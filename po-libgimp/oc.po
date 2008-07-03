@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-07 10:20+0100\n"
+"POT-Creation-Date: 2008-07-02 08:57+0200\n"
 "PO-Revision-Date: 2007-12-27 15:11+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -302,15 +302,15 @@ msgstr ""
 msgid "Additional Information"
 msgstr "Entresenhas suplementàrias"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "Autor :"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "Data :"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "Copyright :"
 
@@ -690,57 +690,29 @@ msgstr ""
 msgid "Temporary Procedure"
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d octet"
-msgstr[1] "%d octets"
+#: ../libgimpbase/gimpbaseenums.c:1047
+msgid "From left to right"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f ko"
+#: ../libgimpbase/gimpbaseenums.c:1048
+msgid "From right to left"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f ko"
+#: ../libgimpbase/gimpbaseenums.c:1078
+msgid "Left justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d ko"
+#: ../libgimpbase/gimpbaseenums.c:1079
+msgid "Right justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f Mo"
+#: ../libgimpbase/gimpbaseenums.c:1080
+msgid "Centered"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f Mo"
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d Mo"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f Go"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f Go"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d Go"
+#: ../libgimpbase/gimpbaseenums.c:1081
+msgid "Filled"
+msgstr ""
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
@@ -852,7 +824,7 @@ msgstr ""
 #: ../libgimpconfig/gimpconfig-iface.c:474
 #: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr ""
 
@@ -929,14 +901,14 @@ msgstr ""
 msgid "Not loaded"
 msgstr ""
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
@@ -975,9 +947,11 @@ msgstr "_Blanc"
 msgid "Select color profile from disk..."
 msgstr ""
 
+#
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-msgid "profile|None"
-msgstr ""
+msgctxt "profile"
+msgid "None"
+msgstr "Pas cap"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -999,6 +973,10 @@ msgstr ""
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
+msgstr ""
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
 msgstr ""
 
 #: ../libgimpwidgets/gimpfileentry.c:174
@@ -1096,66 +1074,66 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Previsualizacion"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1861
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
 msgstr "Ancora"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Edicion"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Visible"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_ine Spacing"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:189
 msgid "_Resize"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:321
+#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "_Escala"
 
@@ -1167,11 +1145,11 @@ msgstr "R_osegar"
 msgid "_Transform"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:322
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr ""
 
@@ -1808,3 +1786,35 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr ""
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d octet"
+#~ msgstr[1] "%d octets"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f ko"
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f ko"
+
+#~ msgid "%d KB"
+#~ msgstr "%d ko"
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f Mo"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f Mo"
+
+#~ msgid "%d MB"
+#~ msgstr "%d Mo"
+
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f Go"
+
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f Go"
+
+#~ msgid "%d GB"
+#~ msgstr "%d Go"
