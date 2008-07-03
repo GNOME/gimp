@@ -1,3 +1,10 @@
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention the fact that intltool now needs to be
+	installed in order to build from tarball.
+
+	* HACKING: removed mentioning of intltoolize here.
+
 2008-07-02  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-gegl-16.png
