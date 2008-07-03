@@ -1,5 +1,14 @@
 2008-07-03  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor)
+	* app/widgets/gimpsettingseditor.c (gimp_settings_editor_constructor):
+	removed trailing period from tooltip texts.
+
+	* app/config/gimprc-blurbs.h: don't mark USER_MANUAL_ONLINE_BLURB
+	for translation, it is not used in the user interface.
+
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: mention the fact that intltool now needs to be
 	installed in order to build from tarball.
 

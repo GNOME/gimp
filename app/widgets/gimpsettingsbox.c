@@ -244,7 +244,7 @@ gimp_settings_box_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (button, _("Add settings to favorites."), NULL);
+  gimp_help_set_help_data (button, _("Add settings to favorites"), NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_settings_box_favorite_activate),
