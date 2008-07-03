@@ -3,8 +3,9 @@
 	* plug-ins/pygimp/pygimp-drawable.c
 	* plug-ins/pygimp/pygimp-vectors.c
 	* plug-ins/pygimp/pygimp-display.c
-	* plug-ins/pygimp/pygimp-image.c: Added checks to ensure that a python
-	object only is created if its id is valid. Fixes bug #536403.
+	* plug-ins/pygimp/pygimp-image.c: Added checks to ensure that a
+	python object only is created if its id is valid. Fixes bug #536403.
+
 	* plug-ins/pygimp/pygimp-pdb.c
 	* plug-ins/pygimp/pygimp-tile.c
 	* plug-ins/pygimp/pygimp-colors.c
