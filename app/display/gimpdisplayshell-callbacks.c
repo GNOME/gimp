@@ -175,11 +175,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_KP_Enter:
           case GDK_ISO_Enter:
           case GDK_BackSpace:
-            break;
-
           case GDK_Escape:
-            if (event->type == GDK_KEY_PRESS)
-              gimp_display_shell_set_fullscreen (shell, FALSE);
             break;
 
           default:

@@ -1,3 +1,9 @@
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): don't use Escape to quit full-screen
+	mode, it collides with tools using the Escape key (bug #539949).
+
 2008-07-03  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-drawable.c
