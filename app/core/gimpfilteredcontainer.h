@@ -41,6 +41,7 @@ struct _GimpFilteredContainer
 
   GimpContainer        *src_container;
   GList                *filter;
+  GHashTable           *tag_ref_counts;
 };
 
 struct _GimpFilteredContainerClass

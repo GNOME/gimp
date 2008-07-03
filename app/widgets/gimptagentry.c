@@ -35,10 +35,17 @@
 
 #include "gimptagentry.h"
 
+#define TAG_SEPARATOR_STR   ","
+
 static void     gimp_tag_entry_activate        (GtkEntry          *entry,
                                                 gpointer           unused);
 static void     gimp_tag_entry_changed         (GtkEntry          *entry,
                                                 gpointer           unused);
+static void     gimp_tag_entry_insert_text     (GtkEditable       *editable,
+                                                gchar             *new_text,
+                                                gint               text_length,
+                                                gint              *position,
+                                                gpointer           user_data);
 
 static void     gimp_tag_entry_query_tag       (GimpTagEntry      *entry);
 
@@ -49,6 +56,16 @@ static void     gimp_tag_entry_item_set_tags   (GimpTagged        *entry,
 static void     gimp_tag_entry_load_selection  (GimpTagEntry      *tag_entry);
 
 static gchar ** gimp_tag_entry_parse_tags      (GimpTagEntry      *entry);
+
+static gchar*   gimp_tag_entry_get_completion_prefix     (GimpTagEntry         *entry);
+static GList *  gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
+                                                          gchar               **used_tags,
+                                                          gchar                *prefix);
+static gchar *  gimp_tag_entry_get_completion_string     (GimpTagEntry         *tag_entry,
+                                                          GList                *candidates,
+                                                          gchar                *prefix);
+static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry         *tag_entry);
+
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 
@@ -65,7 +82,7 @@ static void
 gimp_tag_entry_init (GimpTagEntry *entry)
 {
   entry->tagged_container      = NULL;
-  entry->selected_items          = NULL;
+  entry->selected_items        = NULL;
   entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
 
   g_signal_connect (entry, "activate",
@@ -73,6 +90,9 @@ gimp_tag_entry_init (GimpTagEntry *entry)
                     NULL);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_tag_entry_changed),
+                    NULL);
+  g_signal_connect (entry, "insert-text",
+                    G_CALLBACK (gimp_tag_entry_insert_text),
                     NULL);
 }
 
@@ -98,8 +118,19 @@ gimp_tag_entry_activate (GtkEntry              *entry,
                          gpointer               unused)
 {
   GimpTagEntry         *tag_entry;
+  gint                  selection_start;
+  gint                  selection_end;
 
   tag_entry = GIMP_TAG_ENTRY (entry);
+
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
+                                     &selection_start, &selection_end);
+  if (selection_start != selection_end)
+    {
+      gtk_editable_select_region (GTK_EDITABLE (entry),
+                                  selection_end, selection_end);
+      return;
+    }
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
@@ -119,6 +150,17 @@ gimp_tag_entry_changed (GtkEntry          *entry,
     {
       gimp_tag_entry_query_tag (GIMP_TAG_ENTRY (entry));
     }
+}
+
+static void
+gimp_tag_entry_insert_text     (GtkEditable       *editable,
+                                gchar             *new_text,
+                                gint               text_length,
+                                gint              *position,
+                                gpointer           user_data)
+{
+  g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
+              editable);
 }
 
 static void
@@ -145,6 +187,51 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
 
   gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (tag_entry->tagged_container),
                                       query_list);
+}
+
+static gboolean
+gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
+{
+  gchar                *completion_prefix;
+  GList                *completion_candidates;
+  gchar               **tags;
+  gchar                *completion;
+  gint                  start_position;
+  gint                  end_position;
+  GtkEntry             *entry;
+
+  entry = GTK_ENTRY (tag_entry);
+
+  completion_prefix =
+      gimp_tag_entry_get_completion_prefix (GIMP_TAG_ENTRY (entry));
+  tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (entry));
+  completion_candidates =
+      gimp_tag_entry_get_completion_candidates (GIMP_TAG_ENTRY (entry),
+                                                tags,
+                                                completion_prefix);
+  completion =
+      gimp_tag_entry_get_completion_string (GIMP_TAG_ENTRY (entry),
+                                            completion_candidates,
+                                            completion_prefix);
+
+  if (completion
+      && strlen (completion) > 0)
+    {
+      start_position = gtk_editable_get_position (GTK_EDITABLE (entry));
+      end_position = start_position;
+      gtk_editable_insert_text (GTK_EDITABLE (entry),
+                                completion, strlen (completion),
+                                &end_position);
+      gtk_editable_select_region (GTK_EDITABLE (entry),
+                                  start_position, end_position);
+    }
+
+  g_free (completion);
+  g_strfreev (tags);
+  g_list_free (completion_candidates);
+  g_free (completion_prefix);
+
+  return FALSE;
 }
 
 static void
@@ -274,5 +361,173 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
 
       tag_iterator = g_list_next (tag_iterator);
     }
+}
+
+static gchar*
+gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
+{
+  gchar        *original_string;
+  gchar        *prefix_start;
+  gchar        *prefix;
+  gchar        *cursor;
+  gint          position;
+  gint          i;
+  gunichar      separator;
+  gunichar      c;
+
+  original_string = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+  position = gtk_editable_get_position (GTK_EDITABLE (entry));
+  cursor = original_string;
+  prefix_start = original_string;
+  separator = g_utf8_get_char (TAG_SEPARATOR_STR);
+  for (i = 0; i < position; i++)
+    {
+      c = g_utf8_get_char (cursor);
+      cursor = g_utf8_next_char (cursor);
+      if (c == separator)
+        {
+          prefix_start = cursor;
+        }
+    }
+  do
+    {
+      c = g_utf8_get_char (cursor);
+      if (c == separator)
+        {
+          *cursor = '\0';
+          break;
+        }
+      cursor = g_utf8_next_char (cursor);
+    } while (c);
+
+  prefix = g_strdup (g_strstrip (prefix_start));
+  g_free (original_string);
+
+  return prefix;
+}
+
+static GList *
+gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
+                                          gchar               **used_tags,
+                                          gchar                *prefix)
+{
+  GList        *candidates = NULL;
+  GList        *all_tags;
+  GList        *tag_iterator;
+  GimpTag       tag;
+  gint          i;
+  gint          length;
+
+  if (!prefix
+      || strlen (prefix) < 1)
+    {
+      return NULL;
+    }
+
+  all_tags = g_hash_table_get_keys (tag_entry->tagged_container->tag_ref_counts);
+  tag_iterator = all_tags;
+  length = g_strv_length (used_tags);
+  while (tag_iterator)
+    {
+      tag = GPOINTER_TO_UINT (tag_iterator->data);
+      if (g_str_has_prefix (g_quark_to_string (tag), prefix))
+        {
+          /* check if tag is not already entered */
+          for (i = 0; i < length; i++)
+            {
+              if (! strcmp (g_quark_to_string (tag), used_tags[i]))
+                {
+                  break;
+                }
+            }
+
+          if (i == length)
+            {
+              candidates = g_list_append (candidates, tag_iterator->data);
+            }
+        }
+      tag_iterator = g_list_next (tag_iterator);
+    }
+  g_list_free (all_tags);
+
+  return candidates;
+}
+
+static gchar *
+gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
+                                      GList                    *candidates,
+                                      gchar                    *prefix)
+{
+  const gchar **completions;
+  guint         length;
+  guint         i;
+  GList        *candidate_iterator;
+  const gchar  *candidate_string;
+  gint          prefix_length;
+  gunichar      c;
+  gunichar      d;
+  gint          num_chars_match;
+  gchar        *completion;
+  gchar        *completion_end;
+  gint          completion_length;
+
+  if (! candidates)
+    {
+      return NULL;
+    }
+
+  prefix_length = strlen (prefix);
+  length = g_list_length (candidates);
+  if (length < 2)
+    {
+      candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+      return g_strdup (candidate_string + prefix_length);
+    }
+
+  completions = g_malloc (length * sizeof (gchar*));
+  candidate_iterator = candidates;
+  for (i = 0; i < length; i++)
+    {
+      candidate_string =
+          g_quark_to_string (GPOINTER_TO_UINT (candidate_iterator->data));
+      completions[i] = candidate_string + prefix_length;
+      candidate_iterator = g_list_next (candidate_iterator);
+    }
+
+  num_chars_match = 0;
+  do
+    {
+      c = g_utf8_get_char (completions[0]);
+      if (!c)
+        {
+          break;
+        }
+
+      for (i = 1; i < length; i++)
+        {
+          d = g_utf8_get_char (completions[i]);
+          if (c != d)
+            {
+              candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+              candidate_string += prefix_length;
+              completion_end = g_utf8_offset_to_pointer (candidate_string,
+                                                         num_chars_match);
+              completion_length = completion_end - candidate_string;
+              completion = g_malloc (completion_length + 1);
+              memcpy (completion, candidate_string, completion_length);
+              completion[completion_length] = '\0';
+
+              g_free (completions);
+              return completion;
+            }
+          completions[i] = g_utf8_next_char (completions[i]);
+        }
+      completions[0] = g_utf8_next_char (completions[0]);
+      num_chars_match++;
+    } while (c);
+  g_free (completions);
+
+  candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+  return g_strdup (candidate_string + prefix_length);
 }
 

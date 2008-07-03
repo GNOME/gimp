@@ -53,6 +53,16 @@ static void         gimp_filtered_container_src_freeze         (GimpContainer   
                                                                 GimpFilteredContainer *filtered_container);
 static void         gimp_filtered_container_src_thaw           (GimpContainer         *src_container,
                                                                 GimpFilteredContainer *filtered_container);
+static void         gimp_filtered_container_tag_added          (GimpTagged            *tagged,
+                                                                GimpTag                tag,
+                                                                GimpFilteredContainer  *filtered_container);
+static void         gimp_filtered_container_tag_removed        (GimpTagged            *tagged,
+                                                                GimpTag                tag,
+                                                                GimpFilteredContainer  *filtered_container);
+static void         gimp_filtered_container_tagged_item_added  (GimpTagged             *tagged,
+                                                                GimpFilteredContainer  *filtered_container);
+static void         gimp_filtered_container_tagged_item_removed(GimpTagged             *tagged,
+                                                                GimpFilteredContainer  *filtered_container);
 
 
 G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
@@ -76,6 +86,7 @@ gimp_filtered_container_init (GimpFilteredContainer *filtered_container)
 {
   filtered_container->src_container             = NULL;
   filtered_container->filter                    = NULL;
+  filtered_container->tag_ref_counts            = NULL;
 }
 
 static void
@@ -136,6 +147,7 @@ gimp_filtered_container_new (GimpContainer     *src_container)
 
   filtered_container->src_container = src_container;
   GIMP_CONTAINER (filtered_container)->children_type = children_type;
+  filtered_container->tag_ref_counts = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   gimp_filtered_container_filter (filtered_container);
 
@@ -220,6 +232,9 @@ static void
 gimp_filtered_container_filter (GimpFilteredContainer          *filtered_container)
 {
   gimp_container_foreach (filtered_container->src_container,
+                          (GFunc) gimp_filtered_container_tagged_item_added,
+                          filtered_container);
+  gimp_container_foreach (filtered_container->src_container,
                           (GFunc) add_filtered_item, filtered_container);
 }
 
@@ -228,6 +243,9 @@ gimp_filtered_container_src_add (GimpContainer         *src_container,
                                  GimpObject            *obj,
                                  GimpFilteredContainer *filtered_container)
 {
+  gimp_filtered_container_tagged_item_added (GIMP_TAGGED (obj),
+                                             filtered_container);
+
   if (! gimp_container_frozen (src_container))
     {
       gimp_container_add (GIMP_CONTAINER (filtered_container), obj);
@@ -239,6 +257,9 @@ gimp_filtered_container_src_remove (GimpContainer         *src_container,
                                     GimpObject            *obj,
                                     GimpFilteredContainer *filtered_container)
 {
+  gimp_filtered_container_tagged_item_removed (GIMP_TAGGED (obj),
+                                               filtered_container);
+
   if (! gimp_container_frozen (src_container)
       && gimp_container_have (GIMP_CONTAINER (filtered_container), obj))
     {
@@ -250,8 +271,9 @@ static void
 gimp_filtered_container_src_freeze (GimpContainer              *src_container,
                                     GimpFilteredContainer      *filtered_container)
 {
-  gimp_container_clear (GIMP_CONTAINER (filtered_container));
   gimp_container_freeze (GIMP_CONTAINER (filtered_container));
+  gimp_container_clear (GIMP_CONTAINER (filtered_container));
+  g_hash_table_remove_all (filtered_container->tag_ref_counts);
 }
 
 static void
@@ -260,4 +282,89 @@ gimp_filtered_container_src_thaw (GimpContainer                *src_container,
 {
   gimp_filtered_container_filter (filtered_container);
   gimp_container_thaw (GIMP_CONTAINER (filtered_container));
+}
+
+static void
+gimp_filtered_container_tagged_item_added (GimpTagged                  *tagged,
+                                           GimpFilteredContainer       *filtered_container)
+{
+  GList        *tag_iterator;
+
+  tag_iterator = gimp_tagged_get_tags (tagged);
+  while (tag_iterator)
+    {
+      gimp_filtered_container_tag_added (tagged,
+                                         GPOINTER_TO_UINT (tag_iterator->data),
+                                         filtered_container);
+      tag_iterator = g_list_next (tag_iterator);
+    }
+
+  g_signal_connect (tagged, "tag-added",
+                    G_CALLBACK (gimp_filtered_container_tag_added),
+                    filtered_container);
+  g_signal_connect (tagged, "tag-removed",
+                    G_CALLBACK (gimp_filtered_container_tag_removed),
+                    filtered_container);
+}
+
+static void
+gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
+                                             GimpFilteredContainer     *filtered_container)
+{
+  GList        *tag_iterator;
+
+  g_signal_handlers_disconnect_by_func (tagged,
+                                        G_CALLBACK (gimp_filtered_container_tag_added),
+                                        filtered_container);
+  g_signal_handlers_disconnect_by_func (tagged,
+                                        G_CALLBACK (gimp_filtered_container_tag_removed),
+                                        filtered_container);
+
+  tag_iterator = gimp_tagged_get_tags (tagged);
+  while (tag_iterator)
+    {
+      gimp_filtered_container_tag_removed (tagged,
+                                           GPOINTER_TO_UINT (tag_iterator->data),
+                                           filtered_container);
+      tag_iterator = g_list_next (tag_iterator);
+    }
+
+}
+
+static void
+gimp_filtered_container_tag_added (GimpTagged            *tagged,
+                                   GimpTag                tag,
+                                   GimpFilteredContainer  *filtered_container)
+{
+  gint                  ref_count;
+
+  ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
+                                                    GUINT_TO_POINTER (tag)));
+  ref_count++;
+  g_hash_table_insert (filtered_container->tag_ref_counts,
+                       GUINT_TO_POINTER (tag),
+                       GINT_TO_POINTER (ref_count));
+}
+
+static void
+gimp_filtered_container_tag_removed (GimpTagged                  *tagged,
+                                     GimpTag                      tag,
+                                     GimpFilteredContainer       *filtered_container)
+{
+  gint                  ref_count;
+
+  ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
+                                                    GUINT_TO_POINTER (tag)));
+  ref_count--;
+  if (ref_count > 0)
+    {
+      g_hash_table_insert (filtered_container->tag_ref_counts,
+                           GUINT_TO_POINTER (tag),
+                           GINT_TO_POINTER (ref_count));
+    }
+  else
+    {
+      g_hash_table_remove (filtered_container->tag_ref_counts,
+                           GUINT_TO_POINTER (tag));
+    }
 }
