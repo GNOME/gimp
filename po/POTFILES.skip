@@ -1,3 +1,4 @@
+app/widgets/gtkscalebutton.c
 data/tips/gimp-tips.xml.in
 desktop/gimp.desktop.in
 desktop/gimp.desktop.in
