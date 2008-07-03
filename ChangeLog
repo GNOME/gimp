@@ -1,5 +1,10 @@
 2008-07-03  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/dialogs-actions.c (dialogs_toplevel_actions):
+	changed blurb for "dialog-tips".
+
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_events): don't use Escape to quit full-screen
 	mode, it collides with tools using the Escape key (bug #539949).

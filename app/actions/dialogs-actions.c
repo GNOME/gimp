@@ -222,7 +222,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 
   { "dialogs-tips", GIMP_STOCK_INFO,
     N_("_Tip of the Day"), NULL,
-    N_("Show the tip of the day"),
+    N_("Show some helpful tips on using GIMP"),
     "gimp-tips-dialog",
     GIMP_HELP_TIPS_DIALOG },
 
