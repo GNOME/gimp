@@ -1203,27 +1203,26 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
     PyObject *self;
 
     if (drawable != NULL)
-    ID = drawable->drawable_id;
+        ID = drawable->drawable_id;
 
     if (!gimp_drawable_is_valid(ID)) {
-	Py_INCREF(Py_None);
-	return Py_None;
+        Py_INCREF(Py_None);
+        return Py_None;
     }
-
-    if (drawable != NULL)
-	ID = drawable->drawable_id;
 
     /* create the appropriate object type */
     if (gimp_drawable_is_layer(ID))
-	self = pygimp_layer_new(ID);
+        self = pygimp_layer_new(ID);
     else
-	self = pygimp_channel_new(ID);
+        self = pygimp_channel_new(ID);
 
     if (self == NULL)
-	return NULL;
+        return NULL;
 
-    if (PyObject_TypeCheck(self, &PyGimpDrawable_Type))
-    ((PyGimpDrawable *)self)->drawable = drawable;
+    if (drawable)
+        ((PyGimpDrawable*)self)->drawable = drawable;
+    else if(((PyGimpDrawable*)self)->drawable == NULL)
+        ((PyGimpDrawable*)self)->drawable = gimp_drawable_get(((PyGimpDrawable*)self)->ID);
 
     return self;
 }
@@ -1788,7 +1787,7 @@ pygimp_layer_new(gint32 ID)
 	return NULL;
 
     self->ID = ID;
-    self->drawable = NULL;
+    self->drawable = gimp_drawable_get(ID);
 
     return (PyObject *)self;
 }
@@ -2076,7 +2075,7 @@ pygimp_channel_new(gint32 ID)
 	return NULL;
 
     self->ID = ID;
-    self->drawable = NULL;
+    self->drawable = gimp_drawable_get(ID);
 
     return (PyObject *)self;
 }

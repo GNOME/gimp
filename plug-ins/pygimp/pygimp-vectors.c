@@ -215,6 +215,8 @@ vs_interpolate(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
     PyTuple_SetItem(ret, 0, ret_coords);
     PyTuple_SetItem(ret, 1, PyBool_FromLong(closed));
 
+    g_free(coords);
+    
     return ret;
 }
 
@@ -269,6 +271,8 @@ vs_get_points(PyGimpVectorsStroke *self, void *closure)
 
     PyTuple_SetItem(ret, 0, ret_points);
     PyTuple_SetItem(ret, 1, PyBool_FromLong(closed));
+
+    g_free(controlpoints);
 
     return ret;
 }
