@@ -1814,7 +1814,7 @@ prefs_dialog_new (Gimp       *gimp,
                                          GTK_TABLE (table), 0, size_group);
     gimp_help_set_help_data (combo, NULL, NULL);
 
-    dir = gimp_help_get_manual_location ();
+    dir = gimp_help_get_user_manual_location ();
 
     if (g_file_test (dir, G_FILE_TEST_IS_DIR))
       {
@@ -1843,6 +1843,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_set_size_request (label, width - 20, -1);
     gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
     gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
     gtk_widget_show (label);
 

@@ -35,7 +35,7 @@ void    gimp_help_show (Gimp         *gimp,
 
 /*  returns the folder where the user manual should be installed
  */
-gchar * gimp_help_get_manual_location (void);
+gchar * gimp_help_get_user_manual_location (void);
 
 
 #endif /* __GIMP_HELP_H__ */

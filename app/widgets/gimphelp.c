@@ -128,7 +128,7 @@ gimp_help_show (Gimp         *gimp,
 }
 
 gchar *
-gimp_help_get_manual_location (void)
+gimp_help_get_user_manual_location (void)
 {
   return g_build_filename (gimp_data_directory (), "help", NULL);
 }
@@ -246,7 +246,8 @@ gimp_help_browser (Gimp *gimp)
     {
       gimp_help_browser_error (gimp,
                                _("Help browser doesn't start"),
-                               _("Could not start the GIMP help browser plug-in."),
+                               _("Could not start the GIMP help browser "
+                                 "plug-in."),
                                NULL);
       busy = FALSE;
 
@@ -460,7 +461,7 @@ gimp_help_get_default_domain_uri (Gimp *gimp)
   if (config->user_manual_online)
     return g_strdup (config->user_manual_online_uri);
 
-  dir = gimp_help_get_manual_location ();
+  dir = gimp_help_get_user_manual_location ();
   uri = g_filename_to_uri (dir, NULL, NULL);
   g_free (dir);
 
