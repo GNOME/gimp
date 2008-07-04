@@ -1,11 +1,11 @@
-2008-08-30  Lars-Peter Clausen  <lars@metafoo.de>
+2008-07-04  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-tile.c
 	* plug-ins/pygimp/pygimp-drawable.c
 	* plug-ins/pygimp/pygimp-vectors.c
 	* plug-ins/pygimp/gimpmodile.c: Fixed some potential crashes
 
-2008-08-30  Lars-Peter Clausen  <lars@metafoo.de>
+2008-06-30  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/tools.py: Fixed typo
 	* plug-ins/pygimp/gimpmodule.c: Fixed wrong function and type pointers
@@ -15,7 +15,7 @@
 	* plug-ins/pygimp/gimpui.defs:
 	Fixed compiler warnings
 
-2008-08-28  Lars-Peter Clausen  <lars@metafoo.de>
+2008-06-28  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-pdb.c: Fix typo
 	* plug-ins/pygimp/__init__.py: pixel propertys now return a tuple of
@@ -24,7 +24,7 @@
 	* plug-ins/pygimp/tools.py: New module that provides functions for
 	paint and select tools
 
-2008-08-16  Lars-Peter Clausen  <lars@metafoo.de>
+2008-06-16  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpmodule.c
 	* plug-ins/pygimp/pygimp.h
