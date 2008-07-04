@@ -127,6 +127,12 @@ gimp_help_show (Gimp         *gimp,
     }
 }
 
+gchar *
+gimp_help_get_manual_location (void)
+{
+  return g_build_filename (gimp_data_directory (), "help", NULL);
+}
+
 
 /*  private functions  */
 
@@ -454,7 +460,7 @@ gimp_help_get_default_domain_uri (Gimp *gimp)
   if (config->user_manual_online)
     return g_strdup (config->user_manual_online_uri);
 
-  dir = g_build_filename (gimp_data_directory (), "help", NULL);
+  dir = gimp_help_get_manual_location ();
   uri = g_filename_to_uri (dir, NULL, NULL);
   g_free (dir);
 

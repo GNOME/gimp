@@ -1,5 +1,13 @@
 2008-07-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.[ch]: added a function to get the location
+	where the user manual is expected if it is installed locally.
+
+	* app/dialogs/preferences-dialog.c: inform the user about the
+	presence or absence of the user manual.
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c (browser_dialog_make_index_foreach):
 	improved order of index items with alphabetic counters.
 

@@ -43,6 +43,7 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
+#include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -1799,14 +1800,53 @@ prefs_dialog_new (Gimp       *gimp,
 
   {
     GtkWidget *combo;
+    GtkWidget *hbox;
+    GtkWidget *image;
+    GtkWidget *label;
+    gchar     *dir;
+    gint       width;
 
-    table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+    table = prefs_table_new (2, GTK_CONTAINER (vbox2));
     combo = prefs_boolean_combo_box_add (object, "user-manual-online",
                                          _("Use the online version"),
                                          _("Use a locally installed copy"),
                                          _("User manual:"),
                                          GTK_TABLE (table), 0, size_group);
     gimp_help_set_help_data (combo, NULL, NULL);
+
+    dir = gimp_help_get_manual_location ();
+
+    if (g_file_test (dir, G_FILE_TEST_IS_DIR))
+      {
+        image = gtk_image_new_from_stock (GIMP_STOCK_INFO,
+                                          GTK_ICON_SIZE_MENU);
+        label = gtk_label_new (_("The user manual is installed locally."));
+      }
+    else
+      {
+        image = gtk_image_new_from_stock (GIMP_STOCK_WARNING,
+                                          GTK_ICON_SIZE_MENU);
+        label = gtk_label_new (_("The user manual is not installed."));
+      }
+
+    hbox = gtk_hbox_new (FALSE, 6);
+    gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
+    gtk_widget_show (hbox);
+
+    gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+    gtk_widget_show (image);
+
+    gimp_label_set_attributes (GTK_LABEL (label),
+                               PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                               -1);
+    gtk_widget_get_size_request (combo, &width, NULL);
+    gtk_widget_set_size_request (label, width - 20, -1);
+    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+    gtk_widget_show (label);
+
+    g_free (dir);
   }
 
   /*  Help Browser  */
