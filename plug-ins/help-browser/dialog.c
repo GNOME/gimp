@@ -360,10 +360,21 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
       for (i = 0; i < 5; i++)
         {
+          gunichar c;
+
           if (! indices[i])
             break;
 
-          item->index += atoi (indices[i]) << (8 * (5 - i));
+          c = g_utf8_get_char (indices[i]);
+
+          if (g_unichar_isdigit (c))
+            {
+              item->index += atoi (indices[i]) << (8 * (5 - i));
+            }
+          else if (g_utf8_strlen (indices[i], -1) == 1)
+            {
+              item->index += (c & 0xFF) << (8 * (5 - i));
+            }
         }
 
       g_strfreev (indices);
