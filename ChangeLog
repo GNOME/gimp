@@ -1,5 +1,12 @@
 2008-07-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/gimphelpitem.h: document the purpose of the extra
+	struct fields.
+
+	* plug-ins/help-browser/dialog.c: limit the depth of the index to 4.
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpgrid.c: changed default grid to a 10x10 grid of
 	solid lines (bug #539318).
 

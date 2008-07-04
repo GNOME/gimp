@@ -62,7 +62,10 @@
 #endif
 
 
-#define GIMP_HELP_BROWSER_DIALOG_DATA  "gimp-help-browser-dialog"
+#define GIMP_HELP_BROWSER_DIALOG_DATA      "gimp-help-browser-dialog"
+
+#define GIMP_HELP_BROWSER_INDEX_MAX_DEPTH  4
+
 
 typedef struct
 {
@@ -343,7 +346,6 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpItem   *item,
                                    GimpHelpLocale *locale)
 {
-
 #if 0
   g_printerr ("%s: processing %s (parent %s)\n",
               G_STRFUNC,
@@ -374,7 +376,9 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
       parent = g_hash_table_lookup (locale->help_id_mapping, item->parent);
 
       if (parent)
-        parent->children = g_list_prepend (parent->children, item);
+        {
+          parent->children = g_list_prepend (parent->children, item);
+        }
     }
   else
     {
@@ -386,8 +390,8 @@ static gint
 help_item_compare (gconstpointer a,
                    gconstpointer b)
 {
-  GimpHelpItem *item_a = (GimpHelpItem *) a;
-  GimpHelpItem *item_b = (GimpHelpItem *) b;
+  const GimpHelpItem *item_a = a;
+  const GimpHelpItem *item_b = b;
 
   if (item_a->index > item_b->index)
     return 1;
@@ -402,7 +406,8 @@ add_child (GtkTreeStore   *store,
            GimpHelpDomain *domain,
            GimpHelpLocale *locale,
            GtkTreeIter    *parent,
-           GimpHelpItem   *item)
+           GimpHelpItem   *item,
+           gint            depth)
 {
   GtkTreeIter  iter;
   GList       *list;
@@ -424,13 +429,16 @@ add_child (GtkTreeStore   *store,
                        uri,
                        gtk_tree_iter_copy (&iter));
 
+  if (depth + 1 == GIMP_HELP_BROWSER_INDEX_MAX_DEPTH)
+    return;
+
   item->children = g_list_sort (item->children, help_item_compare);
 
   for (list = item->children; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, &iter, item);
+      add_child (store, domain, locale, &iter, item, depth + 1);
     }
 }
 
@@ -470,7 +478,7 @@ browser_dialog_make_index (GimpHelpDomain *domain,
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, NULL, item);
+      add_child (store, domain, locale, NULL, item, 0);
     }
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (store));
