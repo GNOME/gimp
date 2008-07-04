@@ -1799,12 +1799,13 @@ prefs_dialog_new (Gimp       *gimp,
                           GTK_BOX (vbox2));
 
   {
-    GtkWidget *combo;
-    GtkWidget *hbox;
-    GtkWidget *image;
-    GtkWidget *label;
-    gchar     *dir;
-    gint       width;
+    GtkWidget   *combo;
+    GtkWidget   *hbox;
+    GtkWidget   *image;
+    GtkWidget   *label;
+    const gchar *icon;
+    const gchar *text;
+    gchar       *dir;
 
     table = prefs_table_new (2, GTK_CONTAINER (vbox2));
     combo = prefs_boolean_combo_box_add (object, "user-manual-online",
@@ -1818,29 +1819,27 @@ prefs_dialog_new (Gimp       *gimp,
 
     if (g_file_test (dir, G_FILE_TEST_IS_DIR))
       {
-        image = gtk_image_new_from_stock (GIMP_STOCK_INFO,
-                                          GTK_ICON_SIZE_MENU);
-        label = gtk_label_new (_("The user manual is installed locally."));
+        icon = GIMP_STOCK_INFO;
+        text = _("There's a local installation of the user manual.");
       }
     else
       {
-        image = gtk_image_new_from_stock (GIMP_STOCK_WARNING,
-                                          GTK_ICON_SIZE_MENU);
-        label = gtk_label_new (_("The user manual is not installed."));
+        icon = GIMP_STOCK_WARNING;
+        text = _("The user manual is not installed locally.");
       }
 
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
     gtk_widget_show (hbox);
 
+    image = gtk_image_new_from_stock (icon, GTK_ICON_SIZE_BUTTON);
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_widget_show (image);
 
+    label = gtk_label_new (text);
     gimp_label_set_attributes (GTK_LABEL (label),
                                PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                -1);
-    gtk_widget_get_size_request (combo, &width, NULL);
-    gtk_widget_set_size_request (label, width - 20, -1);
     gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
