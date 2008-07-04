@@ -1,3 +1,8 @@
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgrid.c: changed default grid to a 10x10 grid of
+	solid lines (bug #539318).
+
 2008-07-03  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_toplevel_actions):
