@@ -119,11 +119,10 @@ gimp_text_vector_coords (RenderContext   *context,
 }
 
 static gint
-moveto (const double x,
-        const double y,
-        gpointer         data)
+moveto (RenderContext *context,
+        const double x,
+        const double y)
 {
-  RenderContext *context = data;
   GimpCoords     start;
 
 #if GIMP_TEXT_DEBUG
@@ -144,11 +143,10 @@ moveto (const double x,
 }
 
 static gint
-lineto (const double x,
-        const double y,
-        gpointer         data)
+lineto (RenderContext *context,
+        const double x,
+        const double y)
 {
-  RenderContext *context = data;
   GimpCoords     end;
 
 #if GIMP_TEXT_DEBUG
@@ -166,15 +164,14 @@ lineto (const double x,
 }
 
 static gint
-cubicto (const double x1,
+cubicto (RenderContext* context,
+         const double x1,
          const double y1,
          const double x2,
          const double y2,
          const double x3,
-         const double y3,
-         gpointer         data)
+         const double y3)
 {
-  RenderContext *context = data;
   GimpCoords     control1;
   GimpCoords     control2;
   GimpCoords     end;
@@ -191,6 +188,24 @@ cubicto (const double x1,
   gimp_text_vector_coords (context, x3, y3, &end);
 
   gimp_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
+
+  return 0;
+}
+
+static gint
+closepath (RenderContext *context)
+{
+
+#if GIMP_TEXT_DEBUG
+  g_printerr ("moveto\n");
+#endif
+
+  if (!context->stroke)
+    return 0;
+
+  gimp_stroke_close (context->stroke);
+
+  context->stroke = NULL;
 
   return 0;
 }
@@ -220,13 +235,19 @@ gimp_text_render_vectors (PangoFont            *font,
   cglyph.x =     0;
   cglyph.y =     0;
   cglyph.index = pango_glyph;
-
+    
+  /* A cairo_t needs an image surface to function, so "surface" is created
+   * temporarily for this purpose. Nothing is drawn to "surface", but it is
+   * still needed to be connected to "cr" for "cr" to execute 
+   * cr_glyph_path(). The size of surface is therefore irrelevant.
+   */
   surface = cairo_image_surface_create ( CAIRO_FORMAT_A8, 2, 2);
   cr = cairo_create (surface);
 
   cfont = pango_cairo_font_get_scaled_font ( (PangoCairoFont*) font);
 
   cairo_set_scaled_font (cr, cfont);
+  
   cairo_set_font_options (cr, options);
 
   cairo_transform (cr, matrix);
@@ -235,25 +256,32 @@ gimp_text_render_vectors (PangoFont            *font,
 
   cpath = cairo_copy_path (cr);
 
-  for(i=0;i<cpath->num_data; i+=cpath->data[i].header.length)
+  for(i=0; i < cpath->num_data; i += cpath->data[i].header.length)
   {
     data = &cpath->data[i];
+
+    /* if the drawing operation is the final moveto of the glyph,
+     * break to avoid creating an empty point. This is because cairo
+     * always adds a moveto after each closepath.
+     */
+    if(i + data[0].header.length >= cpath->num_data) break;
+
     switch (data->header.type)
     {
     case CAIRO_PATH_MOVE_TO:
-      moveto(data[1].point.x, data[1].point.y, context);
+      moveto (context, data[1].point.x, data[1].point.y);
       break;
     case CAIRO_PATH_LINE_TO:
-      lineto(data[1].point.x, data[1].point.y, context);
+      lineto (context, data[1].point.x, data[1].point.y);
       break;
     case CAIRO_PATH_CURVE_TO:
-      cubicto(data[1].point.x, data[1].point.y,
-              data[2].point.x, data[2].point.y,
-              data[3].point.x, data[3].point.y,
-              context);
+      cubicto (context,
+               data[1].point.x, data[1].point.y,
+               data[2].point.x, data[2].point.y,
+               data[3].point.x, data[3].point.y);
       break;
     case CAIRO_PATH_CLOSE_PATH:
-      /*pathclose function goes here*/
+      closepath (context);
       break;
     }
   }

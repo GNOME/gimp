@@ -1,5 +1,10 @@
 2008-06-29  Daniel Eddeland <danedde@svn.gnome.org>
 
+	* app/text/gimptext-vectors.c: fixed text formatting and a bug adding
+	an empty point at the end of some paths.
+
+2008-06-29  Daniel Eddeland <danedde@svn.gnome.org>
+
 	Merged 25809:26050 from trunk
 
 2008-06-29  Daniel Eddeland <danedde@svn.gnome.org>
