@@ -64,6 +64,7 @@ enum
 #define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
 #define NARROW_MODE_THRESHOLD   45
+#define CENTER_CROSS_SIZE       6
 
 
 #define SQRT5   2.236067977
@@ -1666,9 +1667,23 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   switch (private->function)
     {
     case GIMP_RECTANGLE_TOOL_MOVING:
+
       if (gimp_tool_control_is_active (tool->control))
-        break;
-      /* else fallthrough */
+        {
+          /* Mark the center because we snap to it */
+          gimp_draw_tool_draw_cross_by_anchor (draw_tool,
+                                               pub_x1 + (pub_x2 - pub_x1) / 2.0,
+                                               pub_y1 + (pub_y2 - pub_y1) / 2.0,
+                                               CENTER_CROSS_SIZE,
+                                               CENTER_CROSS_SIZE,
+                                               GTK_ANCHOR_CENTER,
+                                               FALSE);
+          break;
+        }
+      else
+        {
+          /* Fallthrough */
+        }
 
     case GIMP_RECTANGLE_TOOL_DEAD:
     case GIMP_RECTANGLE_TOOL_CREATING:
