@@ -81,11 +81,13 @@ static void       gimp_help_call          (Gimp          *gimp,
                                            const gchar   *help_locales,
                                            const gchar   *help_id);
 
-static gint       gimp_help_get_help_domains       (Gimp    *gimp,
-                                                    gchar ***domain_names,
-                                                    gchar ***domain_uris);
-static gchar    * gimp_help_get_default_domain_uri (Gimp    *gimp);
-static gchar    * gimp_help_get_locales            (Gimp    *gimp);
+static gint       gimp_help_get_help_domains        (Gimp    *gimp,
+                                                     gchar ***domain_names,
+                                                     gchar ***domain_uris);
+static gchar    * gimp_help_get_default_domain_uri  (Gimp    *gimp);
+static gchar    * gimp_help_get_locales             (Gimp    *gimp);
+
+static gchar    * gimp_help_get_user_manual_basedir (void);
 
 
 /*  public functions  */
@@ -127,10 +129,45 @@ gimp_help_show (Gimp         *gimp,
     }
 }
 
-gchar *
-gimp_help_get_user_manual_location (void)
+gboolean
+gimp_help_user_manual_is_installed (Gimp *gimp)
 {
-  return g_build_filename (gimp_data_directory (), "help", NULL);
+  gchar    *basedir;
+  gboolean  found = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  basedir = gimp_help_get_user_manual_basedir ();
+
+  if (g_file_test (basedir, G_FILE_TEST_IS_DIR))
+    {
+      gchar       *locales = gimp_help_get_locales (gimp);
+      const gchar *s       = locales;
+      const gchar *p;
+
+      for (p = strchr (s, ':'); p && !found; p = strchr (s, ':'))
+        {
+          gchar *locale = g_strndup (s, p - s);
+          gchar *path;
+
+          path = g_build_filename (basedir, locale, "gimp-help.xml", NULL);
+
+          g_printerr ("%s\n", path);
+
+          found = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+
+          g_free (path);
+          g_free (locale);
+
+          s = p + 1;
+        }
+
+      g_free (locales);
+    }
+
+  g_free (basedir);
+
+  return found;
 }
 
 
@@ -461,7 +498,7 @@ gimp_help_get_default_domain_uri (Gimp *gimp)
   if (config->user_manual_online)
     return g_strdup (config->user_manual_online_uri);
 
-  dir = gimp_help_get_user_manual_location ();
+  dir = gimp_help_get_user_manual_basedir ();
   uri = g_filename_to_uri (dir, NULL, NULL);
   g_free (dir);
 
@@ -477,4 +514,10 @@ gimp_help_get_locales (Gimp *gimp)
     return g_strdup (config->help_locales);
 
   return g_strjoinv (":", (gchar **) g_get_language_names ());
+}
+
+static gchar *
+gimp_help_get_user_manual_basedir (void)
+{
+  return g_build_filename (gimp_data_directory (), "help", NULL);
 }

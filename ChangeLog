@@ -1,3 +1,9 @@
+2008-07-05  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimphelp.[ch]: improved test for user manual
+	installation and moved the code out of the prefs dialog.
+
 2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: 

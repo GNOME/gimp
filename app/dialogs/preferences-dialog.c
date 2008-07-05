@@ -1805,7 +1805,6 @@ prefs_dialog_new (Gimp       *gimp,
     GtkWidget   *label;
     const gchar *icon;
     const gchar *text;
-    gchar       *dir;
 
     table = prefs_table_new (2, GTK_CONTAINER (vbox2));
     combo = prefs_boolean_combo_box_add (object, "user-manual-online",
@@ -1815,9 +1814,7 @@ prefs_dialog_new (Gimp       *gimp,
                                          GTK_TABLE (table), 0, size_group);
     gimp_help_set_help_data (combo, NULL, NULL);
 
-    dir = gimp_help_get_user_manual_location ();
-
-    if (g_file_test (dir, G_FILE_TEST_IS_DIR))
+    if (gimp_help_user_manual_is_installed (gimp))
       {
         icon = GIMP_STOCK_INFO;
         text = _("There's a local installation of the user manual.");
@@ -1845,8 +1842,6 @@ prefs_dialog_new (Gimp       *gimp,
 
     gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
     gtk_widget_show (label);
-
-    g_free (dir);
   }
 
   /*  Help Browser  */
