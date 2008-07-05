@@ -1,3 +1,9 @@
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_offsets): Renamed the variales sx
+	and sy to sw and sh.
+
 2008-07-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
