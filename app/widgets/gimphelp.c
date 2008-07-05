@@ -152,8 +152,6 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
 
           path = g_build_filename (basedir, locale, "gimp-help.xml", NULL);
 
-          g_printerr ("%s\n", path);
-
           found = g_file_test (path, G_FILE_TEST_IS_REGULAR);
 
           g_free (path);
