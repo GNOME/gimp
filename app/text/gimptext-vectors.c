@@ -223,7 +223,6 @@ gimp_text_render_vectors (PangoFont            *font,
   cairo_surface_t     *surface;
   cairo_t             *cr;
   cairo_path_t        *cpath;
-  cairo_path_data_t   *data;
   cairo_scaled_font_t *cfont;
   cairo_glyph_t        cglyph;
 
@@ -256,15 +255,17 @@ gimp_text_render_vectors (PangoFont            *font,
 
   cpath = cairo_copy_path (cr);
 
-  for(i=0; i < cpath->num_data; i += cpath->data[i].header.length)
+  for (i = 0; i < cpath->num_data; i += cpath->data[i].header.length)
   {
+    cairo_path_data_t   *data;
+
     data = &cpath->data[i];
 
     /* if the drawing operation is the final moveto of the glyph,
      * break to avoid creating an empty point. This is because cairo
      * always adds a moveto after each closepath.
      */
-    if(i + data[0].header.length >= cpath->num_data) break;
+    if (i + data->header.length >= cpath->num_data) break;
 
     switch (data->header.type)
     {
@@ -292,5 +293,3 @@ gimp_text_render_vectors (PangoFont            *font,
   cairo_surface_destroy (surface);
 
 }
-
-
