@@ -1,3 +1,9 @@
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* data/tips/gimp-tips.xml.in: Removed tip about how to make a
+	circular selection. It's much more discoverable now than it was in
+	GIMP 2.2, and the current description is faulty.
+
 2008-07-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.[ch]: added a function to get the location

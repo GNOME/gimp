@@ -224,15 +224,6 @@
   </tip>
   <tip level="advanced">
     <_thetip>
-      To create a circle-shaped selection, hold <tt>Shift</tt> while
-      doing an ellipse select. To place a circle precisely, drag
-      horizontal and vertical guides tangent to the circle you want to
-      select, place your cursor at the intersection of the guides, and
-      the resulting selection will just touch the guides.
-    </_thetip>
-  </tip>
-  <tip level="advanced">
-    <_thetip>
       If some of your scanned photos do not look colorful enough, you
       can easily improve their tonal range with the &quot;Auto&quot;
       button in the Levels tool (Colors→Levels).  If there are any
