@@ -30,41 +30,6 @@
 #define GIMP_IS_EDIT_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL))
 
 
-typedef struct _GimpEditSelectionTool      GimpEditSelectionTool;
-typedef struct _GimpEditSelectionToolClass GimpEditSelectionToolClass;
-
-struct _GimpEditSelectionTool
-{
-  GimpDrawTool        parent_instance;
-
-  gint                origx, origy;    /*  Last x and y coords               */
-  gint                cumlx, cumly;    /*  Cumulative changes to x and yed   */
-  gint                x, y;            /*  Current x and y coords            */
-  gint                num_segs_in;     /*  Num seg in selection boundary     */
-  gint                num_segs_out;    /*  Num seg in selection boundary     */
-  BoundSeg           *segs_in;         /*  Pointer to the channel sel. segs  */
-  BoundSeg           *segs_out;        /*  Pointer to the channel sel. segs  */
-
-  gint                x1, y1;          /*  Bounding box of selection mask    */
-  gint                x2, y2;
-
-  GimpTranslateMode   edit_mode;       /*  Translate the mask or layer?      */
-
-  gboolean            first_move;      /*  Don't push undos after the first  */
-
-  gboolean            propagate_release;
-
-  gboolean            constrain;       /*  Constrain the movement            */
-  gdouble             start_x, start_y;/*  Coords when button was pressed    */
-  gdouble             last_x,  last_y; /*  Previous coords sent to _motion   */
-};
-
-struct _GimpEditSelectionToolClass
-{
-  GimpDrawToolClass   parent_class;
-};
-
-
 GType      gimp_edit_selection_tool_get_type  (void) G_GNUC_CONST;
 
 void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
