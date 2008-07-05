@@ -137,6 +137,10 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
+  /*  if GIMP2_HELP_URI is set, assume that the manual can be found there  */
+  if (g_getenv ("GIMP2_HELP_URI"))
+    return TRUE;
+
   basedir = gimp_help_get_user_manual_basedir ();
 
   if (g_file_test (basedir, G_FILE_TEST_IS_DIR))

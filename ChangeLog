@@ -1,5 +1,10 @@
 2008-07-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
+	always return TRUE if GIMP2_HELP_URI environment variable is set.
+
+2008-07-05  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c
 	* app/widgets/gimphelp.[ch]: improved test for user manual
 	installation and moved the code out of the prefs dialog.
