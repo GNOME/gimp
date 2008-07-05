@@ -436,8 +436,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                         y2 - y1);
 
     /* Save where to draw the mark of the center */
-    edit_select->center_x = x1 + (x2 - x1) / 2.0;
-    edit_select->center_y = y1 + (y2 - y1) / 2.0;
+    edit_select->center_x = (x1 + x2) / 2.0;
+    edit_select->center_y = (y1 + y2) / 2.0;
   }
 
   gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);

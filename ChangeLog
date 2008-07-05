@@ -1,5 +1,10 @@
 2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c: 
+	* app/tools/gimpeditselectiontool.c: Simplify math.
+
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c:
 	* app/tools/gimpeditselectiontool.c: Mark the center of
 	rectangles/bounding rectangles so that it is easier to predict and

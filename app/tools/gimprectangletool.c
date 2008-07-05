@@ -1672,8 +1672,8 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
         {
           /* Mark the center because we snap to it */
           gimp_draw_tool_draw_cross_by_anchor (draw_tool,
-                                               pub_x1 + (pub_x2 - pub_x1) / 2.0,
-                                               pub_y1 + (pub_y2 - pub_y1) / 2.0,
+                                               (pub_x1 + pub_x2) / 2.0,
+                                               (pub_y1 + pub_y2) / 2.0,
                                                CENTER_CROSS_SIZE,
                                                CENTER_CROSS_SIZE,
                                                GTK_ANCHOR_CENTER,
