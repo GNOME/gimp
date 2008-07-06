@@ -176,20 +176,33 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
           switch (error->code)
             {
             case G_IO_ERROR_NOT_FOUND:
+              if (domain->help_domain)
+                {
+                  g_message (_("The help pages for '%s' are not available."),
+                             domain->help_domain);
+                }
+              else
+                {
+                  g_message ("%s\n\n%s",
+                             _("The GIMP user manual is not available."),
+                             _("Please install the additional help package "
+                               "or use the online user manual at "
+                               "http://docs.gimp.org/."));
+                }
+              break;
+
+            case G_IO_ERROR_NOT_SUPPORTED:
               g_message ("%s\n\n%s",
-                         _("The GIMP user manual is not available."),
-                         _("Please install the additional help package or use "
-                           "the online user manual at http://docs.gimp.org/."));
+                         error->message,
+                         _("Perhaps you are missing GIO backends and need "
+                           "to install GVFS?"));
               break;
 
             case G_IO_ERROR_CANCELLED:
               break;
 
             default:
-              g_message ("%s\n\n%s\n\n%s",
-                         _("There is a problem with the GIMP user manual."),
-                         error->message,
-                         _("Please check your installation."));
+              g_message (error->message);
               break;
             }
 
