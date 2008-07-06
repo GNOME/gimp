@@ -1,5 +1,11 @@
 2008-07-06  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c: if the user asks for help and the user
+	manual is not locally installed, show a dialog that allows to
+	change the preferences so that the online version is used.
+
+2008-07-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimphelpdomain.c: improved error messages.
 
 2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>

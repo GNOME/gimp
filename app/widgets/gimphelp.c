@@ -47,6 +47,8 @@
 #include "gimphelp-ids.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
+#include "gimpmessagedialog.h"
+#include "gimpwidgets-utils.c"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -66,7 +68,8 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint       gimp_idle_help          (GimpIdleHelp  *idle_help);
+static gboolean   gimp_idle_help          (GimpIdleHelp  *idle_help);
+static void       gimp_idle_help_free     (GimpIdleHelp  *idle_help);
 
 static gboolean   gimp_help_browser       (Gimp          *gimp);
 static void       gimp_help_browser_error (Gimp          *gimp,
@@ -81,13 +84,15 @@ static void       gimp_help_call          (Gimp          *gimp,
                                            const gchar   *help_locales,
                                            const gchar   *help_id);
 
-static gint       gimp_help_get_help_domains        (Gimp    *gimp,
-                                                     gchar ***domain_names,
-                                                     gchar ***domain_uris);
-static gchar    * gimp_help_get_default_domain_uri  (Gimp    *gimp);
-static gchar    * gimp_help_get_locales             (Gimp    *gimp);
+static gint       gimp_help_get_help_domains         (Gimp    *gimp,
+                                                      gchar ***domain_names,
+                                                      gchar ***domain_uris);
+static gchar    * gimp_help_get_default_domain_uri   (Gimp    *gimp);
+static gchar    * gimp_help_get_locales              (Gimp    *gimp);
 
-static gchar    * gimp_help_get_user_manual_basedir (void);
+static gchar    * gimp_help_get_user_manual_basedir  (void);
+
+static void       gimp_help_query_user_manual_online (GimpIdleHelp *idle_help);
 
 
 /*  public functions  */
@@ -181,6 +186,18 @@ gimp_idle_help (GimpIdleHelp *idle_help)
   GimpGuiConfig *config         = GIMP_GUI_CONFIG (idle_help->gimp->config);
   const gchar   *procedure_name = NULL;
 
+  if (! idle_help->help_domain       &&
+      ! config->user_manual_online   &&
+      ! gimp_help_user_manual_is_installed (idle_help->gimp))
+    {
+      /*  The user manual is not installed locally, ask the user
+       *  if the online version should be used instead.
+       */
+      gimp_help_query_user_manual_online (idle_help);
+
+      return FALSE;
+    }
+
   GIMP_LOG (HELP, "Domain = '%s', ID = '%s'",
             idle_help->help_domain ? idle_help->help_domain : "NULL",
             idle_help->help_id     ? idle_help->help_id     : "NULL");
@@ -205,13 +222,19 @@ gimp_idle_help (GimpIdleHelp *idle_help)
                     idle_help->help_locales,
                     idle_help->help_id);
 
+  gimp_idle_help_free (idle_help);
+
+  return FALSE;
+}
+
+static void
+gimp_idle_help_free (GimpIdleHelp *idle_help)
+{
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
 
   g_slice_free (GimpIdleHelp, idle_help);
-
-  return FALSE;
 }
 
 static gboolean
@@ -522,4 +545,67 @@ static gchar *
 gimp_help_get_user_manual_basedir (void)
 {
   return g_build_filename (gimp_data_directory (), "help", NULL);
+}
+
+
+static void
+gimp_help_query_online_response (GtkWidget    *dialog,
+                                 gint          response,
+                                 GimpIdleHelp *idle_help)
+{
+  gtk_widget_destroy (dialog);
+
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      g_object_set (idle_help->gimp->config,
+                    "user-manual-online", TRUE,
+                    NULL);
+
+      gimp_help_show (idle_help->gimp,
+                      idle_help->progress,
+                      idle_help->help_domain,
+                      idle_help->help_id);
+    }
+
+  gimp_idle_help_free (idle_help);
+}
+
+static void
+gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
+{
+  GtkWidget *dialog;
+
+  dialog = gimp_message_dialog_new (_("GIMP user manual is missing"),
+                                    GIMP_STOCK_USER_MANUAL,
+                                    NULL, 0, NULL, NULL,
+                                    GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
+                                    _("_Use online version"), GTK_RESPONSE_ACCEPT,
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  if (idle_help->progress)
+    {
+      guint32 window = gimp_progress_get_window (idle_help->progress);
+
+      if (window)
+        gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+    }
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_help_query_online_response),
+                    idle_help);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("The GIMP user manual is not installed "
+                                       "on your computer."));
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("You can either install the additional help "
+                               "package or change your preferences to use "
+                               "the online version."));
+
+  gtk_widget_show (dialog);
 }
