@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-11 08:26+0200\n"
-"PO-Revision-Date: 2008-06-11 08:42+0200\n"
+"POT-Creation-Date: 2008-07-06 22:02+0200\n"
+"PO-Revision-Date: 2008-07-06 22:06+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "Fehlerhafte Palette"
 #. stat error (file does not exist)
 #: ../plug-ins/bmp/bmp-read.c:149 ../plug-ins/common/cel.c:299
 #: ../plug-ins/common/channel-mixer.c:981
-#: ../plug-ins/common/cml-explorer.c:2177 ../plug-ins/common/compressor.c:464
+#: ../plug-ins/common/cml-explorer.c:2178 ../plug-ins/common/compressor.c:464
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve-bend.c:869
 #: ../plug-ins/common/dicom.c:302 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
@@ -167,7 +167,7 @@ msgstr "Alpha-Kanal wird ignoriert."
 
 #: ../plug-ins/bmp/bmp-write.c:294 ../plug-ins/common/cel.c:568
 #: ../plug-ins/common/channel-mixer.c:1059
-#: ../plug-ins/common/cml-explorer.c:2004 ../plug-ins/common/compressor.c:410
+#: ../plug-ins/common/cml-explorer.c:2005 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:473 ../plug-ins/common/compressor.c:563
 #: ../plug-ins/common/compressor.c:632 ../plug-ins/common/curve-bend.c:817
 #: ../plug-ins/common/dicom.c:774 ../plug-ins/common/gbr.c:616
@@ -185,7 +185,7 @@ msgstr "Alpha-Kanal wird ignoriert."
 #: ../plug-ins/fli/fli-gimp.c:715
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ico/ico-save.c:1020
-#: ../plug-ins/ifs-compose/ifs-compose.c:2376 ../plug-ins/jpeg/jpeg-save.c:320
+#: ../plug-ins/ifs-compose/ifs-compose.c:2379 ../plug-ins/jpeg/jpeg-save.c:320
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
@@ -662,73 +662,73 @@ msgstr "Vorschau für eine GIMP-Ebenenbasierte Animation"
 msgid "_Playback..."
 msgstr "Animation _abspielen …"
 
-#: ../plug-ins/common/animation-play.c:443
+#: ../plug-ins/common/animation-play.c:447
 msgid "_Step"
 msgstr "_Schritt"
 
-#: ../plug-ins/common/animation-play.c:443
+#: ../plug-ins/common/animation-play.c:447
 msgid "Step to next frame"
 msgstr "Zum nächsten Einzelbild"
 
-#: ../plug-ins/common/animation-play.c:447
+#: ../plug-ins/common/animation-play.c:451
 msgid "Rewind the animation"
 msgstr "Animation zurückspulen"
 
-#: ../plug-ins/common/animation-play.c:465
+#: ../plug-ins/common/animation-play.c:469
 msgid "Faster"
 msgstr "Schneller"
 
-#: ../plug-ins/common/animation-play.c:465
+#: ../plug-ins/common/animation-play.c:469
 msgid "Increase the speed of the animation"
 msgstr "Geschwindigkeit der Animation erhöhen"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:474
 msgid "Slower"
 msgstr "Langsamer"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:474
 msgid "Decrease the speed of the animation"
 msgstr "Geschwindigkeit der Animation verringern"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:479
 msgid "Reset speed"
 msgstr "Geschwindigkeit zurücksetzen"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:479
 msgid "Reset the speed of the animation"
 msgstr "Die Geschwindigkeit der Animation zurücksetzen"
 
-#: ../plug-ins/common/animation-play.c:483
-#: ../plug-ins/common/animation-play.c:1440
+#: ../plug-ins/common/animation-play.c:487
+#: ../plug-ins/common/animation-play.c:1446
 msgid "Start playback"
 msgstr "Wiedergabe starten"
 
-#: ../plug-ins/common/animation-play.c:487
+#: ../plug-ins/common/animation-play.c:491
 msgid "Detach"
 msgstr "Abtrennen"
 
-#: ../plug-ins/common/animation-play.c:488
+#: ../plug-ins/common/animation-play.c:492
 msgid "Detach the animation from the dialog window"
 msgstr "Die Animation aus dem Dialogfenster lösen"
 
-#: ../plug-ins/common/animation-play.c:580
+#: ../plug-ins/common/animation-play.c:584
 msgid "Animation Playback:"
 msgstr "Animation abspielen:"
 
-#: ../plug-ins/common/animation-play.c:659
+#: ../plug-ins/common/animation-play.c:663
 msgid "Playback speed"
 msgstr "Wiedergabegeschwindigkeit"
 
-#: ../plug-ins/common/animation-play.c:797
+#: ../plug-ins/common/animation-play.c:803
 msgid "Tried to display an invalid layer."
 msgstr "Es wurde versucht, eine ungültige Ebene anzuzeigen."
 
-#: ../plug-ins/common/animation-play.c:1317
+#: ../plug-ins/common/animation-play.c:1323
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Einzelbild %d von %d"
 
-#: ../plug-ins/common/animation-play.c:1440
+#: ../plug-ins/common/animation-play.c:1446
 msgid "Stop playback"
 msgstr "Wiedergabe stoppen"
 
@@ -1230,7 +1230,7 @@ msgid "Save Channel Mixer Settings"
 msgstr "Kanalmixereinstellungen speichern"
 
 #: ../plug-ins/common/channel-mixer.c:1067
-#: ../plug-ins/common/cml-explorer.c:2059
+#: ../plug-ins/common/cml-explorer.c:2060
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parameter wurden in »%s« gespeichert"
@@ -1653,38 +1653,38 @@ msgstr "Mutationsrate:"
 msgid "Mutation dist.:"
 msgstr "Mutationsabstand:"
 
-#: ../plug-ins/common/cml-explorer.c:1818
+#: ../plug-ins/common/cml-explorer.c:1819
 msgid "Graph of the Current Settings"
 msgstr "Graph der aktiven Einstellungen"
 
-#: ../plug-ins/common/cml-explorer.c:1889
+#: ../plug-ins/common/cml-explorer.c:1890
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Warnung: Quell- und Zielkanal sind identisch."
 
-#: ../plug-ins/common/cml-explorer.c:1948
+#: ../plug-ins/common/cml-explorer.c:1949
 msgid "Save CML Explorer Parameters"
 msgstr "CML-Explorer-Parameter speichern"
 
-#: ../plug-ins/common/cml-explorer.c:2081
+#: ../plug-ins/common/cml-explorer.c:2082
 msgid "Load CML Explorer Parameters"
 msgstr "CML-Explorer-Parameter laden"
 
-#: ../plug-ins/common/cml-explorer.c:2199
+#: ../plug-ins/common/cml-explorer.c:2200
 msgid "Error: it's not CML parameter file."
 msgstr "Fehler: dies ist keine CML-Parameter-Datei."
 
-#: ../plug-ins/common/cml-explorer.c:2206
+#: ../plug-ins/common/cml-explorer.c:2207
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Warnung: »%s« ist eine Datei im alten Format."
 
-#: ../plug-ins/common/cml-explorer.c:2210
+#: ../plug-ins/common/cml-explorer.c:2211
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Warnung: »%s« ist eine Parameterdatei für einen neuere CML-Explorer-Version."
 
-#: ../plug-ins/common/cml-explorer.c:2273
+#: ../plug-ins/common/cml-explorer.c:2274
 msgid "Error: failed to load parameters"
 msgstr "Fehler: Parameter konnten nicht geladen werden"
 
@@ -2445,7 +2445,7 @@ msgstr "Es kann nicht auf einer leeren Auswahl gearbeitet werden."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1195 ../plug-ins/common/curve-bend.c:2915
+#: ../plug-ins/common/curve-bend.c:1195 ../plug-ins/common/curve-bend.c:2916
 msgid "Curve Bend"
 msgstr "Verbiegen"
 
@@ -2564,11 +2564,11 @@ msgstr "Die Kurven aus einer Datei laden"
 msgid "Save the curves to a file"
 msgstr "Die Kurven in eine Datei speichern"
 
-#: ../plug-ins/common/curve-bend.c:2013
+#: ../plug-ins/common/curve-bend.c:2014
 msgid "Load Curve Points from File"
 msgstr "Kurvenkontrollpunkte aus Datei laden"
 
-#: ../plug-ins/common/curve-bend.c:2048
+#: ../plug-ins/common/curve-bend.c:2049
 msgid "Save Curve Points to File"
 msgstr "Kurvenkontrollpunkte in Datei speichern"
 
@@ -3257,7 +3257,7 @@ msgid "Composing images"
 msgstr "Bilder werden kombiniert"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1038
+#: ../plug-ins/help-browser/dialog.c:1017
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -5767,7 +5767,7 @@ msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Zu ladende Seiten (z.B. 1-4 oder 1,3,5-7)"
 
 #: ../plug-ins/common/postscript.c:3187
-#: ../plug-ins/common/sphere-designer.c:2642
+#: ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
 msgstr "Ebenen"
 
@@ -6170,77 +6170,77 @@ msgstr "Das Bild anhand eines Beispielbildes kolorieren"
 msgid "_Sample Colorize..."
 msgstr "_Kolorieren …"
 
-#: ../plug-ins/common/sample-colorize.c:1313
+#: ../plug-ins/common/sample-colorize.c:1316
 msgid "Sample Colorize"
 msgstr "Bild kolorieren"
 
-#: ../plug-ins/common/sample-colorize.c:1318
+#: ../plug-ins/common/sample-colorize.c:1321
 msgid "Get _Sample Colors"
 msgstr "_Musterfarbe auswählen"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample-colorize.c:1347
+#: ../plug-ins/common/sample-colorize.c:1350
 msgid "Destination:"
 msgstr "Ziel:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample-colorize.c:1363
+#: ../plug-ins/common/sample-colorize.c:1366
 msgid "Sample:"
 msgstr "Beispielbild:"
 
-#: ../plug-ins/common/sample-colorize.c:1373
+#: ../plug-ins/common/sample-colorize.c:1376
 msgid "From reverse gradient"
 msgstr "Aus invertiertem Farbverlauf"
 
-#: ../plug-ins/common/sample-colorize.c:1378
+#: ../plug-ins/common/sample-colorize.c:1381
 msgid "From gradient"
 msgstr "Aus Farbverlauf"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1399
-#: ../plug-ins/common/sample-colorize.c:1426
+#: ../plug-ins/common/sample-colorize.c:1402
+#: ../plug-ins/common/sample-colorize.c:1429
 msgid "Show selection"
 msgstr "Auswahl zeigen"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1410
-#: ../plug-ins/common/sample-colorize.c:1437
+#: ../plug-ins/common/sample-colorize.c:1413
+#: ../plug-ins/common/sample-colorize.c:1440
 msgid "Show color"
 msgstr "Farbe zeigen"
 
-#: ../plug-ins/common/sample-colorize.c:1550
+#: ../plug-ins/common/sample-colorize.c:1553
 msgid "Input levels:"
 msgstr "Quellwerte:"
 
-#: ../plug-ins/common/sample-colorize.c:1600
+#: ../plug-ins/common/sample-colorize.c:1603
 msgid "Output levels:"
 msgstr "Ausgabewerte:"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1640
+#: ../plug-ins/common/sample-colorize.c:1643
 msgid "Hold intensity"
 msgstr "Intensität erhalten"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1651
+#: ../plug-ins/common/sample-colorize.c:1654
 msgid "Original intensity"
 msgstr "Ursprüngliche Intensität"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1669
+#: ../plug-ins/common/sample-colorize.c:1672
 msgid "Use subcolors"
 msgstr "Zwischenfarben verwenden"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1680
+#: ../plug-ins/common/sample-colorize.c:1683
 msgid "Smooth samples"
 msgstr "Muster verweichen"
 
-#: ../plug-ins/common/sample-colorize.c:2652
+#: ../plug-ins/common/sample-colorize.c:2655
 msgid "Sample analyze"
 msgstr "Analyse der Quellfarben"
 
-#: ../plug-ins/common/sample-colorize.c:3030
+#: ../plug-ins/common/sample-colorize.c:3033
 msgid "Remap colorized"
 msgstr "Einfärben"
 
@@ -6731,7 +6731,7 @@ msgid "Spots"
 msgstr "Spots"
 
 #: ../plug-ins/common/sphere-designer.c:1742
-#: ../plug-ins/common/sphere-designer.c:2689
+#: ../plug-ins/common/sphere-designer.c:2690
 msgid "Texture"
 msgstr "Textur"
 
@@ -6740,7 +6740,7 @@ msgid "Bumpmap"
 msgstr "Bump-Map"
 
 #: ../plug-ins/common/sphere-designer.c:1746
-#: ../plug-ins/common/sphere-designer.c:2691
+#: ../plug-ins/common/sphere-designer.c:2692
 msgid "Light"
 msgstr "Licht"
 
@@ -6757,110 +6757,110 @@ msgstr "Datei öffnen"
 msgid "Save File"
 msgstr "Datei speichern"
 
-#: ../plug-ins/common/sphere-designer.c:2543
+#: ../plug-ins/common/sphere-designer.c:2544
 msgid "Sphere Designer"
 msgstr "Kugel-Designer"
 
-#: ../plug-ins/common/sphere-designer.c:2674
+#: ../plug-ins/common/sphere-designer.c:2675
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: ../plug-ins/common/sphere-designer.c:2690
+#: ../plug-ins/common/sphere-designer.c:2691
 msgid "Bump"
 msgstr "Beulen"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2698
+#: ../plug-ins/common/sphere-designer.c:2699
 #: ../plug-ins/lighting/lighting-ui.c:405
 msgid "Type:"
 msgstr "Typ:"
 
-#: ../plug-ins/common/sphere-designer.c:2717
+#: ../plug-ins/common/sphere-designer.c:2718
 msgid "Texture:"
 msgstr "Textur:"
 
-#: ../plug-ins/common/sphere-designer.c:2722
+#: ../plug-ins/common/sphere-designer.c:2723
 msgid "Colors:"
 msgstr "Farben:"
 
-#: ../plug-ins/common/sphere-designer.c:2725
-#: ../plug-ins/common/sphere-designer.c:2736
+#: ../plug-ins/common/sphere-designer.c:2726
+#: ../plug-ins/common/sphere-designer.c:2737
 msgid "Color Selection Dialog"
 msgstr "Farbauswahldialog"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2747
+#: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:194
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Skalierung:"
 
-#: ../plug-ins/common/sphere-designer.c:2755
+#: ../plug-ins/common/sphere-designer.c:2756
 msgid "Turbulence:"
 msgstr "Turbulenz:"
 
-#: ../plug-ins/common/sphere-designer.c:2762
+#: ../plug-ins/common/sphere-designer.c:2763
 msgid "Amount:"
 msgstr "Menge:"
 
-#: ../plug-ins/common/sphere-designer.c:2769
+#: ../plug-ins/common/sphere-designer.c:2770
 msgid "Exp.:"
 msgstr "Exp.:"
 
-#: ../plug-ins/common/sphere-designer.c:2776
+#: ../plug-ins/common/sphere-designer.c:2777
 msgid "Transformations"
 msgstr "Transformationen"
 
-#: ../plug-ins/common/sphere-designer.c:2792
+#: ../plug-ins/common/sphere-designer.c:2793
 #: ../plug-ins/map-object/map-object-ui.c:1143
 msgid "Scale X:"
 msgstr "X-Skalierung:"
 
-#: ../plug-ins/common/sphere-designer.c:2799
+#: ../plug-ins/common/sphere-designer.c:2800
 msgid "Scale Y:"
 msgstr "Y-Skalierung:"
 
-#: ../plug-ins/common/sphere-designer.c:2805
+#: ../plug-ins/common/sphere-designer.c:2806
 msgid "Scale Z:"
 msgstr "Z-Skalierung:"
 
-#: ../plug-ins/common/sphere-designer.c:2812
+#: ../plug-ins/common/sphere-designer.c:2813
 msgid "Rotate X:"
 msgstr "X drehen:"
 
-#: ../plug-ins/common/sphere-designer.c:2819
+#: ../plug-ins/common/sphere-designer.c:2820
 msgid "Rotate Y:"
 msgstr "Y drehen:"
 
-#: ../plug-ins/common/sphere-designer.c:2826
+#: ../plug-ins/common/sphere-designer.c:2827
 msgid "Rotate Z:"
 msgstr "Z drehen:"
 
-#: ../plug-ins/common/sphere-designer.c:2833
+#: ../plug-ins/common/sphere-designer.c:2834
 msgid "Position X:"
 msgstr "Position X:"
 
-#: ../plug-ins/common/sphere-designer.c:2840
+#: ../plug-ins/common/sphere-designer.c:2841
 msgid "Position Y:"
 msgstr "Position Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2847
+#: ../plug-ins/common/sphere-designer.c:2848
 msgid "Position Z:"
 msgstr "Position Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2962
+#: ../plug-ins/common/sphere-designer.c:2963
 msgid "Rendering sphere"
 msgstr "Kugel wird berechnet"
 
-#: ../plug-ins/common/sphere-designer.c:3012
+#: ../plug-ins/common/sphere-designer.c:3013
 msgid "Create an image of a textured sphere"
 msgstr "Ein Bild aus einer texturierten Kugel erzeugen"
 
-#: ../plug-ins/common/sphere-designer.c:3019
+#: ../plug-ins/common/sphere-designer.c:3020
 msgid "Sphere _Designer..."
 msgstr "_Kugel-Designer …"
 
-#: ../plug-ins/common/sphere-designer.c:3073
+#: ../plug-ins/common/sphere-designer.c:3074
 msgid "Region selected for plug-in is empty"
 msgstr "Der für das Plugin ausgewählte Bereich ist leer"
 
@@ -10134,51 +10134,69 @@ msgstr "Zufälliger Anfangswert:"
 msgid "_Second Flares"
 msgstr "_Zweites Flare"
 
-#: ../plug-ins/help-browser/dialog.c:197
+#: ../plug-ins/help-browser/dialog.c:176
+#: ../plug-ins/help-browser/dialog.c:1018
 msgid "GIMP Help Browser"
 msgstr "GIMP-Hilfe-Browser"
 
-#: ../plug-ins/help-browser/dialog.c:292
-msgid "Drag and drop this icon to a web browser"
-msgstr "Dieses Symbol auf ein Browser-Fenster ziehen und fallen lassen."
-
-#: ../plug-ins/help-browser/dialog.c:576
+#: ../plug-ins/help-browser/dialog.c:544
 msgid "Go back one page"
 msgstr "Eine Seite zurück gehen"
 
-#: ../plug-ins/help-browser/dialog.c:581
+#: ../plug-ins/help-browser/dialog.c:549
 msgid "Go forward one page"
 msgstr "Eine Seite weiter gehen"
 
-#: ../plug-ins/help-browser/dialog.c:586
-msgid "Go to the index page"
-msgstr "Zum Inhaltsverzeichnis"
+#: ../plug-ins/help-browser/dialog.c:554
+msgid "_Reload"
+msgstr "Neu _Laden"
 
-#: ../plug-ins/help-browser/dialog.c:591
-msgid "Reload"
-msgstr "Neu Laden"
-
-#: ../plug-ins/help-browser/dialog.c:591
+#: ../plug-ins/help-browser/dialog.c:554
 msgid "Reload current page"
 msgstr "Diese Seite erneut laden"
 
-#: ../plug-ins/help-browser/dialog.c:596
-msgid "Stop"
-msgstr "Stopp"
+#: ../plug-ins/help-browser/dialog.c:559
+msgid "_Stop"
+msgstr "_Stopp"
 
-#: ../plug-ins/help-browser/dialog.c:596
+#: ../plug-ins/help-browser/dialog.c:559
 msgid "Stop loading this page"
 msgstr "Laden dieser Seite stoppen"
 
-#: ../plug-ins/help-browser/dialog.c:631
+#: ../plug-ins/help-browser/dialog.c:564
+msgid "Go to the index page"
+msgstr "Zum Inhaltsverzeichnis"
+
+#: ../plug-ins/help-browser/dialog.c:569
+msgid "C_opy location"
+msgstr "_Adresse kopieren"
+
+#: ../plug-ins/help-browser/dialog.c:570
+msgid "Copy the location of this page to the clipboard"
+msgstr "Die Adresse dieser Seite in die Zwischenablage kopieren"
+
+#: ../plug-ins/help-browser/dialog.c:599
+msgid "S_how Index"
+msgstr "_Index zeigen"
+
+#: ../plug-ins/help-browser/dialog.c:600
+msgid "Toggle the visibility of the sidebar"
+msgstr ""
+
+#: ../plug-ins/help-browser/dialog.c:621
 msgid "Visit the GIMP documentation website"
 msgstr "Besuchen Sie die GIMP-Dokumentations-Internet-Seite"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/gimphelpdomain.c:181
+#, c-format
+msgid "The help pages for '%s' are not available."
+msgstr "Die Hilfe für »%s« ist nicht vorhanden."
+
+#: ../plug-ins/help/gimphelpdomain.c:187
 msgid "The GIMP user manual is not available."
 msgstr "Das GIMP Benutzerhandbuch ist nicht vorhanden."
 
-#: ../plug-ins/help/gimphelpdomain.c:181
+#: ../plug-ins/help/gimphelpdomain.c:188
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
@@ -10186,15 +10204,11 @@ msgstr ""
 "Bitte installieren Sie das separat erhältliche Hilfepaket oder verwenden Sie "
 "das Online-Benutzerhandbuch unter http://docs.gimp.org/de/."
 
-#: ../plug-ins/help/gimphelpdomain.c:190
-msgid "There is a problem with the GIMP user manual."
-msgstr "Es gibt ein Problem mit dem GIMP Benutzerhandbuch"
+#: ../plug-ins/help/gimphelpdomain.c:197
+msgid "Perhaps you are missing GIO backends and need to install GVFS?"
+msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:192
-msgid "Please check your installation."
-msgstr "Bitte überprüfen Sie Ihre Installation."
-
-#: ../plug-ins/help/gimphelpdomain.c:203
+#: ../plug-ins/help/gimphelpdomain.c:216
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hilfe-ID »%s« ist unbekannt"
@@ -10423,25 +10437,25 @@ msgstr "IFS (%d/%d) wird berechnet"
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2381
+#: ../plug-ins/ifs-compose/ifs-compose.c:2384
 msgid "Save failed"
 msgstr "Speichern fehlgeschlagen"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2462
-#: ../plug-ins/ifs-compose/ifs-compose.c:2475
+#: ../plug-ins/ifs-compose/ifs-compose.c:2465
+#: ../plug-ins/ifs-compose/ifs-compose.c:2478
 msgid "Open failed"
 msgstr "Öffnen fehlgeschlagen"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2470
+#: ../plug-ins/ifs-compose/ifs-compose.c:2473
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Die Datei »%s« scheint keine IFS-Fraktal-Datei zu sein."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2510
+#: ../plug-ins/ifs-compose/ifs-compose.c:2513
 msgid "Save as IFS Fractal file"
 msgstr "Als IFS-Fraktal-Datei speichern"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2547
+#: ../plug-ins/ifs-compose/ifs-compose.c:2550
 msgid "Open IFS Fractal file"
 msgstr "IFS-Fraktal-Datei öffnen"
 
@@ -12318,7 +12332,7 @@ msgid "Downloading %s of image data"
 msgstr "%s an Bilddaten werden heruntergeladen"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/uri/uri-backend-gvfs.c:223
+#: ../plug-ins/uri/uri-backend-gvfs.c:224
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:345
 #, c-format
@@ -12331,13 +12345,13 @@ msgid "Uploading %s of image data"
 msgstr "%s an Bilddaten werden hochgeladen"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
-#: ../plug-ins/uri/uri-backend-gvfs.c:226
+#: ../plug-ins/uri/uri-backend-gvfs.c:227
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "%s an Bilddaten wurden hochgeladen"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
-#: ../plug-ins/uri/uri-backend-gvfs.c:291
+#: ../plug-ins/uri/uri-backend-gvfs.c:292
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -12520,3 +12534,12 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT-Eigenschaften-Datei »%s« ist leer."
+
+#~ msgid "Drag and drop this icon to a web browser"
+#~ msgstr "Dieses Symbol auf ein Browser-Fenster ziehen und fallen lassen."
+
+#~ msgid "There is a problem with the GIMP user manual."
+#~ msgstr "Es gibt ein Problem mit dem GIMP Benutzerhandbuch"
+
+#~ msgid "Please check your installation."
+#~ msgstr "Bitte überprüfen Sie Ihre Installation."
