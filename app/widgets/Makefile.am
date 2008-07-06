@@ -64,6 +64,8 @@ libappwidgets_a_sources = \
 	gimpcolorpanel.h		\
 	gimpcolorselectorpalette.c	\
 	gimpcolorselectorpalette.h	\
+	gimpcombotagentry.c		\
+	gimpcombotagentry.h		\
 	gimpcomponenteditor.c		\
 	gimpcomponenteditor.h		\
 	gimpcontainerbox.c		\

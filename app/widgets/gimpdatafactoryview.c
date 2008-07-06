@@ -39,6 +39,7 @@
 #include "core/gimpfilteredcontainer.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpcombotagentry.h"
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
@@ -139,6 +140,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 {
   GimpContainerEditor *editor;
   gchar               *str;
+  GtkWidget           *tag_combo;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
@@ -231,11 +233,15 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
       gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
                           GIMP_TAG_ENTRY_MODE_QUERY);
   gtk_widget_show (factory_view->query_tag_entry);
+
+  tag_combo = gimp_combo_tag_entry_new (GIMP_TAG_ENTRY (factory_view->query_tag_entry));
+  gtk_widget_show (tag_combo);
+
   gtk_box_pack_start (GTK_BOX (editor->view),
-                      factory_view->query_tag_entry,
+                      tag_combo,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (editor->view),
-                         factory_view->query_tag_entry, 0);
+                         tag_combo, 0);
 
   factory_view->assign_tag_entry =
       gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
@@ -244,9 +250,12 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                      factory_view->selected_items);
   g_list_free (factory_view->selected_items);
   factory_view->selected_items = NULL;
-  gtk_widget_show (factory_view->assign_tag_entry);
+
+  tag_combo = gimp_combo_tag_entry_new (GIMP_TAG_ENTRY (factory_view->assign_tag_entry));
+  gtk_widget_show (tag_combo);
+
   gtk_box_pack_end (GTK_BOX (editor->view),
-                    factory_view->assign_tag_entry,
+                    tag_combo,
                     FALSE, FALSE, 0);
 
   return TRUE;
