@@ -1,5 +1,13 @@
 2008-07-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c (tool_has_size_dynamics): check
+	for tools derived from GimpPaintBrushTool just as we do in
+	tool_has_opacity_dynamics().
+	(tool_has_hardness_dynamics): enable hardness dynamics for the
+	eraser tool (bug #541691).
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c (gimp_help_query_user_manual_online):
 	command button labels should be capitalized in header style.
 
