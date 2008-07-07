@@ -12,7 +12,7 @@
 #include "gimp-composite-util.h"
 #include "gimp-composite-generic.h"
 
-int
+static int
 gimp_composite_regression(int iterations, int n_pixels)
 {
   GimpCompositeContext generic_ctx;

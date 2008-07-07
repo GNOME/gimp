@@ -13,7 +13,7 @@
 #include "gimp-composite-generic.h"
 #include "gimp-composite-altivec.h"
 
-int
+static int
 gimp_composite_altivec_test (int iterations, int n_pixels)
 {
 #if defined(COMPILE_ALTIVEC_IS_OKAY)

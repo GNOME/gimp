@@ -13,7 +13,7 @@
 #include "gimp-composite-generic.h"
 #include "gimp-composite-mmx.h"
 
-int
+static int
 gimp_composite_mmx_test (int iterations, int n_pixels)
 {
 #if defined(COMPILE_MMX_IS_OKAY)

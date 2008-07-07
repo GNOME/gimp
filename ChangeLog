@@ -1,5 +1,10 @@
 2008-07-07  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-*test.c: declared test functions as
+	static.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c: use GIMP_LOG() for debug output.
 
 2008-07-06  Sven Neumann  <sven@gimp.org>
