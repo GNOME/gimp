@@ -1,5 +1,9 @@
 2008-07-07  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/stock-user-manual-64.png: recreated from SVG.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-*test.c: declared test functions as
 	static.
 
