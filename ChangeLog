@@ -1,3 +1,7 @@
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c: use GIMP_LOG() for debug output.
+
 2008-07-06  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c: if the user asks for help and the user

@@ -125,12 +125,11 @@ gimp_help_show (Gimp         *gimp,
       if (help_id && strlen (help_id))
         idle_help->help_id = g_strdup (help_id);
 
-      g_idle_add ((GSourceFunc) gimp_idle_help, idle_help);
+      GIMP_LOG (HELP, "request for help-id '%s' from help-domain '%s'",
+                help_id     ? help_id      : "(null)",
+                help_domain ? help_domain  : "(null)");
 
-      if (gimp->be_verbose)
-        g_print ("HELP: request for help-id '%s' from help-domain '%s'\n",
-                 help_id     ? help_id      : "(null)",
-                 help_domain ? help_domain  : "(null)");
+      g_idle_add ((GSourceFunc) gimp_idle_help, idle_help);
     }
 }
 
@@ -197,10 +196,6 @@ gimp_idle_help (GimpIdleHelp *idle_help)
 
       return FALSE;
     }
-
-  GIMP_LOG (HELP, "Domain = '%s', ID = '%s'",
-            idle_help->help_domain ? idle_help->help_domain : "NULL",
-            idle_help->help_id     ? idle_help->help_id     : "NULL");
 
   if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
