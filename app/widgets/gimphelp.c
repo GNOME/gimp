@@ -574,7 +574,7 @@ gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
                                     GIMP_STOCK_USER_MANUAL,
                                     NULL, 0, NULL, NULL,
                                     GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
-                                    _("_Use online version"), GTK_RESPONSE_ACCEPT,
+                                    _("Use _Online Version"), GTK_RESPONSE_ACCEPT,
                                     NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

@@ -1,5 +1,10 @@
 2008-07-07  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c (gimp_help_query_user_manual_online):
+	command button labels should be capitalized in header style.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/stock-user-manual-64.png: recreated from SVG.
 
 2008-07-07  Sven Neumann  <sven@gimp.org>
