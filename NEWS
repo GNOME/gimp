@@ -7,6 +7,25 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes in GIMP 2.5.2
+=====================
+
+ - final touches on the combined Freehand/Polygon Select tool
+ - added a dockable dialog for managing Color tool settings
+ - prepared the code for changes in the upcoming GTK+ release
+ - improved popup scale button
+ - mark the center of rectangles/bounding rectangles during moves
+ - added dialog to query for using the online user manual
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Lars-Peter Clausen,
+  Jakub Steiner
+
+
+
 Changes in GIMP 2.5.1
 =====================
 
