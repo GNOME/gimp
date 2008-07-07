@@ -598,7 +598,7 @@ gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
                                      _("The GIMP user manual is not installed "
                                        "on your computer."));
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("You can either install the additional help "
+                             _("You may either install the additional help "
                                "package or change your preferences to use "
                                "the online version."));
 
