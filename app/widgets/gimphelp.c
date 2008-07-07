@@ -569,18 +569,25 @@ static void
 gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
 {
   GtkWidget *dialog;
+  GtkWidget *button;
 
   dialog = gimp_message_dialog_new (_("GIMP user manual is missing"),
                                     GIMP_STOCK_USER_MANUAL,
                                     NULL, 0, NULL, NULL,
-                                    GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
-                                    _("Use _Online Version"), GTK_RESPONSE_ACCEPT,
+                                    GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
                                     NULL);
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                  _("_Read Online"), GTK_RESPONSE_ACCEPT);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GIMP_STOCK_WEB,
+                                                  GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_ACCEPT,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
   if (idle_help->progress)
     {
