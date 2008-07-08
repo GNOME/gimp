@@ -500,11 +500,12 @@ static void
 select_index (const gchar *uri)
 {
   GtkTreeSelection *selection;
-  GtkTreeIter      *iter;
+  GtkTreeIter      *iter = NULL;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
 
-  iter = g_hash_table_lookup (uri_hash_table, uri);
+  if (uri)
+    iter = g_hash_table_lookup (uri_hash_table, uri);
 
   if (iter)
     {
@@ -1041,4 +1042,6 @@ load_finished (GtkWidget      *view,
   gtk_action_set_sensitive (action, FALSE);
 
   update_actions ();
+
+  select_index (webkit_web_frame_get_uri (frame));
 }

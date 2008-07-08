@@ -1,3 +1,8 @@
+2008-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (load_finished): select the
+	current URI in the index. Pointed out by Roman Joost.
+
 2008-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_query_user_manual_online):
