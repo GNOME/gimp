@@ -809,34 +809,40 @@ menu_callback (GtkWidget            *menu,
 
 /*  this function unrefs the items and frees the list  */
 static GtkWidget *
-build_menu (GList *list)
+build_menu (GList *items)
 {
   GtkWidget *menu;
+  GList     *list;
 
-  if (! list)
+  if (! items)
     return NULL;
 
   menu = gtk_menu_new ();
 
-  do
+  for (list = items; list; list = g_list_next (list))
     {
       WebKitWebHistoryItem *item = list->data;
-      GtkWidget            *menu_item;
 
-      menu_item = gtk_menu_item_new_with_label (webkit_web_history_item_get_title (item));
+      if (item)
+        {
+          GtkWidget   *menu_item;
+          const gchar *title;
 
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-      gtk_widget_show (menu_item);
+          title = webkit_web_history_item_get_title (item);
+          menu_item = gtk_menu_item_new_with_label (title);
 
-      g_signal_connect_object (menu_item, "activate",
-                               G_CALLBACK (menu_callback),
-                               item, 0);
+          gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+          gtk_widget_show (menu_item);
 
-      g_object_unref (item);
+          g_signal_connect_object (menu_item, "activate",
+                                   G_CALLBACK (menu_callback),
+                                   item, 0);
+
+          g_object_unref (item);
+        }
     }
-  while ((list = g_list_next (list)));
 
-  g_list_free (list);
+  g_list_free (items);
 
   return menu;
 }

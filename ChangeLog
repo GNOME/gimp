@@ -1,5 +1,9 @@
 2008-07-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help-browser/dialog.c (build_menu): plugged a memory leak.
+
+2008-07-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c (load_finished): select the
 	current URI in the index. Pointed out by Roman Joost.
 
