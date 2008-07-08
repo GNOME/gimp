@@ -1710,7 +1710,6 @@ static struct PyMethodDef gimp_methods[] = {
     {"personal_rc_file",        (PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
     {"context_push", (PyCFunction)pygimp_context_push, METH_NOARGS},
     {"context_pop", (PyCFunction)pygimp_context_pop, METH_NOARGS},
-    {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
     {"get_background",  (PyCFunction)pygimp_get_background,     METH_NOARGS},
     {"get_foreground",  (PyCFunction)pygimp_get_foreground,     METH_NOARGS},
     {"set_background",  (PyCFunction)pygimp_set_background,     METH_VARARGS},
