@@ -1,5 +1,11 @@
 2008-07-09  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c (gimp_display_shell_close):
+	if a save dialog is active for this image, then don't allow to
+	close it. Fixes bug #511965.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_progress_message):
 	don't accept a progress message if the status bar is already
 	showing a temporary message.
