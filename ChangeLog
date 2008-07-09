@@ -1,5 +1,11 @@
 2008-07-09  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_message):
+	don't accept a progress message if the status bar is already
+	showing a temporary message.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff-load.c (tiff_warning): send warnings about
 	unknown fields to stderr instead of using the log mechanism.
 
