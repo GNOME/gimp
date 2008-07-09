@@ -453,8 +453,11 @@ gimp_paint_tool_motion (GimpTool        *tool,
   core->cur_coords.x -= off_x;
   core->cur_coords.y -= off_y;
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
-                                          display);
+  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
+
+  /*  don't paint while the Shift key is pressed for line drawing  */
+  if (paint_tool->draw_line)
+    return;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -550,7 +553,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   gimp_tool_pop_status (tool, display);
 
-  if (tool->display          &&
+  if (tool->display            &&
       tool->display != display &&
       tool->display->image == display->image)
     {
