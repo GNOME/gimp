@@ -1,8 +1,3 @@
-2008-07-08  Martin Nordholts  <martinn@svn.gnome.org>
-
-	* gimpmodule.c (gimp_methods): Remove duplicate entry of
-	gimp.get_foreground().
-
 2006-04-28  Sven Neumann  <sven@gimp.org>
 
 	* doc/pygimp.sgml: applied documentation patch contributed by

@@ -3,6 +3,11 @@
 	* app/tools/gimppainttool.c (gimp_paint_tool_motion): don't paint
 	while the Shift key is pressed for line drawing (bug #529434).
 
+2008-07-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/pygimp/gimpmodule.c (gimp_methods): Remove duplicate
+	entry of gimp.get_foreground().
+
 2008-07-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help-browser/dialog.c (build_menu): plugged a memory leak.
