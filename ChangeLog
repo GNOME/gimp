@@ -1,5 +1,10 @@
 2008-07-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff-load.c (tiff_warning): send warnings about
+	unknown fields to stderr instead of using the log mechanism.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppainttool.c (gimp_paint_tool_motion): don't paint
 	while the Shift key is pressed for line drawing (bug #529434).
 
