@@ -35,16 +35,18 @@ typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;
 
 struct _GimpComboTagEntry
 {
-  GtkAlignment                  parent_instance;
+  GtkEventBox                   parent_instance;
 
   GtkWidget                    *tag_entry;
+  GtkWidget                    *alignment;
+  GtkWidget                    *popup;
   gint                          focus_width;
   gboolean                      interior_focus;
 };
 
 struct _GimpComboTagEntryClass
 {
-  GtkAlignmentClass             parent_class;
+  GtkEventBoxClass              parent_class;
 };
 
 

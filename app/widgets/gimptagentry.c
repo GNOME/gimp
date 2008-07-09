@@ -55,7 +55,6 @@ static void     gimp_tag_entry_item_set_tags   (GimpTagged        *entry,
 
 static void     gimp_tag_entry_load_selection  (GimpTagEntry      *tag_entry);
 
-static gchar ** gimp_tag_entry_parse_tags      (GimpTagEntry      *entry);
 
 static gchar*   gimp_tag_entry_get_completion_prefix     (GimpTagEntry         *entry);
 static GList *  gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
@@ -293,7 +292,7 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
     }
 }
 
-static gchar **
+gchar **
 gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
 {
   const gchar          *tag_str;

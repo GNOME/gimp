@@ -54,13 +54,13 @@ struct _GimpTagEntryClass
 };
 
 
-GType       gimp_tag_entry_get_type (void) G_GNUC_CONST;
+GType       gimp_tag_entry_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tag_entry_new      (GimpFilteredContainer     *tagged_container,
-                                     GimpTagEntryMode           mode);
+GtkWidget * gimp_tag_entry_new                (GimpFilteredContainer   *tagged_container,
+                                               GimpTagEntryMode         mode);
 
-void        gimp_tag_entry_set_selected_items (GimpTagEntry        *tag_entry,
-                                               GList               *items);
-
+void        gimp_tag_entry_set_selected_items (GimpTagEntry            *tag_entry,
+                                               GList                   *items);
+gchar **    gimp_tag_entry_parse_tags         (GimpTagEntry            *entry);
 
 #endif  /*  __GIMP_TAG_ENTRY_H__  */

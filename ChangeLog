@@ -1,3 +1,10 @@
+2008-07-09  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.[ch]
+	* app/widgets/gimptagentry.[ch]: tag manipulation using
+	GimpComboTagEntry. Allows selecting or deselecting tags with mouse or
+	other pointing device without using keyboard.
+
 2008-07-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/Makefile.am

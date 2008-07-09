@@ -37,17 +37,52 @@
 #include "gimpcombotagentry.h"
 
 
+#define GIMP_TAG_POPUP_MARGIN           5
+
+typedef struct
+{
+  GimpTag               tag;
+  GdkRectangle          bounds;
+} PopupTagData;
+
+typedef struct
+{
+  GimpComboTagEntry    *combo_entry;
+  PangoContext         *context;
+  PangoLayout          *layout;
+  PopupTagData         *tag_data;
+  gint                  tag_count;
+} PopupData;
+
+
 static gboolean gimp_combo_tag_entry_expose_event      (GtkWidget         *widget,
-                                                        GdkEventExpose    *event);
+                                                        GdkEventExpose    *event,
+                                                        GimpComboTagEntry *combo_entry);
 static void     gimp_combo_tag_entry_style_set         (GtkWidget         *widget,
                                                         GtkStyle          *previous_style,
                                                         GimpComboTagEntry *combo_entry);
 static gboolean gimp_combo_tag_entry_focus_in_out      (GtkWidget         *widget,
                                                         GdkEventFocus     *event,
                                                         GimpComboTagEntry *combo_entry);
+static gboolean gimp_combo_tag_entry_event             (GtkWidget         *widget,
+                                                        GdkEvent          *event,
+                                                        gpointer           user_data);
+static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry *combo_entry);
+static gboolean gimp_combo_tag_entry_popup_leave       (GtkWidget         *popup,
+                                                        GdkEventCrossing  *event,
+                                                        gpointer           user_data);
+static gboolean gimp_combo_tag_entry_popup_expose      (GtkWidget         *widget,
+                                                        GdkEventExpose    *event,
+                                                        PopupData         *popup_dta);
+static gboolean gimp_combo_tag_entry_popup_event       (GtkWidget          *widget,
+                                                        GdkEvent           *event,
+                                                        PopupData          *popup_data);
+static void     gimp_combo_tag_entry_toggle_tag        (GimpComboTagEntry     *combo_entry,
+                                                        const gchar           *tag);
 
+static void     popup_data_destroy                     (PopupData          *popup_data);
 
-G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GTK_TYPE_ALIGNMENT);
+G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GTK_TYPE_EVENT_BOX);
 
 #define parent_class gimp_combo_tag_entry_parent_class
 
@@ -55,18 +90,20 @@ G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GTK_TYPE_ALIGNMENT);
 static void
 gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
 {
-  GtkWidgetClass       *widget_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
-  widget_class->expose_event = gimp_combo_tag_entry_expose_event;
 }
 
 static void
 gimp_combo_tag_entry_init (GimpComboTagEntry *combo_entry)
 {
   combo_entry->tag_entry        = NULL;
+  combo_entry->alignment        = NULL;
+  combo_entry->popup            = NULL;
   combo_entry->focus_width      = 0;
   combo_entry->interior_focus   = FALSE;
+
+  g_signal_connect (combo_entry, "event",
+                    G_CALLBACK (gimp_combo_tag_entry_event),
+                    NULL);
 }
 
 GtkWidget *
@@ -77,9 +114,21 @@ gimp_combo_tag_entry_new (GimpTagEntry         *tag_entry)
   combo_entry = g_object_new (GIMP_TYPE_COMBO_TAG_ENTRY, NULL);
   combo_entry->tag_entry = GTK_WIDGET (tag_entry);
 
+  gtk_widget_add_events (GTK_WIDGET (combo_entry),
+                         GDK_BUTTON_PRESS_MASK);
+
+  combo_entry->alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+  gtk_widget_show (combo_entry->alignment);
+  gtk_container_add (GTK_CONTAINER (combo_entry), combo_entry->alignment);
+
+  g_signal_connect (combo_entry->alignment, "expose-event",
+                    G_CALLBACK (gimp_combo_tag_entry_expose_event),
+                    combo_entry);
+
   gtk_entry_set_has_frame (GTK_ENTRY (tag_entry), FALSE);
   gtk_widget_show (GTK_WIDGET (tag_entry));
-  gtk_container_add (GTK_CONTAINER (combo_entry), GTK_WIDGET (tag_entry));
+  gtk_container_add (GTK_CONTAINER (combo_entry->alignment),
+                     GTK_WIDGET (tag_entry));
 
   g_signal_connect (combo_entry->tag_entry, "style-set",
                     G_CALLBACK (gimp_combo_tag_entry_style_set),
@@ -96,17 +145,16 @@ gimp_combo_tag_entry_new (GimpTagEntry         *tag_entry)
 
 static gboolean
 gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
-                                   GdkEventExpose    *event)
+                                   GdkEventExpose    *event,
+                                   GimpComboTagEntry *combo_entry)
 {
   GdkGC                *gc;
-  GimpComboTagEntry    *combo_entry;
   GtkWidget            *tag_entry;
   GtkStyle             *style;
   GtkAllocation        *allocation;
   GdkRectangle          client_area;
   GdkRectangle          shadow_area;
 
-  combo_entry = GIMP_COMBO_TAG_ENTRY (widget);
   tag_entry   = combo_entry->tag_entry;
   style       = gtk_widget_get_style (tag_entry);
   allocation = &widget->allocation;
@@ -148,7 +196,7 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
                        client_area.width, client_area.width);
     }
 
-  gtk_paint_arrow (style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_arrow (style, widget->window, GTK_WIDGET_STATE (tag_entry),
                   GTK_SHADOW_NONE, NULL, NULL, NULL,
                   GTK_ARROW_DOWN, TRUE,
                   shadow_area.x + shadow_area.width - 14,
@@ -185,8 +233,9 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
       ymargin += combo_entry->focus_width;
     }
 
-  gtk_alignment_set_padding (GTK_ALIGNMENT (combo_entry),
+  gtk_alignment_set_padding (GTK_ALIGNMENT (combo_entry->alignment),
                              ymargin, ymargin, xmargin, xmargin + 16);
+
 }
 
 static gboolean
@@ -197,5 +246,315 @@ gimp_combo_tag_entry_focus_in_out (GtkWidget               *widget,
   gtk_widget_queue_draw (GTK_WIDGET (combo_entry));
 
   return FALSE;
+}
+
+static gboolean
+gimp_combo_tag_entry_event (GtkWidget          *widget,
+                            GdkEvent           *event,
+                            gpointer            user_data)
+{
+  GimpComboTagEntry            *combo_entry;
+
+  combo_entry = GIMP_COMBO_TAG_ENTRY (widget);
+
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton   *button_event;
+      gint              x;
+      gint              y;
+      guint             padding_top;
+      guint             padding_bottom;
+      guint             padding_left;
+      guint             padding_right;
+
+      button_event = (GdkEventButton *) event;
+      x = button_event->x;
+      y = button_event->y;
+
+      gtk_alignment_get_padding (GTK_ALIGNMENT (combo_entry->alignment),
+                                 &padding_top, &padding_bottom,
+                                 &padding_left, &padding_right);
+      if (x > widget->allocation.width - padding_right
+          && y > padding_top
+          && x < widget->allocation.width - padding_left
+          && y < widget->allocation.height - padding_bottom)
+        {
+          if (! combo_entry->popup)
+            {
+              gimp_combo_tag_entry_popup_list (combo_entry);
+            }
+          else
+            {
+              gtk_widget_destroy (combo_entry->popup);
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
+{
+  GtkWidget            *popup;
+  GtkWidget            *scrolled_window;
+  GtkWidget            *drawing_area;
+  gint                  x;
+  gint                  y;
+  gint                  width;
+  gint                  height;
+  PopupData            *popup_data;
+  GHashTable           *tag_hash;
+  GList                *tag_list;
+  GList                *tag_iterator;
+  gint                  i;
+  gint                  line_height;
+  gint                  space_width;
+  PangoAttrList        *attr_list;
+  PangoFontMetrics     *font_metrics;
+
+  popup = gtk_window_new (GTK_WINDOW_POPUP);
+  combo_entry->popup = popup;
+  gtk_window_set_screen (GTK_WINDOW (popup),
+                         gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
+
+  gdk_window_get_origin (GTK_WIDGET (combo_entry)->window, &x, &y);
+  y += GTK_WIDGET (combo_entry)->allocation.height;
+  gtk_window_move (GTK_WINDOW (popup), x, y);
+
+  drawing_area = gtk_drawing_area_new ();
+  gtk_widget_add_events (GTK_WIDGET (drawing_area),
+                         GDK_BUTTON_PRESS_MASK);
+
+  popup_data = g_malloc (sizeof (PopupData));
+  popup_data->combo_entry = combo_entry;
+  popup_data->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
+  popup_data->layout = pango_layout_new (popup_data->context);
+
+  attr_list = pango_attr_list_new ();
+  pango_attr_list_insert (attr_list,
+                          pango_attr_underline_new (PANGO_UNDERLINE_SINGLE));
+  pango_layout_set_attributes (popup_data->layout, attr_list);
+  pango_attr_list_unref (attr_list);
+
+  tag_hash = GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container->tag_ref_counts;
+  tag_list = g_hash_table_get_keys (tag_hash);
+  popup_data->tag_count = g_list_length (tag_list);
+  popup_data->tag_data = g_malloc (sizeof (PopupTagData) * popup_data->tag_count);
+  tag_iterator = tag_list;
+  x = GIMP_TAG_POPUP_MARGIN;
+  y = GIMP_TAG_POPUP_MARGIN;
+  font_metrics = pango_context_get_metrics (popup_data->context,
+                                            pango_context_get_font_description (popup_data->context),
+                                            NULL);
+  line_height = pango_font_metrics_get_ascent (font_metrics) +
+      pango_font_metrics_get_descent (font_metrics);
+  space_width = pango_font_metrics_get_approximate_char_width (font_metrics);
+  line_height /= PANGO_SCALE;
+  space_width /= PANGO_SCALE;
+  pango_font_metrics_unref (font_metrics);
+  width = GTK_WIDGET (combo_entry)->allocation.width;
+  height = 0;
+  for (i = 0; i < popup_data->tag_count; i++)
+    {
+      printf ("found tag: %s\n", g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
+      popup_data->tag_data[i].tag = GPOINTER_TO_UINT (tag_iterator->data);
+      pango_layout_set_text (popup_data->layout,
+                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
+      pango_layout_get_size (popup_data->layout,
+                             &popup_data->tag_data[i].bounds.width,
+                             &popup_data->tag_data[i].bounds.height);
+      popup_data->tag_data[i].bounds.width      /= PANGO_SCALE;
+      popup_data->tag_data[i].bounds.height     /= PANGO_SCALE;
+      if (popup_data->tag_data[i].bounds.width + x + GIMP_TAG_POPUP_MARGIN > width)
+        {
+          x = GIMP_TAG_POPUP_MARGIN;
+          y += line_height;
+        }
+
+      popup_data->tag_data[i].bounds.x = x;
+      popup_data->tag_data[i].bounds.y = y;
+
+      x += popup_data->tag_data[i].bounds.width + space_width;
+
+      tag_iterator = g_list_next (tag_iterator);
+    }
+  g_list_free (tag_list);
+  height = y + line_height + GIMP_TAG_POPUP_MARGIN;
+
+  drawing_area->requisition.width = width;
+  drawing_area->requisition.height = height;
+
+  gtk_widget_show (drawing_area);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
+                                         drawing_area);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+  gtk_widget_set_size_request (scrolled_window,
+                               width + scrolled_window->style->xthickness,
+                               height + scrolled_window->style->ythickness);
+  gtk_widget_show (scrolled_window);
+
+  gtk_container_add (GTK_CONTAINER (popup), scrolled_window);
+
+  gtk_widget_show (GTK_WIDGET (popup));
+
+  g_object_set_data_full (G_OBJECT (popup), "popup-data",
+                          popup_data, (GDestroyNotify) popup_data_destroy);
+
+  g_signal_connect (drawing_area, "expose-event",
+                    G_CALLBACK (gimp_combo_tag_entry_popup_expose),
+                    popup_data);
+  g_signal_connect (drawing_area, "event",
+                    G_CALLBACK (gimp_combo_tag_entry_popup_event),
+                    popup_data);
+  g_signal_connect (popup, "leave-notify-event",
+                    G_CALLBACK (gimp_combo_tag_entry_popup_leave),
+                    popup_data);
+}
+
+
+static gboolean
+gimp_combo_tag_entry_popup_leave (GtkWidget            *popup,
+                                  GdkEventCrossing     *event,
+                                  gpointer              user_data)
+{
+  if (event->detail != GDK_NOTIFY_INFERIOR)
+    {
+      gtk_widget_destroy (popup);
+    }
+  return FALSE;
+}
+
+static gboolean
+gimp_combo_tag_entry_popup_expose (GtkWidget           *widget,
+                                   GdkEventExpose      *event,
+                                   PopupData           *popup_data)
+{
+  PangoRenderer        *renderer;
+  gint                  i;
+
+  renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
+  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer),
+                                   widget->window);
+  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), widget->style->black_gc);
+
+  for (i = 0; i < popup_data->tag_count; i++)
+    {
+      pango_layout_set_text (popup_data->layout,
+                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
+      pango_renderer_draw_layout (renderer, popup_data->layout,
+                                  popup_data->tag_data[i].bounds.x * PANGO_SCALE,
+                                  popup_data->tag_data[i].bounds.y * PANGO_SCALE);
+    }
+
+  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
+  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), NULL);
+
+  return FALSE;
+}
+
+static gboolean
+gimp_combo_tag_entry_popup_event (GtkWidget          *widget,
+                                  GdkEvent           *event,
+                                  PopupData          *popup_data)
+{
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton   *button_event;
+      gint              x;
+      gint              y;
+      gint              i;
+      GdkRectangle     *bounds;
+      GimpTag           tag;
+
+      button_event = (GdkEventButton *) event;
+      x = button_event->x;
+      y = button_event->y;
+
+      for (i = 0; i < popup_data->tag_count; i++)
+        {
+          bounds = &popup_data->tag_data[i].bounds;
+          if (x >= bounds->x
+              && y >= bounds->y
+              && x < bounds->x + bounds->width
+              && y < bounds->y + bounds->height)
+            {
+              tag = popup_data->tag_data[i].tag;
+              gimp_combo_tag_entry_toggle_tag (popup_data->combo_entry,
+                                               g_quark_to_string (tag));
+              break;
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_combo_tag_entry_toggle_tag (GimpComboTagEntry     *combo_entry,
+                                 const gchar           *tag)
+{
+  gchar               **current_tags;
+  GString              *tag_str;
+  gint                  length;
+  gint                  i;
+  gboolean              tag_toggled_off = FALSE;
+
+  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (combo_entry->tag_entry));
+  tag_str = g_string_new ("");
+  length = g_strv_length (current_tags);
+  for (i = 0; i < length; i++)
+    {
+      if (! strcmp (current_tags[i], tag))
+        {
+          tag_toggled_off = TRUE;
+        }
+      else
+        {
+          if (tag_str->len)
+            {
+              g_string_append (tag_str, ", ");
+            }
+          g_string_append (tag_str, current_tags[i]);
+        }
+    }
+
+  if (! tag_toggled_off)
+    {
+      /* this tag was not selected yet,
+       * so it needs to be toggled on. */
+      if (tag_str->len)
+        {
+          g_string_append (tag_str, ", ");
+        }
+      g_string_append (tag_str, tag);
+    }
+
+  gtk_entry_set_text (GTK_ENTRY (combo_entry->tag_entry), tag_str->str);
+  gtk_editable_set_position (GTK_EDITABLE (combo_entry->tag_entry), -1);
+
+  g_string_free (tag_str, TRUE);
+  g_strfreev (current_tags);
+}
+
+static void
+popup_data_destroy (PopupData          *popup_data)
+{
+  popup_data->combo_entry->popup = NULL;
+
+  if (popup_data->layout)
+    {
+      g_object_unref (popup_data->layout);
+    }
+  if (popup_data->context)
+    {
+      g_object_unref (popup_data->context);
+    }
+
+  g_free (popup_data->tag_data);
+  g_free (popup_data);
 }
 
