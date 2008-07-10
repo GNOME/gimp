@@ -20,7 +20,7 @@
 #define __GIMP_DISPLAY_SHELL_SCROLL_H__
 
 
-gboolean   gimp_display_shell_scroll               (GimpDisplayShell *shell,
+void       gimp_display_shell_scroll               (GimpDisplayShell *shell,
                                                     gint              x_offset,
                                                     gint              y_offset);
 

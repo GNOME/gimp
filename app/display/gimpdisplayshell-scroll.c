@@ -35,7 +35,7 @@
 #include "gimpdisplayshell-scroll.h"
 
 
-gboolean
+void
 gimp_display_shell_scroll (GimpDisplayShell *shell,
                            gint              x_offset,
                            gint              y_offset)
@@ -43,7 +43,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
   gint old_x;
   gint old_y;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   old_x = shell->offset_x;
   old_y = shell->offset_y;
@@ -80,11 +80,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       gimp_display_shell_resume (shell);
 
       gimp_display_shell_scrolled (shell);
-
-      return TRUE;
     }
-
-  return FALSE;
 }
 
 void
