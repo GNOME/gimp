@@ -153,7 +153,7 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory->gimp                   = gimp;
   factory->container              = gimp_list_new (data_type, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (factory->container),
-			   (GCompareFunc) gimp_data_name_compare);
+			   (GCompareFunc) gimp_data_compare);
 
   factory->path_property_name     = g_strdup (path_property_name);
   factory->writable_property_name = g_strdup (writable_property_name);

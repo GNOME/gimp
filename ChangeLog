@@ -1,3 +1,13 @@
+2008-07-10  Sven Neumann  <sven@sven-sun.berlin.jpk.com>
+
+	* app/core/gimpdata.[ch]: renamed gimp_data_name_compare() to
+	gimp_data_compare() and changed it to keep the data in three
+	groups: internal, writable and system resource files. Inside the
+	groups the sorting order is alphabetical.
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_new): changed
+	accordingly.
+
 2008-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdatafactory.[ch] (gimp_data_factory_new): renamed
