@@ -1,5 +1,10 @@
 2008-07-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui):
+	changed expander title to "Brush Dynamics".
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c: some changes to the dialog that is shown
 	if the help browser is missing.
 

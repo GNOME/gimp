@@ -183,7 +183,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
 
       frame = gimp_prop_expander_new (config, "dynamics-expanded",
-                                      _("Dynamics sensitivity"));
+                                      _("Brush Dynamics"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
