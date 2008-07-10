@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-09 10:44+0200\n"
-"PO-Revision-Date: 2008-07-09 11:00+0200\n"
-"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
+"POT-Creation-Date: 2008-07-10 12:37+0200\n"
+"PO-Revision-Date: 2008-07-10 12:41+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1116,7 +1116,7 @@ msgstr "_Tipp des Tages"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Show some helpful tips on using GIMP"
-msgstr ""
+msgstr "Zeigt hilfreiche zur Benutzung von GIMP"
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_About"
@@ -8519,22 +8519,22 @@ msgstr "In der Bildansicht navigieren"
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
-#: ../app/display/gimpdisplayshell-close.c:135
-#: ../app/display/gimpdisplayshell-close.c:212
+#: ../app/display/gimpdisplayshell-close.c:147
+#: ../app/display/gimpdisplayshell-close.c:224
 #, c-format
 msgid "Close %s"
 msgstr "%s schließen"
 
-#: ../app/display/gimpdisplayshell-close.c:147
+#: ../app/display/gimpdisplayshell-close.c:159
 msgid "Do_n't Save"
 msgstr "_Nicht Speichern"
 
-#: ../app/display/gimpdisplayshell-close.c:219
+#: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Möchten Sie die Änderungen am Bild »%s« vor dem Schließen speichern?"
 
-#: ../app/display/gimpdisplayshell-close.c:242
+#: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -8546,7 +8546,7 @@ msgstr[1] ""
 "Wenn Sie dieses Bild nicht speichern, gehen die Änderungen der letzten %d "
 "Stunden verloren."
 
-#: ../app/display/gimpdisplayshell-close.c:252
+#: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -8561,7 +8561,7 @@ msgstr[1] ""
 "Wenn Sie dieses Bild nicht speichern, gehen die Änderungen der letzten "
 "Stunde und %d Minuten verloren."
 
-#: ../app/display/gimpdisplayshell-close.c:263
+#: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -10685,8 +10685,8 @@ msgid "Size"
 msgstr "Größe"
 
 #: ../app/tools/gimppaintoptions-gui.c:186
-msgid "Dynamics sensitivity"
-msgstr "Dynamikempfindlichkeit"
+msgid "Brush Dynamics"
+msgstr "Pinseldynamik"
 
 #: ../app/tools/gimppaintoptions-gui.c:204
 msgid "Velocity:"
@@ -12157,46 +12157,45 @@ msgstr "_Hintergrundfarbe:"
 msgid "Spacing"
 msgstr "Abstand"
 
-#: ../app/widgets/gimphelp.c:264
-msgid "Help browser not found"
-msgstr "Der Hilfe-Browser wurde nicht gefunden"
+#: ../app/widgets/gimphelp.c:267
+msgid "Help browser is missing"
+msgstr "Hilfe-Browser fehlt"
 
-#: ../app/widgets/gimphelp.c:265
-msgid "Could not find GIMP help browser."
-msgstr "Der Hilfe-Browser konnte nicht gefunden werden."
+#: ../app/widgets/gimphelp.c:268
+msgid "The GIMP help browser is not available."
+msgstr "Der GIMP-Hilfe-Browser ist nicht verfügbar."
 
-#: ../app/widgets/gimphelp.c:266
+#: ../app/widgets/gimphelp.c:269
 msgid ""
-"The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
-"Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation nicht vorhanden "
-"zu sein."
+"The GIMP help browser plug-in appears to be missing from your installation. "
+"You may instead use the web browser for reading the help pages."
+msgstr "Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation zu fehlen. Sie können stattdessen den Internet-Browser verwenden, um die Hilfe zu lesen."
 
-#: ../app/widgets/gimphelp.c:305
+#: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
 msgstr "Der Hilfe-Browser startet nicht"
 
-#: ../app/widgets/gimphelp.c:306
+#: ../app/widgets/gimphelp.c:311
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Der GIMP-Hilfe-Browser konnte nicht gestartet werden."
 
-#: ../app/widgets/gimphelp.c:333
-msgid "Use _web browser instead"
-msgstr "Stattdessen _Internet-Browser verwenden"
+#: ../app/widgets/gimphelp.c:338
+msgid "Use _Web Browser"
+msgstr "Internet-_Browser nutzen"
 
-#: ../app/widgets/gimphelp.c:574
+#: ../app/widgets/gimphelp.c:587
 msgid "GIMP user manual is missing"
 msgstr "Das GIMP-Benutzerhandbuch fehlt"
 
-#: ../app/widgets/gimphelp.c:581
+#: ../app/widgets/gimphelp.c:594
 msgid "_Read Online"
-msgstr ""
+msgstr "_Online lesen"
 
-#: ../app/widgets/gimphelp.c:605
+#: ../app/widgets/gimphelp.c:618
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "Das GIMP-Benutzerhandbuch ist nicht auf diesem Rechner installiert."
 
-#: ../app/widgets/gimphelp.c:608
+#: ../app/widgets/gimphelp.c:621
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -12897,19 +12896,3 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "_Use online version"
-#~ msgstr "_Online lesen"
-
-#~ msgid "Polygon Select"
-#~ msgstr "Polygonauswahl"
-
-#~ msgid "Polygon Select Tool: Select a hand-drawn polygon"
-#~ msgstr "Polygonauswahl: Ein Polygon freihand auswählen"
-
-#~ msgid "_Polygon Select"
-#~ msgstr "_Polygonauswahl"
-
-#~ msgctxt "command"
-#~ msgid "Polygon Select"
-#~ msgstr "Polygonauswahl"
