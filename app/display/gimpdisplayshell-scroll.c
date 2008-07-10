@@ -133,3 +133,27 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
       shell->offset_y = 0;
     }
 }
+
+/**
+ * gimp_display_shell_get_scaled_viewport:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the viewport in screen coordinates, with origin at (0, 0) in
+ * the image
+ **/
+void
+gimp_display_shell_get_scaled_viewport (GimpDisplayShell *shell,
+                                        gint             *x,
+                                        gint             *y,
+                                        gint             *w,
+                                        gint             *h)
+{
+  if (x) *x = -shell->disp_xoffset + shell->offset_x;
+  if (y) *y = -shell->disp_yoffset + shell->offset_y;
+  if (w) *w =  shell->disp_width;
+  if (h) *h =  shell->disp_height;
+}

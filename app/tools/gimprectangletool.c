@@ -41,6 +41,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scroll.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpdrawtool.h"
@@ -1847,15 +1848,14 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
     /* Calculate rectangles of the selection rectangle and the display shell,
      * with origin at (0, 0) of image, and in screen coordinate scale.
      */
-    gint    x1 =  pub_x1 * shell->scale_x;
-    gint    y1 =  pub_y1 * shell->scale_y;
-    gint    w1 = (pub_x2 - pub_x1) * shell->scale_x;
-    gint    h1 = (pub_y2 - pub_y1) * shell->scale_y;
+    gint x1 =  pub_x1 * shell->scale_x;
+    gint y1 =  pub_y1 * shell->scale_y;
+    gint w1 = (pub_x2 - pub_x1) * shell->scale_x;
+    gint h1 = (pub_y2 - pub_y1) * shell->scale_y;
 
-    gint    x2 = -shell->disp_xoffset + shell->offset_x;
-    gint    y2 = -shell->disp_yoffset + shell->offset_y;
-    gint    w2 =  shell->disp_width;
-    gint    h2 =  shell->disp_height;
+    gint x2, y2, w2, h2;
+
+    gimp_display_shell_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
 
     rectangle_width  = w1;
     rectangle_height = h1;

@@ -1,5 +1,15 @@
 2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_scaled_viewport): Extend the interface
+	with this function
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_handle_sizes): Forget anything we knew
+	about how to interpret the icky GimpDisplayShell offset variables
+
+2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]: Make
 	gimp_display_shell_scroll() a sane public interface for scrolling
 	and call the old version gimp_display_shell_scroll_private()
