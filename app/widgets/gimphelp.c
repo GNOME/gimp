@@ -71,8 +71,10 @@ struct _GimpIdleHelp
 static gboolean   gimp_idle_help          (GimpIdleHelp  *idle_help);
 static void       gimp_idle_help_free     (GimpIdleHelp  *idle_help);
 
-static gboolean   gimp_help_browser       (Gimp          *gimp);
+static gboolean   gimp_help_browser       (Gimp          *gimp,
+					   GimpProgress  *progress);
 static void       gimp_help_browser_error (Gimp          *gimp,
+					   GimpProgress  *progress,
                                            const gchar   *title,
                                            const gchar   *primary,
                                            const gchar   *text);
@@ -199,7 +201,7 @@ gimp_idle_help (GimpIdleHelp *idle_help)
 
   if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
-      if (gimp_help_browser (idle_help->gimp))
+      if (gimp_help_browser (idle_help->gimp, idle_help->progress))
         procedure_name = "extension-gimp-help-browser-temp";
     }
 
@@ -233,7 +235,8 @@ gimp_idle_help_free (GimpIdleHelp *idle_help)
 }
 
 static gboolean
-gimp_help_browser (Gimp *gimp)
+gimp_help_browser (Gimp         *gimp,
+		   GimpProgress *progress)
 {
   static gboolean  busy = FALSE;
   GimpProcedure   *procedure;
@@ -260,11 +263,13 @@ gimp_help_browser (Gimp *gimp)
 
       if (! procedure)
         {
-          gimp_help_browser_error (gimp,
-                                   _("Help browser not found"),
-                                   _("Could not find GIMP help browser."),
+          gimp_help_browser_error (gimp, progress,
+                                   _("Help browser is missing"),
+                                   _("The GIMP help browser is not available."),
                                    _("The GIMP help browser plug-in appears "
-                                     "to be missing from your installation."));
+                                     "to be missing from your installation. "
+				     "You may instead use the web browser "
+				     "for reading the help pages."));
           busy = FALSE;
 
           return FALSE;
@@ -289,7 +294,7 @@ gimp_help_browser (Gimp *gimp)
 
       if (error)
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
           g_error_free (error);
         }
@@ -301,7 +306,7 @@ gimp_help_browser (Gimp *gimp)
 
   if (! procedure)
     {
-      gimp_help_browser_error (gimp,
+      gimp_help_browser_error (gimp, progress,
                                _("Help browser doesn't start"),
                                _("Could not start the GIMP help browser "
                                  "plug-in."),
@@ -317,27 +322,35 @@ gimp_help_browser (Gimp *gimp)
 }
 
 static void
-gimp_help_browser_error (Gimp        *gimp,
-                         const gchar *title,
-                         const gchar *primary,
-                         const gchar *text)
+gimp_help_browser_error (Gimp         *gimp,
+			 GimpProgress *progress,
+                         const gchar  *title,
+                         const gchar  *primary,
+                         const gchar  *text)
 {
   GtkWidget *dialog;
 
-  dialog =
-    gimp_message_dialog_new (title, GIMP_STOCK_WARNING,
-                             NULL, 0,
-                             NULL, NULL,
+  dialog = gimp_message_dialog_new (title, GIMP_STOCK_USER_MANUAL,
+				    NULL, 0,
+				    NULL, NULL,
 
-                             GTK_STOCK_CANCEL,              GTK_RESPONSE_CANCEL,
-                             _("Use _web browser instead"), GTK_RESPONSE_OK,
+				    GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+				    _("Use _Web Browser"), GTK_RESPONSE_OK,
 
-                             NULL);
+				    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  if (progress)
+    {
+      guint32 window = gimp_progress_get_window (progress);
+
+      if (window)
+        gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+    }
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      primary);

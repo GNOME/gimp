@@ -1,5 +1,10 @@
 2008-07-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphelp.c: some changes to the dialog that is shown
+	if the help browser is missing.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
 	* docs/gimp.1.in: document the --help-gegl command-line option.
 
 2008-07-10  Sven Neumann  <sven@gimp.org>
