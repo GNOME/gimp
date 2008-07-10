@@ -1,3 +1,10 @@
+2008-07-10  Manish Singh  <yosh@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/pygimp/pygimp-pdb.c: Allow None to be passed for
+	PDB_DISPLAY.
+
 2008-07-03  Lars-Peter Clausen  <lars@metafoo.de>
 
 	Merged from trunk:
