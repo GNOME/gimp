@@ -144,12 +144,17 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
       /* warning messages go to the statusbar, if it's visible */
       if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (shell->statusbar)))
         break;
-      /* else fallthrough */
+      else
+	return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+				      severity, domain, message);
 
     case GIMP_MESSAGE_INFO:
-      /* info messages go to the statusbar, no matter if it's visible or not */
-      return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
-                                    severity, domain, message);
+      /* info messages go to the statusbar;
+       * if they are not handled there, they are swallowed
+       */
+      gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+			     severity, domain, message);
+      return TRUE;
     }
 
   return FALSE;

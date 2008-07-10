@@ -1,5 +1,11 @@
 2008-07-10  Sven Neumann  <sven@sven-sun.berlin.jpk.com>
 
+	* app/display/gimpdisplayshell-progress.c
+	(gimp_display_shell_progress_message): swallow informational
+	messages if there aren't handled by the statusbar.
+
+2008-07-10  Sven Neumann  <sven@sven-sun.berlin.jpk.com>
+
 	* app/core/gimpdata.[ch]: renamed gimp_data_name_compare() to
 	gimp_data_compare() and changed it to keep the data in three
 	groups: internal, writable and system resource files. Inside the
