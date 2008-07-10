@@ -84,7 +84,7 @@ GimpDataFactory * gimp_data_factory_new      (Gimp                             *
                                               const GimpDataFactoryLoaderEntry *loader_entries,
                                               gint                              n_loader_entries,
                                               GimpDataNewFunc                   new_func,
-                                              GimpDataGetStandardFunc           standard_func);
+                                              GimpDataGetStandardFunc           get_standard_func);
 
 void       gimp_data_factory_data_init         (GimpDataFactory  *factory,
                                                 gboolean          no_data);
