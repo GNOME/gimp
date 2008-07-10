@@ -31,14 +31,40 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
 
+/**
+ * gimp_display_shell_scroll:
+ * @shell:
+ * @x_offset_into_image: In image coordinates.
+ * @y_offset_into_image:
+ *
+ * When the viewport is smaller than the image, offset the viewport to
+ * the specified amount into the image.
+ *
+ * TODO: Behave in a sane way when zoomed out.
+ *
+ **/
+void gimp_display_shell_scroll (GimpDisplayShell *shell,
+                                gdouble           x_offset_into_image,
+                                gdouble           y_offset_into_image)
+{
+  gint x_offset;
+  gint y_offset;
+
+  x_offset = RINT (x_offset_into_image * shell->scale_x - shell->offset_x);
+  y_offset = RINT (y_offset_into_image * shell->scale_y - shell->offset_y);
+
+  gimp_display_shell_scroll_private (shell, x_offset, y_offset);
+}
+
 void
-gimp_display_shell_scroll (GimpDisplayShell *shell,
-                           gint              x_offset,
-                           gint              y_offset)
+gimp_display_shell_scroll_private (GimpDisplayShell *shell,
+                                   gint              x_offset,
+                                   gint              y_offset)
 {
   gint old_x;
   gint old_y;

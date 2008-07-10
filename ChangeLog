@@ -1,5 +1,20 @@
 2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]: Make
+	gimp_display_shell_scroll() a sane public interface for scrolling
+	and call the old version gimp_display_shell_scroll_private()
+
+	* app/display/gimpnavigationeditor.c: Adapt to the saner version
+	of gimp_display_shell_scroll()
+
+	* app/display/gimpdisplayshell-callbacks.c: 
+	* app/display/gimpdisplayshell-autoscroll.c: Use the private
+	version of gimp_display_shell_scroll()
+
+	* app/display/Makefile.am: Added gimpdisplayshell-private.h
+
+2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]: The return value of
 	gimp_display_shell_scroll() is not used anywhere, make it void.
 

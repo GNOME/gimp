@@ -67,6 +67,7 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-preview.h"
+#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
@@ -1093,11 +1094,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (shell->scrolling)
           {
-            gimp_display_shell_scroll (shell,
-                                       (shell->scroll_start_x - mevent->x -
-                                        shell->offset_x),
-                                       (shell->scroll_start_y - mevent->y -
-                                        shell->offset_y));
+            gimp_display_shell_scroll_private (shell,
+                                               (shell->scroll_start_x - mevent->x -
+                                                shell->offset_x),
+                                               (shell->scroll_start_y - mevent->y -
+                                                shell->offset_y));
           }
         else if (state & GDK_BUTTON1_MASK)
           {
@@ -1648,20 +1649,20 @@ static void
 gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell,
-                             0,
-                             gtk_adjustment_get_value (adjustment) -
-                             shell->offset_y);
+  gimp_display_shell_scroll_private (shell,
+                                     0,
+                                     gtk_adjustment_get_value (adjustment) -
+                                     shell->offset_y);
 }
 
 static void
 gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell,
-                             gtk_adjustment_get_value (adjustment) -
-                             shell->offset_x,
-                             0);
+  gimp_display_shell_scroll_private (shell,
+                                     gtk_adjustment_get_value (adjustment) -
+                                     shell->offset_x,
+                                     0);
 }
 
 static GdkModifierType

@@ -497,9 +497,7 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
     {
       GimpDisplayShell *shell = editor->shell;
 
-      gimp_display_shell_scroll (shell,
-                                 RINT (x * shell->scale_x - shell->offset_x),
-                                 RINT (y * shell->scale_y - shell->offset_y));
+      gimp_display_shell_scroll (shell, x, y);
     }
 }
 

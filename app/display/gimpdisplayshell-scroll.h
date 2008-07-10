@@ -21,8 +21,8 @@
 
 
 void       gimp_display_shell_scroll               (GimpDisplayShell *shell,
-                                                    gint              x_offset,
-                                                    gint              y_offset);
+                                                    gdouble           x_offset_into_image,
+                                                    gdouble           y_offset_into_image);
 
 void       gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
 
