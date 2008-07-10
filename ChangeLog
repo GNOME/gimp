@@ -1,10 +1,14 @@
-2008-07-10  Sven Neumann  <sven@sven-sun.berlin.jpk.com>
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: document the --help-gegl command-line option.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-progress.c
 	(gimp_display_shell_progress_message): swallow informational
 	messages if there aren't handled by the statusbar.
 
-2008-07-10  Sven Neumann  <sven@sven-sun.berlin.jpk.com>
+2008-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.[ch]: renamed gimp_data_name_compare() to
 	gimp_data_compare() and changed it to keep the data in three
