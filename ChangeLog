@@ -1,3 +1,7 @@
+2008-07-11  Tor Lillqvist  <tml@novell.com>
+
+	* app/app.c: Drop duplicated #include <gegl.h>.
+
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/selection-to-path/pxl-outline.c (append_coordinate):
