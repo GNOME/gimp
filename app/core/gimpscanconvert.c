@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"

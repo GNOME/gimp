@@ -1,5 +1,13 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpscanconvert.c
+	* app/vectors/gimpbezierstroke.c
+
+	* app/vectors/gimpvectors.c: include <cairo.h> instead of
+	<cairo/cairo.h>.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/unique.c
 	* app/gui/gui-unique.[ch]: merged code from bug #410439 to provide
 	builtin gimp-win-remote functionality for Win32. This is untested
