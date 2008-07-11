@@ -1,3 +1,9 @@
+2008-07-11  Tor Lillqvist  <tml@novell.com>
+
+	* app/unique.c (gimp_unique_filename_to_uri): Check GError being
+	unset correctly.
+	(gimp_unique_win32_open): Add missing semicolon.
+
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpscanconvert.c

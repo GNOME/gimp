@@ -69,7 +69,7 @@ gimp_unique_filename_to_uri (const gchar  *filename,
     {
       uri = g_strdup (filename);
     }
-  else if (! error)
+  else if (! *error)
     {
       if (! g_path_is_absolute (filename))
 	{
@@ -220,7 +220,7 @@ gimp_unique_win32_open (const gchar **filenames,
 
 #endif
 
-  return FALSE
+  return FALSE;
 }
 
 #endif  /* G_OS_WIN32 */
