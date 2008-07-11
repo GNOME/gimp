@@ -22,6 +22,8 @@ libappgui_a_SOURCES = \
 	gui.h			\
 	gui-message.c		\
 	gui-message.h		\
+	gui-unique.c		\
+	gui-unique.h		\
 	gui-vtable.c		\
 	gui-vtable.h		\
 	gui-types.h		\

@@ -22,12 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#if HAVE_DBUS_GLIB
-#define DBUS_API_SUBJECT_TO_CHANGE
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#endif
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
@@ -57,7 +51,6 @@
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
 #include "widgets/gimpcontrollers.h"
-#include "widgets/gimpdbusservice.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -80,6 +73,7 @@
 
 #include "color-history.h"
 #include "gui.h"
+#include "gui-unique.h"
 #include "gui-vtable.h"
 #include "session.h"
 #include "splash.h"
@@ -136,18 +130,11 @@ static void       gui_display_changed           (GimpContext        *context,
                                                  Gimp               *gimp);
 static void       gui_display_remove            (GimpContainer      *displays);
 
-static void       gui_dbus_service_init         (Gimp               *gimp);
-static void       gui_dbus_service_exit         (void);
-
 
 /*  private variables  */
 
-static Gimp            *the_gui_gimp     = NULL;
-static GimpUIManager   *image_ui_manager = NULL;
-
-#if HAVE_DBUS_GLIB
-static DBusGConnection *dbus_connection  = NULL;
-#endif
+static Gimp          *the_gui_gimp     = NULL;
+static GimpUIManager *image_ui_manager = NULL;
 
 
 /*  public functions  */
@@ -525,7 +512,7 @@ gui_restore_after_callback (Gimp               *gimp,
   display = GIMP_DISPLAY (gimp_create_display (gimp,
                                                NULL, GIMP_UNIT_PIXEL, 1.0));
 
-  gui_dbus_service_init (gimp);
+  gui_unique_init (gimp);
 
   if (gui_config->restore_session)
     session_restore (gimp);
@@ -559,9 +546,7 @@ gui_exit_callback (Gimp     *gimp,
 
   gimp->message_handler = GIMP_CONSOLE;
 
-#if HAVE_DBUS_GLIB
-  gui_dbus_service_exit ();
-#endif
+  gui_unique_exit ();
 
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
@@ -760,44 +745,4 @@ gui_display_remove (GimpContainer *displays)
 
   if (gimp_container_is_empty (displays))
     windows_show_toolbox ();
-}
-
-static void
-gui_dbus_service_init (Gimp *gimp)
-{
-#if HAVE_DBUS_GLIB
-  GError  *error = NULL;
-
-  g_return_if_fail (dbus_connection == NULL);
-
-  dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-
-  if (dbus_connection)
-    {
-      GObject *service = gimp_dbus_service_new (gimp);
-
-      dbus_bus_request_name (dbus_g_connection_get_connection (dbus_connection),
-                             GIMP_DBUS_SERVICE_NAME, 0, NULL);
-
-      dbus_g_connection_register_g_object (dbus_connection,
-                                           GIMP_DBUS_SERVICE_PATH, service);
-    }
-  else
-    {
-      g_printerr ("%s\n", error->message);
-      g_error_free (error);
-    }
-#endif
-}
-
-static void
-gui_dbus_service_exit (void)
-{
-#if HAVE_DBUS_GLIB
-  if (dbus_connection)
-    {
-      dbus_g_connection_unref (dbus_connection);
-      dbus_connection = NULL;
-    }
-#endif
 }
