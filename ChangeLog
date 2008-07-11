@@ -1,5 +1,9 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c (gimp_init_malloc): removed misleading comment.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/base/color-balance.c (color_balance_create_lookup_tables):
 	formatting, to improve readability.
 

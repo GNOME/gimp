@@ -607,9 +607,6 @@ gimp_init_malloc (void)
    *
    * An alternative to tuning this parameter would be to use
    * malloc_trim(), for example after releasing a large tile-manager.
-   *
-   * Another possibility is to switch to using GSlice as soon as this
-   * API is available in a stable GLib release.
    */
   mallopt (M_MMAP_THRESHOLD, TILE_WIDTH * TILE_HEIGHT);
 #endif
