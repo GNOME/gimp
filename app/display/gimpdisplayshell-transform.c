@@ -31,6 +31,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
 
@@ -48,6 +49,9 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
                                          GimpCoords       *image_coords,
                                          GimpCoords       *display_coords)
 {
+  gint scaled_image_viewport_offset_x;
+  gint scaled_image_viewport_offset_y;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (image_coords != NULL);
   g_return_if_fail (display_coords != NULL);
@@ -57,8 +61,12 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
   display_coords->x = SCALEX (shell, image_coords->x);
   display_coords->y = SCALEY (shell, image_coords->y);
 
-  display_coords->x += - shell->offset_x + shell->disp_xoffset;
-  display_coords->y += - shell->offset_y + shell->disp_yoffset;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+
+  display_coords->x += scaled_image_viewport_offset_x;
+  display_coords->y += scaled_image_viewport_offset_y;
 }
 
 /**
@@ -75,14 +83,21 @@ gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
                                            GimpCoords       *display_coords,
                                            GimpCoords       *image_coords)
 {
+  gint scaled_image_viewport_offset_x;
+  gint scaled_image_viewport_offset_y;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (display_coords != NULL);
   g_return_if_fail (image_coords != NULL);
 
   *image_coords = *display_coords;
 
-  image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
-  image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+
+  image_coords->x = display_coords->x - scaled_image_viewport_offset_x;
+  image_coords->y = display_coords->y - scaled_image_viewport_offset_y;
 
   image_coords->x /= shell->scale_x;
   image_coords->y /= shell->scale_y;
@@ -96,6 +111,8 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
                                  gint             *ny,
                                  gboolean          use_offsets)
 {
+  gint   scaled_image_viewport_offset_x;
+  gint   scaled_image_viewport_offset_y;
   gint   offset_x = 0;
   gint   offset_y = 0;
   gint64 tx;
@@ -119,8 +136,11 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
   tx = ((gint64) x * shell->x_src_dec) / shell->x_dest_inc;
   ty = ((gint64) y * shell->y_src_dec) / shell->y_dest_inc;
 
-  tx += shell->disp_xoffset - shell->offset_x;
-  ty += shell->disp_yoffset - shell->offset_y;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+  tx += scaled_image_viewport_offset_x;
+  ty += scaled_image_viewport_offset_y;
 
   /* The projected coordinates might overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
@@ -153,6 +173,8 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
                                    gboolean          round,
                                    gboolean          use_offsets)
 {
+  gint   scaled_image_viewport_offset_x;
+  gint   scaled_image_viewport_offset_y;
   gint   offset_x = 0;
   gint   offset_y = 0;
   gint64 tx;
@@ -170,8 +192,11 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  tx = (gint64) x + shell->offset_x - shell->disp_xoffset;
-  ty = (gint64) y + shell->offset_y - shell->disp_yoffset;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+  tx = (gint64) x - scaled_image_viewport_offset_x;
+  ty = (gint64) y - scaled_image_viewport_offset_y;
 
   tx *= shell->x_dest_inc;
   ty *= shell->y_dest_inc;
@@ -308,17 +333,22 @@ gimp_display_shell_transform_points (GimpDisplayShell  *shell,
 
   for (i = 0; i < n_points ; i++)
     {
+      gint    scaled_image_viewport_offset_x;
+      gint    scaled_image_viewport_offset_y;
       gdouble x = points[i].x + offset_x;
       gdouble y = points[i].y + offset_y;
 
       x = x * shell->x_src_dec / shell->x_dest_inc;
       y = y * shell->y_src_dec / shell->y_dest_inc;
 
+      gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                           &scaled_image_viewport_offset_x,
+                                                           &scaled_image_viewport_offset_y);
       coords[i].x = CLAMP (PROJ_ROUND64 (x) +
-                           shell->disp_xoffset - shell->offset_x,
+                           scaled_image_viewport_offset_x,
                            G_MININT, G_MAXINT);
       coords[i].y = CLAMP (PROJ_ROUND64 (y) +
-                           shell->disp_yoffset - shell->offset_y,
+                           scaled_image_viewport_offset_y,
                            G_MININT, G_MAXINT);
     }
 }
@@ -358,17 +388,22 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
 
   for (i = 0; i < n_coords ; i++)
     {
+      gint    scaled_image_viewport_offset_x;
+      gint    scaled_image_viewport_offset_y;
       gdouble x = image_coords[i].x + offset_x;
       gdouble y = image_coords[i].y + offset_y;
 
       x = x * shell->x_src_dec / shell->x_dest_inc;
       y = y * shell->y_src_dec / shell->y_dest_inc;
 
+      gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                           &scaled_image_viewport_offset_x,
+                                                           &scaled_image_viewport_offset_y);
       disp_coords[i].x = CLAMP (PROJ_ROUND64 (x) +
-                                shell->disp_xoffset - shell->offset_x,
+                                scaled_image_viewport_offset_x,
                                 G_MININT, G_MAXINT);
       disp_coords[i].y = CLAMP (PROJ_ROUND64 (y) +
-                                shell->disp_yoffset - shell->offset_y,
+                                scaled_image_viewport_offset_y,
                                 G_MININT, G_MAXINT);
     }
 }
@@ -408,6 +443,8 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs ; i++)
     {
+      gint   scaled_image_viewport_offset_x;
+      gint   scaled_image_viewport_offset_y;
       gint64 x1, x2;
       gint64 y1, y2;
 
@@ -421,13 +458,17 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
       y1 = (y1 * shell->y_src_dec) / shell->y_dest_inc;
       y2 = (y2 * shell->y_src_dec) / shell->y_dest_inc;
 
-      dest_segs[i].x1 = CLAMP (x1 + shell->disp_xoffset - shell->offset_x,
+      gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                           &scaled_image_viewport_offset_x,
+                                                           &scaled_image_viewport_offset_y);
+
+      dest_segs[i].x1 = CLAMP (x1 + scaled_image_viewport_offset_x,
                                G_MININT, G_MAXINT);
-      dest_segs[i].x2 = CLAMP (x2 + shell->disp_xoffset - shell->offset_x,
+      dest_segs[i].x2 = CLAMP (x2 + scaled_image_viewport_offset_x,
                                G_MININT, G_MAXINT);
-      dest_segs[i].y1 = CLAMP (y1 + shell->disp_yoffset - shell->offset_y,
+      dest_segs[i].y1 = CLAMP (y1 + scaled_image_viewport_offset_y,
                                G_MININT, G_MAXINT);
-      dest_segs[i].y2 = CLAMP (y2 + shell->disp_yoffset - shell->offset_y,
+      dest_segs[i].y2 = CLAMP (y2 + scaled_image_viewport_offset_y,
                                G_MININT, G_MAXINT);
     }
 }

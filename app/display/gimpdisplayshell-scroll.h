@@ -20,23 +20,27 @@
 #define __GIMP_DISPLAY_SHELL_SCROLL_H__
 
 
-void       gimp_display_shell_scroll               (GimpDisplayShell *shell,
-                                                    gdouble           x_offset_into_image,
-                                                    gdouble           y_offset_into_image);
+void       gimp_display_shell_scroll                           (GimpDisplayShell *shell,
+                                                                gdouble           x_offset_into_image,
+                                                                gdouble           y_offset_into_image);
 
-void       gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell);
+void       gimp_display_shell_scroll_clamp_offsets             (GimpDisplayShell *shell);
 
-void       gimp_display_shell_get_scaled_viewport  (GimpDisplayShell *shell,
-                                                    gint             *x,
-                                                    gint             *y,
-                                                    gint             *w,
-                                                    gint             *h);
+void       gimp_display_shell_get_scaled_viewport              (GimpDisplayShell *shell,
+                                                                gint             *x,
+                                                                gint             *y,
+                                                                gint             *w,
+                                                                gint             *h);
 
-void       gimp_display_shell_get_viewport         (GimpDisplayShell *shell,
-                                                    gdouble          *x,
-                                                    gdouble          *y,
-                                                    gdouble          *w,
-                                                    gdouble          *h);
+void       gimp_display_shell_get_viewport                     (GimpDisplayShell *shell,
+                                                                gdouble          *x,
+                                                                gdouble          *y,
+                                                                gdouble          *w,
+                                                                gdouble          *h);
+
+void       gimp_display_shell_get_scaled_image_viewport_offset (GimpDisplayShell *shell,
+                                                                gint             *x,
+                                                                gint             *y);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

@@ -1,5 +1,20 @@
 2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_scaled_image_viewport_offset): New
+	function to replace any occurance of
+
+	  shell->disp_[xy]offset - shell->offset_[xy]
+
+	that is just an implementation specific way of saying the same
+	thing.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-transform.c: Make the code less
+	implementation dependant by using the new function.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-draw.c
 	(gimp_display_shell_draw_area): Update comment.
 

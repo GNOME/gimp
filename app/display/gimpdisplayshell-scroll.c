@@ -184,3 +184,21 @@ gimp_display_shell_get_viewport (GimpDisplayShell *shell,
   if (w) *w = shell->disp_width  / shell->scale_x;
   if (h) *h = shell->disp_height / shell->scale_y;
 }
+
+/**
+ * gimp_display_shell_get_scaled_image_viewport_offset:
+ * @shell:
+ * @x:
+ * @y:
+ *
+ * Gets the scaled image offset in viewport coordinates
+ *
+ **/
+void
+gimp_display_shell_get_scaled_image_viewport_offset (GimpDisplayShell *shell,
+                                                     gint             *x,
+                                                     gint             *y)
+{
+  if (x) *x = shell->disp_xoffset - shell->offset_x;
+  if (y) *y = shell->disp_yoffset - shell->offset_y;
+}
