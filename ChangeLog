@@ -1,5 +1,10 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/selection-to-path/pxl-outline.c (append_coordinate):
+	use g_printerr() for debug output.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-unique.c: dispatch opening to an idle handler.
 
 2008-07-11  Sven Neumann  <sven@gimp.org>
