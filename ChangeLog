@@ -1,5 +1,9 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* docs/gimp.1.in: removed reference to gimp-remote(1).
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* docs/Makefile.am: made the build of gimp-remote optional and
 	disable it by default.

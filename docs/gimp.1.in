@@ -348,4 +348,3 @@ world.
 .SH "SEE ALSO"
 .BR gimprc (5),
 .BR gimptool (1),
-.BR gimp\-remote (1)
