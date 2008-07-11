@@ -16,6 +16,7 @@ Changes in GIMP 2.5.2
  - improved popup scale button
  - mark the center of rectangles/bounding rectangles during moves
  - added dialog to query for using the online user manual
+ - allow to map dynamics to hardness for the Eraser tool
  - provide gimp-remote functionality on Windows
  - disable the build and install of the gimp-remote tool by default
  - bug fixes and code cleanup
@@ -24,8 +25,7 @@ Changes in GIMP 2.5.2
 Contributors:
 
   Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
-  Lars-Peter Clausen, Tor Lillqvist, Jakub Steiner
-
+  Lars-Peter Clausen, Alexia Death, Tor Lillqvist, Jakub Steiner
 
 
 Changes in GIMP 2.5.1
