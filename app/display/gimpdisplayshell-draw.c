@@ -48,6 +48,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
 
