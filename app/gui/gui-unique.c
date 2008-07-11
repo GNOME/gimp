@@ -65,6 +65,8 @@ gui_unique_exit (void)
 {
 #if HAVE_DBUS_GLIB
   gui_dbus_service_exit ();
+#elif HAVE_DBUS_GLIB
+  gui_unique_win32_exit ();
 #endif
 }
 
