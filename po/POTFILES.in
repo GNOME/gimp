@@ -8,7 +8,6 @@ app/app.c
 app/batch.c
 app/main.c
 app/sanity.c
-app/unique.c
 app/version.c
 
 app/actions/actions.c

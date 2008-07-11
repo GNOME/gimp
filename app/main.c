@@ -41,6 +41,10 @@
 #include <io.h> /* get_osfhandle */
 #endif
 
+#ifndef GIMP_CONSOLE_COMPILATION
+#include <gdk/gdk.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
@@ -370,11 +374,18 @@ main (int    argc,
   if (no_interface)
     new_instance = TRUE;
 
-  if (! new_instance)
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (! new_instance && gimp_unique_open (filenames, as_new))
     {
-      if (gimp_unique_open (filenames, as_new, be_verbose))
-        return EXIT_SUCCESS;
+      if (be_verbose)
+	g_print ("%s\n",
+		 _("Another GIMP instance is already running."));
+
+      gdk_notify_startup_complete ();
+
+      return EXIT_SUCCESS;
     }
+#endif
 
   abort_message = sanity_check ();
   if (abort_message)

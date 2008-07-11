@@ -21,8 +21,7 @@
 
 
 gboolean gimp_unique_open (const gchar **filenames,
-			   gboolean      as_new,
-			   gboolean      be_verbose);
+			   gboolean      as_new);
 
 
 #endif /* __UNIQUE_H__ */

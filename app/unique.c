@@ -28,40 +28,31 @@
 #include <windows.h>
 #endif
 
-#ifndef GIMP_CONSOLE_COMPILATION
-#include <gdk/gdk.h>
-#endif
-
 #include "core/core-types.h"
 
 #include "file/file-utils.h"
 
 #include "unique.h"
 
-#include "gimp-intl.h"
-
 
 #if HAVE_DBUS_GLIB
 static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
-					 gboolean      as_new,
-					 gboolean      be_verbose);
+					 gboolean      as_new);
 #endif
 
 #ifdef G_OS_WIN32
 static gboolean  gimp_unique_win32_open (const gchar **filenames,
-					 gboolean      as_new,
-					 gboolean      be_verbose);
+					 gboolean      as_new);
 #endif
 
 gboolean
 gimp_unique_open (const gchar **filenames,
-		  gboolean      as_new,
-		  gboolean      be_verbose)
+		  gboolean      as_new)
 {
 #ifdef G_OS_WIN32
-  return gimp_unique_win32_open (filenames, as_new, be_verbose);
+  return gimp_unique_win32_open (filenames, as_new);
 #elif HAVE_DBUS_GLIB
-  return gimp_unique_dbus_open (filenames, as_new, be_verbose);
+  return gimp_unique_dbus_open (filenames, as_new);
 #else
   return FALSE;
 #endif
@@ -72,8 +63,7 @@ gimp_unique_open (const gchar **filenames,
 
 static gboolean
 gimp_unique_dbus_open (const gchar **filenames,
-		       gboolean      as_new,
-		       gboolean      be_verbose)
+		       gboolean      as_new)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
 
@@ -160,12 +150,6 @@ gimp_unique_dbus_open (const gchar **filenames,
 
       if (success)
         {
-          if (be_verbose)
-            g_print ("%s\n",
-                     _("Another GIMP instance is already running."));
-
-          gdk_notify_startup_complete ();
-
           return TRUE;
         }
       else if (! (error->domain == DBUS_GERROR &&
@@ -188,8 +172,7 @@ gimp_unique_dbus_open (const gchar **filenames,
 
 static gboolean
 gimp_unique_win32_open (const gchar **filenames,
-			gboolean      as_new,
-			gboolean      be_verbose)
+			gboolean      as_new)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
 
