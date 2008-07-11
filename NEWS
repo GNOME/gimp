@@ -16,13 +16,15 @@ Changes in GIMP 2.5.2
  - improved popup scale button
  - mark the center of rectangles/bounding rectangles during moves
  - added dialog to query for using the online user manual
+ - provide gimp-remote functionality on Windows
+ - disable the build and install of the gimp-remote tool by default
  - bug fixes and code cleanup
 
 
 Contributors:
 
-  Sven Neumann, Michael Natterer, Martin Nordholts, Lars-Peter Clausen,
-  Jakub Steiner
+  Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
+  Lars-Peter Clausen, Tor Lillqvist, Jakub Steiner
 
 
 
