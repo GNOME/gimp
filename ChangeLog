@@ -2,7 +2,6 @@
 
 	* app/core/gimpscanconvert.c
 	* app/vectors/gimpbezierstroke.c
-
 	* app/vectors/gimpvectors.c: include <cairo.h> instead of
 	<cairo/cairo.h>.
 
