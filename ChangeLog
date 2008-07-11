@@ -1,5 +1,15 @@
 2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-transform.c
+	(gimp_display_shell_transform_xy_f)
+	(gimp_display_shell_untransform_xy_f): We can use
+	gimp_display_shell_get_scaled_image_viewport_offset() here
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_scaled_viewport): and here.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_get_viewport)
 	(gimp_display_shell_get_scaled_viewport)

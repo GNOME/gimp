@@ -232,6 +232,8 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
                                     gdouble          *ny,
                                     gboolean          use_offsets)
 {
+  gint scaled_image_viewport_offset_x;
+  gint scaled_image_viewport_offset_y;
   gint offset_x = 0;
   gint offset_y = 0;
 
@@ -247,11 +249,12 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = SCALEX (shell, x + offset_x) - shell->offset_x;
-  *ny = SCALEY (shell, y + offset_y) - shell->offset_y;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
 
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
+  *nx = SCALEX (shell, x + offset_x) + scaled_image_viewport_offset_x;
+  *ny = SCALEY (shell, y + offset_y) + scaled_image_viewport_offset_y;
 }
 
 /**
@@ -276,6 +279,8 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
                                      gdouble          *ny,
                                      gboolean          use_offsets)
 {
+  gint scaled_image_viewport_offset_x;
+  gint scaled_image_viewport_offset_y;
   gint offset_x = 0;
   gint offset_y = 0;
 
@@ -294,8 +299,12 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = (x + shell->offset_x) / shell->scale_x - offset_x;
-  *ny = (y + shell->offset_y) / shell->scale_y - offset_y;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+
+  *nx = (x - scaled_image_viewport_offset_x) / shell->scale_x - offset_x;
+  *ny = (y - scaled_image_viewport_offset_y) / shell->scale_y - offset_y;
 }
 
 /**

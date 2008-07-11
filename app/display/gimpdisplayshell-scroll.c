@@ -153,10 +153,16 @@ gimp_display_shell_get_scaled_viewport (const GimpDisplayShell *shell,
                                         gint                   *w,
                                         gint                   *h)
 {
+  gint scaled_image_viewport_offset_x;
+  gint scaled_image_viewport_offset_y;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (x) *x = -shell->disp_xoffset + shell->offset_x;
-  if (y) *y = -shell->disp_yoffset + shell->offset_y;
+  gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                       &scaled_image_viewport_offset_x,
+                                                       &scaled_image_viewport_offset_y);
+  if (x) *x = -scaled_image_viewport_offset_x;
+  if (y) *y = -scaled_image_viewport_offset_y;
   if (w) *w =  shell->disp_width;
   if (h) *h =  shell->disp_height;
 }
