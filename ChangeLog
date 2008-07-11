@@ -1,5 +1,14 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am 
+	* app/unique.[ch]: new files containing functionality to check for
+	an already running instance of GIMP of notifying it about files to
+	open. Code split out of main.c.
+
+	* app/main.c: changed accordingly.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c (gimp_init_malloc): removed misleading comment.
 
 2008-07-11  Sven Neumann  <sven@gimp.org>

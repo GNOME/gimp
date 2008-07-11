@@ -41,14 +41,6 @@
 #include <io.h> /* get_osfhandle */
 #endif
 
-#if HAVE_DBUS_GLIB
-#include <dbus/dbus-glib.h>
-#endif
-
-#ifndef GIMP_CONSOLE_COMPILATION
-#include <gdk/gdk.h>
-#endif
-
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
@@ -59,14 +51,11 @@
 
 #include "core/gimp.h"
 
-#include "file/file-utils.h"
-
-#include "widgets/gimpdbusservice.h"
-
 #include "about.h"
 #include "app.h"
 #include "errors.h"
 #include "sanity.h"
+#include "unique.h"
 #include "units.h"
 #include "version.h"
 
@@ -112,11 +101,6 @@ static void      gimp_open_console_window     (void);
 #else
 #define gimp_open_console_window() /* as nothing */
 #endif
-
-static gboolean  gimp_dbus_open               (const gchar **filenames,
-                                               gboolean      as_new,
-                                               gboolean      be_verbose);
-
 
 static const gchar        *system_gimprc     = NULL;
 static const gchar        *user_gimprc       = NULL;
@@ -388,7 +372,7 @@ main (int    argc,
 
   if (! new_instance)
     {
-      if (gimp_dbus_open (filenames, as_new, be_verbose))
+      if (gimp_unique_open (filenames, as_new, be_verbose))
         return EXIT_SUCCESS;
     }
 
@@ -695,113 +679,3 @@ gimp_sigfatal_handler (gint sig_num)
 }
 
 #endif /* ! G_OS_WIN32 */
-
-
-static gboolean
-gimp_dbus_open (const gchar **filenames,
-                gboolean      as_new,
-                gboolean      be_verbose)
-{
-#ifndef GIMP_CONSOLE_COMPILATION
-#if HAVE_DBUS_GLIB
-  DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-
-  if (connection)
-    {
-      DBusGProxy *proxy;
-      gboolean    success;
-      GError     *error = NULL;
-
-      proxy = dbus_g_proxy_new_for_name (connection,
-                                         GIMP_DBUS_SERVICE_NAME,
-                                         GIMP_DBUS_SERVICE_PATH,
-                                         GIMP_DBUS_SERVICE_INTERFACE);
-
-      if (filenames)
-        {
-          const gchar *method = as_new ? "OpenAsNew" : "Open";
-          gchar       *cwd    = NULL;
-          gint         i;
-
-          for (i = 0, success = TRUE; filenames[i] && success; i++)
-            {
-              const gchar *filename = filenames[i];
-              gchar       *uri      = NULL;
-
-              if (file_utils_filename_is_uri (filename, &error))
-                {
-                  uri = g_strdup (filename);
-                }
-              else if (! error)
-                {
-                  if (! g_path_is_absolute (filename))
-                    {
-                      gchar *absolute;
-
-                      if (! cwd)
-                        cwd = g_get_current_dir ();
-
-                      absolute = g_build_filename (cwd, filename, NULL);
-
-                      uri = g_filename_to_uri (absolute, NULL, &error);
-
-                      g_free (absolute);
-                    }
-                  else
-                    {
-                      uri = g_filename_to_uri (filename, NULL, &error);
-                    }
-                }
-
-              if (uri)
-                {
-                  gboolean retval; /* ignored */
-
-                  success = dbus_g_proxy_call (proxy, method, &error,
-                                               G_TYPE_STRING, uri,
-                                               G_TYPE_INVALID,
-                                               G_TYPE_BOOLEAN, &retval,
-                                               G_TYPE_INVALID);
-                  g_free (uri);
-                }
-              else
-                {
-                  g_printerr ("conversion to uri failed: %s\n", error->message);
-                  g_clear_error (&error);
-                }
-            }
-
-          g_free (cwd);
-        }
-      else
-        {
-          success = dbus_g_proxy_call (proxy, "Activate", &error,
-                                       G_TYPE_INVALID, G_TYPE_INVALID);
-        }
-
-      g_object_unref (proxy);
-      dbus_g_connection_unref (connection);
-
-      if (success)
-        {
-          if (be_verbose)
-            g_print ("%s\n",
-                     _("Another GIMP instance is already running."));
-
-          gdk_notify_startup_complete ();
-
-          return TRUE;
-        }
-      else if (! (error->domain == DBUS_GERROR &&
-                  error->code == DBUS_GERROR_SERVICE_UNKNOWN))
-        {
-          g_print ("%s\n", error->message);
-        }
-
-      g_clear_error (&error);
-    }
-#endif
-#endif
-
-  return FALSE;
-}

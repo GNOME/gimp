@@ -64,6 +64,7 @@
 
 #include "gimp-intl.h"
 
+
 /*  local prototypes  */
 
 static void       app_init_update_none    (const gchar *text1,

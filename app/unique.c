@@ -1,0 +1,201 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <glib-object.h>
+
+#if HAVE_DBUS_GLIB
+#include <dbus/dbus-glib.h>
+#endif
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
+#ifndef GIMP_CONSOLE_COMPILATION
+#include <gdk/gdk.h>
+#endif
+
+#include "core/core-types.h"
+
+#include "file/file-utils.h"
+
+#include "unique.h"
+
+#include "gimp-intl.h"
+
+
+#if HAVE_DBUS_GLIB
+static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
+					 gboolean      as_new,
+					 gboolean      be_verbose);
+#endif
+
+#ifdef G_OS_WIN32
+static gboolean  gimp_unique_win32_open (const gchar **filenames,
+					 gboolean      as_new,
+					 gboolean      be_verbose);
+#endif
+
+gboolean
+gimp_unique_open (const gchar **filenames,
+		  gboolean      as_new,
+		  gboolean      be_verbose)
+{
+#ifdef G_OS_WIN32
+  return gimp_unique_win32_open (filenames, as_new, be_verbose);
+#elif HAVE_DBUS_GLIB
+  return gimp_unique_dbus_open (filenames, as_new, be_verbose);
+#else
+  return FALSE;
+#endif
+}
+
+
+#if HAVE_DBUS_GLIB
+
+static gboolean
+gimp_unique_dbus_open (const gchar **filenames,
+		       gboolean      as_new,
+		       gboolean      be_verbose)
+{
+#ifndef GIMP_CONSOLE_COMPILATION
+
+/*  for the DBus service names  */
+#include "widgets/gimpdbusservice.h"
+
+  DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+
+  if (connection)
+    {
+      DBusGProxy *proxy;
+      gboolean    success;
+      GError     *error = NULL;
+
+      proxy = dbus_g_proxy_new_for_name (connection,
+                                         GIMP_DBUS_SERVICE_NAME,
+                                         GIMP_DBUS_SERVICE_PATH,
+                                         GIMP_DBUS_SERVICE_INTERFACE);
+
+      if (filenames)
+        {
+          const gchar *method = as_new ? "OpenAsNew" : "Open";
+          gchar       *cwd    = NULL;
+          gint         i;
+
+          for (i = 0, success = TRUE; filenames[i] && success; i++)
+            {
+              const gchar *filename = filenames[i];
+              gchar       *uri      = NULL;
+
+              if (file_utils_filename_is_uri (filename, &error))
+                {
+                  uri = g_strdup (filename);
+                }
+              else if (! error)
+                {
+                  if (! g_path_is_absolute (filename))
+                    {
+                      gchar *absolute;
+
+                      if (! cwd)
+                        cwd = g_get_current_dir ();
+
+                      absolute = g_build_filename (cwd, filename, NULL);
+
+                      uri = g_filename_to_uri (absolute, NULL, &error);
+
+                      g_free (absolute);
+                    }
+                  else
+                    {
+                      uri = g_filename_to_uri (filename, NULL, &error);
+                    }
+                }
+
+              if (uri)
+                {
+                  gboolean retval; /* ignored */
+
+                  success = dbus_g_proxy_call (proxy, method, &error,
+                                               G_TYPE_STRING, uri,
+                                               G_TYPE_INVALID,
+                                               G_TYPE_BOOLEAN, &retval,
+                                               G_TYPE_INVALID);
+                  g_free (uri);
+                }
+              else
+                {
+                  g_printerr ("conversion to uri failed: %s\n", error->message);
+                  g_clear_error (&error);
+                }
+            }
+
+          g_free (cwd);
+        }
+      else
+        {
+          success = dbus_g_proxy_call (proxy, "Activate", &error,
+                                       G_TYPE_INVALID, G_TYPE_INVALID);
+        }
+
+      g_object_unref (proxy);
+      dbus_g_connection_unref (connection);
+
+      if (success)
+        {
+          if (be_verbose)
+            g_print ("%s\n",
+                     _("Another GIMP instance is already running."));
+
+          gdk_notify_startup_complete ();
+
+          return TRUE;
+        }
+      else if (! (error->domain == DBUS_GERROR &&
+                  error->code == DBUS_GERROR_SERVICE_UNKNOWN))
+        {
+          g_print ("%s\n", error->message);
+        }
+
+      g_clear_error (&error);
+    }
+#endif
+
+  return FALSE;
+}
+
+#endif  /* HAVE_DBUS_GLIB */
+
+
+#ifdef G_OS_WIN32
+
+static gboolean
+gimp_unique_win32_open (const gchar **filenames,
+			gboolean      as_new,
+			gboolean      be_verbose)
+{
+#ifndef GIMP_CONSOLE_COMPILATION
+
+#endif
+
+  return FALSE
+}
+
+#endif  /* G_OS_WIN32 */
