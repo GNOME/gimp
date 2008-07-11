@@ -288,9 +288,6 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
-
   if (use_offsets)
     {
       GimpItem *item;
