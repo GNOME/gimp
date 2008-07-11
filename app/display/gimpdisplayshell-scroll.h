@@ -32,5 +32,11 @@ void       gimp_display_shell_get_scaled_viewport  (GimpDisplayShell *shell,
                                                     gint             *w,
                                                     gint             *h);
 
+void       gimp_display_shell_get_viewport         (GimpDisplayShell *shell,
+                                                    gdouble          *x,
+                                                    gdouble          *y,
+                                                    gdouble          *w,
+                                                    gdouble          *h);
+
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

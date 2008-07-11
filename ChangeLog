@@ -1,6 +1,15 @@
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_viewport): Extend the interface with this
+	function.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_update_marker): Use it here.
+
 2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/display/gimpdisplayshell-scroll.[ch]:
+	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_get_scaled_viewport): Extend the interface
 	with this function
 

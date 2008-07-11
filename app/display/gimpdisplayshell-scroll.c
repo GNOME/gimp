@@ -144,6 +144,7 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
  *
  * Gets the viewport in screen coordinates, with origin at (0, 0) in
  * the image
+ *
  **/
 void
 gimp_display_shell_get_scaled_viewport (GimpDisplayShell *shell,
@@ -156,4 +157,30 @@ gimp_display_shell_get_scaled_viewport (GimpDisplayShell *shell,
   if (y) *y = -shell->disp_yoffset + shell->offset_y;
   if (w) *w =  shell->disp_width;
   if (h) *h =  shell->disp_height;
+}
+
+/**
+ * gimp_display_shell_get_viewport:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the viewport in image coordinates
+ *
+ * TODO: Handle when the viewport is zoomed out
+ *
+ **/
+void
+gimp_display_shell_get_viewport (GimpDisplayShell *shell,
+                                 gdouble          *x,
+                                 gdouble          *y,
+                                 gdouble          *w,
+                                 gdouble          *h)
+{
+  if (x) *x = shell->offset_x    / shell->scale_x;
+  if (y) *y = shell->offset_y    / shell->scale_y;
+  if (w) *w = shell->disp_width  / shell->scale_x;
+  if (h) *h = shell->disp_height / shell->scale_y;
 }
