@@ -130,7 +130,7 @@ static IdleOpenData *
 idle_open_data_new (const gchar *name,
 		    gboolean     as_new)
 {
-  IdleOpenData *data = g_slice_new (IdleOpenData, 1);
+  IdleOpenData *data = g_slice_new (IdleOpenData);
 
   data->name   = g_strdup (name);
   data->as_new = as_new;

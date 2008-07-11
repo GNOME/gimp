@@ -2,6 +2,9 @@
 
 	* app/app.c: Drop duplicated #include <gegl.h>.
 
+	* app/gui/gui-unique.c (idle_open_data_new): Fix g_slice_new()
+	use.
+
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/selection-to-path/pxl-outline.c (append_coordinate):
