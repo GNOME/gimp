@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 EXTRA_DIST = \
+	gimp-remote.1.in		\
 	Wilber.xcf.gz			\
 	Wilber.xcf.gz.README		\
 	Wilber_Construction_Kit.xcf.gz
@@ -8,7 +9,7 @@ EXTRA_DIST = \
 mans = \
 	gimp-$(GIMP_APP_VERSION).1	\
 	gimprc-$(GIMP_APP_VERSION).5	\
-	gimp-remote-$(GIMP_APP_VERSION).1
+	$(GIMP_REMOTE_MANPAGE)
 
 man_MANS = \
 	$(mans)				\

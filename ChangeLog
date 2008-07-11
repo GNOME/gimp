@@ -1,3 +1,11 @@
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* docs/Makefile.am: made the build of gimp-remote optional and
+	disable it by default.
+
+	* INSTALL: document the --enable-gimp-remote configure option.
+
 2008-07-11  Tor Lillqvist  <tml@novell.com>
 
 	* app/unique.c (gimp_unique_filename_to_uri): Check GError being
