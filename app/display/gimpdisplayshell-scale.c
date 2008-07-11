@@ -225,18 +225,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
     gimp_ruler_set_unit  (GIMP_RULER (shell->vrule),
                           shell->unit);
   }
-
-#if 0
-  g_printerr ("offset_x:     %d\n"
-              "offset_y:     %d\n"
-              "disp_width:   %d\n"
-              "disp_height:  %d\n"
-              "disp_xoffset: %d\n"
-              "disp_yoffset: %d\n\n",
-              shell->offset_x, shell->offset_y,
-              shell->disp_width, shell->disp_height,
-              shell->disp_xoffset, shell->disp_yoffset);
-#endif
 }
 
 /**

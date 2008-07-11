@@ -1,6 +1,11 @@
 2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Remove #if zeroed debug output.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_setup): Restructure the way the rulers
 	are setup, partly by making use of the new nifty
 	gimp_display_shell_get_scaled_image_viewport_offset().
