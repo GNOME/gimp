@@ -58,6 +58,35 @@ gimp_unique_open (const gchar **filenames,
 #endif
 }
 
+static gchar *
+gimp_unique_filename_to_uri (const gchar  *filename,
+			     const gchar  *cwd,
+			     GError      **error)
+{
+  gchar *uri = NULL;
+
+  if (file_utils_filename_is_uri (filename, error))
+    {
+      uri = g_strdup (filename);
+    }
+  else if (! error)
+    {
+      if (! g_path_is_absolute (filename))
+	{
+	  gchar *absolute = g_build_filename (cwd, filename, NULL);
+
+	  uri = g_filename_to_uri (absolute, NULL, error);
+
+	  g_free (absolute);
+	}
+      else
+	{
+	  uri = g_filename_to_uri (filename, NULL, error);
+	}
+    }
+
+  return uri;
+}
 
 #if HAVE_DBUS_GLIB
 
@@ -86,38 +115,13 @@ gimp_unique_dbus_open (const gchar **filenames,
       if (filenames)
         {
           const gchar *method = as_new ? "OpenAsNew" : "Open";
-          gchar       *cwd    = NULL;
+          gchar       *cwd    = g_get_current_dir ();
           gint         i;
 
           for (i = 0, success = TRUE; filenames[i] && success; i++)
             {
-              const gchar *filename = filenames[i];
-              gchar       *uri      = NULL;
-
-              if (file_utils_filename_is_uri (filename, &error))
-                {
-                  uri = g_strdup (filename);
-                }
-              else if (! error)
-                {
-                  if (! g_path_is_absolute (filename))
-                    {
-                      gchar *absolute;
-
-                      if (! cwd)
-                        cwd = g_get_current_dir ();
-
-                      absolute = g_build_filename (cwd, filename, NULL);
-
-                      uri = g_filename_to_uri (absolute, NULL, &error);
-
-                      g_free (absolute);
-                    }
-                  else
-                    {
-                      uri = g_filename_to_uri (filename, NULL, &error);
-                    }
-                }
+	      gchar *uri = gimp_unique_filename_to_uri (filenames[i],
+							cwd, &error);
 
               if (uri)
                 {
@@ -175,6 +179,44 @@ gimp_unique_win32_open (const gchar **filenames,
 			gboolean      as_new)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
+
+/*  for the proxy window names  */
+#include "gui/gui-unique.h"
+
+  HWND  window_handle = FindWindowW (GIMP_UNIQUE_WIN32_WINDOW_CLASS,
+				     GIMP_UNIQUE_WIN32_WINDOW_NAME);
+
+  if (window_handle)
+    {
+      COPYDATASTRUCT  copydata;
+      gchar          *cwd   = g_get_current_dir ();
+      GError         *error = NULL;
+      gint            i;
+	
+      for (i = 0; filenames[i]; i++)
+	{
+	  gchar *uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
+
+	  if (uri)
+	    {
+	      copydata.lpData = uri;
+	      copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
+	      copydata.dwData = (long) as_new;
+
+	      SendMessage (window_handle,
+			   WM_COPYDATA, window_handle, &copydata);
+	    }
+	  else
+	    {
+	      g_printerr ("conversion to uri failed: %s\n", error->message);
+	      g_clear_error (&error);
+	    }
+	}
+
+      g_free (cwd);
+
+      return TRUE;
+    }
 
 #endif
 

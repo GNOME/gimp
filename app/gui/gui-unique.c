@@ -43,7 +43,10 @@ static DBusGConnection *dbus_connection  = NULL;
 #endif
 
 #ifdef G_OS_WIN32
-static void gui_unique_win32_init (Gimp *gimp);
+static void gui_unique_win32_init  (Gimp *gimp);
+static void gui_unique_win32_exit  (void);
+
+static Gimp            *unique_gimp      = NULL;
 #endif
 
 
@@ -73,6 +76,7 @@ gui_dbus_service_init (Gimp *gimp)
 {
   GError  *error = NULL;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (dbus_connection == NULL);
 
   dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
@@ -109,10 +113,63 @@ gui_dbus_service_exit (void)
 
 #ifdef G_OS_WIN32
 
+LRESULT CALLBACK
+gui_unique_win32_message_handler (HWND   hWnd,
+				  UINT   uMsg,
+				  WPARAM wParam,
+				  LPARAM lParam)
+{
+  switch (uMsg)
+    {
+    case WM_COPYDATA:
+      {
+	COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
+
+	if (copydata->cbData > 0)
+	  file_open_from_command_line (unique_gimp,
+				       copydata->lpData,
+				       copydata->dwData != 0);
+      }
+      return TRUE;
+
+    default:
+      return DefWindowProcW (hWnd, uMsg, wParam, lParam);
+    }
+}
+
 static void
 gui_unique_win32_init (Gimp *gimp)
 {
+  WNDCLASSW wc;
+  HWND      window_handle;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (unique_gimp == NULL);
+
+  unique_gimp = gimp;
+
+  /* register window class for proxy window */
+  memset (&wc, 0, sizeof (wc));
+
+  wc.hInstance     = GetModuleHandle (NULL);
+  wc.lpfnWndProc   = gui_unique_win32_message_handler;
+  wc.lpszClassName = GIMP_UNIQUE_WIN32_WINDOW_CLASS;
+
+  RegisterClassW (&wc);
+
+  CreateWindowExW (0,
+		   GIMP_UNIQUE_WIN32_WINDOW_CLASS,
+		   GIMP_UNIQUE_WIN32_WINDOW_NAME,
+		   WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
 }
+
+static void
+gui_unique_win32_exit (void)
+{
+  g_return_if_fail (GIMP_IS_GIMP (unique_gimp));
+
+  unique_gimp = NULL;
+}
+
 
 #endif  /* G_OS_WIN32 */

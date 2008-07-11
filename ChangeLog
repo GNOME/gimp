@@ -1,5 +1,12 @@
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/unique.c
+	* app/gui/gui-unique.[ch]: merged code from bug #410439 to provide
+	builtin gimp-win-remote functionality for Win32. This is untested
+	and most probably doesn't even compile.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/gui-unique.[ch]: new files providing functionality to
 	ensure a unique GUI instance of GIMP. Code split out of gui.c.
