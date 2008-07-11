@@ -1,6 +1,6 @@
 2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_get_scaled_image_viewport_offset): New
 	function to replace any occurance of
 
