@@ -20,6 +20,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #if HAVE_DBUS_GLIB
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/dbus-glib.h>
@@ -143,7 +147,6 @@ static void
 gui_unique_win32_init (Gimp *gimp)
 {
   WNDCLASSW wc;
-  HWND      window_handle;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (unique_gimp == NULL);

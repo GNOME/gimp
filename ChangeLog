@@ -4,6 +4,9 @@
 	unset correctly.
 	(gimp_unique_win32_open): Add missing semicolon.
 
+	* app/gui/gui-unique.c: Include <windows.h> on Windows.
+	(gui_unique_win32_init): Drop unused variable.
+
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpscanconvert.c
