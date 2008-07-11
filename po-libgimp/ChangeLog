@@ -1,3 +1,9 @@
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fix intltool warning by adding gimpcpuaccel.c
+
+	* de.po: updated german translation.
+
 2008-07-03  Yannig Marchegay <yannig@marchegay.org>
 
 	* oc.po: Updated Occitan translation.
