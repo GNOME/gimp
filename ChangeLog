@@ -1,3 +1,8 @@
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): Update comment.
+
 2008-07-11  Tor Lillqvist  <tml@novell.com>
 
 	* app/app.c: Drop duplicated #include <gegl.h>.

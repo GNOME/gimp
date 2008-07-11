@@ -533,11 +533,9 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   level_width  = tile_manager_width (tiles);
   level_height = tile_manager_height (tiles);
 
-  /*  the image's size in display coordinates  */
+  /*  the size and position of the image viewport coordinates  */
   sx = shell->disp_xoffset - shell->offset_x;
   sy = shell->disp_yoffset - shell->offset_y;
-
-  /* SCALE[XY] with pyramid level taken into account. */
   sw = PROJ_ROUND (level_width  * (shell->scale_x * (1 << level)));
   sh = PROJ_ROUND (level_height * (shell->scale_y * (1 << level)));
 
