@@ -1,3 +1,9 @@
+2008-07-11  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.c: improved usability on closing tag
+	popup window. It now can be closed by clicking anywhere outside the
+	popup window.
+
 2008-07-09  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.[ch]

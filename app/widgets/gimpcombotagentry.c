@@ -68,9 +68,6 @@ static gboolean gimp_combo_tag_entry_event             (GtkWidget         *widge
                                                         GdkEvent          *event,
                                                         gpointer           user_data);
 static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry *combo_entry);
-static gboolean gimp_combo_tag_entry_popup_leave       (GtkWidget         *popup,
-                                                        GdkEventCrossing  *event,
-                                                        gpointer           user_data);
 static gboolean gimp_combo_tag_entry_popup_expose      (GtkWidget         *widget,
                                                         GdkEventExpose    *event,
                                                         PopupData         *popup_dta);
@@ -312,6 +309,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   gint                  space_width;
   PangoAttrList        *attr_list;
   PangoFontMetrics     *font_metrics;
+  GdkGrabStatus         grab_status;
 
   popup = gtk_window_new (GTK_WINDOW_POPUP);
   combo_entry->popup = popup;
@@ -410,22 +408,16 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   g_signal_connect (drawing_area, "event",
                     G_CALLBACK (gimp_combo_tag_entry_popup_event),
                     popup_data);
-  g_signal_connect (popup, "leave-notify-event",
-                    G_CALLBACK (gimp_combo_tag_entry_popup_leave),
-                    popup_data);
-}
 
-
-static gboolean
-gimp_combo_tag_entry_popup_leave (GtkWidget            *popup,
-                                  GdkEventCrossing     *event,
-                                  gpointer              user_data)
-{
-  if (event->detail != GDK_NOTIFY_INFERIOR)
+  grab_status = gdk_pointer_grab (drawing_area->window, FALSE,
+                                  GDK_BUTTON_PRESS_MASK, NULL, NULL,
+                                  GDK_CURRENT_TIME);
+  if (grab_status != GDK_GRAB_SUCCESS)
     {
+      /* pointer grab must be attained otherwise user would have
+       * problems closing the popup window. */
       gtk_widget_destroy (popup);
     }
-  return FALSE;
 }
 
 static gboolean
@@ -474,20 +466,36 @@ gimp_combo_tag_entry_popup_event (GtkWidget          *widget,
       x = button_event->x;
       y = button_event->y;
 
-      for (i = 0; i < popup_data->tag_count; i++)
+      if (x < 0
+          || y < 0
+          || x > widget->allocation.width
+          || y > widget->allocation.height)
         {
-          bounds = &popup_data->tag_data[i].bounds;
-          if (x >= bounds->x
-              && y >= bounds->y
-              && x < bounds->x + bounds->width
-              && y < bounds->y + bounds->height)
+          /* user has clicked outside the popup area,
+           * which means it should be hidden. */
+          gtk_widget_destroy (popup_data->combo_entry->popup);
+        }
+      else
+        {
+          for (i = 0; i < popup_data->tag_count; i++)
             {
-              tag = popup_data->tag_data[i].tag;
-              gimp_combo_tag_entry_toggle_tag (popup_data->combo_entry,
-                                               g_quark_to_string (tag));
-              break;
+              bounds = &popup_data->tag_data[i].bounds;
+              if (x >= bounds->x
+                  && y >= bounds->y
+                  && x < bounds->x + bounds->width
+                  && y < bounds->y + bounds->height)
+                {
+                  tag = popup_data->tag_data[i].tag;
+                  gimp_combo_tag_entry_toggle_tag (popup_data->combo_entry,
+                                                   g_quark_to_string (tag));
+                  break;
+                }
             }
         }
+    }
+  else if (event->type == GDK_GRAB_BROKEN)
+    {
+      gtk_widget_destroy (popup_data->combo_entry->popup);
     }
 
   return FALSE;
