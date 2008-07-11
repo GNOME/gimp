@@ -89,9 +89,6 @@ void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  gdouble    lower;
-  gdouble    upper;
-  gdouble    max_size;
   gfloat     sx, sy;
   gint       image_width;
   gint       image_height;
@@ -135,87 +132,99 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_adjustment_changed (shell->hsbdata);
   gtk_adjustment_changed (shell->vsbdata);
 
-  /* horizontal ruler */
+  /* Setup rulers */
+  {
+    gdouble horizontal_lower;
+    gdouble horizontal_upper;
+    gdouble horizontal_max_size;
+    gdouble vertical_lower;
+    gdouble vertical_upper;
+    gdouble vertical_max_size;
+    gint    scaled_image_viewport_offset_x;
+    gint    scaled_image_viewport_offset_y;
 
-  lower = 0;
 
-  if (image)
-    {
-      upper    = img2real (shell, TRUE, FUNSCALEX (shell, shell->disp_width));
-      max_size = img2real (shell, TRUE, MAX (image_width, image_height));
-    }
-  else
-    {
-      upper    = image_width;
-      max_size = MAX (image_width, image_height);
-    }
+    /* Initialize values */
 
-  if (image && sx < shell->disp_width)
-    {
-      shell->disp_xoffset = (shell->disp_width - sx) / 2;
+    horizontal_lower = 0;
+    vertical_lower   = 0;
 
-      lower -= img2real (shell, TRUE,
-                         FUNSCALEX (shell, (gdouble) shell->disp_xoffset));
-      upper -= img2real (shell, TRUE,
-                         FUNSCALEX (shell, (gdouble) shell->disp_xoffset));
-    }
-  else if (image)
-    {
-      shell->disp_xoffset = 0;
+    if (image)
+      {
+        horizontal_upper    = img2real (shell, TRUE, FUNSCALEX (shell, shell->disp_width));
+        horizontal_max_size = img2real (shell, TRUE, MAX (image_width, image_height));
 
-      lower += img2real (shell, TRUE,
-                         FUNSCALEX (shell, (gdouble) shell->offset_x));
-      upper += img2real (shell, TRUE,
-                         FUNSCALEX (shell, (gdouble) shell->offset_x));
-    }
-  else
-    {
-      shell->disp_xoffset = 0;
-    }
+        vertical_upper      = img2real (shell, FALSE, FUNSCALEY (shell, shell->disp_height));
+        vertical_max_size   = img2real (shell, FALSE, MAX (image_width, image_height));
+      }
+    else
+      {
+        horizontal_upper    = image_width;
+        horizontal_max_size = MAX (image_width, image_height);
 
-  gimp_ruler_set_range (GIMP_RULER (shell->hrule), lower, upper, max_size);
-  gimp_ruler_set_unit (GIMP_RULER (shell->hrule), shell->unit);
+        vertical_upper      = image_height;
+        vertical_max_size   = MAX (image_width, image_height);
+      }
 
-  /* vertical ruler */
 
-  lower = 0;
+    /* Center the image if its scaled width/height fits within the
+     * viewport
+     */
 
-  if (image)
-    {
-      upper    = img2real (shell, FALSE, FUNSCALEY (shell, shell->disp_height));
-      max_size = img2real (shell, FALSE, MAX (image_width, image_height));
-    }
-  else
-    {
-      upper    = image_height;
-      max_size = MAX (image_width, image_height);
-    }
+    if (image && sx < shell->disp_width)
+      {
+        shell->disp_xoffset = (shell->disp_width - sx) / 2;
+      }
+    else
+      {
+        shell->disp_xoffset = 0;
+      }
 
-  if (image && sy < shell->disp_height)
-    {
-      shell->disp_yoffset = (shell->disp_height - sy) / 2;
+    if (image && sy < shell->disp_height)
+      {
+        shell->disp_yoffset = (shell->disp_height - sy) / 2;
+      }
+    else
+      {
+        shell->disp_yoffset = 0;
+      }
 
-      lower -= img2real (shell, FALSE,
-                         FUNSCALEY (shell, (gdouble) shell->disp_yoffset));
-      upper -= img2real (shell, FALSE,
-                         FUNSCALEY (shell, (gdouble) shell->disp_yoffset));
-    }
-  else if (image)
-    {
-      shell->disp_yoffset = 0;
 
-      lower += img2real (shell, FALSE,
-                         FUNSCALEY (shell, (gdouble) shell->offset_y));
-      upper += img2real (shell, FALSE,
-                         FUNSCALEY (shell, (gdouble) shell->offset_y));
-    }
-  else
-    {
-      shell->disp_yoffset = 0;
-    }
+    /* Adjust due to scrolling */
 
-  gimp_ruler_set_range (GIMP_RULER (shell->vrule), lower, upper, max_size);
-  gimp_ruler_set_unit (GIMP_RULER (shell->vrule), shell->unit);
+    gimp_display_shell_get_scaled_image_viewport_offset (shell,
+                                                         &scaled_image_viewport_offset_x,
+                                                         &scaled_image_viewport_offset_y);
+
+    horizontal_lower -= img2real (shell, TRUE,
+                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+    horizontal_upper -= img2real (shell, TRUE,
+                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+
+    vertical_lower   -= img2real (shell, FALSE,
+                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+    vertical_upper   -= img2real (shell, FALSE,
+                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+
+
+    /* Finally setup the actual rulers */
+
+    gimp_ruler_set_range (GIMP_RULER (shell->hrule),
+                          horizontal_lower,
+                          horizontal_upper,
+                          horizontal_max_size);
+
+    gimp_ruler_set_unit  (GIMP_RULER (shell->hrule),
+                          shell->unit);
+
+    gimp_ruler_set_range (GIMP_RULER (shell->vrule),
+                          vertical_lower,
+                          vertical_upper,
+                          vertical_max_size);
+
+    gimp_ruler_set_unit  (GIMP_RULER (shell->vrule),
+                          shell->unit);
+  }
 
 #if 0
   g_printerr ("offset_x:     %d\n"
