@@ -147,12 +147,14 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
  *
  **/
 void
-gimp_display_shell_get_scaled_viewport (GimpDisplayShell *shell,
-                                        gint             *x,
-                                        gint             *y,
-                                        gint             *w,
-                                        gint             *h)
+gimp_display_shell_get_scaled_viewport (const GimpDisplayShell *shell,
+                                        gint                   *x,
+                                        gint                   *y,
+                                        gint                   *w,
+                                        gint                   *h)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
   if (x) *x = -shell->disp_xoffset + shell->offset_x;
   if (y) *y = -shell->disp_yoffset + shell->offset_y;
   if (w) *w =  shell->disp_width;
@@ -173,12 +175,14 @@ gimp_display_shell_get_scaled_viewport (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_get_viewport (GimpDisplayShell *shell,
-                                 gdouble          *x,
-                                 gdouble          *y,
-                                 gdouble          *w,
-                                 gdouble          *h)
+gimp_display_shell_get_viewport (const GimpDisplayShell *shell,
+                                 gdouble                *x,
+                                 gdouble                *y,
+                                 gdouble                *w,
+                                 gdouble                *h)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
   if (x) *x = shell->offset_x    / shell->scale_x;
   if (y) *y = shell->offset_y    / shell->scale_y;
   if (w) *w = shell->disp_width  / shell->scale_x;
@@ -195,10 +199,12 @@ gimp_display_shell_get_viewport (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_get_scaled_image_viewport_offset (GimpDisplayShell *shell,
-                                                     gint             *x,
-                                                     gint             *y)
+gimp_display_shell_get_scaled_image_viewport_offset (const GimpDisplayShell *shell,
+                                                     gint                   *x,
+                                                     gint                   *y)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
   if (x) *x = shell->disp_xoffset - shell->offset_x;
   if (y) *y = shell->disp_yoffset - shell->offset_y;
 }

@@ -1,3 +1,11 @@
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_viewport)
+	(gimp_display_shell_get_scaled_viewport)
+	(gimp_display_shell_get_scaled_image_viewport_offset): const- and
+	g_return_if_fail-ify.
+
 2008-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprotatetool.c (gimp_rotate_tool_key_press): simplified.
