@@ -89,7 +89,7 @@ void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  gfloat     sx, sy;
+  gfloat     sw, sh;
   gint       image_width;
   gint       image_height;
   gint       offset_x;
@@ -107,29 +107,29 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       image_width  = gimp_image_get_width  (image);
       image_height = gimp_image_get_height (image);
 
-      sx = SCALEX (shell, image_width);
-      sy = SCALEY (shell, image_height);
+      sw = SCALEX (shell, image_width);
+      sh = SCALEY (shell, image_height);
     }
   else
     {
       image_width  = shell->disp_width;
       image_height = shell->disp_height;
 
-      sx = image_width;
-      sy = image_height;
+      sw = image_width;
+      sh = image_height;
     }
 
   gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
 
   shell->hsbdata->value          = offset_x;
-  shell->hsbdata->upper          = sx;
-  shell->hsbdata->page_size      = MIN (sx, shell->disp_width);
+  shell->hsbdata->upper          = sw;
+  shell->hsbdata->page_size      = MIN (sw, shell->disp_width);
   shell->hsbdata->page_increment = shell->disp_width / 2;
   shell->hsbdata->step_increment = shell->scale_x;
 
   shell->vsbdata->value          = offset_y;
-  shell->vsbdata->upper          = sy;
-  shell->vsbdata->page_size      = MIN (sy, shell->disp_height);
+  shell->vsbdata->upper          = sh;
+  shell->vsbdata->page_size      = MIN (sh, shell->disp_height);
   shell->vsbdata->page_increment = shell->disp_height / 2;
   shell->vsbdata->step_increment = shell->scale_y;
 

@@ -1,5 +1,11 @@
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Renamed the variables sx and sy
+	to sw and sh.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	In this ChangeLog entry, disp_offset means disp_[xy]offset and
 	offset means offset_[xy].
 
@@ -324,7 +330,7 @@
 2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scroll.c
-	(gimp_display_shell_scroll_clamp_offsets): Renamed the variales sx
+	(gimp_display_shell_scroll_clamp_offsets): Renamed the variables sx
 	and sy to sw and sh.
 
 2008-07-05  Sven Neumann  <sven@gimp.org>
