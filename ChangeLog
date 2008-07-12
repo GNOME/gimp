@@ -1,3 +1,9 @@
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): The scrollbars should be setup
+	using the new offset, not the old counterpart.
+
 2008-07-12  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c: formatting.

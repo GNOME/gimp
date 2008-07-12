@@ -92,8 +92,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gfloat     sw, sh;
   gint       image_width;
   gint       image_height;
-  gint       offset_x;
-  gint       offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -119,15 +117,13 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       sh = image_height;
     }
 
-  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
-
-  shell->hsbdata->value          = offset_x;
+  shell->hsbdata->value          = shell->offset_x;
   shell->hsbdata->upper          = sw;
   shell->hsbdata->page_size      = MIN (sw, shell->disp_width);
   shell->hsbdata->page_increment = shell->disp_width / 2;
   shell->hsbdata->step_increment = shell->scale_x;
 
-  shell->vsbdata->value          = offset_y;
+  shell->vsbdata->value          = shell->offset_y;
   shell->vsbdata->upper          = sh;
   shell->vsbdata->page_size      = MIN (sh, shell->disp_height);
   shell->vsbdata->page_increment = shell->disp_height / 2;
