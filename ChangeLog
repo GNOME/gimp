@@ -1,3 +1,8 @@
+2008-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpparamspecs.[ch]: added GIMP_TYPE_COLOR_ARRAY and
+	GIMP_TYPE_PARAM_COLOR_ARRAY in preparation for fixing bug #332206.
+
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
