@@ -1,3 +1,7 @@
+2008-07-12  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: fixed check for babl.
+
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* configure.in: Prefered casing of `babl' is `babl'.
