@@ -90,8 +90,10 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNavigationViewClass, marker_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__DOUBLE_DOUBLE,
-                  G_TYPE_NONE, 2,
+                  gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_DOUBLE,
+                  G_TYPE_DOUBLE,
                   G_TYPE_DOUBLE,
                   G_TYPE_DOUBLE);
 
@@ -239,7 +241,8 @@ gimp_navigation_view_move_to (GimpNavigationView *nav_view,
   x = tx * ratiox;
   y = ty * ratioy;
 
-  g_signal_emit (view, view_signals[MARKER_CHANGED], 0, x, y);
+  g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
+                 x, y, nav_view->width, nav_view->height);
 }
 
 void

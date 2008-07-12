@@ -71,6 +71,8 @@ static gboolean gimp_navigation_editor_button_release  (GtkWidget            *wi
 static void   gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
                                                         gdouble               x,
                                                         gdouble               y,
+                                                        gdouble               width,
+                                                        gdouble               height,
                                                         GimpNavigationEditor *editor);
 static void   gimp_navigation_editor_zoom              (GimpNavigationView   *view,
                                                         GimpZoomType          direction,
@@ -491,6 +493,8 @@ static void
 gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
                                        gdouble               x,
                                        gdouble               y,
+                                       gdouble               width,
+                                       gdouble               height,
                                        GimpNavigationEditor *editor)
 {
   if (editor->shell)

@@ -1,3 +1,13 @@
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpmarshal.list: Added
+	VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE marshaller.
+
+	* app/widgets/gimpnavigationview.c: Make the "marker-changed"
+	signal also pass the marker width and height as parameters.
+
+	* app/display/gimpnavigationeditor.c: Updated accordingly.
+
 2008-07-12  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: fixed check for babl.
