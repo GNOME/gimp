@@ -4,13 +4,13 @@
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
 #
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 09:33+0200\n"
-"PO-Revision-Date: 2008-01-11 09:33+0200\n"
+"POT-Creation-Date: 2008-07-11 22:07+0300\n"
+"PO-Revision-Date: 2008-07-11 22:08+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -384,7 +384,7 @@ msgstr "Kitoks gradientas"
 
 #: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
-msgstr "Užpildumas pirmo plano spalva"
+msgstr "Užpildymas pirmo plano spalva"
 
 #: ../libgimpbase/gimpbaseenums.c:96
 msgid "BG color fill"
@@ -540,7 +540,7 @@ msgstr "Spiralinis (pagal laikrodžio rodyklę)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
-msgstr "Spiralinis (pagal laikrodžio rodyklę)"
+msgstr "Spiralinis (prieš laikrodžio rodyklę)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
@@ -834,7 +834,7 @@ msgstr "Ekranas su valdomomis spalvomis"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
-msgstr "Spausdinimo simuliacija"
+msgstr "Spausdinimo imitavimas"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
@@ -881,7 +881,7 @@ msgstr "apdorojant žymę „%s“: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "kritinė skaitymo klaida"
 
