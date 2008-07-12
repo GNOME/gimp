@@ -9,7 +9,7 @@
 	In this ChangeLog entry, disp_offset means disp_[xy]offset and
 	offset means offset_[xy].
 
-	* app/display/gimpdisplayshell.c: Kill disp_offset! We now
+	* app/display/gimpdisplayshell.[ch]: Kill disp_offset! We now
 	represent that by a negative offset.
 
 	* app/display/gimpdisplayshell-scroll.[ch]
