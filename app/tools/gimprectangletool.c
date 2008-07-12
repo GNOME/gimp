@@ -1947,8 +1947,9 @@ gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rect_tool)
 
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
-  return shell->scale_x != private->scale_x_used_for_handle_size_calculations ||
-         shell->scale_y != private->scale_y_used_for_handle_size_calculations;
+  return (shell->scale_x != private->scale_x_used_for_handle_size_calculations
+          ||
+          shell->scale_y != private->scale_y_used_for_handle_size_calculations);
 }
 
 static void
@@ -2192,10 +2193,8 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
    * signal which we don't want in the middle of a rectangle change.
    */
   if (gimp_tool_control_is_active (GIMP_TOOL (rect_tool)->control))
-    {
-      return;
-    }
- 
+    return;
+
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   old_function = private->function;
@@ -2543,10 +2542,10 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
   y1_b = pub_y1 - (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
   y2_b = pub_y2 + (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
 
-  return coord->x < x1_b ||
-         coord->x > x2_b ||
-         coord->y < y1_b ||
-         coord->y > y2_b;
+  return (coord->x < x1_b ||
+          coord->x > x2_b ||
+          coord->y < y1_b ||
+          coord->y > y2_b);
 }
 
 /**
