@@ -178,6 +178,8 @@ gimp_tag_cache_object_add (GimpContainer       *container,
 {
   const char           *identifier;
   GQuark                identifier_quark = 0;
+  gchar                *checksum_string;
+  GQuark                checksum_quark;
   GList                *tag_iterator;
   gint                  i;
 
@@ -186,25 +188,60 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   if (identifier
       && !gimp_tagged_get_tags (tagged))
     {
-      identifier_quark = g_quark_from_string (identifier);
-
-      for (i = 0; i < cache->records->len; i++)
+      identifier_quark = g_quark_try_string (identifier);
+      if (identifier_quark)
         {
-          GimpTagCacheRecord *rec = &g_array_index (cache->records, GimpTagCacheRecord, i);
-
-          if (rec->identifier == identifier_quark)
+          for (i = 0; i < cache->records->len; i++)
             {
-              tag_iterator = rec->tags;
-              while (tag_iterator)
+              GimpTagCacheRecord *rec = &g_array_index (cache->records,
+                                                        GimpTagCacheRecord, i);
+
+              if (rec->identifier == identifier_quark)
                 {
-                  printf ("assigning cached tag: %s to %s\n",
-                          g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)),
-                          identifier);
-                  gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
-                  tag_iterator = g_list_next (tag_iterator);
+                  tag_iterator = rec->tags;
+                  while (tag_iterator)
+                    {
+                      printf ("assigning cached tag: %s to %s\n",
+                              g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)),
+                              identifier);
+                      gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
+                      tag_iterator = g_list_next (tag_iterator);
+                    }
+                  rec->referenced = TRUE;
+                  return;
                 }
-              rec->referenced = TRUE;
-              break;
+            }
+        }
+
+      checksum_string = gimp_tagged_get_checksum (tagged);
+      checksum_quark = g_quark_try_string (checksum_string);
+      g_free (checksum_string);
+
+      if (checksum_quark)
+        {
+          for (i = 0; i < cache->records->len; i++)
+            {
+              GimpTagCacheRecord *rec = &g_array_index (cache->records,
+                                                        GimpTagCacheRecord, i);
+
+              if (rec->checksum == checksum_quark)
+                {
+                  printf ("remapping identifier: %s ==> %s\n",
+                          g_quark_to_string (rec->identifier), identifier);
+                  rec->identifier = g_quark_from_string (identifier);
+
+                  tag_iterator = rec->tags;
+                  while (tag_iterator)
+                    {
+                      printf ("assigning cached tag: %s to %s\n",
+                              g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)),
+                              identifier);
+                      gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
+                      tag_iterator = g_list_next (tag_iterator);
+                    }
+                  rec->referenced = TRUE;
+                  return;
+                }
             }
         }
     }
@@ -222,6 +259,7 @@ tagged_to_cache_record_foreach (GimpTagged     *tagged,
                                 GList         **cache_records)
 {
   const char           *identifier;
+  gchar                *checksum;
   GimpTagCacheRecord   *cache_rec;
 
   identifier = gimp_tagged_get_identifier (tagged);
@@ -229,6 +267,9 @@ tagged_to_cache_record_foreach (GimpTagged     *tagged,
     {
       cache_rec = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
       cache_rec->identifier = g_quark_from_string (identifier);
+      checksum = gimp_tagged_get_checksum (tagged);
+      cache_rec->checksum = g_quark_from_string (checksum);
+      g_free (checksum);
       cache_rec->tags = g_list_copy (gimp_tagged_get_tags (tagged));
       *cache_records = g_list_append (*cache_records, cache_rec);
     }
@@ -257,6 +298,7 @@ gimp_tag_cache_save (GimpTagCache      *cache)
            * but were not loaded. */
           GimpTagCacheRecord *record_copy = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
           record_copy->identifier = current_record->identifier;
+          record_copy->checksum = current_record->checksum;
           record_copy->tags = g_list_copy (current_record->tags);
           saved_records = g_list_append (saved_records, record_copy);
         }
@@ -279,8 +321,9 @@ gimp_tag_cache_save (GimpTagCache      *cache)
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
       GList              *tag_iterator;
 
-      g_string_append_printf (buf, "\t<resource identifier=\"%s\">\n",
-                              g_quark_to_string (cache_rec->identifier));
+      g_string_append_printf (buf, "\t<resource identifier=\"%s\" checksum=\"%s\">\n",
+                              g_quark_to_string (cache_rec->identifier),
+                              g_quark_to_string (cache_rec->checksum));
       tag_iterator = cache_rec->tags;
       while (tag_iterator)
         {
@@ -381,9 +424,12 @@ gimp_tag_cache_load_start_element  (GMarkupParseContext *context,
   if (! strcmp (element_name, "resource"))
     {
       const gchar      *identifier;
+      const gchar      *checksum;
 
       identifier = attribute_name_to_value (attribute_names, attribute_values,
                                             "identifier");
+      checksum   = attribute_name_to_value (attribute_names, attribute_values,
+                                            "checksum");
 
       if (! identifier)
         {
@@ -392,11 +438,10 @@ gimp_tag_cache_load_start_element  (GMarkupParseContext *context,
           return;
         }
 
-      printf ("loading element %s\n", identifier);
-
       memset (&parse_data->current_record, 0, sizeof (GimpTagCacheRecord));
 
       parse_data->current_record.identifier = g_quark_from_string (identifier);
+      parse_data->current_record.checksum   = g_quark_from_string (checksum);
     }
 }
 

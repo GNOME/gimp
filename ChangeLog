@@ -1,3 +1,16 @@
+2008-07-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimptagcache.[ch]: detect resource file renames/moves and
+	  update tag cache accordingly. If identifier (filename) changes,
+	  objects are identified using checksum.
+
+	* app/core/gimpbrush.c (gimp_brush_tagged_init),
+	(gimp_brush_get_checksum)
+	* app/core/gimpdata.c (gimp_data_tagged_iface_init),
+	(gimp_data_get_checksum)
+	* app/core/gimptagged.c (gimp_tagged_get_checksum)
+	* app/core/gimptagged.h: checksum support for tagged objects.
+
 2008-07-11  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c: improved usability on closing tag

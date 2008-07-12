@@ -49,8 +49,7 @@ struct _GimpTaggedInterface
   GList    * (* get_tags)    (GimpTagged *tagged);
 
   gchar    * (* get_identifier) (GimpTagged *tagged);
-  gboolean   (* get_digest)     (GimpTagged *tagged,
-                                 guchar      digest[16]);
+  gchar    * (* get_checksum)   (GimpTagged *tagged);
 };
 
 
@@ -63,7 +62,6 @@ void       gimp_tagged_remove_tag         (GimpTagged *tagged,
 GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
 
 gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
-gboolean   gimp_tagged_get_digest         (GimpTagged *tagged,
-                                           guchar      digest[16]);
+gchar    * gimp_tagged_get_checksum       (GimpTagged *tagged);
 
 #endif  /* __GIMP_TAGGED_H__ */

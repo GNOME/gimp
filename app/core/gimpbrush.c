@@ -21,6 +21,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmd5.h"
 
 #include "core-types.h"
 
@@ -31,6 +32,7 @@
 #include "gimpbrush-scale.h"
 #include "gimpbrushgenerated.h"
 #include "gimpmarshal.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
@@ -47,6 +49,7 @@ enum
   PROP_SPACING
 };
 
+static void        gimp_brush_tagged_init           (GimpTaggedInterface    *iface);
 
 static void        gimp_brush_set_property          (GObject       *object,
                                                      guint          property_id,
@@ -79,8 +82,12 @@ static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                      GimpCoords    *last_coords,
                                                      GimpCoords    *cur_coords);
 
+static gchar     * gimp_brush_get_checksum          (GimpTagged    *tagged);
 
-G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA)
+
+G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_brush_tagged_init))
 
 #define parent_class gimp_brush_parent_class
 
@@ -142,6 +149,12 @@ gimp_brush_init (GimpBrush *brush)
   brush->x_axis.y =  0.0;
   brush->y_axis.x =  0.0;
   brush->y_axis.y = 15.0;
+}
+
+static void
+gimp_brush_tagged_init (GimpTaggedInterface    *iface)
+{
+  iface->get_checksum = gimp_brush_get_checksum;
 }
 
 static void
@@ -515,3 +528,34 @@ gimp_brush_spacing_changed (GimpBrush *brush)
 
   g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
 }
+
+static gchar *
+gimp_brush_get_checksum(GimpTagged      *tagged)
+{
+  GimpBrush            *brush = GIMP_BRUSH (tagged);
+  TempBuf              *buffer;
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+  buffer = brush->pixmap;
+  if (buffer)
+    {
+      g_checksum_update (checksum, temp_buf_data (buffer),
+                         buffer->width * buffer->height * buffer->bytes);
+    }
+  buffer = brush->mask;
+  if (buffer)
+    {
+      g_checksum_update (checksum, temp_buf_data (buffer),
+                         buffer->width * buffer->height * buffer->bytes);
+    }
+
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+  g_checksum_free (checksum);
+
+  return checksum_string;
+}
+

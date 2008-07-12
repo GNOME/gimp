@@ -40,6 +40,7 @@ typedef struct _GimpTagCacheClass  GimpTagCacheClass;
 struct _GimpTagCacheRecord
 {
   GQuark                identifier;
+  GQuark                checksum;
   GList                *tags;
   guint                 referenced : 1;
 };

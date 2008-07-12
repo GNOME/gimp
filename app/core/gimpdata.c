@@ -94,8 +94,7 @@ static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
                                               GimpTag                tag);
 static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
 static gchar *   gimp_data_get_identifier    (GimpTagged            *tagged);
-static gboolean  gimp_data_get_digest        (GimpTagged            *tagged,
-                                              guchar                 digest[16]);
+static gchar *   gimp_data_get_checksum      (GimpTagged            *tagged);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -198,7 +197,7 @@ gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
   iface->remove_tag     = gimp_data_remove_tag;
   iface->get_tags       = gimp_data_get_tags;
   iface->get_identifier = gimp_data_get_identifier;
-  iface->get_digest     = gimp_data_get_digest;
+  iface->get_checksum   = gimp_data_get_checksum;
 }
 
 static void
@@ -421,11 +420,10 @@ gimp_data_get_identifier (GimpTagged *tagged)
     }
 }
 
-static gboolean
-gimp_data_get_digest (GimpTagged *tagged,
-                      guchar      digest[16])
+static gchar *
+gimp_data_get_checksum (GimpTagged *tagged)
 {
-  return FALSE;
+  return NULL;
 }
 
 /**

@@ -172,26 +172,25 @@ gimp_tagged_get_identifier (GimpTagged *tagged)
 }
 
 /**
- * gimp_tagged_get_digest:
+ * gimp_tagged_get_checksum:
  * @tagged: an object that implements the %GimpTagged interface
  *
- * Returns an digest value of @tagged object. It is used to remap
+ * Returns an checksum value of @tagged object. It is used to remap
  * object identifier if it changed from the previous session.
  * For example, when filename changes tags can be remapped to the
- * proper objects by finding it using digest value.
+ * proper objects by finding it using checksum value.
  *
  * If the object does not want to support such remapping
- * (object not stored in file, for example) it can return #FALSE
+ * (object not stored in file, for example) it can return #NULL.
  *
- * Return value: TRUE if object needs identifier remapping and provides
- * digest value, FALSE otherwise.
+ * Return value: checksum string if object needs identifier remapping,
+ * NULL otherwise. Returned string should be freed with #g_free().
  **/
-gboolean
-gimp_tagged_get_digest (GimpTagged *tagged,
-                        guchar      digest[16])
+gchar *
+gimp_tagged_get_checksum (GimpTagged *tagged)
 {
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), FALSE);
 
-  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_digest (tagged, digest);
+  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_checksum (tagged);
 }
 
