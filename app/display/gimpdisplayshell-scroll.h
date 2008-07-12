@@ -50,5 +50,10 @@ void       gimp_display_shell_get_render_start_offset          (const GimpDispla
                                                                 gint                   *offset_x,
                                                                 gint                   *offset_y);
 
+void       gimp_display_shell_setup_hscrollbar_with_value      (GimpDisplayShell       *shell,
+                                                                gdouble                 value);
+void       gimp_display_shell_setup_vscrollbar_with_value      (GimpDisplayShell       *shell,
+                                                                gdouble                 value);
+
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

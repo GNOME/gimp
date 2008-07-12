@@ -117,20 +117,30 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       sh = image_height;
     }
 
+
+  /* Horizontal scrollbar */
+
   shell->hsbdata->value          = shell->offset_x;
-  shell->hsbdata->upper          = sw;
-  shell->hsbdata->page_size      = MIN (sw, shell->disp_width);
+  shell->hsbdata->page_size      = shell->disp_width;
   shell->hsbdata->page_increment = shell->disp_width / 2;
   shell->hsbdata->step_increment = shell->scale_x;
 
+  gimp_display_shell_setup_hscrollbar_with_value (shell, shell->offset_x);
+
+  gtk_adjustment_changed (shell->hsbdata);
+
+
+  /* Vertcal scrollbar */
+
   shell->vsbdata->value          = shell->offset_y;
-  shell->vsbdata->upper          = sh;
-  shell->vsbdata->page_size      = MIN (sh, shell->disp_height);
+  shell->vsbdata->page_size      = shell->disp_height;
   shell->vsbdata->page_increment = shell->disp_height / 2;
   shell->vsbdata->step_increment = shell->scale_y;
 
-  gtk_adjustment_changed (shell->hsbdata);
+  gimp_display_shell_setup_vscrollbar_with_value (shell, shell->offset_y);
+
   gtk_adjustment_changed (shell->vsbdata);
+
 
   /* Setup rulers */
   {

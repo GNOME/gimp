@@ -36,6 +36,9 @@
 #include "gimpdisplayshell-scroll.h"
 
 
+#define OVERPAN_FACTOR 0.5
+
+
 /**
  * gimp_display_shell_center_around_image_coordinate:
  * @shell:
@@ -122,33 +125,46 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
   if (shell->display->image)
     {
       gint sw, sh;
+      gint min_offset_x;
+      gint max_offset_x;
+      gint min_offset_y;
+      gint max_offset_y;
 
       sw = SCALEX (shell, gimp_image_get_width  (shell->display->image));
       sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
 
-      if (shell->disp_width > sw)
+      if (shell->disp_width < sw)
         {
-          shell->offset_x = -(shell->disp_width  - sw) / 2;
+          min_offset_x = 0  - shell->disp_width * OVERPAN_FACTOR;
+          max_offset_x = sw - shell->disp_width * (1.0 - OVERPAN_FACTOR);
         }
       else
         {
-          gint min_offset_x = 0;
-          gint max_offset_x = sw - shell->disp_width;
+          gint overpan_amount;
 
-          shell->offset_x = CLAMP (shell->offset_x, min_offset_x, max_offset_x);
+          overpan_amount = shell->disp_width - sw * (1.0 - OVERPAN_FACTOR);
+
+          min_offset_x = 0  - overpan_amount;
+          max_offset_x = sw + overpan_amount - shell->disp_width;
         }
 
-      if (shell->disp_height > sh)
+      if (shell->disp_height < sh)
         {
-          shell->offset_y = -(shell->disp_height  - sh) / 2;
+          min_offset_y = 0  - shell->disp_height * OVERPAN_FACTOR;
+          max_offset_y = sh - shell->disp_height * (1.0 - OVERPAN_FACTOR);
         }
       else
         {
-          gint min_offset_y = 0;
-          gint max_offset_y = sh - shell->disp_height;
+          gint overpan_amount;
 
-          shell->offset_y = CLAMP (shell->offset_y, min_offset_y, max_offset_y);
+          overpan_amount = shell->disp_height - sh * (1.0 - OVERPAN_FACTOR);
+
+          min_offset_y = 0  - overpan_amount;
+          max_offset_y = sh + overpan_amount - shell->disp_height;
         }
+
+      shell->offset_x = CLAMP (shell->offset_x, min_offset_x, max_offset_x);
+      shell->offset_y = CLAMP (shell->offset_y, min_offset_y, max_offset_y);
     }
   else
     {
@@ -297,4 +313,84 @@ gimp_display_shell_get_render_start_offset (const GimpDisplayShell *shell,
 
   if (offset_x) *offset_x = MAX (0, shell->offset_x);
   if (offset_y) *offset_y = MAX (0, shell->offset_y);
+}
+
+/**
+ * gimp_display_shell_setup_hscrollbar_with_value:
+ * @shell:
+ * @value:
+ *
+ * Setup the limits of the horizontal scrollbar
+ *
+ **/
+void
+gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
+                                                gdouble           value)
+{
+  gint sw;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->display ||
+      ! shell->display->image)
+    return;
+
+  sw = SCALEX (shell, gimp_image_get_width (shell->display->image));
+
+  if (shell->disp_width < sw)
+    {
+      shell->hsbdata->upper = MAX (value + shell->disp_width,
+                                   sw);
+
+      shell->hsbdata->lower = MIN (value,
+                                   0);
+    }
+  else
+    {
+      shell->hsbdata->lower = MIN (value,
+                                   -(shell->disp_width - sw) / 2);
+
+      shell->hsbdata->upper = MAX (value + shell->disp_width,
+                                   sw + (shell->disp_width - sw) / 2);
+    }
+}
+
+/**
+ * gimp_display_shell_setup_vscrollbar_with_value:
+ * @shell:
+ * @value:
+ *
+ * Setup the limits of the vertical scrollbar
+ *
+ **/
+void
+gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
+                                                gdouble           value)
+{
+  gint sh;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->display ||
+      ! shell->display->image)
+    return;
+
+  sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
+
+  if (shell->disp_height < sh)
+    {
+      shell->vsbdata->upper = MAX (value + shell->disp_height,
+                                   sh);
+
+      shell->vsbdata->lower = MIN (value,
+                                   0);
+    }
+  else
+    {
+      shell->vsbdata->lower = MIN (value,
+                                   -(shell->disp_height - sh) / 2);
+
+      shell->vsbdata->upper = MAX (value + shell->disp_height,
+                                   sh + (shell->disp_height - sh) / 2);
+    }
 }

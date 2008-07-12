@@ -935,12 +935,20 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
                                                        1, 1, image_width));
   shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
+
   GTK_WIDGET_UNSET_FLAGS (shell->hsb, GTK_CAN_FOCUS);
 
   /*  the vertical scrollbar  */
   shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
                                                        1, 1, image_height));
   shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
+
   GTK_WIDGET_UNSET_FLAGS (shell->vsb, GTK_CAN_FOCUS);
 
   /*  create the contents of the inner_table  ********************************/

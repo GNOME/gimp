@@ -1,5 +1,29 @@
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	The following change is conceptually based on a patch by
+	Alexia Death and implements the core functionality for
+	bug #362915.
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_clamp_offsets): Clamp the offsets in
+	such a way that allows to scroll beyond the image border.
+
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Put common
+	scrollbar range setup code here.
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Use above helper functions for
+	setting up scrollbar range.
+
+	* app/display/gimpdisplayshell-callbacks.c: Handle adjustment of
+	the scrollbar range when they are about to change value.
+
+	* app/display/gimpdisplayshell.c: Always keep the scrollbar
+	steppers sensitive to user input.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c:
 	Replace gimp_display_shell_scroll() with
 	gimp_display_shell_center_around_image_coordinate() since that is

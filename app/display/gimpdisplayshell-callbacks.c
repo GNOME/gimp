@@ -85,7 +85,15 @@ static void       gimp_display_shell_vscrollbar_update       (GtkAdjustment    *
                                                               GimpDisplayShell *shell);
 static void       gimp_display_shell_hscrollbar_update       (GtkAdjustment    *adjustment,
                                                               GimpDisplayShell *shell);
+static gboolean   gimp_display_shell_vscrollbar_update_range (GtkRange         *range,
+                                                              GtkScrollType     scroll,
+                                                              gdouble           value,
+                                                              GimpDisplayShell *shell);
 
+static gboolean   gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
+                                                              GtkScrollType     scroll,
+                                                              gdouble           value,
+                                                              GimpDisplayShell *shell);
 static GdkModifierType
                   gimp_display_shell_key_to_state            (gint              key);
 
@@ -239,6 +247,14 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                     G_CALLBACK (gimp_display_shell_vscrollbar_update),
                     shell);
 
+  g_signal_connect (shell->hsb, "change-value",
+                    G_CALLBACK (gimp_display_shell_hscrollbar_update_range),
+                    shell);
+
+  g_signal_connect (shell->vsb, "change-value",
+                    G_CALLBACK (gimp_display_shell_vscrollbar_update_range),
+                    shell);
+
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 
@@ -322,6 +338,52 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
        */
       return FALSE;
     }
+}
+
+gboolean
+gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
+                                            GtkScrollType     scroll,
+                                            gdouble           value,
+                                            GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), TRUE);
+
+  if (! shell->display)
+    return TRUE;
+
+  if ((scroll == GTK_SCROLL_JUMP)          ||
+      (scroll == GTK_SCROLL_PAGE_BACKWARD) ||
+      (scroll == GTK_SCROLL_PAGE_FORWARD))
+    return FALSE;
+
+  gimp_display_shell_setup_hscrollbar_with_value (shell, value);
+  
+  gtk_adjustment_changed (shell->hsbdata);
+
+  return FALSE;
+}
+
+gboolean
+gimp_display_shell_vscrollbar_update_range (GtkRange         *range,
+                                            GtkScrollType     scroll,
+                                            gdouble           value,
+                                            GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), TRUE);
+
+  if (! shell->display)
+    return TRUE;
+
+  if ((scroll == GTK_SCROLL_JUMP)          ||
+      (scroll == GTK_SCROLL_PAGE_BACKWARD) ||
+      (scroll == GTK_SCROLL_PAGE_FORWARD))
+    return FALSE;
+
+  gimp_display_shell_setup_vscrollbar_with_value (shell, value);
+  
+  gtk_adjustment_changed (shell->vsbdata);
+
+  return FALSE;
 }
 
 static void
