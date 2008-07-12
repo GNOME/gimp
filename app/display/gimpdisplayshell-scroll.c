@@ -195,8 +195,6 @@ gimp_display_shell_get_scaled_viewport (const GimpDisplayShell *shell,
  *
  * Gets the viewport in image coordinates
  *
- * TODO: Handle when the viewport is zoomed out
- *
  **/
 void
 gimp_display_shell_get_viewport (const GimpDisplayShell *shell,

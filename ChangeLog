@@ -1,5 +1,10 @@
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_viewport): Remove invalid TODO.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpmarshal.list: Added
 	VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE marshaller.
 
