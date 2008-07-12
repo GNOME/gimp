@@ -36,29 +36,25 @@
 #include "gimpdisplayshell-scroll.h"
 
 
-/**
- * gimp_display_shell_scroll:
- * @shell:
- * @x_offset_into_image: In image coordinates.
- * @y_offset_into_image:
- *
- * When the viewport is smaller than the image, offset the viewport to
- * the specified amount into the image.
- *
- * TODO: Behave in a sane way when zoomed out.
- *
- **/
-void gimp_display_shell_scroll (GimpDisplayShell *shell,
-                                gdouble           x_offset_into_image,
-                                gdouble           y_offset_into_image)
+void
+gimp_display_shell_center_around_image_coordinate (GimpDisplayShell       *shell,
+                                                   gdouble                 image_x,
+                                                   gdouble                 image_y)
 {
-  gint x_offset;
-  gint y_offset;
+  gint scaled_image_x;
+  gint scaled_image_y;
+  gint offset_to_apply_x;
+  gint offset_to_apply_y;
 
-  x_offset = RINT (x_offset_into_image * shell->scale_x - shell->offset_x);
-  y_offset = RINT (y_offset_into_image * shell->scale_y - shell->offset_y);
+  scaled_image_x = RINT (image_x * shell->scale_x);
+  scaled_image_y = RINT (image_y * shell->scale_y);
 
-  gimp_display_shell_scroll_private (shell, x_offset, y_offset);
+  offset_to_apply_x = scaled_image_x - shell->disp_width  / 2 - shell->offset_x;
+  offset_to_apply_y = scaled_image_y - shell->disp_height / 2 - shell->offset_y;
+
+  gimp_display_shell_scroll_private (shell,
+                                     offset_to_apply_x,
+                                     offset_to_apply_y);
 }
 
 void

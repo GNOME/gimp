@@ -501,7 +501,9 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
     {
       GimpDisplayShell *shell = editor->shell;
 
-      gimp_display_shell_scroll (shell, x, y);
+      gimp_display_shell_center_around_image_coordinate (shell,
+                                                         x + width / 2,
+                                                         y + height / 2);
     }
 }
 

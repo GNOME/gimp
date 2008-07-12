@@ -20,9 +20,9 @@
 #define __GIMP_DISPLAY_SHELL_SCROLL_H__
 
 
-void       gimp_display_shell_scroll                           (GimpDisplayShell       *shell,
-                                                                gdouble                 x_offset_into_image,
-                                                                gdouble                 y_offset_into_image);
+void       gimp_display_shell_center_around_image_coordinate   (GimpDisplayShell       *shell,
+                                                                gdouble                 image_x,
+                                                                gdouble                 image_y);
 
 void       gimp_display_shell_scroll_clamp_offsets             (GimpDisplayShell       *shell);
 

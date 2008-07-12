@@ -1,5 +1,17 @@
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c:
+	Replace gimp_display_shell_scroll() with
+	gimp_display_shell_center_around_image_coordinate() since that is
+	easier to map to something sensible when we allow to scroll beyond
+	image border.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_marker_changed): Adapt to the new
+	interface.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_get_viewport): Remove invalid TODO.
 
