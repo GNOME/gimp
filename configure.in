@@ -430,8 +430,8 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 
 
-PKG_CHECK_MODULES(BABL, babl >= babl_required_version, :,
-  AC_MSG_ERROR([Test for BABL failed. Please get it from http://gegl.org/]))
+PKG_CHECK_MODULES(babl, babl >= babl_required_version, :,
+  AC_MSG_ERROR([Test for babl failed. Please get it from http://gegl.org/]))
 
 
 PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version, :,
