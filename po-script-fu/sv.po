@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 18:48+0100\n"
-"PO-Revision-Date: 2008-02-10 18:49+0100\n"
+"POT-Creation-Date: 2008-07-12 12:34+0200\n"
+"PO-Revision-Date: 2008-07-12 12:34+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Kunde inte öppna \"%s\" för skrivning: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-procedurbläddrare"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
@@ -104,7 +104,11 @@ msgstr "Script-Fu-gradientväljare"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "För få argument till \"script-fu-register\"-anrop"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:667
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -162,102 +166,50 @@ msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Buttons"
-msgstr "_Knappar"
-
-#: ../plug-ins/script-fu/script-fu.c:309
-msgid "_Logos"
-msgstr "_Logotyper"
-
-#: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "_Diverse"
-
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "_Patterns"
-msgstr "_Mönster"
-
-#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Testa"
 
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Utilities"
-msgstr "_Verktyg"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Knappar"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logotyper"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Mönster"
+
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Webbsideteman"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Rymd_glöd"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Av_fasat mönster"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa till _logotyp"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "An_imation"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Animatörer"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "_Konstnärlig"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Utsmetning"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "_Dekor"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Effekter"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "För_bättra"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Ljus och skugga"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "Sk_ugga"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Rendera"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "_Alkemi"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Läs om alla tillgängliga Script-Fu-skript"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Uppdatera skript"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "Du kan inte använda \"Uppdatera skript\" när en Script-Fu-dialogruta är öppen.  Stäng alla Script-Fu-fönster och försök igen."
 
@@ -458,7 +410,6 @@ msgstr "3_D-Truchet..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -1646,7 +1597,6 @@ msgid "Pattern (text)"
 msgstr "Mönster (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Skugga"
 
@@ -2258,26 +2208,6 @@ msgstr "Skapa en logotyp med en fartfylld texteffekt"
 msgid "Speed Text..."
 msgstr "Fartfylld text..."
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Skapa en enkel sfär med en skuggkastning"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Ljussättning (grader)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Radie (bildpunkter)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Färg på sfär"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Sfär..."
-
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Skapa en animation genom att mapp aktuell bild på en roterande sfär"
@@ -2783,6 +2713,42 @@ msgstr "Markeringsopacitet"
 msgid "_Xach-Effect..."
 msgstr "_Xach-effekt..."
 
+#~ msgid "_Misc"
+#~ msgstr "_Diverse"
+#~ msgid "_Utilities"
+#~ msgstr "_Verktyg"
+#~ msgid "An_imation"
+#~ msgstr "An_imation"
+#~ msgid "_Animators"
+#~ msgstr "_Animatörer"
+#~ msgid "_Artistic"
+#~ msgstr "_Konstnärlig"
+#~ msgid "_Blur"
+#~ msgstr "_Utsmetning"
+#~ msgid "_Decor"
+#~ msgstr "_Dekor"
+#~ msgid "_Effects"
+#~ msgstr "_Effekter"
+#~ msgid "En_hance"
+#~ msgstr "För_bättra"
+#~ msgid "_Light and Shadow"
+#~ msgstr "_Ljus och skugga"
+#~ msgid "S_hadow"
+#~ msgstr "Sk_ugga"
+#~ msgid "_Render"
+#~ msgstr "_Rendera"
+#~ msgid "_Alchemy"
+#~ msgstr "_Alkemi"
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "Skapa en enkel sfär med en skuggkastning"
+#~ msgid "Lighting (degrees)"
+#~ msgstr "Ljussättning (grader)"
+#~ msgid "Radius (pixels)"
+#~ msgstr "Radie (bildpunkter)"
+#~ msgid "Sphere color"
+#~ msgstr "Färg på sfär"
+#~ msgid "_Sphere..."
+#~ msgstr "_Sfär..."
 #~ msgid "BG opacity"
 #~ msgstr "Bakgrundsopacitet"
 #~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
