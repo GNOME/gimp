@@ -121,11 +121,29 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
       sw = SCALEX (shell, gimp_image_get_width  (shell->display->image));
       sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
 
-      shell->offset_x = CLAMP (shell->offset_x, 0,
-                               MAX (sw - shell->disp_width, 0));
+      if (shell->disp_width > sw)
+        {
+          shell->offset_x = -(shell->disp_width  - sw) / 2;
+        }
+      else
+        {
+          gint min_offset_x = 0;
+          gint max_offset_x = sw - shell->disp_width;
 
-      shell->offset_y = CLAMP (shell->offset_y, 0,
-                               MAX (sh - shell->disp_height, 0));
+          shell->offset_x = CLAMP (shell->offset_x, min_offset_x, max_offset_x);
+        }
+
+      if (shell->disp_height > sh)
+        {
+          shell->offset_y = -(shell->disp_height  - sh) / 2;
+        }
+      else
+        {
+          gint min_offset_y = 0;
+          gint max_offset_y = sh - shell->disp_height;
+
+          shell->offset_y = CLAMP (shell->offset_y, min_offset_y, max_offset_y);
+        }
     }
   else
     {
@@ -211,6 +229,69 @@ gimp_display_shell_get_scaled_image_viewport_offset (const GimpDisplayShell *she
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (x) *x = shell->disp_xoffset - shell->offset_x;
-  if (y) *y = shell->disp_yoffset - shell->offset_y;
+  if (x) *x = -shell->offset_x;
+  if (y) *y = -shell->offset_y;
+}
+
+/**
+ * gimp_display_shell_get_disp_offset:
+ * @shell:
+ * @disp_xoffset:
+ * @disp_yoffset:
+ *
+ * In viewport coordinates, get the offset of where to start rendering
+ * the scaled image.
+ *
+ **/
+void
+gimp_display_shell_get_disp_offset (const GimpDisplayShell *shell,
+                                    gint                   *disp_xoffset,
+                                    gint                   *disp_yoffset)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (disp_xoffset)
+    {
+      if (shell->offset_x < 0)
+        {
+          *disp_xoffset = -shell->offset_x;
+        }
+      else
+        {
+          *disp_xoffset = 0;
+        }
+    }
+
+  if (disp_yoffset)
+    {
+      if (shell->offset_y < 0)
+        {
+          *disp_yoffset = -shell->offset_y;
+        }
+      else
+        {
+          *disp_yoffset = 0;
+        }
+    }
+}
+
+/**
+ * gimp_display_shell_get_render_start_offset:
+ * @shell:
+ * @offset_x:
+ * @offset_y:
+ *
+ * Get the offset into the scaled image that we should start render
+ * from
+ *
+ **/
+void
+gimp_display_shell_get_render_start_offset (const GimpDisplayShell *shell,
+                                            gint                   *offset_x,
+                                            gint                   *offset_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (offset_x) *offset_x = MAX (0, shell->offset_x);
+  if (offset_y) *offset_y = MAX (0, shell->offset_y);
 }

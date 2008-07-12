@@ -92,6 +92,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gfloat     sx, sy;
   gint       image_width;
   gint       image_height;
+  gint       offset_x;
+  gint       offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -117,13 +119,15 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       sy = image_height;
     }
 
-  shell->hsbdata->value          = shell->offset_x;
+  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+
+  shell->hsbdata->value          = offset_x;
   shell->hsbdata->upper          = sx;
   shell->hsbdata->page_size      = MIN (sx, shell->disp_width);
   shell->hsbdata->page_increment = shell->disp_width / 2;
   shell->hsbdata->step_increment = shell->scale_x;
 
-  shell->vsbdata->value          = shell->offset_y;
+  shell->vsbdata->value          = offset_y;
   shell->vsbdata->upper          = sy;
   shell->vsbdata->page_size      = MIN (sy, shell->disp_height);
   shell->vsbdata->page_increment = shell->disp_height / 2;
@@ -164,29 +168,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
         vertical_upper      = image_height;
         vertical_max_size   = MAX (image_width, image_height);
-      }
-
-
-    /* Center the image if its scaled width/height fits within the
-     * viewport
-     */
-
-    if (image && sx < shell->disp_width)
-      {
-        shell->disp_xoffset = (shell->disp_width - sx) / 2;
-      }
-    else
-      {
-        shell->disp_xoffset = 0;
-      }
-
-    if (image && sy < shell->disp_height)
-      {
-        shell->disp_yoffset = (shell->disp_height - sy) / 2;
-      }
-    else
-      {
-        shell->disp_yoffset = 0;
       }
 
 

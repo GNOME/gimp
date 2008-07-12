@@ -257,8 +257,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->disp_width             = 0;
   shell->disp_height            = 0;
-  shell->disp_xoffset           = 0;
-  shell->disp_yoffset           = 0;
 
   shell->proximity              = FALSE;
   shell->snap_to_guides         = TRUE;

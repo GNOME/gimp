@@ -1,3 +1,27 @@
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c: Kill disp_[xy]offset! We now
+	keep store that information by using negative values in
+	offset_[xy].
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_clamp_offsets)
+	(gimp_display_shell_get_scaled_image_viewport_offset): Adjust
+	accordingly to preserve current behaviour.
+
+	(gimp_display_shell_get_disp_offset): New function to get the old
+	disp_[xy]offset based on the new offset_[xy].
+
+	(gimp_display_shell_get_render_start_offset): New function to get
+	th old offset_[xy] based on the new offset_[xy].
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-render.c: Get rid of
+	disp_[xy]offset and use
+	gimp_display_shell_get_render_start_offset() and
+	gimp_display_shell_get_disp_offset() instead.
+
 2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
