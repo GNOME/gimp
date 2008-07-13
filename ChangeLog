@@ -1,3 +1,8 @@
+2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/unique.c (gimp_unique_win32_open): check for NULL pointer to
+	prevent crash when there are no filenames provided.
+
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Get rid

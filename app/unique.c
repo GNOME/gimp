@@ -193,7 +193,7 @@ gimp_unique_win32_open (const gchar **filenames,
       GError         *error = NULL;
       gint            i;
 	
-      for (i = 0; filenames[i]; i++)
+      for (i = 0; filenames && filenames[i]; i++)
 	{
 	  gchar *uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
 
