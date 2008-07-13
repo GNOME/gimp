@@ -38,6 +38,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
@@ -430,6 +431,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_center_image (shell);
 }
 
 /**
@@ -468,6 +470,54 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_center_image (shell);
+}
+
+/**
+ * gimp_display_shell_center_image:
+ * @shell:
+ *
+ * Centers the image in the display shell.
+ *
+ **/
+void
+gimp_display_shell_center_image (GimpDisplayShell *shell)
+{
+  gint sw, sh;
+  gint target_offset_x, target_offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->display)
+    return;
+
+  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
+
+  if (sw < shell->disp_width)
+    {
+      target_offset_x = -(shell->disp_width - sw) / 2;
+    }
+  else
+    {
+      target_offset_x = (sw - shell->disp_width) / 2;
+    }
+
+  if (sh < shell->disp_height)
+    {
+      target_offset_y = -(shell->disp_height - sh) / 2;
+    }
+  else
+    {
+      target_offset_y = (sh - shell->disp_height) / 2;
+    }
+
+  /* Note that we can't use gimp_display_shell_scroll_private() here
+   * because that would expose the image twice, causing unwanted
+   * flicker.
+   */
+  gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
+                                      target_offset_x, target_offset_y,
+                                      shell->display->config->resize_windows_on_zoom);
 }
 
 /**

@@ -1,5 +1,12 @@
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_center_image): New function.
+	(gimp_display_shell_scale_fill)
+	(gimp_display_shell_scale_fit_in): Center the image at the end.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_setup_hscrollbar_with_value)
 	(gimp_display_shell_setup_vscrollbar_with_value): Use
