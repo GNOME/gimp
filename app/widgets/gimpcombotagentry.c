@@ -48,6 +48,7 @@ typedef struct
 typedef struct
 {
   GimpComboTagEntry    *combo_entry;
+  GtkWidget            *drawing_area;
   PangoContext         *context;
   PangoLayout          *layout;
   PopupTagData         *tag_data;
@@ -74,8 +75,11 @@ static gboolean gimp_combo_tag_entry_popup_expose      (GtkWidget         *widge
 static gboolean gimp_combo_tag_entry_popup_event       (GtkWidget          *widget,
                                                         GdkEvent           *event,
                                                         PopupData          *popup_data);
-static void     gimp_combo_tag_entry_toggle_tag        (GimpComboTagEntry     *combo_entry,
-                                                        const gchar           *tag);
+static gboolean gimp_combo_tag_entry_drawing_area_event(GtkWidget          *widget,
+                                                        GdkEvent           *event,
+                                                        PopupData          *popup_data);
+static void     gimp_combo_tag_entry_toggle_tag        (GimpComboTagEntry  *combo_entry,
+                                                        const gchar        *tag);
 
 static void     popup_data_destroy                     (PopupData          *popup_data);
 
@@ -290,6 +294,14 @@ gimp_combo_tag_entry_event (GtkWidget          *widget,
   return FALSE;
 }
 
+static int
+tag_list_sort_proc (const void         *p1,
+                    const void         *p2)
+{
+  return strcmp (g_quark_to_string (GPOINTER_TO_UINT (p1)),
+                 g_quark_to_string (GPOINTER_TO_UINT (p2)));
+}
+
 static void
 gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 {
@@ -310,15 +322,15 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   PangoAttrList        *attr_list;
   PangoFontMetrics     *font_metrics;
   GdkGrabStatus         grab_status;
+  gint                  max_height;
+  gint                  screen_height;
 
   popup = gtk_window_new (GTK_WINDOW_POPUP);
   combo_entry->popup = popup;
+  gtk_widget_add_events (GTK_WIDGET (popup),
+                         GDK_BUTTON_PRESS_MASK);
   gtk_window_set_screen (GTK_WINDOW (popup),
                          gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
-
-  gdk_window_get_origin (GTK_WIDGET (combo_entry)->window, &x, &y);
-  y += GTK_WIDGET (combo_entry)->allocation.height;
-  gtk_window_move (GTK_WINDOW (popup), x, y);
 
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_add_events (GTK_WIDGET (drawing_area),
@@ -326,6 +338,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 
   popup_data = g_malloc (sizeof (PopupData));
   popup_data->combo_entry = combo_entry;
+  popup_data->drawing_area = drawing_area;
   popup_data->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
   popup_data->layout = pango_layout_new (popup_data->context);
 
@@ -337,6 +350,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 
   tag_hash = GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container->tag_ref_counts;
   tag_list = g_hash_table_get_keys (tag_hash);
+  tag_list = g_list_sort (tag_list, tag_list_sort_proc);
   popup_data->tag_count = g_list_length (tag_list);
   popup_data->tag_data = g_malloc (sizeof (PopupTagData) * popup_data->tag_count);
   tag_iterator = tag_list;
@@ -355,7 +369,6 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   height = 0;
   for (i = 0; i < popup_data->tag_count; i++)
     {
-      printf ("found tag: %s\n", g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
       popup_data->tag_data[i].tag = GPOINTER_TO_UINT (tag_iterator->data);
       pango_layout_set_text (popup_data->layout,
                              g_quark_to_string (popup_data->tag_data[i].tag), -1);
@@ -390,13 +403,27 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
                                          drawing_area);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-  gtk_widget_set_size_request (scrolled_window,
-                               width + scrolled_window->style->xthickness,
-                               height + scrolled_window->style->ythickness);
+
+  gdk_window_get_origin (GTK_WIDGET (combo_entry)->window, &x, &y);
+  max_height = GTK_WIDGET (combo_entry)->allocation.height * 7;
+  screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
+  width += scrolled_window->style->xthickness;
+  height += scrolled_window->style->ythickness;
+  height = MIN (height, max_height);
+  if (y > screen_height / 2)
+    {
+      y -= height;
+    }
+  else
+    {
+      y += GTK_WIDGET (combo_entry)->allocation.height;
+    }
+
+  gtk_widget_set_size_request (scrolled_window, width, height);
+  gtk_window_move (GTK_WINDOW (popup), x, y);
+
   gtk_widget_show (scrolled_window);
-
   gtk_container_add (GTK_CONTAINER (popup), scrolled_window);
-
   gtk_widget_show (GTK_WIDGET (popup));
 
   g_object_set_data_full (G_OBJECT (popup), "popup-data",
@@ -406,16 +433,21 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
                     G_CALLBACK (gimp_combo_tag_entry_popup_expose),
                     popup_data);
   g_signal_connect (drawing_area, "event",
+                    G_CALLBACK (gimp_combo_tag_entry_drawing_area_event),
+                    popup_data);
+  g_signal_connect (popup, "event",
                     G_CALLBACK (gimp_combo_tag_entry_popup_event),
                     popup_data);
 
-  grab_status = gdk_pointer_grab (drawing_area->window, FALSE,
+  gtk_grab_add (popup);
+  grab_status = gdk_pointer_grab (popup->window, TRUE,
                                   GDK_BUTTON_PRESS_MASK, NULL, NULL,
                                   GDK_CURRENT_TIME);
   if (grab_status != GDK_GRAB_SUCCESS)
     {
       /* pointer grab must be attained otherwise user would have
        * problems closing the popup window. */
+      gtk_grab_remove (popup);
       gtk_widget_destroy (popup);
     }
 }
@@ -458,6 +490,46 @@ gimp_combo_tag_entry_popup_event (GtkWidget          *widget,
       GdkEventButton   *button_event;
       gint              x;
       gint              y;
+
+      button_event = (GdkEventButton *) event;
+
+      gdk_window_get_pointer (widget->window, &x, &y, NULL);
+
+      if (button_event->window != popup_data->drawing_area->window
+          && (x < widget->allocation.y
+          || y < widget->allocation.x
+          || x > widget->allocation.x + widget->allocation.width
+          || y > widget->allocation.y + widget->allocation.height))
+        {
+          /* user has clicked outside the popup area,
+           * which means it should be hidden. */
+          gtk_grab_remove (widget);
+          gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                      GDK_CURRENT_TIME);
+          gtk_widget_destroy (widget);
+        }
+    }
+  else if (event->type == GDK_GRAB_BROKEN)
+    {
+      gtk_grab_remove (widget);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  GDK_CURRENT_TIME);
+      gtk_widget_destroy (widget);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_combo_tag_entry_drawing_area_event (GtkWidget          *widget,
+                                         GdkEvent           *event,
+                                         PopupData          *popup_data)
+{
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton   *button_event;
+      gint              x;
+      gint              y;
       gint              i;
       GdkRectangle     *bounds;
       GimpTag           tag;
@@ -466,36 +538,20 @@ gimp_combo_tag_entry_popup_event (GtkWidget          *widget,
       x = button_event->x;
       y = button_event->y;
 
-      if (x < 0
-          || y < 0
-          || x > widget->allocation.width
-          || y > widget->allocation.height)
+      for (i = 0; i < popup_data->tag_count; i++)
         {
-          /* user has clicked outside the popup area,
-           * which means it should be hidden. */
-          gtk_widget_destroy (popup_data->combo_entry->popup);
-        }
-      else
-        {
-          for (i = 0; i < popup_data->tag_count; i++)
+          bounds = &popup_data->tag_data[i].bounds;
+          if (x >= bounds->x
+              && y >= bounds->y
+              && x < bounds->x + bounds->width
+              && y < bounds->y + bounds->height)
             {
-              bounds = &popup_data->tag_data[i].bounds;
-              if (x >= bounds->x
-                  && y >= bounds->y
-                  && x < bounds->x + bounds->width
-                  && y < bounds->y + bounds->height)
-                {
-                  tag = popup_data->tag_data[i].tag;
-                  gimp_combo_tag_entry_toggle_tag (popup_data->combo_entry,
-                                                   g_quark_to_string (tag));
-                  break;
-                }
+              tag = popup_data->tag_data[i].tag;
+              gimp_combo_tag_entry_toggle_tag (popup_data->combo_entry,
+                                               g_quark_to_string (tag));
+              break;
             }
         }
-    }
-  else if (event->type == GDK_GRAB_BROKEN)
-    {
-      gtk_widget_destroy (popup_data->combo_entry->popup);
     }
 
   return FALSE;
