@@ -378,11 +378,11 @@ gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
 
   if (shell->disp_width < sw)
     {
-      shell->hsbdata->upper = MAX (value + shell->disp_width,
-                                   sw);
-
       shell->hsbdata->lower = MIN (value,
                                    0);
+
+      shell->hsbdata->upper = MAX (value + shell->disp_width,
+                                   sw);
     }
   else
     {
@@ -418,11 +418,11 @@ gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
 
   if (shell->disp_height < sh)
     {
-      shell->vsbdata->upper = MAX (value + shell->disp_height,
-                                   sh);
-
       shell->vsbdata->lower = MIN (value,
                                    0);
+
+      shell->vsbdata->upper = MAX (value + shell->disp_height,
+                                   sh);
     }
   else
     {
