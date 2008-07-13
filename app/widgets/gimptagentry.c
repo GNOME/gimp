@@ -200,6 +200,14 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
 
   entry = GTK_ENTRY (tag_entry);
 
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &start_position, &end_position);
+  if (start_position != end_position)
+    {
+      /* only autocomplete what user types,
+       * not was autocompleted in the previous step. */
+      return FALSE;
+    }
+
   completion_prefix =
       gimp_tag_entry_get_completion_prefix (GIMP_TAG_ENTRY (entry));
   tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (entry));
