@@ -80,6 +80,8 @@ static gboolean gimp_combo_tag_entry_drawing_area_event(GtkWidget          *widg
                                                         PopupData          *popup_data);
 static void     gimp_combo_tag_entry_toggle_tag        (GimpComboTagEntry  *combo_entry,
                                                         const gchar        *tag);
+static gint     gimp_combo_tag_entry_layout_tags       (PopupData          *popup_data,
+                                                        gint                width);
 
 static void     popup_data_destroy                     (PopupData          *popup_data);
 
@@ -314,15 +316,13 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   gint                  y;
   gint                  width;
   gint                  height;
+  gint                  popup_height;
   PopupData            *popup_data;
   GHashTable           *tag_hash;
   GList                *tag_list;
   GList                *tag_iterator;
   gint                  i;
-  gint                  line_height;
-  gint                  space_width;
   PangoAttrList        *attr_list;
-  PangoFontMetrics     *font_metrics;
   GdkGrabStatus         grab_status;
   gint                  max_height;
   gint                  screen_height;
@@ -356,54 +356,18 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   popup_data->tag_count = g_list_length (tag_list);
   popup_data->tag_data = g_malloc (sizeof (PopupTagData) * popup_data->tag_count);
   tag_iterator = tag_list;
-  x = GIMP_TAG_POPUP_MARGIN;
-  y = GIMP_TAG_POPUP_MARGIN;
-  font_metrics = pango_context_get_metrics (popup_data->context,
-                                            pango_context_get_font_description (popup_data->context),
-                                            NULL);
-  line_height = pango_font_metrics_get_ascent (font_metrics) +
-      pango_font_metrics_get_descent (font_metrics);
-  space_width = pango_font_metrics_get_approximate_char_width (font_metrics);
-  line_height /= PANGO_SCALE;
-  space_width /= PANGO_SCALE;
-  pango_font_metrics_unref (font_metrics);
-  width = GTK_WIDGET (combo_entry)->allocation.width;
-  height = 0;
   for (i = 0; i < popup_data->tag_count; i++)
     {
       popup_data->tag_data[i].tag = GPOINTER_TO_UINT (tag_iterator->data);
-      pango_layout_set_text (popup_data->layout,
-                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
-      pango_layout_get_size (popup_data->layout,
-                             &popup_data->tag_data[i].bounds.width,
-                             &popup_data->tag_data[i].bounds.height);
-      popup_data->tag_data[i].bounds.width      /= PANGO_SCALE;
-      popup_data->tag_data[i].bounds.height     /= PANGO_SCALE;
-      if (popup_data->tag_data[i].bounds.width + x + GIMP_TAG_POPUP_MARGIN > width)
-        {
-          x = GIMP_TAG_POPUP_MARGIN;
-          y += line_height;
-        }
-
-      popup_data->tag_data[i].bounds.x = x;
-      popup_data->tag_data[i].bounds.y = y;
-
-      x += popup_data->tag_data[i].bounds.width + space_width;
-
       tag_iterator = g_list_next (tag_iterator);
     }
   g_list_free (tag_list);
-  height = y + line_height + GIMP_TAG_POPUP_MARGIN;
-
-  drawing_area->requisition.width = width;
-  drawing_area->requisition.height = height;
-
-  gtk_widget_show (drawing_area);
+  width = GTK_WIDGET (combo_entry)->allocation.width;
+  height = gimp_combo_tag_entry_layout_tags (popup_data, width);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (viewport), drawing_area);
-  gtk_widget_show (viewport);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window),
@@ -419,23 +383,30 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
   width += frame->style->xthickness;
   height += frame->style->ythickness;
-  height = MIN (height, max_height);
+  popup_height = MIN (height, max_height);
   if (y > screen_height / 2)
     {
-      y -= height;
+      y -= popup_height;
     }
   else
     {
       y += GTK_WIDGET (combo_entry)->allocation.height;
     }
 
-  gtk_widget_set_size_request (scrolled_window, width, height);
+  drawing_area->requisition.width = width;
+  drawing_area->requisition.height = height;
+
+  gtk_widget_set_size_request (scrolled_window, width, popup_height);
   gtk_window_move (GTK_WINDOW (popup), x, y);
 
-  gtk_widget_show (scrolled_window);
-  gtk_widget_show (frame);
   gtk_container_add (GTK_CONTAINER (popup), frame);
-  gtk_widget_show (GTK_WIDGET (popup));
+  gtk_widget_show_all (GTK_WIDGET (popup));
+
+  if (popup_height < height)
+    {
+      height = gimp_combo_tag_entry_layout_tags (popup_data, viewport->allocation.width);
+      gtk_widget_set_size_request (drawing_area, width, height);
+    }
 
   g_object_set_data_full (G_OBJECT (popup), "popup-data",
                           popup_data, (GDestroyNotify) popup_data_destroy);
@@ -461,6 +432,54 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
       gtk_grab_remove (popup);
       gtk_widget_destroy (popup);
     }
+}
+
+static gint
+gimp_combo_tag_entry_layout_tags (PopupData            *popup_data,
+                                  gint                  width)
+{
+  gint                  x;
+  gint                  y;
+  gint                  height = 0;
+  gint                  i;
+  gint                  line_height;
+  gint                  space_width;
+  PangoFontMetrics     *font_metrics;
+
+  x = GIMP_TAG_POPUP_MARGIN;
+  y = GIMP_TAG_POPUP_MARGIN;
+  font_metrics = pango_context_get_metrics (popup_data->context,
+                                            pango_context_get_font_description (popup_data->context),
+                                            NULL);
+  line_height = pango_font_metrics_get_ascent (font_metrics) +
+      pango_font_metrics_get_descent (font_metrics);
+  space_width = pango_font_metrics_get_approximate_char_width (font_metrics);
+  line_height /= PANGO_SCALE;
+  space_width /= PANGO_SCALE;
+  pango_font_metrics_unref (font_metrics);
+  for (i = 0; i < popup_data->tag_count; i++)
+    {
+      pango_layout_set_text (popup_data->layout,
+                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
+      pango_layout_get_size (popup_data->layout,
+                             &popup_data->tag_data[i].bounds.width,
+                             &popup_data->tag_data[i].bounds.height);
+      popup_data->tag_data[i].bounds.width      /= PANGO_SCALE;
+      popup_data->tag_data[i].bounds.height     /= PANGO_SCALE;
+      if (popup_data->tag_data[i].bounds.width + x + GIMP_TAG_POPUP_MARGIN > width)
+        {
+          x = GIMP_TAG_POPUP_MARGIN;
+          y += line_height;
+        }
+
+      popup_data->tag_data[i].bounds.x = x;
+      popup_data->tag_data[i].bounds.y = y;
+
+      x += popup_data->tag_data[i].bounds.width + space_width;
+    }
+  height = y + line_height + GIMP_TAG_POPUP_MARGIN;
+
+  return height;
 }
 
 static gboolean

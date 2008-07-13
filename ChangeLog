@@ -1,5 +1,10 @@
 2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimpcombotagentry.c: if scrollbar appears in popup
+	window, re-layout tags.
+
+2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimpcombotagentry.c: correctly calculate border
 	thickness so that scrollbars would not appear when unneeded.
 
