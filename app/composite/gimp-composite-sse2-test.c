@@ -13,7 +13,7 @@
 #include "gimp-composite-generic.h"
 #include "gimp-composite-sse2.h"
 
-int
+static int
 gimp_composite_sse2_test (int iterations, int n_pixels)
 {
 #if defined(COMPILE_SSE2_IS_OKAY)

@@ -106,6 +106,8 @@ GimpData    * gimp_data_duplicate        (GimpData     *data);
 void          gimp_data_make_internal    (GimpData     *data,
                                           const gchar  *internal_name);
 
+gint          gimp_data_compare          (GimpData     *data1,
+                                          GimpData     *data2);
 gint          gimp_data_name_compare     (GimpData     *data1,
                                           GimpData     *data2);
 

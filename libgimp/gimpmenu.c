@@ -484,12 +484,13 @@ static void
 gimp_menu_callback (GtkWidget *widget,
                     gpointer   any_ID)
 {
-  GimpMenuCallback callback;
-  gpointer         callback_data;
+  GtkWidget        *parent = gtk_widget_get_parent (widget);
+  GimpMenuCallback  callback;
+  gpointer          callback_data;
 
-  callback = (GimpMenuCallback) g_object_get_data (G_OBJECT (widget->parent),
+  callback = (GimpMenuCallback) g_object_get_data (G_OBJECT (parent),
                                                    "gimp-menu-callback");
-  callback_data = g_object_get_data (G_OBJECT (widget->parent),
+  callback_data = g_object_get_data (G_OBJECT (parent),
                                      "gimp-menu-callback-data");
 
   (* callback) (GPOINTER_TO_INT (any_ID), callback_data);

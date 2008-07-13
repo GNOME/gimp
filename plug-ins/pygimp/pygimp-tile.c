@@ -146,10 +146,10 @@ tile_repr(PyGimpTile *self)
     return s;
 }
 
-static int
-tile_length(PyGimpTile *self)
+static Py_ssize_t 
+tile_length(PyObject *self)
 {
-    return self->tile->ewidth * self->tile->eheight;
+    return ((PyGimpTile*)self)->tile->ewidth * ((PyGimpTile*)self)->tile->eheight;
 }
 
 static PyObject *
@@ -251,7 +251,7 @@ tile_ass_sub(PyGimpTile *self, PyObject *v, PyObject *w)
 }
 
 static PyMappingMethods tile_as_mapping = {
-    (inquiry)tile_length, /*length*/
+    tile_length, /*length*/
     (binaryfunc)tile_subscript, /*subscript*/
     (objobjargproc)tile_ass_sub, /*ass_sub*/
 };
@@ -358,8 +358,8 @@ pr_dealloc(PyGimpPixelRgn *self)
 
 /* Code to access pr objects as mappings */
 
-static int
-pr_length(PyGimpPixelRgn *self)
+static Py_ssize_t 
+pr_length(PyObject *self)
 {
     PyErr_SetString(pygimp_error, "Can't get size of pixel region");
     return -1;
@@ -371,7 +371,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
     GimpPixelRgn *pr = &(self->pr);
     int bpp = pr->bpp;
     PyObject *x, *y;
-    int x1, y1, x2, y2, xs, ys;
+    Py_ssize_t x1, y1, x2, y2, xs, ys;
 
     if (!PyTuple_Check(key) || PyTuple_Size(key) != 2) {
 	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
@@ -480,7 +480,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
     int bpp = pr->bpp;
     PyObject *x, *y;
     guchar *buf;
-    int len, x1, x2, xs, y1, y2, ys;
+    Py_ssize_t len, x1, x2, xs, y1, y2, ys;
 	
     if (w == NULL) {
 	PyErr_SetString(PyExc_TypeError, "can't delete subscripts");
@@ -592,7 +592,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 }
 
 static PyMappingMethods pr_as_mapping = {
-    (inquiry)pr_length,		/*mp_length*/
+    pr_length,		/*mp_length*/
     (binaryfunc)pr_subscript,		/*mp_subscript*/
     (objobjargproc)pr_ass_sub,	/*mp_ass_subscript*/
 };

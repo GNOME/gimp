@@ -1491,15 +1491,16 @@ newsprint_cspace_update (GtkWidget *widget,
 
   if (st)
     {
+      gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
       /* the CMYK widget looks after the black pullout widget */
       if (new_cs == CS_CMYK)
         {
-          gtk_widget_set_sensitive (st->pull_table,
-                                    GTK_TOGGLE_BUTTON (widget)->active);
+          gtk_widget_set_sensitive (st->pull_table, active);
         }
 
       /* if we're not activate, then there's nothing more to do */
-      if (!GTK_TOGGLE_BUTTON (widget)->active)
+      if (! active)
         return;
 
       pvals.colourspace = new_cs;

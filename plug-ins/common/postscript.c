@@ -3514,7 +3514,7 @@ static void
 save_unit_toggle_update (GtkWidget *widget,
                          gpointer   data)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       SaveDialogVals *vals = (SaveDialogVals *) data;
       gdouble         factor;
@@ -3555,12 +3555,10 @@ resolution_change_callback (GtkAdjustment *adjustment,
     ratio = 1.0;
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps_width_spinbutton),
-                             GTK_SPIN_BUTTON (ps_width_spinbutton)->
-                                 adjustment->value * ratio);
+                             gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps_width_spinbutton)) * ratio);
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps_height_spinbutton),
-                             GTK_SPIN_BUTTON (ps_height_spinbutton)->
-                                 adjustment->value * ratio);
+                             gtk_spin_button_get_value (GTK_SPIN_BUTTON (ps_height_spinbutton)) * ratio);
 
   return TRUE;
 

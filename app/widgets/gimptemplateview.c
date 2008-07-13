@@ -111,15 +111,9 @@ gimp_template_view_new (GimpViewType     view_type,
 
       tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
 
-      tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-      GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
-
-      tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
-                                                  tree_view->name_cell);
-
-      g_signal_connect (tree_view->name_cell, "edited",
-                        G_CALLBACK (gimp_template_view_tree_name_edited),
-                        template_view);
+      gimp_container_tree_view_connect_name_edited (tree_view,
+                                                    G_CALLBACK (gimp_template_view_tree_name_edited),
+                                                    template_view);
     }
 
   template_view->create_button =

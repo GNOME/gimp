@@ -219,11 +219,11 @@ gimp_user_install_detect_old (GimpUserInstall *install)
 
           migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
 
-#ifdef GIMP_UNSTABLE
-          g_printerr ("gimp-user-install: migrating from %s\n", dir);
-#endif
           if (migrate)
             {
+#ifdef GIMP_UNSTABLE
+	      g_printerr ("gimp-user-install: migrating from %s\n", dir);
+#endif
               install->old_major = 2;
               install->old_minor = i;
 

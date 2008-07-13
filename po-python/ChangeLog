@@ -1,3 +1,19 @@
+2008-07-09  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Updated/fixed German translation.
+
+2008-07-03  Yannig Marchegay <yannig@marchegay.org>
+
+	* oc.po: Updated Occitan translation.
+
+2008-07-02  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
+
+2008-06-24  Gil Forcada <gforcada@gnome.org>
+
+	* ca.po: Updated Catalan translation by Joaquim Perez.
+
 2008-06-06  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.skip: fixed the insanity using a new feature in

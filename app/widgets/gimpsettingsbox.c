@@ -31,10 +31,12 @@
 
 #include "core/gimp.h"
 #include "core/gimplist.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpcontainercombobox.h"
 #include "gimpcontainerview.h"
 #include "gimpsettingsbox.h"
+#include "gimpsettingseditor.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -94,10 +96,23 @@ static void  gimp_settings_box_import_activate   (GtkWidget         *widget,
                                                   GimpSettingsBox   *box);
 static void  gimp_settings_box_export_activate   (GtkWidget         *widget,
                                                   GimpSettingsBox   *box);
+static void  gimp_settings_box_manage_activate   (GtkWidget         *widget,
+                                                  GimpSettingsBox   *box);
 
 static void  gimp_settings_box_favorite_callback (GtkWidget         *query_box,
                                                   const gchar       *string,
                                                   gpointer           data);
+static void  gimp_settings_box_file_dialog       (GimpSettingsBox   *box,
+                                                  const gchar       *title,
+                                                  gboolean           save);
+static void  gimp_settings_box_file_response     (GtkWidget         *dialog,
+                                                  gint               response_id,
+                                                  GimpSettingsBox   *box);
+static void  gimp_settings_box_manage_response   (GtkWidget         *widget,
+                                                  gint               response_id,
+                                                  GimpSettingsBox   *box);
+static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
+                                                  GtkWidget         *dialog);
 
 
 G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_HBOX)
@@ -115,25 +130,30 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
   settings_box_signals[IMPORT] =
     g_signal_new ("import",
                   G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
+                  G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpSettingsBoxClass, import),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_BOOLEAN__STRING,
+                  G_TYPE_BOOLEAN, 1,
+                  G_TYPE_STRING);
 
   settings_box_signals[EXPORT] =
     g_signal_new ("export",
                   G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
+                  G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpSettingsBoxClass, export),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_BOOLEAN__STRING,
+                  G_TYPE_BOOLEAN, 1,
+                  G_TYPE_STRING);
 
   object_class->constructor  = gimp_settings_box_constructor;
   object_class->finalize     = gimp_settings_box_finalize;
   object_class->set_property = gimp_settings_box_set_property;
   object_class->get_property = gimp_settings_box_get_property;
+
+  klass->import              = NULL;
+  klass->export              = NULL;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -177,7 +197,9 @@ gimp_settings_box_constructor (GType                  type,
 {
   GObject         *object;
   GimpSettingsBox *box;
+  GtkWidget       *hbox2;
   GtkWidget       *button;
+  GtkWidget       *image;
   GtkWidget       *arrow;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -208,10 +230,30 @@ gimp_settings_box_constructor (GType                  type,
                           G_CALLBACK (gimp_settings_box_setting_selected),
                           box);
 
+  hbox2 = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  gimp_help_set_help_data (button, _("Add settings to favorites"), NULL);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_settings_box_favorite_activate),
+                    box);
+
+  button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   arrow = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
@@ -227,11 +269,6 @@ gimp_settings_box_constructor (GType                  type,
   box->menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (box->menu), button, NULL);
 
-  gimp_settings_box_menu_item_add (box,
-                                   GTK_STOCK_ADD,
-                                   _("Add Settings to _Favorites..."),
-                                   G_CALLBACK (gimp_settings_box_favorite_activate));
-
   box->import_item =
     gimp_settings_box_menu_item_add (box,
                                      GTK_STOCK_OPEN,
@@ -243,6 +280,13 @@ gimp_settings_box_constructor (GType                  type,
                                      GTK_STOCK_SAVE,
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
+
+  gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
+
+  gimp_settings_box_menu_item_add (box,
+                                   GTK_STOCK_EDIT,
+                                   _("_Manage Settings..."),
+                                   G_CALLBACK (gimp_settings_box_manage_activate));
 
   return object;
 }
@@ -268,6 +312,36 @@ gimp_settings_box_finalize (GObject *object)
     {
       g_free (box->filename);
       box->filename = NULL;
+    }
+
+  g_free (box->import_dialog_title);
+  g_free (box->export_dialog_title);
+  g_free (box->file_dialog_help_id);
+  g_free (box->default_folder);
+  g_free (box->last_filename);
+
+  if (box->editor_dialog)
+    {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+      if (toplevel)
+        g_signal_handlers_disconnect_by_func (toplevel,
+                                              gimp_settings_box_toplevel_unmap,
+                                              box->editor_dialog);
+
+      gtk_widget_destroy (box->editor_dialog);
+    }
+
+  if (box->file_dialog)
+    {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+      if (toplevel)
+        g_signal_handlers_disconnect_by_func (toplevel,
+                                              gimp_settings_box_toplevel_unmap,
+                                              box->file_dialog);
+
+      gtk_widget_destroy (box->file_dialog);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -411,18 +485,26 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
                                  GCallback        callback)
 {
   GtkWidget *item;
-  GtkWidget *image;
 
-  item = gtk_image_menu_item_new_with_mnemonic (label);
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+  if (label)
+    {
+      GtkWidget *image;
+
+      item = gtk_image_menu_item_new_with_mnemonic (label);
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+
+      g_signal_connect (item, "activate",
+                        callback,
+                        box);
+    }
+  else
+    {
+      item = gtk_separator_menu_item_new ();
+    }
 
   gtk_menu_shell_append (GTK_MENU_SHELL (box->menu), item);
   gtk_widget_show (item);
-
-  g_signal_connect (item, "activate",
-                    callback,
-                    box);
 
   return item;
 }
@@ -434,13 +516,9 @@ gimp_settings_box_row_separator_func (GtkTreeModel *model,
 {
   gchar *name = NULL;
 
-#ifdef __GNUC__
-#warning FIXME: dont use magic model column
-#endif
   gtk_tree_model_get (model, iter,
-                      1, &name,
+                      GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME, &name,
                       -1);
-
   g_free (name);
 
   return name == NULL;
@@ -508,14 +586,58 @@ static void
 gimp_settings_box_import_activate (GtkWidget       *widget,
                                    GimpSettingsBox *box)
 {
-  g_signal_emit (box, settings_box_signals[IMPORT], 0);
+  gimp_settings_box_file_dialog (box, box->import_dialog_title, FALSE);
 }
 
 static void
 gimp_settings_box_export_activate (GtkWidget       *widget,
                                    GimpSettingsBox *box)
 {
-  g_signal_emit (box, settings_box_signals[EXPORT], 0);
+  gimp_settings_box_file_dialog (box, box->export_dialog_title, TRUE);
+}
+
+static void
+gimp_settings_box_manage_activate (GtkWidget       *widget,
+                                   GimpSettingsBox *box)
+{
+  GtkWidget *toplevel;
+  GtkWidget *editor;
+
+  if (box->editor_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (box->editor_dialog));
+      return;
+    }
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+  box->editor_dialog = gimp_dialog_new (_("Manage Saved Settings"),
+                                        "gimp-settings-editor-dialog",
+                                        toplevel, 0,
+                                        NULL, NULL,
+                                        GTK_STOCK_CLOSE,
+                                        GTK_RESPONSE_CLOSE,
+                                        NULL);
+
+  g_object_add_weak_pointer (G_OBJECT (box->editor_dialog),
+                             (gpointer) &box->editor_dialog);
+  g_signal_connect (toplevel, "unmap",
+                    G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                    box->editor_dialog);
+
+  g_signal_connect (box->editor_dialog, "response",
+                    G_CALLBACK (gimp_settings_box_manage_response),
+                    box);
+
+  editor = gimp_settings_editor_new (box->gimp,
+                                     box->config,
+                                     box->container);
+  gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (box->editor_dialog)->vbox),
+                     editor);
+  gtk_widget_show (editor);
+
+  gtk_widget_show (box->editor_dialog);
 }
 
 static void
@@ -534,6 +656,162 @@ gimp_settings_box_favorite_callback (GtkWidget   *query_box,
   gimp_settings_box_serialize (box);
 }
 
+static void
+gimp_settings_box_file_dialog (GimpSettingsBox *box,
+                               const gchar     *title,
+                               gboolean         save)
+{
+  GtkWidget *toplevel;
+  GtkWidget *dialog;
+
+  if (box->file_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (box->file_dialog));
+      return;
+    }
+
+  if (save)
+    gtk_widget_set_sensitive (box->import_item, FALSE);
+  else
+    gtk_widget_set_sensitive (box->export_item, FALSE);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+  box->file_dialog = dialog =
+    gtk_file_chooser_dialog_new (title, GTK_WINDOW (toplevel),
+                                 save ?
+                                 GTK_FILE_CHOOSER_ACTION_SAVE :
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 save ? GTK_STOCK_SAVE : GTK_STOCK_OPEN,
+                                 GTK_RESPONSE_OK,
+
+                                 NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
+
+  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-import-export-settings");
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+
+  g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &box->file_dialog);
+  g_signal_connect (toplevel, "unmap",
+                    G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                    dialog);
+
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  if (save)
+    gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                    TRUE);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_settings_box_file_response),
+                    box);
+  g_signal_connect (dialog, "delete-event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
+
+  if (box->default_folder &&
+      g_file_test (box->default_folder, G_FILE_TEST_IS_DIR))
+    {
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            box->default_folder, NULL);
+
+      if (! box->last_filename)
+        gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                             box->default_folder);
+    }
+  else if (! box->last_filename)
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                           g_get_home_dir ());
+    }
+
+  if (box->last_filename)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                   box->last_filename);
+
+  gimp_help_connect (box->file_dialog, gimp_standard_help_func,
+                     box->file_dialog_help_id, NULL);
+
+  gtk_widget_show (box->file_dialog);
+}
+
+static void
+gimp_settings_box_file_response (GtkWidget       *dialog,
+                                 gint             response_id,
+                                 GimpSettingsBox *box)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+  gboolean   save;
+
+  if (toplevel)
+    g_signal_handlers_disconnect_by_func (toplevel,
+                                          gimp_settings_box_toplevel_unmap,
+                                          dialog);
+
+  save = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "save"));
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar    *filename;
+      gboolean  success = FALSE;
+
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      if (save)
+        g_signal_emit (box, settings_box_signals[EXPORT], 0, filename,
+                       &success);
+      else
+        g_signal_emit (box, settings_box_signals[IMPORT], 0, filename,
+                       &success);
+
+      if (success)
+        {
+          g_free (box->last_filename);
+          box->last_filename = g_strdup (filename);
+        }
+
+      g_free (filename);
+    }
+
+  if (save)
+    gtk_widget_set_sensitive (box->import_item, TRUE);
+  else
+    gtk_widget_set_sensitive (box->export_item, TRUE);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+gimp_settings_box_manage_response (GtkWidget       *dialog,
+                                   gint             response_id,
+                                   GimpSettingsBox *box)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+  if (toplevel)
+    g_signal_handlers_disconnect_by_func (toplevel,
+                                          gimp_settings_box_toplevel_unmap,
+                                          dialog);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+gimp_settings_box_toplevel_unmap (GtkWidget *toplevel,
+                                  GtkWidget *dialog)
+{
+  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_DELETE_EVENT);
+}
+
 
 /*  public functions  */
 
@@ -541,19 +819,34 @@ GtkWidget *
 gimp_settings_box_new (Gimp          *gimp,
                        GObject       *config,
                        GimpContainer *container,
-                       const gchar   *filename)
+                       const gchar   *filename,
+                       const gchar   *import_dialog_title,
+                       const gchar   *export_dialog_title,
+                       const gchar   *file_dialog_help_id,
+                       const gchar   *default_folder,
+                       const gchar   *last_filename)
 {
+  GimpSettingsBox *box;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_SETTINGS_BOX,
-                       "gimp",      gimp,
-                       "config",    config,
-                       "container", container,
-                       "filename",  filename,
-                       NULL);
+  box = g_object_new (GIMP_TYPE_SETTINGS_BOX,
+                      "gimp",      gimp,
+                      "config",    config,
+                      "container", container,
+                      "filename",  filename,
+                      NULL);
+
+  box->import_dialog_title = g_strdup (import_dialog_title);
+  box->export_dialog_title = g_strdup (export_dialog_title);
+  box->file_dialog_help_id = g_strdup (file_dialog_help_id);
+  box->default_folder      = g_strdup (default_folder);
+  box->last_filename       = g_strdup (last_filename);
+
+  return GTK_WIDGET (box);
 }
 
 void

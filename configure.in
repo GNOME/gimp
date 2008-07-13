@@ -431,7 +431,7 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 
 
 PKG_CHECK_MODULES(BABL, babl >= babl_required_version, :,
-  AC_MSG_ERROR([Test for BABL failed. Please get it from http://gegl.org/]))
+  AC_MSG_ERROR([Test for babl failed. Please get it from http://gegl.org/]))
 
 
 PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version, :,
@@ -888,15 +888,24 @@ if test "x$enable_mp" != "xno"; then
 	    [Define to 1 to enable support for multiple processors.])
 fi
 
+###################################################
+# gimp-remote is obsolete, but can still be enabled
+###################################################
+
+AC_ARG_ENABLE(gimp-remote,
+	      [  --enable-gimp-remote    build gimp-remote utility (default=no)],
+	      enable_gimp_remote=yes,
+	      enable_gimp_remote="no (not enabled)")
+
 
 ################################
 # Some plug-ins are X11 specific
 ################################
 
-GIMP_COMMAND='gimp-gimp_app_version'
-
 # Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
+
+have_libxmu="no (building for $gdk_target)"
 
 if test "$gdk_target" = x11; then
 
@@ -912,16 +921,13 @@ if test "$gdk_target" = x11; then
    LDFLAGS="$LDFLAGS $X_LIBS"
 
    # Test for Xmu
-   enable_gimp_remote=yes
    if test -z "$LIBXMU"; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
-          GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)';
-	  GIMP_COMMAND='gimp-remote-gimp_app_version'
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
-	  [enable_gimp_remote="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
-	[enable_gimp_remote="no (XMU library not found)"], -lXt -lX11)
+	  [have_libxmu="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
+	[have_libxmu="no (XMU library not found)"], -lXt -lX11)
       LIBSCREENSHOT="$LIBXMU"
    fi
 
@@ -940,9 +946,6 @@ if test "$gdk_target" = x11; then
                 [Define to 1 to if the XFIXES X extension is available])
       LIBSCREENSHOT="$LIBSCREENSHOT $XFIXES_LIBS",
       true)
-
-else
-   enable_gimp_remote="no (building for $gdk_target)"
 fi
 
 AC_SUBST(LIBXMU)
@@ -950,7 +953,21 @@ AC_SUBST(LIBSCREENSHOT)
 
 AC_SUBST(DOC_SHOOTER)
 
+
+if test x"$enable_gimp_remote" = xyes; then
+  enable_gimp_remote="$have_libxmu"
+fi
+
+if test x"$enable_gimp_remote" = xyes; then
+  GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)'
+  GIMP_REMOTE_MANPAGE='gimp-remote-gimp_app_version.1'
+  GIMP_COMMAND='gimp-remote-gimp_app_version'
+else
+  GIMP_COMMAND='gimp-gimp_app_version'
+fi
+
 AC_SUBST(GIMP_REMOTE)
+AC_SUBST(GIMP_REMOTE_MANPAGE)
 AC_SUBST(GIMP_COMMAND)
 
 

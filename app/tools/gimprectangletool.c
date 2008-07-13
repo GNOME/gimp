@@ -41,6 +41,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scroll.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpdrawtool.h"
@@ -64,6 +65,7 @@ enum
 #define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
 #define NARROW_MODE_THRESHOLD   45
+#define CENTER_CROSS_SIZE       6
 
 
 #define SQRT5   2.236067977
@@ -1666,9 +1668,23 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   switch (private->function)
     {
     case GIMP_RECTANGLE_TOOL_MOVING:
+
       if (gimp_tool_control_is_active (tool->control))
-        break;
-      /* else fallthrough */
+        {
+          /* Mark the center because we snap to it */
+          gimp_draw_tool_draw_cross_by_anchor (draw_tool,
+                                               (pub_x1 + pub_x2) / 2.0,
+                                               (pub_y1 + pub_y2) / 2.0,
+                                               CENTER_CROSS_SIZE,
+                                               CENTER_CROSS_SIZE,
+                                               GTK_ANCHOR_CENTER,
+                                               FALSE);
+          break;
+        }
+      else
+        {
+          /* Fallthrough */
+        }
 
     case GIMP_RECTANGLE_TOOL_DEAD:
     case GIMP_RECTANGLE_TOOL_CREATING:
@@ -1832,15 +1848,14 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
     /* Calculate rectangles of the selection rectangle and the display shell,
      * with origin at (0, 0) of image, and in screen coordinate scale.
      */
-    gint    x1 =  pub_x1 * shell->scale_x;
-    gint    y1 =  pub_y1 * shell->scale_y;
-    gint    w1 = (pub_x2 - pub_x1) * shell->scale_x;
-    gint    h1 = (pub_y2 - pub_y1) * shell->scale_y;
+    gint x1 =  pub_x1 * shell->scale_x;
+    gint y1 =  pub_y1 * shell->scale_y;
+    gint w1 = (pub_x2 - pub_x1) * shell->scale_x;
+    gint h1 = (pub_y2 - pub_y1) * shell->scale_y;
 
-    gint    x2 = -shell->disp_xoffset + shell->offset_x;
-    gint    y2 = -shell->disp_yoffset + shell->offset_y;
-    gint    w2 =  shell->disp_width;
-    gint    h2 =  shell->disp_height;
+    gint x2, y2, w2, h2;
+
+    gimp_display_shell_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
 
     rectangle_width  = w1;
     rectangle_height = h1;
@@ -1932,8 +1947,9 @@ gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rect_tool)
 
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
-  return shell->scale_x != private->scale_x_used_for_handle_size_calculations ||
-         shell->scale_y != private->scale_y_used_for_handle_size_calculations;
+  return (shell->scale_x != private->scale_x_used_for_handle_size_calculations
+          ||
+          shell->scale_y != private->scale_y_used_for_handle_size_calculations);
 }
 
 static void
@@ -2177,10 +2193,8 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
    * signal which we don't want in the middle of a rectangle change.
    */
   if (gimp_tool_control_is_active (GIMP_TOOL (rect_tool)->control))
-    {
-      return;
-    }
- 
+    return;
+
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   old_function = private->function;
@@ -2528,10 +2542,10 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
   y1_b = pub_y1 - (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
   y2_b = pub_y2 + (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
 
-  return coord->x < x1_b ||
-         coord->x > x2_b ||
-         coord->y < y1_b ||
-         coord->y > y2_b;
+  return (coord->x < x1_b ||
+          coord->x > x2_b ||
+          coord->y < y1_b ||
+          coord->y > y2_b);
 }
 
 /**

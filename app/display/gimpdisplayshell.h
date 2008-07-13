@@ -99,8 +99,6 @@ struct _GimpDisplayShell
 
   gint               disp_width;       /*  width of drawing area              */
   gint               disp_height;      /*  height of drawing area             */
-  gint               disp_xoffset;
-  gint               disp_yoffset;
 
   gboolean           proximity;        /*  is a device in proximity           */
   gboolean           snap_to_guides;   /*  should the guides be snapped to?   */

@@ -171,22 +171,23 @@ static void
 gimp_thumb_box_style_set (GtkWidget *widget,
                           GtkStyle  *prev_style)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (widget);
+  GimpThumbBox *box   = GIMP_THUMB_BOX (widget);
+  GtkStyle     *style = gtk_widget_get_style (widget);
   GtkWidget    *ebox;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
   gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
 
   ebox = gtk_bin_get_child (GTK_BIN (widget));
 
   gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
   gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
 }
 
 static GimpProgress *

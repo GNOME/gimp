@@ -1353,7 +1353,10 @@ static void
 save_restart_update (GtkAdjustment *adjustment,
                      GtkWidget     *toggle)
 {
-  jsvals.restart = GTK_TOGGLE_BUTTON (toggle)->active ? adjustment->value : 0;
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
+    jsvals.restart = adjustment->value;
+  else
+    jsvals.restart = 0;
 
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);

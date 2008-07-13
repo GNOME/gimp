@@ -190,16 +190,15 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
                                      GIMP_DIRTY_DRAWABLE        |
                                      GIMP_DIRTY_SELECTION);
 
-  image_map_tool->drawable        = NULL;
-  image_map_tool->operation       = NULL;
-  image_map_tool->config          = NULL;
-  image_map_tool->image_map       = NULL;
+  image_map_tool->drawable     = NULL;
+  image_map_tool->operation    = NULL;
+  image_map_tool->config       = NULL;
+  image_map_tool->image_map    = NULL;
 
-  image_map_tool->shell           = NULL;
-  image_map_tool->main_vbox       = NULL;
-  image_map_tool->settings_box    = NULL;
-  image_map_tool->label_group     = NULL;
-  image_map_tool->settings_dialog = NULL;
+  image_map_tool->shell        = NULL;
+  image_map_tool->main_vbox    = NULL;
+  image_map_tool->settings_box = NULL;
+  image_map_tool->label_group  = NULL;
 }
 
 static GObject *

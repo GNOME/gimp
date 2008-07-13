@@ -19,6 +19,7 @@ libgimp/gimpprocview.c
 libgimp/gimpunitcache.c
 
 libgimpbase/gimpbaseenums.c
+libgimpbase/gimpcpuaccel.c
 libgimpbase/gimpmemsize.c
 libgimpbase/gimputils.c
 

@@ -1029,17 +1029,30 @@ gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
     {
       priv->polygon_modified = TRUE;
 
-      if (priv->constrain_angle           &&
-          priv->grabbed_segment_index > 0 &&
-          priv->n_points              > 0 )
+      if (priv->constrain_angle &&
+          priv->n_segment_indices > 1 )
         {
           gdouble start_point_x;
           gdouble start_point_y;
+          gint    segment_index;
+
+          /* Base constraints on the last segment vertex if we move
+           * the first one, otherwise base on the previous segment
+           * vertex
+           */
+          if (priv->grabbed_segment_index == 0)
+            {
+              segment_index = priv->n_segment_indices - 1;
+            }
+          else
+            {
+              segment_index = priv->grabbed_segment_index - 1;
+            }
 
           gimp_free_select_tool_get_segment_point (fst,
                                                    &start_point_x,
                                                    &start_point_y,
-                                                   priv->grabbed_segment_index - 1);
+                                                   segment_index);
               
           gimp_tool_motion_constrain (start_point_x,
                                       start_point_y,
@@ -1438,16 +1451,16 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
   Private      *priv      = GET_PRIVATE (tool);
 
-  if (tool->display != display)
-    return;
+  if (tool->display == display)
+    {
+      gimp_draw_tool_pause (draw_tool);
 
-  gimp_draw_tool_pause (draw_tool);
+      priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
 
-  priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+      priv->supress_handles = state & GDK_SHIFT_MASK   ? TRUE : FALSE;
 
-  priv->supress_handles = state & GDK_SHIFT_MASK   ? TRUE : FALSE;
-
-  gimp_draw_tool_resume (draw_tool);
+      gimp_draw_tool_resume (draw_tool);
+    }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
                                                 key,

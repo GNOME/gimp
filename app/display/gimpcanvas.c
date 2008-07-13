@@ -828,6 +828,7 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
+  GtkStyle  *style  = gtk_widget_get_style (widget);
   gdouble    wilber_width;
   gdouble    wilber_height;
   gdouble    width;
@@ -857,9 +858,9 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                      widget->allocation.height / factor - wilber_height * 1.1);
 
   cairo_set_source_rgba (cr,
-                         widget->style->fg[widget->state].red   / 65535.0,
-                         widget->style->fg[widget->state].green / 65535.0,
-                         widget->style->fg[widget->state].blue  / 65535.0,
+                         style->fg[widget->state].red   / 65535.0,
+                         style->fg[widget->state].green / 65535.0,
+                         style->fg[widget->state].blue  / 65535.0,
                          0.15);
   cairo_fill (cr);
 }

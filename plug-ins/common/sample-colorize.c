@@ -460,7 +460,7 @@ smp_toggle_callback (GtkWidget *widget,
 {
   gboolean *toggle_val = (gboolean *)data;
 
-  *toggle_val = GTK_TOGGLE_BUTTON (widget)->active;
+  *toggle_val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   if ((data == &g_di.sample_show_selection) ||
       (data == &g_di.sample_show_color))
@@ -1018,7 +1018,8 @@ levels_update (gint update)
 
   if (update & INPUT_SLIDERS)
     {
-      gdouble width, mid, tmp;
+      GtkStyle *style = gtk_widget_get_style (g_di.in_lvl_drawarea);
+      gdouble   width, mid, tmp;
 
       levels_erase_slider (g_di.in_lvl_drawarea->window, g_di.slider_pos[0]);
       levels_erase_slider (g_di.in_lvl_drawarea->window, g_di.slider_pos[1]);
@@ -1033,21 +1034,23 @@ levels_update (gint update)
       g_di.slider_pos[1] = (int) (mid + width * tmp + 0.5);
 
       levels_draw_slider (g_di.in_lvl_drawarea->window,
-                          g_di.in_lvl_drawarea->style->black_gc,
-                          g_di.in_lvl_drawarea->style->dark_gc[GTK_STATE_NORMAL],
+                          style->black_gc,
+                          style->dark_gc[GTK_STATE_NORMAL],
                           g_di.slider_pos[1]);
       levels_draw_slider (g_di.in_lvl_drawarea->window,
-                          g_di.in_lvl_drawarea->style->black_gc,
-                          g_di.in_lvl_drawarea->style->black_gc,
+                          style->black_gc,
+                          style->black_gc,
                           g_di.slider_pos[0]);
       levels_draw_slider (g_di.in_lvl_drawarea->window,
-                          g_di.in_lvl_drawarea->style->black_gc,
-                          g_di.in_lvl_drawarea->style->white_gc,
+                          style->black_gc,
+                          style->white_gc,
                           g_di.slider_pos[2]);
     }
 
   if (update & OUTPUT_SLIDERS)
     {
+      GtkStyle *style = gtk_widget_get_style (g_di.sample_drawarea);
+
       levels_erase_slider (g_di.sample_drawarea->window, g_di.slider_pos[3]);
       levels_erase_slider (g_di.sample_drawarea->window, g_di.slider_pos[4]);
 
@@ -1055,12 +1058,12 @@ levels_update (gint update)
       g_di.slider_pos[4] = DA_WIDTH * ((double) g_values.lvl_out_max / 255.0);
 
       levels_draw_slider (g_di.sample_drawarea->window,
-                          g_di.sample_drawarea->style->black_gc,
-                          g_di.sample_drawarea->style->black_gc,
+                          style->black_gc,
+                          style->black_gc,
                           g_di.slider_pos[3]);
       levels_draw_slider (g_di.sample_drawarea->window,
-                          g_di.sample_drawarea->style->black_gc,
-                          g_di.sample_drawarea->style->black_gc,
+                          style->black_gc,
+                          style->black_gc,
                           g_di.slider_pos[4]);
     }
 }

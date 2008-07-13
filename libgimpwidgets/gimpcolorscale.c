@@ -235,7 +235,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
-  GtkRange       *range;
+  GtkRange       *range = GTK_RANGE (widget);
+  GtkStyle       *style = gtk_widget_get_style (widget);
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
@@ -246,8 +247,6 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
-
-  range = GTK_RANGE (scale);
 
   /* This is ugly as it relies heavily on GTK+ internals, but I see no
    * other way to force the range to recalculate its layout. Might
@@ -304,19 +303,19 @@ gimp_color_scale_expose (GtkWidget      *widget,
       area.x += widget->allocation.x;
       area.y += widget->allocation.y;
 
-      gtk_paint_box (widget->style, widget->window,
+      gtk_paint_box (style, widget->window,
                      sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
                      GTK_SHADOW_IN,
                      &area, widget, "trough",
                      x, y, w, h);
 
-      gdk_gc_set_clip_rectangle (widget->style->black_gc, &area);
+      gdk_gc_set_clip_rectangle (style->black_gc, &area);
 
       switch (range->orientation)
         {
         case GTK_ORIENTATION_HORIZONTAL:
           gdk_draw_rgb_image_dithalign (widget->window,
-                                        widget->style->black_gc,
+                                        style->black_gc,
                                         x + trough_border + slider_size,
                                         y + trough_border + 1,
                                         scale->width,
@@ -329,7 +328,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
         case GTK_ORIENTATION_VERTICAL:
           gdk_draw_rgb_image_dithalign (widget->window,
-                                        widget->style->black_gc,
+                                        style->black_gc,
                                         x + trough_border + 1,
                                         y + trough_border + slider_size,
                                         scale->width,
@@ -341,11 +340,11 @@ gimp_color_scale_expose (GtkWidget      *widget,
           break;
         }
 
-      gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+      gdk_gc_set_clip_rectangle (style->black_gc, NULL);
     }
 
   if (GTK_WIDGET_IS_SENSITIVE (widget) && GTK_WIDGET_HAS_FOCUS (range))
-    gtk_paint_focus (widget->style, widget->window, GTK_WIDGET_STATE (widget),
+    gtk_paint_focus (style, widget->window, GTK_WIDGET_STATE (widget),
                      &area, widget, "trough",
                      widget->allocation.x + range->range_rect.x,
                      widget->allocation.y + range->range_rect.y,
@@ -374,8 +373,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
       GdkGC *gc;
 
       gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
-            widget->style->black_gc :
-            widget->style->dark_gc[GTK_STATE_INSENSITIVE]);
+            style->black_gc :
+            style->dark_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
@@ -394,8 +393,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
       gdk_gc_set_clip_rectangle (gc, NULL);
 
       gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
-            widget->style->white_gc :
-            widget->style->light_gc[GTK_STATE_INSENSITIVE]);
+            style->white_gc :
+            style->light_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
       switch (range->orientation)
@@ -739,6 +738,7 @@ static void
 gimp_color_scale_render_stipple (GimpColorScale *scale)
 {
   GtkWidget *widget = GTK_WIDGET (scale);
+  GtkStyle  *style  = gtk_widget_get_style (widget);
   guchar    *buf;
   guchar     insensitive[3];
   guint      x, y;
@@ -746,9 +746,9 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
   if ((buf = scale->buf) == NULL)
     return;
 
-  insensitive[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
-  insensitive[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
-  insensitive[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+  insensitive[0] = style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
+  insensitive[1] = style->bg[GTK_STATE_INSENSITIVE].green >> 8;
+  insensitive[2] = style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
 
   for (y = 0; y < scale->height; y++, buf += scale->rowstride)
     {

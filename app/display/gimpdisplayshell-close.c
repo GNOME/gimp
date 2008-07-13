@@ -90,7 +90,19 @@ gimp_display_shell_close (GimpDisplayShell *shell,
       image->dirty           &&
       shell->display->config->confirm_on_close)
     {
-      gimp_display_shell_close_dialog (shell, image);
+      /*  If there's a save dialog active for this image, then raise it.
+       *  (see bug #511965)
+       */
+      GtkWidget *dialog = g_object_get_data (G_OBJECT (image),
+                                             "gimp-file-save-dialog");
+      if (dialog)
+        {
+          gtk_window_present (GTK_WINDOW (dialog));
+        }
+      else
+        {
+          gimp_display_shell_close_dialog (shell, image);
+        }
     }
   else if (image)
     {

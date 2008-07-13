@@ -3,16 +3,15 @@
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
 #
-# Softcatala <linux a softcatala.org>, 2000-2001.
+# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
-# Quim Perez Noguer <noguer a osona.com>, 2005, 2006.
-# Joaquim Perez <noguer@gmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-12 00:01+0100\n"
+"POT-Creation-Date: 2008-06-24 19:25+0200\n"
 "PO-Revision-Date: 2008-02-29 19:08+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
@@ -22,37 +21,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
 msgstr "Falta la informació de l'excepció"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
 msgstr "S'ha produït un error en executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
 msgstr "_Més informació"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
+#: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
 msgstr "Sí"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
+#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Selecció del fitxer Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
 msgstr "Selecció de la carpeta Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "El valor d'entrada no és vàlid per a '%s'"
@@ -100,40 +99,6 @@ msgstr "_Mida de la lletra en píxels"
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
 msgstr "_Escriu un fitxer CSS separat"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Consola Python"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Cerca..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Navegador de funcions Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir '%s' per escriure: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "No s'ha pogut escriure a '%s': %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Desa la sortida de la consola Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive GIMP Python interpreter"
-msgstr "Intèrpret interactiu de Python del GIMP"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Consola"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
@@ -287,6 +252,40 @@ msgstr "Javascript per al onmouseover i el clicked"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Deshabilita l'animació de la taula"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:46
+msgid "Python Console"
+msgstr "Consola Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+msgid "_Browse..."
+msgstr "_Cerca..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:132
+msgid "Python Procedure Browser"
+msgstr "Navegador de funcions Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "No s'ha pogut obrir '%s' per escriure: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "No s'ha pogut escriure a '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Desa la sortida de la consola Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+msgid "Interactive GIMP Python interpreter"
+msgstr "Intèrpret interactiu de Python del GIMP"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:223
+msgid "_Console"
+msgstr "_Consola"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"

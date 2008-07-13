@@ -257,8 +257,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->disp_width             = 0;
   shell->disp_height            = 0;
-  shell->disp_xoffset           = 0;
-  shell->disp_yoffset           = 0;
 
   shell->proximity              = FALSE;
   shell->snap_to_guides         = TRUE;
@@ -937,12 +935,20 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
                                                        1, 1, image_width));
   shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
+
   GTK_WIDGET_UNSET_FLAGS (shell->hsb, GTK_CAN_FOCUS);
 
   /*  the vertical scrollbar  */
   shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
                                                        1, 1, image_height));
   shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
+
+  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
+  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
+
   GTK_WIDGET_UNSET_FLAGS (shell->vsb, GTK_CAN_FOCUS);
 
   /*  create the contents of the inner_table  ********************************/
@@ -1334,9 +1340,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                          GimpUnit          unit,
                          gdouble           scale)
 {
-  gint display_width;
-  gint display_height;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -1345,8 +1348,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                                      GTK_WIDGET (shell));
 
   gimp_display_shell_set_unit (shell, unit);
-  gimp_display_shell_set_initial_scale (shell, scale,
-                                        &display_width, &display_height);
+  gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_changed (shell);
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));

@@ -48,6 +48,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
 
@@ -511,35 +512,16 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  GimpProjection *proj;
-  TileManager    *tiles;
-  gint            level;
-  gint            level_width;
-  gint            level_height;
-  gint            sx, sy;
-  gint            sw, sh;
+  gint sx, sy;
+  gint sw, sh;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display->image)
     return;
 
-  proj = shell->display->image->projection;
-
-  level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
-
-  tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
-
-  level_width  = tile_manager_width (tiles);
-  level_height = tile_manager_height (tiles);
-
-  /*  the image's size in display coordinates  */
-  sx = shell->disp_xoffset - shell->offset_x;
-  sy = shell->disp_yoffset - shell->offset_y;
-
-  /* SCALE[XY] with pyramid level taken into account. */
-  sw = PROJ_ROUND (level_width  * (shell->scale_x * (1 << level)));
-  sh = PROJ_ROUND (level_height * (shell->scale_y * (1 << level)));
+  gimp_display_shell_get_scaled_image_viewport_offset (shell, &sx, &sy);
+  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
 
   /*  check if the passed in area intersects with
    *  both the display and the image
@@ -574,14 +556,19 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
         {
           for (j = x; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
             {
+              gint disp_xoffset, disp_yoffset;
               gint dx, dy;
 
               dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
               dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
+              gimp_display_shell_get_disp_offset (shell,
+                                                  &disp_xoffset,
+                                                  &disp_yoffset);
+
               gimp_display_shell_render (shell,
-                                         j - shell->disp_xoffset,
-                                         i - shell->disp_yoffset,
+                                         j - disp_xoffset,
+                                         i - disp_yoffset,
                                          dx, dy,
                                          shell->highlight ? &rect : NULL);
             }

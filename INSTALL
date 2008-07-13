@@ -28,18 +28,22 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have GEGL version 0.0.18 or newer and babl version
+  2. You need intltool (at least 0.35.5, but preferably a newer version).
+     Intltool can be downloaded from
+     http://ftp.gnome.org/pub/gnome/sources/intltool/  
+
+  3. You need to have GEGL version 0.0.18 or newer and babl version
      0.0.22 or newer. You can get it from http://gegl.org/ or check
      it out from the subversion repository:
 
        http://svn.gnome.org/svn/babl/trunk
        http://svn.gnome.org/svn/gegl/trunk
 
-  3. You need to have installed GTK+ version 2.12.1 or newer.  GIMP
+  4. You need to have installed GTK+ version 2.12.1 or newer.  GIMP
      also need a recent versions of GLib (>= 2.16.1) and Pango (>= 1.18.0).
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
 
-  4. We require PangoFT2, a Pango backend that uses FreeType2. Make
+  5. We require PangoFT2, a Pango backend that uses FreeType2. Make
      sure you have FreeType2 and fontconfig installed before you
      compile Pango.  FreeType2 can be downloaded from
      http://www.freetype.org/.  Fontconfig from
@@ -48,28 +52,28 @@ header files installed.
      Older versions are known to have bugs that seriously affect the
      stability of GIMP.
 
-  5. We use cairo, which is hosted at http://www.cairographics.org/.
+  6. We use cairo, which is hosted at http://www.cairographics.org/.
 
-  6. We use dbus-glib if available. Grab it from
+  7. We use dbus-glib if available. Grab it from
      http://dbus.freedesktop.org/releases/dbus-glib/
 
-  7. You may want to install other third party libraries or programs
+  8. You may want to install other third party libraries or programs
      that are needed for some of the available plugins. We recommend
      to check that the following libraries are installed: libpng,
      libjpeg, libpoppler, libtiff, webkit, libmng, librsvg, libwmf.
 
-  8. The Python extension requires Python development headers to be
+  9. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
-  9. Configure GIMP by running the `configure' script. You may want
+ 10. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 10. Build GIMP by running `make'. The use of GNU make is recommended.
+ 11. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 11. Install GIMP by running `make install'. In order to avoid clashes
+ 12. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.5.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.5.
@@ -225,6 +229,10 @@ These are:
   --disable-gimp-console.  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
+
+  --enable-gimp-remote.  Use this option if you want the gimp-remote
+     binary to be built. This only works with X11 and it is obsolete if#
+     your platform has DBus support.
 
   --disable-python.  If for some reason you don't want to build the
      Python based pygimp plug-in, you can use --disable-python.

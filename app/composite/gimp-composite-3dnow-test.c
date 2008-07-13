@@ -13,7 +13,7 @@
 #include "gimp-composite-generic.h"
 #include "gimp-composite-3dnow.h"
 
-int
+static int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
 #if defined(COMPILE_3DNOW_IS_OKAY)

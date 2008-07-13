@@ -137,7 +137,7 @@ gimp_data_factory_new (Gimp                             *gimp,
                        const GimpDataFactoryLoaderEntry *loader_entries,
                        gint                              n_loader_entries,
                        GimpDataNewFunc                   new_func,
-                       GimpDataGetStandardFunc           standard_func)
+                       GimpDataGetStandardFunc           get_standard_func)
 {
   GimpDataFactory *factory;
 
@@ -153,7 +153,7 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory->gimp                   = gimp;
   factory->container              = gimp_list_new (data_type, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (factory->container),
-                           (GCompareFunc) gimp_data_name_compare);
+			   (GCompareFunc) gimp_data_compare);
 
   factory->path_property_name     = g_strdup (path_property_name);
   factory->writable_property_name = g_strdup (writable_property_name);
@@ -162,7 +162,7 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory->n_loader_entries       = n_loader_entries;
 
   factory->data_new_func          = new_func;
-  factory->data_get_standard_func = standard_func;
+  factory->data_get_standard_func = get_standard_func;
 
   return factory;
 }

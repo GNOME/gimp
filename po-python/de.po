@@ -3,52 +3,52 @@
 # Copyright (C) 2006 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>, 2006.
 # Hendrik Brandt <heb@gnome-de.org>, 2006-2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-04 12:14+0100\n"
-"PO-Revision-Date: 2008-03-04 12:14+0100\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2008-07-09 10:45+0200\n"
+"PO-Revision-Date: 2008-07-09 11:00+0100\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
 msgstr "Keine Informationen zur Ausnahme"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
 msgstr "Beim Ausführen von %s ist ein Fehler aufgetreten"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
 msgstr "_Mehr Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
+#: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
 msgstr "Nein"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
+#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu-Dateiauswahl"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu-Ordnerauswahl"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ungültige Eingabe für »%s«"
@@ -96,40 +96,6 @@ msgstr "Schrift_größe in Pixeln"
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
 msgstr "_Separate CSS-Datei schreiben"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Python-Konsole"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Durchsuchen …"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Python-Prozedur-Browser"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "In »%s« konnte nicht geschrieben werden: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Python-Fu-Konsolenausgabe speichern"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktiver Gimp-Python-Interpreter"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Konsole"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
@@ -204,15 +170,15 @@ msgstr "Zu _sortierender Kanal"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr "Rot oder Farbton"
+msgstr "Rot bzw. Farbton"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
-msgstr "Grün oder Sättigung"
+msgstr "Grün bzw. Sättigung"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
-msgstr "Blau oder Wert"
+msgstr "Blau bzw. Wert"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
@@ -285,6 +251,40 @@ msgstr "Javascript für onmouseover und clicked"
 msgid "Skip animation for table caps"
 msgstr "Animation für Tabellenkopf überspringen"
 
+#: ../plug-ins/pygimp/plug-ins/python-console.py:46
+msgid "Python Console"
+msgstr "Python-Konsole"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+msgid "_Browse..."
+msgstr "_Durchsuchen …"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:132
+msgid "Python Procedure Browser"
+msgstr "Python-Prozedur-Browser"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "In »%s« konnte nicht geschrieben werden: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Python-Fu-Konsolenausgabe speichern"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktiver Gimp-Python-Interpreter"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:223
+msgid "_Console"
+msgstr "_Konsole"
+
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr ""
@@ -307,11 +307,12 @@ msgstr "_Schräge"
 msgid "_Drop shadow"
 msgstr "S_chlagschatten"
 
+# XXX: Schlagschatten horizontal (_X-Richtung) versetzen (!?)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
 msgstr "Schlagschatten _X-Versatz"
 
+# XXX: Schlagschatten vertikal (_Y-Richtung) versetzen (!?)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Schlagschatten _Y-Versatz"
-

@@ -180,7 +180,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   g_object_set (options, "show-rulers", show, NULL);
 
-  table = GTK_TABLE (GTK_WIDGET (shell->canvas)->parent);
+  table = GTK_TABLE (gtk_widget_get_parent (GTK_WIDGET (shell->canvas)));
 
   if (show)
     {
@@ -220,6 +220,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
                                         gboolean          show)
 {
   GimpDisplayOptions *options;
+  GtkWidget          *parent;
   GtkBox             *hbox;
   GtkBox             *vbox;
 
@@ -229,8 +230,11 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
 
   g_object_set (options, "show-scrollbars", show, NULL);
 
-  hbox = GTK_BOX (shell->vsb->parent->parent);
-  vbox = GTK_BOX (shell->hsb->parent->parent);
+  parent = gtk_widget_get_parent (shell->vsb);
+  hbox   = GTK_BOX (gtk_widget_get_parent (parent));
+
+  parent = gtk_widget_get_parent (shell->hsb);
+  vbox   = GTK_BOX (gtk_widget_get_parent (parent));
 
   if (show)
     {
@@ -585,9 +589,13 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
       if (shell->canvas)
         {
+          GtkStyle *style;
+
           gtk_widget_ensure_style (shell->canvas);
-          gimp_rgb_set_gdk_color (&color,
-                                  shell->canvas->style->bg + GTK_STATE_NORMAL);
+
+          style = gtk_widget_get_style (shell->canvas);
+
+          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
         }
       break;
 

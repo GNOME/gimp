@@ -420,9 +420,14 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
-        gimp_curve_set_point (curve, j,
-                              (gdouble) index[i][j] / 255.0,
-                              (gdouble) value[i][j] / 255.0);
+        {
+          if (index[i][j] < 0 || value[i][j] < 0)
+            gimp_curve_set_point (curve, j, -1, -1);
+          else
+            gimp_curve_set_point (curve, j,
+                                  (gdouble) index[i][j] / 255.0,
+                                  (gdouble) value[i][j] / 255.0);
+        }
 
       gimp_data_thaw (GIMP_DATA (curve));
     }

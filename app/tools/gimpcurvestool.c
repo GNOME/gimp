@@ -584,6 +584,7 @@ gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
   FILE           *file;
   gboolean        success;
+  gchar           header[64];
 
   file = g_fopen (filename, "rt");
 
@@ -596,11 +597,32 @@ gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
       return FALSE;
     }
 
-  success = gimp_curves_config_load_cruft (tool->config, file, error);
+  if (! fgets (header, sizeof (header), file))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not read header from '%s': %s"),
+                   gimp_filename_to_utf8 (filename),
+                   g_strerror (errno));
+      fclose (file);
+      return FALSE;
+    }
+
+  if (g_str_has_prefix (header, "# GIMP Curves File\n"))
+    {
+      rewind (file);
+
+      success = gimp_curves_config_load_cruft (tool->config, file, error);
+
+      fclose (file);
+
+      return success;
+    }
 
   fclose (file);
 
-  return success;
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
+                                                                    filename,
+                                                                    error);
 }
 
 static gboolean

@@ -855,7 +855,7 @@ static void
 my_toggle_callback (GtkWidget *widget,
                     gboolean  *data)
 {
-  gint val = GTK_TOGGLE_BUTTON (widget)->active;
+  gint val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   *data = val;
 

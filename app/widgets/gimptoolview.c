@@ -152,8 +152,9 @@ gimp_tool_view_new (GimpViewType     view_type,
 
   if (view_type == GIMP_VIEW_TYPE_LIST)
     {
-      GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+      GimpContainerTreeView *tree_view   = GIMP_CONTAINER_TREE_VIEW (editor->view);
       GtkWidget             *tree_widget = GTK_WIDGET (tree_view);
+      GtkStyle              *tree_style  = gtk_widget_get_style (tree_widget);
       GtkTreeViewColumn     *column;
       GtkCellRenderer       *eye_cell;
       GtkIconSize            icon_size;
@@ -167,9 +168,9 @@ gimp_tool_view_new (GimpViewType     view_type,
                                       GIMP_STOCK_VISIBLE,
                                       GTK_ICON_SIZE_BUTTON,
                                       view_size -
-                                      2 * tree_widget->style->xthickness,
+                                      2 * tree_style->xthickness,
                                       view_size -
-                                      2 * tree_widget->style->ythickness);
+                                      2 * tree_style->ythickness);
       g_object_set (eye_cell, "stock-size", icon_size, NULL);
 
       gtk_tree_view_column_pack_start (column, eye_cell, FALSE);

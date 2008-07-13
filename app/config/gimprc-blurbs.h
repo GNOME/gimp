@@ -420,8 +420,8 @@ N_("Sets the size of the previews in the Undo History.")
 N_("When enabled, pressing F1 will open the help browser.")
 
 #define USER_MANUAL_ONLINE_BLURB  \
-N_("When enabled, the online user manual will be used by the help system. " \
-   "Otherwise the locally installed copy is used.")
+"When enabled, the online user manual will be used by the help system. " \
+"Otherwise the locally installed copy is used."
 
 #define USER_MANUAL_ONLINE_URI_BLURB \
 "The location of the online user manual. This is used if " \

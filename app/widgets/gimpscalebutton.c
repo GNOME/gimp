@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+#define __GTK_SCALE_BUTTON_H__
+#define __GTK_VOLUME_BUTTON_H__
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -54,6 +57,12 @@ gimp_scale_button_init (GimpScaleButton *button)
 {
   GtkWidget *image = gtk_bin_get_child (GTK_BIN (button));
 
+  gtk_widget_hide (GTK_SCALE_BUTTON (button)->plus_button);
+  gtk_widget_set_no_show_all (GTK_SCALE_BUTTON (button)->plus_button, TRUE);
+
+  gtk_widget_hide (GTK_SCALE_BUTTON (button)->minus_button);
+  gtk_widget_set_no_show_all (GTK_SCALE_BUTTON (button)->minus_button, TRUE);
+
   g_signal_connect (image, "expose-event",
                     G_CALLBACK (gimp_scale_button_image_expose),
                     button);
@@ -81,14 +90,21 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
 {
   GtkAdjustment *adj;
   gchar         *text;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
-  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+
+  value = gtk_adjustment_get_value (adj);
+  lower = adj->lower;
+  upper = adj->upper;
 
   /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
 
   text = g_strdup_printf ("%d\342\200\211%%",
-                          (gint) (0.5 + ((adj->value - adj->lower) * 100.0 /
-                                         (adj->upper - adj->lower))));
+                          (gint) (0.5 + ((value - lower) * 100.0 /
+                                         (upper - lower))));
 
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), text);
   g_free (text);
@@ -99,6 +115,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
                                 GdkEventExpose  *event,
                                 GimpScaleButton *button)
 {
+  GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAdjustment *adj;
   cairo_t       *cr;
   gint           value;
@@ -107,7 +124,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   steps = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
-  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   if (steps < 1)
     return TRUE;
@@ -143,7 +160,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
   cairo_stroke (cr);
 
   for ( ; i < steps; i++)
@@ -152,7 +169,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_INSENSITIVE]);
+  gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_INSENSITIVE]);
   cairo_stroke (cr);
 
   cairo_destroy (cr);
@@ -174,7 +191,8 @@ gimp_scale_button_new (gdouble value,
   adj  = gtk_adjustment_new (value, min, max, step, step, 0);
 
   return g_object_new (GIMP_TYPE_SCALE_BUTTON,
-                       "adjustment", adj,
-                       "size",       GTK_ICON_SIZE_MENU,
+                       "orientation", GTK_ORIENTATION_HORIZONTAL,
+                       "adjustment",  adj,
+                       "size",        GTK_ICON_SIZE_MENU,
                        NULL);
 }

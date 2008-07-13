@@ -865,13 +865,16 @@ static void
 gimp_ui_manager_item_realize (GtkWidget     *widget,
                               GimpUIManager *manager)
 {
+  GtkWidget *menu;
   GtkWidget *submenu;
 
   g_signal_handlers_disconnect_by_func (widget,
                                         gimp_ui_manager_item_realize,
                                         manager);
 
-  if (GTK_IS_MENU_SHELL (widget->parent))
+  menu = gtk_widget_get_parent (widget);
+
+  if (GTK_IS_MENU_SHELL (menu))
     {
       static GQuark quark_key_press_connected = 0;
 
@@ -879,14 +882,14 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
         quark_key_press_connected =
           g_quark_from_static_string ("gimp-menu-item-key-press-connected");
 
-      if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (widget->parent),
+      if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (menu),
                                                  quark_key_press_connected)))
         {
-          g_signal_connect (widget->parent, "key-press-event",
+          g_signal_connect (menu, "key-press-event",
                             G_CALLBACK (gimp_ui_manager_item_key_press),
                             manager);
 
-          g_object_set_qdata (G_OBJECT (widget->parent),
+          g_object_set_qdata (G_OBJECT (menu),
                               quark_key_press_connected,
                               GINT_TO_POINTER (TRUE));
         }
@@ -971,7 +974,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
           if (! menu_item)
             break;
 
-          widget = menu_item->parent;
+          widget = gtk_widget_get_parent (menu_item);
 
           if (! widget)
             break;

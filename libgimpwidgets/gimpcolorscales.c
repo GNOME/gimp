@@ -325,7 +325,7 @@ gimp_color_scales_toggle_update (GtkWidget       *widget,
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       gint i;
 

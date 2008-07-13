@@ -32,8 +32,6 @@
 
 #include <gegl.h>
 
-#include <gegl.h>
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -63,6 +61,7 @@
 #include "units.h"
 
 #include "gimp-intl.h"
+
 
 /*  local prototypes  */
 

@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include "global.h"
 #include "selection-to-path.h"
 #include "bitmap.h"
@@ -253,7 +251,7 @@ append_coordinate (pixel_outline_type *o, int x, int y, edge_type edge)
       break;
 
     default:
-      printf ("append_coordinate: Bad edge (%d)", edge);
+      g_printerr ("append_coordinate: Bad edge (%d)", edge);
     }
 
   append_outline_pixel (o, c);

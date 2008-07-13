@@ -194,6 +194,7 @@ GimpSessionInfoBook *
 gimp_session_info_book_from_widget (GimpDockbook *dockbook)
 {
   GimpSessionInfoBook *info;
+  GtkWidget           *parent;
   GList               *children;
   GList               *list;
 
@@ -201,9 +202,11 @@ gimp_session_info_book_from_widget (GimpDockbook *dockbook)
 
   info = gimp_session_info_book_new ();
 
-  if (GTK_IS_VPANED (GTK_WIDGET (dockbook)->parent))
+  parent = gtk_widget_get_parent (GTK_WIDGET (dockbook));
+
+  if (GTK_IS_VPANED (parent))
     {
-      GtkPaned *paned = GTK_PANED (GTK_WIDGET (dockbook)->parent);
+      GtkPaned *paned = GTK_PANED (parent);
 
       if (GTK_WIDGET (dockbook) == gtk_paned_get_child2 (paned))
         info->position = gtk_paned_get_position (paned);

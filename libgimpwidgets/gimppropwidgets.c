@@ -137,7 +137,8 @@ gimp_prop_check_button_callback (GtkWidget *widget,
     return;
 
   g_object_set (config,
-                param_spec->name, GTK_TOGGLE_BUTTON (widget)->active,
+                param_spec->name,
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)),
                 NULL);
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
@@ -154,7 +155,7 @@ gimp_prop_check_button_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  if (GTK_TOGGLE_BUTTON (button)->active != value)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) != value)
     {
       g_signal_handlers_block_by_func (button,
                                        gimp_prop_check_button_callback,
@@ -260,7 +261,8 @@ gimp_prop_enum_check_button_callback (GtkWidget *widget,
 
   g_object_set (config,
                 param_spec->name,
-                GTK_TOGGLE_BUTTON (widget)->active ? true_value : false_value,
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ?
+                true_value : false_value,
                 NULL);
 
   gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (widget), FALSE);
@@ -296,7 +298,7 @@ gimp_prop_enum_check_button_notify (GObject    *config,
   gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (button),
                                       inconsistent);
 
-  if (GTK_TOGGLE_BUTTON (button)->active != active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) != active)
     {
       g_signal_handlers_block_by_func (button,
                                        gimp_prop_enum_check_button_callback,
@@ -954,7 +956,7 @@ static void
 gimp_prop_radio_button_callback (GtkWidget *widget,
                                  GObject   *config)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GParamSpec *param_spec;
       gint        value;

@@ -588,7 +588,7 @@ static void
 gimp_container_popup_view_type_toggled (GtkWidget          *button,
                                         GimpContainerPopup *popup)
 {
-  if (GTK_TOGGLE_BUTTON (button)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
       GimpViewType view_type;
 

@@ -555,12 +555,7 @@ tools_activate_enum_action (const gchar *action_desc,
       if (GIMP_IS_ENUM_ACTION (action) &&
           GIMP_ENUM_ACTION (action)->value_variable)
         {
-          gint old_value;
-
-          old_value = GIMP_ENUM_ACTION (action)->value;
-          GIMP_ENUM_ACTION (action)->value = value;
-          gtk_action_activate (action);
-          GIMP_ENUM_ACTION (action)->value = old_value;
+          gimp_enum_action_selected (GIMP_ENUM_ACTION (action), value);
         }
     }
 

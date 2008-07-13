@@ -493,12 +493,17 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   GimpStatusbar *statusbar  = GIMP_STATUSBAR (progress);
   GtkWidget     *label      = GTK_STATUSBAR (statusbar)->label;
   PangoLayout   *layout;
-  const gchar   *stock_id   = gimp_get_message_stock_id (severity);
+  const gchar   *stock_id;
   gboolean       handle_msg = FALSE;
 
-  /*  we can only handle short one-liners  */
+  /*  don't accept a message if we are already displaying one  */
+  if (statusbar->temp_timeout_id)
+    return FALSE;
 
+  /*  we can only handle short one-liners  */
   layout = gtk_widget_create_pango_layout (label, message);
+
+  stock_id = gimp_get_message_stock_id (severity);
 
   if (pango_layout_get_line_count (layout) == 1)
     {

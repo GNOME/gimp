@@ -155,7 +155,7 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
 
   /*  eek  */
   gtk_box_pack_end (GTK_BOX (editor->view),
-                    factory_view->spacing_scale->parent,
+                    gtk_widget_get_parent (factory_view->spacing_scale),
                     FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
@@ -242,7 +242,7 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
                                        gimp_brush_factory_view_spacing_changed,
                                        view);
 
-      gimp_brush_set_spacing (brush, adjustment->value);
+      gimp_brush_set_spacing (brush, gtk_adjustment_get_value (adjustment));
 
       g_signal_handlers_unblock_by_func (brush,
                                          gimp_brush_factory_view_spacing_changed,

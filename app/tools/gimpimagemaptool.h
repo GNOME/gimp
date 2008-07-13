@@ -53,9 +53,6 @@ struct _GimpImageMapTool
   GtkWidget             *main_vbox;
   GtkWidget             *settings_box;
   GtkSizeGroup          *label_group;
-
-  /* settings file dialog */
-  GtkWidget             *settings_dialog;
 };
 
 struct _GimpImageMapToolClass

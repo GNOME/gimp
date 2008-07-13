@@ -179,6 +179,7 @@ static void
 gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 {
   GimpContainerBox *box = GIMP_CONTAINER_BOX (grid_view);
+  GtkWidget        *viewport;
 
   grid_view->rows          = 1;
   grid_view->columns       = 1;
@@ -195,14 +196,14 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                          grid_view->wrap_box);
-  gtk_viewport_set_shadow_type (GTK_VIEWPORT (grid_view->wrap_box->parent),
-                                GTK_SHADOW_NONE);
+  viewport = gtk_widget_get_parent (grid_view->wrap_box);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_widget_show (grid_view->wrap_box);
 
-  g_signal_connect (grid_view->wrap_box->parent, "size-allocate",
+  g_signal_connect (viewport, "size-allocate",
                     G_CALLBACK (gimp_container_grid_view_viewport_resized),
                     grid_view);
-  g_signal_connect (grid_view->wrap_box->parent, "button-press-event",
+  g_signal_connect (viewport, "button-press-event",
                     G_CALLBACK (gimp_container_grid_view_button_press),
                     grid_view);
 
@@ -374,8 +375,10 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
     }
   else
     {
-      *x += widget->style->xthickness;
-      *y += widget->style->ythickness;
+      GtkStyle *style = gtk_widget_get_style (widget);
+
+      *x += style->xthickness;
+      *y += style->ythickness;
     }
 
   gimp_menu_position (menu, x, y);

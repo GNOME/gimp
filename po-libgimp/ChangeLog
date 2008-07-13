@@ -1,3 +1,25 @@
+2008-07-12  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fix intltool warning by adding gimpcpuaccel.c
+
+	* de.po: updated german translation.
+
+2008-07-03  Yannig Marchegay <yannig@marchegay.org>
+
+	* oc.po: Updated Occitan translation.
+
+2008-07-02  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
+
+2008-06-24  Gil Forcada  <gforcada@gnome.org>
+
+	* ca.po: Updated Catalan translation by Joaquim Perez.
+
 2008-06-06  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.skip: fixed the insanity using a new feature in

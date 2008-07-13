@@ -60,6 +60,9 @@ Show all command\-line options.
 .B  \-\-help-gtk
 Show GTK+ command\-line options.
 .TP 8
+.B  \-\-help-gegl
+Show GEGL command\-line options.
+.TP 8
 .B \-v, \-\-version
 Output version information and exit. When combined with the \-\-verbose
 option, version information about libraries used by GIMP is shown as well.
@@ -193,7 +196,7 @@ placed in users' home directories the first time GIMP is run.
 together with the tool, colors, brush, pattern and gradient
 associated to that device.
 
-\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK config
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK+ config
 settings. Options such as widget color and fonts sizes can be set
 here.
 
@@ -316,7 +319,7 @@ available on the web at http://bugzilla.gnome.org/. Before reporting
 bugs, please check to see if the bug has already been reported.
 
 When reporting GIMP bugs, it is important to include a reliable way to
-reproduce the bug, version number of GIMP (and probably GTK), OS name
+reproduce the bug, version number of GIMP (and probably GTK+), OS name
 and version, and any relevant hardware specs. If a bug is causing a
 crash, it is very useful if a stack trace can be provided. And of
 course, patches to rectify the bug are even better.
@@ -345,4 +348,3 @@ world.
 .SH "SEE ALSO"
 .BR gimprc (5),
 .BR gimptool (1),
-.BR gimp\-remote (1)

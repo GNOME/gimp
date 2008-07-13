@@ -260,12 +260,11 @@ static void
 gimp_posterize_tool_levels_changed (GtkAdjustment     *adjustment,
                                     GimpPosterizeTool *posterize_tool)
 {
-  GimpPosterizeConfig *config = posterize_tool->config;
-  gint                 value  = ROUND (adjustment->value);
+  gint value = ROUND (gtk_adjustment_get_value (adjustment));
 
-  if (config->levels != value)
+  if (posterize_tool->config->levels != value)
     {
-      g_object_set (config,
+      g_object_set (posterize_tool->config,
                     "levels", value,
                     NULL);
     }

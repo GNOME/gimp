@@ -128,9 +128,10 @@ gimp_action_class_init (GimpActionClass *klass)
 static void
 gimp_action_init (GimpAction *action)
 {
-  action->color     = NULL;
-  action->viewable  = NULL;
-  action->ellipsize = PANGO_ELLIPSIZE_NONE;
+  action->color           = NULL;
+  action->viewable        = NULL;
+  action->ellipsize       = PANGO_ELLIPSIZE_NONE;
+  action->max_width_chars = -1;
 
   g_signal_connect (action, "notify::tooltip",
                     G_CALLBACK (gimp_action_tooltip_notify),
@@ -301,31 +302,25 @@ gimp_action_set_proxy (GimpAction *action,
 
       area = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (area && ! GIMP_IS_COLOR_AREA (area))
+      if (GIMP_IS_COLOR_AREA (area))
         {
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          area = NULL;
+          gimp_color_area_set_color (GIMP_COLOR_AREA (area), action->color);
         }
-
-      if (! area)
+      else
         {
-          GtkSettings *settings = gtk_widget_get_settings (proxy);
-          gint         width, height;
+          gint width, height;
 
           area = gimp_color_area_new (action->color,
                                       GIMP_COLOR_AREA_SMALL_CHECKS, 0);
           gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
 
-          gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU,
+          gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (proxy),
+                                             GTK_ICON_SIZE_MENU,
                                              &width, &height);
 
           gtk_widget_set_size_request (area, width, height);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), area);
           gtk_widget_show (area);
-        }
-      else
-        {
-          gimp_color_area_set_color (GIMP_COLOR_AREA (area), action->color);
         }
     }
   else if (action->viewable)
@@ -334,20 +329,17 @@ gimp_action_set_proxy (GimpAction *action,
 
       view = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (view && (! GIMP_IS_VIEW (view) ||
-                   ! g_type_is_a (G_TYPE_FROM_INSTANCE (action->viewable),
-                                  GIMP_VIEW (view)->renderer->viewable_type)))
+      if (GIMP_IS_VIEW (view) &&
+          g_type_is_a (G_TYPE_FROM_INSTANCE (action->viewable),
+                       GIMP_VIEW (view)->renderer->viewable_type))
         {
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          view = NULL;
+          gimp_view_set_viewable (GIMP_VIEW (view), action->viewable);
         }
-
-      if (! view)
+      else
         {
-          GtkSettings *settings = gtk_widget_get_settings (proxy);
-          GtkIconSize  size;
-          gint         width, height;
-          gint         border_width;
+          GtkIconSize size;
+          gint        width, height;
+          gint        border_width;
 
           if (GIMP_IS_IMAGEFILE (action->viewable))
             {
@@ -360,17 +352,14 @@ gimp_action_set_proxy (GimpAction *action,
               border_width = 1;
             }
 
-          gtk_icon_size_lookup_for_settings (settings, size, &width, &height);
+          gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (proxy),
+                                             size, &width, &height);
 
           view = gimp_view_new_full (action->context, action->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
           gtk_widget_show (view);
-        }
-      else
-        {
-          gimp_view_set_viewable (GIMP_VIEW (view), action->viewable);
         }
     }
   else

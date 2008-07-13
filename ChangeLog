@@ -1,3 +1,24 @@
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): BORDER_PEN_WIDTH is a normal
+	constant, no need for voodoo.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_scaled_image_size): New function that
+	contains logic previously kept in gimp_display_shell_draw_area().
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): Use the new function.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Don't
+	ask gimp_display_shell_set_initial_scale() for display size, we
+	don't care anyway.
+
 2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimp.c: cache pattern, gradient and palette tags in addition
@@ -29,6 +50,111 @@
 	* app/widgets/gimptagentry.c (gimp_tag_entry_query_tag): fixed use of
 	  uninitialized variable.
 
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	The following change is conceptually based on a patch by
+	Alexia Death and implements the core functionality for
+	bug #362915.
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_clamp_offsets): Clamp the offsets in
+	such a way that allows to scroll beyond the image border.
+
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Put common
+	scrollbar range setup code here.
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Use above helper functions for
+	setting up scrollbar range.
+
+	* app/display/gimpdisplayshell-callbacks.c: Handle adjustment of
+	the scrollbar range when they are about to change value.
+
+	* app/display/gimpdisplayshell.c: Always keep the scrollbar
+	steppers sensitive to user input.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c:
+	Replace gimp_display_shell_scroll() with
+	gimp_display_shell_center_around_image_coordinate() since that is
+	easier to map to something sensible when we allow to scroll beyond
+	image border.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_marker_changed): Adapt to the new
+	interface.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_viewport): Remove invalid TODO.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpmarshal.list: Added
+	VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE marshaller.
+
+	* app/widgets/gimpnavigationview.c: Make the "marker-changed"
+	signal also pass the marker width and height as parameters.
+
+	* app/display/gimpnavigationeditor.c: Updated accordingly.
+
+2008-07-12  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: fixed check for babl.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* configure.in: Prefered casing of `babl' is `babl'.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): The scrollbars should be setup
+	using the new offset, not the old counterpart.
+
+2008-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: formatting.
+
+2008-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpparamspecs.[ch]: added GIMP_TYPE_COLOR_ARRAY and
+	GIMP_TYPE_PARAM_COLOR_ARRAY in preparation for fixing bug #332206.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Renamed the variables sx and sy
+	to sw and sh.
+
+2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	In this ChangeLog entry, disp_offset means disp_[xy]offset and
+	offset means offset_[xy].
+
+	* app/display/gimpdisplayshell.[ch]: Kill disp_offset! We now
+	represent that by a negative offset.
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_clamp_offsets)
+	(gimp_display_shell_get_scaled_image_viewport_offset): Adjust
+	accordingly to preserve current behaviour.
+
+	(gimp_display_shell_get_disp_offset): New function to get the old
+	disp_offset based on the new offset.
+
+	(gimp_display_shell_get_render_start_offset): New function to get
+	the old offset based on the new offset.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-render.c: Get rid of disp_offset
+	and use gimp_display_shell_get_disp_offset() and
+	gimp_display_shell_get_render_start_offset() instead.
+
 2008-07-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimptagcache.[ch]: detect resource file renames/moves and
@@ -42,11 +168,248 @@
 	* app/core/gimptagged.c (gimp_tagged_get_checksum)
 	* app/core/gimptagged.h: checksum support for tagged objects.
 
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Remove #if zeroed debug output.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Restructure the way the rulers
+	are setup, partly by making use of the new nifty
+	gimp_display_shell_get_scaled_image_viewport_offset().
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-transform.c
+	(gimp_display_shell_transform_xy_f)
+	(gimp_display_shell_untransform_xy_f): We can use
+	gimp_display_shell_get_scaled_image_viewport_offset() here
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_get_scaled_viewport): and here.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_viewport)
+	(gimp_display_shell_get_scaled_viewport)
+	(gimp_display_shell_get_scaled_image_viewport_offset): const- and
+	g_return_if_fail-ify.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprotatetool.c (gimp_rotate_tool_key_press): simplified.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_scaled_image_viewport_offset): New
+	function to replace any occurance of
+
+	  shell->disp_[xy]offset - shell->offset_[xy]
+
+	that is just an implementation specific way of saying the same
+	thing.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-transform.c: Make the code less
+	implementation dependant by using the new function.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): Update comment.
+
+2008-07-11  Tor Lillqvist  <tml@novell.com>
+
+	* app/app.c: Drop duplicated #include <gegl.h>.
+
+	* app/gui/gui-unique.c (idle_open_data_new): Fix g_slice_new()
+	use.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/selection-to-path/pxl-outline.c (append_coordinate):
+	use g_printerr() for debug output.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui-unique.c: dispatch opening to an idle handler.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: removed reference to gimp-remote(1).
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* docs/Makefile.am: made the build of gimp-remote optional and
+	disable it by default.
+
+	* INSTALL: document the --enable-gimp-remote configure option.
+
+2008-07-11  Tor Lillqvist  <tml@novell.com>
+
+	* app/unique.c (gimp_unique_filename_to_uri): Check GError being
+	unset correctly.
+	(gimp_unique_win32_open): Add missing semicolon.
+
+	* app/gui/gui-unique.c: Include <windows.h> on Windows.
+	(gui_unique_win32_init): Drop unused variable.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpscanconvert.c
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpvectors.c: include <cairo.h> instead of
+	<cairo/cairo.h>.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/unique.c
+	* app/gui/gui-unique.[ch]: merged code from bug #410439 to provide
+	builtin gimp-win-remote functionality for Win32. This is untested
+	and most probably doesn't even compile.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/gui-unique.[ch]: new files providing functionality to
+	ensure a unique GUI instance of GIMP. Code split out of gui.c.
+
+	* app/gui/gui.c: changed accordingly.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am 
+	* app/unique.[ch]: new files containing functionality to check for
+	an already running instance of GIMP of notifying it about files to
+	open. Code split out of main.c.
+
+	* app/main.c: changed accordingly.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c (gimp_init_malloc): removed misleading comment.
+
+2008-07-11  Sven Neumann  <sven@gimp.org>
+
+	* app/base/color-balance.c (color_balance_create_lookup_tables):
+	formatting, to improve readability.
+
+2008-07-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_viewport): Extend the interface with this
+	function.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_update_marker): Use it here.
+
 2008-07-11  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c: improved usability on closing tag
 	popup window. It now can be closed by clicking anywhere outside the
 	popup window.
+
+2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_scaled_viewport): Extend the interface
+	with this function
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_handle_sizes): Forget anything we knew
+	about how to interpret the icky GimpDisplayShell offset variables
+
+2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]: Make
+	gimp_display_shell_scroll() a sane public interface for scrolling
+	and call the old version gimp_display_shell_scroll_private()
+
+	* app/display/gimpnavigationeditor.c: Adapt to the saner version
+	of gimp_display_shell_scroll()
+
+	* app/display/gimpdisplayshell-callbacks.c: 
+	* app/display/gimpdisplayshell-autoscroll.c: Use the private
+	version of gimp_display_shell_scroll()
+
+	* app/display/Makefile.am: Added gimpdisplayshell-private.h
+
+2008-07-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]: The return value of
+	gimp_display_shell_scroll() is not used anywhere, make it void.
+
+2008-07-10  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c: Allow None to be passed for
+	PDB_DISPLAY.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui):
+	changed expander title to "Brush Dynamics".
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c: some changes to the dialog that is shown
+	if the help browser is missing.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: document the --help-gegl command-line option.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-progress.c
+	(gimp_display_shell_progress_message): swallow informational
+	messages if there aren't handled by the statusbar.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.[ch]: renamed gimp_data_name_compare() to
+	gimp_data_compare() and changed it to keep the data in three
+	groups: internal, writable and system resource files. Inside the
+	groups the sorting order is alphabetical.
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_new): changed
+	accordingly.
+
+2008-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdatafactory.[ch] (gimp_data_factory_new): renamed
+	parameter.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-user-install.c (gimp_user_install_detect_old):
+	fixed misplaced debug output.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c (gimp_display_shell_close):
+	if a save dialog is active for this image, then don't allow to
+	close it. Fixes bug #511965.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_message):
+	don't accept a progress message if the status bar is already
+	showing a temporary message.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff-load.c (tiff_warning): send warnings about
+	unknown fields to stderr instead of using the log mechanism.
+
+2008-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_motion): don't paint
+	while the Shift key is pressed for line drawing (bug #529434).
 
 2008-07-09  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -54,6 +417,67 @@
 	* app/widgets/gimptagentry.[ch]: tag manipulation using
 	GimpComboTagEntry. Allows selecting or deselecting tags with mouse or
 	other pointing device without using keyboard.
+
+2008-07-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/pygimp/gimpmodule.c (gimp_methods): Remove duplicate
+	entry of gimp.get_foreground().
+
+2008-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (build_menu): plugged a memory leak.
+
+2008-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (load_finished): select the
+	current URI in the index. Pointed out by Roman Joost.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c (gimp_help_query_user_manual_online):
+	changed button label and added an icon.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintoptions.c
+	(gimp_paint_options_get_dynamic_hardness): applied patch from
+	Alexia Death fixing a cut'n'paste error.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (tool_has_size_dynamics): check
+	for tools derived from GimpPaintBrushTool just as we do in
+	tool_has_opacity_dynamics().
+	(tool_has_hardness_dynamics): enable hardness dynamics for the
+	eraser tool (bug #541691).
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c (gimp_help_query_user_manual_online):
+	command button labels should be capitalized in header style.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-user-manual-64.png: recreated from SVG.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-*test.c: declared test functions as
+	static.
+
+2008-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c: use GIMP_LOG() for debug output.
+
+2008-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c: if the user asks for help and the user
+	manual is not locally installed, show a dialog that allows to
+	change the preferences so that the online version is used.
+
+2008-07-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelpdomain.c: improved error messages.
 
 2008-07-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -63,6 +487,71 @@
 	* app/widgets/widgets-types.h: added GimpComboTagEntry widget which
 	wraps GimpTagEntry and will provide UI similar to combo box.
 
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_offsets): Renamed the variables sx
+	and sy to sw and sh.
+
+2008-07-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
+	always return TRUE if GIMP2_HELP_URI environment variable is set.
+
+2008-07-05  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimphelp.[ch]: improved test for user manual
+	installation and moved the code out of the prefs dialog.
+
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c: 
+	* app/tools/gimpeditselectiontool.c: Simplify math.
+
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c:
+	* app/tools/gimpeditselectiontool.c: Mark the center of
+	rectangles/bounding rectangles so that it is easier to predict and
+	see where snapping occurs. Completes the fix for bug #527659.
+
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpeditselectiontool.[ch]: Don't expose the icky
+	implementation details.
+
+2008-07-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* data/tips/gimp-tips.xml.in: Removed tip about how to make a
+	circular selection. It's much more discoverable now than it was in
+	GIMP 2.2, and the current description is faulty. (Bug #486599.)
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.[ch]: added a function to get the location
+	where the user manual is expected if it is installed locally.
+
+	* app/dialogs/preferences-dialog.c: inform the user about the
+	presence or absence of the user manual.
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (browser_dialog_make_index_foreach):
+	improved order of index items with alphabetic counters.
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelpitem.h: document the purpose of the extra
+	struct fields.
+
+	* plug-ins/help-browser/dialog.c: limit the depth of the index to 4.
+
+2008-07-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgrid.c: changed default grid to a 10x10 grid of
+	solid lines (bug #539318).
+
 2008-07-04  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagentry.c: support tag autocompletion.
@@ -70,11 +559,81 @@
 	* app/core/gimpfilteredcontainer.[ch]: maintain tag reference count
 	of all items contained in source container.
 
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/dialogs-actions.c (dialogs_toplevel_actions):
+	changed blurb for "dialog-tips".
+
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): don't use Escape to quit full-screen
+	mode, it collides with tools using the Escape key (bug #539949).
+
+2008-07-03  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-vectors.c
+	* plug-ins/pygimp/pygimp-display.c
+	* plug-ins/pygimp/pygimp-image.c: Added checks to ensure that a
+	python object only is created if its id is valid. Fixes bug #536403.
+
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/pygimp-tile.c
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/pygimp.h: Fix crashing when pygimp is used with
+	python-2.5 on 64 bit systems. Fixes bug #540629.
+
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor)
+	* app/widgets/gimpsettingseditor.c (gimp_settings_editor_constructor):
+	removed trailing period from tooltip texts.
+
+	* app/config/gimprc-blurbs.h: don't mark USER_MANUAL_ONLINE_BLURB
+	for translation, it is not used in the user interface.
+
+2008-07-03  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention the fact that intltool now needs to be
+	installed in order to build from tarball.
+
+	* HACKING: removed mentioning of intltoolize here.
+
+2008-07-02  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-gegl-16.png
+	* themes/Default/images/stock-gegl-16.svg
+	* themes/Default/images/stock-gegl-22.png
+	* themes/Default/images/stock-gegl-22.svg
+	* themes/Default/images/stock-gegl.svg: tweak icons to comply with
+	tango style guidelines
+
+2008-07-01  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-gegl-16.png
+	* themes/Default/images/stock-gegl-22.png: changed GEGL stock icon
+	based on the new GEGL logo.
+
+	* themes/Default/images/stock-gegl.svg: added SVG version.
+
 2008-07-01  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagentry.c (gimp_tag_entry_set_selected_items),
 	(gimp_tag_entry_load_selection): display tags assigned to selected
 	item.
+
+2008-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphistogrambox.c
+	(gimp_histogram_box_high_adj_update): don't call
+	gtk_adjustment_get_value() on a gint.
+
+2008-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response):
+	restore code that sets the dialog back to sensitive when opening
+	fails because it stays open. Fixes bug #540801.
 
 2008-06-30  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -90,10 +649,241 @@
 
 	* app/core/gimptagcache.[ch]: properly save changed tags.
 
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): remove size
+	group code because the size group doesn't exist if there is no
+	settings box.
+
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/channel-options-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpnavigationeditor.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpscalebutton.c: replace adjustment->value by
+	gtk_adjustment_get_value (adjustment).
+
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/color-rotate/color-rotate-callbacks.c
+	* plug-ins/gfig/gfig-grid.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/gimpressionist/utils.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/print/print-preview.c
+	* plug-ins/win-snap/winsnap.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
 2008-06-29  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimpfilteredcontainer.c
 	* app/widgets/gimptagentry.c: multiple tag querying support.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* pygimp-pdb.c:
+	* pygimp-tile.c:
+	* pygimp-colors.c: revert last patch because Py_ssize_t is
+	undefined in some (older?) pythons. Needs more investigation.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_get_icon): add widget parameter so
+	we can get the right icon theme for the screen. If building
+	against GTK+ >= 2.13.4, use GFile to get proper file type icons.
+
+	(gimp_view_renderer_imagefile_render): pass the widget.
+
+	(get_icon_fallback): remove this unused function.
+
+2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gtkscalebutton.h: Remove uses of GSEAL macro to make
+	the thing compile on systems without bleeding edge GTK+.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	This is completely evil:
+
+	* app/widgets/Makefile.am
+	* app/widgets/gtkscalebutton.[ch]: copy GtkScaleButton from GTK+
+	upstream trunk and hack around until symbol conflicts are gone
+	and it builds.
+
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpscalebutton.[ch]: use the hacked version instead
+	of the one from GTK+. Set the orientation to horizontal.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/animation-play.c
+	* plug-ins/common/cml-explorer.c
+	* plug-ins/common/convolution-matrix.c
+	* plug-ins/common/curve-bend.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/gee-zoom.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/lens-flare.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/sample-colorize.c
+	* plug-ins/common/sphere-designer.c
+	* plug-ins/common/tile-small.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
+2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* pygimp-pdb.c:
+	* pygimp-tile.c:
+	* pygimp-colors.c: Applied patch from Ed Swartz that makes use of
+	Py_ssize_t:s instead of int:s to better utilize 64-bit
+	systems. (Bug #540629.)
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.[ch]: add new function
+	gimp_container_tree_view_connect_name_edited() which makes the
+	name cell editable and connects a passed "edited" callback.
+
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpsettingseditor.c
+	* app/widgets/gimptemplateview.c: use it instead of having the
+	same code four times.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpblobeditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcellrendererdashes.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcurveview.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockseparator.c
+	* app/widgets/gimpfgbgeditor.c
+	* app/widgets/gimpfgbgview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimphandlebar.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimpmessagebox.c
+	* app/widgets/gimppaletteview.c
+	* app/widgets/gimpscalebutton.c
+	* app/widgets/gimpsessioninfo-book.c
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpsettingseditor.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimptoolview.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpviewrenderervectors.c
+	* app/widgets/gimpwidgets-utils.c: use accessors instead of
+	accessing members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/uri/uri-backend-gvfs.c (uri_progress_callback): fix
+	progress display by making sure gimp_progress_update() gets a
+	gdouble passed.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/layers-commands.c
+	* app/actions/view-actions.c
+	* app/dialogs/about-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/display/gimpcanvas.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpnavigationeditor.c
+	* modules/colorsel_water.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpgradientselectbutton.c
+	* libgimp/gimpmenu.c
+	* libgimpwidgets/gimpbrowser.c
+	* libgimpwidgets/gimpcellrenderercolor.c
+	* libgimpwidgets/gimpcellrenderertoggle.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorscale.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimpenumwidgets.c
+	* libgimpwidgets/gimpframe.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppreviewarea.c
+	* libgimpwidgets/gimppropwidgets.c
+	* libgimpwidgets/gimpscrolledpreview.c: use accessors instead of
+	accessing members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplanguagestore-parser.c: include
+	"libgimpbase/gimpbase.h" instead of "libgimpbase/gimpenv.h".
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdbusservice.c: eek, include "gimpuimanager.h"
+	not "gimpuimanager.c".
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tools-commands.c (tools_activate_enum_action):
+	simply call gimp_enum_action_selected() instead of poking around
+	in the action's internals and calling gimp_action_activate()
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): simplify the
+	logic of setting "color" or "viewable" previews on menuitems.
 
 2008-06-28  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -107,6 +897,12 @@
 
 	* app/core/gimpfilteredcontainer.c: detect source container changes.
 
+2008-06-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): swap
+	the angles of the dynamics matrix' labels in RTL and LTR mode so
+	the beginning of the words are aligned and on bottom.
+
 2008-06-27  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/Makefile.am
@@ -117,6 +913,113 @@
 	* app/widgets/gimpbrushfactoryview.c
 	* app/widgets/gimpdatafactoryview.[ch]: simple tag query from GUI.
 
+2008-06-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpscalebutton.c (gimp_scale_button_init): hide the
+	popup's plus and minus buttons, they are completely pointless.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c: make sure the file dialog goes
+	away when the settings box' toplevel is hidden. Set the
+	alternative button order on the file dialog.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpmarshal.list: add marshaller BOOLEAN__STRING for
+	the change below.
+
+	* app/widgets/gimpsettingsbox.[ch]: add the import/export dialogs
+	here. Add a bunch of parameters to new() to be used by the
+	dialogs, they are not properties yet. Changed import() and
+	export() signals to pass the selected filename and return a
+	boolean indicating success.
+
+	* app/tools/gimpimagemaptool-settings.c: remove the dialog code
+	here and connect the import/export functions directly to above
+	GimpSettingsBox signals.
+
+	* app/tools/gimpimagemaptool.[ch]: remove file dialog member.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_settings_import):
+	parse the first line of the file manually and detect whether we
+	are importing an old curves file or a GimpConfig one.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_load_cruft):
+	set any parsed negative value as -1 in the curves object because
+	that's the only negative value allowed.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingseditor.c
+	(gimp_settings_editor_delete_clicked): select a neighboring item
+	after deleting the selected one.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingseditor.[ch]: add dummy import and export
+	buttons, give the list a minimum size.
+
+	* app/widgets/gimpsettingsbox.c: use the correct dialog border.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
+	tweak buttons to look the same and have no spacing between them.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
+	move "Add to favorites" out of the menu into a small button
+	showing a '+' icon. Add a separator between the import/export and
+	the manage menu items.
+
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingseditor.[ch]: enable renaming the
+	settings objects by editing them directly in the list (renaming a
+	recent setting moves it to the favorites section). Enable deleting
+	settings. None of these changes is saved yet (need to trigger a
+	save by confirming the tool or storing the current settings as
+	favorite).
+
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_name_edited):
+	don't dereference a NULL GError.
+
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.[ch]: made the model column
+	enum public and namespaced it.
+
+	* app/widgets/gimpsettingsbox.c: use the enum value instead of a
+	magic number.
+
+	* app/widgets/gimpsettingseditor.c: add a separator between
+	recently used settings and favorites.
+
+2008-06-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_modifier_key): Make switching selection
+	mode through modifier keys work again.
+
+2008-06-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpsettingseditor.[ch]: skeleton of a widget to
+	manage the list of saved settings for the image map tools. Does
+	absolutely nothing yet apart from displaying the list of settings.
+
+	* app/widgets/gimpsettingsbox.[ch]: add "Manage Settings" menu item
+	and show a dialog containing the new widget.
+
 2008-06-22  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimp.c: save and uninitialize tag cache properly.
@@ -125,6 +1028,14 @@
 
 	* app/core/gimptagcache.c: added tag cache loading from file
 	functionality. Improved tag assignment to objects.
+
+
+2008-06-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_update_motion): When applying angle
+	constraints on the first segment vertex, base on the last segment
+	vertex rather than not applying any constraint at all.
 
 2008-06-21  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -136,26 +1047,6 @@
 
 	* app/core/gimptagged.[ch]: fixed repeated get
 	in function name.
-
-2008-06-20  Aurimas Juška   <aurisj@svn.gnome.org>
-
-	* app/core/gimpdata.[ch]
-	* app/core/gimptagcache.c (gimp_tag_cache_update)
-	* app/core/gimptagged.[ch]: extended object identification
-	  capabilities. Each tagged object now provides unique
-	  identification string. In case it can change between sessions,
-	  objects can provide digest calculation which would help to remap
-	  to new identification string.
-
-	* app/core/gimp-gradients.c
-	* app/core/gimp.c
-	* app/core/gimpbrush.c
-	* app/core/gimpcurve.c
-	* app/core/gimpgradient.c (gimp_gradient_get_standard)
-	* app/core/gimppalette.c (gimp_palette_get_standard)
-	* app/core/gimppattern.c (gimp_pattern_get_standard): provide
-	  unique name for internal objects.
-
 
 2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
 
@@ -203,6 +1094,25 @@
 	* plug-ins/common/filter-pack.c
 	* plug-ins/common/sample-colorize.c
 	* plug-ins/imagemap/imap_main.c: s/GtkSignalFunc/GCallback/.
+
+2008-06-20  Aurimas Juška   <aurisj@svn.gnome.org>
+
+	* app/core/gimpdata.[ch]
+	* app/core/gimptagcache.c (gimp_tag_cache_update)
+	* app/core/gimptagged.[ch]: extended object identification
+	  capabilities. Each tagged object now provides unique
+	  identification string. In case it can change between sessions,
+	  objects can provide digest calculation which would help to remap
+	  to new identification string.
+
+	* app/core/gimp-gradients.c
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpcurve.c
+	* app/core/gimpgradient.c (gimp_gradient_get_standard)
+	* app/core/gimppalette.c (gimp_palette_get_standard)
+	* app/core/gimppattern.c (gimp_pattern_get_standard): provide
+	  unique name for internal objects.
 
 2008-06-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -475,7 +1385,6 @@
 	so the paint tools behave as before and the brush outline is
 	meaningful at least in the default setup.
 
->>>>>>> .merge-right.r25970
 2008-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): added

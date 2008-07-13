@@ -63,7 +63,7 @@ getsiz_from_gui (double x, double y)
 {
   return getsiz_proto (x,y, numsmvect, smvector,
                        GTK_ADJUSTMENT (smstrexpadjust)->value,
-                       GTK_TOGGLE_BUTTON (size_voronoi)->active);
+                       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi)));
 }
 
 static void
@@ -324,8 +324,8 @@ smresponse (GtkWidget *widget,
           pcvals.size_vectors[i] = smvector[i];
 
         pcvals.num_size_vectors = numsmvect;
-        pcvals.size_strength_exponent  = GTK_ADJUSTMENT (smstrexpadjust)->value;
-        pcvals.size_voronoi = GTK_TOGGLE_BUTTON (size_voronoi)->active;
+        pcvals.size_strength_exponent  = gtk_adjustment_get_value (GTK_ADJUSTMENT (smstrexpadjust));
+        pcvals.size_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi));
       }
       break;
     }

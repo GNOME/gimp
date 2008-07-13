@@ -350,8 +350,10 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
     }
   else
     {
-      *x += widget->style->xthickness;
-      *y += widget->style->ythickness;
+      GtkStyle *style = gtk_widget_get_style (widget);
+
+      *x += style->xthickness;
+      *y += style->ythickness;
     }
 
   gimp_menu_position (menu, x, y);
@@ -396,6 +398,28 @@ gimp_container_tree_view_new (GimpContainer *container,
     gimp_container_view_set_context (view, context);
 
   return GTK_WIDGET (tree_view);
+}
+
+void
+gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
+                                              GCallback              callback,
+                                              gpointer               data)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+  g_return_if_fail (callback != NULL);
+
+  g_object_set (tree_view->name_cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
+
+  if (! g_list_find (tree_view->editable_cells, tree_view->name_cell))
+    tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
+                                                tree_view->name_cell);
+
+  g_signal_connect (tree_view->name_cell, "edited",
+                    callback,
+                    data);
 }
 
 static void
@@ -761,13 +785,15 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
       if (stock_id)
         {
+          GtkStyle *style = gtk_widget_get_style (tree_widget);
+
           icon_size = gimp_get_icon_size (tree_widget,
                                           stock_id,
                                           GTK_ICON_SIZE_BUTTON,
                                           view_size -
-                                          2 * tree_widget->style->xthickness,
+                                          2 * style->xthickness,
                                           view_size -
-                                          2 * tree_widget->style->ythickness);
+                                          2 * style->ythickness);
 
           g_object_set (list->data, "stock-size", icon_size, NULL);
 

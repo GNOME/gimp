@@ -528,10 +528,11 @@ gimp_gradient_select_preview_expose (GtkWidget                *widget,
 
   for (y = event->area.y; y < event->area.y + event->area.height; y++)
     {
-      guchar *buf = ((y / GIMP_CHECK_SIZE_SM) & 1) ? odd : even;
+      GtkStyle *style = gtk_widget_get_style (widget);
+      guchar   *buf   = ((y / GIMP_CHECK_SIZE_SM) & 1) ? odd : even;
 
       gdk_draw_rgb_image_dithalign (widget->window,
-                                    widget->style->fg_gc[widget->state],
+                                    style->fg_gc[widget->state],
                                     event->area.x, y,
                                     event->area.width, 1,
                                     GDK_RGB_DITHER_MAX,

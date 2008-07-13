@@ -1163,9 +1163,9 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->rate ||
-      paint_options->velocity_options->rate ||
-      paint_options->random_options->rate)
+  if (paint_options->pressure_options->hardness ||
+      paint_options->velocity_options->hardness ||
+      paint_options->random_options->hardness)
     {
       gdouble pressure = -1.0;
       gdouble velocity = -1.0;

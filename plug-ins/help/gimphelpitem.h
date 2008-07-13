@@ -31,7 +31,7 @@ struct _GimpHelpItem
   gchar *title;
   gchar *parent;
 
-  /* eek */
+  /*  extra fields used by the help-browser  */
   GList *children;
   gint   index;
 };

@@ -481,6 +481,10 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_region.height = PyInt_AsLong(h);
 	    break;
 	case GIMP_PDB_DISPLAY:
+            if (item == Py_None) {
+                ret[i].data.d_display = -1;
+                break;
+            }
 	    check(!pygimp_display_check(item));
 	    ret[i].data.d_display = ((PyGimpDisplay *)item)->ID;
 	    break;
@@ -820,7 +824,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 #endif
 
     if (kwargs) {
-        int len, pos;
+        Py_ssize_t len, pos;
         PyObject *key, *val;
 
         len = PyDict_Size(kwargs);

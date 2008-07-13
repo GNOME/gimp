@@ -27,10 +27,15 @@
  *
  *  there should be no need to use it directly
  */
-void   gimp_help_show (Gimp         *gimp,
-                       GimpProgress *progress,
-                       const gchar  *help_domain,
-                       const gchar  *help_id);
+void       gimp_help_show (Gimp         *gimp,
+                           GimpProgress *progress,
+                           const gchar  *help_domain,
+                           const gchar  *help_id);
+
+
+/*  checks if the user manual is installed locally
+ */
+gboolean   gimp_help_user_manual_is_installed (Gimp *gimp);
 
 
 #endif /* __GIMP_HELP_H__ */

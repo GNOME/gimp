@@ -151,8 +151,7 @@ gimp_handle_bar_expose (GtkWidget      *widget,
   gint           width, height;
   gint           i;
 
-  x = GTK_CONTAINER (widget)->border_width;
-  y = GTK_CONTAINER (widget)->border_width;
+  x = y = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   width  = widget->allocation.width  - 2 * x;
   height = widget->allocation.height - 2 * y;
@@ -214,7 +213,7 @@ gimp_handle_bar_button_press (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
   GimpHandleBar *bar    = GIMP_HANDLE_BAR (widget);
-  gint           border = GTK_CONTAINER (widget)->border_width;
+  gint           border = gtk_container_get_border_width (GTK_CONTAINER (widget));
   gint           width  = widget->allocation.width - 2 * border;
   gdouble        value;
   gint           min_dist;
@@ -258,7 +257,7 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
   GimpHandleBar *bar    = GIMP_HANDLE_BAR (widget);
-  gint           border = GTK_CONTAINER (widget)->border_width;
+  gint           border = gtk_container_get_border_width (GTK_CONTAINER (widget));
   gint           width  = widget->allocation.width - 2 * border;
   gdouble        value;
 

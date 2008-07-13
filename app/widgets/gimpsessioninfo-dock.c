@@ -191,12 +191,15 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
     {
       GimpSessionInfoBook *book_info = books->data;
       GtkWidget           *dockbook;
+      GtkWidget           *parent;
 
       dockbook = GTK_WIDGET (gimp_session_info_book_restore (book_info, dock));
 
-      if (GTK_IS_VPANED (dockbook->parent))
+      parent = gtk_widget_get_parent (dockbook);
+
+      if (GTK_IS_VPANED (parent))
         {
-          GtkPaned *paned = GTK_PANED (dockbook->parent);
+          GtkPaned *paned = GTK_PANED (parent);
 
           if (dockbook == gtk_paned_get_child2 (paned))
             g_signal_connect_after (paned, "map",

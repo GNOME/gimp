@@ -283,15 +283,9 @@ gimp_item_tree_view_constructor (GType                  type,
   item_view       = GIMP_ITEM_TREE_VIEW (object);
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (object);
 
-  tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-  GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
-
-  tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
-                                              tree_view->name_cell);
-
-  g_signal_connect (tree_view->name_cell, "edited",
-                    G_CALLBACK (gimp_item_tree_view_name_edited),
-                    item_view);
+  gimp_container_tree_view_connect_name_edited (tree_view,
+                                                G_CALLBACK (gimp_item_tree_view_name_edited),
+                                                item_view);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
@@ -874,10 +868,13 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
                               -1);
           g_free (name);
 
-          gimp_message (view->image->gimp, G_OBJECT (view),
-                        GIMP_MESSAGE_WARNING,
-                        "%s", error->message);
-          g_clear_error (&error);
+          if (error)
+            {
+              gimp_message (view->image->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_WARNING,
+                            "%s", error->message);
+              g_clear_error (&error);
+            }
         }
 
       g_object_unref (renderer);

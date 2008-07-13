@@ -306,7 +306,7 @@ gimp_help_get_help_data (GtkWidget  *widget,
   const gchar *help_id   = NULL;
   gpointer     help_data = NULL;
 
-  for (; widget; widget = widget->parent)
+  for (; widget; widget = gtk_widget_get_parent (widget))
     {
       help_id   = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
       help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");

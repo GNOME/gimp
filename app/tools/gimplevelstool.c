@@ -797,10 +797,10 @@ gimp_levels_tool_config_notify (GObject        *object,
       gtk_adjustment_set_value (tool->high_input,
                                 config->high_input[config->channel] * 255.0);
 
-      tool->low_input->upper    = tool->high_input->value;
-      tool->high_input->lower   = tool->low_input->value;
-      tool->gamma_linear->lower = tool->low_input->value;
-      tool->gamma_linear->upper = tool->high_input->value;
+      tool->low_input->upper    = gtk_adjustment_get_value (tool->high_input);
+      tool->high_input->lower   = gtk_adjustment_get_value (tool->low_input);
+      tool->gamma_linear->lower = gtk_adjustment_get_value (tool->low_input);
+      tool->gamma_linear->upper = gtk_adjustment_get_value (tool->high_input);
       gtk_adjustment_changed (tool->low_input);
       gtk_adjustment_changed (tool->high_input);
       gtk_adjustment_changed (tool->gamma_linear);
@@ -938,10 +938,12 @@ levels_stretch_callback (GtkWidget      *widget,
 static void
 levels_linear_gamma_update (GimpLevelsTool *tool)
 {
+  gdouble low_input  = gtk_adjustment_get_value (tool->low_input);
+  gdouble high_input = gtk_adjustment_get_value (tool->high_input);
   gdouble delta, mid, tmp, value;
 
-  delta = (tool->high_input->value - tool->low_input->value) / 2.0;
-  mid   = tool->low_input->value + delta;
+  delta = (high_input - low_input) / 2.0;
+  mid   = low_input + delta;
   tmp   = log10 (1.0 / tool->config->gamma[tool->config->channel]);
   value = mid + delta * tmp;
 
@@ -952,14 +954,16 @@ static void
 levels_linear_gamma_changed (GtkAdjustment  *adjustment,
                              GimpLevelsTool *tool)
 {
+  gdouble low_input  = gtk_adjustment_get_value (tool->low_input);
+  gdouble high_input = gtk_adjustment_get_value (tool->high_input);
   gdouble delta, mid, tmp, value;
 
-  delta = (tool->high_input->value - tool->low_input->value) / 2.0;
+  delta = (high_input - low_input) / 2.0;
 
   if (delta >= 0.5)
     {
-      mid   = tool->low_input->value + delta;
-      tmp   = (adjustment->value - mid) / delta;
+      mid   = low_input + delta;
+      tmp   = (gtk_adjustment_get_value (adjustment) - mid) / delta;
       value = 1.0 / pow (10, tmp);
 
       /*  round the gamma value to the nearest 1/100th  */
@@ -974,7 +978,7 @@ levels_low_input_changed (GtkAdjustment  *adjustment,
                           GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (adjustment->value);
+  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
   tool->high_input->lower   = value;
   tool->gamma_linear->lower = value;
@@ -996,11 +1000,12 @@ levels_gamma_changed (GtkAdjustment  *adjustment,
                       GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
+  gdouble           value  = gtk_adjustment_get_value (adjustment);
 
-  if (config->gamma[config->channel] != adjustment->value)
+  if (config->gamma[config->channel] != value)
     {
       g_object_set (config,
-                    "gamma", adjustment->value,
+                    "gamma", value,
                     NULL);
     }
 
@@ -1012,7 +1017,7 @@ levels_high_input_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (adjustment->value);
+  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
   tool->low_input->upper    = value;
   tool->gamma_linear->upper = value;
@@ -1034,7 +1039,7 @@ levels_low_output_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (adjustment->value);
+  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
   if (config->low_output[config->channel] != value / 255.0)
     {
@@ -1049,7 +1054,7 @@ levels_high_output_changed (GtkAdjustment  *adjustment,
                             GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (adjustment->value);
+  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
   if (config->high_output[config->channel] != value / 255.0)
     {

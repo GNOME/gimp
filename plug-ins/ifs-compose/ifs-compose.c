@@ -1497,6 +1497,7 @@ static gboolean
 design_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event)
 {
+  GtkStyle    *style = gtk_widget_get_style (widget);
   PangoLayout *layout;
   gint         i;
   gint         cx, cy;
@@ -1510,21 +1511,21 @@ design_area_expose (GtkWidget      *widget,
     }
 
   gdk_draw_rectangle (ifsDesign->pixmap,
-                     widget->style->bg_gc[widget->state],
-                     TRUE,
-                     event->area.x,
-                     event->area.y,
-                     event->area.width, event->area.height);
+                      style->bg_gc[widget->state],
+                      TRUE,
+                      event->area.x,
+                      event->area.y,
+                      event->area.width, event->area.height);
 
   /* draw an indicator for the center */
 
   cx = ifsvals.center_x * widget->allocation.width;
   cy = ifsvals.center_y * widget->allocation.width;
   gdk_draw_line (ifsDesign->pixmap,
-                 widget->style->fg_gc[widget->state],
+                 style->fg_gc[widget->state],
                  cx - 10, cy, cx + 10, cy);
   gdk_draw_line (ifsDesign->pixmap,
-                 widget->style->fg_gc[widget->state],
+                 style->fg_gc[widget->state],
                  cx, cy - 10, cx, cy + 10);
 
   layout = gtk_widget_create_pango_layout (widget, NULL);
@@ -1535,7 +1536,7 @@ design_area_expose (GtkWidget      *widget,
                         widget->allocation.width,
                         widget->allocation.height,
                         ifsDesign->pixmap,
-                        widget->style->fg_gc[widget->state],
+                        style->fg_gc[widget->state],
                         ifsDesign->selected_gc,
                         layout);
     }
@@ -1543,7 +1544,7 @@ design_area_expose (GtkWidget      *widget,
   g_object_unref (layout);
 
   gdk_draw_drawable (widget->window,
-                     widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+                     style->fg_gc[GTK_WIDGET_STATE (widget)],
                      ifsDesign->pixmap,
                      event->area.x, event->area.y,
                      event->area.x, event->area.y,
@@ -2085,8 +2086,10 @@ simple_color_toggled (GtkWidget *widget,
 {
   AffElement *cur = elements[ifsD->current_element];
 
-  cur->v.simple_color = GTK_TOGGLE_BUTTON (widget)->active;
+  cur->v.simple_color = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
   ifsD->current_vals.simple_color = cur->v.simple_color;
+
   if (cur->v.simple_color)
     aff_element_compute_color_trans (cur);
 

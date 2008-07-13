@@ -2805,3 +2805,128 @@ gimp_value_take_stringarray (GValue  *value,
 
   g_value_take_boxed (value, array);
 }
+
+
+/*
+ * GIMP_TYPE_COLOR_ARRAY
+ */
+
+GType
+gimp_color_array_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    type = g_boxed_type_register_static ("GimpColorArray",
+                                         (GBoxedCopyFunc) gimp_array_copy,
+                                         (GBoxedFreeFunc) gimp_array_free);
+
+  return type;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_COLOR_ARRAY
+ */
+
+static void  gimp_param_color_array_class_init (GParamSpecClass *klass);
+static void  gimp_param_color_array_init       (GParamSpec      *pspec);
+
+GType
+gimp_param_color_array_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_color_array_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecArray),
+        0,
+        (GInstanceInitFunc) gimp_param_color_array_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                     "GimpParamColorArray", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_color_array_class_init (GParamSpecClass *klass)
+{
+  klass->value_type = GIMP_TYPE_COLOR_ARRAY;
+}
+
+static void
+gimp_param_color_array_init (GParamSpec *pspec)
+{
+}
+
+GParamSpec *
+gimp_param_spec_color_array (const gchar *name,
+                             const gchar *nick,
+                             const gchar *blurb,
+                             GParamFlags  flags)
+{
+  GimpParamSpecColorArray *array_spec;
+
+  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR_ARRAY,
+                                      name, nick, blurb, flags);
+
+  return G_PARAM_SPEC (array_spec);
+}
+
+const GimpRGB *
+gimp_value_get_colorarray (const GValue *value)
+{
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value), NULL);
+
+  return (const GimpRGB *) gimp_value_get_array (value);
+}
+
+GimpRGB *
+gimp_value_dup_colorarray (const GValue *value)
+{
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value), NULL);
+
+  return (GimpRGB *) gimp_value_dup_array (value);
+}
+
+void
+gimp_value_set_colorarray (GValue        *value,
+                           const GimpRGB *data,
+                           gsize         length)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+
+  gimp_value_set_array (value, (const guint8 *) data,
+                        length * sizeof (GimpRGB));
+}
+
+void
+gimp_value_set_static_colorarray (GValue        *value,
+                                  const GimpRGB *data,
+                                  gsize          length)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+
+  gimp_value_set_static_array (value, (const guint8 *) data,
+                               length * sizeof (GimpRGB));
+}
+
+void
+gimp_value_take_colorarray (GValue  *value,
+                            GimpRGB *data,
+                            gsize    length)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+
+  gimp_value_take_array (value, (guint8 *) data,
+                         length * sizeof (GimpRGB));
+}

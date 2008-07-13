@@ -62,7 +62,10 @@
 #endif
 
 
-#define GIMP_HELP_BROWSER_DIALOG_DATA  "gimp-help-browser-dialog"
+#define GIMP_HELP_BROWSER_DIALOG_DATA      "gimp-help-browser-dialog"
+
+#define GIMP_HELP_BROWSER_INDEX_MAX_DEPTH  4
+
 
 typedef struct
 {
@@ -343,7 +346,6 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpItem   *item,
                                    GimpHelpLocale *locale)
 {
-
 #if 0
   g_printerr ("%s: processing %s (parent %s)\n",
               G_STRFUNC,
@@ -358,10 +360,21 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
       for (i = 0; i < 5; i++)
         {
+          gunichar c;
+
           if (! indices[i])
             break;
 
-          item->index += atoi (indices[i]) << (8 * (5 - i));
+          c = g_utf8_get_char (indices[i]);
+
+          if (g_unichar_isdigit (c))
+            {
+              item->index += atoi (indices[i]) << (8 * (5 - i));
+            }
+          else if (g_utf8_strlen (indices[i], -1) == 1)
+            {
+              item->index += (c & 0xFF) << (8 * (5 - i));
+            }
         }
 
       g_strfreev (indices);
@@ -374,7 +387,9 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
       parent = g_hash_table_lookup (locale->help_id_mapping, item->parent);
 
       if (parent)
-        parent->children = g_list_prepend (parent->children, item);
+        {
+          parent->children = g_list_prepend (parent->children, item);
+        }
     }
   else
     {
@@ -386,8 +401,8 @@ static gint
 help_item_compare (gconstpointer a,
                    gconstpointer b)
 {
-  GimpHelpItem *item_a = (GimpHelpItem *) a;
-  GimpHelpItem *item_b = (GimpHelpItem *) b;
+  const GimpHelpItem *item_a = a;
+  const GimpHelpItem *item_b = b;
 
   if (item_a->index > item_b->index)
     return 1;
@@ -402,7 +417,8 @@ add_child (GtkTreeStore   *store,
            GimpHelpDomain *domain,
            GimpHelpLocale *locale,
            GtkTreeIter    *parent,
-           GimpHelpItem   *item)
+           GimpHelpItem   *item,
+           gint            depth)
 {
   GtkTreeIter  iter;
   GList       *list;
@@ -424,13 +440,16 @@ add_child (GtkTreeStore   *store,
                        uri,
                        gtk_tree_iter_copy (&iter));
 
+  if (depth + 1 == GIMP_HELP_BROWSER_INDEX_MAX_DEPTH)
+    return;
+
   item->children = g_list_sort (item->children, help_item_compare);
 
   for (list = item->children; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, &iter, item);
+      add_child (store, domain, locale, &iter, item, depth + 1);
     }
 }
 
@@ -470,7 +489,7 @@ browser_dialog_make_index (GimpHelpDomain *domain,
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, NULL, item);
+      add_child (store, domain, locale, NULL, item, 0);
     }
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (store));
@@ -481,11 +500,12 @@ static void
 select_index (const gchar *uri)
 {
   GtkTreeSelection *selection;
-  GtkTreeIter      *iter;
+  GtkTreeIter      *iter = NULL;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
 
-  iter = g_hash_table_lookup (uri_hash_table, uri);
+  if (uri)
+    iter = g_hash_table_lookup (uri_hash_table, uri);
 
   if (iter)
     {
@@ -789,21 +809,24 @@ menu_callback (GtkWidget            *menu,
 
 /*  this function unrefs the items and frees the list  */
 static GtkWidget *
-build_menu (GList *list)
+build_menu (GList *items)
 {
   GtkWidget *menu;
+  GList     *list;
 
-  if (! list)
+  if (! items)
     return NULL;
 
   menu = gtk_menu_new ();
 
-  do
+  for (list = items; list; list = g_list_next (list))
     {
       WebKitWebHistoryItem *item = list->data;
       GtkWidget            *menu_item;
+      const gchar          *title;
 
-      menu_item = gtk_menu_item_new_with_label (webkit_web_history_item_get_title (item));
+      title = webkit_web_history_item_get_title (item);
+      menu_item = gtk_menu_item_new_with_label (title);
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       gtk_widget_show (menu_item);
@@ -814,9 +837,8 @@ build_menu (GList *list)
 
       g_object_unref (item);
     }
-  while ((list = g_list_next (list)));
 
-  g_list_free (list);
+  g_list_free (items);
 
   return menu;
 }
@@ -1022,4 +1044,6 @@ load_finished (GtkWidget      *view,
   gtk_action_set_sensitive (action, FALSE);
 
   update_actions ();
+
+  select_index (webkit_web_frame_get_uri (frame));
 }

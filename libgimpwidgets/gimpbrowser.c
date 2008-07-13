@@ -207,8 +207,8 @@ gimp_browser_add_search_types (GimpBrowser *browser,
       browser->search_type_combo = combo;
       browser->search_type       = first_type_id;
 
-      gtk_box_pack_end (GTK_BOX (browser->search_entry->parent), combo,
-                        FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (gtk_widget_get_parent (browser->search_entry)),
+                        combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),

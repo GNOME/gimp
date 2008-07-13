@@ -69,13 +69,14 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                  cairo_t            *cr,
                                  const GdkRectangle *area)
 {
+  GtkStyle       *style   = gtk_widget_get_style (widget);
   GimpVectors    *vectors = GIMP_VECTORS (renderer->viewable);
   GimpBezierDesc *bezdesc;
   gdouble         xscale;
   gdouble         yscale;
   gint            x, y;
 
-  gdk_cairo_set_source_color (cr, &widget->style->white);
+  gdk_cairo_set_source_color (cr, &style->white);
 
   x = area->x + (area->width  - renderer->width)  / 2;
   y = area->y + (area->height - renderer->height) / 2;
@@ -94,7 +95,7 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   cairo_device_to_user_distance (cr, &xscale, &yscale);
 
   cairo_set_line_width (cr, MAX (xscale, yscale));
-  gdk_cairo_set_source_color (cr, &widget->style->black);
+  gdk_cairo_set_source_color (cr, &style->black);
 
   bezdesc = gimp_vectors_make_bezier (vectors);
 
