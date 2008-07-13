@@ -308,6 +308,8 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   GtkWidget            *popup;
   GtkWidget            *scrolled_window;
   GtkWidget            *drawing_area;
+  GtkWidget            *viewport;
+  GtkWidget            *frame;
   gint                  x;
   gint                  y;
   gint                  width;
@@ -398,17 +400,25 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 
   gtk_widget_show (drawing_area);
 
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (viewport), drawing_area);
+  gtk_widget_show (viewport);
+
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-                                         drawing_area);
+  gtk_container_add (GTK_CONTAINER (scrolled_window),
+                     viewport);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+  frame = gtk_frame_new (NULL);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
 
   gdk_window_get_origin (GTK_WIDGET (combo_entry)->window, &x, &y);
   max_height = GTK_WIDGET (combo_entry)->allocation.height * 7;
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
-  width += scrolled_window->style->xthickness;
-  height += scrolled_window->style->ythickness;
+  width += frame->style->xthickness;
+  height += frame->style->ythickness;
   height = MIN (height, max_height);
   if (y > screen_height / 2)
     {
@@ -423,7 +433,8 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   gtk_window_move (GTK_WINDOW (popup), x, y);
 
   gtk_widget_show (scrolled_window);
-  gtk_container_add (GTK_CONTAINER (popup), scrolled_window);
+  gtk_widget_show (frame);
+  gtk_container_add (GTK_CONTAINER (popup), frame);
   gtk_widget_show (GTK_WIDGET (popup));
 
   g_object_set_data_full (G_OBJECT (popup), "popup-data",
