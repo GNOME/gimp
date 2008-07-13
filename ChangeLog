@@ -1,5 +1,14 @@
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Get rid
+	of non-intelligent scrollbar stepper sensitivity code.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_offsets): Add intelligent
+	scrollbar stepper sensitivity code.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_setup_hscrollbar_with_value): Consistency
 	cleanup.
