@@ -165,7 +165,6 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
 static void
 gimp_tag_entry_query_tag (GimpTagEntry         *entry)
 {
-  GimpTagEntry                 *tag_entry;
   gchar                       **parsed_tags;
   gint                          count;
   gint                          i;
@@ -184,7 +183,7 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
     }
   g_strfreev (parsed_tags);
 
-  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (tag_entry->tagged_container),
+  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (entry->tagged_container),
                                       query_list);
 }
 
