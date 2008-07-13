@@ -188,32 +188,43 @@ gimp_unique_win32_open (const gchar **filenames,
 
   if (window_handle)
     {
-      COPYDATASTRUCT  copydata;
-      gchar          *cwd   = g_get_current_dir ();
-      GError         *error = NULL;
-      gint            i;
+      COPYDATASTRUCT  copydata = { 0, };
 
-      for (i = 0; filenames && filenames[i]; i++)
-	{
-	  gchar *uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
+      if (filenames)
+        {
+          gchar  *cwd   = g_get_current_dir ();
+          GError *error = NULL;
+          gint    i;
 
-	  if (uri)
-	    {
-	      copydata.lpData = uri;
-	      copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
-	      copydata.dwData = (long) as_new;
+          for (i = 0; filenames[i]; i++)
+            {
+              gchar *uri;
 
-	      SendMessage (window_handle,
-			   WM_COPYDATA, window_handle, &copydata);
-	    }
-	  else
-	    {
-	      g_printerr ("conversion to uri failed: %s\n", error->message);
-	      g_clear_error (&error);
-	    }
-	}
+              uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
 
-      g_free (cwd);
+              if (uri)
+                {
+                  copydata.lpData = uri;
+                  copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
+                  copydata.dwData = (long) as_new;
+
+                  SendMessage (window_handle,
+                               WM_COPYDATA, window_handle, &copydata);
+                }
+              else
+                {
+                  g_printerr ("conversion to uri failed: %s\n", error->message);
+                  g_clear_error (&error);
+                }
+            }
+
+          g_free (cwd);
+        }
+      else
+        {
+          SendMessage (window_handle,
+                       WM_COPYDATA, window_handle, &copydata);
+        }
 
       return TRUE;
     }

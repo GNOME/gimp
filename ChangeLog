@@ -1,3 +1,10 @@
+2008-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/unique.c
+	* app/gui/gui-unique.c: on Win32, if the gimp binary is started
+	without filenames, raise the toolbox, just as we do in the DBus
+	code path.
+
 2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/unique.c (gimp_unique_win32_open): check for NULL pointer to
