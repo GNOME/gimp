@@ -1340,9 +1340,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                          GimpUnit          unit,
                          gdouble           scale)
 {
-  gint display_width;
-  gint display_height;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -1351,8 +1348,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                                      GTK_WIDGET (shell));
 
   gimp_display_shell_set_unit (shell, unit);
-  gimp_display_shell_set_initial_scale (shell, scale,
-                                        &display_width, &display_height);
+  gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_changed (shell);
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));

@@ -1,3 +1,9 @@
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Don't
+	ask gimp_display_shell_set_initial_scale() for display size, we
+	don't care anyway.
+
 2008-07-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	The following change is conceptually based on a patch by
