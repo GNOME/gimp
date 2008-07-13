@@ -530,12 +530,17 @@ gimp_brush_spacing_changed (GimpBrush *brush)
 }
 
 static gchar *
-gimp_brush_get_checksum(GimpTagged      *tagged)
+gimp_brush_get_checksum (GimpTagged      *tagged)
 {
   GimpBrush            *brush = GIMP_BRUSH (tagged);
   TempBuf              *buffer;
   GChecksum            *checksum;
   gchar                *checksum_string;
+
+  if (! brush->mask)
+    {
+      return NULL;
+    }
 
   checksum = g_checksum_new (G_CHECKSUM_MD5);
 
@@ -546,11 +551,8 @@ gimp_brush_get_checksum(GimpTagged      *tagged)
                          buffer->width * buffer->height * buffer->bytes);
     }
   buffer = brush->mask;
-  if (buffer)
-    {
-      g_checksum_update (checksum, temp_buf_data (buffer),
-                         buffer->width * buffer->height * buffer->bytes);
-    }
+  g_checksum_update (checksum, temp_buf_data (buffer),
+                     buffer->width * buffer->height * buffer->bytes);
 
   checksum_string = g_strdup (g_checksum_get_string (checksum));
 

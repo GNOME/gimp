@@ -33,6 +33,7 @@
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
@@ -40,6 +41,7 @@
 
 /*  local function prototypes  */
 
+static void       gimp_palette_tagged_init      (GimpTaggedInterface   *iface);
 static void       gimp_palette_finalize         (GObject           *object);
 
 static gint64     gimp_palette_get_memsize      (GimpObject        *object,
@@ -69,9 +71,12 @@ static GimpData * gimp_palette_duplicate        (GimpData          *data);
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 static gint64     gimp_palette_entry_get_memsize(GimpPaletteEntry  *entry,
                                                  gint64            *gui_size);
+static gchar    * gimp_palette_get_checksum     (GimpTagged        *tagged);
 
 
-G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_CODE (GimpPalette, gimp_palette, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_palette_tagged_init))
 
 #define parent_class gimp_palette_parent_class
 
@@ -105,6 +110,12 @@ gimp_palette_init (GimpPalette *palette)
   palette->colors    = NULL;
   palette->n_colors  = 0;
   palette->n_columns = 0;
+}
+
+static void
+gimp_palette_tagged_init (GimpTaggedInterface  *iface)
+{
+  iface->get_checksum   = gimp_palette_get_checksum;
 }
 
 static void
@@ -506,4 +517,35 @@ gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
   memsize += gimp_string_get_memsize (entry->name);
 
   return memsize;
+}
+
+static gchar *
+gimp_palette_get_checksum (GimpTagged          *tagged)
+{
+  GimpPalette          *palette = GIMP_PALETTE (tagged);
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+  GimpPaletteEntry     *entry;
+  GList                *color_iterator;
+
+  if (palette->n_colors < 1)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+  g_checksum_update (checksum, (const guchar *) &palette->n_colors,
+                     sizeof (palette->n_colors));
+  color_iterator = palette->colors;
+  while (color_iterator)
+    {
+      entry = (GimpPaletteEntry *) color_iterator->data;
+      g_checksum_update (checksum, (const guchar *) &entry->color,
+                         sizeof (entry->color));
+      color_iterator = g_list_next (color_iterator);
+    }
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+  g_checksum_free (checksum);
+
+  return checksum_string;
 }

@@ -30,10 +30,12 @@
 
 #include "gimppattern.h"
 #include "gimppattern-load.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
 
+static void       gimp_pattern_tagged_init     (GimpTaggedInterface    *iface);
 static void       gimp_pattern_finalize        (GObject       *object);
 
 static gint64     gimp_pattern_get_memsize     (GimpObject    *object,
@@ -51,8 +53,12 @@ static gchar    * gimp_pattern_get_description (GimpViewable  *viewable,
 static gchar    * gimp_pattern_get_extension   (GimpData      *data);
 static GimpData * gimp_pattern_duplicate       (GimpData      *data);
 
+static gchar    * gimp_pattern_get_checksum    (GimpTagged    *tagged);
 
-G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA)
+
+G_DEFINE_TYPE_WITH_CODE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_pattern_tagged_init))
 
 #define parent_class gimp_pattern_parent_class
 
@@ -82,6 +88,12 @@ static void
 gimp_pattern_init (GimpPattern *pattern)
 {
   pattern->mask = NULL;
+}
+
+static void
+gimp_pattern_tagged_init (GimpTaggedInterface  *iface)
+{
+  iface->get_checksum   = gimp_pattern_get_checksum;
 }
 
 static void
@@ -229,4 +241,28 @@ gimp_pattern_get_mask (const GimpPattern *pattern)
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
   return pattern->mask;
+}
+
+static gchar *
+gimp_pattern_get_checksum (GimpTagged          *tagged)
+{
+  GimpPattern          *pattern = GIMP_PATTERN (tagged);
+  TempBuf              *buffer;
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+
+  if (! pattern->mask)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+  buffer = pattern->mask;
+  g_checksum_update (checksum, temp_buf_data (buffer),
+                     buffer->width * buffer->height * buffer->bytes);
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+  g_checksum_free (checksum);
+
+  return checksum_string;
 }

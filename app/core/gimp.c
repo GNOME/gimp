@@ -872,15 +872,12 @@ gimp_restore (Gimp               *gimp,
   gimp_tag_cache_load (gimp->tag_cache);
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp->brush_factory->container);
-  /*
-  gimp_container_foreach (gimp->brush_factory->container,
-                          gimp_tag_cache_update, gimp->tag_cache);
-  gimp_container_foreach (gimp->pattern_factory->container,
-                          gimp_tag_cache_update, gimp->tag_cache);
-  gimp_container_foreach (gimp->palette_factory->container,
-                          gimp_tag_cache_update, gimp->tag_cache);
-  gimp_container_foreach (gimp->gradient_factory->container,
-                          gimp_tag_cache_update, gimp->tag_cache);*/
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp->pattern_factory->container);
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp->gradient_factory->container);
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp->palette_factory->container);
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }
