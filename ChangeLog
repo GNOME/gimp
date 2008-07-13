@@ -1,5 +1,11 @@
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): BORDER_PEN_WIDTH is a normal
+	constant, no need for voodoo.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_get_scaled_image_size): New function that
 	contains logic previously kept in gimp_display_shell_draw_area().
