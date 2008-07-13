@@ -26,7 +26,10 @@
 
 #include "display-types.h"
 
+#include "base/tile-manager.h"
+
 #include "core/gimpimage.h"
+#include "core/gimpprojection.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
@@ -250,6 +253,42 @@ gimp_display_shell_get_scaled_image_viewport_offset (const GimpDisplayShell *she
 
   if (x) *x = -shell->offset_x;
   if (y) *y = -shell->offset_y;
+}
+
+/**
+ * gimp_display_shell_get_scaled_image_size:
+ * @shell:
+ * @w:
+ * @h:
+ *
+ * Gets the size of the rendered image after it has been scaled.
+ *
+ **/
+void
+gimp_display_shell_get_scaled_image_size (const GimpDisplayShell *shell,
+                                          gint                   *w,
+                                          gint                   *h)
+{
+  GimpProjection *proj;
+  TileManager    *tiles;
+  gint            level;
+  gint            level_width;
+  gint            level_height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
+
+  proj = shell->display->image->projection;
+
+  level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
+
+  tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
+
+  level_width  = tile_manager_width (tiles);
+  level_height = tile_manager_height (tiles);
+
+  if (w) *w = PROJ_ROUND (level_width  * (shell->scale_x * (1 << level)));
+  if (h) *h = PROJ_ROUND (level_height * (shell->scale_y * (1 << level)));
 }
 
 /**

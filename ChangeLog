@@ -1,5 +1,14 @@
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_get_scaled_image_size): New function that
+	contains logic previously kept in gimp_display_shell_draw_area().
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): Use the new function.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Don't
 	ask gimp_display_shell_set_initial_scale() for display size, we
 	don't care anyway.
