@@ -374,7 +374,7 @@ gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  sw = SCALEX (shell, gimp_image_get_width (shell->display->image));
+  gimp_display_shell_get_scaled_image_size (shell, &sw, NULL);
 
   if (shell->disp_width < sw)
     {
@@ -414,7 +414,7 @@ gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
+  gimp_display_shell_get_scaled_image_size (shell, NULL, &sh);
 
   if (shell->disp_height < sh)
     {

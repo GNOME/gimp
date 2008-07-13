@@ -1,5 +1,13 @@
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Use
+	gimp_display_shell_get_scaled_image_size() instead of inaccurately
+	calculate that information locally.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpnavigationeditor.c
 	(gimp_navigation_editor_popup): BORDER_PEN_WIDTH is a normal
 	constant, no need for voodoo.
