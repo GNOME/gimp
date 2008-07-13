@@ -1,3 +1,16 @@
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_center_image): Allow to choose what axes to
+	center on.
+
+	(gimp_display_shell_scale_fill)
+	(gimp_display_shell_scale_fit_in): Explicitly center on both axes.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Center
+	the image in the filled display shell. Rather hackish, but seems
+	to work fine.
+
 2008-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

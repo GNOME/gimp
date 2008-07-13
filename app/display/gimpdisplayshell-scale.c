@@ -431,7 +431,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
-  gimp_display_shell_center_image (shell);
+  gimp_display_shell_center_image (shell, TRUE, TRUE);
 }
 
 /**
@@ -470,18 +470,22 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
-  gimp_display_shell_center_image (shell);
+  gimp_display_shell_center_image (shell, TRUE, TRUE);
 }
 
 /**
  * gimp_display_shell_center_image:
  * @shell:
+ * @horizontally:
+ * @vertically:
  *
- * Centers the image in the display shell.
+ * Centers the image in the display shell on the desired axes.
  *
  **/
 void
-gimp_display_shell_center_image (GimpDisplayShell *shell)
+gimp_display_shell_center_image (GimpDisplayShell *shell,
+                                 gboolean          horizontally,
+                                 gboolean          vertically)
 {
   gint sw, sh;
   gint target_offset_x, target_offset_y;
@@ -491,24 +495,33 @@ gimp_display_shell_center_image (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
+  target_offset_x = shell->offset_x;
+  target_offset_y = shell->offset_y;
+
   gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
 
-  if (sw < shell->disp_width)
+  if (horizontally)
     {
-      target_offset_x = -(shell->disp_width - sw) / 2;
-    }
-  else
-    {
-      target_offset_x = (sw - shell->disp_width) / 2;
+      if (sw < shell->disp_width)
+        {
+          target_offset_x = -(shell->disp_width - sw) / 2;
+        }
+      else
+        {
+          target_offset_x = (sw - shell->disp_width) / 2;
+        }
     }
 
-  if (sh < shell->disp_height)
+  if (vertically)
     {
-      target_offset_y = -(shell->disp_height - sh) / 2;
-    }
-  else
-    {
-      target_offset_y = (sh - shell->disp_height) / 2;
+      if (sh < shell->disp_height)
+        {
+          target_offset_y = -(shell->disp_height - sh) / 2;
+        }
+      else
+        {
+          target_offset_y = (sh - shell->disp_height) / 2;
+        }
     }
 
   /* Note that we can't use gimp_display_shell_scroll_private() here

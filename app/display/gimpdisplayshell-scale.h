@@ -38,7 +38,9 @@ void   gimp_display_shell_scale_to              (GimpDisplayShell *shell,
                                                  gdouble           y);
 void   gimp_display_shell_scale_fit_in          (GimpDisplayShell *shell);
 void   gimp_display_shell_scale_fill            (GimpDisplayShell *shell);
-void   gimp_display_shell_center_image          (GimpDisplayShell *shell);
+void   gimp_display_shell_center_image          (GimpDisplayShell *shell,
+                                                 gboolean          horizontally,
+                                                 gboolean          vertically);
 void   gimp_display_shell_scale_by_values       (GimpDisplayShell *shell,
                                                  gdouble           scale,
                                                  gint              offset_x,
