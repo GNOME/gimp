@@ -58,6 +58,7 @@ gimp_unique_open (const gchar **filenames,
 #endif
 }
 
+#ifndef GIMP_CONSOLE_COMPILATION
 static gchar *
 gimp_unique_filename_to_uri (const gchar  *filename,
 			     const gchar  *cwd,
@@ -87,6 +88,8 @@ gimp_unique_filename_to_uri (const gchar  *filename,
 
   return uri;
 }
+#endif
+
 
 #if HAVE_DBUS_GLIB
 
@@ -97,7 +100,7 @@ gimp_unique_dbus_open (const gchar **filenames,
 #ifndef GIMP_CONSOLE_COMPILATION
 
 /*  for the DBus service names  */
-#include "widgets/gimpdbusservice.h"
+#include "gui/gimpdbusservice.h"
 
   DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
 

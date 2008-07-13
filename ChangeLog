@@ -1,5 +1,22 @@
 2008-07-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: removed here ...
+
+	* app/gui/Makefile.am
+	* app/gui/gimpdbusservice.[ch]
+	* app/gui/dbus-service.xml: ... and moved here.
+	(gimp_dbus_service_activate): raise the first display instead of
+	the toolbox.
+
+	* app/gui/gui-unique.c (gui_unique_win32_idle_open): same change
+	here, raise the display instead of the toolbox.
+
+	* app/unique.c: changed accordingly.
+
+2008-07-13  Sven Neumann  <sven@gimp.org>
+
 	* app/unique.c
 	* app/gui/gui-unique.c: on Win32, if the gimp binary is started
 	without filenames, raise the toolbox, just as we do in the DBus

@@ -11,8 +11,6 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
-	$(PANGOFT2_CFLAGS)	\
-	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappwidgets.a
@@ -110,8 +108,6 @@ libappwidgets_a_sources = \
 	gimpdataeditor.h		\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
-	gimpdbusservice.c		\
-	gimpdbusservice.h		\
 	gimpdeviceinfo.c		\
 	gimpdeviceinfo.h		\
 	gimpdevices.c			\
@@ -350,29 +346,20 @@ libappwidgets_a_sources = \
 	gtkvwrapbox.c			\
 	gtkvwrapbox.h
 
-libappwidgets_a_built_sources = gimpdbusservice-glue.h widgets-enums.c
+libappwidgets_a_built_sources = widgets-enums.c
 
 libappwidgets_a_SOURCES = \
 	$(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
 
-EXTRA_DIST = \
-	dbus-service.xml	\
-	makefile.msc
+EXTRA_DIST = makefile.msc
 
 
 #
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-wec gimpdbusservice-glue.h
+gen_sources = xgen-wec
 CLEANFILES = $(gen_sources)
-
-
-$(srcdir)/gimpdbusservice.c: gimpdbusservice-glue.h
-
-gimpdbusservice-glue.h: $(srcdir)/dbus-service.xml
-	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=gimp $< > $(@F)
-
 
 widgets-enums.c: $(srcdir)/widgets-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \

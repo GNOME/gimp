@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -30,12 +30,14 @@
 #include <dbus/dbus-glib-lowlevel.h>
 #endif
 
-#include "core/core-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 
-#include "widgets/gimpdbusservice.h"
+#include "display/gimpdisplay.h"
 
+#include "gimpdbusservice.h"
 #include "gui-unique.h"
 
 
@@ -158,12 +160,12 @@ gui_unique_win32_idle_open (IdleOpenData *data)
     }
   else
     {
-      /* raise the toolbox */
-      const GList *managers = gimp_ui_managers_from_name ("<Image>");
+      /*  raise the first display  */
+      GimpObject *display;
 
-      if (managers)
-        gimp_ui_manager_activate_action (managers->data,
-                                         "dialogs", "dialogs-toolbox");
+      display = gimp_container_get_first_child (unique_gimp->displays);
+
+      gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
     }
 
   return FALSE;
