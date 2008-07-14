@@ -460,6 +460,7 @@ EXPORTS
 	gimp_palette_entry_set_color
 	gimp_palette_entry_set_name
 	gimp_palette_get_background
+	gimp_palette_get_colors
 	gimp_palette_get_columns
 	gimp_palette_get_foreground
 	gimp_palette_get_info

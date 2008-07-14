@@ -1,5 +1,17 @@
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/palette.pdb: added new PDB function
+	gimp-palette-get-colors that retrieves all colors from a palette
+	in a single call. Based on patches from bug #332206.
+
+	* app/pdb/palette-cmds.c
+	* app/pdb/internal-procs.c
+	* libgimp/gimppalette_pdb.[ch]: regenerated.
+	
+	* libgimp/gimp.def: updated.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/app.pl: added support for color arrays.
 
 2008-07-14  Sven Neumann  <sven@gimp.org>
