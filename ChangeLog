@@ -1,3 +1,10 @@
+2008-07-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb: fixed documentation (bug #542972).
+
+	* app/pdb/edit-cmds.c
+	* libgimp/gimpedit_pdb.c: regenerated.
+
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/palette.pdb: added new PDB function
