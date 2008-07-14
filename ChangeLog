@@ -1,3 +1,9 @@
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): added some line breaks to
+	improve readability.
+
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.[ch]

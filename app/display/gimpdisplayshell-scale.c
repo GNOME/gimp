@@ -162,11 +162,15 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
     if (image)
       {
-        horizontal_upper    = img2real (shell, TRUE, FUNSCALEX (shell, shell->disp_width));
-        horizontal_max_size = img2real (shell, TRUE, MAX (image_width, image_height));
+        horizontal_upper    = img2real (shell, TRUE,
+					FUNSCALEX (shell, shell->disp_width));
+        horizontal_max_size = img2real (shell, TRUE,
+					MAX (image_width, image_height));
 
-        vertical_upper      = img2real (shell, FALSE, FUNSCALEY (shell, shell->disp_height));
-        vertical_max_size   = img2real (shell, FALSE, MAX (image_width, image_height));
+        vertical_upper      = img2real (shell, FALSE,
+					FUNSCALEY (shell, shell->disp_height));
+        vertical_max_size   = img2real (shell, FALSE,
+					MAX (image_width, image_height));
       }
     else
       {
@@ -185,14 +189,18 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
                                                          &scaled_image_viewport_offset_y);
 
     horizontal_lower -= img2real (shell, TRUE,
-                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+                                  FUNSCALEX (shell,
+					     (gdouble) scaled_image_viewport_offset_x));
     horizontal_upper -= img2real (shell, TRUE,
-                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+                                  FUNSCALEX (shell,
+					     (gdouble) scaled_image_viewport_offset_x));
 
     vertical_lower   -= img2real (shell, FALSE,
-                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+                                  FUNSCALEY (shell,
+					     (gdouble) scaled_image_viewport_offset_y));
     vertical_upper   -= img2real (shell, FALSE,
-                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+                                  FUNSCALEY (shell,
+					     (gdouble) scaled_image_viewport_offset_y));
 
 
     /* Finally setup the actual rulers */
