@@ -1,5 +1,14 @@
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollerkeyboard.c: changed cursor key event
+	prefix from "key-" to "cursor-".
+
+	* etc/controllerrc: changed accordingly. Also removed default
+	bindings for cursor keys without modifiers as many tools use the
+	cursor keys already.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_setup): added some line breaks to
 	improve readability.
