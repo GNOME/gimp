@@ -272,7 +272,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
   if (! pdb_type_quark)
     {
-      struct
+      const struct
       {
         GType          g_type;
         GimpPDBArgType pdb_type;
@@ -291,13 +291,14 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
         { G_TYPE_STRING,             GIMP_PDB_STRING      },
 
+        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
+
         { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
         { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
         { GIMP_TYPE_INT8_ARRAY,      GIMP_PDB_INT8ARRAY   },
         { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
-
-        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
+        { GIMP_TYPE_COLOR_ARRAY,     GIMP_PDB_COLORARRAY  },
 
         { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
         { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },

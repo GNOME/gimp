@@ -1,5 +1,10 @@
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_arg_type_from_gtype):
+	added mapping from GIMP_TYPE_COLOR_ARRAY to GIMP_PDB_COLORARRAY.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
 	Add new PDB data type PDB_COLORARRAY for using arrays of GimpRGB
 	colors as argument or return value.
 
