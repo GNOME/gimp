@@ -1,5 +1,9 @@
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/app.pl: added support for color arrays.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_arg_type_from_gtype):
 	added mapping from GIMP_TYPE_COLOR_ARRAY to GIMP_PDB_COLORARRAY.
 
