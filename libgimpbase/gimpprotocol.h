@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0012
+#define GIMP_PROTOCOL_VERSION  0x0013
 
 
 enum
@@ -120,6 +120,7 @@ struct _GPParam
     guint8       *d_int8array;
     gdouble      *d_floatarray;
     gchar       **d_stringarray;
+    GimpRGB      *d_colorarray;
     GimpRGB       d_color;
     struct
     {

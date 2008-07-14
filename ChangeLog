@@ -1,5 +1,28 @@
 2008-07-14  Sven Neumann  <sven@gimp.org>
 
+	Add new PDB data type PDB_COLORARRAY for using arrays of GimpRGB
+	colors as argument or return value.
+
+	* libgimpbase/gimpbaseenums.[ch] (enum GimpPDBArgType): replaced
+	the unused GIMP_PDB_BOUNDARY with GIMP_PDB_COLORARRAY.
+
+	* libgimpbase/gimpprotocol.h: increased GIMP_PROTOCOL_VERSION.
+	(struct _GPParam): added d_colorarray entry to the union.
+
+	* libgimpbase/gimpprotocol.c
+	* libgimp/gimp.[ch]
+	* app/pdb/gimp-pdb-compat.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/gimpplugin-message.c
+	* tools/pdbgen/pdb.pl: deal with the new data type.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/script-fu/scheme-wrapper.c: handle the new data type.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerkeyboard.c: changed cursor key event
 	prefix from "key-" to "cursor-".
 

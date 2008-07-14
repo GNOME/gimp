@@ -148,7 +148,9 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
                                             G_PARAM_READWRITE);
       break;
 
-    case GIMP_PDB_BOUNDARY:
+    case GIMP_PDB_COLORARRAY:
+      pspec = gimp_param_spec_color_array (name, name, desc,
+                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_VECTORS:
@@ -220,7 +222,6 @@ gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
       return GIMP_TYPE_RGB;
 
     case GIMP_PDB_REGION:
-    case GIMP_PDB_BOUNDARY:
       break;
 
     case GIMP_PDB_DISPLAY:
@@ -240,6 +241,9 @@ gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
 
     case GIMP_PDB_SELECTION:
       return GIMP_TYPE_SELECTION_ID;
+
+    case GIMP_PDB_COLORARRAY:
+      return GIMP_TYPE_COLOR_ARRAY;
 
     case GIMP_PDB_VECTORS:
       return GIMP_TYPE_VECTORS_ID;

@@ -128,6 +128,7 @@ union _GimpParamData
   guint8           *d_int8array;
   gdouble          *d_floatarray;
   gchar           **d_stringarray;
+  GimpRGB          *d_colorarray;
   GimpRGB           d_color;
   GimpParamRegion   d_region;
   gint32            d_display;

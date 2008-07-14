@@ -736,7 +736,6 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
-        case GIMP_PDB_BOUNDARY:
         case GIMP_PDB_VECTORS:
         case GIMP_PDB_STATUS:
           (void) va_arg (args, gint);
@@ -769,6 +768,7 @@ gimp_run_procedure (const gchar *name,
           (void) va_arg (args, gchar **);
           break;
         case GIMP_PDB_COLOR:
+	case GIMP_PDB_COLORARRAY:
           (void) va_arg (args, GimpRGB *);
           break;
         case GIMP_PDB_PARASITE:
@@ -850,8 +850,8 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_SELECTION:
           params[i].data.d_selection = va_arg (args, gint32);
           break;
-        case GIMP_PDB_BOUNDARY:
-          params[i].data.d_boundary = va_arg (args, gint32);
+        case GIMP_PDB_COLORARRAY:
+          params[i].data.d_colorarray = va_arg (args, GimpRGB *);
           break;
         case GIMP_PDB_VECTORS:
           params[i].data.d_vectors = va_arg (args, gint32);

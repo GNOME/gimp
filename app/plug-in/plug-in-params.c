@@ -221,8 +221,16 @@ plug_in_params_to_args (GParamSpec **pspecs,
           g_value_set_int (&value, params[i].data.d_selection);
           break;
 
-        case GIMP_PDB_BOUNDARY:
-          g_message ("the \"boundary\" arg type is not currently supported");
+        case GIMP_PDB_COLORARRAY:
+          count = g_value_get_int (&args->values[i - 1]);
+          if (full_copy)
+            gimp_value_set_colorarray (&value,
+                                      params[i].data.d_colorarray,
+                                      count);
+          else
+            gimp_value_set_static_colorarray (&value,
+                                             params[i].data.d_colorarray,
+                                             count);
           break;
 
         case GIMP_PDB_VECTORS:
@@ -374,8 +382,11 @@ plug_in_args_to_params (GValueArray *args,
           params[i].data.d_selection = g_value_get_int (value);
           break;
 
-        case GIMP_PDB_BOUNDARY:
-          g_message ("the \"boundary\" arg type is not currently supported");
+        case GIMP_PDB_COLORARRAY:
+          if (full_copy)
+            params[i].data.d_colorarray = gimp_value_dup_colorarray (value);
+          else
+            params[i].data.d_colorarray = (GimpRGB *) gimp_value_get_colorarray (value);
           break;
 
         case GIMP_PDB_VECTORS:
