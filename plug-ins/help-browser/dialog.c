@@ -579,7 +579,7 @@ ui_manager_new (GtkWidget *window)
     },
     {
       "find", GTK_STOCK_FIND,
-      NULL, "<control>F", N_("Find Text in current page"),
+      NULL, "<control>F", N_("Find text in current page"),
       G_CALLBACK (find_callback)
     },
     {
