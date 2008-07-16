@@ -133,9 +133,9 @@ static void       search_entry_changed    (GtkWidget         *entry);
 static gboolean   search_entry_key_press  (GtkWidget         *entry,
                                            GdkEventKey       *event);
 static void       search_prev_clicked     (GtkWidget         *button,
-					   GtkWidget         *entry);
+                                           GtkWidget         *entry);
 static void       search_next_clicked     (GtkWidget         *button,
-					   GtkWidget         *entry);
+                                           GtkWidget         *entry);
 static void       search_close_clicked    (GtkWidget         *button);
 static void       search                  (const gchar       *text,
                                            gboolean           forward);
@@ -1152,7 +1152,7 @@ search_entry_changed (GtkWidget *entry)
 
 static gboolean
 search_entry_key_press (GtkWidget   *entry,
-			GdkEventKey *event)
+                        GdkEventKey *event)
 {
   if (event->keyval == GDK_Escape)
     {
@@ -1165,25 +1165,25 @@ search_entry_key_press (GtkWidget   *entry,
 
 static void
 search_prev_clicked (GtkWidget *button,
-		     GtkWidget *entry)
+                     GtkWidget *entry)
 {
   search (gtk_entry_get_text (GTK_ENTRY (entry)), FALSE);
 }
 
 static void
 search_next_clicked (GtkWidget *button,
-		     GtkWidget *entry)
+                     GtkWidget *entry)
 {
   search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
 }
 
 static void
 search (const gchar *text,
-	gboolean     forward)
+        gboolean     forward)
 {
   if (text)
     webkit_web_view_search_text (WEBKIT_WEB_VIEW (view),
-				 text, FALSE, forward, TRUE);
+                                 text, FALSE, forward, TRUE);
 }
 
 static void
