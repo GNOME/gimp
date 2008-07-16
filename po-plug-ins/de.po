@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-09 10:45+0200\n"
-"PO-Revision-Date: 2008-07-09 11:00+0200\n"
-"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
+"POT-Creation-Date: 2008-07-16 16:54+0200\n"
+"PO-Revision-Date: 2008-07-16 16:53+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +83,7 @@ msgstr "Datei »%s« konnte nicht zum Lesen geöffnet werden: %s"
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:574
 #: ../plug-ins/common/postscript.c:1029 ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470 ../plug-ins/common/tga.c:433
-#: ../plug-ins/common/tiff-load.c:570 ../plug-ins/common/wmf.c:992
+#: ../plug-ins/common/tiff-load.c:589 ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725 ../plug-ins/common/xpm.c:343
 #: ../plug-ins/common/xwd.c:506 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/fli/fli-gimp.c:469 ../plug-ins/ico/ico-load.c:645
@@ -140,7 +140,7 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:571
 #: ../plug-ins/common/raw.c:691 ../plug-ins/common/smooth-palette.c:257
 #: ../plug-ins/common/sunras.c:956 ../plug-ins/common/tga.c:1034
-#: ../plug-ins/common/tiff-load.c:963 ../plug-ins/common/tile.c:267
+#: ../plug-ins/common/tiff-load.c:982 ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880 ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511 ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:251
@@ -3263,7 +3263,7 @@ msgid "Composing images"
 msgstr "Bilder werden kombiniert"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1020
+#: ../plug-ins/help-browser/dialog.c:1047
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -5682,7 +5682,7 @@ msgid "Import from PDF"
 msgstr "Aus PDF importieren"
 
 #: ../plug-ins/common/poppler.c:801 ../plug-ins/common/postscript.c:3083
-#: ../plug-ins/common/tiff-load.c:451
+#: ../plug-ins/common/tiff-load.c:470
 msgid "_Import"
 msgstr "_Importieren"
 
@@ -5737,7 +5737,7 @@ msgstr ""
 "gesetzt ist, um dies GIMP mitzuteilen.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1913 ../plug-ins/common/tiff-load.c:965
+#: ../plug-ins/common/postscript.c:1913 ../plug-ins/common/tiff-load.c:984
 #, c-format
 msgid "Page %d"
 msgstr "Seite %d"
@@ -7111,20 +7111,20 @@ msgstr "TIFF-Bild"
 msgid "TIFF '%s' does not contain any directories"
 msgstr "Das TIFF »%s« enthält keinerlei Verzeichnisse"
 
-#: ../plug-ins/common/tiff-load.c:446
+#: ../plug-ins/common/tiff-load.c:465
 msgid "Import from TIFF"
 msgstr "Aus TIFF importieren"
 
-#: ../plug-ins/common/tiff-load.c:746
+#: ../plug-ins/common/tiff-load.c:765
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-von-%d-Seiten"
 
-#: ../plug-ins/common/tiff-load.c:981
+#: ../plug-ins/common/tiff-load.c:1000
 msgid "TIFF Channel"
 msgstr "TIFF-Kanäle"
 
-#: ../plug-ins/common/tiff-load.c:990 ../plug-ins/psd/psd-load.c:318
+#: ../plug-ins/common/tiff-load.c:1009 ../plug-ins/psd/psd-load.c:318
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -10143,58 +10143,76 @@ msgstr "Zufälliger Anfangswert:"
 msgid "_Second Flares"
 msgstr "_Zweites Flare"
 
-#: ../plug-ins/help-browser/dialog.c:176
-#: ../plug-ins/help-browser/dialog.c:1021
+#: ../plug-ins/help-browser/dialog.c:180
+#: ../plug-ins/help-browser/dialog.c:1048
 msgid "GIMP Help Browser"
 msgstr "GIMP-Hilfe-Browser"
 
-#: ../plug-ins/help-browser/dialog.c:545
+#: ../plug-ins/help-browser/dialog.c:557
 msgid "Go back one page"
 msgstr "Eine Seite zurück gehen"
 
-#: ../plug-ins/help-browser/dialog.c:550
+#: ../plug-ins/help-browser/dialog.c:562
 msgid "Go forward one page"
 msgstr "Eine Seite weiter gehen"
 
-#: ../plug-ins/help-browser/dialog.c:555
+#: ../plug-ins/help-browser/dialog.c:567
 msgid "_Reload"
 msgstr "Neu _Laden"
 
-#: ../plug-ins/help-browser/dialog.c:555
+#: ../plug-ins/help-browser/dialog.c:567
 msgid "Reload current page"
 msgstr "Diese Seite erneut laden"
 
-#: ../plug-ins/help-browser/dialog.c:560
+#: ../plug-ins/help-browser/dialog.c:572
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: ../plug-ins/help-browser/dialog.c:560
+#: ../plug-ins/help-browser/dialog.c:572
 msgid "Stop loading this page"
 msgstr "Laden dieser Seite stoppen"
 
-#: ../plug-ins/help-browser/dialog.c:565
+#: ../plug-ins/help-browser/dialog.c:577
 msgid "Go to the index page"
 msgstr "Zum Inhaltsverzeichnis"
 
-#: ../plug-ins/help-browser/dialog.c:570
+#: ../plug-ins/help-browser/dialog.c:582
+msgid "Find text in current page"
+msgstr "In dieser Seite suchen"
+
+#: ../plug-ins/help-browser/dialog.c:587
 msgid "C_opy location"
 msgstr "_Adresse kopieren"
 
-#: ../plug-ins/help-browser/dialog.c:571
+#: ../plug-ins/help-browser/dialog.c:588
 msgid "Copy the location of this page to the clipboard"
 msgstr "Die Adresse dieser Seite in die Zwischenablage kopieren"
 
-#: ../plug-ins/help-browser/dialog.c:600
+#: ../plug-ins/help-browser/dialog.c:617
 msgid "S_how Index"
 msgstr "_Index zeigen"
 
-#: ../plug-ins/help-browser/dialog.c:601
+#: ../plug-ins/help-browser/dialog.c:618
 msgid "Toggle the visibility of the sidebar"
-msgstr ""
+msgstr "Das Seitenpanel sichtbar/unsichtbar machen"
 
-#: ../plug-ins/help-browser/dialog.c:622
+#: ../plug-ins/help-browser/dialog.c:639
 msgid "Visit the GIMP documentation website"
 msgstr "Besuchen Sie die GIMP-Dokumentations-Internet-Seite"
+
+#: ../plug-ins/help-browser/dialog.c:1089
+msgid "Find:"
+msgstr "Suchen:"
+
+#: ../plug-ins/help-browser/dialog.c:1106
+msgctxt "match"
+msgid "_Previous"
+msgstr "_Aufwärts"
+
+#: ../plug-ins/help-browser/dialog.c:1118
+msgctxt "match"
+msgid "_Next"
+msgstr "Ab_wärts"
 
 #: ../plug-ins/help/gimphelpdomain.c:181
 #, c-format
@@ -12235,7 +12253,7 @@ msgid "Unexpected end of file"
 msgstr "Unerwartetes Dateiende"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
-#: ../plug-ins/selection-to-path/pxl-outline.c:84
+#: ../plug-ins/selection-to-path/pxl-outline.c:82
 msgid "Selection to Path"
 msgstr "Auswahl zu Pfad"
 
@@ -12545,12 +12563,3 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT-Eigenschaften-Datei »%s« ist leer."
-
-#~ msgid "Drag and drop this icon to a web browser"
-#~ msgstr "Dieses Symbol auf ein Browser-Fenster ziehen und fallen lassen."
-
-#~ msgid "There is a problem with the GIMP user manual."
-#~ msgstr "Es gibt ein Problem mit dem GIMP Benutzerhandbuch"
-
-#~ msgid "Please check your installation."
-#~ msgstr "Bitte überprüfen Sie Ihre Installation."
