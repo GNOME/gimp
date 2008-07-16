@@ -1103,7 +1103,7 @@ build_searchbar (void)
                     G_CALLBACK (search_entry_key_press),
                     NULL);
 
-  button = gtk_button_new_with_mnemonic (C_("search hit", "_Previous"));
+  button = gtk_button_new_with_mnemonic (C_("match", "_Previous"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
                         gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
@@ -1115,7 +1115,7 @@ build_searchbar (void)
                     G_CALLBACK (search_prev_clicked),
                     entry);
 
-  button = gtk_button_new_with_mnemonic (C_("search hit", "_Next"));
+  button = gtk_button_new_with_mnemonic (C_("match", "_Next"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
                         gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
