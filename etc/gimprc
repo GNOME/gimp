@@ -172,11 +172,11 @@
 # Specify a default image grid.  This is a parameter list.
 # 
 # (default-grid
-#     (style intersections)
+#     (style solid)
 #     (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
 #     (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-#     (xspacing 32.000000)
-#     (yspacing 32.000000)
+#     (xspacing 10.000000)
+#     (yspacing 10.000000)
 #     (spacing-unit inches)
 #     (xoffset 0.000000)
 #     (yoffset 0.000000)

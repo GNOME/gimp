@@ -22,13 +22,15 @@ Changes in GIMP 2.5.2
  - allow to scroll beyond the image borders
  - added new PDB data type for transferring color arrays
  - added new PDB function gimp-palette-get-colors
+ - added text search to the Help Browser plug-in
  - bug fixes and code cleanup
 
 
 Contributors:
 
   Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
-  Lars-Peter Clausen, Alexia Death, Tor Lillqvist, Jakub Steiner
+  Lars-Peter Clausen, Alexia Death, Tor Lillqvist, Róman Joost,
+  Jakub Steiner
 
 
 Changes in GIMP 2.5.1
