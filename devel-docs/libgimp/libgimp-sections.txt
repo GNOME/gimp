@@ -636,6 +636,7 @@ gimp_palette_duplicate
 gimp_palette_rename
 gimp_palette_delete
 gimp_palette_get_info
+gimp_palette_get_colors
 gimp_palette_get_columns
 gimp_palette_set_columns
 gimp_palette_add_entry
