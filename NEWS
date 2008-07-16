@@ -19,6 +19,9 @@ Changes in GIMP 2.5.2
  - allow to map dynamics to hardness for the Eraser tool
  - provide gimp-remote functionality on Windows
  - disable the build and install of the gimp-remote tool by default
+ - allow to scroll beyond the image borders
+ - added new PDB data type for transferring color arrays
+ - added new PDB function gimp-palette-get-colors
  - bug fixes and code cleanup
 
 
