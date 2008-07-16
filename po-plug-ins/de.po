@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-16 16:57+0200\n"
-"PO-Revision-Date: 2008-07-16 16:57+0200\n"
+"POT-Creation-Date: 2008-07-16 21:44+0200\n"
+"PO-Revision-Date: 2008-07-16 21:45+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3263,7 +3263,7 @@ msgid "Composing images"
 msgstr "Bilder werden kombiniert"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1047
+#: ../plug-ins/help-browser/dialog.c:1092
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -10143,73 +10143,77 @@ msgstr "Zufälliger Anfangswert:"
 msgid "_Second Flares"
 msgstr "_Zweites Flare"
 
-#: ../plug-ins/help-browser/dialog.c:180
-#: ../plug-ins/help-browser/dialog.c:1048
+#: ../plug-ins/help-browser/dialog.c:184
+#: ../plug-ins/help-browser/dialog.c:1093
 msgid "GIMP Help Browser"
 msgstr "GIMP-Hilfe-Browser"
 
-#: ../plug-ins/help-browser/dialog.c:557
+#: ../plug-ins/help-browser/dialog.c:564
 msgid "Go back one page"
 msgstr "Eine Seite zurück gehen"
 
-#: ../plug-ins/help-browser/dialog.c:562
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "Go forward one page"
 msgstr "Eine Seite weiter gehen"
 
-#: ../plug-ins/help-browser/dialog.c:567
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "_Reload"
 msgstr "Neu _Laden"
 
-#: ../plug-ins/help-browser/dialog.c:567
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "Reload current page"
 msgstr "Diese Seite erneut laden"
 
-#: ../plug-ins/help-browser/dialog.c:572
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "_Stop"
 msgstr "_Stopp"
 
-#: ../plug-ins/help-browser/dialog.c:572
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "Stop loading this page"
 msgstr "Laden dieser Seite stoppen"
 
-#: ../plug-ins/help-browser/dialog.c:577
+#: ../plug-ins/help-browser/dialog.c:584
 msgid "Go to the index page"
 msgstr "Zum Inhaltsverzeichnis"
 
-#: ../plug-ins/help-browser/dialog.c:582
-msgid "Find text in current page"
-msgstr "In dieser Seite suchen"
-
-#: ../plug-ins/help-browser/dialog.c:587
+#: ../plug-ins/help-browser/dialog.c:589
 msgid "C_opy location"
 msgstr "_Adresse kopieren"
 
-#: ../plug-ins/help-browser/dialog.c:588
+#: ../plug-ins/help-browser/dialog.c:590
 msgid "Copy the location of this page to the clipboard"
 msgstr "Die Adresse dieser Seite in die Zwischenablage kopieren"
 
-#: ../plug-ins/help-browser/dialog.c:617
+#: ../plug-ins/help-browser/dialog.c:605
+msgid "Find text in current page"
+msgstr "In dieser Seite suchen"
+
+#: ../plug-ins/help-browser/dialog.c:610
+msgid "Find _Again"
+msgstr "_Weitersuchen"
+
+#: ../plug-ins/help-browser/dialog.c:629
 msgid "S_how Index"
 msgstr "_Index zeigen"
 
-#: ../plug-ins/help-browser/dialog.c:618
+#: ../plug-ins/help-browser/dialog.c:630
 msgid "Toggle the visibility of the sidebar"
 msgstr "Das Seitenpanel sichtbar/unsichtbar machen"
 
-#: ../plug-ins/help-browser/dialog.c:639
+#: ../plug-ins/help-browser/dialog.c:651
 msgid "Visit the GIMP documentation website"
 msgstr "Besuchen Sie die GIMP-Dokumentations-Internet-Seite"
 
-#: ../plug-ins/help-browser/dialog.c:1089
+#: ../plug-ins/help-browser/dialog.c:1134
 msgid "Find:"
 msgstr "Suchen:"
 
-#: ../plug-ins/help-browser/dialog.c:1106
+#: ../plug-ins/help-browser/dialog.c:1151
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Aufwärts"
 
-#: ../plug-ins/help-browser/dialog.c:1118
+#: ../plug-ins/help-browser/dialog.c:1163
 msgctxt "search"
 msgid "_Next"
 msgstr "Ab_wärts"
