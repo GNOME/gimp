@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-16 16:54+0200\n"
-"PO-Revision-Date: 2008-07-16 16:53+0200\n"
+"POT-Creation-Date: 2008-07-16 16:57+0200\n"
+"PO-Revision-Date: 2008-07-16 16:57+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -10205,12 +10205,12 @@ msgid "Find:"
 msgstr "Suchen:"
 
 #: ../plug-ins/help-browser/dialog.c:1106
-msgctxt "match"
+msgctxt "search"
 msgid "_Previous"
 msgstr "_Aufwärts"
 
 #: ../plug-ins/help-browser/dialog.c:1118
-msgctxt "match"
+msgctxt "search"
 msgid "_Next"
 msgstr "Ab_wärts"
 
