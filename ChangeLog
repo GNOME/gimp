@@ -1,5 +1,10 @@
 2008-07-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help-browser/dialog.c: also start the search when the
+	slash key is pressed. Added a "find-again" feature bound to Ctrl-G.
+
+2008-07-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c: applied patch from Róman Joost
 	as attached to bug #542826 (with some minor modifications). This
 	adds a "Search in this page" feature bound to Ctrl-F.

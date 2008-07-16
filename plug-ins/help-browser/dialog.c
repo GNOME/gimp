@@ -88,6 +88,8 @@ static void       home_callback           (GtkAction         *action,
                                            gpointer           data);
 static void       find_callback           (GtkAction         *action,
                                            gpointer           data);
+static void       find_again_callback     (GtkAction         *action,
+                                           gpointer           data);
 static void       copy_location_callback  (GtkAction         *action,
                                            gpointer           data);
 static void       show_index_callback     (GtkAction         *action,
@@ -117,6 +119,8 @@ static gboolean   view_popup_menu         (GtkWidget         *widget,
                                            GdkEventButton    *event);
 static gboolean   view_button_press       (GtkWidget         *widget,
                                            GdkEventButton    *event);
+static gboolean   view_key_press          (GtkWidget         *widget,
+                                           GdkEventKey       *event);
 
 static void       title_changed           (GtkWidget         *view,
                                            WebKitWebFrame    *frame,
@@ -290,6 +294,9 @@ browser_dialog_open (void)
                     NULL);
   g_signal_connect (view, "button-press-event",
                     G_CALLBACK (view_button_press),
+                    NULL);
+  g_signal_connect (view, "key-press-event",
+                    G_CALLBACK (view_key_press),
                     NULL);
 
 #if HAVE_WEBKIT_ZOOM_API
@@ -578,11 +585,6 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (home_callback)
     },
     {
-      "find", GTK_STOCK_FIND,
-      NULL, "<control>F", N_("Find text in current page"),
-      G_CALLBACK (find_callback)
-    },
-    {
       "copy-location", GTK_STOCK_COPY,
       N_("C_opy location"), "",
       N_("Copy the location of this page to the clipboard"),
@@ -597,6 +599,16 @@ ui_manager_new (GtkWidget *window)
       "zoom-out", GTK_STOCK_ZOOM_OUT,
       NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback)
+    },
+    {
+      "find", GTK_STOCK_FIND,
+      NULL, "<control>F", N_("Find text in current page"),
+      G_CALLBACK (find_callback)
+    },
+    {
+      "find-again", NULL,
+      N_("Find _Again"), "<control>G", NULL,
+      G_CALLBACK (find_again_callback)
     },
     {
       "close", GTK_STOCK_CLOSE,
@@ -681,9 +693,11 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"stop\" />"
                                      "    <separator />"
                                      "    <menuitem action=\"home\" />"
-                                     "    <menuitem action=\"find\" />"
                                      "    <menuitem action=\"copy-location\" />"
                                      "    <menuitem action=\"show-index\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"find\" />"
+                                     "    <menuitem action=\"find-again\" />"
 #ifdef HAVE_WEBKIT_ZOOM_API
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
@@ -756,10 +770,23 @@ static void
 find_callback (GtkAction *action,
                gpointer   data)
 {
+  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
+
   gtk_widget_show (searchbar);
-  gtk_widget_grab_focus (g_object_get_data (G_OBJECT (searchbar), "entry"));
+  gtk_widget_grab_focus (entry);
 }
 
+static void
+find_again_callback (GtkAction *action,
+                     gpointer   data)
+{
+  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
+
+  gtk_widget_show (searchbar);
+  gtk_widget_grab_focus (entry);
+
+  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+}
 
 static void
 copy_location_callback (GtkAction *action,
@@ -1035,6 +1062,24 @@ view_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
+static gboolean
+view_key_press (GtkWidget   *widget,
+                GdkEventKey *event)
+{
+  if (event->keyval == GDK_slash)
+    {
+      GtkAction *action;
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/help-browser-popup/find");
+      gtk_action_activate (action);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 title_changed (GtkWidget      *view,
                WebKitWebFrame *frame,
@@ -1157,6 +1202,8 @@ search_entry_key_press (GtkWidget   *entry,
   if (event->keyval == GDK_Escape)
     {
       gtk_widget_hide (searchbar);
+      webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
+
       return TRUE;
     }
 
@@ -1190,4 +1237,5 @@ static void
 search_close_clicked (GtkWidget *button)
 {
   gtk_widget_hide (searchbar);
+  webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
 }
