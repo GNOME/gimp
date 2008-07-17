@@ -1,3 +1,21 @@
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: removed 'use_pressure' field from
+	GimpPaintCore.
+	
+	* app/paint/gimppaintoptions.[ch]: removed 'use_pressure' parameter.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
 2008-07-17  Tor Lillqvist  <tml@novell.com>
 
 	* app/Makefile.am (win32_ldflags): Use -Wl,--large-address-aware

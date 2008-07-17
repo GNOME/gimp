@@ -355,7 +355,6 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   core->scale = gimp_paint_options_get_dynamic_size (paint_options,
                                                      coords,
-                                                     paint_core->use_pressure,
                                                      GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush);
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
@@ -689,12 +688,10 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   gint           brush_width, brush_height;
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush)
-    {
-      core->scale = gimp_paint_options_get_dynamic_size (paint_options,
-                                                         &paint_core->cur_coords,
-                                                         paint_core->use_pressure,
-                                                         TRUE);
-    }
+    core->scale = gimp_paint_options_get_dynamic_size (paint_options,
+                                                       &paint_core->cur_coords,
+                                                       TRUE);
+
   /* else use scale from start(), we don't support on-the-fly scaling */
 
   gimp_brush_scale_size (core->brush, core->scale,

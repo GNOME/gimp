@@ -55,7 +55,6 @@ struct _GimpPaintCore
   gint         x1, y1;           /*  undo extents in image coords        */
   gint         x2, y2;           /*  undo extents in image coords        */
 
-  gboolean     use_pressure;     /*  look at coords->pressure            */
   gboolean     use_saved_proj;   /*  keep the unmodified proj around     */
 
   TileManager *undo_tiles;       /*  tiles which have been modified      */

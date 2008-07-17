@@ -980,8 +980,7 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
 
 gdouble
 gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                        const GimpCoords *coords,
-                                        gboolean          use_pressure)
+                                        const GimpCoords *coords)
 {
   gdouble opacity = 1.0;
 
@@ -996,7 +995,7 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->opacity && use_pressure)
+      if (paint_options->pressure_options->opacity)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->opacity)
@@ -1019,7 +1018,6 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 gdouble
 gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
                                      const GimpCoords *coords,
-                                     gboolean          use_pressure,
                                      gboolean          use_dynamics)
 {
   gdouble scale = 1.0;
@@ -1030,11 +1028,11 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->size && use_pressure)
+      if (paint_options->pressure_options->size)
         {
           pressure = coords->pressure;
         }
-      else if (paint_options->pressure_options->inverse_size && use_pressure)
+      else if (paint_options->pressure_options->inverse_size)
         {
           pressure = 1.0 - 0.9 * coords->pressure;
         }
@@ -1078,8 +1076,7 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
-                                     gboolean          use_pressure)
+                                     const GimpCoords *coords)
 {
   gdouble rate = 1.0;
 
@@ -1094,7 +1091,7 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->rate && use_pressure)
+      if (paint_options->pressure_options->rate)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->rate)
@@ -1117,8 +1114,7 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords,
-                                      gboolean          use_pressure)
+                                      const GimpCoords *coords)
 {
   gdouble color = 1.0;
 
@@ -1133,7 +1129,7 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->color && use_pressure)
+      if (paint_options->pressure_options->color)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->color)
@@ -1155,8 +1151,7 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
-                                         const GimpCoords *coords,
-                                         gboolean          use_pressure)
+                                         const GimpCoords *coords)
 {
   gdouble hardness = 1.0;
 
@@ -1171,7 +1166,7 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->hardness && use_pressure)
+      if (paint_options->pressure_options->hardness)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->hardness)
