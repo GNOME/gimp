@@ -109,7 +109,7 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
   im_tool_class->shell_desc          = _("Colorize the Image");
   im_tool_class->settings_name       = "colorize";
   im_tool_class->import_dialog_title = _("Import Colorize Settings");
-  im_tool_class->export_dialog_title = _("Export Colorsize Settings");
+  im_tool_class->export_dialog_title = _("Export Colorize Settings");
 
   im_tool_class->get_operation       = gimp_colorize_tool_get_operation;
   im_tool_class->map                 = gimp_colorize_tool_map;
