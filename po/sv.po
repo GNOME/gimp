@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-12 12:10+0200\n"
-"PO-Revision-Date: 2008-07-12 13:26+0100\n"
+"POT-Creation-Date: 2008-07-17 21:22+0200\n"
+"PO-Revision-Date: 2008-07-17 21:22+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -3352,7 +3352,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Visa _snabbmask"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1099
+#: ../app/display/gimpdisplayshell.c:1101
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
@@ -6666,7 +6666,7 @@ msgstr "bildpunkt"
 #: ../app/tools/gimpmeasuretool.c:1017
 #: ../app/tools/gimpmeasuretool.c:1073
 #: ../app/tools/gimpmeasuretool.c:1101
-#: ../app/tools/gimppainttool.c:610
+#: ../app/tools/gimppainttool.c:603
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -8232,20 +8232,20 @@ msgstr "Hög"
 msgid "Image saved to '%s'"
 msgstr "Bilden sparades till \"%s\""
 
-#: ../app/display/gimpdisplayshell.c:960
+#: ../app/display/gimpdisplayshell.c:962
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:1070
+#: ../app/display/gimpdisplayshell.c:1072
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:1120
+#: ../app/display/gimpdisplayshell.c:1122
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:1207
-#: ../app/display/gimpdisplayshell.c:1301
+#: ../app/display/gimpdisplayshell.c:1209
+#: ../app/display/gimpdisplayshell.c:1303
 #: ../app/widgets/gimptoolbox.c:216
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
@@ -8319,19 +8319,19 @@ msgstr "Konfigurera färgvisningsfilter"
 msgid "Layer Select"
 msgstr "Lagerval"
 
-#: ../app/display/gimpdisplayshell-scale.c:695
+#: ../app/display/gimpdisplayshell-scale.c:772
 msgid "Zoom Ratio"
 msgstr "Zoomfaktor"
 
-#: ../app/display/gimpdisplayshell-scale.c:697
+#: ../app/display/gimpdisplayshell-scale.c:774
 msgid "Select Zoom Ratio"
 msgstr "Välj zoomfaktor:"
 
-#: ../app/display/gimpdisplayshell-scale.c:740
+#: ../app/display/gimpdisplayshell-scale.c:817
 msgid "Zoom ratio:"
 msgstr "Zoomfaktor:"
 
-#: ../app/display/gimpdisplayshell-scale.c:765
+#: ../app/display/gimpdisplayshell-scale.c:842
 msgid "Zoom:"
 msgstr "Zooma:"
 
@@ -9165,7 +9165,7 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
 #: ../app/tools/gimpblendtool.c:399
-#: ../app/tools/gimppainttool.c:601
+#: ../app/tools/gimppainttool.c:594
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -9402,7 +9402,7 @@ msgid "Import Colorize Settings"
 msgstr "Importera färgläggningsinställningar"
 
 #: ../app/tools/gimpcolorizetool.c:112
-msgid "Export Colorsize Settings"
+msgid "Export Colorize Settings"
 msgstr "Exportera färgläggningsinställningar"
 
 #: ../app/tools/gimpcolorizetool.c:156
@@ -9469,12 +9469,12 @@ msgid "Click in any image to view its color"
 msgstr "Klicka i en bild för att visa dess färg"
 
 #: ../app/tools/gimpcolorpickertool.c:249
-#: ../app/tools/gimppainttool.c:504
+#: ../app/tools/gimppainttool.c:497
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicka i en bild för att välja förgrundsfärgen"
 
 #: ../app/tools/gimpcolorpickertool.c:257
-#: ../app/tools/gimppainttool.c:510
+#: ../app/tools/gimppainttool.c:503
 msgid "Click in any image to pick the background color"
 msgstr "Klicka i en bild för att välja bakgrundsfärgen"
 
@@ -10423,7 +10423,7 @@ msgstr "Klicka för att rita linjen"
 msgid "%s to pick a color"
 msgstr "%s för att välja en färg"
 
-#: ../app/tools/gimppainttool.c:657
+#: ../app/tools/gimppainttool.c:650
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
