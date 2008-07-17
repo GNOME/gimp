@@ -154,9 +154,9 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   /*  eek  */
-  gtk_box_pack_end (GTK_BOX (editor->view),
-                    gtk_widget_get_parent (factory_view->spacing_scale),
-                    FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->view),
+                      gtk_widget_get_parent (factory_view->spacing_scale),
+                      FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
     gimp_container_add_handler (factory->container, "spacing-changed",

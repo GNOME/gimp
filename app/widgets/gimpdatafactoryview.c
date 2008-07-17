@@ -248,9 +248,9 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   tag_combo = gimp_combo_tag_entry_new (GIMP_TAG_ENTRY (factory_view->assign_tag_entry));
   gtk_widget_show (tag_combo);
 
-  gtk_box_pack_end (GTK_BOX (editor->view),
-                    tag_combo,
-                    FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->view),
+                      tag_combo,
+                      FALSE, FALSE, 0);
 
   return TRUE;
 }
