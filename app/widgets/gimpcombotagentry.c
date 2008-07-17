@@ -31,6 +31,7 @@
 #include "core/gimpfilteredcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
+#include "core/gimptag.h"
 #include "core/gimptagged.h"
 
 #include "gimptagentry.h"
@@ -296,14 +297,6 @@ gimp_combo_tag_entry_event (GtkWidget          *widget,
   return FALSE;
 }
 
-static int
-tag_list_sort_proc (const void         *p1,
-                    const void         *p2)
-{
-  return strcmp (g_quark_to_string (GPOINTER_TO_UINT (p1)),
-                 g_quark_to_string (GPOINTER_TO_UINT (p2)));
-}
-
 static void
 gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 {
@@ -352,7 +345,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 
   tag_hash = GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container->tag_ref_counts;
   tag_list = g_hash_table_get_keys (tag_hash);
-  tag_list = g_list_sort (tag_list, tag_list_sort_proc);
+  tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
   popup_data->tag_count = g_list_length (tag_list);
   popup_data->tag_data = g_malloc (sizeof (PopupTagData) * popup_data->tag_count);
   tag_iterator = tag_list;

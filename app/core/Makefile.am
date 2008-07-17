@@ -312,6 +312,8 @@ libappcore_a_sources = \
 	gimpstrokeoptions.h			\
 	gimpsubprogress.c			\
 	gimpsubprogress.h			\
+	gimptag.c				\
+	gimptag.h				\
 	gimptagcache.c				\
 	gimptagcache.h				\
 	gimptagged.c				\

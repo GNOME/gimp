@@ -31,6 +31,7 @@
 #include "core/gimpfilteredcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
+#include "core/gimptag.h"
 #include "core/gimptagged.h"
 
 #include "gimptagentry.h"
@@ -341,6 +342,7 @@ static void
 gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
 {
   GimpTagged   *selected_item;
+  GList        *tag_list;
   GList        *tag_iterator;
   gint          insert_pos;
   GimpTag       tag;
@@ -356,7 +358,9 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
   selected_item = GIMP_TAGGED (tag_entry->selected_items->data);
   insert_pos = 0;
 
-  tag_iterator = gimp_tagged_get_tags (selected_item);
+  tag_list = g_list_copy (gimp_tagged_get_tags (selected_item));
+  tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
+  tag_iterator = tag_list;
   while (tag_iterator)
     {
       tag = GPOINTER_TO_UINT (tag_iterator->data);
@@ -367,6 +371,7 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
 
       tag_iterator = g_list_next (tag_iterator);
     }
+  g_list_free (tag_list);
 }
 
 static gchar*
