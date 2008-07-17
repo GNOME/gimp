@@ -1,14 +1,14 @@
 # Lithuanian translation of GIMP script-fu.
-# Copyright (C) 2004-2007 Free Software Foundation, Inc.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# 
-# 
+# Copyright (C) 2004-2008 Free Software Foundation, Inc.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2008.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 09:34+0200\n"
-"PO-Revision-Date: 2008-01-11 09:38+0200\n"
+"POT-Creation-Date: 2008-07-17 09:36+0300\n"
+"PO-Revision-Date: 2008-07-17 09:54+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Nepavyko atverti „%s“ rašymui: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo veiksenoje galimas tik neinteraktyvus iškvietimas"
 
@@ -858,17 +858,19 @@ msgstr "Maks. išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr ""
+msgstr "_Perėjimas..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
+"Pasirinktoje (arba permatomoje) srityje pridėti pereinamų spalvų fonus, "
+"paryškintas vietas ir šešėlius"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr ""
+msgstr "Perei_nantis..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
@@ -1635,38 +1637,45 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
+"Sukurti vamzdinio mygtuko etiketės antraštės paveikslėlį naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
+"Sukurti vamzdinio mygtuko etiketę naudojant gimp.org tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Sukurti antro lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Sukurti trečio lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "_Vamzdinio antrinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "_Vamzdinio tretinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
-msgstr ""
+msgstr "_Bendros vamzdinės etiketės..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
-msgstr ""
+msgstr "V_amzdinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
@@ -2379,6 +2388,7 @@ msgstr "Besisukantis _gaublys..."
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
+"Dabartiniame sluoksnyje pridėti spirografų, epitrochoidų ir lisažu kreives"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2398,7 +2408,7 @@ msgstr "Spalvos metodas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrochoidas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Frame"
@@ -2426,7 +2436,7 @@ msgstr "Vidiniai dantys"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
-msgstr ""
+msgstr "Lisažu"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
@@ -2462,7 +2472,7 @@ msgstr "Daugiakampis: 9 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "Atvaizduojamas Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2474,7 +2484,7 @@ msgstr "Vientisa spalva"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spirografas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2544,7 +2554,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
-msgstr ""
+msgstr "Žvai_gždėtas vaizdas..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Create an image filled with a swirled tile effect"
@@ -2600,7 +2610,7 @@ msgstr "Krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
-msgstr ""
+msgstr "Pataikymo dažnis"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
@@ -2888,34 +2898,3 @@ msgstr "Paryškinimo nepermatomumas"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
-
-#~ msgid "BG opacity"
-#~ msgstr "Fono nepermatomumas"
-
-#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
-#~ msgstr "Sukurti grafiką iš atspalvio, sodrumo ir reikšmės paskirstymų"
-
-#~ msgid "Draw _HSV Graph..."
-#~ msgstr "Nubrėžti _HSV grafiką..."
-
-#~ msgid "End X"
-#~ msgstr "Pabaigos X"
-
-#~ msgid "End Y"
-#~ msgstr "Pabaigos Y"
-
-#~ msgid "From top-left to bottom-right"
-#~ msgstr "Nuo viršutinio kairio kampo į apatinį dešinį"
-
-#~ msgid "Start X"
-#~ msgstr "Pradžios X"
-
-#~ msgid "Start Y"
-#~ msgstr "Pradžios Y"
-
-#~ msgid "Use selection bounds instead of values below"
-#~ msgstr "Vietoje žemiau esančių reikšmių naudoti pažymėjimo ribas"
-
-#~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
-#~ msgstr ""
-#~ "Tik patamsinti\\n(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"
