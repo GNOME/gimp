@@ -1,5 +1,9 @@
 2008-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c: formatting.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcolorizetool.c: fixed typo pointed out by
 	Žygimantas Beručka.
 
