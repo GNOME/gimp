@@ -44,12 +44,12 @@ gimp_coords_mix (const gdouble     amul,
 {
   if (b)
     {
-      ret_val->x        = amul * a->x        + bmul * b->x ;
-      ret_val->y        = amul * a->y        + bmul * b->y ;
-      ret_val->pressure = amul * a->pressure + bmul * b->pressure ;
-      ret_val->xtilt    = amul * a->xtilt    + bmul * b->xtilt ;
-      ret_val->ytilt    = amul * a->ytilt    + bmul * b->ytilt ;
-      ret_val->wheel    = amul * a->wheel    + bmul * b->wheel ;
+      ret_val->x        = amul * a->x        + bmul * b->x;
+      ret_val->y        = amul * a->y        + bmul * b->y;
+      ret_val->pressure = amul * a->pressure + bmul * b->pressure;
+      ret_val->xtilt    = amul * a->xtilt    + bmul * b->xtilt;
+      ret_val->ytilt    = amul * a->ytilt    + bmul * b->ytilt;
+      ret_val->wheel    = amul * a->wheel    + bmul * b->wheel;
     }
   else
     {
