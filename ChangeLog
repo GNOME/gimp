@@ -1,3 +1,7 @@
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpui.c: improved the documentation of gimpui_init().
+
 2008-07-16  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.5.3.
