@@ -69,7 +69,7 @@ EXTRA_DIST = \
 	wilber.ico
 
 if OS_WIN32
-mwindows = -mwindows
+win32_ldflags = -mwindows -Wl,--large-address-aware
 endif
 
 if USE_BINRELOC
@@ -102,7 +102,7 @@ AM_LDFLAGS = \
 	-u $(SYMPREFIX)gimp_image_map_config_get_type	\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
-gimp_2_5_LDFLAGS = $(AM_LDFLAGS) $(mwindows) 
+gimp_2_5_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags) 
 
 gimp_2_5_LDADD = \
 	gui/libappgui.a			\

@@ -1,3 +1,10 @@
+2008-07-17  Tor Lillqvist  <tml@novell.com>
+
+	* app/Makefile.am (win32_ldflags): Use -Wl,--large-address-aware
+	on Windows so that we can use more that 2 GB user data space (if
+	available; i.e. if running on a 64-bit OS, or a 32-bit OS booted
+	with /3GB). See discussion in bug #522073.
+
 2008-07-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpui.c: improved the documentation of gimpui_init().
