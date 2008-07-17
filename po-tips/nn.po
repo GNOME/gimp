@@ -1,25 +1,22 @@
-# translation of nn.po to Norwegian Nynorsk
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+#  Kolbjørn Stuestøl <kol-stue@online.no> 2005.
 #
-# Åsmund Skjæveland <aasmunds@ulrik.uio.no>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: nn\n"
+"Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-12 14:21+0100\n"
-"PO-Revision-Date: 2008-03-12 14:21+0100\n"
-"Last-Translator: Åsmund Skjæveland <aasmunds@ulrik.uio.no>\n"
-"Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"POT-Creation-Date: 2008-07-17 11:42+0200\n"
+"PO-Revision-Date: 2008-06-29 17:01+0100\n"
+"Last-Translator: Kolbjørn Stuestøl <kol-stue@online.no>\n"
+"Language-Team: Kolbjørn Stuestøl <kol-stue@online.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
+msgstr "<big>Velkommen til GIMP!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -28,6 +25,8 @@ msgid ""
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
 msgstr ""
+"<tt>Ctrl</tt>-klikk når du ønskjer at fyllverktøyet eller fargeplukkaren "
+"skal arbeide på  bakgrunnsfargen i staden for på forgrunnsfargen."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -35,18 +34,25 @@ msgid ""
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
+"<tt>Ctrl</tt>-klikk på miniatyren av lagmaska i lagdialogen slår effekten av "
+"lagmaska av og på. <tt>Alt</tt>-klikkar du i staden, vil dette slå av og på "
+"visinga av lagmaska."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
+"Held du nede <tt>Ctrl</tt>-tasten når du brukar rotasjonsverkøtyet, vil du "
+"avgrense rotasjonen til vinklar som er multiplar av 15 grader."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
+"<tt>Shift</tt>-klikk på eit augesymbol i lagdialogen for å gøyme alle laga "
+"unntatt det du klikka på. <tt>Shift</tt>-klikk igjen for å vise alle laga."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -55,6 +61,10 @@ msgid ""
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
+"Eit flytande utval må forankrast til eit nytt lag eller til det aktive laget "
+"før du kan arbeide vidare på resten av biletet. Klikk på &quot;Nytt "
+"lag&quot; eller &quot;Forankre laget&quot; i lagdialogen eller i lokalmenyen "
+"som kjem fram når du høgreklikkar i lagdialogen."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
@@ -66,6 +76,12 @@ msgid ""
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
+"Du kan lage nye tastesnarvegar ved å opna &quot;Set opp "
+"tastatursnarvegar&quot; i brukarinnstillingane, gå inn på aktuell meny og "
+"trykke ønskt tastekombinasjon. Du kan anten trykke tasten &quot;Lagra "
+"tastatursnarvegane nå&quot; eller lagra ved avsluttinga av GIMP. Det kan "
+"vere ein idé å slå av &quot;Bruk dynamiske snarvegtastar&quot; for å unngå "
+"at snarvegane blir endra ved eit uhell."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -73,12 +89,17 @@ msgid ""
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
+"Du kan plassera hjelpelinjer i biletet ved å klikke og dra dei ut frå ein av "
+"linjalane rundt biletkanten. Alle utval som blir dradd ut og sleppt i "
+"biletet, vil feste seg til hjelpelinjene. Du fjerner hjelpelinjene ved å dra "
+"dei ut av biletet med flytteverktøyet."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
+"I GIMP kan du angre det meste av det du gjer, så du kan trygt eksperimentera."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
@@ -86,6 +107,9 @@ msgid ""
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
+"GIMP har direkte støtte for gzip-kompresjon. Bare legg <tt>.gz</tt> (eller "
+"<tt>.bz2</tt> med bzip2) til filnamnet, og biletet blir komprimert når du "
+"lagrar det. Sjølvsagt kan du også opna komprimerte biletfiler."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -93,6 +117,9 @@ msgid ""
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
+"GIMP bruker lag for å setje opp bilete. Desse laga kan gjerne samanliknast "
+"med ein stabel av lysark eller foliar. Det ferdige biletet er slik du ser "
+"det frå toppen av lagstabelen."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -100,6 +127,9 @@ msgid ""
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
+"Dersom lagnamnet er <b>utheva</b> i lagdialogen betyr dette at laget ikkje "
+"har alfakanal. Du kan legge til alfakanal ved hjelp av Lag→Gjennomsikt→Legg "
+"til alfakanal"
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -108,6 +138,9 @@ msgid ""
 "tool (Colors→Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Colors→Curves)."
 msgstr ""
+"Den enklaste måten å forbetra blasse fargar i eit bilete på, er å bruke "
+"&quot;Auto&quot;-knappen i nivåverktøyet (Lag-&gt;Fargar-&gt;Nivå). Uheldige "
+"fargestikk kan korrigerast med kurveverktøyet (Lag-&gt;Fargar-&gt;Kurver)."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -115,12 +148,17 @@ msgid ""
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
+"Dersom du skal streke opp ein bane (Rediger-&gt;Strek opp bane) kan du bruke "
+"teikneverktøya med gjeldande innstillingar. Du kan også bruke luftpenselen "
+"med fargeovergang, eller til og med viskeleret og utsmøringsverktøyet."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
+"Dersom skjermen er svært rotete, kan du trykke <tt>Tab</tt>-tasten fleire "
+"gonger for å skjule eller vise verktøykassa og andre dialogar."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -128,6 +166,10 @@ msgid ""
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
+"Dei fleste programtillegga arbeider på det aktive laget i det aktive "
+"biletet. Dersom du ønskjer at programtillegget skal verke på heile biletet, "
+"kan det hende du må flette saman alle laga (bilete-&gt;flat ut biletet) "
+"først."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -136,6 +178,11 @@ msgid ""
 "(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
+"Ikkje alle funksjonane verkar på alle typer bilete. Dette blir vist ved at "
+"menyinnslaget er gråa ut. Skulle dette vere til hinder for arbeidet ditt, "
+"kan du prøve å endre biletet til RGB-modus (Bilete-&gt;Modus-&gt;RGB), legge "
+"til ein alfakanal (Lag-&gt;Gjennomsikt-&gt;Legg til alfakanal) eller flate "
+"ut biletet (Bilete-&gt;Flat ut biletet)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -143,6 +190,10 @@ msgid ""
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
+"Hald nede <tt>Shift</tt>-tasten medan du lager eit utval dersom du ønskjer "
+"at utvalet skal bli lagt til det eksisterande utvalet i staden for å "
+"erstatte det. Bruker du i staden <tt>Ctrl</tt>-tasten, vil det nye utvalet "
+"bli trekt i frå det eksisterande."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
@@ -152,6 +203,10 @@ msgid ""
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
+"For å lage ein sirkel, hald nede <tt>Shift</tt>-tasten medan du lagar eit "
+"ellipseutval. For nøyaktig plassering av sirkelen, kan du legge inn ei "
+"horisontal og ei vertikal hjelpelinje som tangentar til sirkelen. Plasser "
+"markøren i krysset mellom hjelpelinjene og dra ut sirkelen."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
@@ -160,6 +215,10 @@ msgid ""
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
+"Når du lagrar eit bilete som er under arbeid, bruk helst GIMP sitt eige "
+"filformat XCF, (filendinga <tt>.xcf</tt>). Då vil det aller meste av det du "
+"har gjort også bli lagra. Dermed er det enklare å fortsette arbeidet "
+"seinare. Når prosjektet er ferdig, kan du lagra det som JPEG, PNG, GIF el.l."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -168,6 +227,12 @@ msgid ""
 "window managers can be configured to ignore the <tt>Alt</tt> key or to use "
 "the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
+"Du kan flytte eit utval utan å flytte innhaldet ved å halde nede <tt>Alt</"
+"tt>-tasten samstundes som du flytter utvalet. Dersom dette flytter dette "
+"heile biletet betyr det at denne tasten er i bruk av vindaugehandteraren i "
+"maskinen din. I noen tilfelle kan du setje opp handteraren til å ignorere "
+"<tt>Alt</tt>-tasten, eller du kan kanskje bruke <tt>Super</tt>-tasten eller  "
+"\"Windows logoen\" i staden."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -175,12 +240,16 @@ msgid ""
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
+"Du kan opprette og redigere komplekse utval ved hjelp av baneverktøyet. Bruk "
+"banedialogen for å redigere banane og å omforme dei til utval."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
+"Du kan dra eit lag ut frå lagdialogen og sleppe det i verktøykassa. Dette "
+"vil lage eit nytt bilete som bare inneheld dette eine biletlaget."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -188,6 +257,9 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
+"Du kan dra og sleppe mange ting i GIMP. For eksempel kan du dra ein farge "
+"frå verktøykassa eller frå ein fargepalett og sleppe han i biletet. Biletet "
+"eller utvalet vil då bli fylt med den valde fargen."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
@@ -195,18 +267,27 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
+"Du kan teikne firkantar og sirklar ved å først lage eit utval i ønskt form "
+"ved hjelp av utvalsverktøya og deretter bruke kommandoen  Rediger→Strek opp "
+"utvalet for å lage ein strek rundt utvalet. Har du behov for meir avanserte "
+"teikningar, er det enklare å bruke baneverktøyet eller "
+"Filter→Teikningar→Gfig-teikning."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
+"Du kan få aktiv hjelp (kontekst hjelp) for det meste i GIMP ved å halde "
+"musepeikaren over aktuelt område og trykke F1-tasten."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
 msgstr ""
+"Du får tilgang til mange av lagoperasjonane ved å høgreklikka på tekstfeltet "
+"for eit lag i lagdialogen."
 
 #: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -215,18 +296,29 @@ msgid ""
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
+"Du kan lagre eit utval til ein kanal (Vel→Lagra til kanal) og deretter gjere "
+"endringar på kanalen med teikneverktøya. Bruk knappane i kanaldialogen for å "
+"gjere den nye kanalen synleg eller usynleg, eller omforme kanalen til eit "
+"utval igjen."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
+"Du kan bruke  <tt>Ctrl</tt> + <tt>Tab</tt> for å bla deg gjennom alle laga i "
+"eit bilete (dersom ikkje vindaugehandteraren i maskinen din har lagt beslag "
+"på desse tastane)."
 
 #: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
+"Dersom biletet er større enn biletvindauget, kan du flytte biletet opp og "
+"ned ved hjelp av den midtre museknappen eller musehjulet, eller du kan halde "
+"nede &quot;mellomromtasten&quot; medan du fører musepeikaren opp og ned i "
+"biletet."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
@@ -235,4 +327,7 @@ msgid ""
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
 msgstr ""
-
+"Du kan bruke teikneverktøya for å endre eit utval. Klikk på knappen &quot;"
+"Snarmaske&quot; nedst i biletvindauget. Forandra utvalet ved å teikne på det "
+"med eit av teikneverktøya og trykk &quot;Snarmaske&quot; ein gong til for å "
+"få biletet tilbake til normalvisinga igjen."
