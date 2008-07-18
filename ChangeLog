@@ -1,3 +1,8 @@
+2008-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h (GIMP_COORDS_DEFAULT_VALUES): initialize
+	all members of the GimpCoords struct.
+
 2008-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcoords.c (gimp_coords_mix): also mix in the new
