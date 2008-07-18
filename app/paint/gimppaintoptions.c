@@ -1002,7 +1002,7 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->opacity)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       opacity = gimp_paint_options_get_dynamics_mix (pressure,
                                                      paint_options->pressure_options->prescale,
@@ -1048,11 +1048,11 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
       if (paint_options->random_options->size)
         {
-          random = 1.0 - coords->random;
+          random = 1.0 - g_random_double_range (0.0, 1.0);
         }
       else if (paint_options->random_options->inverse_size)
         {
-          random = coords->random;
+          random = g_random_double_range (0.0, 1.0);
         }
 
       scale = gimp_paint_options_get_dynamics_mix (pressure,
@@ -1098,7 +1098,7 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->rate)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       rate = gimp_paint_options_get_dynamics_mix (pressure,
                                                   paint_options->pressure_options->prescale,
@@ -1136,7 +1136,7 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
         velocity = GIMP_PAINT_VELOCITY_SCALE * coords->velocity;
 
       if (paint_options->random_options->color)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       color = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
@@ -1173,7 +1173,7 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->hardness)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       hardness = gimp_paint_options_get_dynamics_mix (pressure,
                                                       paint_options->pressure_options->prescale,

@@ -44,33 +44,23 @@ gimp_coords_mix (const gdouble     amul,
 {
   if (b)
     {
-      ret_val->x          = amul * a->x          + bmul * b->x;
-      ret_val->y          = amul * a->y          + bmul * b->y;
-      ret_val->pressure   = amul * a->pressure   + bmul * b->pressure;
-      ret_val->xtilt      = amul * a->xtilt      + bmul * b->xtilt;
-      ret_val->ytilt      = amul * a->ytilt      + bmul * b->ytilt;
-      ret_val->wheel      = amul * a->wheel      + bmul * b->wheel;
-      ret_val->delta_time = amul * a->delta_time + bmul * b->delta_time;
-      ret_val->delta_x    = amul * a->delta_x    + bmul * b->delta_x;
-      ret_val->delta_y    = amul * a->delta_y    + bmul * b->delta_y;
-      ret_val->distance   = amul * a->distance   + bmul * b->distance;
-      ret_val->velocity   = amul * a->velocity   + bmul * b->velocity;
-      ret_val->random     = amul * a->random     + bmul * b->random;
+      ret_val->x        = amul * a->x        + bmul * b->x;
+      ret_val->y        = amul * a->y        + bmul * b->y;
+      ret_val->pressure = amul * a->pressure + bmul * b->pressure;
+      ret_val->xtilt    = amul * a->xtilt    + bmul * b->xtilt;
+      ret_val->ytilt    = amul * a->ytilt    + bmul * b->ytilt;
+      ret_val->wheel    = amul * a->wheel    + bmul * b->wheel;
+      ret_val->velocity = amul * a->velocity + bmul * b->velocity;
     }
   else
     {
-      ret_val->x          = amul * a->x;
-      ret_val->y          = amul * a->y;
-      ret_val->pressure   = amul * a->pressure;
-      ret_val->xtilt      = amul * a->xtilt;
-      ret_val->ytilt      = amul * a->ytilt;
-      ret_val->wheel      = amul * a->wheel;
-      ret_val->delta_time = amul * a->delta_time;
-      ret_val->delta_x    = amul * a->delta_x;
-      ret_val->delta_y    = amul * a->delta_y;
-      ret_val->distance   = amul * a->distance;
-      ret_val->velocity   = amul * a->velocity;
-      ret_val->random     = amul * a->random;
+      ret_val->x        = amul * a->x;
+      ret_val->y        = amul * a->y;
+      ret_val->pressure = amul * a->pressure;
+      ret_val->xtilt    = amul * a->xtilt;
+      ret_val->ytilt    = amul * a->ytilt;
+      ret_val->wheel    = amul * a->wheel;
+      ret_val->velocity = amul * a->velocity;
     }
 }
 

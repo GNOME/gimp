@@ -52,9 +52,7 @@
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_WHEEL,    \
-                                        0.0, 0.0, 0.0, 0.0,           \
-                                        GIMP_COORDS_DEFAULT_VELOCITY, \
-                                        0.0 }
+                                        GIMP_COORDS_DEFAULT_VELOCITY }
 
 
 /*  base classes  */
@@ -204,12 +202,7 @@ struct _GimpCoords
   gdouble xtilt;
   gdouble ytilt;
   gdouble wheel;
-  gdouble delta_time;
-  gdouble delta_x;
-  gdouble delta_y;
-  gdouble distance;
   gdouble velocity;
-  gdouble random;
 };
 
 

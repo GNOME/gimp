@@ -1,5 +1,30 @@
 2008-07-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-types.h: removed delta_time, delta_x, delta_y,
+	distance and random from the GimpCoords struct. These don't need
+	to be kept here and they can't be properly interpolated.
+
+	* app/core/gimpcoords.c: changed accordingly.
+
+	* app/xcf/xcf-load.c (xcf_load_vector): the size of the GimpCoords
+	struct changed.
+
+	* app/display/gimpdisplayshell.[ch] (struct _GimpDisplayShell):
+	added some members to store values from the last event that are
+	needed in gimp_display_shell_eval_event() and which are not any
+	longer part of GimpCoords.
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): changed accordingly.
+	
+	* app/paint/gimppaintoptions.c: calculate a random number when one
+	is needed.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate):
+	GimpCoords doesn't have a "random" field any longer.
+
+2008-07-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h (GIMP_COORDS_DEFAULT_VALUES): initialize
 	all members of the GimpCoords struct.
 
