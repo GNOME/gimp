@@ -338,14 +338,14 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
   
+  shell->highlight              = NULL;
+  shell->mask                   = NULL;
+
   shell->last_motion_time       = 0;
   shell->last_motion_delta_x    = 0.0;
   shell->last_motion_delta_y    = 0.0;
   shell->last_motion_distance   = 0.0;
   shell->last_motion_delta_time = 0.0;
-
-  shell->highlight              = NULL;
-  shell->mask                   = NULL;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
