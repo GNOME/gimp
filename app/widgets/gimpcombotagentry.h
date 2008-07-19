@@ -41,6 +41,8 @@ struct _GimpComboTagEntry
   GtkWidget                    *alignment;
   GtkWidget                    *popup;
   gint                          focus_width;
+  PangoAttrList                *normal_item_attr;
+  PangoAttrList                *selected_item_attr;
   gboolean                      interior_focus;
 };
 
