@@ -37,6 +37,8 @@
 #include "gimptagentry.h"
 
 #define TAG_SEPARATOR_STR   ","
+#define GIMP_TAG_ENTRY_QUERY_DESC       "filter"
+#define GIMP_TAG_ENTRY_ASSIGN_DESC      "enter tags"
 
 static void     gimp_tag_entry_activate        (GtkEntry          *entry,
                                                 gpointer           unused);
@@ -47,7 +49,12 @@ static void     gimp_tag_entry_insert_text     (GtkEditable       *editable,
                                                 gint               text_length,
                                                 gint              *position,
                                                 gpointer           user_data);
-
+static gboolean gimp_tag_entry_focus_in        (GtkWidget         *widget,
+                                                GdkEventFocus     *event,
+                                                gpointer           user_data);
+static gboolean gimp_tag_entry_focus_out       (GtkWidget         *widget,
+                                                GdkEventFocus     *event,
+                                                gpointer           user_data);
 static void     gimp_tag_entry_query_tag       (GimpTagEntry      *entry);
 
 static void     gimp_tag_entry_assign_tags     (GimpTagEntry      *tag_entry);
@@ -65,6 +72,12 @@ static gchar *  gimp_tag_entry_get_completion_string     (GimpTagEntry         *
                                                           GList                *candidates,
                                                           gchar                *prefix);
 static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry         *tag_entry);
+
+static void     gimp_tag_entry_toggle_desc     (GimpTagEntry      *widget,
+                                                gboolean           show);
+static gboolean gimp_tag_entry_expose          (GtkWidget         *widget,
+                                                GdkEventExpose    *event,
+                                                gpointer           user_data);
 
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
@@ -84,6 +97,7 @@ gimp_tag_entry_init (GimpTagEntry *entry)
   entry->tagged_container      = NULL;
   entry->selected_items        = NULL;
   entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
+  entry->description_shown     = FALSE;
 
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_tag_entry_activate),
@@ -93,6 +107,15 @@ gimp_tag_entry_init (GimpTagEntry *entry)
                     NULL);
   g_signal_connect (entry, "insert-text",
                     G_CALLBACK (gimp_tag_entry_insert_text),
+                    NULL);
+  g_signal_connect (entry, "focus-in-event",
+                    G_CALLBACK (gimp_tag_entry_focus_in),
+                    NULL);
+  g_signal_connect (entry, "focus-out-event",
+                    G_CALLBACK (gimp_tag_entry_focus_out),
+                    NULL);
+  g_signal_connect_after (entry, "expose-event",
+                    G_CALLBACK (gimp_tag_entry_expose),
                     NULL);
 }
 
@@ -107,8 +130,10 @@ gimp_tag_entry_new (GimpFilteredContainer      *tagged_container,
                         NULL);
 
   entry = g_object_new (GIMP_TYPE_TAG_ENTRY, NULL);
-  entry->tagged_container = tagged_container;
-  entry->mode             = mode;
+  entry->tagged_container       = tagged_container;
+  entry->mode                   = mode;
+
+  gimp_tag_entry_toggle_desc (entry, TRUE);
 
   return GTK_WIDGET (entry);
 }
@@ -122,6 +147,8 @@ gimp_tag_entry_activate (GtkEntry              *entry,
   gint                  selection_end;
 
   tag_entry = GIMP_TAG_ENTRY (entry);
+
+  gimp_tag_entry_toggle_desc (tag_entry, FALSE);
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
                                      &selection_start, &selection_end);
@@ -142,9 +169,17 @@ static void
 gimp_tag_entry_changed (GtkEntry          *entry,
                         gpointer           unused)
 {
-  GimpTagEntry         *tag_entry;
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (entry);
 
-  tag_entry = GIMP_TAG_ENTRY (entry);
+  if (! GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (entry))
+      && strlen (gtk_entry_get_text (entry)) == 0)
+    {
+      gimp_tag_entry_toggle_desc (tag_entry, TRUE);
+    }
+  else
+    {
+      gimp_tag_entry_toggle_desc (tag_entry, FALSE);
+    }
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
@@ -335,7 +370,11 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
 
   entry->selected_items = g_list_copy (items);
 
-  gimp_tag_entry_load_selection (entry);
+  if (! entry->description_shown)
+    {
+      gimp_tag_entry_load_selection (entry);
+      gimp_tag_entry_toggle_desc (entry, TRUE);
+    }
 }
 
 static void
@@ -540,5 +579,129 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
 
   candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
   return g_strdup (candidate_string + prefix_length);
+}
+
+static gboolean
+gimp_tag_entry_focus_in        (GtkWidget         *widget,
+                                GdkEventFocus     *event,
+                                gpointer           user_data)
+{
+  gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), FALSE);
+  return FALSE;
+}
+
+static gboolean
+gimp_tag_entry_focus_out       (GtkWidget         *widget,
+                                GdkEventFocus     *event,
+                                gpointer           user_data)
+{
+  gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), TRUE);
+  return FALSE;
+}
+
+static void
+gimp_tag_entry_toggle_desc     (GimpTagEntry      *tag_entry,
+                                gboolean           show)
+{
+  GtkWidget            *widget = GTK_WIDGET (tag_entry);
+  const gchar          *display_text;
+
+  if (! (show ^ tag_entry->description_shown))
+    {
+      return;
+    }
+
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+    {
+      display_text = GIMP_TAG_ENTRY_QUERY_DESC;
+    }
+  else
+    {
+      display_text = GIMP_TAG_ENTRY_ASSIGN_DESC;
+    }
+
+  if (show)
+    {
+      gchar           **tags;
+      gint              tag_count;
+
+      tags = gimp_tag_entry_parse_tags (tag_entry);
+      tag_count = g_strv_length (tags);
+      g_strfreev (tags);
+
+      if (tag_count <= 0)
+        {
+          tag_entry->description_shown = TRUE;
+          gtk_widget_queue_draw (widget);
+        }
+    }
+  else
+    {
+      tag_entry->description_shown = FALSE;
+      if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+        {
+          gimp_tag_entry_load_selection (tag_entry);
+        }
+      gtk_widget_queue_draw (widget);
+    }
+}
+
+static gboolean
+gimp_tag_entry_expose (GtkWidget       *widget,
+                       GdkEventExpose  *event,
+                       gpointer         user_data)
+{
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
+  PangoContext         *context;
+  PangoLayout          *layout;
+  PangoAttrList        *attr_list;
+  PangoAttribute       *attribute;
+  PangoRenderer        *renderer;
+  gint                  layout_height;
+  gint                  window_height;
+  gint                  offset;
+  const char           *display_text;
+
+  /* eeeeeek */
+  if (widget->window == event->window)
+    {
+      return FALSE;
+    }
+
+  if (! GIMP_TAG_ENTRY (widget)->description_shown)
+    {
+      return FALSE;
+    }
+
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+    {
+      display_text = GIMP_TAG_ENTRY_QUERY_DESC;
+    }
+  else
+    {
+      display_text = GIMP_TAG_ENTRY_ASSIGN_DESC;
+    }
+
+  context = gtk_widget_create_pango_context (GTK_WIDGET (widget));
+  layout = pango_layout_new (context);
+  attr_list = pango_attr_list_new ();
+  attribute = pango_attr_style_new (PANGO_STYLE_ITALIC);
+  pango_attr_list_insert (attr_list, attribute);
+  pango_layout_set_attributes (layout, attr_list);
+  renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
+  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), event->window);
+  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
+                             widget->style->text_gc[GTK_STATE_INSENSITIVE]);
+  pango_layout_set_text (layout, display_text, -1);
+  gdk_drawable_get_size (GDK_DRAWABLE (event->window), NULL, &window_height);
+  pango_layout_get_size (layout, NULL, &layout_height);
+  offset = (window_height * PANGO_SCALE - layout_height) / 2;
+  pango_renderer_draw_layout (renderer, layout, offset, offset);
+  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
+  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), NULL);
+  g_object_unref (layout);
+  g_object_unref (context);
+
+  return FALSE;
 }
 
