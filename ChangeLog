@@ -1,3 +1,12 @@
+2008-07-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.[ch]: Don't expose implementation
+	details and extend the interface with trivial new functions.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): Use the new interface instead of
+	directly accessing the members of the navigation view.
+
 2008-07-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-types.h: removed delta_time, delta_x, delta_y,
