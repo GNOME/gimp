@@ -95,7 +95,6 @@ gimp_gradient_select_constructor (GType                  type,
                                   GObjectConstructParam *params)
 {
   GObject       *object;
-  GtkWidget	    *show;
   GimpPdbDialog *dialog;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -117,9 +116,6 @@ gimp_gradient_select_constructor (GType                  type,
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), dialog->view);
-  show = gtk_label_new ("text test");
-  gtk_widget_show (show);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), show);
   gtk_widget_show (dialog->view);
 
   return object;
