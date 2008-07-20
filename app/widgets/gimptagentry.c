@@ -40,32 +40,34 @@
 #define GIMP_TAG_ENTRY_QUERY_DESC       "filter"
 #define GIMP_TAG_ENTRY_ASSIGN_DESC      "enter tags"
 
-static void     gimp_tag_entry_activate        (GtkEntry          *entry,
-                                                gpointer           unused);
-static void     gimp_tag_entry_changed         (GtkEntry          *entry,
-                                                gpointer           unused);
-static void     gimp_tag_entry_insert_text     (GtkEditable       *editable,
-                                                gchar             *new_text,
-                                                gint               text_length,
-                                                gint              *position,
-                                                gpointer           user_data);
-static gboolean gimp_tag_entry_focus_in        (GtkWidget         *widget,
-                                                GdkEventFocus     *event,
-                                                gpointer           user_data);
-static gboolean gimp_tag_entry_focus_out       (GtkWidget         *widget,
-                                                GdkEventFocus     *event,
-                                                gpointer           user_data);
-static void     gimp_tag_entry_backspace       (GtkEntry          *entry);
-static void     gimp_tag_entry_delete_from_cursor (GtkEntry            *entry,
-                                                   GtkDeleteType        delete_type,
-                                                   gint                 count);
-static void     gimp_tag_entry_query_tag       (GimpTagEntry      *entry);
+static void     gimp_tag_entry_activate                  (GtkEntry             *entry,
+                                                          gpointer              unused);
+static void     gimp_tag_entry_changed                   (GtkEntry             *entry,
+                                                          gpointer              unused);
+static void     gimp_tag_entry_insert_text               (GtkEditable          *editable,
+                                                          gchar                *new_text,
+                                                          gint                  text_length,
+                                                          gint                 *position,
+                                                          gpointer              user_data);
+static gboolean gimp_tag_entry_focus_in                  (GtkWidget            *widget,
+                                                          GdkEventFocus        *event,
+                                                          gpointer              user_data);
+static gboolean gimp_tag_entry_focus_out                 (GtkWidget            *widget,
+                                                          GdkEventFocus        *event,
+                                                          gpointer              user_data);
+static gboolean gimp_tag_entry_button_release            (GtkWidget            *widget,
+                                                          GdkEventButton       *event);
+static void     gimp_tag_entry_backspace                 (GtkEntry             *entry);
+static void     gimp_tag_entry_delete_from_cursor        (GtkEntry             *entry,
+                                                          GtkDeleteType         delete_type,
+                                                          gint                  count);
+static void     gimp_tag_entry_query_tag                 (GimpTagEntry         *entry);
 
-static void     gimp_tag_entry_assign_tags     (GimpTagEntry      *tag_entry);
-static void     gimp_tag_entry_item_set_tags   (GimpTagged        *entry,
-                                                GList             *tags);
+static void     gimp_tag_entry_assign_tags               (GimpTagEntry         *tag_entry);
+static void     gimp_tag_entry_item_set_tags             (GimpTagged           *entry,
+                                                          GList                *tags);
 
-static void     gimp_tag_entry_load_selection  (GimpTagEntry      *tag_entry);
+static void     gimp_tag_entry_load_selection            (GimpTagEntry         *tag_entry);
 
 
 static gchar*   gimp_tag_entry_get_completion_prefix     (GimpTagEntry         *entry);
@@ -77,13 +79,14 @@ static gchar *  gimp_tag_entry_get_completion_string     (GimpTagEntry         *
                                                           gchar                *prefix);
 static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry         *tag_entry);
 
-static void     gimp_tag_entry_toggle_desc     (GimpTagEntry      *widget,
-                                                gboolean           show);
-static gboolean gimp_tag_entry_expose          (GtkWidget         *widget,
-                                                GdkEventExpose    *event,
-                                                gpointer           user_data);
+static void     gimp_tag_entry_toggle_desc               (GimpTagEntry         *widget,
+                                                          gboolean              show);
+static gboolean gimp_tag_entry_expose                    (GtkWidget            *widget,
+                                                          GdkEventExpose       *event,
+                                                          gpointer              user_data);
 
-static gboolean gimp_tag_entry_select_jellybean (GimpTagEntry             *entry);
+static gboolean gimp_tag_entry_select_jellybean          (GimpTagEntry         *entry);
+static gboolean gimp_tag_entry_try_select_jellybean      (GimpTagEntry         *tag_entry);
 
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
@@ -94,7 +97,10 @@ G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 static void
 gimp_tag_entry_class_init (GimpTagEntryClass *klass)
 {
+  GtkWidgetClass       *widget_class = GTK_WIDGET_CLASS (klass);
   GtkEntryClass        *entry_class = GTK_ENTRY_CLASS (klass);
+
+  widget_class->button_release_event    = gimp_tag_entry_button_release;
 
   entry_class->backspace                = gimp_tag_entry_backspace;
   entry_class->delete_from_cursor       = gimp_tag_entry_delete_from_cursor;
@@ -737,6 +743,25 @@ gimp_tag_entry_delete_from_cursor (GtkEntry            *entry,
 }
 
 static gboolean
+gimp_tag_entry_button_release  (GtkWidget         *widget,
+                                GdkEventButton    *event)
+{
+  if (event->button == 1)
+    {
+      g_idle_add ((GSourceFunc) gimp_tag_entry_try_select_jellybean,
+                  widget);
+    }
+  return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
+}
+
+static gboolean
+gimp_tag_entry_try_select_jellybean (GimpTagEntry      *tag_entry)
+{
+  gimp_tag_entry_select_jellybean (tag_entry);
+  return FALSE;
+}
+
+static gboolean
 gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
 {
   gchar        *original_string;
@@ -803,4 +828,5 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
 
   return TRUE;
 }
+
 
