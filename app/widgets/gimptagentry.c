@@ -55,6 +55,10 @@ static gboolean gimp_tag_entry_focus_in        (GtkWidget         *widget,
 static gboolean gimp_tag_entry_focus_out       (GtkWidget         *widget,
                                                 GdkEventFocus     *event,
                                                 gpointer           user_data);
+static void     gimp_tag_entry_backspace       (GtkEntry          *entry);
+static void     gimp_tag_entry_delete_from_cursor (GtkEntry            *entry,
+                                                   GtkDeleteType        delete_type,
+                                                   gint                 count);
 static void     gimp_tag_entry_query_tag       (GimpTagEntry      *entry);
 
 static void     gimp_tag_entry_assign_tags     (GimpTagEntry      *tag_entry);
@@ -79,6 +83,8 @@ static gboolean gimp_tag_entry_expose          (GtkWidget         *widget,
                                                 GdkEventExpose    *event,
                                                 gpointer           user_data);
 
+static gboolean gimp_tag_entry_select_jellybean (GimpTagEntry             *entry);
+
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 
@@ -88,7 +94,10 @@ G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 static void
 gimp_tag_entry_class_init (GimpTagEntryClass *klass)
 {
-  /*GObjectClass *object_class = G_OBJECT_CLASS (klass);*/
+  GtkEntryClass        *entry_class = GTK_ENTRY_CLASS (klass);
+
+  entry_class->backspace                = gimp_tag_entry_backspace;
+  entry_class->delete_from_cursor       = gimp_tag_entry_delete_from_cursor;
 }
 
 static void
@@ -703,5 +712,95 @@ gimp_tag_entry_expose (GtkWidget       *widget,
   g_object_unref (context);
 
   return FALSE;
+}
+
+static void
+gimp_tag_entry_backspace (GtkEntry     *entry)
+{
+  if (! gimp_tag_entry_select_jellybean (GIMP_TAG_ENTRY (entry)))
+    {
+      GTK_ENTRY_CLASS (parent_class)->backspace (entry);
+    }
+}
+
+static void
+gimp_tag_entry_delete_from_cursor (GtkEntry            *entry,
+                                   GtkDeleteType        delete_type,
+                                   gint                 count)
+{
+  if (count != 1
+      || ! gimp_tag_entry_select_jellybean (GIMP_TAG_ENTRY (entry)))
+    {
+      GTK_ENTRY_CLASS (parent_class)->delete_from_cursor (entry, delete_type,
+                                                          count);
+    }
+}
+
+static gboolean
+gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
+{
+  gchar        *original_string;
+  gchar        *jellybean_start;
+  gchar        *jellybean;
+  gchar        *cursor;
+  gint          position;
+  gint          i;
+  gunichar      separator;
+  gunichar      c;
+  gint          selection_start;
+  gint          selection_end;
+
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
+                                     &selection_start, &selection_end);
+  if (selection_start != selection_end)
+    {
+      return FALSE;
+    }
+
+  original_string = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+  position = gtk_editable_get_position (GTK_EDITABLE (entry));
+  cursor = original_string;
+  jellybean_start = original_string;
+  separator = g_utf8_get_char (TAG_SEPARATOR_STR);
+  for (i = 0; i < position; i++)
+    {
+      c = g_utf8_get_char (cursor);
+      cursor = g_utf8_next_char (cursor);
+      if (c == separator)
+        {
+          jellybean_start = cursor;
+        }
+    }
+  do
+    {
+      c = g_utf8_get_char (cursor);
+      cursor = g_utf8_next_char (cursor);
+      if (c == separator)
+        {
+          *cursor = '\0';
+          break;
+        }
+    } while (c);
+
+  jellybean = jellybean_start;
+  while (*jellybean
+         && g_unichar_isspace (g_utf8_get_char (jellybean)))
+    {
+      jellybean = g_utf8_next_char (jellybean);
+    }
+  if (strlen (jellybean) <= 0)
+    {
+      return FALSE;
+    }
+
+  selection_start = g_utf8_pointer_to_offset (original_string, jellybean);
+  selection_end = g_utf8_pointer_to_offset (original_string,
+                                            jellybean + strlen (jellybean));
+  g_free (original_string);
+
+  gtk_editable_select_region (GTK_EDITABLE (entry),
+                             selection_start, selection_end);
+
+  return TRUE;
 }
 
