@@ -185,9 +185,12 @@ gimp_tag_entry_changed (GtkEntry          *entry,
                         gpointer           unused)
 {
   GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (entry);
+  gchar                *text;
 
+  text = g_strdup (gtk_entry_get_text (entry));
+  text = g_strstrip (text);
   if (! GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (entry))
-      && strlen (gtk_entry_get_text (entry)) == 0)
+      && strlen (text) == 0)
     {
       gimp_tag_entry_toggle_desc (tag_entry, TRUE);
     }
@@ -195,6 +198,7 @@ gimp_tag_entry_changed (GtkEntry          *entry,
     {
       gimp_tag_entry_toggle_desc (tag_entry, FALSE);
     }
+  g_free (text);
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
@@ -639,12 +643,22 @@ gimp_tag_entry_toggle_desc     (GimpTagEntry      *tag_entry,
     {
       gchar           **tags;
       gint              tag_count;
+      gint              i;
+      gboolean          has_valid_tag = FALSE;
 
       tags = gimp_tag_entry_parse_tags (tag_entry);
       tag_count = g_strv_length (tags);
+      for (i = 0; i < tag_count; i++)
+        {
+          if (tags[i] && *tags[i])
+            {
+              has_valid_tag = TRUE;
+              break;
+            }
+        }
       g_strfreev (tags);
 
-      if (tag_count <= 0)
+      if (! has_valid_tag)
         {
           tag_entry->description_shown = TRUE;
           gtk_widget_queue_draw (widget);
