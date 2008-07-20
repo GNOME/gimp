@@ -143,8 +143,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->paint_options = paint_options;
 
           dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
-                                                              &paint_core->cur_coords,
-                                                              paint_core->use_pressure);
+                                                              &paint_core->cur_coords);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 

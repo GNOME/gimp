@@ -27,6 +27,15 @@
 	(gimp_combo_tag_entry_popup_list): fixed popup width to properly match
 	tag entry width.
 
+2008-07-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.[ch]: Don't expose implementation
+	details and extend the interface with trivial new functions.
+
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): Use the new interface instead of
+	directly accessing the members of the navigation view.
+
 2008-07-19  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.[ch]: highlight selected tags in popup
@@ -37,6 +46,81 @@
 	* app/widgets/gimptagentry.[ch]: added gray italic description text,
 	which is displayed when GimpTagEntry is not focused and there is no
 	text typed.
+
+2008-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h: removed delta_time, delta_x, delta_y,
+	distance and random from the GimpCoords struct. These don't need
+	to be kept here and they can't be properly interpolated.
+
+	* app/core/gimpcoords.c: changed accordingly.
+
+	* app/xcf/xcf-load.c (xcf_load_vector): the size of the GimpCoords
+	struct changed.
+
+	* app/display/gimpdisplayshell.[ch] (struct _GimpDisplayShell):
+	added some members to store values from the last event that are
+	needed in gimp_display_shell_eval_event() and which are not any
+	longer part of GimpCoords.
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): changed accordingly.
+	
+	* app/paint/gimppaintoptions.c: calculate a random number when one
+	is needed.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate):
+	GimpCoords doesn't have a "random" field any longer.
+
+2008-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h (GIMP_COORDS_DEFAULT_VALUES): initialize
+	all members of the GimpCoords struct.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcoords.c (gimp_coords_mix): also mix in the new
+	members of the GimpCoords struct.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcoords.c (gimp_coords_mix): formatting.
+
+	* app/vectors/gimpbezierstroke.c: formatting.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcolorizetool.c: fixed typo pointed out by
+	Žygimantas Beručka.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: removed 'use_pressure' field from
+	GimpPaintCore.
+	
+	* app/paint/gimppaintoptions.[ch]: removed 'use_pressure' parameter.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
+2008-07-17  Tor Lillqvist  <tml@novell.com>
+
+	* app/Makefile.am (win32_ldflags): Use -Wl,--large-address-aware
+	on Windows so that we can use more that 2 GB user data space (if
+	available; i.e. if running on a 64-bit OS, or a 32-bit OS booted
+	with /3GB). See discussion in bug #522073.
+
+2008-07-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpui.c: improved the documentation of gimpui_init().
 
 2008-07-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -54,15 +138,162 @@
 	* app/widgets/gimpdatafactoryview.c: tag assigment entry visualy
 	connected to data view.
 
+2008-07-16  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.5.3.
+
+2008-07-16  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.5.2 development release.
+
+2008-07-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: also start the search when the
+	slash key is pressed. Added a "find-again" feature bound to Ctrl-G.
+
+2008-07-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: applied patch from Róman Joost
+	as attached to bug #542826 (with some minor modifications). This
+	adds a "Search in this page" feature bound to Ctrl-F.
+
+2008-07-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb: fixed documentation (bug #542972).
+
+	* app/pdb/edit-cmds.c
+	* libgimp/gimpedit_pdb.c: regenerated.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/palette.pdb: added new PDB function
+	gimp-palette-get-colors that retrieves all colors from a palette
+	in a single call. Based on patches from bug #332206.
+
+	* app/pdb/palette-cmds.c
+	* app/pdb/internal-procs.c
+	* libgimp/gimppalette_pdb.[ch]: regenerated.
+	
+	* libgimp/gimp.def: updated.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/app.pl: added support for color arrays.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_arg_type_from_gtype):
+	added mapping from GIMP_TYPE_COLOR_ARRAY to GIMP_PDB_COLORARRAY.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	Add new PDB data type PDB_COLORARRAY for using arrays of GimpRGB
+	colors as argument or return value.
+
+	* libgimpbase/gimpbaseenums.[ch] (enum GimpPDBArgType): replaced
+	the unused GIMP_PDB_BOUNDARY with GIMP_PDB_COLORARRAY.
+
+	* libgimpbase/gimpprotocol.h: increased GIMP_PROTOCOL_VERSION.
+	(struct _GPParam): added d_colorarray entry to the union.
+
+	* libgimpbase/gimpprotocol.c
+	* libgimp/gimp.[ch]
+	* app/pdb/gimp-pdb-compat.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/gimpplugin-message.c
+	* tools/pdbgen/pdb.pl: deal with the new data type.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/script-fu/scheme-wrapper.c: handle the new data type.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontrollerkeyboard.c: changed cursor key event
+	prefix from "key-" to "cursor-".
+
+	* etc/controllerrc: changed accordingly. Also removed default
+	bindings for cursor keys without modifiers as many tools use the
+	cursor keys already.
+
+2008-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): added some line breaks to
+	improve readability.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_center_image): Allow to choose what axes to
+	center on.
+
+	(gimp_display_shell_scale_fill)
+	(gimp_display_shell_scale_fit_in): Explicitly center on both axes.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Center
+	the image in the previously empty display shell. Rather hackish,
+	but seems to work fine.
+
+2008-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: removed here ...
+
+	* app/gui/Makefile.am
+	* app/gui/gimpdbusservice.[ch]
+	* app/gui/dbus-service.xml: ... and moved here.
+	(gimp_dbus_service_activate): raise the first display instead of
+	the toolbox.
+
+	* app/gui/gui-unique.c (gui_unique_win32_idle_open): same change
+	here, raise the display instead of the toolbox.
+
+	* app/unique.c: changed accordingly.
+
+2008-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/unique.c
+	* app/gui/gui-unique.c: on Win32, if the gimp binary is started
+	without filenames, raise the toolbox, just as we do in the DBus
+	code path.
+
 2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
 
-	* app/widgets/gimpcombotagentry.c: if scrollbar appears in popup
-	window, re-layout tags.
+	* app/unique.c (gimp_unique_win32_open): check for NULL pointer to
+	prevent crash when there are no filenames provided.
 
-2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/widgets/gimpcombotagentry.c: correctly calculate border
-	thickness so that scrollbars would not appear when unneeded.
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Get rid
+	of non-intelligent scrollbar stepper sensitivity code.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_offsets): Add intelligent
+	scrollbar stepper sensitivity code.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_setup_hscrollbar_with_value): Consistency
+	cleanup.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_center_image): New function.
+	(gimp_display_shell_scale_fill)
+	(gimp_display_shell_scale_fit_in): Center the image at the end.
+
+2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Use
+	gimp_display_shell_get_scaled_image_size() instead of inaccurately
+	calculate that information locally.
 
 2008-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
@@ -84,6 +315,17 @@
 	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Don't
 	ask gimp_display_shell_set_initial_scale() for display size, we
 	don't care anyway.
+
+2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.c: if scrollbar appears in popup
+	window, re-layout tags.
+
+2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.c: correctly calculate border
+	thickness so that scrollbars would not appear when unneeded.
+
 
 2008-07-13  Aurimas Juška  <aurisj@svn.gnome.org>
 

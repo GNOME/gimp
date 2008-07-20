@@ -815,12 +815,11 @@ gimp_pdb_arg_type_get_type (void)
     { GIMP_PDB_CHANNEL, "GIMP_PDB_CHANNEL", "channel" },
     { GIMP_PDB_DRAWABLE, "GIMP_PDB_DRAWABLE", "drawable" },
     { GIMP_PDB_SELECTION, "GIMP_PDB_SELECTION", "selection" },
-    { GIMP_PDB_BOUNDARY, "GIMP_PDB_BOUNDARY", "boundary" },
+    { GIMP_PDB_COLORARRAY, "GIMP_PDB_COLORARRAY", "colorarray" },
     { GIMP_PDB_VECTORS, "GIMP_PDB_VECTORS", "vectors" },
     { GIMP_PDB_PARASITE, "GIMP_PDB_PARASITE", "parasite" },
     { GIMP_PDB_STATUS, "GIMP_PDB_STATUS", "status" },
     { GIMP_PDB_END, "GIMP_PDB_END", "end" },
-    { GIMP_PDB_PATH, "GIMP_PDB_PATH", "path" },
     { 0, NULL, NULL }
   };
 
@@ -844,12 +843,11 @@ gimp_pdb_arg_type_get_type (void)
     { GIMP_PDB_CHANNEL, "GIMP_PDB_CHANNEL", NULL },
     { GIMP_PDB_DRAWABLE, "GIMP_PDB_DRAWABLE", NULL },
     { GIMP_PDB_SELECTION, "GIMP_PDB_SELECTION", NULL },
-    { GIMP_PDB_BOUNDARY, "GIMP_PDB_BOUNDARY", NULL },
+    { GIMP_PDB_COLORARRAY, "GIMP_PDB_COLORARRAY", NULL },
     { GIMP_PDB_VECTORS, "GIMP_PDB_VECTORS", NULL },
     { GIMP_PDB_PARASITE, "GIMP_PDB_PARASITE", NULL },
     { GIMP_PDB_STATUS, "GIMP_PDB_STATUS", NULL },
     { GIMP_PDB_END, "GIMP_PDB_END", NULL },
-    { GIMP_PDB_PATH, "GIMP_PDB_PATH", NULL },
     { 0, NULL, NULL }
   };
 

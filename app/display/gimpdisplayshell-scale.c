@@ -38,6 +38,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
@@ -161,11 +162,15 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
     if (image)
       {
-        horizontal_upper    = img2real (shell, TRUE, FUNSCALEX (shell, shell->disp_width));
-        horizontal_max_size = img2real (shell, TRUE, MAX (image_width, image_height));
+        horizontal_upper    = img2real (shell, TRUE,
+					FUNSCALEX (shell, shell->disp_width));
+        horizontal_max_size = img2real (shell, TRUE,
+					MAX (image_width, image_height));
 
-        vertical_upper      = img2real (shell, FALSE, FUNSCALEY (shell, shell->disp_height));
-        vertical_max_size   = img2real (shell, FALSE, MAX (image_width, image_height));
+        vertical_upper      = img2real (shell, FALSE,
+					FUNSCALEY (shell, shell->disp_height));
+        vertical_max_size   = img2real (shell, FALSE,
+					MAX (image_width, image_height));
       }
     else
       {
@@ -184,14 +189,18 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
                                                          &scaled_image_viewport_offset_y);
 
     horizontal_lower -= img2real (shell, TRUE,
-                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+                                  FUNSCALEX (shell,
+					     (gdouble) scaled_image_viewport_offset_x));
     horizontal_upper -= img2real (shell, TRUE,
-                                  FUNSCALEX (shell, (gdouble) scaled_image_viewport_offset_x));
+                                  FUNSCALEX (shell,
+					     (gdouble) scaled_image_viewport_offset_x));
 
     vertical_lower   -= img2real (shell, FALSE,
-                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+                                  FUNSCALEY (shell,
+					     (gdouble) scaled_image_viewport_offset_y));
     vertical_upper   -= img2real (shell, FALSE,
-                                  FUNSCALEY (shell, (gdouble) scaled_image_viewport_offset_y));
+                                  FUNSCALEY (shell,
+					     (gdouble) scaled_image_viewport_offset_y));
 
 
     /* Finally setup the actual rulers */
@@ -430,6 +439,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_center_image (shell, TRUE, TRUE);
 }
 
 /**
@@ -468,6 +478,67 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_center_image (shell, TRUE, TRUE);
+}
+
+/**
+ * gimp_display_shell_center_image:
+ * @shell:
+ * @horizontally:
+ * @vertically:
+ *
+ * Centers the image in the display shell on the desired axes.
+ *
+ **/
+void
+gimp_display_shell_center_image (GimpDisplayShell *shell,
+                                 gboolean          horizontally,
+                                 gboolean          vertically)
+{
+  gint sw, sh;
+  gint target_offset_x, target_offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->display)
+    return;
+
+  target_offset_x = shell->offset_x;
+  target_offset_y = shell->offset_y;
+
+  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
+
+  if (horizontally)
+    {
+      if (sw < shell->disp_width)
+        {
+          target_offset_x = -(shell->disp_width - sw) / 2;
+        }
+      else
+        {
+          target_offset_x = (sw - shell->disp_width) / 2;
+        }
+    }
+
+  if (vertically)
+    {
+      if (sh < shell->disp_height)
+        {
+          target_offset_y = -(shell->disp_height - sh) / 2;
+        }
+      else
+        {
+          target_offset_y = (sh - shell->disp_height) / 2;
+        }
+    }
+
+  /* Note that we can't use gimp_display_shell_scroll_private() here
+   * because that would expose the image twice, causing unwanted
+   * flicker.
+   */
+  gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
+                                      target_offset_x, target_offset_y,
+                                      shell->display->config->resize_windows_on_zoom);
 }
 
 /**

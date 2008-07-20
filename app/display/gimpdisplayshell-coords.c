@@ -213,6 +213,11 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 			       gdouble           inertia_factor,
 			       guint32           time)
 {
+  gdouble delta_time = 0.001;
+  gdouble delta_x    = 0.0;
+  gdouble delta_y    = 0.0;
+  gdouble distance   = 1.0;
+
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
    */
@@ -221,21 +226,20 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       inertia_factor = 0.0;
     }
 
-  if (shell->last_disp_motion_time == 0)
+  if (shell->last_motion_time == 0)
     {
       /* First pair is invalid to do any velocity calculation,
-       * so we apply constant values.
+       * so we apply a constant value.
        */
-      coords->velocity   = 1.0;
-      coords->delta_time = 0.001;
-      coords->distance   = 1;
+      coords->velocity = 1.0;
     }
   else
     {
-      gdouble dx = coords->delta_x = shell->last_coords.x - coords->x;
-      gdouble dy = coords->delta_y = shell->last_coords.y - coords->y;
       gdouble filter;
       gdouble dist;
+
+      delta_x = shell->last_coords.x - coords->x;
+      delta_y = shell->last_coords.y - coords->y;
 
 #define SMOOTH_FACTOR 0.3
 
@@ -244,20 +248,18 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
        */
       filter = MIN (1 / shell->scale_x, 1 / shell->scale_y) / 2.0;
 
-      if (fabs (dx) < filter && fabs (dy) < filter)
+      if (fabs (delta_x) < filter && fabs (delta_y) < filter)
         return FALSE;
 
-      coords->delta_time = time - shell->last_disp_motion_time;
-      coords->delta_time = (shell->last_coords.delta_time * (1 - SMOOTH_FACTOR)
-                            + coords->delta_time * SMOOTH_FACTOR);
-      coords->distance = dist = sqrt (SQR (dx) + SQR (dy));
+      delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR)
+                    +  (time - shell->last_motion_time) * SMOOTH_FACTOR);
 
-      coords->random = g_random_double_range (0.0, 1.0);
+      distance = dist = sqrt (SQR (delta_x) + SQR (delta_y));
 
       /* If even smoothed time resolution does not allow to guess for speed,
        * use last velocity.
        */
-      if ((coords->delta_time == 0))
+      if (delta_time == 0)
         {
           coords->velocity = shell->last_coords.velocity;
         }
@@ -266,14 +268,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* We need to calculate the velocity in screen coordinates
            * for human interaction
            */
-          gdouble screen_distance = (coords->distance *
+          gdouble screen_distance = (distance *
                                      MIN (shell->scale_x, shell->scale_y));
 
           /* Calculate raw valocity */
-          coords->velocity = ((screen_distance / (gdouble) coords->delta_time) /
-                              VELOCITY_UNIT);
+          coords->velocity = ((screen_distance / delta_time) / VELOCITY_UNIT);
 
-          /* Adding velocity dependent smooth, feels better in tools this way. */
+          /* Adding velocity dependent smoothing, feels better in tools. */
           coords->velocity = (shell->last_coords.velocity *
                               (1 - MIN (SMOOTH_FACTOR, coords->velocity)) +
                               coords->velocity *
@@ -282,10 +283,11 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }
+
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);
 
-      if (inertia_factor > 0 && coords->distance > 0)
+      if (inertia_factor > 0 && distance > 0)
         {
           /* Apply smoothing to X and Y. */
 
@@ -301,23 +303,21 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           gdouble new_x;
           gdouble new_y;
 
-          sin_new = coords->delta_x / coords->distance;
-          sin_old = shell->last_coords.delta_x / shell->last_coords.distance;
+          sin_new = delta_x / distance;
+          sin_old = shell->last_motion_delta_x / shell->last_motion_distance;
           sin_avg = sin (asin (sin_old) * inertia_factor +
                          asin (sin_new) * (1 - inertia_factor));
 
-          cos_new = coords->delta_y / coords->distance;
-          cos_old = shell->last_coords.delta_y / shell->last_coords.distance;
+          cos_new = delta_y / distance;
+          cos_old = shell->last_motion_delta_y / shell->last_motion_distance;
           cos_avg = cos (acos (cos_old) * inertia_factor +
                          acos (cos_new) * (1 - inertia_factor));
 
-          coords->delta_x = sin_avg * coords->distance;
-          coords->delta_y = cos_avg * coords->distance;
+          delta_x = sin_avg * distance;
+          delta_y = cos_avg * distance;
 
-          new_x =
-            (shell->last_coords.x - coords->delta_x) * 0.5 + coords->x * 0.5;
-          new_y =
-            (shell->last_coords.y - coords->delta_y) * 0.5 + coords->y * 0.5;
+          new_x = (shell->last_coords.x - delta_x) * 0.5 + coords->x * 0.5;
+          new_y = (shell->last_coords.y - delta_y) * 0.5 + coords->y * 0.5;
 
           cur_deviation = SQR (coords->x - new_x) + SQR (coords->y - new_y);
 
@@ -333,18 +333,17 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->x = new_x;
           coords->y = new_y;
 
-          coords->delta_x = shell->last_coords.x - coords->x;
-          coords->delta_y = shell->last_coords.y - coords->y;
+          delta_x = shell->last_coords.x - coords->x;
+          delta_y = shell->last_coords.y - coords->y;
 
           /* Recalculate distance */
-          coords->distance = sqrt (SQR (coords->delta_x) +
-                                   SQR (coords->delta_y));
+          distance = sqrt (SQR (delta_x) + SQR (delta_y));
         }
 
 #ifdef VERBOSE
       g_printerr ("DIST: %f, DT:%f, Vel:%f, Press:%f,smooth_dd:%f, sf %f\n",
-                  coords->distance,
-                  coords->delta_time,
+                  distance,
+                  delta_time,
                   shell->last_coords.velocity,
                   coords->pressure,
                   coords->distance - dist,
@@ -352,8 +351,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 #endif
     }
 
-  shell->last_coords           = *coords;
-  shell->last_disp_motion_time = time;
+  shell->last_coords            = *coords;
+
+  shell->last_motion_time       = time;
+  shell->last_motion_delta_time = delta_time;
+  shell->last_motion_delta_x    = delta_x;
+  shell->last_motion_delta_y    = delta_y;
+  shell->last_motion_distance   = distance;
 
   return TRUE;
 }

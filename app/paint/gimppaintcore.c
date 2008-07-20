@@ -150,7 +150,6 @@ gimp_paint_core_init (GimpPaintCore *core)
   core->x2               = 0;
   core->y2               = 0;
 
-  core->use_pressure     = FALSE;
   core->use_saved_proj   = FALSE;
 
   core->undo_tiles       = NULL;

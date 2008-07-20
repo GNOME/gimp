@@ -231,6 +231,10 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   GdkScreen            *screen;
   gint                  x, y;
   gint                  x_org, y_org;
+  gint                  view_marker_x;
+  gint                  view_marker_y;
+  gint                  view_marker_width;
+  gint                  view_marker_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -272,14 +276,20 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   /* decide where to put the popup */
   gdk_window_get_origin (widget->window, &x_org, &y_org);
 
+  gimp_navigation_view_get_local_marker (view,
+                                         &view_marker_x,
+                                         &view_marker_y,
+                                         &view_marker_width,
+                                         &view_marker_height);
+
   x = (x_org + click_x -
-       view->p_x -
-       0.5 * (view->p_width  - BORDER_PEN_WIDTH) -
+       view_marker_x -
+       0.5 * (view_marker_width  - BORDER_PEN_WIDTH) -
        2   * style->xthickness);
 
   y = (y_org + click_y -
-       view->p_y -
-       0.5 * (view->p_height - BORDER_PEN_WIDTH) -
+       view_marker_y -
+       0.5 * (view_marker_height - BORDER_PEN_WIDTH) -
        2   * style->ythickness);
 
   /* If the popup doesn't fit into the screen, we have a problem.
@@ -305,9 +315,9 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   gdk_flush ();
 
   /* fill in then grab pointer */
-  view->motion_offset_x = 0.5 * (view->p_width  - BORDER_PEN_WIDTH);
-  view->motion_offset_y = 0.5 * (view->p_height - BORDER_PEN_WIDTH);
-
+  gimp_navigation_view_set_motion_offset (view,
+                                          0.5 * (view_marker_width  - BORDER_PEN_WIDTH),
+                                          0.5 * (view_marker_height - BORDER_PEN_WIDTH));
   gimp_navigation_view_grab_pointer (view);
 }
 

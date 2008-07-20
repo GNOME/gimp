@@ -50,6 +50,30 @@ enum
 };
 
 
+struct _GimpNavigationView
+{
+  GimpView     parent_instance;
+
+  /*  values in image coordinates  */
+  gdouble      x;
+  gdouble      y;
+  gdouble      width;
+  gdouble      height;
+
+  /*  values in view coordinates  */
+  gint         p_x;
+  gint         p_y;
+  gint         p_width;
+  gint         p_height;
+
+  gint         motion_offset_x;
+  gint         motion_offset_y;
+  gboolean     has_grab;
+
+  GdkGC       *gc;
+};
+
+
 static void     gimp_navigation_view_realize        (GtkWidget      *widget);
 static void     gimp_navigation_view_unrealize      (GtkWidget      *widget);
 static void     gimp_navigation_view_size_allocate  (GtkWidget      *widget,
@@ -135,7 +159,6 @@ gimp_navigation_view_init (GimpNavigationView *view)
 
   gtk_widget_add_events (GTK_WIDGET (view), (GDK_POINTER_MOTION_MASK |
                                              GDK_KEY_PRESS_MASK));
-
   view->x               = 0.0;
   view->y               = 0.0;
   view->width           = 0.0;
@@ -574,4 +597,30 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
   /*  draw new marker  */
   if (GTK_WIDGET_DRAWABLE (view))
     gimp_navigation_view_draw_marker (nav_view, NULL);
+}
+
+void
+gimp_navigation_view_set_motion_offset (GimpNavigationView *view,
+                                        gint                motion_offset_x,
+                                        gint                motion_offset_y)
+{
+  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+
+  view->motion_offset_x = motion_offset_x;
+  view->motion_offset_y = motion_offset_y;
+}
+
+void
+gimp_navigation_view_get_local_marker (GimpNavigationView *view,
+                                       gint               *x,
+                                       gint               *y,
+                                       gint               *width,
+                                       gint               *height)
+{
+  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+
+  if (x)      *x      = view->p_x;
+  if (y)      *y      = view->p_y;
+  if (width)  *width  = view->p_width;
+  if (height) *height = view->p_height;
 }

@@ -85,6 +85,13 @@ package Gimp::CodeGen::pdb;
 		     init_value     => 'NULL',
 		     get_value_func => '$var = gimp_value_get_stringarray ($value)',
 		     set_value_func => 'gimp_value_take_stringarray ($value, $var, $var_len)' },
+    colorarray  => { name           => 'COLORARRAY',
+		     type           => 'GimpRGB *',
+		     const_type     => 'const GimpRGB *',
+		     array          => 1,
+		     init_value     => 'NULL',
+		     get_value_func => '$var = gimp_value_get_colorarray ($value)',
+		     set_value_func => 'gimp_value_take_colorarray ($value, $var, $var_len)' },
 
     color => { name           => 'COLOR' , 
 	       type           => 'GimpRGB ',

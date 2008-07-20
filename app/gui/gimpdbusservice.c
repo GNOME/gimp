@@ -26,15 +26,17 @@
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 
-#include "widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 
 #include "file/file-open.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdbusservice.h"
 #include "gimpdbusservice-glue.h"
-#include "gimpuimanager.h"
 
 
 static void  gimp_dbus_service_class_init (GimpDBusServiceClass *klass);
@@ -103,16 +105,13 @@ gboolean
 gimp_dbus_service_activate (GimpDBusService  *service,
                             GError          **dbus_error)
 {
-  const GList *managers;
+  GimpObject *display;
 
   g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
 
-  /* raise the toolbox */
-  managers = gimp_ui_managers_from_name ("<Image>");
+  display = gimp_container_get_first_child (service->gimp->displays);
 
-  if (managers)
-    gimp_ui_manager_activate_action (managers->data,
-                                     "dialogs", "dialogs-toolbox");
+  gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
 
   return TRUE;
 }

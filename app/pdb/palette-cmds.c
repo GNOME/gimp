@@ -248,6 +248,54 @@ palette_get_info_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+palette_get_colors_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gint32 num_colors = 0;
+  GimpRGB *colors = NULL;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+
+      if (palette)
+        {
+          GList *list = palette->colors;
+          gint   i;
+
+          num_colors = palette->n_colors;
+          colors     = g_new (GimpRGB, num_colors);
+
+          for (i = 0; i < num_colors; i++, list = g_list_next (list))
+            colors[i] = ((GimpPaletteEntry *)(list->data))->color;
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], num_colors);
+      gimp_value_take_colorarray (&return_vals->values[2], colors, num_colors);
+    }
+
+  return return_vals;
+}
+
+static GValueArray *
 palette_get_columns_invoker (GimpProcedure      *procedure,
                              Gimp               *gimp,
                              GimpContext        *context,
@@ -744,6 +792,41 @@ register_palette_procs (GimpPDB *pdb)
                                                           "The number of colors in the palette",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-palette-get-colors
+   */
+  procedure = gimp_procedure_new (palette_get_colors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-get-colors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-palette-get-colors",
+                                     "Gets all colors from the specified palette.",
+                                     "This procedure retrieves all color entries of the specified palette.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2006",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The palette name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-colors",
+                                                          "num colors",
+                                                          "Length of the colors array",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_color_array ("colors",
+                                                                "colors",
+                                                                "The colors in the palette",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

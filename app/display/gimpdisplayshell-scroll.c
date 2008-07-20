@@ -166,6 +166,32 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
           max_offset_y = sh + overpan_amount - shell->disp_height;
         }
 
+
+      /* Handle scrollbar stepper sensitiity */
+
+      gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb),
+                                               min_offset_x < shell->offset_x ?
+                                               GTK_SENSITIVITY_ON :
+                                               GTK_SENSITIVITY_OFF);
+
+      gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb),
+                                               max_offset_x > shell->offset_x ?
+                                               GTK_SENSITIVITY_ON :
+                                               GTK_SENSITIVITY_OFF);
+
+      gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb),
+                                               min_offset_y < shell->offset_y ?
+                                               GTK_SENSITIVITY_ON :
+                                               GTK_SENSITIVITY_OFF);
+
+      gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb),
+                                               max_offset_y > shell->offset_y ?
+                                               GTK_SENSITIVITY_ON :
+                                               GTK_SENSITIVITY_OFF);
+
+
+      /* Clamp */
+
       shell->offset_x = CLAMP (shell->offset_x, min_offset_x, max_offset_x);
       shell->offset_y = CLAMP (shell->offset_y, min_offset_y, max_offset_y);
     }
@@ -374,15 +400,15 @@ gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  sw = SCALEX (shell, gimp_image_get_width (shell->display->image));
+  gimp_display_shell_get_scaled_image_size (shell, &sw, NULL);
 
   if (shell->disp_width < sw)
     {
-      shell->hsbdata->upper = MAX (value + shell->disp_width,
-                                   sw);
-
       shell->hsbdata->lower = MIN (value,
                                    0);
+
+      shell->hsbdata->upper = MAX (value + shell->disp_width,
+                                   sw);
     }
   else
     {
@@ -414,15 +440,15 @@ gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
+  gimp_display_shell_get_scaled_image_size (shell, NULL, &sh);
 
   if (shell->disp_height < sh)
     {
-      shell->vsbdata->upper = MAX (value + shell->disp_height,
-                                   sh);
-
       shell->vsbdata->lower = MIN (value,
                                    0);
+
+      shell->vsbdata->upper = MAX (value + shell->disp_height,
+                                   sh);
     }
   else
     {

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -30,12 +30,14 @@
 #include <dbus/dbus-glib-lowlevel.h>
 #endif
 
-#include "core/core-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 
-#include "widgets/gimpdbusservice.h"
+#include "display/gimpdisplay.h"
 
+#include "gimpdbusservice.h"
 #include "gui-unique.h"
 
 
@@ -128,12 +130,16 @@ typedef struct
 
 static IdleOpenData *
 idle_open_data_new (const gchar *name,
+                    gint         len,
 		    gboolean     as_new)
 {
-  IdleOpenData *data = g_slice_new (IdleOpenData);
+  IdleOpenData *data = g_slice_new0 (IdleOpenData);
 
-  data->name   = g_strdup (name);
-  data->as_new = as_new;
+  if (len > 0)
+    {
+      data->name   = g_strdup (name);
+      data->as_new = as_new;
+    }
 
   return data;
 }
@@ -148,7 +154,19 @@ idle_open_data_free (IdleOpenData *data)
 static gboolean
 gui_unique_win32_idle_open (IdleOpenData *data)
 {
-  file_open_from_command_line (unique_gimp, data->name, data->as_new);
+  if (data->name)
+    {
+      file_open_from_command_line (unique_gimp, data->name, data->as_new);
+    }
+  else
+    {
+      /*  raise the first display  */
+      GimpObject *display;
+
+      display = gimp_container_get_first_child (unique_gimp->displays);
+
+      gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
+    }
 
   return FALSE;
 }
@@ -163,27 +181,28 @@ gui_unique_win32_message_handler (HWND   hWnd,
   switch (uMsg)
     {
     case WM_COPYDATA:
-      {
-	COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
+      if (unique_gimp)
+        {
+          COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
+          GSource        *source;
+          GClosure       *closure;
+          IdleOpenData   *data;
 
-	if (unique_gimp && copydata->cbData > 0)
-	  {
-	    GSource      *source;
-	    GClosure     *closure;
-	    IdleOpenData *data = idle_open_data_new (copydata->lpData, copydata->dwData != 0);
+          data = idle_open_data_new (copydata->lpData,
+                                     copydata->cbData,
+                                     copydata->dwData != 0);
 
-	    closure = g_cclosure_new (G_CALLBACK (gui_unique_win32_idle_open),
-				      data,
-				      (GClosureNotify) idle_open_data_free);
+          closure = g_cclosure_new (G_CALLBACK (gui_unique_win32_idle_open),
+                                    data,
+                                    (GClosureNotify) idle_open_data_free);
 
-	    g_object_watch_closure (unique_gimp, closure);
+          g_object_watch_closure (unique_gimp, closure);
 
-	    source = g_idle_source_new ();
-	    g_source_set_closure (source, closure);
-	    g_source_attach (source, NULL);
-	    g_source_unref (source);
-	  }
-      }
+          source = g_idle_source_new ();
+          g_source_set_closure (source, closure);
+          g_source_attach (source, NULL);
+          g_source_unref (source);
+        }
       return TRUE;
 
     default:

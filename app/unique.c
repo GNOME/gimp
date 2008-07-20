@@ -58,6 +58,7 @@ gimp_unique_open (const gchar **filenames,
 #endif
 }
 
+#ifndef GIMP_CONSOLE_COMPILATION
 static gchar *
 gimp_unique_filename_to_uri (const gchar  *filename,
 			     const gchar  *cwd,
@@ -87,6 +88,8 @@ gimp_unique_filename_to_uri (const gchar  *filename,
 
   return uri;
 }
+#endif
+
 
 #if HAVE_DBUS_GLIB
 
@@ -97,7 +100,7 @@ gimp_unique_dbus_open (const gchar **filenames,
 #ifndef GIMP_CONSOLE_COMPILATION
 
 /*  for the DBus service names  */
-#include "widgets/gimpdbusservice.h"
+#include "gui/gimpdbusservice.h"
 
   DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
 
@@ -188,32 +191,43 @@ gimp_unique_win32_open (const gchar **filenames,
 
   if (window_handle)
     {
-      COPYDATASTRUCT  copydata;
-      gchar          *cwd   = g_get_current_dir ();
-      GError         *error = NULL;
-      gint            i;
-	
-      for (i = 0; filenames[i]; i++)
-	{
-	  gchar *uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
+      COPYDATASTRUCT  copydata = { 0, };
 
-	  if (uri)
-	    {
-	      copydata.lpData = uri;
-	      copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
-	      copydata.dwData = (long) as_new;
+      if (filenames)
+        {
+          gchar  *cwd   = g_get_current_dir ();
+          GError *error = NULL;
+          gint    i;
 
-	      SendMessage (window_handle,
-			   WM_COPYDATA, window_handle, &copydata);
-	    }
-	  else
-	    {
-	      g_printerr ("conversion to uri failed: %s\n", error->message);
-	      g_clear_error (&error);
-	    }
-	}
+          for (i = 0; filenames[i]; i++)
+            {
+              gchar *uri;
 
-      g_free (cwd);
+              uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
+
+              if (uri)
+                {
+                  copydata.lpData = uri;
+                  copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
+                  copydata.dwData = (long) as_new;
+
+                  SendMessage (window_handle,
+                               WM_COPYDATA, window_handle, &copydata);
+                }
+              else
+                {
+                  g_printerr ("conversion to uri failed: %s\n", error->message);
+                  g_clear_error (&error);
+                }
+            }
+
+          g_free (cwd);
+        }
+      else
+        {
+          SendMessage (window_handle,
+                       WM_COPYDATA, window_handle, &copydata);
+        }
 
       return TRUE;
     }

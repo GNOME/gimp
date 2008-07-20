@@ -139,25 +139,20 @@ GimpBrushApplicationMode
 
 
 gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gboolean          use_pressure);
+                                                const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_size    (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords,
-                                                gboolean          use_pressure,
                                                 gboolean          use_dynamics);
 
 gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gboolean          use_pressure);
+                                                const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_color   (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gboolean          use_pressure);
+                                                const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_hardness(GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gboolean          use_pressure);
+                                                const GimpCoords *coords);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

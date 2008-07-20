@@ -148,7 +148,9 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
                                             G_PARAM_READWRITE);
       break;
 
-    case GIMP_PDB_BOUNDARY:
+    case GIMP_PDB_COLORARRAY:
+      pspec = gimp_param_spec_color_array (name, name, desc,
+                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_VECTORS:
@@ -220,7 +222,6 @@ gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
       return GIMP_TYPE_RGB;
 
     case GIMP_PDB_REGION:
-    case GIMP_PDB_BOUNDARY:
       break;
 
     case GIMP_PDB_DISPLAY:
@@ -240,6 +241,9 @@ gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
 
     case GIMP_PDB_SELECTION:
       return GIMP_TYPE_SELECTION_ID;
+
+    case GIMP_PDB_COLORARRAY:
+      return GIMP_TYPE_COLOR_ARRAY;
 
     case GIMP_PDB_VECTORS:
       return GIMP_TYPE_VECTORS_ID;
@@ -268,7 +272,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
   if (! pdb_type_quark)
     {
-      struct
+      const struct
       {
         GType          g_type;
         GimpPDBArgType pdb_type;
@@ -287,13 +291,14 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
         { G_TYPE_STRING,             GIMP_PDB_STRING      },
 
+        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
+
         { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
         { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
         { GIMP_TYPE_INT8_ARRAY,      GIMP_PDB_INT8ARRAY   },
         { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
-
-        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
+        { GIMP_TYPE_COLOR_ARRAY,     GIMP_PDB_COLORARRAY  },
 
         { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
         { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },

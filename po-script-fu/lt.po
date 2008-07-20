@@ -1,14 +1,14 @@
 # Lithuanian translation of GIMP script-fu.
-# Copyright (C) 2004-2007 Free Software Foundation, Inc.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# 
-# 
+# Copyright (C) 2004-2008 Free Software Foundation, Inc.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2008.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-04 18:27+0300\n"
-"PO-Revision-Date: 2007-10-04 18:28+0300\n"
+"POT-Creation-Date: 2008-07-17 13:40+0300\n"
+"PO-Revision-Date: 2008-07-17 13:41+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Nepavyko atverti „%s“ rašymui: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo veiksenoje galimas tik neinteraktyvus iškvietimas"
 
@@ -102,7 +102,11 @@ msgstr "Script-Fu gradientų pasirinkimas"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu teptukų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Šaukiniui „scrip-fu-register“ nurodyti per mažai argumentų"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:667
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -136,8 +140,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Interaktyvi konsolė Script-Fu kūrimui"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "Script-Fu _konsolė"
+msgid "_Console"
+msgstr "_Konsolė"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -160,102 +164,50 @@ msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Buttons"
-msgstr "_Mygtukai"
-
-#: ../plug-ins/script-fu/script-fu.c:309
-msgid "_Logos"
-msgstr "_Logotipai"
-
-#: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "Į_vairūs"
-
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "_Patterns"
-msgstr "_Raštai"
-
-#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Testas"
 
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Mygtukai"
+
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logotipai"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Raštai"
+
 #: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Utilities"
-msgstr "_Reikmenys"
+msgid "_Web Page Themes"
+msgstr "_Tinklalapių temos"
 
 #: ../plug-ins/script-fu/script-fu.c:319
-msgid "_Web Page Themes"
-msgstr "_Žiniatinklio svetainių temos"
-
-#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "_Ateivių švytėjimas"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "_Nuožulnaus krašto raštas"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa į _logotipą"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "An_imacija"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Animatoriai"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "_Meniškas"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Išliejimas"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "_Dekoravimas"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Efektai"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "Pa_gerinti"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Šviesa ir šešėlis"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "Š_ešėlis"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Atvaizduoti"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "_Alchemija"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Iš naujo perskaityti visus prieinamus Script-Fu scenarijus"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Atnaujinti scenarijus"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -269,7 +221,7 @@ msgstr "3D k_ontūras..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Nelygumų (alfa sluoksnio) išliejimo spindulys"
+msgstr "Įspaudų (alfa sluoksnio) išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -461,7 +413,6 @@ msgstr "3_D Triušė..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -501,7 +452,7 @@ msgstr "Perėjimo pradžia"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
-msgstr ""
+msgstr "Papildoma imtis"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
@@ -763,8 +714,7 @@ msgstr "Nuožulnaus krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
-msgstr ""
-"Sukurti paprastą grafinį mygtuką nuožulniais kraštais žiniatinklio svetainėms"
+msgstr "Sukurti paprastą grafinį mygtuką nuožulniais kraštais tinklalapiams"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
@@ -859,17 +809,19 @@ msgstr "Maks. išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr ""
+msgstr "_Perėjimas..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
+"Pasirinktoje (arba permatomoje) srityje pridėti pereinamų spalvų fonus, "
+"paryškintas vietas ir šešėlius"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr ""
+msgstr "Perei_nantis..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
@@ -988,8 +940,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo "
-"priekinio plano sluoksnio ir fono sluoksnio."
+"Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo priekinio "
+"plano sluoksnio ir fono sluoksnio."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1423,7 +1375,7 @@ msgstr "Lyginės"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
-msgstr "Lyginės/nelyginės"
+msgstr "Lyginės / nelyginės"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
@@ -1636,38 +1588,44 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
+"Sukurti vamzdinio mygtuko etiketės antraštės paveikslėlį naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
+msgstr "Sukurti vamzdinio mygtuko etiketę naudojant gimp.org tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Sukurti antro lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Sukurti trečio lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
+"tinklalapio temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "_Vamzdinio antrinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "_Vamzdinio tretinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
-msgstr ""
+msgstr "_Bendros vamzdinės etiketės..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
-msgstr ""
+msgstr "V_amzdinio mygtuko etiketė..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
@@ -1710,7 +1668,6 @@ msgid "Pattern (text)"
 msgstr "Raštas (tekstas)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Šešėlis"
 
@@ -1799,7 +1756,7 @@ msgstr "_Tinklelis..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr "Naujos gairės iš _pasirinkimo"
+msgstr "Naujos gairės iš _pažymėjimo"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1848,46 +1805,6 @@ msgstr "Pašalinti visas horizontalias ir vertikalias gaires"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "Pašalinti visas gai_res"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Fono nepermatomumas"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Sukurti grafiką iš atspalvio, sodrumo ir reikšmės paskirstymų"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Nubrėžti _HSV grafiką..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Pabaigos X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Pabaigos Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Nuo viršutinio kairio kampo į apatinį dešinį"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Pradžios X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Pradžios Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Vietoje žemiau esančių reikšmių naudoti pažymėjimo ribas"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1975,7 +1892,7 @@ msgstr "Sukurti stačiakampį teptuką"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Sukurti stačiakampį teptuką su plunksnuotais kraštais"
+msgstr "Sukurti stačiakampį teptuką išlietais kraštais"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
@@ -1983,15 +1900,15 @@ msgstr "Sukurti elipsinį teptuką"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Sukurti elipsinį teptuką su plunksnuotais kraštais"
+msgstr "Sukurti elipsinį teptuką išlietais kraštais"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr "Eli_psinis, plunksnuotas..."
+msgstr "Eli_psinis, išlietais kraštais..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
-msgstr "Plunksnuojama"
+msgstr "Kraštų išliejimas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
@@ -1999,13 +1916,13 @@ msgstr "Pavadinimas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr "Stačia_kampis, plunksnuotas..."
+msgstr "Stačia_kampis, išlietais kraštais..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
-msgstr "Išretinimas"
+msgstr "Intervalas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
@@ -2288,11 +2205,11 @@ msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir 
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr "_Apvalūs kampai..."
+msgstr "_Apvalaini kampai..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Pakeisti paveikslėlio spalvų gamą į nurodytos paletės spalvas."
+msgstr "Pakeisti paveikslėlio spalvų paletę į nurodytos paletės spalvas."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2300,7 +2217,7 @@ msgstr "Paletė"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "Nus_tatyti spalvų gamą..."
+msgstr "Nus_tatyti spalvų paletę..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
@@ -2337,11 +2254,11 @@ msgstr "Spindulys (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Round the corners of the current selection"
-msgstr "Suapvalinti esamo pasirinkimo kampus"
+msgstr "Suapvalinti esamo pažymėjimo kampus"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
-msgstr "Suapvalintas _stačiakampis..."
+msgstr "Apvalainas _stačiakampis..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -2376,26 +2293,6 @@ msgstr "Sukurti logotipą su greičio teksto efektu"
 msgid "Speed Text..."
 msgstr "Greičio tekstas..."
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Sukurti paprastą sferą su šešėliu"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Apšvietimas (laipsniais)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Spindulys (taškeliais)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Sferos spalva"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Sfera..."
-
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Sukurti animaciją uždedant esamą paveikslėlį ant besisukančios sferos"
@@ -2420,6 +2317,7 @@ msgstr "Besisukantis _gaublys..."
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
+"Dabartiniame sluoksnyje pridėti spirografų, epitrochoidų ir lisažu kreives"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2439,7 +2337,7 @@ msgstr "Spalvos metodas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrochoidas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Frame"
@@ -2467,7 +2365,7 @@ msgstr "Vidiniai dantys"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
-msgstr ""
+msgstr "Lisažu"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
@@ -2503,7 +2401,7 @@ msgstr "Daugiakampis: 9 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "Atvaizduojamas Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2515,7 +2413,7 @@ msgstr "Vientisa spalva"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spirografas"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2585,7 +2483,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
-msgstr ""
+msgstr "Žvai_gždėtas vaizdas..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Create an image filled with a swirled tile effect"
@@ -2641,7 +2539,7 @@ msgstr "Krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
-msgstr ""
+msgstr "Pataikymo dažnis"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
@@ -2866,7 +2764,7 @@ msgstr "_Kontūrų naudojimas"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr "_Pagrindinės koncepcijos"
+msgstr "_Pagrindiniai principai"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
@@ -2929,7 +2827,3 @@ msgstr "Paryškinimo nepermatomumas"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
-
-#~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
-#~ msgstr ""
-#~ "Tik patamsinti\\n(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"

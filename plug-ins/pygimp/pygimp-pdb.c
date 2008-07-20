@@ -287,8 +287,26 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	case GIMP_PDB_SELECTION:
 	    value = pygimp_layer_new(params[i].data.d_selection);
 	    break;
-	case GIMP_PDB_BOUNDARY:
-	    value = PyInt_FromLong(params[i].data.d_boundary);
+	case GIMP_PDB_COLORARRAY:
+	    if (params[i].data.d_colorarray == NULL) {
+		value = PyTuple_New(0);
+		break;
+	    }
+	    if ((tmp=PyTuple_GetItem(args, i-1)) == NULL) {
+		Py_DECREF(args);
+		return NULL;
+	    }
+	    if (!PyInt_Check(tmp)) {
+		PyErr_SetString(PyExc_TypeError,
+				"count type must be integer");
+		Py_DECREF(args);
+		return NULL;
+	    }
+	    n = PyInt_AsLong(tmp);
+	    value = PyTuple_New(n);
+	    for (j = 0; j < n; j++)
+		PyTuple_SetItem(value, j,
+                                pygimp_rgb_new(&params[i].data.d_colorarray[j]));
 	    break;
 	case GIMP_PDB_VECTORS:
 	    value = pygimp_vectors_new(params[i].data.d_vectors);
@@ -524,9 +542,23 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    check(!pygimp_layer_check(item));
 	    ret[i].data.d_selection = ((PyGimpLayer *)item)->ID;
 	    break;
-	case GIMP_PDB_BOUNDARY:
-	    check(!PyInt_Check(item));
-	    ret[i].data.d_boundary = PyInt_AsLong(item);
+	case GIMP_PDB_COLORARRAY:
+	    {
+                GimpRGB *rgb;
+
+		check(!PySequence_Check(item));
+		len = PySequence_Length(item);
+		rgb = g_new(GimpRGB, len);
+		for (j = 0; j < len; j++) {
+		    if (!pygimp_rgb_from_pyobject(item, &rgb[j])) {
+			Py_DECREF(tuple);
+			g_free(rgb);
+			gimp_destroy_params(ret, nparams);
+			return NULL;
+		    }
+		}
+                ret[i].data.d_colorarray = rgb;
+	    }
 	    break;
 	case GIMP_PDB_VECTORS:
 	    check(!pygimp_vectors_check(item));

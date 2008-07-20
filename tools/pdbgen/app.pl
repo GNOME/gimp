@@ -487,6 +487,14 @@ gimp_param_spec_string_array ("$name",
                               $flags)
 CODE
     }
+    elsif ($pdbtype eq 'colorarray') {
+	$pspec = <<CODE;
+gimp_param_spec_color_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             $flags)
+CODE
+    }
     else {
 	warn "Unsupported PDB type: $arg->{name} ($arg->{type})";
 	exit -1;

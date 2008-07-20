@@ -337,9 +337,15 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_x         = 0;
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
-
+  
   shell->highlight              = NULL;
   shell->mask                   = NULL;
+
+  shell->last_motion_time       = 0;
+  shell->last_motion_delta_x    = 0.0;
+  shell->last_motion_delta_y    = 0.0;
+  shell->last_motion_distance   = 0.0;
+  shell->last_motion_delta_time = 0.0;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -936,18 +942,12 @@ gimp_display_shell_new (GimpDisplay       *display,
                                                        1, 1, image_width));
   shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
 
-  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
-  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->hsb), GTK_SENSITIVITY_ON);
-
   GTK_WIDGET_UNSET_FLAGS (shell->hsb, GTK_CAN_FOCUS);
 
   /*  the vertical scrollbar  */
   shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
                                                        1, 1, image_height));
   shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
-
-  gtk_range_set_lower_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
-  gtk_range_set_upper_stepper_sensitivity (GTK_RANGE (shell->vsb), GTK_SENSITIVITY_ON);
 
   GTK_WIDGET_UNSET_FLAGS (shell->vsb, GTK_CAN_FOCUS);
 
@@ -1322,6 +1322,35 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
     gimp_ui_manager_update (shell->popup_manager, shell->display);
 }
 
+static void
+gimp_display_shell_center_image_callback (GimpDisplayShell *shell,
+                                          GtkAllocation    *allocation,
+                                          GtkWidget        *canvas)
+{
+  gint     sw, sh;
+  gboolean center_horizontally;
+  gboolean center_vertically;
+
+  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
+
+  /* We only want to center on the axes on which the image is smaller
+   * than the display canvas. If it is larger, it will be centered on
+   * that axis later, and if we center on all axis unconditionally, we
+   * end up with the wrong centering if the image is larger than the
+   * display canvas.
+   */
+  center_horizontally = sw < shell->disp_width;
+  center_vertically   = sh < shell->disp_height;
+
+  gimp_display_shell_center_image (shell,
+                                   center_horizontally,
+                                   center_vertically);
+
+  g_signal_handlers_disconnect_by_func (canvas,
+                                        gimp_display_shell_center_image_callback,
+                                        shell);
+}
+
 static gboolean
 gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 {
@@ -1356,6 +1385,15 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_appearance_update (shell);
 
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
+
+  /* Not pretty, but we need to center the image as soon as the canvas
+   * has got its new size allocated. The centering will be wrong if we
+   * do it too early, and if we do it too late flickering will occur
+   * due to the image being rendered twice.
+   */
+  g_signal_connect_swapped (shell->canvas, "size-allocate",
+                            G_CALLBACK (gimp_display_shell_center_image_callback),
+                            shell);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,

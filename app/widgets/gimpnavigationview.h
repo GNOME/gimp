@@ -38,29 +38,6 @@
 
 typedef struct _GimpNavigationViewClass  GimpNavigationViewClass;
 
-struct _GimpNavigationView
-{
-  GimpView     parent_instance;
-
-  /*  values in image coordinates  */
-  gdouble      x;
-  gdouble      y;
-  gdouble      width;
-  gdouble      height;
-
-  /*  values in view coordinates  */
-  gint         p_x;
-  gint         p_y;
-  gint         p_width;
-  gint         p_height;
-
-  gint         motion_offset_x;
-  gint         motion_offset_y;
-  gboolean     has_grab;
-
-  GdkGC       *gc;
-};
-
 struct _GimpNavigationViewClass
 {
   GimpViewClass  parent_class;
@@ -82,6 +59,16 @@ void    gimp_navigation_view_set_marker   (GimpNavigationView *view,
                                            gdouble             y,
                                            gdouble             width,
                                            gdouble             height);
+void    gimp_navigation_view_set_motion_offset
+                                          (GimpNavigationView *view,
+                                           gint                motion_offset_x,
+                                           gint                motion_offset_y);
+void    gimp_navigation_view_get_local_marker
+                                          (GimpNavigationView *view,
+                                           gint               *x,
+                                           gint               *y,
+                                           gint               *width,
+                                           gint               *height);
 void    gimp_navigation_view_grab_pointer (GimpNavigationView *view);
 
 

@@ -1481,11 +1481,17 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
-        case GIMP_PDB_BOUNDARY:
-          if (! _gimp_wire_read_int32 (channel,
-                                       (guint32 *) &(*params)[i].data.d_boundary, 1,
-                                       user_data))
-            goto cleanup;
+	case GIMP_PDB_COLORARRAY:
+	  (*params)[i].data.d_colorarray = g_new (GimpRGB,
+                                                  (*params)[i-1].data.d_int32);
+	  if (! _gimp_wire_read_color (channel,
+                                        (*params)[i].data.d_colorarray,
+                                        (*params)[i-1].data.d_int32,
+                                        user_data))
+	    {
+	      g_free ((*params)[i].data.d_colorarray);
+	      goto cleanup;
+	    }
           break;
 
         case GIMP_PDB_VECTORS:
@@ -1698,9 +1704,10 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
-        case GIMP_PDB_BOUNDARY:
-          if (! _gimp_wire_write_int32 (channel,
-                                        (const guint32 *) &params[i].data.d_boundary, 1,
+        case GIMP_PDB_COLORARRAY:
+          if (! _gimp_wire_write_color (channel,
+                                        params[i].data.d_colorarray,
+                                        params[i-1].data.d_int32,
                                         user_data))
             return;
           break;
@@ -1773,7 +1780,6 @@ gp_params_destroy (GPParam *params,
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
-        case GIMP_PDB_BOUNDARY:
         case GIMP_PDB_VECTORS:
         case GIMP_PDB_STATUS:
           break;
@@ -1809,6 +1815,10 @@ gp_params_destroy (GPParam *params,
 
               g_free (params[i].data.d_stringarray);
             }
+          break;
+
+        case GIMP_PDB_COLORARRAY:
+          g_free (params[i].data.d_colorarray);
           break;
 
         case GIMP_PDB_PARASITE:
