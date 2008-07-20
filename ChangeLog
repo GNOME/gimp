@@ -1,3 +1,9 @@
+2008-07-20  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.c
+	(gimp_combo_tag_entry_popup_list): fixed popup width to properly match
+	tag entry width.
+
 2008-07-19  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.[ch]: highlight selected tags in popup

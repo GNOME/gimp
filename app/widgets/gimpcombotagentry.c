@@ -410,9 +410,6 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   g_list_free (tag_list);
   g_strfreev (current_tags);
 
-  width = GTK_WIDGET (combo_entry)->allocation.width;
-  height = gimp_combo_tag_entry_layout_tags (popup_data, width);
-
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (viewport), drawing_area);
@@ -426,11 +423,12 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   frame = gtk_frame_new (NULL);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
 
+  width = GTK_WIDGET (combo_entry)->allocation.width - frame->style->xthickness * 2;
+  height = gimp_combo_tag_entry_layout_tags (popup_data, width);
   gdk_window_get_origin (GTK_WIDGET (combo_entry)->window, &x, &y);
   max_height = GTK_WIDGET (combo_entry)->allocation.height * 7;
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
-  width += frame->style->xthickness;
-  height += frame->style->ythickness;
+  height += frame->style->ythickness * 2;
   popup_height = MIN (height, max_height);
   if (y > screen_height / 2)
     {
