@@ -36,10 +36,13 @@
 
 #include "gimptagentry.h"
 
-#define TAG_SEPARATOR_STR   ","
-#define GIMP_TAG_ENTRY_QUERY_DESC       "filter"
-#define GIMP_TAG_ENTRY_ASSIGN_DESC      "enter tags"
+#include "gimp-intl.h"
 
+#define TAG_SEPARATOR_STR   ","
+#define GIMP_TAG_ENTRY_QUERY_DESC       _("filter")
+#define GIMP_TAG_ENTRY_ASSIGN_DESC      _("enter tags")
+
+static void     gimp_tag_entry_dispose                   (GObject              *object);
 static void     gimp_tag_entry_activate                  (GtkEntry             *entry,
                                                           gpointer              unused);
 static void     gimp_tag_entry_changed                   (GtkEntry             *entry,
@@ -97,8 +100,11 @@ G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 static void
 gimp_tag_entry_class_init (GimpTagEntryClass *klass)
 {
+  GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class = GTK_WIDGET_CLASS (klass);
-  GtkEntryClass        *entry_class = GTK_ENTRY_CLASS (klass);
+  GtkEntryClass        *entry_class  = GTK_ENTRY_CLASS (klass);
+
+  object_class->dispose                 = gimp_tag_entry_dispose;
 
   widget_class->button_release_event    = gimp_tag_entry_button_release;
 
@@ -132,6 +138,20 @@ gimp_tag_entry_init (GimpTagEntry *entry)
   g_signal_connect_after (entry, "expose-event",
                     G_CALLBACK (gimp_tag_entry_expose),
                     NULL);
+}
+
+static void
+gimp_tag_entry_dispose (GObject        *object)
+{
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (object);
+
+  if (tag_entry->selected_items)
+    {
+      g_list_free (tag_entry->selected_items);
+      tag_entry->selected_items = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *
