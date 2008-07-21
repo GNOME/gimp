@@ -1,3 +1,7 @@
+2008-07-21  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcoords.c: incorporate the velocity.
+
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpdrawtool.c (gimp_draw_tool_on_vectors_handle):
