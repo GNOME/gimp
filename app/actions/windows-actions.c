@@ -321,9 +321,11 @@ windows_actions_dock_notify (GimpDock         *dock,
                              GimpActionGroup  *group)
 {
   GtkAction *action;
-  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+  gchar     *action_name;
 
+  action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  g_free (action_name);
 
   if (action)
     g_object_set (action,

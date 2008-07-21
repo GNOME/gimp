@@ -1,5 +1,10 @@
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/windows-actions.c (windows_actions_dock_notify):
+	plugged another small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
 	* app/menus/file-menu.c (file_menu_open_recent_query_tooltip):
 	plugged a small memory leak.
 
