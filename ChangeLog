@@ -1,3 +1,9 @@
+2008-07-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/splash.c
+	* plug-ins/common/*.c: don't use gtk_box_pack_start_defaults(),
+	it got deprecated in GTK+ trunk.
+
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
 	* configure.in (ALL_LINGUAS): added 'be' (Belarusian).

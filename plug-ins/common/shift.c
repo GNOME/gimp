@@ -374,10 +374,12 @@ shift_dialog (gint32        image_ID,
   gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (shift), drawable);
+                            G_CALLBACK (shift),
+                            drawable);
 
   frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),

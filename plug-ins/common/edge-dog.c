@@ -297,8 +297,9 @@ dog_dialog (gint32        image_ID,
   gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update_preview),
                     drawable);
