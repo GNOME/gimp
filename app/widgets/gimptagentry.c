@@ -625,7 +625,13 @@ gimp_tag_entry_focus_in        (GtkWidget         *widget,
                                 GdkEventFocus     *event,
                                 gpointer           user_data)
 {
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
   gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), FALSE);
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+    {
+      gimp_tag_entry_load_selection (tag_entry);
+    }
+
   return FALSE;
 }
 
@@ -687,10 +693,6 @@ gimp_tag_entry_toggle_desc     (GimpTagEntry      *tag_entry,
   else
     {
       tag_entry->description_shown = FALSE;
-      if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
-        {
-          gimp_tag_entry_load_selection (tag_entry);
-        }
       gtk_widget_queue_draw (widget);
     }
 }
