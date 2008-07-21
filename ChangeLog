@@ -1,6 +1,13 @@
 2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c
+	(gimp_combo_tag_entry_popup_list): focus tag entry when tag popup is
+	dropped down to give user better feedback and get rid of description
+	text.
+
+2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimpcombotagentry.c
 	(gimp_combo_tag_entry_popup_list): correctly possition popup window
 	when it appears on top of tag entry.
 

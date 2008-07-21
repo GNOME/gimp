@@ -468,6 +468,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
                     popup_data);
 
   gtk_grab_add (popup);
+  gtk_widget_grab_focus (combo_entry->tag_entry);
   grab_status = gdk_pointer_grab (popup->window, TRUE,
                                   GDK_BUTTON_PRESS_MASK, NULL, NULL,
                                   GDK_CURRENT_TIME);
