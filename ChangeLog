@@ -1,3 +1,7 @@
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): updated note to translators.
+
 2008-07-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/splash.c
