@@ -120,7 +120,8 @@ gimp_coords_scalarprod (const GimpCoords *a,
           a->pressure * b->pressure +
           a->xtilt    * b->xtilt    +
           a->ytilt    * b->ytilt    +
-          a->wheel    * b->wheel);
+          a->wheel    * b->wheel    +
+          a->velocity * a->velocity);
 }
 
 
@@ -141,6 +142,7 @@ gimp_coords_length_squared (const GimpCoords *a)
   upscaled_a.xtilt    = a->xtilt    * INPUT_RESOLUTION;
   upscaled_a.ytilt    = a->ytilt    * INPUT_RESOLUTION;
   upscaled_a.wheel    = a->wheel    * INPUT_RESOLUTION;
+  upscaled_a.velocity = a->velocity * INPUT_RESOLUTION;
 
   return gimp_coords_scalarprod (&upscaled_a, &upscaled_a);
 }
@@ -167,6 +169,7 @@ gimp_coords_manhattan_dist (const GimpCoords *a,
   dist += ABS (a->xtilt - b->xtilt);
   dist += ABS (a->ytilt - b->ytilt);
   dist += ABS (a->wheel - b->wheel);
+  dist += ABS (a->velocity - b->velocity);
 
   dist *= INPUT_RESOLUTION;
 
@@ -185,5 +188,6 @@ gimp_coords_equal (const GimpCoords *a,
           a->pressure == b->pressure &&
              a->xtilt == b->xtilt    &&
              a->ytilt == b->ytilt    &&
-             a->wheel == b->wheel);
+             a->wheel == b->wheel    &&
+          a->velocity == b->velocity);
 }
