@@ -1,5 +1,11 @@
 2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_construct): sort GimpData resources in correct
+	order.
+
+2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimptagcache.c (gimp_tag_cache_finalize),
 	(gimp_tag_cache_get_memsize): some fixes to finalization and memsize
 	calculations.

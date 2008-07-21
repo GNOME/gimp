@@ -37,6 +37,7 @@
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpfilteredcontainer.h"
+#include "core/gimplist.h"
 #include "core/gimpmarshal.h"
 
 #include "gimpcombotagentry.h"
@@ -152,6 +153,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->factory = factory;
   factory_view->filtered_container = gimp_filtered_container_new (factory->container);
+  gimp_list_set_sort_func (GIMP_LIST (factory_view->filtered_container),
+                           (GCompareFunc) gimp_data_compare);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
