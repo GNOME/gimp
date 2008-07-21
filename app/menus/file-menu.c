@@ -105,7 +105,12 @@ file_menu_open_recent_query_tooltip (GtkWidget  *widget,
                                      GtkTooltip *tooltip,
                                      GimpAction *action)
 {
-  gtk_tooltip_set_text (tooltip, gtk_widget_get_tooltip_text (widget));
+  gchar *text;
+
+  text = gtk_widget_get_tooltip_text (widget);
+  gtk_tooltip_set_text (tooltip, text);
+  g_free (text);
+
   gtk_tooltip_set_icon (tooltip,
                         gimp_viewable_get_pixbuf (action->viewable,
                                                   action->context,

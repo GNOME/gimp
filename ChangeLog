@@ -1,5 +1,10 @@
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/menus/file-menu.c (file_menu_open_recent_query_tooltip):
+	plugged a small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpstrokedesc.[ch]: added boolean property
 	'emulate-brush-dynamics', in preparation for bug #543706.
 
