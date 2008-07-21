@@ -432,7 +432,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   popup_height = MIN (height, max_height);
   if (y > screen_height / 2)
     {
-      y -= popup_height;
+      y -= popup_height + frame->style->ythickness * 2;
     }
   else
     {
