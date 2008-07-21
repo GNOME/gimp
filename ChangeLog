@@ -1,5 +1,12 @@
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpstrokedesc.[ch]: added boolean property
+	'emulate-brush-dynamics', in preparation for bug #543706.
+
+	* app/dialogs/stroke-dialog.c: added a toggle for the new parameter.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (ALL_LINGUAS): updated note to translators.
 
 2008-07-21  Michael Natterer  <mitch@gimp.org>

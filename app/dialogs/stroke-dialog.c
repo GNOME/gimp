@@ -204,17 +204,23 @@ stroke_dialog_new (GimpItem    *item,
                     NULL);
 
   {
+    GtkWidget *vbox;
     GtkWidget *hbox;
     GtkWidget *label;
     GtkWidget *combo;
+    GtkWidget *button;
+
+    vbox = gtk_vbox_new (FALSE, 6);
+    gtk_container_add (GTK_CONTAINER (frame), vbox);
+    gtk_widget_show (vbox);
+
+    gtk_widget_set_sensitive (vbox,
+                              desc->method == GIMP_STROKE_METHOD_PAINT_CORE);
+    g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", vbox);
 
     hbox = gtk_hbox_new (FALSE, 6);
-    gtk_container_add (GTK_CONTAINER (frame), hbox);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
-
-    gtk_widget_set_sensitive (hbox,
-                              desc->method == GIMP_STROKE_METHOD_PAINT_CORE);
-    g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", hbox);
 
     label = gtk_label_new (_("Paint tool:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -234,6 +240,12 @@ stroke_dialog_new (GimpItem    *item,
 
 
     g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", combo);
+
+    button = gimp_prop_check_button_new (G_OBJECT (desc),
+                                         "emulate-brush-dynamics",
+                                         _("_Emulate brush dynamics"));
+    gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
   }
 
   return dialog;
