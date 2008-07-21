@@ -37,6 +37,7 @@
 #include "gimpdata.h"
 #include "gimptagcache.h"
 #include "gimplist.h"
+#include "gimp-utils.h"
 
 #include "gimp-intl.h"
 
@@ -62,7 +63,7 @@ static void    gimp_tag_cache_object_add        (GimpContainer        *container
                                                  GimpTagged           *tagged,
                                                  GimpTagCache         *cache);
 
-static void    gimp_tag_cache_load_start_element(GMarkupParseContext *context,
+static void    gimp_tag_cache_load_start_element (GMarkupParseContext *context,
                                                   const gchar         *element_name,
                                                   const gchar        **attribute_names,
                                                   const gchar        **attribute_values,
@@ -131,6 +132,12 @@ gimp_tag_cache_finalize (GObject *object)
       cache->records = NULL;
     }
 
+  if (cache->containers)
+    {
+      g_list_free (cache->containers);
+      cache->containers = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -138,8 +145,11 @@ static gint64
 gimp_tag_cache_get_memsize (GimpObject *object,
                             gint64     *gui_size)
 {
-  /*GimpTagCache *cache = GIMP_TAG_CACHE (object);*/
-  gint64           memsize = 0;
+  GimpTagCache         *cache = GIMP_TAG_CACHE (object);
+  gint64                memsize = 0;
+
+  memsize += gimp_g_list_get_memsize (cache->containers, 0);
+  memsize += cache->records->len * sizeof (GimpTagCacheRecord);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

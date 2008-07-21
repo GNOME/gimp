@@ -1,5 +1,11 @@
 2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimptagcache.c (gimp_tag_cache_finalize),
+	(gimp_tag_cache_get_memsize): some fixes to finalization and memsize
+	calculations.
+
+2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimpcombotagentry.c
 	(gimp_combo_tag_entry_popup_list): focus tag entry when tag popup is
 	dropped down to give user better feedback and get rid of description
