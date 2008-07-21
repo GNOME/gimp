@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-10 12:37+0200\n"
-"PO-Revision-Date: 2008-07-10 12:41+0200\n"
+"POT-Creation-Date: 2008-07-21 13:47+0200\n"
+"PO-Revision-Date: 2008-07-21 13:47+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr ""
 "erhalten haben. Falls nicht, schreiben Sie an die Free Software Foundation, "
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app.c:215
+#: ../app/app.c:214
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -100,103 +100,103 @@ msgstr ""
 "Der Interpreter »%s« ist nicht verfügbar. Der Stapelverarbeitungsmodus wurde "
 "deaktiviert."
 
-#: ../app/main.c:156 ../tools/gimp-remote.c:60
+#: ../app/main.c:144 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Versionsinformationen anzeigen und Programm beenden"
 
-#: ../app/main.c:161
+#: ../app/main.c:149
 msgid "Show license information and exit"
 msgstr "Lizenzinformationen anzeigen und Programm beenden"
 
-#: ../app/main.c:166
+#: ../app/main.c:154
 msgid "Be more verbose"
 msgstr "Ausführlicher verhalten"
 
-#: ../app/main.c:171
+#: ../app/main.c:159
 msgid "Start a new GIMP instance"
 msgstr "Eine neue GIMP-Instanz starten"
 
-#: ../app/main.c:176
+#: ../app/main.c:164
 msgid "Open images as new"
 msgstr "Bilder als neu öffnen"
 
-#: ../app/main.c:181
+#: ../app/main.c:169
 msgid "Run without a user interface"
 msgstr "Ohne Benutzeroberfläche starten"
 
-#: ../app/main.c:186
+#: ../app/main.c:174
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Keine Pinsel, Muster, Farbverläufe usw. laden"
 
-#: ../app/main.c:191
+#: ../app/main.c:179
 msgid "Do not load any fonts"
 msgstr "Keine Schriften laden"
 
-#: ../app/main.c:196
+#: ../app/main.c:184
 msgid "Do not show a startup window"
 msgstr "Kein Startfenster anzeigen"
 
-#: ../app/main.c:201
+#: ../app/main.c:189
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr ""
 "Keinen gemeinsam genutzten Speicher zwischen GIMP und den Modulen verwenden"
 
-#: ../app/main.c:206
+#: ../app/main.c:194
 msgid "Do not use special CPU acceleration functions"
 msgstr "Keine speziellen Prozessorbeschleunigungen verwenden"
 
-#: ../app/main.c:211
+#: ../app/main.c:199
 msgid "Use an alternate sessionrc file"
 msgstr "Ein alternatives Sitzungsprofil verwenden"
 
-#: ../app/main.c:216
+#: ../app/main.c:204
 msgid "Use an alternate user gimprc file"
 msgstr "Ein alternatives Benutzerprofil verwenden"
 
-#: ../app/main.c:221
+#: ../app/main.c:209
 msgid "Use an alternate system gimprc file"
 msgstr "Ein alternatives Systemprofil verwenden"
 
-#: ../app/main.c:226
+#: ../app/main.c:214
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Auszuführender Stapelbefehl (kann mehrfach verwendet werden)"
 
-#: ../app/main.c:231
+#: ../app/main.c:219
 msgid "The procedure to process batch commands with"
 msgstr "Die Prozedur zum Abarbeiten von Befehlsabfolgen"
 
-#: ../app/main.c:236
+#: ../app/main.c:224
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
 "Warnungen auf der Kommandozeile anstatt in einem Dialogfensters ausgeben"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:242
+#: ../app/main.c:230
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-Kompatibilitätsmodus (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:248
+#: ../app/main.c:236
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Fehlersuche beim Absturz (never|query|always)"
 
-#: ../app/main.c:253
+#: ../app/main.c:241
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Aktiviert Fehlersuchroutinen für nicht-schwerwiegende Signale"
 
-#: ../app/main.c:258
+#: ../app/main.c:246
 msgid "Make all warnings fatal"
 msgstr "Alle Warnungen als kritisch einstufen"
 
-#: ../app/main.c:263
+#: ../app/main.c:251
 msgid "Output a gimprc file with default settings"
 msgstr "Eine gimprc-Datei mit den Standardeinstellungen ausgeben"
 
-#: ../app/main.c:357
+#: ../app/main.c:345
 msgid "[FILE|URI...]"
 msgstr "[DATEI|URI...]"
 
-#: ../app/main.c:375
+#: ../app/main.c:363
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -205,25 +205,25 @@ msgstr ""
 "Bitte stellen Sie sicher, dass Ihre grafische Oberfläche korrekt "
 "eingerichtet ist."
 
-#: ../app/main.c:453
+#: ../app/main.c:382
+msgid "Another GIMP instance is already running."
+msgstr "Eine andere GIMP-Instanz wird bereits ausgeführt."
+
+#: ../app/main.c:448
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "GIMP-Ausgabe. Drücken Sie eine beliebige Taste, um dieses Fenster zu "
 "schließen."
 
-#: ../app/main.c:454
+#: ../app/main.c:449
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Drücken Sie eine beliebige Taste, um dieses Fenster zu schließen)\n"
 
-#: ../app/main.c:471
+#: ../app/main.c:466
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-Ausgabe. Sie können dieses Fenster verkleinern, jedoch nicht schließen."
-
-#: ../app/main.c:792
-msgid "Another GIMP instance is already running."
-msgstr "Eine andere GIMP-Instanz wird bereits ausgeführt."
 
 #: ../app/sanity.c:342
 #, c-format
@@ -415,7 +415,7 @@ msgid "Text Editor"
 msgstr "Texteditor"
 
 #: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:138
-#: ../app/dialogs/preferences-dialog.c:1874 ../app/gui/gui.c:434
+#: ../app/dialogs/preferences-dialog.c:1874 ../app/gui/gui.c:421
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
@@ -1123,7 +1123,7 @@ msgid "_About"
 msgstr "_Info"
 
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:484
+#: ../app/gui/gui.c:471
 msgid "About GIMP"
 msgstr "Informationen zu GIMP"
 
@@ -3329,7 +3329,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Schnellmaske umschalten"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1101
+#: ../app/display/gimpdisplayshell.c:1107
 msgid "Toggle Quick Mask"
 msgstr "Schnellmaske umschalten"
 
@@ -6885,7 +6885,7 @@ msgstr "Pixel"
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:874
 #: ../app/tools/gimpmeasuretool.c:1017 ../app/tools/gimpmeasuretool.c:1073
-#: ../app/tools/gimpmeasuretool.c:1101 ../app/tools/gimppainttool.c:610
+#: ../app/tools/gimpmeasuretool.c:1101 ../app/tools/gimppainttool.c:603
 msgid "pixels"
 msgstr "Pixel"
 
@@ -7009,7 +7009,7 @@ msgid "Cannot convert to a palette with more than 256 colors."
 msgstr ""
 "Es kann nicht in eine Palette mit mehr als 256 Farben umwandelt werden."
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:171
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:158
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "GIMP-Meldung"
@@ -8502,20 +8502,20 @@ msgstr "Hoch"
 msgid "Image saved to '%s'"
 msgstr "Bild wurde nach »%s« gespeichert"
 
-#: ../app/display/gimpdisplayshell.c:962
+#: ../app/display/gimpdisplayshell.c:968
 msgid "Access the image menu"
 msgstr "Auf das Bildmenü zugreifen"
 
-#: ../app/display/gimpdisplayshell.c:1072
+#: ../app/display/gimpdisplayshell.c:1078
 msgid "Zoom image when window size changes"
 msgstr "Bild vergrößern, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:1122
+#: ../app/display/gimpdisplayshell.c:1128
 msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
 
-#: ../app/display/gimpdisplayshell.c:1209
-#: ../app/display/gimpdisplayshell.c:1303 ../app/widgets/gimptoolbox.c:216
+#: ../app/display/gimpdisplayshell.c:1215
+#: ../app/display/gimpdisplayshell.c:1309 ../app/widgets/gimptoolbox.c:216
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
@@ -8605,19 +8605,19 @@ msgstr "Ansichtsfarbfilter konfigurieren"
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
-#: ../app/display/gimpdisplayshell-scale.c:717
+#: ../app/display/gimpdisplayshell-scale.c:772
 msgid "Zoom Ratio"
 msgstr "Skalierungsverhältnis"
 
-#: ../app/display/gimpdisplayshell-scale.c:719
+#: ../app/display/gimpdisplayshell-scale.c:774
 msgid "Select Zoom Ratio"
 msgstr "Skalierung festlegen"
 
-#: ../app/display/gimpdisplayshell-scale.c:762
+#: ../app/display/gimpdisplayshell-scale.c:817
 msgid "Zoom ratio:"
 msgstr "Skalierung:"
 
-#: ../app/display/gimpdisplayshell-scale.c:787
+#: ../app/display/gimpdisplayshell-scale.c:842
 msgid "Zoom:"
 msgstr "Maßstab:"
 
@@ -8731,7 +8731,7 @@ msgid "not a GIMP Levels file"
 msgstr "keine GIMP-Datei mit Einstellungen für Werte"
 
 #. initialize the document history
-#: ../app/gui/gui.c:431
+#: ../app/gui/gui.c:418
 msgid "Documents"
 msgstr "Dokumente"
 
@@ -9490,7 +9490,7 @@ msgstr "_Farbverlauf"
 msgid "Blend does not operate on indexed layers."
 msgstr "Farbverläufe funktioniert nicht mit Ebenen im indizierten Farbmodus."
 
-#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:601
+#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:594
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s für eingeschränkte Winkel"
@@ -9721,7 +9721,7 @@ msgid "Import Colorize Settings"
 msgstr "Einstellungen für Einfärben importieren"
 
 #: ../app/tools/gimpcolorizetool.c:112
-msgid "Export Colorsize Settings"
+msgid "Export Colorize Settings"
 msgstr "Einstellungen für Einfärben exportieren"
 
 #: ../app/tools/gimpcolorizetool.c:156
@@ -9787,11 +9787,11 @@ msgstr "Fa_rbpipette"
 msgid "Click in any image to view its color"
 msgstr "Klicken Sie zum Anzeigen einer Farbe in ein Bild"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:504
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:497
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicken Sie zum Wählen einer Vordergrundfarbe in ein Bild"
 
-#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:510
+#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:503
 msgid "Click in any image to pick the background color"
 msgstr "Klicken Sie zum Wählen einer Hintergrundfarbe in ein Bild"
 
@@ -10738,7 +10738,7 @@ msgstr "Zum Zeichnen der Linie klicken"
 msgid "%s to pick a color"
 msgstr "%s zum Wählen einer Farbe"
 
-#: ../app/tools/gimppainttool.c:657
+#: ../app/tools/gimppainttool.c:650
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s für eine gerade Linie"
@@ -10861,7 +10861,7 @@ msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangletool.c:1084 ../app/tools/gimprectangletool.c:1980
+#: ../app/tools/gimprectangletool.c:1085 ../app/tools/gimprectangletool.c:1981
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
@@ -10897,15 +10897,15 @@ msgstr "Drehen: Ebene, Auswahl oder Pfad drehen"
 msgid "_Rotate"
 msgstr "_Drehen"
 
-#: ../app/tools/gimprotatetool.c:200
+#: ../app/tools/gimprotatetool.c:188
 msgid "_Angle:"
 msgstr "_Winkel:"
 
-#: ../app/tools/gimprotatetool.c:216
+#: ../app/tools/gimprotatetool.c:204
 msgid "Center _X:"
 msgstr "Zentrum _X:"
 
-#: ../app/tools/gimprotatetool.c:225
+#: ../app/tools/gimprotatetool.c:213
 msgid "Center _Y:"
 msgstr "Zentrum _Y:"
 
@@ -12169,7 +12169,9 @@ msgstr "Der GIMP-Hilfe-Browser ist nicht verfügbar."
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
-msgstr "Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation zu fehlen. Sie können stattdessen den Internet-Browser verwenden, um die Hilfe zu lesen."
+msgstr ""
+"Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation zu fehlen. Sie "
+"können stattdessen den Internet-Browser verwenden, um die Hilfe zu lesen."
 
 #: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
