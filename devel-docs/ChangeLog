@@ -1,3 +1,8 @@
+2008-07-21  Michael Natterer  <mitch@gimp.org>
+
+	* tools/widgets.c: don't use gtk_box_pack_start/end_defaults(),
+	they got deprecated in GTK+ trunk.
+
 2008-07-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_palette_get_colors()
