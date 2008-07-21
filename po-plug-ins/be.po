@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:20+0300\n"
-"PO-Revision-Date: 2008-05-28 22:34+0300\n"
+"PO-Revision-Date: 2008-07-17 19:18+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Няма %s у gimprc:\n"
+"У gimprc няма %s:\n"
 "Трэба дадаць запіс кшталту\n"
 "(%s \"%s\")\n"
 "у твой файл %s."
@@ -96,7 +96,7 @@ msgstr "Чым болей паўтарэньняў, тым больш падра
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
 msgid "CX:"
-msgstr ""
+msgstr "CX:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:784
 #: ../plug-ins/FractalExplorer/Dialogs.c:794
@@ -105,7 +105,7 @@ msgstr "Зьмяняе прапорцыі фрактала"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:791
 msgid "CY:"
-msgstr ""
+msgstr "CY:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:809
 msgid "Load a fractal from file"
@@ -177,16 +177,15 @@ msgstr "Колькасьць колераў:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:923
 msgid "Change the number of colors in the mapping"
-msgstr ""
+msgstr "Зьмяніць колькасьць колераў у ператварэньні"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:930
-#, fuzzy
 msgid "Use loglog smoothing"
-msgstr "Ужываць адвольны колер"
+msgstr "Loglog згладжваньне"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:937
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Выкарыстоўваць loglog згладжваньне, каб пазьбегнуць «паласатасьці» выніку"
 
 #. Color Density frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:941
@@ -261,7 +260,7 @@ msgstr "Косінус"
 #: ../plug-ins/fits/fits.c:1026
 #: ../plug-ins/print/print-page-layout.c:512
 msgid "None"
-msgstr "Ніякі"
+msgstr "Няма"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1004
 #: ../plug-ins/FractalExplorer/Dialogs.c:1045
@@ -279,7 +278,7 @@ msgstr "Выкарыстоўваць функцыю «косінус» для г
 #: ../plug-ins/FractalExplorer/Dialogs.c:1051
 #: ../plug-ins/FractalExplorer/Dialogs.c:1092
 msgid "Use linear mapping instead of any trigonometrical function for this color channel"
-msgstr ""
+msgstr "Гэты канал ператвараць лінейна, а не паводле нейкай трыганамэтрычнай функцыі"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1019
 #: ../plug-ins/FractalExplorer/Dialogs.c:1060
@@ -291,7 +290,7 @@ msgstr "Інвэрсія"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1068
 #: ../plug-ins/FractalExplorer/Dialogs.c:1109
 msgid "If you enable this option higher color values will be swapped with lower ones and vice versa"
-msgstr ""
+msgstr "Калі задзейнічаеш гэты выбор больш яркія піксэлі будуць абмененыя на менш яркія й наадварот"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
@@ -318,20 +317,19 @@ msgstr "Як вызначана вышэй"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1135
 msgid "Create a color-map with the options you specified above (color density/function). The result is visible in the preview image"
-msgstr ""
+msgstr "Стварыць мапу колераў з выборамі, вызначанымі вышэй (шчыльнасьць/функцыя колера). Вынік бачны на відарысе агляду"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
-msgstr "Ужыць актыўны градыент да вініковага відарыса"
+msgstr "Ужыць актыўны градыент да выніковага відарыса"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
+msgstr "Стварыць мапу колераў, выкарыстоўваючы градыент з рэдактара градыентаў"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1168
-#, fuzzy
 msgid "FractalExplorer Gradient"
-msgstr "Рэдактар градыентаў"
+msgstr "Градыент Дасьледніка фракталаў"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1198
 msgid "_Fractals"
@@ -451,22 +449,21 @@ msgstr "Захаваць парамэтры фрактала"
 #: ../plug-ins/xjt/xjt.c:2553
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Немагчыма адкрыць '%s'  для чытаньня: %s"
+msgstr "Немагчыма адкрыць '%s' для чытаньня: %s"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1871
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "=== Драйвэр %s не выводзіць у файл.\n"
+msgstr "«%s» не зьяўляецца файлам Дасьледніка фракталаў"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1877
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr ""
+msgstr "«%s» пашкоджаны. Радок %d разьдзелу «Option» няправільны"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:243
-#, fuzzy
 msgid "Render fractal art"
-msgstr "Загрузка выяваў сузор'яў: "
+msgstr "Стварэньне выяваў фракталаў"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "_Fractal Explorer..."
@@ -480,16 +477,16 @@ msgstr "Стварэньне фрактала"
 #: ../plug-ins/gflare/gflare.c:3154
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "Ці жадаеш сапраўды прыбраць  «%s» са сьпісу й выдаліць яго з дыску?"
+msgstr "Ці жадаеш сапраўды прыбраць «%s» са сьпісу й выдаліць яго з дыску?"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:764
 msgid "Delete Fractal"
 msgstr "Выдаліць фрактал"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:954
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "=== Драйвэр %s не выводзіць у файл.\n"
+msgstr "Файл «%s» не зьяўляецца файлам Дасьледніка фракталаў"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:963
 #, c-format
@@ -497,6 +494,8 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
+"Файл «%s» пашкоджаны.\n"
+"Радок %d разьдзелу «Option» няправільны"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1007
 msgid "My first fractal"
@@ -515,14 +514,12 @@ msgid "Delete currently selected fractal"
 msgstr "Выдаліць выбраны фрактал"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1118
-#, fuzzy
 msgid "Rescan for Fractals"
-msgstr "Намінка для _панэлі інструмэнтаў:"
+msgstr "Пераскававаць фракталы"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1137
-#, fuzzy
 msgid "Add FractalExplorer Path"
-msgstr "Тэкст у шлях"
+msgstr "Дадаць шлях Дасьледніка фракталаў"
 
 #: ../plug-ins/Lighting/lighting_apply.c:104
 #: ../plug-ins/Lighting/lighting_ui.c:1018
@@ -756,7 +753,7 @@ msgstr "Уласьцівасьці матар'яла"
 
 #: ../plug-ins/Lighting/lighting_ui.c:638
 msgid "_Glowing:"
-msgstr ""
+msgstr "_Сьвячэньне:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:657
 #: ../plug-ins/MapObject/mapobject_ui.c:836
@@ -843,14 +840,12 @@ msgid "Maximum height for bumps"
 msgstr "Найбольшая вышыня паверхні"
 
 #: ../plug-ins/Lighting/lighting_ui.c:893
-#, fuzzy
 msgid "E_nable environment mapping"
-msgstr "Выберы тэчкі асяродзьдзя"
+msgstr "_Задзейнічаць мапу асяродзьдзя"
 
 #: ../plug-ins/Lighting/lighting_ui.c:907
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Пераключыць мапу паверхні (глыбіню відарыса)"
+msgstr "Пераключыць мапу асяродзьдзя (адбіцьцё)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:924
 msgid "En_vironment image:"
@@ -903,14 +898,12 @@ msgid "Enable/disable real time preview of changes"
 msgstr "Пераключыць прагляд зьмяненьняў у рэальным часе"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1136
-#, fuzzy
 msgid "Save Lighting Preset"
-msgstr "Зададзены нябесны час: "
+msgstr "Захаваць набор асьвятленьня"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1280
-#, fuzzy
 msgid "Load Lighting Preset"
-msgstr "Зададзены нябесны час: "
+msgstr "Загрузіць набор асьвятленьня"
 
 #: ../plug-ins/MapObject/mapobject_apply.c:275
 msgid "Map to plane"
@@ -1119,24 +1112,20 @@ msgstr "Спраектаваць відарысы на бакі скрыні"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1155
 #: ../plug-ins/common/spheredesigner.c:2800
-#, fuzzy
 msgid "Scale X:"
-msgstr "Маштаб:"
+msgstr "Памер па X:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1158
-#, fuzzy
 msgid "X scale (size)"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Памер па X"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1170
-#, fuzzy
 msgid "Y scale (size)"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Памер па Y"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1182
-#, fuzzy
 msgid "Z scale (size)"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Памер па Z"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
 #: ../plug-ins/print/print-page-layout.c:465
@@ -1149,9 +1138,8 @@ msgid "_Bottom:"
 msgstr "_Ніз:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1210
-#, fuzzy
 msgid "Images for the Cap Faces"
-msgstr "_Падрыхтоўка відарысаў для Web"
+msgstr "Відарысы зьверху й зьнізу цыліндра"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
 #: ../plug-ins/print/print-page-layout.c:282
@@ -1372,9 +1360,8 @@ msgid "Save as BMP"
 msgstr "Захаваць як BMP"
 
 #: ../plug-ins/bmp/bmpwrite.c:814
-#, fuzzy
 msgid "_Run-Length Encoded"
-msgstr "Адносная даўжыня ценю"
+msgstr "_Закадаваны ў RLE"
 
 #: ../plug-ins/bmp/bmpwrite.c:826
 #: ../plug-ins/jpeg/jpeg-save.c:897
@@ -1438,9 +1425,8 @@ msgid "Blue freq_uency:"
 msgstr "Часьціня _сіняга:"
 
 #: ../plug-ins/common/AlienMap2.c:149
-#, fuzzy
 msgid "Luminosity freq_uency:"
-msgstr "Часьціня _сіняга:"
+msgstr "Часьціня _яркасьці:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 msgid "Red _phaseshift:"
@@ -1471,25 +1457,22 @@ msgid "Alter colors in various psychedelic ways"
 msgstr "Зьмяніць колеры рознымі псыхадэлічнымі спосабамі"
 
 #: ../plug-ins/common/AlienMap2.c:188
-#, fuzzy
 msgid "_Alien Map..."
-msgstr "_Мапа колераў"
+msgstr "_Чужое ператварэньне..."
 
 #: ../plug-ins/common/AlienMap2.c:320
-#, fuzzy
 msgid "Alien Map: Transforming"
-msgstr "_Стварыць мапу шрыфтоў..."
+msgstr "Адбываеца чужое ператварэньне"
 
 #: ../plug-ins/common/AlienMap2.c:393
-#, fuzzy
 msgid "Alien Map"
-msgstr "_Мапа колераў"
+msgstr "Чужое ператварэньне"
 
 #: ../plug-ins/common/AlienMap2.c:440
 #: ../plug-ins/common/AlienMap2.c:464
 #: ../plug-ins/common/AlienMap2.c:488
 msgid "Number of cycles covering full value range"
-msgstr ""
+msgstr "Колькасьць цыкляў, што расьцягваюцца на ўвесь дыяпазон яркасьці"
 
 #: ../plug-ins/common/AlienMap2.c:452
 #: ../plug-ins/common/AlienMap2.c:476
@@ -1532,14 +1515,12 @@ msgid "Unsupported bit depth (%d)!"
 msgstr "Глыбіня бітаў (%d) не падтрымліваецца!"
 
 #: ../plug-ins/common/CML_explorer.c:129
-#, fuzzy
 msgid "Keep image's values"
-msgstr "Захоўваць значэньні _яркасьці"
+msgstr "Пакінуць значэньні відарыса"
 
 #: ../plug-ins/common/CML_explorer.c:130
-#, fuzzy
 msgid "Keep the first value"
-msgstr "Недапушчальнае найбольшае значэньне."
+msgstr "Пакінуць першае значэньне"
 
 #: ../plug-ins/common/CML_explorer.c:131
 msgid "Fill with parameter k"
@@ -1659,34 +1640,28 @@ msgid "With random power (0,10)"
 msgstr "Выпадковая ступень (0,10)"
 
 #: ../plug-ins/common/CML_explorer.c:204
-#, fuzzy
 msgid "With random power (0,1)"
-msgstr "Выпадковая ступень (0,10)"
+msgstr "З выпадковай ступеньню (0,10)"
 
 #: ../plug-ins/common/CML_explorer.c:205
-#, fuzzy
 msgid "With gradient power (0,1)"
-msgstr "Выпадковая ступень (0,10)"
+msgstr "З градыентнай ступеньню (0,10)"
 
 #: ../plug-ins/common/CML_explorer.c:206
-#, fuzzy
 msgid "Multiply rand. value (0,1)"
-msgstr "Недапушчальнае найбольшае значэньне."
+msgstr "Здабытак адвольных (0,1)"
 
 #: ../plug-ins/common/CML_explorer.c:207
-#, fuzzy
 msgid "Multiply rand. value (0,2)"
-msgstr "Недапушчальнае найбольшае значэньне."
+msgstr "Здабытак адвольных (0,2)"
 
 #: ../plug-ins/common/CML_explorer.c:208
-#, fuzzy
 msgid "Multiply gradient (0,1)"
-msgstr "Рэдактар градыентаў"
+msgstr "Здабытак градыентаў (0,1)"
 
 #: ../plug-ins/common/CML_explorer.c:209
-#, fuzzy
 msgid "With p and random (0,1)"
-msgstr "Выпадковая ступень (0,10)"
+msgstr "З p і адвольным (0,10)"
 
 #: ../plug-ins/common/CML_explorer.c:223
 msgid "All black"
@@ -1713,23 +1688,20 @@ msgid "Continuous grad. w/o gap"
 msgstr "Безупынны, без прагалаў"
 
 #: ../plug-ins/common/CML_explorer.c:229
-#, fuzzy
 msgid "Random, ch. independent"
-msgstr "Увесці выпадковы набор сімвалаў"
+msgstr "Адвольны, незал. ад каналу"
 
 #: ../plug-ins/common/CML_explorer.c:230
-#, fuzzy
 msgid "Random shared"
-msgstr "Выпадковы шум"
+msgstr "Адвольнае (супольнае)"
 
 #: ../plug-ins/common/CML_explorer.c:231
-#, fuzzy
 msgid "Randoms from seed"
-msgstr "_Прыбраць з вылучэньня"
+msgstr "Адвольнае зь ліку"
 
 #: ../plug-ins/common/CML_explorer.c:232
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Адвольнае зь ліку (супольнае)"
 
 #: ../plug-ins/common/CML_explorer.c:300
 #: ../plug-ins/common/CML_explorer.c:308
@@ -1806,9 +1778,8 @@ msgid "_Advanced"
 msgstr "_Дадаткова"
 
 #: ../plug-ins/common/CML_explorer.c:1315
-#, fuzzy
 msgid "Channel Independent Parameters"
-msgstr "Загрузіць парамэтры фрактала"
+msgstr "Незалежныя парамэтры каналаў"
 
 #: ../plug-ins/common/CML_explorer.c:1337
 msgid "Initial value:"
@@ -1824,7 +1795,7 @@ msgstr "Пачатковы зрух:"
 
 #: ../plug-ins/common/CML_explorer.c:1361
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr ""
+msgstr "Лік адвольнасьці (толькі для рэжымаў «Зь ліку»)"
 
 #: ../plug-ins/common/CML_explorer.c:1372
 #: ../plug-ins/maze/maze_face.c:267
@@ -1833,13 +1804,15 @@ msgstr "Лік:"
 
 #: ../plug-ins/common/CML_explorer.c:1385
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr ""
+msgstr "Пераключыцца на «Фіксаваны лік» з апошнім лікам"
 
 #: ../plug-ins/common/CML_explorer.c:1397
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."
 msgstr ""
+"Кнопка «Фіксаваны лік» робіць тое ж самае.\n"
+"З аднаго й таго ж ліку атрымоўваюцца аднолькавыя відарысы, пры ўмове, што (1) шырыні відарысаў аднолькавыя (вось чаму выніковы відарыс не такі, як на аглядзе) і (2) усе часьціні зьмяненьняў роўныя нулю."
 
 #: ../plug-ins/common/CML_explorer.c:1405
 msgid "O_thers"
@@ -1847,7 +1820,7 @@ msgstr "_Іншыя"
 
 #: ../plug-ins/common/CML_explorer.c:1420
 msgid "Copy Settings"
-msgstr "Копіяваць наладкі"
+msgstr "Капіяваць наладкі"
 
 #: ../plug-ins/common/CML_explorer.c:1439
 msgid "Source channel:"
@@ -1863,9 +1836,8 @@ msgid "Copy Parameters"
 msgstr "Капіяваць параметры"
 
 #: ../plug-ins/common/CML_explorer.c:1467
-#, fuzzy
 msgid "Selective Load Settings"
-msgstr "Прачытаць настаўленьні крывых з файла"
+msgstr "Сэлекцыйная загрузіка наладак"
 
 #: ../plug-ins/common/CML_explorer.c:1487
 msgid "Source channel in file:"
@@ -1884,24 +1856,20 @@ msgid "Composition:"
 msgstr "Складаньне:"
 
 #: ../plug-ins/common/CML_explorer.c:1587
-#, fuzzy
 msgid "Misc arrange:"
-msgstr "Упарадкаваць аб'екты"
+msgstr "Парадак:"
 
 #: ../plug-ins/common/CML_explorer.c:1591
-#, fuzzy
 msgid "Use cyclic range"
-msgstr "Няправільны інтэрвал становішчаў"
+msgstr "Выкарыстоўваць цыклічны дыяпазон"
 
 #: ../plug-ins/common/CML_explorer.c:1601
-#, fuzzy
 msgid "Mod. rate:"
-msgstr "_Часьціня дыскрэтызацыі:"
+msgstr "Хуткасьць зьмяненьня:"
 
 #: ../plug-ins/common/CML_explorer.c:1610
-#, fuzzy
 msgid "Env. sensitivity:"
-msgstr "Успрымальнасьць колера"
+msgstr "Успрым. асяродзьдзя:"
 
 #: ../plug-ins/common/CML_explorer.c:1619
 msgid "Diffusion dist.:"
@@ -1909,7 +1877,7 @@ msgstr "Разьм. расьсейваньня:"
 
 #: ../plug-ins/common/CML_explorer.c:1628
 msgid "# of subranges:"
-msgstr "# падшэрагаў:"
+msgstr "Колькасьць падшэрагаў:"
 
 #: ../plug-ins/common/CML_explorer.c:1637
 msgid "P(ower factor):"
@@ -1928,28 +1896,24 @@ msgid "Range high:"
 msgstr "Канец дыяпазону:"
 
 #: ../plug-ins/common/CML_explorer.c:1676
-#, fuzzy
 msgid "Plot a Graph of the Settings"
-msgstr "Настаўленьні захаваныя ў '%s'"
+msgstr "Пабудаваць графік наладак"
 
 #: ../plug-ins/common/CML_explorer.c:1721
-#, fuzzy
 msgid "Ch. sensitivity:"
-msgstr "Успрымальнасьць колера"
+msgstr "Успрымальнасьць канала:"
 
 #: ../plug-ins/common/CML_explorer.c:1731
-#, fuzzy
 msgid "Mutation rate:"
-msgstr "_Часьціня дыскрэтызацыі:"
+msgstr "Часьціня зьмяненьняў:"
 
 #: ../plug-ins/common/CML_explorer.c:1741
 msgid "Mutation dist.:"
 msgstr "Разьм. зьмяненьня:"
 
 #: ../plug-ins/common/CML_explorer.c:1818
-#, fuzzy
 msgid "Graph of the Current Settings"
-msgstr "Настаўленьні захаваныя ў '%s'"
+msgstr "Графік бягучых наладак"
 
 #: ../plug-ins/common/CML_explorer.c:1889
 msgid "Warning: the source and the destination are the same channel."
@@ -1961,9 +1925,9 @@ msgstr ""
 
 #: ../plug-ins/common/CML_explorer.c:2059
 #: ../plug-ins/common/channel_mixer.c:1067
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
-msgstr "Няма зьменаў, якія трэба захаваць."
+msgstr "Парамэтры былі захаваныя ў «%s»"
 
 #: ../plug-ins/common/CML_explorer.c:2081
 #, fuzzy
@@ -2181,7 +2145,7 @@ msgstr "Аптымізаваць (для _GIF)"
 
 #: ../plug-ins/common/animoptimize.c:153
 msgid "Reduce file size where combining layers is possible"
-msgstr ""
+msgstr "Зьменшыць памер файла, кали магчыма спалучэньне пластоў"
 
 #: ../plug-ins/common/animoptimize.c:163
 msgid "_Optimize (Difference)"
@@ -2189,11 +2153,11 @@ msgstr "_Аптымізаваць (адрозьненьні)"
 
 #: ../plug-ins/common/animoptimize.c:171
 msgid "Remove optimization to make editing easier"
-msgstr ""
+msgstr "Прыбраць аптымізацыю, каб спрасьціць рэдагаваньне"
 
 #: ../plug-ins/common/animoptimize.c:178
 msgid "_Unoptimize"
-msgstr ""
+msgstr "_Разаптымізаваць"
 
 #: ../plug-ins/common/animoptimize.c:198
 msgid "_Remove Backdrop"
@@ -2204,9 +2168,8 @@ msgid "_Find Backdrop"
 msgstr "_Знайсьці заднік"
 
 #: ../plug-ins/common/animoptimize.c:427
-#, fuzzy
 msgid "Unoptimizing animation"
-msgstr "Пераматаць мультыплікацыю"
+msgstr "Разаптымізаваньне анімацыі"
 
 #: ../plug-ins/common/animoptimize.c:430
 msgid "Removing animation background"
@@ -2290,21 +2253,19 @@ msgstr "Абразаньне"
 
 #: ../plug-ins/common/autostretch_hsv.c:68
 msgid "Stretch image contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Расьцягнуць кантраст відарыса, каб ён распрасьціраўся на максымальна магчымы дыяпазон"
 
 #: ../plug-ins/common/autostretch_hsv.c:81
-#, fuzzy
 msgid "Stretch _HSV"
-msgstr "HSV (%0.1f, %0.1f, %0.1f)"
+msgstr "_Пашырыць HSV"
 
 #: ../plug-ins/common/autostretch_hsv.c:116
-#, fuzzy
 msgid "Auto-Stretching HSV"
-msgstr "HSV (_Адценьне за стрэлкай)"
+msgstr "Аўтапашырэньне HSV"
 
 #: ../plug-ins/common/autostretch_hsv.c:192
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "autostretch_hsv: cmap быў NULL!  Выхад...\n"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
@@ -2315,9 +2276,8 @@ msgid "_Blinds..."
 msgstr "_Жалюзі..."
 
 #: ../plug-ins/common/blinds.c:188
-#, fuzzy
 msgid "Adding blinds"
-msgstr "Дабаўленьне «шахматнай дошкі»"
+msgstr "Дабаўленьне «жалюзяў»"
 
 #: ../plug-ins/common/blinds.c:226
 msgid "Blinds"
@@ -2372,21 +2332,19 @@ msgstr "Размываньне"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr ""
+msgstr "Зрабіць сярэдні колер мяжы відарыса колерам рысаваньня"
 
 #: ../plug-ins/common/borderaverage.c:104
-#, fuzzy
 msgid "_Border Average..."
-msgstr "Сярэдняе колераў"
+msgstr "_Сярэдняе мяжы..."
 
 #: ../plug-ins/common/borderaverage.c:171
-#, fuzzy
 msgid "Border Average"
-msgstr "Сярэдняе колераў"
+msgstr "Сярэдняе мяжы"
 
 #: ../plug-ins/common/borderaverage.c:351
 msgid "Borderaverage"
-msgstr ""
+msgstr "Сярэдняе мяжы"
 
 #: ../plug-ins/common/borderaverage.c:372
 msgid "Border Size"
@@ -2402,7 +2360,7 @@ msgstr "_Памер вядра:"
 
 #: ../plug-ins/common/bumpmap.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Стварыць эфэкт рэльефу, ужываючы мапу паверхні"
 
 #: ../plug-ins/common/bumpmap.c:267
 msgid "_Bump Map..."
@@ -2427,7 +2385,7 @@ msgstr "_Тып мапы:"
 #. Compensate darkening
 #: ../plug-ins/common/bumpmap.c:849
 msgid "Co_mpensate for darkening"
-msgstr ""
+msgstr "_Кампэнсаваць зацямненьне"
 
 #. Invert bumpmap
 #: ../plug-ins/common/bumpmap.c:863
@@ -2436,9 +2394,8 @@ msgstr "_Інвэртаваць мапу"
 
 #. Tile bumpmap
 #: ../plug-ins/common/bumpmap.c:877
-#, fuzzy
 msgid "_Tile bumpmap"
-msgstr "Побач па _вэртыкалі"
+msgstr "_Замосьціць мапай"
 
 #: ../plug-ins/common/bumpmap.c:892
 #: ../plug-ins/common/emboss.c:499
@@ -2457,7 +2414,7 @@ msgstr "_Зрух па X:"
 #: ../plug-ins/common/bumpmap.c:933
 #: ../plug-ins/common/bumpmap.c:947
 msgid "The offset can be adjusted by dragging the preview using the middle mouse button."
-msgstr ""
+msgstr "Зрух можна зьмяніць, пацягнуўшы агляд сярэдняй кнопкай мышы."
 
 #: ../plug-ins/common/bumpmap.c:944
 #: ../plug-ins/common/postscript.c:3388
@@ -2466,29 +2423,27 @@ msgstr "_Зрух па Y:"
 
 #: ../plug-ins/common/bumpmap.c:958
 msgid "_Waterlevel:"
-msgstr ""
+msgstr "_Ровень вады:"
 
 #: ../plug-ins/common/bumpmap.c:970
 msgid "A_mbient:"
-msgstr ""
+msgstr "_Навакольле:"
 
 #: ../plug-ins/common/c_astretch.c:68
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Расьцягнуць кантраст, каб ён распрасьціраўся на максымальна магчымы дыяпазон"
 
 #: ../plug-ins/common/c_astretch.c:79
-#, fuzzy
 msgid "_Stretch Contrast"
-msgstr "Яркасьць і кантраст"
+msgstr "_Пашырыць кантраст"
 
 #: ../plug-ins/common/c_astretch.c:113
-#, fuzzy
 msgid "Auto-stretching contrast"
-msgstr "Аўтаматычнае паляпшэньне кантрасту"
+msgstr "Аўтапашырэньне кантрасту"
 
 #: ../plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "c_astretch: cmap быў NULL!  Выхад...\n"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
@@ -2656,7 +2611,7 @@ msgstr ""
 
 #: ../plug-ins/common/color_enhance.c:69
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr ""
+msgstr "Расьцягнуць насычанасьць колера, каб яна распрасьціралася на максымальна магчымы дыяпазон"
 
 #: ../plug-ins/common/color_enhance.c:81
 msgid "_Color Enhance"
@@ -2691,14 +2646,12 @@ msgid "Colorify Custom Color"
 msgstr "Калярызаваць сваім колерам"
 
 #: ../plug-ins/common/colormap-remap.c:97
-#, fuzzy
 msgid "Rearrange the colormap"
-msgstr "Мэню мапы колераў"
+msgstr "Пераўпарадкаваньне мапы колераў"
 
 #: ../plug-ins/common/colormap-remap.c:104
-#, fuzzy
 msgid "R_earrange Colormap..."
-msgstr "Мэню мапы колераў"
+msgstr "_Упарадкаваць мапу колераў..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -2712,7 +2665,7 @@ msgstr "_Абмяняць колеры"
 #: ../plug-ins/common/colormap-remap.c:297
 #: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
-msgstr ""
+msgstr "Функцыі ператварэньня перададзены недапушчальны масыў ператварэньня"
 
 #: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
@@ -2744,7 +2697,7 @@ msgstr "Пераўпарадкаваць мапу колераў"
 
 #: ../plug-ins/common/colormap-remap.c:699
 msgid "Drag and drop colors to rearrange the colormap.  The numbers shown are the original indices.  Right-click for a menu with sort options."
-msgstr ""
+msgstr "Пстрыкні й цягні колеры, каб пераўпарадкаваць мапу колераў. Паказаныя лічбы — спачатныя індэксы. Пстрыкні правай кнопкай, каб выклікаць мэню з выборамі ўпарадкаваньня."
 
 #: ../plug-ins/common/colortoalpha.c:94
 msgid "Convert a specified color to transparency"
@@ -2773,9 +2726,8 @@ msgid "From:"
 msgstr "З:"
 
 #: ../plug-ins/common/colortoalpha.c:413
-#, fuzzy
 msgid "Color to Alpha Color Picker"
-msgstr "Ператварыць альфу ў маску"
+msgstr "Выбар колера, які стане празрыстым"
 
 #: ../plug-ins/common/colortoalpha.c:428
 msgid "to alpha"
@@ -2863,56 +2815,52 @@ msgid "LAB"
 msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:252
-#, fuzzy
 msgid "_Luma y470:"
-msgstr "Яркая маска"
+msgstr "_Яркасьць y470:"
 
 #: ../plug-ins/common/compose.c:253
 msgid "_Blueness cb470:"
-msgstr ""
+msgstr "_Сінь cb470:"
 
 #: ../plug-ins/common/compose.c:254
 msgid "_Redness cr470:"
-msgstr ""
+msgstr "_Чырвань cr470:"
 
 #: ../plug-ins/common/compose.c:260
-#, fuzzy
 msgid "_Luma y709:"
-msgstr "Яркая маска"
+msgstr "_Яркасьць y709:"
 
 #: ../plug-ins/common/compose.c:261
 msgid "_Blueness cb709:"
-msgstr ""
+msgstr "_Сінь cb709:"
 
 #: ../plug-ins/common/compose.c:262
 msgid "_Redness cr709:"
-msgstr ""
+msgstr "_Чырвань cr709:"
 
 #: ../plug-ins/common/compose.c:268
-#, fuzzy
 msgid "_Luma y470f:"
-msgstr "Яркая маска"
+msgstr "_Яркасьць y470f:"
 
 #: ../plug-ins/common/compose.c:269
 msgid "_Blueness cb470f:"
-msgstr ""
+msgstr "_Сінь cb470f:"
 
 #: ../plug-ins/common/compose.c:270
 msgid "_Redness cr470f:"
-msgstr ""
+msgstr "_Чырвань cr470f:"
 
 #: ../plug-ins/common/compose.c:276
-#, fuzzy
 msgid "_Luma y709f:"
-msgstr "Яркая маска"
+msgstr "_Яркасьць y709f:"
 
 #: ../plug-ins/common/compose.c:277
 msgid "_Blueness cb709f:"
-msgstr ""
+msgstr "_Сінь cb709f:"
 
 #: ../plug-ins/common/compose.c:278
 msgid "_Redness cr709f:"
-msgstr ""
+msgstr "_Чырвань cr709f:"
 
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
@@ -2968,7 +2916,7 @@ msgstr "Відарысы маюць розныя памеры"
 
 #: ../plug-ins/common/compose.c:770
 msgid "Error in getting layer IDs"
-msgstr ""
+msgstr "Памылка атрыманьня ID пласта"
 
 #: ../plug-ins/common/compose.c:791
 #, c-format
@@ -3096,7 +3044,7 @@ msgstr "_Нармалізаваць"
 
 #: ../plug-ins/common/convmatrix.c:1048
 msgid "A_lpha-weighting"
-msgstr ""
+msgstr "_Узважваць празрыстасьць"
 
 #: ../plug-ins/common/convmatrix.c:1067
 msgid "Border"
@@ -3112,12 +3060,11 @@ msgstr "Выточны код C"
 
 #: ../plug-ins/common/csource.c:637
 msgid "Save as C-Source"
-msgstr ""
+msgstr "Захаваць як выточны код C"
 
 #: ../plug-ins/common/csource.c:668
-#, fuzzy
 msgid "_Prefixed name:"
-msgstr "_Назва канала:"
+msgstr "_Прэфіксаваная назва:"
 
 #: ../plug-ins/common/csource.c:677
 msgid "Co_mment:"
@@ -3145,7 +3092,7 @@ msgstr "_Ужываць макрас замест структуры"
 #.
 #: ../plug-ins/common/csource.c:720
 msgid "Use _1 byte Run-Length-Encoding"
-msgstr ""
+msgstr "_1-байтавае кадаваньне RLE"
 
 #. Alpha
 #.
@@ -3379,15 +3326,13 @@ msgstr "яркасьць"
 
 #: ../plug-ins/common/decompose.c:193
 #: ../plug-ins/common/decompose.c:197
-#, fuzzy
 msgid "hue_l"
-msgstr "Адценьне"
+msgstr "адценьне_я"
 
 #: ../plug-ins/common/decompose.c:194
 #: ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "saturation_l"
-msgstr "Насычанасьць"
+msgstr "насычанасьць_я"
 
 #: ../plug-ins/common/decompose.c:195
 #: ../plug-ins/common/decompose.c:199
@@ -3435,96 +3380,86 @@ msgstr "Жоўты"
 
 #: ../plug-ins/common/decompose.c:211
 #: ../plug-ins/common/decompose.c:216
-#, fuzzy
 msgid "cyan-k"
-msgstr "Блакітны"
+msgstr "блакітны_ч"
 
 #: ../plug-ins/common/decompose.c:212
 #: ../plug-ins/common/decompose.c:217
-#, fuzzy
 msgid "magenta-k"
-msgstr "Пурпуровы"
+msgstr "пурпуровы_ч"
 
 #: ../plug-ins/common/decompose.c:213
 #: ../plug-ins/common/decompose.c:218
-#, fuzzy
 msgid "yellow-k"
-msgstr "Жоўты"
+msgstr "жоўты_ч"
 
 #: ../plug-ins/common/decompose.c:214
 msgid "black"
 msgstr "чорны"
 
 #: ../plug-ins/common/decompose.c:216
-#, fuzzy
 msgid "Cyan_K"
-msgstr "Блакітны"
+msgstr "Блакітны_Ч"
 
 #: ../plug-ins/common/decompose.c:217
-#, fuzzy
 msgid "Magenta_K"
-msgstr "Пурпуровы"
+msgstr "Пурпуровы_Ч"
 
 #: ../plug-ins/common/decompose.c:218
-#, fuzzy
 msgid "Yellow_K"
-msgstr "Жоўты"
+msgstr "Жоўты_Ч"
 
 #: ../plug-ins/common/decompose.c:221
 msgid "Alpha"
 msgstr "Альфа"
 
 #: ../plug-ins/common/decompose.c:229
-#, fuzzy
 msgid "luma-y470"
-msgstr "Яркая маска"
+msgstr "яркасьць-y470"
 
 #: ../plug-ins/common/decompose.c:230
 msgid "blueness-cb470"
-msgstr ""
+msgstr "cінь-cb470:"
 
 #: ../plug-ins/common/decompose.c:231
 msgid "redness-cr470"
-msgstr ""
+msgstr "чырвань-cr470:"
 
 #: ../plug-ins/common/decompose.c:233
-#, fuzzy
 msgid "luma-y709"
-msgstr "Яркая маска"
+msgstr "яркасьць-y709"
 
 #: ../plug-ins/common/decompose.c:234
 msgid "blueness-cb709"
-msgstr ""
+msgstr "сінь-cb709:"
 
 #: ../plug-ins/common/decompose.c:235
 msgid "redness-cr709"
-msgstr ""
+msgstr "чырвань-cr709:"
 
 #: ../plug-ins/common/decompose.c:237
-#, fuzzy
 msgid "luma-y470f"
-msgstr "Яркая маска"
+msgstr "яркасьць-y470f"
 
 #: ../plug-ins/common/decompose.c:238
 msgid "blueness-cb470f"
-msgstr ""
+msgstr "сінь-cb470f:"
 
 #: ../plug-ins/common/decompose.c:239
 msgid "redness-cr470f"
-msgstr ""
+msgstr "чырвань-cr470f:"
 
 #: ../plug-ins/common/decompose.c:241
-#, fuzzy
 msgid "luma-y709f"
-msgstr "Яркая маска"
+msgstr "яркасьць-y709f"
 
 #: ../plug-ins/common/decompose.c:242
 msgid "blueness-cb709f"
-msgstr ""
+msgstr "сінь-cb709f:"
 
 #: ../plug-ins/common/decompose.c:243
 msgid "redness-cr709f"
-msgstr ""
+msgstr "чырвань-cr709f:"
 
 #: ../plug-ins/common/decompose.c:312
 #: ../plug-ins/common/decompose.c:326
@@ -3553,9 +3488,8 @@ msgid "_Decompose to layers"
 msgstr "_Раскласьці на пласты"
 
 #: ../plug-ins/common/decompose.c:1561
-#, fuzzy
 msgid "_Foreground as registration color"
-msgstr "Дадаць бягучы колер рысаваньня"
+msgstr "_Колер рысаваньня — колер прывядзеньня"
 
 #: ../plug-ins/common/decompose.c:1562
 msgid "Pixels in the foreground color will appear black in all output images.  This can be used for things like crop marks that have to show up on all channels."
@@ -3617,22 +3551,20 @@ msgstr "_Накладаньне:"
 
 #: ../plug-ins/common/depthmerge.c:777
 msgid "Sc_ale 1:"
-msgstr ""
+msgstr "_Шкала 1:"
 
 #: ../plug-ins/common/depthmerge.c:787
-#, fuzzy
 msgid "Sca_le 2:"
-msgstr "Ф_армат файла:"
+msgstr "Ш_кала 2:"
 
 #: ../plug-ins/common/desktop-link.c:82
-#, fuzzy
 msgid "Desktop Link"
-msgstr "Злучыць пункты"
+msgstr "Лучыва стальца"
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Памылка загрузкі файла PNG: %s."
+msgstr "Памылка загрузкі файла стальца «%s»: %s."
 
 #: ../plug-ins/common/despeckle.c:147
 msgid "Remove speckle noise from the image"
@@ -3721,9 +3653,9 @@ msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Відарыс Digital Imaging and Communications in Medicine"
 
 #: ../plug-ins/common/dicom.c:322
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a DICOM file."
-msgstr "=== Драйвэр %s не выводзіць у файл.\n"
+msgstr "«%s» не зьяўляецца файлам DICOM"
 
 #: ../plug-ins/common/dicom.c:678
 #: ../plug-ins/common/pcx.c:639
@@ -3787,15 +3719,15 @@ msgstr "Іншыя выборы"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_X displacement"
-msgstr "Зрушэньне па _X:"
+msgstr "Зрух па _X:"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
-msgstr ""
+msgstr "_Шчыпок"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Y displacement"
-msgstr "Зрушэньне па _Y:"
+msgstr "Зрух па _Y:"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Whirl"
@@ -3820,12 +3752,12 @@ msgstr "Зрушэньне"
 #. X options
 #: ../plug-ins/common/displace.c:362
 msgid "_X displacement:"
-msgstr "Зрушэньне па _X:"
+msgstr "Зрух па _X:"
 
 #. Y Options
 #: ../plug-ins/common/displace.c:409
 msgid "_Y displacement:"
-msgstr "Зрушэньне па _X:"
+msgstr "Зрух па _X:"
 
 #: ../plug-ins/common/displace.c:459
 msgid "Displacement Mode"
@@ -3862,15 +3794,13 @@ msgid "Edge detection with control of edge thickness"
 msgstr "Вызначэньне краёў з кантролем таўшчыні краёў"
 
 #: ../plug-ins/common/dog.c:140
-#, fuzzy
 msgid "_Difference of Gaussians..."
-msgstr "Найбольшая рознасьць колераў"
+msgstr "_Рознасьць гаўсаўскіх..."
 
 #: ../plug-ins/common/dog.c:231
 #: ../plug-ins/common/dog.c:278
-#, fuzzy
 msgid "DoG Edge Detect"
-msgstr "Вызначыць сеткавае абсталяванне"
+msgstr "Вызначэньне краёў РГ"
 
 #: ../plug-ins/common/dog.c:306
 msgid "Smoothing Parameters"
@@ -4023,7 +3953,7 @@ msgstr "Абмен колераў"
 
 #: ../plug-ins/common/exchange.c:309
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
-msgstr ""
+msgstr "Пстрыкні сярэдняй кнопкай унутры агляду, каб выбраць «З колеру»"
 
 #: ../plug-ins/common/exchange.c:347
 msgid "To Color"
@@ -4083,6 +4013,7 @@ msgstr "Наяўныя відарысы:"
 msgid "On film:"
 msgstr "На стужцы:"
 
+# Менавіта Выбар, а не Вылучэньне!
 #. Create selection
 #: ../plug-ins/common/film.c:966
 #: ../plug-ins/imagemap/imap_selection.c:367
@@ -4105,7 +4036,7 @@ msgstr "_Падагнаць шырыню да відарысаў"
 #. Film color
 #: ../plug-ins/common/film.c:1021
 msgid "Select Film Color"
-msgstr "Выберы свой стужки"
+msgstr "Выберы колер стужкі"
 
 #: ../plug-ins/common/film.c:1026
 #: ../plug-ins/common/film.c:1076
@@ -4150,7 +4081,7 @@ msgstr "Усе значэньні — долі вышыні кінастужкі
 
 #: ../plug-ins/common/film.c:1131
 msgid "Ad_vanced"
-msgstr ""
+msgstr "_Дадаткова"
 
 #: ../plug-ins/common/film.c:1150
 msgid "Image _height:"
@@ -4162,7 +4093,7 @@ msgstr "_Прагал між відарысамі:"
 
 #: ../plug-ins/common/film.c:1172
 msgid "_Hole offset:"
-msgstr "_Зрушэньне адтуліны:"
+msgstr "_Зрух адтуліны:"
 
 #: ../plug-ins/common/film.c:1183
 msgid "Ho_le width:"
@@ -4248,11 +4179,11 @@ msgstr "Набор _фільтраў"
 
 #: ../plug-ins/common/fp.c:372
 msgid "FP can only be used on RGB images."
-msgstr ""
+msgstr "Набор фільтраў працуе толькі зь відарысамі RGB."
 
 #: ../plug-ins/common/fp.c:382
 msgid "FP can only be run interactively."
-msgstr ""
+msgstr "Набор фільтраў выконваецца толькі інтэрактыўна."
 
 #: ../plug-ins/common/fp.c:400
 msgid "Applying filter pack"
@@ -4338,7 +4269,7 @@ msgstr "Толькі _вылучэньне"
 
 #: ../plug-ins/common/fp.c:870
 msgid "Selec_tion in context"
-msgstr ""
+msgstr "_Вылучэньне ў кантэксьце"
 
 #: ../plug-ins/common/fp.c:1201
 msgid "Filter Pack Simulation"
@@ -4370,15 +4301,13 @@ msgid "Transform image with the Mandelbrot Fractal"
 msgstr "Ператварыць відарыс фракталам Мандэльброта"
 
 #: ../plug-ins/common/fractaltrace.c:121
-#, fuzzy
 msgid "_Fractal Trace..."
-msgstr "_Сьляды часьцінак..."
+msgstr "_Сьлед фрактала..."
 
 #: ../plug-ins/common/fractaltrace.c:460
 #: ../plug-ins/common/fractaltrace.c:691
-#, fuzzy
 msgid "Fractal Trace"
-msgstr "_Сьляды часьцінак..."
+msgstr "Сьлед фрактала"
 
 #. Settings
 #: ../plug-ins/common/fractaltrace.c:731
@@ -4415,19 +4344,19 @@ msgstr "Найпросты, найчасьцей ужываны спосаб р�
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
-msgstr "_Гаўсава размыцьцё..."
+msgstr "_Гаўсаўскае размыцьцё..."
 
 #: ../plug-ins/common/gauss.c:179
 #: ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219
 #: ../plug-ins/common/gauss.c:239
 msgid "Apply a gaussian blur"
-msgstr "Ужывае гаўсава размыцьцё"
+msgstr "Ужывае гаўсаўскае размыцьцё"
 
 #: ../plug-ins/common/gauss.c:428
 #: ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
-msgstr "Гаўсава размыцьцё"
+msgstr "Гаўсаўскае размыцьцё"
 
 #. parameter settings
 #: ../plug-ins/common/gauss.c:506
@@ -4452,7 +4381,7 @@ msgstr "Мэтад размыцьця"
 
 #: ../plug-ins/common/gauss.c:551
 msgid "_IIR"
-msgstr ""
+msgstr "_IIR"
 
 #: ../plug-ins/common/gauss.c:552
 msgid "_RLE"
@@ -4524,7 +4453,7 @@ msgstr "Дзякуй за выбар GIMP!"
 #: ../plug-ins/common/gee.c:173
 #, c-format
 msgid "A less obsolete creation by %s"
-msgstr ""
+msgstr "Не зусім састарэлае стварэньне %s"
 
 #: ../plug-ins/common/gee_zoom.c:126
 #: ../plug-ins/common/gee_zoom.c:186
@@ -4532,9 +4461,9 @@ msgid "Gee Zoom"
 msgstr "Забаўнае маштабаваньне"
 
 #: ../plug-ins/common/gee_zoom.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "An obsolete creation by %s"
-msgstr "Размыць вылучанэньне на"
+msgstr "Састарэлае стварэньне %s"
 
 #: ../plug-ins/common/gif-load.c:141
 #: ../plug-ins/common/gif-save.c:410
@@ -4574,11 +4503,11 @@ msgstr "Кадр %d (%d%s)"
 #: ../plug-ins/common/gif-load.c:966
 #, c-format
 msgid "GIF: Undocumented GIF composite type %d is not handled.  Animation might not play or re-save perfectly."
-msgstr ""
+msgstr "GIF: недакумэнтаваны тып складаньня %d не падтрымліваецца. Магчыма, ня ўдасца якасна прайграць або паўторна захаваць анімацыю."
 
 #: ../plug-ins/common/gif-save.c:683
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr ""
+msgstr "Немагчыма болей проста зьменшыць колеры. Захоўваньне непразрыстым."
 
 #: ../plug-ins/common/gif-save.c:899
 msgid "The GIF format only supports comments in 7bit ASCII encoding. No comment is saved."
@@ -4644,9 +4573,8 @@ msgid "I don't care"
 msgstr "_Усё адно"
 
 #: ../plug-ins/common/gif-save.c:1384
-#, fuzzy
 msgid "Cumulative layers (combine)"
-msgstr "_Пласты, каналы й шляхі"
+msgstr "Сабраныя пласты (злучыць)"
 
 #: ../plug-ins/common/gif-save.c:1386
 msgid "One frame per layer (replace)"
@@ -4668,7 +4596,7 @@ msgstr "Памылка запісу выходнага файла."
 #: ../plug-ins/common/gif-save.c:2635
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "Дапомны камэнтар абмежаваны %d знакамі."
+msgstr "Прадвызначаны камэнтар абмежаваны %d знакамі."
 
 #: ../plug-ins/common/gih.c:207
 #: ../plug-ins/common/gih.c:228
@@ -4681,9 +4609,8 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Пласт %s ня мае альфаканала, абмінуты"
 
 #: ../plug-ins/common/gih.c:492
-#, fuzzy
 msgid "Error in GIMP brush pipe file."
-msgstr "Фатальная памылка пад час аналізу файла з пэндзлем '%s': не зьяўляецца файлам з пэндзлем GIMP."
+msgstr "Памылка ў файле з пасьлядоўнасьцю пэндзляў GIMP."
 
 #: ../plug-ins/common/gih.c:558
 msgid "GIMP brush file appears to be corrupted."
@@ -4691,12 +4618,11 @@ msgstr "Файл з пэндзлем GIMP, падаецца пашкоджаны
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Немагчыма загрузіць адзін пэндзаль у пасьлядоўнасьці, пакіданьне."
 
 #: ../plug-ins/common/gih.c:866
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "_Адкрыць пэндзаль як відарыс"
+msgstr "Захаваць як пасьлядоўнасьць пэндзляў"
 
 #: ../plug-ins/common/gih.c:896
 msgid "Spacing (percent):"
@@ -4770,11 +4696,11 @@ msgstr "Стварыць вялізную колькасьць абстракт�
 
 #: ../plug-ins/common/gqbist.c:410
 msgid "_Qbist..."
-msgstr ""
+msgstr "_Q-біст..."
 
 #: ../plug-ins/common/gqbist.c:511
 msgid "Qbist"
-msgstr ""
+msgstr "Q-біст"
 
 #: ../plug-ins/common/gqbist.c:707
 msgid "Load QBE File"
@@ -4786,35 +4712,31 @@ msgstr "Захаваць як файл QBE"
 
 #: ../plug-ins/common/gqbist.c:803
 msgid "G-Qbist"
-msgstr ""
+msgstr "GQ-біст"
 
 #: ../plug-ins/common/gradmap.c:84
 msgid "Recolor the image using colors from the active gradient"
 msgstr "Перафарбаваць відарыс, ужываючы колеры актыўнага градыента"
 
 #: ../plug-ins/common/gradmap.c:97
-#, fuzzy
 msgid "_Gradient Map"
-msgstr "_Мапа колераў"
+msgstr "_Градыентнае"
 
 #: ../plug-ins/common/gradmap.c:106
 msgid "Recolor the image using colors from the active palette"
 msgstr "Перафарбаваць відарыс, ужываючы колеры актыўнай палітры"
 
 #: ../plug-ins/common/gradmap.c:119
-#, fuzzy
 msgid "_Palette Map"
-msgstr "_Мапа колераў"
+msgstr "_Палітравае"
 
 #: ../plug-ins/common/gradmap.c:162
-#, fuzzy
 msgid "Gradient Map"
-msgstr "_Мапа колераў"
+msgstr "Градыентнае ператварэньне"
 
 #: ../plug-ins/common/gradmap.c:167
-#, fuzzy
 msgid "Palette Map"
-msgstr "_Мапа колераў"
+msgstr "Палітравае ператварэньне"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
@@ -4857,7 +4779,7 @@ msgstr "Шырыня:"
 #. attach labels
 #: ../plug-ins/common/grid.c:857
 msgid "Offset:"
-msgstr "Зрушэньне:"
+msgstr "Зрух:"
 
 #. attach color selectors
 #: ../plug-ins/common/grid.c:896
@@ -4913,9 +4835,8 @@ msgid "Table Creation Options"
 msgstr "Выборы стварэньня табліцы"
 
 #: ../plug-ins/common/gtm.c:479
-#, fuzzy
 msgid "_Use cellspan"
-msgstr "Ужываць як:"
+msgstr "_Ужываць cellspan"
 
 #: ../plug-ins/common/gtm.c:485
 msgid "If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -4971,24 +4892,20 @@ msgid "The height for each table cell.  Can be a number or a percent."
 msgstr "Вышыня ячэі табліцы. Можа быць лікам або адсоткам."
 
 #: ../plug-ins/common/gtm.c:615
-#, fuzzy
 msgid "Cell-_padding:"
-msgstr "_Колер вакол палатна"
+msgstr "Cell-_padding:"
 
 #: ../plug-ins/common/gtm.c:619
-#, fuzzy
 msgid "The amount of cellpadding."
-msgstr "Узровень размыцьця"
+msgstr "Велічыня cellpadding."
 
 #: ../plug-ins/common/gtm.c:628
-#, fuzzy
 msgid "Cell-_spacing:"
-msgstr "_Міжлітарны інтэрвал"
+msgstr "Cell-_spacing:"
 
 #: ../plug-ins/common/gtm.c:632
-#, fuzzy
 msgid "The amount of cellspacing."
-msgstr "Узровень размыцьця"
+msgstr "Велічыня cellspacing."
 
 #: ../plug-ins/common/guillotine.c:69
 msgid "Slice the image into subimages using guides"
@@ -5003,9 +4920,8 @@ msgid "Guillotine"
 msgstr "Гільятына"
 
 #: ../plug-ins/common/header.c:77
-#, fuzzy
 msgid "C source code header"
-msgstr "Каманды вакна загалоўкаў:"
+msgstr "Загаловак выточнага коду C"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
@@ -5043,7 +4959,7 @@ msgstr "_Счарніць"
 
 #: ../plug-ins/common/illusion.c:91
 msgid "Superimpose many altered copies of the image"
-msgstr ""
+msgstr "Накласьці шмат зьмененых копій відарыса"
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
@@ -5056,7 +4972,7 @@ msgstr "Міраж"
 
 #: ../plug-ins/common/illusion.c:388
 msgid "_Divisions:"
-msgstr ""
+msgstr "_Частак:"
 
 #: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
@@ -5072,16 +4988,16 @@ msgstr "Выкарыстоўвай мыш, каб скрывіць воблас�
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
-msgstr ""
+msgstr "_І-Скрыўленьне..."
 
 #: ../plug-ins/common/iwarp.c:699
 msgid "Warping"
-msgstr ""
+msgstr "Скрыўленьне"
 
 #: ../plug-ins/common/iwarp.c:804
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame %d"
-msgstr "Апрацоўка кадра %i."
+msgstr "Скрыўленьне кадра %d"
 
 #: ../plug-ins/common/iwarp.c:816
 msgid "Ping pong"
@@ -5089,7 +5005,7 @@ msgstr "Пінг-понг"
 
 #: ../plug-ins/common/iwarp.c:1022
 msgid "A_nimate"
-msgstr ""
+msgstr "_Анімаваць"
 
 #: ../plug-ins/common/iwarp.c:1041
 msgid "Number of _frames:"
@@ -5097,7 +5013,7 @@ msgstr "_Колькасьць кадраў:"
 
 #: ../plug-ins/common/iwarp.c:1050
 msgid "R_everse"
-msgstr ""
+msgstr "_Зваротны"
 
 #: ../plug-ins/common/iwarp.c:1059
 msgid "_Ping pong"
@@ -5105,12 +5021,11 @@ msgstr "_Пінг-понг"
 
 #: ../plug-ins/common/iwarp.c:1072
 msgid "_Animate"
-msgstr ""
+msgstr "_Анімаваць"
 
 #: ../plug-ins/common/iwarp.c:1093
-#, fuzzy
 msgid "Deform Mode"
-msgstr "_Рэжыму рысаваньня"
+msgstr "Рэжым скрыўленьня"
 
 #: ../plug-ins/common/iwarp.c:1106
 msgid "_Move"
@@ -5121,41 +5036,36 @@ msgid "_Grow"
 msgstr "_Павялічыць"
 
 #: ../plug-ins/common/iwarp.c:1108
-#, fuzzy
 msgid "S_wirl CCW"
-msgstr "Сьпіральны (сс)"
+msgstr "_Сьпіральны (CC)"
 
 #: ../plug-ins/common/iwarp.c:1109
 msgid "Remo_ve"
 msgstr "_Прыбраць"
 
 #: ../plug-ins/common/iwarp.c:1110
-#, fuzzy
 msgid "S_hrink"
-msgstr "_Зьменшыць..."
+msgstr "_Зьменшыць"
 
 #: ../plug-ins/common/iwarp.c:1111
 msgid "Sw_irl CW"
-msgstr ""
+msgstr "Сь_піральны (ЗC)"
 
 #: ../plug-ins/common/iwarp.c:1140
-#, fuzzy
 msgid "_Deform radius:"
-msgstr "Радыюс цыліндра"
+msgstr "Радыюс _дэфармацыі:"
 
 #: ../plug-ins/common/iwarp.c:1150
-#, fuzzy
 msgid "D_eform amount:"
-msgstr "Узровень размыцьця"
+msgstr "_Ровень дэфармавацыі:"
 
 #: ../plug-ins/common/iwarp.c:1159
 msgid "_Bilinear"
 msgstr "_Білінейны"
 
 #: ../plug-ins/common/iwarp.c:1173
-#, fuzzy
 msgid "Adaptive s_upersample"
-msgstr "Адаптыўная інтэрпаляцыя"
+msgstr "Адаптыўная _інтэрпаляцыя"
 
 #: ../plug-ins/common/iwarp.c:1193
 msgid "Ma_x depth:"
@@ -5173,7 +5083,7 @@ msgstr "_Наладкі"
 
 #: ../plug-ins/common/iwarp.c:1265
 msgid "IWarp"
-msgstr ""
+msgstr "І-Скрыўленьне"
 
 #: ../plug-ins/common/iwarp.c:1301
 msgid "Click and drag in the preview to define the distortions to apply to the image."
@@ -5201,11 +5111,11 @@ msgstr "Колькасьць плітак"
 
 #: ../plug-ins/common/jigsaw.c:2459
 msgid "Number of pieces going across"
-msgstr ""
+msgstr "Колькасьць кавалкаў ад краю да краю"
 
 #: ../plug-ins/common/jigsaw.c:2476
 msgid "Number of pieces going down"
-msgstr ""
+msgstr "Колькасьць кавалкаў уніз"
 
 #: ../plug-ins/common/jigsaw.c:2490
 msgid "Bevel Edges"
@@ -5217,15 +5127,15 @@ msgstr "_Шырыня скосу:"
 
 #: ../plug-ins/common/jigsaw.c:2504
 msgid "Degree of slope of each piece's edge"
-msgstr ""
+msgstr "Градус нахілу краёў кожнага кавалка"
 
 #: ../plug-ins/common/jigsaw.c:2517
 msgid "H_ighlight:"
-msgstr ""
+msgstr "_Падсьвечваньне:"
 
 #: ../plug-ins/common/jigsaw.c:2521
 msgid "The amount of highlighting on the edges of each piece"
-msgstr ""
+msgstr "Узровень падсьвечваньня краёў кожнага кавалка"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2538
@@ -5238,7 +5148,7 @@ msgstr "_Квадрат"
 
 #: ../plug-ins/common/jigsaw.c:2543
 msgid "C_urved"
-msgstr ""
+msgstr "_Крывы"
 
 #: ../plug-ins/common/jigsaw.c:2547
 msgid "Each piece has straight sides"
@@ -5270,7 +5180,7 @@ msgstr "_Прызначыць профіль колераў..."
 
 #: ../plug-ins/common/lcms.c:245
 msgid "Assign default RGB Profile"
-msgstr "Прызначыць дапомны профіль RGB"
+msgstr "Вызначэньне прадвызначанага профілю RGB"
 
 #: ../plug-ins/common/lcms.c:252
 msgid "Apply a color profile on the image"
@@ -5282,7 +5192,7 @@ msgstr "_Ператварыць у профіль колераў..."
 
 #: ../plug-ins/common/lcms.c:280
 msgid "Convert to default RGB Profile"
-msgstr "Ператварыць у дапомны RGB-профіль"
+msgstr "Ператварыць у прадвызначаны RGB-профіль"
 
 #: ../plug-ins/common/lcms.c:294
 msgid "Image Color Profile Information"
@@ -5390,9 +5300,8 @@ msgid "Assign"
 msgstr "Прызначыць"
 
 #: ../plug-ins/common/lcms.c:1507
-#, fuzzy
 msgid "_Rendering Intent:"
-msgstr "_Мэта перадачы колера для экрана: "
+msgstr "_Мэта перадачы колера: "
 
 #: ../plug-ins/common/lcms.c:1523
 msgid "_Black Point Compensation"
@@ -5437,16 +5346,16 @@ msgstr "_Асьветліць:"
 
 #: ../plug-ins/common/lens.c:576
 msgid "_X shift:"
-msgstr "Зрушэньне _X:"
+msgstr "Зрух па _X:"
 
 #: ../plug-ins/common/lens.c:590
 msgid "_Y shift:"
-msgstr "Зрушэньне _Y:"
+msgstr "Зрух па _Y:"
 
 #: ../plug-ins/common/lic.c:566
 #: ../plug-ins/common/lic.c:641
 msgid "Van Gogh (LIC)"
-msgstr ""
+msgstr "Ван Гог (ЛІЗ)"
 
 #: ../plug-ins/common/lic.c:666
 msgid "Effect Channel"
@@ -5469,7 +5378,6 @@ msgid "_Gradient"
 msgstr "_Градыент"
 
 #: ../plug-ins/common/lic.c:691
-#, fuzzy
 msgid "Convolve"
 msgstr "Размыцьцё"
 
@@ -5511,7 +5419,7 @@ msgstr "Адмысловыя эфэкты, якіх ніхто не разуме
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr ""
+msgstr "_Ван Гог (ЛІЗ)..."
 
 #: ../plug-ins/common/mail.c:259
 msgid "Email the image"
@@ -5536,7 +5444,7 @@ msgstr "_Назва файла:"
 #. Encapsulation label
 #: ../plug-ins/common/mail.c:568
 msgid "Encapsulation:"
-msgstr ""
+msgstr "Інкапсуляцыя:"
 
 #: ../plug-ins/common/mail.c:580
 msgid "_MIME"
@@ -5589,21 +5497,20 @@ msgstr "Другі канчатковы колер"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
-msgstr ""
+msgstr "Ператварыць колеры, зрабіўшы колер рысаваньня чорным, а колер асноведзі — белым"
 
 #: ../plug-ins/common/mapcolor.c:151
 #, fuzzy
 msgid "Adjust _Foreground & Background"
-msgstr "_Адрэгуляваць колеры рысаваньня й асноведзі"
+msgstr "Колеры рысаваньня й асноведзі"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
-msgstr ""
+msgstr "Ператварыць дыяпазон колераў, вызначаны двума колерамі, у іншы дыяпазон"
 
 #: ../plug-ins/common/mapcolor.c:168
-#, fuzzy
 msgid "Color Range _Mapping..."
-msgstr "Няправільны інтэрвал становішчаў"
+msgstr "Ператварыць _дыяпазон колераў..."
 
 #: ../plug-ins/common/mapcolor.c:214
 #: ../plug-ins/common/mapcolor.c:526
@@ -5616,14 +5523,12 @@ msgid "Adjusting foreground and background colors"
 msgstr "Абмяняць колеры рысаваньня й асноведзі"
 
 #: ../plug-ins/common/mapcolor.c:277
-#, fuzzy
 msgid "Mapping colors"
-msgstr "_Дапомныя колеры"
+msgstr "Ператварэньне колераў"
 
 #: ../plug-ins/common/mapcolor.c:352
-#, fuzzy
 msgid "Map Color Range"
-msgstr "Няправільны інтэрвал становішчаў"
+msgstr "Ператварэньне дыяпазону колераў"
 
 #: ../plug-ins/common/mapcolor.c:383
 msgid "Source Color Range"
@@ -5728,7 +5633,7 @@ msgstr "_Кут:"
 #: ../plug-ins/common/mng.c:499
 #: ../plug-ins/common/png.c:1734
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
+msgstr "Немагчыма захаваць празрыстасьць бяз страт, захоўваньне непразрыстасьці."
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -5784,7 +5689,7 @@ msgstr "Усе JNG"
 
 #: ../plug-ins/common/mng.c:1427
 msgid "Default chunks type:"
-msgstr "Дапомныя тыпы кавалкаў:"
+msgstr "Прадвызначаныя тыпы кавалкаў:"
 
 #: ../plug-ins/common/mng.c:1430
 msgid "Combine"
@@ -5948,11 +5853,11 @@ msgstr "Ромб"
 
 #: ../plug-ins/common/newsprint.c:153
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS квадрат (Эўклідава кропка)"
 
 #: ../plug-ins/common/newsprint.c:162
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS ромб"
 
 #: ../plug-ins/common/newsprint.c:332
 msgid "_Grey"
@@ -5992,9 +5897,8 @@ msgid "Newsprint"
 msgstr "Газэтная папера"
 
 #: ../plug-ins/common/newsprint.c:1031
-#, fuzzy
 msgid "_Spot function:"
-msgstr "\t_Функцыя параўнаньня:"
+msgstr "_Функцыя плямаў:"
 
 #. resolution settings
 #: ../plug-ins/common/newsprint.c:1239
@@ -6002,14 +5906,12 @@ msgid "Resolution"
 msgstr "Разрозьненьне"
 
 #: ../plug-ins/common/newsprint.c:1258
-#, fuzzy
 msgid "_Input SPI:"
-msgstr "Прылады ўвядзеньня"
+msgstr "_В/Ц спачатку:"
 
 #: ../plug-ins/common/newsprint.c:1272
-#, fuzzy
 msgid "O_utput LPI:"
-msgstr "_Выходны канал:"
+msgstr "_Р/Ц вынікова:"
 
 #: ../plug-ins/common/newsprint.c:1285
 msgid "C_ell size:"
@@ -6046,9 +5948,8 @@ msgid "_Lock channels"
 msgstr "_Замкнуць каналы"
 
 #: ../plug-ins/common/newsprint.c:1415
-#, fuzzy
 msgid "_Factory Defaults"
-msgstr "За_грузіць дапомныя"
+msgstr "_Вернуць прадвызначаныя"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1441
@@ -6058,7 +5959,7 @@ msgstr "Згладжваньне"
 
 #: ../plug-ins/common/newsprint.c:1449
 msgid "O_versample:"
-msgstr ""
+msgstr "_Перадыскрэтызацыя:"
 
 #: ../plug-ins/common/nlfilt.c:118
 msgid "Nonlinear swiss army knife filter"
@@ -6095,7 +5996,7 @@ msgstr "_Альфа:"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "Адвольна сказіць колеры"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
@@ -6129,7 +6030,7 @@ msgstr "Канал #%d:"
 
 #: ../plug-ins/common/normalize.c:80
 msgid "Stretch brightness values to cover the full range"
-msgstr ""
+msgstr "Расьцягнуць значэньні яркасьці, каб яны распрасьціраліся на ўвесь дыяпазон"
 
 #: ../plug-ins/common/normalize.c:126
 msgid "Normalizing"
@@ -6193,7 +6094,7 @@ msgstr "Памер _маскі:"
 #.
 #: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
-msgstr ""
+msgstr "Ужываць мапу _памераў маскі:"
 
 #: ../plug-ins/common/oilify.c:867
 #: ../plug-ins/common/sinus.c:922
@@ -6204,9 +6105,8 @@ msgstr "_Паказьнік ступені:"
 #. * Exponent map check button
 #.
 #: ../plug-ins/common/oilify.c:882
-#, fuzzy
 msgid "Use e_xponent map:"
-msgstr "_Стварыць мапу шрыфтоў..."
+msgstr "Ужываць мапу _ступеняў:"
 
 #.
 #. * Intensity algorithm check button
@@ -6225,9 +6125,8 @@ msgid "Division"
 msgstr "Дзяленьне"
 
 #: ../plug-ins/common/papertile.c:319
-#, fuzzy
 msgid "Fractional Pixels"
-msgstr "Колькасьць піксэляў:"
+msgstr "Частковыя піксэлі"
 
 #: ../plug-ins/common/papertile.c:324
 msgid "_Background"
@@ -6238,9 +6137,8 @@ msgid "_Ignore"
 msgstr "_Ігнараваць"
 
 #: ../plug-ins/common/papertile.c:328
-#, fuzzy
 msgid "_Force"
-msgstr "Прымусовые аўтанамінкаваньне"
+msgstr "_Прымусова"
 
 #: ../plug-ins/common/papertile.c:335
 msgid "C_entering"
@@ -6288,7 +6186,7 @@ msgstr "Колер асноведзі"
 
 #: ../plug-ins/common/papertile.c:846
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "Парэзаць відарыс на папяровыя шматкі й скласьці іх"
 
 #: ../plug-ins/common/papertile.c:851
 msgid "September 31, 1999"
@@ -6388,9 +6286,8 @@ msgstr "Адсотак _белага:"
 
 #: ../plug-ins/common/pix.c:140
 #: ../plug-ins/common/pix.c:157
-#, fuzzy
 msgid "Alias Pix image"
-msgstr "_Паказаць вылучэньне відарыса"
+msgstr "Відарыс Alias Pix"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
@@ -6430,9 +6327,8 @@ msgid "Plasma"
 msgstr "Плязма"
 
 #: ../plug-ins/common/plasma.c:336
-#, fuzzy
 msgid "Random _seed:"
-msgstr "_Новы лік"
+msgstr "Адвольны _лік:"
 
 #: ../plug-ins/common/plasma.c:347
 msgid "T_urbulence:"
@@ -6484,9 +6380,8 @@ msgstr "Назва"
 
 #: ../plug-ins/common/plugin-browser.c:605
 #: ../plug-ins/common/plugin-browser.c:668
-#, fuzzy
 msgid "Menu Path"
-msgstr "_Шлях"
+msgstr "Шлях мэню"
 
 #: ../plug-ins/common/plugin-browser.c:613
 #: ../plug-ins/common/plugin-browser.c:677
@@ -6499,14 +6394,12 @@ msgid "Installation Date"
 msgstr "Даты ўсталяваньня"
 
 #: ../plug-ins/common/plugin-browser.c:647
-#, fuzzy
 msgid "List View"
-msgstr "Паказ сьпісу"
+msgstr "Сьпіс"
 
 #: ../plug-ins/common/plugin-browser.c:709
-#, fuzzy
 msgid "Tree View"
-msgstr "_Новы прагляд"
+msgstr "Дрэва"
 
 #: ../plug-ins/common/png.c:261
 #: ../plug-ins/common/png.c:282
@@ -6533,7 +6426,7 @@ msgstr "Невядомая мадэль колераў у файле PNG '%s'."
 
 #: ../plug-ins/common/png.c:868
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
-msgstr "Файл PNG вызначае такое зрушэньне, што пласт будзе разьмешчаны па-за відарысам."
+msgstr "Файл PNG вызначае такі зрух, што пласт будзе разьмешчаны па-за відарысам."
 
 #: ../plug-ins/common/png.c:1229
 #, c-format
@@ -6558,7 +6451,7 @@ msgstr "Захаваць _гаму"
 
 #: ../plug-ins/common/png.c:1819
 msgid "Save layer o_ffset"
-msgstr "Захаваць зрушэньне _пласта"
+msgstr "Захаваць зрух _пласта"
 
 #: ../plug-ins/common/png.c:1828
 msgid "Save _resolution"
@@ -6574,7 +6467,7 @@ msgstr "Захаваць к_амэнтар"
 
 #: ../plug-ins/common/png.c:1863
 msgid "Save color _values from transparent pixels"
-msgstr ""
+msgstr "Захоўваць значэньні _колераў празрыстых піксэляў"
 
 #: ../plug-ins/common/png.c:1877
 msgid "Co_mpression level:"
@@ -6583,12 +6476,12 @@ msgstr "_Узровень сьцісканьня:"
 #: ../plug-ins/common/png.c:1895
 #: ../plug-ins/jpeg/jpeg-save.c:1169
 msgid "_Load Defaults"
-msgstr "За_грузіць дапомныя"
+msgstr "За_грузіць прадвызначаныя"
 
 #: ../plug-ins/common/png.c:1903
 #: ../plug-ins/jpeg/jpeg-save.c:1178
 msgid "S_ave Defaults"
-msgstr "За_хаваць дапомныя"
+msgstr "За_хаваць прадвызначаныя"
 
 #: ../plug-ins/common/pnm.c:245
 msgid "PNM Image"
@@ -6727,9 +6620,9 @@ msgstr "%s-%s"
 
 #: ../plug-ins/common/poppler.c:608
 #: ../plug-ins/common/postscript.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "%s-pages"
-msgstr "Старонак:"
+msgstr "%s-старонак"
 
 #: ../plug-ins/common/poppler.c:786
 msgid "Import from PDF"
@@ -6846,14 +6739,13 @@ msgid "Open as"
 msgstr "Адкрыць як"
 
 #: ../plug-ins/common/postscript.c:3194
-#, fuzzy
 msgid "Try Bounding Box"
-msgstr "Ачысьціць скрыню пошуку"
+msgstr "Абмежавальная рамка"
 
 #. Colouring
 #: ../plug-ins/common/postscript.c:3207
 msgid "Coloring"
-msgstr ""
+msgstr "Расфарбоўваньне"
 
 #: ../plug-ins/common/postscript.c:3211
 msgid "B/W"
@@ -6911,7 +6803,7 @@ msgstr "_Захоўваць суадносіны бакоў"
 
 #: ../plug-ins/common/postscript.c:3400
 msgid "When toggled, the resulting image will be scaled to fit into the given size without changing the aspect ratio."
-msgstr ""
+msgstr "Калі задзейнічана, памер выніковага відарыса будзе зьменены так, каб ён зьмяшчаўся ў зададзены памер, не зьмяняючы суадносін бакоў."
 
 #. Unit
 #: ../plug-ins/common/postscript.c:3410
@@ -6928,9 +6820,8 @@ msgstr "_Мілімэтар"
 
 #. Format
 #: ../plug-ins/common/postscript.c:3441
-#, fuzzy
 msgid "Output"
-msgstr "Выхад:\n"
+msgstr "Выхад"
 
 #: ../plug-ins/common/postscript.c:3447
 msgid "_PostScript level 2"
@@ -6999,9 +6890,9 @@ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
 msgstr "Немагчыма апрацоўваць файлы PSD у колерах CMYK з больш, чым 5 каналаў"
 
 #: ../plug-ins/common/psd-load.c:2542
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot handle image mode %d (%s)"
-msgstr "Немагчыма апрацоўваць рэжым колераў %d файла PSD"
+msgstr "Немагчыма апрацоўваць рэжым відарыса %d (%s)"
 
 #: ../plug-ins/common/psd-load.c:2551
 #, c-format
@@ -7024,11 +6915,11 @@ msgstr "Відарыс Photoshop"
 #: ../plug-ins/common/psd-save.c:353
 #, c-format
 msgid "Unable to save layer with mode '%s'.  Either the PSD file format or the save plug-in does not support that, using normal mode instead."
-msgstr ""
+msgstr "Немагчыма захаваць пласт з рэжымам «%s». Або фармат файла PSD, або дадатак захоўваньня не падтрымліваюць такога, выкарыстаны нармальны рэжым."
 
 #: ../plug-ins/common/psd-save.c:608
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
+msgstr "Памылка: немагчыма ператварыць асноўны тып відарыса GIMP у рэжым PSD"
 
 #: ../plug-ins/common/psd-save.c:1533
 #, c-format
@@ -7063,40 +6954,36 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/randomize.c:102
-#, fuzzy
 msgid "Random Hurl"
-msgstr "Выпадковы шум"
+msgstr "Адвольны кідок"
 
 #: ../plug-ins/common/randomize.c:103
-#, fuzzy
 msgid "Random Pick"
-msgstr "Толькі выбраць"
+msgstr "Адвольны выбар"
 
 #: ../plug-ins/common/randomize.c:104
-#, fuzzy
 msgid "Random Slur"
-msgstr "Выпадковы шум"
+msgstr "Адвольнае раставаньне"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
-msgstr ""
+msgstr "Цалкам адвольная доля піксэляў"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
-msgstr "Адвольны абмяняць некаторыя піксэлі зь іхнымі суседзямі"
+msgstr "Адвольна абмяняць некаторыя піксэлі зь іхнымі суседзямі"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
+msgstr "Адвольна саслізгнуць крыху піксэляў уніз (падобна на раставаньне)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
-msgstr ""
+msgstr "_Кідок..."
 
 #: ../plug-ins/common/randomize.c:243
-#, fuzzy
 msgid "_Pick..."
-msgstr "Толькі выбраць"
+msgstr "_Выбар..."
 
 #: ../plug-ins/common/randomize.c:255
 msgid "_Slur..."
@@ -7104,13 +6991,12 @@ msgstr "_Неахайны..."
 
 #: ../plug-ins/common/randomize.c:744
 #: ../plug-ins/common/snoise.c:601
-#, fuzzy
 msgid "_Random seed:"
-msgstr "_Новы лік"
+msgstr "_Адвольны лік:"
 
 #: ../plug-ins/common/randomize.c:753
 msgid "R_andomization (%):"
-msgstr ""
+msgstr "_Адвольнасьць (%):"
 
 #: ../plug-ins/common/randomize.c:756
 msgid "Percentage of pixels to be filtered"
@@ -7142,18 +7028,16 @@ msgid "RGB Alpha"
 msgstr "RGB-альфа"
 
 #: ../plug-ins/common/raw.c:1004
-#, fuzzy
 msgid "Planar RGB"
-msgstr "Профіль _RGB:"
+msgstr "Плоскі RGB"
 
 #: ../plug-ins/common/raw.c:1005
 msgid "Indexed"
 msgstr "Індэксаваны"
 
 #: ../plug-ins/common/raw.c:1006
-#, fuzzy
 msgid "Indexed Alpha"
-msgstr "Індэксаваны-альфа"
+msgstr "Індэксаваная альфа"
 
 #: ../plug-ins/common/raw.c:1011
 msgid "Image _Type:"
@@ -7179,27 +7063,23 @@ msgstr "Тып палітры:"
 
 #: ../plug-ins/common/raw.c:1088
 msgid "Off_set:"
-msgstr "_Зрушэньне:"
+msgstr "_Зрух:"
 
 #: ../plug-ins/common/raw.c:1100
-#, fuzzy
 msgid "Select Palette File"
 msgstr "Выберы файл з палітрай"
 
 #: ../plug-ins/common/raw.c:1106
-#, fuzzy
 msgid "Pal_ette File:"
-msgstr "_Дыялёг адкрыцьця файла"
+msgstr "_Файл з палітрай:"
 
 #: ../plug-ins/common/raw.c:1134
-#, fuzzy
 msgid "Raw Image Save"
-msgstr "Захаваць сыры відарыс"
+msgstr "Захаваньне сырога відарыса"
 
 #: ../plug-ins/common/raw.c:1156
-#, fuzzy
 msgid "RGB Save Type"
-msgstr "Тып левага колеру"
+msgstr "Тып захаваньня RGB"
 
 #: ../plug-ins/common/raw.c:1160
 msgid "Standard (R,G,B)"
@@ -7207,12 +7087,11 @@ msgstr "Стандартны (R,G,B)"
 
 #: ../plug-ins/common/raw.c:1161
 msgid "Planar (RRR,GGG,BBB)"
-msgstr ""
+msgstr "Плоскі (RRR,GGG,BBB)"
 
 #: ../plug-ins/common/raw.c:1166
-#, fuzzy
 msgid "Indexed Palette Type"
-msgstr "Зьмяніць індэксаваную палітру"
+msgstr "Тып індэксаванай палітры"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
@@ -7271,23 +7150,20 @@ msgid "_High"
 msgstr "_Высокі"
 
 #: ../plug-ins/common/retinex.c:351
-#, fuzzy
 msgid "_Scale:"
-msgstr "Маштаб:"
+msgstr "_Шкала:"
 
 #: ../plug-ins/common/retinex.c:366
-#, fuzzy
 msgid "_Scale division:"
-msgstr "Маштабаваць відарыс"
+msgstr "_Дзяленьне шкалы:"
 
 #: ../plug-ins/common/retinex.c:381
 msgid "_Dynamic:"
-msgstr ""
+msgstr "_Дынаміка:"
 
 #: ../plug-ins/common/retinex.c:654
-#, fuzzy
 msgid "Retinex: filtering"
-msgstr "Паляпшэньне відарысу паводле альгарытму Retinex"
+msgstr "Retinex: фільтраваньне"
 
 #: ../plug-ins/common/ripple.c:127
 msgid "Displace pixels in a ripple pattern"
@@ -7357,22 +7233,19 @@ msgstr "Паварочваньне"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr ""
+msgstr "Расфарбаваць адзін відарыс, выкарыстоўваючы іншы як прыклад"
 
 #: ../plug-ins/common/sample_colorize.c:303
-#, fuzzy
 msgid "_Sample Colorize..."
-msgstr "Танаваньне відарыса"
+msgstr "_Расфарбаваць паводле прыкладу..."
 
 #: ../plug-ins/common/sample_colorize.c:1313
-#, fuzzy
 msgid "Sample Colorize"
-msgstr "Танаваньне відарыса"
+msgstr "Расфарбаваць паводле прыкладу"
 
 #: ../plug-ins/common/sample_colorize.c:1318
-#, fuzzy
 msgid "Get _Sample Colors"
-msgstr "_Найбольшая колькасьць колераў:"
+msgstr "Атрымаць _колеры-прыклады"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample_colorize.c:1347
@@ -7405,43 +7278,36 @@ msgid "Show color"
 msgstr "Паказваць колер"
 
 #: ../plug-ins/common/sample_colorize.c:1550
-#, fuzzy
 msgid "Input levels:"
-msgstr "Уваходныя ўзроўні"
+msgstr "Пачатковыя ўзроўні:"
 
 #: ../plug-ins/common/sample_colorize.c:1600
-#, fuzzy
 msgid "Output levels:"
-msgstr "Выходныя ўзроўні"
+msgstr "Выніковыя ўзроўні:"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1640
-#, fuzzy
 msgid "Hold intensity"
-msgstr "Яркасьць сьвятла"
+msgstr "Захоўваць яркасьць"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1651
-#, fuzzy
 msgid "Original intensity"
-msgstr "Яркасьць сьвятла"
+msgstr "Спачатная яркасьць"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1669
-#, fuzzy
 msgid "Use subcolors"
-msgstr "Ужываць як:"
+msgstr "Ужываць падколеры"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1680
-#, fuzzy
 msgid "Smooth samples"
-msgstr "Згладзіць краі"
+msgstr "Плаўназьменныя прыклады"
 
 #: ../plug-ins/common/sample_colorize.c:2652
-#, fuzzy
 msgid "Sample analyze"
-msgstr "Пункты-прыклады"
+msgstr "Аналізаваць прыклады"
 
 #: ../plug-ins/common/sample_colorize.c:3030
 msgid "Remap colorized"
@@ -7550,12 +7416,12 @@ msgstr "Размыць суседнія піксэлі, але толькі ў �
 
 #: ../plug-ins/common/sel_gauss.c:115
 msgid "_Selective Gaussian Blur..."
-msgstr "_Сэлекцыйнае Гаўсава размыцьцё..."
+msgstr "_Сэлекцыйнае Гаўсаўскае размыцьцё..."
 
 #: ../plug-ins/common/sel_gauss.c:195
 #: ../plug-ins/common/sel_gauss.c:232
 msgid "Selective Gaussian Blur"
-msgstr "Сэлекцыйнае Гаўсава размыцьцё"
+msgstr "Сэлекцыйнае Гаўсаўскае размыцьцё"
 
 #: ../plug-ins/common/sel_gauss.c:271
 msgid "_Blur radius:"
@@ -7570,7 +7436,6 @@ msgid "Replace partial transparency with the current background color"
 msgstr "Замяніць частковую празрыстасьць на бягучы колер асноведзі"
 
 #: ../plug-ins/common/semiflatten.c:75
-#, fuzzy
 msgid "_Semi-Flatten"
 msgstr "_Сплюшчыць відарыс"
 
@@ -7615,11 +7480,11 @@ msgstr "Зрушэньне"
 
 #: ../plug-ins/common/shift.c:386
 msgid "Shift _horizontally"
-msgstr "Зрушэньне па _гарызанталі"
+msgstr "Зрушыць па _гарызанталі"
 
 #: ../plug-ins/common/shift.c:389
 msgid "Shift _vertically"
-msgstr "Зрушэньне па _вэртыкалі"
+msgstr "Зрушыць па _вэртыкалі"
 
 #: ../plug-ins/common/shift.c:420
 msgid "Shift _amount:"
@@ -7748,7 +7613,7 @@ msgstr "_Агляд"
 
 #: ../plug-ins/common/smooth_palette.c:83
 msgid "Derive a smooth color palette from the image"
-msgstr ""
+msgstr "Здабыць плаўназьменную палітру зь відарыса"
 
 #: ../plug-ins/common/smooth_palette.c:88
 msgid "Smoo_th Palette..."
@@ -7781,19 +7646,18 @@ msgid "Solid Noise"
 msgstr "Суцэльны шум"
 
 #: ../plug-ins/common/snoise.c:614
-#, fuzzy
 msgid "_Detail:"
-msgstr "Узровень падрабязнасьцяў"
+msgstr "_Падрабязнасьці:"
 
 #. Turbulent
 #: ../plug-ins/common/snoise.c:624
 msgid "T_urbulent"
-msgstr ""
+msgstr "_Турбулентны"
 
 #. Tilable
 #: ../plug-ins/common/snoise.c:638
 msgid "T_ilable"
-msgstr ""
+msgstr "_Прыдатны для замошчваньня"
 
 #: ../plug-ins/common/snoise.c:653
 msgid "_X size:"
@@ -7833,41 +7697,39 @@ msgstr "Вызначэньне краёў апэратарам Собэля"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Удаць зарыва, зрабіўшы падсвечаныя месцы яркімі й зьмякчанымі"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr ""
+msgstr "_Мяккае зарыва..."
 
 #: ../plug-ins/common/softglow.c:630
 msgid "Softglow"
-msgstr ""
+msgstr "Мяккае зарыва"
 
 #: ../plug-ins/common/softglow.c:667
-#, fuzzy
 msgid "_Glow radius:"
-msgstr "Радыюс зарыва"
+msgstr "_Радыюс зарыва:"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr ""
+msgstr "Зрабіць яркія плямы зорнымі бліскаўкамі"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
-msgstr ""
+msgstr "_Бліскаўкі..."
 
 #: ../plug-ins/common/sparkle.c:223
-#, fuzzy
 msgid "Region selected for filter is empty"
-msgstr "Немагчыма зрабіць вылучаную вобласьць плаваючай, бо яна пустая."
+msgstr "Вобласьць, вылучаная для фільтра, пустая"
 
 #: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
-msgstr ""
+msgstr "Стварэньне бліскавак"
 
 #: ../plug-ins/common/sparkle.c:337
 msgid "Sparkle"
-msgstr ""
+msgstr "Бліскаўкі"
 
 #: ../plug-ins/common/sparkle.c:373
 msgid "Luminosity _threshold:"
@@ -7878,14 +7740,12 @@ msgid "Adjust the luminosity threshold"
 msgstr "Выпраўленьне парог яркасьці"
 
 #: ../plug-ins/common/sparkle.c:386
-#, fuzzy
 msgid "F_lare intensity:"
-msgstr "Яркасьць сьвятла"
+msgstr "_Яркасьць полымя:"
 
 #: ../plug-ins/common/sparkle.c:389
-#, fuzzy
 msgid "Adjust the flare intensity"
-msgstr "Яраксьць выяваў сузор'яў"
+msgstr "Адрэгуляваць яркасьць полымя"
 
 #: ../plug-ins/common/sparkle.c:399
 msgid "_Spike length:"
@@ -7933,7 +7793,7 @@ msgstr "Выпадковае _адценьне:"
 
 #: ../plug-ins/common/sparkle.c:468
 msgid "Adjust how much the hue should be changed randomly"
-msgstr ""
+msgstr "Вызначае, на колькі будзе адвольна зьмененае адценьне "
 
 #: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
@@ -7941,7 +7801,7 @@ msgstr "Выпадковая _насычанасьць:"
 
 #: ../plug-ins/common/sparkle.c:481
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr ""
+msgstr "Вызначае, на колькі будзе адвольна зьмененая насычанасьць"
 
 #: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
@@ -7998,11 +7858,11 @@ msgstr "Суцэльны"
 
 #: ../plug-ins/common/spheredesigner.c:292
 msgid "Checker"
-msgstr ""
+msgstr "Шахматная дошка"
 
 #: ../plug-ins/common/spheredesigner.c:293
 msgid "Marble"
-msgstr ""
+msgstr "Мармур"
 
 #: ../plug-ins/common/spheredesigner.c:294
 msgid "Lizard"
@@ -8010,7 +7870,7 @@ msgstr "Яшчарка"
 
 #: ../plug-ins/common/spheredesigner.c:295
 msgid "Phong"
-msgstr ""
+msgstr "Фонг"
 
 #: ../plug-ins/common/spheredesigner.c:296
 msgid "Noise"
@@ -8043,9 +7903,9 @@ msgid "Light"
 msgstr "Сьвятло"
 
 #: ../plug-ins/common/spheredesigner.c:2017
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' is not a valid save file."
-msgstr "'%s' не зьяўляецца дапушчальнай схемай URI"
+msgstr "Файл «%s» не зьяўляецца дапушчальным файлам захоўваньня."
 
 #: ../plug-ins/common/spheredesigner.c:2196
 msgid "Open File"
@@ -8084,7 +7944,6 @@ msgstr "Дыялёг выбару колера"
 #: ../plug-ins/common/spheredesigner.c:2755
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:553
-#, fuzzy
 msgid "Scale:"
 msgstr "Маштаб:"
 
@@ -8098,21 +7957,19 @@ msgstr "Колькасьць:"
 
 #: ../plug-ins/common/spheredesigner.c:2777
 msgid "Exp.:"
-msgstr ""
+msgstr "Ступень:"
 
 #: ../plug-ins/common/spheredesigner.c:2784
 msgid "Transformations"
 msgstr "Ператварэньні"
 
 #: ../plug-ins/common/spheredesigner.c:2807
-#, fuzzy
 msgid "Scale Y:"
-msgstr "Маштаб:"
+msgstr "Памер па Y:"
 
 #: ../plug-ins/common/spheredesigner.c:2813
-#, fuzzy
 msgid "Scale Z:"
-msgstr "Маштаб:"
+msgstr "Памер па Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2820
 msgid "Rotate X:"
@@ -8155,9 +8012,8 @@ msgid "Region selected for plug-in is empty"
 msgstr "Выбраная для дадатка вобласьць пустая"
 
 #: ../plug-ins/common/spread.c:89
-#, fuzzy
 msgid "Move pixels around randomly"
-msgstr "Перанесьці вылучаныя піксэлі ў буфэр абмену"
+msgstr "Адвольна ва ўсе бакі пасунуць піксэлі"
 
 #: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
@@ -8222,14 +8078,13 @@ msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Тып гэткага файла SUN-raster не падтрымліваецца"
 
 #: ../plug-ins/common/sunras.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "Папярэджаньне ад сьпісу %s: немагчыма прачытаць тэчку %s.\n"
+msgstr "Немагчыма прачытаць запісы аб колеры з «%s»."
 
 #: ../plug-ins/common/sunras.c:433
-#, fuzzy
 msgid "Type of colormap not supported"
-msgstr "Опцыя %s не падтрымліваецца."
+msgstr "Тып мапы колераў не падтрымліваецца."
 
 #: ../plug-ins/common/sunras.c:440
 #: ../plug-ins/common/xbm.c:810
@@ -8281,7 +8136,7 @@ msgstr "Такая глыбіня відарыса не падтрымлівае
 
 #: ../plug-ins/common/sunras.c:524
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Захоўваньне SUNRAS ня можа апрацоўваць відарысы з альфаканаламі"
 
 #: ../plug-ins/common/sunras.c:535
 msgid "Can't operate on unknown image types"
@@ -8297,9 +8152,8 @@ msgstr "Немагчыма працаваць зь відарысам невяд
 #: ../plug-ins/common/xwd.c:1791
 #: ../plug-ins/common/xwd.c:2048
 #: ../plug-ins/fits/fits.c:678
-#, fuzzy
 msgid "EOF encountered on reading"
-msgstr "Увага: нечаканы канец файла пры чытаньні загалоўку AIFF\n"
+msgstr "Нечаканы канец файла пры чытаньні"
 
 #: ../plug-ins/common/sunras.c:1610
 msgid "Save as SUNRAS"
@@ -8311,9 +8165,8 @@ msgid "Data Formatting"
 msgstr "Фарматаваньне даньняў"
 
 #: ../plug-ins/common/sunras.c:1631
-#, fuzzy
 msgid "RunLength Encoded"
-msgstr "Закадавана ўжываючы: %s"
+msgstr "Закадаваны ў RLE"
 
 #: ../plug-ins/common/svg.c:138
 msgid "SVG image"
@@ -8358,21 +8211,18 @@ msgstr "Вышыня:"
 
 #: ../plug-ins/common/svg.c:857
 #: ../plug-ins/common/wmf.c:640
-#, fuzzy
 msgid "_X ratio:"
-msgstr "Маштаб"
+msgstr "Суадносіны па _X:"
 
 #: ../plug-ins/common/svg.c:879
 #: ../plug-ins/common/wmf.c:662
-#, fuzzy
 msgid "_Y ratio:"
-msgstr "Маштаб"
+msgstr "Суадносіны па _Y:"
 
 #: ../plug-ins/common/svg.c:893
 #: ../plug-ins/common/wmf.c:676
-#, fuzzy
 msgid "Constrain aspect ratio"
-msgstr "Фіксаваныя прапорцыі"
+msgstr "Замацаваць прапорцыі"
 
 #: ../plug-ins/common/svg.c:904
 #: ../plug-ins/common/wmf.c:687
@@ -8402,12 +8252,12 @@ msgstr "Відарыс TarGA"
 #: ../plug-ins/common/tga.c:434
 #, fuzzy, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "Памылка чытаньня з сэрвэра."
+msgstr "Памылка чытаньня %s з '%s': %s"
 
 #: ../plug-ins/common/tga.c:450
 #, fuzzy, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "Памылка чытаньня з сэрвэра."
+msgstr "Памылка чытаньня %s з '%s': %s"
 
 #: ../plug-ins/common/tga.c:1323
 msgid "Save as TGA"
@@ -8415,9 +8265,8 @@ msgstr "Захаваць як TGA"
 
 #. rle
 #: ../plug-ins/common/tga.c:1346
-#, fuzzy
 msgid "_RLE compression"
-msgstr "Сьцісканьне даньняў"
+msgstr "Сьцісканьне _RLE"
 
 #. origin
 #: ../plug-ins/common/tga.c:1356
@@ -8426,12 +8275,11 @@ msgstr "_Пачатак уверсе зьлева"
 
 #: ../plug-ins/common/threshold_alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "Зрабіць празрыстым або ўсё, або нічога"
 
 #: ../plug-ins/common/threshold_alpha.c:90
-#, fuzzy
 msgid "_Threshold Alpha..."
-msgstr "RGB-альфа"
+msgstr "_Парог празрыстасьці..."
 
 #: ../plug-ins/common/threshold_alpha.c:131
 msgid "The layer has its alpha channel locked."
@@ -8439,17 +8287,15 @@ msgstr "Альфаканал пласта заблякаваны."
 
 #: ../plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "Ня выбраны абшар рысаваньня RGBA/GRAYA."
 
 #: ../plug-ins/common/threshold_alpha.c:165
-#, fuzzy
 msgid "Coloring transparency"
-msgstr "Запоўніць празрыстым"
+msgstr "Фарбаваньне празрыстасьці"
 
 #: ../plug-ins/common/threshold_alpha.c:248
-#, fuzzy
 msgid "Threshold Alpha"
-msgstr "RGB-альфа"
+msgstr "Парог празрыстасьці"
 
 #: ../plug-ins/common/threshold_alpha.c:283
 msgid "Threshold:"
@@ -8464,7 +8310,7 @@ msgstr "Відарыс TIFF"
 #: ../plug-ins/common/tiff-load.c:305
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr ""
+msgstr "TIFF «%s» ня ўтрымлівае аніякіх паказьнікаў"
 
 #: ../plug-ins/common/tiff-load.c:446
 msgid "Import from TIFF"
@@ -8506,9 +8352,8 @@ msgid "_LZW"
 msgstr "_LZW"
 
 #: ../plug-ins/common/tiff-save.c:1075
-#, fuzzy
 msgid "_Pack Bits"
-msgstr "24 біты"
+msgstr "_Пакаваныя біты"
 
 #: ../plug-ins/common/tiff-save.c:1076
 msgid "_Deflate"
@@ -8528,7 +8373,7 @@ msgstr "Факс МККТТ група 4"
 
 #: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
-msgstr ""
+msgstr "Захаваць значэньні _колераў празрыстых піксэляў"
 
 #: ../plug-ins/common/tiff-save.c:1117
 #: ../plug-ins/common/xbm.c:1227
@@ -8563,7 +8408,7 @@ msgstr "_Стварыць новы відарыс"
 
 #: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the original"
-msgstr ""
+msgstr "Стварыць відарыс, замошчаны меншымі вэрсіямі пачатковага"
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
@@ -8590,14 +8435,12 @@ msgid "A_ll tiles"
 msgstr "_Усе пліткі"
 
 #: ../plug-ins/common/tileit.c:476
-#, fuzzy
 msgid "Al_ternate tiles"
-msgstr "_Альфу ў вылучэньне"
+msgstr "_Праз адну"
 
 #: ../plug-ins/common/tileit.c:490
-#, fuzzy
 msgid "_Explicit tile"
-msgstr "Побач па _вэртыкалі"
+msgstr "_Пэўная плітка"
 
 #: ../plug-ins/common/tileit.c:496
 msgid "Ro_w:"
@@ -8618,7 +8461,7 @@ msgstr "Колькасьць кавалкаў"
 
 #: ../plug-ins/common/tiler.c:67
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr ""
+msgstr "Зьмяніць краі, каб зрабіць відарыс, прыдатным для замошчваньня бяз швоў"
 
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
@@ -8626,7 +8469,7 @@ msgstr "_Сшыць бяз швоў"
 
 #: ../plug-ins/common/tiler.c:338
 msgid "Tiler"
-msgstr ""
+msgstr "Замошчвальнік"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid "Saved"
@@ -8741,9 +8584,8 @@ msgid "_Plural:"
 msgstr "_Множны:"
 
 #: ../plug-ins/common/uniteditor.c:350
-#, fuzzy
 msgid "Incomplete input"
-msgstr "Прылады ўвядзеньня"
+msgstr "Уведзена ня ўсё"
 
 #: ../plug-ins/common/uniteditor.c:353
 msgid "Please fill in all text fields."
@@ -8852,14 +8694,12 @@ msgid "More blac_k (smaller value)"
 msgstr "Больш _чорнага (меншые значэньне)"
 
 #: ../plug-ins/common/vpropagate.c:195
-#, fuzzy
 msgid "_Middle value to peaks"
-msgstr "Памылка: значэньне выбара не падтрымліваецца прыладай %s.\n"
+msgstr "_Сярэднія значэньні на пікі"
 
 #: ../plug-ins/common/vpropagate.c:198
-#, fuzzy
 msgid "_Foreground to peaks"
-msgstr "Колер рысаваньня:"
+msgstr "_Колер рысаваньня на пікі"
 
 #: ../plug-ins/common/vpropagate.c:201
 msgid "O_nly foreground"
@@ -8874,18 +8714,16 @@ msgid "Mor_e opaque"
 msgstr "Больш _непразрыстасьці"
 
 #: ../plug-ins/common/vpropagate.c:210
-#, fuzzy
 msgid "More t_ransparent"
-msgstr "Празрыстая _асноведзь"
+msgstr "Больш _празрысты"
 
 #: ../plug-ins/common/vpropagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
 msgstr "Распаўсюдзіць пэўныя колеры на суседнія піксэлі"
 
 #: ../plug-ins/common/vpropagate.c:238
-#, fuzzy
 msgid "_Value Propagate..."
-msgstr "_Інвэртаваць яркасьць"
+msgstr "_Распаўсюдзіць значэньні..."
 
 #: ../plug-ins/common/vpropagate.c:245
 msgid "Shrink darker areas of the image"
@@ -8897,17 +8735,16 @@ msgstr "_Разьесьці..."
 
 #: ../plug-ins/common/vpropagate.c:257
 msgid "Grow darker areas of the image"
-msgstr ""
+msgstr "Павялічыць сьвятлейшыя вобласьці відарыса"
 
 #: ../plug-ins/common/vpropagate.c:262
 msgid "_Dilate"
-msgstr ""
+msgstr "_Пашырыць"
 
 #: ../plug-ins/common/vpropagate.c:473
 #: ../plug-ins/common/vpropagate.c:1063
-#, fuzzy
 msgid "Value Propagate"
-msgstr "_Інвэртаваць яркасьць"
+msgstr "Распаўсюд значэньняў"
 
 #. Parameter settings
 #: ../plug-ins/common/vpropagate.c:1128
@@ -8923,9 +8760,8 @@ msgid "_Upper threshold:"
 msgstr "_Верхні парог:"
 
 #: ../plug-ins/common/vpropagate.c:1165
-#, fuzzy
 msgid "_Propagating rate:"
-msgstr "_Часьціня дыскрэтызацыі:"
+msgstr "_Ступень:"
 
 #: ../plug-ins/common/vpropagate.c:1176
 msgid "To l_eft"
@@ -8944,26 +8780,24 @@ msgid "To _bottom"
 msgstr "У_ніз"
 
 #: ../plug-ins/common/vpropagate.c:1194
-#, fuzzy
 msgid "Propagating _alpha channel"
-msgstr "_Прыбраць альфаканал"
+msgstr "Распаўсюд _альфаканалу"
 
 #: ../plug-ins/common/vpropagate.c:1205
-#, fuzzy
 msgid "Propagating value channel"
-msgstr "_Рэдагаваць атрыбуты канала..."
+msgstr "Распаўсюд каналу значэньня"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
-msgstr ""
+msgstr "Па ўсялякаму скрывіць ці запэцкаць відарыс"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
-msgstr ""
+msgstr "_Скрыўленьне..."
 
 #: ../plug-ins/common/warp.c:377
 msgid "Warp"
-msgstr ""
+msgstr "Скрыўленьне"
 
 #: ../plug-ins/common/warp.c:398
 msgid "Basic Options"
@@ -8975,24 +8809,20 @@ msgstr "Памер кроку:"
 
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:443
-#, fuzzy
 msgid "Displacement map:"
-msgstr "_Мапа колераў"
+msgstr "Мапа зрушэньня:"
 
 #. =======================================================================
 #. Displacement Type
 #: ../plug-ins/common/warp.c:461
-#, fuzzy
 msgid "On edges:"
-msgstr "Згладзіць краі"
+msgstr "На краях:"
 
 #: ../plug-ins/common/warp.c:472
-#, fuzzy
 msgid "Wrap"
-msgstr "Вакно да памераў відарыса"
+msgstr "Загарнуць"
 
 #: ../plug-ins/common/warp.c:487
-#, fuzzy
 msgid "Smear"
 msgstr "Пляма"
 
@@ -9014,9 +8844,8 @@ msgid "Advanced Options"
 msgstr "Дадатковыя выборы"
 
 #: ../plug-ins/common/warp.c:553
-#, fuzzy
 msgid "Dither size:"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Згладжваньне:"
 
 #: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
@@ -9028,36 +8857,30 @@ msgstr "Падкрокаў:"
 
 #. Magnitude map menu
 #: ../plug-ins/common/warp.c:588
-#, fuzzy
 msgid "Magnitude map:"
-msgstr "_Мапа колераў"
+msgstr "Мапа вышыняў:"
 
 #: ../plug-ins/common/warp.c:610
-#, fuzzy
 msgid "Use magnitude map"
-msgstr "_Стварыць мапу шрыфтоў..."
+msgstr "Ужываць мапу вышынь"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:623
-#, fuzzy
 msgid "More Advanced Options"
-msgstr "Паспрабуй `%s --help', каб атрымаць больш можнасьцяў.\n"
+msgstr "Больш дадатковых выбораў"
 
 #: ../plug-ins/common/warp.c:640
-#, fuzzy
 msgid "Gradient scale:"
-msgstr "Маштабаваць відарыс"
+msgstr "Памер градыента:"
 
 #: ../plug-ins/common/warp.c:663
-#, fuzzy
 msgid "Gradient map selection menu"
-msgstr "Адкрыць дыялёг выбару градыента"
+msgstr "Мэню выбару мапы градыента"
 
 #: ../plug-ins/common/warp.c:673
-#, fuzzy
 msgid "Vector mag:"
-msgstr "Вэктар напрамку"
+msgstr "Вышыня вэктара:"
 
 #. Angle
 #: ../plug-ins/common/warp.c:688
@@ -9067,29 +8890,26 @@ msgstr "Кут:"
 
 #: ../plug-ins/common/warp.c:711
 msgid "Fixed-direction-vector map selection menu"
-msgstr ""
+msgstr "Мэню выбару мапы вэктара зь фіксаваным напрамкам"
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1187
-#, fuzzy
 msgid "Smoothing X gradient"
-msgstr "Рэдактар градыентаў"
+msgstr "Згладжваньне градыента па X"
 
 #: ../plug-ins/common/warp.c:1190
-#, fuzzy
 msgid "Smoothing Y gradient"
-msgstr "Рэдактар градыентаў"
+msgstr "Згладжваньне градыента па Y"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1240
-#, fuzzy
 msgid "Finding XY gradient"
-msgstr "Мэню рэдактара градыента"
+msgstr "Пошук XY градыента"
 
 #: ../plug-ins/common/warp.c:1265
 #, fuzzy, c-format
 msgid "Flow step %d"
-msgstr "%s у кроку `%s..%s'"
+msgstr "Памер кроку:"
 
 #: ../plug-ins/common/waves.c:120
 msgid "Distort the image with waves"
@@ -9151,36 +8971,31 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr ""
+msgstr "Скрывіць відарыс віраваньнямі й шчыпаньнямі"
 
 #: ../plug-ins/common/whirlpinch.c:149
-#, fuzzy
 msgid "W_hirl and Pinch..."
-msgstr "Захаваць і закрыць..."
+msgstr "Вір і _шчыпок..."
 
 #: ../plug-ins/common/whirlpinch.c:193
 msgid "Region affected by plug-in is empty"
 msgstr "Вобласьць, якую апрацоўвае дадатак, пустая"
 
 #: ../plug-ins/common/whirlpinch.c:341
-#, fuzzy
 msgid "Whirling and pinching"
-msgstr "Захаваць і закрыць..."
+msgstr "Віраваньне й шчыпаньне"
 
 #: ../plug-ins/common/whirlpinch.c:528
-#, fuzzy
 msgid "Whirl and Pinch"
-msgstr "Захаваць і закрыць..."
+msgstr "Вір і шчыпок"
 
 #: ../plug-ins/common/whirlpinch.c:564
-#, fuzzy
 msgid "_Whirl angle:"
-msgstr "Кут віраваньня"
+msgstr "_Вугал віраваньня:"
 
 #: ../plug-ins/common/whirlpinch.c:576
-#, fuzzy
 msgid "_Pinch amount:"
-msgstr "Узровень размыцьця"
+msgstr "Моц шчыпаньня:"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
@@ -9270,20 +9085,18 @@ msgstr ""
 "вызначаны памер!"
 
 #: ../plug-ins/common/wmf.c:489
-#, fuzzy
 msgid "Render Windows Metafile"
-msgstr "Відарыс Windows BMP"
+msgstr "Апрацоўваньне Windows Metafile"
 
 #: ../plug-ins/common/wmf.c:974
 #: ../plug-ins/sgi/sgi.c:313
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading."
-msgstr "Немагчыма адкрыць '%s'  для чытаньня: %s"
+msgstr "Немагчыма адкрыць '%s' для чытаньня."
 
 #: ../plug-ins/common/wmf.c:988
-#, fuzzy
 msgid "Rendered WMF"
-msgstr "Файл Microsoft WMF"
+msgstr "Апрацаваны WMF"
 
 #: ../plug-ins/common/xbm.c:172
 #: ../plug-ins/common/xbm.c:190
@@ -9305,6 +9118,8 @@ msgid ""
 "'%s':\n"
 "No image data type specified"
 msgstr ""
+"«%s»:\n"
+"Тып даньняў відарыса ня вызначаны"
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/xbm.c:980
@@ -9322,6 +9137,8 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
+"Немагчыма захаваць маску курсора\n"
+"для відарыса без альфаканала."
 
 #: ../plug-ins/common/xbm.c:1166
 msgid "Save as XBM"
@@ -9334,29 +9151,25 @@ msgstr "Выборы XBM"
 
 #. X10 format
 #: ../plug-ins/common/xbm.c:1193
-#, fuzzy
 msgid "_X10 format bitmap"
-msgstr "Бітавая мапа скончылася заўчасна."
+msgstr "Бітмапа фармату _X10"
 
 #: ../plug-ins/common/xbm.c:1213
-#, fuzzy
 msgid "_Identifier prefix:"
-msgstr "Нечаканы вызначнік"
+msgstr "_Прэфікс вызначніка:"
 
 #. hotspot toggle
 #: ../plug-ins/common/xbm.c:1235
 msgid "_Write hot spot values"
-msgstr ""
+msgstr "_Запісаць значэньні «гарачай плямы»"
 
 #: ../plug-ins/common/xbm.c:1257
-#, fuzzy
 msgid "Hot spot _X:"
-msgstr "_Распалены дабяла..."
+msgstr "«Гарачая пляма» _X:"
 
 #: ../plug-ins/common/xbm.c:1267
-#, fuzzy
 msgid "Hot spot _Y:"
-msgstr "_Распалены дабяла..."
+msgstr "«Гарачая пляма» _Y:"
 
 #. mask file
 #: ../plug-ins/common/xbm.c:1274
@@ -9365,12 +9178,11 @@ msgstr "Файл маскі"
 
 #: ../plug-ins/common/xbm.c:1284
 msgid "W_rite extra mask file"
-msgstr ""
+msgstr "_Запісаць дадатковы файл з маскай"
 
 #: ../plug-ins/common/xbm.c:1297
-#, fuzzy
 msgid "_Mask file extension:"
-msgstr "Падай файл вываду без пашырэньня"
+msgstr "_Пашырэньне файла маскі:"
 
 #: ../plug-ins/common/xpm.c:173
 #: ../plug-ins/common/xpm.c:198
@@ -9378,43 +9190,40 @@ msgid "X PixMap image"
 msgstr "Відарыс X PixMap"
 
 #: ../plug-ins/common/xpm.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s'"
-msgstr "Памылка адкрыцьця файла"
+msgstr "Памылка адкрыцьця файла «%s»"
 
 #: ../plug-ins/common/xpm.c:358
-#, fuzzy
 msgid "XPM file invalid"
-msgstr "Выбраны няправільны файл"
+msgstr "Недапушчальны файл XPM"
 
 #: ../plug-ins/common/xpm.c:772
 msgid "Save as XPM"
 msgstr "Захаваць як XPM"
 
 #: ../plug-ins/common/xpm.c:796
-#, fuzzy
 msgid "_Alpha threshold:"
-msgstr "Ужыць парог"
+msgstr "_Парог празрыстасьці:"
 
 #: ../plug-ins/common/xwd.c:276
 #: ../plug-ins/common/xwd.c:296
-#, fuzzy
 msgid "X window dump"
-msgstr "Кіраваньне вокнамі"
+msgstr "Копія памяці вакна X"
 
 #: ../plug-ins/common/xwd.c:428
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr "Папярэджаньне ад сьпісу %s: немагчыма прачытаць тэчку %s.\n"
+msgstr "Немагчыма прачытаць загаловак XWD з «%s»."
 
 #: ../plug-ins/common/xwd.c:466
 msgid "Can't read color entries"
-msgstr ""
+msgstr "Немагчыма прачытаць запісы колераў"
 
 #: ../plug-ins/common/xwd.c:555
 #, c-format
 msgid "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is not supported."
-msgstr ""
+msgstr "Файл XWD %s мае фармат %d, глыбіню %d і %d бітаў на піксэль. Такія пакуль не падтрымліваюцца."
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
@@ -9422,11 +9231,11 @@ msgstr "Немагчыма захаваць відарыс з альфакана
 
 #: ../plug-ins/common/xwd.c:2179
 msgid "Error during writing indexed/gray image"
-msgstr ""
+msgstr "Памылка падчас запісу індэксаванага/шэрага відарыса."
 
 #: ../plug-ins/common/xwd.c:2277
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "Памылка падчас запісу RGB відарыса."
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
@@ -9451,29 +9260,27 @@ msgstr "Відарыс G3 fax"
 #: ../plug-ins/fits/fits.c:166
 #: ../plug-ins/fits/fits.c:186
 msgid "Flexible Image Transport System"
-msgstr ""
+msgstr "Зручная сыстэма перадачы відарысаў (FITS)"
 
 #: ../plug-ins/fits/fits.c:354
-#, fuzzy
 msgid "Error during open of FITS file"
-msgstr "ПАМЫЛКА: немагчыма адкрыць уваходны файл \"%s\": %s\n"
+msgstr "Памылка падчас адкрыцьця файла FITS"
 
 #: ../plug-ins/fits/fits.c:359
 msgid "FITS file keeps no displayable images"
-msgstr ""
+msgstr "Файл FITS ня ўтрымлівае відарысаў, прыдатных да паказу"
 
 #: ../plug-ins/fits/fits.c:437
 msgid "FITS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Захоўваньне АШЕЫ ня можа апрацоўваць відарысы з альфаканаламі"
 
 #: ../plug-ins/fits/fits.c:974
-#, fuzzy
 msgid "Load FITS File"
-msgstr "Прачытаць тэкст з файла"
+msgstr "Загрузіць файл FITS"
 
 #: ../plug-ins/fits/fits.c:998
 msgid "Replacement for undefined pixels"
-msgstr ""
+msgstr "Замена для нявызначаных піксэляў"
 
 #: ../plug-ins/fits/fits.c:1003
 #: ../plug-ins/gfig/gfig-dialog.c:1286
@@ -9482,47 +9289,41 @@ msgid "White"
 msgstr "Белы"
 
 #: ../plug-ins/fits/fits.c:1010
-#, fuzzy
 msgid "Pixel value scaling"
-msgstr "Маштабаваньне да %f\n"
+msgstr "Маштабаваньне значэньня піксэля"
 
 #: ../plug-ins/fits/fits.c:1015
-#, fuzzy
 msgid "By DATAMIN/DATAMAX"
-msgstr "Размыць вылучанэньне на"
+msgstr "На DATAMIN/DATAMAX"
 
 #: ../plug-ins/fits/fits.c:1022
-#, fuzzy
 msgid "Image Composing"
-msgstr "_Адкрыць відарыс"
+msgstr "Складаньне відарыса"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr ""
+msgstr "Стварыць касьмічныя рэкурсіўныя фрактальныя языкі полымя"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
 msgstr "_Полымя..."
 
 #: ../plug-ins/flame/flame.c:226
-#, fuzzy
 msgid "Drawing flame"
-msgstr "Загрузіць полымя"
+msgstr "Рысаваньне полымя"
 
 #: ../plug-ins/flame/flame.c:318
-#, fuzzy
 msgid "Flame works only on RGB drawables."
-msgstr "Працуе толькі на аб'ектах рысаваньня ў RGB."
+msgstr "Полымя працуе толькі на абшарах рысаваньня RGB."
 
 #: ../plug-ins/flame/flame.c:401
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a regular file"
-msgstr "=== Драйвэр %s не выводзіць у файл.\n"
+msgstr "«%s» не зьяўляецца звычайным файлам"
 
 #: ../plug-ins/flame/flame.c:645
-#, fuzzy
 msgid "Edit Flame"
-msgstr "Загрузіць полымя"
+msgstr "Зьмяніць полымя"
 
 #: ../plug-ins/flame/flame.c:668
 msgid "Directions"
@@ -9530,39 +9331,38 @@ msgstr "Напрамкі"
 
 #: ../plug-ins/flame/flame.c:704
 msgid "Controls"
-msgstr ""
+msgstr "Кіраваньне"
 
 #: ../plug-ins/flame/flame.c:718
 msgid "_Speed:"
 msgstr "_Хуткасьць:"
 
 #: ../plug-ins/flame/flame.c:735
-#, fuzzy
 msgid "_Randomize"
 msgstr "_Перамяшаць"
 
 #: ../plug-ins/flame/flame.c:744
 msgid "Same"
-msgstr "Такі самы"
+msgstr "Така самая"
 
 #: ../plug-ins/flame/flame.c:745
 #: ../plug-ins/gimpressionist/orientation.c:146
 #: ../plug-ins/gimpressionist/size.c:149
 msgid "Random"
-msgstr "Выпадковае"
+msgstr "Адвольная"
 
 #: ../plug-ins/flame/flame.c:749
 msgid "Swirl"
-msgstr ""
+msgstr "Вір"
 
 #: ../plug-ins/flame/flame.c:750
 msgid "Horseshoe"
-msgstr ""
+msgstr "Падкова"
 
 #: ../plug-ins/flame/flame.c:751
 #: ../plug-ins/gfig/gfig-dialog.c:1442
 msgid "Polar"
-msgstr "Палярныя"
+msgstr "Палярная"
 
 #: ../plug-ins/flame/flame.c:752
 msgid "Bent"
@@ -9570,7 +9370,7 @@ msgstr "Выгін"
 
 #: ../plug-ins/flame/flame.c:765
 msgid "_Variation:"
-msgstr ""
+msgstr "_Варыяцыя:"
 
 #: ../plug-ins/flame/flame.c:787
 msgid "Load Flame"
@@ -9585,9 +9385,8 @@ msgid "Flame"
 msgstr "Полымя"
 
 #: ../plug-ins/flame/flame.c:1045
-#, fuzzy
 msgid "_Rendering"
-msgstr "Прарысоўваньне"
+msgstr "_Апрацоўваньне"
 
 #: ../plug-ins/flame/flame.c:1071
 msgid "Co_ntrast:"
@@ -9595,21 +9394,19 @@ msgstr "_Кантраст:"
 
 #: ../plug-ins/flame/flame.c:1085
 msgid "_Gamma:"
-msgstr "_Гамма:"
+msgstr "_Гама:"
 
 #: ../plug-ins/flame/flame.c:1099
-#, fuzzy
 msgid "Sample _density:"
-msgstr "Гушчыня нітак"
+msgstr "_Гушчыня прыкладу:"
 
 #: ../plug-ins/flame/flame.c:1110
 msgid "Spa_tial oversample:"
-msgstr ""
+msgstr "_Прасторавая перадыскрэтызацыя:"
 
 #: ../plug-ins/flame/flame.c:1121
-#, fuzzy
 msgid "Spatial _filter radius:"
-msgstr "Радыюс размыцьця ценю"
+msgstr "_Радыюс прасторавага фільтра:"
 
 #: ../plug-ins/flame/flame.c:1140
 msgid "Color_map:"
@@ -9628,14 +9425,12 @@ msgid "Closed"
 msgstr "Закрыты"
 
 #: ../plug-ins/gfig/gfig-bezier.c:448
-#, fuzzy
 msgid "Close curve on completion"
-msgstr "Пстрыкні, каб закрыць крывую"
+msgstr "Закрыць крывую па сканчэньні"
 
 #: ../plug-ins/gfig/gfig-bezier.c:453
-#, fuzzy
 msgid "Show Line Frame"
-msgstr "Выразаць бягучы кадр"
+msgstr "Паказваць рамку лініі"
 
 #: ../plug-ins/gfig/gfig-bezier.c:458
 msgid "Draws lines between the control points. Only during curve creation"
@@ -9644,7 +9439,7 @@ msgstr "Рысуе лініі між кіроўнымі пунктамі. Тол
 #. Start building the dialog up
 #: ../plug-ins/gfig/gfig-dialog.c:286
 msgid "Gfig"
-msgstr ""
+msgstr "G-фіг"
 
 #. Tool options notebook
 #: ../plug-ins/gfig/gfig-dialog.c:337
@@ -9652,9 +9447,8 @@ msgid "Tool Options"
 msgstr "Выборы інструмэнта"
 
 #: ../plug-ins/gfig/gfig-dialog.c:354
-#, fuzzy
 msgid "_Stroke"
-msgstr "_Нарысаваць контур"
+msgstr "_Аблямаваць"
 
 #. Fill frame on right side
 #: ../plug-ins/gfig/gfig-dialog.c:401
@@ -9674,17 +9468,16 @@ msgid "Pattern fill"
 msgstr "Запоўніць узорам"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
-#, fuzzy
 msgid "Shape gradient"
-msgstr "Рэдактар градыентаў"
+msgstr "Фігурным градыентам"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
-msgstr "Вэртыкальны градыент"
+msgstr "Вэртыкальным градыентам"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
-msgstr "Гарызантальны градыент"
+msgstr "Гарызантальным градыентам"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:480
@@ -9703,17 +9496,15 @@ msgstr "Паказваць сетку"
 
 #: ../plug-ins/gfig/gfig-dialog.c:637
 msgid "Load Gfig Object Collection"
-msgstr ""
+msgstr "Загрузіць калекцыю аб'ектаў G-фіг"
 
 #: ../plug-ins/gfig/gfig-dialog.c:686
-#, fuzzy
 msgid "Save Gfig Drawing"
-msgstr "Рысаваньне _просты аб'ектаў"
+msgstr "Захаваць рысунак G-фіг"
 
 #: ../plug-ins/gfig/gfig-dialog.c:831
-#, fuzzy
 msgid "First Gfig"
-msgstr "Першы элемэнт"
+msgstr "Першы G-фіг"
 
 #: ../plug-ins/gfig/gfig-dialog.c:870
 msgid "_Undo"
@@ -9784,9 +9575,8 @@ msgstr "Стварыць дугу"
 
 #: ../plug-ins/gfig/gfig-dialog.c:931
 #: ../plug-ins/gfig/gfig-stock.c:50
-#, fuzzy
 msgid "Create reg polygon"
-msgstr "Шматкутнік: 10 бакоў"
+msgstr "Стварыць правільны шматкутнік"
 
 #: ../plug-ins/gfig/gfig-dialog.c:934
 #: ../plug-ins/gfig/gfig-stock.c:55
@@ -9800,7 +9590,7 @@ msgstr "Стварыць сьпіраль"
 
 #: ../plug-ins/gfig/gfig-dialog.c:940
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
+msgstr "Стварыць крывую бэзье. Shift + Кнопка сканчае стварэньне аб'екта."
 
 #: ../plug-ins/gfig/gfig-dialog.c:944
 #: ../plug-ins/gfig/gfig-stock.c:48
@@ -9841,17 +9631,15 @@ msgid "Show control points"
 msgstr "Паказаць кіроўныя пункты"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1274
-#, fuzzy
 msgid "Max undo:"
-msgstr "_Гісторыя дзеяньняў"
+msgstr "Адменаў:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
 #: ../plug-ins/gimpressionist/general.c:167
 msgid "Transparent"
-msgstr "Празрысты"
+msgstr "Празрыстая"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1285
-#, fuzzy
 msgid "Foreground"
 msgstr "Колер рысаваньня"
 
@@ -9864,7 +9652,7 @@ msgstr "Капіяваць"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid "Layer background type. Copy causes the previous layer to be copied before the draw is performed."
-msgstr ""
+msgstr "Тып асноведзі пласта. «Капіяваць» азначае, што папярэдні пласт будзе скапіяваны перад выкананьнем рысаваньня."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
@@ -9884,11 +9672,11 @@ msgstr "Прагалы між лініямі:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1403
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "Пажадана сэктараў палярнай сеткі:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "Інтэрвал радыюсаў палярнай сеткі:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1441
 #: ../plug-ins/imagemap/imap_menu.c:220
@@ -9897,7 +9685,7 @@ msgstr "Прастакутнік"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1443
 msgid "Isometric"
-msgstr "Ізамэтрычны"
+msgstr "Ізамэтрычная"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Grid type:"
@@ -9930,20 +9718,20 @@ msgstr "Колер сеткі:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1697
 msgid "Sides:"
-msgstr "Бакі:"
+msgstr "Бакоў:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1707
 msgid "Right"
-msgstr "Правы"
+msgstr "Направа"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1708
 msgid "Left"
-msgstr "Левы"
+msgstr "Налева"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
 #: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Orientation:"
-msgstr "Арыентацыя:"
+msgstr "Напрамак:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
@@ -9955,16 +9743,15 @@ msgstr "Памылка чытаньня файла"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1044
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Рэдагаваньне нязьменнага аб'екта, яго нельга будзе захаваць"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "Колькасьць бакоў правільнага шматкутніка"
 
 #: ../plug-ins/gfig/gfig-preview.c:328
-#, fuzzy
 msgid "Object Details"
-msgstr "Падрабязнасьці значкі"
+msgstr "Падрабязнасьці аб'екта"
 
 #. Position labels
 #: ../plug-ins/gfig/gfig-preview.c:378
@@ -9972,37 +9759,33 @@ msgid "XY position:"
 msgstr "Становішча XY:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
-#, fuzzy
 msgid "Spiral Number of Turns"
-msgstr "_Найбольшая колькасьць колераў:"
+msgstr "Колькасьць заваротаў сьпіралі"
 
 #: ../plug-ins/gfig/gfig-star.c:52
-#, fuzzy
 msgid "Star Number of Points"
-msgstr "Паказваць пункты-прыклады"
+msgstr "Колькасьць пунктаў зоркі"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "Стварыць новы канал"
+msgstr "Стварыць крывуе бэзье"
 
 #: ../plug-ins/gfig/gfig.c:124
-#, fuzzy
 msgid "Create geometric shapes"
-msgstr "Стварыць новы канал"
+msgstr "Стварыць гэамэтрычную фігуру"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
-msgstr ""
+msgstr "_G-фіг..."
 
 #: ../plug-ins/gfig/gfig.c:731
 msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr ""
+msgstr "Няўдалая спроба захаваць фігуру паразітам: немагчыма далучыць паразіта да абшару рысаваньня."
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr ""
+msgstr "Памылка адкрыцьця часовага файла «%s» для загрузкі паразіта: %s"
 
 #: ../plug-ins/gflare/gflare.c:553
 msgid "Addition"
@@ -10050,6 +9833,9 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
+"GFlare «%s» не захаваны. Калі дадасі новы запіс у «%s» кшталту\n"
+"(gflare-path \"%s\")\n"
+"і створыш каталёг «%s», тады зможаш захоўваць уласныя GFlare у гэты каталёг."
 
 #: ../plug-ins/gflare/gflare.c:1484
 #, c-format
@@ -10062,11 +9848,11 @@ msgstr "А_ўтаматычна абнаўляць агляд"
 
 #: ../plug-ins/gflare/gflare.c:2419
 msgid "`Default' is created."
-msgstr "«Дапомны» створаны."
+msgstr "«Прадвызначаны» створаны."
 
 #: ../plug-ins/gflare/gflare.c:2420
 msgid "Default"
-msgstr "Дапомны"
+msgstr "Прадвызначаны"
 
 #.
 #. *  Scales
@@ -10299,19 +10085,16 @@ msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Нажаль магчыма захоўваць толькі індэксаваныя й шэрыя відарысы."
 
 #: ../plug-ins/gfli/gfli.c:811
-#, fuzzy
 msgid "GFLI 1.3 - Load framestack"
-msgstr "Памылка загрузкі модуля '%s': %s"
+msgstr "GFLI 1.3 - Загрузка стосу кадраў"
 
 #: ../plug-ins/gfli/gfli.c:879
-#, fuzzy
 msgid "GFLI 1.3 - Save framestack"
-msgstr "Захаваць запісы аб памылках"
+msgstr "GFLI 1.3 - Запіс стосу кадраў"
 
 #: ../plug-ins/gimpressionist/brush.c:230
-#, fuzzy
 msgid "Can only save drawables!"
-msgstr "Працуе толькі на аб'ектах рысаваньня ў RGB."
+msgstr "Можна захоўваць толькі абшары рысаваньня!"
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
@@ -10356,14 +10139,12 @@ msgid "Co_lor"
 msgstr "_Колер"
 
 #: ../plug-ins/gimpressionist/color.c:52
-#, fuzzy
 msgid "A_verage under brush"
-msgstr "Мэню рэдактара пэндзля"
+msgstr "_Сярэдні пад пэндзлем"
 
 #: ../plug-ins/gimpressionist/color.c:54
-#, fuzzy
 msgid "C_enter of brush"
-msgstr "Рэдактар пэндзляў"
+msgstr "_Сярэдзіна пэндзля"
 
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
@@ -10371,12 +10152,11 @@ msgstr "Колер узяты як сярэдняе ўсіх піксэляў п
 
 #: ../plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr ""
+msgstr "Вібірае колер піксэля, разьмешчанага ў сярэдзіне пэндзля"
 
 #: ../plug-ins/gimpressionist/color.c:76
-#, fuzzy
 msgid "Color _noise:"
-msgstr "Шум HSV..."
+msgstr "_Шум колера:"
 
 #: ../plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
@@ -10418,11 +10198,11 @@ msgstr ""
 #: ../plug-ins/gimpressionist/general.c:195
 #: ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
-msgstr ""
+msgstr "Прыдатны для замошчваньня"
 
 #: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "Выбірае, ці будзе выніковы відарыс прыдатным для бясшоўнага замошчваньня"
 
 #: ../plug-ins/gimpressionist/general.c:204
 msgid "Drop shadow"
@@ -10433,9 +10213,8 @@ msgid "Adds a shadow effect to each brush stroke"
 msgstr "Дадае эфэкт ценю да кожнага мазка пэндзлем"
 
 #: ../plug-ins/gimpressionist/general.c:222
-#, fuzzy
 msgid "Edge darken:"
-msgstr "Толькі цёмнае"
+msgstr "Зацямненьне краю:"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
@@ -10510,9 +10289,8 @@ msgid "The starting angle of the first brush to create"
 msgstr "Пачатковы кут першага створанага пэндзля"
 
 #: ../plug-ins/gimpressionist/orientation.c:112
-#, fuzzy
 msgid "Angle span:"
-msgstr "Кут павароту:"
+msgstr "Хорда кута:"
 
 #: ../plug-ins/gimpressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
@@ -10547,7 +10325,7 @@ msgstr "Няхай адлегласьць ад сярэдзіны відарыс
 #: ../plug-ins/gimpressionist/orientation.c:158
 #: ../plug-ins/gimpressionist/size.c:161
 msgid "Flowing"
-msgstr ""
+msgstr "Мяккі"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
@@ -10556,7 +10334,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
+msgstr "Адценьне вобласьці вызначае напрамак мазка"
 
 #: ../plug-ins/gimpressionist/orientation.c:166
 #: ../plug-ins/gimpressionist/size.c:169
@@ -10565,7 +10343,7 @@ msgstr "Адаптыўны"
 
 #: ../plug-ins/gimpressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
+msgstr "Выбраны напрамак, які найлепш адпавядае спачатнаму відарысу"
 
 #: ../plug-ins/gimpressionist/orientation.c:174
 #: ../plug-ins/gimpressionist/size.c:178
@@ -10578,12 +10356,11 @@ msgstr "Вызначыць уручную напрамак мазкоў"
 
 #: ../plug-ins/gimpressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "Адкрые рэдактар мапы напрамкаў"
 
 #: ../plug-ins/gimpressionist/orientmap.c:508
-#, fuzzy
 msgid "Orientation Map Editor"
-msgstr "Мэню рэдактара пэндзля"
+msgstr "Рэдактар мапы напрамку"
 
 #: ../plug-ins/gimpressionist/orientmap.c:537
 msgid "Vectors"
@@ -10591,13 +10368,12 @@ msgstr "Вэктары"
 
 #: ../plug-ins/gimpressionist/orientmap.c:549
 msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
-msgstr ""
+msgstr "Поле вэктараў. Пстрычка левай: пасунуць выбраны вэктар, пстрычка правай: павернуць у напрамку мышы, пстрычка сярэдняй: дадаць новы вэктар."
 
 #: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
-#, fuzzy
 msgid "Adjust the preview's brightness"
-msgstr "Удакладніць яркасьць колера"
+msgstr "Рэгуляваць яркасьць агляду"
 
 #: ../plug-ins/gimpressionist/orientmap.c:594
 msgid "Select previous vector"
@@ -10648,11 +10424,11 @@ msgstr "Вір_3"
 #: ../plug-ins/gimpressionist/orientmap.c:636
 #: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "_Voronoi"
-msgstr ""
+msgstr "_Вараной"
 
 #: ../plug-ins/gimpressionist/orientmap.c:644
 msgid "Voronoi-mode makes only the vector closest to the given point have any influence"
-msgstr ""
+msgstr "У рэжыме «Вараной» мае ўплыў толькі найбліжэйшы да дадзенага пункту вэктар"
 
 #: ../plug-ins/gimpressionist/orientmap.c:654
 msgid "A_ngle:"
@@ -10663,9 +10439,8 @@ msgid "Change the angle of the selected vector"
 msgstr "Зьмяніць кут выбранага вэктара"
 
 #: ../plug-ins/gimpressionist/orientmap.c:665
-#, fuzzy
 msgid "Ang_le offset:"
-msgstr "Зрушыць маску пласта"
+msgstr "Зрух _кута:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
@@ -10677,13 +10452,12 @@ msgstr "Зьмяніць сілу выбранага вэктара"
 
 #: ../plug-ins/gimpressionist/orientmap.c:687
 msgid "S_trength exp.:"
-msgstr ""
+msgstr "_Ступень сілы:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:691
 #: ../plug-ins/gimpressionist/sizemap.c:519
-#, fuzzy
 msgid "Change the exponent of the strength"
-msgstr "Зьмяніць друкаваны памер"
+msgstr "Зьмяніць паказьнік ступені сілы"
 
 #: ../plug-ins/gimpressionist/paper.c:120
 msgid "P_aper"
@@ -10695,11 +10469,11 @@ msgstr "Івэртуе газэтную тэкстуру"
 
 #: ../plug-ins/gimpressionist/paper.c:159
 msgid "O_verlay"
-msgstr ""
+msgstr "_Перакрываньне"
 
 #: ../plug-ins/gimpressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "Ужывае паперу як яна ёсьць (без рэльефу)"
 
 #: ../plug-ins/gimpressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -10735,7 +10509,7 @@ msgstr "Цэнтраваны"
 
 #: ../plug-ins/gimpressionist/placement.c:90
 msgid "Focus the brush strokes around the center of the image"
-msgstr ""
+msgstr "Сфакусаваць мазкі пэндзля вакол сярэдзіны відарыса"
 
 #: ../plug-ins/gimpressionist/placement.c:102
 msgid "Stroke _density:"
@@ -10743,34 +10517,32 @@ msgstr "_Гушчыня мазкоў:"
 
 #: ../plug-ins/gimpressionist/placement.c:106
 msgid "The relative density of the brush strokes"
-msgstr ""
+msgstr "Адносная гушчыня мазкоў пэндзля"
 
 #.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
 #: ../plug-ins/gimpressionist/ppmtool.c:632
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr "_Захаваць часопіс у файл..."
+msgstr "Не ўдалося захаваць файл PPM «%s»: %s"
 
 #: ../plug-ins/gimpressionist/presets.c:620
-#, fuzzy
 msgid "Save Current"
-msgstr "Бягучы _стан"
+msgstr "Захаваць бягучы"
 
 #: ../plug-ins/gimpressionist/presets.c:874
 msgid "Gimpressionist Defaults"
-msgstr "Дапомныя Гімпрэсіяніста"
+msgstr "Прадвызначэньні Гімпрэсіяніста"
 
 #: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
 msgstr "_Наборы"
 
 #: ../plug-ins/gimpressionist/presets.c:1010
-#, fuzzy
 msgid "Save Current..."
-msgstr "Бягучы _стан"
+msgstr "Захаваць бягучы..."
 
 #: ../plug-ins/gimpressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
@@ -10781,14 +10553,12 @@ msgid "Reads the selected Preset into memory"
 msgstr "Чытае выбраны набор у памяць"
 
 #: ../plug-ins/gimpressionist/presets.c:1052
-#, fuzzy
 msgid "Deletes the selected Preset"
-msgstr "Зададзены нябесны час: "
+msgstr "Выдаляе выбраны набор"
 
 #: ../plug-ins/gimpressionist/presets.c:1058
-#, fuzzy
 msgid "Reread the folder of Presets"
-msgstr "Немагчыма стварыць тэчку '%s': %s"
+msgstr "Перачытаць тэчку набораў"
 
 #: ../plug-ins/gimpressionist/preview.c:192
 msgid "Refresh the Preview window"
@@ -10807,9 +10577,8 @@ msgid "Sizes:"
 msgstr "Памеры:"
 
 #: ../plug-ins/gimpressionist/size.c:95
-#, fuzzy
 msgid "The number of sizes of brushes to use"
-msgstr "Колькі напрамкаў (г.зн. пэндзляў) выкарыстаць"
+msgstr "Колькі памераў пэндзляў выкарыстаць"
 
 #: ../plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
@@ -10853,7 +10622,7 @@ msgstr "Адценьне вобласьці вызначае памер мазк
 
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
+msgstr "Выбраны памер пэндзля, які найлепш адпавядае спачатнаму відарысу"
 
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
@@ -10861,44 +10630,39 @@ msgstr "Уручную вызначыць памер мазка"
 
 #: ../plug-ins/gimpressionist/size.c:190
 msgid "Opens up the Size Map Editor"
-msgstr ""
+msgstr "Адкрые рэдактар мапы памераў"
 
 #: ../plug-ins/gimpressionist/sizemap.c:383
-#, fuzzy
 msgid "Size Map Editor"
-msgstr "Мэню рэдактара пэндзля"
+msgstr "Рэдактар мапы памеру"
 
 #: ../plug-ins/gimpressionist/sizemap.c:411
 msgid "Smvectors"
-msgstr ""
+msgstr "Мп-вэктары"
 
 #: ../plug-ins/gimpressionist/sizemap.c:421
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
+msgstr "Поле мп-вэктараў. Пстрычка левай: пасунуць выбраны мп-вэктар, пстрычка правай: павернуць у напрамку мышы, пстрычка сярэдняй: дадаць новы мп-вэктар."
 
 #: ../plug-ins/gimpressionist/sizemap.c:463
-#, fuzzy
 msgid "Select previous smvector"
-msgstr "_Выбраць папярэдні пласт"
+msgstr "Выбраць папярэдні мп-вэктар"
 
 #: ../plug-ins/gimpressionist/sizemap.c:470
-#, fuzzy
 msgid "Select next smvector"
-msgstr "_Выбраць наступны пласт"
+msgstr "Выбраць наступны мп-вэктар"
 
 #: ../plug-ins/gimpressionist/sizemap.c:477
-#, fuzzy
 msgid "Add new smvector"
-msgstr "Дадаць новую адзінку"
+msgstr "Дадаць новы мп-вэктар"
 
 #: ../plug-ins/gimpressionist/sizemap.c:484
-#, fuzzy
 msgid "Delete selected smvector"
-msgstr "Выдаліць выбраны буфэр"
+msgstr "Выдаліць выбраны мп-вэктар"
 
 #: ../plug-ins/gimpressionist/sizemap.c:497
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "Зьмяніць кут выбранага мп-вэктара"
 
 #: ../plug-ins/gimpressionist/sizemap.c:504
 msgid "S_trength:"
@@ -10906,16 +10670,15 @@ msgstr "_Сіла:"
 
 #: ../plug-ins/gimpressionist/sizemap.c:508
 msgid "Change the strength of the selected smvector"
-msgstr ""
+msgstr "Зьмяніць сілу выбранага мп-вэктара"
 
 #: ../plug-ins/gimpressionist/sizemap.c:515
-#, fuzzy
 msgid "St_rength exp.:"
-msgstr "_Статус і тэкст"
+msgstr "_Ступень сілы:"
 
 #: ../plug-ins/gimpressionist/sizemap.c:531
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
-msgstr ""
+msgstr "У рэжыме «Вараной» мае ўплыў толькі найбліжэйшы да дадзенага пункту мп-вэктар"
 
 #: ../plug-ins/help/gimphelpdomain.c:178
 msgid "The GIMP help files are not found."
@@ -10923,16 +10686,15 @@ msgstr "Файлы з дапамогай па GIMP не адшуканыя."
 
 #: ../plug-ins/help/gimphelpdomain.c:179
 msgid "Please install the additional help package or use the online user manual at http://docs.gimp.org/."
-msgstr "Калі ласка, усталюй дадатковы пакунак з дапамогай, або карыстайся сеціўным кіраўніцтвам карыстальніка па адрасе  http://docs.gimp.org/."
+msgstr "Калі ласка, усталюй дадатковы пакунак з дапамогай, або карыстайся сеціўным кіраўніцтвам карыстальніка па адрасе http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:185
 msgid "There is a problem with the GIMP help files."
 msgstr "Праблема з файламі дапамогі GIMP."
 
 #: ../plug-ins/help/gimphelpdomain.c:187
-#, fuzzy
 msgid "Please check your installation."
-msgstr "Твая ўстаноўка GIMP ня поўная:"
+msgstr "Калі ласка, правер усталёўку GIMP."
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 #, c-format
@@ -11008,14 +10770,12 @@ msgid "IFS Fractal: Target"
 msgstr "Фрактал СІФ: мэта"
 
 #: ../plug-ins/ifscompose/ifscompose.c:655
-#, fuzzy
 msgid "Scale hue by:"
-msgstr "Размыць вылучанэньне на"
+msgstr "Маштабаваць адценьне на:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:670
-#, fuzzy
 msgid "Scale value by:"
-msgstr "Размыць вылучанэньне на"
+msgstr "Маштабаваць яркасьць на:"
 
 #. Full color control section
 #: ../plug-ins/ifscompose/ifscompose.c:687
@@ -11082,13 +10842,12 @@ msgid "Rotate"
 msgstr "Павернуць"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1075
-#, fuzzy
 msgid "Rotate / Scale"
-msgstr "Маштабаваць відарыс"
+msgstr "Паварот / памер"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1078
 msgid "Stretch"
-msgstr ""
+msgstr "Пашырыць"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1176
 msgid "IFS Fractal Render Options"
@@ -11100,12 +10859,11 @@ msgstr "Макс. памяці:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1224
 msgid "Subdivide:"
-msgstr ""
+msgstr "Разьдзяленьне:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1237
-#, fuzzy
 msgid "Spot radius:"
-msgstr "Радыюс цыліндра"
+msgstr "Радыюс плямы:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1302
 #, c-format
@@ -11253,11 +11011,11 @@ msgstr "Стварыць накіроўныя"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr ""
+msgstr "Выніковыя межы накіроўнай: з %d,%d да %d,%d (%d абласьцей)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:144
 msgid "Guides are pre-defined rectangles covering the image. You define them by their width, height, and spacing from each other. This allows you to rapidly create the most common image map type - image collection of \"thumbnails\", suitable for navigation bars."
-msgstr ""
+msgstr "Накіроўныя — гэта прадвызначаныя прастакутнікі, якія пакрываюць відарыс. Вызначай іх з дапамогай шырыні, вышыні й прагалаў між імі. Гэта дазволіць хутка ствараць найбольш тыповы тып відарыса-мапы: калекцыю «мініятураў», прыдатную для навігацыі."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:170
 msgid "_Left start at:"
@@ -11272,18 +11030,16 @@ msgid "_Horz. spacing:"
 msgstr "_Гар. прагал:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:191
-#, fuzzy
 msgid "_No. across:"
-msgstr "Няма мініятураў"
+msgstr "У_поперак:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:197
 msgid "_Vert. spacing:"
 msgstr "_Вэрт. прагал:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:203
-#, fuzzy
 msgid "No. _down:"
-msgstr "Аб'яднаць з ніжэйшым"
+msgstr "У_ніз:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:212
 msgid "Base _URL:"
@@ -11291,7 +11047,7 @@ msgstr "Базавы _URL:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:237
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr ""
+msgstr "Выніковыя межы накіроўнай: з 0,0 да 0,0 (0 абласьцей)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:272
 msgid "Guides"
@@ -11309,14 +11065,12 @@ msgid "Move Down"
 msgstr "Апусьціць"
 
 #: ../plug-ins/imagemap/imap_cmd_move_sash.c:68
-#, fuzzy
 msgid "Move Sash"
-msgstr "Перанесьці элемэнт"
+msgstr "Пасунуць стужку"
 
 #: ../plug-ins/imagemap/imap_cmd_move_selected.c:56
-#, fuzzy
 msgid "Move Selected Objects"
-msgstr "Узьняць выбраны фільтр вышэй"
+msgstr "Пасунуць вылучаныя аб'екты"
 
 #: ../plug-ins/imagemap/imap_cmd_move_to_front.c:51
 msgid "Move To Front"
@@ -11424,7 +11178,7 @@ msgstr "_Альтэрнатыўны тэкст (неабавязковы):"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "_Link"
-msgstr "_Лучыва      "
+msgstr "_Лучыва"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:310
 msgid "Dimensions"
@@ -11474,7 +11228,7 @@ msgstr "Тып і бачнасьць сеткі"
 
 #: ../plug-ins/imagemap/imap_grid.c:214
 msgid "_Hidden"
-msgstr "_Схаваны"
+msgstr "_Схаваная"
 
 #: ../plug-ins/imagemap/imap_grid.c:222
 msgid "_Lines"
@@ -11513,9 +11267,8 @@ msgid "_Preview"
 msgstr "_Агляд"
 
 #: ../plug-ins/imagemap/imap_main.c:124
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Стварыць новы канал"
+msgstr "Стварыць пстрыкальны мышай відарыс-мапу"
 
 #: ../plug-ins/imagemap/imap_main.c:129
 msgid "_Image Map..."
@@ -11607,9 +11360,8 @@ msgid "Redo"
 msgstr "Паўтарыць"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
-#, fuzzy
 msgid "D_eselect All"
-msgstr "Вылучыць _усё"
+msgstr "_Зьняць вылучэньне"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Edit Area _Info..."
@@ -11656,19 +11408,16 @@ msgid "_Zoom To"
 msgstr "_Маштаб"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
-#, fuzzy
 msgid "_Mapping"
-msgstr "Стварэньне мапы паверхні"
+msgstr "_Мапа"
 
 #: ../plug-ins/imagemap/imap_menu.c:188
-#, fuzzy
 msgid "Edit Map Info..."
-msgstr "Ужываць вакно зьвестак (%s)"
+msgstr "Зьмяніць зьвесткі аб мапе..."
 
 #: ../plug-ins/imagemap/imap_menu.c:189
-#, fuzzy
 msgid "Edit Map Info"
-msgstr "Ужываць вакно зьвестак (%s)"
+msgstr "Зьмяніць зьвесткі аб мапе"
 
 #: ../plug-ins/imagemap/imap_menu.c:191
 msgid "_Tools"
@@ -11695,18 +11444,16 @@ msgid "_Contents"
 msgstr "_Зьмесьціва"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-#, fuzzy
 msgid "Area List"
-msgstr "Паказ сьпісу"
+msgstr "Сьпіс абласьцей"
 
 #: ../plug-ins/imagemap/imap_menu.c:218
 msgid "Arrow"
 msgstr "Стрэлка"
 
 #: ../plug-ins/imagemap/imap_menu.c:219
-#, fuzzy
 msgid "Select existing area"
-msgstr "Выберы адну сумежную вобласьць"
+msgstr "Выбраць існоўную вобласьць"
 
 #: ../plug-ins/imagemap/imap_menu.c:221
 msgid "Define Rectangle area"
@@ -11745,42 +11492,36 @@ msgid "_Remove"
 msgstr "_Выдаліць"
 
 #: ../plug-ins/imagemap/imap_preferences.c:236
-#, fuzzy
 msgid "Couldn't save resource file:"
-msgstr "_Захаваць вылучэньне ў файл..."
+msgstr "Немагчыма захаваць файл рэсурсаў:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:350
 msgid "General"
 msgstr "Асноўныя"
 
 #: ../plug-ins/imagemap/imap_preferences.c:354
-#, fuzzy
 msgid "Default Map Type"
-msgstr "Які аб'ект адлюстраваць"
+msgstr "Прадвыўзначаны тып мапы"
 
 #: ../plug-ins/imagemap/imap_preferences.c:373
-#, fuzzy
 msgid "_Prompt for area info"
-msgstr "Увод: '%c' -- дапаможнік, прадвызначана=%d> "
+msgstr "_Запытваць пра зьвесткі аб вобласьці"
 
 #: ../plug-ins/imagemap/imap_preferences.c:375
-#, fuzzy
 msgid "_Require default URL"
-msgstr "Ужывай: %s [МОЖНАСЬЦІ]... [АДРАС]...\n"
+msgstr "_Патрабаваць прадвызначаны URL"
 
 #: ../plug-ins/imagemap/imap_preferences.c:377
-#, fuzzy
 msgid "Show area _handles"
-msgstr "Значка вобласьці апавяшчэньня"
+msgstr "Паказаць _ручкі вобласьці"
 
 #: ../plug-ins/imagemap/imap_preferences.c:379
 msgid "_Keep NCSA circles true"
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_preferences.c:381
-#, fuzzy
 msgid "Show area URL _tip"
-msgstr "Паказаць парады падчас наступнага запуску GIMP"
+msgstr "Паказаць _намінкі з URL вобласьці"
 
 #: ../plug-ins/imagemap/imap_preferences.c:384
 msgid "_Use double-sized grab handles"
@@ -11796,7 +11537,7 @@ msgstr "_Колькасьць крокаў адмены (1-99):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:400
 msgid "Number of M_RU entries (1 - 16):"
-msgstr ""
+msgstr "Колькасьць ранейшых (1-16):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:409
 msgid "Select Color"
@@ -11815,9 +11556,8 @@ msgid "Co_ntiguous Region"
 msgstr "_Прылеглая вобласьць"
 
 #: ../plug-ins/imagemap/imap_preferences.c:443
-#, fuzzy
 msgid "_Automatically convert"
-msgstr "Ператварыць відарыс"
+msgstr "_Аўтаматычна ператвараць"
 
 #: ../plug-ins/imagemap/imap_preferences.c:454
 msgid "General Preferences"
@@ -11852,9 +11592,8 @@ msgid "Target"
 msgstr "Мэта"
 
 #: ../plug-ins/imagemap/imap_settings.c:90
-#, fuzzy
 msgid "Settings for this Mapfile"
-msgstr "Шыфраванне для гэтага падзела:"
+msgstr "Наладкі файла мапы"
 
 #: ../plug-ins/imagemap/imap_settings.c:94
 msgid "Filename:"
@@ -11865,9 +11604,8 @@ msgid "Image name:"
 msgstr "Назва відарыса:"
 
 #: ../plug-ins/imagemap/imap_settings.c:98
-#, fuzzy
 msgid "Select Image File"
-msgstr "Выберы файл выявы"
+msgstr "Выберы файл відарыса"
 
 #: ../plug-ins/imagemap/imap_settings.c:102
 msgid "_Title:"
@@ -11879,16 +11617,15 @@ msgstr "_Стваральнік:"
 
 #: ../plug-ins/imagemap/imap_settings.c:106
 msgid "Default _URL:"
-msgstr "Дапомны _URL:"
+msgstr "Прадвызначаны _URL:"
 
 #: ../plug-ins/imagemap/imap_settings.c:108
 msgid "_Description:"
 msgstr "_Апісаньне:"
 
 #: ../plug-ins/imagemap/imap_settings.c:130
-#, fuzzy
 msgid "Map File Format"
-msgstr "Фармат файла не падтрымліваецца."
+msgstr "Фармат файла мапы"
 
 #: ../plug-ins/imagemap/imap_source.c:63
 msgid "View Source"
@@ -11899,9 +11636,8 @@ msgid "Rotate Image?"
 msgstr "Павернуць відарыс?"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:291
-#, fuzzy
 msgid "_Keep Orientation"
-msgstr "Трымаць наверсе"
+msgstr "_Пакінуць напрамак"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
@@ -11960,14 +11696,12 @@ msgid "_Smoothing:"
 msgstr "_Змазваньне:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:939
-#, fuzzy
 msgid "Frequency (rows):"
-msgstr "радкі спачатку"
+msgstr "Часьціня (радкоў):"
 
 #: ../plug-ins/jpeg/jpeg-save.c:955
-#, fuzzy
 msgid "Use restart markers"
-msgstr "Выканай праграму наноў, каб"
+msgstr "Ужываць маркеры перазапуску"
 
 #: ../plug-ins/jpeg/jpeg-save.c:971
 #: ../plug-ins/xjt/xjt.c:877
@@ -11997,12 +11731,12 @@ msgstr "Узяць наладкі якасьці з пачатковага ві�
 
 #: ../plug-ins/jpeg/jpeg-save.c:1053
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
-msgstr ""
+msgstr "Калі спачатны відарыс быў загружаны з файла JPEG зь нестандартнымі выборамі якасьці (табліцамі квантаваньня), задзейнічай гэты выбор, каб атрымаць амаль такую ж якасьць і памер файла."
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1077
 msgid "Subsampling:"
-msgstr ""
+msgstr "Падвыбарка:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
@@ -12022,23 +11756,20 @@ msgstr "2×2,1×1,1×1 (найменшы файл)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1111
-#, fuzzy
 msgid "DCT method:"
-msgstr "<b>Мэтад адрысоўваньня</b>"
+msgstr "Спосаб ДКП:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1117
-#, fuzzy
 msgid "Fast Integer"
-msgstr "Чакаўся цэлы лік."
+msgstr "Хуткі цэлалікавы"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1118
 msgid "Integer"
-msgstr "Цэлы лік"
+msgstr "Цэлалікавы"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1119
-#, fuzzy
 msgid "Floating-Point"
-msgstr "Пункт-прыклад"
+msgstr "З плыўной коскай"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1133
 msgid "Comment"
@@ -12059,7 +11790,7 @@ msgstr "Стварэньне лябірынту паводле альгарыт�
 
 #: ../plug-ins/maze/algorithms.c:465
 msgid "Constructing tileable maze using Prim's Algorithm"
-msgstr ""
+msgstr "Пабудова паводле альгарытму Прыма лябірынта, прыдатнага для замошчваньня"
 
 #: ../plug-ins/maze/maze.c:153
 msgid "Draw a labyrinth"
@@ -12090,7 +11821,7 @@ msgstr "Шырыня (у піксэлях):"
 #: ../plug-ins/maze/maze_face.c:226
 #: ../plug-ins/maze/maze_face.c:242
 msgid "Pieces:"
-msgstr "Кавалкі:"
+msgstr "Кавалкаў:"
 
 #: ../plug-ins/maze/maze_face.c:231
 msgid "Height (pixels):"
@@ -12102,39 +11833,39 @@ msgid "Algorithm"
 msgstr "Алгарытм"
 
 #: ../plug-ins/maze/maze_face.c:276
-#, fuzzy
 msgid "Depth first"
-msgstr "Першы элемэнт"
+msgstr "Спачатку ўглыб"
 
 #: ../plug-ins/maze/maze_face.c:277
 msgid "Prim's algorithm"
-msgstr "Альгарытм Прыма:"
+msgstr "Альгарытм Прыма"
 
 #: ../plug-ins/maze/maze_face.c:396
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
-msgstr "Памер вылучэньня няцотны"
+msgstr ""
+"Памер вылучэньня няцотны.\n"
+"Лябірынт будзе ня вельмі прыдатны для замошчваньня."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
-#, fuzzy
 msgid "Error: No XMP packet found"
-msgstr "Увага: Няправільная старонка загалоўкаў, ня знойдзена пакетаў\n"
+msgstr "Памылка: Не адшукана пакетаў XMP"
 
 #: ../plug-ins/metadata/xmp-parse.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "Error on line %d char %d: %s"
-msgstr "=== Памылка разбору: %s у радку %d з %s (%s)\n"
+msgstr "Памылка ў радку %d знак %d: %s"
 
 #: ../plug-ins/metadata/xmp-parse.c:277
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Чакаўся тэкст ці неабавязковы элемэнт <%s>, але знойдзены <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:281
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Чакаўся элемэнт <%s>, але знойдзены <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:296
 #, c-format
@@ -12149,22 +11880,22 @@ msgstr "Невядомы атрыбут \"%s\"=\"%s\" элемэнта <%s>"
 #: ../plug-ins/metadata/xmp-parse.c:655
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
-msgstr ""
+msgstr "Патрэбны атрыбут rdf:about адсутнічае ў <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:881
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
+msgstr "Укладзеныя элемэнты (<%s>) не дапушчаюцца ў гэтым кантэксьце"
 
 #: ../plug-ins/metadata/xmp-parse.c:1005
 #, c-format
 msgid "End of element <%s> not expected in this context"
-msgstr ""
+msgstr "Канец элемэнта <%s> не чакаўся ў гэтым кантэксьце"
 
 #: ../plug-ins/metadata/xmp-parse.c:1107
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
-msgstr ""
+msgstr "Бягучы элемэнт (<%s>) ня можа ўтрымліваць тэкст"
 
 #: ../plug-ins/metadata/xmp-parse.c:1132
 msgid "XMP packets must start with <?xpacket begin=...?>"
@@ -12252,9 +11983,8 @@ msgid "_Adjust Page Size and Orientation"
 msgstr "_Адрэгуляваць памер і напрамак старонкі"
 
 #: ../plug-ins/print/print-page-layout.c:202
-#, fuzzy
 msgid "Ignore Page _Margins"
-msgstr "Выбрана адна старонка"
+msgstr "Ігнараваць _палі паперы"
 
 #: ../plug-ins/print/print-page-layout.c:357
 msgid "_X resolution:"
@@ -12301,18 +12031,16 @@ msgid "Image Settings"
 msgstr "Наладкі відарыса"
 
 #: ../plug-ins/print/print.c:253
-#, fuzzy
 msgid "An error occurred while trying to print:"
-msgstr "Падчас запісу зменаў на дыск адбылася памылка."
+msgstr "Здарылася памылка пад час спробы друку:"
 
 #: ../plug-ins/print/print.c:283
 msgid "Printing"
 msgstr "Друкаваньне"
 
 #: ../plug-ins/rcm/rcm.c:99
-#, fuzzy
 msgid "Replace a range of colors with another"
-msgstr "Замена ўсіх колераў на адценьні вызначанага колера"
+msgstr "Замена дыяпазону колераў на іншы"
 
 #: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
@@ -12364,14 +12092,12 @@ msgstr "Шэры рэжым"
 
 #. Gray: Operation-Mode: two radio buttons
 #: ../plug-ins/rcm/rcm_dialog.c:523
-#, fuzzy
 msgid "Treat as this"
-msgstr "Выдаліць гэты канал"
+msgstr "Апрацоўваць як гэты"
 
 #: ../plug-ins/rcm/rcm_dialog.c:535
-#, fuzzy
 msgid "Change to this"
-msgstr "зьмены мелі моц."
+msgstr "Зьмяніць у гэты"
 
 #. * Gray: What is gray? *
 #: ../plug-ins/rcm/rcm_dialog.c:548
@@ -12431,12 +12157,8 @@ msgid "No selection to convert"
 msgstr "Няма вылучэньня для ператварэньня"
 
 #: ../plug-ins/sel2path/sel2path.c:300
-#, fuzzy
 msgid "Selection to Path Advanced Settings"
-msgstr ""
-"Шлях у вылучэньне%s  Дадаць\n"
-"%s  Адняць\n"
-"%s  Перасячы"
+msgstr "Дадатковыя наладкі"
 
 #: ../plug-ins/sgi/sgi.c:119
 #: ../plug-ins/sgi/sgi.c:139
@@ -12461,15 +12183,16 @@ msgid "No compression"
 msgstr "Безь сьцісканьня"
 
 #: ../plug-ins/sgi/sgi.c:634
-#, fuzzy
 msgid "RLE compression"
-msgstr "Сьцісканьне даньняў"
+msgstr "Сьцісканьне RLE"
 
 #: ../plug-ins/sgi/sgi.c:636
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
 msgstr ""
+"Агрэсіўны RLE\n"
+"(не падтрымліваецца SGI)"
 
 #: ../plug-ins/twain/twain.c:87
 msgid "Capture an image from a TWAIN datasource"
@@ -12486,26 +12209,26 @@ msgstr "Прыймо даньняў са сканэра/камэры"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/uri/uri-backend-libcurl.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading %s of image data..."
-msgstr "Даныя аўтарызацыі адрынутыя"
+msgstr "Загрузка %s даньняў відарыса"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "Downloaded %s of image data"
-msgstr "Даныя аўтарызацыі адрынутыя"
+msgstr "Загружана %s даньняў відарыса"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading %s of image data..."
-msgstr "Даныя аўтарызацыі адрынутыя"
+msgstr "Дасыланьне %s даньняў відарыса"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "Uploaded %s of image data"
-msgstr "Даныя аўтарызацыі адрынутыя"
+msgstr "Даслана %s даньняў відарыса"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
@@ -12534,7 +12257,7 @@ msgstr "Немагчыма адкрыць файл вываду на запіс"
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr ""
+msgstr "Пры адкрыцьці для чытаньня «%s» атрыманы выніковы код HTTP: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:164
 #: ../plug-ins/uri/uri-backend-wget.c:184
@@ -12543,7 +12266,7 @@ msgstr ""
 #: ../plug-ins/uri/uri-backend-wget.c:255
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr ""
+msgstr "ненармальны вынік wget на URI «%s»"
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:192
@@ -12572,7 +12295,7 @@ msgstr "Загрузка %s даньняў відарыса"
 
 #: ../plug-ins/uri/uri-backend-wget.c:310
 msgid "Downloading unknown amount of image data"
-msgstr ""
+msgstr "Загрузка невядомай колькасьці даньняў відарыса"
 
 #: ../plug-ins/uri/uri.c:117
 #: ../plug-ins/uri/uri.c:138
@@ -12670,32 +12393,32 @@ msgstr "Сціснуты відарыс XJT GIMP"
 #: ../plug-ins/xjt/xjt.c:724
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr ""
+msgstr "Файл XJT утрымлівае невядомы рэжым пласта %d."
 
 #: ../plug-ins/xjt/xjt.c:761
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr ""
+msgstr "Да ўвагі: рэжым пласта %d не падтрымліваецца, але запісаны ў XJT"
 
 #: ../plug-ins/xjt/xjt.c:777
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr ""
+msgstr "Файл XJT утрымлівае невядомы тып шляха %d."
 
 #: ../plug-ins/xjt/xjt.c:793
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr ""
+msgstr "Да ўвагі: тып шляха %d не падтрымліваецца, але запісаны ў XJT"
 
 #: ../plug-ins/xjt/xjt.c:812
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr ""
+msgstr "Файл XJT утрымлівае невядомы тып адзінкі %d"
 
 #: ../plug-ins/xjt/xjt.c:833
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr ""
+msgstr "Да ўвагі: тып адзінкі %d не падтрымліваецца, але запісаны ў XJT"
 
 #: ../plug-ins/xjt/xjt.c:854
 msgid "Save as XJT"
@@ -12722,10 +12445,10 @@ msgstr "Немагчыма выдаліць працоўную тэчку '%s': 
 #: ../plug-ins/xjt/xjt.c:3222
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
-msgstr ""
+msgstr "Памылка: немагчыма прачытаць файл уласьцівасьцяў XJT «%s»."
 
 #: ../plug-ins/xjt/xjt.c:3228
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr ""
+msgstr "Памылка: файл уласьцівасьцяў XJT «%s» пусты."
 

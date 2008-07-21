@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips 2.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-09 22:34+0200\n"
-"PO-Revision-Date: 2008-05-24 12:03+0300\n"
+"PO-Revision-Date: 2008-06-04 16:38+0200\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "GIMP дазваляе адмяніць бальшыню зьменаў �
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
-msgstr "GIMP умее зьлёту сьціскаць файлы з дапамогай gzip. Проста дадай <tt>.gz</tt> (або  <tt>.bz2</tt>, калі маеш у сыстэме bzip2) да імя файла, і твой відарыс будзе захаваны сьціснутым. Безумоўна, загрузка сьціснутых відарысаў таксама працуе."
+msgstr "GIMP умее зьлёту сьціскаць файлы з дапамогай gzip. Проста дадай <tt>.gz</tt> (або <tt>.bz2</tt>, калі маеш у сыстэме bzip2) да імя файла, і твой відарыс будзе захаваны сьціснутым. Безумоўна, загрузка сьціснутых відарысаў таксама працуе."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
@@ -60,7 +60,7 @@ msgstr "GIMP выкарыстоўвае пласты для ўпарадкава
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
-msgstr "Калі назва пласта пазначана <b>тлустым</b>, гэты пласт ня мае альфаканала. Можна дадаць альфаканал, выкарыстоўваючы Пласт→Празрыстасьць→Дадаць альфаканал."
+msgstr "Калі назва пласта пазначана <b>тоўстым</b>, гэты пласт ня мае альфаканала. Можна дадаць альфаканал, выкарыстоўваючы Пласт→Празрыстасьць→Дадаць альфаканал."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
@@ -116,7 +116,7 @@ msgstr "Можна рысаваць простыя квадраты ці акр�
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
-msgstr "Можна атрымаць кантэкстную дапамогу для бальшыні функцый GIMP'а, націснуўшы клявішу F1 у любы момант.  Гэта спрацоўвае нават у мэню."
+msgstr "Можна атрымаць кантэкстную дапамогу для бальшыні функцый GIMP'а, націснуўшы клявішу F1 у любы момант. Гэта спрацоўвае нават у мэню."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."

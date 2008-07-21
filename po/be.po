@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:19+0300\n"
-"PO-Revision-Date: 2008-05-28 20:11+0300\n"
+"PO-Revision-Date: 2008-06-10 21:03+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -2664,7 +2664,7 @@ msgstr "_Стос"
 
 #: ../app/actions/layers-actions.c:53
 msgid "Te_xt to Selection"
-msgstr "_Тэкст у вылучэньне"
+msgstr "Вылучэньне з _тэксту"
 
 #: ../app/actions/layers-actions.c:54
 msgid "_Mask"
@@ -2792,7 +2792,7 @@ msgstr "Ператварыць гэты тэкставы пласт у звыч�
 
 #: ../app/actions/layers-actions.c:152
 msgid "Text to _Path"
-msgstr "Тэкст у шлях"
+msgstr "_Шлях з тэксту"
 
 #: ../app/actions/layers-actions.c:153
 msgid "Create a path from this text layer"
@@ -2949,7 +2949,7 @@ msgstr "Перасячы альфаканал пласта зь бягучым �
 
 #: ../app/actions/layers-actions.c:308
 msgid "_Text to Selection"
-msgstr "_Тэкст у вылучэньня"
+msgstr "Вылучэньне з _тэксту"
 
 #: ../app/actions/layers-actions.c:309
 msgid "Replace the selection with the text layer's outline"
@@ -3323,7 +3323,7 @@ msgstr "Паўтарыць апошні дадатак з тымі ж выбор
 
 #: ../app/actions/plug-in-actions.c:118
 msgid "R_e-Show Last"
-msgstr "_Ізноў паказацаць апошні"
+msgstr "_Ізноў паказаць апошні"
 
 #: ../app/actions/plug-in-actions.c:119
 msgid "Show the last used plug-in dialog again"
@@ -3693,7 +3693,7 @@ msgstr "Адкрыць тэкставы файл (UTF-8)"
 #: ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Немагчыма адкрыць '%s'  для чытаньня: %s"
+msgstr "Немагчыма адкрыць '%s' для чытаньня: %s"
 
 #: ../app/actions/tool-options-actions.c:56
 msgid "Tool Options Menu"
@@ -4575,7 +4575,7 @@ msgstr "Памылка чытаньня '%s': %s"
 #: ../app/config/gimpconfig-file.c:132
 #, c-format
 msgid "There was an error parsing your '%s' file. Default values will be used. A backup of your configuration has been created at '%s'."
-msgstr "Здарылася памылка аналізаваньня '%s'. Будуць скарыстаныя дапомныя значэньні. Рэзэрвовая копія настаўленьняў створаная ў  '%s'."
+msgstr "Здарылася памылка аналізаваньня '%s'. Будуць скарыстаныя дапомныя значэньні. Рэзэрвовая копія настаўленьняў створаная ў '%s'."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -4623,7 +4623,7 @@ msgstr "Гэта адлегласьць у піксэлях на якой спр
 
 #: ../app/config/gimprc-blurbs.h:79
 msgid "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions until the difference of pixel intensity from the original is greater than a specified threshold. This value represents the default threshold."
-msgstr "Інструмэнты, такія як недакладны вылучальнік і вядро, адшукваюць вобласьці з дапамогай альгарытму крынічнага запаўненьня. Паводле яго запаўненьне пачынаецца з выбранага  піксэля й распаўсюджваецца ва ўсе напрамкі, покуль розьніца яркасьці піксэля з пачатковым ня стане большай за вызначаны парог. Гэтая велічыня вызначае дапомны парог."
+msgstr "Інструмэнты, такія як недакладны вылучальнік і вядро, адшукваюць вобласьці з дапамогай альгарытму крынічнага запаўненьня. Паводле яго запаўненьне пачынаецца з выбранага піксэля й распаўсюджваецца ва ўсе напрамкі, покуль розьніца яркасьці піксэля з пачатковым ня стане большай за вызначаны парог. Гэтая велічыня вызначае дапомны парог."
 
 #: ../app/config/gimprc-blurbs.h:92
 msgid "The window type hint that is set on dock windows. This may affect the way your window manager decorates and handles dock windows."
@@ -5988,11 +5988,11 @@ msgstr "Вэртыкальная адлегласьць між лініямі с
 
 #: ../app/core/gimpgrid.c:115
 msgid "Horizontal offset of the first grid line; this may be a negative number."
-msgstr "Гарызантальнае зрушэньне першай лініі сеткі, можа буць меншым за нуль."
+msgstr "Зрух першай лініі сеткі па вэртыкалі, можа быць меншым за нуль."
 
 #: ../app/core/gimpgrid.c:122
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr "Вэртыкальнае зрушэньне першай лініі сеткі, можа буць меншым за нуль."
+msgstr "Зрух першай лініі сеткі па гарызанталі, можа быць меншым за нуль."
 
 #: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
@@ -6556,7 +6556,7 @@ msgstr "Немагчыма выразаць або скапіяваць, бо в
 
 #: ../app/core/gimpselection.c:826
 msgid "Float Selection"
-msgstr "Плаваючае  вылучэньне"
+msgstr "Плаваючае вылучэньне"
 
 #: ../app/core/gimpselection.c:843
 msgid "Floated Layer"
@@ -7093,7 +7093,7 @@ msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:209
 msgid "Offset by  x/_2, y/2"
-msgstr "Зрушэньне на  x/_2, y/2"
+msgstr "Зрух на x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:218
@@ -7979,7 +7979,7 @@ msgstr "Калі закрыеш зараз гэтыя відарысы, зьме
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Незамацаваныя зьмены ў %0dадным відарысе:"
+msgstr[0] "Незамацаваныя зьмены ў адным відарысе:"
 msgstr[1] "Незамацаваныя зьмены ў %d відарысах:"
 msgstr[2] "Незамацаваныя зьмены ў %d відарысах:"
 
@@ -8211,13 +8211,13 @@ msgstr "_Не захоўваць"
 #: ../app/display/gimpdisplayshell-close.c:209
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Ці замацаваць зьмены відарыса  «%s» перад закрыцьцём?"
+msgstr "Ці замацаваць зьмены відарыса «%s» перад закрыцьцём?"
 
 #: ../app/display/gimpdisplayshell-close.c:232
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "Калі не запішаш відарыс, то зьмены за апошнюю %0dгадзіну будуць страчаныя."
+msgstr[0] "Калі не запішаш відарыс, то зьмены за апошнюю гадзіну будуць страчаныя."
 msgstr[1] "Калі не запішаш відарыс, то зьмены за апошнія %d гадзіны будуць страчаныя."
 msgstr[2] "Калі не запішаш відарыс, то зьмены за апошнія %d гадзін будуць страчаныя."
 
@@ -8233,7 +8233,7 @@ msgstr[2] "Калі не захаваеш відарыс, то зьмянень�
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "Калі не захаваеш відарыс, то зьмяненьні за апошнюю %0dхвіліну будуць страчаныя."
+msgstr[0] "Калі не захаваеш відарыс, то зьмяненьні за апошнюю хвіліну будуць страчаныя."
 msgstr[1] "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвіліны будуць страчаныя."
 msgstr[2] "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвілін будуць страчаныя."
 
@@ -8341,7 +8341,7 @@ msgstr "Дадатак %s вернуў ПОСЬПЕХ, але ня вернуў 
 #: ../app/file/file-open.c:189
 #, c-format
 msgid "%s plug-In could not open image"
-msgstr "Дадатак %s  ня можа адкрыць відарыс"
+msgstr "Дадатак %s ня можа адкрыць відарыс"
 
 #: ../app/file/file-open.c:474
 msgid "Image doesn't contain any layers"
@@ -8784,7 +8784,7 @@ msgstr ""
 "Праблемы пад час аналізу тэкставых паразытаў пласта «%s»:\n"
 "%s\n"
 "\n"
-"Некаторыя тэкставыя ўласьцівасьці  могуць быць няправільнымі. Але, калі не мяркуеш рэдагаваць тэкст, ня варта турбавацца пра гэта."
+"Некаторыя тэкставыя ўласьцівасьці могуць быць няправільнымі. Але, калі не мяркуеш рэдагаваць тэкст, ня варта турбавацца пра гэта."
 
 #: ../app/tools/gimp-tools.c:314
 msgid ""
@@ -8827,7 +8827,7 @@ msgstr "_Раўнаваць"
 
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "Пстрыкні па пласьце, шляху ці накіроўнай, або пстрыкні й пацягні, каб выбраць  некалькі пластоў"
+msgstr "Пстрыкні па пласьце, шляху ці накіроўнай, або пстрыкні й пацягні, каб выбраць некалькі пластоў"
 
 #: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
@@ -8912,7 +8912,7 @@ msgstr "Раўнамерна разьмеркаваць ніжнія краі м
 #: ../app/tools/gimpaligntool.c:879
 #: ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
-msgstr "Зрушэньне:"
+msgstr "Зрух:"
 
 #: ../app/tools/gimpblendoptions.c:222
 #: ../app/widgets/gimpbrusheditor.c:146
@@ -9663,7 +9663,7 @@ msgstr "Шкала гістаграмы"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Адценьне й насычанасьць: папраўляе адценьне, насычанасьць і  сьветласьць"
+msgstr "Адценьне й насычанасьць: папраўляе адценьне, насычанасьць і сьветласьць"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-_Saturation..."
@@ -10031,7 +10031,7 @@ msgstr "Рэжым: "
 #: ../app/widgets/gimpbrushselect.c:177
 #: ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity:"
-msgstr "Непразрыстасьць:"
+msgstr "Непразрысты:"
 
 #: ../app/tools/gimppaintoptions-gui.c:122
 msgid "Brush:"
@@ -10546,7 +10546,8 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"Шлях у вылучэньне%s  Дадаць\n"
+"Шлях у вылучэньне\n"
+"%s  Дадаць\n"
 "%s  Адняць\n"
 "%s  Перасячы"
 
@@ -11304,7 +11305,7 @@ msgstr "Захаваць стан прылады"
 #: ../app/widgets/gimpdevicestatus.c:448
 #, c-format
 msgid "Foreground: %d, %d, %d"
-msgstr "Колер рысаваньня:  %d, %d, %d"
+msgstr "Колер рысаваньня: %d, %d, %d"
 
 #: ../app/widgets/gimpdevicestatus.c:453
 #, c-format
@@ -11371,7 +11372,7 @@ msgstr "Паведамленьні накіраваныя ў stderr."
 #: ../app/widgets/gimperrordialog.c:171
 #, c-format
 msgid "%s Message"
-msgstr "паведамленьне %s"
+msgstr "Паведамленьне %s"
 
 #: ../app/widgets/gimpfiledialog.c:272
 msgid "Automatically Detected"
@@ -11415,7 +11416,7 @@ msgstr "Маштаб: %d:1"
 #: ../app/widgets/gimpgradienteditor.c:788
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
-msgstr "Адлюстраваньне  [%0.4f, %0.4f]"
+msgstr "Адлюстраваньне [%0.4f, %0.4f]"
 
 #: ../app/widgets/gimpgradienteditor.c:1008
 #, c-format
@@ -11476,7 +11477,7 @@ msgstr "Пстрычка: выбар"
 #: ../app/widgets/gimpgradienteditor.c:1320
 #: ../app/widgets/gimpgradienteditor.c:1344
 msgid "Click: select    Drag: move"
-msgstr "Пстрычка: выбар  Валачэньне: перасоўваньне"
+msgstr "Пстрычка: выбраць  Валачэньне: пасунуць"
 
 #: ../app/widgets/gimpgradienteditor.c:1559
 #: ../app/widgets/gimpgradienteditor.c:1567

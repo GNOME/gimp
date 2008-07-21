@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:20+0300\n"
-"PO-Revision-Date: 2008-05-28 21:20+0300\n"
+"PO-Revision-Date: 2008-06-04 16:40+0200\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,13 +40,13 @@ msgstr "Аб'яднаць бачныя пласты"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Дадатак %s не апрацоўвае зрушэньне, памер ці празрыстасьць  пласта"
+msgstr "Дадатак %s не апрацоўвае зрух, памер ці непразрыстасьць пласта"
 
 #: ../libgimp/gimpexport.c:235
 #: ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Дадатак %s  апрацоўвае пласты толькі як кадры мультфільма"
+msgstr "Дадатак %s апрацоўвае пласты толькі як кадры анімацыі"
 
 #: ../libgimp/gimpexport.c:236
 #: ../libgimp/gimpexport.c:245
@@ -76,7 +76,7 @@ msgstr "Ужыць маскі пласта"
 #: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Дадатак %s  апрацоўвае толькі RGB-відарысы"
+msgstr "Дадатак %s апрацоўвае толькі RGB-відарысы"
 
 #: ../libgimp/gimpexport.c:281
 #: ../libgimp/gimpexport.c:319
@@ -87,7 +87,7 @@ msgstr "Ператварыць у RGB"
 #: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Дадатак %s  апрацоўвае толькі відарысы ў адценьнях шэрага"
+msgstr "Дадатак %s апрацоўвае толькі відарысы ў адценьнях шэрага"
 
 #: ../libgimp/gimpexport.c:290
 #: ../libgimp/gimpexport.c:319
@@ -98,7 +98,7 @@ msgstr "Ператварыць у шэрыя колеры"
 #: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Дадатак %s  апрацоўвае толькі індэксаваныя відарысы"
+msgstr "Дадатак %s апрацоўвае толькі індэксаваныя відарысы"
 
 #: ../libgimp/gimpexport.c:299
 #: ../libgimp/gimpexport.c:328
@@ -113,35 +113,35 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Дадатак %s  апрацоўвае толькі бітавыя мапы (двухколерныя індэксаваныя відарысы)"
+msgstr "Дадатак %s апрацоўвае толькі бітавыя мапы (двухколерныя індэксаваныя відарысы)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Ператварыць у індэксаваны з дапомнымі настаўленьнямі бітавай  мапы\n"
+"Ператварыць у індэксаваны з дапомнымі настаўленьнямі бітавай мапы\n"
 "(Рабі ўручную, каб настроіць вынік)"
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Дадатак %s  апрацоўвае толькі RGB або шэрыя відарысы"
+msgstr "Дадатак %s апрацоўвае толькі RGB або шэрыя відарысы"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Дадатак %s  апрацоўвае толькі RGB або індэксаваныя відарысы"
+msgstr "Дадатак %s апрацоўвае толькі RGB або індэксаваныя відарысы"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Дадатак %s  апрацоўвае толькі шэрыя або індэксаваныя відарысы"
+msgstr "Дадатак %s апрацоўвае толькі шэрыя або індэксаваныя відарысы"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "Дадатак %s  патрабуе альфаканал"
+msgstr "Дадатак %s патрабуе альфаканал"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -1222,7 +1222,7 @@ msgstr "Множнік"
 
 #: ../libgimpwidgets/gimpwidgets.c:1005
 msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Гэтае значэньне ўжываецца для ініцыялізаваньня генэратара выпадковых лікаў, што дазваляе паўтараць  «выпадковае» дзеяньне"
+msgstr "Гэтае значэньне ўжываецца для ініцыялізаваньня генэратара выпадковых лікаў, што дазваляе паўтараць «выпадковае» дзеяньне"
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
