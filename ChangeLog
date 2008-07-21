@@ -1,5 +1,10 @@
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_on_vectors_handle):
+	plugged a not so small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/windows-actions.c (windows_actions_dock_notify):
 	plugged another small memory leak.
 
