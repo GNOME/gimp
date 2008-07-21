@@ -1,7 +1,7 @@
 2008-07-21  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogrameditor.c
-	(gimp_histogram_editor_set_image): always unset and ref the
+	(gimp_histogram_editor_set_image): always unset and unref the
 	histograms. Plugs a memory leak reported by valgrind.
 
 2008-07-21  Simon Budig  <simon@gimp.org>
