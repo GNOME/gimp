@@ -1,3 +1,11 @@
+2008-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolortool.c: set scroll_lock to TRUE while moving
+	or creating sample points so the image doesn't scroll while a new
+	sample point is dragged from the rulers and sample points can be
+	deleted by dragging them out of image without scrolling at the
+	same time.
+
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpvectortool.c: only use the position from the event
