@@ -1,5 +1,9 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c: formatting.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo-aux.c
 	(gimp_session_info_aux_new_from_props): plugged memory leak.
 
