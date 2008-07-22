@@ -632,7 +632,7 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
   if (view->bg_histogram != histogram)
     {
       if (view->bg_histogram)
-        gimp_histogram_ref (view->bg_histogram);
+        gimp_histogram_unref (view->bg_histogram);
 
       view->bg_histogram = histogram;
 

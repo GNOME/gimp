@@ -1,5 +1,16 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsessioninfo-aux.c
+	(gimp_session_info_aux_new_from_props): plugged memory leak.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogramview.c
+	(gimp_histogram_view_set_background): fixed refcounting	issue.
+	This plugs the memory leak I tried to fix in GimpHistogramEditor.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.[ch]: added new method
 	gimp_histogram_duplicate().
 
