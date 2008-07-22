@@ -1,5 +1,6 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpvectortool.c 
 	* app/vectors/gimpbezierstroke.c: formatting.
 
 2008-07-22  Sven Neumann  <sven@gimp.org>
