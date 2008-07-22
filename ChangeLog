@@ -1,5 +1,10 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcellrendererviewable.c: no need to cast the
+	return value of g_value_dup_object().
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c (build_menu): check the return
 	value of webkit_web_history_item_get_title() to guard us against
 	a (reported) bug in WebKit.
