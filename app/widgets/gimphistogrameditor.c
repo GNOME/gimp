@@ -365,6 +365,24 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
   gimp_histogram_editor_name_update (editor);
 }
 
+static gboolean
+gimp_histogram_editor_validate (GimpHistogramEditor *editor)
+{
+  if (! editor->valid && editor->histogram)
+    {
+      if (editor->drawable)
+        gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
+      else
+        gimp_histogram_calculate (editor->histogram, NULL, NULL);
+
+      gimp_histogram_editor_info_update (editor);
+
+      editor->valid = TRUE;
+    }
+
+  return editor->valid;
+}
+
 static void
 gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
                                      const GParamSpec    *pspec)
@@ -375,10 +393,8 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
     {
       if (! editor->bg_histogram)
         {
-          editor->bg_histogram = gimp_histogram_new ();
-
-          gimp_drawable_calculate_histogram (editor->drawable,
-                                             editor->bg_histogram);
+          if (gimp_histogram_editor_validate (editor))
+            editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);
 
           gimp_histogram_view_set_background (view, editor->bg_histogram);
         }
@@ -538,17 +554,7 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 static gboolean
 gimp_histogram_view_expose (GimpHistogramEditor *editor)
 {
-  if (! editor->valid && editor->histogram)
-    {
-      if (editor->drawable)
-        gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
-      else
-        gimp_histogram_calculate (editor->histogram, NULL, NULL);
-
-      editor->valid = TRUE;
-
-      gimp_histogram_editor_info_update (editor);
-    }
+  gimp_histogram_editor_validate (editor);
 
   return FALSE;
 }
