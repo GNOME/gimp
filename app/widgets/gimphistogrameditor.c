@@ -256,22 +256,22 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_menu_update,
                                             editor);
-    }
 
-  if (editor->histogram)
-    {
-      gimp_histogram_unref (editor->histogram);
-      editor->histogram = NULL;
+      if (editor->histogram)
+        {
+          gimp_histogram_unref (editor->histogram);
+          editor->histogram = NULL;
 
-      gimp_histogram_view_set_histogram (view, NULL);
-    }
+          gimp_histogram_view_set_histogram (view, NULL);
+        }
 
-  if (editor->bg_histogram)
-    {
-      gimp_histogram_unref (editor->bg_histogram);
-      editor->bg_histogram = NULL;
+      if (editor->bg_histogram)
+        {
+          gimp_histogram_unref (editor->bg_histogram);
+          editor->bg_histogram = NULL;
 
-      gimp_histogram_view_set_background (view, NULL);
+          gimp_histogram_view_set_background (view, NULL);
+        }
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);

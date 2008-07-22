@@ -1,5 +1,10 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogrameditor.c (gimp_histogram_editor_set_image):
+	reverted last change, it did not plug the leak.
+	
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/session.c (session_init): plugged a small memory leak.
 
 2008-07-21  Sven Neumann  <sven@gimp.org>
