@@ -1,5 +1,12 @@
 2008-07-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_get_icon): guard against
+	g_file_query_info() returning NULL (if the file doesn't exist or
+	whatever error).
+
+2008-07-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcolortool.c: set scroll_lock to TRUE while moving
 	or creating sample points so the image doesn't scroll while a new
 	sample point is dragged from the rulers and sample points can be
