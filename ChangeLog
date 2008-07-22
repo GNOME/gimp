@@ -1,6 +1,11 @@
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
-	* app/tools/gimpvectortool.c 
+	* app/tools/gimpvectortool.c: only use the position from the event
+	coordinates when creating or modifying strokes. Initialize all
+	other GimpCoords fields with default values.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c: formatting.
 
 2008-07-22  Sven Neumann  <sven@gimp.org>

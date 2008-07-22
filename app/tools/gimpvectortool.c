@@ -335,12 +335,18 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_ADD_ANCHOR)
     {
+      GimpCoords position = GIMP_COORDS_DEFAULT_VALUES;
+
+      position.x = coords->x;
+      position.y = coords->y;
+
       gimp_vector_tool_undo_push (vector_tool, _("Add Anchor"));
 
       vector_tool->undo_motion = TRUE;
 
       vector_tool->cur_anchor =
-                     gimp_bezier_stroke_extend (vector_tool->sel_stroke, coords,
+                     gimp_bezier_stroke_extend (vector_tool->sel_stroke,
+                                                &position,
                                                 vector_tool->sel_anchor,
                                                 EXTEND_EDITABLE);
 
@@ -648,10 +654,14 @@ gimp_vector_tool_motion (GimpTool        *tool,
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
+  GimpCoords         position    = GIMP_COORDS_DEFAULT_VALUES;
   GimpAnchor        *anchor;
 
   if (vector_tool->function == VECTORS_FINISHED)
     return;
+
+  position.x = coords->x;
+  position.y = coords->y;
 
   gimp_vectors_freeze (vector_tool->vectors);
 
@@ -680,7 +690,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
         {
           gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
                                             vector_tool->cur_anchor,
-                                            coords, vector_tool->restriction);
+                                            &position,
+                                            vector_tool->restriction);
           vector_tool->undo_motion = TRUE;
         }
       break;
@@ -689,8 +700,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
       if (options->polygonal)
         {
           gimp_vector_tool_move_selected_anchors (vector_tool,
-                                               coords->x - vector_tool->last_x,
-                                               coords->y - vector_tool->last_y);
+                                                  coords->x - vector_tool->last_x,
+                                                  coords->y - vector_tool->last_y);
           vector_tool->undo_motion = TRUE;
         }
       else
@@ -698,7 +709,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
           gimp_stroke_point_move_absolute (vector_tool->cur_stroke,
                                            vector_tool->cur_anchor,
                                            vector_tool->cur_position,
-                                           coords, vector_tool->restriction);
+                                           &position,
+                                           vector_tool->restriction);
           vector_tool->undo_motion = TRUE;
         }
       break;
@@ -1695,9 +1707,9 @@ gimp_vector_tool_move_selected_anchors (GimpVectorTool *vector_tool,
 {
   GimpAnchor *cur_anchor;
   GimpStroke *cur_stroke = NULL;
-  GList *anchors;
-  GList *list;
-  GimpCoords offset = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+  GList      *anchors;
+  GList      *list;
+  GimpCoords  offset = { 0.0, };
 
   offset.x = x;
   offset.y = y;
