@@ -8495,7 +8495,7 @@ msgstr[0] ""
 "Se non garda a imaxe perderanse as modificacións feitas durante o último "
 "minuto."
 msgstr[1] ""
-"Se non garda a imaxe perderanse as modificacións feitas durante os últimos "
+"Se non garda a imaxe perderanse as modificacións feitas durante os %d últimos "
 "minutos."
 
 #: ../app/display/gimpdisplayshell-dnd.c:208
