@@ -200,6 +200,19 @@ gimp_tag_entry_activate (GtkEntry              *entry,
     }
 }
 
+void
+gimp_tag_entry_set_tag_string (GimpTagEntry    *tag_entry,
+                               const gchar     *tag_string)
+{
+  gtk_entry_set_text (GTK_ENTRY (tag_entry), tag_string);
+  gtk_editable_set_position (GTK_EDITABLE (tag_entry), -1);
+
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+    {
+      gimp_tag_entry_assign_tags (tag_entry);
+    }
+}
+
 static void
 gimp_tag_entry_changed (GtkEntry          *entry,
                         gpointer           unused)

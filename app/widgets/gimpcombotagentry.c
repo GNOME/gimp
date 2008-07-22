@@ -690,8 +690,8 @@ gimp_combo_tag_entry_toggle_tag (GimpComboTagEntry     *combo_entry,
       g_string_append (tag_str, tag);
     }
 
-  gtk_entry_set_text (GTK_ENTRY (combo_entry->tag_entry), tag_str->str);
-  gtk_editable_set_position (GTK_EDITABLE (combo_entry->tag_entry), -1);
+  gimp_tag_entry_set_tag_string (GIMP_TAG_ENTRY (combo_entry->tag_entry),
+                                 tag_str->str);
 
   g_string_free (tag_str, TRUE);
   g_strfreev (current_tags);

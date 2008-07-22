@@ -81,15 +81,15 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
-  view->edit_button      = NULL;
-  view->new_button       = NULL;
-  view->duplicate_button = NULL;
-  view->delete_button    = NULL;
-  view->refresh_button   = NULL;
-
-  view->filtered_container = NULL;
-
-  view->selected_items   = NULL;
+  view->edit_button             = NULL;
+  view->new_button              = NULL;
+  view->duplicate_button        = NULL;
+  view->delete_button           = NULL;
+  view->refresh_button          = NULL;
+  view->filtered_container      = NULL;
+  view->query_tag_entry         = NULL;
+  view->assign_tag_entry        = NULL;
+  view->selected_items          = NULL;
 }
 
 GtkWidget *
@@ -263,13 +263,14 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
                                     GimpViewable        *viewable)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (editor);
-  GList               *active_items = NULL;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
   if (view->assign_tag_entry)
     {
+      GList    *active_items = NULL;
+
       if (viewable)
         {
           active_items = g_list_append (active_items, viewable);
@@ -280,7 +281,7 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
     }
   else
     {
-      active_items = g_list_append (active_items, viewable);
+      view->selected_items = g_list_append (view->selected_items, viewable);
     }
 }
 

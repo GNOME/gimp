@@ -63,5 +63,7 @@ GtkWidget * gimp_tag_entry_new                (GimpFilteredContainer   *tagged_c
 void        gimp_tag_entry_set_selected_items (GimpTagEntry            *tag_entry,
                                                GList                   *items);
 gchar **    gimp_tag_entry_parse_tags         (GimpTagEntry            *entry);
+void        gimp_tag_entry_set_tag_string     (GimpTagEntry            *tag_entry,
+                                               const gchar             *tag_string);
 
 #endif  /*  __GIMP_TAG_ENTRY_H__  */
