@@ -22,6 +22,12 @@ typedef struct {
     PyObject *sensitivity_func;
     PyObject *user_data;
 } PyGimpIntSensitivityData;
+
+static void
+pygimp_decref_callback(PyObject* obj) {
+    Py_XDECREF (obj);
+}
+
 %%
 modulename gimpui
 %%
@@ -1866,4 +1872,81 @@ _wrap_gimp_enum_store_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     pygobject_register_wrapper((PyObject *)self);
     return 0;
 }
+%%
+override gimp_zoom_preview_new_with_model kwargs
+static int
+_wrap_gimp_zoom_preview_new_with_model(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "drawable", "model", NULL };
+    PyGimpDrawable *py_drawable;
+    PyGObject *py_zoom_model = NULL;
+    GimpZoomModel *zoom_model;
 
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|O!:GimpZoomPreview.__init__", kwlist,
+                                     PyGimpDrawable_Type, &py_drawable,
+                                     &PyGimpZoomModel_Type, &py_zoom_model))
+        return -1;
+
+    if (py_zoom_model)
+        zoom_model = (GimpZoomModel*)py_zoom_model->obj;
+    else
+        zoom_model = NULL;
+
+    if (pygobject_construct(self, "drawable", py_drawable->drawable, "model", zoom_model, NULL))
+        return -1;
+
+    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    Py_INCREF(py_drawable);
+
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_ZOOM_PREVIEW
+%%
+override gimp_aspect_preview_new kwargs
+static int
+_wrap_gimp_aspect_preview_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "drawable", NULL };
+    PyGimpDrawable *py_drawable;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|:GimpAspectPreview.__init__", kwlist,
+                                     PyGimpDrawable_Type, &py_drawable))
+        return -1;
+
+    if (pygobject_construct(self, "drawable", py_drawable->drawable, NULL))
+        return -1;
+    
+    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    Py_INCREF(py_drawable);
+
+    return 0;
+}
+%%
+new-constructor GIMP_TYPE_ASPECT_PREVIEW
+%%
+override gimp_drawable_preview_new kwargs
+static int
+_wrap_gimp_drawable_preview_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "drawable", NULL };
+    PyGimpDrawable *py_drawable;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|:GimpDrawablePreview.__init__", kwlist,
+                                     PyGimpDrawable_Type, &py_drawable))
+        return -1;
+
+    if (pygobject_construct(self, "drawable", py_drawable->drawable, NULL))
+        return -1;
+
+    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    Py_INCREF(py_drawable);
+
+    return 0;
+}
+
+%%
+new-constructor GIMP_TYPE_DRAWABLE_PREVIEW

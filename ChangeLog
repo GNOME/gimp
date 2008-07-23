@@ -1,5 +1,10 @@
 2008-07-23  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/gimpui.override: Wrapped GimpAspectpreview,
+	GimpDrawablePreview and GimpZoomPrewview constructors 
+
+2008-07-23  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/pygimp-drawable.c: Fixed usage of GimpDrawable 
 
 2008-07-04  Lars-Peter Clausen  <lars@metafoo.de>
