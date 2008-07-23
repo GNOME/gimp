@@ -1,3 +1,19 @@
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpguideundo.c
+	* app/core/gimpitemundo.c
+	* app/core/gimplayermaskundo.c
+	* app/core/gimppdbprogress.c
+	* app/core/gimpstrokedesc.c
+	* app/core/gimptooloptions.c
+	* app/core/gimptoolpresets.c
+	* app/paint/gimppaintoptions.c
+	* app/text/gimpfont.c
+	* app/tools/gimptool.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcontrollereditor.c: no need to cast the return
+	value of g_value_dup_object().
+
 2008-07-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcellrendererviewable.c: no need to cast the

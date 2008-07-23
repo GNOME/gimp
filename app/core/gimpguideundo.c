@@ -115,7 +115,7 @@ gimp_guide_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_GUIDE:
-      guide_undo->guide = (GimpGuide *) g_value_dup_object (value);
+      guide_undo->guide = g_value_dup_object (value);
       break;
 
     default:

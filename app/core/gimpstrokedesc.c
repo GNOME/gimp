@@ -208,7 +208,7 @@ gimp_stroke_desc_set_property (GObject      *object,
     case PROP_PAINT_INFO:
       if (desc->paint_info)
         g_object_unref (desc->paint_info);
-      desc->paint_info = (GimpPaintInfo *) g_value_dup_object (value);
+      desc->paint_info = g_value_dup_object (value);
       break;
 
     case PROP_EMULATE_DYNAMICS:
@@ -218,7 +218,7 @@ gimp_stroke_desc_set_property (GObject      *object,
     case PROP_PAINT_OPTIONS:
       if (desc->paint_options)
         g_object_unref (desc->paint_options);
-      desc->paint_options = (GimpPaintOptions *) g_value_dup_object (value);
+      desc->paint_options = g_value_dup_object (value);
       break;
 
     default:

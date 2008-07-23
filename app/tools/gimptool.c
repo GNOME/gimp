@@ -198,7 +198,7 @@ gimp_tool_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TOOL_INFO:
-      tool->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+      tool->tool_info = g_value_dup_object (value);
       break;
 
     default:

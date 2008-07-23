@@ -106,7 +106,7 @@ gimp_tool_options_set_property (GObject      *object,
                           options->tool_info == tool_info);
 
         if (! options->tool_info)
-          options->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+          options->tool_info = g_value_dup_object (value);
       }
       break;
 
