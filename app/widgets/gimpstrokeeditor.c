@@ -113,7 +113,7 @@ gimp_stroke_editor_set_property (GObject      *object,
     case PROP_OPTIONS:
       if (editor->options)
         g_object_unref (editor->options);
-      editor->options = GIMP_STROKE_OPTIONS (g_value_dup_object (value));
+      editor->options = g_value_dup_object (value);
       break;
 
     case PROP_RESOLUTION:

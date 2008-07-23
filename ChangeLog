@@ -1,5 +1,20 @@
 2008-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimppdbdialog.c
+	* app/widgets/gimppluginaction.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* libgimpwidgets/gimpcolorprofilecombobox.c: no need to cast the
+	return value of g_value_dup_object().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpguideundo.c
 	* app/core/gimpitemundo.c
 	* app/core/gimplayermaskundo.c

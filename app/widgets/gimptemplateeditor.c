@@ -437,8 +437,9 @@ gimp_template_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TEMPLATE:
-      editor->template = GIMP_TEMPLATE (g_value_dup_object (value));
+      editor->template = g_value_dup_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -458,6 +459,7 @@ gimp_template_editor_get_property (GObject      *object,
     case PROP_TEMPLATE:
       g_value_set_object (value, editor->template);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

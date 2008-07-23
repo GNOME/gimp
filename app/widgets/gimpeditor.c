@@ -246,23 +246,29 @@ gimp_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MENU_FACTORY:
-      editor->menu_factory = (GimpMenuFactory *) g_value_dup_object (value);
+      editor->menu_factory = g_value_dup_object (value);
       break;
+
     case PROP_MENU_IDENTIFIER:
       editor->menu_identifier = g_value_dup_string (value);
       break;
+
     case PROP_UI_PATH:
       editor->ui_path = g_value_dup_string (value);
       break;
+
     case PROP_POPUP_DATA:
       editor->popup_data = g_value_get_pointer (value);
       break;
+
     case PROP_SHOW_NAME:
       g_object_set_property (G_OBJECT (editor->name_label), "visible", value);
       break;
+
     case PROP_NAME:
       gimp_editor_set_name (editor, g_value_get_string (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -282,18 +288,23 @@ gimp_editor_get_property (GObject    *object,
     case PROP_MENU_FACTORY:
       g_value_set_object (value, editor->menu_factory);
       break;
+
     case PROP_MENU_IDENTIFIER:
       g_value_set_string (value, editor->menu_identifier);
       break;
+
     case PROP_UI_PATH:
       g_value_set_string (value, editor->ui_path);
       break;
+
     case PROP_POPUP_DATA:
       g_value_set_pointer (value, editor->popup_data);
       break;
+
     case PROP_SHOW_NAME:
       g_object_get_property (G_OBJECT (editor->name_label), "visible", value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
