@@ -31,18 +31,16 @@
 
 #include <glib-object.h>
 
-static void
+/*static void
 ensure_drawable(PyGimpDrawable *self)
 {
     if (!self->drawable)
 	self->drawable = gimp_drawable_get(self->ID);
-}
+}*/
 
 static PyObject *
 drw_flush(PyGimpDrawable *self)
 {
-    ensure_drawable(self);
-
     gimp_drawable_flush(self->drawable);
 
     Py_INCREF(Py_None);
@@ -129,8 +127,6 @@ drw_get_tile(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &shadow, &row, &col))
 	return NULL;
 
-    ensure_drawable(self);
-
     t = gimp_drawable_get_tile(self->drawable, shadow, row, col);
     return pygimp_tile_new(t, self);
 }
@@ -146,8 +142,6 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "iii:get_tile2", kwlist,
 				     &shadow, &x ,&y))
 	return NULL;
-
-    ensure_drawable(self);
 
     t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
     return pygimp_tile_new(t, self);
@@ -165,8 +159,6 @@ drw_get_pixel_rgn(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     "iiii|ii:get_pixel_rgn", kwlist,
 				     &x, &y, &width, &height, &dirty, &shadow))
 	return NULL;
-
-    ensure_drawable(self);
 
     return pygimp_pixel_rgn_new(self, x, y, width, height, dirty, shadow);
 }
@@ -578,7 +570,7 @@ drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 			      "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "diiii|iii:transform_rotate", kwlist,
+				     "diiiii|iii:transform_rotate", kwlist,
 				     &angle, &auto_center, &center_x, &center_y,
 				     &transform_direction, &interpolation,
 				     &supersample, &recursion_level,
@@ -1200,29 +1192,36 @@ PyTypeObject PyGimpDrawable_Type = {
 PyObject *
 pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
 {
-    PyObject *self;
+    PyObject *self = NULL;
 
     if (drawable != NULL)
         ID = drawable->drawable_id;
 
     if (!gimp_drawable_is_valid(ID)) {
+        if (drawable)
+            gimp_drawable_detach(drawable);
         Py_INCREF(Py_None);
         return Py_None;
     }
 
     /* create the appropriate object type */
     if (gimp_drawable_is_layer(ID))
-        self = pygimp_layer_new(ID);
-    else
-        self = pygimp_channel_new(ID);
+        self = (PyObject*)PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+    else if (gimp_drawable_is_channel(ID))
+        self = (PyObject*)PyObject_NEW(PyGimpChannel, &PyGimpChannel_Type);
 
-    if (self == NULL)
+    if (self == NULL) {
+        if (drawable)
+            gimp_drawable_detach(drawable);
         return NULL;
+    }
+
+    ((PyGimpDrawable*)self)->ID = ID;
 
     if (drawable)
         ((PyGimpDrawable*)self)->drawable = drawable;
-    else if(((PyGimpDrawable*)self)->drawable == NULL)
-        ((PyGimpDrawable*)self)->drawable = gimp_drawable_get(((PyGimpDrawable*)self)->ID);
+    else
+        ((PyGimpDrawable*)self)->drawable = gimp_drawable_get(ID);
 
     return self;
 }
@@ -1788,6 +1787,7 @@ pygimp_layer_new(gint32 ID)
 
     self->ID = ID;
     self->drawable = gimp_drawable_get(ID);
+
 
     return (PyObject *)self;
 }
