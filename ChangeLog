@@ -1,23 +1,29 @@
 2008-07-24  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/gimpui.override
+	(_wrap_gimp_dialog_new, _wrap_gimp_proc_browser_dialog): Only try set
+	the objects data after the object has been created.
+
+2008-07-24  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/pygimp-drawable.c: Initialise self->drawable in lay_init
-	and chn_init
+	and chn_init.
 
 2008-07-23  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpui.override: Wrapped GimpAspectpreview,
-	GimpDrawablePreview and GimpZoomPrewview constructors 
+	GimpDrawablePreview and GimpZoomPrewview constructors.
 
 2008-07-23  Lars-Peter Clausen  <lars@metafoo.de>
 
-	* plug-ins/pygimp/pygimp-drawable.c: Fixed usage of GimpDrawable 
+	* plug-ins/pygimp/pygimp-drawable.c: Fixed usage of GimpDrawable.
 
 2008-07-04  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-tile.c
 	* plug-ins/pygimp/pygimp-drawable.c
 	* plug-ins/pygimp/pygimp-vectors.c
-	* plug-ins/pygimp/gimpmodile.c: Fixed some potential crashes
+	* plug-ins/pygimp/gimpmodile.c: Fixed some potential crashes.
 
 2008-06-30  Lars-Peter Clausen  <lars@metafoo.de>
 

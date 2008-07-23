@@ -793,27 +793,6 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     if (pyg_flags_get_value(GTK_TYPE_DIALOG_FLAGS, py_flags, (gint *)&flags))
         return -1;
 
-    if (help_func) {
-        if (help_func != Py_None) {
-            if (!PyCallable_Check(help_func)) {
-                PyErr_SetString(PyExc_TypeError, "help_func must be callable");
-                return -1;
-            }
-
-            func = pygimp_help_func_marshal;
-
-            g_object_set_data(self->obj, "pygimp-dialog-help-data", self);
-
-            Py_INCREF(help_func);
-            g_object_set_data_full(self->obj, "pygimp-dialog-help-func",
-                                   help_func, pygimp_help_func_destroy);
-        } else {
-            func = gimp_standard_help_func;
-        }
-    } else {
-        func = gimp_standard_help_func;
-    }
-
     if (py_buttons == Py_None)
         len = 0;
     else if (PyTuple_Check(py_buttons))
@@ -827,6 +806,22 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
         PyErr_SetString(PyExc_RuntimeError,
                         "buttons tuple must contain text/response id pairs");
         return -1;
+    }
+
+    if (help_func) {
+        if (help_func != Py_None) {
+            if (!PyCallable_Check(help_func)) {
+                PyErr_SetString(PyExc_TypeError, "help_func must be callable");
+                return -1;
+            }
+
+            func = pygimp_help_func_marshal;
+
+       } else {
+            func = gimp_standard_help_func;
+        }
+    } else {
+        func = gimp_standard_help_func;
     }
 
     pygobject_construct(self,
@@ -843,7 +838,7 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
         return -1;
     }
 
-    if (parent) {
+   if (parent) {
         if (GTK_IS_WINDOW(parent))
             gtk_window_set_transient_for(GTK_WINDOW(self->obj),
                                          GTK_WINDOW(parent));
@@ -879,6 +874,14 @@ _wrap_gimp_dialog_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 
         gimp_dialog_add_button(GIMP_DIALOG(self->obj), PyString_AsString(text),
                                PyInt_AsLong(id));
+    }
+
+    if (help_func && help_func != Py_None) {
+        g_object_set_data(self->obj, "pygimp-dialog-help-data", self);
+
+        Py_INCREF(help_func);
+        g_object_set_data_full(self->obj, "pygimp-dialog-help-func",
+                               help_func, pygimp_help_func_destroy);
     }
 
     return 0;
@@ -1416,27 +1419,6 @@ _wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args,
                                      &py_buttons))
         return -1;
 
-    if (help_func) {
-        if (help_func != Py_None) {
-            if (!PyCallable_Check(help_func)) {
-                PyErr_SetString(PyExc_TypeError, "help_func must be callable");
-                return -1;
-            }
-
-            func = pygimp_help_func_marshal;
-
-            g_object_set_data(self->obj, "pygimp-dialog-help-data", self);
-
-            Py_INCREF(help_func);
-            g_object_set_data_full(self->obj, "pygimp-dialog-help-func",
-                                   help_func, pygimp_help_func_destroy);
-        } else {
-            func = gimp_standard_help_func;
-        }
-    } else {
-        func = gimp_standard_help_func;
-    }
-
     if (py_buttons == Py_None)
         len = 0;
     else if (PyTuple_Check(py_buttons))
@@ -1452,6 +1434,22 @@ _wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args,
         PyErr_SetString(PyExc_RuntimeError,
                         "buttons tuple must contain text/response id pairs");
         return -1;
+    }
+
+    if (help_func) {
+        if (help_func != Py_None) {
+            if (!PyCallable_Check(help_func)) {
+                PyErr_SetString(PyExc_TypeError, "help_func must be callable");
+                return -1;
+            }
+
+            func = pygimp_help_func_marshal;
+
+       } else {
+            func = gimp_standard_help_func;
+        }
+    } else {
+        func = gimp_standard_help_func;
     }
 
     pygobject_construct(self,
@@ -1489,6 +1487,14 @@ _wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args,
 
         gimp_dialog_add_button(GIMP_DIALOG(self->obj), PyString_AsString(text),
                                PyInt_AsLong(id));
+    }
+
+    if (help_func && help_func != Py_None) {
+        g_object_set_data(self->obj, "pygimp-dialog-help-data", self);
+
+        Py_INCREF(help_func);
+        g_object_set_data_full(self->obj, "pygimp-dialog-help-func",
+                               help_func, pygimp_help_func_destroy);
     }
 
     g_signal_emit_by_name(GIMP_PROC_BROWSER_DIALOG(self->obj)->browser,
