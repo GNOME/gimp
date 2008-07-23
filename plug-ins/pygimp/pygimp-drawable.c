@@ -1714,7 +1714,6 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     self->ID = gimp_layer_new(img->ID, name, width, height,
 			      type, opacity, mode);
 
-    self->drawable = NULL;
 
     if (self->ID < 0) {
 	PyErr_Format(pygimp_error,
@@ -1724,6 +1723,8 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 	return -1;
     }
 
+    self->drawable = gimp_drawable_get(self->ID);
+    
     return 0;
 }
 
@@ -2004,14 +2005,14 @@ chn_init(PyGimpChannel *self, PyObject *args, PyObject *kwargs)
 
     self->ID = gimp_channel_new(img->ID, name, width, height, opacity, rgb);
 
-    self->drawable = NULL;
-
     if (self->ID < 0) {
 	PyErr_Format(pygimp_error,
 		     "could not create %dx%d channel '%s' on image (ID %d)",
 		     width, height, name, img->ID);
 	return -1;
     }
+
+    self->drawable = gimp_drawable_get(self->ID);
 
     return 0;
 }
