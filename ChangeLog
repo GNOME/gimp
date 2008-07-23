@@ -1,5 +1,10 @@
 2008-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
+	don't report negative offsets, they would be interpreted wrongly.
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
 	Based on a patch from Alexia Death (bug #543706):
 	
 	* app/paint/gimppaintcore-stroke.[ch]
