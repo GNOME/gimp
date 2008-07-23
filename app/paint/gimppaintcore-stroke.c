@@ -34,7 +34,8 @@
 #include "gimppaintoptions.h"
 
 
-static void gimp_paint_core_stroke_emulate_dynamics (GArray *coords);
+static void gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
+                                                     gint        len);
 
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
@@ -93,6 +94,7 @@ gboolean
 gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
                                  GimpDrawable      *drawable,
                                  GimpPaintOptions  *paint_options,
+                                 gboolean           emulate_dynamics,
                                  const BoundSeg    *bound_segs,
                                  gint               n_bound_segs,
                                  gint               offset_x,
@@ -161,6 +163,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
       coords[n_coords] = coords[0];
 
       n_coords++;
+
+      if (emulate_dynamics)
+        gimp_paint_core_stroke_emulate_dynamics (coords, n_coords);
 
       if (initialized ||
           gimp_paint_core_start (core, drawable, paint_options, &coords[0],
@@ -262,7 +267,8 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
             }
 
           if (emulate_dynamics)
-            gimp_paint_core_stroke_emulate_dynamics (coords);
+            gimp_paint_core_stroke_emulate_dynamics ((GimpCoords *) coords->data,
+                                                     coords->len);
 
           if (initialized ||
               gimp_paint_core_start (core, drawable, paint_options,
@@ -314,9 +320,10 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 }
 
 static void
-gimp_paint_core_stroke_emulate_dynamics (GArray *coords)
+gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
+                                         gint        len)
 {
-  const gint pressure_length = coords->len / 3;
+  const gint pressure_length = len / 3;
 
   /* Calculate and create pressure ramp parameters */
   if (pressure_length > 0)
@@ -327,27 +334,26 @@ gimp_paint_core_stroke_emulate_dynamics (GArray *coords)
       /* Calculate pressure start ramp */
       for (i = 0; i < pressure_length; i++)
         {
-          g_array_index (coords, GimpCoords, i).pressure =  i * step;
+          coords[i].pressure =  i * step;
         }
                 
       /* Calculate pressure end ramp */
-      for (i = coords->len - pressure_length; i < coords->len; i++)
+      for (i = len - pressure_length; i < len; i++)
         {
-          g_array_index (coords, GimpCoords, i).pressure =
-            1.0 - (i - (coords->len - pressure_length)) * step;
+          coords[i].pressure = 1.0 - (i - (len - pressure_length)) * step;
         }
     }
 
   /* Calculate and create velocity ramp parameters */
-  if (coords->len > 0)
+  if (len > 0)
     {
-      gdouble step = 1.0 / coords->len;
+      gdouble step = 1.0 / len;
       gint    i;
 
       /* Calculate velocity end ramp */
-      for (i = 0; i < coords->len; i++)
+      for (i = 0; i < len; i++)
         {
-          g_array_index (coords, GimpCoords, i).velocity = i  * step;
+          coords[i].velocity = i * step;
         }
     }
 }

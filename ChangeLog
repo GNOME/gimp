@@ -1,5 +1,13 @@
 2008-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore-stroke.[ch]: also implement brush
+	dynamics emulation for stroking selections.
+
+	* app/core/gimpchannel.c: pass the 'emulate-dynamics' parameter to
+	gimp_paint_core_stroke_boundary().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
 	don't report negative offsets, they would be interpreted wrongly.
 
