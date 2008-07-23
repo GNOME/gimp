@@ -34,6 +34,8 @@
 #include "gimppaintoptions.h"
 
 
+static void gimp_paint_core_stroke_emulate_dynamics (GArray *coords);
+
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
 
@@ -219,15 +221,14 @@ gboolean
 gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
                                 GimpDrawable      *drawable,
                                 GimpPaintOptions  *paint_options,
+                                gboolean           emulate_dynamics,
                                 GimpVectors       *vectors,
                                 GError           **error)
 {
-  GList      *stroke;
-  GArray     *coords      = NULL;
-  gboolean    initialized = FALSE;
-  gboolean    closed;
-  gint        off_x, off_y;
-  gint        vectors_off_x, vectors_off_y;
+  GList    *stroke;
+  gboolean  initialized = FALSE;
+  gint      off_x, off_y;
+  gint      vectors_off_x, vectors_off_y;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -244,6 +245,9 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
+      GArray   *coords;
+      gboolean  closed;
+
       coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
                                         1.0, &closed);
 
@@ -256,6 +260,9 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
               g_array_index (coords, GimpCoords, i).x -= off_x;
               g_array_index (coords, GimpCoords, i).y -= off_y;
             }
+
+          if (emulate_dynamics)
+            gimp_paint_core_stroke_emulate_dynamics (coords);
 
           if (initialized ||
               gimp_paint_core_start (core, drawable, paint_options,
@@ -304,4 +311,43 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
     }
 
   return initialized;
+}
+
+static void
+gimp_paint_core_stroke_emulate_dynamics (GArray *coords)
+{
+  const gint pressure_length = coords->len / 3;
+
+  /* Calculate and create pressure ramp parameters */
+  if (pressure_length > 0)
+    {
+      gdouble step = 1.0 / (gdouble) (pressure_length);
+      gint    i;
+
+      /* Calculate pressure start ramp */
+      for (i = 0; i < pressure_length; i++)
+        {
+          g_array_index (coords, GimpCoords, i).pressure =  i * step;
+        }
+                
+      /* Calculate pressure end ramp */
+      for (i = coords->len - pressure_length; i < coords->len; i++)
+        {
+          g_array_index (coords, GimpCoords, i).pressure =
+            1.0 - (i - (coords->len - pressure_length)) * step;
+        }
+    }
+
+  /* Calculate and create velocity ramp parameters */
+  if (coords->len > 0)
+    {
+      gdouble step = 1.0 / coords->len;
+      gint    i;
+
+      /* Calculate velocity end ramp */
+      for (i = 0; i < coords->len; i++)
+        {
+          g_array_index (coords, GimpCoords, i).velocity = i  * step;
+        }
+    }
 }

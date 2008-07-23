@@ -1,5 +1,16 @@
 2008-07-23  Sven Neumann  <sven@gimp.org>
 
+	Based on a patch from Alexia Death (bug #543706):
+	
+	* app/paint/gimppaintcore-stroke.[ch]
+	(gimp_paint_core_stroke_vectors): added code to emulate brush
+	dynamics by modifying pressure and velocity along the stroke.
+
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): pass the
+	'emulate-dynamics' parameter to gimp_paint_core_stroke_vectors().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerinfo.c
 	* app/widgets/gimpcontrollerlist.c
 	* app/widgets/gimpdasheditor.c

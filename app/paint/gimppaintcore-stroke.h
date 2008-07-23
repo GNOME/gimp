@@ -37,6 +37,7 @@ gboolean   gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
 gboolean   gimp_paint_core_stroke_vectors  (GimpPaintCore     *core,
                                             GimpDrawable      *drawable,
                                             GimpPaintOptions  *paint_options,
+                                            gboolean           emulate_dynamics,
                                             GimpVectors       *vectors,
                                             GError           **error);
 
