@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-22 22:52+0200\n"
-"PO-Revision-Date: 2008-07-09 20:07+0200\n"
+"POT-Creation-Date: 2008-07-25 00:00+0200\n"
+"PO-Revision-Date: 2008-07-24 18:49+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -3706,7 +3706,7 @@ msgstr "Desa opcions de l'eina"
 
 #: ../app/actions/tool-options-commands.c:76
 msgid "Enter a name for the saved options"
-msgstr "Poseu un nom a les opcions desades"
+msgstr "Introduïu un nom per a les opcions desades"
 
 #: ../app/actions/tool-options-commands.c:77
 #: ../app/actions/tool-options-commands.c:247
@@ -5089,7 +5089,7 @@ msgstr "Defineix la mida de les previsualitzacions de l'historial de desfer."
 
 #: ../app/config/gimprc-blurbs.h:420
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr "Si es marca l'opció, en prémer F1 s'obrirà el navegador d'ajuda."
+msgstr "Si es marca l'opció, en prémer F1 s'obrirà el navegador de l'ajuda."
 
 #: ../app/config/gimprc-blurbs.h:431
 #, c-format
@@ -6000,15 +6000,15 @@ msgstr "Encongeix el canal"
 msgid "Cannot stroke empty channel."
 msgstr "No es pot pintar un canal buit."
 
-#: ../app/core/gimpchannel.c:1612
+#: ../app/core/gimpchannel.c:1613
 msgid "Set Channel Color"
 msgstr "Defineix el color del canal"
 
-#: ../app/core/gimpchannel.c:1660
+#: ../app/core/gimpchannel.c:1661
 msgid "Set Channel Opacity"
 msgstr "Defineix l'opacitat del canal"
 
-#: ../app/core/gimpchannel.c:1728 ../app/core/gimpselection.c:520
+#: ../app/core/gimpchannel.c:1729 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
@@ -6535,7 +6535,7 @@ msgstr "(La previsualització pot ser massa antiga)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:605 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
+#: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:566
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -7264,7 +7264,7 @@ msgstr "Gestor de mòduls"
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
-msgstr "Cal que reinicieu el GIMP perquè els següents canvis tinguin efecte."
+msgstr "Cal que reinicieu el GIMP perquè els canvis tinguin efecte."
 
 #: ../app/dialogs/module-dialog.c:191
 msgid "Module"
@@ -7312,7 +7312,7 @@ msgstr "Desplaça el canal"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
-#: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:268
+#: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:276
 msgid "Offset"
 msgstr "Desplaçament"
 
@@ -7673,7 +7673,7 @@ msgstr "_Ajudes contextuals"
 
 #: ../app/dialogs/preferences-dialog.c:1798
 msgid "Show help _buttons"
-msgstr "_Botons d'ajuda"
+msgstr "Mostra els _botons d'ajuda"
 
 #: ../app/dialogs/preferences-dialog.c:1811
 msgid "Use the online version"
@@ -7698,11 +7698,11 @@ msgstr "El manual d'usuari no està instal·lat en local."
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1848
 msgid "Help Browser"
-msgstr "Navegador d'ajuda"
+msgstr "Navegador de l'ajuda"
 
 #: ../app/dialogs/preferences-dialog.c:1852
 msgid "H_elp browser to use:"
-msgstr "Nav_egador d'ajuda a utilitzar:"
+msgstr "Nav_egador de l'ajuda a utilitzar:"
 
 #: ../app/dialogs/preferences-dialog.c:1857
 msgid "Web Browser"
@@ -7758,7 +7758,7 @@ msgstr "Caixa d'eines"
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1972
 #: ../app/dialogs/preferences-dialog.c:2146
-#: ../app/widgets/gimpgrideditor.c:196
+#: ../app/widgets/gimpgrideditor.c:204
 msgid "Appearance"
 msgstr "Aparença"
 
@@ -7922,8 +7922,8 @@ msgstr "Resolució del monitor"
 
 # Quim: pixels surt a preferencies-graella i hauria de ser en minúscoles
 #: ../app/dialogs/preferences-dialog.c:2319
-#: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
-#: ../app/widgets/gimpgrideditor.c:293
+#: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
+#: ../app/widgets/gimpgrideditor.c:301
 msgid "Pixels"
 msgstr "píxels"
 
@@ -8329,7 +8329,7 @@ msgstr "Eina de pintar:"
 
 #: ../app/dialogs/stroke-dialog.c:246
 msgid "_Emulate brush dynamics"
-msgstr ""
+msgstr "_Emula la dinàmica del pinzell"
 
 #: ../app/dialogs/tips-dialog.c:87
 msgid "The GIMP tips file is empty!"
@@ -9702,7 +9702,6 @@ msgid "Import Colorize Settings"
 msgstr "Importa les opcions de to-saturació bàsic"
 
 #: ../app/tools/gimpcolorizetool.c:112
-#, fuzzy
 msgid "Export Colorize Settings"
 msgstr "Exporta les opcions de to-saturació bàsic"
 
@@ -10681,7 +10680,7 @@ msgstr "Mida"
 
 #: ../app/tools/gimppaintoptions-gui.c:186
 msgid "Brush Dynamics"
-msgstr ""
+msgstr "Dinàmica del pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:204
 msgid "Velocity:"
@@ -11374,13 +11373,13 @@ msgstr "Seccions centrals"
 msgid "Aspect ratio"
 msgstr "Relació d'aspecte"
 
-#: ../app/tools/tools-enums.c:149 ../app/widgets/gimpgrideditor.c:257
-#: ../app/widgets/gimpgrideditor.c:289
+#: ../app/tools/tools-enums.c:149 ../app/widgets/gimpgrideditor.c:265
+#: ../app/widgets/gimpgrideditor.c:297
 msgid "Width"
 msgstr "Amplada"
 
-#: ../app/tools/tools-enums.c:150 ../app/widgets/gimpgrideditor.c:259
-#: ../app/widgets/gimpgrideditor.c:291
+#: ../app/tools/tools-enums.c:150 ../app/widgets/gimpgrideditor.c:267
+#: ../app/widgets/gimpgrideditor.c:299
 msgid "Height"
 msgstr "Alçada"
 
@@ -11551,7 +11550,7 @@ msgid "Percentage of width of brush"
 msgstr "Tant per cent de l'amplada del pinzell"
 
 #: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:743
+#: ../app/widgets/gimpeditor.c:754
 msgid "(None)"
 msgstr "(Cap)"
 
@@ -11818,17 +11817,17 @@ msgstr "Apuja el controlador seleccionat"
 msgid "Move the selected controller down"
 msgstr "Abaixa el controlador seleccionat"
 
-#: ../app/widgets/gimpcontrollerlist.c:428
+#: ../app/widgets/gimpcontrollerlist.c:430
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Afegeix «%s» a la llista de controladors actius"
 
-#: ../app/widgets/gimpcontrollerlist.c:479
+#: ../app/widgets/gimpcontrollerlist.c:481
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Suprimeix «%s» de la llista de controladors actius"
 
-#: ../app/widgets/gimpcontrollerlist.c:512
+#: ../app/widgets/gimpcontrollerlist.c:514
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -11838,7 +11837,7 @@ msgstr ""
 "\n"
 "Ja en teniu un en la llista de controladors actius."
 
-#: ../app/widgets/gimpcontrollerlist.c:522
+#: ../app/widgets/gimpcontrollerlist.c:524
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -11848,24 +11847,24 @@ msgstr ""
 "\n"
 "Ja en teniu un en la llista de controladors actius."
 
-#: ../app/widgets/gimpcontrollerlist.c:549
+#: ../app/widgets/gimpcontrollerlist.c:551
 msgid "Remove Controller?"
 msgstr "Voleu suprimir el controlador?"
 
-#: ../app/widgets/gimpcontrollerlist.c:554
+#: ../app/widgets/gimpcontrollerlist.c:556
 msgid "Disable Controller"
 msgstr "Inhabilita el controlador"
 
-#: ../app/widgets/gimpcontrollerlist.c:556
+#: ../app/widgets/gimpcontrollerlist.c:558
 msgid "Remove Controller"
 msgstr "Suprimeix el controlador"
 
-#: ../app/widgets/gimpcontrollerlist.c:567
+#: ../app/widgets/gimpcontrollerlist.c:569
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Voleu suprimir el controlador «%s»?"
 
-#: ../app/widgets/gimpcontrollerlist.c:571
+#: ../app/widgets/gimpcontrollerlist.c:573
 #, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
@@ -11880,7 +11879,7 @@ msgstr ""
 "Si no voleu perdre tota la informació, és millor que només feu «inhabilita el "
 "controlador»."
 
-#: ../app/widgets/gimpcontrollerlist.c:631
+#: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
 msgstr "Configura el controlador d'entrada"
 
@@ -12134,61 +12133,58 @@ msgstr "Posició de la nansa: %0.4f"
 msgid "Distance: %0.4f"
 msgstr "Distància: %0.4f"
 
-#: ../app/widgets/gimpgrideditor.c:209
+#: ../app/widgets/gimpgrideditor.c:217
 msgid "Line _style:"
 msgstr "E_stil de línia:"
 
-#: ../app/widgets/gimpgrideditor.c:213
+#: ../app/widgets/gimpgrideditor.c:221
 msgid "Change grid foreground color"
 msgstr "Canvia el color de primer pla de la graella"
 
-#: ../app/widgets/gimpgrideditor.c:220
+#: ../app/widgets/gimpgrideditor.c:228
 msgid "_Foreground color:"
 msgstr "Color del _primer pla:"
 
-#: ../app/widgets/gimpgrideditor.c:224
+#: ../app/widgets/gimpgrideditor.c:232
 msgid "Change grid background color"
 msgstr "Canvia el color de fons de la graella"
 
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/widgets/gimpgrideditor.c:239
 msgid "_Background color:"
 msgstr "Color del _fons:"
 
-#: ../app/widgets/gimpgrideditor.c:236
+#: ../app/widgets/gimpgrideditor.c:244
 msgid "Spacing"
 msgstr "Espaiat"
 
 #: ../app/widgets/gimphelp.c:267
-#, fuzzy
 msgid "Help browser is missing"
-msgstr "Nav_egador d'ajuda a utilitzar:"
+msgstr "No s'ha trobat el navegador de l'ajuda"
 
 #: ../app/widgets/gimphelp.c:268
-#, fuzzy
 msgid "The GIMP help browser is not available."
-msgstr "Navegador de l'ajuda del GIMP"
+msgstr "El navegador de l'ajuda del GIMP no està disponible."
 
 #: ../app/widgets/gimphelp.c:269
-#, fuzzy
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Sembla ser que el connector del navegador d'ajuda del GIMP no està "
-"instal·lat."
+"El connector per al navegador de l'ajuda del GIMP sembla ser que no està "
+"instal·lat. En el seu lloc podeu utilitzar un navegador web per a llegir les "
+"pàgines d'ajuda."
 
 #: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
-msgstr "No es pot iniciar el navegador d'ajuda"
+msgstr "El navegador de l'ajuda no ha funcionat"
 
 #: ../app/widgets/gimphelp.c:311
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "No s'ha pogut iniciar el connector del navegador d'ajuda del GIMP."
+msgstr "No s'ha pogut iniciar el connector del navegador de l'ajuda del GIMP."
 
 #: ../app/widgets/gimphelp.c:338
-#, fuzzy
 msgid "Use _Web Browser"
-msgstr "Navegador web"
+msgstr "Utilitza un navegador _web"
 
 #: ../app/widgets/gimphelp.c:587
 msgid "GIMP user manual is missing"
@@ -12196,7 +12192,7 @@ msgstr "Falta el manual d'usuari del GIMP"
 
 #: ../app/widgets/gimphelp.c:594
 msgid "_Read Online"
-msgstr "_Llegeix del web"
+msgstr "_Llegeix-lo del web"
 
 #: ../app/widgets/gimphelp.c:618
 msgid "The GIMP user manual is not installed on your computer."
@@ -12500,20 +12496,20 @@ msgstr "_Omple amb:"
 msgid "Comme_nt:"
 msgstr "Come_ntari:"
 
-#: ../app/widgets/gimptemplateeditor.c:528
+#: ../app/widgets/gimptemplateeditor.c:530
 msgid "_Name:"
 msgstr "_Nom:"
 
-#: ../app/widgets/gimptemplateeditor.c:541
+#: ../app/widgets/gimptemplateeditor.c:543
 msgid "_Icon:"
 msgstr "_Icona:"
 
-#: ../app/widgets/gimptemplateeditor.c:669
+#: ../app/widgets/gimptemplateeditor.c:671
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d ppi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:671
+#: ../app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
@@ -12908,15 +12904,3 @@ msgstr "Assegureu-vos que la caixa d'eines és visible."
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No s'ha pogut iniciar «%s»: %s"
-
-#~ msgid "Dynamics sensitivity"
-#~ msgstr "Sensibilitat dinàmica"
-
-#~ msgid "Help browser not found"
-#~ msgstr "No s'ha trobat el navegador d'ajuda"
-
-#~ msgid "Could not find GIMP help browser."
-#~ msgstr "No s'ha pogut trobar el navegador d'ajuda del GIMP."
-
-#~ msgid "Use _web browser instead"
-#~ msgstr "En cas contrari, utilitza el navegador _web"

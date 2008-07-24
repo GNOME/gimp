@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-22 23:07+0200\n"
-"PO-Revision-Date: 2008-07-09 20:16+0200\n"
+"POT-Creation-Date: 2008-07-25 00:07+0200\n"
+"PO-Revision-Date: 2008-07-24 18:54+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,8 +54,8 @@ msgstr "Mapa de color erroni"
 #: ../plug-ins/fli/fli-gimp.c:464
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/ico/ico-load.c:651
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:223
+#: ../plug-ins/help/gimphelplocale.c:239 ../plug-ins/ico/ico-load.c:651
 #: ../plug-ins/ico/ico-load.c:728 ../plug-ins/jpeg/jpeg-load.c:111
 #: ../plug-ins/jpeg/jpeg-load.c:828 ../plug-ins/lighting/lighting-ui.c:1354
 #: ../plug-ins/psd/psd-load.c:125 ../plug-ins/psd/psd-thumb-load.c:78
@@ -10324,11 +10324,11 @@ msgstr "Actualitza la pàgina actual"
 
 #: ../plug-ins/help-browser/dialog.c:579
 msgid "_Stop"
-msgstr "_Para"
+msgstr "_Atura"
 
 #: ../plug-ins/help-browser/dialog.c:579
 msgid "Stop loading this page"
-msgstr "Para de carregar aquesta pàgina"
+msgstr "Atura la càrrega d'aquesta pàgina"
 
 #: ../plug-ins/help-browser/dialog.c:584
 msgid "Go to the index page"
@@ -10343,14 +10343,12 @@ msgid "Copy the location of this page to the clipboard"
 msgstr "Copia la ubicació d'aquesta pàgina al porta-retalls"
 
 #: ../plug-ins/help-browser/dialog.c:605
-#, fuzzy
 msgid "Find text in current page"
-msgstr "Actualitza la pàgina actual"
+msgstr "Cerca el text en la pàgina actual"
 
 #: ../plug-ins/help-browser/dialog.c:610
-#, fuzzy
 msgid "Find _Again"
-msgstr "S'està cercant el degradat XY"
+msgstr "Cerca de _nou"
 
 #  "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/help-browser/dialog.c:629
@@ -10359,28 +10357,25 @@ msgstr "M_ostra l'índex"
 
 #: ../plug-ins/help-browser/dialog.c:630
 msgid "Toggle the visibility of the sidebar"
-msgstr "Commuta la visibilitat de la barra lateral "
+msgstr "Commuta la visibilitat de la barra lateral"
 
 #: ../plug-ins/help-browser/dialog.c:651
 msgid "Visit the GIMP documentation website"
 msgstr "Visiteu el web de documentació del GIMP"
 
 #: ../plug-ins/help-browser/dialog.c:1137
-#, fuzzy
 msgid "Find:"
-msgstr "Vent"
+msgstr "Cerca:"
 
 #: ../plug-ins/help-browser/dialog.c:1154
-#, fuzzy
 msgctxt "search"
 msgid "_Previous"
-msgstr "_Previsualitza"
+msgstr "_Anterior"
 
 #: ../plug-ins/help-browser/dialog.c:1166
-#, fuzzy
 msgctxt "search"
 msgid "_Next"
-msgstr "_Hex"
+msgstr "_Següent"
 
 #: ../plug-ins/help/gimphelpdomain.c:181
 #, c-format
@@ -10401,7 +10396,7 @@ msgstr ""
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
-msgstr "Potser us falta l'entorn GIO i necessiteu instal·lar el GVFS?"
+msgstr "Potser us falta el rerefons GIO i necessiteu instal·lar el GVFS?"
 
 #: ../plug-ins/help/gimphelpdomain.c:216
 #, c-format
@@ -10413,7 +10408,7 @@ msgstr "L'identificador d'ajuda «%s» és desconegut"
 msgid "Loading index from '%s'"
 msgstr "S'està carregant l'índex de «%s»"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:267
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -12545,7 +12540,7 @@ msgid "Downloading %s of image data"
 msgstr "S'està rebent el %s de les dades de la imatge"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/uri/uri-backend-gvfs.c:224
+#: ../plug-ins/uri/uri-backend-gvfs.c:226
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:345
 #, c-format
@@ -12558,13 +12553,13 @@ msgid "Uploading %s of image data"
 msgstr "S'estan enviant el %s de les dades de la imatge"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
-#: ../plug-ins/uri/uri-backend-gvfs.c:227
+#: ../plug-ins/uri/uri-backend-gvfs.c:230
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "S'ha enviat el %s de les dades de la imatge"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
-#: ../plug-ins/uri/uri-backend-gvfs.c:292
+#: ../plug-ins/uri/uri-backend-gvfs.c:296
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -12588,7 +12583,7 @@ msgstr "No s'ha pogut escriure %s del «%s»: %s"
 msgid "Downloading image (%s of %s)"
 msgstr "S'està rebent la imatge (%s de %s)"
 
-#: ../plug-ins/uri/uri-backend-gvfs.c:203
+#: ../plug-ins/uri/uri-backend-gvfs.c:204
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "S'està enviant la imatge (%s de %s)"
