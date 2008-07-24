@@ -1,5 +1,9 @@
 2008-07-24  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gtkscalebutton.c: added missing prototypes.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimphelplocale.c: formatting.
 
 2008-07-24  Sven Neumann  <sven@gimp.org>

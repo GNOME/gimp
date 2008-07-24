@@ -1294,6 +1294,10 @@ cb_scale_grab_notify (GtkWidget *widget,
  * Scale stuff.
  */
 
+static GType gtk_scale_button_hscale_get_type (void) G_GNUC_CONST;
+static GType gtk_scale_button_vscale_get_type (void) G_GNUC_CONST;
+
+
 #define GTK_TYPE_SCALE_BUTTON_VSCALE    (gtk_scale_button_vscale_get_type ())
 #define GTK_SCALE_BUTTON_VSCALE(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_SCALE_BUTTON_VSCALE, GtkScaleButtonVScale))
 #define GTK_IS_SCALE_BUTTON_VSCALE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_SCALE_BUTTON_VSCALE))
