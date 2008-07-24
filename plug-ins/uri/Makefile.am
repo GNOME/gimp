@@ -25,13 +25,13 @@ backend_libs = $(GIO_LIBS)
 else
 if HAVE_GNOMEVFS
 backend_sources = uri-backend-gnomevfs.c
-backend_cflags = $(URI_GNOME_VFS_CFLAGS)
-backend_libs = $(URI_GNOME_VFS_LIBS)
+backend_cflags = $(GNOME_VFS_CFLAGS)
+backend_libs = $(GNOME_VFS_LIBS)
 else
 if HAVE_LIBCURL
 backend_sources = uri-backend-libcurl.c
-backend_cflags = $(URI_LIBCURL_CFLAGS)
-backend_libs = $(URI_LIBCURL_LIBS)
+backend_cflags = $(CURL_CFLAGS)
+backend_libs = $(CURL_LIBS)
 else
 backend_sources = uri-backend-wget.c
 backend_cflags = 

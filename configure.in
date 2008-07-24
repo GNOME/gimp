@@ -1319,8 +1319,6 @@ AC_ARG_WITH(gvfs, [  --without-gvfs          build without GIO/GVfs support])
 AM_CONDITIONAL(HAVE_GVFS, test "x$with_gvfs" != xno)
 
 
-gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
-
 AC_ARG_WITH(gnomevfs, [  --without-gnomevfs      build without gnomevfs support])
 
 have_gnomeui="no (disabled)"
@@ -1328,6 +1326,8 @@ have_gnome_keyring="no (disabled)"
 have_gnomevfs="no (disabled)"
 
 if test "x$with_gnomevfs" != xno; then
+
+gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
 if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
   have_gnomeui=yes
@@ -1343,7 +1343,7 @@ else
   have_gnome_keyring="no (gnome-keyring-1 not found)"
 fi
 
-PKG_CHECK_MODULES(URI_GNOME_VFS, $gnome_vfs_modules,
+PKG_CHECK_MODULES(GNOME_VFS, $gnome_vfs_modules,
   have_gnomevfs=yes,
   have_gnomevfs="no (gnome-vfs-2.0 not found)")
 
@@ -1352,15 +1352,13 @@ fi
 AM_CONDITIONAL(HAVE_GNOMEVFS, test "x$have_gnomevfs" = xyes)
 
 
-libcurl_modules="libcurl >= libcurl_required_version"
-
 AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
 
 have_libcurl="no (disabled)"
 
 if test "x$with_libcurl" != xno; then
 
-PKG_CHECK_MODULES(URI_LIBCURL, $libcurl_modules,
+PKG_CHECK_MODULES(CURL, libcurl >= libcurl_required_version,
   have_libcurl=yes,
   have_libcurl="no (libcurl not found)")
 

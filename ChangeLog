@@ -1,5 +1,11 @@
 2008-07-24  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: minor cleanup of the checks for the URI plug-in.
+
+	* plug-ins/uri/Makefile.am: changed accordingly.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/uri/uri-backend-libcurl.c: use g_fopen().
 
 	* plug-ins/uri/uri-backend-gvfs.c: formatting.
