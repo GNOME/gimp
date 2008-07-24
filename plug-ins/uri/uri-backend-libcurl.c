@@ -21,11 +21,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <curl/curl.h>
 #include <curl/types.h>
 #include <curl/easy.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -154,7 +154,7 @@ uri_backend_load_image (const gchar  *uri,
 
   gimp_progress_init (_("Connecting to server"));
 
-  if ((out_file = fopen(tmpname, "wb")) == NULL)
+  if ((out_file = g_fopen (tmpname, "wb")) == NULL)
     {
       g_set_error (error, 0, 0,
                    _("Could not open output file for writing"));

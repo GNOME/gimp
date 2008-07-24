@@ -199,9 +199,11 @@ uri_progress_callback (goffset  current_num_bytes,
         case DOWNLOAD:
           format = _("Downloading image (%s of %s)");
           break;
+
         case UPLOAD:
           format = _("Uploading image (%s of %s)");
           break;
+
         default:
           g_assert_not_reached ();
         }
@@ -223,9 +225,11 @@ uri_progress_callback (goffset  current_num_bytes,
         case DOWNLOAD:
           format = _("Downloaded %s of image data");
           break;
+
         case UPLOAD:
           format = _("Uploaded %s of image data");
           break;
+
         default:
           g_assert_not_reached ();
         }
