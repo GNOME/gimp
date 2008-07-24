@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-17 19:13+0000\n"
-"PO-Revision-Date: 2008-07-19 14:27+0200\n"
+"POT-Creation-Date: 2008-07-19 19:12+0000\n"
+"PO-Revision-Date: 2008-07-20 19:01+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../app/about.h:24
 msgid "GIMP"
-msgstr "GIM"
+msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
@@ -1029,7 +1029,7 @@ msgstr "B_úferes"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
-msgstr "Abre el diálogo de memorias intermedias con nombre"
+msgstr "Abre el diálogo de búferes con nombre"
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Images"
@@ -1554,7 +1554,7 @@ msgstr "Cor_tar con nombre…"
 
 #: ../app/actions/edit-actions.c:151
 msgid "Move the selected pixels to a named buffer"
-msgstr "Mover los píxeles seleccionados a una memoria intermedia con nombre"
+msgstr "Mover los píxeles seleccionados a un búfer con nombre"
 
 #: ../app/actions/edit-actions.c:156
 msgid "_Copy Named..."
@@ -1562,7 +1562,7 @@ msgstr "_Copiar con nombre…"
 
 #: ../app/actions/edit-actions.c:157
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copiar los píxeles seleccionados a una memoria intermedia con nombre"
+msgstr "Copiar los píxeles seleccionados a un búfer con nombre"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:162
@@ -1571,7 +1571,7 @@ msgstr "Copiar _visible con nombre…"
 
 #: ../app/actions/edit-actions.c:163
 msgid "Copy the selected region to a named buffer"
-msgstr "Copiar la región seleccionada a una memoria intermedia con nombre"
+msgstr "Copiar la región seleccionada a un búfer con nombre"
 
 #: ../app/actions/edit-actions.c:168
 msgid "_Paste Named..."
@@ -1579,7 +1579,7 @@ msgstr "_Pegar con nombre…"
 
 #: ../app/actions/edit-actions.c:169
 msgid "Paste the content of a named buffer"
-msgstr "Pegar el contenido de una memoria intermedia con nombre"
+msgstr "Pegar el contenido de un búfer con nombre"
 
 #: ../app/actions/edit-actions.c:174
 msgid "Cl_ear"
@@ -3301,7 +3301,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Activar máscara _rápida"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1101
+#: ../app/display/gimpdisplayshell.c:1107
 msgid "Toggle Quick Mask"
 msgstr "Activar máscara rápida"
 
@@ -3990,8 +3990,9 @@ msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Ajusta la ampliación para que la imagen se vea completamente"
 
 #: ../app/actions/view-actions.c:93
+# fuzzy
 msgid "Fi_ll Window"
-msgstr "Re_llenar la ventana"
+msgstr "Ocupar toda _la ventana"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the entire window is used"
@@ -4786,8 +4787,8 @@ msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
-"Mantener un registro permanente de todos los archivos abiertos "
-"y guardados en la lista de documentos recientes."
+"Mantener un registro permanente de todos los archivos abiertos y guardados "
+"en la lista de documentos recientes."
 
 #: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
@@ -7547,7 +7548,9 @@ msgstr "Confirmar el cierre de las _imágenes no guardadas"
 
 #: ../app/dialogs/preferences-dialog.c:1592
 msgid "Keep record of used files in the Recent Documents list"
-msgstr "Mantener un registro de los archivos utilizados en la lista de documentos recientes"
+msgstr ""
+"Mantener un registro de los archivos utilizados en la lista de documentos "
+"recientes"
 
 #: ../app/dialogs/preferences-dialog.c:1601
 msgid "User Interface"
@@ -8048,7 +8051,7 @@ msgstr "Guardar las posiciones de las ventanas _ahora"
 
 #: ../app/dialogs/preferences-dialog.c:2662
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "R_estaurar la posiciones de ventana guardadas a los valores predeterminados"
+msgstr "R_estaurar las posiciones de ventana guardadas a los valores predeterminados"
 
 #: ../app/dialogs/preferences-dialog.c:2677
 msgid "Folders"
@@ -8432,20 +8435,20 @@ msgstr "Alta"
 msgid "Image saved to '%s'"
 msgstr "Imagen guardada en «%s»"
 
-#: ../app/display/gimpdisplayshell.c:962
+#: ../app/display/gimpdisplayshell.c:968
 msgid "Access the image menu"
 msgstr "Ir al menú de imagen"
 
-#: ../app/display/gimpdisplayshell.c:1072
+#: ../app/display/gimpdisplayshell.c:1078
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: ../app/display/gimpdisplayshell.c:1122
+#: ../app/display/gimpdisplayshell.c:1128
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:1209
-#: ../app/display/gimpdisplayshell.c:1303 ../app/widgets/gimptoolbox.c:216
+#: ../app/display/gimpdisplayshell.c:1215
+#: ../app/display/gimpdisplayshell.c:1309 ../app/widgets/gimptoolbox.c:216
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -8794,7 +8797,9 @@ msgstr "No se puede fijar esta capa porque no es una selección flotante."
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr "No se puede convertir esta capa en una capa normal porque no es una selección flotante."
+msgstr ""
+"No se puede convertir esta capa en una capa normal porque no es una "
+"selección flotante."
 
 #: ../app/pdb/floating-sel-cmds.c:184
 #, c-format
@@ -8884,12 +8889,12 @@ msgstr "No se encuentra la tipografía «%s»"
 #: ../app/pdb/gimppdb-utils.c:250
 #, c-format
 msgid "Invalid empty buffer name"
-msgstr "Nombre vacío de memoria intermedia no válido"
+msgstr "Nombre vacío de búfer no válido"
 
 #: ../app/pdb/gimppdb-utils.c:260
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "No se encuentra la memoria intermedia con nombre «%s»"
+msgstr "No se encuentra el búfer con nombre «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:279
 #, c-format
@@ -9630,7 +9635,7 @@ msgid "Import Colorize Settings"
 msgstr "Importar los ajustes de Colorear"
 
 #: ../app/tools/gimpcolorizetool.c:112
-msgid "Export Colorsize Settings"
+msgid "Export Colorize Settings"
 msgstr "Exportar los ajustes de Colorear"
 
 #: ../app/tools/gimpcolorizetool.c:156
@@ -10105,7 +10110,9 @@ msgstr "Selección del frente"
 
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
-msgstr "Herramienta de selección libre: seleccionar una región dibujada a mano con segmentos libres y poligonales"
+msgstr ""
+"Herramienta de selección libre: seleccionar una región dibujada a mano con "
+"segmentos libres y poligonales"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
@@ -10125,7 +10132,9 @@ msgstr "Retorno realiza la acción, Escape cancela, Retroceso quita el último s
 
 #: ../app/tools/gimpfreeselecttool.c:1124
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr "Pulse y arrastre para añadir un segmento libre, pulse para añadir un segmento poligonal"
+msgstr ""
+"Pulse y arrastre para añadir un segmento libre, pulse para añadir un "
+"segmento poligonal"
 
 #: ../app/tools/gimpfreeselecttool.c:1575
 msgctxt "command"
@@ -12080,8 +12089,9 @@ msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Parece que falta el complemento del visor de ayuda del GIMP en su instalación. "
-"En su lugar, puede usar el navegador web para leer las páginas de ayuda."
+"Parece que falta el complemento del visor de ayuda del GIMP en su "
+"instalación. En su lugar, puede usar el navegador web para leer las páginas "
+"de ayuda."
 
 #: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
@@ -12112,8 +12122,8 @@ msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
-"Puede elegir entre instalar el paquete adicional de ayuda o cambiar "
-"las preferencias para usar la versión en línea."
+"Puede elegir entre instalar el paquete adicional de ayuda o cambiar las "
+"preferencias para usar la versión en línea."
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -12464,8 +12474,7 @@ msgid ""
 "Click to open the color selection dialog."
 msgstr ""
 "Colores de frente y fondo.\n"
-"Los cuadrados blancos y negros reinician los "
-"colores.\n"
+"Los cuadrados blancos y negros reinician los colores.\n"
 "Las flechas intercambian los colores.\n"
 "Pulse para abrir el diálogo de selección de colores."
 
@@ -12809,4 +12818,3 @@ msgstr "¡Asegúrese de que la caja de herramientas está visible!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No se ha podido iniciar «%s»: %s"
-
