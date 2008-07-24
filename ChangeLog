@@ -1,3 +1,8 @@
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_emulate_dynamics): renamed variables.
+
 2008-07-23  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimppaintcore-stroke.[ch]: also implement brush

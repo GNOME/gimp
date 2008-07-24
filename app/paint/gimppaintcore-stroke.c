@@ -35,7 +35,7 @@
 
 
 static void gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
-                                                     gint        len);
+                                                     gint        length);
 
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
@@ -321,39 +321,39 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 
 static void
 gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
-                                         gint        len)
+                                         gint        length)
 {
-  const gint pressure_length = len / 3;
+  const gint ramp_length = length / 3;
 
   /* Calculate and create pressure ramp parameters */
-  if (pressure_length > 0)
+  if (ramp_length > 0)
     {
-      gdouble step = 1.0 / (gdouble) (pressure_length);
+      gdouble slope = 1.0 / (gdouble) (ramp_length);
       gint    i;
 
       /* Calculate pressure start ramp */
-      for (i = 0; i < pressure_length; i++)
+      for (i = 0; i < ramp_length; i++)
         {
-          coords[i].pressure =  i * step;
+          coords[i].pressure =  i * slope;
         }
                 
       /* Calculate pressure end ramp */
-      for (i = len - pressure_length; i < len; i++)
+      for (i = length - ramp_length; i < length; i++)
         {
-          coords[i].pressure = 1.0 - (i - (len - pressure_length)) * step;
+          coords[i].pressure = 1.0 - (i - (length - ramp_length)) * slope;
         }
     }
 
   /* Calculate and create velocity ramp parameters */
-  if (len > 0)
+  if (length > 0)
     {
-      gdouble step = 1.0 / len;
+      gdouble slope = 1.0 / length;
       gint    i;
 
       /* Calculate velocity end ramp */
-      for (i = 0; i < len; i++)
+      for (i = 0; i < length; i++)
         {
-          coords[i].velocity = i * step;
+          coords[i].velocity = i * slope;
         }
     }
 }
