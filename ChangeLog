@@ -1,5 +1,9 @@
 2008-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/gimphelplocale.c: formatting.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: minor cleanup of the checks for the URI plug-in.
 
 	* plug-ins/uri/Makefile.am: changed accordingly.
