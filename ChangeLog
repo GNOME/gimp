@@ -1,7 +1,13 @@
+2008-07-25  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpui.override: Let ZoomPreview.get_drawable and
+	AspectPreview.get_drawable return the PyGimpDrawable which was passed to
+	their constructors.
+
 2008-07-24  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpui.override
-	(_wrap_gimp_dialog_new, _wrap_gimp_proc_browser_dialog): Only try set
+	(_wrap_gimp_dialog_new, _wrap_gimp_proc_browser_dialog_new): Only try set
 	the objects data after the object has been created.
 
 2008-07-24  Lars-Peter Clausen  <lars@metafoo.de>

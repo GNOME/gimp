@@ -1679,19 +1679,24 @@ override gimp_drawable_preview_get_drawable noargs
 static PyObject *
 _wrap_gimp_drawable_preview_get_drawable(PyGObject *self)
 {
-    GimpDrawable *drawable;
-    drawable = gimp_drawable_preview_get_drawable(
-                                             GIMP_DRAWABLE_PREVIEW(self->obj));
-    return pygimp_drawable_new(drawable, -1);
+    PyObject *drawable;
+    
+    drawable = g_object_get_data(self->obj, 
+                                 "pygimp-drawable-preview-pydrawable");
+    Py_INCREF(drawable);
+    return drawable;
 }
 %%
 override gimp_zoom_preview_get_drawable noargs
 static PyObject *
 _wrap_gimp_zoom_preview_get_drawable(PyGObject *self)
 {
-    GimpDrawable *drawable;
-    drawable = gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(self->obj));
-    return pygimp_drawable_new(drawable, -1);
+    PyObject *drawable;
+    
+    drawable = g_object_get_data(self->obj,
+                                 "pygimp-zoom-preview-pydrawable");
+    Py_INCREF(drawable);
+    return drawable;
 }
 %%
 override gimp_drawable_preview_draw_region kwargs
@@ -1902,7 +1907,10 @@ _wrap_gimp_zoom_preview_new_with_model(PyGObject *self, PyObject *args, PyObject
     if (pygobject_construct(self, "drawable", py_drawable->drawable, "model", zoom_model, NULL))
         return -1;
 
-    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    g_object_set_data_full(self->obj, "pygimp-zoom-preview-pydrawable",
+                           py_drawable,
+                           (GDestroyNotify)pygimp_decref_callback);
+
     Py_INCREF(py_drawable);
 
     return 0;
@@ -1925,7 +1933,8 @@ _wrap_gimp_aspect_preview_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     if (pygobject_construct(self, "drawable", py_drawable->drawable, NULL))
         return -1;
     
-    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    g_signal_connect_swapped(self->obj, "destroy",
+                             (GCallback)pygimp_decref_callback, py_drawable);
     Py_INCREF(py_drawable);
 
     return 0;
@@ -1948,7 +1957,10 @@ _wrap_gimp_drawable_preview_new(PyGObject *self, PyObject *args, PyObject *kwarg
     if (pygobject_construct(self, "drawable", py_drawable->drawable, NULL))
         return -1;
 
-    g_signal_connect_swapped(self->obj, "destroy", (GCallback)pygimp_decref_callback, py_drawable);
+    g_object_set_data_full(self->obj, "pygimp-drawable-preview-pydrawable",
+                           py_drawable, 
+                           (GDestroyNotify)pygimp_decref_callback);
+
     Py_INCREF(py_drawable);
 
     return 0;
