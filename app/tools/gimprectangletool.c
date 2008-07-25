@@ -413,6 +413,11 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                               GIMP_TYPE_RECTANGLE_PRECISION,
                                                               GIMP_RECTANGLE_PRECISION_INT,
                                                               GIMP_PARAM_READWRITE));
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("narrow-mode",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
 
       iface->execute                   = NULL;
       iface->cancel                    = NULL;
@@ -496,6 +501,9 @@ gimp_rectangle_tool_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_TOOL_PROP_PRECISION,
                                     "precision");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_TOOL_PROP_NARROW_MODE,
+                                    "narrow-mode");
 }
 
 void
@@ -717,6 +725,9 @@ gimp_rectangle_tool_set_property (GObject      *object,
     case GIMP_RECTANGLE_TOOL_PROP_PRECISION:
       private->precision = g_value_get_enum (value);
       break;
+    case GIMP_RECTANGLE_TOOL_PROP_NARROW_MODE:
+      private->narrow_mode = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -756,6 +767,9 @@ gimp_rectangle_tool_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_TOOL_PROP_PRECISION:
       g_value_set_enum (value, private->precision);
+      break;
+    case GIMP_RECTANGLE_TOOL_PROP_NARROW_MODE:
+      g_value_set_boolean (value, private->narrow_mode);
       break;
 
     default:

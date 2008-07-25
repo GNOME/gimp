@@ -608,8 +608,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   height = gimp_item_height (item);
 
 
-  surface = cairo_image_surface_create ( CAIRO_FORMAT_A8,
-        width, height);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_A8,
+                                        width, height);
 
   cr = cairo_create (surface);
 

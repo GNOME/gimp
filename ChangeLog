@@ -1,3 +1,16 @@
+2008-07-25  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/text/gimptext-bitmap.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimptoolcontrol.c
+	* app/tools/gimptoolcontrol.h
+	* app/tools/gimptexttool.c
+	* app/tools/gimptexttool.h
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprectangletool.h: removed text-editor dialog, added
+	on-canvas text-input and a temporary text cursor, and related things.
+
 2008-07-05  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/text/gimptext-vectors.c: fixed some formatting.

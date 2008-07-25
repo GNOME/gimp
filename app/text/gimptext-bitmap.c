@@ -65,7 +65,7 @@ gimp_text_render_bitmap (PangoFont            *font,
 
   cairo_transform (cr, trafo);
 
-  cairo_set_source_rgb (cr, 0.5, 0.5, 0.5);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
 
   cairo_show_glyphs (cr, &cglyph, 1);  
 

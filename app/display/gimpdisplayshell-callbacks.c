@@ -1233,6 +1233,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
+        if(gimp_tool_control_get_wants_all_key_events (active_tool->control))
+        {
+          tool_manager_key_press_active (gimp, kevent, display);
+          return TRUE;
+        }
+
         GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_PRESS (%d, %s)",
                   display, kevent->keyval,
                   gdk_keyval_name (kevent->keyval) ?

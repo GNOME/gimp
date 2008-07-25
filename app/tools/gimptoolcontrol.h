@@ -59,6 +59,8 @@ struct _GimpToolControl
 
   gboolean           toggled;
 
+  gboolean           wants_all_key_events;
+
   GimpCursorType     cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;
@@ -118,6 +120,10 @@ GimpMotionMode gimp_tool_control_get_motion_mode  (GimpToolControl *control);
 void           gimp_tool_control_set_snap_to      (GimpToolControl *control,
                                                    gboolean         snap_to);
 gboolean       gimp_tool_control_get_snap_to      (GimpToolControl *control);
+
+void           gimp_tool_control_set_wants_all_key_events  (GimpToolControl *control,
+                                                   gboolean         snap_to);
+gboolean       gimp_tool_control_get_wants_all_key_events  (GimpToolControl *control);
 
 void           gimp_tool_control_set_snap_offsets (GimpToolControl *control,
                                                    gint             offset_x,

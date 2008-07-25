@@ -46,15 +46,20 @@ struct _GimpTextTool
   gint           x1, y1;
   gint           x2, y2;
 
+  GtkTextBuffer *text_buffer;
+
   GimpText      *text;
   GimpTextLayer *layer;
   GimpImage     *image;
 
   GtkWidget     *editor;
   GtkWidget     *confirm_dialog;
+  GtkIMContext  *im_context;
 
   gboolean       handle_rectangle_change_complete;
   gboolean       text_box_fixed;
+
+  GimpTextLayout *layout;
 };
 
 struct _GimpTextToolClass
