@@ -777,6 +777,17 @@ gimp_tag_entry_expose (GtkWidget       *widget,
 static void
 gimp_tag_entry_backspace (GtkEntry     *entry)
 {
+  gint          selection_start;
+  gint          selection_end;
+
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
+                                     &selection_start, &selection_end);
+  if (selection_start == selection_end
+      && selection_start > 0)
+    {
+      gtk_editable_set_position (GTK_EDITABLE (entry), selection_start - 1);
+    }
+
   if (! gimp_tag_entry_select_jellybean (GIMP_TAG_ENTRY (entry)))
     {
       GTK_ENTRY_CLASS (parent_class)->backspace (entry);
@@ -816,6 +827,27 @@ gimp_tag_entry_try_select_jellybean (GimpTagEntry      *tag_entry)
 }
 
 static gboolean
+gimp_tag_entry_jellybean_is_valid (const gchar *jellybean)
+{
+  gunichar      c;
+  gunichar      separator = g_utf8_get_char (TAG_SEPARATOR_STR);
+
+  do
+    {
+      c = g_utf8_get_char (jellybean);
+      jellybean = g_utf8_next_char (jellybean);
+      if (c
+          && c != separator
+          && !g_unichar_isspace (c))
+        {
+          return TRUE;
+        }
+    } while (c);
+
+  return FALSE;
+}
+
+static gboolean
 gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
 {
   gchar        *original_string;
@@ -828,6 +860,8 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
   gunichar      c;
   gint          selection_start;
   gint          selection_end;
+  gchar        *previous_jellybean;
+  gboolean      jellybean_valid = FALSE;
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
                                      &selection_start, &selection_end);
@@ -840,14 +874,24 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
   position = gtk_editable_get_position (GTK_EDITABLE (entry));
   cursor = original_string;
   jellybean_start = original_string;
+  previous_jellybean = original_string;
   separator = g_utf8_get_char (TAG_SEPARATOR_STR);
   for (i = 0; i < position; i++)
     {
       c = g_utf8_get_char (cursor);
-      cursor = g_utf8_next_char (cursor);
-      if (c == separator)
+      if (! jellybean_valid
+          && c != separator
+          && !g_unichar_isspace (c))
         {
+          jellybean_valid = TRUE;
+        }
+      cursor = g_utf8_next_char (cursor);
+      if (c == separator
+          && jellybean_valid)
+        {
+          previous_jellybean = jellybean_start;
           jellybean_start = cursor;
+          jellybean_valid = FALSE;
         }
     }
   do
@@ -861,15 +905,16 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
         }
     } while (c);
 
+  printf ("start: %s\n", jellybean_start);
+  printf ("valid: %s\n", previous_jellybean);
   jellybean = jellybean_start;
-  while (*jellybean
-         && g_unichar_isspace (g_utf8_get_char (jellybean)))
+  if (! gimp_tag_entry_jellybean_is_valid (jellybean))
     {
-      jellybean = g_utf8_next_char (jellybean);
-    }
-  if (strlen (jellybean) <= 0)
-    {
-      return FALSE;
+      jellybean = previous_jellybean;
+      if (! gimp_tag_entry_jellybean_is_valid (jellybean))
+        {
+          return FALSE;
+        }
     }
 
   selection_start = g_utf8_pointer_to_offset (original_string, jellybean);
