@@ -43,6 +43,7 @@ struct _GimpComboTagEntry
   gint                          focus_width;
   PangoAttrList                *normal_item_attr;
   PangoAttrList                *selected_item_attr;
+  GdkColor                      selected_item_color;
   gboolean                      interior_focus;
 };
 

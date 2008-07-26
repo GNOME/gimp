@@ -54,6 +54,7 @@ typedef struct
   PangoContext         *context;
   PangoLayout          *layout;
   PopupTagData         *tag_data;
+  PopupTagData         *prelight;
   gint                  tag_count;
 } PopupData;
 
@@ -142,9 +143,6 @@ gimp_combo_tag_entry_new (GimpTagEntry         *tag_entry)
 
   combo_entry = g_object_new (GIMP_TYPE_COMBO_TAG_ENTRY, NULL);
   combo_entry->tag_entry = GTK_WIDGET (tag_entry);
-  combo_entry->normal_item_attr = pango_attr_list_new ();
-  pango_attr_list_insert (combo_entry->normal_item_attr,
-                          pango_attr_underline_new (PANGO_UNDERLINE_SINGLE));
 
   gtk_widget_add_events (GTK_WIDGET (combo_entry),
                          GDK_BUTTON_PRESS_MASK);
@@ -270,17 +268,30 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
   gtk_alignment_set_padding (GTK_ALIGNMENT (combo_entry->alignment),
                              ymargin, ymargin, xmargin, xmargin + 16);
 
+  style = widget->style;
+  if (combo_entry->normal_item_attr)
+    {
+      pango_attr_list_unref (combo_entry->normal_item_attr);
+    }
+  combo_entry->normal_item_attr = pango_attr_list_new ();
+  color = style->text[GTK_STATE_NORMAL];
+  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
+  attribute = pango_attr_underline_new (PANGO_UNDERLINE_SINGLE);
+  pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
   if (combo_entry->selected_item_attr)
     {
       pango_attr_list_unref (combo_entry->selected_item_attr);
     }
   combo_entry->selected_item_attr = pango_attr_list_copy (combo_entry->normal_item_attr);
-  color = widget->style->text[GTK_STATE_SELECTED];
+  color = style->text[GTK_STATE_SELECTED];
   attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
   pango_attr_list_insert (combo_entry->selected_item_attr, attribute);
-  color = widget->style->bg[GTK_STATE_SELECTED];
+  color = style->base[GTK_STATE_SELECTED];
   attribute = pango_attr_background_new (color.red, color.green, color.blue);
   pango_attr_list_insert (combo_entry->selected_item_attr, attribute);
+
+  combo_entry->selected_item_color = style->base[GTK_STATE_SELECTED];
 }
 
 static gboolean
@@ -367,21 +378,20 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   popup = gtk_window_new (GTK_WINDOW_POPUP);
   combo_entry->popup = popup;
   gtk_widget_add_events (GTK_WIDGET (popup),
-                         GDK_BUTTON_PRESS_MASK);
+                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
   gtk_window_set_screen (GTK_WINDOW (popup),
                          gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
 
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_add_events (GTK_WIDGET (drawing_area),
-                         GDK_BUTTON_PRESS_MASK);
+                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
 
   popup_data = g_malloc (sizeof (PopupData));
   popup_data->combo_entry = combo_entry;
   popup_data->drawing_area = drawing_area;
   popup_data->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
   popup_data->layout = pango_layout_new (popup_data->context);
-
-  pango_layout_set_attributes (popup_data->layout, combo_entry->normal_item_attr);
+  popup_data->prelight = NULL;
 
   current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (combo_entry->tag_entry));
   current_count = g_strv_length (current_tags);
@@ -470,7 +480,7 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   gtk_grab_add (popup);
   gtk_widget_grab_focus (combo_entry->tag_entry);
   grab_status = gdk_pointer_grab (popup->window, TRUE,
-                                  GDK_BUTTON_PRESS_MASK, NULL, NULL,
+                                  GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK, NULL, NULL,
                                   GDK_CURRENT_TIME);
   if (grab_status != GDK_GRAB_SUCCESS)
     {
@@ -513,16 +523,16 @@ gimp_combo_tag_entry_layout_tags (PopupData            *popup_data,
                              &popup_data->tag_data[i].bounds.height);
       popup_data->tag_data[i].bounds.width      /= PANGO_SCALE;
       popup_data->tag_data[i].bounds.height     /= PANGO_SCALE;
-      if (popup_data->tag_data[i].bounds.width + x + GIMP_TAG_POPUP_MARGIN > width)
+      if (popup_data->tag_data[i].bounds.width + x + 6 +GIMP_TAG_POPUP_MARGIN > width)
         {
           x = GIMP_TAG_POPUP_MARGIN;
-          y += line_height;
+          y += line_height + 8;
         }
 
       popup_data->tag_data[i].bounds.x = x;
       popup_data->tag_data[i].bounds.y = y;
 
-      x += popup_data->tag_data[i].bounds.width + space_width;
+      x += popup_data->tag_data[i].bounds.width + space_width + 6;
     }
   height = y + line_height + GIMP_TAG_POPUP_MARGIN;
 
@@ -534,6 +544,7 @@ gimp_combo_tag_entry_popup_expose (GtkWidget           *widget,
                                    GdkEventExpose      *event,
                                    PopupData           *popup_data)
 {
+  GdkGC                *gc;
   PangoRenderer        *renderer;
   gint                  i;
 
@@ -541,6 +552,11 @@ gimp_combo_tag_entry_popup_expose (GtkWidget           *widget,
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), widget->style->black_gc);
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer),
                                    widget->window);
+
+  gc = gdk_gc_new (GDK_DRAWABLE (widget->window));
+  gdk_gc_set_rgb_fg_color (gc, &popup_data->combo_entry->selected_item_color);
+  gdk_gc_set_line_attributes (gc, 5, GDK_LINE_SOLID, GDK_CAP_ROUND,
+                              GDK_JOIN_ROUND);
 
   for (i = 0; i < popup_data->tag_count; i++)
     {
@@ -557,9 +573,26 @@ gimp_combo_tag_entry_popup_expose (GtkWidget           *widget,
                                        popup_data->combo_entry->normal_item_attr);
         }
 
+      if (popup_data->tag_data[i].selected)
+        {
+          gdk_draw_rectangle (widget->window, gc, FALSE,
+                              popup_data->tag_data[i].bounds.x, popup_data->tag_data[i].bounds.y,
+                              popup_data->tag_data[i].bounds.width, popup_data->tag_data[i].bounds.height);
+        }
       pango_renderer_draw_layout (renderer, popup_data->layout,
-                                  popup_data->tag_data[i].bounds.x * PANGO_SCALE,
-                                  popup_data->tag_data[i].bounds.y * PANGO_SCALE);
+                                  (popup_data->tag_data[i].bounds.x) * PANGO_SCALE,
+                                  (popup_data->tag_data[i].bounds.y) * PANGO_SCALE);
+
+      if (&popup_data->tag_data[i] == popup_data->prelight)
+        {
+          gtk_paint_focus (widget->style, widget->window,
+                           popup_data->tag_data[i].selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL,
+                           &event->area, widget, NULL,
+                           popup_data->tag_data[i].bounds.x, popup_data->tag_data[i].bounds.y,
+                           popup_data->tag_data[i].bounds.width, popup_data->tag_data[i].bounds.height);
+
+        }
+
     }
 
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
@@ -640,6 +673,38 @@ gimp_combo_tag_entry_drawing_area_event (GtkWidget          *widget,
               gtk_widget_queue_draw (widget);
               break;
             }
+        }
+    }
+  else if (event->type == GDK_MOTION_NOTIFY)
+    {
+      GdkEventMotion   *motion_event;
+      gint              x;
+      gint              y;
+      gint              i;
+      GdkRectangle     *bounds;
+      PopupTagData     *previous_prelight = popup_data->prelight;
+
+      motion_event = (GdkEventMotion*) event;
+      x = motion_event->x;
+      y = motion_event->y;
+
+      popup_data->prelight = NULL;
+      for (i = 0; i < popup_data->tag_count; i++)
+        {
+          bounds = &popup_data->tag_data[i].bounds;
+          if (x >= bounds->x
+              && y >= bounds->y
+              && x < bounds->x + bounds->width
+              && y < bounds->y + bounds->height)
+            {
+              popup_data->prelight = &popup_data->tag_data[i];
+              break;
+            }
+        }
+
+      if (previous_prelight != popup_data->prelight)
+        {
+          gtk_widget_queue_draw (widget);
         }
     }
 
