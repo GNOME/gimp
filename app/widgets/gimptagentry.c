@@ -905,8 +905,6 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
         }
     } while (c);
 
-  printf ("start: %s\n", jellybean_start);
-  printf ("valid: %s\n", previous_jellybean);
   jellybean = jellybean_start;
   if (! gimp_tag_entry_jellybean_is_valid (jellybean))
     {
