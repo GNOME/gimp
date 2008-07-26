@@ -1,3 +1,7 @@
+2008-07-26  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/tools/gimptexttool.c: continued working on the text-cursor.
+
 2008-07-25  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
