@@ -105,7 +105,7 @@ gimp_tagged_base_init (gpointer klass)
  **/
 void
 gimp_tagged_add_tag (GimpTagged    *tagged,
-                     const GimpTag  tag)
+                     GimpTag       *tag)
 {
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
 
@@ -126,7 +126,7 @@ gimp_tagged_add_tag (GimpTagged    *tagged,
  **/
 void
 gimp_tagged_remove_tag (GimpTagged *tagged,
-                        GimpTag     tag)
+                        GimpTag    *tag)
 {
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
 

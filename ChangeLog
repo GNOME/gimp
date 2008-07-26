@@ -5,7 +5,7 @@
 	* app/core/gimpfilteredcontainer.c
 	* app/core/gimptag.[ch]
 	* app/core/gimptagcache.c
-	* app/core/gimptagged.h
+	* app/core/gimptagged.[ch]
 	* app/widgets/gimpcombotagentry.c
 	* app/widgets/gimptagentry.c: made GimpTag an object and updated all
 	places to treat it as such. This allows correctly compare various tags
