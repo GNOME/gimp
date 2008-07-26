@@ -6,50 +6,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-18 22:19+0200\n"
-"PO-Revision-Date: 2008-02-17 22:13+0100\n"
+"POT-Creation-Date: 2008-07-26 03:26+0200\n"
+"PO-Revision-Date: 2008-07-26 03:26+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
 msgstr "Informazioni sull'eccezione mancanti"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
 msgstr "Errore durante l'esecuzione di %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
 msgstr "_Ulteriori informazioni"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
+#: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
 msgstr "Sì"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Selezione file Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
 msgstr "Selezione cartelle Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ingresso non valido per \"%s\""
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Selezione colore Python-Fu"
 
@@ -93,65 +93,31 @@ msgstr "Dime_nsione carattere in pixel"
 msgid "_Write a separate CSS file"
 msgstr "Sc_rivi un file CSS separato"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Console Python"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Scorri..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Navigatore di procedure Python"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Impossibile aprire \"%s\" alla scrittura: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Impossibile scrivere su \"%s\": %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Salva il risultato della console Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interprete interattivo Gimp-Python"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Console"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Aggiungi un livello di nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "Nome _livello"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Nuvole"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "Colore _nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbolenza"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acità"
 
@@ -279,6 +245,40 @@ msgstr "Javascript per onmouseover e clicked)"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Salta l'animazione per le tabelle"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:46
+msgid "Python Console"
+msgstr "Console Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+msgid "_Browse..."
+msgstr "_Scorri..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:132
+msgid "Python Procedure Browser"
+msgstr "Navigatore di procedure Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Impossibile aprire \"%s\" alla scrittura: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Impossibile scrivere su \"%s\": %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Salva il risultato della console Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interprete interattivo Python di GIMP"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:223
+msgid "_Console"
+msgstr "_Console"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
