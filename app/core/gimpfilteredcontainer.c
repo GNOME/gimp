@@ -29,6 +29,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimptag.h"
 #include "gimptagged.h"
 #include "gimplist.h"
 #include "gimpfilteredcontainer.h"
@@ -54,10 +55,10 @@ static void         gimp_filtered_container_src_freeze         (GimpContainer   
 static void         gimp_filtered_container_src_thaw           (GimpContainer         *src_container,
                                                                 GimpFilteredContainer *filtered_container);
 static void         gimp_filtered_container_tag_added          (GimpTagged            *tagged,
-                                                                GimpTag                tag,
+                                                                GimpTag               *tag,
                                                                 GimpFilteredContainer  *filtered_container);
 static void         gimp_filtered_container_tag_removed        (GimpTagged            *tagged,
-                                                                GimpTag                tag,
+                                                                GimpTag               *tag,
                                                                 GimpFilteredContainer  *filtered_container);
 static void         gimp_filtered_container_tagged_item_added  (GimpTagged             *tagged,
                                                                 GimpFilteredContainer  *filtered_container);
@@ -147,7 +148,9 @@ gimp_filtered_container_new (GimpContainer     *src_container)
 
   filtered_container->src_container = src_container;
   GIMP_CONTAINER (filtered_container)->children_type = children_type;
-  filtered_container->tag_ref_counts = g_hash_table_new (g_direct_hash, g_direct_equal);
+  filtered_container->tag_ref_counts =
+      g_hash_table_new ((GHashFunc)gimp_tag_get_hash,
+                        (GEqualFunc)gimp_tag_equals);
 
   gimp_filtered_container_filter (filtered_container);
 
@@ -199,7 +202,8 @@ gimp_filtered_container_object_matches (GimpFilteredContainer          *filtered
       object_tag = gimp_tagged_get_tags (GIMP_TAGGED (object));
       while (object_tag)
         {
-          if (object_tag->data == filter_tag->data)
+          if (gimp_tag_equals (GIMP_TAG (object_tag->data),
+                               GIMP_TAG (filter_tag->data)))
             {
               break;
             }
@@ -294,7 +298,7 @@ gimp_filtered_container_tagged_item_added (GimpTagged                  *tagged,
   while (tag_iterator)
     {
       gimp_filtered_container_tag_added (tagged,
-                                         GPOINTER_TO_UINT (tag_iterator->data),
+                                         GIMP_TAG (tag_iterator->data),
                                          filtered_container);
       tag_iterator = g_list_next (tag_iterator);
     }
@@ -324,7 +328,7 @@ gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
   while (tag_iterator)
     {
       gimp_filtered_container_tag_removed (tagged,
-                                           GPOINTER_TO_UINT (tag_iterator->data),
+                                           GIMP_TAG (tag_iterator->data),
                                            filtered_container);
       tag_iterator = g_list_next (tag_iterator);
     }
@@ -333,38 +337,36 @@ gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
 
 static void
 gimp_filtered_container_tag_added (GimpTagged            *tagged,
-                                   GimpTag                tag,
-                                   GimpFilteredContainer  *filtered_container)
+                                   GimpTag               *tag,
+                                   GimpFilteredContainer *filtered_container)
 {
   gint                  ref_count;
 
   ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
-                                                    GUINT_TO_POINTER (tag)));
+                                                    tag));
   ref_count++;
   g_hash_table_insert (filtered_container->tag_ref_counts,
-                       GUINT_TO_POINTER (tag),
-                       GINT_TO_POINTER (ref_count));
+                       tag, GINT_TO_POINTER (ref_count));
 }
 
 static void
 gimp_filtered_container_tag_removed (GimpTagged                  *tagged,
-                                     GimpTag                      tag,
+                                     GimpTag                     *tag,
                                      GimpFilteredContainer       *filtered_container)
 {
   gint                  ref_count;
 
   ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
-                                                    GUINT_TO_POINTER (tag)));
+                                                    tag));
   ref_count--;
   if (ref_count > 0)
     {
       g_hash_table_insert (filtered_container->tag_ref_counts,
-                           GUINT_TO_POINTER (tag),
-                           GINT_TO_POINTER (ref_count));
+                           tag, GINT_TO_POINTER (ref_count));
     }
   else
     {
-      g_hash_table_remove (filtered_container->tag_ref_counts,
-                           GUINT_TO_POINTER (tag));
+      g_hash_table_remove (filtered_container->tag_ref_counts, tag);
     }
 }
+

@@ -261,7 +261,7 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
   gchar                       **parsed_tags;
   gint                          count;
   gint                          i;
-  GimpTag                       tag;
+  GimpTag                      *tag;
   GList                        *query_list = NULL;
 
   parsed_tags = gimp_tag_entry_parse_tags (entry);
@@ -270,8 +270,11 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
     {
       if (strlen (parsed_tags[i]) > 0)
         {
-          tag = g_quark_try_string (parsed_tags[i]);
-          query_list = g_list_append (query_list, GUINT_TO_POINTER (tag));
+          tag = gimp_tag_try_new (parsed_tags[i]);
+          if (tag)
+            {
+              query_list = g_list_append (query_list, tag);
+            }
         }
     }
   g_strfreev (parsed_tags);
@@ -341,17 +344,17 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
   gchar               **parsed_tags;
   gint                  count;
   gint                  i;
-  GimpTag               tag;
+  GimpTag              *tag;
   GList                *tag_list = NULL;
 
   parsed_tags = gimp_tag_entry_parse_tags (tag_entry);
   count = g_strv_length (parsed_tags);
   for (i = 0; i < count; i++)
     {
-      if (strlen (parsed_tags[i]) > 0)
+      if (gimp_tag_string_is_valid (parsed_tags[i]))
         {
-          tag = g_quark_from_string (parsed_tags[i]);
-          tag_list = g_list_append (tag_list, GUINT_TO_POINTER (tag));
+          tag = gimp_tag_new (parsed_tags[i]);
+          tag_list = g_list_append (tag_list, tag);
         }
     }
   g_strfreev (parsed_tags);
@@ -363,6 +366,8 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
       gimp_tag_entry_item_set_tags (selected_item, tag_list);
       selected_iterator = g_list_next (selected_iterator);
     }
+
+  g_list_foreach (tag_list, (GFunc)g_object_unref, NULL);
   g_list_free (tag_list);
 }
 
@@ -377,8 +382,7 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
   tags_iterator = old_tags;
   while (tags_iterator)
     {
-      gimp_tagged_remove_tag (tagged,
-                              GPOINTER_TO_UINT (tags_iterator->data));
+      gimp_tagged_remove_tag (tagged, GIMP_TAG (tags_iterator->data));
       tags_iterator = g_list_next (tags_iterator);
     }
   g_list_free (old_tags);
@@ -386,8 +390,8 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
   tags_iterator = tags;
   while (tags_iterator)
     {
-      printf ("tagged: %s\n", g_quark_to_string (GPOINTER_TO_UINT (tags_iterator->data)));
-      gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tags_iterator->data));
+      printf ("tagged: %s\n", gimp_tag_get_name (GIMP_TAG (tags_iterator->data)));
+      gimp_tagged_add_tag (tagged, GIMP_TAG (tags_iterator->data));
       tags_iterator = g_list_next (tags_iterator);
     }
 }
@@ -441,7 +445,7 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
   GList        *tag_list;
   GList        *tag_iterator;
   gint          insert_pos;
-  GimpTag       tag;
+  GimpTag      *tag;
   gchar        *text;
 
   gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
@@ -459,8 +463,8 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
   tag_iterator = tag_list;
   while (tag_iterator)
     {
-      tag = GPOINTER_TO_UINT (tag_iterator->data);
-      text = g_strdup_printf ("%s, ", g_quark_to_string (tag));
+      tag = GIMP_TAG (tag_iterator->data);
+      text = g_strdup_printf ("%s, ", gimp_tag_get_name (tag));
       gtk_editable_insert_text (GTK_EDITABLE (tag_entry), text, strlen (text),
                                 &insert_pos);
       g_free (text);
@@ -521,7 +525,8 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
   GList        *candidates = NULL;
   GList        *all_tags;
   GList        *tag_iterator;
-  GimpTag       tag;
+  GimpTag      *tag;
+  const gchar  *tag_name;
   gint          i;
   gint          length;
 
@@ -536,13 +541,14 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
   length = g_strv_length (used_tags);
   while (tag_iterator)
     {
-      tag = GPOINTER_TO_UINT (tag_iterator->data);
-      if (g_str_has_prefix (g_quark_to_string (tag), prefix))
+      tag = GIMP_TAG (tag_iterator->data);
+      tag_name = gimp_tag_get_name (tag);
+      if (g_str_has_prefix (tag_name, prefix))
         {
           /* check if tag is not already entered */
           for (i = 0; i < length; i++)
             {
-              if (! strcmp (g_quark_to_string (tag), used_tags[i]))
+              if (! strcmp (tag_name, used_tags[i]))
                 {
                   break;
                 }
@@ -587,7 +593,7 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
   length = g_list_length (candidates);
   if (length < 2)
     {
-      candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+      candidate_string = gimp_tag_get_name (GIMP_TAG (candidates->data));
       return g_strdup (candidate_string + prefix_length);
     }
 
@@ -595,8 +601,7 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
   candidate_iterator = candidates;
   for (i = 0; i < length; i++)
     {
-      candidate_string =
-          g_quark_to_string (GPOINTER_TO_UINT (candidate_iterator->data));
+      candidate_string = gimp_tag_get_name (GIMP_TAG (candidate_iterator->data));
       completions[i] = candidate_string + prefix_length;
       candidate_iterator = g_list_next (candidate_iterator);
     }
@@ -615,7 +620,7 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
           d = g_utf8_get_char (completions[i]);
           if (c != d)
             {
-              candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+              candidate_string = gimp_tag_get_name (GIMP_TAG (candidates->data));
               candidate_string += prefix_length;
               completion_end = g_utf8_offset_to_pointer (candidate_string,
                                                          num_chars_match);
@@ -634,7 +639,7 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
     } while (c);
   g_free (completions);
 
-  candidate_string = g_quark_to_string (GPOINTER_TO_UINT (candidates->data));
+  candidate_string = gimp_tag_get_name (GIMP_TAG (candidates->data));
   return g_strdup (candidate_string + prefix_length);
 }
 

@@ -42,7 +42,7 @@
 
 typedef struct
 {
-  GimpTag               tag;
+  GimpTag              *tag;
   GdkRectangle          bounds;
   gboolean              selected;
 } PopupTagData;
@@ -404,9 +404,9 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   tag_iterator = tag_list;
   for (i = 0; i < popup_data->tag_count; i++)
     {
-      popup_data->tag_data[i].tag = GPOINTER_TO_UINT (tag_iterator->data);
+      popup_data->tag_data[i].tag = GIMP_TAG (tag_iterator->data);
       popup_data->tag_data[i].selected = FALSE;
-      list_tag = gimp_tag_to_string (popup_data->tag_data[i].tag);
+      list_tag = gimp_tag_get_name (popup_data->tag_data[i].tag);
       for (j = 0; j < current_count; j++)
         {
           if (! strcmp (current_tags[j], list_tag))
@@ -517,7 +517,7 @@ gimp_combo_tag_entry_layout_tags (PopupData            *popup_data,
   for (i = 0; i < popup_data->tag_count; i++)
     {
       pango_layout_set_text (popup_data->layout,
-                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
+                             gimp_tag_get_name (popup_data->tag_data[i].tag), -1);
       pango_layout_get_size (popup_data->layout,
                              &popup_data->tag_data[i].bounds.width,
                              &popup_data->tag_data[i].bounds.height);
@@ -561,7 +561,7 @@ gimp_combo_tag_entry_popup_expose (GtkWidget           *widget,
   for (i = 0; i < popup_data->tag_count; i++)
     {
       pango_layout_set_text (popup_data->layout,
-                             g_quark_to_string (popup_data->tag_data[i].tag), -1);
+                             gimp_tag_get_name (popup_data->tag_data[i].tag), -1);
       if (popup_data->tag_data[i].selected)
         {
           pango_layout_set_attributes (popup_data->layout,
@@ -653,7 +653,7 @@ gimp_combo_tag_entry_drawing_area_event (GtkWidget          *widget,
       gint              y;
       gint              i;
       GdkRectangle     *bounds;
-      GimpTag           tag;
+      GimpTag          *tag;
 
       button_event = (GdkEventButton *) event;
       x = button_event->x;
@@ -724,7 +724,7 @@ gimp_combo_tag_entry_toggle_tag (GimpComboTagEntry     *combo_entry,
 
   tag_data->selected = ! tag_data->selected;
 
-  tag = gimp_tag_to_string (tag_data->tag);
+  tag = gimp_tag_get_name (tag_data->tag);
   current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (combo_entry->tag_entry));
   tag_str = g_string_new ("");
   length = g_strv_length (current_tags);

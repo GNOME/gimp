@@ -42,6 +42,7 @@
 #include "gimp-utils.h"
 #include "gimpdata.h"
 #include "gimpmarshal.h"
+#include "gimptag.h"
 #include "gimptagged.h"
 
 #include "gimp-intl.h"
@@ -89,9 +90,9 @@ static gint64    gimp_data_get_memsize       (GimpObject            *object,
 static void      gimp_data_real_dirty        (GimpData              *data);
 
 static gboolean  gimp_data_add_tag           (GimpTagged            *tagged,
-                                              GimpTag                tag);
+                                              GimpTag               *tag);
 static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
-                                              GimpTag                tag);
+                                              GimpTag               *tag);
 static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
 static gchar *   gimp_data_get_identifier    (GimpTagged            *tagged);
 static gchar *   gimp_data_get_checksum      (GimpTagged            *tagged);
@@ -360,38 +361,40 @@ gimp_data_real_dirty (GimpData *data)
 
 static gboolean
 gimp_data_add_tag (GimpTagged *tagged,
-                   GimpTag     tag)
+                   GimpTag    *tag)
 {
   GimpData *data = GIMP_DATA (tagged);
   GList    *list;
 
   for (list = data->tags; list; list = list->next)
     {
-      GimpTag this = GPOINTER_TO_UINT (list->data);
+      GimpTag *this = GIMP_TAG (list->data);
 
-      if (this == tag)
+      if (gimp_tag_equals (tag, this))
         return FALSE;
     }
 
-  data->tags = g_list_prepend (data->tags, GUINT_TO_POINTER (tag));
+  g_object_ref (tag);
+  data->tags = g_list_prepend (data->tags, tag);
 
   return TRUE;
 }
 
 static gboolean
 gimp_data_remove_tag (GimpTagged *tagged,
-                      GimpTag     tag)
+                      GimpTag    *tag)
 {
   GimpData *data = GIMP_DATA (tagged);
   GList    *list;
 
   for (list = data->tags; list; list = list->next)
     {
-      GimpTag this = GPOINTER_TO_UINT (list->data);
+      GimpTag *this = GIMP_TAG (list->data);
 
-      if (this == tag)
+      if (gimp_tag_equals (tag, this))
         {
           data->tags = g_list_delete_link (data->tags, list);
+          g_object_unref (tag);
           return TRUE;
         }
     }

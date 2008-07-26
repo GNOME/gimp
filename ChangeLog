@@ -1,5 +1,18 @@
 2008-07-26  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/core-types.h
+	* app/core/gimpdata.c
+	* app/core/gimpfilteredcontainer.c
+	* app/core/gimptag.[ch]
+	* app/core/gimptagcache.c
+	* app/core/gimptagged.h
+	* app/widgets/gimpcombotagentry.c
+	* app/widgets/gimptagentry.c: made GimpTag an object and updated all
+	places to treat it as such. This allows correctly compare various tags
+	and change implementation in one place.
+
+2008-07-26  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimptagcache.c (gimp_tag_cache_save): escape identifiers
 	and tags when saving to cache.
 

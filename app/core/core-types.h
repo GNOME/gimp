@@ -172,9 +172,7 @@ typedef struct _GimpScanConvert     GimpScanConvert;
 
 /*  tags  */
 
-typedef GQuark                      GimpTag;
-#define gimp_tag_new(name)          g_quark_from_string (name)
-#define gimp_tag_get_name(tag)      g_quark_to_string (name)
+typedef struct _GimpTag             GimpTag;
 
 
 /*  functions  */
