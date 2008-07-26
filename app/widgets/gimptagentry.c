@@ -204,8 +204,10 @@ void
 gimp_tag_entry_set_tag_string (GimpTagEntry    *tag_entry,
                                const gchar     *tag_string)
 {
+  tag_entry->internal_change = TRUE;
   gtk_entry_set_text (GTK_ENTRY (tag_entry), tag_string);
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), -1);
+  tag_entry->internal_change = FALSE;
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
@@ -246,8 +248,11 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
                                 gint              *position,
                                 gpointer           user_data)
 {
-  g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
-              editable);
+  if (! GIMP_TAG_ENTRY (editable)->internal_change)
+    {
+      g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
+                  editable);
+    }
 }
 
 static void

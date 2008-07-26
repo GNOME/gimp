@@ -1,5 +1,10 @@
 2008-07-26  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagentry.[ch]: do not autocomplete when tags are
+	selected from tag popup list.
+
+2008-07-26  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimpcombotagentry.[ch]: improved tag drawing in popup
 	list.
 

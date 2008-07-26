@@ -47,6 +47,7 @@ struct _GimpTagEntry
   GList                        *selected_items;
   GimpTagEntryMode              mode;
   gboolean                      description_shown;
+  gboolean                      internal_change;
 };
 
 struct _GimpTagEntryClass
