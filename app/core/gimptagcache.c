@@ -35,6 +35,7 @@
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
+#include "gimptag.h"
 #include "gimptagcache.h"
 #include "gimplist.h"
 #include "gimp-utils.h"
@@ -330,18 +331,26 @@ gimp_tag_cache_save (GimpTagCache      *cache)
     {
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
       GList              *tag_iterator;
+      gchar              *identifier_string;
+      gchar              *tag_string;
 
+      identifier_string = g_markup_escape_text (g_quark_to_string (cache_rec->identifier), -1);
       g_string_append_printf (buf, "\t<resource identifier=\"%s\" checksum=\"%s\">\n",
-                              g_quark_to_string (cache_rec->identifier),
+                              identifier_string,
                               g_quark_to_string (cache_rec->checksum));
+      g_free (identifier_string);
+
       tag_iterator = cache_rec->tags;
       while (tag_iterator)
         {
-          g_string_append_printf (buf, "\t\t<tag>%s</tag>\n",
-                                  g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
+          tag_string = g_markup_escape_text (gimp_tag_to_string (GPOINTER_TO_UINT (tag_iterator->data)), -1);
+          g_string_append_printf (buf, "\t\t<tag>%s</tag>\n", tag_string);
+          g_free (tag_string);
           tag_iterator = g_list_next (tag_iterator);
         }
       g_string_append (buf, "\t</resource>\n");
+
+
       iterator = g_list_next (iterator);
     }
   g_string_append (buf, "</tag_cache>\n");
