@@ -19,7 +19,7 @@ Changes in GIMP 2.4.7
   - added missing validity checks (bug #536403)
   - allow to pass None for PDB_DISPLAY
 - plugged a memory leak in gimp-text-get-extents-fontname PDB call
-- translation fixes and updates
+- translation fixes and updates (be, lt, nn, vi)
 
 Contributors:
 
