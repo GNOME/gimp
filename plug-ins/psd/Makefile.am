@@ -16,9 +16,9 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = psd
+libexec_PROGRAMS = psd-load
 
-psd_SOURCES = \
+psd_load_SOURCES = \
 	psd.c			\
 	psd.h			\
 	psd-util.c		\
