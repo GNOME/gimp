@@ -176,7 +176,7 @@ text_get_extents (const gchar *fontname,
       PangoLayoutLine *line;
 
       iter = pango_layout_get_iter (layout);
-      line = pango_layout_iter_get_line (iter);
+      line = pango_layout_iter_get_line_readonly (iter);
       pango_layout_iter_free (iter);
 
       pango_layout_line_get_pixel_extents (line, NULL, &rect);

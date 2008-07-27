@@ -1,3 +1,9 @@
+2008-07-27  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c (text_get_extents)
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render):
+	use the readonly variant of pango_layout_iter_get_line().
+
 2008-07-27  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
