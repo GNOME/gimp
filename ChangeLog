@@ -1,3 +1,9 @@
+2008-07-27  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_synthesize_motion): Bail out if there is no
+	pending rectangle to synthesize a motion on. Fixes bug #544181.
+
 2008-07-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/psd/Makefile.am: renamed executable to 'psd-load'.

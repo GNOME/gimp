@@ -2183,23 +2183,33 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
                                        gdouble            new_x,
                                        gdouble            new_y)
 {
+  GimpTool                 *tool;
+  GimpDrawTool             *draw_tool;
   GimpRectangleToolPrivate *private;
   GimpRectangleFunction     old_function;
+
+  tool      = GIMP_TOOL (rect_tool);
+  draw_tool = GIMP_DRAW_TOOL (rect_tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   /* We don't want to synthesize motions if the tool control is active
    * since that means the mouse button is down and the rectangle will
    * get updated in _motion anyway. The reason we want to prevent this
-   * function from executing is that is emits the rectangle-changed
-   * signal which we don't want in the middle of a rectangle change.
+   * function from executing is that is emits the
+   * rectangle-changed-complete signal which we don't want in the
+   * middle of a rectangle change.
+   *
+   * In addition to that, we don't want to synthesize a motion if
+   * there is no pending rectangle because that doesn't make any
+   * sense.
    */
-  if (gimp_tool_control_is_active (GIMP_TOOL (rect_tool)->control))
+  if (gimp_tool_control_is_active (tool->control) ||
+      ! tool->display)
     return;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   old_function = private->function;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
+  gimp_draw_tool_pause (draw_tool);
 
   gimp_rectangle_tool_set_function (rect_tool, function);
 
@@ -2212,14 +2222,14 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
   private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
 
   gimp_rectangle_tool_update_options (rect_tool,
-                                      GIMP_TOOL (rect_tool)->display);
+                                      tool->display);
 
   gimp_rectangle_tool_set_function (rect_tool, old_function);
 
   gimp_rectangle_tool_update_highlight (rect_tool);
   gimp_rectangle_tool_update_handle_sizes (rect_tool);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
+  gimp_draw_tool_resume (draw_tool);
 
   gimp_rectangle_tool_rectangle_change_complete (rect_tool);
 }
