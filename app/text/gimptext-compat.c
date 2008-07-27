@@ -154,6 +154,17 @@ text_get_extents (const gchar *fontname,
   context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
   g_object_unref (fontmap);
 
+  /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
+   *  see also bug #148997 (Text layer rendering leaks font file descriptor):
+   *
+   *  Calling pango_ft2_font_map_substitute_changed() causes the
+   *  font_map cache to be flushed, thereby removing the circular
+   *  reference that causes the leak.
+   */
+  g_object_weak_ref (G_OBJECT (context),
+                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
+                     fontmap);
+
   layout = pango_layout_new (context);
   g_object_unref (context);
 

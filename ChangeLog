@@ -1,3 +1,11 @@
+2008-07-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/text/gimptext-compat.c (text_get_extents): applied the same
+	workaround for a memory leak in PangoFT2 (bug #143542) as was
+	applied long ago in gimptextlayout.c.
+
 2008-07-10  Manish Singh  <yosh@gimp.org>
 
 	Merged from trunk:
