@@ -133,6 +133,39 @@ gimp_vectors_new_from_text_layer (gint32 image_ID,
 }
 
 /**
+ * gimp_vectors_copy:
+ * @vectors_ID: The vectors object to copy.
+ *
+ * Copy a vectors object.
+ *
+ * This procedure copies the specified vectors object and returns the
+ * copy.
+ *
+ * Returns: The newly copied vectors object.
+ *
+ * Since: GIMP 2.6
+ */
+gint32
+gimp_vectors_copy (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 vectors_copy_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-copy",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    vectors_copy_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vectors_copy_ID;
+}
+
+/**
  * gimp_vectors_get_image:
  * @vectors_ID: The vectors object.
  *

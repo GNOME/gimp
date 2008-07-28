@@ -145,6 +145,38 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+vectors_copy_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpVectors *vectors;
+  GimpVectors *vectors_copy = NULL;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+
+  if (success)
+    {
+      vectors_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                   G_TYPE_FROM_INSTANCE (vectors)));
+
+      if (! vectors_copy)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_vectors (&return_vals->values[1], vectors_copy);
+
+  return return_vals;
+}
+
+static GValueArray *
 vectors_get_image_invoker (GimpProcedure      *procedure,
                            Gimp               *gimp,
                            GimpContext        *context,
@@ -1480,6 +1512,35 @@ register_vectors_procs (GimpPDB *pdb)
                                    gimp_param_spec_vectors_id ("vectors",
                                                                "vectors",
                                                                "The vectors of the text layer.",
+                                                               pdb->gimp, FALSE,
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-copy
+   */
+  procedure = gimp_procedure_new (vectors_copy_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-copy");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-copy",
+                                     "Copy a vectors object.",
+                                     "This procedure copies the specified vectors object and returns the copy.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object to copy",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_vectors_id ("vectors-copy",
+                                                               "vectors copy",
+                                                               "The newly copied vectors object",
                                                                pdb->gimp, FALSE,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
