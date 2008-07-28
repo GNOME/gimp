@@ -931,6 +931,7 @@ gimp_image_undo_thaw
 <FILE>gimpvectors</FILE>
 gimp_vectors_new
 gimp_vectors_new_from_text_layer
+gimp_vectors_copy
 gimp_vectors_is_valid
 gimp_vectors_get_strokes
 gimp_vectors_get_image

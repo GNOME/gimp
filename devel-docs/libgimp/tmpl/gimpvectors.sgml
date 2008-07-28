@@ -37,6 +37,15 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_copy ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_is_valid ##### -->
 <para>
 
