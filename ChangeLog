@@ -1,3 +1,12 @@
+2008-07-29  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcombotagentry.c
+	* app/widgets/gimptagpopup.[ch]
+	* app/widgets/widgets-types.h: popup part of GimpComboTagEntry has
+	been moved to a separate class GimpTagPopup in order to prepare for
+	upcoming feature additions.
+
 2008-07-27  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c: ported GimpComboTagEntry to use

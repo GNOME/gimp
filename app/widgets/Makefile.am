@@ -265,6 +265,8 @@ libappwidgets_a_sources = \
 	gimpstrokeeditor.h		\
 	gimptagentry.c			\
 	gimptagentry.h			\
+	gimptagpopup.c			\
+	gimptagpopup.h			\
 	gimptemplateeditor.c		\
 	gimptemplateeditor.h		\
 	gimptemplateview.c		\
