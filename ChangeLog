@@ -1,5 +1,11 @@
 2008-07-29  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagentry.[ch]: based on user behaviour track if tags
+	should be considered "accepted" (delete operates on jellybeans) or "not
+	accepted" (delete operates on characters).
+
+2008-07-29  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcombotagentry.c
 	* app/widgets/gimptagpopup.[ch]

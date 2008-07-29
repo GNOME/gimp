@@ -48,6 +48,7 @@ struct _GimpTagEntry
   GimpTagEntryMode              mode;
   gboolean                      description_shown;
   gboolean                      internal_change;
+  gboolean                      tags_accepted;
 };
 
 struct _GimpTagEntryClass

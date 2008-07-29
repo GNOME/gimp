@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "widgets-types.h"
 
@@ -64,6 +65,9 @@ static void     gimp_tag_entry_backspace                 (GtkEntry             *
 static void     gimp_tag_entry_delete_from_cursor        (GtkEntry             *entry,
                                                           GtkDeleteType         delete_type,
                                                           gint                  count);
+static gboolean gimp_tag_entry_key_press                 (GtkWidget            *widget,
+                                                          GdkEventKey          *event,
+                                                          gpointer              user_data);
 static void     gimp_tag_entry_query_tag                 (GimpTagEntry         *entry);
 
 static void     gimp_tag_entry_assign_tags               (GimpTagEntry         *tag_entry);
@@ -128,6 +132,9 @@ gimp_tag_entry_init (GimpTagEntry *entry)
                     NULL);
   g_signal_connect (entry, "insert-text",
                     G_CALLBACK (gimp_tag_entry_insert_text),
+                    NULL);
+  g_signal_connect (entry, "key-press-event",
+                    G_CALLBACK (gimp_tag_entry_key_press),
                     NULL);
   g_signal_connect (entry, "focus-in-event",
                     G_CALLBACK (gimp_tag_entry_focus_in),
@@ -213,6 +220,8 @@ gimp_tag_entry_set_tag_string (GimpTagEntry    *tag_entry,
     {
       gimp_tag_entry_assign_tags (tag_entry);
     }
+
+  tag_entry->tags_accepted = TRUE;
 }
 
 static void
@@ -663,7 +672,10 @@ gimp_tag_entry_focus_out       (GtkWidget         *widget,
                                 GdkEventFocus     *event,
                                 gpointer           user_data)
 {
-  gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), TRUE);
+  GimpTagEntry  *tag_entry = GIMP_TAG_ENTRY (widget);
+
+  tag_entry->tags_accepted = TRUE;
+  gimp_tag_entry_toggle_desc (tag_entry, TRUE);
   return FALSE;
 }
 
@@ -782,13 +794,15 @@ gimp_tag_entry_expose (GtkWidget       *widget,
 static void
 gimp_tag_entry_backspace (GtkEntry     *entry)
 {
+  GimpTagEntry *tag_entry = GIMP_TAG_ENTRY (entry);
   gint          selection_start;
   gint          selection_end;
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
                                      &selection_start, &selection_end);
   if (selection_start == selection_end
-      && selection_start > 0)
+      && selection_start > 0
+      && tag_entry->tags_accepted)
     {
       gtk_editable_set_position (GTK_EDITABLE (entry), selection_start - 1);
     }
@@ -812,12 +826,44 @@ gimp_tag_entry_delete_from_cursor (GtkEntry            *entry,
     }
 }
 
+
+static gboolean
+gimp_tag_entry_key_press       (GtkWidget            *widget,
+                                GdkEventKey          *event,
+                                gpointer              user_data)
+{
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
+
+  switch (event->keyval)
+    {
+      case GDK_Tab:
+      case GDK_Return:
+      case GDK_Escape:
+      case GDK_comma:
+          tag_entry->tags_accepted = TRUE;
+          break;
+
+      case GDK_BackSpace:
+      case GDK_Delete:
+          break;
+
+      default:
+          tag_entry->tags_accepted = FALSE;
+          break;
+    }
+
+  return FALSE;
+}
+
 static gboolean
 gimp_tag_entry_button_release  (GtkWidget         *widget,
                                 GdkEventButton    *event)
 {
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
+
   if (event->button == 1)
     {
+      tag_entry->tags_accepted = TRUE;
       g_idle_add ((GSourceFunc) gimp_tag_entry_try_select_jellybean,
                   widget);
     }
@@ -867,6 +913,11 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
   gint          selection_end;
   gchar        *previous_jellybean;
   gboolean      jellybean_valid = FALSE;
+
+  if (!entry->tags_accepted)
+    {
+      return FALSE;
+    }
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
                                      &selection_start, &selection_end);
