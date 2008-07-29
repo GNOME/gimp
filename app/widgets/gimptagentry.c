@@ -43,6 +43,8 @@
 #define GIMP_TAG_ENTRY_QUERY_DESC       _("filter")
 #define GIMP_TAG_ENTRY_ASSIGN_DESC      _("enter tags")
 
+#define GIMP_TAG_ENTRY_MAX_RECENT_ITEMS 20
+
 static void     gimp_tag_entry_dispose                   (GObject              *object);
 static void     gimp_tag_entry_activate                  (GtkEntry             *entry,
                                                           gpointer              unused);
@@ -94,6 +96,10 @@ static gboolean gimp_tag_entry_expose                    (GtkWidget            *
 
 static gboolean gimp_tag_entry_select_jellybean          (GimpTagEntry         *entry);
 static gboolean gimp_tag_entry_try_select_jellybean      (GimpTagEntry         *tag_entry);
+
+static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry         *tag_entry,
+                                                          const gchar          *tags_string,
+                                                          gboolean              to_front);
 
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
@@ -674,7 +680,11 @@ gimp_tag_entry_focus_out       (GtkWidget         *widget,
 {
   GimpTagEntry  *tag_entry = GIMP_TAG_ENTRY (widget);
 
+  gimp_tag_entry_add_to_recent (tag_entry,
+                                gtk_entry_get_text (GTK_ENTRY (widget)),
+                                TRUE);
   tag_entry->tags_accepted = TRUE;
+
   gimp_tag_entry_toggle_desc (tag_entry, TRUE);
   return FALSE;
 }
@@ -847,6 +857,40 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
       case GDK_Delete:
           break;
 
+      case GDK_Up:
+      case GDK_Down:
+          if (tag_entry->recent_list != NULL)
+            {
+              gchar    *recent_item;
+              gchar    *very_recent_item;
+
+              very_recent_item = g_strdup (gtk_entry_get_text (GTK_ENTRY (tag_entry)));
+              gimp_tag_entry_add_to_recent (tag_entry, very_recent_item, TRUE);
+              g_free (very_recent_item);
+
+              if (event->keyval == GDK_Up)
+                {
+                  recent_item = (gchar *) g_list_first (tag_entry->recent_list)->data;
+                  tag_entry->recent_list = g_list_remove (tag_entry->recent_list, recent_item);
+                  tag_entry->recent_list = g_list_append (tag_entry->recent_list, recent_item);
+                }
+              else
+                {
+                  recent_item = (gchar *) g_list_last (tag_entry->recent_list)->data;
+                  tag_entry->recent_list = g_list_remove (tag_entry->recent_list, recent_item);
+                  tag_entry->recent_list = g_list_prepend (tag_entry->recent_list, recent_item);
+                }
+
+              recent_item = (gchar *) g_list_first (tag_entry->recent_list)->data;
+              tag_entry->internal_change = TRUE;
+              gtk_entry_set_text (GTK_ENTRY (tag_entry), recent_item);
+              gtk_editable_set_position (GTK_EDITABLE (tag_entry), -1);
+              tag_entry->internal_change = FALSE;
+
+              return TRUE;
+            }
+          break;
+
       default:
           tag_entry->tags_accepted = FALSE;
           break;
@@ -982,4 +1026,64 @@ gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
   return TRUE;
 }
 
+static gboolean
+gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
+                                const gchar          *tags_string,
+                                gboolean              to_front)
+{
+  gchar        *recent_item = NULL;
+  GList        *tags_iterator;
+  gchar        *stripped_string;
+  gint          stripped_length;
+
+  stripped_string = g_strdup (tags_string);
+  stripped_string = g_strstrip (stripped_string);
+  stripped_length = strlen (stripped_string);
+  g_free (stripped_string);
+
+  if (stripped_length <= 0)
+    {
+      /* there is no content in the string,
+       * therefore don't add to recent list. */
+      return FALSE;
+    }
+
+  if (g_list_length (tag_entry->recent_list) >= GIMP_TAG_ENTRY_MAX_RECENT_ITEMS)
+    {
+      gchar *last_item = (gchar *) g_list_last (tag_entry->recent_list)->data;
+      tag_entry->recent_list = g_list_remove (tag_entry->recent_list, last_item);
+      g_free (last_item);
+    }
+
+  tags_iterator = tag_entry->recent_list;
+  while (tags_iterator)
+    {
+      if (! strcmp (tags_string, tags_iterator->data))
+        {
+          recent_item = tags_iterator->data;
+          tag_entry->recent_list = g_list_remove (tag_entry->recent_list,
+                                                  recent_item);
+          break;
+        }
+      tags_iterator = g_list_next (tags_iterator);
+    }
+
+  if (! recent_item)
+    {
+      recent_item = g_strdup (tags_string);
+    }
+
+  if (to_front)
+    {
+      tag_entry->recent_list = g_list_prepend (tag_entry->recent_list,
+                                               recent_item);
+    }
+  else
+    {
+      tag_entry->recent_list = g_list_append (tag_entry->recent_list,
+                                              recent_item);
+    }
+
+  return TRUE;
+}
 
