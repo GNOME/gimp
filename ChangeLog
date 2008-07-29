@@ -1,3 +1,10 @@
+2008-07-29  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: added the real name of the author
+	of the new PDB function.
+
+	* app/pdb/vectors-cmds.c: regenerated.
+
 2008-07-28  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb (edit_stroke_vectors_invoker): check

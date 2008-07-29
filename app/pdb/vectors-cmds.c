@@ -1527,8 +1527,8 @@ register_vectors_procs (GimpPDB *pdb)
                                      "gimp-vectors-copy",
                                      "Copy a vectors object.",
                                      "This procedure copies the specified vectors object and returns the copy.",
-                                     "Simon Budig",
-                                     "Simon Budig",
+                                     "Barak Itkin <lightningismyname@gmail.com>",
+                                     "Barak Itkin",
                                      "2008",
                                      NULL);
   gimp_procedure_add_argument (procedure,
