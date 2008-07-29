@@ -101,12 +101,20 @@ register(
         (PF_INT, "radius", "Radius for sphere", 100),
         (PF_SLIDER, "light", "Light angle", 45, (0,360,1)),
         (PF_TOGGLE, "shadow", "Shadow?", 1),
-        (PF_RADIO, "foo", "Test", "foo", (("Foo", "foo"), ("Bar", "bar"))),
+        (PF_RADIO, "foo", "Test 123", "foo", (("Foo", "foo"), ("Bar", "bar"))),
         (PF_COLOR, "bg-color", "Background", (1.0, 1.0, 1.0)),
         (PF_COLOR, "sphere-color", "Sphere", "orange")
     ],
     [],
     sphere,
-    menu="<Image>/Filters/Languages/Python-Fu/Test")
+    menu="<Image>/Filters/Languages/Python-Fu/Test",
+    layout=((LAY_FIELD, "radius"),
+            (LAY_FIELD, "light"),
+            (LAY_EXPANDER, "Test expander", ((LAY_FIELD, "shadow"),
+                                             (LAY_FIELD, "foo"))),
+            (LAY_GROUP, "Test group", ((LAY_FIELD, "bg-color"), 
+                                       (LAY_FIELD, "sphere-color")))
+           )
+    )
 
 main()

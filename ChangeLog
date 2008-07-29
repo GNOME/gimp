@@ -1,3 +1,11 @@
+2008-07-29  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpfu.py: Refactored the interactive mode code. Moved all
+	widget code to a new subclass of gimp.Dialog.
+	Added support to specifiy a custom layout for plugins.
+	* plug-ins/pygimp/plug-ins/sphere.py: Added testcode for the new layout
+	parameter of register.
+
 2008-07-25  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpui.override: Let ZoomPreview.get_drawable and
