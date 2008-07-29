@@ -45,6 +45,7 @@ struct _GimpTagEntry
 
   GimpFilteredContainer        *tagged_container;
   GList                        *selected_items;
+  GList                        *recent_list;
   GimpTagEntryMode              mode;
   gboolean                      description_shown;
   gboolean                      internal_change;
