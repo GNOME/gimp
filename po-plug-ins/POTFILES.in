@@ -111,7 +111,6 @@ plug-ins/common/polar-coords.c
 plug-ins/common/poppler.c
 plug-ins/common/postscript.c
 plug-ins/common/procedure-browser.c
-plug-ins/common/psd-save.c
 plug-ins/common/psp.c
 plug-ins/common/qbist.c
 plug-ins/common/raw.c
@@ -263,6 +262,7 @@ plug-ins/print/print-page-layout.c
 plug-ins/print/print.c
 plug-ins/psd/psd-image-res-load.c
 plug-ins/psd/psd-load.c
+plug-ins/psd/psd-save.c
 plug-ins/psd/psd-thumb-load.c
 plug-ins/psd/psd-util.c
 plug-ins/psd/psd.c

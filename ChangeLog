@@ -1,5 +1,14 @@
 2008-07-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/psd-save.c: removed psd-save source here ...
+
+	* plug-ins/psd/Makefile.am
+	* plug-ins/psd/psd-save.c: ... and added it back here.
+
+2008-07-29  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/vectors.pdb: added the real name of the author
 	of the new PDB function.
 

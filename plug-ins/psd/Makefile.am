@@ -16,7 +16,9 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = psd-load
+libexec_PROGRAMS = \
+	psd-load	\
+	psd-save
 
 psd_load_SOURCES = \
 	psd.c			\
@@ -31,6 +33,9 @@ psd_load_SOURCES = \
 	psd-image-res-load.h	\
 	psd-layer-res-load.c	\
 	psd-layer-res-load.h		
+
+psd_save_SOURCES = \
+	psd-save.c
 
 EXTRA_DIST = \
 	TODO.txt		\
