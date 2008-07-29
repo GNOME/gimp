@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp Tips Arabic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-18 09:26+0100\n"
+"POT-Creation-Date: 2008-07-29 02:05+0100\n"
 "PO-Revision-Date: 2008-04-19 22:40+0300\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -187,19 +187,6 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"لإنشاء تحديد دائري، اضغط باستمرار على <tt>Shift</tt> أثناء القيام بتحديد ذي "
-"شكل بيضاوي. لوضع دائرة بدقة، اسحب أدلة خطوط المماس الأفقية والعمودية للدائرة "
-"التي تريد تحديدها، ضع مؤشرك على نقطة التقاء الدليلين، والتحديد الناتج سيلمس "
-"الدليلين بالكاد."
-
-#: ../data/tips/gimp-tips.xml.in.h:18
-msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
@@ -209,7 +196,7 @@ msgstr ""
 "(امتداد الملف هو <tt>.xcf</tt>). هذا سوف يحفظ الطبقات وكل مظهر من مظاهر عملك "
 "المتقدم. عندما تكمل المشروع، يمكنك حفظه بصيغة JPEG أو PNG أو GIF ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -219,7 +206,7 @@ msgstr ""
 "يمكنك تعديل أو تحريك التحديد باستخدام <tt>Alt</tt>+سحب الفأرة. إن جعل هذا "
 "النافذة تتحرك، فهو يعني أن مدير نوافذك يستخدم الزر <tt>Alt</tt> مسبقاً."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -228,7 +215,7 @@ msgstr ""
 "يمكنك إنشاء وتحرير تحديدات معقدة باستخدام أداة المسار. جدول المسارات يسمح لك "
 "بالعمل على مسارات متعددة وتحويلها إلى تحديدات."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -236,7 +223,7 @@ msgstr ""
 "يمكنك سحب طبقة من جدول الطبقات ووضعها في صندوق الأدوات. هذا سينشئ صورة جديدة "
 "تحوي فقط هذه الطبقة."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -245,7 +232,7 @@ msgstr ""
 "يمكنك سحب وإفلات أشياء كثيرة في جمب. كمثال، سحب لون من صندوق الأدوات أو من "
 "لوحة الألوان ووضعه داخل صورة سوف يملأ التحديد الحالي بهذا اللون."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -255,7 +242,7 @@ msgstr ""
 "تحديدك الحالي. يمكن رسم أشكال أكثر تعقيداً باستخدام أداة المسار أو من خلال "
 "المصفيات←تصيير←Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -263,7 +250,7 @@ msgstr ""
 "يمكنك الحصول على مساعدة المحتوى-الحساس لمعظم ميزات جمب بالضغط على الزر F1 في "
 "أي وقت. هذا سيعمل أيضاً داخل القوائم."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -271,7 +258,7 @@ msgstr ""
 "يمكنك عمل عدة عمليات للطبقة بالنقر بالزر الأيمن للفأرة على نص اسم الطبقة في "
 "جدول الطبقات."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -282,7 +269,7 @@ msgstr ""
 "تلوين. باستخدام الأزرار في جدول القنوات، يمكنك تبديل بين إظهار هذه القناة "
 "الجديدة أو إعادتها إلى تحديد."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -290,7 +277,7 @@ msgstr ""
 "يمكنك استعمال <tt>Ctrl</tt>+<tt>Tab</tt> للتحول بين كل طبقات الصورة (إذا لم "
 "يقم مدير النوافذ بحجز هذه المفاتيح...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -298,7 +285,7 @@ msgstr ""
 "يمكنك استخدام زر الفأرة الأوسط لتحريك الصورة (أو اضغط باستمرار زر "
 "<tt>المسافة</tt> أثناء تحريكك للفأرة)."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -309,6 +296,18 @@ msgstr ""
 "سريع&quot; في الجزء السفلي الأيسر من نافذة الصورة. قم بتغيير التحديد "
 "بالتلوين داخل الصورة وانقر على الزر مجدداً لإعادة تحويله إلى تحديد عادي."
 
+#~ msgid ""
+#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
+#~ "guides tangent to the circle you want to select, place your cursor at the "
+#~ "intersection of the guides, and the resulting selection will just touch "
+#~ "the guides."
+#~ msgstr ""
+#~ "لإنشاء تحديد دائري، اضغط باستمرار على <tt>Shift</tt> أثناء القيام بتحديد "
+#~ "ذي شكل بيضاوي. لوضع دائرة بدقة، اسحب أدلة خطوط المماس الأفقية والعمودية "
+#~ "للدائرة التي تريد تحديدها، ضع مؤشرك على نقطة التقاء الدليلين، والتحديد "
+#~ "الناتج سيلمس الدليلين بالكاد."
+
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 #~ msgstr "<big>مرحباً في برنامج جنو لمعالجة الصور!</big>"
 
@@ -318,4 +317,3 @@ msgstr ""
 #~ msgstr ""
 #~ "يسمح لك جمب بالتراجع عن معظم التغييرات التي أجريت على الصورة، لذا خذ "
 #~ "حريتك بالتجارب."
-
