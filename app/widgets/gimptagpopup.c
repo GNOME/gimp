@@ -181,7 +181,9 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
 
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_add_events (GTK_WIDGET (drawing_area),
-                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
+                         GDK_BUTTON_PRESS_MASK
+                         | GDK_BUTTON_RELEASE_MASK
+                         | GDK_POINTER_MOTION_MASK);
   gtk_container_add (GTK_CONTAINER (alignment), drawing_area);
 
   popup->combo_entry          = combo_entry;
@@ -598,6 +600,8 @@ gimp_tag_popup_list_event (GtkWidget          *widget,
       GdkRectangle     *bounds;
       GimpTag          *tag;
 
+      tag_popup->single_select_disabled = TRUE;
+
       button_event = (GdkEventButton *) event;
       x = button_event->x;
       y = button_event->y;
@@ -651,6 +655,40 @@ gimp_tag_popup_list_event (GtkWidget          *widget,
       if (previous_prelight != tag_popup->prelight)
         {
           gtk_widget_queue_draw (widget);
+        }
+    }
+  else if (event->type == GDK_BUTTON_RELEASE
+           && !tag_popup->single_select_disabled)
+    {
+      GdkEventButton   *button_event;
+      gint              x;
+      gint              y;
+      gint              i;
+      GdkRectangle     *bounds;
+      GimpTag          *tag;
+
+      tag_popup->single_select_disabled = TRUE;
+
+      button_event = (GdkEventButton *) event;
+      x = button_event->x;
+      y = button_event->y;
+
+      y += tag_popup->scroll_y;
+
+      for (i = 0; i < tag_popup->tag_count; i++)
+        {
+          bounds = &tag_popup->tag_data[i].bounds;
+          if (x >= bounds->x
+              && y >= bounds->y
+              && x < bounds->x + bounds->width
+              && y < bounds->y + bounds->height)
+            {
+              tag = tag_popup->tag_data[i].tag;
+              gimp_tag_popup_toggle_tag (tag_popup,
+                                         &tag_popup->tag_data[i]);
+              gtk_widget_destroy (GTK_WIDGET (tag_popup));
+              break;
+            }
         }
     }
 

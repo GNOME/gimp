@@ -1,3 +1,10 @@
+2008-07-30  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimptagpopup.[ch]: added support for single tag
+	selection in tag popup. User can press mouse button, drag to select a
+	tag and release mouse button. Selected tag is toggled
+	selected/deselected and popup is closed.
+
 2008-07-29  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagentry.[ch]: added support for switching between

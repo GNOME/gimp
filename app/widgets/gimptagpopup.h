@@ -60,6 +60,7 @@ struct _GimpTagPopup
   gboolean              ignore_button_release;
   gboolean              upper_arrow_prelight;
   gboolean              lower_arrow_prelight;
+  gboolean              single_select_disabled;
   GtkStateType          upper_arrow_state;
   GtkStateType          lower_arrow_state;
 };
