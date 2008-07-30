@@ -389,7 +389,6 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
       selected_iterator = g_list_next (selected_iterator);
     }
 
-  g_list_foreach (tag_list, (GFunc)g_object_unref, NULL);
   g_list_free (tag_list);
 }
 
