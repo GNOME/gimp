@@ -164,6 +164,13 @@ gimp_tag_entry_dispose (GObject        *object)
       tag_entry->selected_items = NULL;
     }
 
+  if (tag_entry->recent_list)
+    {
+      g_list_foreach (tag_entry->recent_list, (GFunc) g_free, NULL);
+      g_list_free (tag_entry->recent_list);
+      tag_entry->recent_list = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
