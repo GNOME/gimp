@@ -1,3 +1,8 @@
+2008-07-30  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp-splash.png: new devel splash from 
+	Aurore Derriennic <aurore.d@gmail.com>
+
 2008-07-30  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-open-dialog.c (file_open_dialog_response):
