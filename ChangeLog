@@ -1,3 +1,11 @@
+2008-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response):
+	attach the URI of the last opened image to the Gimp object.
+
+	* app/actions/file-commands.c (file_open_dialog_show): use the
+	last opened URI as a fallback for initializing the dialog.
+
 2008-07-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am

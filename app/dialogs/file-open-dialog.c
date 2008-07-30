@@ -118,6 +118,10 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   uris = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (open_dialog));
 
+  if (uris)
+    g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-last-uri",
+                            g_strdup (uris->data), (GDestroyNotify) g_free);
+
   gimp_file_dialog_set_sensitive (dialog, FALSE);
 
   for (list = uris; list; list = g_slist_next (list))

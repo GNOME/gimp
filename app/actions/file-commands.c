@@ -65,6 +65,7 @@
 /*  local function prototypes  */
 
 static void   file_open_dialog_show        (GtkWidget   *parent,
+                                            Gimp        *gimp,
                                             GimpImage   *image,
                                             const gchar *uri,
                                             gboolean     open_as_layers);
@@ -90,9 +91,11 @@ void
 file_open_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
+  Gimp        *gimp;
   GimpImage   *image;
   GtkWidget   *widget;
   const gchar *uri = NULL;
+  return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
   image = action_data_get_image (data);
@@ -100,24 +103,26 @@ file_open_cmd_callback (GtkAction *action,
   if (image)
     uri = gimp_object_get_name (GIMP_OBJECT (image));
 
-  file_open_dialog_show (widget, NULL, uri, FALSE);
+  file_open_dialog_show (widget, gimp, NULL, uri, FALSE);
 }
 
 void
 file_open_as_layers_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
+  Gimp        *gimp;
   GimpDisplay *display;
   GtkWidget   *widget;
   GimpImage   *image;
   const gchar *uri;
+  return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
   image = display->image;
   uri = gimp_object_get_name (GIMP_OBJECT (image));
 
-  file_open_dialog_show (widget, image, uri, TRUE);
+  file_open_dialog_show (widget, gimp, image, uri, TRUE);
 }
 
 void
@@ -436,7 +441,7 @@ file_file_open_dialog (Gimp        *gimp,
                        const gchar *uri,
                        GtkWidget   *parent)
 {
-  file_open_dialog_show (parent, NULL, uri, FALSE);
+  file_open_dialog_show (parent, gimp, NULL, uri, FALSE);
 }
 
 
@@ -444,6 +449,7 @@ file_file_open_dialog (Gimp        *gimp,
 
 static void
 file_open_dialog_show (GtkWidget   *parent,
+                       Gimp        *gimp,
                        GimpImage   *image,
                        const gchar *uri,
                        gboolean     open_as_layers)
@@ -456,6 +462,9 @@ file_open_dialog_show (GtkWidget   *parent,
 
   if (dialog)
     {
+      if (! uri)
+        uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-last-uri");
+
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
