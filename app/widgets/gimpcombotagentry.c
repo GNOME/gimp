@@ -76,6 +76,7 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *combo_entry)
   combo_entry->interior_focus       = FALSE;
   combo_entry->normal_item_attr     = NULL;
   combo_entry->selected_item_attr   = NULL;
+  combo_entry->insensitive_item_attr = NULL;
 
   g_signal_connect (combo_entry, "event",
                     G_CALLBACK (gimp_combo_tag_entry_event),
@@ -96,6 +97,11 @@ gimp_combo_tag_entry_dispose (GObject           *object)
     {
       pango_attr_list_unref (combo_entry->selected_item_attr);
       combo_entry->selected_item_attr = NULL;
+    }
+  if (combo_entry->insensitive_item_attr)
+    {
+      pango_attr_list_unref (combo_entry->insensitive_item_attr);
+      combo_entry->insensitive_item_attr = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -249,6 +255,7 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
   pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
   attribute = pango_attr_underline_new (PANGO_UNDERLINE_SINGLE);
   pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
+
   if (combo_entry->selected_item_attr)
     {
       pango_attr_list_unref (combo_entry->selected_item_attr);
@@ -260,6 +267,19 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
   color = style->base[GTK_STATE_SELECTED];
   attribute = pango_attr_background_new (color.red, color.green, color.blue);
   pango_attr_list_insert (combo_entry->selected_item_attr, attribute);
+
+  if (combo_entry->insensitive_item_attr)
+    {
+      pango_attr_list_unref (combo_entry->insensitive_item_attr);
+    }
+  combo_entry->insensitive_item_attr = pango_attr_list_copy (combo_entry->normal_item_attr);
+  color = style->text[GTK_STATE_INSENSITIVE];
+  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (combo_entry->insensitive_item_attr, attribute);
+  color = style->base[GTK_STATE_INSENSITIVE];
+  attribute = pango_attr_background_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (combo_entry->insensitive_item_attr, attribute);
+
 
   combo_entry->selected_item_color = style->base[GTK_STATE_SELECTED];
 }

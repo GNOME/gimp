@@ -36,7 +36,7 @@ typedef struct
 {
   GimpTag              *tag;
   GdkRectangle          bounds;
-  gboolean              selected;
+  GtkStateType          state;
 } PopupTagData;
 
 struct _GimpTagPopup

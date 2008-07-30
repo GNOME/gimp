@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -62,6 +63,8 @@ static gboolean gimp_tag_popup_list_event              (GtkWidget          *widg
                                                         GimpTagPopup       *tag_popup);
 static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *tag_popup,
                                                         PopupTagData       *tag_data);
+static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagged,
+                                                        GimpTagPopup       *tag_popup);
 static gint     gimp_tag_popup_layout_tags             (GimpTagPopup       *tag_popup,
                                                         gint                width);
 static void     gimp_tag_popup_do_timeout_scroll       (GimpTagPopup       *tag_popup,
@@ -213,13 +216,13 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
   for (i = 0; i < popup->tag_count; i++)
     {
       popup->tag_data[i].tag = GIMP_TAG (tag_iterator->data);
-      popup->tag_data[i].selected = FALSE;
+      popup->tag_data[i].state = GTK_STATE_NORMAL;
       list_tag = gimp_tag_get_name (popup->tag_data[i].tag);
       for (j = 0; j < current_count; j++)
         {
           if (! strcmp (current_tags[j], list_tag))
             {
-              popup->tag_data[i].selected = TRUE;
+              popup->tag_data[i].state = GTK_STATE_SELECTED;
               break;
             }
         }
@@ -227,6 +230,19 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
     }
   g_list_free (tag_list);
   g_strfreev (current_tags);
+
+  if (GIMP_TAG_ENTRY (combo_entry->tag_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+    {
+      for (i = 0; i < popup->tag_count; i++)
+        {
+          if (popup->tag_data[i].state != GTK_STATE_SELECTED)
+            {
+              popup->tag_data[i].state = GTK_STATE_INSENSITIVE;
+            }
+        }
+      gimp_container_foreach (GIMP_CONTAINER (GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container),
+                              (GFunc) gimp_tag_popup_check_can_toggle, popup);
+    }
 
   width = GTK_WIDGET (combo_entry)->allocation.width - frame->style->xthickness * 2;
   height = gimp_tag_popup_layout_tags (popup, width);
@@ -276,7 +292,6 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
       popup->scroll_y      = 0;
       popup->scroll_step   = 0;
     }
-
 
   drawing_area->requisition.width = width;
   drawing_area->requisition.height = popup_height;
@@ -543,18 +558,24 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
     {
       pango_layout_set_text (tag_popup->layout,
                              gimp_tag_get_name (tag_popup->tag_data[i].tag), -1);
-      if (tag_popup->tag_data[i].selected)
+      if (tag_popup->tag_data[i].state == GTK_STATE_SELECTED)
         {
           pango_layout_set_attributes (tag_popup->layout,
                                        tag_popup->combo_entry->selected_item_attr);
         }
+      else if (tag_popup->tag_data[i].state == GTK_STATE_INSENSITIVE)
+        {
+          pango_layout_set_attributes (tag_popup->layout,
+                                       tag_popup->combo_entry->insensitive_item_attr);
+        }
+
       else
         {
           pango_layout_set_attributes (tag_popup->layout,
                                        tag_popup->combo_entry->normal_item_attr);
         }
 
-      if (tag_popup->tag_data[i].selected)
+      if (tag_popup->tag_data[i].state == GTK_STATE_SELECTED)
         {
           gdk_draw_rectangle (widget->window, gc, FALSE,
                               tag_popup->tag_data[i].bounds.x,
@@ -569,7 +590,7 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
       if (&tag_popup->tag_data[i] == tag_popup->prelight)
         {
           gtk_paint_focus (widget->style, widget->window,
-                           tag_popup->tag_data[i].selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL,
+                           tag_popup->tag_data[i].state,
                            &event->area, widget, NULL,
                            tag_popup->tag_data[i].bounds.x,
                            tag_popup->tag_data[i].bounds.y - tag_popup->scroll_y,
@@ -706,7 +727,18 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
   gint                  i;
   gboolean              tag_toggled_off = FALSE;
 
-  tag_data->selected = ! tag_data->selected;
+  if (tag_data->state == GTK_STATE_NORMAL)
+    {
+      tag_data->state = GTK_STATE_SELECTED;
+    }
+  else if (tag_data->state == GTK_STATE_SELECTED)
+    {
+      tag_data->state = GTK_STATE_NORMAL;
+    }
+  else
+    {
+      return;
+    }
 
   tag = gimp_tag_get_name (tag_data->tag);
   current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry));
@@ -744,6 +776,53 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
 
   g_string_free (tag_str, TRUE);
   g_strfreev (current_tags);
+
+  if (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+    {
+      for (i = 0; i < tag_popup->tag_count; i++)
+        {
+          if (tag_popup->tag_data[i].state != GTK_STATE_SELECTED)
+            {
+              tag_popup->tag_data[i].state = GTK_STATE_INSENSITIVE;
+            }
+        }
+      gimp_container_foreach (GIMP_CONTAINER (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry)->tagged_container),
+                              (GFunc) gimp_tag_popup_check_can_toggle, tag_popup);
+    }
+}
+
+static int
+gimp_tag_popup_data_compare (const void *a, const void *b)
+{
+  return gimp_tag_compare_func (GIMP_TAG (((PopupTagData *) a)->tag),
+                                GIMP_TAG (((PopupTagData *) b)->tag));
+}
+
+static void
+gimp_tag_popup_check_can_toggle (GimpTagged    *tagged,
+                                 GimpTagPopup  *tag_popup)
+{
+  GList        *tag_iterator;
+  PopupTagData  search_key;
+  PopupTagData *search_result;
+
+  tag_iterator = gimp_tagged_get_tags (tagged);
+  while (tag_iterator)
+    {
+      search_key.tag = GIMP_TAG (tag_iterator->data);
+      search_result =
+          (PopupTagData *) bsearch (&search_key, tag_popup->tag_data, tag_popup->tag_count,
+                                    sizeof (PopupTagData), gimp_tag_popup_data_compare);
+      if (search_result)
+        {
+          if (search_result->state == GTK_STATE_INSENSITIVE)
+            {
+              search_result->state = GTK_STATE_NORMAL;
+            }
+        }
+
+      tag_iterator = g_list_next (tag_iterator);
+    }
 }
 
 static gboolean
