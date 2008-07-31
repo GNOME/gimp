@@ -192,7 +192,9 @@ gimp_image_scale (GimpImage             *image,
     }
 
   /*  Scale all sample points  */
-  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 

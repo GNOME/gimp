@@ -1,3 +1,7 @@
+2008-07-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-scale.c (gimp_image_scale): formatting.
+
 2008-07-30  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp-splash.png: new devel splash from 
