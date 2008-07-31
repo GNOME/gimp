@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-07 21:25+0100\n"
+"POT-Creation-Date: 2008-07-29 02:04+0100\n"
 "PO-Revision-Date: 2008-04-19 22:37+0300\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -688,43 +688,43 @@ msgstr "اقتطاع إلى النتيجة"
 msgid "Crop with aspect"
 msgstr "اقتطاع مع مظهر"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:880
 msgid "Internal GIMP procedure"
 msgstr "إجراء جِمب داخلي"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "GIMP Plug-In"
 msgstr "ملحق جِمب"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Extension"
 msgstr "امتداد جِمب"
 
-#: ../libgimpbase/gimpbaseenums.c:885
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "Temporary Procedure"
 msgstr "إجراء مؤقت"
 
-#: ../libgimpbase/gimpbaseenums.c:1047
+#: ../libgimpbase/gimpbaseenums.c:1045
 msgid "From left to right"
 msgstr "من اليسار إلى اليمين"
 
-#: ../libgimpbase/gimpbaseenums.c:1048
+#: ../libgimpbase/gimpbaseenums.c:1046
 msgid "From right to left"
 msgstr "من اليمين إلى اليسار"
 
-#: ../libgimpbase/gimpbaseenums.c:1078
+#: ../libgimpbase/gimpbaseenums.c:1076
 msgid "Left justified"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1079
+#: ../libgimpbase/gimpbaseenums.c:1077
 msgid "Right justified"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:1080
+#: ../libgimpbase/gimpbaseenums.c:1078
 msgid "Centered"
 msgstr "مركز"
 
-#: ../libgimpbase/gimpbaseenums.c:1081
+#: ../libgimpbase/gimpbaseenums.c:1079
 msgid "Filled"
 msgstr "مملوء"
 
@@ -972,8 +972,10 @@ msgid "Select color profile from disk..."
 msgstr "انتق مواصفات اللون من القرص..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-msgid "profile|None"
-msgstr "profile|لا شيء"
+#, fuzzy
+msgctxt "profile"
+msgid "None"
+msgstr "لا شيء"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1101,7 +1103,7 @@ msgstr "نمط المربعات"
 msgid "_Preview"
 msgstr "_عاين"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1861
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1110,59 +1112,59 @@ msgstr[1] "حقل إدخال النص هذا محدود بحرفين"
 msgstr[2] "حقل إدخال النص هذا محدود بـ %d حرفا"
 msgstr[3] "حقل إدخال النص هذا محدود بـ %d حرفا"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
 msgstr "مرساة"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
 msgstr "المر_كز"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "ضا_عِف"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_حرِّير"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "موصول"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "الصق كجديد"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "الصق في"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "أعِد ضب_ط"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "مرئي"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
 msgstr "_جرة القلم"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
 msgstr "تباعد الحر_وف"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_ine Spacing"
 msgstr "تباعد الأ_سطر"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:189
 msgid "_Resize"
 msgstr "غيِّر الحج_م"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:321
+#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "مق_ياس"
 
@@ -1174,11 +1176,11 @@ msgstr "ا_قتطع"
 msgid "_Transform"
 msgstr "حوِّ_ل"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr "_دوِّر"
 
-#: ../libgimpwidgets/gimpstock.c:322
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr "قُ_ص"
 
@@ -1823,6 +1825,9 @@ msgstr "جِمب"
 #: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "متحكم دخْل جِمب MIDI"
+
+#~ msgid "profile|None"
+#~ msgstr "profile|لا شيء"
 
 #~ msgid "%d Byte"
 #~ msgid_plural "%d Bytes"
