@@ -121,7 +121,12 @@ gimp_tag_popup_dispose (GObject           *object)
   gimp_tag_popup_remove_scroll_timeout (tag_popup);
 
   /* FIXME: parent should do this on destroy event */
-  tag_popup->combo_entry->popup = NULL;
+  if (tag_popup->combo_entry)
+    {
+      gtk_widget_grab_focus (tag_popup->combo_entry->tag_entry);
+      tag_popup->combo_entry->popup = NULL;
+      tag_popup->combo_entry = NULL;
+    }
 
   if (tag_popup->layout)
     {
@@ -172,7 +177,8 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
   gtk_widget_add_events (GTK_WIDGET (popup),
                          GDK_BUTTON_PRESS_MASK
                          | GDK_BUTTON_RELEASE_MASK
-                         | GDK_POINTER_MOTION_MASK);
+                         | GDK_POINTER_MOTION_MASK
+                         | GDK_KEY_RELEASE_MASK);
   gtk_window_set_screen (GTK_WINDOW (popup),
                          gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
 
@@ -315,7 +321,7 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
                     popup);
 
   gtk_grab_add (GTK_WIDGET (popup));
-  gtk_widget_grab_focus (combo_entry->tag_entry);
+  gtk_widget_grab_focus (GTK_WIDGET (popup));
   grab_status = gdk_pointer_grab (GTK_WIDGET (popup)->window, TRUE,
                                   GDK_BUTTON_PRESS_MASK
                                   | GDK_BUTTON_RELEASE_MASK
@@ -530,6 +536,10 @@ gimp_tag_popup_border_event (GtkWidget          *widget,
       gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
                                   GDK_CURRENT_TIME);
       gtk_widget_destroy (widget);
+    }
+  else if (event->type == GDK_KEY_PRESS)
+    {
+      gtk_widget_destroy (GTK_WIDGET (tag_popup));
     }
 
   return FALSE;
