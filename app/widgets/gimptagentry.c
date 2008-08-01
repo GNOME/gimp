@@ -727,8 +727,6 @@ gimp_tag_entry_focus_in        (GtkWidget         *widget,
                                 GdkEventFocus     *event,
                                 gpointer           user_data)
 {
-  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
-
   gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), FALSE);
 
   return FALSE;
@@ -930,6 +928,27 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
   switch (event->keyval)
     {
       case GDK_Tab:
+            {
+              gint      selection_start;
+              gint      selection_end;
+
+              if (! tag_entry->internal_change)
+                {
+                  g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
+                              tag_entry);
+                }
+              gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry),
+                                                 &selection_start, &selection_end);
+              if (selection_start != selection_end)
+                {
+                  gtk_editable_select_region (GTK_EDITABLE (tag_entry),
+                                              selection_end, selection_end);
+                }
+
+              tag_entry->tags_accepted = TRUE;
+            }
+          return TRUE;
+
       case GDK_Return:
       case GDK_Escape:
       case GDK_comma:
