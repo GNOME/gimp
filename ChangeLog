@@ -1,3 +1,8 @@
+2008-08-01  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimptagentry.c: hide tags on assign tag entry when
+	selected item is not visible in the view.
+
 2008-07-31  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.[ch]

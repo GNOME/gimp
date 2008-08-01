@@ -61,6 +61,9 @@ static gboolean gimp_tag_entry_focus_in                  (GtkWidget            *
 static gboolean gimp_tag_entry_focus_out                 (GtkWidget            *widget,
                                                           GdkEventFocus        *event,
                                                           gpointer              user_data);
+static void     gimp_tag_entry_container_changed         (GimpContainer        *container,
+                                                          GimpObject           *object,
+                                                          GimpTagEntry         *tag_entry);
 static gboolean gimp_tag_entry_button_release            (GtkWidget            *widget,
                                                           GdkEventButton       *event);
 static void     gimp_tag_entry_backspace                 (GtkEntry             *entry);
@@ -171,6 +174,14 @@ gimp_tag_entry_dispose (GObject        *object)
       tag_entry->recent_list = NULL;
     }
 
+  if (tag_entry->tagged_container)
+    {
+      g_signal_handlers_disconnect_by_func (tag_entry->tagged_container,
+                                            gimp_tag_entry_container_changed, tag_entry);
+      g_object_unref (tag_entry->tagged_container);
+      tag_entry->tagged_container = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -188,6 +199,12 @@ gimp_tag_entry_new (GimpFilteredContainer      *tagged_container,
   entry->tagged_container       = tagged_container;
   entry->mode                   = mode;
 
+  g_object_ref (tagged_container);
+  g_signal_connect (entry->tagged_container, "add",
+                    G_CALLBACK (gimp_tag_entry_container_changed), entry);
+  g_signal_connect (entry->tagged_container, "remove",
+                    G_CALLBACK (gimp_tag_entry_container_changed), entry);
+
   gimp_tag_entry_toggle_desc (entry, TRUE);
 
   return GTK_WIDGET (entry);
@@ -200,6 +217,7 @@ gimp_tag_entry_activate (GtkEntry              *entry,
   GimpTagEntry         *tag_entry;
   gint                  selection_start;
   gint                  selection_end;
+  GList                *iterator;
 
   tag_entry = GIMP_TAG_ENTRY (entry);
 
@@ -211,10 +229,23 @@ gimp_tag_entry_activate (GtkEntry              *entry,
     {
       gtk_editable_select_region (GTK_EDITABLE (entry),
                                   selection_end, selection_end);
-      return;
     }
 
-  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+  iterator = tag_entry->selected_items;
+  while (iterator)
+    {
+      if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
+          && gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+                                  GIMP_OBJECT(iterator->data)))
+        {
+          break;
+        }
+
+      iterator = g_list_next (iterator);
+    }
+
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN
+      && iterator)
     {
       gimp_tag_entry_assign_tags (GIMP_TAG_ENTRY (entry));
     }
@@ -444,6 +475,8 @@ void
 gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
                                    GList                   *items)
 {
+  GList        *iterator;
+
   if (entry->selected_items)
     {
       g_list_free (entry->selected_items);
@@ -452,9 +485,30 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
 
   entry->selected_items = g_list_copy (items);
 
-  if (! entry->description_shown)
+  iterator = entry->selected_items;
+  while (iterator)
+    {
+      if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
+          && gimp_container_have (GIMP_CONTAINER (entry->tagged_container),
+                                  GIMP_OBJECT(iterator->data)))
+        {
+          break;
+        }
+
+      iterator = g_list_next (iterator);
+    }
+
+  if (entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN
+      && iterator)
     {
       gimp_tag_entry_load_selection (entry);
+      gimp_tag_entry_toggle_desc (entry, FALSE);
+    }
+  else
+    {
+      entry->internal_change = TRUE;
+      gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
+      entry->internal_change = FALSE;
       gimp_tag_entry_toggle_desc (entry, TRUE);
     }
 }
@@ -469,7 +523,9 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
   GimpTag      *tag;
   gchar        *text;
 
+  tag_entry->internal_change = TRUE;
   gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
+  tag_entry->internal_change = FALSE;
 
   if (! tag_entry->selected_items)
     {
@@ -486,8 +542,10 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
     {
       tag = GIMP_TAG (tag_iterator->data);
       text = g_strdup_printf ("%s, ", gimp_tag_get_name (tag));
+      tag_entry->internal_change = TRUE;
       gtk_editable_insert_text (GTK_EDITABLE (tag_entry), text, strlen (text),
                                 &insert_pos);
+      tag_entry->internal_change = FALSE;
       g_free (text);
 
       tag_iterator = g_list_next (tag_iterator);
@@ -670,11 +728,8 @@ gimp_tag_entry_focus_in        (GtkWidget         *widget,
                                 gpointer           user_data)
 {
   GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (widget);
+
   gimp_tag_entry_toggle_desc (GIMP_TAG_ENTRY (widget), FALSE);
-  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
-    {
-      gimp_tag_entry_load_selection (tag_entry);
-    }
 
   return FALSE;
 }
@@ -693,6 +748,35 @@ gimp_tag_entry_focus_out       (GtkWidget         *widget,
 
   gimp_tag_entry_toggle_desc (tag_entry, TRUE);
   return FALSE;
+}
+
+
+static void
+gimp_tag_entry_container_changed       (GimpContainer        *container,
+                                        GimpObject           *object,
+                                        GimpTagEntry         *tag_entry)
+{
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+    {
+      GList        *selected_iterator = tag_entry->selected_items;
+
+      while (selected_iterator)
+        {
+          if (gimp_tagged_get_tags (GIMP_TAGGED (selected_iterator->data))
+              && gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+                                      GIMP_OBJECT(selected_iterator->data)))
+            {
+              break;
+            }
+          selected_iterator = g_list_next (selected_iterator);
+        }
+      if (! selected_iterator)
+        {
+          tag_entry->internal_change = TRUE;
+          gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
+          tag_entry->internal_change = FALSE;
+        }
+    }
 }
 
 static void
@@ -718,28 +802,21 @@ gimp_tag_entry_toggle_desc     (GimpTagEntry      *tag_entry,
 
   if (show)
     {
-      gchar           **tags;
-      gint              tag_count;
-      gint              i;
-      gboolean          has_valid_tag = FALSE;
+      gchar        *current_text;
+      size_t        len;
 
-      tags = gimp_tag_entry_parse_tags (tag_entry);
-      tag_count = g_strv_length (tags);
-      for (i = 0; i < tag_count; i++)
-        {
-          if (tags[i] && *tags[i])
-            {
-              has_valid_tag = TRUE;
-              break;
-            }
-        }
-      g_strfreev (tags);
+      current_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (tag_entry)));
+      current_text = g_strstrip (current_text);
+      len = strlen (current_text);
+      g_free (current_text);
 
-      if (! has_valid_tag)
+      if (len > 0)
         {
-          tag_entry->description_shown = TRUE;
-          gtk_widget_queue_draw (widget);
+          return;
         }
+
+      tag_entry->description_shown = TRUE;
+      gtk_widget_queue_draw (widget);
     }
   else
     {
