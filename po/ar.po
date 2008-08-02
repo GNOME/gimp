@@ -9,15 +9,14 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-31 11:06+0100\n"
-"PO-Revision-Date: 2008-07-31 03:06+0300\n"
+"PO-Revision-Date: 2008-08-02 00:36+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -577,15 +576,15 @@ msgstr "أ_خفض القناة"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
-msgstr "أخفض هذه القناة درجة في رصة القنوات"
+msgstr "اخفض هذه القناة درجة في رصة القنوات"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
-msgstr "أخفض القناة إلى ال_قاع"
+msgstr "اخفض القناة إلى ال_قاع"
 
 #: ../app/actions/channels-actions.c:97
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "أخفض القناة إلى أسفل رصة القنوات"
+msgstr "اخفض القناة إلى أسفل رصة القنوات"
 
 #: ../app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
@@ -847,8 +846,7 @@ msgstr "أأحذف '%s'؟"
 
 #: ../app/actions/data-commands.c:257
 #, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "أمتأكد أنك تريد إزالة '%s' من القائمة وحذفه من القرص؟"
 
 #: ../app/actions/dialogs-actions.c:39
@@ -2662,7 +2660,7 @@ msgstr "أ_خفض الطبقة"
 
 #: ../app/actions/layers-actions.c:111
 msgid "Lower this layer one step in the layer stack"
-msgstr "أخفض الطبقة درجة واحدة في رصة الطبقات"
+msgstr "اخفض الطبقة درجة واحدة في رصة الطبقات"
 
 #: ../app/actions/layers-actions.c:116
 msgid "Layer to _Bottom"
@@ -2678,7 +2676,7 @@ msgstr "_ثبّت الطبقة"
 
 #: ../app/actions/layers-actions.c:123
 msgid "Anchor the floating layer"
-msgstr "ثبّت الطبقة العائمة"
+msgstr "ثبّت الطبقة الحرة"
 
 #: ../app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
@@ -3532,8 +3530,7 @@ msgstr "احذف القالب"
 
 #: ../app/actions/templates-commands.c:239
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "أمتأكد أنك تريد حذف القالب '%s' من القائمة ومن القرص؟"
 
 #: ../app/actions/text-editor-actions.c:44
@@ -4582,13 +4579,11 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:164
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:167
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr "يحدد مستوى الزيادة المستخدم في التحجيم والتحويلات الأخرى."
 
 #: ../app/config/gimprc-blurbs.h:174
@@ -4679,16 +4674,14 @@ msgstr "عند تفعيله، ستعيد نافذة الصورة تحجيم نف
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
-msgstr ""
-"عند تفعيله، ستعيد نافذة الصورة تحجيم نفسها عند تكبير الصور للداخل أو الخارج."
+msgstr "عند تفعيله، ستعيد نافذة الصورة تحجيم نفسها عند تكبير الصور للداخل أو الخارج."
 
 #: ../app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "دع جمب يحاول استعادة آخر جلسة محفوظة عند كل بداية."
 
 #: ../app/config/gimprc-blurbs.h:265
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:269
@@ -5259,19 +5252,19 @@ msgstr "طبّق قناع الطبقة"
 
 #: ../app/core/core-enums.c:876 ../app/core/core-enums.c:923
 msgid "Floating selection to layer"
-msgstr "التحديد الطافي إلى طبقة"
+msgstr "التحديد الحر إلى طبقة"
 
 #: ../app/core/core-enums.c:877
 msgid "Float selection"
-msgstr "تحديد طافي"
+msgstr "تحديد حر"
 
 #: ../app/core/core-enums.c:878
 msgid "Anchor floating selection"
-msgstr "اربط التحديد الطافي"
+msgstr "اربط التحديد الحر"
 
 #: ../app/core/core-enums.c:879
 msgid "Remove floating selection"
-msgstr "احذف التحديد الطافي"
+msgstr "احذف التحديد الحر"
 
 #: ../app/core/core-enums.c:880 ../app/core/gimp-edit.c:262
 msgid "Paste"
@@ -5402,11 +5395,11 @@ msgstr "غيّر موضع المسار"
 
 #: ../app/core/core-enums.c:924
 msgid "Rigor floating selection"
-msgstr "شُد التحديد الطافي"
+msgstr "شُد التحديد الحر"
 
 #: ../app/core/core-enums.c:925
 msgid "Relax floating selection"
-msgstr "أرخِ التحديد الطافي"
+msgstr "أرخِ التحديد الحر"
 
 #: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:95
 #: ../app/tools/gimpinktool.c:55
@@ -5619,8 +5612,7 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:448
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ تعذّر فك إصدارة نسق abr %Id."
 
 #: ../app/core/gimpbrush-load.c:615
@@ -5640,15 +5632,12 @@ msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ ليس م
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr ""
-"خطأ تحليل فادح في ملف الفرشاة '%s':‏ إصدارة فرشة جمب مجهولة في السطر %Id."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ إصدارة فرشة جمب مجهولة في السطر %Id."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ شكل فرشة جمب مجهول في السطر %Id."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -5991,8 +5980,7 @@ msgid "The foreground color of the grid."
 msgstr "اللون الأمامي للشبكة."
 
 #: ../app/core/gimpgrid.c:95
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr "لون خلفية الشبكة؛ يستخدم فقط مع طراز السطور مزدوجة الشرطة."
 
 #: ../app/core/gimpgrid.c:101
@@ -6004,29 +5992,28 @@ msgid "Vertical spacing of grid lines."
 msgstr "التباعد الرأسي لخطوط الشبكة"
 
 #: ../app/core/gimpgrid.c:115
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
-msgstr ""
+msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgstr "الإزاحة الأفقية لخط الشبكة الأول؛ يمن أن يكون سالبا."
 
 #: ../app/core/gimpgrid.c:122
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr ""
+msgstr "الإزاحة الرأسية لخط الشبكة الأول؛ يمن أن يكون سالبا."
 
 #: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
-msgstr "ترتيب الكائنات"
+msgstr "رتّب الكائنات"
 
 #: ../app/core/gimpimage-colormap.c:63
 msgid "Set Colormap"
-msgstr "إعداد مخطط الألوان"
+msgstr "حدد مخطط الألوان"
 
 #: ../app/core/gimpimage-colormap.c:118
 msgid "Change Colormap entry"
-msgstr "تغيير مدخل مخطط الألوان"
+msgstr "غيّر مدخلة مخطط الألوان"
 
 #: ../app/core/gimpimage-colormap.c:138
 msgid "Add Color to Colormap"
-msgstr "أضِف لون لمخطط الألوان"
+msgstr "أضِف لونا لمخطط الألوان"
 
 #: ../app/core/gimpimage-convert.c:792
 #, c-format
@@ -6039,37 +6026,36 @@ msgstr "حوّل الصورة إلى ح‌خ‌ز"
 
 #: ../app/core/gimpimage-convert.c:810
 msgid "Convert Image to Grayscale"
-msgstr "تحويل الصورة لتدرج رمادي"
+msgstr "حوّل الصورة إلى تدرج رمادي"
 
 #: ../app/core/gimpimage-convert.c:814
 msgid "Convert Image to Indexed"
-msgstr "تحويل الصورة إلى مفهرسة"
+msgstr "حوّل الصورة إلى مفهرسة"
 
 #: ../app/core/gimpimage-convert.c:896
 msgid "Converting to indexed colors (stage 2)"
-msgstr "تحويل إلى مفهرسة (المرحلة 2)"
+msgstr "حوّل إلى مفهرسة (المرحلة 2)"
 
 #: ../app/core/gimpimage-convert.c:941
 msgid "Converting to indexed colors (stage 3)"
-msgstr "تحويل إلى مفهرسة (المرحلة 3)"
+msgstr "حوّل إلى مفهرسة (المرحلة 3)"
 
 #: ../app/core/gimpimage-crop.c:126
-#, fuzzy
 msgctxt "command"
 msgid "Crop Image"
-msgstr "اقتصاص الصورة"
+msgstr "قصّر الصورة"
 
 #: ../app/core/gimpimage-crop.c:129 ../app/core/gimpimage-resize.c:90
 msgid "Resize Image"
-msgstr "تغيير حجم الصورة"
+msgstr "غيّر حجم الصورة"
 
 #: ../app/core/gimpimage-guides.c:51
 msgid "Add Horizontal Guide"
-msgstr "أضِف دليل أفقي"
+msgstr "أضِف دليلا أفقيا"
 
 #: ../app/core/gimpimage-guides.c:74
 msgid "Add Vertical Guide"
-msgstr "أضِف دليل عامودي"
+msgstr "أضِف دليلا رأسيا"
 
 #: ../app/core/gimpimage-guides.c:115 ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
@@ -6077,40 +6063,39 @@ msgstr "احذف الدليل"
 
 #: ../app/core/gimpimage-guides.c:140
 msgid "Move Guide"
-msgstr "تحريك الدليل"
+msgstr "انقل الدليل"
 
 #: ../app/core/gimpimage-item-list.c:53
 msgid "Translate Items"
-msgstr "ترجمة عناصر"
+msgstr "ترجم العناصر"
 
 #: ../app/core/gimpimage-item-list.c:80
 msgid "Flip Items"
-msgstr "قلب عناصر"
+msgstr "اقلب العناصر"
 
 #: ../app/core/gimpimage-item-list.c:107
-#, fuzzy
 msgid "Rotate Items"
-msgstr "إنشاء عناصر"
+msgstr "دوّر العناصر"
 
 #: ../app/core/gimpimage-item-list.c:137
 msgid "Transform Items"
-msgstr "تحويل عناصر"
+msgstr "حوّل عناصر"
 
 #: ../app/core/gimpimage-merge.c:102 ../app/core/gimpimage-merge.c:114
 msgid "Merge Visible Layers"
-msgstr "دمج الطبقات المرئية"
+msgstr "ادمج الطبقات المرئية"
 
 #: ../app/core/gimpimage-merge.c:165
 msgid "Flatten Image"
-msgstr "تسطيح صورة"
+msgstr "سطّح صورة"
 
 #: ../app/core/gimpimage-merge.c:214
 msgid "Merge Down"
-msgstr "دمج لأسفل"
+msgstr "ادمج لأسفل"
 
 #: ../app/core/gimpimage-merge.c:254
 msgid "Merge Visible Paths"
-msgstr "دمج المسارات المرئية"
+msgstr "ادمج المسارات المرئية"
 
 #: ../app/core/gimpimage-merge.c:289
 #, c-format
@@ -6119,11 +6104,11 @@ msgstr "لا يوجد مسارات مرئية كافية للدمج. لا بد �
 
 #: ../app/core/gimpimage-quick-mask.c:82
 msgid "Enable Quick Mask"
-msgstr "تمكين قناع سريع"
+msgstr "فعّل القناع السريع"
 
 #: ../app/core/gimpimage-quick-mask.c:132
 msgid "Disable Quick Mask"
-msgstr "تعطيل قناع سريع"
+msgstr "عطّل القناع السريع"
 
 #: ../app/core/gimpimage-sample-points.c:53
 msgid "Add Sample Point"
@@ -6135,36 +6120,32 @@ msgstr "احذف عينة نقطة"
 
 #: ../app/core/gimpimage-sample-points.c:135
 msgid "Move Sample Point"
-msgstr "نقل عينة نقطة"
+msgstr "انقل عينة نقطة"
 
 #: ../app/core/gimpimage-undo-push.c:855
 #, c-format
 msgid "Can't undo %s"
-msgstr "لا يمكن التراجع عن %s"
+msgstr "تعذّر التراجع عن %s"
 
 #: ../app/core/gimpimage.c:1467
 msgid "Change Image Resolution"
-msgstr "تغيير كثافة الصورة"
+msgstr "غيّر استبانة الصورة"
 
 #: ../app/core/gimpimage.c:1507
 msgid "Change Image Unit"
-msgstr "تغيير وحدة الصورة"
+msgstr "غيّر وحدة الصورة"
 
 #: ../app/core/gimpimage.c:2313
-#, fuzzy
 msgid "Attach Parasite to Image"
-msgstr ""
-"لا يمكن تحميل صورة:\n"
-"%s"
+msgstr "أرفِق طفيليا بالصورة"
 
 #: ../app/core/gimpimage.c:2351
-#, fuzzy
 msgid "Remove Parasite from Image"
-msgstr "احذف من هذا الموضوع."
+msgstr "احذف طفيلي من الصورة"
 
 #: ../app/core/gimpimage.c:2810
 msgid "Add Layer"
-msgstr "أضِف صورة"
+msgstr "أضِف طبقة"
 
 #: ../app/core/gimpimage.c:2875 ../app/core/gimpimage.c:2888
 msgid "Remove Layer"
@@ -6172,27 +6153,27 @@ msgstr "احذف طبقة"
 
 #: ../app/core/gimpimage.c:3030
 msgid "Layer cannot be raised higher."
-msgstr "لا يمكن رفع الطبقة أعلى"
+msgstr "لا يمكن رفع الطبقة أعلى."
 
 #: ../app/core/gimpimage.c:3035
 msgid "Raise Layer"
-msgstr "رفع الطبقة"
+msgstr "ارفع الطبقة"
 
 #: ../app/core/gimpimage.c:3052
 msgid "Layer cannot be lowered more."
-msgstr "لا يمكن خفض الطبقة أكثر"
+msgstr "لا يمكن خفض الطبقة أكثر."
 
 #: ../app/core/gimpimage.c:3057
 msgid "Lower Layer"
-msgstr "خفض الطبقة"
+msgstr "اخفض الطبقة"
 
 #: ../app/core/gimpimage.c:3068
 msgid "Raise Layer to Top"
-msgstr "رفع الطبقة إلى السكح"
+msgstr "ارفع الطبقة إلى السطح"
 
 #: ../app/core/gimpimage.c:3083
 msgid "Lower Layer to Bottom"
-msgstr "خفض الطبقة إلى القاع"
+msgstr "اخفض الطبقة إلى القاع"
 
 #: ../app/core/gimpimage.c:3155
 msgid "Add Channel"
@@ -6208,15 +6189,15 @@ msgstr "لا يمكن رفع القناة أعلى."
 
 #: ../app/core/gimpimage.c:3263
 msgid "Raise Channel"
-msgstr "رفع القناة"
+msgstr "ارفع القناة"
 
 #: ../app/core/gimpimage.c:3280
 msgid "Channel is already on top."
-msgstr "القناة في الأعلى حاليا."
+msgstr "القناة في القمة بالفعل."
 
 #: ../app/core/gimpimage.c:3285
 msgid "Raise Channel to Top"
-msgstr "رفع الفناة إلى أعلى"
+msgstr "ارفع القناة إلى القمة"
 
 #: ../app/core/gimpimage.c:3302
 msgid "Channel cannot be lowered more."
@@ -6224,59 +6205,59 @@ msgstr "لا يمكن خفض القناة أكثر."
 
 #: ../app/core/gimpimage.c:3307
 msgid "Lower Channel"
-msgstr "خفض قناة"
+msgstr "اخفض قناة"
 
 #: ../app/core/gimpimage.c:3327
 msgid "Channel is already on the bottom."
-msgstr "القناة موجودة حاليا في الأسفل."
+msgstr "القناة في القاع بالفعل."
 
 #: ../app/core/gimpimage.c:3332
 msgid "Lower Channel to Bottom"
-msgstr "حفض القناة نحو الأسفل"
+msgstr "اخفض القناة إلى القاع"
 
 #: ../app/core/gimpimage.c:3406
 msgid "Add Path"
-msgstr "أضِف مسار"
+msgstr "أضِف مسارا"
 
 #: ../app/core/gimpimage.c:3452
 msgid "Remove Path"
-msgstr "احذف مسار"
+msgstr "احذف المسار"
 
 #: ../app/core/gimpimage.c:3496
 msgid "Path cannot be raised higher."
-msgstr "لا يمكن رفع المسار أعلى.ؤ"
+msgstr "لا يمكن رفع المسار أعلى."
 
 #: ../app/core/gimpimage.c:3501
 msgid "Raise Path"
-msgstr "رفع المسار"
+msgstr "ارفع المسار"
 
 #: ../app/core/gimpimage.c:3518
 msgid "Path is already on top."
-msgstr "المسار حاليا في الأعلى."
+msgstr "المسار في القمة بالفعل."
 
 #: ../app/core/gimpimage.c:3523
 msgid "Raise Path to Top"
-msgstr "لم يمكن إنشاء مسار الذّاكرة المخّأة"
+msgstr "ارفع المسار إلى القمة"
 
 #: ../app/core/gimpimage.c:3540
 msgid "Path cannot be lowered more."
-msgstr "لا يمكن خفض المسار أكبر."
+msgstr "لا يمكن خفض المسار أكثر."
 
 #: ../app/core/gimpimage.c:3545
 msgid "Lower Path"
-msgstr "خفض مسار"
+msgstr "اخفض مسار"
 
 #: ../app/core/gimpimage.c:3565
 msgid "Path is already on the bottom."
-msgstr "المسار حاليا في الأسفل."
+msgstr "المسار في القاع بالفعل."
 
 #: ../app/core/gimpimage.c:3570
 msgid "Lower Path to Bottom"
-msgstr "خفض مسار نحو الأسفل"
+msgstr "اخفض المسار إلى القاع"
 
 #: ../app/core/gimpimagefile.c:528 ../app/dialogs/preferences-dialog.c:1721
 msgid "Folder"
-msgstr "المجلد"
+msgstr "مجلد"
 
 #: ../app/core/gimpimagefile.c:533
 msgid "Special File"
@@ -6292,7 +6273,7 @@ msgstr "انقر لإنشاء معاينة"
 
 #: ../app/core/gimpimagefile.c:574
 msgid "Loading preview..."
-msgstr "تحميل معاينة..."
+msgstr "يحمّل المعاينة..."
 
 #: ../app/core/gimpimagefile.c:580
 msgid "Preview is out of date"
@@ -6300,7 +6281,7 @@ msgstr "المعاينة غير محدثة"
 
 #: ../app/core/gimpimagefile.c:586
 msgid "Cannot create preview"
-msgstr "لا يمكن إنشاء معاينة"
+msgstr "تعذّر إنشاء معاينة"
 
 #: ../app/core/gimpimagefile.c:596
 msgid "(Preview may be out of date)"
@@ -6323,83 +6304,79 @@ msgstr[5] "%Id × %Id بسكل"
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
-msgstr[0] "شفافية %Id"
-msgstr[1] "%Id طبقات"
-msgstr[2] "%Id طبقات"
+msgstr[0] "لا طبقات"
+msgstr[1] "طبقة واحدة"
+msgstr[2] "طبقتين"
 msgstr[3] "%Id طبقات"
-msgstr[4] "%Id طبقات"
-msgstr[5] "%Id طبقات"
+msgstr[4] "%Id طبقة"
+msgstr[5] "%Id طبقة"
 
 #: ../app/core/gimpimagefile.c:675
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "تعذر فتح التصغير '%s': %s"
+msgstr "تعذر فتح المصغرة '%s'‏: %s"
 
 #: ../app/core/gimpitem.c:1138
 msgid "Attach Parasite"
-msgstr "إرفاق الملف (أو الملفّات)"
+msgstr "أرفق طفيليا"
 
 #: ../app/core/gimpitem.c:1148
-#, fuzzy
 msgid "Attach Parasite to Item"
-msgstr "اختر _عنصراً للإضافة ل \"%s\":"
+msgstr "أرفق طفيليا بالعنصر"
 
 #: ../app/core/gimpitem.c:1190 ../app/core/gimpitem.c:1197
-#, fuzzy
 msgid "Remove Parasite from Item"
-msgstr "احذف العنصر المحدد من شريط الأدوات"
+msgstr "أزل الطفيلي من العنصر"
 
 #: ../app/core/gimplayer-floating-sel.c:99
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "اختيار لون المنتقى"
+msgstr "أزل التحديد الحر"
 
 #: ../app/core/gimplayer-floating-sel.c:130
-#, fuzzy
 msgid "Anchor Floating Selection"
-msgstr "اختيار لون المنتقى"
+msgstr "ثبّت التحديد الحر"
 
 #: ../app/core/gimplayer-floating-sel.c:205 ../app/core/gimplayer.c:643
 #, c-format
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
-msgstr ""
+msgstr "تعذر إنشاء طبقة جديدة من التحديد الكافي لأنه ينتمي إلى قناع طبقة أو قناة."
 
 #: ../app/core/gimplayer-floating-sel.c:211
 msgid "Floating Selection to Layer"
-msgstr "تحديد طافي إلى طبقة"
+msgstr "التحديد الحر إلى طبقة"
 
 #: ../app/core/gimplayer.c:248 ../app/tools/tools-enums.c:209
 msgid "Layer"
-msgstr "الطبقة"
+msgstr "طبقة"
 
 #: ../app/core/gimplayer.c:249
 msgid "Rename Layer"
-msgstr "تغيير اسم الطبقة"
+msgstr "غيّر اسم الطبقة"
 
 #: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:330
 #: ../app/pdb/layer-cmds.c:365
 msgid "Move Layer"
-msgstr "تحريك الطبقة"
+msgstr "انقل الطبقة"
 
 #: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
-msgstr "تغيير حجم الطبقة"
+msgstr "غيّر حجم الطبقة"
 
 #: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
-msgstr "قلب طبقة"
+msgstr "اقلب طبقة"
 
 #: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
-msgstr "تدوير الطبقة"
+msgstr "دوّر الطبقة"
 
 #: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1324
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
-msgstr "%s قناع"
+msgstr "قناع %s"
 
 #: ../app/core/gimplayer.c:446
 #, c-format
@@ -6407,60 +6384,58 @@ msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr ""
-"التحديد الحر\n"
+"تحديد حر\n"
 "(%s)"
 
 #: ../app/core/gimplayer.c:1254
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "لا يمكن إضافة علامة طبقة إلى طبقة ليست جزء من صورة."
+msgstr "لا يمكن إضافة قناع طبقة إلى طبقة ليست جزء من صورة."
 
 #: ../app/core/gimplayer.c:1261
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
+msgstr "تعذّ إضافة قناع طبقة لأنه الطبقة بها واحد مسبقا."
 
 #: ../app/core/gimplayer.c:1271
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr ""
+msgstr "لا يمكن إضافة قناع طبقة ذو أبعاد مختلفة عن الطبقة المحددة."
 
 #: ../app/core/gimplayer.c:1379
 msgid "Transfer Alpha to Mask"
-msgstr ""
+msgstr "حوّل ألفا إلى قناع"
 
 #: ../app/core/gimplayer.c:1551 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
-msgstr "تفعيل قناع الطبقة"
+msgstr "طبّق قناع الطبقة"
 
 #: ../app/core/gimplayer.c:1552
 msgid "Delete Layer Mask"
-msgstr "احذف علامة الطبقة"
+msgstr "احذف قناع الطبقة"
 
 #: ../app/core/gimplayer.c:1664
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "فيما إذا كان للبكسبف شفافية (قنات ألفا)"
+msgstr "أضِف ألفا إلى القناة"
 
 #: ../app/core/gimplayer.c:1718
-#, fuzzy
 msgid "Remove Alpha Channel"
-msgstr "فيما إذا كان للبكسبف شفافية (قنات ألفا)"
+msgstr "أزِل ألفا من القناة"
 
 #: ../app/core/gimplayer.c:1740
 msgid "Layer to Image Size"
-msgstr "شفافية حجم الصورة"
+msgstr "الطبقة إلى حجم الصورة"
 
 #: ../app/core/gimplayermask.c:105
 msgid "Move Layer Mask"
-msgstr "نقل علامة الطبقة"
+msgstr "انقل قناع الطبقة"
 
 #. reject renaming, layer masks are always named "<layer name> mask"
 #: ../app/core/gimplayermask.c:160
 #, c-format
 msgid "Cannot rename layer masks."
-msgstr "لا يمكن إعادة تسمية أغلفة الشفافية"
+msgstr "لا يمكن تغيير اسم قناع الطبقة."
 
 #: ../app/core/gimplayermask.c:303
 msgid "Show Layer Mask"
-msgstr "إظهار قناع الطبقة"
+msgstr "أظهر قناع الطبقة"
 
 #: ../app/core/gimppalette-import.c:428
 #, c-format
@@ -6470,7 +6445,7 @@ msgstr "فهرس %Id"
 #: ../app/core/gimppalette-import.c:532
 #, c-format
 msgid "Unknown type of palette file: %s"
-msgstr "نوعية غير معروفة من ملف لوح الألوان: %s"
+msgstr "نوع لوح ألوان مجهول: %s"
 
 #: ../app/core/gimppalette-load.c:85 ../app/core/gimppalette-load.c:110
 #: ../app/core/gimppalette-load.c:131 ../app/core/gimppalette-load.c:160
@@ -6525,8 +6500,7 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 
 #: ../app/core/gimppattern-load.c:114
@@ -6548,50 +6522,50 @@ msgstr ""
 
 #: ../app/core/gimpprogress.c:107 ../app/core/gimpprogress.c:154
 msgid "Please wait"
-msgstr "الرجاء الإنتظار"
+msgstr "انتظر رجاء"
 
 #: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:237
 msgid "Move Selection"
-msgstr "نقل التحديد"
+msgstr "انقل التحديد"
 
 #: ../app/core/gimpselection.c:168
 msgid "Sharpen Selection"
-msgstr "حد التحديد"
+msgstr "حُد التحديد"
 
 #: ../app/core/gimpselection.c:169
 msgid "Select None"
-msgstr "تحديد لا شيء"
+msgstr "اختر لا شيء"
 
 #: ../app/core/gimpselection.c:170
 msgid "Select All"
-msgstr "تحديد الكل"
+msgstr "اختر الكل"
 
 #: ../app/core/gimpselection.c:171
 msgid "Invert Selection"
-msgstr "عكس تحديد"
+msgstr "اعكس التحديد"
 
 #: ../app/core/gimpselection.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "There is no selection to stroke."
-msgstr "لا يوجد ملحق لمعالجة هذا الفيلم."
+msgstr "لا تحديد لرسمه."
 
 #: ../app/core/gimpselection.c:640
 #, c-format
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "غير قادر على القص أو النسخ لأن المنطقة المحددة فارغة."
+msgstr "تعذّر القص أو النسخ لأن المنطقة المحددة فارغة."
 
 #: ../app/core/gimpselection.c:817
 #, c-format
 msgid "Cannot float selection because the selected region is empty."
-msgstr ""
+msgstr "تعذّر تحرير التحديد لأن المنطقة المحددة فارغة."
 
 #: ../app/core/gimpselection.c:824
 msgid "Float Selection"
-msgstr "طفو التحديد"
+msgstr "حرر التحديد"
 
 #: ../app/core/gimpselection.c:840
 msgid "Floated Layer"
-msgstr "طبقة طافية"
+msgstr "طبقة حرة"
 
 #: ../app/core/gimpstrokeoptions.c:119
 msgid ""
@@ -6604,14 +6578,12 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: ../app/core/gimptemplate.c:113
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "تغيير استبانة الشاشة"
+msgstr "الاستبانة الأفقية للشاشة"
 
 #: ../app/core/gimptemplate.c:118
-#, fuzzy
 msgid "The vertical image resolution."
-msgstr "تدوير الصور على الشرائط العمودية"
+msgstr "الاستبانة الرأسية للشاشة"
 
 #: ../app/core/gimptemplate.c:403 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -6639,7 +6611,7 @@ msgstr "إنش"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
-msgstr "م"
+msgstr "ملم"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeters"
@@ -6664,15 +6636,15 @@ msgstr "بيكا"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
-msgstr "مئوي"
+msgstr "بالمئة"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr "جمع|مئوي"
+msgstr "بالمئة"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
-msgstr "زر موقع جمب"
+msgstr "زُر موقع جمب"
 
 #. Translators: insert your names here,
 #. * separated by newline
@@ -6680,26 +6652,27 @@ msgstr "زر موقع جمب"
 #: ../app/dialogs/about-dialog.c:130
 msgid "translator-credits"
 msgstr ""
-"أنس الحسيني <linux.anas@gmail.com>\n"
-"جهاد عفيفي <djihed@gmail.com>\n"
-"أسامة خالد <osamak.wfm@gmail.com>"
+"فريق عربايز للترجمة http://www.arabeyes.org:\n"
+"أنس الحسيني\t<linux.anas@gmail.com>\n"
+"جهاد عفيفي\t<djihed@gmail.com>\n"
+"أسامة خالد\t<osamak.wfm@gmail.com>\n"
+"خالد حسني\t<khaledhosny@eglug.org>"
 
 #: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
-msgstr "جمب نقل لك بواسطة"
+msgstr "قدّمه لك"
 
 #: ../app/dialogs/about-dialog.c:605
 msgid "This is an unstable development release."
-msgstr "هذا إصدار تطوير غير مستقر"
+msgstr "هذه إصدارة تطويرية غير مستقرة."
 
 #: ../app/dialogs/channel-options-dialog.c:145
 msgid "Channel _name:"
 msgstr "ا_سم القناة:"
 
 #: ../app/dialogs/channel-options-dialog.c:174
-#, fuzzy
 msgid "Initialize from _selection"
-msgstr "حذف المنتقى من المحفوظة"
+msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
@@ -6707,19 +6680,19 @@ msgstr "تحويل لون مفهرس"
 
 #: ../app/dialogs/convert-dialog.c:128
 msgid "Convert Image to Indexed Colors"
-msgstr "تحويل الصورة إلى ألوان مفهرسة"
+msgstr "حوّل الصورة إلى ألوان مفهرسة"
 
 #: ../app/dialogs/convert-dialog.c:138
 msgid "C_onvert"
-msgstr "ت_حويل"
+msgstr "_حوّل"
 
 #: ../app/dialogs/convert-dialog.c:189
 msgid "_Maximum number of colors:"
-msgstr "أكبر عدد من الألوان:"
+msgstr "أ_كبر عدد من الألوان:"
 
 #: ../app/dialogs/convert-dialog.c:216
 msgid "_Remove unused colors from colormap"
-msgstr "_إزالة الألوان غير المستخدمة من مخطط الألوان"
+msgstr "أ_زل الألوان غير المستخدمة من مخطط الألوان"
 
 #. dithering
 #: ../app/dialogs/convert-dialog.c:232 ../app/tools/gimpblendoptions.c:247
@@ -6728,7 +6701,7 @@ msgstr "ارتجاف"
 
 #: ../app/dialogs/convert-dialog.c:244
 msgid "Color _dithering:"
-msgstr "ارتجاف اللون:"
+msgstr "ار_تجاف اللون:"
 
 #: ../app/dialogs/convert-dialog.c:259
 #, fuzzy
@@ -6764,15 +6737,15 @@ msgstr "الأخطاء"
 
 #: ../app/dialogs/dialogs.c:171
 msgid "History"
-msgstr "التاريخ"
+msgstr "التأريخ"
 
 #: ../app/dialogs/dialogs.c:173
 msgid "Image Templates"
-msgstr "قوالب الصورة"
+msgstr "قوالب الصور"
 
 #: ../app/dialogs/dialogs.c:194
 msgid "Histogram"
-msgstr "الرسم البياني"
+msgstr "رسم بياني"
 
 #: ../app/dialogs/dialogs.c:198
 msgid "Selection Editor"
@@ -6784,7 +6757,7 @@ msgstr "تراجع"
 
 #: ../app/dialogs/dialogs.c:202
 msgid "Undo History"
-msgstr "تاريخ التراجع"
+msgstr "تأريخ التراجع"
 
 #: ../app/dialogs/dialogs.c:212
 msgid "Navigation"
@@ -6792,46 +6765,44 @@ msgstr "إبحار"
 
 #: ../app/dialogs/dialogs.c:212
 msgid "Display Navigation"
-msgstr "عرض ابحار"
+msgstr "اعرض الإبحار"
 
 #: ../app/dialogs/dialogs.c:218
-#, fuzzy
 msgid "FG/BG"
-msgstr "عمود لون الخلفيّة"
+msgstr "المقدمة/الخلفية"
 
 #: ../app/dialogs/dialogs.c:218
-#, fuzzy
 msgid "FG/BG Color"
-msgstr "عمود لون الخلفيّة"
+msgstr "لون المقدمة/الخلفية"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr "تبهيت %s"
+msgstr "أبهت %s"
 
 #: ../app/dialogs/fade-dialog.c:123
 msgid "_Fade"
-msgstr "تب_هيت"
+msgstr "أب_هت"
 
 #: ../app/dialogs/fade-dialog.c:157
 msgid "_Mode:"
-msgstr "_نمط:"
+msgstr "ال_طور:"
 
 #: ../app/dialogs/fade-dialog.c:163
 msgid "_Opacity:"
-msgstr "_عتمة:"
+msgstr "الإ_عتام:"
 
 #: ../app/dialogs/file-open-dialog.c:246
 msgid "Open layers"
-msgstr "فتح طبقات"
+msgstr "افتح طبقات"
 
 #: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
-msgstr "فتح موقع"
+msgstr "افتح مكانا"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
-msgstr "أدخل الموقع)URI)"
+msgstr "أدخل المكان:"
 
 #: ../app/dialogs/file-save-dialog.c:302 ../app/dialogs/file-save-dialog.c:338
 msgid ""
@@ -6849,13 +6820,12 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:428
-#, fuzzy
 msgid "Extension Mismatch"
-msgstr "لخبطة في النوع"
+msgstr "الامتداد غير متطابق"
 
 #: ../app/dialogs/file-save-dialog.c:444
 msgid "The given file extension does not match the chosen file type."
-msgstr ""
+msgstr "الامتداد المعطى لا يطابق نوع الملف المحدد."
 
 #: ../app/dialogs/file-save-dialog.c:448
 msgid "Do you want to save the image using this name anyway?"
@@ -6863,15 +6833,15 @@ msgstr "هل تريد حفظ الصورة باستخدام هذا الاسم ع�
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
-msgstr "تركيب الشبكة"
+msgstr "اضبط الشبكة"
 
 #: ../app/dialogs/grid-dialog.c:86
 msgid "Configure Image Grid"
-msgstr "تركيب شبكة الصورة"
+msgstr "اضبط شبكة الصورة"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
-msgstr "دمج الطبقات"
+msgstr "ادمج الطبقات"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:66
 msgid "Layers Merge Options"
@@ -6879,11 +6849,11 @@ msgstr "خيارات دمج الطبقات"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
-msgstr "دم_ج"
+msgstr "ادم_ج"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:91
 msgid "Final, Merged Layer should be:"
-msgstr "أخيرا، الطبقة المدموجة يجب أن تكون:"
+msgstr "الطبقة الأخيرة المدموجة يجب أن تكون:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Expanded as necessary"
@@ -6895,12 +6865,11 @@ msgstr "قص إلى الصورة"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "Clipped to bottom layer"
-msgstr "قص  إلى طبقة القاع"
+msgstr "قص إلى طبقة القاع"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:109
-#, fuzzy
 msgid "_Discard invisible layers"
-msgstr "دمج الطبقات المرئية"
+msgstr "_تجاهل الطبقات غير المرئية"
 
 #: ../app/dialogs/image-new-dialog.c:96
 msgid "Create a New Image"
@@ -6909,24 +6878,24 @@ msgstr "أنشئ صورة جديدة"
 #: ../app/dialogs/image-new-dialog.c:144
 #: ../app/dialogs/preferences-dialog.c:2015
 msgid "_Template:"
-msgstr "قالب:"
+msgstr "_قالب:"
 
 #: ../app/dialogs/image-new-dialog.c:292
 msgid "Confirm Image Size"
-msgstr "تأكيد حجم الصورة"
+msgstr "أكّد حجم الصورة"
 
 #: ../app/dialogs/image-new-dialog.c:314
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr "أنت تحاول إنشاء صورة بالحجم %s."
+msgstr "تحاول إنشاء صورة بالحجم %s."
 
 #: ../app/dialogs/image-new-dialog.c:321
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr ""
+msgstr "صورة بهذا الحجم ستستهلك ذاكرة أكثر من المحدد في \"أقصى حجم صورة\" في حوار التفضيلات (حاليا %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -6935,25 +6904,24 @@ msgstr "خصائص الصورة"
 
 #: ../app/dialogs/image-properties-dialog.c:84
 msgid "Properties"
-msgstr "خصائص"
+msgstr "الخصائص"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr "تفضيلات اللون"
+msgstr "لاحة الألوان"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
-msgstr "تعليق"
+msgstr "التعليق"
 
 #: ../app/dialogs/image-scale-dialog.c:111
-#, fuzzy
 msgctxt "dialog-title"
 msgid "Scale Image"
-msgstr "وزن الصورة"
+msgstr "تحجيم الصورة"
 
 #: ../app/dialogs/image-scale-dialog.c:205
 msgid "Confirm Scaling"
-msgstr "تأكيد وزن"
+msgstr "أكّد التحجيم"
 
 #: ../app/dialogs/image-scale-dialog.c:245
 #, c-format
@@ -6961,12 +6929,11 @@ msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr ""
+msgstr "تحجيم الصورة إلى هذا الحجم سيجعلها تستهلك ذاكرة أكثر من المحدد في \"أقصى حجم صورة\" في حوار التفضيلات (حاليا %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid ""
-"Scaling the image to the chosen size will shrink some layers completely away."
-msgstr ""
+msgid "Scaling the image to the chosen size will shrink some layers completely away."
+msgstr "تحجيم الصورة إلى هذا الحجم سيقلص بعض الطبقات تماما."
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
@@ -6974,35 +6941,32 @@ msgstr "هل هذا ما تريد فعله؟"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
-msgstr "تركيب اختصارات لوحة المفاتيح"
+msgstr "اضبط اختصارات لوحة المفاتيح"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:83
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"لتحرير مفتاح اختصار فانقر السّطر المقابل و أدخل مسرّعاً جديداً أو اضغط مفتاح "
-"التّراجع للإخلاء."
+"لتحرير مفتاح اختصار انقر السّطر المقابل و أدخل مسرّعًا جديدًا أو اضغط مفتاح "
+"التّراجع للمسح."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:91
 #: ../app/dialogs/preferences-dialog.c:1645
 msgid "_Save keyboard shortcuts on exit"
-msgstr "حفظ اختصارات لوحة المفاتيح عند الخروج"
+msgstr "احفظ اختصارات لوحة المفاتيح عند الخروج"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
-msgstr "أضِف قناع إلى الصورة"
+msgstr "أضِف قناعا إلى الصورة"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:110
-#, fuzzy
 msgid "Initialize Layer Mask to:"
-msgstr "لا يمكن تشغيل الأصوات\n"
+msgstr ""
 
 #: ../app/dialogs/layer-add-mask-dialog.c:138
-#, fuzzy
 msgid "In_vert mask"
-msgstr "قناع تنقيط الخلفية"
+msgstr "اق_لب القناع"
 
 #: ../app/dialogs/layer-options-dialog.c:125
 msgid "Layer _name:"
@@ -7025,22 +6989,19 @@ msgstr "نوع ملء الطبقة"
 
 #: ../app/dialogs/layer-options-dialog.c:217
 msgid "Set name from _text"
-msgstr "ضبط الاسم من الن_ص"
+msgstr "اضبط الاسم من الن_ص"
 
 #: ../app/dialogs/module-dialog.c:127
-#, fuzzy
 msgid "Module Manager"
-msgstr "مدير المركبّات"
+msgstr "مدير الملحقات"
 
 #: ../app/dialogs/module-dialog.c:150
-#, fuzzy
 msgid "You will have to restart GIMP for the changes to take effect."
-msgstr "يجب عليك أن تعيد بدء جمب لكي تطبيق التغييرات التالية:"
+msgstr "ستحتاج لإعادة تشغيل جمب لتطبيق التغييرات."
 
 #: ../app/dialogs/module-dialog.c:191
-#, fuzzy
 msgid "Module"
-msgstr "المركبّات"
+msgstr "الوحدات"
 
 #: ../app/dialogs/module-dialog.c:464
 msgid "Only in memory"
@@ -7064,42 +7025,38 @@ msgstr "التأريخ:"
 
 #: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
-msgstr "حقوق النسخ:"
+msgstr "حقوق النشر:"
 
 #: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
-msgstr "الموقع:"
+msgstr "المكان:"
 
 #: ../app/dialogs/offset-dialog.c:108
-#, fuzzy
 msgid "Offset Layer"
-msgstr "طبقة في السطر"
+msgstr "أزِح الطبقة"
 
 #: ../app/dialogs/offset-dialog.c:110
-#, fuzzy
 msgid "Offset Layer Mask"
-msgstr "قناع تنقيط الخلفية"
+msgstr "أزِح قناع الطبقة"
 
 #: ../app/dialogs/offset-dialog.c:112
-#, fuzzy
 msgid "Offset Channel"
-msgstr "قناة الفيديو"
+msgstr "أزِح القناة"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
 #: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:276
 msgid "Offset"
-msgstr "إزاحة"
+msgstr "الإزاحة"
 
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:127
-#, fuzzy
 msgid "_Offset"
-msgstr "الانزياح السّيني"
+msgstr "أ_زح"
 
 #: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:226
 msgid "_X:"
-msgstr "_:س"
+msgstr "_س:"
 
 #: ../app/dialogs/offset-dialog.c:186 ../app/dialogs/resize-dialog.c:227
 msgid "_Y:"
@@ -7107,43 +7064,41 @@ msgstr "_ص:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
-msgstr "إزاحة بـ  x/_2، y/2"
+msgstr "أزح بـ س/_2، ص/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:222
-#, fuzzy
 msgid "Edge Behavior"
-msgstr "حافة سريعة"
+msgstr "سلوك الحافة"
 
 #: ../app/dialogs/offset-dialog.c:226
-#, fuzzy
 msgid "_Wrap around"
 msgstr "_لف حول"
 
 #: ../app/dialogs/offset-dialog.c:229
 msgid "Fill with _background color"
-msgstr "ملء باللون الخلفي"
+msgstr "املأ بلون ال_خلفية"
 
 #: ../app/dialogs/offset-dialog.c:232
 msgid "Make _transparent"
-msgstr "اجعلها شفافة"
+msgstr "اجعلها _شفافة"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
-msgstr "استيراد عينة جديدة"
+msgstr "استورد لوح ألوان جديد"
 
 #: ../app/dialogs/palette-import-dialog.c:166
 msgid "_Import"
-msgstr "استيراد"
+msgstr "ا_ستورد"
 
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:205
 msgid "Select Source"
-msgstr "تحديد المصدر"
+msgstr "اختر المصدر"
 
 #: ../app/dialogs/palette-import-dialog.c:227
 msgid "I_mage"
-msgstr "صورة"
+msgstr "_صورة"
 
 #: ../app/dialogs/palette-import-dialog.c:241
 msgid "Sample _Merged"
@@ -7151,16 +7106,16 @@ msgstr "عينات مدموجة"
 
 #: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
-msgstr "ال_بكسلات المنتقاه فقط"
+msgstr "ال_بكسلات المحددة فقط"
 
 #: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
-msgstr "ملف عينة"
+msgstr "ملف _لوح الألوان"
 
 #. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:294
 msgid "Select Palette File"
-msgstr "انتق ملف لوح ألوان"
+msgstr "اختر ملف لوح ألوان"
 
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:305
@@ -7177,47 +7132,46 @@ msgstr "ا_سم لوح الألوان:"
 
 #: ../app/dialogs/palette-import-dialog.c:327
 msgid "N_umber of colors:"
-msgstr "عدد الألوان:"
+msgstr "_عدد الألوان:"
 
 #: ../app/dialogs/palette-import-dialog.c:340
 msgid "C_olumns:"
-msgstr ""
+msgstr "الأع_مدة:"
 
 #: ../app/dialogs/palette-import-dialog.c:352
 msgid "I_nterval:"
-msgstr "الفترة:"
+msgstr "الف_ترة:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:363
 msgid "Preview"
-msgstr "معاينة"
+msgstr "عاين"
 
 #: ../app/dialogs/palette-import-dialog.c:384
 msgid "The selected source contains no colors."
-msgstr ""
+msgstr "المصدر المختار لا يحتوي على ألوان."
 
 #: ../app/dialogs/preferences-dialog.c:267
 msgid "Reset All Preferences"
-msgstr "إعادة ضبط كل التفضيلات"
+msgstr "صفّر كل التفضيلات"
 
 #: ../app/dialogs/preferences-dialog.c:285
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "هل تريد حقا إعادة ضبط كل الخصائق إلى قيمها الافتراضية؟"
+msgstr "هل تريد حقا إعادة ضبط كل التفضيلات إلى قيمها المبدئية؟"
 
 #: ../app/dialogs/preferences-dialog.c:355
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "يجب عليك أن تعيد بدء جمب لكي تطبيق التغييرات التالية:"
+msgstr "عليك إعادة تشغيل جمب لتطبيق التغييرات التالية:"
 
 #: ../app/dialogs/preferences-dialog.c:494
-#, fuzzy
 msgid "Configure Input Devices"
-msgstr "أجهزة الإدخال دون امتدادات"
+msgstr "اضبط أجهزة الإدخال"
 
 #: ../app/dialogs/preferences-dialog.c:571
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "ستعاد اختصارات لوحة المفاتيح إلى قيمها المبدئية في المرة القادمة التي تشغل جمب فيها."
 
 #: ../app/dialogs/preferences-dialog.c:582
 msgid "Remove all Keyboard Shortcuts"
@@ -7231,70 +7185,67 @@ msgstr "هل تريد حقا حذف جميع اختصارات لوحة المف�
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
+msgstr "سيُعاد إعداد نافذتك إلى قيمته المبدئية في المرة القادمة التي تشغل جمب فيها."
 
 #: ../app/dialogs/preferences-dialog.c:680
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "ستعاد إعدادات أجهزة الإدخال إلى قيمها المبدئية في المرة القادمة التي تشغل جمب فيها."
 
 #: ../app/dialogs/preferences-dialog.c:715
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
-"سوف يتم استعادة أداتك إلى القيم الافتراضية في المرة القادمة التي تشغل فيها "
-"جمب."
+msgstr "ستعاد خيارات الأدوات إلى قيمها المبدئية في المرة القادمة التي تشغل جمب فيها."
 
 #: ../app/dialogs/preferences-dialog.c:1283
 msgid "Show _menubar"
-msgstr "إظهار شريط القائمة"
+msgstr "أظهر _شريط القوائم"
 
 #: ../app/dialogs/preferences-dialog.c:1287
 msgid "Show _rulers"
-msgstr "إظهار المساطر"
+msgstr "أظهر المسا_طر"
 
 #: ../app/dialogs/preferences-dialog.c:1290
 msgid "Show scroll_bars"
-msgstr "إظهار أشرطة التمرير"
+msgstr "أظهر أشرطة ال_تمرير"
 
 #: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show s_tatusbar"
-msgstr "إظهار شريط الحالة"
+msgstr "أظهر شريط ال_حالة"
 
 #: ../app/dialogs/preferences-dialog.c:1301
 msgid "Show s_election"
-msgstr "إظهار التحديد"
+msgstr "أظهر التح_ديد"
 
 #: ../app/dialogs/preferences-dialog.c:1304
 msgid "Show _layer boundary"
-msgstr "إظهار حد الطبقة"
+msgstr "أظهر حدود الطب_قة"
 
 #: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _guides"
-msgstr "إظهار الأدلة"
+msgstr "أظهر الأد_لة"
 
 #: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show gri_d"
-msgstr "إظهار الشبكة"
+msgstr "أظهر الشبك_ة"
 
 #: ../app/dialogs/preferences-dialog.c:1316
 msgid "Canvas _padding mode:"
-msgstr "نمط لون توسيد رقعة الرسم:"
+msgstr "طور توسيد رق_عة الرسم:"
 
 #: ../app/dialogs/preferences-dialog.c:1321
 msgid "Custom p_adding color:"
-msgstr "لون مخصص لتوسيد رقعة الرسم:"
+msgstr "لون توسيد م_خصص:"
 
 #: ../app/dialogs/preferences-dialog.c:1322
-#, fuzzy
 msgid "Select Custom Canvas Padding Color"
-msgstr "إعداد لون مخصص لتوسيد رقعة الرسم"
+msgstr "اضبط لون مخصص لتوسيد رقعة الرسم"
 
 #: ../app/dialogs/preferences-dialog.c:1411
 msgid "Preferences"
-msgstr "تفضيلات"
+msgstr "التفضيلات"
 
 #: ../app/dialogs/preferences-dialog.c:1523
 #: ../app/dialogs/preferences-dialog.c:2774
@@ -7303,42 +7254,40 @@ msgstr "البيئة"
 
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Resource Consumption"
-msgstr "استهلاك المورد"
+msgstr "استهلاك الموارد"
 
 #: ../app/dialogs/preferences-dialog.c:1547
 msgid "Minimal number of _undo levels:"
-msgstr "أقل عدد من مستويات التراجع:"
+msgstr "أقل عدد من مستويات ال_تراجع:"
 
 #: ../app/dialogs/preferences-dialog.c:1550
 msgid "Maximum undo _memory:"
-msgstr "أعلى ذاكرة  تراجع:"
+msgstr "أعلى _ذاكرة تراجع:"
 
 #: ../app/dialogs/preferences-dialog.c:1553
-#, fuzzy
 msgid "Tile cache _size:"
-msgstr "حجم مخبأ القرص"
+msgstr "_حجم مخبئية اللوح:"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Maximum _new image size:"
-msgstr "حجم الصورة الصورة الأًٌآ"
+msgstr "أقصى حجم للصور ال_جديدة:"
 
 #: ../app/dialogs/preferences-dialog.c:1561
-#, fuzzy
 msgid "Number of _processors to use:"
-msgstr "استخدم النّقر للإضافة"
+msgstr "عدد الم_عالجات المستخدمة:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1566
 msgid "Image Thumbnails"
-msgstr "أظافر إبهام الصورة"
+msgstr "مصغّرات الصور"
 
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "Size of _thumbnails:"
-msgstr "حجم أظافر الإبهام"
+msgstr "حجم الم_صغّرات:"
 
 #: ../app/dialogs/preferences-dialog.c:1575
 msgid "Maximum _filesize for thumbnailing:"
-msgstr "حجم ملف أظافر الإبهام الأقصى:"
+msgstr "أقصى حجم لملف المض_غرات:"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1579
@@ -7347,11 +7296,11 @@ msgstr "حفظ الصور"
 
 #: ../app/dialogs/preferences-dialog.c:1582
 msgid "Confirm closing of unsa_ved images"
-msgstr "تأكيد إغلاق الصور غير المحفوظة"
+msgstr "أكّد إغلاق الصور _غير المحفوظة"
 
 #: ../app/dialogs/preferences-dialog.c:1592
 msgid "Keep record of used files in the Recent Documents list"
-msgstr "أبق التسجيل للملفات المستخدمة في قائمة أحدث المستندات"
+msgstr "احفظ سجلا بالملفات المستخدمة في قائمة أحدث المستندات"
 
 #: ../app/dialogs/preferences-dialog.c:1601
 msgid "User Interface"
@@ -7368,15 +7317,15 @@ msgstr "معاينات"
 
 #: ../app/dialogs/preferences-dialog.c:1614
 msgid "_Enable layer & channel previews"
-msgstr "تمكين معاينات الطبقة والقناة"
+msgstr "فعّل _معاينات الطبقات والقنوات"
 
 #: ../app/dialogs/preferences-dialog.c:1620
 msgid "_Default layer & channel preview size:"
-msgstr "معاينة الطبقة والقناة الا_فتراضية:"
+msgstr "حجم معاينة الطبقات والقنوات الا_فتراضي:"
 
 #: ../app/dialogs/preferences-dialog.c:1623
 msgid "Na_vigation preview size:"
-msgstr "حجم معاينة الإبحار:"
+msgstr "حجم معاينة الإب_حار:"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1627
@@ -7385,43 +7334,40 @@ msgstr "اختصارات لوحة المفاتيح"
 
 #: ../app/dialogs/preferences-dialog.c:1631
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "أظهر مفاتيح الاختصار في ال_قائمة"
 
 #: ../app/dialogs/preferences-dialog.c:1634
-#, fuzzy
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "استخدام اختصارات لوحة مفاتيح حركية"
+msgstr "استخدم اختصارات لوحة مفاتيح _دينامية"
 
 #: ../app/dialogs/preferences-dialog.c:1638
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "تركيب اختصارت لوحة المفاتيح..."
+msgstr "اضبط اختصارات لوحة الم_فاتيح..."
 
 #: ../app/dialogs/preferences-dialog.c:1649
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "حفظ اختصارات لوحة المفاتيح الآن"
+msgstr "احفظ اختصارات لوحة المفاتيح الآ_ن"
 
 #: ../app/dialogs/preferences-dialog.c:1656
-#, fuzzy
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "تنضيد اختصارات لوحة المفاتيح المحفوظة إلى القيم الافتراضية."
+msgstr "_صفّر اختصارات لوحة المفاتيح إلى القيم المبدئية."
 
 #: ../app/dialogs/preferences-dialog.c:1665
-#, fuzzy
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "اختصارات لوحة المفاتيح"
+msgstr "أزل _كل اختصارات لوحة المفاتيح"
 
 #: ../app/dialogs/preferences-dialog.c:1677
 #: ../app/dialogs/preferences-dialog.c:1716
 msgid "Theme"
-msgstr "الثيمة"
+msgstr "السمة"
 
 #: ../app/dialogs/preferences-dialog.c:1686
 msgid "Select Theme"
-msgstr "تحديد ثيمة"
+msgstr "اختر سمة"
 
 #: ../app/dialogs/preferences-dialog.c:1768
 msgid "Reload C_urrent Theme"
-msgstr "إعادة تحميل الثيمة الحالية"
+msgstr "أعد تحميل السمة ال_حالية"
 
 #: ../app/dialogs/preferences-dialog.c:1780
 msgid "Help System"
@@ -7437,32 +7383,31 @@ msgstr "عام"
 
 #: ../app/dialogs/preferences-dialog.c:1795
 msgid "Show _tooltips"
-msgstr "عرض تلمي_ح الأداة"
+msgstr "اعرض تلمي_حات الأدوات"
 
 #: ../app/dialogs/preferences-dialog.c:1798
 msgid "Show help _buttons"
-msgstr "إظهار أزرار المساعدة"
+msgstr "أظهر أزرار ال_مساعدة"
 
 #: ../app/dialogs/preferences-dialog.c:1811
 msgid "Use the online version"
-msgstr ""
+msgstr "استخدم نسخة الإنترنت"
 
 #: ../app/dialogs/preferences-dialog.c:1812
 msgid "Use a locally installed copy"
-msgstr ""
+msgstr "استخدم نسخة مثبتة محليا"
 
 #: ../app/dialogs/preferences-dialog.c:1813
-#, fuzzy
 msgid "User manual:"
-msgstr "إ_دخال يدوي:"
+msgstr "دليل المستخدم:"
 
 #: ../app/dialogs/preferences-dialog.c:1820
 msgid "There's a local installation of the user manual."
-msgstr ""
+msgstr "يوجد نسخة محلية من دليل المستخدم."
 
 #: ../app/dialogs/preferences-dialog.c:1825
 msgid "The user manual is not installed locally."
-msgstr ""
+msgstr "دليل المستخدم ليس مثبتا محليا."
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1848
@@ -7471,42 +7416,40 @@ msgstr "متصفح المساعدة"
 
 #: ../app/dialogs/preferences-dialog.c:1852
 msgid "H_elp browser to use:"
-msgstr "مسا_عدة المتصفح للاستخدام:"
+msgstr "متصفح المساعدة الم_ستخدم:"
 
 #: ../app/dialogs/preferences-dialog.c:1857
 msgid "Web Browser"
-msgstr "متصفح الويب"
+msgstr "متصفح الوِب"
 
 #: ../app/dialogs/preferences-dialog.c:1861
 msgid "_Web browser to use:"
-msgstr "متصفح ال_ويب المستخدم:"
+msgstr "متصفح ال_وِب المستخدم:"
 
 #: ../app/dialogs/preferences-dialog.c:1889
 msgid "_Save tool options on exit"
-msgstr "_حقظ خيارات الأداة عند الخروج"
+msgstr "ا_حقظ خيارات الأدوات عند الخروج"
 
 #: ../app/dialogs/preferences-dialog.c:1893
 msgid "Save Tool Options _Now"
-msgstr "حفظ خيارات الأداة ال_آن"
+msgstr "احفظ خيارات الأدوات ال_آن"
 
 #: ../app/dialogs/preferences-dialog.c:1900
-#, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "تنضيد مواقع النافذة المحفوظة إلى القيم الافتراضية"
+msgstr "_صفّر خيارات الأدوات إلى القيم المبدئية"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1910
-#, fuzzy
 msgid "Guide & Grid Snapping"
-msgstr "شبكة رسم أفقيّة"
+msgstr "اتباع الدليل والشبكة"
 
 #: ../app/dialogs/preferences-dialog.c:1915
 msgid "_Snap distance:"
-msgstr "مسافة القفز"
+msgstr "_مسافة القفز:"
 
 #: ../app/dialogs/preferences-dialog.c:1923
 msgid "Default _interpolation:"
-msgstr "التوليد الافتراضي:"
+msgstr "الزيادة الا_فتراضية:"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1930
@@ -7519,11 +7462,11 @@ msgstr "أداة النقل"
 
 #: ../app/dialogs/preferences-dialog.c:1947
 msgid "Set layer or path as active"
-msgstr "ضبط الطبقة أو المسار كنشط"
+msgstr "اجعل الطبقة أو المسار نشطا"
 
 #: ../app/dialogs/preferences-dialog.c:1960 ../app/widgets/gimptoolbox.c:628
 msgid "Toolbox"
-msgstr "صندوق الأداة"
+msgstr "صندوق الأدوات"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1972
@@ -7534,23 +7477,23 @@ msgstr "المظهر"
 
 #: ../app/dialogs/preferences-dialog.c:1976
 msgid "Show _foreground & background color"
-msgstr "إظهار اللون الأمامي والخلفي"
+msgstr "أظهر لون المقدمة والخلفية"
 
 #: ../app/dialogs/preferences-dialog.c:1980
 msgid "Show active _brush, pattern & gradient"
-msgstr "إظهار الفرشاة والنمط والتدريج النشط"
+msgstr "أظهر الفرشاة وال_نمط والتدرّج النشط"
 
 #: ../app/dialogs/preferences-dialog.c:1984
 msgid "Show active _image"
-msgstr "إظهار الصورة النشطة"
+msgstr "أظهر ال_صورة النشطة"
 
 #: ../app/dialogs/preferences-dialog.c:1997
 msgid "Default New Image"
-msgstr "صورة جديدة افتراضية"
+msgstr "الصورة الجديدة افتراضية"
 
 #: ../app/dialogs/preferences-dialog.c:2000
 msgid "Default Image"
-msgstr "صورة افتراضية"
+msgstr "الصورة الافتراضية"
 
 #: ../app/dialogs/preferences-dialog.c:2037
 msgid "Default Image Grid"
@@ -7569,39 +7512,38 @@ msgid "Use \"_Dot for dot\" by default"
 msgstr "استخدم \"نقطة لنقطة\" افتراضيا"
 
 #: ../app/dialogs/preferences-dialog.c:2082
-#, fuzzy
 msgid "Marching _ants speed:"
-msgstr "تغيير السرعة آليا"
+msgstr ""
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2086
 msgid "Zoom & Resize Behavior"
-msgstr "سلوك التبئير وتغيير الحجم"
+msgstr "سلوك التقريب والتحجيم"
 
 #: ../app/dialogs/preferences-dialog.c:2090
 msgid "Resize window on _zoom"
-msgstr "تغيير حجم النافذة أثناء التبئير"
+msgstr "غيّر حجم النافذة عند الت_قريب"
 
 #: ../app/dialogs/preferences-dialog.c:2093
 msgid "Resize window on image _size change"
-msgstr "تغيير حجم النافذة عند تغيير حجم الصورة"
+msgstr "غيّر حجم النافذة عند تغيير _حجم الصورة"
 
 #: ../app/dialogs/preferences-dialog.c:2099
 msgid "Fit to window"
-msgstr "ملاءمة إلى النافذة"
+msgstr "لائم النافذة"
 
 #: ../app/dialogs/preferences-dialog.c:2101
 msgid "Initial zoom _ratio:"
-msgstr "نسبة التبئير الابتدائية:"
+msgstr "نسبة التقريب الابتدائية:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2105
 msgid "Space Bar"
-msgstr "مساحة الشريط"
+msgstr "مسطرة المسافات"
 
 #: ../app/dialogs/preferences-dialog.c:2111
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "_بينما مسطرة المسافات مضغوطة:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2115
@@ -7610,31 +7552,31 @@ msgstr "مؤشرات الفأرة"
 
 #: ../app/dialogs/preferences-dialog.c:2119
 msgid "Show _brush outline"
-msgstr "أظهر حدود الفرشاة الخارجية"
+msgstr "أظهر _حدود الفرشاة الخارجية"
 
 #: ../app/dialogs/preferences-dialog.c:2122
 msgid "Show pointer for paint _tools"
-msgstr "اعرض المؤشر لأداة التأشير"
+msgstr "اعرض المؤشر لأ_داة التأشير"
 
 #: ../app/dialogs/preferences-dialog.c:2128
 msgid "Pointer _mode:"
-msgstr "_نمط المؤشر:"
+msgstr "_طور المؤشر:"
 
 #: ../app/dialogs/preferences-dialog.c:2131
 msgid "Pointer re_ndering:"
-msgstr "طريقة المؤشر:"
+msgstr "طريقة المؤ_شر:"
 
 #: ../app/dialogs/preferences-dialog.c:2143
 msgid "Image Window Appearance"
-msgstr "ظهور نافذة الصورة"
+msgstr "مظهر نافذة الصورة"
 
 #: ../app/dialogs/preferences-dialog.c:2154
 msgid "Default Appearance in Normal Mode"
-msgstr "الظهور الافتراضي في النمط العادي"
+msgstr "المظهر الافتراضي في الطور العادي"
 
 #: ../app/dialogs/preferences-dialog.c:2159
 msgid "Default Appearance in Fullscreen Mode"
-msgstr "الظهور الافتراضي في نمط ملء الشاشة"
+msgstr "المظهر الافتراضي في طور ملء الشاشة"
 
 #: ../app/dialogs/preferences-dialog.c:2168
 msgid "Image Title & Statusbar Format"
@@ -7646,31 +7588,31 @@ msgstr "العنوان والحالة"
 
 #: ../app/dialogs/preferences-dialog.c:2189
 msgid "Current format"
-msgstr "التنسيق الحالي"
+msgstr "النسق الحالي"
 
 #: ../app/dialogs/preferences-dialog.c:2190
 msgid "Default format"
-msgstr "التنسيق الافتراضي"
+msgstr "النسق الافتراضي"
 
 #: ../app/dialogs/preferences-dialog.c:2191
 msgid "Show zoom percentage"
-msgstr "إظهار نسبة التبئير المئوية"
+msgstr "أظهر نسبة التقريب المئوية"
 
 #: ../app/dialogs/preferences-dialog.c:2192
 msgid "Show zoom ratio"
-msgstr "إظهار نسبة التبئير"
+msgstr "أظهر نسبة التقريب"
 
 #: ../app/dialogs/preferences-dialog.c:2193
 msgid "Show image size"
-msgstr "إظهار حجم الصورة"
+msgstr "أظهر حجم الصورة"
 
 #: ../app/dialogs/preferences-dialog.c:2206
 msgid "Image Title Format"
-msgstr "صيغة عنوان الصورة"
+msgstr "نسق عنوان الصورة"
 
 #: ../app/dialogs/preferences-dialog.c:2208
 msgid "Image Statusbar Format"
-msgstr "صيغة شريط حالة الصورة"
+msgstr "نسق شريط حالة الصورة"
 
 #: ../app/dialogs/preferences-dialog.c:2293
 msgid "Display"
@@ -7678,22 +7620,21 @@ msgstr "العرض"
 
 #: ../app/dialogs/preferences-dialog.c:2309
 msgid "_Check style:"
-msgstr "_فحص الأسلوب:"
+msgstr "ا_فحص الطراز:"
 
 #: ../app/dialogs/preferences-dialog.c:2312
 msgid "Check _size:"
-msgstr "فحص ال_حجم:"
+msgstr "افحص ال_حجم:"
 
 #: ../app/dialogs/preferences-dialog.c:2315
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "أحصل على كثافة المرقاب"
+msgstr "استبانة الشاشة"
 
 #: ../app/dialogs/preferences-dialog.c:2319
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
 #: ../app/widgets/gimpgrideditor.c:301
 msgid "Pixels"
-msgstr "بيكسلات"
+msgstr "بكسلات"
 
 #: ../app/dialogs/preferences-dialog.c:2341
 #: ../app/widgets/gimpimagepropview.c:476
@@ -7703,78 +7644,67 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:2357
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
-msgstr ""
+msgstr "ا_كتشف آليا (حاليا %Id × %Id ppi)"
 
 #: ../app/dialogs/preferences-dialog.c:2377
 msgid "_Enter manually"
-msgstr "إ_دخال يدوي:"
+msgstr "أ_دخل يدويا"
 
 #: ../app/dialogs/preferences-dialog.c:2392
 msgid "C_alibrate..."
-msgstr "معايرة..."
+msgstr "عايِر..."
 
 #: ../app/dialogs/preferences-dialog.c:2415
-#, fuzzy
 msgid "Color Management"
-msgstr "إدارة الحسابات"
+msgstr "إدارة الألوان"
 
 #: ../app/dialogs/preferences-dialog.c:2435
-#, fuzzy
 msgid "_RGB profile:"
-msgstr "تحرير اللمحة المختصرة: %s"
+msgstr "لا_حة ح‌خ‌ز:"
 
 #: ../app/dialogs/preferences-dialog.c:2436
-#, fuzzy
 msgid "Select RGB Color Profile"
-msgstr "اختر لونا لإضافته"
+msgstr "اختر لاحة ألوان ح‌خ‌ز"
 
 #: ../app/dialogs/preferences-dialog.c:2437
-#, fuzzy
 msgid "_CMYK profile:"
-msgstr "تحرير اللمحة المختصرة: %s"
+msgstr "لاحة _CMYK:"
 
 #: ../app/dialogs/preferences-dialog.c:2438
-#, fuzzy
 msgid "Select CMYK Color Profile"
-msgstr "اختر لونا لإضافته"
+msgstr "اختر لاحة ألوان CMYK"
 
 #: ../app/dialogs/preferences-dialog.c:2439
-#, fuzzy
 msgid "_Monitor profile:"
-msgstr "تحرير اللمحة المختصرة: %s"
+msgstr "لاحة ال_شاشة:"
 
 #: ../app/dialogs/preferences-dialog.c:2440
-#, fuzzy
 msgid "Select Monitor Color Profile"
-msgstr "اختر لونا لإضافته"
+msgstr "اختر لاحة ألوان الشاشة"
 
 #: ../app/dialogs/preferences-dialog.c:2441
-#, fuzzy
 msgid "_Print simulation profile:"
-msgstr "بروفيل موزيلا “%s”"
+msgstr "لاحة محاكاة ال_طبع:"
 
 #: ../app/dialogs/preferences-dialog.c:2442
-#, fuzzy
 msgid "Select Printer Color Profile"
-msgstr "اختر لونا لإضافته"
+msgstr "اختر لاحة ألوان الطابعة"
 
 #: ../app/dialogs/preferences-dialog.c:2453
 msgid "_Mode of operation:"
-msgstr "_نمط العملية:"
+msgstr "_طور العمل:"
 
 #: ../app/dialogs/preferences-dialog.c:2483
 msgid "_Try to use the system monitor profile"
-msgstr ""
+msgstr "_جرب استخدام لاحة شاشة النظام"
 
 #: ../app/dialogs/preferences-dialog.c:2493
-#, fuzzy
 msgid "_Display rendering intent:"
-msgstr "تفاصيل ترجمة الخط"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2502
-#, fuzzy
 msgid "_Softproof rendering intent:"
-msgstr "تفاصيل ترجمة الخط"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2515
 msgid "Mark out of gamut colors"
@@ -7782,12 +7712,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2520
 msgid "Select Warning Color"
-msgstr "انتق لون التحذير"
+msgstr "اختر لون التحذير"
 
 #: ../app/dialogs/preferences-dialog.c:2533
-#, fuzzy
 msgid "File Open behaviour:"
-msgstr "فتح الملف؟"
+msgstr "سلوك فتح الملفات:"
 
 #: ../app/dialogs/preferences-dialog.c:2545
 msgid "Input Devices"
@@ -7800,46 +7729,43 @@ msgstr "أجهزة إدخال ممتدة"
 
 #: ../app/dialogs/preferences-dialog.c:2559
 msgid "Configure E_xtended Input Devices..."
-msgstr "تركيب أجهزة الإدخال الممتدة..."
+msgstr "اضبط أجهزة الإدخال ال_ممتدة..."
 
 #: ../app/dialogs/preferences-dialog.c:2566
 msgid "_Save input device settings on exit"
-msgstr "حفظ إعدادات جهاز الدخل عند الخروج"
+msgstr "ا_حفظ إعدادات جهاز الإدخال عند الخروج"
 
 #: ../app/dialogs/preferences-dialog.c:2570
 msgid "Save Input Device Settings _Now"
-msgstr "حفظ إعدادات جهاز الدخل الآن"
+msgstr "احفظ إعدادات جهاز الإدخال ال_آن"
 
 #: ../app/dialogs/preferences-dialog.c:2577
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "تنضيد إعدادات جهاز الدخل المحفوظة إلى القيم الافتراضية"
+msgstr "صفّر إعدادات جهاز الدخل المحفوظة إلى القيم المبدئية"
 
 #: ../app/dialogs/preferences-dialog.c:2592
 msgid "Additional Input Controllers"
-msgstr "متحكمات دخل إضافية"
+msgstr "متحكمات إدخال إضافية"
 
 #: ../app/dialogs/preferences-dialog.c:2595
 msgid "Input Controllers"
-msgstr "متحكمات الدخل"
+msgstr "متحكمات الإدخال"
 
 #: ../app/dialogs/preferences-dialog.c:2611
 msgid "Window Management"
-msgstr "إدارة النافذة"
+msgstr "إدارة النوافذ"
 
 #: ../app/dialogs/preferences-dialog.c:2620
-#, fuzzy
 msgid "Window Manager Hints"
-msgstr "مدير النوافذ صوفش"
+msgstr "تلميحات مدير النوافذ"
 
 #: ../app/dialogs/preferences-dialog.c:2626
-#, fuzzy
 msgid "Hint for the _toolbox:"
-msgstr "تلميحة للعنصر 1 "
+msgstr "تلميحة _صندوق الأدوات:"
 
 #: ../app/dialogs/preferences-dialog.c:2630
-#, fuzzy
 msgid "Hint for other _docks:"
-msgstr "بحث عن مساعدة أخرى"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2635
 msgid "Toolbox and other docks are transient to the active image window"
@@ -7847,134 +7773,128 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2640
 msgid "Focus"
-msgstr "تركيز"
+msgstr "البؤرة"
 
 #: ../app/dialogs/preferences-dialog.c:2644
 msgid "Activate the _focused image"
-msgstr "تنشيط الصورة المركزة"
+msgstr "نشّط الصورة التي في ال_بؤرة"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2648
-#, fuzzy
 msgid "Window Positions"
-msgstr "مبدل النافذة"
+msgstr "مواضع النوافذ"
 
 #: ../app/dialogs/preferences-dialog.c:2651
 msgid "_Save window positions on exit"
-msgstr "حفظ موقع النافذة عند الخروج"
+msgstr "ا_حفظ مواضع النوافذ عند الخروج"
 
 #: ../app/dialogs/preferences-dialog.c:2655
 msgid "Save Window Positions _Now"
-msgstr "حفظ مواقع النافذة الآن"
+msgstr "احفظ مواضع النوافذ الآ_ن"
 
 #: ../app/dialogs/preferences-dialog.c:2662
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "تنضيد مواقع النافذة المحفوظة إلى القيم الافتراضية"
+msgstr "صفّر مواضع النوافذ المحفوظة إلى القيم المبدئية"
 
 #: ../app/dialogs/preferences-dialog.c:2677
 msgid "Folders"
 msgstr "المجلدات"
 
 #: ../app/dialogs/preferences-dialog.c:2697
-#, fuzzy
 msgid "Temporary folder:"
-msgstr "افتح مجلد %s"
+msgstr "المجلد المؤقت:"
 
 #: ../app/dialogs/preferences-dialog.c:2698
 msgid "Select Folder for Temporary Files"
-msgstr "اختر مجلدا للملفات المخبأة"
+msgstr "اختر مجلدا للملفات المؤقتة"
 
 #: ../app/dialogs/preferences-dialog.c:2702
 msgid "Swap folder:"
-msgstr "مجلد التبادل:"
+msgstr "مجلد التبديل:"
 
 #: ../app/dialogs/preferences-dialog.c:2703
 msgid "Select Swap Folder"
-msgstr "تحديد مجلد التبادل:"
+msgstr "اختر مجلد التبديل:"
 
 #: ../app/dialogs/preferences-dialog.c:2738
 msgid "Brush Folders"
-msgstr "مجلدات الفرشاة"
+msgstr "مجلدات الفرش"
 
 #: ../app/dialogs/preferences-dialog.c:2740
 msgid "Select Brush Folders"
-msgstr "تحديد مجلدات الفرشاة"
+msgstr "اختر مجلدات الفرش"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Pattern Folders"
-msgstr "مجلدات النمط"
+msgstr "مجلدات الأنماط"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Pattern Folders"
-msgstr "تحديد مجلدات العينة"
+msgstr "اختر مجلدات الأنماط"
 
 #: ../app/dialogs/preferences-dialog.c:2746
 msgid "Palette Folders"
-msgstr "مجلدات لوح اللون"
+msgstr "مجلدات ألواح الألوان"
 
 #: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Palette Folders"
-msgstr "تحديد مجلدات لوح اللون"
+msgstr "اختر مجلدات ألواح الألوان"
 
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradient Folders"
-msgstr "مجلدات التدريج"
+msgstr "مجلدات التدرجات"
 
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Gradient Folders"
-msgstr "إنتقاء مجلدات التدريج"
+msgstr "اختر مجلدات التدرجات"
 
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Font Folders"
-msgstr "مجلدات الخط"
+msgstr "مجلدات الخطوط"
 
 #: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Font Folders"
-msgstr "تحديد مجلدات الخط"
+msgstr "اختر مجلدات الخطوط"
 
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Plug-In Folders"
-msgstr "مجلدات المقابس"
+msgstr "مجلدات الملحقات"
 
 #: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Plug-In Folders"
-msgstr "تحديد مجلدات المقابس"
+msgstr "اختر مجلدات الملحقات"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Scripts"
-msgstr "سكربتات"
+msgstr "مخطوطات"
 
 #: ../app/dialogs/preferences-dialog.c:2762
-#, fuzzy
 msgid "Script-Fu Folders"
-msgstr "جاري مسح الرسائل في \"%s\""
+msgstr "مجلدات المخطوطات"
 
 #: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "اختر مجلدات المخطوطات"
 
 #: ../app/dialogs/preferences-dialog.c:2766
 msgid "Module Folders"
-msgstr "مجلدات المركبات"
+msgstr "مجلدات الوحدات"
 
 #: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Module Folders"
-msgstr "تحديد مجلدات المركّبات"
+msgstr "اختر مجلدات الوحدات"
 
 #: ../app/dialogs/preferences-dialog.c:2770
-#, fuzzy
 msgid "Interpreters"
-msgstr "تقاطع"
+msgstr "المفسّرات"
 
 #: ../app/dialogs/preferences-dialog.c:2770
-#, fuzzy
 msgid "Interpreter Folders"
-msgstr "مجلّدات محلّيّة"
+msgstr "مجلدات المفسّرات"
 
 #: ../app/dialogs/preferences-dialog.c:2772
-#, fuzzy
 msgid "Select Interpreter Folders"
-msgstr "جاري مسح الرسائل في \"%s\""
+msgstr "اختر مجلدات المفسّرات"
 
 #: ../app/dialogs/preferences-dialog.c:2774
 msgid "Environment Folders"
@@ -7982,19 +7902,19 @@ msgstr "مجلدات البيئة"
 
 #: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Environment Folders"
-msgstr "تحرير مجلدات البيئة"
+msgstr "اختر مجلدات البيئة"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Themes"
-msgstr "الثيمات"
+msgstr "السمات"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Theme Folders"
-msgstr "مجلدات الثيمات"
+msgstr "مجلدات السمات"
 
 #: ../app/dialogs/preferences-dialog.c:2780
 msgid "Select Theme Folders"
-msgstr "تحديد مجلدات الثيمات"
+msgstr "اختر مجلدات السمات"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -8004,29 +7924,29 @@ msgstr "حجم الطباعة"
 #: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:161
 msgid "_Width:"
-msgstr "العرض:"
+msgstr "ال_عرض:"
 
 #: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:206
 #: ../app/widgets/gimptemplateeditor.c:168
 msgid "H_eight:"
-msgstr "الارتفاع:"
+msgstr "الار_تفاع:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:264
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
-msgstr "كثافة X:"
+msgstr "استبانة _س:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:267
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
-msgstr "كثافة Y:"
+msgstr "استبانة _ص:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:308
 #, c-format
 msgid "pixels/%a"
-msgstr "بيكسل/%a"
+msgstr "بكسل/%a"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
@@ -8034,31 +7954,30 @@ msgstr "اخرج من جمب"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Close All Images"
-msgstr "إعلاق جميع الصور"
+msgstr "أغلق كل الصور"
 
 #: ../app/dialogs/quit-dialog.c:165
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "إذا خرجت من جمب الآن،هذه التغييرات ستفقد"
+msgstr "إذا خرجت من جمب الآن ستفقد هذه التغييرات."
 
 #: ../app/dialogs/quit-dialog.c:168
 msgid "If you close these images now, changes will be lost."
-msgstr "إذا أغلقت هذه الصورة الآن، ستضيع التعديلات:"
+msgstr "إذا أغلقت هذه الصورة الآن ستضيع التعديلات."
 
 #: ../app/dialogs/quit-dialog.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] ""
-"هناك مستندٌ واحد بتغييراتٍ غير محفوظة. هل تريد حفظ التّغييرات قبل الغلق؟"
-msgstr[1] "يوجد صورة واحدة بتغييرات غير محفوظة:"
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا توجد صور بتغييرات غير محفوظة:"
+msgstr[1] "توجد صورة واحدة بتغييرات غير محفوظة:"
+msgstr[2] "توجد صورتين بتغييرات غير محفوظة:"
+msgstr[3] "توجد %Id صور بتغييرات غير محفوظة:"
+msgstr[4] "توجد %Id صورة بتغييرات غير محفوظة:"
+msgstr[5] "توجد %Id صورة بتغييرات غير محفوظة:"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
-msgstr "استبعاد التغييرات"
+msgstr "_تجاهل التغييرات"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -8070,23 +7989,23 @@ msgstr "حجم الطبقة"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
-msgstr "إعادة تحجيم ال_طبقات:"
+msgstr "غيّر حجم ال_طبقات:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
-msgstr "معايرة كثافة المرقاب"
+msgstr "عايِر استبانة الشاشة"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
-msgstr "قس المساطر وأدخل أطوالها:"
+msgstr "قِس المساطر وأدخل أطوالها:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
-msgstr "أفقي:"
+msgstr "أ_فقي:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
-msgstr "عامودي:"
+msgstr "رأ_سي:"
 
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:139
@@ -8099,7 +8018,7 @@ msgstr "الجودة"
 
 #: ../app/dialogs/scale-dialog.c:187
 msgid "I_nterpolation:"
-msgstr "توليد"
+msgstr "الزيا_دة:"
 
 #: ../app/dialogs/scale-dialog.c:206
 msgid ""
@@ -8127,7 +8046,7 @@ msgstr "ملف تلميحات جمب فارغ!"
 #: ../app/dialogs/tips-dialog.c:91
 #, fuzzy
 msgid "The GIMP tips file appears to be missing!"
-msgstr "مقبس متصفح مساعدة جمب يبدو مفقودا من تثبيتك."
+msgstr "ملحق متصفح مساعدة جمب يبدو مفقودا من تثبيتك."
 
 #: ../app/dialogs/tips-dialog.c:93
 #, c-format
@@ -8276,7 +8195,7 @@ msgstr "صورة TGA لها أبعاد غير سليمة"
 
 #: ../app/display/gimpdisplayshell.c:1078
 msgid "Zoom image when window size changes"
-msgstr "تبئير الصورة عندما يتغير حجم النافذة"
+msgstr "تقريب الصورة عندما يتغير حجم النافذة"
 
 #: ../app/display/gimpdisplayshell.c:1128
 #, fuzzy
@@ -8306,8 +8225,7 @@ msgstr "حفظ التغييرات على الصورة '%s' قبل الإغلاق
 #: ../app/display/gimpdisplayshell-close.c:254
 #, fuzzy, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
 msgstr[1] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
 msgstr[2] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
@@ -8323,18 +8241,17 @@ msgid ""
 msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيّاً إذا لم تحفظ."
-msgstr[1] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيّاً إذا لم تحفظ."
-msgstr[2] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيّاً إذا لم تحفظ."
-msgstr[3] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيّاً إذا لم تحفظ."
+msgstr[0] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيًّا إذا لم تحفظ."
+msgstr[1] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيًّا إذا لم تحفظ."
+msgstr[2] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيًّا إذا لم تحفظ."
+msgstr[3] "ستضيع تغييرات السّاعة والدّقيقة الأخيرة نهائيًّا إذا لم تحفظ."
 msgstr[4] ""
 msgstr[5] ""
 
 #: ../app/display/gimpdisplayshell-close.c:275
 #, fuzzy, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
 msgstr[1] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
 msgstr[2] "إذا لم تحفظ الصورة، فإن التغييرات في آخر %s ستفقد"
@@ -8377,11 +8294,11 @@ msgstr "اختيار طبقة"
 
 #: ../app/display/gimpdisplayshell-scale.c:772
 msgid "Zoom Ratio"
-msgstr "نسبة التبئير"
+msgstr "نسبة التقريب"
 
 #: ../app/display/gimpdisplayshell-scale.c:774
 msgid "Select Zoom Ratio"
-msgstr "تحديد نسبة التبئير"
+msgstr "اختر نسبة التقريب"
 
 #: ../app/display/gimpdisplayshell-scale.c:817
 msgid "Zoom ratio:"
@@ -8389,7 +8306,7 @@ msgstr "نسبة التكبير:"
 
 #: ../app/display/gimpdisplayshell-scale.c:842
 msgid "Zoom:"
-msgstr "التبئير:"
+msgstr "التقريب:"
 
 #: ../app/display/gimpdisplayshell-title.c:233
 #, fuzzy
@@ -8441,12 +8358,12 @@ msgstr "ليس ملف عادي"
 #: ../app/file/file-open.c:183
 #, fuzzy, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "المقبس أرجع نجاح ولمن لم يرجع صورة"
+msgstr "الملحق أرجع نجاح ولمن لم يرجع صورة"
 
 #: ../app/file/file-open.c:194
 #, fuzzy, c-format
 msgid "%s plug-In could not open image"
-msgstr "المقبس لم يستطع فتح الصورة"
+msgstr "الملحق لم يستطع فتح الصورة"
 
 #: ../app/file/file-open.c:452
 #, fuzzy, c-format
@@ -8456,7 +8373,7 @@ msgstr "الصورة لا تحتوي أي طبقات مرئية"
 #: ../app/file/file-open.c:502
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "فشل فتح '%s': %s"
+msgstr "فشل فتح '%s'‏: %s"
 
 #: ../app/file/file-open.c:610
 msgid ""
@@ -8472,7 +8389,7 @@ msgstr "نوع ملف غير معروف"
 #: ../app/file/file-save.c:192
 #, fuzzy, c-format
 msgid "%s plug-in could not save image"
-msgstr "المقبس لم يستطع حفظ الصورة"
+msgstr "الملحق لم يستطع حفظ الصورة"
 
 #: ../app/file/file-utils.c:74
 #, c-format
@@ -8759,8 +8676,7 @@ msgstr "الصباغة '%s' غير موجودة"
 
 #: ../app/pdb/gimppdb-utils.c:306
 #, fuzzy, c-format
-msgid ""
-"Item '%s' (%d) can not be used because it has not been added to an image"
+msgid "Item '%s' (%d) can not be used because it has not been added to an image"
 msgstr "العنصر '%s' (%Id) لا يمكن استخدامه، لأنه لم يضف إلى صورة"
 
 #: ../app/pdb/gimppdb-utils.c:325
@@ -8860,8 +8776,7 @@ msgstr ""
 
 #: ../app/pdb/image-cmds.c:2140
 #, c-format
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 
 #: ../app/pdb/selection-tools-cmds.c:215 ../app/tools/gimpfreeselecttool.c:196
@@ -8930,11 +8845,11 @@ msgstr "تركيب المصدر"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
-msgstr "طلب المقابس الجديدة"
+msgstr "طلب الملحقات الجديدة"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
-msgstr "يبدأ المقابس"
+msgstr "يبدأ الملحقات"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
@@ -8947,7 +8862,7 @@ msgstr "زر في اللوحة"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr "بيئة مقبس"
+msgstr "بيئة ملحق"
 
 #: ../app/plug-in/plug-in-icc-profile.c:113
 #: ../app/plug-in/plug-in-icc-profile.c:188
@@ -9340,7 +9255,7 @@ msgstr "ملء دلو"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
-msgstr "تحديد باللون"
+msgstr "اختر باللون"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
@@ -9348,7 +9263,7 @@ msgstr ""
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
-msgstr "بتحديد اللون"
+msgstr "باختر اللون"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -9471,7 +9386,7 @@ msgstr "تلوين يعمل فقط على طبقات ألوان RGB"
 
 #: ../app/tools/gimpcolorizetool.c:221
 msgid "Select Color"
-msgstr "تحديد لون"
+msgstr "اختر لون"
 
 #: ../app/tools/gimpcolorizetool.c:238
 #: ../app/tools/gimphuesaturationtool.c:388
@@ -9685,7 +9600,7 @@ msgstr "نوع المنحنى"
 #: ../app/tools/gimpcurvestool.c:603
 #, fuzzy, c-format
 msgid "Could not read header from '%s': %s"
-msgstr "لا يمكن قراءة البايتات %Id من '%s': %s"
+msgstr "لا يمكن قراءة البايتات %Id من '%s'‏: %s"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -9771,7 +9686,7 @@ msgstr "التعرض:"
 #: ../app/tools/gimpeditselectiontool.c:241
 #: ../app/tools/gimpeditselectiontool.c:1224
 msgid "Move Floating Selection"
-msgstr "تحريك التحديد الطافي"
+msgstr "تحريك التحديد الحر"
 
 #: ../app/tools/gimpeditselectiontool.c:453
 #: ../app/tools/gimpeditselectiontool.c:721
@@ -9833,9 +9748,8 @@ msgid "Flip"
 msgstr "قلب"
 
 #: ../app/tools/gimpfliptool.c:80
-msgid ""
-"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr "أداة القلب: قلب الطبقة، أو التحديد أو المسار أفقا أو عاموديا"
+msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgstr "أداة القلب: قلب الطبقة، أو التحديد أو المسار أفقا أو رأسيا"
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "_Flip"
@@ -9849,7 +9763,7 @@ msgstr "حواف ناعمة"
 #: ../app/tools/gimpforegroundselectoptions.c:85
 #, fuzzy
 msgid "Select a single contiguous area"
-msgstr "تحديد مناطق متصلة"
+msgstr "اختر مناطق متصلة"
 
 #: ../app/tools/gimpforegroundselectoptions.c:96
 msgid "Size of the brush used for refinements"
@@ -9954,8 +9868,7 @@ msgstr "إنتقاء ملف"
 
 #: ../app/tools/gimpfreeselecttool.c:197
 #, fuzzy
-msgid ""
-"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "أداة التحديد الحر: انتق المنطقة المرسومة يدويا"
 
 #: ../app/tools/gimpfreeselecttool.c:198
@@ -10769,7 +10682,7 @@ msgstr ""
 #: ../app/tools/gimpselectiontool.c:308
 #, fuzzy
 msgid "Click to anchor the floating selection"
-msgstr "حذف التحديد الطافي"
+msgstr "حذف التحديد الحر"
 
 #: ../app/tools/gimpsheartool.c:82
 msgid "Shear"
@@ -10814,8 +10727,7 @@ msgid "Click to smudge the line"
 msgstr "انقر لتضبيب السطر"
 
 #: ../app/tools/gimptextoptions.c:127
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "التلميح يعدل حدود الخط الخارجية لينتج صورة نقطية نضرة بحجم صغير."
 
 #: ../app/tools/gimptextoptions.c:134
@@ -11242,7 +11154,7 @@ msgstr "مسار انتقال"
 #: ../app/vectors/gimpvectors-export.c:96
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "خطأ أثناء الكتابة '%s': %s"
+msgstr "خطأ أثناء الكتابة '%s'‏: %s"
 
 #: ../app/vectors/gimpvectors-import.c:296
 msgid "Import Paths"
@@ -11265,7 +11177,7 @@ msgstr "لا توجد صور في الأرشيف %s"
 #: ../app/vectors/gimpvectors-import.c:349
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "فشل استيراد المسارات من '%s': %s"
+msgstr "فشل استيراد المسارات من '%s'‏: %s"
 
 #: ../app/widgets/gimpactiongroup.c:802
 #, fuzzy, c-format
@@ -11835,7 +11747,7 @@ msgstr "تحديث لحظي"
 #: ../app/widgets/gimpgradienteditor.c:775
 #, c-format
 msgid "Zoom factor: %d:1"
-msgstr "معامل التبئير: %Id:1"
+msgstr "معامل التقريب: %Id:1"
 
 #: ../app/widgets/gimpgradienteditor.c:778
 #, c-format
@@ -11953,7 +11865,7 @@ msgstr "متصفح مساعدة جمب"
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
-msgstr "مقبس متصفح مساعدة جمب يبدو مفقودا من تثبيتك."
+msgstr "ملحق متصفح مساعدة جمب يبدو مفقودا من تثبيتك."
 
 #: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
@@ -11961,7 +11873,7 @@ msgstr "متصفح المساعدة لا يبدأ"
 
 #: ../app/widgets/gimphelp.c:311
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "لم يستطع بداية مقبس مساعدة حمب."
+msgstr "لم يستطع بداية ملحق مساعدة حمب."
 
 #: ../app/widgets/gimphelp.c:338
 #, fuzzy
@@ -12002,7 +11914,7 @@ msgstr "عدد أوسط:"
 
 #: ../app/widgets/gimphistogrameditor.c:102
 msgid "Pixels:"
-msgstr "بيكسلات:"
+msgstr "بكسلات:"
 
 #: ../app/widgets/gimphistogrameditor.c:103
 msgid "Count:"
@@ -12022,7 +11934,7 @@ msgstr "استعلام..."
 
 #: ../app/widgets/gimpimagepropview.c:122
 msgid "Pixel dimensions:"
-msgstr "أبعاد البيكسل:"
+msgstr "أبعاد البكسل:"
 
 #: ../app/widgets/gimpimagepropview.c:125
 msgid "Print size:"
@@ -12062,7 +11974,7 @@ msgstr "تكرار الخطوات:"
 
 #: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of pixels:"
-msgstr "عدد البيكسلات:"
+msgstr "عدد البكسلات:"
 
 #: ../app/widgets/gimpimagepropview.c:164
 msgid "Number of layers:"
@@ -12079,7 +11991,7 @@ msgstr "عدد المسارات:"
 #: ../app/widgets/gimpimagepropview.c:471
 #, c-format
 msgid "pixels/%s"
-msgstr "بيكسل/%s"
+msgstr "بكسل/%s"
 
 #: ../app/widgets/gimpimagepropview.c:473
 #, c-format
@@ -12120,8 +12032,7 @@ msgid "Auto"
 msgstr "تلقائي"
 
 #: ../app/widgets/gimpmenudock.c:170
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 
 #: ../app/widgets/gimpmessagebox.c:443
@@ -12676,73 +12587,5 @@ msgstr "الرجاء التأكد من أن صندوق الأدوات ظاهر!"
 #: ../tools/gimp-remote-x11.c:248
 #, c-format
 msgid "Couldn't start '%s': %s"
-msgstr "لا يمكن بدء: '%s': %s"
+msgstr "لا يمكن بدء: '%s'‏: %s"
 
-#~ msgid "Open a Layers, Channels & Paths dock"
-#~ msgstr "فتح حوض الطبقات والقنوات والمسارات"
-
-#~ msgid "_Misc. Stuff"
-#~ msgstr "أشياء متفرقة"
-
-#~ msgid "command|Flip"
-#~ msgstr "command|قلب"
-
-#~ msgid "Manage Loadable Modules"
-#~ msgstr "يدير المركّبات القابلة للتحميل"
-
-#~ msgid "On disk"
-#~ msgstr "على القرص"
-
-#~ msgid "Load"
-#~ msgstr "تحميل"
-
-#~ msgid "Purpose:"
-#~ msgstr "الغرض:"
-
-#, fuzzy
-#~ msgid "command|Polygon Select"
-#~ msgstr "ال_واجهة اﻻمامية لسطر الأوامر"
-
-#~ msgid "command|Scale"
-#~ msgstr "command|قياس"
-
-#~ msgid "command|Shear"
-#~ msgstr "command|قص"
-
-#, fuzzy
-#~ msgid ""
-#~ "This window has %d tab open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgid_plural ""
-#~ "This window has %d tabs open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgstr[0] ""
-#~ "هذه النافذة بها %d تبويبات مفتوحة. إغلاق النافذة سوف يغلق جميع التباويب."
-#~ msgstr[1] ""
-#~ "هذه النافذة بها %d تبويب مفتوح. إغلاق النافذة سوف يغلق جميع التباويب."
-#~ msgstr[2] ""
-#~ "هذه النافذة بها %d تبويب مفتوح. إغلاق النافذة سوف يغلق جميع التباويب."
-#~ msgstr[3] ""
-#~ "هذه النافذة بها %d تبويب مفتوح. إغلاق النافذة سوف يغلق جميع التباويب."
-#~ msgstr[4] ""
-#~ "هذه النافذة بها %d تبويب مفتوح. إغلاق النافذة سوف يغلق جميع التباويب."
-#~ msgstr[5] ""
-#~ "هذه النافذة بها %d تبويب مفتوح. إغلاق النافذة سوف يغلق جميع التباويب."
-
-#~ msgid "Acq_uire"
-#~ msgstr "اكت_ساب"
-
-#~ msgid "_Xtns"
-#~ msgstr "م_لحقات"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "Left justified"
-#~ msgstr "ضبط يسار"
-
-#~ msgid "Right justified"
-#~ msgstr "ضبط يمين"
-
-#~ msgid "Show tip next time GIMP starts"
-#~ msgstr "إظهار التلميح عند بدء جمب في المرة القادمة"
