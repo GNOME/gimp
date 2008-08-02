@@ -1,3 +1,8 @@
+2008-08-02  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimptagcache.c (gimp_tag_cache_load): fixed small memory
+	leak.
+
 2008-08-01  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagpopup.c: close tag popup on keyboard input.

@@ -429,6 +429,7 @@ gimp_tag_cache_load (GimpTagCache      *cache)
                                             parse_data.records->len);
     }
 
+  g_markup_parse_context_free (parse_context);
   g_array_free (parse_data.records, TRUE);
   g_free (buffer);
 }
