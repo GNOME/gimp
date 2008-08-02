@@ -6,12 +6,13 @@
 # Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
+# Joaquim Perez <noguer@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-24 19:17+0200\n"
-"PO-Revision-Date: 2008-04-19 11:08+0200\n"
+"POT-Creation-Date: 2008-07-22 23:06+0200\n"
+"PO-Revision-Date: 2008-07-09 20:17+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -696,43 +697,43 @@ msgstr "Escapça a la mida"
 msgid "Crop with aspect"
 msgstr "Escapça segons l'aspecte"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:880
 msgid "Internal GIMP procedure"
 msgstr "Procediment intern del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "GIMP Plug-In"
 msgstr "Connector del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Extension"
 msgstr "Extensió del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:885
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "Temporary Procedure"
 msgstr "Procediment temporal"
 
-#: ../libgimpbase/gimpbaseenums.c:1047
+#: ../libgimpbase/gimpbaseenums.c:1045
 msgid "From left to right"
 msgstr "D'esquerra a dreta"
 
-#: ../libgimpbase/gimpbaseenums.c:1048
+#: ../libgimpbase/gimpbaseenums.c:1046
 msgid "From right to left"
 msgstr "De dreta a esquerra"
 
-#: ../libgimpbase/gimpbaseenums.c:1078
+#: ../libgimpbase/gimpbaseenums.c:1076
 msgid "Left justified"
 msgstr "Justificat a l'esquerra"
 
-#: ../libgimpbase/gimpbaseenums.c:1079
+#: ../libgimpbase/gimpbaseenums.c:1077
 msgid "Right justified"
 msgstr "Justificat a la dreta"
 
-#: ../libgimpbase/gimpbaseenums.c:1080
+#: ../libgimpbase/gimpbaseenums.c:1078
 msgid "Centered"
 msgstr "Centrat"
 
-#: ../libgimpbase/gimpbaseenums.c:1081
+#: ../libgimpbase/gimpbaseenums.c:1079
 msgid "Filled"
 msgstr "Omplert"
 
@@ -983,7 +984,6 @@ msgid "Select color profile from disk..."
 msgstr "Selecciona el perfil de color des del disc..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-#, fuzzy
 msgctxt "profile"
 msgid "None"
 msgstr "Cap"
@@ -1114,7 +1114,7 @@ msgstr "Comprova l'estil"
 msgid "_Preview"
 msgstr "_Previsualitza"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1861
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1835,6 +1835,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador d'entrada MIDI del GIMP"
-
-#~ msgid "profile|None"
-#~ msgstr "Cap"

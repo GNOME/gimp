@@ -169,18 +169,24 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
     {
       GFile       *file;
       GFileInfo   *file_info;
-      GIcon       *icon;
       GtkIconInfo *info;
 
       file = g_file_new_for_uri (gimp_object_get_name (GIMP_OBJECT (imagefile)));
       file_info = g_file_query_info (file, "standard::icon", 0, NULL, NULL);
-      icon = g_file_info_get_icon (file_info);
 
-      info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
-      pixbuf = gtk_icon_info_load_icon (info, NULL);
+      if (file_info)
+        {
+          GIcon *icon;
+
+          icon = g_file_info_get_icon (file_info);
+
+          info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
+          pixbuf = gtk_icon_info_load_icon (info, NULL);
+
+          g_object_unref (file_info);
+        }
 
       g_object_unref (file);
-      g_object_unref (file_info);
     }
 #endif
 

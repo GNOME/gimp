@@ -169,7 +169,7 @@ gimp_color_profile_combo_box_set_property (GObject      *object,
     {
     case PROP_DIALOG:
       g_return_if_fail (combo_box->dialog == NULL);
-      combo_box->dialog = (GtkWidget *) g_value_dup_object (value);
+      combo_box->dialog = g_value_dup_object (value);
       break;
 
     case PROP_MODEL:

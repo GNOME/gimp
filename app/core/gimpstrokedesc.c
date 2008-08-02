@@ -47,6 +47,7 @@ enum
   PROP_METHOD,
   PROP_STROKE_OPTIONS,
   PROP_PAINT_INFO,
+  PROP_EMULATE_DYNAMICS,
   PROP_PAINT_OPTIONS
 };
 
@@ -109,6 +110,10 @@ gimp_stroke_desc_class_init (GimpStrokeDescClass *klass)
                                    "paint-info", NULL,
                                    GIMP_TYPE_PAINT_INFO,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EMULATE_DYNAMICS,
+                                    "emulate-brush-dynamics", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
                                    "paint-options", NULL,
                                    GIMP_TYPE_PAINT_OPTIONS,
@@ -189,23 +194,31 @@ gimp_stroke_desc_set_property (GObject      *object,
     case PROP_GIMP:
       desc->gimp = g_value_get_object (value);
       break;
+
     case PROP_METHOD:
       desc->method = g_value_get_enum (value);
       break;
+
     case PROP_STROKE_OPTIONS:
       if (g_value_get_object (value))
         gimp_config_sync (g_value_get_object (value),
                           G_OBJECT (desc->stroke_options), 0);
       break;
+
     case PROP_PAINT_INFO:
       if (desc->paint_info)
         g_object_unref (desc->paint_info);
-      desc->paint_info = (GimpPaintInfo *) g_value_dup_object (value);
+      desc->paint_info = g_value_dup_object (value);
       break;
+
+    case PROP_EMULATE_DYNAMICS:
+      desc->emulate_dynamics = g_value_get_boolean (value);
+      break;
+
     case PROP_PAINT_OPTIONS:
       if (desc->paint_options)
         g_object_unref (desc->paint_options);
-      desc->paint_options = (GimpPaintOptions *) g_value_dup_object (value);
+      desc->paint_options = g_value_dup_object (value);
       break;
 
     default:
@@ -227,15 +240,23 @@ gimp_stroke_desc_get_property (GObject    *object,
     case PROP_GIMP:
       g_value_set_object (value, desc->gimp);
       break;
+
     case PROP_METHOD:
       g_value_set_enum (value, desc->method);
       break;
+
     case PROP_STROKE_OPTIONS:
       g_value_set_object (value, desc->stroke_options);
       break;
+
     case PROP_PAINT_INFO:
       g_value_set_object (value, desc->paint_info);
       break;
+
+    case PROP_EMULATE_DYNAMICS:
+      g_value_set_boolean (value, desc->emulate_dynamics);
+      break;
+
     case PROP_PAINT_OPTIONS:
       g_value_set_object (value, desc->paint_options);
       break;

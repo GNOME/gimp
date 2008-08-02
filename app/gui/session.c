@@ -155,6 +155,8 @@ session_init (Gimp *gimp)
                   skip = (info->toplevel_entry == NULL);
                 }
 
+              g_free (entry_name);
+
               if (GIMP_CONFIG_GET_INTERFACE (info)->deserialize (GIMP_CONFIG (info),
                                                                  scanner,
                                                                  1,

@@ -122,6 +122,41 @@ CODE
     );
 }
 
+sub vectors_copy {
+    $blurb = 'Copy a vectors object.';
+
+    $help = <<'HELP';
+This procedure copies the specified vectors object and returns the copy.
+HELP
+
+    $author = 'Barak Itkin <lightningismyname@gmail.com>';
+    $copyright = 'Barak Itkin';
+    $date = '2008';
+    $since = '2.6';
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object to copy' }
+    );
+
+    @outargs = (
+	{ name => 'vectors_copy', type => 'vectors',
+	  desc => 'The newly copied vectors object' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  vectors_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                               G_TYPE_FROM_INSTANCE (vectors)));
+
+  if (! vectors_copy)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub vectors_get_image {
     $blurb = 'Returns the vectors objects image.';
     $help  = 'Returns the vectors objects image.';
@@ -1404,6 +1439,7 @@ CODE
 @procs = qw(vectors_is_valid
             vectors_new
 	    vectors_new_from_text_layer
+            vectors_copy
             vectors_get_image
             vectors_get_name vectors_set_name
             vectors_get_visible vectors_set_visible

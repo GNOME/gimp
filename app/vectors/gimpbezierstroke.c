@@ -611,6 +611,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
           if (dist < min_dist || min_dist < 0)
             {
               min_dist = dist;
+
               if (ret_pos)
                 *ret_pos = pos;
               if (ret_point)
@@ -620,6 +621,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
               if (ret_segment_end)
                 *ret_segment_end = segment_end;
             }
+
           segment_start = anchorlist->data;
           segmentcoords[0] = segmentcoords[3];
           count = 1;
@@ -635,7 +637,9 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
           segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
+
       anchorlist = g_list_next (anchorlist);
+
       if (anchorlist)
         {
           segment_end = GIMP_ANCHOR (anchorlist->data);
@@ -650,6 +654,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
       if (dist < min_dist || min_dist < 0)
         {
           min_dist = dist;
+
           if (ret_pos)
             *ret_pos = pos;
           if (ret_point)
@@ -716,7 +721,8 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
       for (i = 0; i <= 15; i++)
         {
           pos2 *= 0.5;
-          if (3*pos1*pos1*(1-pos1) + pos1*pos1*pos1 < scalar)
+
+          if (3 * pos1 * pos1 * (1-pos1) + pos1 * pos1 * pos1 < scalar)
             pos1 += pos2;
           else
             pos1 -= pos2;
@@ -837,6 +843,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
           if (dist >= 0 && (dist < min_dist || min_dist < 0))
             {
               min_dist = dist;
+
               if (ret_pos)
                 *ret_pos = pos;
               if (nearest)
@@ -846,6 +853,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
               if (ret_segment_end)
                 *ret_segment_end = segment_end;
             }
+
           segment_start = anchorlist->data;
           segmentcoords[0] = segmentcoords[3];
           count = 1;
@@ -861,7 +869,9 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
           segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
+
       anchorlist = g_list_next (anchorlist);
+
       if (anchorlist)
         {
           segment_end = GIMP_ANCHOR (anchorlist->data);
@@ -876,6 +886,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
       if (dist >= 0 && (dist < min_dist || min_dist < 0))
         {
           min_dist = dist;
+
           if (ret_pos)
             *ret_pos = pos;
           if (nearest)
@@ -1536,6 +1547,7 @@ gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
   bezdesc->status = CAIRO_STATUS_SUCCESS;
   bezdesc->data = (cairo_path_data_t *) cmd_array->data;
   bezdesc->num_data = cmd_array->len;
+
   g_array_free (points, TRUE);
   g_array_free (cmd_array, FALSE);
 
@@ -1724,10 +1736,10 @@ arcto_circleparam (gdouble  h,
 
   while (dt >= 0.00001)
     {
-      pt0 = (  y[0]*(1-t0)*(1-t0)*(1-t0) +
-             3*y[1]*(1-t0)*(1-t0)*t0 +
-             3*y[2]*(1-t0)*t0*t0 +
-               y[3]*t0*t0*t0 );
+      pt0 = (    y[0] * (1-t0) * (1-t0) * (1-t0) +
+             3 * y[1] * (1-t0) * (1-t0) * t0     +
+             3 * y[2] * (1-t0) * t0     * t0     +
+                 y[3] * t0     * t0     * t0 );
 
       if (pt0 > h)
         t0 = t0 - dt;
@@ -1787,12 +1799,13 @@ arcto_ellipsesegment (gdouble     radius_x,
                       gdouble     phi1,
                       GimpCoords *ellips)
 {
-  gdouble       phi_s, phi_e;
-  GimpCoords    template    = GIMP_COORDS_DEFAULT_VALUES;
-  const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
-  gdouble       y[4];
-  gdouble       h0, h1;
-  gdouble       t0, t1;
+  const GimpCoords  template    = GIMP_COORDS_DEFAULT_VALUES;
+  const gdouble     circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
+
+  gdouble  phi_s, phi_e;
+  gdouble  y[4];
+  gdouble  h0, h1;
+  gdouble  t0, t1;
 
   g_return_if_fail (ellips != NULL);
 
@@ -1824,10 +1837,9 @@ arcto_ellipsesegment (gdouble     radius_x,
 
   ellips[0].x = cos (phi_s); ellips[0].y = sin (phi_s);
   ellips[3].x = cos (phi_e); ellips[3].y = sin (phi_e);
-  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]),
-                   &(ellips[1]));
-  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]),
-                   &(ellips[2]));
+
+  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]), &(ellips[1]));
+  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]), &(ellips[2]));
 
   if (h0 > y[0])
     {

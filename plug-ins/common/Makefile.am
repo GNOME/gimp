@@ -138,7 +138,6 @@ libexec_PROGRAMS = \
 	$(POPPLER) \
 	postscript \
 	procedure-browser \
-	psd-save \
 	$(PSP) \
 	qbist \
 	raw \
@@ -1796,22 +1795,6 @@ procedure_browser_SOURCES = \
 	procedure-browser.c
 
 procedure_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-psd_save_SOURCES = \
-	psd-save.c
-
-psd_save_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\

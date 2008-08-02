@@ -170,7 +170,7 @@ gimp_dash_editor_set_property (GObject      *object,
     case PROP_STROKE_OPTIONS:
       g_return_if_fail (editor->stroke_options == NULL);
 
-      editor->stroke_options = GIMP_STROKE_OPTIONS (g_value_dup_object (value));
+      editor->stroke_options = g_value_dup_object (value);
       g_signal_connect_object (editor->stroke_options, "notify::dash-info",
                                G_CALLBACK (update_segments_from_options),
                                editor, G_CONNECT_SWAPPED);

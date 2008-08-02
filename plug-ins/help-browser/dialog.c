@@ -876,20 +876,23 @@ build_menu (GList *items)
   for (list = items; list; list = g_list_next (list))
     {
       WebKitWebHistoryItem *item = list->data;
-      GtkWidget            *menu_item;
       const gchar          *title;
 
       title = webkit_web_history_item_get_title (item);
-      menu_item = gtk_menu_item_new_with_label (title);
 
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-      gtk_widget_show (menu_item);
+      if (title)
+        {
+          GtkWidget *menu_item = gtk_menu_item_new_with_label (title);
 
-      g_signal_connect_object (menu_item, "activate",
-                               G_CALLBACK (menu_callback),
-                               item, 0);
+          gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+          gtk_widget_show (menu_item);
 
-      g_object_unref (item);
+          g_signal_connect_object (menu_item, "activate",
+                                   G_CALLBACK (menu_callback),
+                                   item, 0);
+
+          g_object_unref (item);
+        }
     }
 
   g_list_free (items);

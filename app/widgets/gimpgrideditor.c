@@ -126,17 +126,21 @@ gimp_grid_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_GRID:
-      editor->grid = GIMP_GRID (g_value_dup_object (value));
+      editor->grid = g_value_dup_object (value);
       break;
+
     case PROP_CONTEXT:
-      editor->context = GIMP_CONTEXT (g_value_dup_object (value));
+      editor->context = g_value_dup_object (value);
       break;
+
     case PROP_XRESOLUTION:
       editor->xresolution = g_value_get_double (value);
       break;
+
     case PROP_YRESOLUTION:
       editor->yresolution = g_value_get_double (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -156,15 +160,19 @@ gimp_grid_editor_get_property (GObject    *object,
     case PROP_GRID:
       g_value_set_object (value, editor->grid);
       break;
+
     case PROP_CONTEXT:
       g_value_set_object (value, editor->context);
       break;
+
     case PROP_XRESOLUTION:
       g_value_set_double (value, editor->xresolution);
       break;
+
     case PROP_YRESOLUTION:
       g_value_set_double (value, editor->yresolution);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

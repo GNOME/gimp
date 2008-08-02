@@ -194,7 +194,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
     }
 
 #ifdef GIMP_HELP_DEBUG
-  g_printerr ("help (%s): parsing '%s' for locale \"%s\"\n",
+  g_printerr ("help (%s): parsing '%s' for \"%s\"\n",
               locale->locale_id, uri, help_domain);
 #endif
 
@@ -219,8 +219,8 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
                                            cancellable, error);
       if (! info)
         {
-          locale_set_error (error, _("Could not open '%s' for reading: %s"),
-                            file);
+          locale_set_error (error,
+                            _("Could not open '%s' for reading: %s"), file);
           g_object_unref (file);
 
           return FALSE;
@@ -235,7 +235,8 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 
   if (! stream)
     {
-      locale_set_error (error, _("Could not open '%s' for reading: %s"), file);
+      locale_set_error (error, 
+                        _("Could not open '%s' for reading: %s"), file);
       g_object_unref (file);
 
       return FALSE;

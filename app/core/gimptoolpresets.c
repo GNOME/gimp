@@ -139,7 +139,7 @@ gimp_tool_presets_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TOOL_INFO:
-      presets->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+      presets->tool_info = g_value_dup_object (value);
       break;
 
     default:

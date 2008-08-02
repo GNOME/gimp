@@ -410,11 +410,11 @@ gimp_controller_editor_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTROLLER_INFO:
-      editor->info = GIMP_CONTROLLER_INFO (g_value_dup_object (value));
+      editor->info = g_value_dup_object (value);
       break;
 
     case PROP_CONTEXT:
-      editor->context = GIMP_CONTEXT (g_value_dup_object (value));
+      editor->context = g_value_dup_object (value);
       break;
 
     default:

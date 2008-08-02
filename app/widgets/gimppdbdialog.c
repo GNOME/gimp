@@ -242,11 +242,11 @@ gimp_pdb_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PDB:
-      dialog->pdb = GIMP_PDB (g_value_dup_object (value));
+      dialog->pdb = g_value_dup_object (value);
       break;
 
     case PROP_CONTEXT:
-      dialog->caller_context = GIMP_CONTEXT (g_value_dup_object (value));
+      dialog->caller_context = g_value_dup_object (value);
       break;
 
     case PROP_SELECT_TYPE:
@@ -265,7 +265,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
       break;
 
     case PROP_MENU_FACTORY:
-      dialog->menu_factory = (GimpMenuFactory *) g_value_dup_object (value);
+      dialog->menu_factory = g_value_dup_object (value);
       break;
 
     default:

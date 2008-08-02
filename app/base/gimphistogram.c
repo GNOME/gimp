@@ -102,6 +102,39 @@ gimp_histogram_unref (GimpHistogram *histogram)
     }
 }
 
+/**
+ * gimp_histogram_duplicate:
+ * @histogram: a %GimpHistogram
+ *
+ * Creates a duplicate of @histogram. The duplicate has a reference
+ * count of 1 and contains the values from @histogram.
+ *
+ * Return value: a newly allocated %GimpHistogram
+ **/
+GimpHistogram *
+gimp_histogram_duplicate (GimpHistogram *histogram)
+{
+  GimpHistogram *dup;
+
+  g_return_val_if_fail (histogram != NULL, NULL);
+
+  dup = gimp_histogram_new ();
+
+#ifdef ENABLE_MP
+  g_static_mutex_lock (&histogram->mutex);
+#endif
+
+  dup->n_channels = histogram->n_channels;
+  dup->values[0]  = g_memdup (histogram->values[0],
+                              sizeof (gdouble) * dup->n_channels * 256);
+
+#ifdef ENABLE_MP
+  g_static_mutex_unlock (&histogram->mutex);
+#endif
+
+  return dup;
+}
+
 void
 gimp_histogram_calculate (GimpHistogram *histogram,
                           PixelRegion   *region,

@@ -1362,7 +1362,6 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool      *draw_tool,
   GimpStroke *pref_stroke  = NULL;
   GimpAnchor *anchor       = NULL;
   GimpAnchor *pref_anchor  = NULL;
-  GList      *list;
   gdouble     dx, dy;
   gdouble     pref_mindist = -1;
   gdouble     mindist      = -1;
@@ -1377,35 +1376,33 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool      *draw_tool,
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      GList *anchor_list;
+      GList *anchor_list = gimp_stroke_get_draw_anchors (stroke);
+      GList *list;
 
-      anchor_list = gimp_stroke_get_draw_anchors (stroke);
+      anchor_list = g_list_concat (gimp_stroke_get_draw_anchors (stroke),
+                                   gimp_stroke_get_draw_controls (stroke));
 
-      list = gimp_stroke_get_draw_controls (stroke);
-      anchor_list = g_list_concat (anchor_list, list);
-
-      while (anchor_list)
+      for (list = anchor_list; list; list = g_list_next (list))
         {
-          dx = coord->x - GIMP_ANCHOR (anchor_list->data)->position.x;
-          dy = coord->y - GIMP_ANCHOR (anchor_list->data)->position.y;
+          dx = coord->x - GIMP_ANCHOR (list->data)->position.x;
+          dy = coord->y - GIMP_ANCHOR (list->data)->position.y;
 
           if (mindist < 0 || mindist > dx * dx + dy * dy)
             {
               mindist = dx * dx + dy * dy;
-              anchor = GIMP_ANCHOR (anchor_list->data);
+              anchor = GIMP_ANCHOR (list->data);
+
               if (ret_stroke)
                 *ret_stroke = stroke;
             }
 
           if ((pref_mindist < 0 || pref_mindist > dx * dx + dy * dy) &&
-              GIMP_ANCHOR (anchor_list->data)->type == preferred)
+              GIMP_ANCHOR (list->data)->type == preferred)
             {
               pref_mindist = dx * dx + dy * dy;
-              pref_anchor = GIMP_ANCHOR (anchor_list->data);
+              pref_anchor = GIMP_ANCHOR (list->data);
               pref_stroke = stroke;
             }
-
-          anchor_list = anchor_list->next;
         }
 
       g_list_free (anchor_list);

@@ -107,8 +107,9 @@ gimp_item_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ITEM:
-      item_undo->item = (GimpItem *) g_value_dup_object (value);
+      item_undo->item = g_value_dup_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -128,6 +129,7 @@ gimp_item_undo_get_property (GObject    *object,
     case PROP_ITEM:
       g_value_set_object (value, item_undo->item);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

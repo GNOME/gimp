@@ -151,7 +151,7 @@ splash_create (gboolean be_verbose)
       splash->area = gtk_image_new_from_animation (pixbuf);
     }
 
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), splash->area);
+  gtk_box_pack_start (GTK_BOX (vbox), splash->area, TRUE, TRUE, 0);
   gtk_widget_show (splash->area);
 
   gtk_widget_set_size_request (splash->area, splash->width, splash->height);

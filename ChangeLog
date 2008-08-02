@@ -17,6 +17,10 @@
 	* app/widgets/gimptagentry.c: hide tags on assign tag entry when
 	selected item is not visible in the view.
 
+2008-07-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-scale.c (gimp_image_scale): formatting.
+
 2008-07-31  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.[ch]
@@ -29,6 +33,19 @@
 	* app/widgets/gimptagentry.c (gimp_tag_entry_assign_tags): don't unref
 	tags since they are currently only referenced by tagged objects.
 
+2008-07-30  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp-splash.png: new devel splash from 
+	Aurore Derriennic <aurore.d@gmail.com>
+
+2008-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response):
+	attach the URI of the last opened image to the Gimp object.
+
+	* app/actions/file-commands.c (file_open_dialog_show): use the
+	last opened URI as a fallback for initializing the dialog.
+
 2008-07-30  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagentry.c (gimp_tag_entry_dispose): free recently
@@ -40,6 +57,22 @@
 	selection in tag popup. User can press mouse button, drag to select a
 	tag and release mouse button. Selected tag is toggled
 	selected/deselected and popup is closed.
+
+2008-07-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/psd-save.c: removed psd-save source here ...
+
+	* plug-ins/psd/Makefile.am
+	* plug-ins/psd/psd-save.c: ... and added it back here.
+
+2008-07-29  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: added the real name of the author
+	of the new PDB function.
+
+	* app/pdb/vectors-cmds.c: regenerated.
 
 2008-07-29  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -60,6 +93,46 @@
 	* app/widgets/widgets-types.h: popup part of GimpComboTagEntry has
 	been moved to a separate class GimpTagPopup in order to prepare for
 	upcoming feature additions.
+
+2008-07-28  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb (edit_stroke_vectors_invoker): check
+	that the passed vectors item is attached.
+
+	* app/pdb/edit-cmds.c: regenerated.
+
+2008-07-28  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: applied patch from LightningIsMyName
+	adding the new PDB function gimp-vectors-copy (bug #544212).
+
+	* app/pdb/internal-procs.c
+	* app/pdb/vectors-cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2008-07-27  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c (text_get_extents): applied the same
+	workaround for a memory leak in PangoFT2 (bug #143542) as was
+	applied long ago in gimptextlayout.c.
+
+2008-07-27  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c (text_get_extents)
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render):
+	use the readonly variant of pango_layout_iter_get_line().
+
+2008-07-27  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_synthesize_motion): Bail out if there is no
+	pending rectangle to synthesize a motion on. Fixes bug #544181.
+
+2008-07-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/psd/Makefile.am: renamed executable to 'psd-load'.
 
 2008-07-27  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -107,6 +180,151 @@
 	* app/widgets/gimpcombotagentry.[ch]: improved tag drawing in popup
 	list.
 
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gtkscalebutton.c: added missing prototypes.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelplocale.c: formatting.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: minor cleanup of the checks for the URI plug-in.
+
+	* plug-ins/uri/Makefile.am: changed accordingly.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/uri/uri-backend-libcurl.c: use g_fopen().
+
+	* plug-ins/uri/uri-backend-gvfs.c: formatting.
+
+2008-07-24  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_emulate_dynamics): renamed variables.
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.[ch]: also implement brush
+	dynamics emulation for stroking selections.
+
+	* app/core/gimpchannel.c: pass the 'emulate-dynamics' parameter to
+	gimp_paint_core_stroke_boundary().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
+	don't report negative offsets, they would be interpreted wrongly.
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	Based on a patch from Alexia Death (bug #543706):
+	
+	* app/paint/gimppaintcore-stroke.[ch]
+	(gimp_paint_core_stroke_vectors): added code to emulate brush
+	dynamics by modifying pressure and velocity along the stroke.
+
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): pass the
+	'emulate-dynamics' parameter to gimp_paint_core_stroke_vectors().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimppdbdialog.c
+	* app/widgets/gimppluginaction.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* libgimpwidgets/gimpcolorprofilecombobox.c: no need to cast the
+	return value of g_value_dup_object().
+
+2008-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpguideundo.c
+	* app/core/gimpitemundo.c
+	* app/core/gimplayermaskundo.c
+	* app/core/gimppdbprogress.c
+	* app/core/gimpstrokedesc.c
+	* app/core/gimptooloptions.c
+	* app/core/gimptoolpresets.c
+	* app/paint/gimppaintoptions.c
+	* app/text/gimpfont.c
+	* app/tools/gimptool.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcontrollereditor.c: no need to cast the return
+	value of g_value_dup_object().
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcellrendererviewable.c: no need to cast the
+	return value of g_value_dup_object().
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (build_menu): check the return
+	value of webkit_web_history_item_get_title() to guard us against
+	a (reported) bug in WebKit.
+
+2008-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_get_icon): guard against
+	g_file_query_info() returning NULL (if the file doesn't exist or
+	whatever error).
+
+2008-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolortool.c: set scroll_lock to TRUE while moving
+	or creating sample points so the image doesn't scroll while a new
+	sample point is dragged from the rulers and sample points can be
+	deleted by dragging them out of image without scrolling at the
+	same time.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpvectortool.c: only use the position from the event
+	coordinates when creating or modifying strokes. Initialize all
+	other GimpCoords fields with default values.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: formatting.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo-aux.c
+	(gimp_session_info_aux_new_from_props): plugged memory leak.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogramview.c
+	(gimp_histogram_view_set_background): fixed refcounting	issue.
+	This plugs the memory leak I tried to fix in GimpHistogramEditor.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/base/gimphistogram.[ch]: added new method
+	gimp_histogram_duplicate().
+
+	* app/widgets/gimphistogrameditor.c
+	(gimp_histogram_editor_frozen_update): instead of recalculating
+	the histogram, use a duplicate for the background histogram.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c (gimp_histogram_editor_set_image):
+	reverted last change, it did not plug the leak.
+
+2008-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/session.c (session_init): plugged a small memory leak.
+
 2008-07-22  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c
@@ -119,6 +337,52 @@
 	* app/widgets/gimptagentry.c (gimp_tag_entry_focus_in),
 	(gimp_tag_entry_toggle_desc): fixed ill recursion which later results
 	in segmentation fault.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c
+	(gimp_histogram_editor_set_image): always unset and unref the
+	histograms. Plugs a memory leak reported by valgrind.
+
+2008-07-21  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcoords.c: incorporate the velocity.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_on_vectors_handle):
+	plugged a not so small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/windows-actions.c (windows_actions_dock_notify):
+	plugged another small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/menus/file-menu.c (file_menu_open_recent_query_tooltip):
+	plugged a small memory leak.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpstrokedesc.[ch]: added boolean property
+	'emulate-brush-dynamics', in preparation for bug #543706.
+
+	* app/dialogs/stroke-dialog.c: added a toggle for the new parameter.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): updated note to translators.
+
+2008-07-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/splash.c
+	* plug-ins/common/*.c: don't use gtk_box_pack_start_defaults(),
+	it got deprecated in GTK+ trunk.
+
+2008-07-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): added 'be' (Belarusian).
 
 2008-07-21  Aurimas Juška  <aurisj@svn.gnome.org>
 

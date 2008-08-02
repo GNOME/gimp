@@ -712,6 +712,7 @@ gimp_channel_stroke (GimpItem        *item,
 
         retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                   stroke_desc->paint_options,
+                                                  stroke_desc->emulate_dynamics,
                                                   segs_in, n_segs_in,
                                                   offset_x, offset_y,
                                                   error);

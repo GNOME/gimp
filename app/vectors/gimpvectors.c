@@ -522,6 +522,7 @@ gimp_vectors_stroke (GimpItem        *item,
 
         retval = gimp_paint_core_stroke_vectors (core, drawable,
                                                  stroke_desc->paint_options,
+                                                 stroke_desc->emulate_dynamics,
                                                  vectors, error);
 
         g_object_unref (core);
