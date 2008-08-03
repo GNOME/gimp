@@ -31,6 +31,7 @@ menudata_DATA = \
 	selection-menu.xml		\
 	templates-menu.xml		\
 	text-editor-toolbar.xml		\
+	text-tool-menu.xml		\
 	tool-options-menu.xml		\
 	tools-menu.xml			\
 	undo-menu.xml			\

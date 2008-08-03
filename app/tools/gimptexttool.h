@@ -54,10 +54,12 @@ struct _GimpTextTool
 
   GtkWidget     *editor;
   GtkWidget     *confirm_dialog;
+  GtkWidget     *ui_manager;
   GtkIMContext  *im_context;
 
   gboolean       handle_rectangle_change_complete;
   gboolean       text_box_fixed;
+  gboolean       text_cursor_changing;
 
   GimpTextLayout *layout;
 };

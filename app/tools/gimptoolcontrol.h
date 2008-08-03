@@ -61,6 +61,8 @@ struct _GimpToolControl
 
   gboolean           wants_all_key_events;
 
+  gboolean           show_context_menu;
+
   GimpCursorType     cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;
@@ -124,6 +126,10 @@ gboolean       gimp_tool_control_get_snap_to      (GimpToolControl *control);
 void           gimp_tool_control_set_wants_all_key_events  (GimpToolControl *control,
                                                    gboolean         snap_to);
 gboolean       gimp_tool_control_get_wants_all_key_events  (GimpToolControl *control);
+
+void           gimp_tool_control_set_show_context_menu  (GimpToolControl *control,
+                                                         gboolean show_context_menu);
+gboolean       gimp_tool_control_get_show_context_menu  (GimpToolControl *control);
 
 void           gimp_tool_control_set_snap_offsets (GimpToolControl *control,
                                                    gint             offset_x,

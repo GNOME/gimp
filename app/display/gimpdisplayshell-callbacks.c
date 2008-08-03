@@ -839,10 +839,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_ui_manager_ui_popup (shell->popup_manager,
-                                      "/dummy-menubar/image-popup",
-                                      GTK_WIDGET (shell),
-                                      NULL, NULL, NULL, NULL);
+            if(gimp_tool_control_get_show_context_menu (active_tool->control))
+              {
+                g_signal_emit_by_name (active_tool, "show-popup", &image_coords);
+              }
+            else
+              {
+                gimp_ui_manager_ui_popup (shell->popup_manager,
+                                          "/dummy-menubar/image-popup",
+                                          GTK_WIDGET (shell),
+                                          NULL, NULL, NULL, NULL);
+              }
             break;
 
           default:
@@ -1234,10 +1241,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventKey *kevent = (GdkEventKey *) event;
 
         if(gimp_tool_control_get_wants_all_key_events (active_tool->control))
-        {
-          tool_manager_key_press_active (gimp, kevent, display);
-          return TRUE;
-        }
+          {
+            tool_manager_key_press_active (gimp, kevent, display);
+            return TRUE;
+          }
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_PRESS (%d, %s)",
                   display, kevent->keyval,

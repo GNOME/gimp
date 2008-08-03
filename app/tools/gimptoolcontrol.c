@@ -64,6 +64,8 @@ gimp_tool_control_init (GimpToolControl *control)
 
   control->wants_all_key_events   = FALSE;
 
+  control->show_context_menu      = NULL;
+
   control->cursor                 = GIMP_CURSOR_MOUSE;
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
   control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
@@ -287,6 +289,21 @@ gimp_tool_control_get_wants_all_key_events (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_all_key_events;
+}
+
+void
+gimp_tool_control_set_show_context_menu  (GimpToolControl *control,
+                                          gboolean show_context_menu)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  control->show_context_menu = show_context_menu;
+}
+
+gboolean
+gimp_tool_control_get_show_context_menu  (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  return control->show_context_menu; 
 }
 
 void

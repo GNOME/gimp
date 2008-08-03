@@ -1,3 +1,20 @@
+2008-08-03  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/tools/gimptoolcontrol.h
+	* app/tools/gimptexttool.c
+	* app/tools/gimptexttool.h
+	* app/tools/gimptoolcontrol.c
+	* app/menus/menus.c
+	* app/actions/actions.c
+	* app/actions/Makefile.am
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/actions/text-tool-actions.c
+	* app/actions/text-tool-actions.h
+	* app/actions/text-tool-commands.c
+	* app/actions/text-tool-commands.h
+	* menus/Makefile.am: added a context-sensitive right-click menu for
+	text-tool. Still work in progress
+
 2008-07-26  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/tools/gimptexttool.c: continued working on the text-cursor.

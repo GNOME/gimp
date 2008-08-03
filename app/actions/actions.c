@@ -79,6 +79,7 @@
 #include "select-actions.h"
 #include "templates-actions.h"
 #include "text-editor-actions.h"
+#include "text-tool-actions.h"
 #include "tool-options-actions.h"
 #include "tools-actions.h"
 #include "vectors-actions.h"
@@ -190,6 +191,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "templates", N_("Templates"), GIMP_STOCK_TEMPLATE,
     templates_actions_setup,
     templates_actions_update },
+  { "text-tool", N_("Text Tool"), GTK_STOCK_EDIT,
+    text_tool_actions_setup,
+    text_tool_actions_update },
   { "text-editor", N_("Text Editor"), GTK_STOCK_EDIT,
     text_editor_actions_setup,
     text_editor_actions_update },
