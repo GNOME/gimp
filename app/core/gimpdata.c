@@ -415,11 +415,25 @@ gimp_data_get_identifier (GimpTagged *tagged)
 
   if (data->internal)
     {
-      return data->internal_name;
+      return g_strdup (data->internal_name);
     }
   else
     {
-      return data->filename;
+      gchar *utf8_filename;
+      gsize  bytes_written;
+
+      utf8_filename = g_filename_to_utf8 (data->filename, -1, NULL,
+                                          &bytes_written, NULL);
+      if (utf8_filename)
+        {
+          return utf8_filename;
+        }
+      else
+        {
+          g_warning ("could not convert filename to utf8: %s\n",
+                     data->filename);
+          return g_strdup (data->filename);
+        }
     }
 }
 

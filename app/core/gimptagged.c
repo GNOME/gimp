@@ -158,10 +158,9 @@ gimp_tagged_get_tags (GimpTagged *tagged)
  * @tagged: an object that implements the %GimpTagged interface
  *
  * Returns an identifier string which uniquely identifies the object.
- * The returned string is owned by @tagged object and must not be
- * modified or destroyed.
  *
- * Return value: unique identifier of the object.
+ * Return value: a newly allocated string containing unique identifier
+ * of the object. It should be freed using #g_free.
  **/
 gchar *
 gimp_tagged_get_identifier (GimpTagged *tagged)

@@ -188,7 +188,7 @@ gimp_tag_cache_object_add (GimpContainer       *container,
                            GimpTagged          *tagged,
                            GimpTagCache        *cache)
 {
-  const char           *identifier;
+  gchar                *identifier;
   GQuark                identifier_quark = 0;
   gchar                *checksum_string;
   GQuark                checksum_quark;
@@ -196,11 +196,12 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   gint                  i;
 
   identifier = gimp_tagged_get_identifier (tagged);
+  identifier_quark = g_quark_try_string (identifier);
+  g_free (identifier);
 
-  if (identifier
+  if (identifier_quark
       && !gimp_tagged_get_tags (tagged))
     {
-      identifier_quark = g_quark_try_string (identifier);
       if (identifier_quark)
         {
           for (i = 0; i < cache->records->len; i++)
@@ -215,7 +216,7 @@ gimp_tag_cache_object_add (GimpContainer       *container,
                     {
                       printf ("assigning cached tag: %s to %s\n",
                               gimp_tag_get_name (GIMP_TAG (tag_iterator->data)),
-                              identifier);
+                              g_quark_to_string (identifier_quark));
                       gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iterator->data));
 
                       tag_iterator = g_list_next (tag_iterator);
@@ -240,15 +241,16 @@ gimp_tag_cache_object_add (GimpContainer       *container,
               if (rec->checksum == checksum_quark)
                 {
                   printf ("remapping identifier: %s ==> %s\n",
-                          g_quark_to_string (rec->identifier), identifier);
-                  rec->identifier = g_quark_from_string (identifier);
+                          g_quark_to_string (rec->identifier),
+                          g_quark_to_string (identifier_quark));
+                  rec->identifier = identifier_quark;
 
                   tag_iterator = rec->tags;
                   while (tag_iterator)
                     {
                       printf ("assigning cached tag: %s to %s\n",
                               gimp_tag_get_name (GIMP_TAG (tag_iterator->data)),
-                              identifier);
+                              g_quark_to_string (identifier_quark));
                       gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iterator->data));
 
                       tag_iterator = g_list_next (tag_iterator);
@@ -272,7 +274,7 @@ static void
 tagged_to_cache_record_foreach (GimpTagged     *tagged,
                                 GList         **cache_records)
 {
-  const char           *identifier;
+  gchar                *identifier;
   gchar                *checksum;
   GimpTagCacheRecord   *cache_rec;
 
@@ -287,6 +289,7 @@ tagged_to_cache_record_foreach (GimpTagged     *tagged,
       cache_rec->tags = g_list_copy (gimp_tagged_get_tags (tagged));
       *cache_records = g_list_append (*cache_records, cache_rec);
     }
+  g_free (identifier);
 }
 
 void
