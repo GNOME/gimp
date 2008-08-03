@@ -1,5 +1,10 @@
 2008-08-03  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagpopup.c (gimp_tag_popup_list_expose):
+	don't draw focus rectangle on insensitive item.
+
+2008-08-03  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.c (gimp_tag_entry_activate): fixed
 	requirements for resource to which tags are set: it only needs to be
 	visible in view.

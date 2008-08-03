@@ -597,7 +597,8 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
                                   (tag_popup->tag_data[i].bounds.x) * PANGO_SCALE,
                                   (tag_popup->tag_data[i].bounds.y - tag_popup->scroll_y) * PANGO_SCALE);
 
-      if (&tag_popup->tag_data[i] == tag_popup->prelight)
+      if (&tag_popup->tag_data[i] == tag_popup->prelight
+          && tag_popup->tag_data[i].state != GTK_STATE_INSENSITIVE)
         {
           gtk_paint_focus (widget->style, widget->window,
                            tag_popup->tag_data[i].state,
