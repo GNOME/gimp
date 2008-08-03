@@ -1,5 +1,11 @@
 2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Center
+	the image after connecting to it. This is required if the image we
+	connect to is smaller than the initial canvas size.
+
+2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Further work for completing bug #362915 that makes changes to the
 	image size (e.g when cropping) be much more nicely handled by
 	display shell.

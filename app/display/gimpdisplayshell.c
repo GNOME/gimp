@@ -1204,6 +1204,9 @@ gimp_display_shell_new (GimpDisplay       *display,
   if (display->image)
     {
       gimp_display_shell_connect (shell);
+
+      /* after connecting to the image we want to center it */
+      gimp_display_shell_center_image_on_next_size_allocate (shell);
     }
   else
     {
