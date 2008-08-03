@@ -178,7 +178,8 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
                          GDK_BUTTON_PRESS_MASK
                          | GDK_BUTTON_RELEASE_MASK
                          | GDK_POINTER_MOTION_MASK
-                         | GDK_KEY_RELEASE_MASK);
+                         | GDK_KEY_RELEASE_MASK
+                         | GDK_SCROLL_MASK);
   gtk_window_set_screen (GTK_WINDOW (popup),
                          gtk_widget_get_screen (GTK_WIDGET (combo_entry)));
 
@@ -540,6 +541,23 @@ gimp_tag_popup_border_event (GtkWidget          *widget,
   else if (event->type == GDK_KEY_PRESS)
     {
       gtk_widget_destroy (GTK_WIDGET (tag_popup));
+    }
+  else if (event->type == GDK_SCROLL)
+    {
+      GdkEventScroll   *scroll_event = (GdkEventScroll *) event;
+
+      switch (scroll_event->direction)
+        {
+          case GDK_SCROLL_RIGHT:
+          case GDK_SCROLL_DOWN:
+              gimp_tag_popup_scroll_by (tag_popup, MENU_SCROLL_STEP2);
+              return TRUE;
+
+          case GDK_SCROLL_LEFT:
+          case GDK_SCROLL_UP:
+              gimp_tag_popup_scroll_by (tag_popup, - MENU_SCROLL_STEP2);
+              return TRUE;
+        }
     }
 
   return FALSE;
