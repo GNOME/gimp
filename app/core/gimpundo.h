@@ -27,6 +27,8 @@ struct _GimpUndoAccumulator
 {
   gboolean mode_changed;
   gboolean size_changed;
+  gdouble  previous_origin_x;
+  gdouble  previous_origin_y;
   gboolean resolution_changed;
   gboolean unit_changed;
   gboolean quick_mask_changed;

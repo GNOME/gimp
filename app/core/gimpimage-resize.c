@@ -97,7 +97,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
   old_height = gimp_image_get_height (image);
 
   /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (image, NULL);
+  gimp_image_undo_push_image_size (image, NULL, -offset_x, -offset_y);
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -220,7 +220,8 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_image_undo_group_end (image);
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+  gimp_image_emit_size_changed_signals (image, offset_x, offset_y);
+
   g_object_thaw_notify (G_OBJECT (image));
 
   gimp_unset_busy (image->gimp);

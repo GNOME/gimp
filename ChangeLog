@@ -1,3 +1,54 @@
+2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Further work for completing bug #362915 that makes changes to the
+	image size (e.g when cropping) be much more nicely handled by
+	display shell.
+
+	* app/core/gimpimage.[ch]: Add new signal
+	GimpImage::size-changed-detailed that is emited whenever
+	GimpViewable::size-changed is. The new signal provides additional
+	information, namely the previous origin relative to the current
+	origin. Cliens choose what specific signal to listen to depending
+	on how much info they need.
+
+	* app/display/gimpdisplayshell-handlers.c: Connect to
+	GimpImage::size-changed-detailed instead of
+	GimpViewable::size-changed since the shell wants information about
+	the previous image origin.
+	(gimp_display_shell_resolution_changed_handler): Use
+	gimp_display_shell_scale_resize() instead to avoid display
+	garbage.
+
+	* app/display/gimpdisplayshell-scale.[ch]: Add new utility
+	function gimp_display_shell_center_image_on_next_size_allocate().
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_handle_size_changed_detailed): New function
+	that replaces logic in gimp_display_shell_handle_size_changed and
+	that takes previous-origin of the image into account and adjusts
+	the offset so that the image content that remains doesn't move. If
+	the window is resized on image resize, just center the image
+	afterwards.
+
+	* app/core/gimpimage-undo-push.[ch]
+	(gimp_image_undo_push_image_size): Add previous-origin paremeters.
+
+	* app/core/gimpimageundo.[ch]: Add and manage previous-origin
+	properties so that the display shell offset can be appropriately
+	adjusted also when undoing.
+
+	* app/core/gimpundo.h
+	* app/core/gimpimage-undo.c: Add previous_origin members to the
+	undo accumulator and emit that information when the size of the
+	image changes due to the undo.
+
+	* app/core/gimpimage-crop.c (gimp_image_crop)
+	* app/core/gimpimage-scale.c (gimp_image_scale)
+	* app/core/gimpimage-rotate.c (gimp_image_rotate)
+	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
+	Supply information about the previous-origin of the image to the
+	size-changed signals and the undo system.
+
 2008-07-31  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-scale.c (gimp_image_scale): formatting.

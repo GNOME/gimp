@@ -26,6 +26,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "base/tile-manager.h"
 
 #include "core/gimpimage.h"
@@ -199,6 +201,47 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
     {
       shell->offset_x = 0;
       shell->offset_y = 0;
+    }
+}
+
+/**
+ * gimp_display_shell_handle_size_changed_detailed:
+ * @shell:
+ * @previous_origin_x:
+ * @previous_origin_y:
+ *
+ * On e.g. an image crop we want to avoid repositioning the image
+ * content in the display shell if possible.
+ *
+ **/
+void
+gimp_display_shell_handle_size_changed_detailed (GimpDisplayShell *shell,
+                                                 gdouble           previous_origin_x,
+                                                 gdouble           previous_origin_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->display->config->resize_windows_on_resize)
+    {
+      /* If the window is resized just center the image in it when it
+       * has change size
+       */
+      gimp_display_shell_shrink_wrap (shell, FALSE);
+      gimp_display_shell_center_image_on_next_size_allocate (shell);
+    }
+  else
+    {
+      gint scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
+      gint scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+
+      /* Note that we can't use gimp_display_shell_scroll_private() here
+       * because that would expose the image twice, causing unwanted
+       * flicker.
+       */
+      gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
+                                          shell->offset_x + scaled_previous_origin_x,
+                                          shell->offset_y + scaled_previous_origin_y,
+                                          FALSE);
     }
 }
 

@@ -88,6 +88,7 @@ enum
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
   RESOLUTION_CHANGED,
+  SIZE_CHANGED_DETAILED,
   UNIT_CHANGED,
   QUICK_MASK_CHANGED,
   SELECTION_CONTROL,
@@ -314,6 +315,17 @@ gimp_image_class_init (GimpImageClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_image_signals[SIZE_CHANGED_DETAILED] =
+    g_signal_new ("size-changed-detailed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, size_changed_detailed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__DOUBLE_DOUBLE,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_DOUBLE,
+                  G_TYPE_DOUBLE);
+
   gimp_image_signals[UNIT_CHANGED] =
     g_signal_new ("unit-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -504,6 +516,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
+  klass->size_changed_detailed        = NULL;
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
@@ -1470,7 +1483,7 @@ gimp_image_set_resolution (GimpImage *image,
       image->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
-      gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+      gimp_image_emit_size_changed_signals (image, 0.0, 0.0);
     }
 }
 
@@ -1793,6 +1806,29 @@ gimp_image_sample_point_removed (GimpImage       *image,
                  sample_point);
 }
 
+/**
+ * gimp_image_size_changed_detailed:
+ * @image:
+ * @previous_origin_x:
+ * @previous_origin_y:
+ *
+ * Emits the size-changed-detailed signal that is typically used to adjust the
+ * position of the image in the display shell on various operations,
+ * e.g. crop.
+ *
+ **/
+void
+gimp_image_size_changed_detailed (GimpImage *image,
+                                  gdouble    previous_origin_x,
+                                  gdouble    previous_origin_y)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[SIZE_CHANGED_DETAILED], 0,
+                 previous_origin_x,
+                 previous_origin_y);
+}
+
 void
 gimp_image_colormap_changed (GimpImage *image,
                              gint       color_index)
@@ -1819,6 +1855,21 @@ gimp_image_quick_mask_changed (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[QUICK_MASK_CHANGED], 0);
+}
+
+void
+gimp_image_emit_size_changed_signals (GimpImage *image,
+                                      gdouble    previous_offset_x,
+                                      gdouble    previous_offset_y)
+{
+  /* Emit GimpViewable::size-changed */
+  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+
+  /* Then emit basically the same signal but with more
+   * details. Clients can choose what signal of these two to listen to
+   * depending on how much info they need.
+   */
+  gimp_image_size_changed_detailed (image, previous_offset_x, previous_offset_y);
 }
 
 

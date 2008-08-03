@@ -381,8 +381,9 @@ gimp_image_undo_pop_stack (GimpImage     *image,
         gimp_image_mode_changed (image);
 
       if (accum.size_changed)
-        gimp_viewable_size_changed (GIMP_VIEWABLE (image));
-
+        gimp_image_emit_size_changed_signals (image,
+                                              accum.previous_origin_x,
+                                              accum.previous_origin_y);
       if (accum.resolution_changed)
         gimp_image_resolution_changed (image);
 

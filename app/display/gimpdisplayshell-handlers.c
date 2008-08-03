@@ -43,6 +43,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 
@@ -64,7 +65,10 @@ static void   gimp_display_shell_name_changed_handler       (GimpImage        *i
 static void   gimp_display_shell_selection_control_handler  (GimpImage        *image,
                                                              GimpSelectionControl control,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_size_changed_handler       (GimpImage        *image,
+static void   gimp_display_shell_size_changed_detailed_handler
+                                                            (GimpImage        *image,
+                                                             gdouble           previous_origin_x,
+                                                             gdouble           previous_origin_y,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
@@ -148,8 +152,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "selection-control",
                     G_CALLBACK (gimp_display_shell_selection_control_handler),
                     shell);
-  g_signal_connect (image, "size-changed",
-                    G_CALLBACK (gimp_display_shell_size_changed_handler),
+  g_signal_connect (image, "size-changed-detailed",
+                    G_CALLBACK (gimp_display_shell_size_changed_detailed_handler),
                     shell);
   g_signal_connect (image, "resolution-changed",
                     G_CALLBACK (gimp_display_shell_resolution_changed_handler),
@@ -338,7 +342,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_resolution_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_size_changed_handler,
+                                        gimp_display_shell_size_changed_detailed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_selection_control_handler,
@@ -410,15 +414,6 @@ gimp_display_shell_selection_control_handler (GimpImage            *image,
 }
 
 static void
-gimp_display_shell_size_changed_handler (GimpImage        *image,
-                                         GimpDisplayShell *shell)
-{
-  gimp_display_shell_scale_resize (shell,
-                                   shell->display->config->resize_windows_on_resize,
-                                   FALSE);
-}
-
-static void
 gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
@@ -431,7 +426,13 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
     }
   else
     {
-      gimp_display_shell_size_changed_handler (image, shell);
+      /* A resolution change has the same effect as a size change from
+       * a display shell point of view. Force a redraw of the display
+       * so that we don't get any display garbage.
+       */
+      gimp_display_shell_scale_resize (shell,
+                                       shell->display->config->resize_windows_on_resize,
+                                       FALSE);
     }
 }
 
@@ -476,6 +477,17 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
                                                 GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_sample_point (shell, sample_point);
+}
+
+static void
+gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
+                                                  gdouble           previous_origin_x,
+                                                  gdouble           previous_origin_y,
+                                                  GimpDisplayShell *shell)
+{
+  gimp_display_shell_handle_size_changed_detailed (shell,
+                                                   previous_origin_x,
+                                                   previous_origin_y);
 }
 
 static void

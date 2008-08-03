@@ -541,6 +541,36 @@ gimp_display_shell_center_image (GimpDisplayShell *shell,
                                       shell->display->config->resize_windows_on_zoom);
 }
 
+static void
+gimp_display_shell_size_allocate_center_image_callback (GimpDisplayShell *shell,
+                                                        GtkAllocation    *allocation,
+                                                        GtkWidget        *canvas)
+{
+  gimp_display_shell_center_image (shell, TRUE, TRUE);
+
+  g_signal_handlers_disconnect_by_func (canvas,
+                                        gimp_display_shell_size_allocate_center_image_callback,
+                                        shell);
+}
+
+/**
+ * gimp_display_shell_center_image_on_next_size_allocate:
+ * @shell:
+ *
+ * Centers the image in the display as soon as the canvas has got its
+ * new size
+ *
+ **/
+void
+gimp_display_shell_center_image_on_next_size_allocate (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  g_signal_connect_swapped (shell->canvas, "size-allocate",
+                            G_CALLBACK (gimp_display_shell_size_allocate_center_image_callback),
+                            shell);
+}
+
 /**
  * gimp_display_shell_scale_by_values:
  * @shell:         the #GimpDisplayShell
