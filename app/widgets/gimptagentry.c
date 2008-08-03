@@ -234,9 +234,8 @@ gimp_tag_entry_activate (GtkEntry              *entry,
   iterator = tag_entry->selected_items;
   while (iterator)
     {
-      if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
-          && gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
-                                  GIMP_OBJECT(iterator->data)))
+      if (gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+                               GIMP_OBJECT(iterator->data)))
         {
           break;
         }
