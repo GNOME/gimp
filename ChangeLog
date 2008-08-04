@@ -1,3 +1,9 @@
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: applied patch from Geert
+	Jordaens as attached to bug #464466. Improves quality of scaling,
+	in particular down-scaling.
+
 2008-08-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch] (GimpImage::size-changed-detailed):
