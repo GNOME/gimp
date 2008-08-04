@@ -253,8 +253,6 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
   color = style->text[GTK_STATE_NORMAL];
   attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
   pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
-  attribute = pango_attr_underline_new (PANGO_UNDERLINE_SINGLE);
-  pango_attr_list_insert (combo_entry->normal_item_attr, attribute);
 
   if (combo_entry->selected_item_attr)
     {

@@ -571,6 +571,8 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
   GdkGC                *gc;
   PangoRenderer        *renderer;
   gint                  i;
+  PangoAttribute       *attribute;
+  PangoAttrList        *attributes;
 
   renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), widget->style->black_gc);
@@ -588,20 +590,26 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
                              gimp_tag_get_name (tag_popup->tag_data[i].tag), -1);
       if (tag_popup->tag_data[i].state == GTK_STATE_SELECTED)
         {
-          pango_layout_set_attributes (tag_popup->layout,
-                                       tag_popup->combo_entry->selected_item_attr);
+          attributes = pango_attr_list_copy (tag_popup->combo_entry->selected_item_attr);
         }
       else if (tag_popup->tag_data[i].state == GTK_STATE_INSENSITIVE)
         {
-          pango_layout_set_attributes (tag_popup->layout,
-                                       tag_popup->combo_entry->insensitive_item_attr);
+          attributes = pango_attr_list_copy (tag_popup->combo_entry->insensitive_item_attr);
         }
-
       else
         {
-          pango_layout_set_attributes (tag_popup->layout,
-                                       tag_popup->combo_entry->normal_item_attr);
+          attributes = pango_attr_list_copy (tag_popup->combo_entry->normal_item_attr);
         }
+
+      if (&tag_popup->tag_data[i] == tag_popup->prelight
+          && tag_popup->tag_data[i].state != GTK_STATE_INSENSITIVE)
+        {
+          attribute = pango_attr_underline_new (PANGO_UNDERLINE_SINGLE);
+          pango_attr_list_insert (attributes, attribute);
+        }
+
+      pango_layout_set_attributes (tag_popup->layout, attributes);
+      pango_attr_list_unref (attributes);
 
       if (tag_popup->tag_data[i].state == GTK_STATE_SELECTED)
         {
@@ -616,7 +624,8 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
                                   (tag_popup->tag_data[i].bounds.y - tag_popup->scroll_y) * PANGO_SCALE);
 
       if (&tag_popup->tag_data[i] == tag_popup->prelight
-          && tag_popup->tag_data[i].state != GTK_STATE_INSENSITIVE)
+          && tag_popup->tag_data[i].state != GTK_STATE_INSENSITIVE
+          && ! tag_popup->single_select_disabled)
         {
           gtk_paint_focus (widget->style, widget->window,
                            tag_popup->tag_data[i].state,

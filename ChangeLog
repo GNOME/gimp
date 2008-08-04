@@ -1,5 +1,11 @@
 2008-08-04  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimpcombotagentry.c (gimp_combo_tag_entry_style_set):
+	* app/widgets/gimptagpopup.c (gimp_tag_popup_list_expose):
+	underline highlighted tags in popup list.
+
+2008-08-04  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagpopup.c (gimp_tag_popup_new),
 	(gimp_tag_popup_border_event): support scrolling with mouse wheel.
 
