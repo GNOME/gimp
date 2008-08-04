@@ -386,7 +386,7 @@ scale_region_tile (PixelRegion           *srcPR,
   gint         levely       = 0;
 
   /* determine scaling levels */
-  determine_scale(srcPR, dstPR, &levelx, &levely, &max_progress);
+  determine_scale (srcPR, dstPR, &levelx, &levely, &max_progress);
 
   if (levelx == 0 && levely == 0)
     {
