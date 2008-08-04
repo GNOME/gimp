@@ -1,3 +1,8 @@
+2008-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagemapconfig.c (gimp_image_map_config_compare):
+	clarify if() condition.
+
 2008-08-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpimage.c (gimp_image_emit_size_changed_signals): The

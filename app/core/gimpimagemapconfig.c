@@ -148,7 +148,7 @@ gimp_image_map_config_compare (GimpImageMapConfig *a,
     {
       return -1;
     }
-  else if (b->time)
+  else if (b->time > 0)
     {
       return 1;
     }
