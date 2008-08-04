@@ -1859,8 +1859,8 @@ gimp_image_quick_mask_changed (GimpImage *image)
 
 void
 gimp_image_emit_size_changed_signals (GimpImage *image,
-                                      gdouble    previous_offset_x,
-                                      gdouble    previous_offset_y)
+                                      gdouble    previous_origin_x,
+                                      gdouble    previous_origin_y)
 {
   /* Emit GimpViewable::size-changed */
   gimp_viewable_size_changed (GIMP_VIEWABLE (image));
@@ -1869,7 +1869,7 @@ gimp_image_emit_size_changed_signals (GimpImage *image,
    * details. Clients can choose what signal of these two to listen to
    * depending on how much info they need.
    */
-  gimp_image_size_changed_detailed (image, previous_offset_x, previous_offset_y);
+  gimp_image_size_changed_detailed (image, previous_origin_x, previous_origin_y);
 }
 
 

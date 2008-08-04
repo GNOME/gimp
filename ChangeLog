@@ -1,3 +1,8 @@
+2008-08-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimage.c (gimp_image_emit_size_changed_signals): The
+	parameters should be named previous_origin_[xy].
+
 2008-08-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/blur-motion.c (mblur_dialog): added translation

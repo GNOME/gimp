@@ -332,8 +332,8 @@ void            gimp_image_selection_control     (GimpImage          *image,
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
 void            gimp_image_emit_size_changed_signals
                                                  (GimpImage          *image,
-                                                  gdouble             previous_offset_x,
-                                                  gdouble             previous_offset_y);
+                                                  gdouble             previous_origin_x,
+                                                  gdouble             previous_origin_y);
 
 
 
