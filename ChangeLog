@@ -1,3 +1,16 @@
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	Applied a slightly modified patch from Róman Joost as attached to
+	bug #545963. This add links to the user manual to the tips dialog:
+
+	* data/tips/gimp-tips.dtd
+	* data/tips/gimp-tips.xml.in: add optional help IDs to the tips.
+
+	* app/dialogs/tips-dialog.c
+
+	* app/dialogs/tips-parser.[ch]: parse the help IDs from the tips
+	file and show a "Learn more" link in the tips dialog.
+
 2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Center

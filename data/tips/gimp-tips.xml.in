@@ -20,20 +20,20 @@
       pressing the F1 key at any time.  This also works inside the menus.
     </_thetip>
   </tip>
-  <tip level="beginner">
+  <tip level="beginner" help="gimp-layer-dialog">
     <_thetip>
       GIMP uses layers to let you organize your image.  Think of them
       as a stack of slides or filters, such that looking through them you
       see a composite of their contents.
     </_thetip>
   </tip>
-  <tip level="beginner">
+  <tip level="beginner" help="gimp-layer-menu">
     <_thetip>
       You can perform many layer operations by right-clicking on the text
       label of a layer in the Layers dialog.
     </_thetip>
   </tip>
-  <tip level="beginner">
+  <tip level="beginner" help="gimp-file-save">
     <_thetip>
       When you save an image to work on it again later, try using XCF,
       GIMP's native file format (use the file extension <tt>.xcf</tt>).
@@ -41,14 +41,14 @@
       Once a project is completed, you can save it as JPEG, PNG, GIF, ...
     </_thetip>
   </tip>
-  <tip level="beginner">
+  <tip level="beginner" help="gimp-image-flatten">
     <_thetip>
       Most plug-ins work on the current layer of the current image.  In
       some cases, you will have to merge all layers (Image→Flatten Image)
       if you want the plug-in to work on the whole image.
     </_thetip>
   </tip>
-  <tip level="beginner">
+  <tip level="beginner" help="gimp-layer-alpha-add">
     <_thetip>
       If a layer's name in the Layers dialog is displayed in <b>bold</b>,
       this layer doesn't have an alpha-channel. You can add an alpha-channel
@@ -91,14 +91,14 @@
       (or optionally hold <tt>Spacebar</tt> while you move the mouse).
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-concepts-image-grid">
     <_thetip>
       Click and drag on a ruler to place a guide on an image.  All
       dragged selections will snap to the guides.  You can remove
       guides by dragging them off the image with the Move tool.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-file-new">
     <_thetip>
       You can drag a layer from the Layers dialog and drop it onto the
       toolbox.  This will create a new image containing only that layer.
@@ -128,28 +128,28 @@
       current one.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-selection-stroke">
     <_thetip>
       You can draw simple squares or circles using Edit→Stroke Selection.
       It strokes the edge of your current selection. More complex shapes
       can be drawn using the Path tool or with Filters→Render→Gfig.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-path-stroke">
     <_thetip>
       If you stroke a path (Edit→Stroke Path), the paint tools can
       be used with their current settings.  You can use the Paintbrush in
       gradient mode or even the Eraser or the Smudge tool.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-using-paths">
     <_thetip>
       You can create and edit complex selections using the Path tool.
       The Paths dialog allows you to work on multiple paths and to convert
       them to selections.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-using-quickmask">
     <_thetip>
       You can use the paint tools to change the selection.  Click on the
       &quot;Quick Mask&quot; button at the bottom left of an image window.
@@ -157,7 +157,7 @@
       again to convert it back to a normal selection.
     </_thetip>
   </tip>
-  <tip level="intermediate">
+  <tip level="intermediate" help="gimp-channel-dialog">
     <_thetip>
       You can save a selection to a channel (Select→Save to Channel) and
       then modify this channel with any paint tools.  Using the buttons in
@@ -208,7 +208,7 @@
       an image (if your window manager doesn't trap those keys...).
     </_thetip>
   </tip>
-  <tip level="advanced">
+  <tip level="advanced" help="gimp-tool-bucket-fill">
     <_thetip>
       <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
       the background color instead of the foreground color.
@@ -216,7 +216,7 @@
       sets the background color instead of the foreground color.
     </_thetip>
   </tip>
-  <tip level="advanced">
+  <tip level="advanced" help="gimp-tools-transform">
     <_thetip>
       <tt>Ctrl</tt>-drag with the Rotate tool will constrain the
       rotation to 15 degree angles.
