@@ -212,7 +212,7 @@ gimp_image_scale (GimpImage             *image,
 
   g_object_unref (sub_progress);
 
-  gimp_image_emit_size_changed_signals (image, -offset_x, -offset_y);
+  gimp_image_size_changed_detailed (image, -offset_x, -offset_y);
 
   g_object_thaw_notify (G_OBJECT (image));
 

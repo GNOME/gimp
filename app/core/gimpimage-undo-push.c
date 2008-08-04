@@ -81,8 +81,8 @@ gimp_image_undo_push_image_type (GimpImage   *image,
 GimpUndo *
 gimp_image_undo_push_image_size (GimpImage   *image,
                                  const gchar *undo_desc,
-                                 gdouble      previous_origin_x,
-                                 gdouble      previous_origin_y)
+                                 gint         previous_origin_x,
+                                 gint         previous_origin_y)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 

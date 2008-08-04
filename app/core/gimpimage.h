@@ -191,6 +191,9 @@ struct _GimpImageClass
                                          GimpChannelType       channel);
   void (* mask_changed)                 (GimpImage            *image);
   void (* resolution_changed)           (GimpImage            *image);
+  void (* size_changed_detailed)        (GimpImage            *image,
+                                         gint                  previous_origin_x,
+                                         gint                  previous_origin_y);
   void (* unit_changed)                 (GimpImage            *image);
   void (* quick_mask_changed)           (GimpImage            *image);
   void (* selection_control)            (GimpImage            *image,
@@ -216,9 +219,6 @@ struct _GimpImageClass
                                          GimpSamplePoint      *sample_point);
   void (* sample_point_removed)         (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
-  void (* size_changed_detailed)        (GimpImage            *image,
-                                         gdouble               previous_origin_x,
-                                         gdouble               previous_origin_y);
   void (* parasite_attached)            (GimpImage            *image,
                                          const gchar          *name);
   void (* parasite_detached)            (GimpImage            *image,
@@ -322,19 +322,14 @@ void            gimp_image_sample_point_added    (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
 void            gimp_image_sample_point_removed  (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
-void            gimp_image_size_changed_detailed (GimpImage          *image,
-                                                  gdouble             previous_origin_x,
-                                                  gdouble             previous_origin_y);
 void            gimp_image_colormap_changed      (GimpImage          *image,
                                                   gint                col);
 void            gimp_image_selection_control     (GimpImage          *image,
                                                   GimpSelectionControl  control);
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
-void            gimp_image_emit_size_changed_signals
-                                                 (GimpImage          *image,
-                                                  gdouble             previous_origin_x,
-                                                  gdouble             previous_origin_y);
-
+void            gimp_image_size_changed_detailed (GimpImage          *image,
+                                                  gint                previous_origin_x,
+                                                  gint                previous_origin_y);
 
 
 /*  undo  */

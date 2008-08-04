@@ -1,5 +1,33 @@
 2008-08-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch] (GimpImage::size-changed-detailed):
+	change double to int in signal parameters.
+
+	Remove gimp_image_emit_size_changed_signals() and call
+	gimp_viewable_size_changed() in size-changed-detailed's default
+	handler.
+
+	* app/core/gimpimageundo.[ch]
+	* app/core/gimpimage-undo-push.[ch]: change double to int in
+	previous-origin related code.
+
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-resize.c: call gimp_image_size_changed_detailed()
+	instead of the removed gimp_image_emit_size_changed_signals()
+
+	* app/display/gimpdisplayshell-scroll.[ch]: remove
+	gimp_display_shell_handle_size_changed_detailed() because it
+	handles both scrolling and scaling and doesn't belong here.
+
+	* app/display/gimpdisplayshell-handlers.c: moved its code back to
+	gimp_display_shell_size_changed_detailed_handler() and follow the
+	double -> int change above.
+
+2008-08-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagemapconfig.c (gimp_image_map_config_compare):
 	clarify if() condition.
 

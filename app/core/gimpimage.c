@@ -148,6 +148,10 @@ static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
+static void     gimp_image_real_size_changed_detailed
+                                                 (GimpImage      *image,
+                                                  gint            previous_origin_x,
+                                                  gint            previous_origin_y);
 static void     gimp_image_real_colormap_changed (GimpImage      *image,
                                                   gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *image,
@@ -321,10 +325,10 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, size_changed_detailed),
                   NULL, NULL,
-                  gimp_marshal_VOID__DOUBLE_DOUBLE,
+                  gimp_marshal_VOID__INT_INT,
                   G_TYPE_NONE, 2,
-                  G_TYPE_DOUBLE,
-                  G_TYPE_DOUBLE);
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   gimp_image_signals[UNIT_CHANGED] =
     g_signal_new ("unit-changed",
@@ -516,7 +520,11 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
-  klass->size_changed_detailed        = NULL;
+  klass->resolution_changed           = NULL;
+  klass->size_changed_detailed        = gimp_image_real_size_changed_detailed;
+  klass->unit_changed                 = NULL;
+  klass->quick_mask_changed           = NULL;
+  klass->selection_control            = NULL;
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
@@ -1112,6 +1120,14 @@ gimp_image_get_description (GimpViewable  *viewable,
 }
 
 static void
+gimp_image_real_size_changed_detailed (GimpImage *image,
+                                       gint       previous_origin_x,
+                                       gint       previous_origin_y)
+{
+  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+}
+
+static void
 gimp_image_real_colormap_changed (GimpImage *image,
                                   gint       color_index)
 {
@@ -1483,7 +1499,7 @@ gimp_image_set_resolution (GimpImage *image,
       image->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
-      gimp_image_emit_size_changed_signals (image, 0.0, 0.0);
+      gimp_image_size_changed_detailed (image, 0, 0);
     }
 }
 
@@ -1816,11 +1832,12 @@ gimp_image_sample_point_removed (GimpImage       *image,
  * position of the image in the display shell on various operations,
  * e.g. crop.
  *
+ * This function makes sure that GimpViewable::size-changed is also emitted.
  **/
 void
 gimp_image_size_changed_detailed (GimpImage *image,
-                                  gdouble    previous_origin_x,
-                                  gdouble    previous_origin_y)
+                                  gint       previous_origin_x,
+                                  gint       previous_origin_y)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
@@ -1855,21 +1872,6 @@ gimp_image_quick_mask_changed (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[QUICK_MASK_CHANGED], 0);
-}
-
-void
-gimp_image_emit_size_changed_signals (GimpImage *image,
-                                      gdouble    previous_origin_x,
-                                      gdouble    previous_origin_y)
-{
-  /* Emit GimpViewable::size-changed */
-  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
-
-  /* Then emit basically the same signal but with more
-   * details. Clients can choose what signal of these two to listen to
-   * depending on how much info they need.
-   */
-  gimp_image_size_changed_detailed (image, previous_origin_x, previous_origin_y);
 }
 
 

@@ -92,18 +92,20 @@ gimp_image_undo_class_init (GimpImageUndoClass *klass)
   undo_class->free               = gimp_image_undo_free;
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_X,
-                                   g_param_spec_double ("previous-origin-x", NULL, NULL,
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("previous-origin-x",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_Y,
-                                   g_param_spec_double ("previous-origin-y", NULL, NULL,
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("previous-origin-y",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
@@ -193,10 +195,10 @@ gimp_image_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PREVIOUS_ORIGIN_X:
-      image_undo->previous_origin_x = g_value_get_double (value);
+      image_undo->previous_origin_x = g_value_get_int (value);
       break;
     case PROP_PREVIOUS_ORIGIN_Y:
-      image_undo->previous_origin_y = g_value_get_double (value);
+      image_undo->previous_origin_y = g_value_get_int (value);
       break;
     case PROP_GRID:
       {
@@ -227,10 +229,10 @@ gimp_image_undo_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_PREVIOUS_ORIGIN_X:
-      g_value_set_double (value, image_undo->previous_origin_x);
+      g_value_set_int (value, image_undo->previous_origin_x);
       break;
     case PROP_PREVIOUS_ORIGIN_Y:
-      g_value_set_double (value, image_undo->previous_origin_y);
+      g_value_set_int (value, image_undo->previous_origin_y);
       break;
     case PROP_GRID:
       g_value_set_object (value, image_undo->grid);
@@ -293,10 +295,10 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
     case GIMP_UNDO_IMAGE_SIZE:
       {
-        gint    width;
-        gint    height;
-        gdouble previous_origin_x;
-        gdouble previous_origin_y;
+        gint width;
+        gint height;
+        gint previous_origin_x;
+        gint previous_origin_y;
 
         width             = image_undo->width;
         height            = image_undo->height;

@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -67,8 +68,8 @@ static void   gimp_display_shell_selection_control_handler  (GimpImage        *i
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_size_changed_detailed_handler
                                                             (GimpImage        *image,
-                                                             gdouble           previous_origin_x,
-                                                             gdouble           previous_origin_y,
+                                                             gint              previous_origin_x,
+                                                             gint              previous_origin_y,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
@@ -481,13 +482,32 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
 
 static void
 gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
-                                                  gdouble           previous_origin_x,
-                                                  gdouble           previous_origin_y,
+                                                  gint              previous_origin_x,
+                                                  gint              previous_origin_y,
                                                   GimpDisplayShell *shell)
 {
-  gimp_display_shell_handle_size_changed_detailed (shell,
-                                                   previous_origin_x,
-                                                   previous_origin_y);
+  if (shell->display->config->resize_windows_on_resize)
+    {
+      /* If the window is resized just center the image in it when it
+       * has change size
+       */
+      gimp_display_shell_shrink_wrap (shell, FALSE);
+      gimp_display_shell_center_image_on_next_size_allocate (shell);
+    }
+  else
+    {
+      gint scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
+      gint scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+
+      /* Note that we can't use gimp_display_shell_scroll_private() here
+       * because that would expose the image twice, causing unwanted
+       * flicker.
+       */
+      gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
+                                          shell->offset_x + scaled_previous_origin_x,
+                                          shell->offset_y + scaled_previous_origin_y,
+                                          FALSE);
+    }
 }
 
 static void

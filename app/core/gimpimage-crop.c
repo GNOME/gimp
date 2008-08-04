@@ -267,7 +267,7 @@ gimp_image_crop (GimpImage   *image,
                          gimp_image_get_width  (image),
                          gimp_image_get_height (image));
 
-      gimp_image_emit_size_changed_signals (image, -x1, -y1);
+      gimp_image_size_changed_detailed (image, -x1, -y1);
 
       g_object_thaw_notify (G_OBJECT (image));
     }

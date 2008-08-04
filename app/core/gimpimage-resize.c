@@ -220,7 +220,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_image_undo_group_end (image);
 
-  gimp_image_emit_size_changed_signals (image, offset_x, offset_y);
+  gimp_image_size_changed_detailed (image, offset_x, offset_y);
 
   g_object_thaw_notify (G_OBJECT (image));
 
