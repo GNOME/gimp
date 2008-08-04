@@ -1046,9 +1046,9 @@ mblur_dialog (gint32        image_ID,
                                     G_CALLBACK (mblur_radio_button_update),
                                     &mbvals.mblur_type, mbvals.mblur_type,
 
-                                    _("_Linear"), MBLUR_LINEAR, NULL,
-                                    _("_Radial"), MBLUR_RADIAL, NULL,
-                                    _("_Zoom"),   MBLUR_ZOOM,   NULL,
+                                    C_("blur-type", "_Linear"),  MBLUR_LINEAR, NULL,
+                                    C_("blur-type", "_Radial"),  MBLUR_RADIAL, NULL,
+                                    C_("blur-type", "_Zoom"),    MBLUR_ZOOM,   NULL,
 
                                     NULL);
 

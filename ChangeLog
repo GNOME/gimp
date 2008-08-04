@@ -1,5 +1,10 @@
 2008-08-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/blur-motion.c (mblur_dialog): added translation
+	context to blur-type menu (bug #546204).
+
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/value-propagate.c: applied patch from Liam Quin
 	as attached to bug #546159. Fixes bad data access for black and
 	white propagation and removes unneeded calls to sqrt().
