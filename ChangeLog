@@ -1,5 +1,15 @@
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_guide):
+	draw the guide all across the canvas, not limiting it to the image.
+
+	* app/tools/gimpdrawtool.[ch]: added new function
+	gimp_draw_tool_draw_guide_line().
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_draw): use it.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: moved the Windows menu next to the Help
 	menu.
 

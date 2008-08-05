@@ -69,8 +69,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                gboolean          active)
 {
   gint  position;
-  gint  x1, x2, y1, y2;
-  gint  x, y, w, h;
+  gint  x1, y1, x2, y2;
+  gint  x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_GUIDE (guide));
@@ -80,18 +80,10 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
   if (position < 0)
     return;
 
-  gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
-  gimp_display_shell_transform_xy (shell,
-                                   gimp_image_get_width  (shell->display->image),
-                                   gimp_image_get_height (shell->display->image),
-                                   &x2, &y2, FALSE);
+  x1 = 0;
+  y1 = 0;
 
-  gdk_drawable_get_size (shell->canvas->window, &w, &h);
-
-  x1 = MAX (x1, 0);
-  y1 = MAX (y1, 0);
-  x2 = MIN (x2, w);
-  y2 = MIN (y2, h);
+  gdk_drawable_get_size (shell->canvas->window, &x2, &y2);
 
   switch (gimp_guide_get_orientation (guide))
     {
@@ -129,9 +121,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell,
-                                         (GimpGuide *) list->data,
-                                         FALSE);
+          gimp_display_shell_draw_guide (shell, list->data, FALSE);
         }
     }
 }
