@@ -1124,6 +1124,10 @@ gimp_image_real_size_changed_detailed (GimpImage *image,
                                        gint       previous_origin_x,
                                        gint       previous_origin_y)
 {
+  /* Whenever GimpImage::size-changed-detailed is emitted, so is
+   * GimpViewable::size-changed. Clients choose what signal to listen
+   * to depending on how much info they need.
+   */
   gimp_viewable_size_changed (GIMP_VIEWABLE (image));
 }
 
