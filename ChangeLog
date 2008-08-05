@@ -1,5 +1,17 @@
 2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Don't setup scrollbar step
+	increment here.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Setup scrollbar
+	step increment here and make sure that a step always scrolls at
+	least a display shell pixel.
+
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpimage.c (gimp_image_real_size_changed_detailed):
 	Clarify the design with a comment.
 

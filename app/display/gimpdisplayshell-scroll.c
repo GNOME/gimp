@@ -420,6 +420,8 @@ gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
       shell->hsbdata->upper = MAX (value + shell->disp_width,
                                    sw + (shell->disp_width - sw) / 2);
     }
+
+  shell->hsbdata->step_increment = MAX (shell->scale_x, 1.0);
 }
 
 /**
@@ -460,4 +462,6 @@ gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
       shell->vsbdata->upper = MAX (value + shell->disp_height,
                                    sh + (shell->disp_height - sh) / 2);
     }
+
+  shell->vsbdata->step_increment = MAX (shell->scale_y, 1.0);
 }

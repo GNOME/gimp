@@ -124,7 +124,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   shell->hsbdata->value          = shell->offset_x;
   shell->hsbdata->page_size      = shell->disp_width;
   shell->hsbdata->page_increment = shell->disp_width / 2;
-  shell->hsbdata->step_increment = shell->scale_x;
 
   gimp_display_shell_setup_hscrollbar_with_value (shell, shell->offset_x);
 
@@ -136,7 +135,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   shell->vsbdata->value          = shell->offset_y;
   shell->vsbdata->page_size      = shell->disp_height;
   shell->vsbdata->page_increment = shell->disp_height / 2;
-  shell->vsbdata->step_increment = shell->scale_y;
 
   gimp_display_shell_setup_vscrollbar_with_value (shell, shell->offset_y);
 
