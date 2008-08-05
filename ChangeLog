@@ -1,3 +1,13 @@
+2008-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-transform.c: get rid of the "image"
+	part in all instances of "scaled_image_viewport_offset", we call
+	it simply "viewport" in all other places and it makes the code
+	more readable.
+
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gimpdbusservice.[ch]: changed refcounting and fixed a

@@ -149,8 +149,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
     gdouble vertical_lower;
     gdouble vertical_upper;
     gdouble vertical_max_size;
-    gint    scaled_image_viewport_offset_x;
-    gint    scaled_image_viewport_offset_y;
+    gint    scaled_viewport_offset_x;
+    gint    scaled_viewport_offset_y;
 
 
     /* Initialize values */
@@ -182,23 +182,23 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
     /* Adjust due to scrolling */
 
-    gimp_display_shell_get_scaled_image_viewport_offset (shell,
-                                                         &scaled_image_viewport_offset_x,
-                                                         &scaled_image_viewport_offset_y);
+    gimp_display_shell_get_scaled_viewport_offset (shell,
+                                                   &scaled_viewport_offset_x,
+                                                   &scaled_viewport_offset_y);
 
     horizontal_lower -= img2real (shell, TRUE,
                                   FUNSCALEX (shell,
-					     (gdouble) scaled_image_viewport_offset_x));
+					     (gdouble) scaled_viewport_offset_x));
     horizontal_upper -= img2real (shell, TRUE,
                                   FUNSCALEX (shell,
-					     (gdouble) scaled_image_viewport_offset_x));
+					     (gdouble) scaled_viewport_offset_x));
 
     vertical_lower   -= img2real (shell, FALSE,
                                   FUNSCALEY (shell,
-					     (gdouble) scaled_image_viewport_offset_y));
+					     (gdouble) scaled_viewport_offset_y));
     vertical_upper   -= img2real (shell, FALSE,
                                   FUNSCALEY (shell,
-					     (gdouble) scaled_image_viewport_offset_y));
+					     (gdouble) scaled_viewport_offset_y));
 
 
     /* Finally setup the actual rulers */
