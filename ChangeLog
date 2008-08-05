@@ -1,5 +1,10 @@
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_scale): don't waste CPU
+	cycles scaling an empty channel.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.h
 	* app/base/tile-pyramid.h: moved a misplaced comment to the right
 	place.
