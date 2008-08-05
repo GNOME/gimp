@@ -133,10 +133,18 @@ gimp_tag_popup_dispose (GObject           *object)
       g_object_unref (tag_popup->layout);
       tag_popup->layout = NULL;
     }
+
   if (tag_popup->context)
     {
       g_object_unref (tag_popup->context);
       tag_popup->context = NULL;
+    }
+
+  if (tag_popup->close_rectangles)
+    {
+      g_list_foreach (tag_popup->close_rectangles, (GFunc) g_free, NULL);
+      g_list_free (tag_popup->close_rectangles);
+      tag_popup->close_rectangles = NULL;
     }
 
   g_free (tag_popup->tag_data);
@@ -376,6 +384,16 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
       tag_popup->tag_data[i].bounds.height     /= PANGO_SCALE;
       if (tag_popup->tag_data[i].bounds.width + x + 3 +GIMP_TAG_POPUP_MARGIN > width)
         {
+          if (tag_popup->tag_data[i].bounds.width + line_height + GIMP_TAG_POPUP_MARGIN < width)
+            {
+              GdkRectangle     *close_rect = g_malloc (sizeof (GdkRectangle));
+              close_rect->x = x;
+              close_rect->y = y;
+              close_rect->width = width - (tag_popup->tag_data[i].bounds.width + line_height + GIMP_TAG_POPUP_MARGIN);
+              close_rect->height = line_height + 2;
+              tag_popup->close_rectangles = g_list_append (tag_popup->close_rectangles,
+                                                           close_rect);
+            }
           x = GIMP_TAG_POPUP_MARGIN;
           y += line_height + 2;
         }
@@ -680,6 +698,26 @@ gimp_tag_popup_list_event (GtkWidget          *widget,
                                          &tag_popup->tag_data[i]);
               gtk_widget_queue_draw (widget);
               break;
+            }
+        }
+
+      if (i == tag_popup->tag_count)
+        {
+          GList            *iterator = tag_popup->close_rectangles;
+
+          while (iterator)
+            {
+              bounds = (GdkRectangle *) iterator->data;
+              if (x >= bounds->x
+                  && y >= bounds->y
+                  && x < bounds->x + bounds->width
+                  && y < bounds->y + bounds->height)
+                {
+                  gtk_widget_destroy (GTK_WIDGET (tag_popup));
+                  break;
+                }
+
+              iterator = g_list_next (iterator);
             }
         }
     }

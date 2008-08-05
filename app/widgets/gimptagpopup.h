@@ -50,6 +50,7 @@ struct _GimpTagPopup
   PopupTagData         *tag_data;
   PopupTagData         *prelight;
   gint                  tag_count;
+  GList                *close_rectangles;
   guint                 timeout_id;
   gint                  scroll_height;
   gint                  scroll_y;
