@@ -377,13 +377,13 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
       if (tag_popup->tag_data[i].bounds.width + x + 3 +GIMP_TAG_POPUP_MARGIN > width)
         {
           x = GIMP_TAG_POPUP_MARGIN;
-          y += line_height + 4;
+          y += line_height + 2;
         }
 
       tag_popup->tag_data[i].bounds.x = x;
       tag_popup->tag_data[i].bounds.y = y;
 
-      x += tag_popup->tag_data[i].bounds.width + space_width + 3;
+      x += tag_popup->tag_data[i].bounds.width + space_width + 5;
     }
   height = y + line_height + GIMP_TAG_POPUP_MARGIN;
 
@@ -614,10 +614,10 @@ gimp_tag_popup_list_expose (GtkWidget           *widget,
       if (tag_popup->tag_data[i].state == GTK_STATE_SELECTED)
         {
           gdk_draw_rectangle (widget->window, gc, FALSE,
-                              tag_popup->tag_data[i].bounds.x,
-                              tag_popup->tag_data[i].bounds.y - tag_popup->scroll_y,
-                              tag_popup->tag_data[i].bounds.width,
-                              tag_popup->tag_data[i].bounds.height);
+                              tag_popup->tag_data[i].bounds.x - 1,
+                              tag_popup->tag_data[i].bounds.y - tag_popup->scroll_y + 1,
+                              tag_popup->tag_data[i].bounds.width + 2,
+                              tag_popup->tag_data[i].bounds.height - 2);
         }
       pango_renderer_draw_layout (renderer, tag_popup->layout,
                                   (tag_popup->tag_data[i].bounds.x) * PANGO_SCALE,
