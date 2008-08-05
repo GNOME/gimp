@@ -1,3 +1,9 @@
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	Only center on the mouse pointer when zooming if it is within the
+	canvas.
+
 2008-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-scroll.[ch]
@@ -12,12 +18,6 @@
 
 	* app/gui/gimpdbusservice.[ch]: changed refcounting and fixed a
 	bug that I had introduced with the latest changes.
-
-2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
-
-	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
-	Only center on the mouse pointer when zooming if it is within the
-	canvas.
 
 2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
