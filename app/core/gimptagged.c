@@ -26,6 +26,7 @@
 #include "core-types.h"
 
 #include "gimpmarshal.h"
+#include "gimptag.h"
 #include "gimptagged.h"
 
 
@@ -77,18 +78,18 @@ gimp_tagged_base_init (gpointer klass)
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET (GimpTaggedInterface, tag_added),
                       NULL, NULL,
-                      gimp_marshal_VOID__INT,
+                      g_cclosure_marshal_VOID__OBJECT,
                       G_TYPE_NONE, 1,
-                      G_TYPE_INT);
+                      GIMP_TYPE_TAG);
       gimp_tagged_signals[TAG_REMOVED] =
         g_signal_new ("tag-removed",
                       GIMP_TYPE_TAGGED,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET (GimpTaggedInterface, tag_removed),
                       NULL, NULL,
-                      gimp_marshal_VOID__INT,
+                      g_cclosure_marshal_VOID__OBJECT,
                       G_TYPE_NONE, 1,
-                      G_TYPE_INT);
+                      GIMP_TYPE_TAG);
 
       initialized = TRUE;
     }

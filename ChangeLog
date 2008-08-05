@@ -1,5 +1,10 @@
 2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimptagged.c (gimp_tagged_base_init): marshal GimpTags as
+	objects.
+
+2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagpopup.[ch]: horizontal space at the end of each
 	line can be used to close tag popup.
 
