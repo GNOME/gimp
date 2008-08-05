@@ -1018,6 +1018,13 @@ gimp_tag_entry_button_release  (GtkWidget         *widget,
 static gboolean
 gimp_tag_entry_try_select_jellybean (GimpTagEntry      *tag_entry)
 {
+  gint selection_pos = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+  gint char_count = g_utf8_strlen (gtk_entry_get_text (GTK_ENTRY (tag_entry)), -1);
+  if (selection_pos == char_count)
+    {
+      return FALSE;
+    }
+
   gimp_tag_entry_select_jellybean (tag_entry);
   return FALSE;
 }
@@ -1044,7 +1051,7 @@ gimp_tag_entry_jellybean_is_valid (const gchar *jellybean)
 }
 
 static gboolean
-gimp_tag_entry_select_jellybean (GimpTagEntry             *entry)
+gimp_tag_entry_select_jellybean (GimpTagEntry          *entry)
 {
   gchar        *original_string;
   gchar        *jellybean_start;
