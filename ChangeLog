@@ -1,3 +1,8 @@
+2008-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: move update_range
+	callbacks where they belong and make them static.
+
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/tips-dialog.c (tips_dialog_create): added a
