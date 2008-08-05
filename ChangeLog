@@ -1,5 +1,10 @@
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/tips-dialog.c (tips_dialog_create): added a
+	translator comment for the "Learn more" button.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_guide):
 	draw the guide all across the canvas, not limiting it to the image.
 

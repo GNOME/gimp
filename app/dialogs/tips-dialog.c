@@ -190,6 +190,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (hbox);
   
   more_button = gtk_link_button_new_with_label ("http://docs.gimp.org/",
+  /*  a link to the related section in the user manual  */
                                                 _("Learn more"));
   gtk_widget_show (more_button);
   gtk_box_pack_start (GTK_BOX (hbox), more_button, FALSE, FALSE, 0);
