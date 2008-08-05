@@ -325,8 +325,9 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   x = shell->disp_width  / 2;
   y = shell->disp_height / 2;
 
-  /*  Center on the mouse position instead of the display center,
-   *  if one of the following conditions is fulfilled:
+  /*  Center on the mouse position instead of the display center if
+   *  one of the following conditions are fulfilled and pointer is
+   *  within the canvas:
    *
    *   (1) there's no current event (the action was triggered by an
    *       input controller)
@@ -343,7 +344,21 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       gtk_get_event_widget (event) == shell->canvas ||
       gtk_get_event_widget (event) == GTK_WIDGET (shell))
     {
-      gtk_widget_get_pointer (shell->canvas, &x, &y);
+      gint canvas_pointer_x;
+      gint canvas_pointer_y;
+
+      gtk_widget_get_pointer (shell->canvas,
+                              &canvas_pointer_x,
+                              &canvas_pointer_y);
+
+      if (canvas_pointer_x >= 0 &&
+          canvas_pointer_y >= 0 &&
+          canvas_pointer_x < shell->disp_width &&
+          canvas_pointer_y < shell->disp_height)
+        {
+          x = canvas_pointer_x;
+          y = canvas_pointer_y;
+        }
     }
 
   gimp_display_shell_scale_to (shell, zoom_type, new_scale, x, y);

@@ -15,6 +15,12 @@
 
 2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	Only center on the mouse pointer when zooming if it is within the
+	canvas.
+
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_setup): Don't setup scrollbar step
 	increment here.
