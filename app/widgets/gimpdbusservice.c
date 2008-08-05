@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpDBusService
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2007, 2008 Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@
 
 typedef struct
 {
-  Gimp     *gimp;
   gchar    *uri;
   gboolean  as_new;
 } OpenData;
@@ -194,7 +193,6 @@ gimp_dbus_service_open_data_new (GimpDBusService *service,
 {
   OpenData *data = g_slice_new (OpenData);
 
-  data->gimp   = g_object_ref (service->gimp);
   data->uri    = g_strdup (uri);
   data->as_new = as_new;
 
@@ -204,24 +202,25 @@ gimp_dbus_service_open_data_new (GimpDBusService *service,
 static void
 gimp_dbus_service_open_data_free (OpenData *data)
 {
-  g_object_unref (data->gimp);
   g_free (data->uri);
-
   g_slice_free (OpenData, data);
 }
 
 static gboolean
-gimp_dbus_service_open_idle (GQueue *queue)
+gimp_dbus_service_open_idle (GimpDBusService *service)
 {
-  OpenData *data = g_queue_pop_tail (queue);
+  OpenData *data = g_queue_pop_tail (service->queue);
 
   if (data)
     {
-      file_open_from_command_line (data->gimp, data->uri, data->as_new);
+      file_open_from_command_line (service->gimp, data->uri, data->as_new);
+
       gimp_dbus_service_open_data_free (data);
 
       return TRUE;
     }
+
+  service->source = NULL;
 
   return FALSE;
 }
@@ -239,8 +238,8 @@ gimp_dbus_service_queue_open (GimpDBusService *service,
       service->source = g_idle_source_new ();
 
       g_source_set_callback (service->source,
-                             (GSourceFunc) gimp_dbus_service_open_idle,
-                             service->queue, NULL);
+                             (GSourceFunc) gimp_dbus_service_open_idle, service,
+                             NULL);
       g_source_attach (service->source, NULL);
       g_source_unref (service->source);
     }
