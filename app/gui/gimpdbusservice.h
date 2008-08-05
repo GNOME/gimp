@@ -46,6 +46,8 @@ struct _GimpDBusService
   GObject  parent_instance;
 
   Gimp    *gimp;
+  GQueue  *queue;
+  GSource *source;
 };
 
 struct _GimpDBusServiceClass
