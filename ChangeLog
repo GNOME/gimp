@@ -1,5 +1,12 @@
 2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimptag.[ch]
+	* app/core/gimptagcache.c (gimp_tag_cache_load_text)
+	* app/widgets/gimptagentry.c (gimp_tag_entry_assign_tags): added rules
+	tag names.
+
+2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimpfilteredcontainer.[ch]
 	* app/widgets/gimpcombotagentry.[ch]: make tag popup arrow insensitive
 	when tag list is empty.

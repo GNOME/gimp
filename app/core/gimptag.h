@@ -24,6 +24,8 @@
 
 #include "gimpobject.h"
 
+#define GIMP_TAG_INTERNAL_PREFIX        "gimp:"
+
 #define GIMP_TYPE_TAG                   (gimp_tag_get_type ())
 #define GIMP_TAG(obj)                   (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG, GimpTag))
 #define GIMP_TAG_CLASS(klass)           (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG, GimpTagClass))
@@ -62,7 +64,10 @@ gint            gimp_tag_compare_func          (const void     *p1,
 gint            gimp_tag_compare_with_string   (GimpTag        *tag,
                                                 const gchar    *string);
 
-gboolean        gimp_tag_string_is_valid       (const gchar    *tag_string);
+gchar         * gimp_tag_string_make_valid     (const gchar    *tag_string);
+
+gboolean        g_unichar_is_sentence_terminal    (gunichar    c);
+gboolean        g_unichar_is_terminal_punctuation (gunichar    c);
 
 #endif // __GIMP_TAG_H__
 

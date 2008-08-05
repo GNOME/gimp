@@ -513,12 +513,17 @@ gimp_tag_cache_load_text (GMarkupParseContext *context,
       memcpy (buffer, text, text_len);
       buffer[text_len] = '\0';
 
-      printf ("assigning tag %s to %s\n", buffer,
-              g_quark_to_string (parse_data->current_record.identifier));
-
       tag = gimp_tag_new (buffer);
-      parse_data->current_record.tags = g_list_append (parse_data->current_record.tags,
-                                                       tag);
+      if (tag)
+        {
+          parse_data->current_record.tags = g_list_append (parse_data->current_record.tags,
+                                                           tag);
+        }
+      else
+        {
+          g_warning ("dropping invalid tag '%s' from '%s'\n", buffer,
+              g_quark_to_string (parse_data->current_record.identifier));
+        }
     }
 }
 

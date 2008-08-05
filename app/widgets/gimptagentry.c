@@ -403,9 +403,9 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
   count = g_strv_length (parsed_tags);
   for (i = 0; i < count; i++)
     {
-      if (gimp_tag_string_is_valid (parsed_tags[i]))
+      tag = gimp_tag_new (parsed_tags[i]);
+      if (tag)
         {
-          tag = gimp_tag_new (parsed_tags[i]);
           tag_list = g_list_append (tag_list, tag);
         }
     }
