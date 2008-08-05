@@ -1,3 +1,9 @@
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.h
+	* app/base/tile-pyramid.h: moved a misplaced comment to the right
+	place.
+
 2008-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: move update_range
