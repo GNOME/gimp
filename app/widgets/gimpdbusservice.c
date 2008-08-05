@@ -68,6 +68,44 @@ gimp_dbus_service_new (Gimp *gimp)
   return G_OBJECT (service);
 }
 
+typedef struct
+{
+  Gimp     *gimp;
+  gchar    *uri;
+  gboolean  as_new;
+} IdleData;
+
+static IdleData *
+gimp_dbus_service_open_idle_new (GimpDBusService *service,
+                                 const gchar     *uri,
+                                 gboolean         as_new)
+{
+  IdleData *data = g_slice_new (IdleData);
+
+  data->gimp   = g_object_ref (service->gimp);
+  data->uri    = g_strdup (uri);
+  data->as_new = as_new;
+
+  return data;
+}
+
+static void
+gimp_dbus_service_open_idle_free (IdleData *data)
+{
+  g_object_unref (data->gimp);
+  g_free (data->uri);
+
+  g_slice_free (IdleData, data);
+}
+
+static gboolean
+gimp_dbus_service_open_idle (IdleData *data)
+{
+  file_open_from_command_line (data->gimp, data->uri, data->as_new);
+
+  return FALSE;
+}
+
 gboolean
 gimp_dbus_service_open (GimpDBusService  *service,
                         const gchar      *uri,
@@ -78,7 +116,15 @@ gimp_dbus_service_open (GimpDBusService  *service,
   g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (success != NULL, FALSE);
 
-  *success = file_open_from_command_line (service->gimp, uri, FALSE);
+  g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                   (GSourceFunc) gimp_dbus_service_open_idle,
+                   gimp_dbus_service_open_idle_new (service, uri, FALSE),
+                   (GDestroyNotify) gimp_dbus_service_open_idle_free);
+
+  /*  The call always succeeds as it is handled in one way or another.
+   *  Even presenting an error message is considered success ;-)
+   */
+  *success = TRUE;
 
   return TRUE;
 }
@@ -93,7 +139,15 @@ gimp_dbus_service_open_as_new (GimpDBusService  *service,
   g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (success != NULL, FALSE);
 
-  *success = file_open_from_command_line (service->gimp, uri, TRUE);
+  g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                   (GSourceFunc) gimp_dbus_service_open_idle,
+                   gimp_dbus_service_open_idle_new (service, uri, TRUE),
+                   (GDestroyNotify) gimp_dbus_service_open_idle_free);
+
+  /*  The call always succeeds as it is handled in one way or another.
+   *  Even presenting an error message is considered success ;-)
+   */
+  *success = TRUE;
 
   return TRUE;
 }
@@ -115,5 +169,6 @@ gimp_dbus_service_activate (GimpDBusService  *service,
 
   return TRUE;
 }
+
 
 #endif /* HAVE_DBUS_GLIB */
