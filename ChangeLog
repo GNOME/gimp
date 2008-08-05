@@ -1,5 +1,8 @@
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/value-propagate.c (value_propagate_body):
+	reduced number of progress updates.
+
 	* app/core/gimpchannel.c (gimp_channel_scale): don't waste CPU
 	cycles scaling an empty channel.
 

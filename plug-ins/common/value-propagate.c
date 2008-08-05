@@ -518,7 +518,7 @@ value_propagate_body (GimpDrawable *drawable,
       nr = swap;
 
 
-      if (((y % 5) == 0) && !preview)
+      if (((y % 16) == 0) && !preview)
         gimp_progress_update ((gdouble) y / (gdouble) (endy - begy));
     }
 
@@ -530,7 +530,7 @@ value_propagate_body (GimpDrawable *drawable,
   else
     {
       /*  update the region  */
-      gimp_progress_update(1.0);
+      gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, begx, begy, endx-begx, endy-begy);
