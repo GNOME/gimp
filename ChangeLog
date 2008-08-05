@@ -1,5 +1,10 @@
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: moved the Windows menu next to the Help
+	menu.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gimpdbusservice.c: open the files from an idle handler.
 	Opening a file may take a while (in particular if it involves
 	asking the user for input) and we need to respond to the D-Bus

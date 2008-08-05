@@ -558,19 +558,6 @@
       <menuitem action="context-colors-swap" />
     </menu>
 
-    <menu action="windows-menu" name="Windows">
-      <menu action="windows-docks-menu" name="Recently Closed Docks" />
-      <menu action="windows-dialogs-menu" name="Dockable Dialogs">
-	<xi:include href="dialogs-menuitems.xml" />
-      </menu>
-      <separator />
-      <placeholder name="Images" />
-      <separator />
-      <placeholder name="Docks">
-	<menuitem action="windows-show-toolbox" />
-      </placeholder>
-    </menu>
-
     <menu action="plug-in-menu" name="Filters">
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
@@ -616,6 +603,19 @@
     </menu>
 
     <placeholder name="Menus" />
+
+    <menu action="windows-menu" name="Windows">
+      <menu action="windows-docks-menu" name="Recently Closed Docks" />
+      <menu action="windows-dialogs-menu" name="Dockable Dialogs">
+	<xi:include href="dialogs-menuitems.xml" />
+      </menu>
+      <separator />
+      <placeholder name="Images" />
+      <separator />
+      <placeholder name="Docks">
+	<menuitem action="windows-show-toolbox" />
+      </placeholder>
+    </menu>
 
     <menu action="help-menu" name="Help">
       <menuitem action="help-help" />
