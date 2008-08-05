@@ -53,6 +53,10 @@ static gboolean gimp_combo_tag_entry_event             (GtkWidget         *widge
                                                         gpointer           user_data);
 static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry *combo_entry);
 
+static void     gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
+                                                        gint                    tag_count,
+                                                        GimpComboTagEntry      *combo_entry);
+
 
 G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GTK_TYPE_EVENT_BOX);
 
@@ -104,6 +108,16 @@ gimp_combo_tag_entry_dispose (GObject           *object)
       combo_entry->insensitive_item_attr = NULL;
     }
 
+  if (combo_entry->filtered_container)
+    {
+      g_signal_handlers_disconnect_by_func (combo_entry->filtered_container,
+                                            G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
+                                            combo_entry);
+
+      g_object_unref (combo_entry->filtered_container);
+      combo_entry->filtered_container = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -114,6 +128,8 @@ gimp_combo_tag_entry_new (GimpTagEntry         *tag_entry)
 
   combo_entry = g_object_new (GIMP_TYPE_COMBO_TAG_ENTRY, NULL);
   combo_entry->tag_entry = GTK_WIDGET (tag_entry);
+  combo_entry->filtered_container = tag_entry->tagged_container;
+  g_object_ref (combo_entry->filtered_container);
 
   gtk_widget_add_events (GTK_WIDGET (combo_entry),
                          GDK_BUTTON_PRESS_MASK);
@@ -141,6 +157,11 @@ gimp_combo_tag_entry_new (GimpTagEntry         *tag_entry)
                     G_CALLBACK (gimp_combo_tag_entry_focus_in_out),
                     combo_entry);
 
+  g_signal_connect (combo_entry->filtered_container,
+                    "tag-count-changed",
+                    G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
+                    combo_entry);
+
   return GTK_WIDGET (combo_entry);
 }
 
@@ -155,6 +176,7 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
   GtkAllocation        *allocation;
   GdkRectangle          client_area;
   GdkRectangle          shadow_area;
+  gint                  tag_count;
 
   tag_entry   = combo_entry->tag_entry;
   style       = gtk_widget_get_style (tag_entry);
@@ -197,7 +219,9 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
                        client_area.width, client_area.width);
     }
 
-  gtk_paint_arrow (style, widget->window, GTK_WIDGET_STATE (tag_entry),
+  tag_count = gimp_filtered_container_get_tag_count (combo_entry->filtered_container);
+
+  gtk_paint_arrow (style, widget->window, tag_count > 0 ? GTK_STATE_NORMAL : GTK_STATE_INSENSITIVE,
                   GTK_SHADOW_NONE, NULL, NULL, NULL,
                   GTK_ARROW_DOWN, TRUE,
                   shadow_area.x + shadow_area.width - 14,
@@ -340,6 +364,20 @@ gimp_combo_tag_entry_event (GtkWidget          *widget,
 static void
 gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
 {
-  combo_entry->popup = gimp_tag_popup_new (combo_entry);
+  gint          tag_count;
+
+  tag_count = gimp_filtered_container_get_tag_count (combo_entry->filtered_container);
+  if (tag_count > 0)
+    {
+      combo_entry->popup = gimp_tag_popup_new (combo_entry);
+    }
+}
+
+static void
+gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
+                                        gint                    tag_count,
+                                        GimpComboTagEntry      *combo_entry)
+{
+  gtk_widget_queue_draw (GTK_WIDGET (combo_entry));
 }
 

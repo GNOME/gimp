@@ -40,6 +40,7 @@ struct _GimpComboTagEntry
   GtkWidget                    *tag_entry;
   GtkWidget                    *alignment;
   GtkWidget                    *popup;
+  GimpFilteredContainer        *filtered_container;
   gint                          focus_width;
   PangoAttrList                *normal_item_attr;
   PangoAttrList                *selected_item_attr;

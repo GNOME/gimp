@@ -42,11 +42,15 @@ struct _GimpFilteredContainer
   GimpContainer        *src_container;
   GList                *filter;
   GHashTable           *tag_ref_counts;
+  gint                  tag_count;
 };
 
 struct _GimpFilteredContainerClass
 {
   GimpContainerClass  parent_class;
+
+  void      (* tag_count_changed)     (GimpFilteredContainer  *container,
+                                       gint                    count);
 };
 
 
@@ -59,5 +63,6 @@ void            gimp_filtered_container_set_filter    (GimpFilteredContainer   *
 
 GList         * gimp_filtered_container_get_filter    (GimpFilteredContainer   *container);
 
+gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer   *container);
 
 #endif  /* __GIMP_FILTERED_CONTAINER_H__ */

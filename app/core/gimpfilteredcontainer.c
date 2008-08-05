@@ -29,10 +29,19 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpmarshal.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 #include "gimplist.h"
 #include "gimpfilteredcontainer.h"
+
+enum
+{
+  TAG_COUNT_CHANGED,
+  LAST_SIGNAL
+};
+
+static guint        gimp_filtered_container_signals[LAST_SIGNAL] = { 0, };
 
 static void         gimp_filtered_container_dispose            (GObject               *object);
 
@@ -64,6 +73,8 @@ static void         gimp_filtered_container_tagged_item_added  (GimpTagged      
                                                                 GimpFilteredContainer  *filtered_container);
 static void         gimp_filtered_container_tagged_item_removed(GimpTagged             *tagged,
                                                                 GimpFilteredContainer  *filtered_container);
+static void         gimp_filtered_container_tag_count_changed  (GimpFilteredContainer  *filtered_container,
+                                                                gint                    tag_count);
 
 
 G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
@@ -80,6 +91,18 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
   g_object_class->dispose             = gimp_filtered_container_dispose;
 
   gimp_object_class->get_memsize      = gimp_filtered_container_get_memsize;
+
+  klass->tag_count_changed            = gimp_filtered_container_tag_count_changed;
+
+  gimp_filtered_container_signals[TAG_COUNT_CHANGED] =
+      g_signal_new ("tag-count-changed",
+                    GIMP_TYPE_FILTERED_CONTAINER,
+                    G_SIGNAL_RUN_LAST,
+                    G_STRUCT_OFFSET (GimpFilteredContainerClass, tag_count_changed),
+                    NULL, NULL,
+                    gimp_marshal_VOID__INT,
+                    G_TYPE_NONE, 1,
+                    G_TYPE_INT);
 }
 
 static void
@@ -88,6 +111,7 @@ gimp_filtered_container_init (GimpFilteredContainer *filtered_container)
   filtered_container->src_container             = NULL;
   filtered_container->filter                    = NULL;
   filtered_container->tag_ref_counts            = NULL;
+  filtered_container->tag_count                 = 0;
 }
 
 static void
@@ -277,7 +301,9 @@ gimp_filtered_container_src_freeze (GimpContainer              *src_container,
 {
   gimp_container_freeze (GIMP_CONTAINER (filtered_container));
   gimp_container_clear (GIMP_CONTAINER (filtered_container));
+
   g_hash_table_remove_all (filtered_container->tag_ref_counts);
+  filtered_container->tag_count = 0;
 }
 
 static void
@@ -347,6 +373,13 @@ gimp_filtered_container_tag_added (GimpTagged            *tagged,
   ref_count++;
   g_hash_table_insert (filtered_container->tag_ref_counts,
                        tag, GINT_TO_POINTER (ref_count));
+  if (ref_count == 1)
+    {
+      filtered_container->tag_count++;
+      g_signal_emit (filtered_container,
+                     gimp_filtered_container_signals[TAG_COUNT_CHANGED],
+                     0, filtered_container->tag_count);
+    }
 }
 
 static void
@@ -366,7 +399,27 @@ gimp_filtered_container_tag_removed (GimpTagged                  *tagged,
     }
   else
     {
-      g_hash_table_remove (filtered_container->tag_ref_counts, tag);
+      if (g_hash_table_remove (filtered_container->tag_ref_counts, tag))
+        {
+          filtered_container->tag_count--;
+          g_signal_emit (filtered_container,
+                         gimp_filtered_container_signals[TAG_COUNT_CHANGED],
+                         0, filtered_container->tag_count);
+        }
     }
+}
+
+static void
+gimp_filtered_container_tag_count_changed (GimpFilteredContainer       *container,
+                                           gint                         tag_count)
+{
+}
+
+gint
+gimp_filtered_container_get_tag_count  (GimpFilteredContainer  *container)
+{
+  g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (container), 0);
+
+  return container->tag_count;
 }
 

@@ -1,5 +1,11 @@
 2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimpfilteredcontainer.[ch]
+	* app/widgets/gimpcombotagentry.[ch]: make tag popup arrow insensitive
+	when tag list is empty.
+
+2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagpopup.c (gimp_tag_popup_layout_tags),
 	(gimp_tag_popup_list_expose): decreased height of tag highlight.
 
