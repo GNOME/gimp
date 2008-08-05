@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-05 12:38+0200\n"
-"PO-Revision-Date: 2008-08-05 12:36+0200\n"
+"PO-Revision-Date: 2008-08-05 12:43+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8392,7 +8392,7 @@ msgstr "_Nächster Tipp"
 #. a link to related section in the user manual
 #: ../app/dialogs/tips-dialog.c:194
 msgid "Learn more"
-msgstr "Mehr Details"
+msgstr "Mehr erfahren"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
