@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-22 21:25+0200\n"
-"PO-Revision-Date: 2008-07-22 13:35+0200\n"
+"POT-Creation-Date: 2008-08-05 11:31+0200\n"
+"PO-Revision-Date: 2008-08-05 11:31+0200\n"
 "Last-Translator: Frco. Javier Rial Rodríguez <fjrial@cesga.es>\n"
 "Language-Team: Galician <g11n@mancomun.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type:  text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
@@ -48,8 +48,8 @@ msgstr "Mapa de cores malo"
 #: ../plug-ins/fli/fli-gimp.c:464
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/ico/ico-load.c:651
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:223
+#: ../plug-ins/help/gimphelplocale.c:239 ../plug-ins/ico/ico-load.c:651
 #: ../plug-ins/ico/ico-load.c:728 ../plug-ins/jpeg/jpeg-load.c:111
 #: ../plug-ins/jpeg/jpeg-load.c:828 ../plug-ins/lighting/lighting-ui.c:1354
 #: ../plug-ins/psd/psd-load.c:125 ../plug-ins/psd/psd-thumb-load.c:78
@@ -165,17 +165,16 @@ msgstr "Ignorarase a canle alfa."
 #: ../plug-ins/common/mng.c:904 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:645 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1245 ../plug-ins/common/pnm.c:958
-#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/psd-save.c:1559
-#: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
-#: ../plug-ins/common/sphere-designer.c:2112 ../plug-ins/common/sunras.c:544
-#: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:671
-#: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
-#: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
-#: ../plug-ins/fli/fli-gimp.c:715
+#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/raw.c:528
+#: ../plug-ins/common/raw.c:555 ../plug-ins/common/sphere-designer.c:2112
+#: ../plug-ins/common/sunras.c:544 ../plug-ins/common/tga.c:1138
+#: ../plug-ins/common/tiff-save.c:671 ../plug-ins/common/xbm.c:1016
+#: ../plug-ins/common/xwd.c:598 ../plug-ins/fits/fits.c:457
+#: ../plug-ins/flame/flame.c:442 ../plug-ins/fli/fli-gimp.c:715
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ico/ico-save.c:1020
 #: ../plug-ins/ifs-compose/ifs-compose.c:2379 ../plug-ins/jpeg/jpeg-save.c:320
-#: ../plug-ins/lighting/lighting-ui.c:1211
+#: ../plug-ins/lighting/lighting-ui.c:1211 ../plug-ins/psd/psd-save.c:1559
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
 #, c-format
@@ -190,12 +189,12 @@ msgstr "Non foi posible abrir '%s' para a súa escritura: %s"
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:607
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1252
 #: ../plug-ins/common/pnm.c:963 ../plug-ins/common/postscript.c:1201
-#: ../plug-ins/common/psd-save.c:1564 ../plug-ins/common/sunras.c:549
-#: ../plug-ins/common/tga.c:1143 ../plug-ins/common/tiff-save.c:681
-#: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
-#: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/fli/fli-gimp.c:684 ../plug-ins/ico/ico-save.c:1015
-#: ../plug-ins/jpeg/jpeg-save.c:278 ../plug-ins/sgi/sgi.c:537
+#: ../plug-ins/common/sunras.c:549 ../plug-ins/common/tga.c:1143
+#: ../plug-ins/common/tiff-save.c:681 ../plug-ins/common/xbm.c:1021
+#: ../plug-ins/common/xpm.c:623 ../plug-ins/common/xwd.c:603
+#: ../plug-ins/fits/fits.c:462 ../plug-ins/fli/fli-gimp.c:684
+#: ../plug-ins/ico/ico-save.c:1015 ../plug-ins/jpeg/jpeg-save.c:278
+#: ../plug-ins/psd/psd-save.c:1564 ../plug-ins/sgi/sgi.c:537
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
 msgid "Saving '%s'"
@@ -479,7 +478,7 @@ msgstr "Ángulo de fase, gama 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:515 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/value-propagate.c:1097 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/value-propagate.c:1120 ../plug-ins/common/waves.c:277
 msgid "Mode"
 msgstr "Modo"
 
@@ -919,14 +918,17 @@ msgid "Blur Type"
 msgstr "Tipo de desenfoque"
 
 #: ../plug-ins/common/blur-motion.c:1049
+msgctxt "blur-type"
 msgid "_Linear"
 msgstr "_Lineal"
 
 #: ../plug-ins/common/blur-motion.c:1050
+msgctxt "blur-type"
 msgid "_Radial"
 msgstr "_Radial"
 
-#: ../plug-ins/common/blur-motion.c:1051 ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/common/blur-motion.c:1051
+msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "_Zoom"
 
@@ -5903,42 +5905,6 @@ msgstr "Visor de _procedementos"
 msgid "Procedure Browser"
 msgstr "Visor de procedementos"
 
-#: ../plug-ins/common/psd-save.c:222 ../plug-ins/psd/psd.c:114
-#: ../plug-ins/psd/psd.c:153
-msgid "Photoshop image"
-msgstr "Imaxe de Photoshop"
-
-#: ../plug-ins/common/psd-save.c:353
-#, c-format
-msgid ""
-"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
-"plug-in does not support that, using normal mode instead."
-msgstr ""
-"Non se pode gardar a capa co modo '%s' .Quer o formato PSD quer o "
-"complemento de gardado non o admite; utilizarase o modo normal no seu lugar."
-
-#: ../plug-ins/common/psd-save.c:608
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Erro: non se pode converter o tipo de imaxe básico do GIMP ao modo PSD"
-
-#: ../plug-ins/common/psd-save.c:1535
-#, c-format
-msgid ""
-"Unable to save '%s'.  The PSD file format does not support images that are "
-"more than 30,000 pixels wide or tall."
-msgstr ""
-"Non se puido gardar '%s'.  O formato de ficheiro PSD non admite imaxes que "
-"teñan máis de 30.000 píxeles de alto ou de largo."
-
-#: ../plug-ins/common/psd-save.c:1547
-#, c-format
-msgid ""
-"Unable to save '%s'.  The PSD file format does not support images with "
-"layers that are more than 30,000 pixels wide or tall."
-msgstr ""
-"Non se puido gardar '%s'.  O formato de ficheiro PSD non admite imaxes con "
-"capas que teñan máis de 30.000 píxeles de largo ou de alto."
-
 #: ../plug-ins/common/psp.c:597 ../plug-ins/common/psp.c:621
 msgid "Paint Shop Pro image"
 msgstr "Imaxe Paint Shop Pro"
@@ -7600,48 +7566,48 @@ msgid "_Dilate"
 msgstr "_Dilatar"
 
 #: ../plug-ins/common/value-propagate.c:473
-#: ../plug-ins/common/value-propagate.c:1063
+#: ../plug-ins/common/value-propagate.c:1086
 msgid "Value Propagate"
 msgstr "Propagación do valor"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1129
+#: ../plug-ins/common/value-propagate.c:1152
 msgid "Propagate"
 msgstr "Propagar"
 
-#: ../plug-ins/common/value-propagate.c:1142
+#: ../plug-ins/common/value-propagate.c:1165
 msgid "Lower t_hreshold:"
 msgstr "Límite in_ferior"
 
-#: ../plug-ins/common/value-propagate.c:1154
+#: ../plug-ins/common/value-propagate.c:1177
 msgid "_Upper threshold:"
 msgstr "Límite superior:"
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1189
 msgid "_Propagating rate:"
 msgstr "Taxa de _propagación:"
 
-#: ../plug-ins/common/value-propagate.c:1177
+#: ../plug-ins/common/value-propagate.c:1200
 msgid "To l_eft"
 msgstr "Á esqu_erda"
 
-#: ../plug-ins/common/value-propagate.c:1180
+#: ../plug-ins/common/value-propagate.c:1203
 msgid "To _right"
 msgstr "Á de_reita"
 
-#: ../plug-ins/common/value-propagate.c:1183
+#: ../plug-ins/common/value-propagate.c:1206
 msgid "To _top"
 msgstr "Á parte _superior"
 
-#: ../plug-ins/common/value-propagate.c:1186
+#: ../plug-ins/common/value-propagate.c:1209
 msgid "To _bottom"
 msgstr "A parte _inferior"
 
-#: ../plug-ins/common/value-propagate.c:1195
+#: ../plug-ins/common/value-propagate.c:1218
 msgid "Propagating _alpha channel"
 msgstr "A propagar a canle _alfa"
 
-#: ../plug-ins/common/value-propagate.c:1206
+#: ../plug-ins/common/value-propagate.c:1229
 msgid "Propagating value channel"
 msgstr "A propagar a canle de valor"
 
@@ -10211,7 +10177,7 @@ msgstr "Descoñécese o ID de axuda '%s'"
 msgid "Loading index from '%s'"
 msgstr "Cargando índice desde '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:267
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11000,6 +10966,10 @@ msgstr "_Axuda"
 #: ../plug-ins/imagemap/imap_menu.c:200
 msgid "_Contents"
 msgstr "_Contidos"
+
+#: ../plug-ins/imagemap/imap_menu.c:203
+msgid "_Zoom"
+msgstr "_Zoom"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Area List"
@@ -12250,6 +12220,42 @@ msgstr "O modo de compresión non está soportado: %d"
 msgid "Extra"
 msgstr "Extra"
 
+#: ../plug-ins/psd/psd-save.c:222 ../plug-ins/psd/psd.c:114
+#: ../plug-ins/psd/psd.c:153
+msgid "Photoshop image"
+msgstr "Imaxe de Photoshop"
+
+#: ../plug-ins/psd/psd-save.c:353
+#, c-format
+msgid ""
+"Unable to save layer with mode '%s'.  Either the PSD file format or the save "
+"plug-in does not support that, using normal mode instead."
+msgstr ""
+"Non se pode gardar a capa co modo '%s' .Quer o formato PSD quer o "
+"complemento de gardado non o admite; utilizarase o modo normal no seu lugar."
+
+#: ../plug-ins/psd/psd-save.c:608
+msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgstr "Erro: non se pode converter o tipo de imaxe básico do GIMP ao modo PSD"
+
+#: ../plug-ins/psd/psd-save.c:1535
+#, c-format
+msgid ""
+"Unable to save '%s'.  The PSD file format does not support images that are "
+"more than 30,000 pixels wide or tall."
+msgstr ""
+"Non se puido gardar '%s'.  O formato de ficheiro PSD non admite imaxes que "
+"teñan máis de 30.000 píxeles de alto ou de largo."
+
+#: ../plug-ins/psd/psd-save.c:1547
+#, c-format
+msgid ""
+"Unable to save '%s'.  The PSD file format does not support images with "
+"layers that are more than 30,000 pixels wide or tall."
+msgstr ""
+"Non se puido gardar '%s'.  O formato de ficheiro PSD non admite imaxes con "
+"capas que teñan máis de 30.000 píxeles de largo ou de alto."
+
 #: ../plug-ins/psd/psd-util.c:53
 #, c-format
 msgid "Unexpected end of file"
@@ -12363,7 +12369,7 @@ msgid "Downloading %s of image data"
 msgstr "A descargar %s dos datos da imaxe"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/uri/uri-backend-gvfs.c:224
+#: ../plug-ins/uri/uri-backend-gvfs.c:226
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:345
 #, c-format
@@ -12376,13 +12382,13 @@ msgid "Uploading %s of image data"
 msgstr "Subindo  %s dos datos da imaxe"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
-#: ../plug-ins/uri/uri-backend-gvfs.c:227
+#: ../plug-ins/uri/uri-backend-gvfs.c:230
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Transferiuse o %s dos datos da imaxe"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
-#: ../plug-ins/uri/uri-backend-gvfs.c:292
+#: ../plug-ins/uri/uri-backend-gvfs.c:296
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -12403,7 +12409,7 @@ msgstr "Produciuse un erro ao escribir %s en '%s': %s"
 msgid "Downloading image (%s of %s)"
 msgstr "Descargando imaxe (%s de %s)"
 
-#: ../plug-ins/uri/uri-backend-gvfs.c:203
+#: ../plug-ins/uri/uri-backend-gvfs.c:204
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Subindo imaxe (%s de %s)"
