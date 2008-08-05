@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-22 21:17+0200\n"
-"PO-Revision-Date: 2008-07-22 14:02+0200\n"
+"POT-Creation-Date: 2008-08-05 11:31+0200\n"
+"PO-Revision-Date: 2008-08-05 11:32+0200\n"
 "Last-Translator: Frco. Javier Rial Rodríguez <fjrial@cesga.es>\n"
 "Language-Team: Galician <g11n@mancomun.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type:  text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
@@ -825,8 +825,8 @@ msgid "Sample Merged"
 msgstr "Mostra combinada"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:175 ../app/dialogs/file-open-dialog.c:209
-#: ../app/dialogs/file-open-dialog.c:255
+#: ../app/actions/file-commands.c:180 ../app/dialogs/file-open-dialog.c:213
+#: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:475
@@ -843,7 +843,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1380
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1409
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
 #: ../app/pdb/image-cmds.c:2072 ../app/widgets/gimpdnd-xds.c:92
@@ -1834,11 +1834,11 @@ msgstr "Gardar e pechar..."
 msgid "Save this image and close its window"
 msgstr "Gardar esta imaxe e pechar a súa ventá"
 
-#: ../app/actions/file-commands.c:252
+#: ../app/actions/file-commands.c:257
 msgid "Saving canceled"
 msgstr "Cancelouse o gardado"
 
-#: ../app/actions/file-commands.c:261 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:266 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1850,36 +1850,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:291 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:296 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Gardar imaxe"
 
-#: ../app/actions/file-commands.c:297
+#: ../app/actions/file-commands.c:302
 msgid "Save a Copy of the Image"
 msgstr "Gardar unha copia da imaxe"
 
-#: ../app/actions/file-commands.c:317
+#: ../app/actions/file-commands.c:322
 msgid "Create New Template"
 msgstr "Crear novo modelo"
 
-#: ../app/actions/file-commands.c:321
+#: ../app/actions/file-commands.c:326
 msgid "Enter a name for this template"
 msgstr "Introduza un nome para este modelo"
 
-#: ../app/actions/file-commands.c:347
+#: ../app/actions/file-commands.c:352
 msgid "Revert failed. No file name associated with this image."
 msgstr "Erro ao reverter. Non hai un nome de ficheiro asociado con esta imaxe."
 
-#: ../app/actions/file-commands.c:360
+#: ../app/actions/file-commands.c:365
 msgid "Revert Image"
 msgstr "Reverter imaxe"
 
-#: ../app/actions/file-commands.c:386
+#: ../app/actions/file-commands.c:391
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Reverter '%s' a '%s'?"
 
-#: ../app/actions/file-commands.c:392
+#: ../app/actions/file-commands.c:397
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1887,19 +1887,19 @@ msgstr ""
 "Ao reverter a imaxe ao estado gardado en disco, perderá todas as súas "
 "modificacións, inclusive toda a información para desfacer."
 
-#: ../app/actions/file-commands.c:464
+#: ../app/actions/file-commands.c:473
 msgid "Open Image as Layers"
 msgstr "Abrir imaxe como capas"
 
-#: ../app/actions/file-commands.c:469 ../app/dialogs/file-open-dialog.c:76
+#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
 msgstr "Abrir imaxe"
 
-#: ../app/actions/file-commands.c:544
+#: ../app/actions/file-commands.c:553
 msgid "(Unnamed Template)"
 msgstr "(Modelo sen nome)"
 
-#: ../app/actions/file-commands.c:592
+#: ../app/actions/file-commands.c:601
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2535,7 +2535,7 @@ msgstr "Non é posible recortar porque a selección actual está baleira."
 msgid "Change Print Size"
 msgstr "Modificar tamaño de impresión"
 
-#: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:80
+#: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
 msgstr "Escalar imaxe"
 
@@ -3938,7 +3938,7 @@ msgid "New Path Options"
 msgstr "Opcións de novo camiño"
 
 #: ../app/actions/vectors-commands.c:305 ../app/pdb/paths-cmds.c:627
-#: ../app/pdb/vectors-cmds.c:1191
+#: ../app/pdb/vectors-cmds.c:1223
 msgid "Path to Selection"
 msgstr "Camiño a selección"
 
@@ -5950,15 +5950,15 @@ msgstr "Encoller canle"
 msgid "Cannot stroke empty channel."
 msgstr "Non é posible trazar unha canle en branco."
 
-#: ../app/core/gimpchannel.c:1612
+#: ../app/core/gimpchannel.c:1613
 msgid "Set Channel Color"
 msgstr "Definir cor da canle"
 
-#: ../app/core/gimpchannel.c:1660
+#: ../app/core/gimpchannel.c:1661
 msgid "Set Channel Opacity"
 msgstr "Definir a opacidade da canle"
 
-#: ../app/core/gimpchannel.c:1728 ../app/core/gimpselection.c:520
+#: ../app/core/gimpchannel.c:1729 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Máscara de selección"
 
@@ -6322,136 +6322,136 @@ msgstr "Eliminar punto de mostra"
 msgid "Move Sample Point"
 msgstr "Mover punto de mostra"
 
-#: ../app/core/gimpimage-undo-push.c:855
+#: ../app/core/gimpimage-undo-push.c:859
 #, c-format
 msgid "Can't undo %s"
 msgstr "Non é posible desfacer %s"
 
-#: ../app/core/gimpimage.c:1467
+#: ../app/core/gimpimage.c:1496
 msgid "Change Image Resolution"
 msgstr "Modificar a resolución da imaxe"
 
-#: ../app/core/gimpimage.c:1507
+#: ../app/core/gimpimage.c:1536
 msgid "Change Image Unit"
 msgstr "Modificar a unidade da imaxe"
 
-#: ../app/core/gimpimage.c:2313
+#: ../app/core/gimpimage.c:2366
 msgid "Attach Parasite to Image"
 msgstr "Anexar parásito á imaxe"
 
-#: ../app/core/gimpimage.c:2351
+#: ../app/core/gimpimage.c:2404
 msgid "Remove Parasite from Image"
 msgstr "Eliminar parásito da imaxe"
 
-#: ../app/core/gimpimage.c:2810
+#: ../app/core/gimpimage.c:2863
 msgid "Add Layer"
 msgstr "Engadir capa"
 
-#: ../app/core/gimpimage.c:2875 ../app/core/gimpimage.c:2888
+#: ../app/core/gimpimage.c:2928 ../app/core/gimpimage.c:2941
 msgid "Remove Layer"
 msgstr "Eliminar capa"
 
-#: ../app/core/gimpimage.c:3030
+#: ../app/core/gimpimage.c:3083
 msgid "Layer cannot be raised higher."
 msgstr "Non é posible subir máis a capa."
 
-#: ../app/core/gimpimage.c:3035
+#: ../app/core/gimpimage.c:3088
 msgid "Raise Layer"
 msgstr "Subir capa"
 
-#: ../app/core/gimpimage.c:3052
+#: ../app/core/gimpimage.c:3105
 msgid "Layer cannot be lowered more."
 msgstr "Non é posible baixar máis a capa."
 
-#: ../app/core/gimpimage.c:3057
+#: ../app/core/gimpimage.c:3110
 msgid "Lower Layer"
 msgstr "Baixar capa"
 
-#: ../app/core/gimpimage.c:3068
+#: ../app/core/gimpimage.c:3121
 msgid "Raise Layer to Top"
 msgstr "Subir a capa á parte superior"
 
-#: ../app/core/gimpimage.c:3083
+#: ../app/core/gimpimage.c:3136
 msgid "Lower Layer to Bottom"
 msgstr "Baixar a capa á parte inferior"
 
-#: ../app/core/gimpimage.c:3155
+#: ../app/core/gimpimage.c:3208
 msgid "Add Channel"
 msgstr "Engadir canle"
 
-#: ../app/core/gimpimage.c:3200 ../app/core/gimpimage.c:3211
+#: ../app/core/gimpimage.c:3253 ../app/core/gimpimage.c:3264
 msgid "Remove Channel"
 msgstr "Eliminar canle"
 
-#: ../app/core/gimpimage.c:3258
+#: ../app/core/gimpimage.c:3311
 msgid "Channel cannot be raised higher."
 msgstr "Non é posible subir máis a canle."
 
-#: ../app/core/gimpimage.c:3263
+#: ../app/core/gimpimage.c:3316
 msgid "Raise Channel"
 msgstr "Subir canle"
 
-#: ../app/core/gimpimage.c:3280
+#: ../app/core/gimpimage.c:3333
 msgid "Channel is already on top."
 msgstr "A canle xa está na parte superior."
 
-#: ../app/core/gimpimage.c:3285
+#: ../app/core/gimpimage.c:3338
 msgid "Raise Channel to Top"
 msgstr "Subir a canle á parte superior"
 
-#: ../app/core/gimpimage.c:3302
+#: ../app/core/gimpimage.c:3355
 msgid "Channel cannot be lowered more."
 msgstr "Non é posible baixar máis a canle."
 
-#: ../app/core/gimpimage.c:3307
+#: ../app/core/gimpimage.c:3360
 msgid "Lower Channel"
 msgstr "Baixar canle"
 
-#: ../app/core/gimpimage.c:3327
+#: ../app/core/gimpimage.c:3380
 msgid "Channel is already on the bottom."
 msgstr "A canle xa está na parte inferior."
 
-#: ../app/core/gimpimage.c:3332
+#: ../app/core/gimpimage.c:3385
 msgid "Lower Channel to Bottom"
 msgstr "Baixar canle á parte inferior"
 
-#: ../app/core/gimpimage.c:3406
+#: ../app/core/gimpimage.c:3459
 msgid "Add Path"
 msgstr "Engadir camiño"
 
-#: ../app/core/gimpimage.c:3452
+#: ../app/core/gimpimage.c:3505
 msgid "Remove Path"
 msgstr "Eliminar camiño"
 
-#: ../app/core/gimpimage.c:3496
+#: ../app/core/gimpimage.c:3549
 msgid "Path cannot be raised higher."
 msgstr "Non é posible subir máis o camiño."
 
-#: ../app/core/gimpimage.c:3501
+#: ../app/core/gimpimage.c:3554
 msgid "Raise Path"
 msgstr "Subir camiño"
 
-#: ../app/core/gimpimage.c:3518
+#: ../app/core/gimpimage.c:3571
 msgid "Path is already on top."
 msgstr "O camiño xa está na parte superior."
 
-#: ../app/core/gimpimage.c:3523
+#: ../app/core/gimpimage.c:3576
 msgid "Raise Path to Top"
 msgstr "Subir o camiño á parte superior"
 
-#: ../app/core/gimpimage.c:3540
+#: ../app/core/gimpimage.c:3593
 msgid "Path cannot be lowered more."
 msgstr "Non é posible baixar máis o camiño."
 
-#: ../app/core/gimpimage.c:3545
+#: ../app/core/gimpimage.c:3598
 msgid "Lower Path"
 msgstr "Baixar camiño"
 
-#: ../app/core/gimpimage.c:3565
+#: ../app/core/gimpimage.c:3618
 msgid "Path is already on the bottom."
 msgstr "O camiño xa está na parte inferior."
 
-#: ../app/core/gimpimage.c:3570
+#: ../app/core/gimpimage.c:3623
 msgid "Lower Path to Bottom"
 msgstr "Baixar o camiño á parte inferior"
 
@@ -6489,7 +6489,7 @@ msgstr "(A previsualización pode estar desactualizada)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:605 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
+#: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:566
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -7011,7 +7011,7 @@ msgstr "_Modo:"
 msgid "_Opacity:"
 msgstr "_Opacidade:"
 
-#: ../app/dialogs/file-open-dialog.c:242
+#: ../app/dialogs/file-open-dialog.c:246
 msgid "Open layers"
 msgstr "Abrir capas"
 
@@ -7275,7 +7275,7 @@ msgstr "Desprazar canle"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
-#: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:268
+#: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:276
 msgid "Offset"
 msgstr "Desprazamento"
 
@@ -7712,7 +7712,7 @@ msgstr "Caixa de ferramentas"
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1972
 #: ../app/dialogs/preferences-dialog.c:2146
-#: ../app/widgets/gimpgrideditor.c:196
+#: ../app/widgets/gimpgrideditor.c:204
 msgid "Appearance"
 msgstr "Aparencia"
 
@@ -7872,8 +7872,8 @@ msgid "Monitor Resolution"
 msgstr "Resolución do monitor"
 
 #: ../app/dialogs/preferences-dialog.c:2319
-#: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
-#: ../app/widgets/gimpgrideditor.c:293
+#: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
+#: ../app/widgets/gimpgrideditor.c:301
 msgid "Pixels"
 msgstr "Píxeles"
 
@@ -8281,41 +8281,45 @@ msgstr "Ferramenta Pintura:"
 msgid "_Emulate brush dynamics"
 msgstr "_Emular dinámicas do pincel"
 
-#: ../app/dialogs/tips-dialog.c:87
+#: ../app/dialogs/tips-dialog.c:89
 msgid "The GIMP tips file is empty!"
 msgstr "O ficheiro de consellos de GIMP está baleiro!"
 
-#: ../app/dialogs/tips-dialog.c:91
+#: ../app/dialogs/tips-dialog.c:93
 msgid "The GIMP tips file appears to be missing!"
 msgstr "O ficheiro de consellos de GIMP parece que falta!"
 
-#: ../app/dialogs/tips-dialog.c:93
+#: ../app/dialogs/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Debería haber un ficheiro chamado '%s'. Comprobe a súa instalación."
 
-#: ../app/dialogs/tips-dialog.c:99
+#: ../app/dialogs/tips-dialog.c:101
 msgid "The GIMP tips file could not be parsed!"
 msgstr "Non se pode analizar o ficheiro de suxestión de GIMP!"
 
-#: ../app/dialogs/tips-dialog.c:127
+#: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
 msgstr "Suxestión do día de GIMP"
 
-#: ../app/dialogs/tips-dialog.c:133
+#: ../app/dialogs/tips-dialog.c:135
 msgid "_Previous Tip"
 msgstr "Suxestión _anterior"
 
-#: ../app/dialogs/tips-dialog.c:139
+#: ../app/dialogs/tips-dialog.c:141
 msgid "_Next Tip"
 msgstr "_Seguinte suxestión"
+
+#: ../app/dialogs/tips-dialog.c:193
+msgid "Learn more"
+msgstr "Aprender máis"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
 #. according to the name of the po file used for gimp-tips.xml.
 #. E.g. for the german translation, that would be "tips-locale:de".
 #.
-#: ../app/dialogs/tips-parser.c:180
+#: ../app/dialogs/tips-parser.c:188
 msgid "tips-locale:C"
 msgstr "tips-locale:gl"
 
@@ -8439,8 +8443,8 @@ msgstr "Aplicar zoom á imaxe cando cambia o tamaño da ventá"
 msgid "Navigate the image display"
 msgstr "Navegar na pantalla da imaxe"
 
-#: ../app/display/gimpdisplayshell.c:1215
-#: ../app/display/gimpdisplayshell.c:1309 ../app/widgets/gimptoolbox.c:216
+#: ../app/display/gimpdisplayshell.c:1218
+#: ../app/display/gimpdisplayshell.c:1312 ../app/widgets/gimptoolbox.c:216
 msgid "Drop image files here to open them"
 msgstr "Arrastre aquí os ficheiros de imaxes para abrilos"
 
@@ -8495,8 +8499,8 @@ msgstr[0] ""
 "Se non garda a imaxe perderanse as modificacións feitas durante o último "
 "minuto."
 msgstr[1] ""
-"Se non garda a imaxe perderanse as modificacións feitas durante os %d últimos "
-"minutos."
+"Se non garda a imaxe perderanse as modificacións feitas durante os %d "
+"últimos minutos."
 
 #: ../app/display/gimpdisplayshell-dnd.c:208
 #: ../app/display/gimpdisplayshell-dnd.c:527
@@ -8530,19 +8534,19 @@ msgstr "Configurar os filtros de cores da pantalla"
 msgid "Layer Select"
 msgstr "Selección de Capa"
 
-#: ../app/display/gimpdisplayshell-scale.c:772
+#: ../app/display/gimpdisplayshell-scale.c:802
 msgid "Zoom Ratio"
 msgstr "Proporción de zoom"
 
-#: ../app/display/gimpdisplayshell-scale.c:774
+#: ../app/display/gimpdisplayshell-scale.c:804
 msgid "Select Zoom Ratio"
 msgstr "Seleccione a proporción de zoom"
 
-#: ../app/display/gimpdisplayshell-scale.c:817
+#: ../app/display/gimpdisplayshell-scale.c:847
 msgid "Zoom ratio:"
 msgstr "Proporción de zoom:"
 
-#: ../app/display/gimpdisplayshell-scale.c:842
+#: ../app/display/gimpdisplayshell-scale.c:872
 msgid "Zoom:"
 msgstr "Zoom:"
 
@@ -11296,13 +11300,13 @@ msgstr "Seccións de ouro"
 msgid "Aspect ratio"
 msgstr "Proporción de aspecto"
 
-#: ../app/tools/tools-enums.c:149 ../app/widgets/gimpgrideditor.c:257
-#: ../app/widgets/gimpgrideditor.c:289
+#: ../app/tools/tools-enums.c:149 ../app/widgets/gimpgrideditor.c:265
+#: ../app/widgets/gimpgrideditor.c:297
 msgid "Width"
 msgstr "Largura"
 
-#: ../app/tools/tools-enums.c:150 ../app/widgets/gimpgrideditor.c:259
-#: ../app/widgets/gimpgrideditor.c:291
+#: ../app/tools/tools-enums.c:150 ../app/widgets/gimpgrideditor.c:267
+#: ../app/widgets/gimpgrideditor.c:299
 msgid "Height"
 msgstr "Altura"
 
@@ -11473,7 +11477,7 @@ msgid "Percentage of width of brush"
 msgstr "Porcentaxe da largura do pincel"
 
 #: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:743
+#: ../app/widgets/gimpeditor.c:754
 msgid "(None)"
 msgstr "(Ningún)"
 
@@ -11739,17 +11743,17 @@ msgstr "Mover o controlador seleccionado cara a arriba"
 msgid "Move the selected controller down"
 msgstr "Mover o controlador seleccionado cara a abaixo"
 
-#: ../app/widgets/gimpcontrollerlist.c:428
+#: ../app/widgets/gimpcontrollerlist.c:430
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Engadir '%s' á lista de controladores activos"
 
-#: ../app/widgets/gimpcontrollerlist.c:479
+#: ../app/widgets/gimpcontrollerlist.c:481
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Eliminar '%s' da lista de controladores activos"
 
-#: ../app/widgets/gimpcontrollerlist.c:512
+#: ../app/widgets/gimpcontrollerlist.c:514
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -11759,7 +11763,7 @@ msgstr ""
 "\n"
 "Xa ten un controlador de teclado na súa lista de controladores activos."
 
-#: ../app/widgets/gimpcontrollerlist.c:522
+#: ../app/widgets/gimpcontrollerlist.c:524
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -11769,24 +11773,24 @@ msgstr ""
 "\n"
 "Xa ten un controlador de roda na súa lista de controladores activos."
 
-#: ../app/widgets/gimpcontrollerlist.c:549
+#: ../app/widgets/gimpcontrollerlist.c:551
 msgid "Remove Controller?"
 msgstr "Eliminar controlador?"
 
-#: ../app/widgets/gimpcontrollerlist.c:554
+#: ../app/widgets/gimpcontrollerlist.c:556
 msgid "Disable Controller"
 msgstr "Desactivar controlador"
 
-#: ../app/widgets/gimpcontrollerlist.c:556
+#: ../app/widgets/gimpcontrollerlist.c:558
 msgid "Remove Controller"
 msgstr "Eliminar o controlador"
 
-#: ../app/widgets/gimpcontrollerlist.c:567
+#: ../app/widgets/gimpcontrollerlist.c:569
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Eliminar o controlador '%s'?"
 
-#: ../app/widgets/gimpcontrollerlist.c:571
+#: ../app/widgets/gimpcontrollerlist.c:573
 #, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
@@ -11801,7 +11805,7 @@ msgstr ""
 "Ao seleccionar \"Desactivar controlador\" desactivarase o controlador sen "
 "eliminalo."
 
-#: ../app/widgets/gimpcontrollerlist.c:631
+#: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
 msgstr "Configurar o controlador de entrada"
 
@@ -12054,27 +12058,27 @@ msgstr "Posición do manipulador: %0.4f"
 msgid "Distance: %0.4f"
 msgstr "Distancia: %0.4f"
 
-#: ../app/widgets/gimpgrideditor.c:209
+#: ../app/widgets/gimpgrideditor.c:217
 msgid "Line _style:"
 msgstr "E_stilo de liña:"
 
-#: ../app/widgets/gimpgrideditor.c:213
+#: ../app/widgets/gimpgrideditor.c:221
 msgid "Change grid foreground color"
 msgstr "Modificar a cor do primeiro plano da grade"
 
-#: ../app/widgets/gimpgrideditor.c:220
+#: ../app/widgets/gimpgrideditor.c:228
 msgid "_Foreground color:"
 msgstr "Cor do _primeiro plano:"
 
-#: ../app/widgets/gimpgrideditor.c:224
+#: ../app/widgets/gimpgrideditor.c:232
 msgid "Change grid background color"
 msgstr "Modificar a cor de fondo da grade"
 
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/widgets/gimpgrideditor.c:239
 msgid "_Background color:"
 msgstr "Cor de f_ondo:"
 
-#: ../app/widgets/gimpgrideditor.c:236
+#: ../app/widgets/gimpgrideditor.c:244
 msgid "Spacing"
 msgstr "Espazamento"
 
@@ -12416,20 +12420,20 @@ msgstr "E_ncher con:"
 msgid "Comme_nt:"
 msgstr "Come_ntario:"
 
-#: ../app/widgets/gimptemplateeditor.c:528
+#: ../app/widgets/gimptemplateeditor.c:530
 msgid "_Name:"
 msgstr "_Nome:"
 
-#: ../app/widgets/gimptemplateeditor.c:541
+#: ../app/widgets/gimptemplateeditor.c:543
 msgid "_Icon:"
 msgstr "_Icona:"
 
-#: ../app/widgets/gimptemplateeditor.c:669
+#: ../app/widgets/gimptemplateeditor.c:671
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d ppp, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:671
+#: ../app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppp, %s"
