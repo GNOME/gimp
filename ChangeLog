@@ -1,3 +1,8 @@
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.[ch]: changed refcounting and fixed a
+	bug that I had introduced with the latest changes.
+
 2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
