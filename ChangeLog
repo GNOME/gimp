@@ -1,5 +1,10 @@
 2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagpopup.c (gimp_tag_popup_new): upper scroll arrow
+	is initialy insensitive as it is at the minimum scroll position.
+
+2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimpcombotagentry.c
 	* app/widgets/gimptagentry.c
 	* app/widgets/gimptagpopup.c: implemented RTL text direction support.
