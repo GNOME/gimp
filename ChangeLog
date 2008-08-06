@@ -1,5 +1,11 @@
 2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimpcombotagentry.c
+	* app/widgets/gimptagentry.c
+	* app/widgets/gimptagpopup.c: implemented RTL text direction support.
+
+2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimpcombotagentry.[ch]
 	* app/widgets/gimpdatafactoryview.c
 	* app/widgets/gimptagentry.[ch]

@@ -405,6 +405,24 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
 
       x += tag_popup->tag_data[i].bounds.width + space_width + 5;
     }
+  if (gtk_widget_get_direction (GTK_WIDGET (tag_popup)) == GTK_TEXT_DIR_RTL)
+    {
+      GList    *iterator;
+
+      for (i = 0; i < tag_popup->tag_count; i++)
+        {
+          PopupTagData *tag_data = &tag_popup->tag_data[i];
+          tag_data->bounds.x = width - tag_data->bounds.x - tag_data->bounds.width;
+        }
+
+      iterator = tag_popup->close_rectangles;
+      while (iterator)
+        {
+          GdkRectangle *rect = (GdkRectangle *) iterator->data;
+          rect->x = width - rect->x - rect->width;
+          iterator = g_list_next (iterator);
+        }
+    }
   height = y + line_height + GIMP_TAG_POPUP_MARGIN;
 
   return height;

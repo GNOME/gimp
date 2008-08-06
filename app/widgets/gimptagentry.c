@@ -1084,7 +1084,9 @@ gimp_tag_entry_expose (GtkWidget       *widget,
   PangoAttrList        *attr_list;
   PangoAttribute       *attribute;
   PangoRenderer        *renderer;
+  gint                  layout_width;
   gint                  layout_height;
+  gint                  window_width;
   gint                  window_height;
   gint                  offset;
   const char           *display_text;
@@ -1120,10 +1122,21 @@ gimp_tag_entry_expose (GtkWidget       *widget,
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
                              widget->style->text_gc[GTK_STATE_INSENSITIVE]);
   pango_layout_set_text (layout, display_text, -1);
-  gdk_drawable_get_size (GDK_DRAWABLE (event->window), NULL, &window_height);
-  pango_layout_get_size (layout, NULL, &layout_height);
+  gdk_drawable_get_size (GDK_DRAWABLE (event->window),
+                         &window_width, &window_height);
+  pango_layout_get_size (layout,
+                         &layout_width, &layout_height);
   offset = (window_height * PANGO_SCALE - layout_height) / 2;
-  pango_renderer_draw_layout (renderer, layout, offset, offset);
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      pango_renderer_draw_layout (renderer, layout,
+                                  window_width * PANGO_SCALE - layout_width - offset,
+                                  offset);
+    }
+  else
+    {
+      pango_renderer_draw_layout (renderer, layout, offset, offset);
+    }
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), NULL);
   g_object_unref (layout);

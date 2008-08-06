@@ -137,8 +137,16 @@ gimp_combo_tag_entry_new (GimpFilteredContainer        *filtered_container,
   gtk_widget_add_events (GTK_WIDGET (combo_entry),
                          GDK_BUTTON_PRESS_MASK);
 
-  border.left   = 2;
-  border.right  = 8 + 2 * 2 + 2;
+  if (gtk_widget_get_direction (GTK_WIDGET (combo_entry)) == GTK_TEXT_DIR_RTL)
+    {
+      border.left   = 8 + 2 * 2 + 2;
+      border.right  = 2;
+    }
+  else
+    {
+      border.left   = 2;
+      border.right  = 8 + 2 * 2 + 2;
+    }
   border.top    = 2;
   border.bottom = 2;
   gtk_entry_set_inner_border (GTK_ENTRY (combo_entry), &border);
@@ -177,14 +185,22 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
   tag_count = gimp_filtered_container_get_tag_count (combo_entry->filtered_container);
 
   gdk_drawable_get_size (GDK_DRAWABLE (event->window), &window_width, &window_height);
-  gdk_draw_rectangle (event->window, widget->style->base_gc[widget->state],
-                      TRUE, window_width - 16, 0, 16, window_height);
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      gdk_draw_rectangle (event->window, widget->style->base_gc[widget->state],
+                          TRUE, 0, 0, 14, window_height);
+    }
+  else
+    {
+      gdk_draw_rectangle (event->window, widget->style->base_gc[widget->state],
+                          TRUE, window_width - 14, 0, 14, window_height);
+    }
 
   gtk_paint_arrow (widget->style,
                    event->window, tag_count > 0 ? GTK_STATE_NORMAL : GTK_STATE_INSENSITIVE,
                    GTK_SHADOW_NONE, NULL, NULL, NULL,
                    GTK_ARROW_DOWN, TRUE,
-                   arrow_rect.x + arrow_rect.width - 14,
+                   arrow_rect.x + arrow_rect.width / 2 - 4,
                    arrow_rect.y + arrow_rect.height / 2 - 4, 8, 8);
 
   return FALSE;
@@ -307,9 +323,16 @@ gimp_combo_tag_entry_get_arrow_rect    (GimpComboTagEntry      *combo_entry,
 {
   GtkWidget    *widget = GTK_WIDGET (combo_entry);
 
-  arrow_rect->x = widget->allocation.width - 16 - widget->style->xthickness;
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      arrow_rect->x = widget->style->xthickness;
+    }
+  else
+    {
+      arrow_rect->x = widget->allocation.width - 16 - widget->style->xthickness * 2;
+    }
   arrow_rect->y = 0;
-  arrow_rect->width = 16;
+  arrow_rect->width = 12;
   arrow_rect->height = widget->allocation.height - widget->style->ythickness * 2;
 }
 
