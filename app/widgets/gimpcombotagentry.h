@@ -22,6 +22,7 @@
 #ifndef __GIMP_COMBO_TAG_ENTRY_H__
 #define __GIMP_COMBO_TAG_ENTRY_H__
 
+#include "gimptagentry.h"
 
 #define GIMP_TYPE_COMBO_TAG_ENTRY            (gimp_combo_tag_entry_get_type ())
 #define GIMP_COMBO_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntry))
@@ -35,10 +36,8 @@ typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;
 
 struct _GimpComboTagEntry
 {
-  GtkEventBox                   parent_instance;
+  GimpTagEntry                  parent_instance;
 
-  GtkWidget                    *tag_entry;
-  GtkWidget                    *alignment;
   GtkWidget                    *popup;
   GimpFilteredContainer        *filtered_container;
   gint                          focus_width;
@@ -51,14 +50,13 @@ struct _GimpComboTagEntry
 
 struct _GimpComboTagEntryClass
 {
-  GtkEventBoxClass              parent_class;
+  GimpTagEntryClass             parent_class;
 };
 
 
 GType       gimp_combo_tag_entry_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_combo_tag_entry_new            (GimpTagEntry          *tag_entry);
-
-GtkWidget * gimp_combo_tag_entry_get_tag_entry  (GimpComboTagEntry     *combo_entry);
+GtkWidget * gimp_combo_tag_entry_new            (GimpFilteredContainer *filtered_container,
+                                                 GimpTagEntryMode       mode);
 
 #endif  /*  __GIMP_COMBO_TAG_ENTRY_H__  */

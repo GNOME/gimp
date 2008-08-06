@@ -125,7 +125,7 @@ gimp_tag_popup_dispose (GObject           *object)
   /* FIXME: parent should do this on destroy event */
   if (tag_popup->combo_entry)
     {
-      gtk_widget_grab_focus (tag_popup->combo_entry->tag_entry);
+      gtk_widget_grab_focus (GTK_WIDGET (tag_popup->combo_entry));
       tag_popup->combo_entry->popup = NULL;
       tag_popup->combo_entry = NULL;
     }
@@ -221,10 +221,10 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
   pango_layout_set_attributes (popup->layout, combo_entry->normal_item_attr);
 
 
-  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (combo_entry->tag_entry));
+  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (combo_entry));
   current_count = g_strv_length (current_tags);
 
-  tag_hash = GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container->tag_ref_counts;
+  tag_hash = combo_entry->filtered_container->tag_ref_counts;
   tag_list = g_hash_table_get_keys (tag_hash);
   tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
   popup->tag_count = g_list_length (tag_list);
@@ -248,7 +248,7 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
   g_list_free (tag_list);
   g_strfreev (current_tags);
 
-  if (GIMP_TAG_ENTRY (combo_entry->tag_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+  if (GIMP_TAG_ENTRY (combo_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
       for (i = 0; i < popup->tag_count; i++)
         {
@@ -257,7 +257,7 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
               popup->tag_data[i].state = GTK_STATE_INSENSITIVE;
             }
         }
-      gimp_container_foreach (GIMP_CONTAINER (GIMP_TAG_ENTRY (combo_entry->tag_entry)->tagged_container),
+      gimp_container_foreach (GIMP_CONTAINER (combo_entry->filtered_container),
                               (GFunc) gimp_tag_popup_check_can_toggle, popup);
     }
 
@@ -819,7 +819,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
     }
 
   tag = gimp_tag_get_name (tag_data->tag);
-  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry));
+  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (tag_popup->combo_entry));
   tag_str = g_string_new ("");
   length = g_strv_length (current_tags);
   for (i = 0; i < length; i++)
@@ -849,13 +849,13 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
       g_string_append (tag_str, tag);
     }
 
-  gimp_tag_entry_set_tag_string (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry),
+  gimp_tag_entry_set_tag_string (GIMP_TAG_ENTRY (tag_popup->combo_entry),
                                  tag_str->str);
 
   g_string_free (tag_str, TRUE);
   g_strfreev (current_tags);
 
-  if (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+  if (GIMP_TAG_ENTRY (tag_popup->combo_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
       for (i = 0; i < tag_popup->tag_count; i++)
         {
@@ -864,7 +864,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
               tag_popup->tag_data[i].state = GTK_STATE_INSENSITIVE;
             }
         }
-      gimp_container_foreach (GIMP_CONTAINER (GIMP_TAG_ENTRY (tag_popup->combo_entry->tag_entry)->tagged_container),
+      gimp_container_foreach (GIMP_CONTAINER (tag_popup->combo_entry->filtered_container),
                               (GFunc) gimp_tag_popup_check_can_toggle, tag_popup);
     }
 }

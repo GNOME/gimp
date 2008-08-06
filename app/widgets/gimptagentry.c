@@ -44,6 +44,22 @@
 
 #define GIMP_TAG_ENTRY_MAX_RECENT_ITEMS 20
 
+enum
+{
+  PROP_0,
+
+  PROP_FILTERED_CONTAINER,
+  PROP_TAG_ENTRY_MODE,
+};
+
+static void     gimp_tag_entry_set_property              (GObject              *object,
+                                                          guint                 property_id,
+                                                          const GValue         *value,
+                                                          GParamSpec           *pspec);
+static void     gimp_tag_entry_get_property              (GObject              *object,
+                                                          guint                 property_id,
+                                                          GValue               *value,
+                                                          GParamSpec           *pspec);
 static void     gimp_tag_entry_dispose                   (GObject              *object);
 static void     gimp_tag_entry_activate                  (GtkEntry             *entry,
                                                           gpointer              unused);
@@ -108,6 +124,34 @@ static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry         *
                                                           gboolean              to_front);
 
 
+GType
+gimp_tag_entry_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+    {
+        { GIMP_TAG_ENTRY_MODE_QUERY, "GIMP_TAG_ENTRY_MODE_QUERY", "query" },
+        { GIMP_TAG_ENTRY_MODE_ASSIGN, "GIMP_TAG_ENTRY_MODE_ASSIGN", "assign" },
+        { 0, NULL, NULL }
+    };
+
+  static const GimpEnumDesc descs[] =
+    {
+        { GIMP_TAG_ENTRY_MODE_QUERY, N_("Query"), NULL },
+        { GIMP_TAG_ENTRY_MODE_ASSIGN, N_("Assign"), NULL },
+        { 0, NULL, NULL }
+    };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpTagEntryMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 
 #define parent_class gimp_tag_entry_parent_class
@@ -121,17 +165,40 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
   GtkEntryClass        *entry_class  = GTK_ENTRY_CLASS (klass);
 
   object_class->dispose                 = gimp_tag_entry_dispose;
+  object_class->get_property            = gimp_tag_entry_get_property;
+  object_class->set_property            = gimp_tag_entry_set_property;
 
   widget_class->button_release_event    = gimp_tag_entry_button_release;
 
   entry_class->backspace                = gimp_tag_entry_backspace;
   entry_class->delete_from_cursor       = gimp_tag_entry_delete_from_cursor;
+
+  g_object_class_install_property (object_class,
+                                   PROP_FILTERED_CONTAINER,
+                                   g_param_spec_object ("filtered-container",
+                                                        ("Filtered container"),
+                                                        ("The Filtered container"),
+                                                        GIMP_TYPE_FILTERED_CONTAINER,
+                                                        G_PARAM_CONSTRUCT_ONLY
+                                                        | G_PARAM_WRITABLE
+                                                        | G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class,
+                                   PROP_TAG_ENTRY_MODE,
+                                   g_param_spec_enum ("tag-entry-mode",
+                                                      ("Working mode"),
+                                                      ("Mode in which to work."),
+                                                      GIMP_TYPE_TAG_ENTRY_MODE,
+                                                      GIMP_TAG_ENTRY_MODE_QUERY,
+                                                      G_PARAM_CONSTRUCT_ONLY
+                                                      | G_PARAM_WRITABLE
+                                                      | G_PARAM_READABLE));
 }
 
 static void
 gimp_tag_entry_init (GimpTagEntry *entry)
 {
-  entry->tagged_container      = NULL;
+  entry->filtered_container      = NULL;
   entry->selected_items        = NULL;
   entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
   entry->description_shown     = FALSE;
@@ -177,39 +244,86 @@ gimp_tag_entry_dispose (GObject        *object)
       tag_entry->recent_list = NULL;
     }
 
-  if (tag_entry->tagged_container)
+  if (tag_entry->filtered_container)
     {
-      g_signal_handlers_disconnect_by_func (tag_entry->tagged_container,
+      g_signal_handlers_disconnect_by_func (tag_entry->filtered_container,
                                             gimp_tag_entry_container_changed, tag_entry);
-      g_object_unref (tag_entry->tagged_container);
-      tag_entry->tagged_container = NULL;
+      g_object_unref (tag_entry->filtered_container);
+      tag_entry->filtered_container = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+static void
+gimp_tag_entry_set_property    (GObject              *object,
+                                guint                 property_id,
+                                const GValue         *value,
+                                GParamSpec           *pspec)
+{
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (object);
+
+  switch (property_id)
+    {
+      case PROP_FILTERED_CONTAINER:
+          tag_entry->filtered_container = g_value_get_object (value);
+          g_assert (GIMP_IS_FILTERED_CONTAINER (tag_entry->filtered_container));
+          g_object_ref (tag_entry->filtered_container);
+          g_signal_connect (tag_entry->filtered_container, "add",
+                            G_CALLBACK (gimp_tag_entry_container_changed), tag_entry);
+          g_signal_connect (tag_entry->filtered_container, "remove",
+                            G_CALLBACK (gimp_tag_entry_container_changed), tag_entry);
+          break;
+
+      case PROP_TAG_ENTRY_MODE:
+          tag_entry->mode = g_value_get_enum (value);
+          gimp_tag_entry_toggle_desc (tag_entry, TRUE);
+          break;
+
+      default:
+          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+          break;
+    }
+}
+
+static void
+gimp_tag_entry_get_property    (GObject              *object,
+                                guint                 property_id,
+                                GValue               *value,
+                                GParamSpec           *pspec)
+{
+  GimpTagEntry         *tag_entry = GIMP_TAG_ENTRY (object);
+
+  switch (property_id)
+    {
+      case PROP_FILTERED_CONTAINER:
+          g_value_set_object (value, tag_entry->filtered_container);
+          break;
+
+      case PROP_TAG_ENTRY_MODE:
+          g_value_set_enum (value, tag_entry->mode);
+          break;
+
+      default:
+          G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+          break;
+    }
+}
+
 GtkWidget *
-gimp_tag_entry_new (GimpFilteredContainer      *tagged_container,
+gimp_tag_entry_new (GimpFilteredContainer      *filtered_container,
                     GimpTagEntryMode            mode)
 {
   GimpTagEntry         *entry;
 
-  g_return_val_if_fail (tagged_container == NULL
-                        || GIMP_IS_FILTERED_CONTAINER (tagged_container),
+  g_return_val_if_fail (filtered_container == NULL
+                        || GIMP_IS_FILTERED_CONTAINER (filtered_container),
                         NULL);
 
-  entry = g_object_new (GIMP_TYPE_TAG_ENTRY, NULL);
-  entry->tagged_container       = tagged_container;
-  entry->mode                   = mode;
-
-  g_object_ref (tagged_container);
-  g_signal_connect (entry->tagged_container, "add",
-                    G_CALLBACK (gimp_tag_entry_container_changed), entry);
-  g_signal_connect (entry->tagged_container, "remove",
-                    G_CALLBACK (gimp_tag_entry_container_changed), entry);
-
-  gimp_tag_entry_toggle_desc (entry, TRUE);
-
+  entry = g_object_new (GIMP_TYPE_TAG_ENTRY,
+                        "filtered-container", filtered_container,
+                        "tag-entry-mode", mode,
+                        NULL);
   return GTK_WIDGET (entry);
 }
 
@@ -237,7 +351,7 @@ gimp_tag_entry_activate (GtkEntry              *entry,
   iterator = tag_entry->selected_items;
   while (iterator)
     {
-      if (gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+      if (gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
                                GIMP_OBJECT(iterator->data)))
         {
           break;
@@ -334,7 +448,7 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
     }
   g_strfreev (parsed_tags);
 
-  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (entry->tagged_container),
+  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (entry->filtered_container),
                                       query_list);
 }
 
@@ -431,7 +545,7 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
   while (iterator)
     {
       if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
-          && gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+          && gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
                                   GIMP_OBJECT(iterator->data)))
         {
           break;
@@ -623,7 +737,7 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
   while (iterator)
     {
       if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
-          && gimp_container_have (GIMP_CONTAINER (entry->tagged_container),
+          && gimp_container_have (GIMP_CONTAINER (entry->filtered_container),
                                   GIMP_OBJECT(iterator->data)))
         {
           break;
@@ -751,7 +865,7 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
       return NULL;
     }
 
-  all_tags = g_hash_table_get_keys (tag_entry->tagged_container->tag_ref_counts);
+  all_tags = g_hash_table_get_keys (tag_entry->filtered_container->tag_ref_counts);
   tag_iterator = all_tags;
   length = g_strv_length (used_tags);
   while (tag_iterator)
@@ -897,7 +1011,7 @@ gimp_tag_entry_container_changed       (GimpContainer        *container,
       while (selected_iterator)
         {
           if (gimp_tagged_get_tags (GIMP_TAGGED (selected_iterator->data))
-              && gimp_container_have (GIMP_CONTAINER (tag_entry->tagged_container),
+              && gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
                                       GIMP_OBJECT(selected_iterator->data)))
             {
               break;

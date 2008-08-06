@@ -30,11 +30,14 @@
 #define GIMP_IS_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_ENTRY))
 #define GIMP_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_ENTRY, GimpTagEntryClass))
 
+#define GIMP_TYPE_TAG_ENTRY_MODE       (gimp_tag_entry_mode_get_type ())
+
+GType gimp_tag_entry_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TAG_ENTRY_MODE_QUERY,
-  GIMP_TAG_ENTRY_MODE_ASSIGN,
+  GIMP_TAG_ENTRY_MODE_QUERY,  /*< desc="Query" >*/
+  GIMP_TAG_ENTRY_MODE_ASSIGN, /*< desc="Assign" >*/
 } GimpTagEntryMode;
 
 typedef struct _GimpTagEntryClass  GimpTagEntryClass;
@@ -43,7 +46,7 @@ struct _GimpTagEntry
 {
   GtkEntry                      parent_instance;
 
-  GimpFilteredContainer        *tagged_container;
+  GimpFilteredContainer        *filtered_container;
   GList                        *selected_items;
   GList                        *recent_list;
   GimpTagEntryMode              mode;

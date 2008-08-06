@@ -1,5 +1,13 @@
 2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimpcombotagentry.[ch]
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimptagentry.[ch]
+	* app/widgets/gimptagpopup.c: cleaned up and reorganized code in
+	order to prepare widget code for RTL support.
+
+2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.[ch]
 	* app/widgets/gimptagpopup.c: since tags can be changed to make them
 	valid, they are now reloaded after assignment and cursor is positioned
