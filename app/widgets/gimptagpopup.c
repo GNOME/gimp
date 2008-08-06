@@ -39,6 +39,10 @@
 #include "gimptagpopup.h"
 #include "gimpcombotagentry.h"
 
+#include "gimp-intl.h"
+
+#define GIMP_TAG_SEPARATOR              _(", ") /* must one of UNICODE terminal punctuation chars and contain space at the end */
+
 #define MENU_SCROLL_STEP1 8
 #define MENU_SCROLL_STEP2 15
 #define MENU_SCROLL_FAST_ZONE 8
@@ -830,7 +834,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
         {
           if (tag_str->len)
             {
-              g_string_append (tag_str, ", ");
+              g_string_append (tag_str, GIMP_TAG_SEPARATOR);
             }
           g_string_append (tag_str, current_tags[i]);
         }
@@ -842,7 +846,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
        * so it needs to be toggled on. */
       if (tag_str->len)
         {
-          g_string_append (tag_str, ", ");
+          g_string_append (tag_str, GIMP_TAG_SEPARATOR);
         }
       g_string_append (tag_str, tag);
     }

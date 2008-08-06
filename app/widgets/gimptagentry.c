@@ -39,7 +39,6 @@
 
 #include "gimp-intl.h"
 
-#define TAG_SEPARATOR_STR   ","
 #define GIMP_TAG_ENTRY_QUERY_DESC       _("filter")
 #define GIMP_TAG_ENTRY_ASSIGN_DESC      _("enter tags")
 
@@ -450,23 +449,53 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
 gchar **
 gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
 {
-  const gchar          *tag_str;
-  gchar               **split_tags;
   gchar               **parsed_tags;
   gint                  length;
   gint                  i;
+  GString              *parsed_tag;
+  const gchar          *cursor;
+  GList                *tag_list = NULL;
+  GList                *iterator;
+  gunichar              c;
 
-  tag_str = gtk_entry_get_text (GTK_ENTRY (entry));
-  split_tags = g_strsplit (tag_str, ",", 0);
-  length = g_strv_length (split_tags);
+  parsed_tag = g_string_new ("");
+  cursor = gtk_entry_get_text (GTK_ENTRY (entry));
+  do
+    {
+      c = g_utf8_get_char (cursor);
+      cursor = g_utf8_next_char (cursor);
+
+      if (! c || g_unichar_is_terminal_punctuation (c))
+        {
+          if (parsed_tag->len > 0)
+            {
+              gchar    *validated_tag = gimp_tag_string_make_valid (parsed_tag->str);
+              if (validated_tag)
+                {
+                  tag_list = g_list_append (tag_list, validated_tag);
+                }
+
+              g_string_set_size (parsed_tag, 0);
+            }
+        }
+      else
+        {
+          g_string_append_unichar (parsed_tag, c);
+        }
+    } while (c);
+  g_string_free (parsed_tag, TRUE);
+
+  length = g_list_length (tag_list);
   parsed_tags = g_malloc ((length + 1) * sizeof (gchar **));
+  iterator = tag_list;
   for (i = 0; i < length; i++)
     {
-      parsed_tags[i] = g_strdup (g_strstrip (split_tags[i]));
+      parsed_tags[i] = (gchar *) iterator->data;
+
+      iterator = g_list_next (iterator);
     }
   parsed_tags[length] = NULL;
 
-  g_strfreev (split_tags);
   return parsed_tags;
 }
 
@@ -561,19 +590,17 @@ gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
   gchar        *cursor;
   gint          position;
   gint          i;
-  gunichar      separator;
   gunichar      c;
 
   original_string = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
   position = gtk_editable_get_position (GTK_EDITABLE (entry));
   cursor = original_string;
   prefix_start = original_string;
-  separator = g_utf8_get_char (TAG_SEPARATOR_STR);
   for (i = 0; i < position; i++)
     {
       c = g_utf8_get_char (cursor);
       cursor = g_utf8_next_char (cursor);
-      if (c == separator)
+      if (g_unichar_is_terminal_punctuation (c))
         {
           prefix_start = cursor;
         }
@@ -581,7 +608,7 @@ gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
   do
     {
       c = g_utf8_get_char (cursor);
-      if (c == separator)
+      if (g_unichar_is_terminal_punctuation (c))
         {
           *cursor = '\0';
           break;
@@ -1033,14 +1060,13 @@ static gboolean
 gimp_tag_entry_jellybean_is_valid (const gchar *jellybean)
 {
   gunichar      c;
-  gunichar      separator = g_utf8_get_char (TAG_SEPARATOR_STR);
 
   do
     {
       c = g_utf8_get_char (jellybean);
       jellybean = g_utf8_next_char (jellybean);
       if (c
-          && c != separator
+          && !g_unichar_is_terminal_punctuation (c)
           && !g_unichar_isspace (c))
         {
           return TRUE;
@@ -1059,7 +1085,6 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *entry)
   gchar        *cursor;
   gint          position;
   gint          i;
-  gunichar      separator;
   gunichar      c;
   gint          selection_start;
   gint          selection_end;
@@ -1083,18 +1108,17 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *entry)
   cursor = original_string;
   jellybean_start = original_string;
   previous_jellybean = original_string;
-  separator = g_utf8_get_char (TAG_SEPARATOR_STR);
   for (i = 0; i < position; i++)
     {
       c = g_utf8_get_char (cursor);
       if (! jellybean_valid
-          && c != separator
+          && !g_unichar_is_terminal_punctuation (c)
           && !g_unichar_isspace (c))
         {
           jellybean_valid = TRUE;
         }
       cursor = g_utf8_next_char (cursor);
-      if (c == separator
+      if (g_unichar_is_terminal_punctuation (c)
           && jellybean_valid)
         {
           previous_jellybean = jellybean_start;
@@ -1106,7 +1130,7 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *entry)
     {
       c = g_utf8_get_char (cursor);
       cursor = g_utf8_next_char (cursor);
-      if (c == separator)
+      if (g_unichar_is_terminal_punctuation (c))
         {
           *cursor = '\0';
           break;
