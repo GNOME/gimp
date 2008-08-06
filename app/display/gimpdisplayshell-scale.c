@@ -551,7 +551,7 @@ gimp_display_shell_center_image (GimpDisplayShell *shell,
    */
   gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
                                       target_offset_x, target_offset_y,
-                                      shell->display->config->resize_windows_on_zoom);
+                                      FALSE);
 }
 
 static void

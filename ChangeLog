@@ -1,3 +1,10 @@
+2008-08-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_center_image): The operation of centering the
+	image in the display shell has by itself nothing to do with
+	resizing the display shell window.
+
 2008-08-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimppixelrgn.c (gimp_pixel_rgn_configure): fixed gtk-doc
