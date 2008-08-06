@@ -504,8 +504,9 @@ lens_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   preview = gimp_zoom_preview_new (drawable);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (lens_distort_preview),
                             drawable);

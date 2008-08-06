@@ -1,21 +1,21 @@
-# translation of gimp-script-fu.HEAD.po to Spanish
+# translation of gimp-script-fu.HEAD.po to Español
 # Spanish translation for gimp-script-fu.
-# Copyright © 1998-2000,2003, 2006, 2007 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-16 10:37+0100\n"
-"PO-Revision-Date: 2007-10-19 02:18+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Spanish <traductores@es.gnome.org>\n"
+"POT-Creation-Date: 2008-07-11 14:07+0000\n"
+"PO-Revision-Date: 2008-07-17 10:53+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,37 +23,37 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:135
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
 msgstr "Consola de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Welcome to TinyScheme"
 msgstr "Bienvenido a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:204
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Interactive Scheme Development"
 msgstr "Desarrollo interactivo de Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:240
+#: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
 msgstr "_Examinar…"
 
-#: ../plug-ins/script-fu/script-fu-console.c:300
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "Save Script-Fu Console Output"
 msgstr "Guardar salida de la consola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:347
+#: ../plug-ins/script-fu/script-fu-console.c:343
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para escritura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:376
+#: ../plug-ins/script-fu/script-fu-console.c:372
 msgid "Script-Fu Procedure Browser"
 msgstr "Examinador de procedimientos Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:719
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
@@ -110,7 +110,11 @@ msgstr "Selección de degradado de Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selección de pincel de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Faltan argumentos para la llamada a «script-fu-register»"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:667
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -123,19 +127,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Opciones de servidor de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "_Iniciar servidor"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "Archivo de registro del servidor:"
 
@@ -144,8 +148,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Consola interactiva para el desarrollo de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Consola de Script-Fu"
+msgid "_Console"
+msgstr "_Consola"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -155,115 +159,63 @@ msgstr "Servidor para el funcionamiento remoto de Script-Fu"
 msgid "_Start Server..."
 msgstr "_Iniciar servidor…"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "El _GIMP en línea"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "Manual del _usuario"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:304
-msgid "_Buttons"
-msgstr "_Botones"
-
-#: ../plug-ins/script-fu/script-fu.c:306
-msgid "_Logos"
-msgstr "_Logotipos"
-
-#: ../plug-ins/script-fu/script-fu.c:308
-msgid "_Misc"
-msgstr "_Misc"
-
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "_Patterns"
-msgstr "_Patrones"
-
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Prueba"
 
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "_Utilities"
-msgstr "_Utilidades"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Botones"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logotipos"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Patrones"
+
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "Temas de páginas _web"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "_Resplandor alienígena"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Patrón _biselado"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: ../plug-ins/script-fu/script-fu.c:327
-msgid "An_imation"
-msgstr "A_nimación"
-
 #: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Animators"
-msgstr "A_nimadores"
-
-#: ../plug-ins/script-fu/script-fu.c:331
-msgid "_Artistic"
-msgstr "_Artístico"
-
-#: ../plug-ins/script-fu/script-fu.c:333
-msgid "_Blur"
-msgstr "_Desenfoque"
-
-#: ../plug-ins/script-fu/script-fu.c:335
-msgid "_Decor"
-msgstr "_Decorador"
-
-#: ../plug-ins/script-fu/script-fu.c:337
-msgid "_Effects"
-msgstr "_Efectos"
-
-#: ../plug-ins/script-fu/script-fu.c:339
-msgid "En_hance"
-msgstr "Real_zar"
-
-#: ../plug-ins/script-fu/script-fu.c:341
-msgid "_Light and Shadow"
-msgstr "_Luces y sombras"
-
-#: ../plug-ins/script-fu/script-fu.c:343
-msgid "S_hadow"
-msgstr "_Sombra"
-
-#: ../plug-ins/script-fu/script-fu.c:345
-msgid "_Render"
-msgstr "_Renderizar"
-
-#: ../plug-ins/script-fu/script-fu.c:347
-msgid "_Alchemy"
-msgstr "_Alquimia"
-
-#: ../plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Releer todos los guiones de Script-Fu disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:355
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Refrescar scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:378
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -471,7 +423,6 @@ msgstr "Truchet 3_D…"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -1759,7 +1710,6 @@ msgid "Pattern (text)"
 msgstr "Patrón (texto)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Sombra"
 
@@ -1903,46 +1853,6 @@ msgstr "Quitar todas las líneas guía horizontales y verticales"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_Quitar todas las guías"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Opacidad del fondo"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Crear un gráfico de las distribuciones de tono, saturación y valor"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Dibujar gráfico _HSV…"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "X final"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Y final"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "De arriba-izquierda a abajo-derecha"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Escala del gráfico"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Comienzo en X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Comienzo en Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Usar los límites de la selección en vez de los valores de abajo"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -2432,26 +2342,6 @@ msgstr "Crear un logotipo con un efecto de texto en movimiento"
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "Texto en movimiento…"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Crear una esfera sencilla con una sombra arrojada"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Iluminación (grados)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Radio (píxeles)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Color de la esfera"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Esfera…"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"

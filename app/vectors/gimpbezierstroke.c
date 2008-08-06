@@ -22,7 +22,7 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -245,11 +245,12 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
 }
 
 static void
-gimp_bezier_stroke_anchor_delete (GimpStroke        *stroke,
-                                  GimpAnchor        *anchor)
+gimp_bezier_stroke_anchor_delete (GimpStroke *stroke,
+                                  GimpAnchor *anchor)
 {
-  GList *list, *list2;
-  gint i;
+  GList *list;
+  GList *list2;
+  gint   i;
 
   /* Anchors always are surrounded by two handles that have to
    * be deleted too */
@@ -271,7 +272,8 @@ static GimpStroke *
 gimp_bezier_stroke_open (GimpStroke *stroke,
                          GimpAnchor *end_anchor)
 {
-  GList *list, *list2;
+  GList      *list;
+  GList      *list2;
   GimpStroke *new_stroke = NULL;
 
   list = g_list_find (stroke->anchors, end_anchor);
@@ -318,10 +320,12 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
                                   GimpAnchor *predec,
                                   gdouble     position)
 {
-  GList *segment_start, *list, *list2;
-  GimpCoords subdivided[8];
-  GimpCoords beziercoords[4];
-  gint i;
+  GList      *segment_start;
+  GList      *list;
+  GList      *list2;
+  GimpCoords  subdivided[8];
+  GimpCoords  beziercoords[4];
+  gint        i;
 
   segment_start = g_list_find (stroke->anchors, predec);
 
@@ -424,10 +428,11 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
                                         const GimpCoords      *deltacoord,
                                         GimpAnchorFeatureType  feature)
 {
-  GimpCoords offsetcoords[2];
-  GList      *segment_start, *list;
+  GimpCoords  offsetcoords[2];
+  GList      *segment_start;
+  GList      *list;
   gint        i;
-  gdouble feel_good;
+  gdouble     feel_good;
 
   segment_start = g_list_find (stroke->anchors, predec);
 
@@ -480,7 +485,8 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
   GimpCoords  deltacoord;
   GimpCoords  tmp1, tmp2, abs_pos;
   GimpCoords  beziercoords[4];
-  GList      *segment_start, *list;
+  GList      *segment_start;
+  GList      *list;
   gint        i;
 
   segment_start = g_list_find (stroke->anchors, predec);
@@ -514,7 +520,8 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
 static void
 gimp_bezier_stroke_close (GimpStroke *stroke)
 {
-  GList *start, *end;
+  GList      *start;
+  GList      *end;
   GimpAnchor *anchor;
 
   start = g_list_first (stroke->anchors);
@@ -569,7 +576,8 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   GimpCoords  point;
   GimpCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start, *segment_end = NULL;
+  GimpAnchor *segment_start;
+  GimpAnchor *segment_end = NULL;
   GimpAnchor *anchor;
   gint        count;
 
@@ -603,6 +611,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
           if (dist < min_dist || min_dist < 0)
             {
               min_dist = dist;
+
               if (ret_pos)
                 *ret_pos = pos;
               if (ret_point)
@@ -612,6 +621,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
               if (ret_segment_end)
                 *ret_segment_end = segment_end;
             }
+
           segment_start = anchorlist->data;
           segmentcoords[0] = segmentcoords[3];
           count = 1;
@@ -627,7 +637,9 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
           segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
+
       anchorlist = g_list_next (anchorlist);
+
       if (anchorlist)
         {
           segment_end = GIMP_ANCHOR (anchorlist->data);
@@ -642,6 +654,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
       if (dist < min_dist || min_dist < 0)
         {
           min_dist = dist;
+
           if (ret_pos)
             *ret_pos = pos;
           if (ret_point)
@@ -671,9 +684,9 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
    */
 
   GimpCoords subdivided[8];
-  gdouble dist1, dist2;
+  gdouble    dist1, dist2;
   GimpCoords point1, point2;
-  gdouble pos1, pos2;
+  gdouble    pos1, pos2;
 
   gimp_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
   gimp_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
@@ -683,8 +696,8 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
                  && gimp_coords_length_squared (&point2) < precision))
     {
       GimpCoords line, dcoord;
-      gdouble length2, scalar;
-      gint i;
+      gdouble    length2, scalar;
+      gint       i;
 
       gimp_coords_difference (&(beziercoords[3]),
                               &(beziercoords[0]),
@@ -708,7 +721,8 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
       for (i = 0; i <= 15; i++)
         {
           pos2 *= 0.5;
-          if (3*pos1*pos1*(1-pos1) + pos1*pos1*pos1 < scalar)
+
+          if (3 * pos1 * pos1 * (1-pos1) + pos1 * pos1 * pos1 < scalar)
             pos1 += pos2;
           else
             pos1 -= pos2;
@@ -794,7 +808,8 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
   GimpCoords  point;
   GimpCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start, *segment_end = NULL;
+  GimpAnchor *segment_start;
+  GimpAnchor *segment_end = NULL;
   GimpAnchor *anchor;
   gint        count;
 
@@ -828,6 +843,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
           if (dist >= 0 && (dist < min_dist || min_dist < 0))
             {
               min_dist = dist;
+
               if (ret_pos)
                 *ret_pos = pos;
               if (nearest)
@@ -837,6 +853,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
               if (ret_segment_end)
                 *ret_segment_end = segment_end;
             }
+
           segment_start = anchorlist->data;
           segmentcoords[0] = segmentcoords[3];
           count = 1;
@@ -852,7 +869,9 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
           segmentcoords[count] = GIMP_ANCHOR (anchorlist->data)->position;
           count++;
         }
+
       anchorlist = g_list_next (anchorlist);
+
       if (anchorlist)
         {
           segment_end = GIMP_ANCHOR (anchorlist->data);
@@ -867,6 +886,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
       if (dist >= 0 && (dist < min_dist || min_dist < 0))
         {
           min_dist = dist;
+
           if (ret_pos)
             *ret_pos = pos;
           if (nearest)
@@ -889,10 +909,12 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
                                                 GimpCoords       *ret_point,
                                                 gdouble          *ret_pos)
 {
-  GArray *ret_coords, *ret_params;
-  GimpCoords dir, line, dcoord, min_point;
-  gdouble min_dist = -1, dist, length2, scalar, ori, ori2;
-  gint i;
+  GArray     *ret_coords;
+  GArray     *ret_params;
+  GimpCoords  dir, line, dcoord, min_point;
+  gdouble     min_dist = -1;
+  gdouble     dist, length2, scalar, ori, ori2;
+  gint        i;
 
   gimp_coords_difference (coord2, coord1, &line);
 
@@ -1274,7 +1296,8 @@ gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
                                    GimpStroke *extension,
                                    GimpAnchor *neighbor)
 {
-  GList *list1, *list2;
+  GList *list1;
+  GList *list2;
 
   list1 = g_list_find (stroke->anchors, anchor);
   list1 = gimp_bezier_stroke_get_anchor_listitem (list1);
@@ -1446,10 +1469,11 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
 static GimpBezierDesc *
 gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
 {
-  GArray *points, *cmd_array;
-  GimpBezierDesc *bezdesc;
+  GArray            *points;
+  GArray            *cmd_array;
+  GimpBezierDesc    *bezdesc;
   cairo_path_data_t  pathdata;
-  gint num_cmds, i;
+  gint               num_cmds, i;
 
   points = gimp_stroke_control_points_get (stroke, NULL);
 
@@ -1523,6 +1547,7 @@ gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
   bezdesc->status = CAIRO_STATUS_SUCCESS;
   bezdesc->data = (cairo_path_data_t *) cmd_array->data;
   bezdesc->num_data = cmd_array->len;
+
   g_array_free (points, TRUE);
   g_array_free (cmd_array, FALSE);
 
@@ -1701,7 +1726,8 @@ gimp_bezier_stroke_cubicto (GimpStroke       *stroke,
 }
 
 static gdouble
-arcto_circleparam (gdouble h, gdouble *y)
+arcto_circleparam (gdouble  h,
+                   gdouble *y)
 {
   gdouble t0 = 0.5;
   gdouble dt = 0.25;
@@ -1710,10 +1736,10 @@ arcto_circleparam (gdouble h, gdouble *y)
 
   while (dt >= 0.00001)
     {
-      pt0 = (  y[0]*(1-t0)*(1-t0)*(1-t0) +
-             3*y[1]*(1-t0)*(1-t0)*t0 +
-             3*y[2]*(1-t0)*t0*t0 +
-               y[3]*t0*t0*t0 );
+      pt0 = (    y[0] * (1-t0) * (1-t0) * (1-t0) +
+             3 * y[1] * (1-t0) * (1-t0) * t0     +
+             3 * y[2] * (1-t0) * t0     * t0     +
+                 y[3] * t0     * t0     * t0 );
 
       if (pt0 > h)
         t0 = t0 - dt;
@@ -1737,7 +1763,9 @@ arcto_circleparam (gdouble h, gdouble *y)
 }
 
 static void
-arcto_subdivide (gdouble t, gint part, GimpCoords *p)
+arcto_subdivide (gdouble     t,
+                 gint        part,
+                 GimpCoords *p)
 {
   GimpCoords p01, p12, p23, p012, p123, p0123;
 
@@ -1771,12 +1799,13 @@ arcto_ellipsesegment (gdouble     radius_x,
                       gdouble     phi1,
                       GimpCoords *ellips)
 {
-  gdouble       phi_s, phi_e;
-  GimpCoords    template    = GIMP_COORDS_DEFAULT_VALUES;
-  const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
-  gdouble       y[4];
-  gdouble       h0, h1;
-  gdouble       t0, t1;
+  const GimpCoords  template    = GIMP_COORDS_DEFAULT_VALUES;
+  const gdouble     circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
+
+  gdouble  phi_s, phi_e;
+  gdouble  y[4];
+  gdouble  h0, h1;
+  gdouble  t0, t1;
 
   g_return_if_fail (ellips != NULL);
 
@@ -1808,10 +1837,9 @@ arcto_ellipsesegment (gdouble     radius_x,
 
   ellips[0].x = cos (phi_s); ellips[0].y = sin (phi_s);
   ellips[3].x = cos (phi_e); ellips[3].y = sin (phi_e);
-  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]),
-                   &(ellips[1]));
-  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]),
-                   &(ellips[2]));
+
+  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]), &(ellips[1]));
+  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]), &(ellips[2]));
 
   if (h0 > y[0])
     {
@@ -2145,7 +2173,7 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
    */
 
   GimpCoords subdivided[8];
-  gdouble middle_t = (start_t + end_t) / 2;
+  gdouble    middle_t = (start_t + end_t) / 2;
 
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
@@ -2184,12 +2212,15 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
                                                 precision)) /* 1st half */
     {
       *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[0]), 3);
+
       if (ret_params)
         {
           gdouble params[3];
+
           params[0] = start_t;
           params[1] = (2 * start_t + middle_t) / 3;
           params[2] = (start_t + 2 * middle_t) / 3;
+
           *ret_params = g_array_append_vals (*ret_params, &(params[0]), 3);
         }
     }
@@ -2205,12 +2236,15 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
                                                 precision)) /* 2nd half */
     {
       *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[3]), 3);
+
       if (ret_params)
         {
           gdouble params[3];
+
           params[0] = middle_t;
           params[1] = (2 * middle_t + end_t) / 3;
           params[2] = (middle_t + 2 * end_t) / 3;
+
           *ret_params = g_array_append_vals (*ret_params, &(params[0]), 3);
         }
     }

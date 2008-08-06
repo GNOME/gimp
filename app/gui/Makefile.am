@@ -15,13 +15,17 @@ INCLUDES = \
 
 noinst_LIBRARIES = libappgui.a
 
-libappgui_a_SOURCES = \
+libappgui_a_sources = \
 	color-history.c		\
 	color-history.h		\
+	gimpdbusservice.c	\
+	gimpdbusservice.h	\
 	gui.c			\
 	gui.h			\
 	gui-message.c		\
 	gui-message.h		\
+	gui-unique.c		\
+	gui-unique.h		\
 	gui-vtable.c		\
 	gui-vtable.h		\
 	gui-types.h		\
@@ -34,4 +38,23 @@ libappgui_a_SOURCES = \
 	ige-mac-menu.c		\
 	ige-mac-menu.h
 
-EXTRA_DIST = makefile.msc
+libappgui_a_built_sources = gimpdbusservice-glue.h 
+
+libappgui_a_SOURCES = $(libappgui_a_built_sources) $(libappgui_a_sources)
+
+EXTRA_DIST = \
+	dbus-service.xml	\
+	makefile.msc
+
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependencies
+gen_sources = gimpdbusservice-glue.h
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/gimpdbusservice.c: gimpdbusservice-glue.h
+
+gimpdbusservice-glue.h: $(srcdir)/dbus-service.xml
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=gimp $< > $(@F)

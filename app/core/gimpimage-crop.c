@@ -129,7 +129,7 @@ gimp_image_crop (GimpImage   *image,
                                      _("Resize Image"));
 
       /*  Push the image size to the stack  */
-      gimp_image_undo_push_image_size (image, NULL);
+      gimp_image_undo_push_image_size (image, NULL, x1, y1);
 
       /*  Set the new width and height  */
       g_object_set (image,
@@ -267,7 +267,8 @@ gimp_image_crop (GimpImage   *image,
                          gimp_image_get_width  (image),
                          gimp_image_get_height (image));
 
-      gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+      gimp_image_size_changed_detailed (image, -x1, -y1);
+
       g_object_thaw_notify (G_OBJECT (image));
     }
 

@@ -412,15 +412,17 @@ gimp_paint_options_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PAINT_INFO:
-      options->paint_info = (GimpPaintInfo *) g_value_dup_object (value);
+      options->paint_info = g_value_dup_object (value);
       break;
 
     case PROP_BRUSH_SCALE:
       options->brush_scale = g_value_get_double (value);
       break;
+
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
+
     case PROP_HARD:
       options->hard = g_value_get_boolean (value);
       break;
@@ -432,21 +434,27 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PRESSURE_OPACITY:
       pressure_options->opacity = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_HARDNESS:
       pressure_options->hardness = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_RATE:
       pressure_options->rate = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_SIZE:
       pressure_options->size = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_INVERSE_SIZE:
       pressure_options->inverse_size = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_COLOR:
       pressure_options->color = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_PRESCALE:
       pressure_options->prescale = g_value_get_double (value);
       break;
@@ -454,21 +462,27 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_VELOCITY_OPACITY:
       velocity_options->opacity = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_HARDNESS:
       velocity_options->hardness = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_RATE:
       velocity_options->rate = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_SIZE:
       velocity_options->size = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_INVERSE_SIZE:
       velocity_options->inverse_size = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_COLOR:
       velocity_options->color = g_value_get_boolean (value);
       break;
+
     case PROP_VELOCITY_PRESCALE:
       velocity_options->prescale = g_value_get_double (value);
       break;
@@ -476,21 +490,27 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_RANDOM_OPACITY:
       random_options->opacity = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_HARDNESS:
       random_options->hardness = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_RATE:
       random_options->rate = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_SIZE:
       random_options->size = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_INVERSE_SIZE:
       random_options->inverse_size = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_COLOR:
       random_options->color = g_value_get_boolean (value);
       break;
+
     case PROP_RANDOM_PRESCALE:
       random_options->prescale = g_value_get_double (value);
       break;
@@ -498,9 +518,11 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_USE_FADE:
       fade_options->use_fade = g_value_get_boolean (value);
       break;
+
     case PROP_FADE_LENGTH:
       fade_options->fade_length = g_value_get_double (value);
       break;
+
     case PROP_FADE_UNIT:
       fade_options->fade_unit = g_value_get_int (value);
       break;
@@ -508,6 +530,7 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_USE_JITTER:
       jitter_options->use_jitter = g_value_get_boolean (value);
       break;
+
     case PROP_JITTER_AMOUNT:
       jitter_options->jitter_amount = g_value_get_double (value);
       break;
@@ -515,15 +538,19 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_USE_GRADIENT:
       gradient_options->use_gradient = g_value_get_boolean (value);
       break;
+
     case PROP_GRADIENT_REVERSE:
       gradient_options->gradient_reverse = g_value_get_boolean (value);
       break;
+
     case PROP_GRADIENT_REPEAT:
       gradient_options->gradient_repeat = g_value_get_enum (value);
       break;
+
     case PROP_GRADIENT_LENGTH:
       gradient_options->gradient_length = g_value_get_double (value);
       break;
+
     case PROP_GRADIENT_UNIT:
       gradient_options->gradient_unit = g_value_get_int (value);
       break;
@@ -531,6 +558,7 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_BRUSH_VIEW_TYPE:
       options->brush_view_type = g_value_get_enum (value);
       break;
+
     case PROP_BRUSH_VIEW_SIZE:
       options->brush_view_size = g_value_get_int (value);
       break;
@@ -538,6 +566,7 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PATTERN_VIEW_TYPE:
       options->pattern_view_type = g_value_get_enum (value);
       break;
+
     case PROP_PATTERN_VIEW_SIZE:
       options->pattern_view_size = g_value_get_int (value);
       break;
@@ -545,6 +574,7 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_GRADIENT_VIEW_TYPE:
       options->gradient_view_type = g_value_get_enum (value);
       break;
+
     case PROP_GRADIENT_VIEW_SIZE:
       options->gradient_view_size = g_value_get_int (value);
       break;
@@ -578,9 +608,11 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_BRUSH_SCALE:
       g_value_set_double (value, options->brush_scale);
       break;
+
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;
+
     case PROP_HARD:
       g_value_set_boolean (value, options->hard);
       break;
@@ -592,21 +624,27 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_PRESSURE_OPACITY:
       g_value_set_boolean (value, pressure_options->opacity);
       break;
+
     case PROP_PRESSURE_HARDNESS:
       g_value_set_boolean (value, pressure_options->hardness);
       break;
+
     case PROP_PRESSURE_RATE:
       g_value_set_boolean (value, pressure_options->rate);
       break;
+
     case PROP_PRESSURE_SIZE:
       g_value_set_boolean (value, pressure_options->size);
       break;
+
     case PROP_PRESSURE_INVERSE_SIZE:
       g_value_set_boolean (value, pressure_options->inverse_size);
       break;
+
     case PROP_PRESSURE_COLOR:
       g_value_set_boolean (value, pressure_options->color);
       break;
+
     case PROP_PRESSURE_PRESCALE:
       g_value_set_double (value, pressure_options->prescale);
       break;
@@ -614,21 +652,27 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_VELOCITY_OPACITY:
       g_value_set_boolean (value, velocity_options->opacity);
       break;
+
     case PROP_VELOCITY_HARDNESS:
       g_value_set_boolean (value, velocity_options->hardness);
       break;
+
     case PROP_VELOCITY_RATE:
       g_value_set_boolean (value, velocity_options->rate);
       break;
+
     case PROP_VELOCITY_SIZE:
       g_value_set_boolean (value, velocity_options->size);
       break;
+
     case PROP_VELOCITY_INVERSE_SIZE:
       g_value_set_boolean (value, velocity_options->inverse_size);
       break;
+
     case PROP_VELOCITY_COLOR:
       g_value_set_boolean (value, velocity_options->color);
       break;
+
     case PROP_VELOCITY_PRESCALE:
       g_value_set_double (value, velocity_options->prescale);
       break;
@@ -636,21 +680,27 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_RANDOM_OPACITY:
       g_value_set_boolean (value, random_options->opacity);
       break;
+
     case PROP_RANDOM_HARDNESS:
       g_value_set_boolean (value, random_options->hardness);
       break;
+
     case PROP_RANDOM_RATE:
       g_value_set_boolean (value, random_options->rate);
       break;
+
     case PROP_RANDOM_SIZE:
       g_value_set_boolean (value, random_options->size);
       break;
+
     case PROP_RANDOM_INVERSE_SIZE:
       g_value_set_boolean (value, random_options->inverse_size);
       break;
+
     case PROP_RANDOM_COLOR:
       g_value_set_boolean (value, random_options->color);
       break;
+
     case PROP_RANDOM_PRESCALE:
       g_value_set_double (value, random_options->prescale);
       break;
@@ -658,9 +708,11 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_USE_FADE:
       g_value_set_boolean (value, fade_options->use_fade);
       break;
+
     case PROP_FADE_LENGTH:
       g_value_set_double (value, fade_options->fade_length);
       break;
+
     case PROP_FADE_UNIT:
       g_value_set_int (value, fade_options->fade_unit);
       break;
@@ -668,6 +720,7 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_USE_JITTER:
       g_value_set_boolean (value, jitter_options->use_jitter);
       break;
+
     case PROP_JITTER_AMOUNT:
       g_value_set_double (value, jitter_options->jitter_amount);
       break;
@@ -675,15 +728,19 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_USE_GRADIENT:
       g_value_set_boolean (value, gradient_options->use_gradient);
       break;
+
     case PROP_GRADIENT_REVERSE:
       g_value_set_boolean (value, gradient_options->gradient_reverse);
       break;
+
     case PROP_GRADIENT_REPEAT:
       g_value_set_enum (value, gradient_options->gradient_repeat);
       break;
+
     case PROP_GRADIENT_LENGTH:
       g_value_set_double (value, gradient_options->gradient_length);
       break;
+
     case PROP_GRADIENT_UNIT:
       g_value_set_int (value, gradient_options->gradient_unit);
       break;
@@ -691,6 +748,7 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_BRUSH_VIEW_TYPE:
       g_value_set_enum (value, options->brush_view_type);
       break;
+
     case PROP_BRUSH_VIEW_SIZE:
       g_value_set_int (value, options->brush_view_size);
       break;
@@ -698,6 +756,7 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_PATTERN_VIEW_TYPE:
       g_value_set_enum (value, options->pattern_view_type);
       break;
+
     case PROP_PATTERN_VIEW_SIZE:
       g_value_set_int (value, options->pattern_view_size);
       break;
@@ -705,6 +764,7 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_GRADIENT_VIEW_TYPE:
       g_value_set_enum (value, options->gradient_view_type);
       break;
+
     case PROP_GRADIENT_VIEW_SIZE:
       g_value_set_int (value, options->gradient_view_size);
       break;
@@ -980,8 +1040,7 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
 
 gdouble
 gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                        const GimpCoords *coords,
-                                        gboolean          use_pressure)
+                                        const GimpCoords *coords)
 {
   gdouble opacity = 1.0;
 
@@ -996,14 +1055,14 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->opacity && use_pressure)
+      if (paint_options->pressure_options->opacity)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->opacity)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->opacity)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       opacity = gimp_paint_options_get_dynamics_mix (pressure,
                                                      paint_options->pressure_options->prescale,
@@ -1019,7 +1078,6 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 gdouble
 gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
                                      const GimpCoords *coords,
-                                     gboolean          use_pressure,
                                      gboolean          use_dynamics)
 {
   gdouble scale = 1.0;
@@ -1030,11 +1088,11 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->size && use_pressure)
+      if (paint_options->pressure_options->size)
         {
           pressure = coords->pressure;
         }
-      else if (paint_options->pressure_options->inverse_size && use_pressure)
+      else if (paint_options->pressure_options->inverse_size)
         {
           pressure = 1.0 - 0.9 * coords->pressure;
         }
@@ -1050,11 +1108,11 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
       if (paint_options->random_options->size)
         {
-          random = 1.0 - coords->random;
+          random = 1.0 - g_random_double_range (0.0, 1.0);
         }
       else if (paint_options->random_options->inverse_size)
         {
-          random = coords->random;
+          random = g_random_double_range (0.0, 1.0);
         }
 
       scale = gimp_paint_options_get_dynamics_mix (pressure,
@@ -1078,8 +1136,7 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
-                                     gboolean          use_pressure)
+                                     const GimpCoords *coords)
 {
   gdouble rate = 1.0;
 
@@ -1094,14 +1151,14 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->rate && use_pressure)
+      if (paint_options->pressure_options->rate)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->rate)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->rate)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       rate = gimp_paint_options_get_dynamics_mix (pressure,
                                                   paint_options->pressure_options->prescale,
@@ -1117,8 +1174,7 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords,
-                                      gboolean          use_pressure)
+                                      const GimpCoords *coords)
 {
   gdouble color = 1.0;
 
@@ -1133,14 +1189,14 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->color && use_pressure)
+      if (paint_options->pressure_options->color)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->color)
         velocity = GIMP_PAINT_VELOCITY_SCALE * coords->velocity;
 
       if (paint_options->random_options->color)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       color = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
@@ -1155,30 +1211,29 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
-                                         const GimpCoords *coords,
-                                         gboolean          use_pressure)
+                                         const GimpCoords *coords)
 {
   gdouble hardness = 1.0;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->rate ||
-      paint_options->velocity_options->rate ||
-      paint_options->random_options->rate)
+  if (paint_options->pressure_options->hardness ||
+      paint_options->velocity_options->hardness ||
+      paint_options->random_options->hardness)
     {
       gdouble pressure = -1.0;
       gdouble velocity = -1.0;
       gdouble random   = -1.0;
 
-      if (paint_options->pressure_options->hardness && use_pressure)
+      if (paint_options->pressure_options->hardness)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->hardness)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
       if (paint_options->random_options->hardness)
-        random = coords->random;
+        random = g_random_double_range (0.0, 1.0);
 
       hardness = gimp_paint_options_get_dynamics_mix (pressure,
                                                       paint_options->pressure_options->prescale,

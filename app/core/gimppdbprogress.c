@@ -237,13 +237,13 @@ gimp_pdb_progress_set_property (GObject      *object,
     case PROP_PDB:
       if (progress->pdb)
         g_object_unref (progress->pdb);
-      progress->pdb = GIMP_PDB (g_value_dup_object (value));
+      progress->pdb = g_value_dup_object (value);
       break;
 
     case PROP_CONTEXT:
       if (progress->context)
         g_object_unref (progress->context);
-      progress->context = GIMP_CONTEXT (g_value_dup_object (value));
+      progress->context = g_value_dup_object (value);
       break;
 
     case PROP_CALLBACK_NAME:

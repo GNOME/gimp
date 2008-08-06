@@ -54,6 +54,7 @@ typedef struct
   TipsParserState        state;
   TipsParserState        last_known_state;
   const gchar           *locale;
+  const gchar           *help_id;
   TipsParserLocaleState  locale_state;
   gint                   markup_depth;
   gint                   unknown_depth;
@@ -63,33 +64,38 @@ typedef struct
 } TipsParser;
 
 
-static void  tips_parser_start_element (GMarkupParseContext  *context,
-                                        const gchar          *element_name,
-                                        const gchar         **attribute_names,
-                                        const gchar         **attribute_values,
-                                        gpointer              user_data,
-                                        GError              **error);
-static void  tips_parser_end_element   (GMarkupParseContext  *context,
-                                        const gchar          *element_name,
-                                        gpointer              user_data,
-                                        GError              **error);
-static void  tips_parser_characters    (GMarkupParseContext  *context,
-                                        const gchar          *text,
-                                        gsize                 text_len,
-                                        gpointer              user_data,
-                                        GError              **error);
+static void    tips_parser_start_element (GMarkupParseContext  *context,
+                                          const gchar          *element_name,
+                                          const gchar         **attribute_names,
+                                          const gchar         **attribute_values,
+                                          gpointer              user_data,
+                                          GError              **error);
+static void    tips_parser_end_element   (GMarkupParseContext  *context,
+                                          const gchar          *element_name,
+                                          gpointer              user_data,
+                                          GError              **error);
+static void    tips_parser_characters    (GMarkupParseContext  *context,
+                                          const gchar          *text,
+                                          gsize                 text_len,
+                                          gpointer              user_data,
+                                          GError              **error);
 
-static void tips_parser_start_markup   (TipsParser   *parser,
-                                        const gchar  *markup_name);
-static void tips_parser_end_markup     (TipsParser   *parser,
-                                        const gchar  *markup_name);
-static void tips_parser_start_unknown  (TipsParser   *parser);
-static void tips_parser_end_unknown    (TipsParser   *parser);
-static void tips_parser_parse_locale   (TipsParser   *parser,
-                                        const gchar **names,
-                                        const gchar **values);
-static void  tips_parser_set_by_locale (TipsParser   *parser,
-                                        gchar       **dest);
+static void    tips_parser_start_markup   (TipsParser   *parser,
+                                           const gchar  *markup_name);
+static void    tips_parser_end_markup     (TipsParser   *parser,
+                                           const gchar  *markup_name);
+static void    tips_parser_start_unknown  (TipsParser   *parser);
+static void    tips_parser_end_unknown    (TipsParser   *parser);
+
+static gchar * tips_parser_parse_help_id  (TipsParser   *parser,
+                                           const gchar **names,
+                                           const gchar **values);
+
+static void    tips_parser_parse_locale   (TipsParser   *parser,
+                                           const gchar **names,
+                                           const gchar **values);
+static void    tips_parser_set_by_locale  (TipsParser   *parser,
+                                           gchar       **dest);
 
 
 static const GMarkupParser markup_parser =
@@ -129,7 +135,7 @@ gimp_tip_new (const gchar *title,
       va_end (args);
     }
 
-  tip->thetip = g_string_free (str, FALSE);
+  tip->text = g_string_free (str, FALSE);
 
   return tip;
 }
@@ -140,7 +146,9 @@ gimp_tip_free (GimpTip *tip)
   if (! tip)
     return;
 
-  g_free (tip->thetip);
+  g_free (tip->text);
+  g_free (tip->help_id);
+
   g_slice_free (GimpTip, tip);
 }
 
@@ -230,9 +238,13 @@ tips_parser_start_element (GMarkupParseContext *context,
     {
     case TIPS_START:
       if (strcmp (element_name, "gimp-tips") == 0)
-        parser->state = TIPS_IN_TIPS;
+        {
+          parser->state = TIPS_IN_TIPS;
+        }
       else
-        tips_parser_start_unknown (parser);
+        {
+          tips_parser_start_unknown (parser);
+        }
       break;
 
     case TIPS_IN_TIPS:
@@ -240,9 +252,14 @@ tips_parser_start_element (GMarkupParseContext *context,
         {
           parser->state = TIPS_IN_TIP;
           parser->current_tip = g_slice_new0 (GimpTip);
+          parser->current_tip->help_id = tips_parser_parse_help_id (parser,
+                                                                    attribute_names,
+                                                                    attribute_values);
         }
       else
-        tips_parser_start_unknown (parser);
+        {
+          tips_parser_start_unknown (parser);
+        }
       break;
 
     case TIPS_IN_TIP:
@@ -252,16 +269,22 @@ tips_parser_start_element (GMarkupParseContext *context,
           tips_parser_parse_locale (parser, attribute_names, attribute_values);
         }
       else
-        tips_parser_start_unknown (parser);
+        {
+          tips_parser_start_unknown (parser);
+        }
       break;
 
     case TIPS_IN_THETIP:
       if (strcmp (element_name, "b"  ) == 0 ||
           strcmp (element_name, "big") == 0 ||
           strcmp (element_name, "tt" ) == 0)
-        tips_parser_start_markup (parser, element_name);
+        {
+          tips_parser_start_markup (parser, element_name);
+        }
       else
-        tips_parser_start_unknown (parser);
+        {
+          tips_parser_start_unknown (parser);
+        }
       break;
 
     case TIPS_IN_UNKNOWN:
@@ -297,7 +320,7 @@ tips_parser_end_element (GMarkupParseContext *context,
     case TIPS_IN_THETIP:
       if (parser->markup_depth == 0)
         {
-          tips_parser_set_by_locale (parser, &parser->current_tip->thetip);
+          tips_parser_set_by_locale (parser, &parser->current_tip->text);
           g_string_truncate (parser->value, 0);
           parser->state = TIPS_IN_TIP;
         }
@@ -387,6 +410,23 @@ tips_parser_end_unknown (TipsParser *parser)
     parser->state = parser->last_known_state;
 }
 
+static gchar *
+tips_parser_parse_help_id (TipsParser   *parser,
+                           const gchar **names,
+                           const gchar **values)
+{
+  while (*names && *values)
+    {
+      if (strcmp (*names, "help") == 0 && **values)
+        return g_strdup (*values);
+
+      names++;
+      values++;
+    }
+
+  return NULL;
+}
+
 static void
 tips_parser_parse_locale (TipsParser   *parser,
                           const gchar **names,
@@ -435,3 +475,4 @@ tips_parser_set_by_locale (TipsParser  *parser,
       break;
     }
 }
+

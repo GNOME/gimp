@@ -53,6 +53,9 @@
 #include "gimp-intl.h"
 
 
+#define BORDER_PEN_WIDTH  3
+
+
 static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
 static void   gimp_navigation_editor_destroy           (GtkObject            *object);
@@ -71,6 +74,8 @@ static gboolean gimp_navigation_editor_button_release  (GtkWidget            *wi
 static void   gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
                                                         gdouble               x,
                                                         gdouble               y,
+                                                        gdouble               width,
+                                                        gdouble               height,
                                                         GimpNavigationEditor *editor);
 static void   gimp_navigation_editor_zoom              (GimpNavigationView   *view,
                                                         GimpZoomType          direction,
@@ -226,6 +231,10 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   GdkScreen            *screen;
   gint                  x, y;
   gint                  x_org, y_org;
+  gint                  view_marker_x;
+  gint                  view_marker_y;
+  gint                  view_marker_width;
+  gint                  view_marker_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -267,16 +276,20 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   /* decide where to put the popup */
   gdk_window_get_origin (widget->window, &x_org, &y_org);
 
-#define BORDER_PEN_WIDTH  3
+  gimp_navigation_view_get_local_marker (view,
+                                         &view_marker_x,
+                                         &view_marker_y,
+                                         &view_marker_width,
+                                         &view_marker_height);
 
   x = (x_org + click_x -
-       view->p_x -
-       0.5 * (view->p_width  - BORDER_PEN_WIDTH) -
+       view_marker_x -
+       0.5 * (view_marker_width  - BORDER_PEN_WIDTH) -
        2   * style->xthickness);
 
   y = (y_org + click_y -
-       view->p_y -
-       0.5 * (view->p_height - BORDER_PEN_WIDTH) -
+       view_marker_y -
+       0.5 * (view_marker_height - BORDER_PEN_WIDTH) -
        2   * style->ythickness);
 
   /* If the popup doesn't fit into the screen, we have a problem.
@@ -302,11 +315,9 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   gdk_flush ();
 
   /* fill in then grab pointer */
-  view->motion_offset_x = 0.5 * (view->p_width  - BORDER_PEN_WIDTH);
-  view->motion_offset_y = 0.5 * (view->p_height - BORDER_PEN_WIDTH);
-
-#undef BORDER_PEN_WIDTH
-
+  gimp_navigation_view_set_motion_offset (view,
+                                          0.5 * (view_marker_width  - BORDER_PEN_WIDTH),
+                                          0.5 * (view_marker_height - BORDER_PEN_WIDTH));
   gimp_navigation_view_grab_pointer (view);
 }
 
@@ -491,15 +502,17 @@ static void
 gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
                                        gdouble               x,
                                        gdouble               y,
+                                       gdouble               width,
+                                       gdouble               height,
                                        GimpNavigationEditor *editor)
 {
   if (editor->shell)
     {
       GimpDisplayShell *shell = editor->shell;
 
-      gimp_display_shell_scroll (shell,
-                                 RINT (x * shell->scale_x - shell->offset_x),
-                                 RINT (y * shell->scale_y - shell->offset_y));
+      gimp_display_shell_center_around_image_coordinate (shell,
+                                                         x + width / 2,
+                                                         y + height / 2);
     }
 }
 
@@ -642,9 +655,13 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
     gimp_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
 
   if (renderer->viewable)
-    gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
-                                     shell->offset_x    / shell->scale_x,
-                                     shell->offset_y    / shell->scale_y,
-                                     shell->disp_width  / shell->scale_x,
-                                     shell->disp_height / shell->scale_y);
+    {
+      GimpNavigationView *view = GIMP_NAVIGATION_VIEW (editor->view);
+      gdouble             x, y;
+      gdouble             w, h;
+
+      gimp_display_shell_get_viewport (shell, &x, &y, &w, &h);
+
+      gimp_navigation_view_set_marker (view, x, y, w, h);
+    }
 }

@@ -274,7 +274,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
   GimpDrawable     *drawable;
-  GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
   gint              off_x, off_y;
   GError           *error = NULL;
@@ -311,11 +310,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       tool->display = display;
     }
 
-  gdk_display = gtk_widget_get_display (display->shell);
-
-  core->use_pressure = (gimp_devices_get_current (display->image->gimp) !=
-                        gdk_display_get_core_pointer (gdk_display));
-
   if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords,
                                &error))
     {
@@ -345,7 +339,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
               GIMP_BRUSH_HARD);
 
       core->start_coords = core->last_coords;
-      core->use_pressure = FALSE;
 
       gimp_paint_tool_round_line (core, hard, state);
     }
@@ -453,8 +446,11 @@ gimp_paint_tool_motion (GimpTool        *tool,
   core->cur_coords.x -= off_x;
   core->cur_coords.y -= off_y;
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
-                                          display);
+  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
+
+  /*  don't paint while the Shift key is pressed for line drawing  */
+  if (paint_tool->draw_line)
+    return;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -550,7 +546,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   gimp_tool_pop_status (tool, display);
 
-  if (tool->display          &&
+  if (tool->display            &&
       tool->display != display &&
       tool->display->image == display->image)
     {

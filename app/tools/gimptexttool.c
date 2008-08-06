@@ -1957,7 +1957,6 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
                                    &cursor,
                                     gtk_text_buffer_get_insert (text_tool->text_buffer));
 
-
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
   else
@@ -1970,11 +1969,7 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar *str)
 {
-  GtkTextIter start, end;
-
-  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
-
   gimp_text_tool_update_proxy (text_tool);
 }
 

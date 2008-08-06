@@ -174,11 +174,11 @@ gimp_cell_renderer_viewable_set_property (GObject      *object,
     {
     case PROP_RENDERER:
       {
-        GimpViewRenderer *renderer;
+        GimpViewRenderer *renderer = g_value_dup_object (value);
 
-        renderer = (GimpViewRenderer *) g_value_dup_object (value);
         if (cell->renderer)
           g_object_unref (cell->renderer);
+
         cell->renderer = renderer;
       }
       break;

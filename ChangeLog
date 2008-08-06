@@ -1,5 +1,9 @@
 2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
 
+	Merged 26051:26401 from trunk
+
+2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
+
 	* app/tools/gimptexttool.c
 	* app/tools/gimptexttool.h
 	* app/actions/text-tool-actions.c

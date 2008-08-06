@@ -130,49 +130,37 @@ gimp_rotate_tool_key_press (GimpTool    *tool,
                             GdkEventKey *kevent,
                             GimpDisplay *display)
 {
-  GimpDrawTool   *draw_tool   = GIMP_DRAW_TOOL (tool);
-  GimpRotateTool *rotate      = GIMP_ROTATE_TOOL (tool);
-  gboolean        handled_key = FALSE;
-  GtkSpinButton  *angle_spin  = GTK_SPIN_BUTTON (rotate->angle_spin_button);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (display == draw_tool->display)
     {
+      GimpRotateTool *rotate     = GIMP_ROTATE_TOOL (tool);
+      GtkSpinButton  *angle_spin = GTK_SPIN_BUTTON (rotate->angle_spin_button);
+
       switch (kevent->keyval)
         {
         case GDK_Up:
-          handled_key = TRUE;
           gtk_spin_button_spin (angle_spin, GTK_SPIN_STEP_FORWARD, 0.0);
-          break;
+          return TRUE;
 
         case GDK_Down:
-          handled_key = TRUE;
           gtk_spin_button_spin (angle_spin, GTK_SPIN_STEP_BACKWARD, 0.0);
-          break;
+          return TRUE;
 
         case GDK_Left:
-          handled_key = TRUE;
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_FORWARD, 0.0);
-          break;
+          return TRUE;
 
         case GDK_Right:
-          handled_key = TRUE;
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_BACKWARD, 0.0);
-          break;
+          return TRUE;
 
         default:
-          handled_key = FALSE;
           break;
         }
     }
 
-  if (! handled_key)
-    {
-      handled_key = GIMP_TOOL_CLASS (parent_class)->key_press (tool,
-                                                               kevent,
-                                                               display);
-    }
-
-  return handled_key;
+  return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
 
 static void

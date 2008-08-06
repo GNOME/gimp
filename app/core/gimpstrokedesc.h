@@ -46,13 +46,14 @@ struct _GimpStrokeDesc
 
   GimpStrokeOptions *stroke_options;
   GimpPaintInfo     *paint_info;
+  gboolean           emulate_dynamics;
 
   GimpPaintOptions  *paint_options;
 };
 
 struct _GimpStrokeDescClass
 {
-  GimpObjectClass parent_class;
+  GimpObjectClass    parent_class;
 };
 
 

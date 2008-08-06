@@ -212,6 +212,53 @@ CODE
     );
 }
 
+sub palette_get_colors {
+    $blurb = 'Gets all colors from the specified palette.';
+
+    $help = <<'HELP';
+This procedure retrieves all color entries of the specified palette. 
+HELP
+
+    &neo_pdb_misc('2006', '2.6');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The palette name' }
+    );
+
+    @outargs = (
+    	{ name => 'colors', type => 'colorarray',
+	  desc => 'The colors in the palette',
+	  array => { name => 'num_colors',
+                     desc => 'Length of the colors array' } }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPalette *palette = NULL' ],
+	code => <<'CODE'
+{
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+
+  if (palette)
+    {
+      GList *list = palette->colors;
+      gint   i;
+
+      num_colors = palette->n_colors;
+      colors     = g_new (GimpRGB, num_colors);
+
+      for (i = 0; i < num_colors; i++, list = g_list_next (list))
+	colors[i] = ((GimpPaletteEntry *)(list->data))->color;
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 sub palette_get_columns {
     $blurb = "Retrieves the number of columns to use to display this palette";
     $help = <<'HELP';
@@ -551,7 +598,7 @@ CODE
             palette_rename
             palette_delete
             palette_is_editable
-            palette_get_info
+            palette_get_info palette_get_colors
             palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color

@@ -766,7 +766,8 @@ edit_stroke_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
         {
           GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
 
@@ -799,7 +800,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-cut",
                                      "Cut from the specified drawable.",
-                                     "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.",
+                                     "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -813,7 +814,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
-                                                         "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels",
+                                                         "TRUE if the cut was successful, FALSE if there was nothing to copy from",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -828,7 +829,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-copy",
                                      "Copy from the specified drawable.",
-                                     "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer.",
+                                     "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -842,7 +843,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
-                                                         "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
+                                                         "TRUE if the cut was successful, FALSE if there was nothing to copy from",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -871,7 +872,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
-                                                         "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
+                                                         "TRUE if the copy was successful",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -965,7 +966,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("real-name",
                                                            "real name",
-                                                           "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
+                                                           "The real name given to the buffer, or NULL if the cut failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -1002,7 +1003,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("real-name",
                                                            "real name",
-                                                           "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
+                                                           "The real name given to the buffer, or NULL if the copy failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -1039,7 +1040,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("real-name",
                                                            "real name",
-                                                           "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
+                                                           "The real name given to the buffer, or NULL if the copy failed",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

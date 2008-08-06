@@ -199,17 +199,20 @@ gimp_controller_info_set_property (GObject      *object,
           g_object_unref (info->controller);
         }
 
-      info->controller = GIMP_CONTROLLER (g_value_dup_object (value));
+      info->controller = g_value_dup_object (value);
 
       if (info->controller)
         {
+          GimpControllerClass *controller_class;
+
           g_signal_connect_object (info->controller, "event",
                                    G_CALLBACK (gimp_controller_info_event),
                                    G_OBJECT (info),
                                    0);
 
+          controller_class = GIMP_CONTROLLER_GET_CLASS (info->controller);
           gimp_viewable_set_stock_id (GIMP_VIEWABLE (info),
-                                      GIMP_CONTROLLER_GET_CLASS (info->controller)->stock_id);
+                                      controller_class->stock_id);
         }
       break;
     case PROP_MAPPING:

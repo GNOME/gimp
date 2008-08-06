@@ -99,8 +99,6 @@ struct _GimpDisplayShell
 
   gint               disp_width;       /*  width of drawing area              */
   gint               disp_height;      /*  height of drawing area             */
-  gint               disp_xoffset;
-  gint               disp_yoffset;
 
   gboolean           proximity;        /*  is a device in proximity           */
   gboolean           snap_to_guides;   /*  should the guides be snapped to?   */
@@ -182,8 +180,6 @@ struct _GimpDisplayShell
   gint               scroll_start_x;
   gint               scroll_start_y;
   gboolean           button_press_before_focus;
-  guint32            last_disp_motion_time; /*  previous time of a forwarded motion event  */
-  guint32            last_read_motion_time;
 
   GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
@@ -192,6 +188,14 @@ struct _GimpDisplayShell
   gpointer           scroll_info;
 
   GimpCoords         last_coords;      /* last motion event                   */
+
+  guint32            last_motion_time; /*  previous time of a forwarded motion event  */
+  guint32            last_read_motion_time;
+  gdouble            last_motion_delta_time;
+  gdouble            last_motion_delta_x;
+  gdouble            last_motion_delta_y;
+  gdouble            last_motion_distance;
+
 };
 
 struct _GimpDisplayShellClass

@@ -36,9 +36,11 @@
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the gimp_edit_paste() command. If there is no selection, then the
  * specified drawable will be removed and its contents stored in the
- * internal GIMP edit buffer.
+ * internal GIMP edit buffer. This procedure will fail if the selected
+ * area lies completely outside the bounds of the current drawable and
+ * there is nothing to copy from.
  *
- * Returns: TRUE if the cut was successful, FALSE if the selection contained only transparent pixels.
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  */
 gboolean
 gimp_edit_cut (gint32 drawable_ID)
@@ -71,9 +73,11 @@ gimp_edit_cut (gint32 drawable_ID)
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the gimp_edit_paste() command. If there is no selection, then the
  * specified drawable's contents will be stored in the internal GIMP
- * edit buffer.
+ * edit buffer. This procedure will fail if the selected area lies
+ * completely outside the bounds of the current drawable and there is
+ * nothing to copy from.
  *
- * Returns: TRUE if the copy was successful, FALSE if the selection contained only transparent pixels.
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  */
 gboolean
 gimp_edit_copy (gint32 drawable_ID)
@@ -108,7 +112,7 @@ gimp_edit_copy (gint32 drawable_ID)
  * projection's contents will be stored in the internal GIMP edit
  * buffer.
  *
- * Returns: TRUE if the copy was successful, FALSE if the selection contained only transparent pixels.
+ * Returns: TRUE if the copy was successful.
  *
  * Since: GIMP 2.2
  */
@@ -224,7 +228,7 @@ gimp_edit_paste_as_new (void)
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
+ * Returns: The real name given to the buffer, or NULL if the cut failed.
  *
  * Since: GIMP 2.4
  */
@@ -262,7 +266,7 @@ gimp_edit_named_cut (gint32       drawable_ID,
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
+ * Returns: The real name given to the buffer, or NULL if the copy failed.
  *
  * Since: GIMP 2.4
  */
@@ -300,7 +304,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * available for later pasting, regardless of any intermediate copy or
  * cut operations.
  *
- * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
+ * Returns: The real name given to the buffer, or NULL if the copy failed.
  *
  * Since: GIMP 2.4
  */

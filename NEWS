@@ -7,6 +7,32 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes in GIMP 2.5.2
+=====================
+
+ - final touches on the combined Freehand/Polygon Select tool
+ - added a dockable dialog for managing Color tool settings
+ - prepared the code for changes in the upcoming GTK+ release
+ - improved popup scale button
+ - mark the center of rectangles/bounding rectangles during moves
+ - added dialog to query for using the online user manual
+ - allow to map dynamics to hardness for the Eraser tool
+ - provide gimp-remote functionality on Windows
+ - disable the build and install of the gimp-remote tool by default
+ - allow to scroll beyond the image borders
+ - added new PDB data type for transferring color arrays
+ - added new PDB function gimp-palette-get-colors
+ - added text search to the Help Browser plug-in
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
+  Lars-Peter Clausen, Alexia Death, Tor Lillqvist, Róman Joost,
+  Jakub Steiner
+
+
 Changes in GIMP 2.5.1
 =====================
 

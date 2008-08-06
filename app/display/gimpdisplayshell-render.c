@@ -44,6 +44,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scroll.h"
 
 #define GIMP_DISPLAY_ZOOM_FAST     (1 << 0) /* use the fastest possible code
                                                path trading quality for speed
@@ -223,6 +224,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   GimpImage      *image;
   RenderInfo      info;
   GimpImageType   type;
+  gint            offset_x;
+  gint            offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (w > 0 && h > 0);
@@ -230,13 +233,15 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   image = shell->display->image;
   projection = image->projection;
 
+  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
    */
   info.shell      = shell;
 
-  info.x          = x + shell->offset_x;
-  info.y          = y + shell->offset_y;
+  info.x          = x + offset_x;
+  info.y          = y + offset_y;
   info.w          = w;
   info.h          = h;
 
@@ -310,12 +315,20 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
 
   /*  put it to the screen  */
-  gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
-                        x + shell->disp_xoffset, y + shell->disp_yoffset,
+  {
+    gint disp_xoffset, disp_yoffset;
+    gint offset_x, offset_y;
+
+    gimp_display_shell_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
+    gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+
+    gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
+                        x + disp_xoffset, y + disp_yoffset,
                         w, h,
                         shell->render_buf,
                         3 * GIMP_DISPLAY_RENDER_BUF_WIDTH,
-                        shell->offset_x, shell->offset_y);
+                        offset_x, offset_y);
+  }
 }
 
 
@@ -338,16 +351,20 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
 {
   guchar       *buf  = shell->render_buf;
   GdkRectangle  rect;
+  gint          offset_x;
+  gint          offset_y;
 
-  rect.x      = shell->offset_x + x;
-  rect.y      = shell->offset_y + y;
+  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+
+  rect.x      = x + offset_x;
+  rect.y      = y + offset_y;
   rect.width  = w;
   rect.height = h;
 
   if (gdk_rectangle_intersect (highlight, &rect, &rect))
     {
-      rect.x -= shell->offset_x + x;
-      rect.y -= shell->offset_y + y;
+      rect.x -= x + offset_x;
+      rect.y -= y + offset_y;
 
       for (y = 0; y < rect.y; y++)
         {

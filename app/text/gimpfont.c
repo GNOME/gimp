@@ -165,7 +165,7 @@ gimp_font_set_property (GObject       *object,
     case PROP_PANGO_CONTEXT:
       if (font->pango_context)
         g_object_unref (font->pango_context);
-      font->pango_context = (PangoContext *) g_value_dup_object (value);
+      font->pango_context = g_value_dup_object (value);
       break;
 
     default:

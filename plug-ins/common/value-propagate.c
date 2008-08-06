@@ -518,7 +518,7 @@ value_propagate_body (GimpDrawable *drawable,
       nr = swap;
 
 
-      if (((y % 5) == 0) && !preview)
+      if (((y % 16) == 0) && !preview)
         gimp_progress_update ((gdouble) y / (gdouble) (endy - begy));
     }
 
@@ -530,7 +530,7 @@ value_propagate_body (GimpDrawable *drawable,
   else
     {
       /*  update the region  */
-      gimp_progress_update(1.0);
+      gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, begx, begy, endx-begx, endy-begy);
@@ -610,7 +610,7 @@ set_value (GimpImageBaseType  dtype,
     }
 }
 
-static int
+static inline int
 value_difference_check (guchar *pos1,
                         guchar *pos2,
                         gint   ch)
@@ -636,11 +636,23 @@ initialize_white (GimpImageBaseType   dtype,
                   guchar             *here,
                   void              **tmp)
 {
-  if (*tmp == NULL)
-    *tmp = (void *) g_new (gfloat, 1);
-  *(float *)*tmp = sqrt (channel_mask[0] * here[0] * here[0]
-                         + channel_mask[1] * here[1] * here[1]
-                         + channel_mask[2] * here[2] * here[2]);
+
+  switch (dtype)
+    {
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
+      if (*tmp == NULL)
+	*tmp = (void *) g_new (gfloat, 1);
+      **(float **)tmp = channel_mask[0] * here[0] * here[0]
+                     + channel_mask[1] * here[1] * here[1]
+                     + channel_mask[2] * here[2] * here[2];
+      break;
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
+      break;
+    default:
+      break;
+    }
 }
 
 static void
@@ -657,9 +669,9 @@ propagate_white (GimpImageBaseType  dtype,
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
-      v_here = sqrt (channel_mask[0] * here[0] * here[0]
+      v_here = channel_mask[0] * here[0] * here[0]
                      + channel_mask[1] * here[1] * here[1]
-                     + channel_mask[2] * here[2] * here[2]);
+                     + channel_mask[2] * here[2] * here[2];
      if (*(float *)tmp < v_here && value_difference_check(orig, here, 3))
         {
           *(float *)tmp = v_here;
@@ -683,11 +695,22 @@ initialize_black (GimpImageBaseType   dtype,
                   guchar             *here,
                   void              **tmp)
 {
-  if (*tmp == NULL)
-    *tmp = (void *) g_new (gfloat, 1);
-  *(float *)*tmp = sqrt (channel_mask[0] * here[0] * here[0]
-                         + channel_mask[1] * here[1] * here[1]
-                         + channel_mask[2] * here[2] * here[2]);
+  switch (dtype)
+    {
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
+      if (*tmp == NULL)
+	*tmp = (void *) g_new (gfloat, 1);
+      **(float **)tmp = (channel_mask[0] * here[0] * here[0]
+                     + channel_mask[1] * here[1] * here[1]
+                     + channel_mask[2] * here[2] * here[2]);
+      break;
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
+      break;
+    default:
+      break;
+    }
 }
 
 static void
@@ -704,7 +727,7 @@ propagate_black (GimpImageBaseType  image_type,
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
-      v_here = sqrt (channel_mask[0] * here[0] * here[0]
+      v_here = (channel_mask[0] * here[0] * here[0]
                      + channel_mask[1] * here[1] * here[1]
                      + channel_mask[2] * here[2] * here[2]);
       if (v_here < *(float *)tmp && value_difference_check(orig, here, 3))
@@ -753,7 +776,7 @@ initialize_middle (GimpImageBaseType   image_type,
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
-      data->original_value = sqrt (channel_mask[0] * here[0] * here[0]
+      data->original_value = (channel_mask[0] * here[0] * here[0]
                                    + channel_mask[1] * here[1] * here[1]
                                    + channel_mask[2] * here[2] * here[2]);
       break;
@@ -785,7 +808,7 @@ propagate_middle (GimpImageBaseType  image_type,
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
-      v_here = sqrt (channel_mask[0] * here[0] * here[0]
+      v_here = (channel_mask[0] * here[0] * here[0]
                      + channel_mask[1] * here[1] * here[1]
                      + channel_mask[2] * here[2] * here[2]);
       if ((v_here <= data->minv) && value_difference_check(orig, here, 3))
@@ -1082,8 +1105,9 @@ vpropagate_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (value_propagate_body),
                             drawable);

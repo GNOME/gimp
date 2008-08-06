@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-18 09:25+0100\n"
+"POT-Creation-Date: 2008-07-30 19:56+0100\n"
 "PO-Revision-Date: 2008-04-19 20:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -2778,6 +2778,10 @@ msgstr "إعتام التمييز اللوني"
 msgid "_Xach-Effect..."
 msgstr "تأثير-_Xach..."
 
+#, fuzzy
+#~ msgid "Script-Fu _Console"
+#~ msgstr "وحدة تحكم سكربت-فو"
+
 #~ msgid "_Misc"
 #~ msgstr "إ_عدادات مختلفة"
 
@@ -2817,6 +2821,21 @@ msgstr "تأثير-_Xach..."
 #~ msgid "_Alchemy"
 #~ msgstr "_خيميائي"
 
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "أنشئ كرة بسيطة مع ظل ساقط"
+
+#~ msgid "Lighting (degrees)"
+#~ msgstr "الإضاءة (بالدرجات)"
+
+#~ msgid "Radius (pixels)"
+#~ msgstr "نصف-القطر (بالبكسل)"
+
+#~ msgid "Sphere color"
+#~ msgstr "لون الكرة"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_كرة..."
+
 #~ msgid "BG opacity"
 #~ msgstr "عتمة الخلفية"
 
@@ -2846,21 +2865,6 @@ msgstr "تأثير-_Xach..."
 
 #~ msgid "Use selection bounds instead of values below"
 #~ msgstr "استخدم حدود الاختيار بدلاً من القيم أدناه"
-
-#~ msgid "Create a simple sphere with a drop shadow"
-#~ msgstr "أنشئ كرة بسيطة مع ظل ساقط"
-
-#~ msgid "Lighting (degrees)"
-#~ msgstr "الإضاءة (بالدرجات)"
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "نصف-القطر (بالبكسل)"
-
-#~ msgid "Sphere color"
-#~ msgstr "لون الكرة"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_كرة..."
 
 #~ msgid "/Script-Fu/"
 #~ msgstr "/سكربت-فو/"
@@ -3014,4 +3018,3 @@ msgstr "تأثير-_Xach..."
 
 #~ msgid "<Toolbox>/Help/The GIMP Online"
 #~ msgstr "<Toolbox>/Help/GIMP على الخط"
-

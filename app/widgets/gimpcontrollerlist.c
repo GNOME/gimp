@@ -348,8 +348,9 @@ gimp_controller_list_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_GIMP:
-      list->gimp = GIMP (g_value_dup_object (value));
+      list->gimp = g_value_dup_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -369,6 +370,7 @@ gimp_controller_list_get_property (GObject    *object,
     case PROP_GIMP:
       g_value_set_object (value, list->gimp);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

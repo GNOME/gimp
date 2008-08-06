@@ -618,7 +618,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
            proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
            proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
-           proc_install->params[i].type == GIMP_PDB_STRINGARRAY)
+           proc_install->params[i].type == GIMP_PDB_STRINGARRAY ||
+           proc_install->params[i].type == GIMP_PDB_COLORARRAY)
           &&
           proc_install->params[i - 1].type != GIMP_PDB_INT32)
         {

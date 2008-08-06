@@ -1333,7 +1333,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_widget_show (inner_vbox);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start_defaults (GTK_BOX (inner_vbox), alignment);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), alignment, TRUE, TRUE, 0);
   gtk_widget_show (alignment);
 
   innermost_vbox = gtk_vbox_new (FALSE, 0);

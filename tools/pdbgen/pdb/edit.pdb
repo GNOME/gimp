@@ -23,10 +23,12 @@ sub edit_cut {
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
 selection is cut from the specified drawable and placed in an internal
-GIMP edit buffer.  It can subsequently be retrieved using the
+GIMP edit buffer. It can subsequently be retrieved using the
 gimp_edit_paste() command. If there is no selection, then the
 specified drawable will be removed and its contents stored in the
-internal GIMP edit buffer.
+internal GIMP edit buffer. This procedure will fail if the selected area
+lies completely outside the bounds of the current drawable and there is
+nothing to copy from.
 HELP
 
     &std_pdb_misc;
@@ -38,8 +40,8 @@ HELP
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean',
-	  desc => 'TRUE if the cut was successful, FALSE if the
-                   selection contained only transparent pixels' }
+	  desc => 'TRUE if the cut was successful,
+                   FALSE if there was nothing to copy from' }
     );
 
     %invoke = (
@@ -75,7 +77,9 @@ selection is copied from the specified drawable and placed in an
 internal GIMP edit buffer. It can subsequently be retrieved using the
 gimp_edit_paste() command.  If there is no selection, then the
 specified drawable's contents will be stored in the internal GIMP edit
-buffer.
+buffer. This procedure will fail if the selected area lies completely
+outside the bounds of the current drawable and there is nothing to
+copy from.
 HELP
 
     &std_pdb_misc;
@@ -87,8 +91,8 @@ HELP
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean',
-	  desc => 'TRUE if the copy was successful, FALSE if the
-                   selection contained only transparent pixels' }
+	  desc => 'TRUE if the cut was successful,
+                   FALSE if there was nothing to copy from' }
     );
 
     %invoke = (
@@ -135,8 +139,7 @@ HELP
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean',
-	  desc => 'TRUE if the copy was successful, FALSE if the
-                   selection contained only transparent pixels' }
+	  desc => 'TRUE if the copy was successful' }
     );
 
     %invoke = (
@@ -266,7 +269,7 @@ HELP
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
-                   selection contained only transparent pixels' }
+                   cut failed' }
     );
 
     %invoke = (
@@ -318,7 +321,7 @@ HELP
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
-                   selection contained only transparent pixels' }
+                   copy failed' }
     );
 
     %invoke = (
@@ -372,7 +375,7 @@ HELP
     @outargs = (
 	{ name => 'real_name', type => 'string',
 	  desc => 'The real name given to the buffer, or NULL if the
-                   selection contained only transparent pixels' }
+                   copy failed' }
     );
 
     %invoke = (
@@ -868,7 +871,8 @@ HELP
 	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) &&
+      gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
     {
       GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
 

@@ -50,7 +50,7 @@ static gboolean gimp_ui_initialized = FALSE;
  * gimp_ui_init:
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
  *             gtk_init(). It's a convention to use the name of the
- *             executable and _not_ the PDB procedure name or something.
+ *             executable and _not_ the PDB procedure name.
  * @preview:   This parameter is unused and exists for historical
  *             reasons only.
  *
@@ -58,8 +58,11 @@ static gboolean gimp_ui_initialized = FALSE;
  * image rendering subsystem (GdkRGB) to follow the GIMP main program's
  * colormap allocation/installation policy.
  *
- * GIMP's colormap policy can be determinded by the user with the
- * gimprc variables @min_colors and @install_cmap.
+ * It also sets up various other things so that the plug-in user looks
+ * and behaves like the GIMP core. This includes selecting the GTK+
+ * theme and setting up the help system as chosen in the GIMP
+ * preferences. Any plug-in that provides a user interface should call
+ * this function.
  **/
 void
 gimp_ui_init (const gchar *prog_name,

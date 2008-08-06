@@ -26,15 +26,7 @@
 GType         gimp_tile_manager_get_type     (void) G_GNUC_CONST;
 
 
-/* Creates a new tile manager with the specified width for the
- *  toplevel. The toplevel size is used to compute the number of
- *  levels and their size. Each level is 1/2 the width and height of
- *  the level above it.
- *
- * The toplevel is level 0. The smallest level in the hierarchy
- *  is "nlevels - 1". That level will be smaller than TILE_WIDTH x
- *  TILE_HEIGHT
- */
+/* Creates a new tile manager with the specified size */
 TileManager * tile_manager_new               (gint width,
                                               gint height,
                                               gint bpp);

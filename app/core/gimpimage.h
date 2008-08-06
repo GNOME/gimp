@@ -191,6 +191,9 @@ struct _GimpImageClass
                                          GimpChannelType       channel);
   void (* mask_changed)                 (GimpImage            *image);
   void (* resolution_changed)           (GimpImage            *image);
+  void (* size_changed_detailed)        (GimpImage            *image,
+                                         gint                  previous_origin_x,
+                                         gint                  previous_origin_y);
   void (* unit_changed)                 (GimpImage            *image);
   void (* quick_mask_changed)           (GimpImage            *image);
   void (* selection_control)            (GimpImage            *image,
@@ -324,6 +327,9 @@ void            gimp_image_colormap_changed      (GimpImage          *image,
 void            gimp_image_selection_control     (GimpImage          *image,
                                                   GimpSelectionControl  control);
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
+void            gimp_image_size_changed_detailed (GimpImage          *image,
+                                                  gint                previous_origin_x,
+                                                  gint                previous_origin_y);
 
 
 /*  undo  */

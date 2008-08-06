@@ -22,7 +22,7 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -522,6 +522,7 @@ gimp_vectors_stroke (GimpItem        *item,
 
         retval = gimp_paint_core_stroke_vectors (core, drawable,
                                                  stroke_desc->paint_options,
+                                                 stroke_desc->emulate_dynamics,
                                                  vectors, error);
 
         g_object_unref (core);

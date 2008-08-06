@@ -589,15 +589,35 @@ gimp_channel_scale (GimpItem              *item,
                     GimpInterpolationType  interpolation_type,
                     GimpProgress          *progress)
 {
+  GimpChannel *channel = GIMP_CHANNEL (item);
+
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     {
       new_offset_x = 0;
       new_offset_y = 0;
     }
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
-                                         new_offset_x, new_offset_y,
-                                         interpolation_type, progress);
+  /*  don't waste CPU cycles scaling an empty channel  */
+  if (channel->bounds_known && channel->empty)
+    {
+      GimpDrawable *drawable  = GIMP_DRAWABLE (item);
+      TileManager  *new_tiles = tile_manager_new (new_width, new_height,
+                                                  drawable->bytes);
+
+      gimp_drawable_set_tiles_full (drawable,
+                                    gimp_item_is_attached (item), NULL,
+                                    new_tiles, gimp_drawable_type (drawable),
+                                    new_offset_x, new_offset_y);
+      tile_manager_unref (new_tiles);
+
+      gimp_channel_clear (GIMP_CHANNEL (item), NULL, FALSE);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                             new_offset_x, new_offset_y,
+                                             interpolation_type, progress);
+    }
 }
 
 static void
@@ -712,6 +732,7 @@ gimp_channel_stroke (GimpItem        *item,
 
         retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                   stroke_desc->paint_options,
+                                                  stroke_desc->emulate_dynamics,
                                                   segs_in, n_segs_in,
                                                   offset_x, offset_y,
                                                   error);
@@ -1188,7 +1209,7 @@ gimp_channel_real_clear (GimpChannel *channel,
       gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
     }
 
-  if (channel->bounds_known && !channel->empty)
+  if (channel->bounds_known && ! channel->empty)
     {
       pixel_region_init (&maskPR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),

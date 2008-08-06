@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpDBusService
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2007, 2008 Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ struct _GimpDBusService
   GObject  parent_instance;
 
   Gimp    *gimp;
+  GQueue  *queue;
+  GSource *source;
 };
 
 struct _GimpDBusServiceClass

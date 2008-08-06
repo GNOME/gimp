@@ -183,7 +183,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
 
       frame = gimp_prop_expander_new (config, "dynamics-expanded",
-                                      _("Dynamics sensitivity"));
+                                      _("Brush Dynamics"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -299,10 +299,10 @@ static gboolean
 tool_has_opacity_dynamics (GType tool_type)
 {
   return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-          tool_type == GIMP_TYPE_HEAL_TOOL                   ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL      ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
+          tool_type == GIMP_TYPE_CLONE_TOOL             ||
+          tool_type == GIMP_TYPE_HEAL_TOOL              ||
+          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
+          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
           tool_type == GIMP_TYPE_ERASER_TOOL);
 }
 
@@ -314,6 +314,7 @@ tool_has_hardness_dynamics (GType tool_type)
           tool_type == GIMP_TYPE_HEAL_TOOL              ||
           tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
           tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
+          tool_type == GIMP_TYPE_ERASER_TOOL            ||
           tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
           tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
           tool_type == GIMP_TYPE_SMUDGE_TOOL);
@@ -322,23 +323,21 @@ tool_has_hardness_dynamics (GType tool_type)
 static gboolean
 tool_has_rate_dynamics (GType tool_type)
 {
-  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL ||
+  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
+          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
           tool_type == GIMP_TYPE_SMUDGE_TOOL);
 }
 
 static gboolean
 tool_has_size_dynamics (GType tool_type)
 {
-  return (tool_type == GIMP_TYPE_CLONE_TOOL             ||
+  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+          tool_type == GIMP_TYPE_CLONE_TOOL             ||
           tool_type == GIMP_TYPE_HEAL_TOOL              ||
           tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
           tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
           tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL            ||
-          tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
-          tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
-          tool_type == GIMP_TYPE_PENCIL_TOOL);
+          tool_type == GIMP_TYPE_ERASER_TOOL);
 }
 
 static gboolean

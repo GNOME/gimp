@@ -4,6 +4,7 @@
  * GIMP Help Browser
  * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
+ *                         Róman Joost <romanofski@gimp.org>
  *
  * dialog.c
  *
@@ -26,15 +27,10 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#include <glib/gstdio.h>
 
 #include <gtk/gtk.h>
+
+#include <gdk/gdkkeysyms.h>
 
 #include <webkit/webkit.h>
 
@@ -42,10 +38,6 @@
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "plug-ins/help/gimphelp.h"
 
@@ -57,12 +49,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
 
+#define GIMP_HELP_BROWSER_DIALOG_DATA      "gimp-help-browser-dialog"
 
-#define GIMP_HELP_BROWSER_DIALOG_DATA  "gimp-help-browser-dialog"
+#define GIMP_HELP_BROWSER_INDEX_MAX_DEPTH  4
+
 
 typedef struct
 {
@@ -81,59 +72,77 @@ enum
 
 /*  local function prototypes  */
 
-static GtkUIManager * ui_manager_new     (GtkWidget         *window);
+static GtkUIManager * ui_manager_new      (GtkWidget         *window);
 
-static void       back_callback          (GtkAction         *action,
-                                          gpointer           data);
-static void       forward_callback       (GtkAction         *action,
-                                          gpointer           data);
-static void       reload_callback        (GtkAction         *action,
-                                          gpointer           data);
-static void       stop_callback          (GtkAction         *action,
-                                          gpointer           data);
-static void       home_callback          (GtkAction         *action,
-                                          gpointer           data);
-static void       copy_location_callback (GtkAction         *action,
-                                          gpointer           data);
-static void       show_index_callback    (GtkAction         *action,
-                                          gpointer           data);
-static void       zoom_in_callback       (GtkAction         *action,
-                                          gpointer           data);
-static void       zoom_out_callback      (GtkAction         *action,
-                                          gpointer           data);
-static void       close_callback         (GtkAction         *action,
-                                          gpointer           data);
-static void       website_callback       (GtkAction         *action,
-                                          gpointer           data);
+static GtkWidget * build_searchbar        (void);
 
-static void       update_actions         (void);
+static void       back_callback           (GtkAction         *action,
+                                           gpointer           data);
+static void       forward_callback        (GtkAction         *action,
+                                           gpointer           data);
+static void       reload_callback         (GtkAction         *action,
+                                           gpointer           data);
+static void       stop_callback           (GtkAction         *action,
+                                           gpointer           data);
+static void       home_callback           (GtkAction         *action,
+                                           gpointer           data);
+static void       find_callback           (GtkAction         *action,
+                                           gpointer           data);
+static void       find_again_callback     (GtkAction         *action,
+                                           gpointer           data);
+static void       copy_location_callback  (GtkAction         *action,
+                                           gpointer           data);
+static void       show_index_callback     (GtkAction         *action,
+                                           gpointer           data);
+static void       zoom_in_callback        (GtkAction         *action,
+                                           gpointer           data);
+static void       zoom_out_callback       (GtkAction         *action,
+                                           gpointer           data);
+static void       close_callback          (GtkAction         *action,
+                                           gpointer           data);
+static void       website_callback        (GtkAction         *action,
+                                           gpointer           data);
 
-static void       window_set_icons       (GtkWidget         *window);
+static void       update_actions          (void);
 
-static void       row_activated          (GtkTreeView       *tree_view,
-                                          GtkTreePath       *path,
-                                          GtkTreeViewColumn *column);
-static void       dialog_unmap           (GtkWidget         *window,
-                                          GtkWidget         *paned);
+static void       window_set_icons        (GtkWidget         *window);
 
-static void       view_realize           (GtkWidget         *widget);
-static void       view_unrealize         (GtkWidget         *widget);
-static gboolean   view_popup_menu        (GtkWidget         *widget,
-                                          GdkEventButton    *event);
-static gboolean   view_button_press      (GtkWidget         *widget,
-                                          GdkEventButton    *event);
+static void       row_activated           (GtkTreeView       *tree_view,
+                                           GtkTreePath       *path,
+                                           GtkTreeViewColumn *column);
+static void       dialog_unmap            (GtkWidget         *window,
+                                           GtkWidget         *paned);
 
-static void       title_changed          (GtkWidget         *view,
-                                          WebKitWebFrame    *frame,
-                                          const gchar       *title,
-                                          GtkWidget         *window);
-static void       load_started           (GtkWidget         *view,
-                                          WebKitWebFrame    *frame);
-static void       load_finished          (GtkWidget         *view,
-                                          WebKitWebFrame    *frame);
+static void       view_realize            (GtkWidget         *widget);
+static void       view_unrealize          (GtkWidget         *widget);
+static gboolean   view_popup_menu         (GtkWidget         *widget,
+                                           GdkEventButton    *event);
+static gboolean   view_button_press       (GtkWidget         *widget,
+                                           GdkEventButton    *event);
+static gboolean   view_key_press          (GtkWidget         *widget,
+                                           GdkEventKey       *event);
 
-static void       select_index           (const gchar       *uri);
+static void       title_changed           (GtkWidget         *view,
+                                           WebKitWebFrame    *frame,
+                                           const gchar       *title,
+                                           GtkWidget         *window);
+static void       load_started            (GtkWidget         *view,
+                                           WebKitWebFrame    *frame);
+static void       load_finished           (GtkWidget         *view,
+                                           WebKitWebFrame    *frame);
 
+static void       select_index            (const gchar       *uri);
+
+static void       search_entry_changed    (GtkWidget         *entry);
+static gboolean   search_entry_key_press  (GtkWidget         *entry,
+                                           GdkEventKey       *event);
+static void       search_prev_clicked     (GtkWidget         *button,
+                                           GtkWidget         *entry);
+static void       search_next_clicked     (GtkWidget         *button,
+                                           GtkWidget         *entry);
+static void       search_close_clicked    (GtkWidget         *button);
+static void       search                  (const gchar       *text,
+                                           gboolean           forward);
 
 
 /*  private variables  */
@@ -142,6 +151,7 @@ static GHashTable   *uri_hash_table = NULL;
 
 static GtkWidget    *view           = NULL;
 static GtkWidget    *sidebar        = NULL;
+static GtkWidget    *searchbar      = NULL;
 static GtkWidget    *tree_view      = NULL;
 static GtkUIManager *ui_manager     = NULL;
 static GtkWidget    *button_prev    = NULL;
@@ -155,6 +165,7 @@ void
 browser_dialog_open (void)
 {
   GtkWidget   *window;
+  GtkWidget   *main_vbox;
   GtkWidget   *vbox;
   GtkWidget   *toolbar;
   GtkWidget   *paned;
@@ -253,12 +264,16 @@ browser_dialog_open (void)
                     NULL);
 
   /*  HTML view  */
+  main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_show (main_vbox);
+  gtk_paned_pack2 (GTK_PANED (paned), main_vbox, TRUE, TRUE);
+
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   gtk_widget_set_size_request (scrolled, 300, 200);
-  gtk_paned_add2 (GTK_PANED (paned), scrolled);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled, TRUE, TRUE, 0);
   gtk_widget_show (scrolled);
 
   view = webkit_web_view_new ();
@@ -279,6 +294,9 @@ browser_dialog_open (void)
                     NULL);
   g_signal_connect (view, "button-press-event",
                     G_CALLBACK (view_button_press),
+                    NULL);
+  g_signal_connect (view, "key-press-event",
+                    G_CALLBACK (view_key_press),
                     NULL);
 
 #if HAVE_WEBKIT_ZOOM_API
@@ -303,6 +321,10 @@ browser_dialog_open (void)
                     paned);
 
   update_actions ();
+
+  /* Searchbar */
+  searchbar = build_searchbar ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), searchbar, FALSE, FALSE, 0);
 }
 
 void
@@ -343,7 +365,6 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpItem   *item,
                                    GimpHelpLocale *locale)
 {
-
 #if 0
   g_printerr ("%s: processing %s (parent %s)\n",
               G_STRFUNC,
@@ -358,10 +379,21 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
       for (i = 0; i < 5; i++)
         {
+          gunichar c;
+
           if (! indices[i])
             break;
 
-          item->index += atoi (indices[i]) << (8 * (5 - i));
+          c = g_utf8_get_char (indices[i]);
+
+          if (g_unichar_isdigit (c))
+            {
+              item->index += atoi (indices[i]) << (8 * (5 - i));
+            }
+          else if (g_utf8_strlen (indices[i], -1) == 1)
+            {
+              item->index += (c & 0xFF) << (8 * (5 - i));
+            }
         }
 
       g_strfreev (indices);
@@ -374,7 +406,9 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
       parent = g_hash_table_lookup (locale->help_id_mapping, item->parent);
 
       if (parent)
-        parent->children = g_list_prepend (parent->children, item);
+        {
+          parent->children = g_list_prepend (parent->children, item);
+        }
     }
   else
     {
@@ -386,8 +420,8 @@ static gint
 help_item_compare (gconstpointer a,
                    gconstpointer b)
 {
-  GimpHelpItem *item_a = (GimpHelpItem *) a;
-  GimpHelpItem *item_b = (GimpHelpItem *) b;
+  const GimpHelpItem *item_a = a;
+  const GimpHelpItem *item_b = b;
 
   if (item_a->index > item_b->index)
     return 1;
@@ -402,7 +436,8 @@ add_child (GtkTreeStore   *store,
            GimpHelpDomain *domain,
            GimpHelpLocale *locale,
            GtkTreeIter    *parent,
-           GimpHelpItem   *item)
+           GimpHelpItem   *item,
+           gint            depth)
 {
   GtkTreeIter  iter;
   GList       *list;
@@ -424,13 +459,16 @@ add_child (GtkTreeStore   *store,
                        uri,
                        gtk_tree_iter_copy (&iter));
 
+  if (depth + 1 == GIMP_HELP_BROWSER_INDEX_MAX_DEPTH)
+    return;
+
   item->children = g_list_sort (item->children, help_item_compare);
 
   for (list = item->children; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, &iter, item);
+      add_child (store, domain, locale, &iter, item, depth + 1);
     }
 }
 
@@ -470,7 +508,7 @@ browser_dialog_make_index (GimpHelpDomain *domain,
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, domain, locale, NULL, item);
+      add_child (store, domain, locale, NULL, item, 0);
     }
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (store));
@@ -481,11 +519,12 @@ static void
 select_index (const gchar *uri)
 {
   GtkTreeSelection *selection;
-  GtkTreeIter      *iter;
+  GtkTreeIter      *iter = NULL;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
 
-  iter = g_hash_table_lookup (uri_hash_table, uri);
+  if (uri)
+    iter = g_hash_table_lookup (uri_hash_table, uri);
 
   if (iter)
     {
@@ -560,6 +599,16 @@ ui_manager_new (GtkWidget *window)
       "zoom-out", GTK_STOCK_ZOOM_OUT,
       NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback)
+    },
+    {
+      "find", GTK_STOCK_FIND,
+      NULL, "<control>F", N_("Find text in current page"),
+      G_CALLBACK (find_callback)
+    },
+    {
+      "find-again", NULL,
+      N_("Find _Again"), "<control>G", NULL,
+      G_CALLBACK (find_again_callback)
     },
     {
       "close", GTK_STOCK_CLOSE,
@@ -646,6 +695,9 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"home\" />"
                                      "    <menuitem action=\"copy-location\" />"
                                      "    <menuitem action=\"show-index\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"find\" />"
+                                     "    <menuitem action=\"find-again\" />"
 #ifdef HAVE_WEBKIT_ZOOM_API
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
@@ -712,6 +764,28 @@ home_callback (GtkAction *action,
       browser_dialog_load (uri);
       g_free (uri);
     }
+}
+
+static void
+find_callback (GtkAction *action,
+               gpointer   data)
+{
+  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
+
+  gtk_widget_show (searchbar);
+  gtk_widget_grab_focus (entry);
+}
+
+static void
+find_again_callback (GtkAction *action,
+                     gpointer   data)
+{
+  GtkWidget *entry = g_object_get_data (G_OBJECT (searchbar), "entry");
+
+  gtk_widget_show (searchbar);
+  gtk_widget_grab_focus (entry);
+
+  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
 }
 
 static void
@@ -789,34 +863,39 @@ menu_callback (GtkWidget            *menu,
 
 /*  this function unrefs the items and frees the list  */
 static GtkWidget *
-build_menu (GList *list)
+build_menu (GList *items)
 {
   GtkWidget *menu;
+  GList     *list;
 
-  if (! list)
+  if (! items)
     return NULL;
 
   menu = gtk_menu_new ();
 
-  do
+  for (list = items; list; list = g_list_next (list))
     {
       WebKitWebHistoryItem *item = list->data;
-      GtkWidget            *menu_item;
+      const gchar          *title;
 
-      menu_item = gtk_menu_item_new_with_label (webkit_web_history_item_get_title (item));
+      title = webkit_web_history_item_get_title (item);
 
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-      gtk_widget_show (menu_item);
+      if (title)
+        {
+          GtkWidget *menu_item = gtk_menu_item_new_with_label (title);
 
-      g_signal_connect_object (menu_item, "activate",
-                               G_CALLBACK (menu_callback),
-                               item, 0);
+          gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+          gtk_widget_show (menu_item);
 
-      g_object_unref (item);
+          g_signal_connect_object (menu_item, "activate",
+                                   G_CALLBACK (menu_callback),
+                                   item, 0);
+
+          g_object_unref (item);
+        }
     }
-  while ((list = g_list_next (list)));
 
-  g_list_free (list);
+  g_list_free (items);
 
   return menu;
 }
@@ -986,6 +1065,24 @@ view_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
+static gboolean
+view_key_press (GtkWidget   *widget,
+                GdkEventKey *event)
+{
+  if (event->keyval == GDK_slash)
+    {
+      GtkAction *action;
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/help-browser-popup/find");
+      gtk_action_activate (action);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 title_changed (GtkWidget      *view,
                WebKitWebFrame *frame,
@@ -1022,4 +1119,126 @@ load_finished (GtkWidget      *view,
   gtk_action_set_sensitive (action, FALSE);
 
   update_actions ();
+
+  select_index (webkit_web_frame_get_uri (frame));
+}
+
+static GtkWidget *
+build_searchbar (void)
+{
+  GtkWidget *button;
+  GtkWidget *image;
+  GtkWidget *entry;
+  GtkWidget *hbox;
+  GtkWidget *label;
+
+  hbox = gtk_hbox_new (FALSE, 6);
+
+  label = gtk_label_new (_("Find:"));
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+  entry = gtk_entry_new ();
+  gtk_widget_show (entry);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  g_object_set_data (G_OBJECT (hbox), "entry", entry);
+
+  g_signal_connect (entry, "changed",
+                    G_CALLBACK (search_entry_changed),
+                    NULL);
+
+  g_signal_connect (entry, "key-press-event",
+                    G_CALLBACK (search_entry_key_press),
+                    NULL);
+
+  button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
+                                                  GTK_ICON_SIZE_BUTTON));
+  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (search_prev_clicked),
+                    entry);
+
+  button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
+                                                  GTK_ICON_SIZE_BUTTON));
+  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (search_next_clicked),
+                    entry);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+
+  g_object_get (button, "image", &image, NULL);
+  g_object_set (image, "icon-size", GTK_ICON_SIZE_MENU, NULL);
+  g_object_unref (image);
+
+  gtk_widget_show (button);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (search_close_clicked),
+                    NULL);
+
+  return hbox;
+}
+
+static void
+search_entry_changed (GtkWidget *entry)
+{
+  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+}
+
+static gboolean
+search_entry_key_press (GtkWidget   *entry,
+                        GdkEventKey *event)
+{
+  if (event->keyval == GDK_Escape)
+    {
+      gtk_widget_hide (searchbar);
+      webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+search_prev_clicked (GtkWidget *button,
+                     GtkWidget *entry)
+{
+  search (gtk_entry_get_text (GTK_ENTRY (entry)), FALSE);
+}
+
+static void
+search_next_clicked (GtkWidget *button,
+                     GtkWidget *entry)
+{
+  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+}
+
+static void
+search (const gchar *text,
+        gboolean     forward)
+{
+  if (text)
+    webkit_web_view_search_text (WEBKIT_WEB_VIEW (view),
+                                 text, FALSE, forward, TRUE);
+}
+
+static void
+search_close_clicked (GtkWidget *button)
+{
+  gtk_widget_hide (searchbar);
+  webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
 }

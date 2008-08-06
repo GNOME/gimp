@@ -4,6 +4,7 @@
 
 <!ELEMENT tip (thetip+)>
 <!ATTLIST tip level (start|beginner|intermediate|advanced) #REQUIRED>
+<!ATTLIST tip help CDATA #IMPLIED>
 
 <!ENTITY % markup "(#PCDATA|b|big|tt)*">
 

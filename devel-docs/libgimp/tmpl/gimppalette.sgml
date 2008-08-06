@@ -64,6 +64,16 @@ Functions operating on a single palette.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_palette_get_colors ##### -->
+<para>
+
+</para>
+
+@name: 
+@num_colors: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_palette_get_columns ##### -->
 <para>
 

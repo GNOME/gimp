@@ -177,15 +177,19 @@ gimp_action_get_property (GObject    *object,
     case PROP_CONTEXT:
       g_value_set_object (value, action->context);
       break;
+
     case PROP_COLOR:
       g_value_set_boxed (value, action->color);
       break;
+
     case PROP_VIEWABLE:
       g_value_set_object (value, action->viewable);
       break;
+
     case PROP_ELLIPSIZE:
       g_value_set_enum (value, action->ellipsize);
       break;
+
     case PROP_MAX_WIDTH_CHARS:
       g_value_set_int (value, action->max_width_chars);
       break;
@@ -210,24 +214,28 @@ gimp_action_set_property (GObject      *object,
     case PROP_CONTEXT:
       if (action->context)
         g_object_unref  (action->context);
-      action->context = GIMP_CONTEXT (g_value_dup_object (value));
+      action->context = g_value_dup_object (value);
       break;
+
     case PROP_COLOR:
       if (action->color)
         g_free (action->color);
       action->color = g_value_dup_boxed (value);
       set_proxy = TRUE;
       break;
+
     case PROP_VIEWABLE:
       if (action->viewable)
         g_object_unref  (action->viewable);
-      action->viewable = GIMP_VIEWABLE (g_value_dup_object (value));
+      action->viewable = g_value_dup_object (value);
       set_proxy = TRUE;
       break;
+
     case PROP_ELLIPSIZE:
       action->ellipsize = g_value_get_enum (value);
       set_proxy = TRUE;
       break;
+
     case PROP_MAX_WIDTH_CHARS:
       action->max_width_chars = g_value_get_int (value);
       set_proxy = TRUE;

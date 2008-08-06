@@ -62,6 +62,42 @@
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
+#define CENTER_CROSS_SIZE       6
+
+
+typedef struct _GimpEditSelectionTool
+{
+  GimpDrawTool        parent_instance;
+
+  gint                origx, origy;    /*  Last x and y coords               */
+  gint                cumlx, cumly;    /*  Cumulative changes to x and yed   */
+  gint                x, y;            /*  Current x and y coords            */
+  gint                num_segs_in;     /*  Num seg in selection boundary     */
+  gint                num_segs_out;    /*  Num seg in selection boundary     */
+  BoundSeg           *segs_in;         /*  Pointer to the channel sel. segs  */
+  BoundSeg           *segs_out;        /*  Pointer to the channel sel. segs  */
+
+  gint                x1, y1;          /*  Bounding box of selection mask    */
+  gint                x2, y2;
+
+  gdouble             center_x;        /*  Where to draw the mark of center  */
+  gdouble             center_y;
+
+  GimpTranslateMode   edit_mode;       /*  Translate the mask or layer?      */
+
+  gboolean            first_move;      /*  Don't push undos after the first  */
+
+  gboolean            propagate_release;
+
+  gboolean            constrain;       /*  Constrain the movement            */
+  gdouble             start_x, start_y;/*  Coords when button was pressed    */
+  gdouble             last_x,  last_y; /*  Previous coords sent to _motion   */
+} GimpEditSelectionTool;
+
+typedef struct _GimpEditSelectionToolClass
+{
+  GimpDrawToolClass   parent_class;
+} GimpEditSelectionToolClass;
 
 
 static void       gimp_edit_selection_tool_button_release      (GimpTool                    *tool,
@@ -398,6 +434,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                         y1 - coords->y,
                                         x2 - x1,
                                         y2 - y1);
+
+    /* Save where to draw the mark of the center */
+    edit_select->center_x = (x1 + x2) / 2.0;
+    edit_select->center_y = (y1 + y2) / 2.0;
   }
 
   gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);
@@ -918,6 +958,15 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                     FALSE);
       break;
     }
+
+  /* Mark the center because we snap to it */
+  gimp_draw_tool_draw_cross_by_anchor (draw_tool,
+                                       edit_select->center_x + edit_select->cumlx,
+                                       edit_select->center_y + edit_select->cumly,
+                                       CENTER_CROSS_SIZE,
+                                       CENTER_CROSS_SIZE,
+                                       GTK_ANCHOR_CENTER,
+                                       FALSE);
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }

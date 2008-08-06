@@ -45,6 +45,7 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-icon.h			\
 	gimpdisplayshell-preview.c		\
 	gimpdisplayshell-preview.h		\
+	gimpdisplayshell-private.h		\
 	gimpdisplayshell-progress.c		\
 	gimpdisplayshell-progress.h		\
 	gimpdisplayshell-render.c		\

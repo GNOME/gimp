@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 /**
@@ -224,6 +226,48 @@ gimp_palette_get_info (const gchar *name,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_palette_get_colors:
+ * @name: The palette name.
+ * @num_colors: Length of the colors array.
+ *
+ * Gets all colors from the specified palette.
+ *
+ * This procedure retrieves all color entries of the specified palette.
+ *
+ * Returns: The colors in the palette.
+ *
+ * Since: GIMP 2.6
+ */
+GimpRGB *
+gimp_palette_get_colors (const gchar *name,
+                         gint        *num_colors)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpRGB *colors = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-palette-get-colors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  *num_colors = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_colors = return_vals[1].data.d_int32;
+      colors = g_new (GimpRGB, *num_colors);
+      memcpy (colors,
+              return_vals[2].data.d_colorarray,
+              *num_colors * sizeof (GimpRGB));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return colors;
 }
 
 /**

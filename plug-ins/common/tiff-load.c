@@ -380,23 +380,42 @@ tiff_warning (const gchar *module,
               const gchar *fmt,
               va_list      ap)
 {
-  va_list ap_test;
+  int tag = 0;
 
-  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
-  /* Ignore the warnings about unregistered private tags (>= 32768) */
   if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
     {
+      const char *name;
+      va_list     ap_test;
+
       G_VA_COPY (ap_test, ap);
-      if (va_arg (ap_test, char *));  /* ignore first argument */
-      if (va_arg (ap_test, int) >= 32768)
-        return;
+
+      name = va_arg (ap_test, const char *);
+      tag  = va_arg (ap_test, int);
     }
   /* for older versions of libtiff? */
   else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
     {
+      va_list ap_test;
+
       G_VA_COPY (ap_test, ap);
-      if (va_arg (ap_test, int) >= 32768)
-        return;
+
+      tag = va_arg (ap_test, int);
+    }
+
+  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
+  /* Ignore the warnings about unregistered private tags (>= 32768).  */
+  if (tag >= 32768)
+    return;
+
+  /* Other unknown fields are only reported to stderr. */
+  if (tag > 0)
+    {
+      gchar *msg = g_strdup_vprintf (fmt, ap);
+
+      g_printerr ("%s\n", msg);
+      g_free (msg);
+
+      return;
     }
 
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);

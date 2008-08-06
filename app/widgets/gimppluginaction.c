@@ -150,7 +150,7 @@ gimp_plug_in_action_set_property (GObject      *object,
     case PROP_PROCEDURE:
       if (action->procedure)
         g_object_unref (action->procedure);
-      action->procedure = GIMP_PLUG_IN_PROCEDURE (g_value_dup_object (value));
+      action->procedure = g_value_dup_object (value);
       break;
 
     default:

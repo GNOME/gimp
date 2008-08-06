@@ -1,56 +1,56 @@
 # Lithuanian translation of GIMP.i
-# Copyright (C) 2004-2007 Free Software Foundation, Inc.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
+# Copyright (C) 2004-2008 Free Software Foundation, Inc.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2008.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-14 02:01+0300\n"
-"PO-Revision-Date: 2007-08-31 22:55+0200\n"
-"Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
+"POT-Creation-Date: 2008-07-17 14:37+0300\n"
+"PO-Revision-Date: 2008-07-17 14:37+0300\n"
+"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
 msgstr "Trūkstama išimties informacija"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
 msgstr "Vykdant %s iškilo klaida"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
 msgstr "_Daugiau informacijos"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
+#: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
 msgstr "Taip"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu failų parinkimas"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu aplankų parinkimas"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Netinkama „%s“ įvestis"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu spalvų parinkimas"
 
@@ -94,65 +94,31 @@ msgstr "Š_rifto dydis pikseliais"
 msgid "_Write a separate CSS file"
 msgstr "Į_rašyti atskirą CSS failą"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Python konsolė"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Naršyti..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Python procedūrų naršyklė"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Nepavyko rašymui atverti „%s“: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Nepavyko įrašyti į „%s“: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Išsaugoti Python-Fu konsolės išvestį"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interaktyvus Gimp-Python interpretatorius"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Konsolė"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Pridėi rūko sluoksnį"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Rūkas..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Sluoksnio pavadinimas"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Debesys"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Rūko spalva"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulencija"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "_Nepermatomumas"
 
@@ -217,11 +183,11 @@ msgstr "_Didėjanti"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Iš paletės spalvų sukurti besikartojantį gradientą"
+msgstr "Iš paletės spalvų sukurti pasikartojantį gradientą"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr "Paletė į _besikartojantį gradientą"
+msgstr "Paletė į _pasikartojantį gradientą"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
@@ -238,8 +204,8 @@ msgstr "Supjaustyti"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML "
-"lentelės kodas"
+"Supjaustyto paveikslėlį pagal gaires, sukuria paveikslėlius ir HTML lentelės "
+"kodą"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -263,7 +229,7 @@ msgstr "Paveikslėlio formatas"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
-msgstr "Atskiras paveikslėlio aplinkas"
+msgstr "Atskiras paveikslėlio aplankas"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
@@ -280,6 +246,40 @@ msgstr "Javascript scenarijus onmouseover ir clicked įvykiams"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Praleisti animaciją lentelės antraštėse"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:46
+msgid "Python Console"
+msgstr "Python konsolė"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+msgid "_Browse..."
+msgstr "_Naršyti..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:132
+msgid "Python Procedure Browser"
+msgstr "Python procedūrų naršyklė"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nepavyko rašymui atverti „%s“: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nepavyko įrašyti į „%s“: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Išsaugoti Python-Fu konsolės išvestį"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktyvus GIMP Python interpretatorius"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:223
+msgid "_Console"
+msgstr "_Konsolė"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"

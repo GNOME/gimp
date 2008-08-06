@@ -80,13 +80,17 @@ gimp_image_undo_push_image_type (GimpImage   *image,
 
 GimpUndo *
 gimp_image_undo_push_image_size (GimpImage   *image,
-                                 const gchar *undo_desc)
+                                 const gchar *undo_desc,
+                                 gint         previous_origin_x,
+                                 gint         previous_origin_y)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
                                GIMP_UNDO_IMAGE_SIZE, undo_desc,
                                GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE,
+                               "previous-origin-x", previous_origin_x,
+                               "previous-origin-y", previous_origin_y,
                                NULL);
 }
 

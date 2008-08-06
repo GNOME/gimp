@@ -728,25 +728,30 @@ gimp_data_make_internal (GimpData *data)
 }
 
 /**
- * gimp_data_name_compare:
+ * gimp_data_compare:
  * @data1: a #GimpData object.
  * @data2: another #GimpData object.
  *
- * Compares the names of the two objects for use in sorting; see
- * gimp_object_name_collate() for the method.  Objects marked as
- * "internal" are considered to come before any objects that are not.
+ * Compares two data objects for use in sorting. Objects marked as
+ * "internal" come first, then user-writable objects, then system data
+ * files. In these three groups, the objects are sorted alphabetically
+ * by name, using gimp_object_name_collate().
  *
  * Return value: -1 if @data1 compares before @data2,
  *                0 if they compare equal,
  *                1 if @data1 compares after @data2.
  **/
 gint
-gimp_data_name_compare (GimpData *data1,
-                        GimpData *data2)
+gimp_data_compare (GimpData *data1,
+		   GimpData *data2)
 {
   /*  move the internal objects (like the FG -> BG) gradient) to the top  */
   if (data1->internal != data2->internal)
     return data1->internal ? -1 : 1;
+
+  /*  keep user-writable objects about system resource files  */
+  if (data1->writable != data2->writable)
+    return data1->writable ? -1 : 1;
 
   return gimp_object_name_collate ((GimpObject *) data1,
                                    (GimpObject *) data2);

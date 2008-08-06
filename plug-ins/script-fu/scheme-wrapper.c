@@ -615,18 +615,18 @@ script_fu_marshal_procedure_call (scheme *sc, pointer a)
 #define typeflag(p) ((p)->_flag)
 #define type(p)     (typeflag(p)&T_MASKTYPE)
 
-char *ret_types[] = {
+static const char *ret_types[] = {
   "GIMP_PDB_INT32",       "GIMP_PDB_INT16",     "GIMP_PDB_INT8",
   "GIMP_PDB_FLOAT",       "GIMP_PDB_STRING",    "GIMP_PDB_INT32ARRAY",
   "GIMP_PDB_INT16ARRAY",  "GIMP_PDB_INT8ARRAY", "GIMP_PDB_FLOATARRAY",
   "GIMP_PDB_STRINGARRAY", "GIMP_PDB_COLOR",     "GIMP_PDB_REGION",
   "GIMP_PDB_DISPLAY",     "GIMP_PDB_IMAGE",     "GIMP_PDB_LAYER",
   "GIMP_PDB_CHANNEL",     "GIMP_PDB_DRAWABLE",  "GIMP_PDB_SELECTION",
-  "GIMP_PDB_BOUNDARY",    "GIMP_PDB_VECTORS",   "GIMP_PDB_PARASITE",
+  "GIMP_PDB_COLORARRY",   "GIMP_PDB_VECTORS",   "GIMP_PDB_PARASITE",
   "GIMP_PDB_STATUS",      "GIMP_PDB_END"
 };
 
-char *ts_types[] = {
+static const char *ts_types[] = {
   "T_NONE",
   "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
   "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
@@ -634,7 +634,7 @@ char *ts_types[] = {
   "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
 };
 
-char *status_types[] = {
+static const char *status_types[] = {
   "GIMP_PDB_EXECUTION_ERROR", "GIMP_PDB_CALLING_ERROR",
   "GIMP_PDB_PASS_THROUGH",    "GIMP_PDB_SUCCESS",
   "GIMP_PDB_CANCEL"
@@ -739,7 +739,6 @@ g_printerr ("      passed arg is type %s (%d)\n",
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
-        case GIMP_PDB_BOUNDARY:
         case GIMP_PDB_VECTORS:
           if (!sc->vptr->is_number (sc->vptr->pair_car (a)))
             success = FALSE;
@@ -846,7 +845,7 @@ if (count > 0)
     g_printerr ("     ");
     for (j = 0; j < count; ++j)
       g_printerr (" %ld",
-               sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
     g_printerr ("\n");
   }
 }
@@ -897,7 +896,7 @@ if (count > 0)
     g_printerr ("     ");
     for (j = 0; j < count; ++j)
       g_printerr (" %ld",
-               sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
     g_printerr ("\n");
   }
 }
@@ -950,7 +949,7 @@ if (count > 0)
     g_printerr ("     ");
     for (j = 0; j < count; ++j)
       g_printerr (" %ld",
-               sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
     g_printerr ("\n");
   }
 }
@@ -1003,7 +1002,7 @@ if (count > 0)
     g_printerr ("     ");
     for (j = 0; j < count; ++j)
       g_printerr (" %f",
-               sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
+                  sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
     g_printerr ("\n");
   }
 }
@@ -1101,6 +1100,66 @@ g_printerr ("      (%d %d %d)\n", r, g, b);
           else
             {
               success = FALSE;
+            }
+          break;
+
+        case GIMP_PDB_COLORARRAY:
+          vector = sc->vptr->pair_car (a);
+          if (!sc->vptr->is_vector (vector))
+            success = FALSE;
+          if (success)
+            {
+              n_elements = args[i-1].data.d_int32;
+              if (n_elements < 0 ||
+                  n_elements > sc->vptr->vector_length (vector))
+                {
+                  g_snprintf (error_str, sizeof (error_str),
+                              "COLOR vector (argument %d) for function %s has "
+                              "size of %ld but expected size of %d",
+                              i+1, proc_name,
+                              sc->vptr->vector_length (vector), n_elements);
+                  return foreign_error (sc, error_str, 0);
+                }
+
+              args[i].data.d_colorarray = g_new (GimpRGB, n_elements);
+
+              for (j = 0; j < n_elements; j++)
+                {
+                  pointer v_element = sc->vptr->vector_elem (vector, j);
+                  pointer color_list;
+                  guchar  r, g, b;
+
+                  if (! (sc->vptr->is_list (sc,
+                                            sc->vptr->pair_car (v_element)) &&
+                         sc->vptr->list_length (sc,
+                                                sc->vptr->pair_car (v_element)) == 3))
+                    {
+                      g_snprintf (error_str, sizeof (error_str),
+                                  "Item %d in vector is not a color "
+                                  "(argument %d for function %s)",
+                                  j+1, i+1, proc_name);
+                      return foreign_error (sc, error_str, vector);
+                    }
+
+                  color_list = sc->vptr->pair_car (v_element);
+                  r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                             0, 255);
+                  color_list = sc->vptr->pair_cdr (color_list);
+                  g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                             0, 255);
+                  color_list = sc->vptr->pair_cdr (color_list);
+                  b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                             0, 255);
+
+                  gimp_rgba_set_uchar (&args[i].data.d_colorarray[j],
+                                       r, g, b, 255);
+                }
+#if DEBUG_MARSHALL
+{
+glong count = sc->vptr->vector_length (vector);
+g_printerr ("      color vector has %ld elements\n", count);
+}
+#endif
             }
           break;
 
@@ -1282,7 +1341,6 @@ g_printerr ("      value %d is type %s (%d)\n",
             case GIMP_PDB_CHANNEL:
             case GIMP_PDB_DRAWABLE:
             case GIMP_PDB_SELECTION:
-            case GIMP_PDB_BOUNDARY:
             case GIMP_PDB_VECTORS:
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_integer (sc,
@@ -1457,6 +1515,38 @@ g_printerr ("      value %d is type %s (%d)\n",
                 break;
               }
 
+            case GIMP_PDB_COLORARRAY:
+              /*  color arrays are always implemented such that the previous
+               *  return value contains the number of strings in the array
+               */
+              {
+                gint32   num_colors = values[i].data.d_int32;
+                GimpRGB *array  = (GimpRGB *) values[i + 1].data.d_colorarray;
+                pointer  vector = sc->vptr->mk_vector (sc, num_colors);
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
+                set_safe_foreign (sc, return_val);
+
+                for (j = 0; j < num_colors; j++)
+                  {
+                    guchar r, g, b;
+
+                    gimp_rgb_get_uchar (&array[j], &r, &g, &b);
+
+                    intermediate_val = sc->vptr->cons (sc,
+                        sc->vptr->mk_integer (sc, r),
+                        sc->vptr->cons (sc,
+                            sc->vptr->mk_integer (sc, g),
+                            sc->vptr->cons (sc,
+                                sc->vptr->mk_integer (sc, b),
+                                sc->NIL)));
+                    return_val = sc->vptr->cons (sc,
+                                                 intermediate_val,
+                                                 return_val);
+                    set_safe_foreign (sc, return_val);
+                  }
+              }
+              break;
             case GIMP_PDB_REGION:
               {
                 gint32 x, y, w, h;
@@ -1612,6 +1702,10 @@ script_fu_marshal_destroy_args (GimpParam *params,
           g_free (params[i].data.d_stringarray);
           break;
 
+        case GIMP_PDB_COLORARRAY:
+          g_free (params[i].data.d_colorarray);
+          break;
+
         case GIMP_PDB_COLOR:
         case GIMP_PDB_REGION:
         case GIMP_PDB_DISPLAY:
@@ -1620,7 +1714,6 @@ script_fu_marshal_destroy_args (GimpParam *params,
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
         case GIMP_PDB_SELECTION:
-        case GIMP_PDB_BOUNDARY:
         case GIMP_PDB_VECTORS:
         case GIMP_PDB_PARASITE:
         case GIMP_PDB_STATUS:

@@ -100,6 +100,7 @@ gimp_session_info_aux_new_from_props (GObject *object,
             }
 
           g_value_unset (&value);
+          g_string_free (str, TRUE);
         }
       else
         {
