@@ -1,3 +1,7 @@
+2008-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.c: minor cleanups.
+
 2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):

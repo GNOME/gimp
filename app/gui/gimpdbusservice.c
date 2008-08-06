@@ -46,19 +46,21 @@ typedef struct
 } OpenData;
 
 
-static void  gimp_dbus_service_class_init (GimpDBusServiceClass *klass);
-static void  gimp_dbus_service_init       (GimpDBusService      *service);
-static void  gimp_dbus_service_dispose    (GObject              *object);
-static void  gimp_dbus_service_finalize   (GObject              *object);
+static void       gimp_dbus_service_class_init (GimpDBusServiceClass *klass);
 
-static void  gimp_dbus_service_queue_open (GimpDBusService      *service,
-                                           const gchar          *uri,
-                                           gboolean              as_new);
+static void       gimp_dbus_service_init           (GimpDBusService  *service);
+static void       gimp_dbus_service_dispose        (GObject          *object);
+static void       gimp_dbus_service_finalize       (GObject          *object);
 
-static OpenData * gimp_dbus_service_open_data_new  (GimpDBusService *service,
-                                                    const gchar     *uri,
-                                                    gboolean         as_new);
-static void       gimp_dbus_service_open_data_free (OpenData        *data);
+static gboolean   gimp_dbus_service_queue_open     (GimpDBusService  *service,
+                                                    const gchar      *uri,
+                                                    gboolean          as_new);
+
+static gboolean   gimp_dbus_service_open_idle      (GimpDBusService  *service);
+static OpenData * gimp_dbus_service_open_data_new  (GimpDBusService  *service,
+                                                    const gchar      *uri,
+                                                    gboolean          as_new);
+static void       gimp_dbus_service_open_data_free (OpenData         *data);
 
 
 G_DEFINE_TYPE (GimpDBusService, gimp_dbus_service, G_TYPE_OBJECT)
@@ -141,12 +143,7 @@ gimp_dbus_service_open (GimpDBusService  *service,
   g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (success != NULL, FALSE);
 
-  gimp_dbus_service_queue_open (service, uri, FALSE);
-
-  /*  The call always succeeds as it is handled in one way or another.
-   *  Even presenting an error message is considered success ;-)
-   */
-  *success = TRUE;
+  *success = gimp_dbus_service_queue_open (service, uri, FALSE);
 
   return TRUE;
 }
@@ -161,12 +158,7 @@ gimp_dbus_service_open_as_new (GimpDBusService  *service,
   g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (success != NULL, FALSE);
 
-  gimp_dbus_service_queue_open (service, uri, TRUE);
-
-  /*  The call always succeeds as it is handled in one way or another.
-   *  Even presenting an error message is considered success ;-)
-   */
-  *success = TRUE;
+  *success = gimp_dbus_service_queue_open (service, uri, TRUE);
 
   return TRUE;
 }
@@ -184,6 +176,59 @@ gimp_dbus_service_activate (GimpDBusService  *service,
   gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
 
   return TRUE;
+}
+
+/*
+ * Adds a request to open a file to the end of the queue and
+ * starts an idle source if it is not already running.
+ */
+static gboolean
+gimp_dbus_service_queue_open (GimpDBusService *service,
+                              const gchar     *uri,
+                              gboolean         as_new)
+{
+  g_queue_push_tail (service->queue,
+                     gimp_dbus_service_open_data_new (service, uri, as_new));
+
+  if (! service->source)
+    {
+      service->source = g_idle_source_new ();
+
+      g_source_set_callback (service->source,
+                             (GSourceFunc) gimp_dbus_service_open_idle, service,
+                             NULL);
+      g_source_attach (service->source, NULL);
+      g_source_unref (service->source);
+    }
+
+  /*  The call always succeeds as it is handled in one way or another.
+   *  Even presenting an error message is considered success ;-)
+   */
+  return TRUE;
+}
+
+/*
+ * Idle callback that removes the first request from the queue and
+ * handles it. If there are no more requests, the idle source is
+ * removed.
+ */
+static gboolean
+gimp_dbus_service_open_idle (GimpDBusService *service)
+{
+  OpenData *data = g_queue_pop_tail (service->queue);
+
+  if (data)
+    {
+      file_open_from_command_line (service->gimp, data->uri, data->as_new);
+
+      gimp_dbus_service_open_data_free (data);
+
+      return TRUE;
+    }
+
+  service->source = NULL;
+
+  return FALSE;
 }
 
 static OpenData *
@@ -206,43 +251,5 @@ gimp_dbus_service_open_data_free (OpenData *data)
   g_slice_free (OpenData, data);
 }
 
-static gboolean
-gimp_dbus_service_open_idle (GimpDBusService *service)
-{
-  OpenData *data = g_queue_pop_tail (service->queue);
-
-  if (data)
-    {
-      file_open_from_command_line (service->gimp, data->uri, data->as_new);
-
-      gimp_dbus_service_open_data_free (data);
-
-      return TRUE;
-    }
-
-  service->source = NULL;
-
-  return FALSE;
-}
-
-static void
-gimp_dbus_service_queue_open (GimpDBusService *service,
-                              const gchar     *uri,
-                              gboolean         as_new)
-{
-  g_queue_push_tail (service->queue,
-                     gimp_dbus_service_open_data_new (service, uri, as_new));
-
-  if (! service->source)
-    {
-      service->source = g_idle_source_new ();
-
-      g_source_set_callback (service->source,
-                             (GSourceFunc) gimp_dbus_service_open_idle, service,
-                             NULL);
-      g_source_attach (service->source, NULL);
-      g_source_unref (service->source);
-    }
-}
 
 #endif /* HAVE_DBUS_GLIB */
