@@ -1,3 +1,12 @@
+2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/tools/gimptexttool.c
+	* app/tools/gimptexttool.h
+	* app/actions/text-tool-actions.c
+	* app/actions/text-tool-commands.c
+	* app/actions/text-tool-commands.h: Continued working on
+	context-sensitive menu and clipboard actions etc.
+
 2008-08-03  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/tools/gimptoolcontrol.h

@@ -160,7 +160,7 @@ static void      gimp_text_tool_draw           (GimpDrawTool *draw_tool);
 
 static void      gimp_text_tool_update_layout  (GimpTextTool *text_tool);
 
-static void      gimp_text_tool_show_context_menu (GimpTextTool *text_tool, GimpCoords *coords);
+static void      gimp_text_tool_show_context_menu (GimpTool *tool, GimpCoords *coords);
 
 /* IM Context Callbacks
  */
@@ -169,12 +169,11 @@ static void     gimp_text_tool_commit_cb          (GtkIMContext *context,
                                                    GimpTextTool *text_tool);
 
 static void     gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
-                                                   const gchar *str,
                                                    GimpTextTool *text_tool);
 
-static void gimp_text_tool_enter_text (GimpTextTool *text_tool,
-                                       const gchar  *str);
-static void gimp_text_tool_delete_text (GimpTextTool *text_tool);
+static void gimp_text_tool_enter_text   (GimpTextTool *text_tool,
+                                         const gchar  *str);
+static void gimp_text_tool_update_proxy (GimpTextTool *text_tool);
 
 G_DEFINE_TYPE_WITH_CODE (GimpTextTool, gimp_text_tool,
                          GIMP_TYPE_DRAW_TOOL,
@@ -232,7 +231,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
                 0, NULL, NULL,
                 gimp_marshal_VOID__POINTER,
                 G_TYPE_NONE, 1,
-                G_TYPE_INT);
+                G_TYPE_POINTER);
 }
 
 static void
@@ -306,9 +305,12 @@ gimp_text_tool_dispose (GObject *object)
   gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
 
   gimp_tool_control_set_wants_all_key_events (tool->control, FALSE);
+  gimp_tool_control_set_show_context_menu (tool->control, FALSE);
+
   gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
   g_signal_handlers_disconnect_by_func (text_tool->im_context, gimp_text_tool_commit_cb, text_tool);
   g_signal_handlers_disconnect_by_func (text_tool->im_context, gimp_text_tool_preedit_changed_cb, text_tool);
+  g_signal_handlers_disconnect_by_func (text_tool, gimp_text_tool_show_context_menu, NULL);
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -660,6 +662,30 @@ gimp_text_tool_key_press (GimpTool    *tool,
   gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &selection,
                                     gtk_text_buffer_get_selection_bound (text_tool->text_buffer));
 
+  if (kevent->state & GDK_CONTROL_MASK)
+    {
+      printf ("ctrl is down\n");
+      if (kevent->keyval == GDK_X ||
+          kevent->keyval == GDK_x)
+        {
+          gimp_text_tool_clipboard_cut (text_tool);
+          return TRUE;
+        }
+      if (kevent->keyval == GDK_C ||
+          kevent->keyval == GDK_c)
+        {
+          gimp_text_tool_clipboard_copy (text_tool);
+          return TRUE;
+        }
+      if (kevent->keyval == GDK_V ||
+          kevent->keyval == GDK_v)
+        {
+          gimp_text_tool_clipboard_paste (text_tool);
+          return TRUE;
+        }
+      return FALSE;
+    }
+
   if (kevent->state & GDK_SHIFT_MASK)
       sel_start = &cursor;
   else
@@ -670,6 +696,7 @@ gimp_text_tool_key_press (GimpTool    *tool,
       kevent->keyval == GDK_ISO_Enter)
     {
       gimp_draw_tool_pause (draw_tool);
+      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
       gimp_text_tool_enter_text (text_tool, "\n");
       gimp_text_tool_update_layout (text_tool);
       gimp_draw_tool_resume (draw_tool);
@@ -1887,23 +1914,41 @@ gimp_text_tool_commit_cb (GtkIMContext *context,
   gimp_text_tool_enter_text (text_tool, str);
 }
 
-/* TODO: This function does nothing right now, 
- * but it will be used for special Input Methods */
 static void
 gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
-                                   const gchar *str,
                                    GimpTextTool *text_tool)
 {
-  printf ("debug. preedit_changed\n");
 
   gchar *string;
   gint cursor;
-/*
-  gtk_im_context_get_preedit_string (text_tool->im_context, &string, NULL, &cursor);
-*/
+  
+  gtk_im_context_get_preedit_string (context,
+                                    &string, NULL, &cursor);
+  printf ("preedit changed. string: %s\n", string);
+  g_free (string);
 }
 
 static void
+gimp_text_tool_update_proxy (GimpTextTool *text_tool)
+{
+  if (text_tool->text)
+    {
+      GtkTextIter start, end;
+      gchar *string;
+
+      gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
+      string = gtk_text_buffer_get_text (text_tool->text_buffer, &start, &end, TRUE);
+      g_object_set (text_tool->proxy, "text",
+                    string, NULL);
+      g_free (string);
+    }
+  else
+    {
+      gimp_text_tool_create_layer (text_tool, NULL);
+    }
+}
+
+void
 gimp_text_tool_delete_text (GimpTextTool *text_tool)
 {
   GtkTextIter cursor, start, end;
@@ -1918,20 +1963,7 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
   else
     gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
 
-  if (text_tool->text)
-    {
-      gchar *string;
-
-      gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-      string = gtk_text_buffer_get_text (text_tool->text_buffer, &start, &end, TRUE);
-      g_object_set (text_tool->proxy, "text",
-                    string, NULL);
-      g_free (string);
-    }
-  else
-    {
-      gimp_text_tool_create_layer (text_tool, NULL);
-    }
+  gimp_text_tool_update_proxy (text_tool);
 }
 
 static void
@@ -1943,20 +1975,7 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
   gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
 
-  if (text_tool->text)
-    {
-      gchar *string;
-
-      gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-      string = gtk_text_buffer_get_text (text_tool->text_buffer, &start, &end, TRUE);
-      g_object_set (text_tool->proxy, "text",
-                    string, NULL);
-      g_free (string);
-    }
-  else
-    {
-      gimp_text_tool_create_layer (text_tool, NULL);
-    }
+  gimp_text_tool_update_proxy (text_tool);
 }
 
 static void
@@ -1975,14 +1994,16 @@ gimp_text_tool_update_layout (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_show_context_menu (GimpTextTool *text_tool, GimpCoords *coords)
+gimp_text_tool_show_context_menu (GimpTool *tool, GimpCoords *coords)
 {
-  GimpTool          *tool;
+  GimpTextTool      *text_tool;
   GimpDisplayShell  *shell;
   gint               cx, cy;
   gint               x1, y1, x2, y2;
 
-  tool = GIMP_TOOL (text_tool);
+  text_tool = GIMP_TEXT_TOOL (tool);
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
   g_object_get (text_tool,
@@ -2007,4 +2028,35 @@ gimp_text_tool_show_context_menu (GimpTextTool *text_tool, GimpCoords *coords)
                             "/text-tool-popup",
                             GTK_WIDGET (shell),
                             NULL, NULL, NULL, NULL);
+}
+
+void
+gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
+{
+  GtkClipboard *clipboard;
+  GdkAtom       clipboard_atom;
+
+  clipboard_atom = gdk_atom_intern ("CLIPBOARD", FALSE);
+  clipboard = gtk_clipboard_get (clipboard_atom);
+  gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
+  gimp_text_tool_update_proxy (text_tool);
+}
+
+void
+gimp_text_tool_clipboard_copy (GimpTextTool *text_tool)
+{
+  GtkClipboard *clipboard;
+
+  clipboard = gtk_clipboard_get (gdk_atom_intern ("CLIPBOARD", FALSE));
+  gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
+}
+
+void
+gimp_text_tool_clipboard_paste (GimpTextTool *text_tool)
+{
+  GtkClipboard *clipboard;
+
+  clipboard = gtk_clipboard_get (gdk_atom_intern ("CLIPBOARD", FALSE));
+  gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
+  gimp_text_tool_update_proxy (text_tool);
 }

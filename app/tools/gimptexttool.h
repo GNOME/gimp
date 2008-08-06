@@ -78,5 +78,9 @@ GType   gimp_text_tool_get_type  (void) G_GNUC_CONST;
 void    gimp_text_tool_set_layer (GimpTextTool *text_tool,
                                   GimpLayer    *layer);
 
+void    gimp_text_tool_delete_text     (GimpTextTool *text_tool);
+void    gimp_text_tool_clipboard_cut   (GimpTextTool *text_tool);
+void    gimp_text_tool_clipboard_copy  (GimpTextTool *text_tool);
+void    gimp_text_tool_clipboard_paste (GimpTextTool *text_tool);
 
 #endif /* __GIMP_TEXT_TOOL_H__ */

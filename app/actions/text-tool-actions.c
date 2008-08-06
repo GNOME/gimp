@@ -38,31 +38,35 @@ static const GimpActionEntry text_tool_actions[] =
 {
   { "text-tool-popup", NULL,
     N_("Text Tool Popup"), NULL, NULL, NULL,
-    GIMP_HELP_TEXT_EDITOR_DIALOG },
+    NULL },
 
-  { "text-tool-cut", NULL,
+  { "text-tool-cut", GTK_STOCK_CUT,
     N_("Cut"), NULL, NULL,
-    NULL, NULL },
+    G_CALLBACK (text_tool_cut_cmd_callback),
+    NULL },
 
-  { "text-tool-copy", NULL,
+  { "text-tool-copy", GTK_STOCK_COPY,
     N_("Copy"), NULL, NULL,
-    NULL, NULL },
+    G_CALLBACK (text_tool_copy_cmd_callback),
+    NULL },
 
-  { "text-tool-paste", NULL,
+  { "text-tool-paste", GTK_STOCK_PASTE,
     N_("Paste"), NULL, NULL,
-    NULL, NULL },
+    G_CALLBACK (text_tool_paste_cmd_callback),
+    NULL },
 
-  { "text-tool-delete", NULL,
-    N_("Delete"), NULL, NULL,
-    NULL, NULL },
+  { "text-tool-delete", GTK_STOCK_DELETE,
+    N_("Delete selected"), NULL, NULL,
+    G_CALLBACK (text_tool_delete_cmd_callback), 
+    NULL },
 
-  { "text-tool-load", NULL,
+  { "text-tool-load", GTK_STOCK_OPEN,
     N_("Open"), NULL,
     N_("Load text from file"),
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
-  { "text-tool-clear", NULL,
+  { "text-tool-clear", GTK_STOCK_CLEAR,
     N_("Clear"), "",
     N_("Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),
@@ -70,7 +74,7 @@ static const GimpActionEntry text_tool_actions[] =
 
   { "text-tool-input-methods", NULL,
     N_("Input Methods"), NULL, NULL, NULL,
-    GIMP_HELP_TEXT_EDITOR_DIALOG }
+    NULL }
 };
 
 static const GimpRadioActionEntry text_tool_direction_actions[] =
