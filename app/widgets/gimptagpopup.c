@@ -298,7 +298,7 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
       popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
       gtk_alignment_set_padding (GTK_ALIGNMENT (alignment),
                                  popup->scroll_arrow_height + 2,
-                                 popup->scroll_arrow_height + 2, 2, 2);
+                                 popup->scroll_arrow_height + 2, 0, 0);
       popup_height              = popup_rect.height - popup->scroll_arrow_height * 2 + 4;
       popup->scroll_height = height - popup_rect.height;
       popup->scroll_y      = 0;
