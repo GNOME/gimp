@@ -1,3 +1,7 @@
+2008-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-shadow.c: removed unused include.
+
 2008-08-06  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c

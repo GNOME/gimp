@@ -27,7 +27,6 @@
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-shadow.h"
-#include "gimpimage.h"
 
 
 TileManager *
@@ -96,6 +95,7 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
 
       pixel_region_init (&shadowPR, drawable->shadow,
                          x, y, width, height, FALSE);
+
       gimp_drawable_apply_region (drawable, &shadowPR,
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
