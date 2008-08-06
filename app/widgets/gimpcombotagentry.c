@@ -50,6 +50,8 @@ static void     gimp_combo_tag_entry_style_set         (GtkWidget              *
                                                         gpointer                user_data);
 
 static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry *combo_entry);
+static void     gimp_combo_tag_entry_popup_destroy     (GtkObject         *object,
+                                                        GimpComboTagEntry *combo_entry);
 
 static void     gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
                                                         gint                    tag_count,
@@ -253,7 +255,19 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   if (tag_count > 0)
     {
       combo_entry->popup = gimp_tag_popup_new (combo_entry);
+      g_signal_connect (combo_entry->popup, "destroy",
+                        G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
+                        combo_entry);
     }
+}
+
+
+static void
+gimp_combo_tag_entry_popup_destroy     (GtkObject         *object,
+                                        GimpComboTagEntry *combo_entry)
+{
+  combo_entry->popup = NULL;
+  gtk_widget_grab_focus (GTK_WIDGET (combo_entry));
 }
 
 static void

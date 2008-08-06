@@ -122,13 +122,7 @@ gimp_tag_popup_dispose (GObject           *object)
 
   gimp_tag_popup_remove_scroll_timeout (tag_popup);
 
-  /* FIXME: parent should do this on destroy event */
-  if (tag_popup->combo_entry)
-    {
-      gtk_widget_grab_focus (GTK_WIDGET (tag_popup->combo_entry));
-      tag_popup->combo_entry->popup = NULL;
-      tag_popup->combo_entry = NULL;
-    }
+  tag_popup->combo_entry = NULL;
 
   if (tag_popup->layout)
     {
