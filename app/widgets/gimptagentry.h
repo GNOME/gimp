@@ -69,4 +69,6 @@ gchar **    gimp_tag_entry_parse_tags         (GimpTagEntry            *entry);
 void        gimp_tag_entry_set_tag_string     (GimpTagEntry            *tag_entry,
                                                const gchar             *tag_string);
 
+const gchar   * gimp_tag_entry_get_separator  (void);
+
 #endif  /*  __GIMP_TAG_ENTRY_H__  */
