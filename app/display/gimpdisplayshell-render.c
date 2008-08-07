@@ -231,7 +231,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (w > 0 && h > 0);
 
   image = shell->display->image;
-  projection = image->projection;
+
+  projection = gimp_image_get_projection (image);
 
   gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
 

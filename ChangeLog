@@ -1,5 +1,24 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: added gimp_image_get_projection().
+
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsourcecore.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.c
+	* app/widgets/gimpsamplepointeditor.c
+	* tools/pdbgen/pdb/image.pdb: use the new accessor function.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.h: fixed comment.
 
 2008-08-07  Tor Lillqvist  <tml@novell.com>

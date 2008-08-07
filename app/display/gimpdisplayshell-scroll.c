@@ -306,7 +306,7 @@ gimp_display_shell_get_scaled_image_size (const GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  proj = shell->display->image->projection;
+  proj = gimp_image_get_projection (shell->display->image);
 
   level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
 

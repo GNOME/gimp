@@ -403,6 +403,11 @@ gboolean        gimp_image_set_tattoo_state      (GimpImage          *image,
 GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
 
 
+/*  projection  */
+
+GimpProjection * gimp_image_get_projection       (const GimpImage    *image);
+
+
 /*  layers / channels / vectors  */
 
 GimpContainer * gimp_image_get_layers            (const GimpImage    *image);
