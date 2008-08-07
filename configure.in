@@ -220,6 +220,13 @@ AC_MSG_CHECKING([for native Win32])
 case "$target_or_host" in
   *-*-mingw*)
     os_win32=yes
+    case "$host" in
+      x86_64-*-*)
+	;;
+      *)
+	WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
+	;;
+    esac
     PATHSEP=';'
     ;;
   *)
@@ -228,6 +235,7 @@ case "$target_or_host" in
     ;;
 esac
 AC_MSG_RESULT([$os_win32])
+AC_SUBST(WIN32_LARGE_ADDRESS_AWARE)
 AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
 AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
