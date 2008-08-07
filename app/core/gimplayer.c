@@ -1149,6 +1149,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
        case GIMP_RGB_IMAGE:
           copy_region (region, &layerPR);
           break;
+
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1161,15 +1162,18 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_RGBA_IMAGE:
           copy_region (region, &layerPR);
           break;
+
         case GIMP_RGB_IMAGE:
           add_alpha_region (region, &layerPR);
           break;
+
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           gimp_layer_transform_color (dest_image,
                                       region,   src_type,
                                       &layerPR, type);
           break;
+
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1182,6 +1186,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_GRAY_IMAGE:
           copy_region (region, &layerPR);
           break;
+
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1197,12 +1202,15 @@ gimp_layer_new_from_region (PixelRegion          *region,
                                       region,   src_type,
                                       &layerPR, type);
           break;
+
         case GIMP_GRAYA_IMAGE:
           copy_region (region, &layerPR);
           break;
+
         case GIMP_GRAY_IMAGE:
           add_alpha_region (region, &layerPR);
           break;
+
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1224,6 +1232,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
                                       region,   src_type,
                                       &layerPR, type);
           break;
+
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
