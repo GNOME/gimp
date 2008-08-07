@@ -1,3 +1,17 @@
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: added new action
+	"layers-new-from-visible".
+
+	* app/widgets/gimphelp-ids.h: added new help-id.
+
+	* menus/layers-menu.xml
+	* menus/image-menu.xml.in: added the new action.
+
+	* app/actions/edit-actions.c: improved the blurb for
+	"edit-copy-visible".
+
 2008-08-07  Tor Lillqvist  <tml@novell.com>
 
 	* app/main.c: Code built by the still unstable mingw-w64 toolchain

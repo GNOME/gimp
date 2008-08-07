@@ -136,6 +136,7 @@
 #define GIMP_HELP_LAYER_DIALOG_LOCK_ALPHA_BUTTON  "gimp-layer-dialog-lock-alpha-button"
 
 #define GIMP_HELP_LAYER_NEW                       "gimp-layer-new"
+#define GIMP_HELP_LAYER_NEW_FROM_VISIBLE          "gimp-layer-new-from-visible"
 #define GIMP_HELP_LAYER_DUPLICATE                 "gimp-layer-duplicate"
 #define GIMP_HELP_LAYER_ANCHOR                    "gimp-layer-anchor"
 #define GIMP_HELP_LAYER_MERGE_DOWN                "gimp-layer-merge-down"
