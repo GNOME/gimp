@@ -1,33 +1,48 @@
 ;  FROZEN-TEXT effect
 ;  Thanks to Ed Mackey for this one
-;   Written by Spencer Kimball
+;  Written by Spencer Kimball
 
 (define (apply-frosty-logo-effect img
                                   logo-layer
                                   size
-                                  bg-color)
+                                  bg-color
+                                  isnew) ; The parameter isnew is used
+                                         ; when the script is called
+                                         ; using the logo script (not
+                                         ; alpha to logo), in order to
+                                         ; make sure some actions are
+                                         ; performed only then
   (let* (
         (border (/ size 5))
         (width (+ (car (gimp-drawable-width logo-layer)) border))
         (height (+ (car (gimp-drawable-height logo-layer)) border))
         (logo-layer-mask (car (gimp-layer-create-mask logo-layer
-                                                      ADD-BLACK-MASK)))
+						      ADD-BLACK-MASK)))
         (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE
                                             "Sparkle" 100 NORMAL-MODE)))
         (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE
-                                          "Matte" 100 NORMAL-MODE)))
-        (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
+                                          _"Matte" 100 NORMAL-MODE)))
+        (shadow-layer (car (gimp-layer-new img
+					   (+ border width)
+					   (+ border height)
+					   RGBA-IMAGE
                                            "Shadow" 90 MULTIPLY-MODE)))
         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE
                                        "Background" 100 NORMAL-MODE)))
         (selection 0)
+        (stack (car(gimp-image-get-layer-position img logo-layer)))
         )
 
     (gimp-context-push)
 
+    (if ( = isnew 1) (script-fu-util-image-resize-from-layer img shadow-layer))
+
     (gimp-layer-add-mask logo-layer logo-layer-mask)
-    (script-fu-util-image-resize-from-layer img shadow-layer)
-    (script-fu-util-image-add-layers img sparkle-layer matte-layer shadow-layer bg-layer)
+    (gimp-image-add-layer img sparkle-layer (+ 1 stack))
+    (gimp-image-add-layer img matte-layer (+ 2 stack))
+    (gimp-image-add-layer img shadow-layer (+ 3 stack))
+    (gimp-layer-translate shadow-layer (- border) (- border))
+    (gimp-image-add-layer img bg-layer 5)
     (gimp-selection-none img)
     (gimp-edit-clear sparkle-layer)
     (gimp-edit-clear matte-layer)
@@ -71,17 +86,9 @@
     (gimp-selection-none img)
     (gimp-image-remove-channel img selection)
 
-    (for-each (lambda (the-layer)
-              (gimp-layer-resize the-layer (- width border) (- height border)
-                                           (- border) (- border))
-              )
-              (list sparkle-layer matte-layer bg-layer)
-    )
-
-    (gimp-layer-resize shadow-layer (- width border) (- height border) 0 0)
     (gimp-layer-translate shadow-layer border border)
 
-    (script-fu-util-image-resize-from-layer img logo-layer)
+    (if ( = isnew 1) (script-fu-util-image-resize-from-layer img logo-layer))
 
     (gimp-layer-translate bg-layer (- 0 border) (- 0 border))
 
@@ -94,47 +101,31 @@
                                      size
                                      bg-color)
 
-  (let* (
-        (position (- (car(gimp-image-get-layer-position img logo-layer)) 1))
-        (duplicate (car (gimp-layer-new-from-drawable logo-layer img)))
-        (name (car (gimp-layer-get-name logo-layer)))
-        (select (cons-array 4 'byte))
-        (crop 0)
-        (temp 0)
-        )
-
     (gimp-image-undo-group-start img)
 
+    ;Checking if the effect size is to big or not
     (gimp-selection-layer-alpha logo-layer)
-    (gimp-image-add-layer img duplicate -1)
-    (gimp-layer-resize-to-image-size duplicate)
-    (gimp-selection-none img)
-    (apply-frosty-logo-effect img duplicate size bg-color)
-    (set! crop (aref (cadr (gimp-image-get-layers img)) (+ position 6)))
-    (set! temp (aref (cadr (gimp-image-get-layers img)) (+ position 3)))
-    (gimp-selection-layer-alpha temp)
-    (aset select 0 (cadr (gimp-selection-bounds img)))
-    (aset select 1 (caddr (gimp-selection-bounds img)))
-    (aset select 2 (cadddr (gimp-selection-bounds img)))
-    (aset select 3 (cadddr (cdr(gimp-selection-bounds img))))
+    (gimp-selection-feather img (/ size 5))
+    (gimp-selection-sharpen img)
 
-    (gimp-layer-resize crop
-           (+ 20 (- (aref select 2) (aref select 0)))
-           (+ 20 (- (aref select 3) (aref select 1)))
-           (- 0 (+ 0 (aref select 0)))
-           (- 0 (+ 0 (aref select 1))))
-    (gimp-layer-resize duplicate
-           (car (gimp-drawable-width logo-layer))
-           (car (gimp-drawable-height logo-layer))
-           (- 0 (car (gimp-drawable-offsets logo-layer)))
-           (- 0 (cadr (gimp-drawable-offsets logo-layer))))
-    (gimp-image-remove-layer img logo-layer)
-    (gimp-layer-set-name duplicate name)
+    (if (= 1 (car(gimp-selection-is-empty img)))
+	(begin
+	  (gimp-image-undo-group-end img)
+	  (gimp-selection-none img)
+	  (gimp-message "Your layer's opaque parts are either too small for
+this effect size, or they are not inside the canvas.")
+	  ))
 
-    (gimp-selection-none img)
-    (gimp-image-undo-group-end img)
-    (gimp-displays-flush)
-  )
+    (if (= 0 (car(gimp-selection-is-empty img)))
+	(begin
+	  (gimp-selection-none img)
+	  (gimp-layer-resize-to-image-size logo-layer)
+	  (apply-frosty-logo-effect img logo-layer size bg-color 0)
+
+	  (gimp-selection-none img)
+	  (gimp-image-undo-group-end img)
+	  (gimp-displays-flush)
+	  ))
 )
 
 (script-fu-register "script-fu-frosty-logo-alpha"
@@ -162,12 +153,36 @@
         (img (car (gimp-image-new 256 256 RGB)))
         (border (/ size 5))
         (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font)))
-        )
-    (gimp-image-undo-disable img)
-    (apply-frosty-logo-effect img text-layer size bg-color)
-    (gimp-image-undo-enable img)
-    (gimp-display-new img)
-  )
+        (error-string "The text you entered contains only spaces.")
+	)
+     (if (= text-layer -1)  ; checking that the text layer was created
+			    ; succesfully - it has more then just
+			    ; empty charcters
+	 (begin
+	   (gimp-image-delete img)
+	   (gimp-message error-string)
+	   )
+	 (begin     ; Checking if the effect size is too big or not
+	   (gimp-image-undo-disable img)
+	   (gimp-selection-layer-alpha text-layer)
+	   (gimp-selection-feather img border)
+	   (gimp-selection-sharpen img)
+
+	   (if (= 0 (car(gimp-selection-is-empty img))) ; Checking whether
+					                ; the effect size
+						        ; is too big
+	       (begin
+		 (apply-frosty-logo-effect img text-layer size bg-color 1)
+		 (gimp-selection-all img)
+		 (gimp-image-undo-enable img)
+		 (gimp-display-new img)
+		 ))
+	   (if (= 1 (car(gimp-selection-is-empty img)))
+	       (begin
+		 (gimp-image-delete img)
+		 (gimp-message error-string)
+		 ))))
+     )
 )
 
 (script-fu-register "script-fu-frosty-logo"
@@ -177,10 +192,10 @@
   "Spencer Kimball & Ed Mackey"
   "1997"
   ""
-  SF-STRING _"Text"                   "GIMP"
-  SF-ADJUSTMENT _"Font size (pixels)" '(100 2 1000 1 10 0 1)
-  SF-FONT   _"Font"                   "Becker"
-  SF-COLOR  _"Background color"       "white"
+  SF-STRING     _"Text"                "GIMP"
+  SF-ADJUSTMENT _"Font size (pixels)"  '(100 2 1000 1 10 0 1)
+  SF-FONT       _"Font"                "Becker"
+  SF-COLOR      _"Background color"    "white"
 )
 
 (script-fu-menu-register "script-fu-frosty-logo"
