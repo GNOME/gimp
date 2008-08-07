@@ -1,5 +1,10 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c: sprinkled with const qualifiers.
+	Fixed some portability problems.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile.c (tile_attach): renamed a variable.
 
 2008-08-07  Sven Neumann  <sven@gimp.org>
