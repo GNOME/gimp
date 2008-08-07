@@ -60,7 +60,7 @@ static void        begin_print              (GtkPrintOperation *operation,
                                              PrintData         *data);
 static void        end_print                (GtkPrintOperation *operation,
                                              GtkPrintContext   *context,
-                                             gint32            *image_ID);
+                                             gint32            *layer_ID);
 static void        draw_page                (GtkPrintOperation *print,
                                              GtkPrintContext   *context,
                                              gint               page_nr,
@@ -189,32 +189,24 @@ print_image (gint32    image_ID,
              gboolean  interactive)
 {
   GtkPrintOperation *operation;
-  GError            *error         = NULL;
-  gint32             orig_image_ID = image_ID;
-  gint32             drawable_ID   = gimp_image_get_active_drawable (image_ID);
   gchar             *temp_proc;
+  GError            *error = NULL;
+  gint32             layer;
   PrintData          data;
-  GimpExportReturn   export;
 
-  /* export the image */
-  export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                              GIMP_EXPORT_CAN_HANDLE_RGB   |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-  if (export == GIMP_EXPORT_CANCEL)
-    return GIMP_PDB_EXECUTION_ERROR;
+  /*  create a print layer from the projection  */
+  layer = gimp_layer_new_from_visible (image_ID, image_ID, PRINT_PROC_NAME);
 
   operation = gtk_print_operation_new ();
 
   gtk_print_operation_set_n_pages (operation, 1);
-  print_operation_set_name (operation, orig_image_ID);
+  print_operation_set_name (operation, image_ID);
 
-  print_page_setup_load (operation, orig_image_ID);
+  print_page_setup_load (operation, image_ID);
 
   /* fill in the PrintData struct */
-  data.image_id      = orig_image_ID;
-  data.drawable_id   = drawable_ID;
+  data.image_id      = image_ID;
+  data.drawable_id   = layer;
   data.unit          = gimp_get_default_unit ();
   data.image_unit    = gimp_image_get_unit (image_ID);
   data.offset_x      = 0;
@@ -226,9 +218,6 @@ print_image (gint32    image_ID,
   gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
 
   print_settings_load (&data);
-
-  if (export != GIMP_EXPORT_EXPORT)
-    image_ID = -1;
 
   gtk_print_operation_set_unit (operation, GTK_UNIT_POINTS);
 
@@ -243,7 +232,7 @@ print_image (gint32    image_ID,
                     &image_ID);
 
   print_operation = operation;
-  temp_proc = print_temp_proc_install (orig_image_ID);
+  temp_proc = print_temp_proc_install (image_ID);
   gimp_extension_enable ();
 
   if (interactive)
@@ -277,8 +266,8 @@ print_image (gint32    image_ID,
 
   g_object_unref (operation);
 
-  if (gimp_image_is_valid (image_ID))
-    gimp_image_delete (image_ID);
+  if (gimp_drawable_is_valid (layer))
+    gimp_drawable_delete (layer);
 
   if (error)
     {
@@ -377,13 +366,13 @@ begin_print (GtkPrintOperation *operation,
 static void
 end_print (GtkPrintOperation *operation,
            GtkPrintContext   *context,
-           gint32            *image_ID)
+           gint32            *layer_ID)
 {
-  /* we don't need the export image any longer, delete it */
-  if (gimp_image_is_valid (*image_ID))
+  /* we don't need the print layer any longer, delete it */
+  if (gimp_drawable_is_valid (*layer_ID))
     {
-      gimp_image_delete (*image_ID);
-      *image_ID = -1;
+      gimp_drawable_delete (*layer_ID);
+      *layer_ID = -1;
     }
 
   gimp_progress_end ();

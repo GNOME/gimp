@@ -1,5 +1,12 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c (print_image): get rid of the
+	gimp_export_image() hack and use the new procedure
+	gimp-layer-new-from-visible instead. Finally we can print what the
+	user sees (including channels).
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbuffer.[ch]: added gimp_buffer_get_tiles().
 
 	* app/actions/edit-commands.c
