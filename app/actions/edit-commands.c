@@ -332,7 +332,7 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
     {
       GimpLayer *layer;
 
-      layer = gimp_layer_new_from_tiles (buffer->tiles,
+      layer = gimp_layer_new_from_tiles (gimp_buffer_get_tiles (buffer),
                                          image,
                                          gimp_image_base_type_with_alpha (image),
                                          _("Clibboard"),

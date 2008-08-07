@@ -207,7 +207,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
 
   if (gimp->global_buffer)
     {
-      TileManager   *tiles = gimp->global_buffer->tiles;
+      TileManager   *tiles = gimp_buffer_get_tiles (gimp->global_buffer);
       GimpImageType  type  = gimp_buffer_get_image_type (gimp->global_buffer);
 
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);

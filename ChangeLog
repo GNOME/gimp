@@ -1,5 +1,13 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbuffer.[ch]: added gimp_buffer_get_tiles().
+
+	* app/actions/edit-commands.c
+	* app/core/gimpbrushclipboard.c
+	* app/core/gimppatternclipboard.c: use the new accessor function.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimplayer.c
 	* app/actions/edit-commands.c
 	* app/actions/layers-commands.c

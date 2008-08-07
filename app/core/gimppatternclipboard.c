@@ -210,7 +210,8 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
-      pixel_region_init (&bufferPR, gimp->global_buffer->tiles,
+      pixel_region_init (&bufferPR,
+                         gimp_buffer_get_tiles (gimp->global_buffer),
                          0, 0, width, height, FALSE);
       pixel_region_init_temp_buf (&maskPR, pattern->mask,
                                   0, 0, width, height);
