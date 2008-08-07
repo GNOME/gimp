@@ -199,7 +199,10 @@ struct _GimpParam
    int                                                  \
    main (int argc, char *argv[])                        \
    {                                                    \
-     return gimp_main (&PLUG_IN_INFO, argc, argv);      \
+     /* Use __argc and __argv here, too, as they work   \
+      * better with mingw-w64.				\
+      */						\
+     return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
    }
 #else
 #  define MAIN()                                        \

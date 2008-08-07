@@ -1,3 +1,11 @@
+2008-08-07  Tor Lillqvist  <tml@novell.com>
+
+	* app/main.c: Code built by the still unstable mingw-w64 toolchain
+	gets bogus argc and argv when built as subsystem:windows, so use
+	__argc and __argv instead, which seem to be OK.
+
+	* libgimp/gimp.h: Similar change here.
+
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c (tile_manager_invalidate_tile): fixed
