@@ -26,10 +26,10 @@
 
 #define GIMP_TYPE_COMBO_TAG_ENTRY            (gimp_combo_tag_entry_get_type ())
 #define GIMP_COMBO_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntry))
-#define GIMP_COMBO_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_ENTRY, GimpComboTagEntryClass))
-#define GIMP_IS_COMBO_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_ENTRY))
-#define GIMP_IS_COMBO_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_ENTRY))
-#define GIMP_COMBO_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_ENTRY, GimpComboTagEntryClass))
+#define GIMP_COMBO_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntryClass))
+#define GIMP_IS_COMBO_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COMBO_TAG_ENTRY))
+#define GIMP_IS_COMBO_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMBO_TAG_ENTRY))
+#define GIMP_COMBO_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COMBO_TAG_ENTRY, GimpComboTagEntryClass))
 
 
 typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;

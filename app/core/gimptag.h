@@ -66,6 +66,7 @@ gint            gimp_tag_compare_with_string   (GimpTag        *tag,
 
 gchar         * gimp_tag_string_make_valid     (const gchar    *tag_string);
 
+/* one day they should find a better home */
 gboolean        g_unichar_is_sentence_terminal    (gunichar    c);
 gboolean        g_unichar_is_terminal_punctuation (gunichar    c);
 

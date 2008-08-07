@@ -38,20 +38,20 @@
 #include "gimptagpopup.h"
 #include "gimpcombotagentry.h"
 
-static void     gimp_combo_tag_entry_dispose           (GObject           *object);
-static gboolean gimp_combo_tag_entry_expose_event      (GtkWidget         *widget,
-                                                        GdkEventExpose    *event,
-                                                        gpointer           user_data);
-static gboolean gimp_combo_tag_entry_event             (GtkWidget         *widget,
-                                                        GdkEvent          *event,
-                                                        gpointer           user_data);
+static void     gimp_combo_tag_entry_dispose           (GObject                *object);
+static gboolean gimp_combo_tag_entry_expose_event      (GtkWidget              *widget,
+                                                        GdkEventExpose         *event,
+                                                        gpointer                user_data);
+static gboolean gimp_combo_tag_entry_event             (GtkWidget              *widget,
+                                                        GdkEvent               *event,
+                                                        gpointer                user_data);
 static void     gimp_combo_tag_entry_style_set         (GtkWidget              *widget,
                                                         GtkStyle               *previous_style,
                                                         gpointer                user_data);
 
-static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry *combo_entry);
-static void     gimp_combo_tag_entry_popup_destroy     (GtkObject         *object,
-                                                        GimpComboTagEntry *combo_entry);
+static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry      *combo_entry);
+static void     gimp_combo_tag_entry_popup_destroy     (GtkObject              *object,
+                                                        GimpComboTagEntry      *combo_entry);
 
 static void     gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
                                                         gint                    tag_count,
@@ -122,12 +122,24 @@ gimp_combo_tag_entry_dispose (GObject           *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+/**
+ * gimp_combo_tag_entry_new:
+ * @filtered_container: a filtered container to be used.
+ * @mode:               tag entry mode to work in.
+ *
+ * Creates a new #GimpComboTagEntry widget which extends #GimpTagEntry by
+ * adding ability to pick tags using popup window (similar to combo box).
+ *
+ * Return value: a new #GimpComboTagEntry widget.
+ **/
 GtkWidget *
 gimp_combo_tag_entry_new (GimpFilteredContainer        *filtered_container,
                           GimpTagEntryMode              mode)
 {
   GimpComboTagEntry            *combo_entry;
   GtkBorder                     border;
+
+  g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container), NULL);
 
   combo_entry = g_object_new (GIMP_TYPE_COMBO_TAG_ENTRY,
                               "filtered-container", filtered_container,

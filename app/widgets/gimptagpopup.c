@@ -41,11 +41,11 @@
 
 #include "gimp-intl.h"
 
-#define MENU_SCROLL_STEP1 8
-#define MENU_SCROLL_STEP2 15
-#define MENU_SCROLL_FAST_ZONE 8
-#define MENU_SCROLL_TIMEOUT1 50
-#define MENU_SCROLL_TIMEOUT2 20
+#define MENU_SCROLL_STEP1               8
+#define MENU_SCROLL_STEP2               15
+#define MENU_SCROLL_FAST_ZONE           8
+#define MENU_SCROLL_TIMEOUT1            50
+#define MENU_SCROLL_TIMEOUT2            20
 
 #define GIMP_TAG_POPUP_MARGIN           5
 
@@ -149,6 +149,16 @@ gimp_tag_popup_dispose (GObject           *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+/**
+ * gimp_tag_popup_new:
+ * @combo_entry:        #GimpComboTagEntry which is owner of the popup
+ *                      window.
+ *
+ * Tag popup widget is only useful for for #GimpComboTagEntry and
+ * should not be used elsewhere.
+ *
+ * Return value: a newly created #GimpTagPopup widget.
+ **/
 GtkWidget *
 gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
 {
@@ -174,6 +184,8 @@ gimp_tag_popup_new (GimpComboTagEntry             *combo_entry)
   const gchar          *list_tag;
   GdkRectangle          popup_rects[2]; /* variants of popup placement */
   GdkRectangle          popup_rect; /* best popup rect in screen coordinates */
+
+  g_return_val_if_fail (GIMP_IS_COMBO_TAG_ENTRY (combo_entry), NULL);
 
   popup = g_object_new (GIMP_TYPE_TAG_POPUP,
                         "type", GTK_WINDOW_POPUP,
@@ -1051,17 +1063,17 @@ gimp_tag_popup_scroll_by (GimpTagPopup         *tag_popup,
 
 static void
 gimp_tag_popup_do_timeout_scroll (GimpTagPopup *tag_popup,
-                                  gboolean   touchscreen_mode)
+                                  gboolean      touchscreen_mode)
 {
   gimp_tag_popup_scroll_by (tag_popup, tag_popup->scroll_step);
 }
 
 static void
-gimp_tag_popup_handle_scrolling (GimpTagPopup *tag_popup,
-                                 gint     x,
-                                 gint     y,
-                                 gboolean enter,
-                                 gboolean motion)
+gimp_tag_popup_handle_scrolling (GimpTagPopup  *tag_popup,
+                                 gint           x,
+                                 gint           y,
+                                 gboolean       enter,
+                                 gboolean       motion)
 {
   GdkRectangle rect;
   gboolean in_arrow;
@@ -1270,8 +1282,8 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *tag_popup,
 }
 
 static gboolean
-gimp_tag_popup_button_scroll (GimpTagPopup      *tag_popup,
-                              GdkEventButton *event)
+gimp_tag_popup_button_scroll (GimpTagPopup     *tag_popup,
+                              GdkEventButton   *event)
 {
   if (tag_popup->upper_arrow_prelight
       || tag_popup->lower_arrow_prelight)
@@ -1295,11 +1307,11 @@ gimp_tag_popup_button_scroll (GimpTagPopup      *tag_popup,
 }
 
 static void
-get_arrows_visible_area (GimpTagPopup *tag_popup,
-                         GdkRectangle *border,
-                         GdkRectangle *upper,
-                         GdkRectangle *lower,
-                         gint *arrow_space)
+get_arrows_visible_area (GimpTagPopup  *tag_popup,
+                         GdkRectangle  *border,
+                         GdkRectangle  *upper,
+                         GdkRectangle  *lower,
+                         gint          *arrow_space)
 {
   GtkWidget    *widget = GTK_WIDGET (tag_popup->alignment);
   gint          scroll_arrow_height = tag_popup->scroll_arrow_height;
@@ -1328,9 +1340,9 @@ get_arrows_visible_area (GimpTagPopup *tag_popup,
 }
 
 static void
-get_arrows_sensitive_area (GimpTagPopup    *tag_popup,
-                           GdkRectangle *upper,
-                           GdkRectangle *lower)
+get_arrows_sensitive_area (GimpTagPopup        *tag_popup,
+                           GdkRectangle        *upper,
+                           GdkRectangle        *lower)
 {
   GdkRectangle  tmp_border;
   GdkRectangle  tmp_upper;

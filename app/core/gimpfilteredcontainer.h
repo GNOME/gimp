@@ -61,7 +61,7 @@ GimpContainer * gimp_filtered_container_new           (GimpContainer           *
 void            gimp_filtered_container_set_filter    (GimpFilteredContainer   *container,
                                                        GList                   *tags);
 
-GList         * gimp_filtered_container_get_filter    (GimpFilteredContainer   *container);
+const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer   *container);
 
 gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer   *container);
 

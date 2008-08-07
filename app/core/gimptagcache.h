@@ -57,11 +57,11 @@ struct _GimpTagCache
 
 struct _GimpTagCacheClass
 {
-  GimpObjectClass  parent_class;
+  GimpObjectClass       parent_class;
 };
 
 
-GType           gimp_tag_cache_get_type (void) G_GNUC_CONST;
+GType           gimp_tag_cache_get_type      (void) G_GNUC_CONST;
 
 GimpTagCache *  gimp_tag_cache_new           (Gimp             *gimp);
 

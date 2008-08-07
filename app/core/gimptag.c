@@ -44,6 +44,16 @@ gimp_tag_init (GimpTag         *tag)
   tag->collate_key      = 0;
 }
 
+/**
+ * gimp_tag_new:
+ * @tag_string: a tag name.
+ *
+ * Given tag name does not need to be valid. If it is not valid, an attempt
+ * will be made to fix it.
+ *
+ * Return value: a new #GimpTag object, or NULL if tag string is invalid and
+ * cannot be fixed.
+ **/
 GimpTag *
 gimp_tag_new (const char *tag_string)
 {
@@ -74,6 +84,18 @@ gimp_tag_new (const char *tag_string)
   return tag;
 }
 
+/**
+ * gimp_tag_try_new:
+ * @tag_string: a tag name.
+ *
+ * Similar to gimp_tag_new(), but returns NULL if tag is surely not equal
+ * to any of currently created tags. It is useful for tag querying to avoid
+ * unneeded comparisons. If tag is created, however, it does not mean that
+ * it would necessarily match with some other tag.
+ *
+ * Return value: new #GimpTag object, or NULL if tag will not match with any
+ * other #GimpTag.
+ **/
 GimpTag *
 gimp_tag_try_new (const char *tag_string)
 {
@@ -90,7 +112,7 @@ gimp_tag_try_new (const char *tag_string)
       return NULL;
     }
 
-  tag_quark = g_quark_from_string (tag_name);
+  tag_quark = g_quark_try_string (tag_name);
   if (! tag_quark)
     {
       g_free (tag_name);
@@ -99,7 +121,7 @@ gimp_tag_try_new (const char *tag_string)
 
   case_folded = g_utf8_casefold (tag_name, -1);
   collate_key = g_utf8_collate_key (case_folded, -1);
-  collate_key_quark = g_quark_from_string (collate_key);
+  collate_key_quark = g_quark_try_string (collate_key);
   g_free (collate_key);
   g_free (case_folded);
   g_free (tag_name);
@@ -115,6 +137,12 @@ gimp_tag_try_new (const char *tag_string)
   return tag;
 }
 
+/**
+ * gimp_tag_get_name:
+ * @tag: a gimp tag.
+ *
+ * Return value: name of tag.
+ **/
 const gchar *
 gimp_tag_get_name (GimpTag           *tag)
 {
@@ -123,6 +151,15 @@ gimp_tag_get_name (GimpTag           *tag)
   return g_quark_to_string (tag->tag);
 }
 
+/**
+ * gimp_tag_get_hash:
+ * @tag: a gimp tag.
+ *
+ * Hashing function which is useful, for example, to store #GimpTag in
+ * a #GHashTable.
+ *
+ * Return value: hash value for tag.
+ **/
 guint
 gimp_tag_get_hash (GimpTag       *tag)
 {
@@ -131,6 +168,15 @@ gimp_tag_get_hash (GimpTag       *tag)
   return tag->collate_key;
 }
 
+/**
+ * gimp_tag_equals:
+ * @tag:   a gimp tag.
+ * @other: an other gimp tag to compare with.
+ *
+ * Compares tags for equality according to tag comparison rules.
+ *
+ * Return value: TRUE if tags are equal, FALSE otherwise.
+ **/
 gboolean
 gimp_tag_equals (GimpTag             *tag,
                  GimpTag             *other)
@@ -141,6 +187,16 @@ gimp_tag_equals (GimpTag             *tag,
   return tag->tag == other->tag;
 }
 
+/**
+ * gimp_tag_compare_func:
+ * @p1: pointer to left-hand #GimpTag object.
+ * @p2: pointer to right-hand #GimpTag object.
+ *
+ * Compares tags according to tag comparison rules. Useful for sorting
+ * functions.
+ *
+ * Return value: meaning of return value is the same as in strcmp().
+ **/
 int
 gimp_tag_compare_func (const void         *p1,
                        const void         *p2)
@@ -152,6 +208,17 @@ gimp_tag_compare_func (const void         *p1,
                     g_quark_to_string (t2->collate_key));
 }
 
+/**
+ * gimp_tag_compare_with_string:
+ * @tag:        a #GimpTag object.
+ * @tag_string: pointer to right-hand #GimpTag object.
+ *
+ * Compares tag and a string according to tag comparison rules. Similar to
+ * gimp_tag_compare_func(), but can be used without creating temporary tag
+ * object.
+ *
+ * Return value: meaning of return value is the same as in strcmp().
+ **/
 gint
 gimp_tag_compare_with_string (GimpTag          *tag,
                               const char       *tag_string)
@@ -319,6 +386,16 @@ g_unichar_is_terminal_punctuation (gunichar    c)
     }
 }
 
+/**
+ * gimp_tag_string_make_valid:
+ * @string: a text string.
+ *
+ * Tries to create a valid tag string from given @string.
+ *
+ * Return value: a newly allocated tag string in case given @string was valid
+ * or could be fixed, otherwise NULL. Allocated value should be freed using
+ * g_free().
+ **/
 gchar *
 gimp_tag_string_make_valid (const gchar      *string)
 {

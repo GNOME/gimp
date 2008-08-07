@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimpfilteredcontainer.c
- * Copyright (C) Aurimas Juška <aurisj@svn.gnome.org>
+ * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,18 +149,20 @@ gimp_filtered_container_get_memsize (GimpObject *object,
  * gimp_filtered_container_new:
  * @src_container: container to be filtered.
  *
- * Creates a new #GimpFilteredContainer object. Since #GimpFilteredContainer is a #GimpContainer
- * implementation, it holds GimpObjects. It filters @src_container for objects containing
- * all of the filtering tags. Syncronization with @src_container data is performed
+ * Creates a new #GimpFilteredContainer object. Since #GimpFilteredContainer is a
+ * #GimpContainer implementation, it holds GimpObjects. It filters @src_container for objects
+ * containing all of the filtering tags. Syncronization with @src_container data is performed
  * automatically.
  *
- * Return value: a new #GimpFilteredContainer object
+ * Return value: a new #GimpFilteredContainer object.
  **/
 GimpContainer *
 gimp_filtered_container_new (GimpContainer     *src_container)
 {
   GimpFilteredContainer        *filtered_container;
   GType                         children_type;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER (src_container), NULL);
 
   children_type = gimp_container_children_type (src_container);
 
@@ -190,10 +192,20 @@ gimp_filtered_container_new (GimpContainer     *src_container)
   return GIMP_CONTAINER (filtered_container);
 }
 
+/**
+ * gimp_filtered_container_set_filter:
+ * @filtered_container: a #GimpFilteredContainer object.
+ * @tags:               list of #GimpTag objects.
+ *
+ * Sets list of tags to be used for filtering. Only objects which have all of
+ * the tags assigned match filtering criteria.
+ **/
 void
 gimp_filtered_container_set_filter (GimpFilteredContainer              *filtered_container,
                                     GList                              *tags)
 {
+  g_return_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container));
+
   filtered_container->filter = tags;
 
   gimp_container_freeze (GIMP_CONTAINER (filtered_container));
@@ -202,9 +214,20 @@ gimp_filtered_container_set_filter (GimpFilteredContainer              *filtered
   gimp_container_thaw (GIMP_CONTAINER (filtered_container));
 }
 
-GList *
+/**
+ * gimp_filtered_container_get_filter:
+ * @filtered_container: a #GimpFilteredContainer object.
+ *
+ * Returns current tag filter. Tag filter is a list of GimpTag objects, which
+ * must be contained by each object matching filter criteria.
+ *
+ * Return value: a list of GimpTag objects used as filter. This value should
+ * not be modified or freed.
+ **/
+const GList *
 gimp_filtered_container_get_filter (GimpFilteredContainer              *filtered_container)
 {
+  g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container), NULL);
   return filtered_container->filter;
 }
 
@@ -415,6 +438,17 @@ gimp_filtered_container_tag_count_changed (GimpFilteredContainer       *containe
 {
 }
 
+/**
+ * gimp_filtered_container_get_tag_count:
+ * @container:  a #GimpFilteredContainer object.
+ *
+ * Get number of distinct tags that are currently assigned to all objects
+ * in the container. The count is independent of currently used filter, it
+ * is provided for all available objects (ie. empty filter).
+ *
+ * Return value: number of distinct tags assigned to all objects in the
+ * container.
+ **/
 gint
 gimp_filtered_container_get_tag_count  (GimpFilteredContainer  *container)
 {

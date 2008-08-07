@@ -310,14 +310,25 @@ gimp_tag_entry_get_property    (GObject              *object,
     }
 }
 
+/**
+ * gimp_tag_entry_new:
+ * @filtered_container: a #GimpFilteredContainer object
+ * @mode:               #GimpTagEntryMode to work in.
+ *
+ * #GimpTagEntry is a widget which can query and assign tags to tagged objects.
+ * When operating in query mode, @filtered_container is kept up to date with
+ * tags selected. When operating in assignment mode, tags are assigned to
+ * objects selected and visible in @filtered_container.
+ *
+ * Return value: a new GimpTagEntry widget.
+ **/
 GtkWidget *
 gimp_tag_entry_new (GimpFilteredContainer      *filtered_container,
                     GimpTagEntryMode            mode)
 {
   GimpTagEntry         *entry;
 
-  g_return_val_if_fail (filtered_container == NULL
-                        || GIMP_IS_FILTERED_CONTAINER (filtered_container),
+  g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container),
                         NULL);
 
   entry = g_object_new (GIMP_TYPE_TAG_ENTRY,
@@ -367,10 +378,22 @@ gimp_tag_entry_activate (GtkEntry              *entry,
     }
 }
 
+/**
+ * gimp_tag_entry_set_tag_string:
+ * @tag_entry:  a #GimpTagEntry object.
+ * @tag_string: string of tags, separated by any terminal punctuation
+ *              character.
+ *
+ * Sets tags from @tag_string to @tag_entry. Given tags do not need to
+ * be valid as they can be fixed or dropped automatically. Depending on
+ * selected #GimpTagEntryMode, appropriate action is peformed.
+ **/
 void
 gimp_tag_entry_set_tag_string (GimpTagEntry    *tag_entry,
                                const gchar     *tag_string)
 {
+  g_return_if_fail (GIMP_IS_TAG_ENTRY (tag_entry));
+
   tag_entry->internal_change = TRUE;
   gtk_entry_set_text (GTK_ENTRY (tag_entry), tag_string);
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), -1);
@@ -597,6 +620,16 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
     }
 }
 
+/**
+ * gimp_tag_entry_parse_tags:
+ * @entry:      a #GimpTagEntry widget.
+ *
+ * Parses currently entered tags from @entry. Tags do not need to be valid as
+ * they are fixed when necessary. Only valid tags are returned.
+ *
+ * Return value: a newly allocated NULL terminated list of strings. It should
+ * be freed using g_strfreev().
+ **/
 gchar **
 gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
 {
@@ -608,6 +641,8 @@ gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
   GList                *tag_list = NULL;
   GList                *iterator;
   gunichar              c;
+
+  g_return_val_if_fail (GIMP_IS_TAG_ENTRY (entry), NULL);
 
   parsed_tag = g_string_new ("");
   cursor = gtk_entry_get_text (GTK_ENTRY (entry));
@@ -719,11 +754,22 @@ gimp_tag_entry_set_current (GimpTagEntry        *entry,
   gtk_editable_set_position (GTK_EDITABLE (entry), position);
 }
 
+/**
+ * gimp_tag_entry_set_selected_items:
+ * @entry:      a #GimpTagEntry widget.
+ * @items:      a list of #GimpTagged objects.
+ *
+ * Set list of currently selected #GimpTagged objects. Only selected and
+ * visible (not filtered out) #GimpTagged objects are assigned tags when
+ * operating in tag assignment mode.
+ **/
 void
 gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
                                    GList                   *items)
 {
   GList        *iterator;
+
+  g_return_if_fail (GIMP_IS_TAG_ENTRY (entry));
 
   if (entry->selected_items)
     {
@@ -1458,7 +1504,7 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
 const gchar *
 gimp_tag_entry_get_separator  (void)
 {
-  /* IMPORTANT: use only one of UNICODE terminal punctuation chars followed by space.
+  /* IMPORTANT: use only one of Unicode terminal punctuation chars followed by space.
    * http://unicode.org/review/pr-23.html */
   return _(", ");
 }
