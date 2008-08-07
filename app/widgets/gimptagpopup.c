@@ -396,9 +396,9 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
           if (tag_popup->tag_data[i].bounds.width + line_height + GIMP_TAG_POPUP_MARGIN < width)
             {
               GdkRectangle     *close_rect = g_malloc (sizeof (GdkRectangle));
-              close_rect->x = x;
+              close_rect->x = x - space_width - 5;
               close_rect->y = y;
-              close_rect->width = width - (tag_popup->tag_data[i].bounds.width + line_height + GIMP_TAG_POPUP_MARGIN);
+              close_rect->width = width - close_rect->x;
               close_rect->height = line_height + 2;
               tag_popup->close_rectangles = g_list_append (tag_popup->close_rectangles,
                                                            close_rect);
@@ -412,6 +412,19 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
 
       x += tag_popup->tag_data[i].bounds.width + space_width + 5;
     }
+
+  if (tag_popup->tag_count > 0
+      && (width - x) > line_height + GIMP_TAG_POPUP_MARGIN)
+    {
+      GdkRectangle     *close_rect = g_malloc (sizeof (GdkRectangle));
+      close_rect->x = x - space_width - 5;
+      close_rect->y = y;
+      close_rect->width = width - close_rect->x;
+      close_rect->height = line_height + 2;
+      tag_popup->close_rectangles = g_list_append (tag_popup->close_rectangles,
+                                                   close_rect);
+    }
+
   if (gtk_widget_get_direction (GTK_WIDGET (tag_popup)) == GTK_TEXT_DIR_RTL)
     {
       GList    *iterator;
