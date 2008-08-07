@@ -34,6 +34,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpprojection.h"
 
 #include "vectors/gimpvectors-import.h"
 
@@ -300,14 +301,48 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
 
       image = gimp_edit_paste_as_new (gimp, action_data_get_image (data),
                                       buffer);
+      g_object_unref (buffer);
 
       if (image)
         {
           gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
           g_object_unref (image);
         }
+    }
+  else
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
+                    _("There is no image data in the clipboard to paste."));
+    }
+}
 
+void
+edit_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  Gimp       *gimp;
+  GimpImage  *image;
+  GimpBuffer *buffer;
+  return_if_no_gimp (gimp, data);
+  return_if_no_image (image, data);
+
+  buffer = gimp_clipboard_get_buffer (gimp);
+
+  if (buffer)
+    {
+      GimpProjection *projection = gimp_image_get_projection (image);
+      GimpImage      *layer;
+
+      layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
+                                         image,
+                                         gimp_projection_get_image_type (projection),
+                                         _("Clibboard"),
+                                         GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       g_object_unref (buffer);
+
+      gimp_image_add_layer (image, layer, -1);
+
+      gimp_image_flush (image);
     }
   else
     {

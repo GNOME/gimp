@@ -146,6 +146,12 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
+  { "edit-paste-as-new-layer", NULL,
+    N_("New _Layer"), NULL,
+    N_("Create a new layer from the content of the clipboard"),
+    G_CALLBACK (edit_paste_as_new_layer_cmd_callback),
+    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
+
   { "edit-named-cut", GTK_STOCK_CUT,
     N_("Cu_t Named..."), "",
     N_("Move the selected pixels to a named buffer"),
@@ -314,21 +320,22 @@ edit_actions_update (GimpActionGroup *group,
   g_free (redo_name);
   g_free (fade_name);
 
-  SET_SENSITIVE ("edit-cut",          drawable);
-  SET_SENSITIVE ("edit-copy",         drawable);
-  SET_SENSITIVE ("edit-copy-visible", image);
+  SET_SENSITIVE ("edit-cut",                drawable);
+  SET_SENSITIVE ("edit-copy",               drawable);
+  SET_SENSITIVE ("edit-copy-visible",       image);
   /*             "edit-paste" is always enabled  */
-  SET_SENSITIVE ("edit-paste-into",   image);
+  SET_SENSITIVE ("edit-paste-as-new-layer", image);
+  SET_SENSITIVE ("edit-paste-into",         image);
 
   SET_SENSITIVE ("edit-named-cut",          drawable);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
   SET_SENSITIVE ("edit-named-paste",        image);
 
-  SET_SENSITIVE ("edit-clear",        drawable);
-  SET_SENSITIVE ("edit-fill-fg",      drawable);
-  SET_SENSITIVE ("edit-fill-bg",      drawable);
-  SET_SENSITIVE ("edit-fill-pattern", drawable);
+  SET_SENSITIVE ("edit-clear",              drawable);
+  SET_SENSITIVE ("edit-fill-fg",            drawable);
+  SET_SENSITIVE ("edit-fill-bg",            drawable);
+  SET_SENSITIVE ("edit-fill-pattern",       drawable);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE

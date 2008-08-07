@@ -1,3 +1,13 @@
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/edit-commands.[ch]
+	* app/actions/edit-actions.c: added new action
+	"edit-paste-as-new-layer".
+
+	* app/widgets/gimphelp-ids.h: added new help-id.
+
+	* menus/image-menu.xml.in: added the new action.
+
 2008-08-07  Tor Lillqvist  <tml@novell.com>
 
 	* app/config/gimpbaseconfig.c (gimp_base_config_class_init): Use
