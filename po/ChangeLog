@@ -1,3 +1,7 @@
+2008-08-07  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* POTFILES.in: added app/widgets/gimptagentry.c.
+
 2008-08-2  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Updated Arabic Translation by Khaled Hosny.

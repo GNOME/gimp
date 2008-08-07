@@ -424,6 +424,7 @@ app/widgets/gimpsettingsbox.c
 app/widgets/gimpsettingseditor.c
 app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
+app/widgets/gimptagentry.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptexteditor.c
 app/widgets/gimpthumbbox.c
