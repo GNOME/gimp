@@ -89,7 +89,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("Duplicate Layer"), "<control><shift>D",
+    N_("D_uplicate Layer"), "<control><shift>D",
     N_("Create a duplicate of the layer and add it to the image"),
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
