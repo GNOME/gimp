@@ -1003,12 +1003,12 @@ gimp_layer_new (GimpImage            *image,
 
 /**
  * gimp_layer_new_from_tiles:
- * @tiles:       The buffer to make the new layer from.
+ * @tiles:      The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:        The #GimpImageType of the new layer.
- * @name:        The new layer's name.
- * @opacity:     The new layer's opacity.
- * @mode:        The new layer's mode.
+ * @type:       The #GimpImageType of the new layer.
+ * @name:       The new layer's name.
+ * @opacity:    The new layer's opacity.
+ * @mode:       The new layer's mode.
  *
  * Copies %tiles to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements
@@ -1042,12 +1042,12 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
 /**
  * gimp_layer_new_from_pixbuf:
- * @pixbuf:      The pixbuf to make the new layer from.
+ * @pixbuf:     The pixbuf to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:        The #GimpImageType of the new layer.
- * @name:        The new layer's name.
- * @opacity:     The new layer's opacity.
- * @mode:        The new layer's mode.
+ * @type:       The #GimpImageType of the new layer.
+ * @name:       The new layer's name.
+ * @opacity:    The new layer's opacity.
+ * @mode:       The new layer's mode.
  *
  * Copies %pixbuf to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements
@@ -1082,12 +1082,12 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
 /**
  * gimp_layer_new_from_region:
- * @region:      A readable pixel region.
+ * @region:     A readable pixel region.
  * @dest_image: The image the new layer will be added to.
- * @type:        The #GimpImageType of the new layer.
- * @name:        The new layer's name.
- * @opacity:     The new layer's opacity.
- * @mode:        The new layer's mode.
+ * @type:       The #GimpImageType of the new layer.
+ * @name:       The new layer's name.
+ * @opacity:    The new layer's opacity.
+ * @mode:       The new layer's mode.
  *
  * Copies %region to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements

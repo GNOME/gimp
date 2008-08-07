@@ -114,7 +114,7 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
 
       layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
                                          dest_image,
-                                         gimp_projection_get_image_type (projection),
+                                         gimp_image_base_type_with_alpha (dest_image),
                                          name,
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }

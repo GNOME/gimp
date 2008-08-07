@@ -32,9 +32,9 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpprojection.h"
 
 #include "vectors/gimpvectors-import.h"
 
@@ -330,12 +330,11 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
 
   if (buffer)
     {
-      GimpProjection *projection = gimp_image_get_projection (image);
-      GimpImage      *layer;
+      GimpLayer *layer;
 
-      layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
+      layer = gimp_layer_new_from_tiles (buffer->tiles,
                                          image,
-                                         gimp_projection_get_image_type (projection),
+                                         gimp_image_base_type_with_alpha (image),
                                          _("Clibboard"),
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       g_object_unref (buffer);

@@ -1,5 +1,15 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimplayer.c
+	* app/actions/edit-commands.c
+	* app/actions/layers-commands.c
+	* tools/pdbgen/pdb/layer.pdb: corrected the GimpImageType passed
+	to gimp_layer_new_from_tiles().
+
+	* app/pdb/layer-cmds.c: regenerated.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/edit-commands.[ch]
 	* app/actions/edit-actions.c: added new action
 	"edit-paste-as-new-layer".

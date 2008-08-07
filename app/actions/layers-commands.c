@@ -348,7 +348,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 
   layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
                                      image,
-                                     gimp_projection_get_image_type (projection),
+                                     gimp_image_base_type_with_alpha (image),
                                      _("Visible"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, -1);
