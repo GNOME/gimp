@@ -83,7 +83,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW },
 
   { "layers-new-from-visible", NULL,
-    N_("New from Visible"), NULL,
+    N_("New from _Visible"), NULL,
     N_("Create a new layer from what is visible in this image"),
     G_CALLBACK (layers_new_from_visible_cmd_callback),
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },

@@ -1,5 +1,10 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/layers-actions.c (layers_actions): added mnemonic to
+	the new action.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c: sprinkled with const qualifiers.
 	Fixed some portability problems.
 
