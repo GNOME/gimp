@@ -1,3 +1,7 @@
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.h: fixed comment.
+
 2008-08-07  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Define WIN32_LARGE_ADDRESS_AWARE as
