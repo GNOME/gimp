@@ -1,3 +1,9 @@
+2008-08-07  Tor Lillqvist  <tml@novell.com>
+
+	* app/config/gimpbaseconfig.c (gimp_base_config_class_init): Use
+	G_MAXSIZE instead of G_MAXULONG to limit the max tile cache size,
+	as long is still 32 bits on Win64 but size_t is 64 bits.
+
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb: added new procedure
