@@ -753,18 +753,7 @@ gimp_selection_extract (GimpChannel  *selection,
       else
         {
           /*  Otherwise, do a straight copy  */
-          if (GIMP_IS_DRAWABLE (pickable))
-            {
-              copy_region (&srcPR, &destPR);
-            }
-          else
-            {
-              /*  There's a bug that shows up when shared tiles are
-               *  invalidated. So we don't copy-on-write from the
-               *  projection.
-               */
-              copy_region_nocow (&srcPR, &destPR);
-            }
+          copy_region (&srcPR, &destPR);
         }
 
       /*  If we're cutting, remove either the layer (or floating selection),

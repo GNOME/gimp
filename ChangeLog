@@ -1,5 +1,20 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c (tile_manager_invalidate_tile): fixed
+	broken copy-on-write code. The old code did not insert the new
+	tile in the tile-manager's tile pointer array.
+
+	(tile_manager_map): changed in a similar way as
+	tile_manager_invalidate_tile(). This code was not broken, but it
+	is easier to read now.
+
+	* app/base/tile-private.h: moved a comment.
+
+	* app/core/gimpselection.c (gimp_selection_extract): removed
+	workaround for above bug.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_extract): aded a
 	comment explaining why copy_region_nocow() is being used here.
 
