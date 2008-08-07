@@ -1,5 +1,9 @@
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile.c (tile_attach): renamed a variable.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c (print_image): get rid of the
 	gimp_export_image() hack and use the new procedure
 	gimp-layer-new-from-visible instead. Finally we can print what the
