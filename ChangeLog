@@ -1,5 +1,7 @@
 2008-08-08  Michael Natterer  <mitch@gimp.org>
 
+	Bug #545990: GIMP color wheel is not antialiased
+
 	* modules/colorsel_triangle.c: removed.
 
 	* modules/colorsel_wheel.c: new module using the GtkHSV widget
