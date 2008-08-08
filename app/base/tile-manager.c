@@ -395,20 +395,12 @@ tile_manager_map_tile (TileManager *tm,
                        gint         ypixel,
                        Tile        *srctile)
 {
-  gint num;
-
   g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
 
-  num = tile_manager_get_tile_num (tm, xpixel, ypixel);
-
-  if (G_UNLIKELY (num < 0))
-    {
-      g_warning ("%s: tile coordinates out of range.", G_STRLOC);
-      return;
-    }
-
-  tile_manager_map (tm, num, srctile);
+  tile_manager_map (tm,
+                    tile_manager_get_tile_num (tm, xpixel, ypixel),
+                    srctile);
 }
 
 void
