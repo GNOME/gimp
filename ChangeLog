@@ -1,5 +1,10 @@
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c: introduced utility function
+	tile_manager_allocate_tiles() to avoid code duplication.
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-pyramid.c: improved a comment.
 
 2008-08-08  Sven Neumann  <sven@gimp.org>

@@ -33,6 +33,9 @@
 #include "tile-private.h"
 
 
+static void  tile_manager_allocate_tiles (TileManager *tm);
+
+
 GType
 gimp_tile_manager_get_type (void)
 {
@@ -151,13 +154,8 @@ tile_manager_get (TileManager *tm,
                   gboolean     wantread,
                   gboolean     wantwrite)
 {
-  Tile **tiles;
-  Tile  *tile;
-  gint   ntiles;
-  gint   nrows, ncols;
-  gint   right_tile;
-  gint   bottom_tile;
-  gint   i, j, k;
+  Tile *tile;
+  gint  ntiles;
 
   g_return_val_if_fail (tm != NULL, NULL);
 
@@ -167,36 +165,7 @@ tile_manager_get (TileManager *tm,
     return NULL;
 
   if (! tm->tiles)
-    {
-      tm->tiles = g_new (Tile *, ntiles);
-      tiles = tm->tiles;
-
-      nrows = tm->ntile_rows;
-      ncols = tm->ntile_cols;
-
-      right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
-      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
-
-      for (i = 0, k = 0; i < nrows; i++)
-        {
-          for (j = 0; j < ncols; j++, k++)
-            {
-              Tile *new = tile_new (tm->bpp);
-
-              tile_attach (new, tm, k);
-
-              if (j == (ncols - 1))
-                new->ewidth = right_tile;
-
-              if (i == (nrows - 1))
-                new->eheight = bottom_tile;
-
-              new->size = new->ewidth * new->eheight * new->bpp;
-
-              tiles[k] = new;
-            }
-        }
-    }
+    tile_manager_allocate_tiles (tm);
 
   tile = tm->tiles[tile_num];
 
@@ -318,6 +287,43 @@ tile_manager_validate_tile (TileManager *tm,
 }
 
 static void
+tile_manager_allocate_tiles (TileManager *tm)
+{
+  Tile       **tiles;
+  const gint   nrows       = tm->ntile_rows;
+  const gint   ncols       = tm->ntile_cols;
+  const gint   right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
+  const gint   bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
+  gint         i, j, k;
+
+  g_assert (tm->tiles == NULL);
+
+  tiles = g_new (Tile *, nrows * ncols);
+
+  for (i = 0, k = 0; i < nrows; i++)
+    {
+      for (j = 0; j < ncols; j++, k++)
+        {
+          Tile *new = tile_new (tm->bpp);
+          
+          tile_attach (new, tm, k);
+
+          if (j == (ncols - 1))
+            new->ewidth = right_tile;
+          
+          if (i == (nrows - 1))
+            new->eheight = bottom_tile;
+
+          new->size = new->ewidth * new->eheight * new->bpp;
+          
+          tiles[k] = new;
+        }
+    }
+
+  tm->tiles = tiles;
+}
+
+static void
 tile_manager_invalidate_tile (TileManager  *tm,
                               gint          tile_num)
 {
@@ -410,60 +416,18 @@ tile_manager_map (TileManager *tm,
                   gint         tile_num,
                   Tile        *srctile)
 {
-  Tile **tiles;
-  Tile  *tile;
-  gint   ntiles;
-  gint   nrows, ncols;
-  gint   right_tile;
-  gint   bottom_tile;
-  gint   i, j, k;
+  Tile *tile;
 
   g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
-
-  ntiles = tm->ntile_rows * tm->ntile_cols;
-
-  if (G_UNLIKELY ((tile_num < 0) || (tile_num >= ntiles)))
-    {
-      g_warning ("%s: tile out of range", G_STRLOC);
-      return;
-    }
+  g_return_if_fail (tile_num >= 0);
+  g_return_if_fail (tile_num < tm->ntile_rows * tm->ntile_cols);
 
   if (G_UNLIKELY (! tm->tiles))
     {
       g_warning ("%s: empty tile level - initializing", G_STRLOC);
 
-      tm->tiles = g_new (Tile *, ntiles);
-      tiles = tm->tiles;
-
-      nrows = tm->ntile_rows;
-      ncols = tm->ntile_cols;
-
-      right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
-      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
-
-      for (i = 0, k = 0; i < nrows; i++)
-        {
-          for (j = 0; j < ncols; j++, k++)
-            {
-              Tile *new = tile_new (tm->bpp);
-
-#ifdef DEBUG_TILE_MANAGER
-              g_printerr (",");
-#endif
-              tile_attach (new, tm, k);
-
-              if (j == (ncols - 1))
-                new->ewidth = right_tile;
-
-              if (i == (nrows - 1))
-                new->eheight = bottom_tile;
-
-              new->size = new->ewidth * new->eheight * new->bpp;
-
-              tiles[k] = new;
-            }
-        }
+      tile_manager_allocate_tiles (tm);
     }
 
   tile = tm->tiles[tile_num];
