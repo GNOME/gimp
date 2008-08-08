@@ -153,13 +153,13 @@ gimp_combo_tag_entry_new (GimpFilteredContainer        *filtered_container,
 
   if (gtk_widget_get_direction (GTK_WIDGET (combo_entry)) == GTK_TEXT_DIR_RTL)
     {
-      border.left   = 8 + 2 * 2 + 2;
+      border.left   = 18;
       border.right  = 2;
     }
   else
     {
       border.left   = 2;
-      border.right  = 8 + 2 * 2 + 2;
+      border.right  = 18;
     }
   border.top    = 2;
   border.bottom = 2;
