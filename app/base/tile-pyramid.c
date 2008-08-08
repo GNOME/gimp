@@ -315,7 +315,7 @@ tile_pyramid_get_bpp (const TilePyramid *pyramid)
 
 /**
  * tile_pyramid_get_memsize:
- * @pyramid:   a #TilePyramid
+ * @pyramid: a #TilePyramid
  *
  * Return value: size of memory allocated for the @pyramid
  **/

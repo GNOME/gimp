@@ -305,17 +305,17 @@ tile_manager_allocate_tiles (TileManager *tm)
       for (j = 0; j < ncols; j++, k++)
         {
           Tile *new = tile_new (tm->bpp);
-          
+
           tile_attach (new, tm, k);
 
           if (j == (ncols - 1))
             new->ewidth = right_tile;
-          
+
           if (i == (nrows - 1))
             new->eheight = bottom_tile;
 
           new->size = new->ewidth * new->eheight * new->bpp;
-          
+
           tiles[k] = new;
         }
     }
