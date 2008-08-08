@@ -581,16 +581,11 @@ tile_manager_get_memsize (const TileManager *tm,
   return memsize;
 }
 
-void
-tile_manager_get_tile_coordinates (TileManager *tm,
-                                   Tile        *tile,
-                                   gint        *x,
-                                   gint        *y)
+static inline gint
+tile_manager_locate_tile (TileManager *tm,
+                          Tile        *tile)
 {
   TileLink *tl;
-
-  g_return_if_fail (tm != NULL);
-  g_return_if_fail (x != NULL && y != NULL);
 
   for (tl = tile->tlink; tl; tl = tl->next)
     {
@@ -601,11 +596,10 @@ tile_manager_get_tile_coordinates (TileManager *tm,
   if (G_UNLIKELY (tl == NULL))
     {
       g_warning ("%s: tile not attached to manager", G_STRLOC);
-      return;
+      return 0;
     }
 
-  *x = TILE_WIDTH * (tl->tile_num % tm->ntile_cols);
-  *y = TILE_HEIGHT * (tl->tile_num / tm->ntile_cols);
+  return tl->tile_num;
 }
 
 void
@@ -614,15 +608,35 @@ tile_manager_get_tile_col_row (TileManager *tm,
                                gint        *tile_col,
                                gint        *tile_row)
 {
-  gint tile_x;
-  gint tile_y;
+  gint tile_num;
 
-  g_return_if_fail (tm && tile && tile_col && tile_row);
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (tile != NULL);
+  g_return_if_fail (tile_col != NULL && tile_row != NULL);
 
-  tile_manager_get_tile_coordinates (tm, tile, &tile_x, &tile_y);
+  tile_num = tile_manager_locate_tile (tm, tile);
 
-  *tile_col = tile_x / TILE_WIDTH;
-  *tile_row = tile_y / TILE_HEIGHT;
+  *tile_col = tile_num % tm->ntile_cols;
+  *tile_row = tile_num / tm->ntile_cols;
+}
+
+void
+tile_manager_get_tile_coordinates (TileManager *tm,
+                                   Tile        *tile,
+                                   gint        *x,
+                                   gint        *y)
+{
+  gint tile_col;
+  gint tile_row;
+
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (tile != NULL);
+  g_return_if_fail (x != NULL && y != NULL);
+
+  tile_manager_get_tile_col_row (tm, tile, &tile_col, &tile_row);
+
+  *x = TILE_WIDTH  * tile_col;
+  *y = TILE_HEIGHT * tile_row;
 }
 
 void

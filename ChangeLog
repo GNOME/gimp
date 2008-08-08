@@ -1,5 +1,13 @@
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c: implement
+	tile_manager_get_tile_coordinates() by calling
+	tile_manager_get_tile_col_row() instead of the other way around.
+	Saves two multiplications and divisions for each call of
+	tile_manager_get_tile_col_row().
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.c: introduced utility function
 	tile_manager_allocate_tiles() to avoid code duplication.
 
