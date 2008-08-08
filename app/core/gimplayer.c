@@ -1028,7 +1028,6 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
 
   pixel_region_init (&bufPR, tiles,
                      0, 0,
@@ -1067,7 +1066,6 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
 
   pixel_region_init_data (&bufPR, gdk_pixbuf_get_pixels (pixbuf),
                           gdk_pixbuf_get_n_channels (pixbuf),
@@ -1111,7 +1109,6 @@ gimp_layer_new_from_region (PixelRegion          *region,
 
   g_return_val_if_fail (region != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
 
   width  = region->w;
   height = region->h;
