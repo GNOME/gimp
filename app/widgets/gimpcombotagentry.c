@@ -252,6 +252,8 @@ gimp_combo_tag_entry_event (GtkWidget          *widget,
             {
               gtk_widget_destroy (combo_entry->popup);
             }
+
+          return TRUE;
         }
     }
 
