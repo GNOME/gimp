@@ -1,9 +1,9 @@
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_new_from_tiles)
-	(gimp_layer_new_from_pixbuf) (gimp_layer_new_from_region): allow to
-	pass NULL as 'name'. The NULL name will be handled just like in
-	gimp_layer_new().
+	(gimp_layer_new_from_pixbuf) (gimp_layer_new_from_region): allow
+	to pass NULL for the 'name' parameter. This will be handled just
+	like in gimp_layer_new().
 
 2008-08-07  Sven Neumann  <sven@gimp.org>
 
