@@ -333,7 +333,6 @@ tile_pyramid_get_memsize (const TilePyramid *pyramid)
   return memsize;
 }
 
-/*  private functions  */
 
 /* This function make sure that levels are allocated up to the level
  * it returns. The return value may be smaller than the level that
@@ -382,9 +381,9 @@ tile_pyramid_alloc_levels (TilePyramid *pyramid,
   return pyramid->top_level;
 }
 
-/* This method is used to validate a pyramid tile from the base level.
- * It needs to pre-multiply the alpha channel because upper levels are
- * pre-multiplied.
+/* This method is used to validate a pyramid tile from four tiles on
+ * the base level.  It needs to pre-multiply the alpha channel because
+ * upper levels are pre-multiplied.
  */
 static void
 tile_pyramid_validate_tile (TileManager *tm,
@@ -441,9 +440,9 @@ tile_pyramid_validate_upper_tile (TileManager *tm,
       }
 }
 
-/* Average the src tile to one quarter of the destination tile.
- * The source tile doesn't have pre-multiplied alpha, but the
- * destination tile does.
+/* Average the src tile to one quarter of the destination tile.  The
+ * source tile doesn't have pre-multiplied alpha, but the destination
+ * tile does.
  */
 static void
 tile_pyramid_write_quarter (Tile       *dest,
