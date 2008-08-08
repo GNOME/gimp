@@ -40,8 +40,8 @@ endif
 
 lib_LTLIBRARIES = \
 	libcolorsel_cmyk.la		\
-	libcolorsel_triangle.la		\
 	libcolorsel_water.la		\
+	libcolorsel_wheel.la		\
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la	\
@@ -68,13 +68,13 @@ endif
 
 libcolorsel_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 
-libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
-libcolorsel_triangle_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcolorsel_triangle_la_LIBADD = $(colorsel_libadd)
-
 libcolorsel_water_la_SOURCES = colorsel_water.c
 libcolorsel_water_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolorsel_water_la_LIBADD = $(colorsel_libadd)
+
+libcolorsel_wheel_la_SOURCES = colorsel_wheel.c
+libcolorsel_wheel_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcolorsel_wheel_la_LIBADD = $(colorsel_libadd)
 
 libcdisplay_colorblind_la_SOURCES = cdisplay_colorblind.c
 libcdisplay_colorblind_la_LDFLAGS = -avoid-version -module $(no_undefined)

@@ -1,3 +1,12 @@
+2008-08-08  Michael Natterer  <mitch@gimp.org>
+
+	* modules/colorsel_triangle.c: removed.
+
+	* modules/colorsel_wheel.c: new module using the GtkHSV widget
+	which was originally developed from above triangle selector.
+
+	* modules/Makefile.am: chaged accordingly.
+
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c: implement
