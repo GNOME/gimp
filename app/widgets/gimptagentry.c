@@ -135,6 +135,9 @@ static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry         *
 static void     gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry);
 static void     gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry);
 
+static void     gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
+                                                          GimpTagSearchDir      search_dir);
+
 
 GType
 gimp_tag_entry_mode_get_type (void)
@@ -516,11 +519,6 @@ gimp_tag_entry_delete_text     (GtkEditable          *editable,
         {
           while (end_pos <= tag_entry->mask->len
                  && (tag_entry->mask->str[end_pos] == 's'))
-            {
-              end_pos++;
-            }
-          while (end_pos <= tag_entry->mask->len
-                 && (tag_entry->mask->str[end_pos] == 'w'))
             {
               end_pos++;
             }
@@ -1250,6 +1248,10 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
                 {
                   return TRUE;
                 }
+              else
+                {
+                  gimp_tag_entry_select_for_deletion (tag_entry, TAG_SEARCH_LEFT);
+                }
             }
           break;
 
@@ -1265,6 +1267,10 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
                                                    TAG_SEARCH_RIGHT))
                 {
                   return TRUE;
+                }
+              else
+                {
+                  gimp_tag_entry_select_for_deletion (tag_entry, TAG_SEARCH_RIGHT);
                 }
             }
           break;
@@ -1796,5 +1802,49 @@ gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry)
     }
 
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+}
+
+static void
+gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
+                                          GimpTagSearchDir      search_dir)
+{
+  gint          start_pos;
+  gint          end_pos;
+
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &start_pos, &end_pos);
+  while (start_pos > 0
+         && (tag_entry->mask->str[start_pos - 1] == 't'))
+    {
+      start_pos--;
+    }
+  if (search_dir == TAG_SEARCH_LEFT)
+    {
+      while (start_pos > 0
+             && (tag_entry->mask->str[start_pos - 1] == 'w'))
+        {
+          start_pos--;
+        }
+    }
+
+  if (end_pos > start_pos
+      && (tag_entry->mask->str[end_pos - 1] == 't'
+          || tag_entry->mask->str[end_pos - 1] == 's'))
+    {
+      while (end_pos <= tag_entry->mask->len
+             && (tag_entry->mask->str[end_pos] == 's'))
+        {
+          end_pos++;
+        }
+      if (search_dir == TAG_SEARCH_RIGHT)
+        {
+          while (end_pos <= tag_entry->mask->len
+                 && (tag_entry->mask->str[end_pos] == 'w'))
+            {
+              end_pos++;
+            }
+        }
+    }
+
+  gtk_editable_select_region (GTK_EDITABLE (tag_entry), start_pos, end_pos);
 }
 

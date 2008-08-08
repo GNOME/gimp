@@ -1,5 +1,10 @@
 2008-08-09  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagentry.c: when deleting a tag, in which side to
+	delete whitespace depends whether Delete or Backspace keys are used.
+
+2008-08-09  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.c: multiple tag deletion.
 
 2008-08-09  Aurimas Juška  <aurisj@svn.gnome.org>
