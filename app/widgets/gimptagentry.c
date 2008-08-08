@@ -1239,8 +1239,14 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
 
       case GDK_BackSpace:
             {
-              gint        position = gtk_editable_get_position (GTK_EDITABLE (widget));
-              if (gimp_tag_entry_select_jellybean (tag_entry, position, position, TAG_SEARCH_LEFT))
+              gint      selection_start;
+              gint      selection_end;
+
+              gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry),
+                                                 &selection_start, &selection_end);
+              if (gimp_tag_entry_select_jellybean (tag_entry,
+                                                   selection_start, selection_end,
+                                                   TAG_SEARCH_LEFT))
                 {
                   return TRUE;
                 }
@@ -1249,8 +1255,14 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
 
       case GDK_Delete:
             {
-              gint        position = gtk_editable_get_position (GTK_EDITABLE (widget));
-              if (gimp_tag_entry_select_jellybean (tag_entry, position, position, TAG_SEARCH_RIGHT))
+              gint      selection_start;
+              gint      selection_end;
+
+              gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry),
+                                                 &selection_start, &selection_end);
+              if (gimp_tag_entry_select_jellybean (tag_entry,
+                                                   selection_start, selection_end,
+                                                   TAG_SEARCH_RIGHT))
                 {
                   return TRUE;
                 }
@@ -1365,25 +1377,43 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
 
       case TAG_SEARCH_LEFT:
             {
-              while (tag_entry->mask->str[selection_start] != 't'
-                     && selection_start > 0)
+              if ((tag_entry->mask->str[selection_start] == 'w'
+                   || tag_entry->mask->str[selection_start] == 's')
+                  && selection_start > 0)
                 {
-                  selection_start--;
+                  while ((tag_entry->mask->str[selection_start] == 'w'
+                          || tag_entry->mask->str[selection_start] == 's')
+                         && selection_start > 0)
+                    {
+                      selection_start--;
+                    }
+                  selection_end = selection_start + 1;
                 }
-              selection_end = selection_start + 1;
             }
           break;
 
       case TAG_SEARCH_RIGHT:
             {
-              while (tag_entry->mask->str[selection_start] != 't'
-                     && selection_start < tag_entry->mask->len - 1)
+              if ((tag_entry->mask->str[selection_start] == 'w'
+                   || tag_entry->mask->str[selection_start] == 's')
+                  && selection_start < tag_entry->mask->len - 1)
                 {
-                  selection_start++;
+                  while ((tag_entry->mask->str[selection_start] == 'w'
+                          || tag_entry->mask->str[selection_start] == 's')
+                         && selection_start < tag_entry->mask->len - 1)
+                    {
+                      selection_start++;
+                    }
+                  selection_end = selection_start + 1;
                 }
-              selection_end = selection_start + 1;
             }
           break;
+    }
+
+  if (selection_start < tag_entry->mask->len
+      && selection_start == selection_end)
+    {
+      selection_end = selection_start + 1;
     }
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry),
