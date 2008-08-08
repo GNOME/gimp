@@ -47,12 +47,13 @@ struct _GimpTagEntry
   GtkEntry                      parent_instance;
 
   GimpFilteredContainer        *filtered_container;
+  GString                      *mask;
   GList                        *selected_items;
   GList                        *recent_list;
   GimpTagEntryMode              mode;
+  gint                          internal_operation;
+  gint                          suppress_mask_update;
   gboolean                      description_shown;
-  gboolean                      internal_change;
-  gboolean                      tags_accepted;
 };
 
 struct _GimpTagEntryClass
