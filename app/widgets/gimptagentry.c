@@ -139,6 +139,7 @@ static void     gimp_tag_entry_previous_tag              (GimpTagEntry         *
 
 static void     gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
                                                           GimpTagSearchDir      search_dir);
+static gboolean gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry         *tag_entry);
 
 
 GType
@@ -1274,6 +1275,8 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
               else
                 {
                   gimp_tag_entry_select_for_deletion (tag_entry, TAG_SEARCH_LEFT);
+                  g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
+                              tag_entry);
                 }
             }
           break;
@@ -1294,6 +1297,8 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
               else
                 {
                   gimp_tag_entry_select_for_deletion (tag_entry, TAG_SEARCH_RIGHT);
+                  g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
+                              tag_entry);
                 }
             }
           break;
@@ -1385,6 +1390,7 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
   if (selection_start >= tag_entry->mask->len)
     {
       selection_start = tag_entry->mask->len - 1;
+      selection_end   = selection_start;
     }
 
   if (tag_entry->mask->str[selection_start] == 'u')
@@ -1472,7 +1478,8 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
 
   if ((selection_start != prev_selection_start
       || selection_end != prev_selection_end)
-      && (tag_entry->mask->str[selection_start] == 't'))
+      && (tag_entry->mask->str[selection_start] == 't')
+      && selection_start < selection_end)
     {
       gtk_editable_select_region (GTK_EDITABLE (tag_entry),
                                   selection_start, selection_end);
@@ -1760,7 +1767,7 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
     } while (found_region);
 
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), cursor_position);
-
+  gimp_tag_entry_strip_extra_whitespace (tag_entry);
 
   printf ("commit mask (a): '%s'\n", tag_entry->mask->str);
 }
@@ -1882,19 +1889,13 @@ gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
   gint          start_pos;
   gint          end_pos;
 
+  /* make sure the whole tag is selected,
+   * including a  separator */
   gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &start_pos, &end_pos);
   while (start_pos > 0
          && (tag_entry->mask->str[start_pos - 1] == 't'))
     {
       start_pos--;
-    }
-  if (search_dir == TAG_SEARCH_LEFT)
-    {
-      while (start_pos > 0
-             && (tag_entry->mask->str[start_pos - 1] == 'w'))
-        {
-          start_pos--;
-        }
     }
 
   if (end_pos > start_pos
@@ -1906,16 +1907,89 @@ gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
         {
           end_pos++;
         }
-      if (search_dir == TAG_SEARCH_RIGHT)
+    }
+
+  /* ensure there is no unnecessary whitespace selected */
+  while (start_pos < end_pos
+         && tag_entry->mask->str[start_pos] == 'w')
+    {
+      start_pos++;
+    }
+  while (start_pos < end_pos
+         && tag_entry->mask->str[end_pos - 1] == 'w')
+    {
+      end_pos--;
+    }
+
+  /* delete spaces in one side */
+  if (search_dir == TAG_SEARCH_LEFT)
+    {
+#if 0
+      while (start_pos > 0
+             && (tag_entry->mask->str[start_pos - 1] == 'w'))
         {
-          while (end_pos <= tag_entry->mask->len
-                 && (tag_entry->mask->str[end_pos] == 'w'))
+          start_pos--;
+        }
+#endif
+      gtk_editable_select_region (GTK_EDITABLE (tag_entry), end_pos, start_pos);
+    }
+  else if (end_pos > start_pos
+      && search_dir == TAG_SEARCH_RIGHT
+      && (tag_entry->mask->str[end_pos - 1] == 't'
+          || tag_entry->mask->str[end_pos - 1] == 's'))
+    {
+#if 0
+      while (end_pos <= tag_entry->mask->len
+             && (tag_entry->mask->str[end_pos] == 'w'))
+        {
+          end_pos++;
+        }
+#endif
+      gtk_editable_select_region (GTK_EDITABLE (tag_entry), start_pos, end_pos);
+    }
+}
+
+static gboolean
+gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry         *tag_entry)
+{
+  gint  i;
+  gint  position;
+
+  position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+
+  /* strip whitespace in front */
+  while (tag_entry->mask->len > 0
+         && tag_entry->mask->str[0] == 'w')
+    {
+      gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, 1);
+    }
+
+  /* strip whitespace in back */
+  while (tag_entry->mask->len > 1
+         && tag_entry->mask->str[tag_entry->mask->len - 1] == 'w'
+         && tag_entry->mask->str[tag_entry->mask->len - 2] == 'w')
+    {
+      gtk_editable_delete_text (GTK_EDITABLE (tag_entry), tag_entry->mask->len - 1, tag_entry->mask->len);
+      position--;
+    }
+
+  /* strip extra whitespace in the middle */
+  for (i = tag_entry->mask->len - 1; i > 0; i--)
+    {
+      if (tag_entry->mask->str[i] == 'w'
+          && tag_entry->mask->str[i - 1] == 'w')
+        {
+          gtk_editable_delete_text (GTK_EDITABLE (tag_entry), i, i + 1);
+
+          if (position >= i)
             {
-              end_pos++;
+              position--;
             }
         }
     }
 
-  gtk_editable_select_region (GTK_EDITABLE (tag_entry), start_pos, end_pos);
+  gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+
+  return FALSE;
 }
 
