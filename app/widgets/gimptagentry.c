@@ -897,7 +897,7 @@ gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
     }
   *cursor = '\0';
 
-  prefix = g_strdup (g_strstrip (prefix_start));
+  prefix = g_strdup (g_strchug (prefix_start));
   g_free (original_string);
 
   return prefix;
@@ -1970,7 +1970,11 @@ gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry         *tag_entry)
          && tag_entry->mask->str[tag_entry->mask->len - 2] == 'w')
     {
       gtk_editable_delete_text (GTK_EDITABLE (tag_entry), tag_entry->mask->len - 1, tag_entry->mask->len);
-      position--;
+
+      if (position == tag_entry->mask->len)
+        {
+          position--;
+        }
     }
 
   /* strip extra whitespace in the middle */
