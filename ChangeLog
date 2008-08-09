@@ -1,5 +1,11 @@
 2008-08-09  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagentry.c (gimp_tag_entry_add_to_recent):
+	disable add to recently used tag list when working in tag assignment
+	mode.
+
+2008-08-09  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.c: select tags with shift + left/right
 	arrow keys.
 

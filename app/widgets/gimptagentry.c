@@ -1478,6 +1478,11 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
   gchar        *stripped_string;
   gint          stripped_length;
 
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+    {
+      return FALSE;
+    }
+
   stripped_string = g_strdup (tags_string);
   stripped_string = g_strstrip (stripped_string);
   stripped_length = strlen (stripped_string);
