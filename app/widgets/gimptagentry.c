@@ -484,12 +484,42 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
     {
       g_signal_stop_emission_by_name (editable, "insert_text");
     }
-  else if (! tag_entry->suppress_mask_update)
+  else if (text_length > 0)
     {
-      insert_pos = *position;
-      for (i = 0; i < text_length; i++)
+      gunichar  c;
+
+      if (! tag_entry->suppress_mask_update)
         {
-          g_string_insert_c (tag_entry->mask, insert_pos + i, 'u');
+          insert_pos = *position;
+          for (i = 0; i < text_length; i++)
+            {
+              g_string_insert_c (tag_entry->mask, insert_pos + i, 'u');
+            }
+        }
+
+      c = g_utf8_get_char (new_text);
+      if (! tag_entry->internal_operation
+          && *position > 0
+          && tag_entry->mask->str[*position - 1] == 's'
+          && ! g_unichar_isspace (c))
+        {
+          if (! tag_entry->suppress_mask_update)
+            {
+              g_string_insert_c (tag_entry->mask, insert_pos, 'u');
+            }
+
+          g_signal_handlers_block_by_func (editable,
+                                           G_CALLBACK (gimp_tag_entry_insert_text),
+                                           NULL);
+
+          gtk_editable_insert_text (editable, " ", 1, position);
+          gtk_editable_insert_text (editable, new_text, text_length, position);
+
+          g_signal_handlers_unblock_by_func (editable,
+                                             G_CALLBACK (gimp_tag_entry_insert_text),
+                                             NULL);
+
+          g_signal_stop_emission_by_name (editable, "insert_text");
         }
     }
 
@@ -1924,13 +1954,6 @@ gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
   /* delete spaces in one side */
   if (search_dir == TAG_SEARCH_LEFT)
     {
-#if 0
-      while (start_pos > 0
-             && (tag_entry->mask->str[start_pos - 1] == 'w'))
-        {
-          start_pos--;
-        }
-#endif
       gtk_editable_select_region (GTK_EDITABLE (tag_entry), end_pos, start_pos);
     }
   else if (end_pos > start_pos
@@ -1938,13 +1961,6 @@ gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
       && (tag_entry->mask->str[end_pos - 1] == 't'
           || tag_entry->mask->str[end_pos - 1] == 's'))
     {
-#if 0
-      while (end_pos <= tag_entry->mask->len
-             && (tag_entry->mask->str[end_pos] == 'w'))
-        {
-          end_pos++;
-        }
-#endif
       gtk_editable_select_region (GTK_EDITABLE (tag_entry), start_pos, end_pos);
     }
 }
