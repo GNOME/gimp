@@ -837,7 +837,7 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry,
   while (tag_iterator)
     {
       tag = GIMP_TAG (tag_iterator->data);
-      text = g_strdup_printf ("%s%s", gimp_tag_get_name (tag), gimp_tag_entry_get_separator ());
+      text = g_strdup_printf ("%s%s ", gimp_tag_get_name (tag), gimp_tag_entry_get_separator ());
       tag_entry->internal_operation++;
       gtk_editable_insert_text (GTK_EDITABLE (tag_entry), text, strlen (text),
                                 &insert_pos);
@@ -1523,9 +1523,9 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
 const gchar *
 gimp_tag_entry_get_separator  (void)
 {
-  /* IMPORTANT: use only one of Unicode terminal punctuation chars followed by space.
+  /* IMPORTANT: use only one of Unicode terminal punctuation chars.
    * http://unicode.org/review/pr-23.html */
-  return _(", ");
+  return _(",");
 }
 
 static void
@@ -1591,7 +1591,6 @@ gimp_tag_entry_commit_region   (GString              *tags,
                     {
                       g_string_append (out_tags, gimp_tag_entry_get_separator ());
                       g_string_append_c (out_mask, 's');
-                      g_string_append_c (out_mask, 'w');
                     }
 
                   stage++;
@@ -1680,7 +1679,6 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
           gchar        *tags_string;
           GString      *tags;
           GString      *mask;
-          gboolean      no_space = FALSE;
 
           tags_string = gtk_editable_get_chars (GTK_EDITABLE (tag_entry), region_start, region_end);
           tags = g_string_new (tags_string);
@@ -1690,24 +1688,24 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
 
           gimp_tag_entry_commit_region (tags, mask);
 
-          if (region_start > 0)
-            {
-              gchar        *last_c;
-              gunichar      c;
-
-              last_c = g_utf8_offset_to_pointer (gtk_entry_get_text (GTK_ENTRY (tag_entry)),
-                                                 region_start - 1);
-              c = g_utf8_get_char (last_c);
-              no_space = ! g_unichar_isspace (c);
-            }
-
-
-          if (no_space
+          /* prepend space before if needed */
+          if (region_start > 0
+              && tag_entry->mask->str[region_start - 1] != 'w'
               && mask->len > 0
               && mask->str[0] != 'w')
             {
               g_string_prepend_c (tags, ' ');
               g_string_prepend_c (mask, 'w');
+            }
+
+          /* append space after if needed */
+          if (region_end <= tag_entry->mask->len
+              && tag_entry->mask->str[region_end] != 'w'
+              && mask->len > 0
+              && mask->str[mask->len - 1] != 'w')
+            {
+              g_string_append_c (tags, ' ');
+              g_string_append_c (mask, 'w');
             }
 
           if (cursor_position <= region_end)

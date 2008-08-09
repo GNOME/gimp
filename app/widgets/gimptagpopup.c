@@ -871,6 +871,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
           if (tag_str->len)
             {
               g_string_append (tag_str, gimp_tag_entry_get_separator ());
+              g_string_append_c (tag_str, ' ');
             }
           g_string_append (tag_str, current_tags[i]);
         }
@@ -883,6 +884,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup        *tag_popup,
       if (tag_str->len)
         {
           g_string_append (tag_str, gimp_tag_entry_get_separator ());
+          g_string_append_c (tag_str, ' ');
         }
       g_string_append (tag_str, tag);
     }
