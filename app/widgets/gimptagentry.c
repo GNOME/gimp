@@ -892,7 +892,7 @@ gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
 static GList *
 gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
                                           gchar               **used_tags,
-                                          gchar                *prefix)
+                                          gchar                *src_prefix)
 {
   GList        *candidates = NULL;
   GList        *all_tags;
@@ -901,9 +901,16 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
   const gchar  *tag_name;
   gint          i;
   gint          length;
+  gchar        *prefix;
 
-  if (!prefix
-      || strlen (prefix) < 1)
+  if (!src_prefix
+      || strlen (src_prefix) < 1)
+    {
+      return NULL;
+    }
+
+  prefix = g_utf8_normalize (src_prefix, -1, G_NORMALIZE_ALL);
+  if (! prefix)
     {
       return NULL;
     }
@@ -934,6 +941,7 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
       tag_iterator = g_list_next (tag_iterator);
     }
   g_list_free (all_tags);
+  g_free (prefix);
 
   return candidates;
 }

@@ -406,7 +406,12 @@ gimp_tag_string_make_valid (const gchar      *string)
 
   g_return_val_if_fail (string, NULL);
 
-  tag = g_strdup (string);
+  tag = g_utf8_normalize (string, -1, G_NORMALIZE_ALL);
+  if (! tag)
+    {
+      return NULL;
+    }
+
   tag = g_strstrip (tag);
   if (! *tag)
     {
