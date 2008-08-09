@@ -132,8 +132,10 @@ static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry         *
                                                           const gchar          *tags_string,
                                                           gboolean              to_front);
 
-static void     gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry);
-static void     gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry);
+static void     gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry,
+                                                          gboolean              select);
+static void     gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry,
+                                                          gboolean              select);
 
 static void     gimp_tag_entry_select_for_deletion       (GimpTagEntry         *tag_entry,
                                                           GimpTagSearchDir      search_dir);
@@ -1233,11 +1235,13 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
           break;
 
       case GDK_Left:
-          gimp_tag_entry_previous_tag (tag_entry);
+          gimp_tag_entry_previous_tag (tag_entry,
+                                       (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
           return TRUE;
 
       case GDK_Right:
-          gimp_tag_entry_next_tag (tag_entry);
+          gimp_tag_entry_next_tag (tag_entry,
+                                   (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
           return TRUE;
 
       case GDK_BackSpace:
@@ -1749,7 +1753,8 @@ gimp_tag_entry_commit_source_func        (GimpTagEntry         *tag_entry)
 
 
 static void
-gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry)
+gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry,
+                                          gboolean              select)
 {
   gint  position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
   if (tag_entry->mask->str[position] != 'u')
@@ -1770,13 +1775,35 @@ gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry)
       position++;
     }
 
-  gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+  if (select)
+    {
+      gint  current_position;
+      gint  selection_start;
+      gint  selection_end;
+
+      current_position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+      gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &selection_start, &selection_end);
+      if (current_position == selection_end)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry), selection_start, position);
+        }
+      else if (current_position == selection_start)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry), selection_end, position);
+        }
+    }
+  else
+    {
+      gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+    }
 }
 
 static void
-gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry)
+gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry,
+                                          gboolean              select)
 {
   gint  position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+
   if (position >= 1
          && tag_entry->mask->str[position - 1] == 's')
     {
@@ -1804,7 +1831,27 @@ gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry)
       position--;
     }
 
-  gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+  if (select)
+    {
+      gint  current_position;
+      gint  selection_start;
+      gint  selection_end;
+
+      current_position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+      gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &selection_start, &selection_end);
+      if (current_position == selection_start)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry), selection_end, position);
+        }
+      else if (current_position == selection_end)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry), selection_start, position);
+        }
+    }
+  else
+    {
+      gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
+    }
 }
 
 static void
