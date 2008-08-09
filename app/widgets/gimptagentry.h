@@ -50,9 +50,11 @@ struct _GimpTagEntry
   GString                      *mask;
   GList                        *selected_items;
   GList                        *recent_list;
-  GimpTagEntryMode              mode;
+  gint                          tab_completion_index;
   gint                          internal_operation;
   gint                          suppress_mask_update;
+  gint                          suppress_tag_query;
+  GimpTagEntryMode              mode;
   gboolean                      description_shown;
   gboolean                      has_invalid_tags;
 };

@@ -214,6 +214,7 @@ gimp_tag_entry_init (GimpTagEntry *entry)
 {
   entry->filtered_container      = NULL;
   entry->selected_items        = NULL;
+  entry->tab_completion_index  = -1;
   entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
   entry->description_shown     = FALSE;
   entry->has_invalid_tags      = FALSE;
@@ -451,7 +452,8 @@ gimp_tag_entry_changed (GtkEntry          *entry,
     }
   g_free (text);
 
-  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY
+      && ! tag_entry->suppress_tag_query)
     {
       gimp_tag_entry_query_tag (GIMP_TAG_ENTRY (entry));
     }
@@ -469,8 +471,6 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
   gboolean      is_tag[2];
   gint          i;
   gint          insert_pos;
-
-  printf ("insert mask (b): '%s'\n", tag_entry->mask->str);
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (editable));
 
@@ -523,10 +523,9 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
         }
     }
 
-  printf ("insert mask (a): '%s'\n", tag_entry->mask->str);
-
   if (! tag_entry->internal_operation)
     {
+      tag_entry->tab_completion_index = -1;
       g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
                   editable);
     }
@@ -539,8 +538,6 @@ gimp_tag_entry_delete_text     (GtkEditable          *editable,
                                 gpointer              user_data)
 {
   GimpTagEntry *tag_entry = GIMP_TAG_ENTRY (editable);
-
-  printf ("delete mask (b): '%s'\n", tag_entry->mask->str);
 
   if (! tag_entry->internal_operation)
     {
@@ -576,8 +573,6 @@ gimp_tag_entry_delete_text     (GtkEditable          *editable,
           g_string_erase (tag_entry->mask, start_pos, end_pos - start_pos);
         }
     }
-
-  printf ("delete mask (a): '%s'\n", tag_entry->mask->str);
 }
 
 static void
@@ -623,6 +618,7 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
 {
   gchar                *completion_prefix;
   GList                *completion_candidates;
+  gint                  candidate_count;
   gchar               **tags;
   gchar                *completion;
   gint                  start_position;
@@ -630,6 +626,15 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
   GtkEntry             *entry;
 
   entry = GTK_ENTRY (tag_entry);
+
+  if (tag_entry->tab_completion_index >= 0)
+    {
+      tag_entry->internal_operation++;
+      tag_entry->suppress_tag_query++;
+      gtk_editable_delete_selection (GTK_EDITABLE (tag_entry));
+      tag_entry->suppress_tag_query--;
+      tag_entry->internal_operation--;
+    }
 
   gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &start_position, &end_position);
   if (start_position != end_position)
@@ -646,6 +651,19 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
       gimp_tag_entry_get_completion_candidates (GIMP_TAG_ENTRY (entry),
                                                 tags,
                                                 completion_prefix);
+  if (tag_entry->tab_completion_index >= 0
+      && completion_candidates)
+    {
+      GimpTag              *the_chosen_one;
+
+      candidate_count = g_list_length (completion_candidates);
+      tag_entry->tab_completion_index %= candidate_count;
+      the_chosen_one = (GimpTag *) g_list_nth_data (completion_candidates,
+                                                    tag_entry->tab_completion_index);
+      g_list_free (completion_candidates);
+      completion_candidates = NULL;
+      completion_candidates = g_list_append (completion_candidates, the_chosen_one);
+    }
   completion =
       gimp_tag_entry_get_completion_string (GIMP_TAG_ENTRY (entry),
                                             completion_candidates,
@@ -656,11 +674,21 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
     {
       start_position = gtk_editable_get_position (GTK_EDITABLE (entry));
       end_position = start_position;
+      tag_entry->internal_operation++;
       gtk_editable_insert_text (GTK_EDITABLE (entry),
                                 completion, strlen (completion),
                                 &end_position);
-      gtk_editable_select_region (GTK_EDITABLE (entry),
-                                  start_position, end_position);
+      tag_entry->internal_operation--;
+      if (tag_entry->tab_completion_index >= 0
+          && candidate_count == 1)
+        {
+          gtk_editable_set_position (GTK_EDITABLE (entry), end_position);
+        }
+      else
+        {
+          gtk_editable_select_region (GTK_EDITABLE (entry),
+                                      start_position, end_position);
+        }
     }
 
   g_free (completion);
@@ -1259,17 +1287,7 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
     {
       case GDK_Tab:
             {
-              gint      selection_start;
-              gint      selection_end;
-
-              gtk_editable_get_selection_bounds (GTK_EDITABLE (widget),
-                                                 &selection_start, &selection_end);
-              if (selection_start != selection_end)
-                {
-                  gtk_editable_select_region (GTK_EDITABLE (widget),
-                                              selection_end, selection_end);
-                }
-
+              tag_entry->tab_completion_index++;
               g_idle_add ((GSourceFunc)gimp_tag_entry_auto_complete,
                           tag_entry);
             }
