@@ -1406,7 +1406,8 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
 
       case TAG_SEARCH_LEFT:
             {
-              if ((tag_entry->mask->str[selection_start] == 'w'
+              if (selection_start == selection_end
+                  && (tag_entry->mask->str[selection_start] == 'w'
                    || tag_entry->mask->str[selection_start] == 's')
                   && selection_start > 0)
                 {
@@ -1423,8 +1424,9 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
 
       case TAG_SEARCH_RIGHT:
             {
-              if ((tag_entry->mask->str[selection_start] == 'w'
-                   || tag_entry->mask->str[selection_start] == 's')
+              if (selection_start == selection_end
+                  && (tag_entry->mask->str[selection_start] == 'w'
+                      || tag_entry->mask->str[selection_start] == 's')
                   && selection_start < tag_entry->mask->len - 1)
                 {
                   while ((tag_entry->mask->str[selection_start] == 'w'
