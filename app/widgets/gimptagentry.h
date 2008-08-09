@@ -54,6 +54,7 @@ struct _GimpTagEntry
   gint                          internal_operation;
   gint                          suppress_mask_update;
   gboolean                      description_shown;
+  gboolean                      has_invalid_tags;
 };
 
 struct _GimpTagEntryClass

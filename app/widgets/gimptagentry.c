@@ -215,6 +215,7 @@ gimp_tag_entry_init (GimpTagEntry *entry)
   entry->selected_items        = NULL;
   entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
   entry->description_shown     = FALSE;
+  entry->has_invalid_tags      = FALSE;
   entry->mask                  = g_string_new ("");
 
   g_signal_connect (entry, "activate",
@@ -556,6 +557,9 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
   gint                          i;
   GimpTag                      *tag;
   GList                        *query_list = NULL;
+  gboolean                      has_invalid_tags;
+
+  has_invalid_tags = FALSE;
 
   parsed_tags = gimp_tag_entry_parse_tags (entry);
   count = g_strv_length (parsed_tags);
@@ -564,6 +568,10 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
       if (strlen (parsed_tags[i]) > 0)
         {
           tag = gimp_tag_try_new (parsed_tags[i]);
+          if (! tag)
+            {
+              has_invalid_tags = TRUE;
+            }
           query_list = g_list_append (query_list, tag);
         }
     }
@@ -571,6 +579,12 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
 
   gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (entry->filtered_container),
                                       query_list);
+
+  if (has_invalid_tags != entry->has_invalid_tags)
+    {
+      entry->has_invalid_tags = has_invalid_tags;
+      gtk_widget_queue_draw (GTK_WIDGET (entry));
+    }
 }
 
 static gboolean

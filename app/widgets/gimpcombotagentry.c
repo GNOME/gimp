@@ -189,6 +189,7 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
   gint                  tag_count;
   gint                  window_width;
   gint                  window_height;
+  GtkStateType          arrow_state;
 
   if (widget->window == event->window)
     {
@@ -210,8 +211,18 @@ gimp_combo_tag_entry_expose_event (GtkWidget         *widget,
                           TRUE, window_width - 14, 0, 14, window_height);
     }
 
+  if (tag_count > 0
+      && ! GIMP_TAG_ENTRY (combo_entry)->has_invalid_tags)
+    {
+      arrow_state = GTK_STATE_NORMAL;
+    }
+  else
+    {
+      arrow_state = GTK_STATE_INSENSITIVE;
+    }
+
   gtk_paint_arrow (widget->style,
-                   event->window, tag_count > 0 ? GTK_STATE_NORMAL : GTK_STATE_INSENSITIVE,
+                   event->window, arrow_state,
                    GTK_SHADOW_NONE, NULL, NULL, NULL,
                    GTK_ARROW_DOWN, TRUE,
                    arrow_rect.x + arrow_rect.width / 2 - 4,
@@ -266,7 +277,8 @@ gimp_combo_tag_entry_popup_list (GimpComboTagEntry             *combo_entry)
   gint          tag_count;
 
   tag_count = gimp_filtered_container_get_tag_count (combo_entry->filtered_container);
-  if (tag_count > 0)
+  if (tag_count > 0
+      && ! GIMP_TAG_ENTRY (combo_entry)->has_invalid_tags)
     {
       combo_entry->popup = gimp_tag_popup_new (combo_entry);
       g_signal_connect (combo_entry->popup, "destroy",
