@@ -562,10 +562,7 @@ gimp_tag_entry_query_tag (GimpTagEntry         *entry)
       if (strlen (parsed_tags[i]) > 0)
         {
           tag = gimp_tag_try_new (parsed_tags[i]);
-          if (tag)
-            {
-              query_list = g_list_append (query_list, tag);
-            }
+          query_list = g_list_append (query_list, tag);
         }
     }
   g_strfreev (parsed_tags);
