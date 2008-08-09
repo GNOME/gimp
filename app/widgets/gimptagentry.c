@@ -1716,7 +1716,7 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
               g_string_append_c (mask, 'w');
             }
 
-          if (cursor_position <= region_end)
+          if (cursor_position >= region_end)
             {
               cursor_position += mask->len - (region_end - region_start);
             }
