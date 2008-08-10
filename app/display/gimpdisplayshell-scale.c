@@ -89,7 +89,6 @@ void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  gfloat     sw, sh;
   gint       image_width;
   gint       image_height;
 
@@ -104,17 +103,11 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
     {
       image_width  = gimp_image_get_width  (image);
       image_height = gimp_image_get_height (image);
-
-      sw = SCALEX (shell, image_width);
-      sh = SCALEY (shell, image_height);
     }
   else
     {
       image_width  = shell->disp_width;
       image_height = shell->disp_height;
-
-      sw = image_width;
-      sh = image_height;
     }
 
 

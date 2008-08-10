@@ -1,5 +1,11 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Remove unused local variables sw
+	and sh.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]: Renamed
 	gimp_display_shell_scroll_private() to gimp_display_shell_scroll()
 	and keep it here.
