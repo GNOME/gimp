@@ -2026,6 +2026,14 @@ gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry         *tag_entry)
         }
     }
 
+  /* special case when cursor is in the last position:
+   * it must be positioned after the last whitespace. */
+  if (position == tag_entry->mask->len - 1
+      && tag_entry->mask->str[position] == 'w')
+    {
+      position++;
+    }
+
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), position);
 
   return FALSE;
