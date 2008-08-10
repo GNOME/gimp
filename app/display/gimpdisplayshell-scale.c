@@ -45,7 +45,7 @@
 #include "gimp-intl.h"
 
 
-#define SCALE_TIMEOUT 1
+#define SCALE_TIMEOUT 2
 
 #define SCALE_EPSILON 0.0001
 
@@ -485,6 +485,31 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 }
 
 /**
+ * gimp_display_shell_scale_handle_zoom_revert:
+ * @shell:
+ *
+ * Handle the updating of the Revert Zoom variables.
+ **/
+void
+gimp_display_shell_scale_handle_zoom_revert (GimpDisplayShell *shell)
+{
+  guint now;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  now = time (NULL);
+
+  if (now - shell->last_scale_time >= SCALE_TIMEOUT)
+    {
+      shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
+      shell->last_offset_x = shell->offset_x;
+      shell->last_offset_y = shell->offset_y;
+    }
+
+  shell->last_scale_time = now;
+}
+
+/**
  * gimp_display_shell_scale_by_values:
  * @shell:         the #GimpDisplayShell
  * @scale:         the new scale
@@ -503,8 +528,6 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
                                     gint              offset_y,
                                     gboolean          resize_window)
 {
-  guint now;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /*  Abort early if the values are all setup already. We don't
@@ -515,18 +538,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
       shell->offset_y == offset_y)
     return;
 
-  /* remember the current scale and offsets to allow reverting the scaling */
-
-  now = time (NULL);
-
-  if (now - shell->last_scale_time > SCALE_TIMEOUT)
-    {
-      shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
-      shell->last_offset_x = shell->offset_x;
-      shell->last_offset_y = shell->offset_y;
-    }
-
-  shell->last_scale_time = now;
+  gimp_display_shell_scale_handle_zoom_revert (shell);
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);

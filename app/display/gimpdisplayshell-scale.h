@@ -38,6 +38,7 @@ void     gimp_display_shell_scale_to                     (GimpDisplayShell *shel
                                                           gdouble           y);
 void     gimp_display_shell_scale_fit_in                 (GimpDisplayShell *shell);
 void     gimp_display_shell_scale_fill                   (GimpDisplayShell *shell);
+void     gimp_display_shell_scale_handle_zoom_revert     (GimpDisplayShell *shell);
 void     gimp_display_shell_scale_by_values              (GimpDisplayShell *shell,
                                                           gdouble           scale,
                                                           gint              offset_x,

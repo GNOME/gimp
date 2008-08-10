@@ -1,5 +1,12 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_handle_zoom_revert): Move the
+	zoom-revert updating logic into this new helper function so that
+	we can update zoom-revert from other places.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.[ch]:
 	Rename gimp_display_shell_scale_setup() to
 	gimp_display_shell_update_scrollbars_and_rulers(), because that's
