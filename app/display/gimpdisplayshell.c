@@ -1326,35 +1326,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
     gimp_ui_manager_update (shell->popup_manager, shell->display);
 }
 
-static void
-gimp_display_shell_center_image_callback (GimpDisplayShell *shell,
-                                          GtkAllocation    *allocation,
-                                          GtkWidget        *canvas)
-{
-  gint     sw, sh;
-  gboolean center_horizontally;
-  gboolean center_vertically;
-
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
-
-  /* We only want to center on the axes on which the image is smaller
-   * than the display canvas. If it is larger, it will be centered on
-   * that axis later, and if we center on all axis unconditionally, we
-   * end up with the wrong centering if the image is larger than the
-   * display canvas.
-   */
-  center_horizontally = sw < shell->disp_width;
-  center_vertically   = sh < shell->disp_height;
-
-  gimp_display_shell_scroll_center_image (shell,
-                                          center_horizontally,
-                                          center_vertically);
-
-  g_signal_handlers_disconnect_by_func (canvas,
-                                        gimp_display_shell_center_image_callback,
-                                        shell);
-}
-
 static gboolean
 gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 {
@@ -1390,14 +1361,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
 
-  /* Not pretty, but we need to center the image as soon as the canvas
-   * has got its new size allocated. The centering will be wrong if we
-   * do it too early, and if we do it too late flickering will occur
-   * due to the image being rendered twice.
-   */
-  g_signal_connect_swapped (shell->canvas, "size-allocate",
-                            G_CALLBACK (gimp_display_shell_center_image_callback),
-                            shell);
+  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,

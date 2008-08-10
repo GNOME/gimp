@@ -1,5 +1,12 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Recent
+	refactorings seems to have made the centering hack obsolete so use
+	gimp_display_shell_scroll_center_image_on_next_size_allocate()
+	instead.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
 	Always center the image after a wrap. I can't think of a case when
 	that shouldn't happen.
