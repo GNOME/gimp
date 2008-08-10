@@ -123,6 +123,35 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
+                                      gint              offset_x,
+                                      gint              offset_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->offset_x == offset_x &&
+      shell->offset_y == offset_y)
+    return;
+
+  gimp_display_shell_scale_handle_zoom_revert (shell);
+
+  /* freeze the active tool */
+  gimp_display_shell_pause (shell);
+
+  shell->offset_x = offset_x;
+  shell->offset_y = offset_y;
+
+  gimp_display_shell_scroll_clamp_offsets (shell);
+  gimp_display_shell_update_scrollbars_and_rulers (shell);
+  gimp_display_shell_scrolled (shell);
+
+  gimp_display_shell_expose_full (shell);
+
+  /* re-enable the active tool */
+  gimp_display_shell_resume (shell);
+}
+
+void
 gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -241,13 +270,9 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
       target_offset_y = (sh - shell->disp_height) / 2;
     }
 
-  /* Note that we can't use gimp_display_shell_scroll() here
-   * because that would expose the image twice, causing unwanted
-   * flicker.
-   */
-  gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
-                                      target_offset_x, target_offset_y,
-                                      FALSE);
+  gimp_display_shell_scroll_set_offset (shell,
+                                        target_offset_x,
+                                        target_offset_y);
 }
 
 static void

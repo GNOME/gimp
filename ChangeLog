@@ -1,5 +1,17 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_set_offset): New low level function for
+	setting display shell offset.
+
+	(gimp_display_shell_scroll_center_image)
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Use it instead
+	of gimp_display_shell_scale_by_values().
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_handle_zoom_revert): Move the
 	zoom-revert updating logic into this new helper function so that
