@@ -582,6 +582,8 @@ gimp_tag_popup_border_event (GtkWidget          *widget,
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
+      tag_popup->single_select_disabled = TRUE;
+
       if (((GdkEventButton *)event)->window == widget->window
           && ! tag_popup->ignore_button_release
           && gimp_tag_popup_button_scroll (tag_popup, (GdkEventButton *) event))

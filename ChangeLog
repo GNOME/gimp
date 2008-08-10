@@ -1,5 +1,11 @@
 2008-08-10  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/gimptagpopup.c (gimp_tag_popup_border_event): disable
+	single selection mode when mouse button is release outside popup
+	window.
+
+2008-08-10  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.c
 	(gimp_tag_entry_strip_extra_whitespace): reposition cursor after a
 	whitespace when there are no tags before (last position).
