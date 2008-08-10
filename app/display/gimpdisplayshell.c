@@ -1884,6 +1884,9 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
         }
 
       gtk_window_resize (GTK_WINDOW (shell), width, height);
+
+      /* A wrap always means that we should center the image too */
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
 }
 

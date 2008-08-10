@@ -1,5 +1,19 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	Always center the image after a wrap. I can't think of a case when
+	that shouldn't happen.
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Centering
+	occurs implicitly after wrapping now, no need to do it explicitly.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): Handle the no-image
+	case.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_scroll_set_offset): New low level function for
 	setting display shell offset.

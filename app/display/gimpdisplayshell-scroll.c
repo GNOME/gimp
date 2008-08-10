@@ -252,7 +252,8 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display)
+  if (! shell->display ||
+      ! shell->display->image)
     return;
 
   target_offset_x = shell->offset_x;
