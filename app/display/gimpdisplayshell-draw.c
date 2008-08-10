@@ -64,9 +64,9 @@ static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
 /*  public functions  */
 
 void
-gimp_display_shell_draw_guide (GimpDisplayShell *shell,
-                               GimpGuide        *guide,
-                               gboolean          active)
+gimp_display_shell_draw_guide (const GimpDisplayShell *shell,
+                               GimpGuide              *guide,
+                               gboolean                active)
 {
   gint  position;
   gint  x1, y1, x2, y2;
@@ -108,7 +108,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_guides (GimpDisplayShell *shell)
+gimp_display_shell_draw_guides (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -340,9 +340,9 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 }
 
 void
-gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
-                                      GimpSamplePoint  *sample_point,
-                                      gboolean          active)
+gimp_display_shell_draw_sample_point (const GimpDisplayShell *shell,
+                                      GimpSamplePoint        *sample_point,
+                                      gboolean                active)
 {
   GimpCanvasStyle style;
   gdouble         x, y;
@@ -406,7 +406,7 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
+gimp_display_shell_draw_sample_points (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -425,8 +425,8 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_vector (GimpDisplayShell *shell,
-                                GimpVectors      *vectors)
+gimp_display_shell_draw_vector (const GimpDisplayShell *shell,
+                                GimpVectors            *vectors)
 {
   GimpStroke *stroke = NULL;
 
@@ -464,7 +464,7 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
+gimp_display_shell_draw_vectors (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -486,7 +486,7 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
+gimp_display_shell_draw_cursor (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -496,11 +496,11 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_area (GimpDisplayShell *shell,
-                              gint              x,
-                              gint              y,
-                              gint              w,
-                              gint              h)
+gimp_display_shell_draw_area (const GimpDisplayShell *shell,
+                              gint                    x,
+                              gint                    y,
+                              gint                    w,
+                              gint                    h)
 {
   gint sx, sy;
   gint sw, sh;

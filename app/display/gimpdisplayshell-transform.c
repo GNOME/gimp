@@ -45,9 +45,9 @@
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
-                                         GimpCoords       *image_coords,
-                                         GimpCoords       *display_coords)
+gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
+                                         GimpCoords             *image_coords,
+                                         GimpCoords             *display_coords)
 {
   gint scaled_viewport_offset_x;
   gint scaled_viewport_offset_y;
@@ -79,9 +79,9 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
  * points on the display can be mapped to points in the image.
  **/
 void
-gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
-                                           GimpCoords       *display_coords,
-                                           GimpCoords       *image_coords)
+gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
+                                           GimpCoords             *display_coords,
+                                           GimpCoords             *image_coords)
 {
   gint scaled_viewport_offset_x;
   gint scaled_viewport_offset_y;
@@ -104,12 +104,12 @@ gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_transform_xy (GimpDisplayShell *shell,
-                                 gdouble           x,
-                                 gdouble           y,
-                                 gint             *nx,
-                                 gint             *ny,
-                                 gboolean          use_offsets)
+gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
+                                 gdouble                 x,
+                                 gdouble                 y,
+                                 gint                   *nx,
+                                 gint                   *ny,
+                                 gboolean                use_offsets)
 {
   gint   scaled_viewport_offset_x;
   gint   scaled_viewport_offset_y;
@@ -165,13 +165,13 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
  * in the image.
  **/
 void
-gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
-                                   gint              x,
-                                   gint              y,
-                                   gint             *nx,
-                                   gint             *ny,
-                                   gboolean          round,
-                                   gboolean          use_offsets)
+gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
+                                   gint                    x,
+                                   gint                    y,
+                                   gint                   *nx,
+                                   gint                   *ny,
+                                   gboolean                round,
+                                   gboolean                use_offsets)
 {
   gint   scaled_viewport_offset_x;
   gint   scaled_viewport_offset_y;
@@ -225,12 +225,12 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
  * except that it returns its results as doubles rather than ints.
  **/
 void
-gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
-                                    gdouble           x,
-                                    gdouble           y,
-                                    gdouble          *nx,
-                                    gdouble          *ny,
-                                    gboolean          use_offsets)
+gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
+                                    gdouble                 x,
+                                    gdouble                 y,
+                                    gdouble                *nx,
+                                    gdouble                *ny,
+                                    gboolean                use_offsets)
 {
   gint scaled_viewport_offset_x;
   gint scaled_viewport_offset_y;
@@ -272,12 +272,12 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
  * ints, and consequently there is no option related to rounding.
  **/
 void
-gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
-                                     gdouble           x,
-                                     gdouble           y,
-                                     gdouble          *nx,
-                                     gdouble          *ny,
-                                     gboolean          use_offsets)
+gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
+                                     gdouble                 x,
+                                     gdouble                 y,
+                                     gdouble                *nx,
+                                     gdouble                *ny,
+                                     gboolean                use_offsets)
 {
   gint scaled_viewport_offset_x;
   gint scaled_viewport_offset_y;
@@ -317,11 +317,11 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_points (GimpDisplayShell  *shell,
-                                     const GimpVector2 *points,
-                                     GdkPoint          *coords,
-                                     gint               n_points,
-                                     gboolean           use_offsets)
+gimp_display_shell_transform_points (const GimpDisplayShell *shell,
+                                     const GimpVector2      *points,
+                                     GdkPoint               *coords,
+                                     gint                    n_points,
+                                     gboolean                use_offsets)
 {
   gint offset_x = 0;
   gint offset_y = 0;
@@ -371,11 +371,11 @@ gimp_display_shell_transform_points (GimpDisplayShell  *shell,
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_coords (GimpDisplayShell *shell,
-                                     const GimpCoords *image_coords,
-                                     GdkPoint         *disp_coords,
-                                     gint              n_coords,
-                                     gboolean          use_offsets)
+gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
+                                     const GimpCoords       *image_coords,
+                                     GdkPoint               *disp_coords,
+                                     gint                    n_coords,
+                                     gboolean                use_offsets)
 {
   gint offset_x = 0;
   gint offset_y = 0;
@@ -425,11 +425,11 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_segments (GimpDisplayShell *shell,
-                                       const BoundSeg   *src_segs,
-                                       GdkSegment       *dest_segs,
-                                       gint              n_segs,
-                                       gboolean          use_offsets)
+gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
+                                       const BoundSeg         *src_segs,
+                                       GdkSegment             *dest_segs,
+                                       gint                    n_segs,
+                                       gboolean                use_offsets)
 {
   gint offset_x = 0;
   gint offset_y = 0;
@@ -489,11 +489,11 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
  * that corresponds to the display viewport.
  **/
 void
-gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
-                                         gint             *x,
-                                         gint             *y,
-                                         gint             *width,
-                                         gint             *height)
+gimp_display_shell_untransform_viewport (const GimpDisplayShell *shell,
+                                         gint                   *x,
+                                         gint                   *y,
+                                         gint                   *width,
+                                         gint                   *height)
 {
   gint x1, y1, x2, y2;
 
