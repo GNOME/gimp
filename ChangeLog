@@ -1,5 +1,16 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]: It makes more sense
+	for gimp_display_shell_get_scaled_image_size() to be moved from
+	here to
+
+	* app/display/gimpdisplayshell-draw.[ch]: here, and rename it to
+	gimp_display_shell_draw_get_scaled_image_size().
+
+	* app/display/gimpdisplayshell.c: Adapt to name change.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-draw.[ch]
 	* app/display/gimpdisplayshell-render.[ch]
 	* app/display/gimpdisplayshell-transform.[ch]

@@ -67,6 +67,7 @@
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-progress.h"
@@ -1334,7 +1335,7 @@ gimp_display_shell_center_image_callback (GimpDisplayShell *shell,
   gboolean center_horizontally;
   gboolean center_vertically;
 
-  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
+  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
   /* We only want to center on the axes on which the image is smaller
    * than the display canvas. If it is larger, it will be centered on
