@@ -1855,7 +1855,7 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
 
     gint x2, y2, w2, h2;
 
-    gimp_display_shell_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
+    gimp_display_shell_scroll_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
 
     rectangle_width  = w1;
     rectangle_height = h1;
