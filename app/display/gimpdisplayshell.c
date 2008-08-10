@@ -1247,7 +1247,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 
-  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_update_scrollbars_and_rulers (shell);
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);
@@ -1300,7 +1300,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
   gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_update_scrollbars_and_rulers (shell);
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_unset_cursor (shell);
@@ -1475,7 +1475,7 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     {
       shell->unit = unit;
 
-      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_update_scrollbars_and_rulers (shell);
       gimp_display_shell_scaled (shell);
 
       g_object_notify (G_OBJECT (shell), "unit");

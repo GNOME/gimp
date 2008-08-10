@@ -79,14 +79,12 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 /*  public functions  */
 
 /**
- * gimp_display_shell_scale_setup:
+ * gimp_display_shell_update_scrollbars_and_rulers:
  * @shell: the #GimpDisplayShell
  *
- * Prepares the display for drawing the image at current scale and offset.
- * This preparation involves, for example, setting up scrollbars and rulers.
  **/
 void
-gimp_display_shell_scale_setup (GimpDisplayShell *shell)
+gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell)
 {
   GimpImage *image;
   gint       image_width;
@@ -585,7 +583,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
     gimp_display_shell_shrink_wrap (shell, grow_only);
 
   gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_update_scrollbars_and_rulers (shell);
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);

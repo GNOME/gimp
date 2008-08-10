@@ -303,7 +303,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       shell->disp_height = allocation->height;
 
       gimp_display_shell_scroll_clamp_offsets (shell);
-      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_update_scrollbars_and_rulers (shell);
       gimp_display_shell_scaled (shell);
     }
 }

@@ -20,41 +20,41 @@
 #define __GIMP_DISPLAY_SHELL_SCALE_H__
 
 
-void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
+void     gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell);
 
-gboolean gimp_display_shell_scale_revert        (GimpDisplayShell *shell);
-gboolean gimp_display_shell_scale_can_revert    (GimpDisplayShell *shell);
+gboolean gimp_display_shell_scale_revert                 (GimpDisplayShell *shell);
+gboolean gimp_display_shell_scale_can_revert             (GimpDisplayShell *shell);
 
-void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
-                                                 gboolean          dot_for_dot);
+void     gimp_display_shell_scale_set_dot_for_dot        (GimpDisplayShell *shell,
+                                                          gboolean          dot_for_dot);
 
-void   gimp_display_shell_scale                 (GimpDisplayShell *shell,
-                                                 GimpZoomType      zoom_type,
-                                                 gdouble           scale);
-void   gimp_display_shell_scale_to              (GimpDisplayShell *shell,
-                                                 GimpZoomType      zoom_type,
-                                                 gdouble           scale,
-                                                 gdouble           x,
-                                                 gdouble           y);
-void   gimp_display_shell_scale_fit_in          (GimpDisplayShell *shell);
-void   gimp_display_shell_scale_fill            (GimpDisplayShell *shell);
-void   gimp_display_shell_scale_by_values       (GimpDisplayShell *shell,
-                                                 gdouble           scale,
-                                                 gint              offset_x,
-                                                 gint              offset_y,
-                                                 gboolean          resize_window);
-void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell,
-                                                 gboolean          grow_only);
+void     gimp_display_shell_scale                        (GimpDisplayShell *shell,
+                                                          GimpZoomType      zoom_type,
+                                                          gdouble           scale);
+void     gimp_display_shell_scale_to                     (GimpDisplayShell *shell,
+                                                          GimpZoomType      zoom_type,
+                                                          gdouble           scale,
+                                                          gdouble           x,
+                                                          gdouble           y);
+void     gimp_display_shell_scale_fit_in                 (GimpDisplayShell *shell);
+void     gimp_display_shell_scale_fill                   (GimpDisplayShell *shell);
+void     gimp_display_shell_scale_by_values              (GimpDisplayShell *shell,
+                                                          gdouble           scale,
+                                                          gint              offset_x,
+                                                          gint              offset_y,
+                                                          gboolean          resize_window);
+void     gimp_display_shell_scale_shrink_wrap            (GimpDisplayShell *shell,
+                                                          gboolean          grow_only);
 
-void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
-                                                 gboolean          resize_window,
-                                                 gboolean          grow_only);
-void   gimp_display_shell_set_initial_scale     (GimpDisplayShell *shell,
-                                                 gdouble           scale,
-                                                 gint             *display_width,
-                                                 gint             *display_height);
+void     gimp_display_shell_scale_resize                 (GimpDisplayShell *shell,
+                                                          gboolean          resize_window,
+                                                          gboolean          grow_only);
+void     gimp_display_shell_set_initial_scale            (GimpDisplayShell *shell,
+                                                          gdouble           scale,
+                                                          gint             *display_width,
+                                                          gint             *display_height);
 
-void   gimp_display_shell_scale_dialog          (GimpDisplayShell *shell);
+void     gimp_display_shell_scale_dialog                 (GimpDisplayShell *shell);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */

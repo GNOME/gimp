@@ -114,7 +114,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       gdk_window_process_updates (shell->canvas->window, FALSE);
 
       /*  Update scrollbars and rulers  */
-      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_update_scrollbars_and_rulers (shell);
 
       gimp_display_shell_resume (shell);
 
