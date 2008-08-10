@@ -1,5 +1,13 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the image fits
+	within the display shell canvas on a given axis, center the image
+	on that axis. This behaviour will certainly require a few tweaks
+	but let's see how this feels. Feedback welcome.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Recent
 	refactorings seems to have made the centering hack obsolete so use
 	gimp_display_shell_scroll_center_image_on_next_size_allocate()

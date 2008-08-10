@@ -302,6 +302,26 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       shell->disp_width  = allocation->width;
       shell->disp_height = allocation->height;
 
+      if (shell->display && shell->display->image)
+        {
+          gint sw;
+          gint sh;
+          gboolean center_horizontally;
+          gboolean center_vertically;
+
+          gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+          center_horizontally = sw < shell->disp_width;
+          center_vertically   = sh < shell->disp_height;
+
+          /* If the image fits within the display shell canvas on a
+           * given axis, center the image on that axis.
+           */
+          gimp_display_shell_scroll_center_image (shell,
+                                                  center_horizontally,
+                                                  center_vertically);
+        }
+
       gimp_display_shell_scroll_clamp_offsets (shell);
       gimp_display_shell_update_scrollbars_and_rulers (shell);
       gimp_display_shell_scaled (shell);
