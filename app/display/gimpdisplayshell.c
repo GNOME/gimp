@@ -1206,7 +1206,7 @@ gimp_display_shell_new (GimpDisplay       *display,
       gimp_display_shell_connect (shell);
 
       /* after connecting to the image we want to center it */
-      gimp_display_shell_center_image_on_next_size_allocate (shell);
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
   else
     {
@@ -1345,9 +1345,9 @@ gimp_display_shell_center_image_callback (GimpDisplayShell *shell,
   center_horizontally = sw < shell->disp_width;
   center_vertically   = sh < shell->disp_height;
 
-  gimp_display_shell_center_image (shell,
-                                   center_horizontally,
-                                   center_vertically);
+  gimp_display_shell_scroll_center_image (shell,
+                                          center_horizontally,
+                                          center_vertically);
 
   g_signal_handlers_disconnect_by_func (canvas,
                                         gimp_display_shell_center_image_callback,

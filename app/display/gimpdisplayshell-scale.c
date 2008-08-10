@@ -452,7 +452,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
-  gimp_display_shell_center_image (shell, TRUE, TRUE);
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
 /**
@@ -491,97 +491,7 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
-  gimp_display_shell_center_image (shell, TRUE, TRUE);
-}
-
-/**
- * gimp_display_shell_center_image:
- * @shell:
- * @horizontally:
- * @vertically:
- *
- * Centers the image in the display shell on the desired axes.
- *
- **/
-void
-gimp_display_shell_center_image (GimpDisplayShell *shell,
-                                 gboolean          horizontally,
-                                 gboolean          vertically)
-{
-  gint sw, sh;
-  gint target_offset_x, target_offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->display)
-    return;
-
-  target_offset_x = shell->offset_x;
-  target_offset_y = shell->offset_y;
-
-  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
-
-  if (horizontally)
-    {
-      if (sw < shell->disp_width)
-        {
-          target_offset_x = -(shell->disp_width - sw) / 2;
-        }
-      else
-        {
-          target_offset_x = (sw - shell->disp_width) / 2;
-        }
-    }
-
-  if (vertically)
-    {
-      if (sh < shell->disp_height)
-        {
-          target_offset_y = -(shell->disp_height - sh) / 2;
-        }
-      else
-        {
-          target_offset_y = (sh - shell->disp_height) / 2;
-        }
-    }
-
-  /* Note that we can't use gimp_display_shell_scroll_private() here
-   * because that would expose the image twice, causing unwanted
-   * flicker.
-   */
-  gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
-                                      target_offset_x, target_offset_y,
-                                      FALSE);
-}
-
-static void
-gimp_display_shell_size_allocate_center_image_callback (GimpDisplayShell *shell,
-                                                        GtkAllocation    *allocation,
-                                                        GtkWidget        *canvas)
-{
-  gimp_display_shell_center_image (shell, TRUE, TRUE);
-
-  g_signal_handlers_disconnect_by_func (canvas,
-                                        gimp_display_shell_size_allocate_center_image_callback,
-                                        shell);
-}
-
-/**
- * gimp_display_shell_center_image_on_next_size_allocate:
- * @shell:
- *
- * Centers the image in the display as soon as the canvas has got its
- * new size
- *
- **/
-void
-gimp_display_shell_center_image_on_next_size_allocate (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  g_signal_connect_swapped (shell->canvas, "size-allocate",
-                            G_CALLBACK (gimp_display_shell_size_allocate_center_image_callback),
-                            shell);
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
 /**

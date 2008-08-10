@@ -492,7 +492,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
        * has change size
        */
       gimp_display_shell_shrink_wrap (shell, FALSE);
-      gimp_display_shell_center_image_on_next_size_allocate (shell);
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
   else
     {

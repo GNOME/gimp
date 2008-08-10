@@ -1,3 +1,18 @@
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Put functions to center the image in the display shell where they
+	belong, and give them proper names.
+
+	* app/display/gimpdisplayshell-scale.[ch]: Get rid of functions
+	and use the new names.
+
+	* app/display/gimpdisplayshell-scroll.[ch]: Put the functions here
+	and call them gimp_display_shell_scroll_center_image() and
+	gimp_display_shell_scroll_center_image_on_next_size_allocate().
+
+	* app/display/gimpdisplayshell.c:
+	* app/display/gimpdisplayshell-handlers.c: Use the new names.
+
 2008-08-08  Michael Natterer  <mitch@gimp.org>
 
 	Bug #545990: GIMP color wheel is not antialiased

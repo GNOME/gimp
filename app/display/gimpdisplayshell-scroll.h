@@ -26,6 +26,13 @@ void   gimp_display_shell_center_around_image_coordinate (GimpDisplayShell      
 
 void   gimp_display_shell_scroll_clamp_offsets           (GimpDisplayShell       *shell);
 
+void   gimp_display_shell_scroll_center_image            (GimpDisplayShell       *shell,
+                                                          gboolean                horizontally,
+                                                          gboolean                vertically);
+
+void   gimp_display_shell_scroll_center_image_on_next_size_allocate
+                                                         (GimpDisplayShell *shell);
+
 void   gimp_display_shell_get_scaled_viewport            (const GimpDisplayShell *shell,
                                                           gint                   *x,
                                                           gint                   *y,
