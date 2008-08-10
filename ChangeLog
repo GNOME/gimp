@@ -1,5 +1,19 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]: gimp_display_shell_ ->
+	gimp_display_shell_scroll_ for functions that are scroll
+	related. Also did some other minor renamings.
+
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c 
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpdisplayshell-callbacks.c: Adapt to the name
+	changes.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback): We
 	need to center the image after a Shrink Wrap.
 

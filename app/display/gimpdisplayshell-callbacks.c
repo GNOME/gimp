@@ -1695,7 +1695,7 @@ gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
       (scroll == GTK_SCROLL_PAGE_FORWARD))
     return FALSE;
 
-  gimp_display_shell_setup_hscrollbar_with_value (shell, value);
+  gimp_display_shell_scroll_setup_hscrollbar (shell, value);
 
   gtk_adjustment_changed (shell->hsbdata);
 
@@ -1716,7 +1716,7 @@ gimp_display_shell_vscrollbar_update_range (GtkRange         *range,
       (scroll == GTK_SCROLL_PAGE_FORWARD))
     return FALSE;
 
-  gimp_display_shell_setup_vscrollbar_with_value (shell, value);
+  gimp_display_shell_scroll_setup_vscrollbar (shell, value);
 
   gtk_adjustment_changed (shell->vsbdata);
 

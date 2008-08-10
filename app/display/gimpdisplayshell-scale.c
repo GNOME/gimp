@@ -125,7 +125,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   shell->hsbdata->page_size      = shell->disp_width;
   shell->hsbdata->page_increment = shell->disp_width / 2;
 
-  gimp_display_shell_setup_hscrollbar_with_value (shell, shell->offset_x);
+  gimp_display_shell_scroll_setup_hscrollbar (shell, shell->offset_x);
 
   gtk_adjustment_changed (shell->hsbdata);
 
@@ -136,7 +136,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   shell->vsbdata->page_size      = shell->disp_height;
   shell->vsbdata->page_increment = shell->disp_height / 2;
 
-  gimp_display_shell_setup_vscrollbar_with_value (shell, shell->offset_y);
+  gimp_display_shell_scroll_setup_vscrollbar (shell, shell->offset_y);
 
   gtk_adjustment_changed (shell->vsbdata);
 
@@ -182,9 +182,9 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
     /* Adjust due to scrolling */
 
-    gimp_display_shell_get_scaled_viewport_offset (shell,
-                                                   &scaled_viewport_offset_x,
-                                                   &scaled_viewport_offset_y);
+    gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
+                                                          &scaled_viewport_offset_x,
+                                                          &scaled_viewport_offset_y);
 
     horizontal_lower -= img2real (shell, TRUE,
                                   FUNSCALEX (shell,

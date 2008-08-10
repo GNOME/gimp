@@ -234,7 +234,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   projection = gimp_image_get_projection (image);
 
-  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
@@ -320,8 +320,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     gint disp_xoffset, disp_yoffset;
     gint offset_x, offset_y;
 
-    gimp_display_shell_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
-    gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+    gimp_display_shell_scroll_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
+    gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
     gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
                         x + disp_xoffset, y + disp_yoffset,
@@ -355,7 +355,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
   gint          offset_x;
   gint          offset_y;
 
-  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
   rect.x      = x + offset_x;
   rect.y      = y + offset_y;

@@ -510,7 +510,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   if (! shell->display->image)
     return;
 
-  gimp_display_shell_get_scaled_viewport_offset (shell, &sx, &sy);
+  gimp_display_shell_scroll_get_scaled_viewport_offset (shell, &sx, &sy);
   gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
 
   /*  check if the passed in area intersects with
@@ -552,9 +552,9 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
               dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
               dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-              gimp_display_shell_get_disp_offset (shell,
-                                                  &disp_xoffset,
-                                                  &disp_yoffset);
+              gimp_display_shell_scroll_get_disp_offset (shell,
+                                                         &disp_xoffset,
+                                                         &disp_yoffset);
 
               gimp_display_shell_render (shell,
                                          j - disp_xoffset,
