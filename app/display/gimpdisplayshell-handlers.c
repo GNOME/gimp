@@ -499,7 +499,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
       gint scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
       gint scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
 
-      /* Note that we can't use gimp_display_shell_scroll_private() here
+      /* Note that we can't use gimp_display_shell_scroll() here
        * because that would expose the image twice, causing unwanted
        * flicker.
        */

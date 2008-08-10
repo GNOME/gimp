@@ -1,5 +1,20 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]: Renamed
+	gimp_display_shell_scroll_private() to gimp_display_shell_scroll()
+	and keep it here.
+
+	* app/display/gimpdisplayshell-private.h: Removed.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-autoscroll.c: Adapt.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.[ch]: It makes more sense
 	for gimp_display_shell_get_scaled_image_size() to be moved from
 	here to

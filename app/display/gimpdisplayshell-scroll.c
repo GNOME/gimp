@@ -37,7 +37,6 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
-#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
@@ -70,15 +69,15 @@ gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell       *shell
   offset_to_apply_x = scaled_image_x - shell->disp_width  / 2 - shell->offset_x;
   offset_to_apply_y = scaled_image_y - shell->disp_height / 2 - shell->offset_y;
 
-  gimp_display_shell_scroll_private (shell,
-                                     offset_to_apply_x,
-                                     offset_to_apply_y);
+  gimp_display_shell_scroll (shell,
+                             offset_to_apply_x,
+                             offset_to_apply_y);
 }
 
 void
-gimp_display_shell_scroll_private (GimpDisplayShell *shell,
-                                   gint              x_offset,
-                                   gint              y_offset)
+gimp_display_shell_scroll (GimpDisplayShell *shell,
+                           gint              x_offset,
+                           gint              y_offset)
 {
   gint old_x;
   gint old_y;
@@ -242,7 +241,7 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
       target_offset_y = (sh - shell->disp_height) / 2;
     }
 
-  /* Note that we can't use gimp_display_shell_scroll_private() here
+  /* Note that we can't use gimp_display_shell_scroll() here
    * because that would expose the image twice, causing unwanted
    * flicker.
    */
