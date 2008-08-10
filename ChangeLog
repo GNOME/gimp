@@ -1,5 +1,10 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback): We
+	need to center the image after a Shrink Wrap.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_scroll_center_image): There is no need for
 	special casing depending on image size relative to viewport size.
