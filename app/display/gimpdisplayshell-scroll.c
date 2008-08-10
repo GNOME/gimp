@@ -233,26 +233,12 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
 
   if (horizontally)
     {
-      if (sw < shell->disp_width)
-        {
-          target_offset_x = -(shell->disp_width - sw) / 2;
-        }
-      else
-        {
-          target_offset_x = (sw - shell->disp_width) / 2;
-        }
+      target_offset_x = (sw - shell->disp_width) / 2;
     }
 
   if (vertically)
     {
-      if (sh < shell->disp_height)
-        {
-          target_offset_y = -(shell->disp_height - sh) / 2;
-        }
-      else
-        {
-          target_offset_y = (sh - shell->disp_height) / 2;
-        }
+      target_offset_y = (sh - shell->disp_height) / 2;
     }
 
   /* Note that we can't use gimp_display_shell_scroll_private() here

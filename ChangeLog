@@ -1,5 +1,11 @@
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): There is no need for
+	special casing depending on image size relative to viewport size.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Put functions to center the image in the display shell where they
 	belong, and give them proper names.
 
