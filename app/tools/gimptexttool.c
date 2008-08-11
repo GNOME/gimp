@@ -1301,8 +1301,8 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
         }
 
       g_object_set (text_tool->proxy,
-                    "box-mode", GIMP_TEXT_BOX_FIXED,
-                    "box-width", (gdouble) (x2 - x1),
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
 
