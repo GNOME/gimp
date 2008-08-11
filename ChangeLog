@@ -1,3 +1,9 @@
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* modules/Makefile.am
+	* modules/*.c: renamed all modules to color-selector-foo.c,
+	display-filter-foo.c and controller-foo.c
+
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: mention lcms in the list of recommended libraries.
