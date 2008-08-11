@@ -38,7 +38,7 @@ by running:
 Basically this does the following for you:
 
     gimp/trunk$ aclocal-1.9; libtoolize; automake-1.9 -a;
-    gimp/trunk$ autoconf; glib-gettextize; intltoolize
+    gimp/trunk$ autoconf; intltoolize --automake
 
 The above commands create the "configure" script.  Now you can run the
 configure script in gimp/trunk to create all the Makefiles.

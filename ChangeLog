@@ -1,5 +1,19 @@
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
+	Please re-run autogen.sh after this update, and let me know if
+	there are any problems.
+
+	* po-*/Makefile.in.in: updated to a version that does not require
+	mkinstalldirs to be present.
+
+	* autogen.sh: removed the call to glib-gettextize and call
+	intltoolize without the --force command-line option. This change
+	makes an end to the po/Makefile.in.in being overwritten.
+
+	* HACKING: changed the documentation accordingly.
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugin-defs.pl: removed the LIBFOO hack from
 	this script.
 	
