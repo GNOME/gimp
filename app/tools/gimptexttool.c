@@ -622,8 +622,8 @@ gimp_text_tool_text_notify (GimpText     *text,
 
   /* we need to redraw the rectangle if it is visible and the shape of
      the layer has changed, because of an undo for example. */
-  if (strcmp (pspec->name, "box-width" == 0)  ||
-      strcmp (pspec->name, "box-height" == 0) ||
+  if (strcmp (pspec->name, "box-width") == 0  ||
+      strcmp (pspec->name, "box-height") == 0 ||
       text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
     {
       GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
