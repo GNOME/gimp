@@ -1,6 +1,6 @@
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
-	* INSTALL: mention lcms in the list or recommended libraries.
+	* INSTALL: mention lcms in the list of recommended libraries.
 
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
