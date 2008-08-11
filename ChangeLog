@@ -1,3 +1,7 @@
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c: minor coding style cleanups.
+
 2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-callbacks.c

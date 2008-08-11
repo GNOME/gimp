@@ -430,6 +430,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
         g_object_set (text_tool->proxy,
                       "box-mode", GIMP_TEXT_BOX_DYNAMIC,
                       NULL);
+
       text_tool->handle_rectangle_change_complete = FALSE;
     }
   else
@@ -621,9 +622,9 @@ gimp_text_tool_text_notify (GimpText     *text,
 
   /* we need to redraw the rectangle if it is visible and the shape of
      the layer has changed, because of an undo for example. */
-  if ((0 == strcmp (pspec->name, "box-width"))
-      || (0 == strcmp (pspec->name, "box-height"))
-      || (text->box_mode == GIMP_TEXT_BOX_DYNAMIC))
+  if (strcmp (pspec->name, "box-width" == 0)  ||
+      strcmp (pspec->name, "box-height" == 0) ||
+      text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
     {
       GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
 
@@ -893,8 +894,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   if (text_tool->text_box_fixed)
     {
-      GimpRectangleTool *rect_tool       = GIMP_RECTANGLE_TOOL (text_tool);
-      GimpItem          *item            = GIMP_ITEM (layer);
+      GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
+      GimpItem          *item      = GIMP_ITEM (layer);
       gint               x1, y1, x2, y2;
 
       g_object_get (rect_tool,
@@ -904,8 +905,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                     "y2", &y2,
                     NULL);
       g_object_set (text_tool->proxy,
-                    "box-mode", GIMP_TEXT_BOX_FIXED,
-                    "box-width", (gdouble) (x2 - x1),
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
       gimp_item_translate (item,
