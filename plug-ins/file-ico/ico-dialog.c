@@ -51,7 +51,7 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget *scrolledwindow;
   GtkWidget *warning;
 
-  dialog = gimp_dialog_new (_("Save as Windows Icon"), "ico",
+  dialog = gimp_dialog_new (_("Save as Windows Icon"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, "plug-in-winicon",
 

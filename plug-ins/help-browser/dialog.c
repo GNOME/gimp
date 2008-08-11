@@ -162,7 +162,7 @@ static GdkCursor    *busy_cursor    = NULL;
 /*  public functions  */
 
 void
-browser_dialog_open (void)
+browser_dialog_open (const gchar *plug_in_binary)
 {
   GtkWidget   *window;
   GtkWidget   *main_vbox;
@@ -175,14 +175,14 @@ browser_dialog_open (void)
   GtkAction   *action;
   DialogData   data = { 720, 560, 240, TRUE, 1.0 };
 
-  gimp_ui_init ("helpbrowser", TRUE);
+  gimp_ui_init (plug_in_binary, TRUE);
 
   gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
-  gtk_window_set_role (GTK_WINDOW (window), "help-browser");
+  gtk_window_set_role (GTK_WINDOW (window), plug_in_binary);
 
   gtk_window_set_default_size (GTK_WINDOW (window), data.width, data.height);
 

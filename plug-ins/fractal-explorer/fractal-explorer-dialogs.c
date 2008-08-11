@@ -528,7 +528,7 @@ explorer_dialog (void)
   GSList    *group = NULL;
   gint       i;
 
-  gimp_ui_init ("fractal-explorer", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   path = gimp_gimprc_query ("fractalexplorer-path");
 
@@ -560,9 +560,9 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new ("Fractal Explorer", "fractal-explorer",
+    gimp_dialog_new ("Fractal Explorer", PLUG_IN_BINARY,
                      NULL, 0,
-                     gimp_standard_help_func, HELP_ID,
+                     gimp_standard_help_func, PLUG_IN_PROC,
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,

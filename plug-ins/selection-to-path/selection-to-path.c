@@ -46,6 +46,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_BINARY "selection-to-path"
+
 #define RESPONSE_RESET 1
 #define MID_POINT      127
 
@@ -295,9 +297,10 @@ sel2path_dialog (SELVALS *sels)
 
   retVal = FALSE;
 
-  gimp_ui_init ("sel2path", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Selection to Path Advanced Settings"), "sel2path",
+  dlg = gimp_dialog_new (_("Selection to Path Advanced Settings"),
+                         PLUG_IN_BINARY,
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-sel2path-advanced",
 

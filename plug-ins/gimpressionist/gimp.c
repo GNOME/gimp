@@ -86,7 +86,7 @@ query (void)
     { GIMP_PDB_STRING,   "preset",    "Preset Name"    },
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (PLUG_IN_PROC,
                           N_("Performs various artistic operations"),
                           "Performs various artistic operations on an image",
                           "Vidar Madsen <vidar@prosalg.no>",
@@ -98,14 +98,14 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 }
 
 static void
 gimpressionist_get_data (void)
 {
   restore_default_values ();
-  gimp_get_data (PLUG_IN_NAME, &pcvals);
+  gimp_get_data (PLUG_IN_PROC, &pcvals);
 }
 
 static void
@@ -204,7 +204,7 @@ run (const gchar      *name,
           gimp_displays_flush ();
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_NAME,
+            gimp_set_data (PLUG_IN_PROC,
                            &pcvals,
                            sizeof (gimpressionist_vals_t));
         }

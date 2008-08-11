@@ -61,8 +61,6 @@
 #define ZOOMED(x) (_zoom_factor * (x))
 #define GET_REAL_COORD(x) ((x) / _zoom_factor)
 
-#define PLUG_IN_PROC "plug-in-imagemap"
-
 static gint             zoom_in         (void);
 static gint             zoom_out        (void);
 
@@ -1260,7 +1258,7 @@ dialog(GimpDrawable *drawable)
    GtkWidget    *tools;
    Menu_t       *menu;
 
-   gimp_ui_init ("imagemap", TRUE);
+   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
    set_arrow_func ();
 
@@ -1270,18 +1268,18 @@ dialog(GimpDrawable *drawable)
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
 
    main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func, "plug-in-imagemap", NULL);
+   gimp_help_connect (dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
-   gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
+   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
    gimp_window_set_transient (GTK_WINDOW (dlg));
 
-   g_signal_connect(dlg, "delete-event",
-                    G_CALLBACK(close_callback), NULL);
-   g_signal_connect(dlg, "key-press-event",
-                    G_CALLBACK(key_press_cb), NULL);
-   g_signal_connect(dlg, "key_release_event",
-                    G_CALLBACK(key_release_cb), NULL);
+   g_signal_connect (dlg, "delete-event",
+                     G_CALLBACK (close_callback), NULL);
+   g_signal_connect (dlg, "key-press-event",
+                     G_CALLBACK (key_press_cb), NULL);
+   g_signal_connect (dlg, "key_release_event",
+                     G_CALLBACK (key_release_cb), NULL);
 
    g_signal_connect (dlg, "destroy",
                      G_CALLBACK (gtk_main_quit),

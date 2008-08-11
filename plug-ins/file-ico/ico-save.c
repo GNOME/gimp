@@ -233,7 +233,7 @@ ico_save_dialog (gint32          image_ID,
   gint       i;
   gint       response;
 
-  gimp_ui_init ("file-ico", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   dialog = ico_dialog_new (info);
   for (i = 0; i < info->num_icons; i++)

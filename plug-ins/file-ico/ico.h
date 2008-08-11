@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __ICO_H__
+#define __ICO_H__
 
 
 #ifdef ICO_DBG
@@ -32,6 +32,8 @@
 #else
 #define D(x)
 #endif
+
+#define PLUG_IN_BINARY      "file-ico"
 
 #define ICO_PNG_MAGIC       0x474e5089
 #define ICO_ALPHA_THRESHOLD 127
@@ -105,4 +107,4 @@ guint8 * ico_alloc_map  (gint     width,
                          gint     bpp,
                          gint    *len);
 
-#endif /* __MAIN_H__ */
+#endif /* __ICO_H__ */

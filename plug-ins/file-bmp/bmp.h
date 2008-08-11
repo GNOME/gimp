@@ -17,8 +17,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define LOAD_PROC "file-bmp-load"
-#define SAVE_PROC "file-bmp-save"
+#ifndef __BMP_H__
+#define __BMP_H__
+
+#define LOAD_PROC      "file-bmp-load"
+#define SAVE_PROC      "file-bmp-save"
+#define PLUG_IN_BINARY "file-bmp"
 
 #define MAXCOLORS   256
 
@@ -68,3 +72,5 @@ typedef struct _Bitmap_Channel
   guint32 shiftin;
   gfloat  max_value;
 } Bitmap_Channel;
+
+#endif /* __BMP_H__ */

@@ -788,7 +788,7 @@ save_dialog (gint channels)
   GSList    *group;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as BMP"), "bmp",
+  dialog = gimp_dialog_new (_("Save as BMP"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, SAVE_PROC,
 

@@ -12,9 +12,9 @@ winsnap_LDFLAGS = -mwindows
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = winsnap
+libexec_PROGRAMS = win-snap
 
-winsnap_SOURCES = \
+win_snap_SOURCES = \
 	winsnap.c	\
 	winsnap.h
 

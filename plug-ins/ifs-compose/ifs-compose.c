@@ -53,8 +53,9 @@
 
 #define UNDO_LEVELS             24
 
-#define IFSCOMPOSE_PARASITE "ifscompose-parasite"
-#define IFSCOMPOSE_PROC     "plug-in-ifscompose"
+#define PLUG_IN_PARASITE "ifscompose-parasite"
+#define PLUG_IN_PROC     "plug-in-ifscompose"
+#define PLUG_IN_BINARY   "ifs-compose"
 
 typedef enum
 {
@@ -329,7 +330,7 @@ query (void)
   static const GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  gimp_install_procedure (IFSCOMPOSE_PROC,
+  gimp_install_procedure (PLUG_IN_PROC,
                           N_("Create an Iterated Function System (IFS) fractal"),
                           "Interactively create an Iterated Function System "
                           "fractal. Use the window on the upper left to adjust "
@@ -348,7 +349,7 @@ query (void)
                           G_N_ELEMENTS (args), nreturn_vals,
                           args, return_vals);
 
-  gimp_plugin_menu_register (IFSCOMPOSE_PROC,
+  gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Filters/Render/Nature");
 }
 
@@ -387,7 +388,7 @@ run (const gchar      *name,
        *  if not found, fall back to global values
        */
       parasite = gimp_drawable_parasite_find (drawable->drawable_id,
-                                              IFSCOMPOSE_PARASITE);
+                                              PLUG_IN_PARASITE);
       if (parasite)
         {
           found_parasite = ifsvals_parse_string (gimp_parasite_data (parasite),
@@ -397,13 +398,13 @@ run (const gchar      *name,
 
       if (!found_parasite)
         {
-          gint length = gimp_get_data_size (IFSCOMPOSE_PROC);
+          gint length = gimp_get_data_size (PLUG_IN_PROC);
 
           if (length > 0)
             {
               gchar *data = g_new (gchar, length);
 
-              gimp_get_data (IFSCOMPOSE_PROC, data);
+              gimp_get_data (PLUG_IN_PROC, data);
               ifsvals_parse_string (data, &ifsvals, &elements);
               g_free (data);
             }
@@ -423,13 +424,13 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       {
-        gint length = gimp_get_data_size (IFSCOMPOSE_PROC);
+        gint length = gimp_get_data_size (PLUG_IN_PROC);
 
         if (length > 0)
           {
             gchar *data = g_new (gchar, length);
 
-            gimp_get_data (IFSCOMPOSE_PROC, data);
+            gimp_get_data (PLUG_IN_PROC, data);
             ifsvals_parse_string (data, &ifsvals, &elements);
             g_free (data);
           }
@@ -468,9 +469,9 @@ run (const gchar      *name,
            */
           str = ifsvals_stringify (&ifsvals, elements);
 
-          gimp_set_data (IFSCOMPOSE_PROC, str, strlen (str) + 1);
+          gimp_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
 
-          parasite = gimp_parasite_new (IFSCOMPOSE_PARASITE,
+          parasite = gimp_parasite_new (PLUG_IN_PARASITE,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         strlen (str) + 1, str);
@@ -764,11 +765,11 @@ ifs_compose_dialog (GimpDrawable *drawable)
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
-  gimp_ui_init ("ifscompose", TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("IFS Fractal"), "ifscompose",
+  dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, IFSCOMPOSE_PROC,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_OPEN,   RESPONSE_OPEN,
                             GTK_STOCK_SAVE,   RESPONSE_SAVE,
@@ -1173,8 +1174,9 @@ ifs_options_dialog (GtkWidget *parent)
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
-        gimp_dialog_new (_("IFS Fractal Render Options"), "ifscompose",
-                         parent, 0, NULL, NULL,
+        gimp_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_BINARY,
+                         parent, 0,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

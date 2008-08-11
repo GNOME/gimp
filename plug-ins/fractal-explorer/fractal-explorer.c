@@ -71,8 +71,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC  "plug-in-fractalexplorer"
-
 /**********************************************************************
   Global variables
  *********************************************************************/
@@ -1113,10 +1111,10 @@ fractalexplorer_rescan_list (GtkWidget *widget,
       return;
     }
 
-  dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
+  dlg = gimp_dialog_new (_("Rescan for Fractals"), PLUG_IN_BINARY,
                          gtk_widget_get_toplevel (view),
                          GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                         gimp_standard_help_func, NULL,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

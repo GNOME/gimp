@@ -1,5 +1,43 @@
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/cml-explorer.c
+	* plug-ins/common/depth-merge.c
+	* plug-ins/common/file-cel.c
+	* plug-ins/common/oilify.c
+	* plug-ins/file-bmp/bmp-write.c
+	* plug-ins/file-bmp/bmp.[ch]
+	* plug-ins/file-ico/ico-dialog.c
+	* plug-ins/file-ico/ico-save.c
+	* plug-ins/file-ico/ico.h
+	* plug-ins/flame/flame.c
+	* plug-ins/fractal-explorer/fractal-explorer-dialogs.c
+	* plug-ins/fractal-explorer/fractal-explorer.[ch]
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/help-browser/dialog.[ch]
+	* plug-ins/help-browser/help-browser.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_main.[ch]
+	* plug-ins/lighting/lighting-main.[ch]
+	* plug-ins/lighting/lighting-ui.c
+	* plug-ins/map-object/map-object-main.[ch]
+	* plug-ins/map-object/map-object-ui.c
+	* plug-ins/selection-to-path/selection-to-path.c
+	* plug-ins/win-snap/winsnap.c: use PLUG_IN_BINARY and PLUG_IN_PROC
+	defines consistently instead of using literal strings or other
+	random defines. Define them if not already there or move them to
+	plugin-global places.
+
+	* plug-ins/win-snap/Makefile.am: rename the binary to "win-snap".
+
+	* plug-ins/win-snap/winsnap.c: changed accordingly.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* modules/Makefile.am
 	* modules/*.c: renamed all modules to color-selector-foo.c,
 	display-filter-foo.c and controller-foo.c

@@ -1330,11 +1330,11 @@ main_dialog (GimpDrawable *drawable)
   GimpZoomModel *model;
   gboolean       run = FALSE;
 
-  gimp_ui_init ("map-object", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  appwin = gimp_dialog_new (_("Map to Object"), "map-object",
+  appwin = gimp_dialog_new (_("Map to Object"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-map-object",
+			    gimp_standard_help_func, PLUG_IN_PROC,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
