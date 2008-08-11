@@ -1,3 +1,8 @@
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fixed some changed filenames that Mitch forgot to
+	change.
+
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: follow file plug-in renamings.

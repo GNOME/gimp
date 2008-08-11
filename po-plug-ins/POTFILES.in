@@ -65,6 +65,7 @@ plug-ins/common/file-gif-save.c
 plug-ins/common/file-gih.c
 plug-ins/common/file-glob.c
 plug-ins/common/file-header.c
+plug-ins/common/file-html-table.c
 plug-ins/common/file-mng.c
 plug-ins/common/file-pat.c
 plug-ins/common/file-pcx.c
@@ -75,8 +76,11 @@ plug-ins/common/file-pnm.c
 plug-ins/common/file-ps.c
 plug-ins/common/file-psp.c
 plug-ins/common/file-raw.c
+plug-ins/common/file-sunras.c
 plug-ins/common/file-svg.c
 plug-ins/common/file-tga.c
+plug-ins/common/file-tiff-load.c
+plug-ins/common/file-tiff-save.c
 plug-ins/common/file-wmf.c
 plug-ins/common/file-xbm.c
 plug-ins/common/file-xpm.c
@@ -90,7 +94,6 @@ plug-ins/common/gradient-map.c
 plug-ins/common/grid.c
 plug-ins/common/guillotine.c
 plug-ins/common/hot.c
-plug-ins/common/html-table.c
 plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
@@ -130,10 +133,7 @@ plug-ins/common/smooth-palette.c
 plug-ins/common/softglow.c
 plug-ins/common/sparkle.c
 plug-ins/common/sphere-designer.c
-plug-ins/common/sunras.c
 plug-ins/common/threshold-alpha.c
-plug-ins/common/tiff-load.c
-plug-ins/common/tiff-save.c
 plug-ins/common/tile-glass.c
 plug-ins/common/tile-paper.c
 plug-ins/common/tile-seamless.c
