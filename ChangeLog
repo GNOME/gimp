@@ -1,3 +1,7 @@
+2008-08-11  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimptag.c: fixed case insensitive tag handling.
+
 2008-08-10  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagpopup.c (gimp_tag_popup_border_event): disable

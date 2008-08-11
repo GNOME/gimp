@@ -112,21 +112,21 @@ gimp_tag_try_new (const char *tag_string)
       return NULL;
     }
 
-  tag_quark = g_quark_try_string (tag_name);
-  if (! tag_quark)
-    {
-      g_free (tag_name);
-      return NULL;
-    }
-
   case_folded = g_utf8_casefold (tag_name, -1);
   collate_key = g_utf8_collate_key (case_folded, -1);
   collate_key_quark = g_quark_try_string (collate_key);
   g_free (collate_key);
   g_free (case_folded);
-  g_free (tag_name);
 
   if (! collate_key_quark)
+    {
+      g_free (tag_name);
+      return NULL;
+    }
+
+  tag_quark = g_quark_from_string (tag_name);
+  g_free (tag_name);
+  if (! tag_quark)
     {
       return NULL;
     }
@@ -184,7 +184,7 @@ gimp_tag_equals (GimpTag             *tag,
   g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
   g_return_val_if_fail (GIMP_IS_TAG (other), FALSE);
 
-  return tag->tag == other->tag;
+  return tag->collate_key == other->collate_key;
 }
 
 /**
