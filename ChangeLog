@@ -1,3 +1,7 @@
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention lcms in the list or recommended libraries.
+
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: check for lcms with PKG_CHECK_MODULES(). Remove
