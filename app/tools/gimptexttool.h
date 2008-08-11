@@ -57,6 +57,12 @@ struct _GimpTextTool
   GtkWidget     *ui_manager;
   GtkIMContext  *im_context;
 
+  gboolean       needs_im_reset;
+
+  gchar         *preedit_string;
+  gint           preedit_len;
+  gint           preedit_cursor;
+
   gboolean       handle_rectangle_change_complete;
   gboolean       text_box_fixed;
   gboolean       text_cursor_changing;
