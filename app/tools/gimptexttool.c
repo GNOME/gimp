@@ -1289,6 +1289,7 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
                     NULL);
 
       text_tool->text_box_fixed = TRUE;
+
       if (! text)
         {
           /*
@@ -1339,7 +1340,7 @@ void
 gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
                                 GimpItem          *item)
 {
-  GimpDisplay *display    = GIMP_TOOL (rect_tool)->display;
+  GimpDisplay *display  = GIMP_TOOL (rect_tool)->display;
   gint         offset_x;
   gint         offset_y;
   gint         width;
@@ -1348,10 +1349,11 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (display != NULL);
-  g_return_if_fail ( (display->image == item->image) );
+  g_return_if_fail (display->image == item->image);
 
-  width     = gimp_item_width (item);
-  height    = gimp_item_height (item);
+  width  = gimp_item_width (item);
+  height = gimp_item_height (item);
+
   gimp_item_offsets (item, &offset_x, &offset_y);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
