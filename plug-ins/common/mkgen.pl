@@ -140,7 +140,7 @@ foreach (sort keys %plugins) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
 	} else {
 		my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-		$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
+		$optlib = "\n\t\$(\U$name\E_LIBS)\t\t\\";
 	}
     }
 

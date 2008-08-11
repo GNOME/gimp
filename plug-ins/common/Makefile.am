@@ -961,7 +961,7 @@ file_aa_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBAA)		\
+	$(AA_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1145,7 +1145,7 @@ file_mng_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBMNG)		\
+	$(MNG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1196,7 +1196,7 @@ file_pdf_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBPOPPLER)		\
+	$(POPPLER_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1231,7 +1231,7 @@ file_png_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBPNG)		\
+	$(PNG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1280,7 +1280,7 @@ file_psp_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBZ)		\
+	$(Z_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1331,7 +1331,7 @@ file_svg_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBSVG)		\
+	$(SVG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1364,7 +1364,7 @@ file_tiff_load_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBTIFF)		\
+	$(TIFF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1381,7 +1381,7 @@ file_tiff_save_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBTIFF)		\
+	$(TIFF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1400,7 +1400,7 @@ file_wmf_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBWMF)		\
+	$(WMF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1433,7 +1433,7 @@ file_xpm_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBXPM)		\
+	$(XPM_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1652,7 +1652,7 @@ lcms_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBLCMS)		\
+	$(LCMS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1717,7 +1717,7 @@ mail_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBMAIL)		\
+	$(MAIL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -2085,7 +2085,7 @@ screenshot_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(LIBSCREENSHOT)		\
+	$(SCREENSHOT_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

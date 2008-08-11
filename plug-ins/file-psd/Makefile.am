@@ -54,7 +54,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
-	$(LIBJPEG)		\
+	$(JPEG_LIBS)		\
 	$(GTK_LIBS)		\
 	$(EXIF_LIBS)		\
 	$(IPTCDATA_LIBS)	\

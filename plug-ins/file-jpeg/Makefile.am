@@ -49,8 +49,8 @@ file_jpeg_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
-	$(LIBJPEG)		\
-	$(LIBLCMS)		\
+	$(JPEG_LIBS)		\
+	$(LCMS_LIBS)		\
 	$(GTK_LIBS)		\
 	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\
@@ -65,7 +65,7 @@ jpegqual_SOURCES = \
 	jpegqual.c	
 
 jpegqual_LDADD = \
-	$(LIBJPEG)		\
+	$(JPEG_LIBS)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

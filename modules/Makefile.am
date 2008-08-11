@@ -60,7 +60,7 @@ controller_libadd = $(modules_libadd)
 
 if HAVE_LCMS
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk_lcms.c
-libcolorsel_cmyk_la_LIBADD = $(libgimpconfig) $(colorsel_libadd) $(LIBLCMS)
+libcolorsel_cmyk_la_LIBADD = $(libgimpconfig) $(colorsel_libadd) $(LCMS_LIBS)
 else
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
 libcolorsel_cmyk_la_LIBADD = $(colorsel_libadd)
@@ -90,7 +90,7 @@ libcdisplay_highcontrast_la_LIBADD = $(cdisplay_libadd)
 
 libcdisplay_lcms_la_SOURCES = cdisplay_lcms.c
 libcdisplay_lcms_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcdisplay_lcms_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
+libcdisplay_lcms_la_LIBADD = $(cdisplay_libadd) $(LCMS_LIBS)
 
 if PLATFORM_WIN32
 libcdisplay_lcms_la_LIBADD += -lgdi32
@@ -98,7 +98,7 @@ endif
 
 libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
+libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LCMS_LIBS)
 
 libcontroller_linux_input_la_SOURCES = \
 	gimpinputdevicestore-hal.c	\
