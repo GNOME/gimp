@@ -32,11 +32,7 @@
 #endif /* HAVE_EXIF */
 
 #ifdef HAVE_LCMS
-#ifdef HAVE_LCMS_LCMS_H
-#include <lcms/lcms.h>
-#else
 #include <lcms.h>
-#endif
 #endif
 
 #include <libgimp/gimp.h>

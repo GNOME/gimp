@@ -62,6 +62,7 @@ m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
 m4_define([exif_required_version], [0.6.15])
+m4_define([lcms_required_version], [1.16])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1426,30 +1427,16 @@ AC_SUBST(WMF_CFLAGS)
 
 AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
 
-have_lcms=no
+have_lcms="no (lcms support disabled)"
 if test "x$with_lcms" != xno; then
-  AC_CHECK_LIB(lcms, cmsCreate_sRGBProfile, [
-    AC_CHECK_HEADER(lcms.h,
-      have_lcms=yes, [
-      AC_CHECK_HEADER(lcms/lcms.h,
-        have_lcms=yes
-        AC_DEFINE(HAVE_LCMS_LCMS_H, 1,
-          [Define to 1 if the lcms header must be included as lcms/lcms.h]))
-      ])
-  ])
-  if test "x$have_lcms" = xyes; then
+  have_lcms=yes
+  PKG_CHECK_MODULES(LCMS, lcms >= lcms_required_version,
     AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
-    LCMS_LIBS="-llcms"
-    LCMS='lcms$(EXEEXT)'
-  else
-    have_lcms="no (lcms not found or unusable)"
-  fi
-else
-  have_lcms="no (lcms support disabled)"
+    LCMS='lcms$(EXEEXT)',
+    have_lcms="no (lcms not found or unusable)")
 fi
 
 AC_SUBST(LCMS)
-AC_SUBST(LCMS_LIBS)
 AM_CONDITIONAL(HAVE_LCMS, test "x$have_lcms" = xyes)
 
 

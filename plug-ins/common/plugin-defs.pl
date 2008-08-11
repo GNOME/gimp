@@ -90,7 +90,7 @@
     'illusion' => { ui => 1 },
     'iwarp' => { ui => 1 },
     'jigsaw' => { ui => 1 },
-    'lcms' => { ui => 1, optional => 1, libs => 'LCMS_LIBS' },
+    'lcms' => { ui => 1, optional => 1, libs => 'LCMS_LIBS', cflags => 'LCMS_CFLAGS' },
     'lens-apply' => { ui => 1 },
     'lens-distortion' => { ui => 1 },
     'lens-flare' => { ui => 1 },

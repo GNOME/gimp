@@ -1,3 +1,21 @@
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: check for lcms with PKG_CHECK_MODULES(). Remove
+	check for <lcms.h> vs. <lsmc/lsmc.h> because the pc file should
+	give us the right location now.
+
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/colorsel_cmyk_lcms.c
+	* plug-ins/file-jpeg/jpeg-load.c
+	* plug-ins/common/lcms.c: #include <lcms.h> and nothing else.
+
+	* modules/Makefile.am
+	* plug-ins/file-jpeg/Makefile.am
+	* plug-ins/common/plugin-defs.pl: add LCMS_CFLAGS where appropriate.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
 	Please re-run autogen.sh after this update, and let me know if
@@ -25,7 +43,7 @@
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: change all LIBFOO variables to FOO_LIBS for
-	consistency, could get rid of some variables alltogether since
+	consistency, got rid of some variables alltogether since
 	PNG_CHECK_MODULES() already defined FOO_LIBS.
 
 	* tools/Makefile.am

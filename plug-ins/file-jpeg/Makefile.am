@@ -20,6 +20,7 @@ INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(EXIF_CFLAGS)	\
+	$(LCMS_CFLAGS)	\
 	-I$(includedir)
 
 libexec_PROGRAMS = file-jpeg

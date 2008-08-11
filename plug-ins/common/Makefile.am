@@ -1639,6 +1639,8 @@ jigsaw_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+lcms_CFLAGS = $(LCMS_CFLAGS)
+
 lcms_SOURCES = \
 	lcms.c
 
