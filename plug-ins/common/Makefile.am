@@ -1717,7 +1717,6 @@ mail_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(MAIL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

@@ -138,9 +138,6 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{optional}) {
 	if (exists $plugins{$_}->{libs}) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
-	} else {
-		my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-		$optlib = "\n\t\$(\U$name\E_LIBS)\t\t\\";
 	}
     }
 

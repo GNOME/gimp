@@ -1,3 +1,13 @@
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl: removed the LIBFOO hack from
+	this script.
+	
+	* plug-ins/common/mkgen.pl: explicitely specify the libs in the
+	two places where it wasn't done yet.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: change all LIBFOO variables to FOO_LIBS for
