@@ -998,15 +998,15 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
     have_libtiff=yes
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
-	TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff',
+	FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; LIBTIFF='-ltiff',
 	[have_libtiff="no (TIFF header files not found)"])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
-          TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
+          FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
 	  [have_libtiff="no (TIFF header files not found)"])],
 	[AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
+            FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
 	    [have_libtiff="no (TIFF header files not found)"])],
         [have_libtiff="no (TIFF library not found)"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi
@@ -1021,8 +1021,8 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
     MIME_TYPES="$MIME_TYPES;image/tiff"
   fi
 
-AC_SUBST(TIFF_LOAD)
-AC_SUBST(TIFF_SAVE)
+AC_SUBST(FILE_TIFF_LOAD)
+AC_SUBST(FILE_TIFF_SAVE)
 AC_SUBST(LIBTIFF)
 
 
@@ -1094,7 +1094,7 @@ have_zlib=yes
 if test -z "$LIBZ"; then
   AC_CHECK_LIB(z, gzsetparams,
     [AC_CHECK_HEADER(zlib.h,
-      PSP='psp$(EXEEXT)'; LIBZ='-lz',
+      FILE_PSP='file-psp$(EXEEXT)'; LIBZ='-lz',
       [have_zlib="no (ZLIB header files not found)"])],
     [have_zlib="no (ZLIB library not found)"])
 fi
@@ -1103,8 +1103,8 @@ if test "x$have_zlib" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-psd"
 fi
 
+AC_SUBST(FILE_PSP)
 AC_SUBST(LIBZ)
-AC_SUBST(PSP)
 
 
 ##################
@@ -1116,7 +1116,7 @@ AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
 if test "x$with_libpng" != xno; then
   have_libpng=yes
   PKG_CHECK_MODULES(PNG, libpng,
-    PNG='png$(EXEEXT)'
+    FILE_PNG='file-png$(EXEEXT)'
     LIBPNG="$PNG_LIBS",
     [have_libpng="no (libpng not found)"
      AC_MSG_ERROR([
@@ -1128,7 +1128,7 @@ if test "x$have_libpng" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
 fi
 
-AC_SUBST(PNG)
+AC_SUBST(FILE_PNG)
 AC_SUBST(LIBPNG)
 
 AM_CONDITIONAL(HAVE_PNG, test "x$have_libpng" = xyes)
@@ -1147,13 +1147,13 @@ AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
       [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
       [have_libmng="no (MNG library not found)"], -lz -lm)
     if test "$mng_ok" = yes; then
-      MNG='mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
+      FILE_MNG='file-mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
     else
       have_libmng="no (MNG header file not found)"
     fi
   fi
 
-AC_SUBST(MNG)
+AC_SUBST(FILE_MNG)
 AC_SUBST(LIBMNG)
 
 
@@ -1187,12 +1187,12 @@ if test "x$with_aa" != xno && test -z "$LIBAA"; then
   have_libaa=yes
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
-      AA='aa$(EXEEXT)'; LIBAA='-laa',
+      FILE_AA='file-aa$(EXEEXT)'; LIBAA='-laa',
       [have_libaa="no (AA header file not found)"])],
     [have_libaa="no (AA library not found)"])
 fi
 
-AC_SUBST(AA)
+AC_SUBST(FILE_AA)
 AC_SUBST(LIBAA)
 
 
@@ -1211,7 +1211,7 @@ have_libxpm=yes
 if test -z "$LIBXPM"; then
   AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
     [AC_CHECK_HEADER(X11/xpm.h,
-      XPM='xpm$(EXEEXT)'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
+      FILE_XPM='file-xpm$(EXEEXT)'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
       [have_libxpm="no (XPM header file not found)"])],
     [have_libxpm="no (XPM library not found)"], $X_PRE_LIBS $lib_X11)
 fi
@@ -1222,7 +1222,7 @@ if test "x$have_libxpm" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-xpixmap"
 fi
 
-AC_SUBST(XPM)
+AC_SUBST(FILE_XPM)
 AC_SUBST(LIBXPM)
 
 
@@ -1263,7 +1263,7 @@ have_librsvg=no
 if test "x$with_librsvg" != xno; then
   have_librsvg=yes
   PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-    SVG='svg$(EXEEXT)'
+    FILE_SVG='file-svg$(EXEEXT)'
     LIBSVG=$SVG_LIBS,
     have_librsvg="no (librsvg not found)")
 else
@@ -1274,7 +1274,7 @@ if test "x$have_librsvg" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/svg+xml"
 fi
 
-AC_SUBST(SVG)
+AC_SUBST(FILE_SVG)
 AC_SUBST(LIBSVG)
 
 
@@ -1301,7 +1301,7 @@ AC_ARG_WITH(poppler,[  --without-poppler       build without poppler support])
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version gthread-2.0,
-    POPPLER='poppler$(EXEEXT)'
+    FILE_PDF='file-pdf$(EXEEXT)'
     LIBPOPPLER=$POPPLER_LIBS
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
@@ -1310,7 +1310,7 @@ else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi
 
-AC_SUBST(POPPLER)
+AC_SUBST(FILE_PDF)
 AC_SUBST(LIBPOPPLER)
 
 
@@ -1407,7 +1407,7 @@ if test "x$WMF_CONFIG" != "xno" ; then
   wmf_version=`$WMF_CONFIG --version`
   if expr $wmf_version \>= wmf_required_version >/dev/null; then
     AC_MSG_RESULT([yes (version $wmf_version)])
-    WMF='wmf$(EXEEXT)'
+    FILE_WMF='file-wmf$(EXEEXT)'
     LIBWMF=`$WMF_CONFIG --libs`
     WMF_CFLAGS=`$WMF_CONFIG --cflags`
   else
@@ -1421,9 +1421,9 @@ if test "x$have_libwmf" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-wmf"
 fi
 
-AC_SUBST(LIBWMF)
+AC_SUBST(FILE_WMF)
 AC_SUBST(WMF_CFLAGS)
-AC_SUBST(WMF)
+AC_SUBST(LIBWMF)
 
 
 ################
@@ -1984,32 +1984,35 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
-plug-ins/bmp/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
-plug-ins/common/Makefile
-plug-ins/faxg3/Makefile
-plug-ins/fits/Makefile
+plug-ins/file-bmp/Makefile
+plug-ins/file-faxg3/Makefile
+plug-ins/file-fits/Makefile
+plug-ins/file-fli/Makefile
+plug-ins/file-ico/Makefile
+plug-ins/file-jpeg/Makefile
+plug-ins/file-psd/Makefile
+plug-ins/file-sgi/Makefile
+plug-ins/file-uri/Makefile
+plug-ins/file-xjt/Makefile
 plug-ins/flame/Makefile
-plug-ins/fli/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile
-plug-ins/gradient-flare/Makefile
-plug-ins/gradient-flare/flares/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
+plug-ins/gradient-flare/Makefile
+plug-ins/gradient-flare/flares/Makefile
 plug-ins/help-browser/Makefile
 plug-ins/help/Makefile
-plug-ins/ico/Makefile
 plug-ins/ifs-compose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/imagemap/images/Makefile
-plug-ins/jpeg/Makefile
 plug-ins/lighting/Makefile
 plug-ins/lighting/images/Makefile
 plug-ins/map-object/Makefile
@@ -2017,7 +2020,6 @@ plug-ins/maze/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
-plug-ins/psd/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/script-fu/Makefile
@@ -2027,11 +2029,9 @@ plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
-plug-ins/sgi/Makefile
 plug-ins/twain/Makefile
-plug-ins/uri/Makefile
 plug-ins/win-snap/Makefile
-plug-ins/xjt/Makefile
+plug-ins/common/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/app/Makefile

@@ -1,3 +1,45 @@
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/bmp/*
+	* plug-ins/faxg3/*
+	* plug-ins/fits/*
+	* plug-ins/fli/*
+	* plug-ins/ico/*
+	* plug-ins/jpeg/*
+	* plug-ins/psd/*
+	* plug-ins/sgi/*
+	* plug-ins/uri/*
+	* plug-ins/xjt/*: removed these...
+
+	* plug-ins/file-bmp/*
+	* plug-ins/file-faxg3/*
+	* plug-ins/file-fits/*
+	* plug-ins/file-fli/*
+	* plug-ins/file-ico/*
+	* plug-ins/file-jpeg/*
+	* plug-ins/file-psd/*
+	* plug-ins/file-sgi/*
+	* plug-ins/file-uri/*
+	* plug-ins/file-xjt/*: and moved them here. Changed executable
+	names to "file-foo".
+
+	* plug-ins/Makefile.am: changed accordingly.
+
+	* plug-ins/common/*: rename all file plug-ins to file-foo.c. Get
+	rid of the names "poppler" and "postscript" and call them
+	"file-pdf" and "file-ps" because the conflict with standard
+	autofoo targets is gone.
+
+	* plug-ins/common/plugin-defs.pl: changed accordingly.
+
+	* plug-ins/common/mkgen.pl: make sure cflags variables are named
+	"PLUG_IN_NAME_CFLAGS" and not "PLUG-IN-NAME_CFLAGS"
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* configure.in: change folders and variable names to match above
+	changes.
+
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: minor coding style cleanups.
@@ -151,7 +193,7 @@
 	* modules/colorsel_wheel.c: new module using the GtkHSV widget
 	which was originally developed from above triangle selector.
 
-	* modules/Makefile.am: chaged accordingly.
+	* modules/Makefile.am: changed accordingly.
 
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
