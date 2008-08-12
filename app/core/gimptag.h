@@ -62,7 +62,7 @@ gboolean        gimp_tag_equals                (GimpTag        *tag,
 gint            gimp_tag_compare_func          (const void     *p1,
                                                 const void     *p2);
 gint            gimp_tag_compare_with_string   (GimpTag        *tag,
-                                                const gchar    *string);
+                                                const gchar    *tag_string);
 
 gchar         * gimp_tag_string_make_valid     (const gchar    *tag_string);
 

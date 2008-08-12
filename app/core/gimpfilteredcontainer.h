@@ -58,10 +58,10 @@ GType           gimp_filtered_container_get_type      (void) G_GNUC_CONST;
 
 GimpContainer * gimp_filtered_container_new           (GimpContainer           *src_container);
 
-void            gimp_filtered_container_set_filter    (GimpFilteredContainer   *container,
+void            gimp_filtered_container_set_filter    (GimpFilteredContainer   *filtered_container,
                                                        GList                   *tags);
 
-const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer   *container);
+const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer   *filtered_container);
 
 gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer   *container);
 

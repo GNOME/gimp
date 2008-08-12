@@ -847,7 +847,7 @@ gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
 
 /**
  * gimp_tag_entry_set_selected_items:
- * @entry:      a #GimpTagEntry widget.
+ * @tag_entry:  a #GimpTagEntry widget.
  * @items:      a list of #GimpTagged objects.
  *
  * Set list of currently selected #GimpTagged objects. Only selected and
@@ -855,26 +855,26 @@ gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
  * operating in tag assignment mode.
  **/
 void
-gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
+gimp_tag_entry_set_selected_items (GimpTagEntry            *tag_entry,
                                    GList                   *items)
 {
   GList        *iterator;
 
-  g_return_if_fail (GIMP_IS_TAG_ENTRY (entry));
+  g_return_if_fail (GIMP_IS_TAG_ENTRY (tag_entry));
 
-  if (entry->selected_items)
+  if (tag_entry->selected_items)
     {
-      g_list_free (entry->selected_items);
-      entry->selected_items = NULL;
+      g_list_free (tag_entry->selected_items);
+      tag_entry->selected_items = NULL;
     }
 
-  entry->selected_items = g_list_copy (items);
+  tag_entry->selected_items = g_list_copy (items);
 
-  iterator = entry->selected_items;
+  iterator = tag_entry->selected_items;
   while (iterator)
     {
       if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
-          && gimp_container_have (GIMP_CONTAINER (entry->filtered_container),
+          && gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
                                   GIMP_OBJECT(iterator->data)))
         {
           break;
@@ -883,19 +883,19 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
       iterator = g_list_next (iterator);
     }
 
-  if (entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
       if (iterator)
         {
-          gimp_tag_entry_load_selection (entry, TRUE);
-          gimp_tag_entry_toggle_desc (entry, FALSE);
+          gimp_tag_entry_load_selection (tag_entry, TRUE);
+          gimp_tag_entry_toggle_desc (tag_entry, FALSE);
         }
       else
         {
-          entry->internal_operation++;
-          gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
-          entry->internal_operation--;
-          gimp_tag_entry_toggle_desc (entry, TRUE);
+          tag_entry->internal_operation++;
+          gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
+          tag_entry->internal_operation--;
+          gimp_tag_entry_toggle_desc (tag_entry, TRUE);
         }
     }
 }
@@ -1664,6 +1664,14 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
   return TRUE;
 }
 
+/**
+ * gimp_tag_entry_get_separator:
+ *
+ * Tag separator is a single Unicode terminal punctuation
+ * character.
+ *
+ * Return value: returns locale dependent tag separator.
+ **/
 const gchar *
 gimp_tag_entry_get_separator  (void)
 {

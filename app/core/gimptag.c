@@ -48,8 +48,7 @@ gimp_tag_init (GimpTag         *tag)
  * gimp_tag_new:
  * @tag_string: a tag name.
  *
- * Given tag name does not need to be valid. If it is not valid, an attempt
- * will be made to fix it.
+ * If given tag name is not valid, an attempt will be made to fix it.
  *
  * Return value: a new #GimpTag object, or NULL if tag string is invalid and
  * cannot be fixed.
@@ -140,6 +139,8 @@ gimp_tag_try_new (const char *tag_string)
 /**
  * gimp_tag_get_name:
  * @tag: a gimp tag.
+ *
+ * Retrieve name of the tag.
  *
  * Return value: name of tag.
  **/
@@ -388,25 +389,25 @@ g_unichar_is_terminal_punctuation (gunichar    c)
 
 /**
  * gimp_tag_string_make_valid:
- * @string: a text string.
+ * @tag_string: a text string.
  *
- * Tries to create a valid tag string from given @string.
+ * Tries to create a valid tag string from given @tag_string.
  *
- * Return value: a newly allocated tag string in case given @string was valid
- * or could be fixed, otherwise NULL. Allocated value should be freed using
- * g_free().
+ * Return value: a newly allocated tag string in case given @tag_string was
+ * valid or could be fixed, otherwise NULL. Allocated value should be freed
+ * using g_free().
  **/
 gchar *
-gimp_tag_string_make_valid (const gchar      *string)
+gimp_tag_string_make_valid (const gchar      *tag_string)
 {
   gchar        *tag;
-  GString      *tag_string;
+  GString      *buffer;
   gchar        *tag_cursor;
   gunichar      c;
 
-  g_return_val_if_fail (string, NULL);
+  g_return_val_if_fail (tag_string, NULL);
 
-  tag = g_utf8_normalize (string, -1, G_NORMALIZE_ALL);
+  tag = g_utf8_normalize (tag_string, -1, G_NORMALIZE_ALL);
   if (! tag)
     {
       return NULL;
@@ -419,7 +420,7 @@ gimp_tag_string_make_valid (const gchar      *string)
       return NULL;
     }
 
-  tag_string = g_string_new ("");
+  buffer = g_string_new ("");
   tag_cursor = tag;
   if (g_str_has_prefix (tag_cursor, GIMP_TAG_INTERNAL_PREFIX))
     {
@@ -432,12 +433,12 @@ gimp_tag_string_make_valid (const gchar      *string)
       if (g_unichar_isprint (c)
           && ! g_unichar_is_terminal_punctuation (c))
         {
-          g_string_append_unichar (tag_string, c);
+          g_string_append_unichar (buffer, c);
         }
     } while (c);
 
   g_free (tag);
-  tag = g_string_free (tag_string, FALSE);
+  tag = g_string_free (buffer, FALSE);
   tag = g_strstrip (tag);
 
   if (! *tag)

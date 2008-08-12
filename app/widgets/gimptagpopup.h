@@ -74,6 +74,6 @@ struct _GimpTagPopupClass
 
 GType       gimp_tag_popup_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tag_popup_new            (GimpComboTagEntry             *tag_entry);
+GtkWidget * gimp_tag_popup_new            (GimpComboTagEntry             *combo_entry);
 
 #endif  /*  __GIMP_TAG_POPUP_H__  */

@@ -149,10 +149,10 @@ gimp_filtered_container_get_memsize (GimpObject *object,
  * gimp_filtered_container_new:
  * @src_container: container to be filtered.
  *
- * Creates a new #GimpFilteredContainer object. Since #GimpFilteredContainer is a
- * #GimpContainer implementation, it holds GimpObjects. It filters @src_container for objects
- * containing all of the filtering tags. Syncronization with @src_container data is performed
- * automatically.
+ * Creates a new #GimpFilteredContainer object which creates filtered
+ * data view of #GimpTagged objects. It filters @src_container for objects
+ * containing all of the filtering tags. Syncronization with @src_container
+ * data is performed automatically.
  *
  * Return value: a new #GimpFilteredContainer object.
  **/
