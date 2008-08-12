@@ -1419,7 +1419,7 @@ replace_inten_pixels (const guchar   *src1,
       guchar new_alpha   = INT_BLEND (src2_alpha, src1_alpha,
                                       INT_MULT (*m, opacity, tmp), tmp);
 
-      if (new_alpha && affect[b])
+      if (new_alpha)
         {
           guint ratio = *m * opacity;
 
@@ -1427,7 +1427,11 @@ replace_inten_pixels (const guchar   *src1,
 
           for (b = 0; b < alpha; b++)
             {
-              if (src2[b] > src1[b])
+              if (! affect[b])
+                {
+                  dest[b] = src1[b];
+                }
+              else if (src2[b] > src1[b])
                 {
                   guint t = (src2[b] - src1[b]) * ratio;
                   dest[b] = src1[b] + INT_DIV (t, 255);
