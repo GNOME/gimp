@@ -470,7 +470,7 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
   const gchar  *entry_text;
   gboolean      is_tag[2];
   gint          i;
-  gint          insert_pos;
+  gint          insert_pos = *position;
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (editable));
 
@@ -486,18 +486,8 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
     }
   else if (text_length > 0)
     {
-      gunichar  c;
+      gunichar  c = g_utf8_get_char (new_text);
 
-      if (! tag_entry->suppress_mask_update)
-        {
-          insert_pos = *position;
-          for (i = 0; i < text_length; i++)
-            {
-              g_string_insert_c (tag_entry->mask, insert_pos + i, 'u');
-            }
-        }
-
-      c = g_utf8_get_char (new_text);
       if (! tag_entry->internal_operation
           && *position > 0
           && tag_entry->mask->str[*position - 1] == 's'
@@ -505,7 +495,7 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
         {
           if (! tag_entry->suppress_mask_update)
             {
-              g_string_insert_c (tag_entry->mask, insert_pos, 'u');
+              g_string_insert_c (tag_entry->mask, *position, 'u');
             }
 
           g_signal_handlers_block_by_func (editable,
@@ -520,6 +510,39 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
                                              NULL);
 
           g_signal_stop_emission_by_name (editable, "insert_text");
+        }
+      else if (! tag_entry->internal_operation
+               && text_length == 1
+               && *position < tag_entry->mask->len
+               && tag_entry->mask->str[*position] == 't'
+               && ! g_unichar_isspace (c))
+        {
+          if (! tag_entry->suppress_mask_update)
+            {
+              g_string_insert_c (tag_entry->mask, *position, 'u');
+            }
+
+          g_signal_handlers_block_by_func (editable,
+                                           G_CALLBACK (gimp_tag_entry_insert_text),
+                                           NULL);
+
+          gtk_editable_insert_text (editable, new_text, text_length, position);
+          gtk_editable_insert_text (editable, " ", 1, position);
+          (*position)--;
+
+          g_signal_handlers_unblock_by_func (editable,
+                                             G_CALLBACK (gimp_tag_entry_insert_text),
+                                             NULL);
+
+          g_signal_stop_emission_by_name (editable, "insert_text");
+        }
+
+      if (! tag_entry->suppress_mask_update)
+        {
+          for (i = 0; i < text_length; i++)
+            {
+              g_string_insert_c (tag_entry->mask, insert_pos + i, 'u');
+            }
         }
     }
 
@@ -1455,6 +1478,15 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
                 {
                   selection_start--;
                 }
+
+              if (selection_start > 0
+                  && (tag_entry->mask->str[selection_start - 1] == 'w')
+                  && (tag_entry->mask->str[selection_start] == 't'))
+                {
+                  /* between whitespace and tag,
+                   * should allow to select tag. */
+                  selection_start--;
+                }
             }
           break;
 
@@ -1522,6 +1554,14 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
         {
           selection_end++;
         }
+    }
+
+  if (search_dir == TAG_SEARCH_NONE
+      && selection_end - selection_start == 1
+      && tag_entry->mask->str[selection_start] == 'w')
+    {
+      gtk_editable_set_position (GTK_EDITABLE (tag_entry), selection_end);
+      return TRUE;
     }
 
   if ((selection_start != prev_selection_start
@@ -1793,7 +1833,7 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
               g_string_append_c (mask, 'w');
             }
 
-          if (cursor_position >= region_end)
+          if (cursor_position >= region_start)
             {
               cursor_position += mask->len - (region_end - region_start);
             }
@@ -1836,12 +1876,12 @@ gimp_tag_entry_next_tag                  (GimpTagEntry         *tag_entry,
   if (tag_entry->mask->str[position] != 'u')
     {
       while (position < tag_entry->mask->len
-             && (tag_entry->mask->str[position] != 's'))
+             && (tag_entry->mask->str[position] != 'w'))
         {
           position++;
         }
 
-      if (tag_entry->mask->str[position] == 's')
+      if (tag_entry->mask->str[position] == 'w')
         {
           position++;
         }
@@ -1881,7 +1921,7 @@ gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry,
   gint  position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
 
   if (position >= 1
-         && tag_entry->mask->str[position - 1] == 's')
+         && tag_entry->mask->str[position - 1] == 'w')
     {
       position--;
     }
@@ -1892,7 +1932,7 @@ gimp_tag_entry_previous_tag              (GimpTagEntry         *tag_entry,
   if (tag_entry->mask->str[position - 1] != 'u')
     {
       while (position > 0
-             && (tag_entry->mask->str[position - 1] != 's'))
+             && (tag_entry->mask->str[position - 1] != 'w'))
         {
           if (tag_entry->mask->str[position - 1] == 'u')
             {
