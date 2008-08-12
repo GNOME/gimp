@@ -1,5 +1,11 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_start): use
+	gimp_projection_get_tiles() instead of doing the same through the
+	GimpPickable interface.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/win-snap/Makefile.am: follow the executable name change.
 
 2008-08-12  Sven Neumann  <sven@gimp.org>
