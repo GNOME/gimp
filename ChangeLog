@@ -1,5 +1,19 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpitem.c
+	* app/core/gimpobject.c
+	* app/dialogs/preferences-dialog.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/fractal-explorer/fractal-explorer-dialogs.c
+	* plug-ins/fractal-explorer/fractal-explorer.c: use canonical
+	signal names.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (sed-po-makefiles): create the stamp-it files in
 	the po-* directories.
 

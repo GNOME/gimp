@@ -1278,7 +1278,7 @@ dialog(GimpDrawable *drawable)
                      G_CALLBACK (close_callback), NULL);
    g_signal_connect (dlg, "key-press-event",
                      G_CALLBACK (key_press_cb), NULL);
-   g_signal_connect (dlg, "key_release_event",
+   g_signal_connect (dlg, "key-release-event",
                      G_CALLBACK (key_release_cb), NULL);
 
    g_signal_connect (dlg, "destroy",

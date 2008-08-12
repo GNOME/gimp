@@ -1045,7 +1045,7 @@ add_objects_list (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (view, "row_activated",
+  g_signal_connect (view, "row-activated",
                     G_CALLBACK (activate_fractal_callback),
                     NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), view);

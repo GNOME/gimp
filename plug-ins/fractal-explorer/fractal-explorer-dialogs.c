@@ -1189,7 +1189,7 @@ explorer_dialog (void)
   cmap_preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (cmap_preview, 32, 32);
   gtk_container_add (GTK_CONTAINER (abox), cmap_preview);
-  g_signal_connect (cmap_preview, "size_allocate",
+  g_signal_connect (cmap_preview, "size-allocate",
                     G_CALLBACK (cmap_preview_size_allocate), NULL);
   gtk_widget_show (cmap_preview);
 

@@ -435,7 +435,7 @@ make_selection(ObjectList_t *object_list)
   /* Drop support */
   gtk_drag_dest_set (list, GTK_DEST_DEFAULT_ALL, target_table, 2,
 		     GDK_ACTION_COPY);
-  g_signal_connect (list, "drag_data_received", G_CALLBACK(handle_drop), NULL);
+  g_signal_connect (list, "drag-data-received", G_CALLBACK(handle_drop), NULL);
 
   /* For handling doubleclick */
 

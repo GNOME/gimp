@@ -677,7 +677,7 @@ new_preview (gint *sfn)
       gtk_widget_set_size_request (preview,
                                    PREVIEW_SIZE, PREVIEW_SIZE);
       gtk_widget_show (preview);
-      g_signal_connect_swapped (preview, "size_allocate",
+      g_signal_connect_swapped (preview, "size-allocate",
                                 G_CALLBACK (preview_update), st);
 
       label = gtk_label_new ("");
