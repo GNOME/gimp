@@ -1,5 +1,10 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* configure.in (sed-po-makefiles): create the stamp-it files in
+	the po-* directories.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* po-*/Makefile.in.in: corrected 'subdir' variables. Spotted by
 	Tor Lillqvist.
 
