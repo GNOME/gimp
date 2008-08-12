@@ -1,5 +1,9 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/win-snap/Makefile.am: follow the executable name change.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c (gimp_projection_paint_area): moved
 	function calls out of CLAMP macros.
 
