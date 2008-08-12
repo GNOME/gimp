@@ -654,11 +654,14 @@ gimp_projection_paint_area (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
+  const gint width  = gimp_image_get_width  (proj->image);
+  const gint height = gimp_image_get_height (proj->image);
+
   /*  Bounds check  */
-  gint x1 = CLAMP (x,     0, gimp_image_get_width  (proj->image));
-  gint y1 = CLAMP (y,     0, gimp_image_get_height (proj->image));
-  gint x2 = CLAMP (x + w, 0, gimp_image_get_width  (proj->image));
-  gint y2 = CLAMP (y + h, 0, gimp_image_get_height (proj->image));
+  gint x1 = CLAMP (x,     0, width);
+  gint y1 = CLAMP (y,     0, height);
+  gint x2 = CLAMP (x + w, 0, width);
+  gint y2 = CLAMP (y + h, 0, height);
 
   gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
 

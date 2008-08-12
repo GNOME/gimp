@@ -1,5 +1,10 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_paint_area): moved
+	function calls out of CLAMP macros.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
 	removed calls to scale the image and to update the scrollbars and
 	rulers. Doesn't seem to make sense in an empty display and it
