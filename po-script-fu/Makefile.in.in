@@ -37,7 +37,7 @@ datarootdir = @datarootdir@
 libdir = @libdir@
 DATADIRNAME = @DATADIRNAME@
 itlocaledir = $(prefix)/$(DATADIRNAME)/locale
-subdir = po
+subdir = po-script-fu
 install_sh = @install_sh@
 # Automake >= 1.8 provides @mkdir_p@.
 # Until it can be supposed, use the safe fallback:

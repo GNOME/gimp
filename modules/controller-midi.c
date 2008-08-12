@@ -825,7 +825,8 @@ midi_alsa_dispatch (GSource     *source,
                     GSourceFunc  callback,
                     gpointer     user_data)
 {
-  ControllerMidi  *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+  ControllerMidi *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+
   snd_seq_event_t       *event;
   snd_seq_client_info_t *client_info;
   snd_seq_port_info_t   *port_info;
