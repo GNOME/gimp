@@ -1492,36 +1492,46 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
 
       case TAG_SEARCH_LEFT:
             {
-              if (selection_start == selection_end
-                  && (tag_entry->mask->str[selection_start] == 'w'
-                   || tag_entry->mask->str[selection_start] == 's')
-                  && selection_start > 0)
+              if (selection_start == selection_end)
                 {
-                  while ((tag_entry->mask->str[selection_start] == 'w'
-                          || tag_entry->mask->str[selection_start] == 's')
-                         && selection_start > 0)
+                  if (selection_start > 0
+                      && tag_entry->mask->str[selection_start] == 't'
+                      && tag_entry->mask->str[selection_start - 1] == 'w')
                     {
                       selection_start--;
                     }
-                  selection_end = selection_start + 1;
+                  if ((tag_entry->mask->str[selection_start] == 'w'
+                       || tag_entry->mask->str[selection_start] == 's')
+                      && selection_start > 0)
+                    {
+                      while ((tag_entry->mask->str[selection_start] == 'w'
+                              || tag_entry->mask->str[selection_start] == 's')
+                             && selection_start > 0)
+                        {
+                          selection_start--;
+                        }
+                      selection_end = selection_start + 1;
+                    }
                 }
             }
           break;
 
       case TAG_SEARCH_RIGHT:
             {
-              if (selection_start == selection_end
-                  && (tag_entry->mask->str[selection_start] == 'w'
-                      || tag_entry->mask->str[selection_start] == 's')
-                  && selection_start < tag_entry->mask->len - 1)
+              if (selection_start == selection_end)
                 {
-                  while ((tag_entry->mask->str[selection_start] == 'w'
-                          || tag_entry->mask->str[selection_start] == 's')
-                         && selection_start < tag_entry->mask->len - 1)
-                    {
-                      selection_start++;
-                    }
-                  selection_end = selection_start + 1;
+                  if ((tag_entry->mask->str[selection_start] == 'w'
+                      || tag_entry->mask->str[selection_start] == 's')
+                      && selection_start < tag_entry->mask->len - 1)
+                        {
+                          while ((tag_entry->mask->str[selection_start] == 'w'
+                                  || tag_entry->mask->str[selection_start] == 's')
+                                 && selection_start < tag_entry->mask->len - 1)
+                            {
+                              selection_start++;
+                            }
+                          selection_end = selection_start + 1;
+                        }
                 }
             }
           break;
@@ -1569,8 +1579,17 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
       && (tag_entry->mask->str[selection_start] == 't')
       && selection_start < selection_end)
     {
-      gtk_editable_select_region (GTK_EDITABLE (tag_entry),
-                                  selection_start, selection_end);
+      if (search_dir == TAG_SEARCH_LEFT)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry),
+                                      selection_end, selection_start);
+        }
+      else if (search_dir == TAG_SEARCH_RIGHT)
+        {
+          gtk_editable_select_region (GTK_EDITABLE (tag_entry),
+                                      selection_start, selection_end);
+        }
+
       return TRUE;
     }
   else
