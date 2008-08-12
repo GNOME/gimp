@@ -1298,11 +1298,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
 
-  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
-  gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
-  gimp_display_shell_scaled (shell);
-
   gimp_display_shell_unset_cursor (shell);
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
