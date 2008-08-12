@@ -1,8 +1,8 @@
 2008-08-12  Michael Natterer  <mitch@gimp.org>
 
 	* modules/color-selector-wheel.c: override the wheel's
-	size-allocate and return a small requisition that allows to be
-	resized smaller again.
+	size-request and return a small requisition that allows
+	it to be resized smaller again.
 
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
