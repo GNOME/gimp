@@ -1,3 +1,7 @@
+2008-08-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* tagging.txt: added resource tagging overview for developers.
+
 2008-07-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_vectors_copy().
