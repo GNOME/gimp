@@ -71,11 +71,11 @@ libcolor_selector_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 
 libcolor_selector_water_la_SOURCES = color-selector-water.c
 libcolor_selector_water_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcolor_selector_water_la_LIBADD = $(colorsel_libadd)
+libcolor_selector_water_la_LIBADD = $(color_selector_libadd)
 
 libcolor_selector_wheel_la_SOURCES = color-selector-wheel.c
 libcolor_selector_wheel_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcolor_selector_wheel_la_LIBADD = $(colorsel_libadd)
+libcolor_selector_wheel_la_LIBADD = $(color_selector_libadd)
 
 libdisplay_filter_color_blind_la_SOURCES = display-filter-color-blind.c
 libdisplay_filter_color_blind_la_LDFLAGS = -avoid-version -module $(no_undefined)

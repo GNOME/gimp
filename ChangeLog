@@ -1,3 +1,7 @@
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* modules/Makefile.am: fixed library dependencies.
+
 2008-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/cml-explorer.c
