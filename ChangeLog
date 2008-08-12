@@ -1,5 +1,12 @@
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): applied a
+	slightly modified version of the patch from Luidnel Maignan as
+	attached to bug #105568. Fixes incorrect alpha treatment in
+	plug-in selection masking.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogrameditor.c
 	(gimp_histogram_editor_frozen_update): don't do the background
 	histogram unless the histogram view is actually visible.
