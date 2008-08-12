@@ -1,5 +1,11 @@
 2008-08-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: added configuration for resource tagging reference.
+
+2008-08-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* tagging.txt: added resource tagging overview for developers.
 
 2008-07-28  Sven Neumann  <sven@gimp.org>
