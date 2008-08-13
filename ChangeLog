@@ -1,5 +1,14 @@
 2008-08-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/python-console.py: instead of calling
+	gimp-displays-flush twice a second, call it after each command
+	that is committed. This is similar to what the Script-Fu console
+	does.
+
+	* plug-ins/script-fu/script-fu-console.c: formatting.
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/pygimp-colors.c: fix compiler warnings.
 
 2008-08-13  Sven Neumann  <sven@gimp.org>
