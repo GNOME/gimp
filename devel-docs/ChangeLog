@@ -1,3 +1,7 @@
+2008-08-14  Aurimas Juška  <auris@auris-laptop>
+
+	* tagging.txt: tag cache loading sequence was documented wrongly.
+
 2008-08-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/app-docs.sgml

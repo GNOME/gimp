@@ -65,10 +65,10 @@ to a tag cache file in user home directory.
 
 When session starts, previously saved resource and tag
 mapping has to be loaded and assigned to GimpTagged objects.
-Before actually loading tag cache file, GimpTagCache object
-is given all list of loaded resources (GimpContainer
-containing GimpTagged objects).
-After that, loaded resources are assigned tags:
+First tag cache is loaded from file, and then containers are
+added (GimpContainer objects where contained items implement
+GimpTagged interface). After that, loaded resources are
+assigned tags:
   If resource identifier matches identifier in cache,
     corresponding tags are assigned to GimpTagged object.
   Else, if the identifier is not found in tag cache,
