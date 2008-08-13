@@ -1,5 +1,12 @@
 2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_get_zoom_focus): New function
+	responsible for deciding what viewport coordinate to focus on when
+	zooming in and out.
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.[ch]
 	(gimp_display_shell_scale_to): Make this a private function
 	because we want to be in full control over what pixel to focus on
