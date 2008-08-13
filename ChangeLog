@@ -1,6 +1,12 @@
 2008-08-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help/gimphelplocale.c (gimp_help_locale_parse):
+	reverted the last change as g_file_query_info() is now also
+	implemented on Win32.
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelplocale.c (gimp_help_locale_parse):
 	continue even if g_file_query_info() fails. We can't show proper
 	progress information then, but we can still attempt the download.
  
