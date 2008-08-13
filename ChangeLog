@@ -1,5 +1,18 @@
 2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale_to): Make this a private function
+	because we want to be in full control over what pixel to focus on
+	when zooming in and out.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): Use
+	gimp_display_shell_scale() here instead of
+	gimp_display_shell_scale_to(). We figure out (and can override if
+	we wish) the coordinates that were previously passed explicitly.
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_image_is_within_viewport): New function.
 

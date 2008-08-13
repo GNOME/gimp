@@ -31,11 +31,6 @@ void     gimp_display_shell_scale_set_dot_for_dot          (GimpDisplayShell *sh
 void     gimp_display_shell_scale                          (GimpDisplayShell *shell,
                                                             GimpZoomType      zoom_type,
                                                             gdouble           scale);
-void     gimp_display_shell_scale_to                       (GimpDisplayShell *shell,
-                                                            GimpZoomType      zoom_type,
-                                                            gdouble           scale,
-                                                            gdouble           x,
-                                                            gdouble           y);
 void     gimp_display_shell_scale_fit_in                   (GimpDisplayShell *shell);
 gboolean gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell);
 void     gimp_display_shell_scale_fill                     (GimpDisplayShell *shell);
