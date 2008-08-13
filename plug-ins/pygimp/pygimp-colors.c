@@ -667,7 +667,7 @@ rgb_pretty_print(PyObject *self, gboolean inexact)
     PyObject *r_f = NULL, *g_f = NULL, *b_f = NULL, *a_f = NULL;
     PyObject *r = NULL, *g = NULL, *b = NULL, *a = NULL;
     reprfunc repr;
-    char *prefix;
+    const char *prefix;
 
     if (inexact) {
 	repr = PyObject_Str;
@@ -1190,7 +1190,7 @@ hsv_pretty_print(PyObject *self, gboolean inexact)
     PyObject *h_f = NULL, *s_f = NULL, *v_f = NULL, *a_f = NULL;
     PyObject *h = NULL, *s = NULL, *v = NULL, *a = NULL;
     reprfunc repr;
-    char *prefix;
+    const char *prefix;
 
     if (inexact) {
 	repr = PyObject_Str;
@@ -1703,7 +1703,7 @@ hsl_pretty_print(PyObject *self, gboolean inexact)
     PyObject *h_f = NULL, *s_f = NULL, *l_f = NULL, *a_f = NULL;
     PyObject *h = NULL, *s = NULL, *l = NULL, *a = NULL;
     reprfunc repr;
-    char *prefix;
+    const char *prefix;
 
     if (inexact) {
 	repr = PyObject_Str;
@@ -2212,7 +2212,7 @@ cmyk_pretty_print(PyObject *self, gboolean inexact)
     PyObject *c_f = NULL, *m_f = NULL, *y_f = NULL, *k_f = NULL, *a_f = NULL;
     PyObject *c = NULL, *m = NULL, *y = NULL, *k = NULL, *a = NULL;
     reprfunc repr;
-    char *prefix;
+    const char *prefix;
 
     if (inexact) {
 	repr = PyObject_Str;
