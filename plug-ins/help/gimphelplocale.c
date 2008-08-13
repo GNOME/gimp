@@ -217,25 +217,18 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       GFileInfo *info = g_file_query_info (file,
                                            G_FILE_ATTRIBUTE_STANDARD_SIZE, 0,
                                            cancellable, error);
-      if (! info)
+      if (info)
         {
-          locale_set_error (error,
-                            _("Could not open '%s' for reading: %s"), file);
-          g_object_unref (file);
-
-          return FALSE;
+          size = g_file_info_get_size (info);
+          g_object_unref (info);
         }
-
-      size = g_file_info_get_size (info);
-
-      g_object_unref (info);
     }
 
   stream = g_file_read (file, cancellable, error);
 
   if (! stream)
     {
-      locale_set_error (error, 
+      locale_set_error (error,
                         _("Could not open '%s' for reading: %s"), file);
       g_object_unref (file);
 
