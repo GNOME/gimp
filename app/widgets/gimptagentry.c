@@ -1584,7 +1584,7 @@ gimp_tag_entry_select_jellybean (GimpTagEntry          *tag_entry,
           gtk_editable_select_region (GTK_EDITABLE (tag_entry),
                                       selection_end, selection_start);
         }
-      else if (search_dir == TAG_SEARCH_RIGHT)
+      else
         {
           gtk_editable_select_region (GTK_EDITABLE (tag_entry),
                                       selection_start, selection_end);
