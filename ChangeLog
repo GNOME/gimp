@@ -1,5 +1,10 @@
 2008-08-13  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): applied
+	patch from Luidnel Maignan (followup to bug #105568).
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c: applied patch from Geert
 	Jordaens to fix scaling artifacts in top row (bug #464466).
 

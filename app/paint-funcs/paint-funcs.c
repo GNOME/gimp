@@ -1422,6 +1422,7 @@ replace_inten_pixels (const guchar   *src1,
       if (new_alpha)
         {
           guint ratio = *m * opacity;
+          ratio = ratio / 255 * src2_alpha;
 
           ratio = INT_DIV (ratio, new_alpha);
 
