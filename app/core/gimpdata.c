@@ -417,7 +417,7 @@ gimp_data_get_identifier (GimpTagged *tagged)
     {
       return g_strdup (data->internal_name);
     }
-  else
+  else if (data->filename)
     {
       gchar *utf8_filename;
       gsize  bytes_written;
@@ -434,6 +434,10 @@ gimp_data_get_identifier (GimpTagged *tagged)
                      data->filename);
           return g_strdup (data->filename);
         }
+    }
+  else
+    {
+       return NULL;
     }
 }
 
