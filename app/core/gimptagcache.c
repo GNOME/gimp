@@ -183,11 +183,9 @@ gimp_tag_cache_new (Gimp       *gimp)
  * @cache:      a GimpTagCache object.
  * @container:  container containing GimpTagged objects.
  *
- * Adds container of GimpTagged objects to tag cache. Objects in container
- * are assigned tags when cache is loaded from file. When tag cache is saved
- * to file, tags are collected from objects in container. Therefore, before
- * loading and saving tag cache, containers added to tag cache must be already
- * initialized and not freed.
+ * Adds container of GimpTagged objects to tag cache. Before calling this
+ * function tag cache must be loaded using gimp_tag_cache_load(). When tag
+ * cache is saved to file, tags are collected from objects in containers.
  **/
 void
 gimp_tag_cache_add_container (GimpTagCache     *cache,
@@ -219,8 +217,7 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   identifier_quark = g_quark_try_string (identifier);
   g_free (identifier);
 
-  if (identifier_quark
-      && !gimp_tagged_get_tags (tagged))
+  if (! gimp_tagged_get_tags (tagged))
     {
       if (identifier_quark)
         {
