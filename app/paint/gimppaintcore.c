@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
+#include "core/gimpprojection.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcoreundo.h"

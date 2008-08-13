@@ -1,3 +1,8 @@
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/paint/gimppaintcore.c: Include gimpprojection.h for
+	gimp_projection_get_tiles().
+
 2008-08-12  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): applied a
