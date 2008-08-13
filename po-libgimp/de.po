@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-11 20:46+0200\n"
-"PO-Revision-Date: 2008-08-11 20:49+0200\n"
+"POT-Creation-Date: 2008-08-13 20:20+0200\n"
+"PO-Revision-Date: 2008-08-13 20:30+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Mit Standardeinstellungen in ein indiziertes Format umwandeln\n"
-"(Für bessere Resultate, sollten Sie diesen Schritt manuell durchführen)"
+"(Für bessere Resultate sollten Sie diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
@@ -125,7 +125,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Mit Standardeinstellungen in das Bitmap-Format umwandeln\n"
-"(Für bessere Resultate, sollten Sie diesen Schritt manuell durchführen)"
+"(Für bessere Resultate sollten Sie diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
@@ -646,7 +646,7 @@ msgstr "Interaktiv ausführen"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run non-interactively"
-msgstr "Nicht-Interaktiv ausführen"
+msgstr "Nicht-interaktiv ausführen"
 
 #: ../libgimpbase/gimpbaseenums.c:657
 msgid "Run with last used values"
@@ -674,11 +674,11 @@ msgstr "Glanzlichter"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
-msgstr "Normal (Vorwärts)"
+msgstr "Normal (vorwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
-msgstr "Korrigierend (Rückwärts)"
+msgstr "Korrigierend (rückwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
@@ -800,7 +800,7 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
-"Die Farbe, mit der Farben markiert werden, die ausserhalb des Gamut liegen."
+"Die Farbe, mit der Farben markiert werden, die außerhalb des Gamut liegen."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -892,7 +892,7 @@ msgid ""
 "The original file has not been touched."
 msgstr ""
 "Fehler beim Schreiben in die temporäre Datei für »%s«: %s\n"
-"Die Originaldatei wurde nicht geändert."
+"Die Originaldatei wurde nicht verändert."
 
 #: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
@@ -1360,7 +1360,7 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Dieser Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
+"Dieses Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
 "Einstellungsdialog."
 
 #: ../modules/display-filter-lcms.c:226
@@ -1397,7 +1397,7 @@ msgstr "Alle Dateien (*.*)"
 
 #: ../modules/display-filter-proof.c:343
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC Farbprofil (*.icc, *.icm)"
+msgstr "ICC-Farbprofil (*.icc, *.icm)"
 
 #: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
@@ -1471,7 +1471,7 @@ msgstr "Schwarzauszug:"
 #: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
-"Der Prozentsatz an Schwarz, welcher aus den farbigen Tinten entnommen werden "
+"Der Prozentsatz an Schwarz, welcher aus den farbigen Tinten gemischt werden "
 "soll."
 
 #: ../modules/color-selector-cmyk-lcms.c:87
@@ -1499,11 +1499,11 @@ msgstr "Wasserfarben"
 msgid "Pressure"
 msgstr "Druck"
 
-#: ../modules/color-selector-wheel.c:95
+#: ../modules/color-selector-wheel.c:98
 msgid "HSV color wheel"
-msgstr "HSV Farbrad"
+msgstr "HSV-Farbrad"
 
-#: ../modules/color-selector-wheel.c:126
+#: ../modules/color-selector-wheel.c:129
 msgid "Wheel"
 msgstr "Rad"
 
@@ -1569,7 +1569,7 @@ msgstr "Seitliche Taste"
 
 #: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
-msgstr "Extra Taste"
+msgstr "Extra-Taste"
 
 #: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
@@ -1734,7 +1734,7 @@ msgstr "Das Gerätes, von welchem DirectInput-Ereignisse ausgelesen werden."
 
 #: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
-msgstr "DirectX DirectInput"
+msgstr "DirectX-DirectInput"
 
 #: ../modules/controller-dx-dinput.c:420
 #, c-format

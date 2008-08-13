@@ -1,3 +1,7 @@
+2008-08-13  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Fixed German translation.
+
 2008-08-11  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: follow name changes in the modules directory.
