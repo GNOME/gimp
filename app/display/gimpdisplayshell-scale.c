@@ -38,6 +38,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
@@ -443,6 +444,30 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
   gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+}
+
+/**
+ * gimp_display_shell_scale_image_is_within_viewport:
+ * @shell:
+ *
+ * Returns: %TRUE if the (scaled) image is smaller than and within the
+ *          viewport.
+ **/
+gboolean
+gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell)
+{
+  gint sw, sh;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+  return sw              < shell->disp_width       &&
+         sh              < shell->disp_height      &&
+         shell->offset_x < 0                       &&
+         shell->offset_y < 0                       &&
+         shell->offset_x > sw - shell->disp_width  &&
+         shell->offset_y > sh - shell->disp_height;
 }
 
 /**

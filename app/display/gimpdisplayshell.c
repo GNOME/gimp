@@ -718,6 +718,21 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
   return NULL;
 }
 
+static void
+gimp_display_shell_zoom_button_callback (GimpDisplayShell *shell,
+                                         GtkWidget        *zoom_button)
+{
+  shell->zoom_on_resize =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (zoom_button));
+
+  if (shell->zoom_on_resize &&
+      gimp_display_shell_scale_image_is_within_viewport (shell))
+    {
+      /* Implicitly make a View -> Fit Image in Window */
+      gimp_display_shell_scale_fit_in (shell);
+    }
+}
+
 
 /*  public functions  */
 
@@ -1079,9 +1094,9 @@ gimp_display_shell_new (GimpDisplay       *display,
                            _("Zoom image when window size changes"),
                            GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON);
 
-  g_signal_connect (shell->zoom_button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &shell->zoom_on_resize);
+  g_signal_connect_swapped (shell->zoom_button, "toggled",
+                            G_CALLBACK (gimp_display_shell_zoom_button_callback),
+                            shell);
 
   /*  create the contents of the lower_hbox  *********************************/
 
