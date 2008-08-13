@@ -4,8 +4,8 @@
 	(gimp_display_shell_scale_image_is_within_viewport): New function.
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): When
-	the zoom button is toggled, implicitly do a View -> Fit Image in
-	Window if the (scaled) image is within the viewport.
+	the zoom button is toggled on, implicitly do a View -> Fit Image
+	in Window if the (scaled) image is within the viewport.
 
 2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
 
