@@ -366,11 +366,11 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                                                                &new_scale_width,
                                                                &new_scale_height);
 
-      *vertically   = current_scale_width  > shell->disp_width &&
-                      new_scale_width      < shell->disp_width;
+      *vertically   = current_scale_width  >  shell->disp_width &&
+                      new_scale_width      <= shell->disp_width;
         
-      *horizontally = current_scale_height > shell->disp_height &&
-                      new_scale_height     < shell->disp_height;
+      *horizontally = current_scale_height >  shell->disp_height &&
+                      new_scale_height     <= shell->disp_height;
         
     }
 
@@ -507,12 +507,12 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell)
 
   gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
-  return sw              < shell->disp_width       &&
-         sh              < shell->disp_height      &&
-         shell->offset_x < 0                       &&
-         shell->offset_y < 0                       &&
-         shell->offset_x > sw - shell->disp_width  &&
-         shell->offset_y > sh - shell->disp_height;
+  return sw              <= shell->disp_width       &&
+         sh              <= shell->disp_height      &&
+         shell->offset_x <= 0                       &&
+         shell->offset_y <= 0                       &&
+         shell->offset_x >  sw - shell->disp_width  &&
+         shell->offset_y >  sh - shell->disp_height;
 }
 
 /**

@@ -1,3 +1,10 @@
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_starts_to_fit)
+	(gimp_display_shell_scale_image_is_within_viewport): Make
+	proper tests (<= not <).
+
 2008-08-14  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-commands.c (file_save_cmd_callback): if we
