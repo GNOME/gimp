@@ -422,7 +422,11 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
 
   if (shell->dot_for_dot)
     {
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      if (shell->unit != GIMP_UNIT_PIXEL)
+        {
+          gimp_display_shell_scale_update_rulers (shell);
+        }
+
       gimp_display_shell_scaled (shell);
     }
   else
