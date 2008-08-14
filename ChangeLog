@@ -1,5 +1,14 @@
 2008-08-14  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.c (file_save_cmd_callback): when we
+	trust the dirty flag and don't save because there are no changes,
+	display a message in the status-bar telling the user so.
+
+	* app/config/gimpguiconfig.c: changed the default value for 
+	"trust-dirty-flag" to TRUE.
+
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_tile_get):
 	use G_STRFUNC to get the proper function name in the error message.
 
