@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-02 23:10+0900\n"
-"PO-Revision-Date: 2008-06-14 21:34+0900\n"
+"POT-Creation-Date: 2008-08-14 22:33+0900\n"
+"PO-Revision-Date: 2008-08-09 09:41+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "ファイル '%s' を書き込み用で開けませんでした： %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu プロシージャブラウザ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:718
+#: ../plug-ins/script-fu/script-fu-console.c:719
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
@@ -162,7 +162,7 @@ msgstr "GIMP 関連のウェブサイト"
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
-msgstr "ユーザーマニュアル"
+msgstr "ユーザーマニュアル(_U)"
 
 #: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
@@ -375,7 +375,7 @@ msgstr "影ぼかし半径"
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
@@ -1524,7 +1524,11 @@ msgstr ""
 msgid "Create frozen logo with an added drop shadow"
 msgstr "シャドウが付いた、凍った雰囲気のロゴを生成します。"
 
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+msgid "Matte"
+msgstr "つや消し"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:9
 msgid "_Frosty..."
 msgstr "霜(_F)..."
 
@@ -2275,7 +2279,7 @@ msgstr "画像へ(_I)"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "Convert a selection to a pattern"
-msgstr "Convert a selection to a pattern"
+msgstr "現在の選択範囲をパターンに変換します"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
@@ -2774,67 +2778,59 @@ msgstr "織物(_W)..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr "GIMP　ウェブサイトへのブックマーク"
+msgstr "GIMP ウェブサイトへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
 msgstr "ユーザーマニュアルへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-#, fuzzy
 msgid "Create and Use _Selections"
-msgstr "選択範囲を作成・使用"
+msgstr "選択範囲の作成と使用（英文）(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-#, fuzzy
 msgid "Create, Open and Save _Files"
-msgstr "画像を作成・開く・保存(_F)"
+msgstr "ファイルを開く・作成・保存（英文）(_F)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-#, fuzzy
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く(_S)"
+msgstr "シンプルなオブジェクトを描く（英文）(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-#, fuzzy
 msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方(_D)"
+msgstr "ダイアログの使い方（英文）(_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
-msgstr "プラグインレジストリ(_R)"
+msgstr "プラグインレジストリ（英文）(_R)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-#, fuzzy
 msgid "Using _Paths"
-msgstr "パスを使う"
+msgstr "パスを使う（英文）(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-#, fuzzy
 msgid "_Basic Concepts"
-msgstr "基本コンセプト(_B)"
+msgstr "基本コンセプト（英文）(_B)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト(_D)"
+msgstr "開発者用ウェブサイト（英文）(_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
-msgstr "メインのウェブサイト(_M)"
+msgstr "メインのウェブサイト（英文）(_M)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-#, fuzzy
 msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには(_P)"
+msgstr "ウェブ用画像を作成するには（英文）(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル(_U)"
+msgstr "ユーザーマニュアル（英文）(_U)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-#, fuzzy
 msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ写真を使った作業(_W)"
+msgstr "デジカメ画像を修正する（英文）(_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
