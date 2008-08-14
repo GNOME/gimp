@@ -70,7 +70,6 @@ static void gimp_display_shell_scale_dialog_response (GtkWidget        *widget,
                                                       ScaleDialogData  *dialog);
 static void gimp_display_shell_scale_dialog_free     (ScaleDialogData  *dialog);
 static void gimp_display_shell_scale_to              (GimpDisplayShell *shell,
-                                                      GimpZoomType      zoom_type,
                                                       gdouble           scale,
                                                       gdouble           x,
                                                       gdouble           y);
@@ -344,18 +343,30 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type,
                           gdouble           new_scale)
 {
-  gint x, y;
+  gint    x, y;
+  gdouble current_scale;
+  gdouble real_new_scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->canvas != NULL);
 
-  if (zoom_type == GIMP_ZOOM_TO &&
-      SCALE_EQUALS (new_scale, gimp_zoom_model_get_factor (shell->zoom)))
-    return;
+  current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  gimp_display_shell_scale_get_zoom_focus (shell, &x, &y);
+  if (zoom_type != GIMP_ZOOM_TO)
+    {
+      real_new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale);
+    }
+  else
+    {
+      real_new_scale = new_scale;
+    }
 
-  gimp_display_shell_scale_to (shell, zoom_type, new_scale, x, y);
+  if (! SCALE_EQUALS (real_new_scale, current_scale))
+    {
+      gimp_display_shell_scale_get_zoom_focus (shell, &x, &y);
+
+      gimp_display_shell_scale_to (shell, real_new_scale, x, y);
+    }
 }
 
 /**
@@ -830,7 +841,6 @@ gimp_display_shell_scale_dialog_free (ScaleDialogData *dialog)
 /**
  * gimp_display_shell_scale_to:
  * @shell:     the #GimpDisplayShell
- * @zoom_type: whether to zoom in, out or to a specified scale
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  * @x:         x screen coordinate
  * @y:         y screen coordinate
@@ -846,7 +856,6 @@ gimp_display_shell_scale_dialog_free (ScaleDialogData *dialog)
  **/
 static void
 gimp_display_shell_scale_to (GimpDisplayShell *shell,
-                             GimpZoomType      zoom_type,
                              gdouble           scale,
                              gdouble           x,
                              gdouble           y)
@@ -867,9 +876,6 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 
   offset_x /= current;
   offset_y /= current;
-
-  if (zoom_type != GIMP_ZOOM_TO)
-    scale = gimp_zoom_model_zoom_step (zoom_type, current);
 
   offset_x *= scale;
   offset_y *= scale;

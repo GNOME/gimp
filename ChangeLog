@@ -1,5 +1,14 @@
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Move calculation of the actual new
+	scale to use from here
+	(gimp_display_shell_scale): to here, because we need this
+	information in order to determine what point to focus on while
+	zooming.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.c
 	(gimp_display_shell_set_unit): No need to update scrollbars, only
 	rulers.
