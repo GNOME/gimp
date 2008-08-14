@@ -322,8 +322,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                                   center_vertically);
         }
 
-      gimp_display_shell_scroll_clamp_offsets (shell);
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      gimp_display_shell_scroll_clamp_and_update (shell);
+
       gimp_display_shell_scaled (shell);
     }
 }

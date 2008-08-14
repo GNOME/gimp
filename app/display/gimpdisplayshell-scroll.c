@@ -141,8 +141,8 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
 
-  gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
+  gimp_display_shell_scroll_clamp_and_update (shell);
+
   gimp_display_shell_scrolled (shell);
 
   gimp_display_shell_expose_full (shell);
@@ -231,6 +231,20 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
       shell->offset_x = 0;
       shell->offset_y = 0;
     }
+}
+
+/**
+ * gimp_display_shell_scroll_clamp_and_update:
+ * @shell:
+ *
+ * Helper function for calling two functions that are commonly called
+ * in pairs.
+ **/
+void
+gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
+{
+  gimp_display_shell_scroll_clamp_offsets (shell);
+  gimp_display_shell_update_scrollbars_and_rulers (shell);
 }
 
 /**

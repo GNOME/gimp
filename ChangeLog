@@ -1,3 +1,12 @@
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_and_update): New helper function.
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-callbacks.c: Use it.
+
 2008-08-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/python-console.py: renamed the dialog

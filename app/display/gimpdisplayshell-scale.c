@@ -537,8 +537,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   if (resize_window)
     gimp_display_shell_shrink_wrap (shell, grow_only);
 
-  gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
+  gimp_display_shell_scroll_clamp_and_update (shell);
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);
