@@ -1,3 +1,9 @@
+2008-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (search_entry_key_press): search
+	the next match when return or enter is pressed in the search
+	entry.
+
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c

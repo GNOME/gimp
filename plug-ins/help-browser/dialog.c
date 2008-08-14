@@ -1202,11 +1202,17 @@ static gboolean
 search_entry_key_press (GtkWidget   *entry,
                         GdkEventKey *event)
 {
-  if (event->keyval == GDK_Escape)
+  switch (event->keyval)
     {
+    case GDK_Escape:
       gtk_widget_hide (searchbar);
       webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
+      return TRUE;
 
+    case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
+      search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
       return TRUE;
     }
 
