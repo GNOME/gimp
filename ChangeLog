@@ -1,3 +1,8 @@
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_tile_get):
+	use G_STRFUNC to get the proper function name in the error message.
+
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
