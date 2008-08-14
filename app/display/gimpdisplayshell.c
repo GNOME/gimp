@@ -1396,16 +1396,10 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 
   if (image)
     {
-      gdouble xres;
-      gdouble yres;
-
-      gimp_image_get_resolution (image, &xres, &yres);
-
-      shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom) *
-                        SCREEN_XRES (shell) / xres);
-
-      shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom) *
-                        SCREEN_YRES (shell) / yres);
+      gimp_display_shell_calculate_scale_x_and_y (shell,
+                                                  gimp_zoom_model_get_factor (shell->zoom),
+                                                  &shell->scale_x,
+                                                  &shell->scale_y);
 
       shell->x_dest_inc = gimp_image_get_width  (image);
       shell->y_dest_inc = gimp_image_get_height (image);

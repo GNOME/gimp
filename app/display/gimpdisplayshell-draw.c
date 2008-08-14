@@ -48,6 +48,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -77,8 +78,32 @@ gimp_display_shell_draw_get_scaled_image_size (const GimpDisplayShell *shell,
                                                gint                   *w,
                                                gint                   *h)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
+                                                           gimp_zoom_model_get_factor (shell->zoom),
+                                                           w,
+                                                           h);
+}
+
+/**
+ * gimp_display_shell_draw_get_scaled_image_size_for_scale:
+ * @shell:
+ * @scale:
+ * @w:
+ * @h:
+ *
+ **/
+void
+gimp_display_shell_draw_get_scaled_image_size_for_scale (const GimpDisplayShell *shell,
+                                                         gdouble                 scale,
+                                                         gint                   *w,
+                                                         gint                   *h)
+{
   GimpProjection *proj;
   TileManager    *tiles;
+  gdouble         scale_x;
+  gdouble         scale_y;
   gint            level;
   gint            level_width;
   gint            level_height;
@@ -88,15 +113,17 @@ gimp_display_shell_draw_get_scaled_image_size (const GimpDisplayShell *shell,
 
   proj = gimp_image_get_projection (shell->display->image);
 
-  level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
+  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+
+  level = gimp_projection_get_level (proj, scale_x, scale_y);
 
   tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
 
   level_width  = tile_manager_width (tiles);
   level_height = tile_manager_height (tiles);
 
-  if (w) *w = PROJ_ROUND (level_width  * (shell->scale_x * (1 << level)));
-  if (h) *h = PROJ_ROUND (level_height * (shell->scale_y * (1 << level)));
+  if (w) *w = PROJ_ROUND (level_width  * (scale_x * (1 << level)));
+  if (h) *h = PROJ_ROUND (level_height * (scale_y * (1 << level)));
 }
 
 void

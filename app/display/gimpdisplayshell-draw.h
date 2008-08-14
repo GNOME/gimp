@@ -23,6 +23,11 @@
 void   gimp_display_shell_draw_get_scaled_image_size (const GimpDisplayShell *shell,
                                                       gint                   *w,
                                                       gint                   *h);
+void   gimp_display_shell_draw_get_scaled_image_size_for_scale
+                                                     (const GimpDisplayShell *shell,
+                                                      gdouble                 scale,
+                                                      gint                   *w,
+                                                      gint                   *h);
 void   gimp_display_shell_draw_guide                 (const GimpDisplayShell *shell,
                                                       GimpGuide              *guide,
                                                       gboolean                active);

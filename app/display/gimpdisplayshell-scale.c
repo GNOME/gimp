@@ -329,6 +329,45 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
     }
 }
 
+static void
+gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
+                                              gdouble           new_scale,
+                                              gdouble           current_scale,
+                                              gboolean         *vertically,
+                                              gboolean         *horizontally)
+{
+  /* The image can only start to fit if we zoom out */
+  if (new_scale > current_scale)
+    {
+      *vertically   = FALSE;
+      *horizontally = FALSE;
+    }
+  else
+    {
+      gint current_scale_width;
+      gint current_scale_height;
+      gint new_scale_width;
+      gint new_scale_height;
+
+      gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
+                                                               current_scale,
+                                                               &current_scale_width,
+                                                               &current_scale_height);
+
+      gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
+                                                               new_scale,
+                                                               &new_scale_width,
+                                                               &new_scale_height);
+
+      *vertically   = current_scale_width  > shell->disp_width &&
+                      new_scale_width      < shell->disp_width;
+        
+      *horizontally = current_scale_height > shell->disp_height &&
+                      new_scale_height     < shell->disp_height;
+        
+    }
+}
+
 /**
  * gimp_display_shell_scale:
  * @shell:     the #GimpDisplayShell
@@ -364,9 +403,25 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   if (! SCALE_EQUALS (real_new_scale, current_scale))
     {
+      gboolean vertically;
+      gboolean horizontally;
+
+      gimp_display_shell_scale_image_starts_to_fit (shell,
+                                                    real_new_scale,
+                                                    current_scale,
+                                                    &vertically,
+                                                    &horizontally);
+
       gimp_display_shell_scale_get_zoom_focus (shell, real_new_scale, &x, &y);
 
       gimp_display_shell_scale_to (shell, real_new_scale, x, y);
+
+      /* If an image axis started to fit due to zooming out, center on
+       * that axis in the display shell
+       */
+      gimp_display_shell_scroll_center_image (shell,
+                                              vertically,
+                                              horizontally);
     }
 }
 
@@ -591,6 +646,32 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
+/**
+ * gimp_display_shell_calculate_scale_x_and_y:
+ * @shell:
+ * @scale:
+ * @scale_x:
+ * @scale_y:
+ *
+ **/
+void
+gimp_display_shell_calculate_scale_x_and_y (const GimpDisplayShell *shell,
+                                            gdouble                 scale,
+                                            gdouble                *scale_x,
+                                            gdouble                *scale_y)
+{
+  gdouble xres;
+  gdouble yres;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
+
+  gimp_image_get_resolution (shell->display->image, &xres, &yres);
+
+  if (scale_x) *scale_x = scale * SCREEN_XRES (shell) / xres;
+  if (scale_y) *scale_y = scale * SCREEN_YRES (shell) / yres;
+}
+
 void
 gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
                                       gdouble           scale,
@@ -805,9 +886,6 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   gtk_widget_show (shell->scale_dialog);
 }
-
-
-/*  private functions  */
 
 static void
 gimp_display_shell_scale_dialog_response (GtkWidget       *widget,

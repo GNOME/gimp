@@ -1,5 +1,28 @@
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-draw.[ch]
+	(gimp_display_shell_draw_get_scaled_image_size_for_scale): New
+	function.
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale): When zooming out and the image
+	starts to fit the viewport on a given axis, center on that
+	axis.
+
+	(gimp_display_shell_scale_image_starts_to_fit): New function.
+
+	(gimp_display_shell_calculate_scale_x_and_y): New function.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_scale_changed): Use
+	gimp_display_shell_calculate_scale_x_and_y().
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): Bail out if neither
+	vertical nor horizontal centering is requested.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_get_zoom_focus): When the image is
 	within the viewport, also use the center of the image as the zoom
