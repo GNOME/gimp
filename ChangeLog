@@ -1,6 +1,6 @@
 2008-08-14  Sven Neumann  <sven@gimp.org>
 
-	* app/actions/file-commands.c (file_save_cmd_callback): when we
+	* app/actions/file-commands.c (file_save_cmd_callback): if we
 	trust the dirty flag and don't save because there are no changes,
 	display a message in the status-bar telling the user so.
 
