@@ -530,7 +530,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_proc_run: ERROR");
+                        "%s: ERROR", G_STRFUNC);
           gimp_plug_in_close (plug_in, TRUE);
         }
 
