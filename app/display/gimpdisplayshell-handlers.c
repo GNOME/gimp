@@ -629,7 +629,8 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
 
   if (! shell->dot_for_dot)
     {
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      gimp_display_shell_scroll_clamp_and_update (shell);
+
       gimp_display_shell_scaled (shell);
 
       gimp_display_shell_expose_full (shell);
