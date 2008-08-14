@@ -74,6 +74,7 @@ static void gimp_display_shell_scale_to              (GimpDisplayShell *shell,
                                                       gdouble           x,
                                                       gdouble           y);
 static void gimp_display_shell_scale_get_zoom_focus  (GimpDisplayShell *shell,
+                                                      gdouble           new_scale,
                                                       gint             *x,
                                                       gint             *y);
 
@@ -363,7 +364,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   if (! SCALE_EQUALS (real_new_scale, current_scale))
     {
-      gimp_display_shell_scale_get_zoom_focus (shell, &x, &y);
+      gimp_display_shell_scale_get_zoom_focus (shell, real_new_scale, &x, &y);
 
       gimp_display_shell_scale_to (shell, real_new_scale, x, y);
     }
@@ -888,6 +889,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 /**
  * gimp_display_shell_scale_get_zoom_focus:
  * @shell:
+ * @new_scale:
  * @x:
  * @y:
  *
@@ -895,47 +897,66 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
  **/
 static void
 gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
+                                         gdouble           new_scale,
                                          gint             *x,
                                          gint             *y)
 {
   GdkEvent *event;
+  gdouble   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  *x = shell->disp_width  / 2;
-  *y = shell->disp_height / 2;
-
-  /*  Center on the mouse position instead of the display center if
-   *  one of the following conditions are fulfilled and pointer is
-   *  within the canvas:
-   *
-   *   (1) there's no current event (the action was triggered by an
-   *       input controller)
-   *   (2) the event originates from the canvas (a scroll event)
-   *   (3) the event originates from the shell (a key press event)
-   *
-   *  Basically the only situation where we don't want to center on
-   *  mouse position is if the action is being called from a menu.
-   */
-
-  event = gtk_get_current_event ();
-
-  if (! event ||
-      gtk_get_event_widget (event) == shell->canvas ||
-      gtk_get_event_widget (event) == GTK_WIDGET (shell))
+  if (new_scale < current_scale &&
+      gimp_display_shell_scale_image_is_within_viewport (shell))
     {
-      gint canvas_pointer_x;
-      gint canvas_pointer_y;
+      /* If the image is within the viewport and we are zooming out, put
+       * the zoom focus in the center of the image
+       */
+      gint sw, sh;
 
-      gtk_widget_get_pointer (shell->canvas,
-                              &canvas_pointer_x,
-                              &canvas_pointer_y);
+      gimp_display_shell_draw_get_scaled_image_size (shell,
+                                                     &sw,
+                                                     &sh);
+      *x = -shell->offset_x + sw / 2;
+      *y = -shell->offset_y + sh / 2;
+    }
+  else
+    {
+      *x = shell->disp_width  / 2;
+      *y = shell->disp_height / 2;
 
-      if (canvas_pointer_x >= 0 &&
-          canvas_pointer_y >= 0 &&
-          canvas_pointer_x < shell->disp_width &&
-          canvas_pointer_y < shell->disp_height)
+      /*  Center on the mouse position instead of the display center if
+       *  one of the following conditions are fulfilled and pointer is
+       *  within the canvas:
+       *
+       *   (1) there's no current event (the action was triggered by an
+       *       input controller)
+       *   (2) the event originates from the canvas (a scroll event)
+       *   (3) the event originates from the shell (a key press event)
+       *
+       *  Basically the only situation where we don't want to center on
+       *  mouse position is if the action is being called from a menu.
+       */
+
+      event = gtk_get_current_event ();
+
+      if (! event ||
+          gtk_get_event_widget (event) == shell->canvas ||
+          gtk_get_event_widget (event) == GTK_WIDGET (shell))
         {
-          *x = canvas_pointer_x;
-          *y = canvas_pointer_y;
+          gint canvas_pointer_x;
+          gint canvas_pointer_y;
+
+          gtk_widget_get_pointer (shell->canvas,
+                                  &canvas_pointer_x,
+                                  &canvas_pointer_y);
+
+          if (canvas_pointer_x >= 0 &&
+              canvas_pointer_y >= 0 &&
+              canvas_pointer_x < shell->disp_width &&
+              canvas_pointer_y < shell->disp_height)
+            {
+              *x = canvas_pointer_x;
+              *y = canvas_pointer_y;
+            }
         }
     }
 }

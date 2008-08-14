@@ -1,6 +1,13 @@
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_get_zoom_focus): If the image is within
+	the viewport and we are zooming out, make the focus point be the
+	center of the image.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_to): Move calculation of the actual new
 	scale to use from here
 	(gimp_display_shell_scale): to here, because we need this
