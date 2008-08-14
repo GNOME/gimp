@@ -1,5 +1,14 @@
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_set_unit): No need to update scrollbars, only
+	rulers.
+	(gimp_display_shell_reconnect): A
+	gimp_display_shell_scroll_clamp_and_update() makes more sense
+	here.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-handlers.c
 	(gimp_display_shell_monitor_res_notify_handler): When the screen
 	resolution changes and we are not in Dot by dot, we also need to

@@ -1262,7 +1262,8 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
+  gimp_display_shell_scroll_clamp_and_update (shell);
+
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);
@@ -1449,7 +1450,8 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     {
       shell->unit = unit;
 
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      gimp_display_shell_scale_update_rulers (shell);
+
       gimp_display_shell_scaled (shell);
 
       g_object_notify (G_OBJECT (shell), "unit");
