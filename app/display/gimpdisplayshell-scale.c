@@ -75,6 +75,7 @@ static void gimp_display_shell_scale_to              (GimpDisplayShell *shell,
                                                       gdouble           y);
 static void gimp_display_shell_scale_get_zoom_focus  (GimpDisplayShell *shell,
                                                       gdouble           new_scale,
+                                                      gdouble           current_scale,
                                                       gint             *x,
                                                       gint             *y);
 
@@ -329,13 +330,19 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
     }
 }
 
-static void
+static gboolean
 gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                                               gdouble           new_scale,
                                               gdouble           current_scale,
                                               gboolean         *vertically,
                                               gboolean         *horizontally)
 {
+  gboolean vertically_dummy;
+  gboolean horizontally_dummy;
+
+  if (! vertically)   vertically   = &vertically_dummy;
+  if (! horizontally) horizontally = &horizontally_dummy;
+
   /* The image can only start to fit if we zoom out */
   if (new_scale > current_scale)
     {
@@ -366,6 +373,22 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                       new_scale_height     < shell->disp_height;
         
     }
+
+  return *vertically && *horizontally;
+}
+
+static gboolean
+gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
+                                             gdouble           new_scale,
+                                             gdouble           current_scale,
+                                             gboolean         *vertically,
+                                             gboolean         *horizontally)
+{
+  return gimp_display_shell_scale_image_starts_to_fit (shell,
+                                                       current_scale,
+                                                       new_scale,
+                                                       vertically,
+                                                       horizontally);
 }
 
 /**
@@ -412,7 +435,11 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                                     &vertically,
                                                     &horizontally);
 
-      gimp_display_shell_scale_get_zoom_focus (shell, real_new_scale, &x, &y);
+      gimp_display_shell_scale_get_zoom_focus (shell,
+                                               real_new_scale,
+                                               current_scale,
+                                               &x,
+                                               &y);
 
       gimp_display_shell_scale_to (shell, real_new_scale, x, y);
 
@@ -976,16 +1003,19 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 static void
 gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gdouble           new_scale,
+                                         gdouble           current_scale,
                                          gint             *x,
                                          gint             *y)
 {
   GdkEvent *event;
 
-  if (gimp_display_shell_scale_image_is_within_viewport (shell))
+  if (gimp_display_shell_scale_image_is_within_viewport (shell) &&
+      ! gimp_display_shell_scale_image_stops_to_fit (shell,
+                                                     new_scale,
+                                                     current_scale,
+                                                     NULL,
+                                                     NULL))
     {
-      /* If the image is within the viewport and we are zooming out, put
-       * the zoom focus in the center of the image
-       */
       gint sw, sh;
 
       gimp_display_shell_draw_get_scaled_image_size (shell,

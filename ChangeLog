@@ -1,5 +1,13 @@
 2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_stops_to_fit): New function.
+	(gimp_display_shell_scale_get_zoom_focus): If the image stops
+	to fit the viewport, we can already now use the mouse cursor
+	as the zoom focus point.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-draw.[ch]
 	(gimp_display_shell_draw_get_scaled_image_size_for_scale): New
 	function.
