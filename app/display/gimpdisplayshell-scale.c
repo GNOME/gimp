@@ -902,10 +902,8 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gint             *y)
 {
   GdkEvent *event;
-  gdouble   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  if (new_scale < current_scale &&
-      gimp_display_shell_scale_image_is_within_viewport (shell))
+  if (gimp_display_shell_scale_image_is_within_viewport (shell))
     {
       /* If the image is within the viewport and we are zooming out, put
        * the zoom focus in the center of the image
