@@ -52,7 +52,7 @@ def do_console():
             pyconsole.Console._commit(self)
             gimp.displays_flush()
 
-    class Console(gimpui.Dialog):
+    class ConsoleDialog(gimpui.Dialog):
         def __init__(self):
             gimpui.Dialog.__init__(self, title=_("Python Console"),
                                    role=PROC_NAME, help_id=PROC_NAME,
@@ -210,7 +210,7 @@ def do_console():
             self.show_all()
             gtk.main()
 
-    Console().run()
+    ConsoleDialog().run()
 
 register(
     PROC_NAME,

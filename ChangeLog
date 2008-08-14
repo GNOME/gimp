@@ -1,3 +1,8 @@
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/python-console.py: renamed the dialog
+	class to ConsoleDialog to avoid confusion with pyconsole.Console.
+
 2008-08-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/python-console.py: instead of calling
