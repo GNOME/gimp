@@ -2010,7 +2010,9 @@ clip_point (gdouble *dir,
           polygon_add_point (poly_new, x2 + pt[0], y2 + pt[1]);
         }
       else
-        polygon_add_point (poly_new, dir[0] * t + pt[0], dir[1] * t + pt[1]);
+        {
+          polygon_add_point (poly_new, dir[0] * t + pt[0], dir[1] * t + pt[1]);
+        }
     }
 }
 
@@ -2682,7 +2684,9 @@ polygon_add_point (Polygon *poly,
       poly->npts++;
     }
   else
-    g_print ( _("Unable to add additional point.\n"));
+    {
+      g_warning ("can't add more points");
+    }
 }
 
 static gboolean
