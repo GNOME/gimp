@@ -1,3 +1,7 @@
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/pixelize.c: formatting.
+
 2008-08-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
