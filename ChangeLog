@@ -1,5 +1,13 @@
 2008-08-15  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.[ch]: added some logic to avoid that
+	an info message replaces a warning. Allow info messages to
+	replace other info messages.
+
+	* app/display/gimpdisplay-handlers.c: changed accordingly.
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-commands.c (file_save_cmd_callback): save new
 	images, even if they are not marked dirty.
 
