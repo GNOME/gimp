@@ -19,12 +19,15 @@ Changes in GIMP 2.4.7
   - added missing validity checks (bug #536403)
   - allow to pass None for PDB_DISPLAY
 - plugged a memory leak in gimp-text-get-extents-fontname PDB call
+- fixed potential timeout issues in org.gimp.GIMP.UI D-Bus service
+- fixed endianness issue in the ICO save plug-in (bug #529629)
 - translation fixes and updates (be, lt, nn, vi)
 
 Contributors:
 
    Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
-   Lars-Peter Clausen, Rik Snel, S. Fielding, Joao S. O. Bueno
+   Lars-Peter Clausen, Rik Snel, S. Fielding, Joao S. O. Bueno,
+   Aurimas Juška
 
 
 Changes in GIMP 2.4.6
