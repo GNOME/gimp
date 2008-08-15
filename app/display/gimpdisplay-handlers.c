@@ -154,12 +154,9 @@ gimp_display_saved_handler (GimpImage   *image,
                             GimpDisplay *display)
 {
   GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
-  gchar     *filename;
+  gchar     *filename  = file_utils_uri_display_name (uri);
 
-  filename = file_utils_uri_display_name (uri);
-
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GTK_STOCK_SAVE,
-                            _("Image saved to '%s'"), filename);
-
+  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image saved to '%s'"), filename);
   g_free (filename);
 }

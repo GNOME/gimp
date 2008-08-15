@@ -37,31 +37,32 @@ typedef struct _GimpStatusbarClass GimpStatusbarClass;
 
 struct _GimpStatusbar
 {
-  GtkStatusbar      parent_instance;
+  GtkStatusbar         parent_instance;
 
-  GimpDisplayShell *shell;
+  GimpDisplayShell    *shell;
 
-  GSList           *messages;
-  GHashTable       *context_ids;
-  guint             seq_context_id;
+  GSList              *messages;
+  GHashTable          *context_ids;
+  guint                seq_context_id;
 
-  GdkPixbuf        *icon;
+  GdkPixbuf           *icon;
 
-  guint             temp_context_id;
-  guint             temp_timeout_id;
+  guint                temp_context_id;
+  guint                temp_timeout_id;
+  GimpMessageSeverity  temp_severity;
 
-  gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
-  gchar             length_format_str[CURSOR_FORMAT_LENGTH];
+  gchar                cursor_format_str[CURSOR_FORMAT_LENGTH];
+  gchar                length_format_str[CURSOR_FORMAT_LENGTH];
 
-  GtkWidget        *cursor_label;
-  GtkWidget        *unit_combo;
-  GtkWidget        *scale_combo;
+  GtkWidget           *cursor_label;
+  GtkWidget           *unit_combo;
+  GtkWidget           *scale_combo;
 
-  GtkWidget        *progressbar;
-  GtkWidget        *cancel_button;
-  gboolean          progress_active;
-  gboolean          progress_shown;
-  gdouble           progress_value;
+  GtkWidget           *progressbar;
+  GtkWidget           *cancel_button;
+  gboolean             progress_active;
+  gboolean             progress_shown;
+  gdouble              progress_value;
 };
 
 struct _GimpStatusbarClass
@@ -120,10 +121,12 @@ void        gimp_statusbar_pop              (GimpStatusbar       *statusbar,
                                              const gchar         *context);
 
 void        gimp_statusbar_push_temp        (GimpStatusbar       *statusbar,
+                                             GimpMessageSeverity  severity,
                                              const gchar         *stock_id,
                                              const gchar         *format,
-                                             ...) G_GNUC_PRINTF(3,4);
+                                             ...) G_GNUC_PRINTF(4,5);
 void        gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
+                                             GimpMessageSeverity  severity,
                                              const gchar         *stock_id,
                                              const gchar         *format,
                                              va_list              args);
