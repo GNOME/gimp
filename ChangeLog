@@ -1,3 +1,8 @@
+2008-08-15  Daniel Eddeland  <danedde@svn.gnome.org>
+
+	* app/text/gimptextlayout-render.c: make text align correctly if
+	text-box is FIXED.
+
 2008-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore-stroke.c
