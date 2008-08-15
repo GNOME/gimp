@@ -1,3 +1,15 @@
+2008-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_boundary)
+	(gimp_paint_core_stroke_vectors): when stroking multiple segments,
+	set paint_core->cur_coords to the start of each segment. It
+	normally gets assigned by gimp_paint_core_start(), but that's not
+	called for subsequent segments. Fixes stroking multiple segments
+	with the ink tool. The other tools were not affected since they
+	plot individual brushes rather than a shape from the last to the
+	current coordinates. Spotted by Alexia.
+
 2008-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mosaic.c: formatting.	
