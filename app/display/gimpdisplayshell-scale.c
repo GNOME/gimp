@@ -397,9 +397,9 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
  * @zoom_type: whether to zoom in, our or to a specific scale
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
- * This function calls gimp_display_shell_scale_to(). It tries to be
- * smart whether to use the position of the mouse pointer or the
- * center of the display as coordinates.
+ * This function figures out the context of the zoom and behaves
+ * appropriatley thereafter.
+ *
  **/
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
@@ -426,29 +426,40 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   if (! SCALE_EQUALS (real_new_scale, current_scale))
     {
-      gboolean vertically;
-      gboolean horizontally;
+      if (shell->display->config->resize_windows_on_zoom)
+        {
+          /* If the window is resized on zoom, simply do the zoom and
+           * get things rolling
+           */
+          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
+          gimp_display_shell_shrink_wrap (shell, FALSE);
+        }
+      else
+        {
+          gboolean vertically;
+          gboolean horizontally;
 
-      gimp_display_shell_scale_image_starts_to_fit (shell,
-                                                    real_new_scale,
-                                                    current_scale,
-                                                    &vertically,
-                                                    &horizontally);
+          gimp_display_shell_scale_image_starts_to_fit (shell,
+                                                        real_new_scale,
+                                                        current_scale,
+                                                        &vertically,
+                                                        &horizontally);
 
-      gimp_display_shell_scale_get_zoom_focus (shell,
-                                               real_new_scale,
-                                               current_scale,
-                                               &x,
-                                               &y);
+          gimp_display_shell_scale_get_zoom_focus (shell,
+                                                   real_new_scale,
+                                                   current_scale,
+                                                   &x,
+                                                   &y);
 
-      gimp_display_shell_scale_to (shell, real_new_scale, x, y);
+          gimp_display_shell_scale_to (shell, real_new_scale, x, y);
 
-      /* If an image axis started to fit due to zooming out, center on
-       * that axis in the display shell
-       */
-      gimp_display_shell_scroll_center_image (shell,
-                                              vertically,
-                                              horizontally);
+          /* If an image axis started to fit due to zooming out, center on
+           * that axis in the display shell
+           */
+          gimp_display_shell_scroll_center_image (shell,
+                                                  vertically,
+                                                  horizontally);
+        }
     }
 }
 

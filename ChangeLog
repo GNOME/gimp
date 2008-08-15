@@ -1,3 +1,8 @@
+2008-08-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	More elegantly deal with the 'Resize window on zoom'-case.
+
 2008-08-15  Daniel Eddeland  <danedde@svn.gnome.org>
 
 	* app/text/gimptextlayout-render.c: make text align correctly if
