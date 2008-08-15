@@ -1,5 +1,9 @@
 2008-08-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mosaic.c: formatting.	
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mosaic.c (polygon_add_point): converted a
 	g_print() call to g_warning() and unmarked the string for
 	translation.
