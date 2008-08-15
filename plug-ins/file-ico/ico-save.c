@@ -1082,6 +1082,14 @@ ico_save_image (const gchar *filename,
       entries[i].size = ftell (fp) - entries[i].offset;
     }
 
+  for (i = 0; i < info.num_icons; i++)
+    {
+      entries[i].planes = GUINT16_TO_LE (entries[i].planes);
+      entries[i].bpp    = GUINT16_TO_LE (entries[i].bpp);
+      entries[i].size   = GUINT32_TO_LE (entries[i].size);
+      entries[i].offset = GUINT32_TO_LE (entries[i].offset);
+    }
+
   if (fseek (fp, sizeof(IcoFileHeader), SEEK_SET) < 0
       || fwrite (entries, sizeof (IcoFileEntry), info.num_icons, fp) <= 0)
     {

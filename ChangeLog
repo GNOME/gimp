@@ -1,5 +1,10 @@
 2008-08-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-ico/ico-save.c: applied patch from Aurimas Juška
+	that fixes an endianness issue (bug #529629).
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: added some logic to avoid that
 	an info message replaces a warning. Allow info messages to
 	replace other info messages.
