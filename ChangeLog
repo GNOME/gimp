@@ -1,3 +1,9 @@
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback):
+	Also handle the case when only the offset is wrong. Not pretty but
+	simple.
+
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/display/Makefile.am
