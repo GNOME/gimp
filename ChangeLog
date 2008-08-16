@@ -1,3 +1,7 @@
+2008-08-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.c: remove #include "core/gimpguide.h"
+
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): changed
