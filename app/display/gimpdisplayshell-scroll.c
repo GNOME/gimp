@@ -44,6 +44,14 @@
 #define OVERPAN_FACTOR 0.5
 
 
+typedef struct
+{
+  GimpDisplayShell *shell;
+  gboolean          vertically;
+  gboolean          horizontally;
+} SizeAllocateCallbackData;
+
+
 /**
  * gimp_display_shell_scroll_center_image_coordinate:
  * @shell:
@@ -292,15 +300,19 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_scroll_center_image_callback (GimpDisplayShell *shell,
-                                                 GtkAllocation    *allocation,
-                                                 GtkWidget        *canvas)
+gimp_display_shell_scroll_center_image_callback (GtkWidget                *canvas,
+                                                 GtkAllocation            *allocation,
+                                                 SizeAllocateCallbackData *data)
 {
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+  gimp_display_shell_scroll_center_image (data->shell,
+                                          data->horizontally,
+                                          data->vertically);
 
   g_signal_handlers_disconnect_by_func (canvas,
                                         gimp_display_shell_scroll_center_image_callback,
-                                        shell);
+                                        data);
+
+  g_slice_free (SizeAllocateCallbackData, data);
 }
 
 /**
@@ -316,13 +328,27 @@ gimp_display_shell_scroll_center_image_callback (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *shell)
+gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *shell,
+                                                              gboolean          vertically,
+                                                              gboolean          horizontally)
 {
+  SizeAllocateCallbackData *data;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  g_signal_connect_swapped (shell->canvas, "size-allocate",
-                            G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
-                            shell);
+  data = g_slice_new (SizeAllocateCallbackData);
+
+  if (data)
+    {
+      data->shell        = shell;
+      data->horizontally = horizontally;
+      data->vertically   = vertically;
+      
+      g_signal_connect (shell->canvas, "size-allocate",
+                        G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
+                        data);
+    }
+
 }
 
 /**

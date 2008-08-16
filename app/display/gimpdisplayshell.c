@@ -614,7 +614,9 @@ gimp_display_shell_configure_event (GtkWidget         *widget,
        * axis, center the image on that axis. We know that the canvas
        * will get a size-allocate if we get here.
        */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
+                                                                    center_horizontally,
+                                                                    center_vertically);
     }
 
   return TRUE;
@@ -1270,7 +1272,9 @@ gimp_display_shell_new (GimpDisplay       *display,
        * not even finnished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
+                                                                    TRUE,
+                                                                    TRUE);
     }
   else
     {
@@ -1423,7 +1427,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller
    */
-  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
+  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
+                                                                TRUE,
+                                                                TRUE);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,

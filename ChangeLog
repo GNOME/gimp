@@ -1,5 +1,13 @@
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
+	Support axis independence.
+
+	* app/display/gimpdisplayshell.c: Adapt.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
 	Explain that this function needs to be used with care since it is
