@@ -1,5 +1,19 @@
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
+	Next step towards fixing bug #344818:
+
+	* libgimp/gimp.[ch]: keep the last error status and error message
+	in libgimp. Added new functon gimp_pdb_get_error() that allows to
+	retrieve it.
+
+	* libgimp/gimp.def: updated.
+
+	* plug-ins/pygimp/gimpmodule.c (pygimp_vectors_import_from_file)
+	(pygimp_vectors_import_from_string): use the new function to get
+	a more useful error message.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
 	removed the term 'PDB' from the user-visible error messages.
 

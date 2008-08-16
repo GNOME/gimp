@@ -307,6 +307,10 @@ void           gimp_destroy_params      (GimpParam       *params,
 void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
                                          gint             n_params);
 
+/* Retrieve the error message for the last procedure call.
+ */
+const gchar  * gimp_get_pdb_error       (void);
+
 
 /* Return various constants given by the GIMP core at plug-in config time.
  */

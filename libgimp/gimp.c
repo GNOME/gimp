@@ -90,7 +90,6 @@
 #  define USE_WIN32_SHM 1
 #endif
 
-#include <libintl.h>
 #include <locale.h>
 
 #include "libgimpbase/gimpbasetypes.h"
@@ -103,6 +102,8 @@
 
 #include "gimp.h"
 #include "gimpunitcache.h"
+
+#include "libgimp-intl.h"
 
 
 #define TILE_MAP_SIZE (_tile_width * _tile_height * 4)
@@ -156,6 +157,9 @@ static gboolean   gimp_extension_read          (GIOChannel      *channel,
                                                 GIOCondition     condition,
                                                 gpointer         data);
 
+static void       gimp_set_pdb_error           (const GimpParam *return_vals,
+                                                gint             n_return_vals);
+
 
 static GIOChannel *_readchannel  = NULL;
 GIOChannel *_writechannel = NULL;
@@ -203,8 +207,11 @@ static const GDebugKey gimp_debug_keys[] =
   { "on",             GIMP_DEBUG_DEFAULT        }
 };
 
-
 static GimpPlugInInfo PLUG_IN_INFO;
+
+
+static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
+static gchar             *pdb_error_message  = NULL;
 
 
 /**
@@ -964,21 +971,9 @@ gimp_run_procedure2 (const gchar     *name,
   proc_return->nparams = 0;
   proc_return->params  = NULL;
 
-  switch (return_vals[0].data.d_status)
-    {
-    case GIMP_PDB_EXECUTION_ERROR:
-      break;
-
-    case GIMP_PDB_CALLING_ERROR:
-      g_printerr ("a calling error occurred while trying to run: \"%s\"\n",
-                  name);
-      break;
-
-    default:
-      break;
-    }
-
   gimp_wire_destroy (&msg);
+
+  gimp_set_pdb_error (return_vals, *n_return_vals);
 
   return return_vals;
 }
@@ -1016,6 +1011,49 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
     }
 
   g_free (paramdefs);
+}
+
+/**
+ * gimp_get_pdb_error:
+ *
+ * Retrieves the error message from the last procedure call.
+ *
+ * If a procedure call fails, then it might pass an error message with
+ * the return values. Plug-ins that are using the libgimp C wrappers
+ * don't access the procedure return values directly. Thus ligimp
+ * stores the error message and makes it available with this
+ * function. A successful procedure call unsets the error message again.
+ *
+ * The returned string is owned by libgimp and must not be freed or
+ * modified.
+ *
+ * Return value: the error message
+ *
+ * Since: GIMP 2.6
+ **/
+const gchar *
+gimp_get_pdb_error (void)
+{
+  if (pdb_error_message && strlen (pdb_error_message))
+    return pdb_error_message;
+
+  switch (pdb_error_status)
+    {
+    case GIMP_PDB_SUCCESS:
+      return _("success");
+
+    case GIMP_PDB_EXECUTION_ERROR:
+      return _("execution error");
+
+    case GIMP_PDB_CALLING_ERROR:
+      return _("calling error");
+
+    case GIMP_PDB_CANCEL:
+      return _("cancelled");
+
+    default:
+      return "invalid return status";
+    }
 }
 
 /**
@@ -1229,7 +1267,7 @@ gimp_default_display (void)
 const gchar *
 gimp_wm_class (void)
 {
-  return (const gchar *) _wm_class;
+  return _wm_class;
 }
 
 /**
@@ -1244,7 +1282,7 @@ gimp_wm_class (void)
 const gchar *
 gimp_display_name (void)
 {
-  return (const gchar *) _display_name;
+  return _display_name;
 }
 
 /**
@@ -1952,4 +1990,33 @@ gimp_extension_read (GIOChannel  *channel,
   gimp_single_message ();
 
   return TRUE;
+}
+
+static void
+gimp_set_pdb_error (const GimpParam *return_vals,
+                    gint             n_return_vals)
+{
+  if (pdb_error_message)
+    {
+      g_free (pdb_error_message);
+      pdb_error_message = NULL;
+    }
+
+  pdb_error_status = return_vals[0].data.d_status;
+
+  switch (pdb_error_status)
+    {
+    case GIMP_PDB_SUCCESS:
+    case GIMP_PDB_PASS_THROUGH:
+      break;
+
+    case GIMP_PDB_EXECUTION_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
+    case GIMP_PDB_CANCEL:
+      if (n_return_vals > 1 && return_vals[1].type == GIMP_PDB_STRING)
+        {
+          pdb_error_message = g_strdup (return_vals[1].data.d_string);
+        }
+      break;
+    }
 }

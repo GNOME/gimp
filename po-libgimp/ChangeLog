@@ -1,3 +1,7 @@
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimp/gimp.c with some new messages.
+
 2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.

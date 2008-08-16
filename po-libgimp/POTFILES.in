@@ -3,6 +3,7 @@
 
 [encoding: UTF-8]
 
+libgimp/gimp.c
 libgimp/gimpbrushmenu.c
 libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
