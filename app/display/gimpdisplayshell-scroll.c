@@ -329,8 +329,8 @@ gimp_display_shell_scroll_center_image_callback (GtkWidget                *canva
  **/
 void
 gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *shell,
-                                                              gboolean          vertically,
-                                                              gboolean          horizontally)
+                                                              gboolean          horizontally,
+                                                              gboolean          vertically)
 {
   SizeAllocateCallbackData *data;
 
