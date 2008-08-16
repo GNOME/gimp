@@ -97,9 +97,7 @@ typedef enum
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
 
 
-typedef struct _GimpRectangleToolPrivate GimpRectangleToolPrivate;
-
-struct _GimpRectangleToolPrivate
+typedef struct
 {
   /* The following members are "constants", that is, variables that are setup
    * during gimp_rectangle_tool_button_press and then only read.
@@ -202,7 +200,7 @@ struct _GimpRectangleToolPrivate
 
   /* Synced with options->guide, only exists for drawing. */
   GimpRectangleGuide      guide;
-};
+} GimpRectangleToolPrivate;
 
 
 static void          gimp_rectangle_tool_iface_base_init      (GimpRectangleToolInterface *iface);
@@ -1869,7 +1867,7 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
 
     gint x2, y2, w2, h2;
 
-    gimp_display_shell_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
+    gimp_display_shell_scroll_get_scaled_viewport (shell, &x2, &y2, &w2, &h2);
 
     rectangle_width  = w1;
     rectangle_height = h1;

@@ -70,7 +70,8 @@ gimprc_query_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], value);
@@ -104,7 +105,8 @@ gimprc_set_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -120,7 +122,7 @@ get_default_comment_invoker (GimpProcedure      *procedure,
 
   comment = g_strdup (gimp->config->default_image->comment);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], comment);
 
   return return_vals;
@@ -139,7 +141,7 @@ get_default_unit_invoker (GimpProcedure      *procedure,
 
   unit_id = gimp_get_default_unit ();
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_set_int (&return_vals->values[1], unit_id);
 
   return return_vals;
@@ -160,7 +162,7 @@ get_monitor_resolution_invoker (GimpProcedure      *procedure,
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_double (&return_vals->values[1], xres);
   g_value_set_double (&return_vals->values[2], yres);
@@ -181,7 +183,7 @@ get_theme_dir_invoker (GimpProcedure      *procedure,
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], theme_dir);
 
   return return_vals;
@@ -200,7 +202,7 @@ get_color_configuration_invoker (GimpProcedure      *procedure,
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], config);
 
   return return_vals;
@@ -219,7 +221,7 @@ get_module_load_inhibit_invoker (GimpProcedure      *procedure,
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], load_inhibit);
 
   return return_vals;

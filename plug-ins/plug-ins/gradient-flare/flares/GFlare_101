@@ -1,0 +1,18 @@
+GIMP GFlare 0.25
+100.000000 NORMAL
+50.000000 NORMAL
+35.500000 NORMAL
+Flare\040Radial\040101
+%white
+%white
+100.000000 0.000000 0.000000
+%white_grad
+%random
+%random
+100.000000 0.000000 0.000000
+40 50.000000
+Flare\040Glow\040Radial\0401
+%random
+%random
+40.000000 0 0
+CIRCLE 6 1

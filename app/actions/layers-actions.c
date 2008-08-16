@@ -82,6 +82,12 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_new_last_vals_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
+  { "layers-new-from-visible", NULL,
+    N_("New from _Visible"), NULL,
+    N_("Create a new layer from what is visible in this image"),
+    G_CALLBACK (layers_new_from_visible_cmd_callback),
+    GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
+
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Layer"), "<control><shift>D",
     N_("Create a duplicate of the layer and add it to the image"),
@@ -510,28 +516,29 @@ layers_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
-  SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
+  SET_VISIBLE   ("layers-text-tool",        text_layer && !ac);
+  SET_SENSITIVE ("layers-edit-attributes",  layer && !fs && !ac);
 
-  SET_SENSITIVE ("layers-new",             image);
-  SET_SENSITIVE ("layers-new-last-values", image);
-  SET_SENSITIVE ("layers-duplicate",       layer && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",          layer && !ac);
+  SET_SENSITIVE ("layers-new",              image);
+  SET_SENSITIVE ("layers-new-last-values",  image);
+  SET_SENSITIVE ("layers-new-from-visible", image);
+  SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
+  SET_SENSITIVE ("layers-delete",           layer && !ac);
 
-  SET_SENSITIVE ("layers-select-top",      layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-bottom",   layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-select-top",       layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-select-bottom",    layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-select-previous",  layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-select-next",      layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-raise",            layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-raise-to-top",     layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-lower",            layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-anchor",          layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",      layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-merge-layers",    layer && !fs && !ac);
-  SET_SENSITIVE ("layers-flatten-image",   layer && !fs && !ac);
+  SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
+  SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
   SET_VISIBLE   ("layers-text-discard",             text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac);

@@ -98,7 +98,7 @@ static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
  *                                    the shadow tiles. It is common
  *                                    practice to write to the shadow
  *                                    tiles and then use
- *                                    #gimp_drawable_merge_shadow () to
+ *                                    gimp_drawable_merge_shadow() to
  *                                    merge the changes from the shadow
  *                                    tiles using the current selection
  *                                    as a mask.

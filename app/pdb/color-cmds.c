@@ -76,7 +76,8 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
                                            brightness, contrast);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -122,7 +123,8 @@ levels_invoker (GimpProcedure      *procedure,
                               low_output, high_output);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -148,7 +150,8 @@ levels_auto_invoker (GimpProcedure      *procedure,
         gimp_drawable_levels_stretch (drawable, progress);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -174,7 +177,8 @@ levels_stretch_invoker (GimpProcedure      *procedure,
         gimp_drawable_levels_stretch (drawable, progress);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -202,7 +206,8 @@ posterize_invoker (GimpProcedure      *procedure,
         gimp_drawable_posterize (drawable, progress, levels);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -228,7 +233,8 @@ desaturate_invoker (GimpProcedure      *procedure,
         gimp_drawable_desaturate (drawable, progress, GIMP_DESATURATE_LIGHTNESS);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -256,7 +262,8 @@ desaturate_full_invoker (GimpProcedure      *procedure,
         gimp_drawable_desaturate (drawable, progress, desaturate_mode);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -284,7 +291,8 @@ equalize_invoker (GimpProcedure      *procedure,
         gimp_drawable_equalize (drawable, mask_only);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -310,7 +318,8 @@ invert_invoker (GimpProcedure      *procedure,
         gimp_drawable_invert (drawable, progress);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -347,7 +356,8 @@ curves_spline_invoker (GimpProcedure      *procedure,
                                      channel, control_pts, num_points);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -384,7 +394,8 @@ curves_explicit_invoker (GimpProcedure      *procedure,
                                        channel, curve, num_bytes);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -423,7 +434,8 @@ color_balance_invoker (GimpProcedure      *procedure,
                                      preserve_lum);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -456,7 +468,8 @@ colorize_invoker (GimpProcedure      *procedure,
                                 hue, saturation, lightness);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -516,7 +529,8 @@ histogram_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -563,7 +577,8 @@ hue_saturation_invoker (GimpProcedure      *procedure,
                                       hue_range, hue_offset, saturation, lightness);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -595,7 +610,8 @@ threshold_invoker (GimpProcedure      *procedure,
                                  low_threshold, high_threshold);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

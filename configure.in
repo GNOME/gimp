@@ -63,6 +63,7 @@ m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
 m4_define([exif_required_version], [0.6.15])
+m4_define([lcms_required_version], [1.16])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -221,6 +222,13 @@ AC_MSG_CHECKING([for native Win32])
 case "$target_or_host" in
   *-*-mingw*)
     os_win32=yes
+    case "$host" in
+      x86_64-*-*)
+	;;
+      *)
+	WIN32_LARGE_ADDRESS_AWARE='-Wl,--large-address-aware'
+	;;
+    esac
     PATHSEP=';'
     ;;
   *)
@@ -229,6 +237,7 @@ case "$target_or_host" in
     ;;
 esac
 AC_MSG_RESULT([$os_win32])
+AC_SUBST(WIN32_LARGE_ADDRESS_AWARE)
 AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
 AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
@@ -923,7 +932,7 @@ if test "$gdk_target" = x11; then
    DOC_SHOOTER=doc-shooter
 
    # screenshot plug-in needs to link to X11 explicitely
-   LIBSCREENSHOT="$X_LIBS -lX11"
+   SCREENSHOT_LIBS="$X_LIBS -lX11"
 
    gimp_save_CFLAGS="$CFLAGS"
    gimp_save_LDFLAGS="$LDFLAGS"
@@ -931,20 +940,20 @@ if test "$gdk_target" = x11; then
    LDFLAGS="$LDFLAGS $X_LIBS"
 
    # Test for Xmu
-   if test -z "$LIBXMU"; then
+   if test -z "$XMU_LIBS"; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
 	  have_libxmu=yes
-          LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
+          XMU_LIBS="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [have_libxmu="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
 	[have_libxmu="no (XMU library not found)"], -lXt -lX11)
-      LIBSCREENSHOT="$LIBXMU"
+      SCREENSHOT_LIBS="$XMU_LIBS"
    fi
 
    # Check for shaped window extension
    AC_CHECK_LIB(Xext, XShapeGetRectangles,
      [AC_CHECK_HEADERS(X11/extensions/shape.h,
-        LIBSCREENSHOT="$LIBSCREENSHOT -lXext",,[#include <gdk/gdkx.h>])],,
+        SCREENSHOT_LIBS="$SCREENSHOT_LIBS -lXext",,[#include <gdk/gdkx.h>])],,
      -lX11 -lXext)
 
    CFLAGS="$gimp_save_CFLAGS"
@@ -954,12 +963,12 @@ if test "$gdk_target" = x11; then
    PKG_CHECK_MODULES(XFIXES, xfixes,
       AC_DEFINE(HAVE_XFIXES, 1,
                 [Define to 1 to if the XFIXES X extension is available])
-      LIBSCREENSHOT="$LIBSCREENSHOT $XFIXES_LIBS",
+      SCREENSHOT_LIBS="$SCREENSHOT_LIBS $XFIXES_LIBS",
       true)
 fi
 
-AC_SUBST(LIBXMU)
-AC_SUBST(LIBSCREENSHOT)
+AC_SUBST(XMU_LIBS)
+AC_SUBST(SCREENSHOT_LIBS)
 
 AC_SUBST(DOC_SHOOTER)
 
@@ -996,24 +1005,24 @@ MIME_TYPES="application/postscript;application/pdf;image/bmp;image/g3fax;image/g
 
 have_libtiff=no
 AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
-  if test "x$with_libtiff" != xno && test -z "$LIBTIFF"; then
+  if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
     have_libtiff=yes
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
-	TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff',
+	FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff',
 	[have_libtiff="no (TIFF header files not found)"])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
-          TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
+          FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff -ljpeg -lz',
 	  [have_libtiff="no (TIFF header files not found)"])],
 	[AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
+            FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff34 -ljpeg -lz',
 	    [have_libtiff="no (TIFF header files not found)"])],
         [have_libtiff="no (TIFF library not found)"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi
 
-  if test "x$with_libtiff" != xno && test -z "$LIBTIFF"; then
+  if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
     AC_MSG_ERROR([
 *** Checks for TIFF libary failed. You can build without it by passing
 *** --without-libtiff to configure but you won't be able to use TIFFs then.])
@@ -1023,9 +1032,9 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
     MIME_TYPES="$MIME_TYPES;image/tiff"
   fi
 
-AC_SUBST(TIFF_LOAD)
-AC_SUBST(TIFF_SAVE)
-AC_SUBST(LIBTIFF)
+AC_SUBST(FILE_TIFF_LOAD)
+AC_SUBST(FILE_TIFF_SAVE)
+AC_SUBST(TIFF_LIBS)
 
 
 ###################
@@ -1035,7 +1044,7 @@ AC_SUBST(LIBTIFF)
 jpeg_ok=no
 
 AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
-  if test "x$with_libjpeg" != xno && test -z "$LIBJPEG"; then
+  if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
       jpeg_ok=yes,
       [jpeg_ok="no (JPEG library not found)"
@@ -1054,7 +1063,7 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
 	AC_CHECK_LIB(jpeg, jpeg_save_markers,
-	JPEG='jpeg$(EXEEXT)'; LIBJPEG='-ljpeg',
+	JPEG='jpeg$(EXEEXT)'; JPEG_LIBS='-ljpeg',
         jpeg_ok="no (JPEG library is too old)")
       else
 	jpeg_ok="no (JPEG header file not found)"
@@ -1062,7 +1071,7 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
     fi
   fi
 
-  if test "x$with_libjpeg" != xno && test -z "$LIBJPEG"; then
+  if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
     AC_MSG_ERROR([
 *** Checks for JPEG library failed. You can build without it by passing
 *** --without-libjpeg to configure but you won't be able to use JPEGs then.])
@@ -1073,7 +1082,7 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   fi
 
 AM_CONDITIONAL(BUILD_JPEG, test "x$jpeg_ok" = xyes)
-AC_SUBST(LIBJPEG)
+AC_SUBST(JPEG_LIBS)
 
 
 ## xjt does build, but it is more confusing than useful on Win32,
@@ -1093,10 +1102,10 @@ fi
 ################
 
 have_zlib=yes
-if test -z "$LIBZ"; then
+if test -z "$Z_LIBS"; then
   AC_CHECK_LIB(z, gzsetparams,
     [AC_CHECK_HEADER(zlib.h,
-      PSP='psp$(EXEEXT)'; LIBZ='-lz',
+      FILE_PSP='file-psp$(EXEEXT)'; Z_LIBS='-lz',
       [have_zlib="no (ZLIB header files not found)"])],
     [have_zlib="no (ZLIB library not found)"])
 fi
@@ -1105,8 +1114,8 @@ if test "x$have_zlib" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-psd"
 fi
 
-AC_SUBST(LIBZ)
-AC_SUBST(PSP)
+AC_SUBST(FILE_PSP)
+AC_SUBST(Z_LIBS)
 
 
 ##################
@@ -1118,8 +1127,7 @@ AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
 if test "x$with_libpng" != xno; then
   have_libpng=yes
   PKG_CHECK_MODULES(PNG, libpng,
-    PNG='png$(EXEEXT)'
-    LIBPNG="$PNG_LIBS",
+    FILE_PNG='file-png$(EXEEXT)',
     [have_libpng="no (libpng not found)"
      AC_MSG_ERROR([
 *** Checks for PNG library failed. You can build without it by passing
@@ -1130,8 +1138,7 @@ if test "x$have_libpng" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
 fi
 
-AC_SUBST(PNG)
-AC_SUBST(LIBPNG)
+AC_SUBST(FILE_PNG)
 
 AM_CONDITIONAL(HAVE_PNG, test "x$have_libpng" = xyes)
 
@@ -1143,20 +1150,20 @@ AM_CONDITIONAL(HAVE_PNG, test "x$have_libpng" = xyes)
 have_libmng=no
 AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
   have_libmng=yes
-  if test "x$with_libmng" != xno && test -z "$LIBMNG" &&
-     test -n "$LIBPNG" && test -n "$LIBJPEG" && test -n "$LIBZ"; then
+  if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
+     test -n "$PNG_LIBS" && test -n "$JPEG_LIBS" && test -n "$Z_LIBS"; then
     AC_CHECK_LIB(mng, mng_create,
       [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
       [have_libmng="no (MNG library not found)"], -lz -lm)
     if test "$mng_ok" = yes; then
-      MNG='mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
+      FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"
     else
       have_libmng="no (MNG header file not found)"
     fi
   fi
 
-AC_SUBST(MNG)
-AC_SUBST(LIBMNG)
+AC_SUBST(FILE_MNG)
+AC_SUBST(MNG_LIBS)
 
 
 ############################################################
@@ -1167,7 +1174,7 @@ AC_SUBST(LIBMNG)
 
 have_libexif=no
 AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
-if test "x$with_libexif" != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
+if test "x$with_libexif" != xno && test -z "$EXIF_LIBS" && test -n "$JPEG_LIBS"; then
   have_libexif=yes
   PKG_CHECK_MODULES(EXIF, libexif >= exif_required_version,
     AC_DEFINE(HAVE_EXIF, 1, [Define to 1 if libexif is available]),
@@ -1185,17 +1192,17 @@ AC_SUBST(EXIF_LIBS)
 
 have_libaa=no
 AC_ARG_WITH(aa,  [  --without-aa            do not build the AA plug-in])
-if test "x$with_aa" != xno && test -z "$LIBAA"; then
+if test "x$with_aa" != xno && test -z "$AA_LIBS"; then
   have_libaa=yes
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
-      AA='aa$(EXEEXT)'; LIBAA='-laa',
+      FILE_AA='file-aa$(EXEEXT)'; AA_LIBS='-laa',
       [have_libaa="no (AA header file not found)"])],
     [have_libaa="no (AA library not found)"])
 fi
 
-AC_SUBST(AA)
-AC_SUBST(LIBAA)
+AC_SUBST(FILE_AA)
+AC_SUBST(AA_LIBS)
 
 
 ##################
@@ -1210,10 +1217,10 @@ if test "$gdk_target" = x11; then
   lib_X11=-lX11
 fi
 have_libxpm=yes
-if test -z "$LIBXPM"; then
+if test -z "$XPM_LIBS"; then
   AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
     [AC_CHECK_HEADER(X11/xpm.h,
-      XPM='xpm$(EXEEXT)'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
+      FILE_XPM='file-xpm$(EXEEXT)'; XPM_LIBS="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
       [have_libxpm="no (XPM header file not found)"])],
     [have_libxpm="no (XPM library not found)"], $X_PRE_LIBS $lib_X11)
 fi
@@ -1224,8 +1231,8 @@ if test "x$have_libxpm" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-xpixmap"
 fi
 
-AC_SUBST(XPM)
-AC_SUBST(LIBXPM)
+AC_SUBST(FILE_XPM)
+AC_SUBST(XPM_LIBS)
 
 
 ##################
@@ -1265,8 +1272,7 @@ have_librsvg=no
 if test "x$with_librsvg" != xno; then
   have_librsvg=yes
   PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-    SVG='svg$(EXEEXT)'
-    LIBSVG=$SVG_LIBS,
+    FILE_SVG='file-svg$(EXEEXT)',
     have_librsvg="no (librsvg not found)")
 else
    have_librsvg="no (librsvg support disabled)"
@@ -1276,8 +1282,7 @@ if test "x$have_librsvg" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/svg+xml"
 fi
 
-AC_SUBST(SVG)
-AC_SUBST(LIBSVG)
+AC_SUBST(FILE_SVG)
 
 
 ####################################
@@ -1303,8 +1308,7 @@ AC_ARG_WITH(poppler,[  --without-poppler       build without poppler support])
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version gthread-2.0,
-    POPPLER='poppler$(EXEEXT)'
-    LIBPOPPLER=$POPPLER_LIBS
+    FILE_PDF='file-pdf$(EXEEXT)'
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
     have_poppler="Using PostScript plug-in (libpoppler not found)")
@@ -1312,8 +1316,7 @@ else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi
 
-AC_SUBST(POPPLER)
-AC_SUBST(LIBPOPPLER)
+AC_SUBST(FILE_PDF)
 
 
 ###############################################
@@ -1409,8 +1412,8 @@ if test "x$WMF_CONFIG" != "xno" ; then
   wmf_version=`$WMF_CONFIG --version`
   if expr $wmf_version \>= wmf_required_version >/dev/null; then
     AC_MSG_RESULT([yes (version $wmf_version)])
-    WMF='wmf$(EXEEXT)'
-    LIBWMF=`$WMF_CONFIG --libs`
+    FILE_WMF='file-wmf$(EXEEXT)'
+    WMF_LIBS=`$WMF_CONFIG --libs`
     WMF_CFLAGS=`$WMF_CONFIG --cflags`
   else
     have_libwmf="no (libwmf is too old)"
@@ -1423,9 +1426,9 @@ if test "x$have_libwmf" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/x-wmf"
 fi
 
-AC_SUBST(LIBWMF)
+AC_SUBST(FILE_WMF)
+AC_SUBST(WMF_LIBS)
 AC_SUBST(WMF_CFLAGS)
-AC_SUBST(WMF)
 
 
 ################
@@ -1434,30 +1437,16 @@ AC_SUBST(WMF)
 
 AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
 
-have_lcms=no
+have_lcms="no (lcms support disabled)"
 if test "x$with_lcms" != xno; then
-  AC_CHECK_LIB(lcms, cmsCreate_sRGBProfile, [
-    AC_CHECK_HEADER(lcms.h,
-      have_lcms=yes, [
-      AC_CHECK_HEADER(lcms/lcms.h,
-        have_lcms=yes
-        AC_DEFINE(HAVE_LCMS_LCMS_H, 1,
-          [Define to 1 if the lcms header must be included as lcms/lcms.h]))
-      ])
-  ])
-  if test "x$have_lcms" = xyes; then
+  have_lcms=yes
+  PKG_CHECK_MODULES(LCMS, lcms >= lcms_required_version,
     AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
-    LIBLCMS="-llcms"
-    LCMS='lcms$(EXEEXT)'
-  else
-    have_lcms="no (lcms not found or unusable)"
-  fi
-else
-  have_lcms="no (lcms support disabled)"
+    LCMS='lcms$(EXEEXT)',
+    have_lcms="no (lcms not found or unusable)")
 fi
 
 AC_SUBST(LCMS)
-AC_SUBST(LIBLCMS)
 AM_CONDITIONAL(HAVE_LCMS, test "x$have_lcms" = xyes)
 
 
@@ -1986,32 +1975,35 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
-plug-ins/bmp/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
-plug-ins/common/Makefile
-plug-ins/faxg3/Makefile
-plug-ins/fits/Makefile
+plug-ins/file-bmp/Makefile
+plug-ins/file-faxg3/Makefile
+plug-ins/file-fits/Makefile
+plug-ins/file-fli/Makefile
+plug-ins/file-ico/Makefile
+plug-ins/file-jpeg/Makefile
+plug-ins/file-psd/Makefile
+plug-ins/file-sgi/Makefile
+plug-ins/file-uri/Makefile
+plug-ins/file-xjt/Makefile
 plug-ins/flame/Makefile
-plug-ins/fli/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile
-plug-ins/gradient-flare/Makefile
-plug-ins/gradient-flare/flares/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
+plug-ins/gradient-flare/Makefile
+plug-ins/gradient-flare/flares/Makefile
 plug-ins/help-browser/Makefile
 plug-ins/help/Makefile
-plug-ins/ico/Makefile
 plug-ins/ifs-compose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/imagemap/images/Makefile
-plug-ins/jpeg/Makefile
 plug-ins/lighting/Makefile
 plug-ins/lighting/images/Makefile
 plug-ins/map-object/Makefile
@@ -2019,7 +2011,6 @@ plug-ins/maze/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
-plug-ins/psd/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/script-fu/Makefile
@@ -2029,11 +2020,9 @@ plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
-plug-ins/sgi/Makefile
 plug-ins/twain/Makefile
-plug-ins/uri/Makefile
 plug-ins/win-snap/Makefile
-plug-ins/xjt/Makefile
+plug-ins/common/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/app/Makefile
@@ -2098,11 +2087,11 @@ gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
 )
 
 AC_CONFIG_COMMANDS([sed-po-makefiles],
-[sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
-sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile
-sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
-sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
-sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile])
+[sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile && touch po-libgimp/stamp-it
+sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile && touch po-python/stamp-it
+sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile && touch po-plug-ins/stamp-it
+sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile && touch po-script-fu/stamp-it
+sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it])
 
 AC_OUTPUT
 

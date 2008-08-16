@@ -62,6 +62,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpcanvas.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectangletool.h"
@@ -317,6 +318,9 @@ gimp_text_tool_dispose (GObject *object)
   gimp_tool_control_set_wants_all_key_events (tool->control, FALSE);
   gimp_tool_control_set_show_context_menu (tool->control, FALSE);
 
+  gtk_im_context_set_client_window (text_tool->im_context, NULL);
+  gtk_im_context_focus_out (text_tool->im_context);
+
   gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
   g_signal_handlers_disconnect_by_func (text_tool->im_context,
                                         gimp_text_tool_commit_cb, text_tool);
@@ -418,7 +422,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
   if (x1 <= cx && x2 >= cx && y1 <= cy && y2 >= cy)
   {
     text_tool->text_cursor_changing = TRUE;
-    gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD); 
+    gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
     gimp_tool_control_activate (tool->control);
   }
   else
@@ -612,6 +616,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
         g_object_set (text_tool->proxy,
                       "box-mode", GIMP_TEXT_BOX_DYNAMIC,
                       NULL);
+
       text_tool->handle_rectangle_change_complete = FALSE;
     }
   else
@@ -670,7 +675,7 @@ gimp_text_tool_motion (GimpTool        *tool,
 
           if (offset == old_cursor_offset)
               return;
-    
+
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
           gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
                                              &cursor, offset);
@@ -729,9 +734,9 @@ gimp_text_tool_key_press (GimpTool    *tool,
 
   if (kevent->keyval == GDK_BackSpace)
     {
-      gimp_draw_tool_pause (draw_tool);
+      /*gimp_draw_tool_pause (draw_tool);*/
       gimp_text_tool_delete_text (text_tool);
-      gimp_draw_tool_resume (draw_tool);
+/*      gimp_draw_tool_resume (draw_tool);*/
       return TRUE;
     }
 
@@ -995,9 +1000,9 @@ gimp_text_tool_text_notify (GimpText     *text,
 
   /* we need to redraw the rectangle if it is visible and the shape of
      the layer has changed, because of an undo for example. */
-  if ((0 == strcmp (pspec->name, "box-width"))
-      || (0 == strcmp (pspec->name, "box-height"))
-      || (text->box_mode == GIMP_TEXT_BOX_DYNAMIC))
+  if (strcmp (pspec->name, "box-width") == 0  ||
+      strcmp (pspec->name, "box-height") == 0 ||
+      text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
     {
       GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
 
@@ -1268,8 +1273,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   if (text_tool->text_box_fixed)
     {
-      GimpRectangleTool *rect_tool       = GIMP_RECTANGLE_TOOL (text_tool);
-      GimpItem          *item            = GIMP_ITEM (layer);
+      GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
+      GimpItem          *item      = GIMP_ITEM (layer);
       gint               x1, y1, x2, y2;
 
       g_object_get (rect_tool,
@@ -1279,8 +1284,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                     "y2", &y2,
                     NULL);
       g_object_set (text_tool->proxy,
-                    "box-mode", GIMP_TEXT_BOX_FIXED,
-                    "box-width", (gdouble) (x2 - x1),
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
       gimp_item_translate (item,
@@ -1306,7 +1311,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 static void
 gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
 {
-  GimpTool *tool = GIMP_TOOL (text_tool);
+  GimpTool          *tool = GIMP_TOOL (text_tool);
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
@@ -1323,6 +1328,8 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
                                     GIMP_DISPLAY_SHELL (tool->display->shell)->canvas->window);
   gtk_im_context_focus_in (text_tool->im_context);
 
+
+
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
   text_tool->ui_manager = gimp_menu_factory_manager_new (dialog_factory->menu_factory,
                                                          "<TextTool>",
@@ -1335,6 +1342,12 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
 
   g_signal_connect (text_tool, "show-popup",
                     G_CALLBACK (gimp_text_tool_show_context_menu), NULL);
+/*
+  if (!text_tool->layer) {gimp_text_tool_create_layer (text_tool, NULL); printf ("1\n");}
+  if (!text_tool->layer->text) printf ("2\n");
+  if (!text_tool->layout) {printf ("3\n"); return;}
+  if (!text_tool->layout->layout) printf ("4\n");
+  */
 }
 
 static void
@@ -1734,6 +1747,7 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
                     NULL);
 
       text_tool->text_box_fixed = TRUE;
+
       if (! text)
         {
           /*
@@ -1746,8 +1760,8 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
         }
 
       g_object_set (text_tool->proxy,
-                    "box-mode", GIMP_TEXT_BOX_FIXED,
-                    "box-width", (gdouble) (x2 - x1),
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
 
@@ -1784,7 +1798,7 @@ void
 gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
                                 GimpItem          *item)
 {
-  GimpDisplay *display    = GIMP_TOOL (rect_tool)->display;
+  GimpDisplay *display  = GIMP_TOOL (rect_tool)->display;
   gint         offset_x;
   gint         offset_y;
   gint         width;
@@ -1793,10 +1807,11 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (display != NULL);
-  g_return_if_fail ( (display->image == item->image) );
+  g_return_if_fail (display->image == item->image);
 
-  width     = gimp_item_width (item);
-  height    = gimp_item_height (item);
+  width  = gimp_item_width (item);
+  height = gimp_item_height (item);
+
   gimp_item_offsets (item, &offset_x, &offset_y);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
@@ -1895,11 +1910,20 @@ static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GimpTool       *tool = GIMP_TOOL (draw_tool);
   gint            width, height;
   GtkTextIter     start;
+  GdkRectangle    cliprect;
+  gint            x1, y1, x2, y2;
 
   GValue value = { 0, };
 
+  g_object_get (G_OBJECT (text_tool),
+                          "x1", &x1,
+                          "y1", &y1,
+                          "x2", &x2,
+                          "y2", &y2,
+                          NULL);
 
   g_value_init (&value, G_TYPE_BOOLEAN);
   g_value_set_boolean (&value, TRUE);
@@ -1914,6 +1938,14 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (!text_tool->layout) return;
   if (!text_tool->layout->layout) return;
 
+  /*Turn on clipping for text-cursor and selections*/
+  cliprect.x = x1;
+  cliprect.width = x2 - x1;
+  cliprect.y = y1;
+  cliprect.height = y2 - y1;
+  gimp_canvas_set_clip_rect (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas,
+                             GIMP_CANVAS_STYLE_XOR, &cliprect);
+
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
 
   if (!gtk_text_buffer_get_has_selection (text_tool->text_buffer))
@@ -1923,7 +1955,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       gint           cursorx;
       GtkTextIter    cursor;
       PangoRectangle crect;
-      gchar          *string;
+      gchar         *string;
 
       gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
                                         gtk_text_buffer_get_insert (text_tool->text_buffer));
@@ -1947,10 +1979,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       crect.height = PANGO_PIXELS (crect.height);
 
       gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x, crect.y,
-                                     4, crect.height,
-                                     TRUE);
-
+                                       crect.x, crect.y,
+                                       4, crect.height,
+                                       TRUE);
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
           gimp_text_tool_draw_preedit_lines (draw_tool);
     }
@@ -2032,6 +2063,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       pango_layout_iter_free (line_iter);
     }
+  gimp_canvas_set_clip_rect (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas,
+                             GIMP_CANVAS_STYLE_XOR, NULL);
 }
 
 static void
@@ -2179,7 +2212,7 @@ gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_clipboard_copy (GimpTextTool *text_tool)
+gimp_text_tool_clipboard_copy (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
 {
   GtkClipboard *clipboard;
 
@@ -2188,7 +2221,7 @@ gimp_text_tool_clipboard_copy (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_clipboard_paste (GimpTextTool *text_tool)
+gimp_text_tool_clipboard_paste (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
 {
   GtkClipboard *clipboard;
 

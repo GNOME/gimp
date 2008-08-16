@@ -20,15 +20,15 @@
 #define __GIMP_DISPLAY_SHELL_RENDER_H__
 
 
-void   gimp_display_shell_render_init (Gimp             *gimp);
-void   gimp_display_shell_render_exit (Gimp             *gimp);
+void   gimp_display_shell_render_init (Gimp                   *gimp);
+void   gimp_display_shell_render_exit (Gimp                   *gimp);
 
-void   gimp_display_shell_render      (GimpDisplayShell *shell,
-                                       gint              x,
-                                       gint              y,
-                                       gint              w,
-                                       gint              h,
-                                       GdkRectangle     *highlight);
+void   gimp_display_shell_render      (const GimpDisplayShell *shell,
+                                       gint                    x,
+                                       gint                    y,
+                                       gint                    w,
+                                       gint                    h,
+                                       GdkRectangle           *highlight);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */

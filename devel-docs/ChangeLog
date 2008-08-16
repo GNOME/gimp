@@ -1,3 +1,9 @@
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added gimp_layer_new_from_visible().
+
+	* libgimp/tmpl/gimplayer.sgml: regenerated.
+
 2008-07-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_vectors_copy().

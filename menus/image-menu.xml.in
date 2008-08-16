@@ -178,6 +178,7 @@
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
 	<menuitem action="edit-paste-as-new-short" />
+	<menuitem action="edit-paste-as-new-layer" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
@@ -345,6 +346,7 @@
     <menu action="layers-menu" name="Layer">
       <placeholder name="New">
         <menuitem action="layers-new" />
+        <menuitem action="layers-new-from-visible" />
         <menuitem action="layers-duplicate" />
       </placeholder>
       <placeholder name="Structure">

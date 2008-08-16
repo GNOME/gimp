@@ -1,0 +1,88 @@
+     TinyScheme would not exist if it wasn't for MiniScheme. I had just
+     written the HTTP server for Ovrimos SQL Server, and I was lamenting the
+     lack of a scripting language. Server-side Javascript would have been the
+     preferred solution, had there been a Javascript interpreter I could
+     lay my hands on. But there weren't. Perl would have been another solution,
+     but it was probably ten times bigger that the program it was supposed to
+     be embedded in. There would also be thorny licencing issues. 
+     
+     So, the obvious thing to do was find a trully small interpreter. Forth
+     was a language I had once quasi-implemented, but the difficulty of
+     handling dynamic data and the weirdness of the language put me off. I then
+     looked around for a LISP interpreter, the next thing I knew was easy to
+     implement. Alas, the LeLisp I knew from my days in UPMC (Universite Pierre
+     et Marie Curie) had given way to Common Lisp, a megalith of a language!
+     Then my search lead me to Scheme, a language I knew was very orthogonal
+     and clean. When I found Mini-Scheme, a single C file of some 2400 loc, I 
+     fell in love with it! What if it lacked floating-point numbers and 
+     strings! The rest, as they say, is history.
+     
+     Below  are the original credits. Don't email Akira KIDA, the address has
+     changed.
+     
+     ---------- Mini-Scheme Interpreter Version 0.85 ----------
+
+                coded by Atsushi Moriwaki (11/5/1989)
+
+            E-MAIL :  moriwaki@kurims.kurims.kyoto-u.ac.jp
+
+               THIS SOFTWARE IS IN THE PUBLIC DOMAIN
+               ------------------------------------
+ This software is completely free to copy, modify and/or re-distribute.
+ But I would appreciate it if you left my name on the code as the author.
+
+  This version has been modified by R.C. Secrist.
+
+  Mini-Scheme is now maintained by Akira KIDA.
+
+  This is a revised and modified version by Akira KIDA.
+   current version is 0.85k4 (15 May 1994)
+
+  Please send suggestions, bug reports and/or requests to:
+        <SDI00379@niftyserve.or.jp>
+
+
+     Features compared to MiniSCHEME
+     -------------------------------
+
+     All code is now reentrant. Interpreter state is held in a 'scheme'
+     struct, and many interpreters can coexist in the same program, possibly
+     in different threads. The user can specify user-defined memory allocation
+     primitives. (see "Programmer's Reference")
+
+     The reader is more consistent.
+
+     Strings, characters and flonums are supported. (see "Types")
+
+     Files being loaded can be nested up to some depth.
+
+     R5RS I/O is there, plus String Ports. (see "Scheme Reference","I/O")
+
+     Vectors exist.
+
+     As a standalone application, it supports command-line arguments.
+     (see "Standalone")
+
+     Running out of memory is now handled.
+
+     The user can add foreign functions in C. (see "Foreign Functions")
+
+     The code has been changed slightly, core functions have been moved
+     to the library, behavior has been aligned with R5RS etc.
+
+     Support has been added for user-defined error recovery.
+     (see "Error Handling")
+
+     Support has been added for modular programming.
+     (see "Colon Qualifiers - Packages")
+
+     To enable this, EVAL has changed internally, and can
+     now take two arguments, as per R5RS. Environments are supported.
+     (see "Colon Qualifiers - Packages")
+
+     Promises are now evaluated once only.
+
+     (macro (foo form) ...) is now equivalent to (macro foo (lambda(form) ...))
+
+     The reader can be extended using new #-expressions
+     (see "Reader extensions")

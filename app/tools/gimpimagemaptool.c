@@ -506,10 +506,11 @@ static void
 gimp_image_map_tool_flush (GimpImageMap     *image_map,
                            GimpImageMapTool *image_map_tool)
 {
-  GimpTool *tool = GIMP_TOOL (image_map_tool);
+  GimpTool    *tool = GIMP_TOOL (image_map_tool);
+  GimpDisplay *display = tool->display;
 
-  gimp_projection_flush_now (tool->display->image->projection);
-  gimp_display_flush_now (tool->display);
+  gimp_projection_flush_now (gimp_image_get_projection (display->image));
+  gimp_display_flush_now (display);
 }
 
 static void

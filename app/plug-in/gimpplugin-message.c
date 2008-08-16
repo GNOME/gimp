@@ -37,8 +37,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-shadow.h"
 
-#include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
+#include "pdb/gimppdb.h"
+#include "pdb/gimppdberror.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-cleanup.h"
@@ -205,7 +206,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_tile_request: ERROR");
+                    "%s: ERROR", G_STRFUNC);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -213,7 +214,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_tile_request: ERROR");
+                    "%s: ERROR", G_STRFUNC);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -294,7 +295,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   if (! gp_tile_ack_write (plug_in->my_write, plug_in))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_tile_request: ERROR");
+                    "%s: ERROR", G_STRFUNC);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -379,7 +380,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_tile_request: ERROR");
+                    "%s: ERROR", G_STRFUNC);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -389,7 +390,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "plug_in_handle_tile_request: ERROR");
+                    "%s: ERROR", G_STRFUNC);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -502,11 +503,23 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
 
   if (error)
     {
-      gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
-                    GIMP_MESSAGE_ERROR,
-                    _("PDB calling error for procedure '%s':\n"
-                      "%s"),
-                    canonical, error->message);
+      if (error->domain == GIMP_PDB_ERROR)
+        {
+          gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
+                        GIMP_MESSAGE_ERROR,
+                        _("Calling error for procedure '%s':\n"
+                          "%s"),
+                        canonical, error->message);
+        }
+      else
+        {
+          gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
+                        GIMP_MESSAGE_ERROR,
+                        _("Execution error for procedure '%s':\n"
+                          "%s"),
+                        canonical, error->message);
+        }
+
       g_error_free (error);
     }
 
@@ -530,7 +543,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_proc_run: ERROR");
+                        "%s: ERROR", G_STRFUNC);
           gimp_plug_in_close (plug_in, TRUE);
         }
 

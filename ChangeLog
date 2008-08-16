@@ -1,5 +1,9 @@
 2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
 
+	Merged 26402:26609 from trunk
+
+2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
+
 	* app/tools/gimptexttool.c
 	* app/tools/gimptexttool.h: Input methods and bug fixing.
 

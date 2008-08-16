@@ -41,6 +41,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
@@ -330,6 +331,27 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   gimp_image_add_layer (image, new_layer, -1);
 
   gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+}
+
+void
+layers_new_from_visible_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage      *image;
+  GimpLayer      *layer;
+  GimpProjection *projection;
+  return_if_no_image (image, data);
+
+  projection = gimp_image_get_projection (image);
+
+  layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
+                                     image,
+                                     gimp_image_base_type_with_alpha (image),
+                                     _("Visible"),
+                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  gimp_image_add_layer (image, layer, -1);
 
   gimp_image_flush (image);
 }

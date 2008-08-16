@@ -44,6 +44,8 @@ void   edit_paste_into_cmd_callback         (GtkAction *action,
                                              gpointer   data);
 void   edit_paste_as_new_cmd_callback       (GtkAction *action,
                                              gpointer   data);
+void   edit_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                             gpointer   data);
 void   edit_named_cut_cmd_callback          (GtkAction *action,
                                              gpointer   data);
 void   edit_named_copy_cmd_callback         (GtkAction *action,

@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-05 12:38+0200\n"
-"PO-Revision-Date: 2008-08-05 12:43+0200\n"
+"POT-Creation-Date: 2008-08-16 16:14+0200\n"
+"PO-Revision-Date: 2008-08-16 16:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -192,11 +192,11 @@ msgstr "Alle Warnungen als kritisch einstufen"
 msgid "Output a gimprc file with default settings"
 msgstr "Eine gimprc-Datei mit den Standardeinstellungen ausgeben"
 
-#: ../app/main.c:345
+#: ../app/main.c:355
 msgid "[FILE|URI...]"
 msgstr "[DATEI|URI...]"
 
-#: ../app/main.c:363
+#: ../app/main.c:373
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -205,22 +205,22 @@ msgstr ""
 "Bitte stellen Sie sicher, dass Ihre grafische Oberfläche korrekt "
 "eingerichtet ist."
 
-#: ../app/main.c:382
+#: ../app/main.c:392
 msgid "Another GIMP instance is already running."
 msgstr "Eine andere GIMP-Instanz wird bereits ausgeführt."
 
-#: ../app/main.c:448
+#: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "GIMP-Ausgabe. Drücken Sie eine beliebige Taste, um dieses Fenster zu "
 "schließen."
 
-#: ../app/main.c:449
+#: ../app/main.c:463
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Drücken Sie eine beliebige Taste, um dieses Fenster zu schließen)\n"
 
-#: ../app/main.c:466
+#: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-Ausgabe. Sie können dieses Fenster verkleinern, jedoch nicht schließen."
@@ -624,7 +624,7 @@ msgstr "Aus_wahl aus Kanal"
 msgid "Replace the selection with this channel"
 msgstr "Die Auswahl durch diesen Kanal ersetzen"
 
-#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:260
+#: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:266
 #: ../app/actions/vectors-actions.c:173
 msgid "_Add to Selection"
 msgstr "Zur Auswahl _hinzufügen"
@@ -633,8 +633,8 @@ msgstr "Zur Auswahl _hinzufügen"
 msgid "Add this channel to the current selection"
 msgstr "Diesen Kanal der Auswahl hinzufügen"
 
-#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:266
-#: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
+#: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:272
+#: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
 #: ../app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
 msgstr "Von Auswahl ab_ziehen"
@@ -643,8 +643,8 @@ msgstr "Von Auswahl ab_ziehen"
 msgid "Subtract this channel from the current selection"
 msgstr "Diesen Kanal von der Auswahl abziehen"
 
-#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:272
-#: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
+#: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:278
+#: ../app/actions/layers-actions.c:305 ../app/actions/layers-actions.c:332
 #: ../app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
 msgstr "Schnittmenge _bilden"
@@ -696,7 +696,7 @@ msgid "%s Channel Copy"
 msgstr "%s (Kopie)"
 
 #: ../app/actions/channels-commands.c:307 ../app/core/gimpselection.c:549
-#: ../app/pdb/selection-cmds.c:440 ../app/pdb/selection-cmds.c:505
+#: ../app/pdb/selection-cmds.c:454 ../app/pdb/selection-cmds.c:521
 msgid "Channel to Selection"
 msgstr "Auswahl aus Kanal"
 
@@ -858,10 +858,10 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1409
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1413
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
-#: ../app/pdb/image-cmds.c:2072 ../app/widgets/gimpdnd-xds.c:92
+#: ../app/pdb/image-cmds.c:2136 ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -1116,7 +1116,7 @@ msgstr "_Tipp des Tages"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Show some helpful tips on using GIMP"
-msgstr "Zeigt hilfreiche zur Benutzung von GIMP"
+msgstr "Zeigt hilfreiche Tipps zur Benutzung von GIMP"
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_About"
@@ -1459,7 +1459,7 @@ msgstr "A_blagen"
 msgid "Undo History Menu"
 msgstr "Journal-Menü"
 
-#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:302
+#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:308
 msgid "_Undo"
 msgstr "_Rückgängig"
 
@@ -1467,7 +1467,7 @@ msgstr "_Rückgängig"
 msgid "Undo the last operation"
 msgstr "Die letzte Operation rückgängig machen"
 
-#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:303
+#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:309
 msgid "_Redo"
 msgstr "_Wiederherstellen"
 
@@ -1502,7 +1502,7 @@ msgstr "Journal _leeren"
 msgid "Remove all operations from the undo history"
 msgstr "Alle Einträge aus dem Journal entfernen"
 
-#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:304
+#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:310
 msgid "_Fade..."
 msgstr "_Verblassen …"
 
@@ -1533,8 +1533,8 @@ msgid "Copy _Visible"
 msgstr "_Sichtbares kopieren"
 
 #: ../app/actions/edit-actions.c:121
-msgid "Copy the selected region to the clipboard"
-msgstr "Ausgewählten Bereich in die Zwischenablage kopieren"
+msgid "Copy what is visible in the the selected region"
+msgstr "Kopiert das was sichtbar und ausgewählt ist in die Zwischenablage"
 
 #: ../app/actions/edit-actions.c:126
 msgid "_Paste"
@@ -1565,142 +1565,156 @@ msgid "_New Image"
 msgstr "Neues _Bild"
 
 #: ../app/actions/edit-actions.c:150
+msgid "New _Layer"
+msgstr "Neue _Ebene"
+
+#: ../app/actions/edit-actions.c:151
+msgid "Create a new layer from the content of the clipboard"
+msgstr "Ein neue Ebene aus dem Inhalt der Zwischenablage erzeugen"
+
+#: ../app/actions/edit-actions.c:156
 msgid "Cu_t Named..."
 msgstr "In Ablage _verschieben …"
 
-#: ../app/actions/edit-actions.c:151
+#: ../app/actions/edit-actions.c:157
 msgid "Move the selected pixels to a named buffer"
 msgstr "Ausgewählte Pixel in eine benannte Ablage verschieben"
 
-#: ../app/actions/edit-actions.c:156
+#: ../app/actions/edit-actions.c:162
 msgid "_Copy Named..."
 msgstr "In Ablage _kopieren …"
 
-#: ../app/actions/edit-actions.c:157
+#: ../app/actions/edit-actions.c:163
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Ausgewählte Pixel in eine benannte Ablage kopieren"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:162
+#: ../app/actions/edit-actions.c:168
 msgid "Copy _Visible Named..."
 msgstr "_Sichtbares in Ablage kopieren …"
 
-#: ../app/actions/edit-actions.c:163
+#: ../app/actions/edit-actions.c:169
 msgid "Copy the selected region to a named buffer"
 msgstr "Ausgewählten Bereich in eine benannte Ablage kopieren"
 
-#: ../app/actions/edit-actions.c:168
+#: ../app/actions/edit-actions.c:174
 msgid "_Paste Named..."
 msgstr "Aus Ablage _einfügen …"
 
-#: ../app/actions/edit-actions.c:169
+#: ../app/actions/edit-actions.c:175
 msgid "Paste the content of a named buffer"
 msgstr "Den Inhalt einer benannten Ablage einfügen"
 
-#: ../app/actions/edit-actions.c:174
+#: ../app/actions/edit-actions.c:180
 msgid "Cl_ear"
 msgstr "_Löschen"
 
-#: ../app/actions/edit-actions.c:175
+#: ../app/actions/edit-actions.c:181
 msgid "Clear the selected pixels"
 msgstr "Ausgewählte Pixel entfernen"
 
-#: ../app/actions/edit-actions.c:183
+#: ../app/actions/edit-actions.c:189
 msgid "Fill with _FG Color"
 msgstr "Mit _Vordergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:184
+#: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the foreground color"
 msgstr "Die Auswahl mit der Vordergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:189
+#: ../app/actions/edit-actions.c:195
 msgid "Fill with B_G Color"
 msgstr "Mit _Hintergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:190
+#: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the background color"
 msgstr "Die Auswahl mit der Hintergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:195
+#: ../app/actions/edit-actions.c:201
 msgid "Fill with P_attern"
 msgstr "Mit _Muster füllen"
 
-#: ../app/actions/edit-actions.c:196
+#: ../app/actions/edit-actions.c:202
 msgid "Fill the selection using the active pattern"
 msgstr "Die Auswahl mit dem aktuellen Muster füllen"
 
-#: ../app/actions/edit-actions.c:275
+#: ../app/actions/edit-actions.c:281
 #, c-format
 msgid "_Undo %s"
 msgstr "_Rückgängig: %s"
 
-#: ../app/actions/edit-actions.c:280
+#: ../app/actions/edit-actions.c:286
 #, c-format
 msgid "_Redo %s"
 msgstr "_Wiederholen: %s"
 
-#: ../app/actions/edit-actions.c:291
+#: ../app/actions/edit-actions.c:297
 #, c-format
 msgid "_Fade %s..."
 msgstr "%s verblassen …"
 
-#: ../app/actions/edit-commands.c:133
+#: ../app/actions/edit-commands.c:134
 msgid "Clear Undo History"
 msgstr "Das Journal leeren"
 
-#: ../app/actions/edit-commands.c:159
+#: ../app/actions/edit-commands.c:160
 msgid "Really clear image's undo history?"
 msgstr "Möchten Sie wirklich das Journal dieses Bildes löschen?"
 
-#: ../app/actions/edit-commands.c:171
+#: ../app/actions/edit-commands.c:172
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Das Löschen des Journals für dieses Bild würde %s mehr Speicherplatz "
 "schaffen."
 
-#: ../app/actions/edit-commands.c:200
+#: ../app/actions/edit-commands.c:201
 msgid "Cut pixels to the clipboard"
 msgstr "Ausgeschnittene Pixel in der Zwischenablage"
 
-#: ../app/actions/edit-commands.c:227 ../app/actions/edit-commands.c:253
+#: ../app/actions/edit-commands.c:228 ../app/actions/edit-commands.c:254
 msgid "Copied pixels to the clipboard"
 msgstr "Kopierte Pixel in der Zwischenablage"
 
-#: ../app/actions/edit-commands.c:315 ../app/actions/edit-commands.c:491
+#: ../app/actions/edit-commands.c:315 ../app/actions/edit-commands.c:349
+#: ../app/actions/edit-commands.c:525
 msgid "There is no image data in the clipboard to paste."
 msgstr ""
 "Die Zwischenablage enthält keine Bilddaten, die eingefügt werden könnten."
 
-#: ../app/actions/edit-commands.c:329
+#: ../app/actions/edit-commands.c:338 ../app/core/gimpbrushclipboard.c:181
+#: ../app/core/gimppatternclipboard.c:181 ../app/widgets/gimpclipboard.c:296
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#: ../app/actions/edit-commands.c:363
 msgid "Cut Named"
 msgstr "In Ablage verschieben"
 
-#: ../app/actions/edit-commands.c:332 ../app/actions/edit-commands.c:373
-#: ../app/actions/edit-commands.c:393
+#: ../app/actions/edit-commands.c:366 ../app/actions/edit-commands.c:407
+#: ../app/actions/edit-commands.c:427
 msgid "Enter a name for this buffer"
 msgstr "Bitte geben Sie dieser Ablage einen Namen"
 
-#: ../app/actions/edit-commands.c:370
+#: ../app/actions/edit-commands.c:404
 msgid "Copy Named"
 msgstr "In Ablage kopieren"
 
-#: ../app/actions/edit-commands.c:390
+#: ../app/actions/edit-commands.c:424
 msgid "Copy Visible Named "
 msgstr "Sichtbares in Ablage kopieren "
 
-#: ../app/actions/edit-commands.c:508
+#: ../app/actions/edit-commands.c:542
 msgid "There is no active layer or channel to cut from."
 msgstr ""
 "Es gibt keine aktive Ebene und keinen aktiven Kanal, aus denen "
 "ausgeschnitten werden könnte."
 
-#: ../app/actions/edit-commands.c:513 ../app/actions/edit-commands.c:545
-#: ../app/actions/edit-commands.c:569
+#: ../app/actions/edit-commands.c:547 ../app/actions/edit-commands.c:579
+#: ../app/actions/edit-commands.c:603
 msgid "(Unnamed Buffer)"
 msgstr "(Unbenannte Ablage)"
 
-#: ../app/actions/edit-commands.c:540
+#: ../app/actions/edit-commands.c:574
 msgid "There is no active layer or channel to copy from."
 msgstr ""
 "Es gibt keine aktive Ebene und keinen aktiven Kanal, aus denen kopiert "
@@ -1861,11 +1875,11 @@ msgstr "Speichern und schließen …"
 msgid "Save this image and close its window"
 msgstr "Dieses Bild speichern und das Bildfenster schließen"
 
-#: ../app/actions/file-commands.c:257
+#: ../app/actions/file-commands.c:259
 msgid "Saving canceled"
 msgstr "Speichern abgebrochen"
 
-#: ../app/actions/file-commands.c:266 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:268 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1877,38 +1891,42 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:296 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:293
+msgid "No changes need to be saved"
+msgstr "Keine Änderungen zu speichern"
+
+#: ../app/actions/file-commands.c:300 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Bild speichern"
 
-#: ../app/actions/file-commands.c:302
+#: ../app/actions/file-commands.c:306
 msgid "Save a Copy of the Image"
 msgstr "Eine Kopie des Bildes speichern"
 
-#: ../app/actions/file-commands.c:322
+#: ../app/actions/file-commands.c:326
 msgid "Create New Template"
 msgstr "Eine neue Vorlage erstellen"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:330
 msgid "Enter a name for this template"
 msgstr "Bitte geben Sie dieser Vorlage einen Namen"
 
-#: ../app/actions/file-commands.c:352
+#: ../app/actions/file-commands.c:356
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Das Bild konnte nicht wiederhergestellt werden, da kein Dateiname mit dem "
 "Bild verknüpft ist."
 
-#: ../app/actions/file-commands.c:365
+#: ../app/actions/file-commands.c:369
 msgid "Revert Image"
 msgstr "Bild wiederherstellen"
 
-#: ../app/actions/file-commands.c:391
+#: ../app/actions/file-commands.c:395
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Wollen Sie von »%s« zu »%s« zurückkehren?"
 
-#: ../app/actions/file-commands.c:397
+#: ../app/actions/file-commands.c:401
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1916,19 +1934,19 @@ msgstr ""
 "Indem Sie das Bild auf den zuletzt gespeicherten Stand zurücksetzen, werden "
 "alle Änderungen einschließlich des Journals verloren gehen."
 
-#: ../app/actions/file-commands.c:473
+#: ../app/actions/file-commands.c:477
 msgid "Open Image as Layers"
 msgstr "Bild als Ebenen öffnen"
 
-#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:76
+#: ../app/actions/file-commands.c:482 ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: ../app/actions/file-commands.c:553
+#: ../app/actions/file-commands.c:557
 msgid "(Unnamed Template)"
 msgstr "(Unbenannte Vorlage)"
 
-#: ../app/actions/file-commands.c:601
+#: ../app/actions/file-commands.c:605
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2442,7 +2460,7 @@ msgstr "Bild _skalieren"
 msgid "Change the size of the image content"
 msgstr "Die Größe des Bildinhaltes ändern"
 
-#: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:182
+#: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:188
 msgid "_Crop to Selection"
 msgstr "Auf Auswahl _zuschneiden"
 
@@ -2463,15 +2481,15 @@ msgstr "Ein Duplikat dieses Bildes erzeugen"
 msgid "Merge Visible _Layers..."
 msgstr "Sichtbare _Ebenen vereinen …"
 
-#: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:135
+#: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:141
 msgid "Merge all visible layers into one layer"
 msgstr "Alle sichtbaren Ebenen in einer Ebene vereinigen"
 
-#: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:140
+#: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:146
 msgid "_Flatten Image"
 msgstr "Bild z_usammenfügen"
 
-#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:141
+#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:147
 msgid "Merge all layers into one and remove transparency"
 msgstr "Alle Ebenen in einer vereinen und die Transparenz entfernen"
 
@@ -2545,19 +2563,19 @@ msgid "Set Image Print Resolution"
 msgstr "Druckauflösung des Bildes ändern"
 
 #: ../app/actions/image-commands.c:362
-#: ../app/pdb/drawable-transform-cmds.c:147
-#: ../app/pdb/drawable-transform-cmds.c:221
+#: ../app/pdb/drawable-transform-cmds.c:148
+#: ../app/pdb/drawable-transform-cmds.c:223
 msgid "Flipping"
 msgstr "Wird gespiegelt"
 
 #: ../app/actions/image-commands.c:383
-#: ../app/pdb/drawable-transform-cmds.c:519
-#: ../app/pdb/drawable-transform-cmds.c:597
-#: ../app/pdb/transform-tools-cmds.c:213 ../app/tools/gimprotatetool.c:122
+#: ../app/pdb/drawable-transform-cmds.c:525
+#: ../app/pdb/drawable-transform-cmds.c:604
+#: ../app/pdb/transform-tools-cmds.c:215 ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
 msgstr "Wird gedreht"
 
-#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:617
+#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Es konnte nicht ausgeschnitten oder kopiert werden,\n"
@@ -2572,11 +2590,11 @@ msgid "Scale Image"
 msgstr "Bild skalieren"
 
 #. Scaling
-#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1079
+#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
 #: ../app/dialogs/preferences-dialog.c:1919
-#: ../app/pdb/drawable-transform-cmds.c:674
-#: ../app/pdb/drawable-transform-cmds.c:749
-#: ../app/pdb/transform-tools-cmds.c:288 ../app/tools/gimpscaletool.c:107
+#: ../app/pdb/drawable-transform-cmds.c:682
+#: ../app/pdb/drawable-transform-cmds.c:758
+#: ../app/pdb/transform-tools-cmds.c:291 ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "Skalierung"
 
@@ -2673,336 +2691,348 @@ msgid "Create a new layer with last used values"
 msgstr "Eine neue Ebene mit den zuletzt verwendeten Werten erstellen"
 
 #: ../app/actions/layers-actions.c:86
+msgid "New from _Visible"
+msgstr "N_eu aus Sichtbarem"
+
+#: ../app/actions/layers-actions.c:87
+msgid "Create a new layer from what is visible in this image"
+msgstr "Eine neue Ebene erstellen, aus dem, was in diesem Bild zu sehen ist"
+
+#: ../app/actions/layers-actions.c:92
 msgid "D_uplicate Layer"
 msgstr "Ebene _duplizieren"
 
-#: ../app/actions/layers-actions.c:87
+#: ../app/actions/layers-actions.c:93
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Ein Duplikat dieser Ebene erstellen und zum Ebenenstapel hinzufügen"
 
-#: ../app/actions/layers-actions.c:92
+#: ../app/actions/layers-actions.c:98
 msgid "_Delete Layer"
 msgstr "Ebene _löschen"
 
-#: ../app/actions/layers-actions.c:93
+#: ../app/actions/layers-actions.c:99
 msgid "Delete this layer"
 msgstr "Diese Ebene löschen"
 
-#: ../app/actions/layers-actions.c:98
+#: ../app/actions/layers-actions.c:104
 msgid "_Raise Layer"
 msgstr "Ebene an_heben"
 
-#: ../app/actions/layers-actions.c:99
+#: ../app/actions/layers-actions.c:105
 msgid "Raise this layer one step in the layer stack"
 msgstr "Die Ebene um einen Schritt im Stapel anheben"
 
-#: ../app/actions/layers-actions.c:104
+#: ../app/actions/layers-actions.c:110
 msgid "Layer to _Top"
 msgstr "Ebene nach ganz _oben"
 
-#: ../app/actions/layers-actions.c:105
+#: ../app/actions/layers-actions.c:111
 msgid "Move this layer to the top of the layer stack"
 msgstr "Die Ebene an die Spitze des Stapels setzen"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:116
 msgid "_Lower Layer"
 msgstr "Ebene a_bsenken"
 
-#: ../app/actions/layers-actions.c:111
+#: ../app/actions/layers-actions.c:117
 msgid "Lower this layer one step in the layer stack"
 msgstr "Die Ebene um einen Schritt im Stapel absenken"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:122
 msgid "Layer to _Bottom"
 msgstr "Ebene nach ganz _unten"
 
-#: ../app/actions/layers-actions.c:117
+#: ../app/actions/layers-actions.c:123
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Die Ebene ans Ende des Stapels setzen"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:128
 msgid "_Anchor Layer"
 msgstr "Ebene _verankern"
 
-#: ../app/actions/layers-actions.c:123
+#: ../app/actions/layers-actions.c:129
 msgid "Anchor the floating layer"
 msgstr "Schwebende Auswahl verankern"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:134
 msgid "Merge Do_wn"
 msgstr "Nach un_ten vereinen"
 
-#: ../app/actions/layers-actions.c:129
+#: ../app/actions/layers-actions.c:135
 msgid "Merge this layer with the one below it"
 msgstr "Diese Ebene mit der darunterliegenden vereinen"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:140
 msgid "Merge _Visible Layers..."
 msgstr "Sichtbare _Ebenen vereinen …"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:152
 msgid "_Discard Text Information"
 msgstr "Te_xtinformationen verwerfen"
 
-#: ../app/actions/layers-actions.c:147
+#: ../app/actions/layers-actions.c:153
 msgid "Turn this text layer into a normal layer"
 msgstr "Die Textebene in eine normale Ebene umwandeln"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:158
 msgid "Text to _Path"
 msgstr "_Pfad aus Text"
 
-#: ../app/actions/layers-actions.c:153
+#: ../app/actions/layers-actions.c:159
 msgid "Create a path from this text layer"
 msgstr "Einen Pfad aus dem Text der Ebene erzeugen"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:164
 msgid "Text alon_g Path"
 msgstr "Text am Pfad entlan_g"
 
 # XXX "... ziehen" (!?)
-#: ../app/actions/layers-actions.c:159
+#: ../app/actions/layers-actions.c:165
 msgid "Warp this layer's text along the current path"
 msgstr "Den Text der Ebene am aktuellen Pfad entlang verzerren"
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:170
 msgid "Layer B_oundary Size..."
 msgstr "Ebenen_größe …"
 
-#: ../app/actions/layers-actions.c:165
+#: ../app/actions/layers-actions.c:171
 msgid "Adjust the layer dimensions"
 msgstr "Die Größe der Ebene anpassen"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:176
 msgid "Layer to _Image Size"
 msgstr "Ebene auf _Bildgröße"
 
-#: ../app/actions/layers-actions.c:171
+#: ../app/actions/layers-actions.c:177
 msgid "Resize the layer to the size of the image"
 msgstr "Die Größe der Ebene an die Bildgröße anpassen"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:182
 msgid "_Scale Layer..."
 msgstr "Ebene _skalieren …"
 
-#: ../app/actions/layers-actions.c:177
+#: ../app/actions/layers-actions.c:183
 msgid "Change the size of the layer content"
 msgstr "Die Größe des Ebeneninhaltes ändern"
 
-#: ../app/actions/layers-actions.c:183
+#: ../app/actions/layers-actions.c:189
 msgid "Crop the layer to the extents of the selection"
 msgstr "Die Ebene auf die Auswahlgröße zurechtschneiden"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:194
 msgid "Add La_yer Mask..."
 msgstr "Ebenenmaske _hinzufügen …"
 
-#: ../app/actions/layers-actions.c:189
+#: ../app/actions/layers-actions.c:195
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "Eine Maske hinzufügen, die ein nicht-destruktives Bearbeiten der Transparenz "
 "ermöglicht"
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:200
 msgid "Add Alpha C_hannel"
 msgstr "Alphakanal hin_zufügen"
 
-#: ../app/actions/layers-actions.c:195
+#: ../app/actions/layers-actions.c:201
 msgid "Add transparency information to the layer"
 msgstr "Transparenzinformationen zur Ebene hinzufügen"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:206
 msgid "_Remove Alpha Channel"
 msgstr "Alphakanal _entfernen"
 
-#: ../app/actions/layers-actions.c:201
+#: ../app/actions/layers-actions.c:207
 msgid "Remove transparency information from the layer"
 msgstr "Transparenzinformationen von der Ebene entfernen"
 
-#: ../app/actions/layers-actions.c:209
+#: ../app/actions/layers-actions.c:215
 msgid "Lock Alph_a Channel"
 msgstr "Alphakanal _sperren"
 
-#: ../app/actions/layers-actions.c:210
+#: ../app/actions/layers-actions.c:216
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Transparenzinformationen dieser Ebene vor Änderungen schützen"
 
-#: ../app/actions/layers-actions.c:216
+#: ../app/actions/layers-actions.c:222
 msgid "_Edit Layer Mask"
 msgstr "Ebenen_maske bearbeiten"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:223
 msgid "Work on the layer mask"
 msgstr "An der Ebenenmaske arbeiten"
 
-#: ../app/actions/layers-actions.c:223
+#: ../app/actions/layers-actions.c:229
 msgid "S_how Layer Mask"
 msgstr "E_benenmaske anzeigen"
 
-#: ../app/actions/layers-actions.c:229
+#: ../app/actions/layers-actions.c:235
 msgid "_Disable Layer Mask"
 msgstr "Ebenenmaske _deaktivieren"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:236
 msgid "Dismiss the effect of the layer mask"
 msgstr "Effekt der Ebenenmaske übergehen"
 
-#: ../app/actions/layers-actions.c:239
+#: ../app/actions/layers-actions.c:245
 msgid "Apply Layer _Mask"
 msgstr "Ebenenmaske an_wenden"
 
-#: ../app/actions/layers-actions.c:240
+#: ../app/actions/layers-actions.c:246
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Effekt anwenden und die Ebenenmaske entfernen"
 
-#: ../app/actions/layers-actions.c:245
+#: ../app/actions/layers-actions.c:251
 msgid "Delete Layer Mas_k"
 msgstr "Ebenenmaske lös_chen"
 
-#: ../app/actions/layers-actions.c:246
+#: ../app/actions/layers-actions.c:252
 msgid "Remove the layer mask and its effect"
 msgstr "Ebenenmaske und deren Effekt entfernen"
 
-#: ../app/actions/layers-actions.c:254
+#: ../app/actions/layers-actions.c:260
 msgid "_Mask to Selection"
 msgstr "Auswahl aus _Maske"
 
-#: ../app/actions/layers-actions.c:255
+#: ../app/actions/layers-actions.c:261
 msgid "Replace the selection with the layer mask"
 msgstr "Die Auswahl durch die Ebenenmaske ersetzen"
 
-#: ../app/actions/layers-actions.c:261
+#: ../app/actions/layers-actions.c:267
 msgid "Add the layer mask to the current selection"
 msgstr "Die Ebenenmaske zur Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:267
+#: ../app/actions/layers-actions.c:273
 msgid "Subtract the layer mask from the current selection"
 msgstr "Die Ebenenmaske von der Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:273
+#: ../app/actions/layers-actions.c:279
 msgid "Intersect the layer mask with the current selection"
 msgstr "Die Ebenenmaske mit der Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:281
+#: ../app/actions/layers-actions.c:287
 msgid "Al_pha to Selection"
 msgstr "Aus_wahl aus Alphakanal"
 
-#: ../app/actions/layers-actions.c:282
+#: ../app/actions/layers-actions.c:288
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Die Auswahl durch den Alphakanal der Ebene ersetzen"
 
-#: ../app/actions/layers-actions.c:287 ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
 msgid "A_dd to Selection"
 msgstr "Zur Auswahl _hinzufügen"
 
-#: ../app/actions/layers-actions.c:288
+#: ../app/actions/layers-actions.c:294
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Den Alphakanal der Ebene zur Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:294
+#: ../app/actions/layers-actions.c:300
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Den Alphakanal der Ebene von der Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:300
+#: ../app/actions/layers-actions.c:306
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Den Alphakanal der Ebene mit der Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:308
+#: ../app/actions/layers-actions.c:314
 msgid "_Text to Selection"
 msgstr "Auswahl aus _Text"
 
-#: ../app/actions/layers-actions.c:309
+#: ../app/actions/layers-actions.c:315
 msgid "Replace the selection with the text layer's outline"
 msgstr "Die Auswahl mit dem Umriss der Textebene ersetzen"
 
-#: ../app/actions/layers-actions.c:315
+#: ../app/actions/layers-actions.c:321
 msgid "Add the text layer's outline to the current selection"
 msgstr "Den Umriss der Textebene zur aktuellen Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:327
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "Den Umriss der Textebene von der aktuellen Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:327
+#: ../app/actions/layers-actions.c:333
 msgid "Intersect the text layer's outline with the current selection"
 msgstr "Den Umriss der Textebene mit der aktuellen Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:335
+#: ../app/actions/layers-actions.c:341
 msgid "Select _Top Layer"
 msgstr "_Oberste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:336
+#: ../app/actions/layers-actions.c:342
 msgid "Select the topmost layer"
 msgstr "Die oberste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:341
+#: ../app/actions/layers-actions.c:347
 msgid "Select _Bottom Layer"
 msgstr "_Unterste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:342
+#: ../app/actions/layers-actions.c:348
 msgid "Select the bottommost layer"
 msgstr "Die unterste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:347
+#: ../app/actions/layers-actions.c:353
 msgid "Select _Previous Layer"
 msgstr "_Vorherige Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:348
+#: ../app/actions/layers-actions.c:354
 msgid "Select the layer above the current layer"
 msgstr "Die Ebene oberhalb der aktiven Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:353
+#: ../app/actions/layers-actions.c:359
 msgid "Select _Next Layer"
 msgstr "_Nächste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:354
+#: ../app/actions/layers-actions.c:360
 msgid "Select the layer below the current layer"
 msgstr "Die Ebene unterhalb der aktiven Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:362
+#: ../app/actions/layers-actions.c:368
 msgid "Set Opacity"
 msgstr "Transparenz ändern"
 
-#: ../app/actions/layers-commands.c:202
+#: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
-#: ../app/actions/layers-commands.c:205
+#: ../app/actions/layers-commands.c:206
 msgid "Edit Layer Attributes"
 msgstr "Ebeneneigenschaften bearbeiten"
 
-#: ../app/actions/layers-commands.c:248 ../app/actions/layers-commands.c:250
-#: ../app/actions/layers-commands.c:318 ../app/actions/layers-commands.c:322
+#: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
+#: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
 msgstr "Neue Ebene"
 
-#: ../app/actions/layers-commands.c:253
+#: ../app/actions/layers-commands.c:254
 msgid "Create a New Layer"
 msgstr "Eine neue Ebene erstellen"
 
-#: ../app/actions/layers-commands.c:549
+#: ../app/actions/layers-commands.c:352
+msgid "Visible"
+msgstr "Sichtbar"
+
+#: ../app/actions/layers-commands.c:571
 msgid "Set Layer Boundary Size"
 msgstr "Ebenengröße festlegen"
 
-#: ../app/actions/layers-commands.c:590 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
-#: ../app/actions/layers-commands.c:627
+#: ../app/actions/layers-commands.c:649
 msgid "Crop Layer"
 msgstr "Ebene zuschneiden"
 
-#: ../app/actions/layers-commands.c:766
+#: ../app/actions/layers-commands.c:788
 msgid "Layer Mask to Selection"
 msgstr "Auswahl aus Ebenenmaske"
 
-#: ../app/actions/layers-commands.c:1014
+#: ../app/actions/layers-commands.c:1036
 msgid "Please select a channel first"
 msgstr "Bitte wählen Sie zunächst einen Kanal aus"
 
-#: ../app/actions/layers-commands.c:1022 ../app/core/gimplayer.c:1277
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
@@ -3329,7 +3359,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Schnellmaske umschalten"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1107
+#: ../app/display/gimpdisplayshell.c:1123
 msgid "Toggle Quick Mask"
 msgstr "Schnellmaske umschalten"
 
@@ -3977,8 +4007,8 @@ msgstr "Neuer Pfad"
 msgid "New Path Options"
 msgstr "Eigenschaften des neuen Pfades"
 
-#: ../app/actions/vectors-commands.c:305 ../app/pdb/paths-cmds.c:627
-#: ../app/pdb/vectors-cmds.c:1223
+#: ../app/actions/vectors-commands.c:305 ../app/pdb/paths-cmds.c:640
+#: ../app/pdb/vectors-cmds.c:1253
 msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
 
@@ -4319,11 +4349,11 @@ msgstr "A_ndere (%s) …"
 msgid "_Zoom (%s)"
 msgstr "_Vergrößerung (%s)"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:589
 msgid "Set Canvas Padding Color"
 msgstr "Farbe des Leinwandrahmens"
 
-#: ../app/actions/view-commands.c:589
+#: ../app/actions/view-commands.c:591
 msgid "Set Custom Canvas Padding Color"
 msgstr "Benutzerdefinierte Farbe des Leinwandrahmens festlegen"
 
@@ -4517,7 +4547,7 @@ msgstr "Die Größenänderung der Auslagerungsdatei ist fehlgeschlagen: %s"
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:642
 #: ../app/tools/gimplevelstool.c:752 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:421
+#: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
@@ -5499,7 +5529,7 @@ msgid "Transform"
 msgstr "Transformation"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:927
-#: ../app/paint/gimppaintcore.c:134
+#: ../app/paint/gimppaintcore.c:135
 msgid "Paint"
 msgstr "Zeichnen"
 
@@ -5515,7 +5545,7 @@ msgstr "Parasit entfernen"
 msgid "Import paths"
 msgstr "Pfade importieren"
 
-#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:851
+#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:878
 msgid "Plug-In"
 msgstr "Plugin"
 
@@ -5851,11 +5881,6 @@ msgstr ""
 "Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Breite Pinsel werden "
 "nicht unterstützt."
 
-#: ../app/core/gimpbrushclipboard.c:181 ../app/core/gimppatternclipboard.c:181
-#: ../app/widgets/gimpclipboard.c:296
-msgid "Clipboard"
-msgstr "Zwischenablage"
-
 # CHECK
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
@@ -6008,20 +6033,20 @@ msgstr "Kanal vergrößern"
 msgid "Shrink Channel"
 msgstr "Kanal verkleinern"
 
-#: ../app/core/gimpchannel.c:691
+#: ../app/core/gimpchannel.c:711
 #, c-format
 msgid "Cannot stroke empty channel."
 msgstr "Leere Kanäle können nicht nachgezogen werden."
 
-#: ../app/core/gimpchannel.c:1613
+#: ../app/core/gimpchannel.c:1633
 msgid "Set Channel Color"
 msgstr "Farbe für Kanal setzen"
 
-#: ../app/core/gimpchannel.c:1661
+#: ../app/core/gimpchannel.c:1681
 msgid "Set Channel Opacity"
 msgstr "Kanaldeckkraft setzen"
 
-#: ../app/core/gimpchannel.c:1729 ../app/core/gimpselection.c:520
+#: ../app/core/gimpchannel.c:1749 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
@@ -6390,131 +6415,131 @@ msgstr "Prüfpunkt verschieben"
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
 
-#: ../app/core/gimpimage.c:1496
+#: ../app/core/gimpimage.c:1500
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: ../app/core/gimpimage.c:1536
+#: ../app/core/gimpimage.c:1540
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: ../app/core/gimpimage.c:2366
+#: ../app/core/gimpimage.c:2370
 msgid "Attach Parasite to Image"
 msgstr "Parasit an Bild zuweisen"
 
-#: ../app/core/gimpimage.c:2404
+#: ../app/core/gimpimage.c:2408
 msgid "Remove Parasite from Image"
 msgstr "Parasit von Bild entfernen"
 
-#: ../app/core/gimpimage.c:2863
+#: ../app/core/gimpimage.c:2878
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:2928 ../app/core/gimpimage.c:2941
+#: ../app/core/gimpimage.c:2943 ../app/core/gimpimage.c:2956
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3083
+#: ../app/core/gimpimage.c:3098
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3088
+#: ../app/core/gimpimage.c:3103
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3105
+#: ../app/core/gimpimage.c:3120
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3110
+#: ../app/core/gimpimage.c:3125
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3121
+#: ../app/core/gimpimage.c:3136
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3136
+#: ../app/core/gimpimage.c:3151
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3208
+#: ../app/core/gimpimage.c:3223
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3253 ../app/core/gimpimage.c:3264
+#: ../app/core/gimpimage.c:3268 ../app/core/gimpimage.c:3279
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3311
+#: ../app/core/gimpimage.c:3326
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3316
+#: ../app/core/gimpimage.c:3331
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: ../app/core/gimpimage.c:3333
+#: ../app/core/gimpimage.c:3348
 msgid "Channel is already on top."
 msgstr "Dieser Kanal befindet sich bereits ganz oben."
 
-#: ../app/core/gimpimage.c:3338
+#: ../app/core/gimpimage.c:3353
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3370
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3375
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3380
+#: ../app/core/gimpimage.c:3395
 msgid "Channel is already on the bottom."
 msgstr "Dieser Kanal befindet sich bereits ganz unten."
 
-#: ../app/core/gimpimage.c:3385
+#: ../app/core/gimpimage.c:3400
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3459
+#: ../app/core/gimpimage.c:3474
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3505
+#: ../app/core/gimpimage.c:3520
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3549
+#: ../app/core/gimpimage.c:3564
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3554
+#: ../app/core/gimpimage.c:3569
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3586
 msgid "Path is already on top."
 msgstr "Dieser Pfad befindet sich bereits ganz oben."
 
-#: ../app/core/gimpimage.c:3576
+#: ../app/core/gimpimage.c:3591
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3593
+#: ../app/core/gimpimage.c:3608
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3598
+#: ../app/core/gimpimage.c:3613
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3618
+#: ../app/core/gimpimage.c:3633
 msgid "Path is already on the bottom."
 msgstr "Dieser Pfad befindet sich bereits ganz unten."
 
-#: ../app/core/gimpimage.c:3623
+#: ../app/core/gimpimage.c:3638
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -6612,8 +6637,8 @@ msgstr "Ebene"
 msgid "Rename Layer"
 msgstr "Ebene umbenennen"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:330
-#: ../app/pdb/layer-cmds.c:365
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/layer-cmds.c:414
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
@@ -6629,7 +6654,7 @@ msgstr "Ebene spiegeln"
 msgid "Rotate Layer"
 msgstr "Ebene drehen"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1324
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6644,43 +6669,43 @@ msgstr ""
 "Schwebende Auswahl\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1254
+#: ../app/core/gimplayer.c:1260
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Masken können nicht zu einer Ebene ohne Alphakanal hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1261
+#: ../app/core/gimplayer.c:1267
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, da diese Ebene bereits eine "
 "Maske hat."
 
-#: ../app/core/gimplayer.c:1271
+#: ../app/core/gimplayer.c:1277
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1379
+#: ../app/core/gimplayer.c:1385
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: ../app/core/gimplayer.c:1551 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: ../app/core/gimplayer.c:1552
+#: ../app/core/gimplayer.c:1558
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: ../app/core/gimplayer.c:1664
+#: ../app/core/gimplayer.c:1670
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: ../app/core/gimplayer.c:1718
+#: ../app/core/gimplayer.c:1724
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: ../app/core/gimplayer.c:1740
+#: ../app/core/gimplayer.c:1746
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
@@ -6836,18 +6861,18 @@ msgstr ""
 "Ausschneiden oder Kopieren fehlgeschlagen, da der ausgewählte Bereich leer "
 "ist."
 
-#: ../app/core/gimpselection.c:817
+#: ../app/core/gimpselection.c:814
 #, c-format
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Die Auswahl konnte nicht schwebend gemacht werden, da der ausgewählte "
 "Bereich leer ist."
 
-#: ../app/core/gimpselection.c:824
+#: ../app/core/gimpselection.c:821
 msgid "Float Selection"
 msgstr "Auswahl anheben"
 
-#: ../app/core/gimpselection.c:840
+#: ../app/core/gimpselection.c:837
 msgid "Floated Layer"
 msgstr "Schwebende Ebene"
 
@@ -7003,7 +7028,7 @@ msgstr "Rasterung für _Transparenz aktivieren"
 msgid "Converting to indexed colors"
 msgstr "Bild wird in indizierte Farben umgewandelt"
 
-#: ../app/dialogs/convert-dialog.c:414 ../app/pdb/convert-cmds.c:148
+#: ../app/dialogs/convert-dialog.c:414 ../app/pdb/convert-cmds.c:150
 #, c-format
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr ""
@@ -8389,7 +8414,7 @@ msgstr "_Vorheriger Tipp"
 msgid "_Next Tip"
 msgstr "_Nächster Tipp"
 
-#. a link to related section in the user manual
+#. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:194
 msgid "Learn more"
 msgstr "Mehr erfahren"
@@ -8506,25 +8531,25 @@ msgstr "Niedrig"
 msgid "quality|High"
 msgstr "Hoch"
 
-#: ../app/display/gimpdisplay-handlers.c:159
+#: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Bild wurde nach »%s« gespeichert"
 
-#: ../app/display/gimpdisplayshell.c:968
+#: ../app/display/gimpdisplayshell.c:984
 msgid "Access the image menu"
 msgstr "Auf das Bildmenü zugreifen"
 
-#: ../app/display/gimpdisplayshell.c:1078
+#: ../app/display/gimpdisplayshell.c:1094
 msgid "Zoom image when window size changes"
 msgstr "Bild vergrößern, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:1128
+#: ../app/display/gimpdisplayshell.c:1144
 msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
 
-#: ../app/display/gimpdisplayshell.c:1218
-#: ../app/display/gimpdisplayshell.c:1312 ../app/widgets/gimptoolbox.c:216
+#: ../app/display/gimpdisplayshell.c:1234
+#: ../app/display/gimpdisplayshell.c:1324 ../app/widgets/gimptoolbox.c:216
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
@@ -8614,19 +8639,19 @@ msgstr "Ansichtsfarbfilter konfigurieren"
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
-#: ../app/display/gimpdisplayshell-scale.c:802
+#: ../app/display/gimpdisplayshell-scale-dialog.c:114
 msgid "Zoom Ratio"
 msgstr "Skalierungsverhältnis"
 
-#: ../app/display/gimpdisplayshell-scale.c:804
+#: ../app/display/gimpdisplayshell-scale-dialog.c:116
 msgid "Select Zoom Ratio"
 msgstr "Skalierung festlegen"
 
-#: ../app/display/gimpdisplayshell-scale.c:847
+#: ../app/display/gimpdisplayshell-scale-dialog.c:159
 msgid "Zoom ratio:"
 msgstr "Skalierung:"
 
-#: ../app/display/gimpdisplayshell-scale.c:872
+#: ../app/display/gimpdisplayshell-scale-dialog.c:184
 msgid "Zoom:"
 msgstr "Maßstab:"
 
@@ -8839,34 +8864,34 @@ msgstr "Weichzeichnen"
 msgid "Sharpen"
 msgstr "Schärfen"
 
-#: ../app/pdb/channel-cmds.c:180
+#: ../app/pdb/channel-cmds.c:183
 msgid "Combine Masks"
 msgstr "Masken Kombinieren"
 
-#: ../app/pdb/drawable-transform-cmds.c:307
-#: ../app/pdb/drawable-transform-cmds.c:391
-#: ../app/pdb/transform-tools-cmds.c:145 ../app/tools/gimpperspectivetool.c:69
+#: ../app/pdb/drawable-transform-cmds.c:310
+#: ../app/pdb/drawable-transform-cmds.c:395
+#: ../app/pdb/transform-tools-cmds.c:146 ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective"
 msgstr "Perspektive"
 
-#: ../app/pdb/drawable-transform-cmds.c:822
-#: ../app/pdb/drawable-transform-cmds.c:893
-#: ../app/pdb/transform-tools-cmds.c:358 ../app/tools/gimpsheartool.c:111
+#: ../app/pdb/drawable-transform-cmds.c:832
+#: ../app/pdb/drawable-transform-cmds.c:904
+#: ../app/pdb/transform-tools-cmds.c:362 ../app/tools/gimpsheartool.c:111
 msgid "Shearing"
 msgstr "Beschneiden"
 
-#: ../app/pdb/drawable-transform-cmds.c:977
-#: ../app/pdb/transform-tools-cmds.c:433
+#: ../app/pdb/drawable-transform-cmds.c:989
+#: ../app/pdb/transform-tools-cmds.c:438
 msgid "2D Transform"
 msgstr "2D-Transformation"
 
-#: ../app/pdb/drawable-transform-cmds.c:1059
-#: ../app/pdb/drawable-transform-cmds.c:1151
-#: ../app/pdb/drawable-transform-cmds.c:1241
+#: ../app/pdb/drawable-transform-cmds.c:1072
+#: ../app/pdb/drawable-transform-cmds.c:1165
+#: ../app/pdb/drawable-transform-cmds.c:1256
 msgid "2D Transforming"
 msgstr "2D-Transformation"
 
-#: ../app/pdb/edit-cmds.c:695 ../app/tools/gimpblendtool.c:223
+#: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:223
 msgid "Blending"
 msgstr "Farbverlauf"
 
@@ -8877,14 +8902,14 @@ msgstr ""
 "Diese Ebene konnte nicht entfernt werden, da sie keine schwebende Auswahl "
 "ist."
 
-#: ../app/pdb/floating-sel-cmds.c:94
+#: ../app/pdb/floating-sel-cmds.c:95
 #, c-format
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
 "Diese Ebene konnte nicht verankert werden, da sie keine schwebende Auswahl "
 "ist."
 
-#: ../app/pdb/floating-sel-cmds.c:125
+#: ../app/pdb/floating-sel-cmds.c:127
 #, c-format
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
@@ -8893,21 +8918,22 @@ msgstr ""
 "Diese Ebene konnte nicht in eine normale Ebene umgewandelt werden, da sie "
 "keine schwebende Auswahl ist."
 
-#: ../app/pdb/floating-sel-cmds.c:184
+#: ../app/pdb/floating-sel-cmds.c:188
 #, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
 msgstr ""
 "Diese Ebene konnte nicht gesichert werden, da sie keine schwebende Auswahl "
 "ist."
 
-#: ../app/pdb/floating-sel-cmds.c:217
+#: ../app/pdb/floating-sel-cmds.c:222
 #, c-format
 msgid "Cannot relax this layer because it is not a floating selection."
 msgstr ""
 "Diese Ebene konnte nicht wiederhergestellt werden, da sie keine schwebende "
 "Auswahl ist."
 
-#: ../app/pdb/gimppdb-query.c:300
+#: ../app/pdb/gimppdb-query.c:300 ../app/pdb/gimppdb.c:307
+#: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Prozedur »%s« wurde nicht gefunden"
@@ -9036,25 +9062,19 @@ msgstr "Bild »%s« (%d) ist bereits vom Typ »%s«"
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Das Vektorobjekt %d besitzt keine Linie mit der Kennung %d"
 
-#: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:376
+#: ../app/pdb/gimppdb.c:411
 #, c-format
 msgid ""
-"PDB calling error:\n"
-"Procedure '%s' not found"
-msgstr ""
-"PDB-Aufruffehler:\n"
-"Prozedur »%s« nicht gefunden"
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
+"s, got %s."
+msgstr "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument Nr. %d aufgerufen. %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimppdb.c:410
+#: ../app/pdb/gimpprocedure.c:338 ../app/plug-in/gimppluginprocframe.c:202
 #, c-format
-msgid ""
-"PDB calling error for procedure '%s':\n"
-"Argument #%d type mismatch (expected %s, got %s)"
-msgstr ""
-"PDB-Aufruffehler für Prozedur »%s«:\n"
-"Falscher Typ bei Argument Nr. %d (%s erwartet, %s erhalten)"
+msgid "Procedure '%s' returned no return values"
+msgstr "Prozedur »%s« hat sich ohne Rückgabewerte beendet"
 
-#: ../app/pdb/gimpprocedure.c:515
+#: ../app/pdb/gimpprocedure.c:558
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -9063,7 +9083,7 @@ msgstr ""
 "Prozedur »%s« lieferte einen falschen Wertetyp für den Rückgabewert »%s« (Nr. %"
 "d). %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:526
+#: ../app/pdb/gimpprocedure.c:570
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -9072,7 +9092,7 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. %d) "
 "aufgerufen. %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:558
+#: ../app/pdb/gimpprocedure.c:602
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9082,7 +9102,7 @@ msgstr ""
 "Sehr wahrscheinlich versucht das Plugin eine Ebene zu bearbeiten, die nicht "
 "mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:570
+#: ../app/pdb/gimpprocedure.c:614
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9092,7 +9112,7 @@ msgstr ""
 "aufgerufen. Sehr wahrscheinlich versucht das Plugin eine Ebene zu "
 "bearbeiten, die nicht mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:586
+#: ../app/pdb/gimpprocedure.c:630
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9102,7 +9122,7 @@ msgstr ""
 "Sehr wahrscheinlich versucht ein Plugin ein Bild zu bearbeiten, dass nicht "
 "mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:598
+#: ../app/pdb/gimpprocedure.c:642
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9112,7 +9132,7 @@ msgstr ""
 "aufgerufen. Wahrscheinlich versucht das Plugin mit einem Bild zu arbeiten, "
 "welches nicht länger existiert."
 
-#: ../app/pdb/gimpprocedure.c:618
+#: ../app/pdb/gimpprocedure.c:662
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -9121,7 +9141,7 @@ msgstr ""
 "Die Prozedur »%s« hat »%s« als Rückgabewert »%s« (Nr. %d, Typ %s) "
 "zurückgegeben. Dieser liegt außerhalb des Wertebereiches."
 
-#: ../app/pdb/gimpprocedure.c:631
+#: ../app/pdb/gimpprocedure.c:675
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9130,7 +9150,7 @@ msgstr ""
 "Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, Typ %"
 "s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
 
-#: ../app/pdb/image-cmds.c:2140
+#: ../app/pdb/image-cmds.c:2206
 #, c-format
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
@@ -9138,7 +9158,7 @@ msgstr ""
 "Da die Auflösung des Bildes außerhalb des gültigen Bereiches liegt, wird die "
 "Standardauflösung verwendet."
 
-#: ../app/pdb/selection-tools-cmds.c:215 ../app/tools/gimpfreeselecttool.c:196
+#: ../app/pdb/selection-tools-cmds.c:218 ../app/tools/gimpfreeselecttool.c:197
 msgid "Free Select"
 msgstr "Freie Auswahl"
 
@@ -9147,13 +9167,13 @@ msgstr "Freie Auswahl"
 msgid "Failed to create text layer"
 msgstr "Fehler beim Erstellen der Textebene"
 
-#: ../app/pdb/text-layer-cmds.c:161 ../app/pdb/text-layer-cmds.c:231
-#: ../app/pdb/text-layer-cmds.c:308 ../app/pdb/text-layer-cmds.c:386
-#: ../app/pdb/text-layer-cmds.c:457 ../app/pdb/text-layer-cmds.c:527
-#: ../app/pdb/text-layer-cmds.c:597 ../app/pdb/text-layer-cmds.c:667
-#: ../app/pdb/text-layer-cmds.c:737 ../app/pdb/text-layer-cmds.c:805
-#: ../app/pdb/text-layer-cmds.c:875 ../app/pdb/text-layer-cmds.c:945
-#: ../app/pdb/text-layer-cmds.c:1015
+#: ../app/pdb/text-layer-cmds.c:163 ../app/pdb/text-layer-cmds.c:235
+#: ../app/pdb/text-layer-cmds.c:314 ../app/pdb/text-layer-cmds.c:394
+#: ../app/pdb/text-layer-cmds.c:467 ../app/pdb/text-layer-cmds.c:539
+#: ../app/pdb/text-layer-cmds.c:611 ../app/pdb/text-layer-cmds.c:683
+#: ../app/pdb/text-layer-cmds.c:755 ../app/pdb/text-layer-cmds.c:825
+#: ../app/pdb/text-layer-cmds.c:897 ../app/pdb/text-layer-cmds.c:969
+#: ../app/pdb/text-layer-cmds.c:1041
 msgid "Set text layer attribute"
 msgstr "Eigenschaften der Textebene setzen"
 
@@ -9177,13 +9197,22 @@ msgstr "Ungültiger Interpreterverweis in Interpreterdatei %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Ungültige binäre Formatzeichenkette in Interpreterdatei %s"
 
-#: ../app/plug-in/gimpplugin-message.c:507
+#: ../app/plug-in/gimpplugin-message.c:510
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"PDB-Aufruffehler für Prozedur »%s«:\n"
+"Fehler beim Aufruf der Prozedur »%s«:\n"
+"%s"
+
+#: ../app/plug-in/gimpplugin-message.c:518
+#, c-format
+msgid ""
+"PDB execution error for procedure '%s':\n"
+"%s"
+msgstr ""
+"Fahler beim Ausführen der Prozedur »%s«:\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin.c:635
@@ -9201,6 +9230,13 @@ msgstr ""
 "Das abgestürzte Plugin hat GIMP eventuell instabil gemacht. Sie sollten "
 "sicherheitshalber Ihre Bilder jetzt abspeichern und anschließend GIMP neu "
 "starten."
+
+#: ../app/plug-in/gimppluginmanager-call.c:173
+#: ../app/plug-in/gimppluginmanager-call.c:223
+#: ../app/plug-in/gimppluginmanager-call.c:321
+#, c-format
+msgid "Failed to run plug-in \"%s\""
+msgstr "Konnte das Plugin »%s« nicht ausführen"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
@@ -9269,7 +9305,7 @@ msgstr ""
 "Franz jagt im komplett verwahrlosten\n"
 "Taxi quer durch Bayern. 012345689"
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:874
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:875
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -10194,37 +10230,37 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Vordergrundauswahl"
 
-#: ../app/tools/gimpfreeselecttool.c:197
+#: ../app/tools/gimpfreeselecttool.c:198
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Freie Auswahl: Einen Bereich freihand oder mit Polygonsegmenten auswählen"
 
-#: ../app/tools/gimpfreeselecttool.c:198
+#: ../app/tools/gimpfreeselecttool.c:199
 msgid "_Free Select"
 msgstr "_Freie Auswahl"
 
-#: ../app/tools/gimpfreeselecttool.c:1111
+#: ../app/tools/gimpfreeselecttool.c:1114
 msgid "Click to complete selection"
 msgstr "Klicken Sie, um die Auswahl fertigzustellen"
 
-#: ../app/tools/gimpfreeselecttool.c:1115
+#: ../app/tools/gimpfreeselecttool.c:1118
 msgid "Click-Drag to move segment vertex"
 msgstr "Klicken und ziehen Sie, um die Ecke zu verschieben"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Eingabetaste übergibt, Escapetaste bricht ab, Rücktaste entfernt letztes "
 "Segment"
 
-#: ../app/tools/gimpfreeselecttool.c:1124
+#: ../app/tools/gimpfreeselecttool.c:1127
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Klicken und ziehen Sie, um ein Segment freihändig hinzuzufügen; klicken Sie, "
 "um ein Polygonsegment hinzuzufügen"
 
-#: ../app/tools/gimpfreeselecttool.c:1575
+#: ../app/tools/gimpfreeselecttool.c:1579
 msgctxt "command"
 msgid "Free Select"
 msgstr "Freie Auswahl"
@@ -10870,7 +10906,7 @@ msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangletool.c:1085 ../app/tools/gimprectangletool.c:1981
+#: ../app/tools/gimprectangletool.c:1083 ../app/tools/gimprectangletool.c:1979
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
@@ -11090,19 +11126,19 @@ msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:951
+#: ../app/tools/gimptexttool.c:952
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
-#: ../app/tools/gimptexttool.c:1067 ../app/tools/gimptexttool.c:1070
+#: ../app/tools/gimptexttool.c:1068 ../app/tools/gimptexttool.c:1071
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1074
+#: ../app/tools/gimptexttool.c:1075
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1098
+#: ../app/tools/gimptexttool.c:1099
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11117,7 +11153,7 @@ msgstr ""
 "Sie können die Ebene bearbeiten oder eine neue Text-Ebene mit denselben "
 "Textattributen erstellen."
 
-#: ../app/tools/gimptexttool.c:1309
+#: ../app/tools/gimptexttool.c:1311
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
@@ -12860,12 +12896,12 @@ msgstr "»%s« wird geöffnet"
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-Fehler: nicht unterstützte XCF-Dateiversion %d gefunden"
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
 msgstr "»%s« speichern"
 
-#: ../app/xcf/xcf.c:402
+#: ../app/xcf/xcf.c:403
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fehler beim Schreiben der XCF-Datei: %s"
@@ -12907,3 +12943,31 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Procedure '%s' called with wrong type for argument #%d (expected %s, got %"
+#~ "s)"
+#~ msgstr ""
+#~ "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. %"
+#~ "d) aufgerufen. %s erwartet, %s erhalten."
+
+#~ msgid ""
+#~ "PDB calling error:\n"
+#~ "Procedure '%s' not found"
+#~ msgstr ""
+#~ "PDB-Aufruffehler:\n"
+#~ "Prozedur »%s« nicht gefunden"
+
+#~ msgid ""
+#~ "PDB calling error for procedure '%s':\n"
+#~ "Argument #%d type mismatch (expected %s, got %s)"
+#~ msgstr ""
+#~ "PDB-Aufruffehler für Prozedur »%s«:\n"
+#~ "Falscher Typ bei Argument Nr. %d (%s erwartet, %s erhalten)"
+
+#~ msgid "Clibboard"
+#~ msgstr "Zwischenablage"
+
+#~ msgid "Copy the selected region to the clipboard"
+#~ msgstr "Ausgewählten Bereich in die Zwischenablage kopieren"

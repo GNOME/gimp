@@ -71,8 +71,8 @@ struct _Tile
 
   TileLink *tlink;
 
-  Tile     *next;
-  Tile     *prev;       /* List pointers for the tile cache lists */
+  Tile     *next;       /* List pointers for the tile cache lists */
+  Tile     *prev;
   gpointer  listhead;   /* Pointer to the head of the list this tile is on */
 };
 

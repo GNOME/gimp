@@ -269,7 +269,8 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
       g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_sample_point_editor_point_update,
                                             editor);
-      g_signal_handlers_disconnect_by_func (image_editor->image->projection,
+
+      g_signal_handlers_disconnect_by_func (gimp_image_get_projection (image_editor->image),
                                             gimp_sample_point_editor_proj_update,
                                             editor);
     }
@@ -287,7 +288,8 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect (image, "update-sample-point",
                         G_CALLBACK (gimp_sample_point_editor_point_update),
                         editor);
-      g_signal_connect (image->projection, "update",
+
+      g_signal_connect (gimp_image_get_projection (image), "update",
                         G_CALLBACK (gimp_sample_point_editor_proj_update),
                         editor);
     }

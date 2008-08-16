@@ -63,7 +63,8 @@ HELP
                                     error);
 
   if (! uri)
-    return gimp_procedure_get_return_values (procedure, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   file_proc =
     file_procedure_find (gimp->plug_in_manager->load_procs, uri, error);
@@ -71,7 +72,8 @@ HELP
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   proc = GIMP_PROCEDURE (file_proc);
 
@@ -276,7 +278,8 @@ HELP
                                     error);
 
   if (! uri)
-    return gimp_procedure_get_return_values (procedure, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   file_proc =
     file_procedure_find (gimp->plug_in_manager->save_procs, uri, error);
@@ -284,7 +287,8 @@ HELP
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   proc = GIMP_PROCEDURE (file_proc);
 

@@ -1,0 +1,25 @@
+;; -*- scheme -*-
+
+(define-boxed GimpRGB
+  (in-module "Gimp")
+  (c-name "GimpRGB")
+  (gtype-id "GIMP_TYPE_RGB")
+)
+
+(define-boxed GimpHSV
+  (in-module "Gimp")
+  (c-name "GimpHSV")
+  (gtype-id "GIMP_TYPE_HSV")
+)
+
+(define-boxed GimpHSL
+  (in-module "Gimp")
+  (c-name "GimpHSL")
+  (gtype-id "GIMP_TYPE_HSL")
+)
+
+(define-boxed GimpCMYK
+  (in-module "Gimp")
+  (c-name "GimpCMYK")
+  (gtype-id "GIMP_TYPE_CMYK")
+)

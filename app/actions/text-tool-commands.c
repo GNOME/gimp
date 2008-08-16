@@ -61,7 +61,7 @@ text_tool_copy_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data); 
-  gimp_text_tool_clipboard_copy (text_tool);
+  gimp_text_tool_clipboard_copy (text_tool, TRUE);
 }
 
 void
@@ -69,7 +69,7 @@ text_tool_paste_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data); 
-  gimp_text_tool_clipboard_paste (text_tool);
+  gimp_text_tool_clipboard_paste (text_tool, TRUE);
 }
 
 void

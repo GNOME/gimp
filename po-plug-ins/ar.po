@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-30 19:55+0100\n"
+"POT-Creation-Date: 2008-08-08 12:25+0100\n"
 "PO-Revision-Date: 2008-04-19 22:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -478,7 +478,7 @@ msgstr "زاوية الطور، المجال: 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:515 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/value-propagate.c:1097 ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/value-propagate.c:1120 ../plug-ins/common/waves.c:277
 msgid "Mode"
 msgstr "النمط"
 
@@ -917,14 +917,20 @@ msgid "Blur Type"
 msgstr "نوع الغشاوة"
 
 #: ../plug-ins/common/blur-motion.c:1049
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Linear"
 msgstr "خ_طي"
 
 #: ../plug-ins/common/blur-motion.c:1050
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Radial"
 msgstr "نصف ق_طري"
 
-#: ../plug-ins/common/blur-motion.c:1051 ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/common/blur-motion.c:1051
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "ت_حجيم"
 
@@ -7491,48 +7497,48 @@ msgid "_Dilate"
 msgstr "تم_دد"
 
 #: ../plug-ins/common/value-propagate.c:473
-#: ../plug-ins/common/value-propagate.c:1063
+#: ../plug-ins/common/value-propagate.c:1086
 msgid "Value Propagate"
 msgstr "انتشار القيمة"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1129
+#: ../plug-ins/common/value-propagate.c:1152
 msgid "Propagate"
 msgstr "بث"
 
-#: ../plug-ins/common/value-propagate.c:1142
+#: ../plug-ins/common/value-propagate.c:1165
 msgid "Lower t_hreshold:"
 msgstr "العتبة الد_نيا:"
 
-#: ../plug-ins/common/value-propagate.c:1154
+#: ../plug-ins/common/value-propagate.c:1177
 msgid "_Upper threshold:"
 msgstr "العتبة القصو_ى:"
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1189
 msgid "_Propagating rate:"
 msgstr "نسبة الانتشا_ر:"
 
-#: ../plug-ins/common/value-propagate.c:1177
+#: ../plug-ins/common/value-propagate.c:1200
 msgid "To l_eft"
 msgstr "إلى الي_سار"
 
-#: ../plug-ins/common/value-propagate.c:1180
+#: ../plug-ins/common/value-propagate.c:1203
 msgid "To _right"
 msgstr "إلى ال_يمين"
 
-#: ../plug-ins/common/value-propagate.c:1183
+#: ../plug-ins/common/value-propagate.c:1206
 msgid "To _top"
 msgstr "إلى الأ_على"
 
-#: ../plug-ins/common/value-propagate.c:1186
+#: ../plug-ins/common/value-propagate.c:1209
 msgid "To _bottom"
 msgstr "إلى الأسف_ل"
 
-#: ../plug-ins/common/value-propagate.c:1195
+#: ../plug-ins/common/value-propagate.c:1218
 msgid "Propagating _alpha channel"
 msgstr "انت_شار قناة ألفا"
 
-#: ../plug-ins/common/value-propagate.c:1206
+#: ../plug-ins/common/value-propagate.c:1229
 msgid "Propagating value channel"
 msgstr "انتشار قناة القيمة"
 
@@ -10874,6 +10880,10 @@ msgstr "مساع_دة"
 msgid "_Contents"
 msgstr "الم_حتويات"
 
+#: ../plug-ins/imagemap/imap_menu.c:203
+msgid "_Zoom"
+msgstr "ت_حجيم"
+
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Area List"
 msgstr "قائمة المساحات"
@@ -12005,15 +12015,15 @@ msgstr "_ضبط حجم الصفحة والاتجاه"
 msgid "Page Set_up"
 msgstr "إ_عداد الصفحة"
 
-#: ../plug-ins/print/print.c:261
+#: ../plug-ins/print/print.c:250
 msgid "Image Settings"
 msgstr "إعدادات الصورة"
 
-#: ../plug-ins/print/print.c:345
+#: ../plug-ins/print/print.c:334
 msgid "An error occurred while trying to print:"
 msgstr "حدث خطأ عند محاولة الطباعة:"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:363
 msgid "Printing"
 msgstr "جاري الطباعة"
 

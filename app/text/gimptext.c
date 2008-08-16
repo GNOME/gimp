@@ -328,7 +328,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_double (value, text->box_height);
       break;
     case PROP_BOX_UNIT:
-      g_value_set_int (value, text->unit);
+      g_value_set_int (value, text->box_unit);
       break;
     case PROP_TRANSFORMATION:
       g_value_set_boxed (value, &text->transformation);

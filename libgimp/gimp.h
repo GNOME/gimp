@@ -199,7 +199,10 @@ struct _GimpParam
    int                                                  \
    main (int argc, char *argv[])                        \
    {                                                    \
-     return gimp_main (&PLUG_IN_INFO, argc, argv);      \
+     /* Use __argc and __argv here, too, as they work   \
+      * better with mingw-w64.				\
+      */						\
+     return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
    }
 #else
 #  define MAIN()                                        \
@@ -303,6 +306,10 @@ void           gimp_destroy_params      (GimpParam       *params,
  */
 void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
                                          gint             n_params);
+
+/* Retrieve the error message for the last procedure call.
+ */
+const gchar  * gimp_get_pdb_error       (void);
 
 
 /* Return various constants given by the GIMP core at plug-in config time.

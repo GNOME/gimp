@@ -62,4 +62,4 @@ void    gimp_curves_tool_register (GimpToolRegisterCallback  callback,
 GType   gimp_curves_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __CURVES_H__  */
+#endif  /*  __GIMP_CURVES_TOOL_H__  */
