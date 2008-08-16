@@ -640,12 +640,6 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
 
   gimp_display_shell_scale_shrink_wrap (shell,
                                         FALSE);
-
-  /* Handle if only the offset of wrong */
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
-
-  /* Handle if the display shell canvas is wrong */
-  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
 }
 
 void

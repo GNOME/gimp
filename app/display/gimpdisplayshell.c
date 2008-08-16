@@ -607,11 +607,12 @@ gimp_display_shell_configure_event (GtkWidget         *widget,
 
       gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
-      center_horizontally = sw < shell->disp_width;
-      center_vertically   = sh < shell->disp_height;
+      center_horizontally = sw <= shell->disp_width;
+      center_vertically   = sh <= shell->disp_height;
 
-      /* If the image fits within the display shell canvas on a
-       * given axis, center the image on that axis.
+      /* If the image fits within the display shell canvas on a given
+       * axis, center the image on that axis. We know that the canvas
+       * will get a size-allocate if we get here.
        */
       gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
@@ -1265,7 +1266,10 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       gimp_display_shell_connect (shell);
 
-      /* after connecting to the image we want to center it */
+      /* After connecting to the image we want to center it. Since we
+       * not even finnished creating the display shell, we can safely
+       * assume we will get a size-allocate later.
+       */
       gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
   else
@@ -1416,6 +1420,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
 
+  /* A size-allocate will always occur because the scrollbars will
+   * become visible forcing the canvas to become smaller
+   */
   gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
@@ -1898,10 +1905,13 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
         }
 
       gtk_window_resize (GTK_WINDOW (shell), width, height);
-
-      /* A wrap always means that we should center the image too */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
     }
+
+  /* A wrap always means that we should center the image too. If the
+   * window changes size another center will be done in
+   * GimpDisplayShell::configure_event().
+   */
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
 /**

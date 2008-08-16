@@ -1,3 +1,25 @@
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
+	Explain that this function needs to be used with care since it is
+	risky.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_new)
+	(gimp_display_shell_fill): Clarify that it is safe to use the
+	risky function.
+
+	(gimp_display_shell_configure_event): Make proper comparisions (<=
+	not =) and explain that usage of the risky function is safe.
+
+	(gimp_display_shell_shrink_wrap): Always call
+	gimp_display_shell_scroll_center_image() and let size-requests be
+	handled by GimpDisplayShell::configure_event().
+
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback): No
+	need to center anything explicitly any longer.
+
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c (gimp_get_pdb_error): added translator comments.

@@ -308,7 +308,11 @@ gimp_display_shell_scroll_center_image_callback (GimpDisplayShell *shell,
  * @shell:
  *
  * Centers the image in the display as soon as the canvas has got its
- * new size
+ * new size.
+ *
+ * Only call this if you are sure the canvas size will change.
+ * (Otherwise the signal connection and centering will lurk until the
+ * canvas size is changed e.g. by toggling the rulers.)
  *
  **/
 void
