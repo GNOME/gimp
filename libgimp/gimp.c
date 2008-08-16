@@ -1022,7 +1022,7 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
  * the return values. Plug-ins that are using the libgimp C wrappers
  * don't access the procedure return values directly. Thus ligimp
  * stores the error message and makes it available with this
- * function. A successful procedure call unsets the error message again.
+ * function. The next procedure call unsets the error message again.
  *
  * The returned string is owned by libgimp and must not be freed or
  * modified.
@@ -1039,20 +1039,20 @@ gimp_get_pdb_error (void)
 
   switch (pdb_error_status)
     {
-      /*  procedure executed successfully  */
     case GIMP_PDB_SUCCESS:
+      /*  procedure executed successfully  */
       return _("success");
 
-      /*  procedure execution failed       */
     case GIMP_PDB_EXECUTION_ERROR:
+      /*  procedure execution failed       */
       return _("execution error");
 
-      /*  procedure called incorrectly     */
     case GIMP_PDB_CALLING_ERROR:
+      /*  procedure called incorrectly     */
       return _("calling error");
 
-      /*  procedure cancelled              */
     case GIMP_PDB_CANCEL:
+      /*  procedure execution cancelled    */
       return _("cancelled");
 
     default:
