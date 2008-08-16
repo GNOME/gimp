@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -50,33 +48,33 @@
 
 /*  local function prototypes  */
 
-static void      gimp_display_shell_scale_to              (GimpDisplayShell *shell,
-                                                           gdouble           scale,
-                                                           gint              viewport_x,
-                                                           gint              viewport_y);
+static void      gimp_display_shell_scale_to             (GimpDisplayShell *shell,
+                                                          gdouble           scale,
+                                                          gint              viewport_x,
+                                                          gint              viewport_y);
 
 static gboolean  gimp_display_shell_scale_image_starts_to_fit
-                                                          (GimpDisplayShell *shell,
-                                                           gdouble           new_scale,
-                                                           gdouble           current_scale,
-                                                           gboolean         *vertically,
-                                                           gboolean         *horizontally);
+                                                         (GimpDisplayShell *shell,
+                                                          gdouble           new_scale,
+                                                          gdouble           current_scale,
+                                                          gboolean         *vertically,
+                                                          gboolean         *horizontally);
 static void      gimp_display_shell_scale_viewport_coord_almost_centered
-                                                          (GimpDisplayShell *shell,
-                                                           gint              x,
-                                                           gint              y,
-                                                           gboolean         *horizontally,
-                                                           gboolean         *vertically);
+                                                         (GimpDisplayShell *shell,
+                                                          gint              x,
+                                                          gint              y,
+                                                          gboolean         *horizontally,
+                                                          gboolean         *vertically);
 
-static void      gimp_display_shell_scale_get_zoom_focus  (GimpDisplayShell *shell,
-                                                           gdouble           new_scale,
-                                                           gdouble           current_scale,
-                                                           gint             *x,
-                                                           gint             *y);
+static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
+                                                          gdouble           new_scale,
+                                                          gdouble           current_scale,
+                                                          gint             *x,
+                                                          gint             *y);
 
-static gdouble   img2real                                 (GimpDisplayShell *shell,
-                                                           gboolean          xdir,
-                                                           gdouble           a);
+static gdouble   img2real                                (GimpDisplayShell *shell,
+                                                          gboolean          xdir,
+                                                          gdouble           a);
 
 
 /*  public functions  */
