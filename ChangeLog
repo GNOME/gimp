@@ -1,3 +1,10 @@
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: pass error parameter to
+	gimp_vectors_import functions.
+
+	* app/pdb/vectors-cmds.c: regenerated.
+
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
@@ -26,7 +33,7 @@
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
 	If a procedure call fails, pass a string describing the error as
-	the second return value. First step towars fixing bug #344818.
+	the second return value. First step towards fixing bug #344818.
 
 	* app/pdb/gimpprocedure.[ch] (gimp_procedure_get_return_values):
 	added a GError parameter. If it is set, pass the error message to

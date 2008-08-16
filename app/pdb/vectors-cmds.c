@@ -1293,7 +1293,7 @@ vectors_import_from_file_invoker (GimpProcedure      *procedure,
       GList *list, *vectors_list = NULL;
 
       success = gimp_vectors_import_file (image, filename,
-                                          merge, scale, -1, &vectors_list, NULL);
+                                          merge, scale, -1, &vectors_list, error);
 
       if (success)
         {
@@ -1355,7 +1355,7 @@ vectors_import_from_string_invoker (GimpProcedure      *procedure,
       GList *list, *vectors_list = NULL;
 
       success = gimp_vectors_import_buffer (image, string, length,
-                                            merge, scale, -1, &vectors_list, NULL);
+                                            merge, scale, -1, &vectors_list, error);
 
       if (success)
         {
