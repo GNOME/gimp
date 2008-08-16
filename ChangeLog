@@ -1,3 +1,13 @@
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_viewport_coord_almost_centered): New
+	function.
+
+	(gimp_display_shell_scale): Center the image on zoom also if it is
+	almost centered. This makes the image centered all the way when
+	zooming out far away.
+
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpfreeselecttool.c

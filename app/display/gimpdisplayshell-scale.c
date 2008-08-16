@@ -47,9 +47,9 @@
 #include "gimp-intl.h"
 
 
-#define SCALE_TIMEOUT 2
-
-#define SCALE_EPSILON 0.0001
+#define SCALE_TIMEOUT             2
+#define SCALE_EPSILON             0.0001
+#define ALMOST_CENTERED_THRESHOLD 2
 
 #define SCALE_EQUALS(a,b) (fabs ((a) - (b)) < SCALE_EPSILON)
 
@@ -389,6 +389,34 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_scale_viewport_coord_almost_centered:
+ * @shell:
+ * @x:
+ * @y:
+ * @horizontally:
+ * @vertically:
+ *
+ **/
+static void
+gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell,
+                                                         gint              x,
+                                                         gint              y,
+                                                         gboolean         *horizontally,
+                                                         gboolean         *vertically)
+{
+  gint center_x, center_y;
+
+  center_x = shell->disp_width  / 2;
+  center_y = shell->disp_height / 2;
+
+  *horizontally = x > center_x - ALMOST_CENTERED_THRESHOLD &&
+                  x < center_x + ALMOST_CENTERED_THRESHOLD;
+
+  *vertically   = y > center_y - ALMOST_CENTERED_THRESHOLD &&
+                  y < center_y + ALMOST_CENTERED_THRESHOLD;
+}
+
+/**
  * gimp_display_shell_scale_to:
  * @shell:
  * @scale:
@@ -477,14 +505,10 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
         }
       else
         {
-          gboolean vertically;
-          gboolean horizontally;
-
-          gimp_display_shell_scale_image_starts_to_fit (shell,
-                                                        real_new_scale,
-                                                        current_scale,
-                                                        &vertically,
-                                                        &horizontally);
+          gboolean starts_fitting_horizontally;
+          gboolean starts_fitting_vertically;
+          gboolean almost_centered_horizontally;
+          gboolean almost_centered_vertically;
 
           gimp_display_shell_scale_get_zoom_focus (shell,
                                                    real_new_scale,
@@ -494,12 +518,26 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
           gimp_display_shell_scale_to (shell, real_new_scale, x, y);
 
-          /* If an image axis started to fit due to zooming out, center on
-           * that axis in the display shell
+
+          /* If an image axis started to fit due to zooming out or if
+           * the focus point is as good as in the center, center on
+           * that axis
            */
+          gimp_display_shell_scale_image_starts_to_fit (shell,
+                                                        real_new_scale,
+                                                        current_scale,
+                                                        &starts_fitting_horizontally,
+                                                        &starts_fitting_vertically);
+          gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+                                                                   x,
+                                                                   y,
+                                                                   &almost_centered_horizontally,
+                                                                   &almost_centered_vertically);
           gimp_display_shell_scroll_center_image (shell,
-                                                  vertically,
-                                                  horizontally);
+                                                  starts_fitting_horizontally ||
+                                                  almost_centered_horizontally,
+                                                  starts_fitting_vertically ||
+                                                  almost_centered_vertically);
         }
     }
 }
