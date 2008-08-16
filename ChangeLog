@@ -1,3 +1,8 @@
+2008-08-16  Daniel Eddeland  <danedde@svn.gnome.org>
+
+	* app/text/gimptext.c: corrected gimp_text_set_property for
+	"box-unit" , fixing bug #547126
+
 2008-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/pixelize.c: formatting.
