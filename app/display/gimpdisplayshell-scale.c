@@ -522,8 +522,8 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell)
          sh              <= shell->disp_height      &&
          shell->offset_x <= 0                       &&
          shell->offset_y <= 0                       &&
-         shell->offset_x >  sw - shell->disp_width  &&
-         shell->offset_y >  sh - shell->disp_height;
+         shell->offset_x >= sw - shell->disp_width  &&
+         shell->offset_y >= sh - shell->disp_height;
 }
 
 /**
