@@ -1,6 +1,12 @@
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Reimplement to increase
+	readability.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_to): Nice-ify.
 
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>

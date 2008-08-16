@@ -42,6 +42,7 @@
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
+#include "gimpdisplayshell-transform.h"
 
 #include "gimp-intl.h"
 
@@ -403,29 +404,32 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gint              viewport_x,
                              gint              viewport_y)
 {
-  gdouble current;
-  gdouble offset_x;
-  gdouble offset_y;
+  gdouble image_focus_x, image_focus_y;
+  gint    target_offset_x, target_offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display)
     return;
 
-  current = gimp_zoom_model_get_factor (shell->zoom);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       viewport_x,
+                                       viewport_y,
+                                       &image_focus_x,
+                                       &image_focus_y,
+                                       FALSE);
 
-  offset_x = shell->offset_x + viewport_x;
-  offset_y = shell->offset_y + viewport_y;
+  target_offset_x = scale * image_focus_x - viewport_x;
+  target_offset_y = scale * image_focus_y - viewport_y;
 
-  offset_x /= current;
-  offset_y /= current;
-
-  offset_x *= scale;
-  offset_y *= scale;
-
-  gimp_display_shell_scale_by_values (shell, scale,
-                                      offset_x - viewport_x, offset_y - viewport_y,
-                                      shell->display->config->resize_windows_on_zoom);
+  /* Note that we never come here if we need to
+   * resize_windows_on_zoom
+   */
+  gimp_display_shell_scale_by_values (shell,
+                                      scale,
+                                      target_offset_x,
+                                      target_offset_y,
+                                      FALSE);
 }
 
 /**
