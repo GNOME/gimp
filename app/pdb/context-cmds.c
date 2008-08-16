@@ -57,7 +57,8 @@ context_push_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -76,7 +77,8 @@ context_pop_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -94,7 +96,7 @@ context_list_paint_methods_invoker (GimpProcedure      *procedure,
   paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
                                                  &num_paint_methods);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (&return_vals->values[1], num_paint_methods);
   gimp_value_take_stringarray (&return_vals->values[2], paint_methods, num_paint_methods);
@@ -121,7 +123,8 @@ context_get_paint_method_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -152,7 +155,8 @@ context_set_paint_method_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -169,7 +173,7 @@ context_get_foreground_invoker (GimpProcedure      *procedure,
   gimp_context_get_foreground (context, &foreground);
   gimp_rgb_set_alpha (&foreground, 1.0);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   gimp_value_set_rgb (&return_vals->values[1], &foreground);
 
   return return_vals;
@@ -194,7 +198,8 @@ context_set_foreground_invoker (GimpProcedure      *procedure,
       gimp_context_set_foreground (context, &foreground);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -211,7 +216,7 @@ context_get_background_invoker (GimpProcedure      *procedure,
   gimp_context_get_background (context, &background);
   gimp_rgb_set_alpha (&background, 1.0);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   gimp_value_set_rgb (&return_vals->values[1], &background);
 
   return return_vals;
@@ -236,7 +241,8 @@ context_set_background_invoker (GimpProcedure      *procedure,
       gimp_context_set_background (context, &background);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -249,7 +255,7 @@ context_set_default_colors_invoker (GimpProcedure      *procedure,
 {
   gimp_context_set_default_colors (context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GValueArray *
@@ -262,7 +268,7 @@ context_swap_colors_invoker (GimpProcedure      *procedure,
 {
   gimp_context_swap_colors (context);
 
-  return gimp_procedure_get_return_values (procedure, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GValueArray *
@@ -278,7 +284,7 @@ context_get_opacity_invoker (GimpProcedure      *procedure,
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_set_double (&return_vals->values[1], opacity);
 
   return return_vals;
@@ -302,7 +308,8 @@ context_set_opacity_invoker (GimpProcedure      *procedure,
       gimp_context_set_opacity (context, opacity / 100.0);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -318,7 +325,7 @@ context_get_paint_mode_invoker (GimpProcedure      *procedure,
 
   paint_mode = gimp_context_get_paint_mode (context);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_set_enum (&return_vals->values[1], paint_mode);
 
   return return_vals;
@@ -342,7 +349,8 @@ context_set_paint_mode_invoker (GimpProcedure      *procedure,
       gimp_context_set_paint_mode (context, paint_mode);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -364,7 +372,8 @@ context_get_brush_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -395,7 +404,8 @@ context_set_brush_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -417,7 +427,8 @@ context_get_pattern_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -448,7 +459,8 @@ context_set_pattern_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -470,7 +482,8 @@ context_get_gradient_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -501,7 +514,8 @@ context_set_gradient_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -523,7 +537,8 @@ context_get_palette_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -554,7 +569,8 @@ context_set_palette_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -576,7 +592,8 @@ context_get_font_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -607,7 +624,8 @@ context_set_font_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

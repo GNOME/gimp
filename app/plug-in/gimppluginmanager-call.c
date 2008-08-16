@@ -41,6 +41,7 @@
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimpplugindef.h"
+#include "gimppluginerror.h"
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
@@ -140,7 +141,6 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                GimpPlugInProcedure *procedure,
                                GValueArray         *args,
                                gboolean             synchronous,
-                               gboolean             destroy_return_vals,
                                GimpObject          *display)
 {
   GValueArray *return_vals = NULL;
@@ -167,8 +167,19 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
+          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
+                                            GIMP_PLUG_IN_EXECUTION_FAILED,
+                                            _("Failed to run plug-in \"%s\""),
+                                            name);
+
           g_object_unref (plug_in);
-          goto done;
+
+          return_vals = gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
+                                                          FALSE, error);
+          g_error_free (error);
+
+          return return_vals;
         }
 
       display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
@@ -206,14 +217,22 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
+          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
+                                            GIMP_PLUG_IN_EXECUTION_FAILED,
+                                            _("Failed to run plug-in \"%s\""),
+                                            name);
+
           g_free (config.display_name);
           g_free (proc_run.params);
 
-          return_vals =
-            gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
-
           g_object_unref (plug_in);
-          goto done;
+
+          return_vals = gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
+                                                          FALSE, error);
+          g_error_free (error);
+
+          return return_vals;
         }
 
       g_free (config.display_name);
@@ -260,13 +279,6 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       g_object_unref (plug_in);
     }
 
- done:
-  if (return_vals && destroy_return_vals)
-    {
-      g_value_array_free (return_vals);
-      return_vals = NULL;
-    }
-
   return return_vals;
 }
 
@@ -277,8 +289,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                     GimpTemporaryProcedure *procedure,
                                     GValueArray            *args)
 {
-  GValueArray *return_vals = NULL;
-  GimpPlugIn  *plug_in;
+  GimpPlugIn *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -291,6 +302,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
   if (plug_in)
     {
       GimpPlugInProcFrame *proc_frame;
+      GValueArray         *return_vals;
       GPProcRun            proc_run;
 
       proc_frame = gimp_plug_in_proc_frame_push (plug_in, context, progress,
@@ -303,13 +315,20 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
+          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
+                                            GIMP_PLUG_IN_EXECUTION_FAILED,
+                                            _("Failed to run plug-in \"%s\""),
+                                            name);
+
           g_free (proc_run.params);
           gimp_plug_in_proc_frame_pop (plug_in);
 
-          return_vals =
-            gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
+          return_vals = gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
+                                                          FALSE, error);
+          g_error_free (error);
 
-          goto done;
+          return return_vals;
         }
 
       g_free (proc_run.params);
@@ -327,8 +346,13 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
       gimp_plug_in_proc_frame_unref (proc_frame, plug_in);
       g_object_unref (plug_in);
-    }
 
- done:
-  return return_vals;
+      return return_vals;
+    }
+  else
+    {
+      /*  can we actually ever get here?  */
+      return gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
+                                               FALSE, NULL);
+    }
 }

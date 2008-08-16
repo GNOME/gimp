@@ -1,3 +1,42 @@
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	If a procedure call fails, pass a string describing the error as
+	the second return value. First step towars fixing bug #344818.
+
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_get_return_values):
+	added a GError parameter. If it is set, pass the error message to
+	the return values.
+
+	* app/pdb/gimppdberror.h: added some more error codes.
+
+	* app/pdb/gimppdb.c
+	* app/xcf/xcf.c: pass errors to gimp_procedure_get_return_values().
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	show a different error message for execution vs. calling errors.
+
+	* app/plug-in/gimpplugin-progress.c
+	(gimp_plug_in_progress_cancel_callback): pass the error
+	GIMP_PDB_CANCELLED to gimp_procedure_get_return_values().
+
+	* app/plug-in/gimppluginmanager-call.[ch]
+	(gimp_plug_in_manager_call_run): removed the 'destroy_return_vals'
+	parameter.
+
+	* app/plug-in/gimppluginprocedure.c: destroy the return values here.
+
+	* app/plug-in/gimppluginprocframe.c: pass an error to
+	gimp_procedure_get_return_values().
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: generate code that passes the
+	error to gimp_procedure_get_return_values().
+
+	* app/pdb/*-cmds.c: regenerated.
+	
+	* plug-ins/pygimp/pygimp-pdb.c: extract the error message from the
+	return values and pass it to the exception that is thrown.
+
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback):

@@ -81,7 +81,8 @@ layer_new_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer);
@@ -119,7 +120,8 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer);
@@ -165,7 +167,8 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer_copy);
@@ -205,7 +208,8 @@ layer_copy_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer_copy);
@@ -231,7 +235,8 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
       gimp_layer_add_alpha (layer);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -252,7 +257,8 @@ layer_flatten_invoker (GimpProcedure      *procedure,
       gimp_layer_flatten (layer, context);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -284,7 +290,8 @@ layer_scale_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -317,7 +324,8 @@ layer_resize_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -341,7 +349,8 @@ layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -376,7 +385,8 @@ layer_translate_invoker (GimpProcedure      *procedure,
       gimp_image_undo_group_end (image);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -414,7 +424,8 @@ layer_set_offsets_invoker (GimpProcedure      *procedure,
       gimp_image_undo_group_end (image);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -455,7 +466,8 @@ layer_create_mask_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer_mask (&return_vals->values[1], mask);
@@ -483,7 +495,8 @@ layer_get_mask_invoker (GimpProcedure      *procedure,
       mask = gimp_layer_get_mask (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer_mask (&return_vals->values[1], mask);
@@ -511,7 +524,8 @@ layer_from_mask_invoker (GimpProcedure      *procedure,
       layer = gimp_layer_mask_get_layer (mask);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer);
@@ -542,7 +556,8 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -568,7 +583,8 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -591,7 +607,8 @@ layer_is_floating_sel_invoker (GimpProcedure      *procedure,
       is_floating_sel = gimp_layer_is_floating_sel (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], is_floating_sel);
@@ -619,7 +636,8 @@ layer_get_lock_alpha_invoker (GimpProcedure      *procedure,
       lock_alpha = gimp_layer_get_lock_alpha (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], lock_alpha);
@@ -647,7 +665,8 @@ layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
       gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -673,7 +692,8 @@ layer_get_apply_mask_invoker (GimpProcedure      *procedure,
         apply_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], apply_mask);
@@ -704,7 +724,8 @@ layer_set_apply_mask_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -730,7 +751,8 @@ layer_get_show_mask_invoker (GimpProcedure      *procedure,
         show_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], show_mask);
@@ -761,7 +783,8 @@ layer_set_show_mask_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -787,7 +810,8 @@ layer_get_edit_mask_invoker (GimpProcedure      *procedure,
         edit_mask = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], edit_mask);
@@ -818,7 +842,8 @@ layer_set_edit_mask_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -841,7 +866,8 @@ layer_get_opacity_invoker (GimpProcedure      *procedure,
       opacity = gimp_layer_get_opacity (layer) * 100.0;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_double (&return_vals->values[1], opacity);
@@ -869,7 +895,8 @@ layer_set_opacity_invoker (GimpProcedure      *procedure,
       gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -892,7 +919,8 @@ layer_get_mode_invoker (GimpProcedure      *procedure,
       mode = gimp_layer_get_mode (layer);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_enum (&return_vals->values[1], mode);
@@ -920,7 +948,8 @@ layer_set_mode_invoker (GimpProcedure      *procedure,
       gimp_layer_set_mode (layer, mode, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

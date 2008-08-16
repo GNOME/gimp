@@ -65,7 +65,7 @@ vectors_is_valid_invoker (GimpProcedure      *procedure,
   valid = (GIMP_IS_VECTORS (vectors) &&
            ! gimp_item_is_removed (GIMP_ITEM (vectors)));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_set_boolean (&return_vals->values[1], valid);
 
   return return_vals;
@@ -93,7 +93,8 @@ vectors_new_invoker (GimpProcedure      *procedure,
       vectors = gimp_vectors_new (image, name);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_vectors (&return_vals->values[1], vectors);
@@ -136,7 +137,8 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_vectors (&return_vals->values[1], vectors);
@@ -168,7 +170,8 @@ vectors_copy_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_vectors (&return_vals->values[1], vectors_copy);
@@ -196,7 +199,8 @@ vectors_get_image_invoker (GimpProcedure      *procedure,
       image = gimp_item_get_image (GIMP_ITEM (vectors));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_image (&return_vals->values[1], image);
@@ -224,7 +228,8 @@ vectors_get_name_invoker (GimpProcedure      *procedure,
       name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -252,7 +257,8 @@ vectors_set_name_invoker (GimpProcedure      *procedure,
       success = gimp_item_rename (GIMP_ITEM (vectors), name, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -275,7 +281,8 @@ vectors_get_visible_invoker (GimpProcedure      *procedure,
       visible = gimp_item_get_visible (GIMP_ITEM (vectors));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], visible);
@@ -303,7 +310,8 @@ vectors_set_visible_invoker (GimpProcedure      *procedure,
       gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -326,7 +334,8 @@ vectors_get_linked_invoker (GimpProcedure      *procedure,
       linked = gimp_item_get_linked (GIMP_ITEM (vectors));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], linked);
@@ -354,7 +363,8 @@ vectors_set_linked_invoker (GimpProcedure      *procedure,
       gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -377,7 +387,8 @@ vectors_get_tattoo_invoker (GimpProcedure      *procedure,
       tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_int (&return_vals->values[1], tattoo);
@@ -405,7 +416,8 @@ vectors_set_tattoo_invoker (GimpProcedure      *procedure,
       gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -445,7 +457,8 @@ vectors_get_strokes_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -485,7 +498,8 @@ vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_double (&return_vals->values[1], length);
@@ -534,7 +548,8 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -572,7 +587,8 @@ vectors_remove_stroke_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -600,7 +616,8 @@ vectors_stroke_close_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -632,7 +649,8 @@ vectors_stroke_translate_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -664,7 +682,8 @@ vectors_stroke_scale_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -698,7 +717,8 @@ vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -730,7 +750,8 @@ vectors_stroke_flip_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -766,7 +787,8 @@ vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -823,7 +845,8 @@ vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -892,7 +915,8 @@ vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_int (&return_vals->values[1], stroke_id);
@@ -952,7 +976,8 @@ vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -996,7 +1021,8 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_int (&return_vals->values[1], stroke_id);
@@ -1040,7 +1066,8 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -1087,7 +1114,8 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -1142,7 +1170,8 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -1183,7 +1212,8 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_int (&return_vals->values[1], stroke_id);
@@ -1232,7 +1262,8 @@ vectors_to_selection_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -1283,7 +1314,8 @@ vectors_import_from_file_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -1344,7 +1376,8 @@ vectors_import_from_string_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -1377,7 +1410,8 @@ vectors_export_to_file_invoker (GimpProcedure      *procedure,
       success = gimp_vectors_export_file (image, vectors, filename, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -1404,7 +1438,8 @@ vectors_export_to_string_invoker (GimpProcedure      *procedure,
       success = (string != NULL);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_take_string (&return_vals->values[1], string);

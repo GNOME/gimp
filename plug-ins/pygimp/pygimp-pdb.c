@@ -620,9 +620,7 @@ static PyMethodDef pdb_methods[] = {
 PyObject *
 pygimp_pdb_new(void)
 {
-    PyGimpPDB *self;
-	
-    self = PyObject_NEW(PyGimpPDB, &PyGimpPDB_Type);
+    PyGimpPDB *self = PyObject_NEW(PyGimpPDB, &PyGimpPDB_Type);
 
     if (self == NULL)
 	return NULL;
@@ -929,8 +927,11 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 #if PG_DEBUG > 0
 	g_printerr("execution error\n");
 #endif
+        if (nret > 1 && ret[1].type == GIMP_PDB_STRING)
+          PyErr_SetString(PyExc_RuntimeError, ret[1].data.d_string);
+        else
+          PyErr_SetString(PyExc_RuntimeError, "execution error");
 	gimp_destroy_params(ret, nret);
-	PyErr_SetString(PyExc_RuntimeError, "execution error");
 	return NULL;
 	break;
 
@@ -938,8 +939,11 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 #if PG_DEBUG > 0
 	g_printerr("calling error\n");
 #endif
+        if (nret > 1 && ret[1].type == GIMP_PDB_STRING)
+          PyErr_SetString(PyExc_RuntimeError, ret[1].data.d_string);
+        else
+          PyErr_SetString(PyExc_RuntimeError, "calling error");
 	gimp_destroy_params(ret, nret);
-	PyErr_SetString(PyExc_TypeError, "invalid arguments");
 	return NULL;
 	break;
 

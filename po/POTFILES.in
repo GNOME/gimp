@@ -274,6 +274,7 @@ app/plug-in/gimppluginmanager-call.c
 app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginprocedure.c
+app/plug-in/gimppluginprocframe.c
 app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
 app/plug-in/plug-in-icc-profile.c
