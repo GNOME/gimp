@@ -408,9 +408,9 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           g_value_array_free (args);
 
           pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                                   _("Procedure '%s' called with wrong "
-                                     "type for argument #%d "
-                                     "(expected %s, got %s)"),
+                                   _("Procedure '%s' has been called with a "
+                                     "wrong type for argument #%d."
+                                     "Expected %s, got %s."),
                                    gimp_object_get_name (GIMP_OBJECT (procedure)),
                                    i + 1, expected, got);
 

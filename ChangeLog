@@ -1,5 +1,11 @@
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): changed
+	error message to be similar to the message thrown from
+	gimp_procedure_validate_args().
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
 	If a procedure call fails, pass a string describing the error as
 	the second return value. First step towars fixing bug #344818.
 
