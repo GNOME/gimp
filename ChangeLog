@@ -1,5 +1,10 @@
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	removed the term 'PDB' from the user-visible error messages.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/vectors.pdb: pass error parameter to
 	gimp_vectors_import functions.
 

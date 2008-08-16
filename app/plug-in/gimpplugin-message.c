@@ -507,7 +507,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
         {
           gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
                         GIMP_MESSAGE_ERROR,
-                        _("PDB calling error for procedure '%s':\n"
+                        _("Calling error for procedure '%s':\n"
                           "%s"),
                         canonical, error->message);
         }
@@ -515,7 +515,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
         {
           gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
                         GIMP_MESSAGE_ERROR,
-                        _("PDB execution error for procedure '%s':\n"
+                        _("Execution error for procedure '%s':\n"
                           "%s"),
                         canonical, error->message);
         }
