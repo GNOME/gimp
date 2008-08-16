@@ -3,7 +3,7 @@
 	Next step towards fixing bug #344818:
 
 	* libgimp/gimp.[ch]: keep the last error status and error message
-	in libgimp. Added new functon gimp_pdb_get_error() that allows to
+	in libgimp. Added new functon gimp_get_pdb_error() that allows to
 	retrieve it.
 
 	* libgimp/gimp.def: updated.
