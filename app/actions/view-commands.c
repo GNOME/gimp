@@ -38,6 +38,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
+#include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
 
 #include "widgets/gimpactiongroup.h"

@@ -1,3 +1,12 @@
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-scale.[ch]
+	* app/display/gimpdisplayshell-scale-dialog.[ch]: split scale
+	dialog into a new file.
+
+	* app/actions/view-commands.c: changed accordingly.
+
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c

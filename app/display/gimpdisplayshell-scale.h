@@ -59,7 +59,5 @@ void     gimp_display_shell_set_initial_scale              (GimpDisplayShell    
                                                             gint                    *display_width,
                                                             gint                    *display_height);
 
-void     gimp_display_shell_scale_dialog                   (GimpDisplayShell        *shell);
-
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */

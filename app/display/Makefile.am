@@ -51,6 +51,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-scale.c		\
 	gimpdisplayshell-scale.h		\
+	gimpdisplayshell-scale-dialog.c		\
+	gimpdisplayshell-scale-dialog.h		\
 	gimpdisplayshell-scroll.c		\
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
