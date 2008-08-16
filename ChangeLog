@@ -1,5 +1,15 @@
 2008-08-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.c (gimp_get_pdb_error): added translator comments.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c (pf_call): also use
+	gimp_get_pdb_error() here. Easier and safer than looking at the
+	return values to get the error message.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
 	Next step towards fixing bug #344818:
 
 	* libgimp/gimp.[ch]: keep the last error status and error message

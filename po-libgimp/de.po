@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-13 20:20+0200\n"
-"PO-Revision-Date: 2008-08-13 20:30+0200\n"
+"POT-Creation-Date: 2008-08-16 19:31+0200\n"
+"PO-Revision-Date: 2008-08-16 19:34+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../libgimp/gimp.c:1043
+msgid "success"
+msgstr "Erfolg"
+
+#: ../libgimp/gimp.c:1046
+msgid "execution error"
+msgstr "Ausführungsfehler"
+
+#: ../libgimp/gimp.c:1049
+msgid "calling error"
+msgstr "Aufruffehler"
+
+#: ../libgimp/gimp.c:1052
+msgid "cancelled"
+msgstr "abgebrochen"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"

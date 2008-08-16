@@ -1039,15 +1039,19 @@ gimp_get_pdb_error (void)
 
   switch (pdb_error_status)
     {
+      /*  procedure executed successfully  */
     case GIMP_PDB_SUCCESS:
       return _("success");
 
+      /*  procedure execution failed       */
     case GIMP_PDB_EXECUTION_ERROR:
       return _("execution error");
 
+      /*  procedure called incorrectly     */
     case GIMP_PDB_CALLING_ERROR:
       return _("calling error");
 
+      /*  procedure cancelled              */
     case GIMP_PDB_CANCEL:
       return _("cancelled");
 
