@@ -1,5 +1,10 @@
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Nice-ify.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.[ch]
 	(gimp_display_shell_scale_get_zoom_focus)
 	(gimp_display_shell_scale_image_is_within_viewport): Support axis
