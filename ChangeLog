@@ -1,3 +1,18 @@
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): Remove the centering
+	logic because we do not always want to run it when the canvas size
+	changes. For example, the canvas size changes if rulers are
+	toggled on/off.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_configure_event): Implement
+	GtkWidget::configure_event() for the display shell and put the
+	image centering logic here instead, since this class function is
+	run when the top level window size changes. Run it only if the
+	size (not position) of the window changes.
+
 2008-08-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpdrawtool.c: remove #include "core/gimpguide.h"

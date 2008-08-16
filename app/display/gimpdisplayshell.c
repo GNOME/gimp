@@ -117,6 +117,8 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
                                                     GdkEventAny      *aevent);
+static gboolean  gimp_display_shell_configure_event(GtkWidget        *widget,
+                                                    GdkEventConfigure*cevent);
 static gboolean
              gimp_display_shell_window_state_event (GtkWidget        *widget,
                                                     GdkEventWindowState *event);
@@ -211,6 +213,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
   widget_class->delete_event       = gimp_display_shell_delete_event;
+  widget_class->configure_event    = gimp_display_shell_configure_event;
   widget_class->window_state_event = gimp_display_shell_window_state_event;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
   widget_class->style_set          = gimp_display_shell_style_set;
@@ -571,6 +574,47 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
   gimp_display_shell_close (shell, FALSE);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_display_shell_configure_event (GtkWidget         *widget,
+                                    GdkEventConfigure *cevent)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+  gint              current_width;
+  gint              current_height;
+
+  /* Grab the size before we run the parent implementation */
+  current_width  = widget->allocation.width;
+  current_height = widget->allocation.height;
+
+  /* Run the parent implementation */
+  if (GTK_WIDGET_CLASS (parent_class)->configure_event)
+    GTK_WIDGET_CLASS (parent_class)->configure_event (widget, cevent);
+
+  /* Only run this stuff if the size changed */
+  if (shell->display        &&
+      shell->display->image &&
+      (cevent->width  != current_width ||
+       cevent->height != current_height))
+    {
+      gint sw;
+      gint sh;
+      gboolean center_horizontally;
+      gboolean center_vertically;
+
+      gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+      center_horizontally = sw < shell->disp_width;
+      center_vertically   = sh < shell->disp_height;
+
+      /* If the image fits within the display shell canvas on a
+       * given axis, center the image on that axis.
+       */
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell);
+    }
 
   return TRUE;
 }
