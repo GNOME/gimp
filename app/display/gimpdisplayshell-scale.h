@@ -34,7 +34,9 @@ void     gimp_display_shell_scale                          (GimpDisplayShell    
                                                             GimpZoomType            zoom_type,
                                                             gdouble                 scale);
 void     gimp_display_shell_scale_fit_in                   (GimpDisplayShell       *shell);
-gboolean gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell       *shell);
+gboolean gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell       *shell,
+                                                            gboolean               *horizontally,
+                                                            gboolean               *vertically);
 void     gimp_display_shell_scale_fill                     (GimpDisplayShell       *shell);
 void     gimp_display_shell_scale_handle_zoom_revert       (GimpDisplayShell       *shell);
 void     gimp_display_shell_scale_by_values                (GimpDisplayShell       *shell,

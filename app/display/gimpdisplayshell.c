@@ -726,7 +726,7 @@ gimp_display_shell_zoom_button_callback (GimpDisplayShell *shell,
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (zoom_button));
 
   if (shell->zoom_on_resize &&
-      gimp_display_shell_scale_image_is_within_viewport (shell))
+      gimp_display_shell_scale_image_is_within_viewport (shell, NULL, NULL))
     {
       /* Implicitly make a View -> Fit Image in Window */
       gimp_display_shell_scale_fit_in (shell);

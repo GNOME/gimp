@@ -510,20 +510,29 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
  *          viewport.
  **/
 gboolean
-gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell)
+gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
+                                                   gboolean         *horizontally,
+                                                   gboolean         *vertically)
 {
-  gint sw, sh;
+  gint     sw, sh;
+  gboolean horizontally_dummy, vertically_dummy;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
+  if (! horizontally) horizontally = &horizontally_dummy;
+  if (! vertically)   vertically   = &vertically_dummy;
+
   gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
-  return sw              <= shell->disp_width       &&
-         sh              <= shell->disp_height      &&
-         shell->offset_x <= 0                       &&
-         shell->offset_y <= 0                       &&
-         shell->offset_x >= sw - shell->disp_width  &&
-         shell->offset_y >= sh - shell->disp_height;
+  *horizontally = sw              <= shell->disp_width       &&
+                  shell->offset_x <= 0                       &&
+                  shell->offset_x >= sw - shell->disp_width;
+
+  *vertically   = sh              <= shell->disp_height      &&
+                  shell->offset_y <= 0                       &&
+                  shell->offset_y >= sh - shell->disp_height;
+
+  return *vertically && *horizontally;
 }
 
 /**
@@ -1009,7 +1018,8 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
  * @x:
  * @y:
  *
- * Calculates the viewport coordinate to focus on when zooming.
+ * Calculates the viewport coordinate to focus on when zooming
+ * independently for each axis.
  **/
 static void
 gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
@@ -1018,64 +1028,88 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gint             *x,
                                          gint             *y)
 {
-  GdkEvent *event;
+  gint image_center_x, image_center_y;
+  gint other_x, other_y;
 
-  if (gimp_display_shell_scale_image_is_within_viewport (shell) &&
-      ! gimp_display_shell_scale_image_stops_to_fit (shell,
-                                                     new_scale,
-                                                     current_scale,
-                                                     NULL,
-                                                     NULL))
-    {
-      gint sw, sh;
+  /* Calculate stops-to-fit focus point */
+  {
+    gint sw, sh;
 
-      gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                     &sw,
-                                                     &sh);
-      *x = -shell->offset_x + sw / 2;
-      *y = -shell->offset_y + sh / 2;
-    }
-  else
-    {
-      *x = shell->disp_width  / 2;
-      *y = shell->disp_height / 2;
+    gimp_display_shell_draw_get_scaled_image_size (shell,
+                                                   &sw,
+                                                   &sh);
+    image_center_x = -shell->offset_x + sw / 2;
+    image_center_y = -shell->offset_y + sh / 2;
+  }
 
-      /*  Center on the mouse position instead of the display center if
-       *  one of the following conditions are fulfilled and pointer is
-       *  within the canvas:
-       *
-       *   (1) there's no current event (the action was triggered by an
-       *       input controller)
-       *   (2) the event originates from the canvas (a scroll event)
-       *   (3) the event originates from the shell (a key press event)
-       *
-       *  Basically the only situation where we don't want to center on
-       *  mouse position is if the action is being called from a menu.
-       */
+  /* Calculate other focus point */
+  {
+    GdkEvent *event;
+    gboolean  event_looks_sane;
+    gboolean  cursor_within_canvas;
+    gint      canvas_pointer_x, canvas_pointer_y;
+    
 
-      event = gtk_get_current_event ();
+    /*  Center on the mouse position instead of the display center if
+     *  one of the following conditions are fulfilled and pointer is
+     *  within the canvas:
+     *
+     *   (1) there's no current event (the action was triggered by an
+     *       input controller)
+     *   (2) the event originates from the canvas (a scroll event)
+     *   (3) the event originates from the shell (a key press event)
+     *
+     *  Basically the only situation where we don't want to center on
+     *  mouse position is if the action is being called from a menu.
+     */
 
-      if (! event ||
-          gtk_get_event_widget (event) == shell->canvas ||
-          gtk_get_event_widget (event) == GTK_WIDGET (shell))
-        {
-          gint canvas_pointer_x;
-          gint canvas_pointer_y;
+    event = gtk_get_current_event ();
 
-          gtk_widget_get_pointer (shell->canvas,
-                                  &canvas_pointer_x,
-                                  &canvas_pointer_y);
+    event_looks_sane = ! event ||
+                       gtk_get_event_widget (event) == shell->canvas ||
+                       gtk_get_event_widget (event) == GTK_WIDGET (shell);
 
-          if (canvas_pointer_x >= 0 &&
-              canvas_pointer_y >= 0 &&
-              canvas_pointer_x < shell->disp_width &&
-              canvas_pointer_y < shell->disp_height)
-            {
-              *x = canvas_pointer_x;
-              *y = canvas_pointer_y;
-            }
-        }
-    }
+
+    gtk_widget_get_pointer (shell->canvas,
+                            &canvas_pointer_x,
+                            &canvas_pointer_y);
+
+    cursor_within_canvas = canvas_pointer_x >= 0 &&
+                           canvas_pointer_y >= 0 &&
+                           canvas_pointer_x <  shell->disp_width &&
+                           canvas_pointer_y <  shell->disp_height;
+
+
+    if (event_looks_sane && cursor_within_canvas)
+      {
+        other_x = canvas_pointer_x;
+        other_y = canvas_pointer_y;
+      }
+    else
+      {
+        other_x = shell->disp_width  / 2;
+        other_y = shell->disp_height / 2;
+      }
+  }
+
+  /* Decide which one to use for each axis */
+  {
+    gboolean within_horizontally, within_vertically;
+    gboolean stops_horizontally, stops_vertically;
+    
+    gimp_display_shell_scale_image_is_within_viewport (shell,
+                                                       &within_horizontally,
+                                                       &within_vertically);
+
+    gimp_display_shell_scale_image_stops_to_fit (shell,
+                                                 new_scale,
+                                                 current_scale,
+                                                 &stops_horizontally,
+                                                 &stops_vertically);
+
+    *x = within_horizontally && ! stops_horizontally ? image_center_x : other_x;
+    *y = within_vertically   && ! stops_vertically   ? image_center_y : other_y;
+  }
 }
 
 static void
