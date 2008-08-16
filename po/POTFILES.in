@@ -269,6 +269,7 @@ app/pdb/vectors-cmds.c
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
 app/plug-in/gimpplugin-message.c
+app/plug-in/gimpplugin-progress.c
 app/plug-in/gimpplugin.c
 app/plug-in/gimppluginmanager-call.c
 app/plug-in/gimppluginmanager-restore.c
