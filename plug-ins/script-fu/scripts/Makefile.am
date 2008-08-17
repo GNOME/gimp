@@ -90,7 +90,6 @@ scripts = \
 	speed-text.scm			\
 	spinning-globe.scm		\
 	spyrogimp.scm			\
-	starburst-logo.scm		\
 	starscape-logo.scm		\
 	swirltile.scm			\
 	swirly-pattern.scm		\
