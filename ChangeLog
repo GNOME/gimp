@@ -1,5 +1,11 @@
 2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): Don't apply the
+	centering logic on zoom_on_resize.
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.[ch]
 	(gimp_display_shell_configure_event): When applying the centering
 	logic we need to know the size of the new canvas, so instead of

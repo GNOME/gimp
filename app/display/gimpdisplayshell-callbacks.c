@@ -282,6 +282,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           gint    offset_x;
           gint    offset_y;
 
+          /* FIXMEEEEE!!! */
+
           /*  multiply the zoom_factor with the ratio of the new and
            *  old canvas diagonals
            */
@@ -303,23 +305,27 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       shell->disp_height = allocation->height;
 
       /* When we size-allocate due to resize of the top level window,
-       * we want some additional logic
+       * we want some additional logic. Don't apply it on
+       * zoom_on_resize though.
        */
       if (shell->size_allocate_from_configure_event)
         {
-          gint sw;
-          gint sh;
-          gboolean center_horizontally;
-          gboolean center_vertically;
+          if (! shell->zoom_on_resize)
+            {
+              gint sw;
+              gint sh;
+              gboolean center_horizontally;
+              gboolean center_vertically;
 
-          gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+              gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
-          center_horizontally = sw <= shell->disp_width;
-          center_vertically   = sh <= shell->disp_height;
+              center_horizontally = sw <= shell->disp_width;
+              center_vertically   = sh <= shell->disp_height;
 
-          gimp_display_shell_scroll_center_image (shell,
-                                                  center_horizontally,
-                                                  center_vertically);
+              gimp_display_shell_scroll_center_image (shell,
+                                                      center_horizontally,
+                                                      center_vertically);
+            }
 
           shell->size_allocate_from_configure_event = FALSE;
         }
