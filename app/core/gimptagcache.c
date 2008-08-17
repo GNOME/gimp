@@ -379,7 +379,6 @@ gimp_tag_cache_save (GimpTagCache      *cache)
   g_string_append (buf, "</tag_cache>\n");
 
   filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
-  printf ("writing tag cache to %s\n", filename);
   error = NULL;
   if (!g_file_set_contents (filename, buf->str, buf->len, &error))
     {

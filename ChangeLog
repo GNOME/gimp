@@ -1,5 +1,11 @@
 2008-08-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimptagcache.c (gimp_tag_cache_save):
+	* app/widgets/gimptagentry.c (gimp_tag_entry_commit_tags):
+	removed debugging output.
+
+2008-08-17  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/widgets/gimptagentry.h: described the meaning of gimp tag entry
 	text mask.
 

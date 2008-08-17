@@ -1797,9 +1797,6 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
   gboolean      found_region;
   gint          cursor_position;
 
-  printf ("commiting tags ...\n");
-  printf ("commit mask (b): '%s'\n", tag_entry->mask->str);
-
   cursor_position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
 
   do
@@ -1885,8 +1882,6 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
 
   gtk_editable_set_position (GTK_EDITABLE (tag_entry), cursor_position);
   gimp_tag_entry_strip_extra_whitespace (tag_entry);
-
-  printf ("commit mask (a): '%s'\n", tag_entry->mask->str);
 }
 
 static gboolean
