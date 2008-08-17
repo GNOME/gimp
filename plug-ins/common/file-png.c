@@ -1349,8 +1349,7 @@ save_image (const gchar  *filename,
       break;
 
     default:
-      g_set_error (error, 0, 0,
-                   "%s", _("Image type can't be saved as PNG"));
+      g_set_error (error, 0, 0, "Image type can't be saved as PNG");
       return FALSE;
     }
 

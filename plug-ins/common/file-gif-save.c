@@ -82,19 +82,22 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query                    (void);
-static void   run                      (const gchar      *name,
+static void     query                  (void);
+static void     run                    (const gchar      *name,
                                         gint              nparams,
                                         const GimpParam  *param,
                                         gint             *nreturn_vals,
                                         GimpParam       **return_vals);
-static gint   save_image               (const gchar      *filename,
+
+static gboolean  save_image            (const gchar      *filename,
                                         gint32            image_ID,
                                         gint32            drawable_ID,
-                                        gint32            orig_image_ID);
+                                        gint32            orig_image_ID,
+                                        GError          **error);
 
-static gboolean sanity_check           (const gchar      *filename,
-                                        gint32            image_ID);
+static GimpPDBStatusType sanity_check  (const gchar      *filename,
+                                        gint32            image_ID,
+                                        GError          **error);
 static gboolean bad_bounds_dialog      (void);
 
 static gboolean save_dialog            (gint32            image_ID);
@@ -182,6 +185,7 @@ run (const gchar      *name,
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  GError           *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -210,6 +214,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
           export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
                                       (GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -225,7 +230,9 @@ run (const gchar      *name,
           break;
         }
 
-      if (sanity_check (filename, image_ID))
+      status = sanity_check (filename, image_ID, &error);
+
+      if (status == GIMP_PDB_SUCCESS)
         {
           switch (run_mode)
             {
@@ -266,9 +273,8 @@ run (const gchar      *name,
           if (status == GIMP_PDB_SUCCESS)
             {
               if (save_image (param[3].data.d_string,
-                              image_ID,
-                              drawable_ID,
-                              orig_image_ID))
+                              image_ID, drawable_ID, orig_image_ID,
+                              &error))
                 {
                   /*  Store psvals data  */
                   gimp_set_data (SAVE_PROC, &gsvals, sizeof (GIFSaveVals));
@@ -279,15 +285,19 @@ run (const gchar      *name,
                 }
             }
         }
-      else
-        /* Some layers were out of bounds and the user wishes
-          to abort.  */
-        {
-          status = GIMP_PDB_CANCEL;
-        }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
+      if (status == GIMP_PDB_EXECUTION_ERROR)
+        {
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
+        }
     }
 
   values[0].data.d_status = status;
@@ -535,9 +545,10 @@ parse_disposal_tag (const gchar *str)
 }
 
 
-static gboolean
-sanity_check (const gchar *filename,
-              gint32       image_ID)
+static GimpPDBStatusType
+sanity_check (const gchar  *filename,
+              gint32        image_ID,
+              GError      **error)
 {
   gint32 *layers;
   gint    nlayers;
@@ -550,9 +561,13 @@ sanity_check (const gchar *filename,
 
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
-      g_message (_("Unable to save '%s'.  The GIF file format does not support images that are more than %d pixels wide or tall."),
-                 gimp_filename_to_utf8 (filename), G_MAXUSHORT);
-      return FALSE;
+      g_set_error (error, 0, 0,
+                   _("Unable to save '%s'.  "
+                   "The GIF file format does not support images that are "
+                   "more than %d pixels wide or tall."),
+                   gimp_filename_to_utf8 (filename), G_MAXUSHORT);
+
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   /*** Iterate through the layers to make sure they're all ***/
@@ -577,30 +592,32 @@ sanity_check (const gchar *filename,
           /* Image has illegal bounds - ask the user what it wants to do */
 
           /* Do the crop if we can't talk to the user, or if we asked
-           * the user and they said yes. */
+           * the user and they said yes.
+           */
           if ((run_mode == GIMP_RUN_NONINTERACTIVE) || bad_bounds_dialog ())
             {
               gimp_image_crop (image_ID, image_width, image_height, 0, 0);
-              return TRUE;
+              return GIMP_PDB_SUCCESS;
             }
           else
             {
-              return FALSE;
+              return GIMP_PDB_CANCEL;
             }
         }
     }
 
   g_free (layers);
 
-  return TRUE;
+  return GIMP_PDB_SUCCESS;
 }
 
 
-static gint
+static gboolean
 save_image (const gchar *filename,
             gint32       image_ID,
             gint32       drawable_ID,
-            gint32       orig_image_ID)
+            gint32       orig_image_ID,
+            GError     **error)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
@@ -743,8 +760,9 @@ save_image (const gchar *filename,
   outfile = g_fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

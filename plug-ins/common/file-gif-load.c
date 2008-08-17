@@ -92,7 +92,8 @@ static void   run        (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 static gint32 load_image (const gchar      *filename,
-                          gboolean          thumbnail);
+                          gboolean          thumbnail,
+                          GError          **error);
 
 
 static guchar        used_cmap[3][256];
@@ -177,6 +178,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
   gint32             image_ID;
 
   INIT_I18N ();
@@ -189,11 +191,11 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, FALSE);
+      image_ID = load_image (param[1].data.d_string, FALSE, &error);
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
-      image_ID = load_image (param[0].data.d_string, TRUE);
+      image_ID = load_image (param[0].data.d_string, TRUE, &error);
     }
   else
     {
@@ -228,6 +230,13 @@ run (const gchar      *name,
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
+
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
         }
     }
 
@@ -289,8 +298,9 @@ static gint32 ReadImage (FILE *, const gchar *,
 
 
 static gint32
-load_image (const gchar *filename,
-            gboolean     thumbnail)
+load_image (const gchar  *filename,
+            gboolean      thumbnail,
+            GError      **error)
 {
   FILE     *fd;
   guchar    buf[16];
@@ -304,10 +314,12 @@ load_image (const gchar *filename,
   gint32    image_ID = -1;
 
   fd = g_fopen (filename, "rb");
-  if (!fd)
+
+  if (! fd)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -322,7 +334,8 @@ load_image (const gchar *filename,
 
   if (strncmp ((gchar *) buf, "GIF", 3) != 0)
     {
-      g_message (_("This is not a GIF file"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("This is not a GIF file"));
       return -1;
     }
 

@@ -279,7 +279,7 @@ run (const gchar      *name,
           load_vals.width      = - param[1].data.d_int32;
           load_vals.height     = - param[1].data.d_int32;
 
-          image_ID = load_image (filename, NULL);
+          image_ID = load_image (filename, &error);
 
           if (image_ID != -1)
             {
