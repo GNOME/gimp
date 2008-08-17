@@ -65,7 +65,7 @@
                                       bg-color)
   (begin
     (gimp-image-undo-group-start img)
-    (apply-glowing-logo-effect img logo-layer size bg-color)
+    (apply-glowing-logo-effect img logo-layer (* size 3) bg-color)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
   )
@@ -78,10 +78,10 @@
   "Spencer Kimball"
   "1997"
   "RGBA"
-  SF-IMAGE      "Image"                     0
-  SF-DRAWABLE   "Drawable"                  0
-  SF-ADJUSTMENT _"Effect size (pixels * 3)" '(150 2 1000 1 10 0 1)
-  SF-COLOR      _"Background color"         '(7 0 20)
+  SF-IMAGE      "Image"                 0
+  SF-DRAWABLE   "Drawable"              0
+  SF-ADJUSTMENT _"Effect size (pixels)" '(50 1 500 1 10 0 1)
+  SF-COLOR      _"Background color"     '(7 0 20)
 )
 
 (script-fu-menu-register "script-fu-glowing-logo-alpha"
