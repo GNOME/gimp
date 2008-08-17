@@ -1,5 +1,11 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/starscape-logo.scm: dropped the
+	"Alpha to Logo" part of the "Starscape logo script. It had a
+	similar problem as the Starburst script (see bug #486779).
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/Makefile.am
 	* plug-ins/script-fu/scripts/starburst-logo.scm: dropped the
 	"Starburst" logo script. Fixes bug #486779.
