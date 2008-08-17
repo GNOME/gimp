@@ -21,7 +21,7 @@
         (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE
                                             "Sparkle" 100 NORMAL-MODE)))
         (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE
-                                          _"Matte" 100 NORMAL-MODE)))
+                                          "Matte" 100 NORMAL-MODE)))
         (shadow-layer (car (gimp-layer-new img
 					   (+ border width)
 					   (+ border height)

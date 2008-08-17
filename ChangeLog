@@ -1,7 +1,12 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	(apply-frosty-logo-effect): unmarked string for translation.
+	Script-Fu doesn't support i18n outside the register call.
 
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/glowing-logo.scm
 	* plug-ins/script-fu/scripts/neon-logo.scm: changed the "Alpha to
 	Logo" parts of these scripts so that the user can specify the
 	effect size directly instead of as some multiple of the size.
