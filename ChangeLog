@@ -1,6 +1,16 @@
 2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the image ends up
+	below or to the right of the viewport top and left edges, and the
+	image is not centered on a given axis, align the top left image
+	edge with the top left viewport edge. This is basically the best
+	we can do without an API for start and end of a window resize
+	cycle using the mouse.
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_size_allocate): Don't apply the
 	centering logic on zoom_on_resize.
 
