@@ -427,10 +427,9 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
 
       if (error_msg)
         {
-          GError *pdb_error = g_error_new (GIMP_PDB_ERROR,
-                                           GIMP_PDB_INTERNAL_ERROR,
-                                           "%s", error_msg);
-
+          GError *pdb_error = g_error_new_literal (GIMP_PDB_ERROR,
+                                                   GIMP_PDB_INTERNAL_ERROR,
+                                                   error_msg);
           g_warning ("%s: %s", G_STRFUNC, error_msg);
           g_free (error_msg);
 

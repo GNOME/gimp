@@ -320,6 +320,20 @@ gimp_plug_in_progress_cancel (GimpPlugIn  *plug_in,
 
 /*  private functions  */
 
+static GValueArray *
+get_cancel_return_values (GimpProcedure *procedure)
+{
+  GValueArray *return_vals;
+  GError      *error;
+
+  error = g_error_new_literal (GIMP_PDB_ERROR, GIMP_PDB_CANCELLED,
+                               _("Cancelled"));
+  return_vals = gimp_procedure_get_return_values (procedure, FALSE, error);
+  g_error_free (error);
+
+  return return_vals;
+}
+
 static void
 gimp_plug_in_progress_cancel_callback (GimpProgress *progress,
                                        GimpPlugIn   *plug_in)
@@ -329,13 +343,8 @@ gimp_plug_in_progress_cancel_callback (GimpProgress *progress,
 
   if (proc_frame->main_loop)
     {
-      GError *error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_CANCELLED,
-                                   "%s", _("Cancelled"));
-
       proc_frame->return_vals =
-        gimp_procedure_get_return_values (proc_frame->procedure, FALSE, error);
-
-      g_error_free (error);
+        get_cancel_return_values (proc_frame->procedure);
     }
 
   for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
@@ -344,14 +353,8 @@ gimp_plug_in_progress_cancel_callback (GimpProgress *progress,
 
       if (proc_frame->main_loop)
         {
-          GError *error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_CANCELLED,
-                                       "%s", _("Cancelled"));
-
           proc_frame->return_vals =
-            gimp_procedure_get_return_values (proc_frame->procedure,
-                                              FALSE, error);
-
-          g_value_set_enum (proc_frame->return_vals->values, GIMP_PDB_CANCEL);
+            get_cancel_return_values (proc_frame->procedure);
         }
     }
 
