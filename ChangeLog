@@ -1,7 +1,7 @@
 2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
-	(gimp_display_shell_canvas_size_allocate): Simpliy.
+	(gimp_display_shell_canvas_size_allocate): Simplify.
 
 2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
 
