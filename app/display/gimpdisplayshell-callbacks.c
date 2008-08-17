@@ -308,54 +308,53 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
        * we want some additional logic. Don't apply it on
        * zoom_on_resize though.
        */
-      if (shell->size_allocate_from_configure_event)
+      if (shell->size_allocate_from_configure_event &&
+          ! shell->zoom_on_resize)
         {
-          if (! shell->zoom_on_resize)
+          gboolean center_horizontally;
+          gboolean center_vertically;
+          gint     target_offset_x;
+          gint     target_offset_y;
+          gint     sw;
+          gint     sh;
+
+          gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+          center_horizontally = sw <= shell->disp_width;
+          center_vertically   = sh <= shell->disp_height;
+
+          gimp_display_shell_scroll_center_image (shell,
+                                                  center_horizontally,
+                                                  center_vertically);
+
+          /* This is basically the best we can do before we get an
+           * API for storing the image offset at the start of an
+           * image window resize using the mouse
+           */
+          target_offset_x = shell->offset_x;
+          target_offset_y = shell->offset_y;
+ 
+          if (! center_horizontally)
             {
-              gboolean center_horizontally;
-              gboolean center_vertically;
-              gint     target_offset_x;
-              gint     target_offset_y;
-              gint     sw;
-              gint     sh;
-
-              gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
-
-              center_horizontally = sw <= shell->disp_width;
-              center_vertically   = sh <= shell->disp_height;
-
-              gimp_display_shell_scroll_center_image (shell,
-                                                      center_horizontally,
-                                                      center_vertically);
-
-              /* This is basically the best we can do before we get an
-               * API for storing the image offset at the start of an
-               * image window resize using the mouse
-               */
-              target_offset_x = shell->offset_x;
-              target_offset_y = shell->offset_y;
- 
-              if (! center_horizontally)
-                {
-                  target_offset_x = MAX (shell->offset_x, 0);
-                }
- 
-              if (! center_vertically)
-                {
-                  target_offset_y = MAX (shell->offset_y, 0);
-                }
- 
-              gimp_display_shell_scroll_set_offset (shell,
-                                                    target_offset_x,
-                                                    target_offset_y);
+              target_offset_x = MAX (shell->offset_x, 0);
             }
-
-          shell->size_allocate_from_configure_event = FALSE;
+ 
+          if (! center_vertically)
+            {
+              target_offset_y = MAX (shell->offset_y, 0);
+            }
+ 
+          gimp_display_shell_scroll_set_offset (shell,
+                                                target_offset_x,
+                                                target_offset_y);
         }
 
       gimp_display_shell_scroll_clamp_and_update (shell);
 
       gimp_display_shell_scaled (shell);
+
+      /* Reset */
+      shell->size_allocate_from_configure_event = FALSE;
     }
 }
 
