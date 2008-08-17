@@ -674,6 +674,8 @@ gimp_tag_entry_auto_complete (GimpTagEntry     *tag_entry)
       gimp_tag_entry_get_completion_candidates (GIMP_TAG_ENTRY (entry),
                                                 tags,
                                                 completion_prefix);
+  completion_candidates = g_list_sort (completion_candidates,
+                                       gimp_tag_compare_func);
   if (tag_entry->tab_completion_index >= 0
       && completion_candidates)
     {
