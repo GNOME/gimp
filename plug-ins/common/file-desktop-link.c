@@ -44,7 +44,8 @@ static void    run        (const gchar      *name,
                            GimpParam       **return_vals);
 
 static gint32  load_image (const gchar      *filename,
-                           GimpRunMode       run_mode);
+                           GimpRunMode       run_mode,
+                           GError          **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -99,6 +100,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  GError            *error  = NULL;
   gint32             image_ID;
 
   run_mode = param[0].data.d_int32;
@@ -111,7 +113,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, run_mode);
+      image_ID = load_image (param[1].data.d_string, run_mode, &error);
 
       if (image_ID != -1)
         {
@@ -120,6 +122,12 @@ run (const gchar      *name,
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
+        }
+      else if (error)
+        {
+          *nreturn_vals = 2;
+          values[1].type          = GIMP_PDB_STRING;
+          values[1].data.d_string = error->message;
         }
     }
   else
@@ -131,8 +139,9 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar *filename,
-            GimpRunMode  run_mode)
+load_image (const gchar  *filename,
+            GimpRunMode   run_mode,
+            GError      **load_error)
 {
   GKeyFile *file     = g_key_file_new ();
   gchar    *group    = NULL;
@@ -160,8 +169,9 @@ load_image (const gchar *filename,
  out:
   if (error)
     {
-      g_message (_("Error loading desktop file '%s': %s"),
-                 gimp_filename_to_utf8 (filename), error->message);
+      g_set_error (load_error, error->domain, error->code,
+                   _("Error loading desktop file '%s': %s"),
+                   gimp_filename_to_utf8 (filename), error->message);
       g_error_free (error);
     }
 

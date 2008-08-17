@@ -71,14 +71,16 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static gint32      load_image        (const gchar  *filename);
-static GdkPixbuf * load_rsvg_pixbuf  (const gchar  *filename,
-                                      SvgLoadVals  *vals,
-                                      GError      **error);
-static gboolean    load_rsvg_size    (const gchar  *filename,
-                                      SvgLoadVals  *vals,
-                                      GError      **error);
-static gboolean    load_dialog       (const gchar  *filename);
+static gint32              load_image        (const gchar  *filename,
+                                              GError      **error);
+static GdkPixbuf         * load_rsvg_pixbuf  (const gchar  *filename,
+                                              SvgLoadVals  *vals,
+                                             GError      **error);
+static gboolean            load_rsvg_size    (const gchar  *filename,
+                                              SvgLoadVals  *vals,
+                                              GError      **error);
+static GimpPDBStatusType   load_dialog       (const gchar  *filename,
+                                              GError      **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -173,6 +175,7 @@ run (const gchar      *name,
   static GimpParam   values[4];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
 
   INIT_I18N ();
 
@@ -205,8 +208,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_INTERACTIVE:
-          if (!load_dialog (param[1].data.d_string))
-            status = GIMP_PDB_CANCEL;
+          status = load_dialog (param[1].data.d_string, &error);
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -225,7 +227,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           const gchar *filename = param[1].data.d_string;
-          gint32       image_ID = load_image (filename);
+          gint32       image_ID = load_image (filename, &error);
 
           if (image_ID != -1)
             {
@@ -253,7 +255,7 @@ run (const gchar      *name,
 
           gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
         }
-    }
+     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
@@ -277,7 +279,7 @@ run (const gchar      *name,
           load_vals.width      = - param[1].data.d_int32;
           load_vals.height     = - param[1].data.d_int32;
 
-          image_ID = load_image (filename);
+          image_ID = load_image (filename, NULL);
 
           if (image_ID != -1)
             {
@@ -300,11 +302,19 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **load_error)
 {
   gint32        image;
   gint32        layer;
@@ -315,12 +325,16 @@ load_image (const gchar *filename)
 
   pixbuf = load_rsvg_pixbuf (filename, &load_vals, &error);
 
-  if (!pixbuf)
+  if (! pixbuf)
     {
       /*  Do not rely on librsvg setting GError on failure!  */
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename),
-                 error ? error->message : _("Unknown reason"));
+      g_set_error (load_error,
+                   error ? error->domain : 0, error ? error->code : 0,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename),
+                   error ? error->message : _("Unknown reason"));
+      g_clear_error (&error);
+
       return -1;
     }
 
@@ -666,43 +680,47 @@ load_dialog_set_ratio (gdouble x,
   g_signal_handlers_unblock_by_func (yadj, load_dialog_ratio_callback, NULL);
 }
 
-static gboolean
-load_dialog (const gchar *filename)
+static GimpPDBStatusType
+load_dialog (const gchar  *filename,
+             GError      **load_error)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *image;
-  GdkPixbuf *preview;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *abox;
-  GtkWidget *res;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkWidget *toggle;
-  GtkWidget *toggle2;
-  GtkObject *adj;
-  gboolean   run;
-  GError    *error = NULL;
-
-  SvgLoadVals  vals =
-    {
-      SVG_DEFAULT_RESOLUTION,
-      - SVG_PREVIEW_SIZE,
-      - SVG_PREVIEW_SIZE
-    };
+  GtkWidget   *dialog;
+  GtkWidget   *frame;
+  GtkWidget   *hbox;
+  GtkWidget   *vbox;
+  GtkWidget   *image;
+  GdkPixbuf   *preview;
+  GtkWidget   *table;
+  GtkWidget   *table2;
+  GtkWidget   *abox;
+  GtkWidget   *res;
+  GtkWidget   *label;
+  GtkWidget   *spinbutton;
+  GtkWidget   *toggle;
+  GtkWidget   *toggle2;
+  GtkObject   *adj;
+  gboolean     run;
+  GError      *error = NULL;
+  SvgLoadVals  vals  =
+  {
+    SVG_DEFAULT_RESOLUTION,
+    - SVG_PREVIEW_SIZE,
+    - SVG_PREVIEW_SIZE
+  };
 
   preview = load_rsvg_pixbuf (filename, &vals, &error);
 
-  if (!preview)
+  if (! preview)
     {
       /*  Do not rely on librsvg setting GError on failure!  */
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename),
-                 error ? error->message : _("Unknown reason"));
-      return FALSE;
+      g_set_error (load_error,
+                   error ? error->domain : 0, error ? error->code : 0,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename),
+                   error ? error->message : _("Unknown reason"));
+      g_clear_error (&error);
+
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -966,5 +984,5 @@ load_dialog (const gchar *filename)
 
   gtk_widget_destroy (dialog);
 
-  return run;
+  return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
 }
