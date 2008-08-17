@@ -45,19 +45,15 @@ psd_set_error (const gboolean   file_eof,
                const gint       err_no,
                GError         **error)
 {
-  /*
-   *  Set error
-   */
   if (file_eof)
     {
-      *error = g_error_new (G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                            _("Unexpected end of file"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("Unexpected end of file"));
     }
   else
     {
-      *error = g_error_new_literal (G_FILE_ERROR,
-                                    g_file_error_from_errno (err_no),
-                                    g_strerror (err_no));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (err_no),
+                   "%s", g_strerror (err_no));
     }
 
   return;
