@@ -329,6 +329,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->zoom_on_resize         = FALSE;
   shell->show_transform_preview = FALSE;
 
+  shell->size_allocate_from_configure_event = FALSE;
+
   shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options       = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
@@ -594,29 +596,15 @@ gimp_display_shell_configure_event (GtkWidget         *widget,
   if (GTK_WIDGET_CLASS (parent_class)->configure_event)
     GTK_WIDGET_CLASS (parent_class)->configure_event (widget, cevent);
 
-  /* Only run this stuff if the size changed */
+  /* If the window size has changed, make sure additoinal logic is run
+   * on size-allocate
+   */
   if (shell->display        &&
       shell->display->image &&
       (cevent->width  != current_width ||
        cevent->height != current_height))
     {
-      gint sw;
-      gint sh;
-      gboolean center_horizontally;
-      gboolean center_vertically;
-
-      gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
-
-      center_horizontally = sw <= shell->disp_width;
-      center_vertically   = sh <= shell->disp_height;
-
-      /* If the image fits within the display shell canvas on a given
-       * axis, center the image on that axis. We know that the canvas
-       * will get a size-allocate if we get here.
-       */
-      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
-                                                                    center_horizontally,
-                                                                    center_vertically);
+      shell->size_allocate_from_configure_event = TRUE;
     }
 
   return TRUE;

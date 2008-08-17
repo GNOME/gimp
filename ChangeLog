@@ -1,3 +1,15 @@
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.[ch]
+	(gimp_display_shell_configure_event): When applying the centering
+	logic we need to know the size of the new canvas, so instead of
+	having it here, only make sure that this logic is run on the next
+	canvas size-allocate.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the size-allocate
+	comes from a top level window resize, apply centering logic.
+
 2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scroll.c
