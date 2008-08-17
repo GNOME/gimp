@@ -34,8 +34,8 @@ class pixel_fetcher:
                 self.img_height = drawable.height
                 self.img_bpp = drawable.bpp
                 self.img_has_alpha = drawable.has_alpha
-                self.tile_width = 64
-                self.tile_height = 64
+                self.tile_width = gimp.tile_width()
+                self.tile_height = gimp.tile_height()
                 self.bg_colour = '\0\0\0\0'
                 self.bounds = drawable.mask_bounds
                 self.drawable = drawable
@@ -93,22 +93,28 @@ def whirl_pinch(image, drawable, whirl, pinch, radius):
         if not drawable.is_rgb and not drawable.is_grey:
                 return
 
-        gimp.tile_cache_ntiles(2 * (self.width + 63) / 64)
+        gimp.tile_cache_ntiles(2 * (1 + self.width / gimp.tile_width()))
 
         whirl = whirl * math.pi / 180
         dest_rgn = drawable.get_pixel_rgn(self.sel_x1, self.sel_y1,
                                           self.sel_w, self.sel_h, True, True)
         pft = pixel_fetcher(drawable)
         pfb = pixel_fetcher(drawable)
+
         bg_colour = gimp.get_background()
+
         pft.set_bg_colour(bg_colour[0], bg_colour[1], bg_colour[2], 0)
         pfb.set_bg_colour(bg_colour[0], bg_colour[1], bg_colour[2], 0)
+
         progress = 0
         max_progress = self.sel_w * self.sel_h
-        gimp.progress_init("Whirling and pinching...")
+
+        gimp.progress_init("Whirling and pinching")
+
         self.radius2 = self.radius * self.radius * radius
         pixel = ['', '', '', '']
         values = [0,0,0,0]
+
         for row in range(self.sel_y1, (self.sel_y1+self.sel_y2)/2+1):
                 top_p = ''
                 bot_p = ''
@@ -154,11 +160,14 @@ def whirl_pinch(image, drawable, whirl, pinch, radius):
                                 bot_p = pfb.get_pixel((self.sel_x2 - 1) -
                                         (col - self.sel_x1), (self.sel_y2-1) -
                                         (row - self.sel_y1)) + bot_p
+
                 dest_rgn[self.sel_x1:self.sel_x2, row] = top_p
                 dest_rgn[self.sel_x1:self.sel_x2, (self.sel_y2 - 1)
                          - (row - self.sel_y1)] = bot_p
+
                 progress = progress + self.sel_w * 2
                 gimp.progress_update(float(progress) / max_progress)
+
         drawable.flush()
         drawable.merge_shadow(True)
         drawable.update(self.sel_x1,self.sel_y1,self.sel_w,self.sel_h)

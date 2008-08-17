@@ -1,6 +1,7 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/pygimp/plug-ins/whirlpinch.py: formatting.
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: don't hardcode the tile
+	size, use gimp.tile_width() instead.
 
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
