@@ -26,7 +26,7 @@
 #define __DIALOG_H__
 
 
-void   browser_dialog_open       (void);
+void   browser_dialog_open       (const gchar    *plug_in_binary);
 void   browser_dialog_load       (const gchar    *uri);
 
 void   browser_dialog_make_index (GimpHelpDomain *domain,

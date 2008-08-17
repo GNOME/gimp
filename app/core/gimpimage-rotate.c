@@ -61,6 +61,8 @@ gimp_image_rotate (GimpImage        *image,
   gdouble   progress_current = 1.0;
   gint      new_image_width;
   gint      new_image_height;
+  gint      offset_x;
+  gint      offset_y;
   gboolean  size_changed;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -89,13 +91,17 @@ gimp_image_rotate (GimpImage        *image,
       new_image_width  = gimp_image_get_height (image);
       new_image_height = gimp_image_get_width  (image);
       size_changed     = TRUE;
+      offset_x         = (gimp_image_get_width  (image) - new_image_width)  / 2;
+      offset_y         = (gimp_image_get_height (image) - new_image_height) / 2;
       break;
 
     case GIMP_ROTATE_180:
       new_image_width  = gimp_image_get_width  (image);
       new_image_height = gimp_image_get_height (image);
       size_changed     = FALSE;
-     break;
+      offset_x         = 0;
+      offset_y         = 0;
+      break;
 
     default:
       g_assert_not_reached ();
@@ -186,7 +192,7 @@ gimp_image_rotate (GimpImage        *image,
       gdouble xres;
       gdouble yres;
 
-      gimp_image_undo_push_image_size (image, NULL);
+      gimp_image_undo_push_image_size (image, NULL, offset_x, offset_y);
 
       g_object_set (image,
                     "width",  new_image_width,
@@ -202,7 +208,7 @@ gimp_image_rotate (GimpImage        *image,
   gimp_image_undo_group_end (image);
 
   if (size_changed)
-    gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+    gimp_image_size_changed_detailed (image, -offset_x, -offset_y);
 
   g_object_thaw_notify (G_OBJECT (image));
 

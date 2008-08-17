@@ -26,7 +26,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
 #include "gimpdisplayshell-coords.h"
-#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -136,9 +135,9 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
       info->time += AUTOSCROLL_DT;
 
-      gimp_display_shell_scroll_private (shell,
-                                         AUTOSCROLL_DX * (gdouble) dx,
-                                         AUTOSCROLL_DX * (gdouble) dy);
+      gimp_display_shell_scroll (shell,
+                                 AUTOSCROLL_DX * (gdouble) dx,
+                                 AUTOSCROLL_DX * (gdouble) dy);
 
       gimp_display_shell_untransform_coordinate (shell,
                                                  &device_coords,

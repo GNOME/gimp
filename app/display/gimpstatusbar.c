@@ -496,8 +496,8 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   const gchar   *stock_id;
   gboolean       handle_msg = FALSE;
 
-  /*  don't accept a message if we are already displaying one  */
-  if (statusbar->temp_timeout_id)
+  /*  don't accept a message if we are already displaying a more severe one  */
+  if (statusbar->temp_timeout_id && statusbar->temp_severity > severity)
     return FALSE;
 
   /*  we can only handle short one-liners  */
@@ -536,7 +536,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   g_object_unref (layout);
 
   if (handle_msg)
-    gimp_statusbar_push_temp (statusbar, stock_id, "%s", message);
+    gimp_statusbar_push_temp (statusbar, severity, stock_id, "%s", message);
 
   return handle_msg;
 }
@@ -1030,32 +1030,36 @@ gimp_statusbar_pop (GimpStatusbar *statusbar,
 }
 
 void
-gimp_statusbar_push_temp (GimpStatusbar *statusbar,
-                          const gchar   *stock_id,
-                          const gchar   *format,
+gimp_statusbar_push_temp (GimpStatusbar       *statusbar,
+                          GimpMessageSeverity  severity,
+                          const gchar         *stock_id,
+                          const gchar         *format,
                           ...)
 {
   va_list args;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-  g_return_if_fail (format != NULL);
-
   va_start (args, format);
-  gimp_statusbar_push_temp_valist (statusbar, stock_id, format, args);
+  gimp_statusbar_push_temp_valist (statusbar, severity, stock_id, format, args);
   va_end (args);
 }
 
 void
-gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
-                                 const gchar   *stock_id,
-                                 const gchar   *format,
-                                 va_list        args)
+gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
+                                 GimpMessageSeverity  severity,
+                                 const gchar         *stock_id,
+                                 const gchar         *format,
+                                 va_list              args)
 {
   GimpStatusbarMsg *msg = NULL;
   gchar            *message;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (severity <= GIMP_MESSAGE_WARNING);
   g_return_if_fail (format != NULL);
+
+  /*  don't accept a message if we are already displaying a more severe one  */
+  if (statusbar->temp_timeout_id && statusbar->temp_severity > severity)
+    return;
 
   message = gimp_statusbar_vprintf (format, args);
 
@@ -1065,6 +1069,8 @@ gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
   statusbar->temp_timeout_id =
     g_timeout_add (MESSAGE_TIMEOUT,
                    (GSourceFunc) gimp_statusbar_temp_timeout, statusbar);
+
+  statusbar->temp_severity = severity;
 
   if (statusbar->messages)
     {

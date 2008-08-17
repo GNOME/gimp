@@ -26,8 +26,9 @@
 #include "ppmtool.h"
 /* Defines */
 
-#define PLUG_IN_NAME    "plug-in-gimpressionist"
+#define PLUG_IN_PROC    "plug-in-gimpressionist"
 #define PLUG_IN_VERSION "v1.0, November 2003"
+#define PLUG_IN_BINARY  "gimpressionist"
 
 #define PREVIEWSIZE     150
 #define MAXORIENTVECT   50

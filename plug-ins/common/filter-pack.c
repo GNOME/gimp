@@ -888,7 +888,7 @@ fp_create_preview (GtkWidget **preview,
 
   *preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (*preview, preview_width, preview_height);
-  g_signal_connect (*preview, "size_allocate",
+  g_signal_connect (*preview, "size-allocate",
                     G_CALLBACK (fp_preview_size_allocate), NULL);
   gtk_widget_show (*preview);
   gtk_container_add (GTK_CONTAINER (*frame), *preview);

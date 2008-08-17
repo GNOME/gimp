@@ -120,32 +120,6 @@
   )
 )
 
-(define (script-fu-starscape-logo-alpha img logo-layer size glow-color)
-  (begin
-    (gimp-image-undo-group-start img)
-    (apply-starscape-logo-effect img logo-layer size glow-color)
-    (gimp-image-undo-group-end img)
-    (gimp-displays-flush)
-  )
-)
-
-(script-fu-register "script-fu-starscape-logo-alpha"
-  _"Sta_rscape..."
-  _"Fill the selected region (or alpha) with a rock-like texture, a nova glow, and shadow"
-  "Spencer Kimball"
-  "Spencer Kimball"
-  "1997"
-  "RGBA"
-  SF-IMAGE       "Image"                    0
-  SF-DRAWABLE    "Drawable"                 0
-  SF-ADJUSTMENT _"Effect size (pixels * 4)" '(150 1 1000 1 10 0 1)
-  SF-COLOR      _"Glow color"               '(28 65 188)
-)
-
-(script-fu-menu-register "script-fu-starscape-logo-alpha"
-                         "<Image>/Filters/Alpha to Logo")
-
-
 (define (script-fu-starscape-logo text size fontname glow-color)
   (let* (
         (img (car (gimp-image-new 256 256 RGB)))

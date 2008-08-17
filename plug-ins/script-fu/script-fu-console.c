@@ -609,6 +609,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                        output->len,
                                        console);
         }
+
       g_string_free (output, TRUE);
 
       gimp_displays_flush ();

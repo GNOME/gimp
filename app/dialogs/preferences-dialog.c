@@ -511,10 +511,10 @@ prefs_input_devices_dialog (GtkWidget *widget,
                             G_CALLBACK (gtk_widget_destroy),
                             input_dialog);
 
-  g_signal_connect (input_dialog, "enable_device",
+  g_signal_connect (input_dialog, "enable-device",
                     G_CALLBACK (prefs_input_dialog_able_callback),
                     NULL);
-  g_signal_connect (input_dialog, "disable_device",
+  g_signal_connect (input_dialog, "disable-device",
                     G_CALLBACK (prefs_input_dialog_able_callback),
                     NULL);
 

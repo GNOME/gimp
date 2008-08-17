@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-30 19:56+0100\n"
+"POT-Creation-Date: 2008-08-08 12:26+0100\n"
 "PO-Revision-Date: 2008-04-19 20:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -366,7 +366,7 @@ msgstr "نصف-قطر غشاوة الظل"
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
@@ -1475,7 +1475,12 @@ msgstr "إضافة تأثير جليدي إلى المنطقة المحددة (�
 msgid "Create frozen logo with an added drop shadow"
 msgstr "أنشئ شعار جليدي مع ظل ساقط"
 
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#, fuzzy
+msgid "Matte"
+msgstr "بقع"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:9
 msgid "_Frosty..."
 msgstr "_جليدي..."
 

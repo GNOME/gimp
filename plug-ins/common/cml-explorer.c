@@ -1816,7 +1816,7 @@ function_graph_new (GtkWidget *widget,
   GtkWidget *frame;
   GtkWidget *preview;
 
-  dialog = gimp_dialog_new (_("Graph of the Current Settings"), "cml_explorer",
+  dialog = gimp_dialog_new (_("Graph of the Current Settings"), PLUG_IN_BINARY,
                             gtk_widget_get_toplevel (widget), 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

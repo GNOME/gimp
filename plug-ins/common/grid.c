@@ -735,7 +735,7 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (width), chain_button, 1, 3, 2, 3);
   gtk_widget_show (chain_button);
 
-  /* connect to the 'value_changed' signal because we have to take care
+  /* connect to the 'value-changed' signal because we have to take care
    * of keeping the entries in sync when the chainbutton is active
    */
   g_signal_connect (width, "value-changed",
@@ -798,14 +798,14 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (space), chain_button, 1, 3, 2, 3);
   gtk_widget_show (chain_button);
 
-  /* connect to the 'value_changed' and "unit_changed" signals because
+  /* connect to the 'value-changed' and "unit-changed" signals because
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
   g_signal_connect (space, "value-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect (space, "unit_changed",
+  g_signal_connect (space, "unit-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect_swapped (space, "value-changed",
@@ -871,14 +871,14 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 0, 1);
   gtk_widget_show (chain_button);
 
-  /* connect to the 'value_changed' and "unit_changed" signals because
+  /* connect to the 'value-changed' and "unit-changed" signals because
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
   g_signal_connect (offset, "value-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect (offset, "unit_changed",
+  g_signal_connect (offset, "unit-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect_swapped (offset, "value-changed",

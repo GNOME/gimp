@@ -42,6 +42,7 @@
 
 #define GIMP_HELP_BROWSER_EXT_PROC       "extension-gimp-help-browser"
 #define GIMP_HELP_BROWSER_TEMP_EXT_PROC  "extension-gimp-help-browser-temp"
+#define PLUG_IN_BINARY                   "help-browser"
 
 
 /*  forward declarations  */
@@ -149,7 +150,7 @@ run (const gchar      *name,
 
           if (status == GIMP_PDB_SUCCESS)
             {
-              browser_dialog_open ();
+              browser_dialog_open (PLUG_IN_BINARY);
 
               temp_proc_install ();
 

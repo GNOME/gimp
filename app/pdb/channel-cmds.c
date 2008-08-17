@@ -75,7 +75,8 @@ channel_new_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_channel (&return_vals->values[1], channel);
@@ -114,7 +115,8 @@ channel_new_from_component_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_channel (&return_vals->values[1], channel);
@@ -146,7 +148,8 @@ channel_copy_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_channel (&return_vals->values[1], channel_copy);
@@ -181,7 +184,8 @@ channel_combine_masks_invoker (GimpProcedure      *procedure,
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -204,7 +208,8 @@ channel_get_show_masked_invoker (GimpProcedure      *procedure,
       show_masked = gimp_channel_get_show_masked (channel);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], show_masked);
@@ -232,7 +237,8 @@ channel_set_show_masked_invoker (GimpProcedure      *procedure,
       gimp_channel_set_show_masked (channel, show_masked);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -255,7 +261,8 @@ channel_get_opacity_invoker (GimpProcedure      *procedure,
       opacity = gimp_channel_get_opacity (channel) * 100;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_double (&return_vals->values[1], opacity);
@@ -283,7 +290,8 @@ channel_set_opacity_invoker (GimpProcedure      *procedure,
       gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -307,7 +315,8 @@ channel_get_color_invoker (GimpProcedure      *procedure,
       gimp_rgb_set_alpha (&color, 1.0);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_rgb (&return_vals->values[1], &color);
@@ -338,7 +347,8 @@ channel_set_color_invoker (GimpProcedure      *procedure,
       gimp_channel_set_color (channel, &rgb_color, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

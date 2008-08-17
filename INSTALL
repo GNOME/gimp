@@ -59,8 +59,9 @@ header files installed.
 
   8. You may want to install other third party libraries or programs
      that are needed for some of the available plugins. We recommend
-     to check that the following libraries are installed: libpng,
-     libjpeg, libpoppler, libtiff, webkit, libmng, librsvg, libwmf.
+     to check that the following libraries are installed: lcms,
+     libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg
+     and libwmf.
 
   9. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development

@@ -59,7 +59,8 @@ GimpPlugInProcFrame * gimp_plug_in_proc_frame_ref     (GimpPlugInProcFrame *proc
 void                  gimp_plug_in_proc_frame_unref   (GimpPlugInProcFrame *proc_frame,
                                                        GimpPlugIn          *plug_in);
 
-GValueArray * gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame);
+GValueArray         * gimp_plug_in_proc_frame_get_return_values
+                                                      (GimpPlugInProcFrame *proc_frame);
 
 
 #endif /* __GIMP_PLUG_IN_PROC_FRAME_H__ */

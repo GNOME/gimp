@@ -59,6 +59,7 @@ gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
 
 gint            gimp_buffer_get_bytes       (const GimpBuffer *buffer);
 GimpImageType   gimp_buffer_get_image_type  (const GimpBuffer *buffer);
+TileManager   * gimp_buffer_get_tiles       (const GimpBuffer *buffer);
 
 
 #endif /* __GIMP_BUFFER_H__ */

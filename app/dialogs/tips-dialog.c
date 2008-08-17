@@ -36,24 +36,26 @@
 
 #include "gimp-intl.h"
 
-
 enum
 {
   RESPONSE_PREVIOUS = 1,
   RESPONSE_NEXT     = 2
 };
 
-static void  tips_dialog_set_tip  (GimpTip   *tip);
-static void  tips_dialog_response (GtkWidget *dialog,
-                                   gint       response);
-static void  tips_dialog_destroy  (GtkWidget *widget,
-                                   gpointer   data);
+static void  tips_dialog_set_tip  (GimpTip       *tip);
+static void  tips_dialog_response (GtkWidget     *dialog,
+                                   gint           response);
+static void  tips_dialog_destroy  (GtkWidget     *widget,
+                                   GimpGuiConfig *config);
+static void  more_button_clicked  (GtkWidget     *button,
+                                   Gimp          *gimp);
 
 
-static GtkWidget *tips_dialog   = NULL;
-static GtkWidget *thetip_label  = NULL;
-static GList     *tips          = NULL;
-static GList     *current_tip   = NULL;
+static GtkWidget *tips_dialog = NULL;
+static GtkWidget *tip_label   = NULL;
+static GtkWidget *more_button = NULL;
+static GList     *tips        = NULL;
+static GList     *current_tip = NULL;
 
 
 GtkWidget *
@@ -164,20 +166,38 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  thetip_label = gtk_label_new (NULL);
-  gtk_label_set_selectable (GTK_LABEL (thetip_label), TRUE);
-  gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (thetip_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (thetip_label), 0.5, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), thetip_label, TRUE, TRUE, 0);
-  gtk_widget_show (thetip_label);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
   gtk_container_set_focus_chain (GTK_CONTAINER (hbox), NULL);
+
+  tip_label = gtk_label_new (NULL);
+  gtk_label_set_selectable (GTK_LABEL (tip_label), TRUE);
+  gtk_label_set_justify (GTK_LABEL (tip_label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_line_wrap (GTK_LABEL (tip_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (tip_label), 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), tip_label, TRUE, TRUE, 0);
+  gtk_widget_show (tip_label);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+  
+  more_button = gtk_link_button_new_with_label ("http://docs.gimp.org/",
+  /*  a link to the related section in the user manual  */
+                                                _("Learn more"));
+  gtk_widget_show (more_button);
+  gtk_box_pack_start (GTK_BOX (hbox), more_button, FALSE, FALSE, 0);
+
+  g_signal_connect (more_button, "clicked",
+                    G_CALLBACK (more_button_clicked),
+                    gimp);
 
   tips_dialog_set_tip (current_tip->data);
 
@@ -185,11 +205,9 @@ tips_dialog_create (Gimp *gimp)
 }
 
 static void
-tips_dialog_destroy (GtkWidget *widget,
-                     gpointer   data)
+tips_dialog_destroy (GtkWidget     *widget,
+                     GimpGuiConfig *config)
 {
-  GimpGuiConfig *config = GIMP_GUI_CONFIG (data);
-
   /* the last-shown-tip is saved in sessionrc */
   config->last_tip = g_list_position (tips, current_tip);
 
@@ -227,5 +245,21 @@ tips_dialog_set_tip (GimpTip *tip)
 {
   g_return_if_fail (tip != NULL);
 
-  gtk_label_set_markup (GTK_LABEL (thetip_label), tip->thetip);
+  gtk_label_set_markup (GTK_LABEL (tip_label), tip->text);
+
+  /*  set the URI to unset the "visited" state  */
+  gtk_link_button_set_uri (GTK_LINK_BUTTON (more_button),
+                           "http://docs.gimp.org/");
+
+  gtk_widget_set_sensitive (more_button, tip->help_id != NULL);
+}
+
+static void
+more_button_clicked (GtkWidget *button,
+                     Gimp      *gimp)
+{
+  GimpTip *tip = current_tip->data;
+
+  if (tip->help_id)
+    gimp_help (gimp, NULL, NULL, tip->help_id);
 }

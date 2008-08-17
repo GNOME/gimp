@@ -41,6 +41,8 @@
 enum
 {
   PROP_0,
+  PROP_PREVIOUS_ORIGIN_X,
+  PROP_PREVIOUS_ORIGIN_Y,
   PROP_GRID,
   PROP_PARASITE_NAME
 };
@@ -88,6 +90,22 @@ gimp_image_undo_class_init (GimpImageUndoClass *klass)
 
   undo_class->pop                = gimp_image_undo_pop;
   undo_class->free               = gimp_image_undo_free;
+
+  g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_X,
+                                   g_param_spec_int ("previous-origin-x",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_Y,
+                                   g_param_spec_int ("previous-origin-y",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
@@ -176,6 +194,12 @@ gimp_image_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PREVIOUS_ORIGIN_X:
+      image_undo->previous_origin_x = g_value_get_int (value);
+      break;
+    case PROP_PREVIOUS_ORIGIN_Y:
+      image_undo->previous_origin_y = g_value_get_int (value);
+      break;
     case PROP_GRID:
       {
         GimpGrid *grid = g_value_get_object (value);
@@ -204,6 +228,12 @@ gimp_image_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_PREVIOUS_ORIGIN_X:
+      g_value_set_int (value, image_undo->previous_origin_x);
+      break;
+    case PROP_PREVIOUS_ORIGIN_Y:
+      g_value_set_int (value, image_undo->previous_origin_y);
+      break;
     case PROP_GRID:
       g_value_set_object (value, image_undo->grid);
        break;
@@ -267,12 +297,19 @@ gimp_image_undo_pop (GimpUndo            *undo,
       {
         gint width;
         gint height;
+        gint previous_origin_x;
+        gint previous_origin_y;
 
-        width  = image_undo->width;
-        height = image_undo->height;
+        width             = image_undo->width;
+        height            = image_undo->height;
+        previous_origin_x = image_undo->previous_origin_x;
+        previous_origin_y = image_undo->previous_origin_y;
 
-        image_undo->width  = gimp_image_get_width  (image);
-        image_undo->height = gimp_image_get_height (image);
+        /* Transform to a redo */
+        image_undo->width             = gimp_image_get_width  (image);
+        image_undo->height            = gimp_image_get_height (image);
+        image_undo->previous_origin_x = -previous_origin_x;
+        image_undo->previous_origin_y = -previous_origin_y;
 
         g_object_set (image,
                       "width",  width,
@@ -284,7 +321,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
         if (gimp_image_get_width  (image) != image_undo->width ||
             gimp_image_get_height (image) != image_undo->height)
-          accum->size_changed = TRUE;
+          {
+            accum->size_changed      = TRUE;
+            accum->previous_origin_x = previous_origin_x;
+            accum->previous_origin_y = previous_origin_y;
+          }
       }
       break;
 

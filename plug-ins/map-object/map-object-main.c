@@ -36,9 +36,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC "plug-in-map-object"
-
-
 /* Global variables */
 /* ================ */
 

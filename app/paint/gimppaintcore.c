@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
+#include "core/gimpprojection.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcoreundo.h"
@@ -368,11 +369,9 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (core->use_saved_proj)
     {
-      GimpPickable *pickable;
-      TileManager  *tiles;
-
-      pickable = GIMP_PICKABLE (gimp_item_get_image (item)->projection);
-      tiles    = gimp_pickable_get_tiles (pickable);
+      GimpImage      *image      = gimp_item_get_image (item);
+      GimpProjection *projection = gimp_image_get_projection (image);
+      TileManager    *tiles      = gimp_projection_get_tiles (projection);
 
       core->saved_proj_tiles = tile_manager_new (tile_manager_width (tiles),
                                                  tile_manager_height (tiles),
@@ -796,14 +795,15 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
   if (core->use_saved_proj)
     {
-      GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpPickable *pickable = GIMP_PICKABLE (image->projection);
-      gint          off_x;
-      gint          off_y;
+      GimpImage      *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpProjection *projection = gimp_image_get_projection (image);
+      gint            off_x;
+      gint            off_y;
 
       gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      gimp_paint_core_validate_saved_proj_tiles (core, pickable,
+      gimp_paint_core_validate_saved_proj_tiles (core,
+                                                 GIMP_PICKABLE (projection),
                                                  core->canvas_buf->x + off_x,
                                                  core->canvas_buf->y + off_y,
                                                  core->canvas_buf->width,
@@ -1087,9 +1087,11 @@ gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
                */
               dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
                                                  j, i, TRUE, TRUE);
+
               memcpy (tile_data_pointer (dest_tile, 0, 0),
                       tile_data_pointer (src_tile, 0, 0),
                       tile_size (src_tile));
+
               tile_release (dest_tile, TRUE);
               tile_release (src_tile, FALSE);
             }

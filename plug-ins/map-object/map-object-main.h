@@ -4,6 +4,9 @@
 /* Defines and stuff */
 /* ================= */
 
+#define PLUG_IN_PROC   "plug-in-map-object"
+#define PLUG_IN_BINARY "map-object"
+
 #define TILE_CACHE_SIZE 16
 
 /* Typedefs */

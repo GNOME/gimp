@@ -48,6 +48,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -63,14 +64,76 @@ static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
 
 /*  public functions  */
 
+/**
+ * gimp_display_shell_get_scaled_image_size:
+ * @shell:
+ * @w:
+ * @h:
+ *
+ * Gets the size of the rendered image after it has been scaled.
+ *
+ **/
 void
-gimp_display_shell_draw_guide (GimpDisplayShell *shell,
-                               GimpGuide        *guide,
-                               gboolean          active)
+gimp_display_shell_draw_get_scaled_image_size (const GimpDisplayShell *shell,
+                                               gint                   *w,
+                                               gint                   *h)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
+                                                           gimp_zoom_model_get_factor (shell->zoom),
+                                                           w,
+                                                           h);
+}
+
+/**
+ * gimp_display_shell_draw_get_scaled_image_size_for_scale:
+ * @shell:
+ * @scale:
+ * @w:
+ * @h:
+ *
+ **/
+void
+gimp_display_shell_draw_get_scaled_image_size_for_scale (const GimpDisplayShell *shell,
+                                                         gdouble                 scale,
+                                                         gint                   *w,
+                                                         gint                   *h)
+{
+  GimpProjection *proj;
+  TileManager    *tiles;
+  gdouble         scale_x;
+  gdouble         scale_y;
+  gint            level;
+  gint            level_width;
+  gint            level_height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
+
+  proj = gimp_image_get_projection (shell->display->image);
+
+  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+
+  level = gimp_projection_get_level (proj, scale_x, scale_y);
+
+  tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
+
+  level_width  = tile_manager_width (tiles);
+  level_height = tile_manager_height (tiles);
+
+  if (w) *w = PROJ_ROUND (level_width  * (scale_x * (1 << level)));
+  if (h) *h = PROJ_ROUND (level_height * (scale_y * (1 << level)));
+}
+
+void
+gimp_display_shell_draw_guide (const GimpDisplayShell *shell,
+                               GimpGuide              *guide,
+                               gboolean                active)
 {
   gint  position;
-  gint  x1, x2, y1, y2;
-  gint  x, y, w, h;
+  gint  x1, y1, x2, y2;
+  gint  x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_GUIDE (guide));
@@ -80,18 +143,10 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
   if (position < 0)
     return;
 
-  gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
-  gimp_display_shell_transform_xy (shell,
-                                   gimp_image_get_width  (shell->display->image),
-                                   gimp_image_get_height (shell->display->image),
-                                   &x2, &y2, FALSE);
+  x1 = 0;
+  y1 = 0;
 
-  gdk_drawable_get_size (shell->canvas->window, &w, &h);
-
-  x1 = MAX (x1, 0);
-  y1 = MAX (y1, 0);
-  x2 = MIN (x2, w);
-  y2 = MIN (y2, h);
+  gdk_drawable_get_size (shell->canvas->window, &x2, &y2);
 
   switch (gimp_guide_get_orientation (guide))
     {
@@ -116,7 +171,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_guides (GimpDisplayShell *shell)
+gimp_display_shell_draw_guides (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -129,9 +184,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell,
-                                         (GimpGuide *) list->data,
-                                         FALSE);
+          gimp_display_shell_draw_guide (shell, list->data, FALSE);
         }
     }
 }
@@ -350,9 +403,9 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 }
 
 void
-gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
-                                      GimpSamplePoint  *sample_point,
-                                      gboolean          active)
+gimp_display_shell_draw_sample_point (const GimpDisplayShell *shell,
+                                      GimpSamplePoint        *sample_point,
+                                      gboolean                active)
 {
   GimpCanvasStyle style;
   gdouble         x, y;
@@ -416,7 +469,7 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
+gimp_display_shell_draw_sample_points (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -435,8 +488,8 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_vector (GimpDisplayShell *shell,
-                                GimpVectors      *vectors)
+gimp_display_shell_draw_vector (const GimpDisplayShell *shell,
+                                GimpVectors            *vectors)
 {
   GimpStroke *stroke = NULL;
 
@@ -474,7 +527,7 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
+gimp_display_shell_draw_vectors (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -496,7 +549,7 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
+gimp_display_shell_draw_cursor (const GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -506,11 +559,11 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_area (GimpDisplayShell *shell,
-                              gint              x,
-                              gint              y,
-                              gint              w,
-                              gint              h)
+gimp_display_shell_draw_area (const GimpDisplayShell *shell,
+                              gint                    x,
+                              gint                    y,
+                              gint                    w,
+                              gint                    h)
 {
   gint sx, sy;
   gint sw, sh;
@@ -520,8 +573,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   if (! shell->display->image)
     return;
 
-  gimp_display_shell_get_scaled_image_viewport_offset (shell, &sx, &sy);
-  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
+  gimp_display_shell_scroll_get_scaled_viewport_offset (shell, &sx, &sy);
+  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
   /*  check if the passed in area intersects with
    *  both the display and the image
@@ -562,9 +615,9 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
               dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
               dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-              gimp_display_shell_get_disp_offset (shell,
-                                                  &disp_xoffset,
-                                                  &disp_yoffset);
+              gimp_display_shell_scroll_get_disp_offset (shell,
+                                                         &disp_xoffset,
+                                                         &disp_yoffset);
 
               gimp_display_shell_render (shell,
                                          j - disp_xoffset,

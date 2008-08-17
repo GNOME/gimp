@@ -28,6 +28,9 @@
 #include "imap_object.h"
 #include "imap_preferences.h"
 
+#define PLUG_IN_PROC   "plug-in-imagemap"
+#define PLUG_IN_BINARY "imagemap"
+
 typedef enum {NCSA, CERN, CSIM} MapFormat_t;
 
 typedef struct {

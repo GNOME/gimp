@@ -31,9 +31,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define OILIFY_PROC          "plug-in-oilify"
-#define OILIFY_ENHANCED_PROC "plug-in-oilify-enhanced"
-#define OILIFY_BINARY        "oilify"
+#define PLUG_IN_PROC          "plug-in-oilify"
+#define PLUG_IN_ENHANCED_PROC "plug-in-oilify-enhanced"
+#define PLUG_IN_BINARY        "oilify"
 
 #define SCALE_WIDTH    125
 #define HISTSIZE       256
@@ -115,7 +115,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "exponent-map",  "Exponent control map"           }
   };
 
-  gimp_install_procedure (OILIFY_PROC,
+  gimp_install_procedure (PLUG_IN_PROC,
                           N_("Smear colors to simulate an oil painting"),
                           "This function performs the well-known oil-paint "
                           "effect on the specified drawable.",
@@ -128,9 +128,9 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (OILIFY_PROC, "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
 
-  gimp_install_procedure (OILIFY_ENHANCED_PROC,
+  gimp_install_procedure (PLUG_IN_ENHANCED_PROC,
                           N_("Smear colors to simulate an oil painting"),
                           "This function performs the well-known oil-paint "
                           "effect on the specified drawable.",
@@ -174,7 +174,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data (OILIFY_PROC, &ovals);
+      gimp_get_data (PLUG_IN_PROC, &ovals);
 
       /*  First acquire information with a dialog  */
       if (! oilify_dialog (drawable))
@@ -183,7 +183,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Interpret the arguments per the name used to invoke us  */
-      if (! strcmp (name, OILIFY_PROC))
+      if (! strcmp (name, PLUG_IN_PROC))
         {
           if (nparams != 5)
             {
@@ -195,7 +195,7 @@ run (const gchar      *name,
               ovals.mode = param[4].data.d_int32;
             }
         }
-      else if (! strcmp (name, OILIFY_ENHANCED_PROC))
+      else if (! strcmp (name, PLUG_IN_ENHANCED_PROC))
         {
           if (nparams < 5 || nparams > 8)
             {
@@ -232,7 +232,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data (OILIFY_PROC, &ovals);
+      gimp_get_data (PLUG_IN_PROC, &ovals);
       break;
 
     default:
@@ -253,7 +253,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (OILIFY_PROC, &ovals, sizeof (OilifyVals));
+        gimp_set_data (PLUG_IN_PROC, &ovals, sizeof (OilifyVals));
     }
   else
     {
@@ -772,11 +772,11 @@ oilify_dialog (GimpDrawable *drawable)
   if (! can_use_mode_inten && ovals.mode == MODE_INTEN)
     ovals.mode = MODE_RGB;
 
-  gimp_ui_init (OILIFY_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Oilify"), OILIFY_BINARY,
+  dialog = gimp_dialog_new (_("Oilify"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, OILIFY_PROC,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -107,7 +107,9 @@ EOT
 
 foreach (sort keys %plugins) {
     my $makename = $_;
+    my $MAKENAME;
     $makename =~ s/-/_/g;
+    $MAKENAME = "\U$makename";
 
     my $libgimp = "";
 
@@ -136,15 +138,12 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{optional}) {
 	if (exists $plugins{$_}->{libs}) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
-	} else {
-		my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-		$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
 	}
     }
 
     if (exists $plugins{$_}->{cflags}) {
 	my $cflags = $plugins{$_}->{cflags};
-	my $optflags = $cflags =~ /FLAGS/ ? $cflags : "\U$_\E_CFLAGS";
+	my $optflags = $cflags =~ /FLAGS/ ? $cflags : "$MAKENAME\E_CFLAGS";
 
 	print MK <<EOT;
 

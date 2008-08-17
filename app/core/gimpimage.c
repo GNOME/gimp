@@ -88,6 +88,7 @@ enum
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
   RESOLUTION_CHANGED,
+  SIZE_CHANGED_DETAILED,
   UNIT_CHANGED,
   QUICK_MASK_CHANGED,
   SELECTION_CONTROL,
@@ -147,6 +148,10 @@ static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
+static void     gimp_image_real_size_changed_detailed
+                                                 (GimpImage      *image,
+                                                  gint            previous_origin_x,
+                                                  gint            previous_origin_y);
 static void     gimp_image_real_colormap_changed (GimpImage      *image,
                                                   gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *image,
@@ -313,6 +318,17 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  gimp_image_signals[SIZE_CHANGED_DETAILED] =
+    g_signal_new ("size-changed-detailed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, size_changed_detailed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   gimp_image_signals[UNIT_CHANGED] =
     g_signal_new ("unit-changed",
@@ -504,6 +520,11 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
+  klass->resolution_changed           = NULL;
+  klass->size_changed_detailed        = gimp_image_real_size_changed_detailed;
+  klass->unit_changed                 = NULL;
+  klass->quick_mask_changed           = NULL;
+  klass->selection_control            = NULL;
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
@@ -1099,6 +1120,18 @@ gimp_image_get_description (GimpViewable  *viewable,
 }
 
 static void
+gimp_image_real_size_changed_detailed (GimpImage *image,
+                                       gint       previous_origin_x,
+                                       gint       previous_origin_y)
+{
+  /* Whenever GimpImage::size-changed-detailed is emitted, so is
+   * GimpViewable::size-changed. Clients choose what signal to listen
+   * to depending on how much info they need.
+   */
+  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+}
+
+static void
 gimp_image_real_colormap_changed (GimpImage *image,
                                   gint       color_index)
 {
@@ -1470,7 +1503,7 @@ gimp_image_set_resolution (GimpImage *image,
       image->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
-      gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+      gimp_image_size_changed_detailed (image, 0, 0);
     }
 }
 
@@ -1791,6 +1824,30 @@ gimp_image_sample_point_removed (GimpImage       *image,
 
   g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_REMOVED], 0,
                  sample_point);
+}
+
+/**
+ * gimp_image_size_changed_detailed:
+ * @image:
+ * @previous_origin_x:
+ * @previous_origin_y:
+ *
+ * Emits the size-changed-detailed signal that is typically used to adjust the
+ * position of the image in the display shell on various operations,
+ * e.g. crop.
+ *
+ * This function makes sure that GimpViewable::size-changed is also emitted.
+ **/
+void
+gimp_image_size_changed_detailed (GimpImage *image,
+                                  gint       previous_origin_x,
+                                  gint       previous_origin_y)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[SIZE_CHANGED_DETAILED], 0,
+                 previous_origin_x,
+                 previous_origin_y);
 }
 
 void
@@ -2447,6 +2504,17 @@ gimp_image_set_tattoo_state (GimpImage  *image,
     image->tattoo_state = val;
 
   return retval;
+}
+
+
+/*  projection  */
+
+GimpProjection *
+gimp_image_get_projection (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return image->projection;
 }
 
 

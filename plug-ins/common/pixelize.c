@@ -480,8 +480,10 @@ pixelize_large (GimpDrawable *drawable,
 
           gimp_pixel_rgn_init (&src_rgn, drawable,
                                x, y, x_step, y_step, FALSE, FALSE);
+
           for (b = 0; b < bpp; b++)
             average[b] = 0;
+
           count = 0;
 
           for (pr = gimp_pixel_rgns_register (1, &src_rgn);
@@ -489,9 +491,11 @@ pixelize_large (GimpDrawable *drawable,
                pr = gimp_pixel_rgns_process (pr))
             {
               src_row = src_rgn.data;
+
               for (row = 0; row < src_rgn.h; row++)
                 {
                   src = src_row;
+
                   if (has_alpha)
                     {
                       for (col = 0; col < src_rgn.w; col++)
@@ -513,14 +517,18 @@ pixelize_large (GimpDrawable *drawable,
                           src += src_rgn.bpp;
                         }
                     }
+
                   src_row += src_rgn.rowstride;
                 }
+
               count += src_rgn.w * src_rgn.h;
+
               if (!preview)
                 {
                   /* Update progress */
                   progress += src_rgn.w * src_rgn.h;
-                  gimp_progress_update ((double) progress / (double) max_progress);
+                  gimp_progress_update ((gdouble) progress /
+                                        (gdouble) max_progress);
                 }
             }
 
@@ -544,6 +552,7 @@ pixelize_large (GimpDrawable *drawable,
           if (preview)
             {
               dest_row = dest + ((y - y1) * width + (x - x1)) * bpp;
+
               for (j = 0; j < y_step; j++)
                 {
                   d = dest_row;
@@ -558,27 +567,33 @@ pixelize_large (GimpDrawable *drawable,
               gimp_pixel_rgn_init (&dest_rgn, drawable,
                                    x, y, x_step, y_step,
                                    TRUE, TRUE);
+
               for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
                    pr != NULL;
                    pr = gimp_pixel_rgns_process (pr))
                 {
                   dest_row = dest_rgn.data;
+
                   for (row = 0; row < dest_rgn.h; row++)
                     {
-                    dest = dest_row;
-                    for (col = 0; col < dest_rgn.w; col++)
-                      {
-                        for (b = 0; b < bpp; b++)
-                          dest[b] = average[b];
+                      dest = dest_row;
 
-                        dest  += dest_rgn.bpp;
-                      }
-                    dest_row += dest_rgn.rowstride;
-                  }
-                /* Update progress */
-                progress += dest_rgn.w * dest_rgn.h;
-                gimp_progress_update ((double) progress / (double) max_progress);
-              }
+                      for (col = 0; col < dest_rgn.w; col++)
+                        {
+                          for (b = 0; b < bpp; b++)
+                            dest[b] = average[b];
+
+                          dest  += dest_rgn.bpp;
+                        }
+
+                      dest_row += dest_rgn.rowstride;
+                    }
+
+                  /* Update progress */
+                  progress += dest_rgn.w * dest_rgn.h;
+                  gimp_progress_update ((gdouble) progress /
+                                        (gdouble) max_progress);
+                }
             }
         }
     }
@@ -657,7 +672,7 @@ pixelize_small (GimpDrawable *drawable,
           /* Update progress */
           progress += area.w * area.h;
           gimp_progress_update ((double) progress / (double) max_progress);
-      }
+        }
     }
 
   g_free(area.data);
@@ -701,6 +716,7 @@ pixelize_sub (gint pixelwidth,
 
           for (i = 0; i < bpp; i++)
             average[i] = 0;
+
           count = 0;
 
           /* Read */
@@ -709,6 +725,7 @@ pixelize_sub (gint pixelwidth,
           for (row = 0; row < h; row++)
             {
               buf = buf_row;
+
               if (has_alpha)
                 {
                   for (col = 0; col < w; col++)
@@ -716,8 +733,10 @@ pixelize_sub (gint pixelwidth,
                       gulong alpha = buf[bpp-1];
 
                       average[bpp-1] += alpha;
+
                       for (i = 0; i < bpp-1; i++)
-                          average[i] += buf[i] * alpha;
+                        average[i] += buf[i] * alpha;
+
                       buf += bpp;
                     }
                 }
@@ -726,14 +745,16 @@ pixelize_sub (gint pixelwidth,
                   for (col = 0; col < w; col++)
                     {
                       for (i = 0; i < bpp; i++)
-                          average[i] += buf[i];
+                        average[i] += buf[i];
+
                       buf += bpp;
                     }
                 }
+
               buf_row += rowstride;
             }
 
-          count += w*h;
+          count += w * h;
 
           /* Average */
           if (count > 0)
@@ -761,6 +782,7 @@ pixelize_sub (gint pixelwidth,
           for (row = 0; row < h; row++)
             {
               buf = buf_row;
+
               for (col = 0; col < w; col++)
                 {
                   for (i = 0; i < bpp; i++)
@@ -769,6 +791,7 @@ pixelize_sub (gint pixelwidth,
                   count++;
                   buf += bpp;
                 }
+
               buf_row += rowstride;
             }
         }

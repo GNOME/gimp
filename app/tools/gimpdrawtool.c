@@ -539,6 +539,52 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
 }
 
 /**
+ * gimp_draw_tool_draw_guide:
+ * @draw_tool:   the #GimpDrawTool
+ * @orientation: the orientation of the guide line
+ * @position:    the position of the guide line in image coordinates
+ *
+ * This function draws a guide line across the canvas.
+ **/
+void
+gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
+                                GimpOrientationType  orientation,
+                                gint                 position)
+{
+  GimpDisplayShell *shell;
+  gint              x1, y1, x2, y2;
+  gint              x, y;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  x1 = 0;
+  y1 = 0;
+
+  gdk_drawable_get_size (shell->canvas->window, &x2, &y2);
+
+  switch (orientation)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
+      y1 = y2 = y;
+      break;
+
+    case GIMP_ORIENTATION_VERTICAL:
+      gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
+      x1 = x2 = x;
+      break;
+
+    case GIMP_ORIENTATION_UNKNOWN:
+      return;
+    }
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         x1, y1, x2, y2);
+}
+
+/**
  * gimp_draw_tool_draw_rectangle:
  * @draw_tool:   the #GimpDrawTool
  * @filled:      whether to fill the rectangle

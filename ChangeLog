@@ -1,3 +1,105 @@
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: formatting.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/file-desktop-link.c
+	* plug-ins/common/file-svg.c: changed to pass error messages with
+	the return values instead of calling g_message().
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	(apply-frosty-logo-effect): unmarked string for translation.
+	Script-Fu doesn't support i18n outside the register call.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm: changed the "Alpha to
+	Logo" parts of these scripts so that the user can specify the
+	effect size directly instead of as some multiple of the size.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/starscape-logo.scm: dropped the
+	"Alpha to Logo" part of the "Starscape logo script. It had a
+	similar problem as the Starburst script (see bug #486779).
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/starburst-logo.scm: dropped the
+	"Starburst" logo script. Fixes bug #486779.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	Next step towards fixing bug #344818:
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_execute): if the error
+	has not already been set, construct one from the error message
+	that is optionally passed with the return values.
+
+	* plug-ins/common/file-png.c: changed to pass an error message
+	with the return values instead of calling g_message() in case of
+	an error.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginprocframe.[ch]: renamed
+	gimp_plug_in_proc_frame_get_return_vals() to
+	gimp_plug_in_proc_frame_get_return_values().
+
+	* app/plug-in/gimppluginmanager-call.c: changed accordingly.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-psd/psd-util.c (psd_set_error): changed to use
+	g_set_error().
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin-progress.c
+	(gimp_plug_in_progress_cancel_callback): introduced a utility
+	function to reduce code duplication.
+
+	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): changed
+	to use g_error_new_literal().
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): Simplify.
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the image ends up
+	below or to the right of the viewport top and left edges, and the
+	image is not centered on a given axis, align the top left image
+	edge with the top left viewport edge. This is basically the best
+	we can do without an API for start and end of a window resize
+	cycle using the mouse.
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): Don't apply the
+	centering logic on zoom_on_resize.
+
+2008-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.[ch]
+	(gimp_display_shell_configure_event): When applying the centering
+	logic we need to know the size of the new canvas, so instead of
+	having it here, only make sure that this logic is run on the next
+	canvas size-allocate.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the size-allocate
+	comes from a top level window resize, apply centering logic.
+
 2008-08-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimptagcache.c (gimp_tag_cache_save):
@@ -15,6 +117,390 @@
 	sort autocompletion candidates so that they can be cycled in correct
 	order.
 
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
+	Oops, correct parameter order.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
+	Support axis independence.
+
+	* app/display/gimpdisplayshell.c: Adapt.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image_on_next_size_allocate):
+	Explain that this function needs to be used with care since it is
+	risky.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_new)
+	(gimp_display_shell_fill): Clarify that it is safe to use the
+	risky function.
+
+	(gimp_display_shell_configure_event): Make proper comparisions (<=
+	not =) and explain that usage of the risky function is safe.
+
+	(gimp_display_shell_shrink_wrap): Always call
+	gimp_display_shell_scroll_center_image() and let size-requests be
+	handled by GimpDisplayShell::configure_event().
+
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback): No
+	need to center anything explicitly any longer.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.c (gimp_get_pdb_error): added translator comments.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c (pf_call): also use
+	gimp_get_pdb_error() here. Easier and safer than looking at the
+	return values to get the error message.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	Next step towards fixing bug #344818:
+
+	* libgimp/gimp.[ch]: keep the last error status and error message
+	in libgimp. Added new functon gimp_get_pdb_error() that allows to
+	retrieve it.
+
+	* libgimp/gimp.def: updated.
+
+	* plug-ins/pygimp/gimpmodule.c (pygimp_vectors_import_from_file)
+	(pygimp_vectors_import_from_string): use the new function to get
+	a more useful error message.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	removed the term 'PDB' from the user-visible error messages.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/vectors.pdb: pass error parameter to
+	gimp_vectors_import functions.
+
+	* app/pdb/vectors-cmds.c: regenerated.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): Remove the centering
+	logic because we do not always want to run it when the canvas size
+	changes. For example, the canvas size changes if rulers are
+	toggled on/off.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_configure_event): Implement
+	GtkWidget::configure_event() for the display shell and put the
+	image centering logic here instead, since this class function is
+	run when the top level window size changes. Run it only if the
+	size (not position) of the window changes.
+
+2008-08-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.c: remove #include "core/gimpguide.h"
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): changed
+	error message to be similar to the message thrown from
+	gimp_procedure_validate_args().
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	If a procedure call fails, pass a string describing the error as
+	the second return value. First step towards fixing bug #344818.
+
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_get_return_values):
+	added a GError parameter. If it is set, pass the error message to
+	the return values.
+
+	* app/pdb/gimppdberror.h: added some more error codes.
+
+	* app/pdb/gimppdb.c
+	* app/xcf/xcf.c: pass errors to gimp_procedure_get_return_values().
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	show a different error message for execution vs. calling errors.
+
+	* app/plug-in/gimpplugin-progress.c
+	(gimp_plug_in_progress_cancel_callback): pass the error
+	GIMP_PDB_CANCELLED to gimp_procedure_get_return_values().
+
+	* app/plug-in/gimppluginmanager-call.[ch]
+	(gimp_plug_in_manager_call_run): removed the 'destroy_return_vals'
+	parameter.
+
+	* app/plug-in/gimppluginprocedure.c: destroy the return values here.
+
+	* app/plug-in/gimppluginprocframe.c: pass an error to
+	gimp_procedure_get_return_values().
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: generate code that passes the
+	error to gimp_procedure_get_return_values().
+
+	* app/pdb/*-cmds.c: regenerated.
+	
+	* plug-ins/pygimp/pygimp-pdb.c: extract the error message from the
+	return values and pass it to the exception that is thrown.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback):
+	Also handle the case when only the offset is wrong. Not pretty but
+	simple.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-scale.[ch]
+	* app/display/gimpdisplayshell-scale-dialog.[ch]: split scale
+	dialog into a new file.
+
+	* app/actions/view-commands.c: changed accordingly.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_viewport_coord_almost_centered): New
+	function.
+
+	(gimp_display_shell_scale): Center the image on zoom also if it is
+	almost centered. This makes the image centered all the way when
+	zooming out far away.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimprectangletool.c: formatting.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Reimplement to increase
+	readability.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Nice-ify.
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale_get_zoom_focus)
+	(gimp_display_shell_scale_image_is_within_viewport): Support axis
+	independence.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_zoom_button_callback): Adapt to new
+	gimp_display_shell_scale_image_is_within_viewport().
+
+2008-08-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_is_within_viewport): Make proper
+	tests (>= not >)...
+
+2008-08-16  Daniel Eddeland  <danedde@svn.gnome.org>
+
+	* app/text/gimptext.c: corrected gimp_text_set_property for
+	"box-unit" , fixing bug #547126
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/pixelize.c: formatting.
+
+2008-08-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	More elegantly deal with the 'Resize window on zoom'-case.
+
+2008-08-15  Daniel Eddeland  <danedde@svn.gnome.org>
+
+	* app/text/gimptextlayout-render.c: make text align correctly if
+	text-box is FIXED.
+
+2008-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_boundary)
+	(gimp_paint_core_stroke_vectors): when stroking multiple segments,
+	set paint_core->cur_coords to the start of each segment. It
+	normally gets assigned by gimp_paint_core_start(), but that's not
+	called for subsequent segments. Fixes stroking multiple segments
+	with the ink tool. The other tools were not affected since they
+	plot individual brushes rather than a shape from the last to the
+	current coordinates. Spotted by Alexia.
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mosaic.c: formatting.	
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mosaic.c (polygon_add_point): converted a
+	g_print() call to g_warning() and unmarked the string for
+	translation.
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-ico/ico-save.c: applied patch from Aurimas Juška
+	that fixes an endianness issue (bug #529629).
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: added some logic to avoid that
+	an info message replaces a warning. Allow info messages to
+	replace other info messages.
+
+	* app/display/gimpdisplay-handlers.c: changed accordingly.
+
+2008-08-15  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c (file_save_cmd_callback): save new
+	images, even if they are not marked dirty.
+
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	use G_STRFUNC in another error message that I missed earlier.
+
+2008-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help-browser/dialog.c (search_entry_key_press): search
+	the next match when return or enter is pressed in the search
+	entry.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_starts_to_fit)
+	(gimp_display_shell_scale_image_is_within_viewport): Make
+	proper tests (<= not <).
+
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c (file_save_cmd_callback): if we
+	trust the dirty flag and don't save because there are no changes,
+	display a message in the status-bar telling the user so.
+
+	* app/config/gimpguiconfig.c: changed the default value for 
+	"trust-dirty-flag" to TRUE.
+
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_tile_get):
+	use G_STRFUNC to get the proper function name in the error message.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_stops_to_fit): New function.
+	(gimp_display_shell_scale_get_zoom_focus): If the image stops
+	to fit the viewport, we can already now use the mouse cursor
+	as the zoom focus point.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-draw.[ch]
+	(gimp_display_shell_draw_get_scaled_image_size_for_scale): New
+	function.
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale): When zooming out and the image
+	starts to fit the viewport on a given axis, center on that
+	axis.
+
+	(gimp_display_shell_scale_image_starts_to_fit): New function.
+
+	(gimp_display_shell_calculate_scale_x_and_y): New function.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_scale_changed): Use
+	gimp_display_shell_calculate_scale_x_and_y().
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): Bail out if neither
+	vertical nor horizontal centering is requested.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_get_zoom_focus): When the image is
+	within the viewport, also use the center of the image as the zoom
+	focus point when zooming in. It feels way too weird not to do it
+	this way.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_get_zoom_focus): If the image is within
+	the viewport and we are zooming out, make the focus point be the
+	center of the image.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Move calculation of the actual new
+	scale to use from here
+	(gimp_display_shell_scale): to here, because we need this
+	information in order to determine what point to focus on while
+	zooming.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_set_unit): No need to update scrollbars, only
+	rulers.
+	(gimp_display_shell_reconnect): A
+	gimp_display_shell_scroll_clamp_and_update() makes more sense
+	here.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_monitor_res_notify_handler): When the screen
+	resolution changes and we are not in Dot by dot, we also need to
+	clamp the display shell offsets.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_resolution_changed_handler): If we are in
+	dot-by-dot, we only need to update the rulers, and only if the
+	unit is not pixels.
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_update_scrollbars_and_rulers): Split this up
+	in gimp_display_shell_scale_update_scrollbars() and
+	gimp_display_shell_scale_update_rulers().
+
+2008-08-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_clamp_and_update): New helper function.
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-callbacks.c: Use it.
+
+2008-08-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/python-console.py: renamed the dialog
+	class to ConsoleDialog to avoid confusion with pyconsole.Console.
+
 2008-08-14  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagentry.c (gimp_tag_entry_select_jellybean): made
@@ -29,6 +515,146 @@
 
 	* app/core/gimpdata.c (gimp_data_get_identifier): fixed crash when
 	creating new resource (which has NULL filename).
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/python-console.py: instead of calling
+	gimp-displays-flush twice a second, call it after each command
+	that is committed. This is similar to what the Script-Fu console
+	does.
+
+	* plug-ins/script-fu/script-fu-console.c: formatting.
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/pygimp-colors.c: fix compiler warnings.
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelplocale.c (gimp_help_locale_parse):
+	reverted the last change as g_file_query_info() is now also
+	implemented on Win32.
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelplocale.c (gimp_help_locale_parse):
+	continue even if g_file_query_info() fails. We can't show proper
+	progress information then, but we can still attempt the download.
+ 
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): applied
+	patch from Luidnel Maignan (followup to bug #105568).
+
+2008-08-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: applied patch from Geert
+	Jordaens to fix scaling artifacts in top row (bug #464466).
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_get_zoom_focus): New function
+	responsible for deciding what viewport coordinate to focus on when
+	zooming in and out.
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale_to): Make this a private function
+	because we want to be in full control over what pixel to focus on
+	when zooming in and out.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): Use
+	gimp_display_shell_scale() here instead of
+	gimp_display_shell_scale_to(). We figure out (and can override if
+	we wish) the coordinates that were previously passed explicitly.
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_image_is_within_viewport): New function.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): When
+	the zoom button is toggled on, implicitly do a View -> Fit Image
+	in Window if the (scaled) image is within the viewport.
+
+2008-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/paint/gimppaintcore.c: Include gimpprojection.h for
+	gimp_projection_get_tiles().
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): applied a
+	slightly modified version of the patch from Luidnel Maignan as
+	attached to bug #105568. Fixes incorrect alpha treatment in
+	plug-in selection masking.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c
+	(gimp_histogram_editor_frozen_update): don't do the background
+	histogram unless the histogram view is actually visible.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_start): use
+	gimp_projection_get_tiles() instead of doing the same through the
+	GimpPickable interface.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/win-snap/Makefile.am: follow the executable name change.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprojection.c (gimp_projection_paint_area): moved
+	function calls out of CLAMP macros.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
+	removed calls to scale the image and to update the scrollbars and
+	rulers. Doesn't seem to make sense in an empty display and it
+	causes a crash.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpitem.c
+	* app/core/gimpobject.c
+	* app/dialogs/preferences-dialog.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/fractal-explorer/fractal-explorer-dialogs.c
+	* plug-ins/fractal-explorer/fractal-explorer.c: use canonical
+	signal names.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (sed-po-makefiles): create the stamp-it files in
+	the po-* directories.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* po-*/Makefile.in.in: corrected 'subdir' variables. Spotted by
+	Tor Lillqvist.
+
+	* modules/controller-midi.c: formatting.
+
+2008-08-12  Michael Natterer  <mitch@gimp.org>
+
+	* modules/color-selector-wheel.c: override the wheel's
+	size-request and return a small requisition that allows
+	it to be resized smaller again.
+
+2008-08-12  Sven Neumann  <sven@gimp.org>
+
+	* modules/Makefile.am: fixed library dependencies.
 
 2008-08-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -49,9 +675,302 @@
 	possible. Also improved whitespace addition as user starts typing
 	tags.
 
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/cml-explorer.c
+	* plug-ins/common/depth-merge.c
+	* plug-ins/common/file-cel.c
+	* plug-ins/common/oilify.c
+	* plug-ins/file-bmp/bmp-write.c
+	* plug-ins/file-bmp/bmp.[ch]
+	* plug-ins/file-ico/ico-dialog.c
+	* plug-ins/file-ico/ico-save.c
+	* plug-ins/file-ico/ico.h
+	* plug-ins/flame/flame.c
+	* plug-ins/fractal-explorer/fractal-explorer-dialogs.c
+	* plug-ins/fractal-explorer/fractal-explorer.[ch]
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/help-browser/dialog.[ch]
+	* plug-ins/help-browser/help-browser.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_main.[ch]
+	* plug-ins/lighting/lighting-main.[ch]
+	* plug-ins/lighting/lighting-ui.c
+	* plug-ins/map-object/map-object-main.[ch]
+	* plug-ins/map-object/map-object-ui.c
+	* plug-ins/selection-to-path/selection-to-path.c
+	* plug-ins/win-snap/winsnap.c: use PLUG_IN_BINARY and PLUG_IN_PROC
+	defines consistently instead of using literal strings or other
+	random defines. Define them if not already there or move them to
+	plugin-global places.
+
+	* plug-ins/win-snap/Makefile.am: rename the binary to "win-snap".
+
+	* plug-ins/win-snap/winsnap.c: changed accordingly.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* modules/Makefile.am
+	* modules/*.c: renamed all modules to color-selector-foo.c,
+	display-filter-foo.c and controller-foo.c
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention lcms in the list of recommended libraries.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: check for lcms with PKG_CHECK_MODULES(). Remove
+	check for <lcms.h> vs. <lsmc/lsmc.h> because the pc file should
+	give us the right location now.
+
+	* modules/cdisplay_lcms.c
+	* modules/cdisplay_proof.c
+	* modules/colorsel_cmyk_lcms.c
+	* plug-ins/file-jpeg/jpeg-load.c
+	* plug-ins/common/lcms.c: #include <lcms.h> and nothing else.
+
+	* modules/Makefile.am
+	* plug-ins/file-jpeg/Makefile.am
+	* plug-ins/common/plugin-defs.pl: add LCMS_CFLAGS where appropriate.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	Please re-run autogen.sh after this update, and let me know if
+	there are any problems.
+
+	* po-*/Makefile.in.in: updated to a version that does not require
+	mkinstalldirs to be present.
+
+	* autogen.sh: removed the call to glib-gettextize and call
+	intltoolize without the --force command-line option. This change
+	makes an end to the po/Makefile.in.in being overwritten.
+
+	* HACKING: changed the documentation accordingly.
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mkgen.pl: removed the LIBFOO hack from this
+	script.
+	
+	* plug-ins/common/plugin-defs.pl: explicitely specify the libs in
+	the two places where it wasn't done yet.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: change all LIBFOO variables to FOO_LIBS for
+	consistency, got rid of some variables alltogether since
+	PNG_CHECK_MODULES() already defined FOO_LIBS.
+
+	* tools/Makefile.am
+	* modules/Makefile.am
+	* plug-ins/file-ico/Makefile.am
+	* plug-ins/file-jpeg/Makefile.am
+	* plug-ins/file-psd/Makefile.am
+	* plug-ins/file-xjt/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/mkgen.pl: changed accordingly.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/bmp/*
+	* plug-ins/faxg3/*
+	* plug-ins/fits/*
+	* plug-ins/fli/*
+	* plug-ins/ico/*
+	* plug-ins/jpeg/*
+	* plug-ins/psd/*
+	* plug-ins/sgi/*
+	* plug-ins/uri/*
+	* plug-ins/xjt/*: removed these...
+
+	* plug-ins/file-bmp/*
+	* plug-ins/file-faxg3/*
+	* plug-ins/file-fits/*
+	* plug-ins/file-fli/*
+	* plug-ins/file-ico/*
+	* plug-ins/file-jpeg/*
+	* plug-ins/file-psd/*
+	* plug-ins/file-sgi/*
+	* plug-ins/file-uri/*
+	* plug-ins/file-xjt/*: and moved them here. Changed executable
+	names to "file-foo".
+
+	* plug-ins/Makefile.am: changed accordingly.
+
+	* plug-ins/common/*: rename all file plug-ins to file-foo.c. Get
+	rid of the names "poppler" and "postscript" and call them
+	"file-pdf" and "file-ps" because the conflict with standard
+	autofoo targets is gone.
+
+	* plug-ins/common/plugin-defs.pl: changed accordingly.
+
+	* plug-ins/common/mkgen.pl: make sure cflags variables are named
+	"PLUG_IN_NAME_CFLAGS" and not "PLUG-IN-NAME_CFLAGS"
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* configure.in: change folders and variable names to match above
+	changes.
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c: minor coding style cleanups.
+
 2008-08-11  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimptag.c: fixed case insensitive tag handling.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_size_allocate): If the image fits
+	within the display shell canvas on a given axis, center the image
+	on that axis. This behaviour will certainly require a few tweaks
+	but let's see how this feels. Feedback welcome.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill): Recent
+	refactorings seems to have made the centering hack obsolete so use
+	gimp_display_shell_scroll_center_image_on_next_size_allocate()
+	instead.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	Always center the image after a wrap. I can't think of a case when
+	that shouldn't happen.
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Centering
+	occurs implicitly after wrapping now, no need to do it explicitly.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): Handle the no-image
+	case.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_scroll_set_offset): New low level function for
+	setting display shell offset.
+
+	(gimp_display_shell_scroll_center_image)
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Use it instead
+	of gimp_display_shell_scale_by_values().
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_handle_zoom_revert): Move the
+	zoom-revert updating logic into this new helper function so that
+	we can update zoom-revert from other places.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]:
+	Rename gimp_display_shell_scale_setup() to
+	gimp_display_shell_update_scrollbars_and_rulers(), because that's
+	exactly what that function does.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-callbacks.c: Adapt to new name.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Remove unused local variables sw
+	and sh.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]: Renamed
+	gimp_display_shell_scroll_private() to gimp_display_shell_scroll()
+	and keep it here.
+
+	* app/display/gimpdisplayshell-private.h: Removed.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-autoscroll.c: Adapt.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]: It makes more sense
+	for gimp_display_shell_get_scaled_image_size() to be moved from
+	here to
+
+	* app/display/gimpdisplayshell-draw.[ch]: here, and rename it to
+	gimp_display_shell_draw_get_scaled_image_size().
+
+	* app/display/gimpdisplayshell.c: Adapt to name change.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-draw.[ch]
+	* app/display/gimpdisplayshell-render.[ch]
+	* app/display/gimpdisplayshell-transform.[ch]
+	* app/display/gimpdisplayshell-appearance.[ch]: Sprinkle as many
+	const qualifiers we can without any implementation changes.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]: gimp_display_shell_ ->
+	gimp_display_shell_scroll_ for functions that are scroll
+	related. Also did some other minor renamings.
+
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpdisplayshell-callbacks.c: Adapt to the name
+	changes.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/view-commands.c (view_shrink_wrap_cmd_callback): We
+	need to center the image after a Shrink Wrap.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_center_image): There is no need for
+	special casing depending on image size relative to viewport size.
+
+2008-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Put functions to center the image in the display shell where they
+	belong, and give them proper names.
+
+	* app/display/gimpdisplayshell-scale.[ch]: Get rid of functions
+	and use the new names.
+
+	* app/display/gimpdisplayshell-scroll.[ch]: Put the functions here
+	and call them gimp_display_shell_scroll_center_image() and
+	gimp_display_shell_scroll_center_image_on_next_size_allocate().
+
+	* app/display/gimpdisplayshell.c:
+	* app/display/gimpdisplayshell-handlers.c: Use the new names.
 
 2008-08-10  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -155,6 +1074,193 @@
 	* app/widgets/gimptagentry.[ch]: reorganized and rewritten jellybean
 	  handling code.
 
+2008-08-08  Michael Natterer  <mitch@gimp.org>
+
+	Bug #545990: GIMP color wheel is not antialiased
+
+	* modules/colorsel_triangle.c: removed.
+
+	* modules/colorsel_wheel.c: new module using the GtkHSV widget
+	which was originally developed from above triangle selector.
+
+	* modules/Makefile.am: changed accordingly.
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c: implement
+	tile_manager_get_tile_coordinates() by calling
+	tile_manager_get_tile_col_row() instead of the other way around.
+	Saves two multiplications and divisions for each call of
+	tile_manager_get_tile_col_row().
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c: introduced utility function
+	tile_manager_allocate_tiles() to avoid code duplication.
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-pyramid.c: improved a comment.
+
+2008-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_new_from_tiles)
+	(gimp_layer_new_from_pixbuf) (gimp_layer_new_from_region): allow
+	to pass NULL for the 'name' parameter. This will be handled just
+	like in gimp_layer_new().
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/frosty-logo.scm: applied slightly
+	modified version of a patch provided by LightningIsMyName.
+	Catches some cases where the script would fail (bug #472316).
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-actions.c (layers_actions): added mnemonic to
+	the new action.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: sprinkled with const qualifiers.
+	Fixed some portability problems.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile.c (tile_attach): renamed a variable.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c (print_image): get rid of the
+	gimp_export_image() hack and use the new procedure
+	gimp-layer-new-from-visible instead. Finally we can print what the
+	user sees (including channels).
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbuffer.[ch]: added gimp_buffer_get_tiles().
+
+	* app/actions/edit-commands.c
+	* app/core/gimpbrushclipboard.c
+	* app/core/gimppatternclipboard.c: use the new accessor function.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c
+	* app/actions/edit-commands.c
+	* app/actions/layers-commands.c
+	* tools/pdbgen/pdb/layer.pdb: corrected the GimpImageType passed
+	to gimp_layer_new_from_tiles().
+
+	* app/pdb/layer-cmds.c: regenerated.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/edit-commands.[ch]
+	* app/actions/edit-actions.c: added new action
+	"edit-paste-as-new-layer".
+
+	* app/widgets/gimphelp-ids.h: added new help-id.
+
+	* menus/image-menu.xml.in: added the new action.
+
+2008-08-07  Tor Lillqvist  <tml@novell.com>
+
+	* app/config/gimpbaseconfig.c (gimp_base_config_class_init): Use
+	G_MAXSIZE instead of G_MAXULONG to limit the max tile cache size,
+	as long is still 32 bits on Win64 but size_t is 64 bits.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb: added new procedure
+	'gimp-layer-new-from-visible'.
+
+	* app/pdb/layer-cmds.c
+	* app/pdb/internal-procs.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: added new action
+	"layers-new-from-visible".
+
+	* app/widgets/gimphelp-ids.h: added new help-id.
+
+	* menus/layers-menu.xml
+	* menus/image-menu.xml.in: added the new action.
+
+	* app/actions/edit-actions.c: improved the blurb for
+	"edit-copy-visible".
+
+2008-08-07  Tor Lillqvist  <tml@novell.com>
+
+	* app/main.c: Code built by the still unstable mingw-w64 toolchain
+	gets bogus argc and argv when built as subsystem:windows, so use
+	__argc and __argv instead, which seem to be OK.
+
+	* libgimp/gimp.h: Similar change here.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c (tile_manager_invalidate_tile): fixed
+	broken copy-on-write code. The old code did not insert the new
+	tile in the tile-manager's tile pointer array.
+
+	(tile_manager_map): changed in a similar way as
+	tile_manager_invalidate_tile(). This code was not broken, but it
+	is easier to read now.
+
+	* app/base/tile-private.h: moved a comment.
+
+	* app/core/gimpselection.c (gimp_selection_extract): removed
+	workaround for above bug.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpselection.c (gimp_selection_extract): aded a
+	comment explaining why copy_region_nocow() is being used here.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_new_from_region): added some
+	empty lines for readability.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.[ch]: added gimp_image_get_projection().
+
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsourcecore.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.c
+	* app/widgets/gimpsamplepointeditor.c
+	* tools/pdbgen/pdb/image.pdb: use the new accessor function.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.h: fixed comment.
+
+2008-08-07  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Define WIN32_LARGE_ADDRESS_AWARE as
+	-Wl,--large-address-aware on 32-bit Windows, empty
+	otherwise. AC_SUBST() it.
+
+	* app/Makefile.am (win32_ldflags): Use WIN32_LARGE_ADDRESS_AWARE
+	instead of hardcoding the switch, as it isn't valid, and would be
+	pointless, when building a 64-bit GIMP.
+
 2008-08-07  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimptagpopup.c (gimp_tag_popup_layout_tags): improved
@@ -168,6 +1274,26 @@
 	* app/widgets/gimpcombotagentry.[ch]
 	* app/widgets/gimptagentry.[ch]
 	* app/widgets/gimptagpopup.c: code cleanup and documentation.
+
+2008-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-shadow.c: removed unused include.
+
+2008-08-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_center_image): The operation of centering the
+	image in the display shell has by itself nothing to do with
+	resizing the display shell window.
+
+2008-08-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimppixelrgn.c (gimp_pixel_rgn_configure): fixed gtk-doc
+	comment syntax.
+
+2008-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.c: minor cleanups.
 
 2008-08-06  Aurimas Juška  <aurisj@svn.gnome.org>
 
@@ -211,6 +1337,96 @@
 	* app/widgets/gimptagpopup.c: use any UNICODE terminal punctuation
 	character as separator.
 
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	Only center on the mouse pointer when zooming if it is within the
+	canvas.
+
+2008-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-transform.c: get rid of the "image"
+	part in all instances of "scaled_image_viewport_offset", we call
+	it simply "viewport" in all other places and it makes the code
+	more readable.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.[ch]: changed refcounting and fixed a
+	bug that I had introduced with the latest changes.
+
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): Don't setup scrollbar step
+	increment here.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_setup_hscrollbar_with_value)
+	(gimp_display_shell_setup_vscrollbar_with_value): Setup scrollbar
+	step increment here and make sure that a step always scrolls at
+	least a display shell pixel.
+
+2008-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimage.c (gimp_image_real_size_changed_detailed):
+	Clarify the design with a comment.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.[ch]: keep a queue of D-Bus requests and
+	work on them one after another instead of handling them all in
+	parallel. Complements the fix for bug #546426.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/value-propagate.c (value_propagate_body):
+	reduced number of progress updates.
+
+	* app/core/gimpchannel.c (gimp_channel_scale): don't waste CPU
+	cycles scaling an empty channel.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.h
+	* app/base/tile-pyramid.h: moved a misplaced comment to the right
+	place.
+
+2008-08-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: move update_range
+	callbacks where they belong and make them static.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-dialog.c (tips_dialog_create): added a
+	translator comment for the "Learn more" button.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_guide):
+	draw the guide all across the canvas, not limiting it to the image.
+
+	* app/tools/gimpdrawtool.[ch]: added new function
+	gimp_draw_tool_draw_guide_line().
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_draw): use it.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* menus/image-menu.xml.in: moved the Windows menu next to the Help
+	menu.
+
+2008-08-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gimpdbusservice.c: open the files from an idle handler.
+	Opening a file may take a while (in particular if it involves
+	asking the user for input) and we need to respond to the D-Bus
+	call before it times out.
+
 2008-08-05  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimptagged.c (gimp_tagged_base_init): marshal GimpTags as
@@ -245,6 +1461,74 @@
 	* app/widgets/gimptagpopup.c (gimp_tag_popup_layout_tags),
 	(gimp_tag_popup_list_expose): decreased height of tag highlight.
 
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: applied patch from Geert
+	Jordaens as attached to bug #464466. Improves quality of scaling,
+	in particular down-scaling.
+
+2008-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch] (GimpImage::size-changed-detailed):
+	change double to int in signal parameters.
+
+	Remove gimp_image_emit_size_changed_signals() and call
+	gimp_viewable_size_changed() in size-changed-detailed's default
+	handler.
+
+	* app/core/gimpimageundo.[ch]
+	* app/core/gimpimage-undo-push.[ch]: change double to int in
+	previous-origin related code.
+
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-resize.c: call gimp_image_size_changed_detailed()
+	instead of the removed gimp_image_emit_size_changed_signals()
+
+	* app/display/gimpdisplayshell-scroll.[ch]: remove
+	gimp_display_shell_handle_size_changed_detailed() because it
+	handles both scrolling and scaling and doesn't belong here.
+
+	* app/display/gimpdisplayshell-handlers.c: moved its code back to
+	gimp_display_shell_size_changed_detailed_handler() and follow the
+	double -> int change above.
+
+2008-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagemapconfig.c (gimp_image_map_config_compare):
+	clarify if() condition.
+
+2008-08-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimage.c (gimp_image_emit_size_changed_signals): The
+	parameters should be named previous_origin_[xy].
+
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/blur-motion.c (mblur_dialog): added translation
+	context to blur-type menu (bug #546204).
+
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/value-propagate.c: applied patch from Liam Quin
+	as attached to bug #546159. Fixes bad data access for black and
+	white propagation and removes unneeded calls to sqrt().
+
+2008-08-04  Sven Neumann  <sven@gimp.org>
+
+	Applied a slightly modified patch from Róman Joost as attached to
+	bug #545963. This add links to the user manual to the tips dialog:
+
+	* data/tips/gimp-tips.dtd
+	* data/tips/gimp-tips.xml.in: add optional help IDs to the tips.
+
+	* app/dialogs/tips-dialog.c
+
+	* app/dialogs/tips-parser.[ch]: parse the help IDs from the tips
+	file and show a "Learn more" link in the tips dialog.
+
 2008-08-04  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/gimpcombotagentry.c (gimp_combo_tag_entry_style_set):
@@ -274,6 +1558,63 @@
 	(tagged_to_cache_record_foreach)
 	* app/core/gimptagged.c: GimpTagged identifier is now always UTF-8
 	string.
+
+2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): Center
+	the image after connecting to it. This is required if the image we
+	connect to is smaller than the initial canvas size.
+
+2008-08-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Further work for completing bug #362915 that makes changes to the
+	image size (e.g when cropping) be much more nicely handled by
+	display shell.
+
+	* app/core/gimpimage.[ch]: Add new signal
+	GimpImage::size-changed-detailed that is emited whenever
+	GimpViewable::size-changed is. The new signal provides additional
+	information, namely the previous origin relative to the current
+	origin. Cliens choose what specific signal to listen to depending
+	on how much info they need.
+
+	* app/display/gimpdisplayshell-handlers.c: Connect to
+	GimpImage::size-changed-detailed instead of
+	GimpViewable::size-changed since the shell wants information about
+	the previous image origin.
+	(gimp_display_shell_resolution_changed_handler): Use
+	gimp_display_shell_scale_resize() instead to avoid display
+	garbage.
+
+	* app/display/gimpdisplayshell-scale.[ch]: Add new utility
+	function gimp_display_shell_center_image_on_next_size_allocate().
+
+	* app/display/gimpdisplayshell-scroll.[ch]
+	(gimp_display_shell_handle_size_changed_detailed): New function
+	that replaces logic in gimp_display_shell_handle_size_changed and
+	that takes previous-origin of the image into account and adjusts
+	the offset so that the image content that remains doesn't move. If
+	the window is resized on image resize, just center the image
+	afterwards.
+
+	* app/core/gimpimage-undo-push.[ch]
+	(gimp_image_undo_push_image_size): Add previous-origin paremeters.
+
+	* app/core/gimpimageundo.[ch]: Add and manage previous-origin
+	properties so that the display shell offset can be appropriately
+	adjusted also when undoing.
+
+	* app/core/gimpundo.h
+	* app/core/gimpimage-undo.c: Add previous_origin members to the
+	undo accumulator and emit that information when the size of the
+	image changes due to the undo.
+
+	* app/core/gimpimage-crop.c (gimp_image_crop)
+	* app/core/gimpimage-scale.c (gimp_image_scale)
+	* app/core/gimpimage-rotate.c (gimp_image_rotate)
+	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
+	Supply information about the previous-origin of the image to the
+	size-changed signals and the undo system.
 
 2008-08-02  Aurimas Juška  <aurisj@svn.gnome.org>
 

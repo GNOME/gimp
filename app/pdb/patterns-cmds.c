@@ -50,7 +50,7 @@ patterns_refresh_invoker (GimpProcedure      *procedure,
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
 
-  return gimp_procedure_get_return_values (procedure, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GValueArray *
@@ -75,7 +75,8 @@ patterns_get_list_invoker (GimpProcedure      *procedure,
                                                              filter, &num_patterns);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -111,7 +112,8 @@ patterns_get_pattern_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -166,7 +168,8 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {

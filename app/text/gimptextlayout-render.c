@@ -73,6 +73,7 @@ gimp_text_layout_render (GimpTextLayout     *layout,
                          gpointer            render_data)
 {
   PangoLayoutIter *iter;
+  PangoRectangle   rect;
   gint             x, y;
 
   g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
@@ -83,11 +84,26 @@ gimp_text_layout_render (GimpTextLayout     *layout,
   x *= PANGO_SCALE;
   y *= PANGO_SCALE;
 
+  pango_layout_get_extents (layout->layout, NULL, &rect);
+
+  /* If the width of the layout is > 0, then the text-box is FIXED
+   * and the layout position should be offset if the alignment
+   * is centered or right-aligned*/
+  if (pango_layout_get_width (layout->layout) > 0)
+    switch (pango_layout_get_alignment (layout->layout))
+      {
+      case PANGO_ALIGN_RIGHT:
+        x += pango_layout_get_width (layout->layout) - rect.width;
+        break;
+      case PANGO_ALIGN_CENTER:
+        x += (pango_layout_get_width (layout->layout) - rect.width) / 2;
+        break;
+      }
+
   iter = pango_layout_get_iter (layout->layout);
 
   do
     {
-      PangoRectangle   rect;
       PangoLayoutLine *line;
       gint             baseline;
 

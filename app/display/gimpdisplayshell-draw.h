@@ -20,31 +20,39 @@
 #define __GIMP_DISPLAY_SHELL_DRAW_H__
 
 
-void   gimp_display_shell_draw_guide         (GimpDisplayShell   *shell,
-                                              GimpGuide          *guide,
-                                              gboolean            active);
-void   gimp_display_shell_draw_guides        (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_grid          (GimpDisplayShell   *shell,
-                                              const GdkRectangle *area);
-void   gimp_display_shell_draw_pen           (GimpDisplayShell   *shell,
-                                              const GimpVector2  *points,
-                                              gint                num_points,
-                                              GimpContext        *context,
-                                              GimpActiveColor     color,
-                                              gint                width);
-void   gimp_display_shell_draw_sample_point  (GimpDisplayShell   *shell,
-                                              GimpSamplePoint    *sample_point,
-                                              gboolean            active);
-void   gimp_display_shell_draw_sample_points (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_vector        (GimpDisplayShell   *shell,
-                                              GimpVectors        *vectors);
-void   gimp_display_shell_draw_vectors       (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_cursor        (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_area          (GimpDisplayShell   *shell,
-                                              gint                x,
-                                              gint                y,
-                                              gint                w,
-                                              gint                h);
+void   gimp_display_shell_draw_get_scaled_image_size (const GimpDisplayShell *shell,
+                                                      gint                   *w,
+                                                      gint                   *h);
+void   gimp_display_shell_draw_get_scaled_image_size_for_scale
+                                                     (const GimpDisplayShell *shell,
+                                                      gdouble                 scale,
+                                                      gint                   *w,
+                                                      gint                   *h);
+void   gimp_display_shell_draw_guide                 (const GimpDisplayShell *shell,
+                                                      GimpGuide              *guide,
+                                                      gboolean                active);
+void   gimp_display_shell_draw_guides                (const GimpDisplayShell *shell);
+void   gimp_display_shell_draw_grid                  (GimpDisplayShell       *shell,
+                                                      const GdkRectangle     *area);
+void   gimp_display_shell_draw_pen                   (GimpDisplayShell       *shell,
+                                                      const GimpVector2      *points,
+                                                      gint                    num_points,
+                                                      GimpContext            *context,
+                                                      GimpActiveColor         color,
+                                                      gint                    width);
+void   gimp_display_shell_draw_sample_point          (const GimpDisplayShell *shell,
+                                                      GimpSamplePoint        *sample_point,
+                                                      gboolean                active);
+void   gimp_display_shell_draw_sample_points         (const GimpDisplayShell *shell);
+void   gimp_display_shell_draw_vector                (const GimpDisplayShell *shell,
+                                                      GimpVectors            *vectors);
+void   gimp_display_shell_draw_vectors               (const GimpDisplayShell *shell);
+void   gimp_display_shell_draw_cursor                (const GimpDisplayShell *shell);
+void   gimp_display_shell_draw_area                  (const GimpDisplayShell *shell,
+                                                      gint                    x,
+                                                      gint                    y,
+                                                      gint                    w,
+                                                      gint                    h);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_DRAW_H__ */

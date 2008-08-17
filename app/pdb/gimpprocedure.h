@@ -121,7 +121,8 @@ void            gimp_procedure_add_return_value   (GimpProcedure    *procedure,
 
 GValueArray   * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
 GValueArray   * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
-                                                   gboolean          success);
+                                                   gboolean          success,
+                                                   const GError     *error);
 
 GValueArray   * gimp_procedure_execute            (GimpProcedure    *procedure,
                                                    Gimp             *gimp,

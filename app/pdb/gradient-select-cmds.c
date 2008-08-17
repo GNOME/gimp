@@ -68,7 +68,8 @@ gradients_popup_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -93,7 +94,8 @@ gradients_close_popup_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -121,7 +123,8 @@ gradients_set_popup_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

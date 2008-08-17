@@ -523,9 +523,9 @@ create_orientmap_dialog (GtkWidget *parent)
     }
 
   orient_map_window =
-    gimp_dialog_new (_("Orientation Map Editor"), "gimpressionist",
+    gimp_dialog_new (_("Orientation Map Editor"), PLUG_IN_BINARY,
                      gtk_widget_get_toplevel (parent), 0,
-                     gimp_standard_help_func, PLUG_IN_NAME,
+                     gimp_standard_help_func, PLUG_IN_PROC,
 
                      GTK_STOCK_APPLY,  GTK_RESPONSE_APPLY,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

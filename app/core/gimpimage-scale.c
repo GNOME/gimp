@@ -56,6 +56,8 @@ gimp_image_scale (GimpImage             *image,
   GList        *remove           = NULL;
   gint          old_width;
   gint          old_height;
+  gint          offset_x;
+  gint          offset_y;
   gdouble       img_scale_w      = 1.0;
   gdouble       img_scale_h      = 1.0;
   gint          progress_steps;
@@ -79,13 +81,16 @@ gimp_image_scale (GimpImage             *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
 
-  /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (image, NULL);
-
   old_width   = gimp_image_get_width  (image);
   old_height  = gimp_image_get_height (image);
   img_scale_w = (gdouble) new_width  / (gdouble) old_width;
   img_scale_h = (gdouble) new_height / (gdouble) old_height;
+
+  offset_x = (old_width  - new_width)  / 2;
+  offset_y = (old_height - new_height) / 2;
+
+  /*  Push the image size to the stack  */
+  gimp_image_undo_push_image_size (image, NULL, offset_x, offset_y);
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -207,7 +212,8 @@ gimp_image_scale (GimpImage             *image,
 
   g_object_unref (sub_progress);
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+  gimp_image_size_changed_detailed (image, -offset_x, -offset_y);
+
   g_object_thaw_notify (G_OBJECT (image));
 
   gimp_unset_busy (image->gimp);

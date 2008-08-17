@@ -29,10 +29,14 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimppdberror.h"
+
 #include "gimpplugin.h"
 #include "gimpplugin-cleanup.h"
 #include "gimpplugin-progress.h"
 #include "gimppluginprocedure.h"
+
+#include "gimp-intl.h"
 
 
 /*  public functions  */
@@ -156,7 +160,7 @@ gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
 }
 
 GValueArray *
-gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
+gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
 {
   GValueArray *return_vals;
 
@@ -173,7 +177,7 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
         {
           /* Allocate new return values of the correct size. */
           return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                          FALSE);
+                                                          TRUE, NULL);
 
           /* Copy all of the arguments we can. */
           memcpy (return_vals->values, proc_frame->return_vals->values,
@@ -191,9 +195,16 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
     }
   else
     {
-      /* Just return a dummy set of values. */
-      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                      FALSE);
+      GimpProcedure *procedure = proc_frame->procedure;
+      GError        *error;
+
+      error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                           _("Procedure '%s' returned no return values"),
+                           gimp_object_get_name (GIMP_OBJECT (procedure)));
+
+      return_vals = gimp_procedure_get_return_values (procedure, FALSE,
+                                                      error);
+      g_error_free (error);
     }
 
   return return_vals;

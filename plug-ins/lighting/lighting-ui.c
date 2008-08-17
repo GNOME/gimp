@@ -1005,7 +1005,7 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *image;
   */
 
-  gimp_ui_init ("Lighting", FALSE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   path = gimp_gimprc_query ("lighting-effects-path");
   if (path)
@@ -1016,9 +1016,9 @@ main_dialog (GimpDrawable *drawable)
 
   lighting_stock_init ();
 
-  appwin = gimp_dialog_new (_("Lighting Effects"), "Lighting",
+  appwin = gimp_dialog_new (_("Lighting Effects"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, "plug-in-lighting",
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
