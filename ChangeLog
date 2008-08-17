@@ -1,5 +1,10 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-psd/psd-util.c (psd_set_error): changed to use
+	g_error_new_literal().
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin-progress.c
 	(gimp_plug_in_progress_cancel_callback): introduced a utility
 	function to reduce code duplication.
