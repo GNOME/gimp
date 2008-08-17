@@ -1,5 +1,17 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
+	Next step towards fixing bug #344818:
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_execute): if the error
+	has not already been set, construct one from the error message
+	that is optionally passed with the return values.
+
+	* plug-ins/common/file-png.c: changed to pass an error message
+	with the return values instead of calling g_message() in case of
+	an error.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocframe.[ch]: renamed
 	gimp_plug_in_proc_frame_get_return_vals() to
 	gimp_plug_in_proc_frame_get_return_values().

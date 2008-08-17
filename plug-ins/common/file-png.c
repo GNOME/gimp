@@ -119,11 +119,13 @@ static void      run                       (const gchar      *name,
                                             GimpParam       **return_vals);
 
 static gint32    load_image                (const gchar      *filename,
-                                            gboolean          interactive);
+                                            gboolean          interactive,
+                                            GError          **error);
 static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
                                             gint32            drawable_ID,
-                                            gint32            orig_image_ID);
+                                            gint32            orig_image_ID,
+                                            GError          **error);
 
 static void      respin_cmap               (png_structp       pp,
                                             png_infop         info,
@@ -386,13 +388,14 @@ run (const gchar      *name,
   gint32            drawable_ID;
   gint32            orig_image_ID;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  GError           *error  = NULL;
 
   INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, LOAD_PROC) == 0)
@@ -400,7 +403,7 @@ run (const gchar      *name,
       run_mode = param[0].data.d_int32;
 
       image_ID = load_image (param[1].data.d_string,
-                             run_mode == GIMP_RUN_INTERACTIVE);
+                             run_mode == GIMP_RUN_INTERACTIVE, &error);
 
       if (image_ID != -1)
         {
@@ -411,6 +414,13 @@ run (const gchar      *name,
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
+
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
         }
     }
   else if (strcmp (name, SAVE_PROC)  == 0 ||
@@ -436,6 +446,7 @@ run (const gchar      *name,
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                        GIMP_EXPORT_CAN_HANDLE_ALPHA));
+
           if (export == GIMP_EXPORT_CANCEL)
             {
               *nreturn_vals = 1;
@@ -505,7 +516,9 @@ run (const gchar      *name,
 
                   if (pngvals.compression_level < 0 ||
                       pngvals.compression_level > 9)
-                    status = GIMP_PDB_CALLING_ERROR;
+                    {
+                      status = GIMP_PDB_CALLING_ERROR;
+                    }
                 }
             }
           break;
@@ -524,13 +537,20 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           if (save_image (param[3].data.d_string,
-                          image_ID, drawable_ID, orig_image_ID))
+                          image_ID, drawable_ID, orig_image_ID, &error))
             {
               gimp_set_data (SAVE_PROC, &pngvals, sizeof (pngvals));
             }
           else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
+
+              if (error)
+                {
+                  *nreturn_vals = 2;
+                  values[1].type          = GIMP_PDB_STRING;
+                  values[1].data.d_string = error->message;
+                }
             }
         }
 
@@ -646,8 +666,9 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
  */
 
 static gint32
-load_image (const gchar *filename,
-            gboolean     interactive)
+load_image (const gchar  *filename,
+            gboolean      interactive,
+            GError      **error)
 {
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
@@ -683,8 +704,9 @@ load_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("Error while reading '%s'. File corrupted?"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, 0, 0,
+                   _("Error while reading '%s'. File corrupted?"),
+                   gimp_filename_to_utf8 (filename));
       return image;
     }
 
@@ -700,8 +722,9 @@ load_image (const gchar *filename,
 
   if (fp == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -810,17 +833,20 @@ load_image (const gchar *filename,
       image_type = GIMP_INDEXED;
       layer_type = GIMP_INDEXED_IMAGE;
       break;
-    default:                   /* Aie! Unknown type */
-      g_message (_("Unknown color model in PNG file '%s'."),
-                 gimp_filename_to_utf8 (filename));
+
+    default:                           /* Aie! Unknown type */
+      g_set_error (error, 0, 0,
+                   _("Unknown color model in PNG file '%s'."),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
   image = gimp_image_new (info->width, info->height, image_type);
   if (image == -1)
     {
-      g_message ("Could not create new image for '%s'",
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, 0, 0,
+                   "Could not create new image for '%s': %s",
+                   gimp_filename_to_utf8 (filename), gimp_get_pdb_error ());
       return -1;
     }
 
@@ -1127,6 +1153,7 @@ load_image (const gchar *filename,
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
         }
+
       g_free (pixel);
     }
 
@@ -1137,7 +1164,7 @@ load_image (const gchar *filename,
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
 
-  return (image);
+  return image;
 }
 
 
@@ -1146,10 +1173,11 @@ load_image (const gchar *filename,
  */
 
 static gboolean
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID,
-            gint32       orig_image_ID)
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            gint32        orig_image_ID,
+            GError      **error)
 {
   gint i, k,                    /* Looping vars */
     bpp = 0,                    /* Bytes per pixel */
@@ -1227,8 +1255,9 @@ save_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("Error while saving '%s'. Could not save image."),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, 0, 0,
+                   _("Error while saving '%s'. Could not save image."),
+                   gimp_filename_to_utf8 (filename));
       return FALSE;
     }
 
@@ -1242,8 +1271,9 @@ save_image (const gchar *filename,
   fp = g_fopen (filename, "wb");
   if (fp == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -1319,7 +1349,8 @@ save_image (const gchar *filename,
       break;
 
     default:
-      g_message ("Image type can't be saved as PNG");
+      g_set_error (error, 0, 0,
+                   "%s", _("Image type can't be saved as PNG"));
       return FALSE;
     }
 

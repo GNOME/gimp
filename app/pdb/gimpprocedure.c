@@ -332,15 +332,41 @@ gimp_procedure_execute (GimpProcedure  *procedure,
                                                                args,
                                                                error);
 
-  if (! return_vals)
+
+  if (return_vals)
     {
+      if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
+        {
+          /*  If the error has not already been set, construct one
+           *  from the error message that is optionally passed with
+           *  the return values.
+           */
+          if (error && *error == NULL)
+            {
+              if (return_vals->n_values > 1 &&
+                  G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+                {
+                  g_set_error (error, 0, 0,
+                               g_value_get_string (&return_vals->values[1]));
+                }
+            }
+        }
+    }
+  else
+    {
+      g_warning ("%s: no return values, shouldn't happen", G_STRFUNC);
+
       pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
                                _("Procedure '%s' returned no return values"),
                                gimp_object_get_name (GIMP_OBJECT (procedure)));
 
       return_vals = gimp_procedure_get_return_values (procedure, FALSE,
                                                       pdb_error);
-      g_propagate_error (error, pdb_error);
+      if (error && *error == NULL)
+        g_propagate_error (error, pdb_error);
+      else
+        g_error_free (pdb_error);
+
     }
 
   return return_vals;
