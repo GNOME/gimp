@@ -160,7 +160,7 @@ gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
 }
 
 GValueArray *
-gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
+gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
 {
   GValueArray *return_vals;
 

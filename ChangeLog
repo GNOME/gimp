@@ -1,5 +1,13 @@
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginprocframe.[ch]: renamed
+	gimp_plug_in_proc_frame_get_return_vals() to
+	gimp_plug_in_proc_frame_get_return_values().
+
+	* app/plug-in/gimppluginmanager-call.c: changed accordingly.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-psd/psd-util.c (psd_set_error): changed to use
 	g_set_error().
 

@@ -273,7 +273,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           g_main_loop_unref (proc_frame->main_loop);
           proc_frame->main_loop = NULL;
 
-          return_vals = gimp_plug_in_proc_frame_get_return_vals (proc_frame);
+          return_vals = gimp_plug_in_proc_frame_get_return_values (proc_frame);
         }
 
       g_object_unref (plug_in);
@@ -342,7 +342,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
        *  gimp_plug_in_handle_temp_proc_return()
        */
 
-      return_vals = gimp_plug_in_proc_frame_get_return_vals (proc_frame);
+      return_vals = gimp_plug_in_proc_frame_get_return_values (proc_frame);
 
       gimp_plug_in_proc_frame_unref (proc_frame, plug_in);
       g_object_unref (plug_in);
