@@ -47,6 +47,17 @@ struct _GimpTagEntry
   GtkEntry                      parent_instance;
 
   GimpFilteredContainer        *filtered_container;
+  /* mask describes the meaning of each char in GimpTagEntry.
+   * It is maintained automatically on insert-text and delete-text
+   * events. If manual mask modification is desired, then
+   * suppress_mask_update must be increased before calling any
+   * function changing entry contents.
+   * Meaning of mask chars:
+   * u - undefined / unknown (just typed unparsed text)
+   * t - tag
+   * s - separator
+   * w - whitespace.
+   */
   GString                      *mask;
   GList                        *selected_items;
   GList                        *recent_list;
