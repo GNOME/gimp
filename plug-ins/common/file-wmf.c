@@ -62,7 +62,8 @@ static void      run            (const gchar       *name,
                                  const GimpParam   *param,
                                  gint              *nreturn_vals,
                                  GimpParam        **return_vals);
-static gint32    load_image     (const gchar       *filename);
+static gint32    load_image     (const gchar       *filename,
+                                 GError           **error);
 static gboolean  load_wmf_size  (const gchar       *filename,
                                  WmfLoadVals       *vals);
 static gboolean  load_dialog    (const gchar       *filename);
@@ -167,6 +168,7 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   const gchar       *filename = NULL;
+  GError            *error    = NULL;
   gint32             image_ID = -1;
   gint               width    = 0;
   gint               height   = 0;
@@ -247,7 +249,7 @@ run (const gchar      *name,
           load_vals.resolution = WMF_DEFAULT_RESOLUTION;
         }
 
-      image_ID = load_image (filename);
+      image_ID = load_image (filename, &error);
 
       if (image_ID != -1)
         {
@@ -275,6 +277,13 @@ run (const gchar      *name,
         {
           gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
         }
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -720,14 +729,14 @@ load_dialog (const gchar *filename)
 }
 
 static guchar *
-pixbuf_gd_convert (gint *gd_pixels,
-                   gint  width,
-                   gint  height)
+pixbuf_gd_convert (const gint *gd_pixels,
+                   gint        width,
+                   gint        height)
 {
-  gint    *gd_ptr = gd_pixels;
-  guchar  *pixels;
-  guchar  *px_ptr;
-  gint     i, j;
+  const gint *gd_ptr = gd_pixels;
+  guchar     *pixels;
+  guchar     *px_ptr;
+  gint        i, j;
 
   pixels = (guchar *) g_try_malloc (width * height * sizeof (guchar) * 4);
   if (! pixels)
@@ -949,6 +958,11 @@ wmf_load_file (const gchar  *filename,
 
   g_mapped_file_free (file);
 
+  /* FIXME: improve error message */
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+               _("Could not open '%s' for reading"),
+               gimp_filename_to_utf8 (filename));
+
   return pixels;
 }
 
@@ -956,7 +970,8 @@ wmf_load_file (const gchar  *filename,
  * 'load_image()' - Load a WMF image into a new image window.
  */
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   gint32        image;
   gint32	layer;
@@ -967,27 +982,14 @@ load_image (const gchar *filename)
   guint         rowstride;
   guint         count = 0;
   guint         done  = 0;
-  GError       *error = NULL;
   gpointer      pr;
 
-  pixels = wmf_load_file (filename, &width, &height, &error);
+  pixels = wmf_load_file (filename, &width, &height, error);
+
+  if (! pixels)
+    return -1;
+
   rowstride = width * 4;
-
-  if (!pixels)
-    {
-      if (error)
-        {
-          g_message (error->message);
-          g_error_free (error);
-        }
-      else
-        {
-          g_message (_("Could not open '%s' for reading"),
-                     gimp_filename_to_utf8 (filename));
-        }
-
-      return -1;
-    }
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
