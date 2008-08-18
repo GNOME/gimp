@@ -864,6 +864,35 @@ gimp_pdb_arg_type_get_type (void)
 }
 
 GType
+gimp_pdb_error_handler_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PDB_ERROR_HANDLER_INTERNAL, "GIMP_PDB_ERROR_HANDLER_INTERNAL", "internal" },
+    { GIMP_PDB_ERROR_HANDLER_PLUGIN, "GIMP_PDB_ERROR_HANDLER_PLUGIN", "plugin" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PDB_ERROR_HANDLER_INTERNAL, "GIMP_PDB_ERROR_HANDLER_INTERNAL", NULL },
+    { GIMP_PDB_ERROR_HANDLER_PLUGIN, "GIMP_PDB_ERROR_HANDLER_PLUGIN", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpPDBErrorHandler", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_pdb_proc_type_get_type (void)
 {
   static const GEnumValue values[] =

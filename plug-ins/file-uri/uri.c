@@ -185,6 +185,11 @@ run (const gchar      *name,
       return;
     }
 
+  /*  We handle PDB errors by forwarding them to the caller in
+   *  our return values.
+   */
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
   if (! strcmp (name, LOAD_PROC) && uri_backend_get_load_protocols ())
     {
       image_ID = load_image (param[2].data.d_string, run_mode, &error);

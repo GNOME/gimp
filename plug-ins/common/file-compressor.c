@@ -304,6 +304,11 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
+  /*  We handle PDB errors by forwarding them to the caller in
+   *  our return values.
+   */
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
   for (i = 0; i < G_N_ELEMENTS (compressors); i++)
     {
       const Compressor *compressor = &compressors[i];

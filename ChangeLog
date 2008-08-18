@@ -1,3 +1,30 @@
+2008-08-19  Sven Neumann  <sven@gimp.org>
+
+	Complements the fix for bug #344818:
+
+	* libgimpbase/gimpbaseenums.[ch]: added new enum GimpPDBErrorHandler.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/plug-in/gimpplugin.[ch]: added error_handler to GimpPlugIn.
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	only display an error message for a failed procedure call if the
+	plug-in's error-handler is set to GIMP_PDB_ERROR_HANDLER_INTERNAL.
+	
+	* tools/pdbgen/pdb/plug_in.pdb: added PDB getter and setter for
+	the plug-in's error-handler.
+
+	* app/pdb/plug-in-cmds.c
+	* app/pdb/internal-procs.c
+	* libgimp/gimpenums.c.tail
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	* plug-ins/common/file-compressor.c
+	* plug-ins/file-uri/uri.c: set the error-handler to
+	GIMP_PDB_ERROR_HANDLER_PLUGIN as these plug-ins are forwarding the
+	error with their return values.
+
 2008-08-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/file-uri/uri.c: pass error messages with the return
