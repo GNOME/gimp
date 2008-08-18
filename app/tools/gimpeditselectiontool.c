@@ -714,7 +714,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
       edit_select->first_move = FALSE;
     }
 
-  gimp_projection_flush (gimp_image_get_projection (display->image));
+  gimp_projection_flush (display->image->projection);
 
   gimp_tool_pop_status (tool, display);
   gimp_tool_push_status_coords (tool, display,

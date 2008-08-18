@@ -1003,12 +1003,12 @@ gimp_layer_new (GimpImage            *image,
 
 /**
  * gimp_layer_new_from_tiles:
- * @tiles:      The buffer to make the new layer from.
+ * @tiles:       The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
- * @name:       The new layer's name.
- * @opacity:    The new layer's opacity.
- * @mode:       The new layer's mode.
+ * @type:        The #GimpImageType of the new layer.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
  *
  * Copies %tiles to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements
@@ -1028,6 +1028,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   pixel_region_init (&bufPR, tiles,
                      0, 0,
@@ -1041,12 +1042,12 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
 /**
  * gimp_layer_new_from_pixbuf:
- * @pixbuf:     The pixbuf to make the new layer from.
+ * @pixbuf:      The pixbuf to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
- * @name:       The new layer's name.
- * @opacity:    The new layer's opacity.
- * @mode:       The new layer's mode.
+ * @type:        The #GimpImageType of the new layer.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
  *
  * Copies %pixbuf to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements
@@ -1066,6 +1067,7 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   pixel_region_init_data (&bufPR, gdk_pixbuf_get_pixels (pixbuf),
                           gdk_pixbuf_get_n_channels (pixbuf),
@@ -1080,12 +1082,12 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
 /**
  * gimp_layer_new_from_region:
- * @region:     A readable pixel region.
+ * @region:      A readable pixel region.
  * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
- * @name:       The new layer's name.
- * @opacity:    The new layer's opacity.
- * @mode:       The new layer's mode.
+ * @type:        The #GimpImageType of the new layer.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
  *
  * Copies %region to a layer taking into consideration the
  * possibility of transforming the contents to meet the requirements
@@ -1109,6 +1111,7 @@ gimp_layer_new_from_region (PixelRegion          *region,
 
   g_return_val_if_fail (region != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   width  = region->w;
   height = region->h;
@@ -1146,7 +1149,6 @@ gimp_layer_new_from_region (PixelRegion          *region,
        case GIMP_RGB_IMAGE:
           copy_region (region, &layerPR);
           break;
-
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1159,18 +1161,15 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_RGBA_IMAGE:
           copy_region (region, &layerPR);
           break;
-
         case GIMP_RGB_IMAGE:
           add_alpha_region (region, &layerPR);
           break;
-
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           gimp_layer_transform_color (dest_image,
                                       region,   src_type,
                                       &layerPR, type);
           break;
-
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1183,7 +1182,6 @@ gimp_layer_new_from_region (PixelRegion          *region,
         case GIMP_GRAY_IMAGE:
           copy_region (region, &layerPR);
           break;
-
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1199,15 +1197,12 @@ gimp_layer_new_from_region (PixelRegion          *region,
                                       region,   src_type,
                                       &layerPR, type);
           break;
-
         case GIMP_GRAYA_IMAGE:
           copy_region (region, &layerPR);
           break;
-
         case GIMP_GRAY_IMAGE:
           add_alpha_region (region, &layerPR);
           break;
-
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;
@@ -1229,7 +1224,6 @@ gimp_layer_new_from_region (PixelRegion          *region,
                                       region,   src_type,
                                       &layerPR, type);
           break;
-
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
           break;

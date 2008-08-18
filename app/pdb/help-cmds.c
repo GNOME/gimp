@@ -63,8 +63,7 @@ help_invoker (GimpProcedure      *procedure,
       gimp_help (gimp, progress, help_domain, help_id);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

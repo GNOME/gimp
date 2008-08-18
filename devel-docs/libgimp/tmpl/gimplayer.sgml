@@ -33,27 +33,6 @@ Operations on a single layer.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_new_from_drawable ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@dest_image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_new_from_visible ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@dest_image_ID: 
-@name: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_layer_copy ##### -->
 <para>
 
@@ -182,6 +161,16 @@ Operations on a single layer.
 
 @layer_ID: 
 @mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_new_from_drawable ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@dest_image_ID: 
 @Returns: 
 
 

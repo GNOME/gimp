@@ -83,8 +83,7 @@ by_color_select_invoker (GimpProcedure      *procedure,
                                     feather_radius);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -137,8 +136,7 @@ by_color_select_full_invoker (GimpProcedure      *procedure,
                                     feather_radius_y);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -183,8 +181,7 @@ ellipse_select_invoker (GimpProcedure      *procedure,
                                    TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -226,8 +223,7 @@ free_select_invoker (GimpProcedure      *procedure,
                                    TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -277,8 +273,7 @@ fuzzy_select_invoker (GimpProcedure      *procedure,
                                  feather_radius);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -334,8 +329,7 @@ fuzzy_select_full_invoker (GimpProcedure      *procedure,
                                  feather_radius_y);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -377,8 +371,7 @@ rect_select_invoker (GimpProcedure      *procedure,
                                      TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -431,8 +424,7 @@ round_rect_select_invoker (GimpProcedure      *procedure,
                                       TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

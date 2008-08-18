@@ -212,7 +212,7 @@ gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
   return gimp_plug_in_manager_call_run (gimp->plug_in_manager,
                                         context, progress,
                                         GIMP_PLUG_IN_PROCEDURE (procedure),
-                                        args, TRUE, NULL);
+                                        args, TRUE, FALSE, NULL);
 }
 
 static void
@@ -223,19 +223,10 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
                                       GValueArray   *args,
                                       GimpObject    *display)
 {
-  GimpPlugInProcedure *plug_in_procedure = GIMP_PLUG_IN_PROCEDURE (procedure);
-  GValueArray         *return_vals;
-
-  return_vals = gimp_plug_in_manager_call_run (gimp->plug_in_manager,
-                                               context, progress,
-                                               plug_in_procedure,
-                                               args, FALSE, display);
-
-  /*  In case of errors, gimp_plug_in_manager_call_run() may return
-   *  return_vals, even if run asynchronously.
-   */
-  if (return_vals)
-    g_value_array_free (return_vals);
+  gimp_plug_in_manager_call_run (gimp->plug_in_manager,
+                                 context, progress,
+                                 GIMP_PLUG_IN_PROCEDURE (procedure),
+                                 args, FALSE, TRUE, display);
 }
 
 const gchar *

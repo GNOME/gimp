@@ -36,7 +36,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-private.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
@@ -44,16 +44,8 @@
 #define OVERPAN_FACTOR 0.5
 
 
-typedef struct
-{
-  GimpDisplayShell *shell;
-  gboolean          vertically;
-  gboolean          horizontally;
-} SizeAllocateCallbackData;
-
-
 /**
- * gimp_display_shell_scroll_center_image_coordinate:
+ * gimp_display_shell_center_around_image_coordinate:
  * @shell:
  * @image_x:
  * @image_y:
@@ -62,7 +54,7 @@ typedef struct
  *
  **/
 void
-gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell       *shell,
+gimp_display_shell_center_around_image_coordinate (GimpDisplayShell       *shell,
                                                    gdouble                 image_x,
                                                    gdouble                 image_y)
 {
@@ -77,15 +69,15 @@ gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell       *shell
   offset_to_apply_x = scaled_image_x - shell->disp_width  / 2 - shell->offset_x;
   offset_to_apply_y = scaled_image_y - shell->disp_height / 2 - shell->offset_y;
 
-  gimp_display_shell_scroll (shell,
-                             offset_to_apply_x,
-                             offset_to_apply_y);
+  gimp_display_shell_scroll_private (shell,
+                                     offset_to_apply_x,
+                                     offset_to_apply_y);
 }
 
 void
-gimp_display_shell_scroll (GimpDisplayShell *shell,
-                           gint              x_offset,
-                           gint              y_offset)
+gimp_display_shell_scroll_private (GimpDisplayShell *shell,
+                                   gint              x_offset,
+                                   gint              y_offset)
 {
   gint old_x;
   gint old_y;
@@ -122,41 +114,12 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       gdk_window_process_updates (shell->canvas->window, FALSE);
 
       /*  Update scrollbars and rulers  */
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      gimp_display_shell_scale_setup (shell);
 
       gimp_display_shell_resume (shell);
 
       gimp_display_shell_scrolled (shell);
     }
-}
-
-void
-gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
-                                      gint              offset_x,
-                                      gint              offset_y)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->offset_x == offset_x &&
-      shell->offset_y == offset_y)
-    return;
-
-  gimp_display_shell_scale_handle_zoom_revert (shell);
-
-  /* freeze the active tool */
-  gimp_display_shell_pause (shell);
-
-  shell->offset_x = offset_x;
-  shell->offset_y = offset_y;
-
-  gimp_display_shell_scroll_clamp_and_update (shell);
-
-  gimp_display_shell_scrolled (shell);
-
-  gimp_display_shell_expose_full (shell);
-
-  /* re-enable the active tool */
-  gimp_display_shell_resume (shell);
 }
 
 void
@@ -242,117 +205,7 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scroll_clamp_and_update:
- * @shell:
- *
- * Helper function for calling two functions that are commonly called
- * in pairs.
- **/
-void
-gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
-{
-  gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
-}
-
-/**
- * gimp_display_shell_scroll_center_image:
- * @shell:
- * @horizontally:
- * @vertically:
- *
- * Centers the image in the display shell on the desired axes.
- *
- **/
-void
-gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
-                                        gboolean          horizontally,
-                                        gboolean          vertically)
-{
-  gint sw, sh;
-  gint target_offset_x, target_offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->display ||
-      ! shell->display->image ||
-      (! vertically && ! horizontally))
-    return;
-
-  target_offset_x = shell->offset_x;
-  target_offset_y = shell->offset_y;
-
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
-
-  if (horizontally)
-    {
-      target_offset_x = (sw - shell->disp_width) / 2;
-    }
-
-  if (vertically)
-    {
-      target_offset_y = (sh - shell->disp_height) / 2;
-    }
-
-  gimp_display_shell_scroll_set_offset (shell,
-                                        target_offset_x,
-                                        target_offset_y);
-}
-
-static void
-gimp_display_shell_scroll_center_image_callback (GtkWidget                *canvas,
-                                                 GtkAllocation            *allocation,
-                                                 SizeAllocateCallbackData *data)
-{
-  gimp_display_shell_scroll_center_image (data->shell,
-                                          data->horizontally,
-                                          data->vertically);
-
-  g_signal_handlers_disconnect_by_func (canvas,
-                                        gimp_display_shell_scroll_center_image_callback,
-                                        data);
-
-  g_slice_free (SizeAllocateCallbackData, data);
-}
-
-/**
- * gimp_display_shell_scroll_center_image_on_next_size_allocate:
- * @shell:
- *
- * Centers the image in the display as soon as the canvas has got its
- * new size.
- *
- * Only call this if you are sure the canvas size will change.
- * (Otherwise the signal connection and centering will lurk until the
- * canvas size is changed e.g. by toggling the rulers.)
- *
- **/
-void
-gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *shell,
-                                                              gboolean          horizontally,
-                                                              gboolean          vertically)
-{
-  SizeAllocateCallbackData *data;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  data = g_slice_new (SizeAllocateCallbackData);
-
-  if (data)
-    {
-      data->shell        = shell;
-      data->horizontally = horizontally;
-      data->vertically   = vertically;
-      
-      g_signal_connect (shell->canvas, "size-allocate",
-                        G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
-                        data);
-    }
-
-}
-
-/**
- * gimp_display_shell_scroll_get_scaled_viewport:
+ * gimp_display_shell_get_scaled_viewport:
  * @shell:
  * @x:
  * @y:
@@ -364,20 +217,20 @@ gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *
  *
  **/
 void
-gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
-                                               gint                   *x,
-                                               gint                   *y,
-                                               gint                   *w,
-                                               gint                   *h)
+gimp_display_shell_get_scaled_viewport (const GimpDisplayShell *shell,
+                                        gint                   *x,
+                                        gint                   *y,
+                                        gint                   *w,
+                                        gint                   *h)
 {
   gint scaled_viewport_offset_x;
   gint scaled_viewport_offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
-                                                        &scaled_viewport_offset_x,
-                                                        &scaled_viewport_offset_y);
+  gimp_display_shell_get_scaled_viewport_offset (shell,
+                                                 &scaled_viewport_offset_x,
+                                                 &scaled_viewport_offset_y);
   if (x) *x = -scaled_viewport_offset_x;
   if (y) *y = -scaled_viewport_offset_y;
   if (w) *w =  shell->disp_width;
@@ -385,7 +238,7 @@ gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scroll_get_viewport:
+ * gimp_display_shell_get_viewport:
  * @shell:
  * @x:
  * @y:
@@ -396,11 +249,11 @@ gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
-                                        gdouble                *x,
-                                        gdouble                *y,
-                                        gdouble                *w,
-                                        gdouble                *h)
+gimp_display_shell_get_viewport (const GimpDisplayShell *shell,
+                                 gdouble                *x,
+                                 gdouble                *y,
+                                 gdouble                *w,
+                                 gdouble                *h)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -411,7 +264,7 @@ gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scroll_get_scaled_viewport_offset:
+ * gimp_display_shell_get_scaled_viewport_offset:
  * @shell:
  * @x:
  * @y:
@@ -420,9 +273,9 @@ gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *shell,
-                                                      gint                   *x,
-                                                      gint                   *y)
+gimp_display_shell_get_scaled_viewport_offset (const GimpDisplayShell *shell,
+                                               gint                   *x,
+                                               gint                   *y)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -431,7 +284,43 @@ gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *sh
 }
 
 /**
- * gimp_display_shell_scroll_get_disp_offset:
+ * gimp_display_shell_get_scaled_image_size:
+ * @shell:
+ * @w:
+ * @h:
+ *
+ * Gets the size of the rendered image after it has been scaled.
+ *
+ **/
+void
+gimp_display_shell_get_scaled_image_size (const GimpDisplayShell *shell,
+                                          gint                   *w,
+                                          gint                   *h)
+{
+  GimpProjection *proj;
+  TileManager    *tiles;
+  gint            level;
+  gint            level_width;
+  gint            level_height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
+
+  proj = shell->display->image->projection;
+
+  level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
+
+  tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
+
+  level_width  = tile_manager_width (tiles);
+  level_height = tile_manager_height (tiles);
+
+  if (w) *w = PROJ_ROUND (level_width  * (shell->scale_x * (1 << level)));
+  if (h) *h = PROJ_ROUND (level_height * (shell->scale_y * (1 << level)));
+}
+
+/**
+ * gimp_display_shell_get_disp_offset:
  * @shell:
  * @disp_xoffset:
  * @disp_yoffset:
@@ -441,9 +330,9 @@ gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *sh
  *
  **/
 void
-gimp_display_shell_scroll_get_disp_offset (const GimpDisplayShell *shell,
-                                           gint                   *disp_xoffset,
-                                           gint                   *disp_yoffset)
+gimp_display_shell_get_disp_offset (const GimpDisplayShell *shell,
+                                    gint                   *disp_xoffset,
+                                    gint                   *disp_yoffset)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -473,7 +362,7 @@ gimp_display_shell_scroll_get_disp_offset (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scroll_get_render_start_offset:
+ * gimp_display_shell_get_render_start_offset:
  * @shell:
  * @offset_x:
  * @offset_y:
@@ -483,9 +372,9 @@ gimp_display_shell_scroll_get_disp_offset (const GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scroll_get_render_start_offset (const GimpDisplayShell *shell,
-                                                   gint                   *offset_x,
-                                                   gint                   *offset_y)
+gimp_display_shell_get_render_start_offset (const GimpDisplayShell *shell,
+                                            gint                   *offset_x,
+                                            gint                   *offset_y)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -494,7 +383,7 @@ gimp_display_shell_scroll_get_render_start_offset (const GimpDisplayShell *shell
 }
 
 /**
- * gimp_display_shell_scroll_setup_hscrollbar:
+ * gimp_display_shell_setup_hscrollbar_with_value:
  * @shell:
  * @value:
  *
@@ -502,8 +391,8 @@ gimp_display_shell_scroll_get_render_start_offset (const GimpDisplayShell *shell
  *
  **/
 void
-gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
-                                            gdouble           value)
+gimp_display_shell_setup_hscrollbar_with_value (GimpDisplayShell *shell,
+                                                gdouble           value)
 {
   gint sw;
 
@@ -513,7 +402,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, NULL);
+  gimp_display_shell_get_scaled_image_size (shell, &sw, NULL);
 
   if (shell->disp_width < sw)
     {
@@ -536,7 +425,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scroll_setup_vscrollbar:
+ * gimp_display_shell_setup_vscrollbar_with_value:
  * @shell:
  * @value:
  *
@@ -544,8 +433,8 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
-                                            gdouble           value)
+gimp_display_shell_setup_vscrollbar_with_value (GimpDisplayShell *shell,
+                                                gdouble           value)
 {
   gint sh;
 
@@ -555,7 +444,7 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
       ! shell->display->image)
     return;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, NULL, &sh);
+  gimp_display_shell_get_scaled_image_size (shell, NULL, &sh);
 
   if (shell->disp_height < sh)
     {

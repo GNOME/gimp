@@ -620,7 +620,9 @@ static PyMethodDef pdb_methods[] = {
 PyObject *
 pygimp_pdb_new(void)
 {
-    PyGimpPDB *self = PyObject_NEW(PyGimpPDB, &PyGimpPDB_Type);
+    PyGimpPDB *self;
+	
+    self = PyObject_NEW(PyGimpPDB, &PyGimpPDB_Type);
 
     if (self == NULL)
 	return NULL;
@@ -923,6 +925,24 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     }
 
     switch(ret[0].data.d_status) {
+    case GIMP_PDB_EXECUTION_ERROR:
+#if PG_DEBUG > 0
+	g_printerr("execution error\n");
+#endif
+	gimp_destroy_params(ret, nret);
+	PyErr_SetString(PyExc_RuntimeError, "execution error");
+	return NULL;
+	break;
+
+    case GIMP_PDB_CALLING_ERROR:
+#if PG_DEBUG > 0
+	g_printerr("calling error\n");
+#endif
+	gimp_destroy_params(ret, nret);
+	PyErr_SetString(PyExc_TypeError, "invalid arguments");
+	return NULL;
+	break;
+
     case GIMP_PDB_SUCCESS:
 #if PG_DEBUG > 0
 	g_printerr("success\n");
@@ -936,30 +956,6 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	}
 	break;
 
-    case GIMP_PDB_EXECUTION_ERROR:
-#if PG_DEBUG > 0
-	g_printerr("execution error\n");
-#endif
-        PyErr_SetString(PyExc_RuntimeError, gimp_get_pdb_error());
-	gimp_destroy_params(ret, nret);
-	return NULL;
-
-    case GIMP_PDB_CALLING_ERROR:
-#if PG_DEBUG > 0
-	g_printerr("calling error\n");
-#endif
-        PyErr_SetString(PyExc_RuntimeError, gimp_get_pdb_error());
-	gimp_destroy_params(ret, nret);
-	return NULL;
-
-    case GIMP_PDB_CANCEL:
-#if PG_DEBUG > 0
-	g_printerr("cancel\n");
-#endif
-        PyErr_SetString(PyExc_RuntimeError, gimp_get_pdb_error());
-	gimp_destroy_params(ret, nret);
-	return NULL;
-
     default:
 #if PG_DEBUG > 0
 	g_printerr("unknown - %i (type %i)\n",
@@ -967,6 +963,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 #endif
 	PyErr_SetString(pygimp_error, "unknown return code");
 	return NULL;
+	break;
     }
 
     if (PyTuple_Size(t) == 1) {

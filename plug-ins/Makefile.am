@@ -9,7 +9,7 @@ help_browser = help-browser
 endif
 
 if BUILD_JPEG
-file_jpeg = file-jpeg
+jpeg = jpeg
 endif
 
 if BUILD_PRINT
@@ -29,54 +29,54 @@ twain = twain
 endif
 
 if HAVE_PNG
-file_ico = file-ico
+ico = ico
 endif
 
 if OS_WIN32
 twain = twain
 win_snap = win-snap
 if HAVE_LIBCURL
-file_uri = file-uri
+uri = uri
 endif
 else
-file_uri = file-uri
+uri = uri
 endif
 
 if BUILD_XJT
-file_xjt = file-xjt
+xjt = xjt
 endif
 
 
 SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
+	bmp			\
 	color-rotate		\
-	file-bmp		\
-	file-faxg3		\
-	file-fits		\
-	file-fli		\
-	$(file_ico)		\
-	$(file_jpeg)		\
-	file-psd		\
-	file-sgi		\
-	$(file_uri)		\
-	$(file_xjt)		\
+	faxg3			\
+	fits			\
 	flame			\
+	fli			\
 	fractal-explorer	\
 	gfig			\
 	gimpressionist		\
 	gradient-flare		\
 	help			\
 	$(help_browser)		\
+	$(ico)			\
 	ifs-compose		\
 	imagemap		\
+	$(jpeg)                 \
 	lighting		\
 	map-object		\
 	maze			\
 	metadata		\
 	pagecurl		\
 	$(print)		\
+	psd			\
 	selection-to-path	\
+	sgi			\
 	$(twain)		\
+	$(uri)			\
 	$(win_snap)		\
+	$(xjt)			\
 	common

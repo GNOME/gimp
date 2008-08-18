@@ -134,11 +134,11 @@ create_dialog (void)
   GtkWidget *hbox;
   GtkWidget *preview_box;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init ("gimpressionist", TRUE);
 
-  dialog = gimp_dialog_new (_("GIMPressionist"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("GIMPressionist"), "gimpressionist",
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            gimp_standard_help_func, PLUG_IN_NAME,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

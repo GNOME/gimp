@@ -753,7 +753,10 @@ gimp_selection_extract (GimpChannel  *selection,
       else
         {
           /*  Otherwise, do a straight copy  */
-          copy_region (&srcPR, &destPR);
+          if (! GIMP_IS_DRAWABLE (pickable))
+            copy_region_nocow (&srcPR, &destPR);
+          else
+            copy_region (&srcPR, &destPR);
         }
 
       /*  If we're cutting, remove either the layer (or floating selection),

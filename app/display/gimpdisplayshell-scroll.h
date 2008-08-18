@@ -20,47 +20,44 @@
 #define __GIMP_DISPLAY_SHELL_SCROLL_H__
 
 
-void   gimp_display_shell_scroll_center_image_coordinate    (GimpDisplayShell       *shell,
-                                                             gdouble                 image_x,
-                                                             gdouble                 image_y);
-void   gimp_display_shell_scroll                            (GimpDisplayShell       *shell,
-                                                             gint                    x_offset,
-                                                             gint                    y_offset);
-void   gimp_display_shell_scroll_set_offset                 (GimpDisplayShell       *shell,
-                                                             gint                    offset_x,
-                                                             gint                    offset_y);
-void   gimp_display_shell_scroll_clamp_offsets              (GimpDisplayShell       *shell);
-void   gimp_display_shell_scroll_clamp_and_update           (GimpDisplayShell       *shell);
-void   gimp_display_shell_scroll_center_image               (GimpDisplayShell       *shell,
-                                                             gboolean                horizontally,
-                                                             gboolean                vertically);
-void   gimp_display_shell_scroll_center_image_on_next_size_allocate
-                                                            (GimpDisplayShell       *shell,
-                                                             gboolean                horizontally,
-                                                             gboolean                vertically);
-void   gimp_display_shell_scroll_get_scaled_viewport        (const GimpDisplayShell *shell,
-                                                             gint                   *x,
-                                                             gint                   *y,
-                                                             gint                   *w,
-                                                             gint                   *h);
-void   gimp_display_shell_scroll_get_viewport               (const GimpDisplayShell *shell,
-                                                             gdouble                *x,
-                                                             gdouble                *y,
-                                                             gdouble                *w,
-                                                             gdouble                *h);
-void   gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *shell,
-                                                             gint                   *x,
-                                                             gint                   *y);
-void   gimp_display_shell_scroll_get_disp_offset            (const GimpDisplayShell *shell,
-                                                             gint                   *disp_xoffset,
-                                                             gint                   *disp_yoffset);
-void   gimp_display_shell_scroll_get_render_start_offset    (const GimpDisplayShell *shell,
-                                                             gint                   *offset_x,
-                                                             gint                   *offset_y);
-void   gimp_display_shell_scroll_setup_hscrollbar           (GimpDisplayShell       *shell,
-                                                             gdouble                 value);
-void   gimp_display_shell_scroll_setup_vscrollbar           (GimpDisplayShell       *shell,
-                                                             gdouble                 value);
+void   gimp_display_shell_center_around_image_coordinate (GimpDisplayShell       *shell,
+                                                          gdouble                 image_x,
+                                                          gdouble                 image_y);
+
+void   gimp_display_shell_scroll_clamp_offsets           (GimpDisplayShell       *shell);
+
+void   gimp_display_shell_get_scaled_viewport            (const GimpDisplayShell *shell,
+                                                          gint                   *x,
+                                                          gint                   *y,
+                                                          gint                   *w,
+                                                          gint                   *h);
+
+void   gimp_display_shell_get_viewport                   (const GimpDisplayShell *shell,
+                                                          gdouble                *x,
+                                                          gdouble                *y,
+                                                          gdouble                *w,
+                                                          gdouble                *h);
+
+void   gimp_display_shell_get_scaled_viewport_offset     (const GimpDisplayShell *shell,
+                                                          gint                   *x,
+                                                          gint                   *y);
+
+void   gimp_display_shell_get_scaled_image_size          (const GimpDisplayShell *shell,
+                                                          gint                   *w,
+                                                          gint                   *h);
+
+void   gimp_display_shell_get_disp_offset                (const GimpDisplayShell *shell,
+                                                          gint                   *disp_xoffset,
+                                                          gint                   *disp_yoffset);
+
+void   gimp_display_shell_get_render_start_offset        (const GimpDisplayShell *shell,
+                                                          gint                   *offset_x,
+                                                          gint                   *offset_y);
+
+void   gimp_display_shell_setup_hscrollbar_with_value    (GimpDisplayShell       *shell,
+                                                          gdouble                 value);
+void   gimp_display_shell_setup_vscrollbar_with_value    (GimpDisplayShell       *shell,
+                                                          gdouble                 value);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */

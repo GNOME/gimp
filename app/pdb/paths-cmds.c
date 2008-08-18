@@ -67,8 +67,7 @@ path_list_invoker (GimpProcedure      *procedure,
       path_list = gimp_container_get_name_array (image->vectors, &num_paths);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -104,8 +103,7 @@ path_get_current_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -138,8 +136,7 @@ path_set_current_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -167,8 +164,7 @@ path_delete_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -232,8 +228,7 @@ path_get_points_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -309,8 +304,7 @@ path_set_points_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -347,8 +341,7 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -423,8 +416,7 @@ path_get_point_at_dist_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -463,8 +455,7 @@ path_get_tattoo_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], tattoo);
@@ -499,8 +490,7 @@ path_set_tattoo_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -530,8 +520,7 @@ get_path_by_tattoo_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -566,8 +555,7 @@ path_get_locked_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], locked);
@@ -602,8 +590,7 @@ path_set_locked_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -649,8 +636,7 @@ path_to_selection_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -678,8 +664,7 @@ path_import_invoker (GimpProcedure      *procedure,
                                           merge, scale, -1, NULL, NULL);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

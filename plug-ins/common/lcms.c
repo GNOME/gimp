@@ -25,7 +25,11 @@
 
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
+#ifdef HAVE_LCMS_LCMS_H
+#include <lcms/lcms.h>
+#else
 #include <lcms.h>
+#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

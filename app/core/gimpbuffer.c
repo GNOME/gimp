@@ -327,11 +327,3 @@ gimp_buffer_get_image_type (const GimpBuffer *buffer)
 
   return 0;
 }
-
-TileManager *
-gimp_buffer_get_tiles (const GimpBuffer *buffer)
-{
-  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
-
-  return buffer->tiles;
-}

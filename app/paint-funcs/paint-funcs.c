@@ -1391,8 +1391,6 @@ behind_indexed_pixels (const guchar   *src1,
  *  The operation is still bounded by mask/opacity constraints
  */
 
-#define INT_DIV(a, b) ((a)/(b) + (((a) % (b)) > ((b) / 2)))
-
 static inline void
 replace_inten_pixels (const guchar   *src1,
                       const guchar   *src2,
@@ -1404,62 +1402,54 @@ replace_inten_pixels (const guchar   *src1,
                       guint           bytes1,
                       guint           bytes2)
 {
-  const guint   has_alpha1 = HAS_ALPHA (bytes1);
-  const guint   has_alpha2 = HAS_ALPHA (bytes2);
-  const guint   alpha      = bytes1 - has_alpha1;
-  const guint   alpha2     = bytes2 - has_alpha2;
-  const guchar *m          = mask ? mask : &no_mask;
-  guint         b;
-  gint          tmp;
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+  const guint bytes      = MIN (bytes1, bytes2);
+  guint b;
+  gint  tmp;
 
-  while (length --)
+  if (mask)
     {
-      guchar src1_alpha  = has_alpha1 ? src1[alpha]  : 255;
-      guchar src2_alpha  = has_alpha2 ? src2[alpha2] : 255;
-      guchar new_alpha   = INT_BLEND (src2_alpha, src1_alpha,
-                                      INT_MULT (*m, opacity, tmp), tmp);
+      const guchar *m = mask;
 
-      if (new_alpha)
+      while (length --)
         {
-          guint ratio = *m * opacity;
-          ratio = ratio / 255 * src2_alpha;
+          guchar mask_alpha = INT_MULT (*m, opacity, tmp);
 
-          ratio = INT_DIV (ratio, new_alpha);
+          for (b = 0; b < bytes; b++)
+            dest[b] = (affect[b] ?
+                       INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
+                       src1[b]);
 
-          for (b = 0; b < alpha; b++)
-            {
-              if (! affect[b])
-                {
-                  dest[b] = src1[b];
-                }
-              else if (src2[b] > src1[b])
-                {
-                  guint t = (src2[b] - src1[b]) * ratio;
-                  dest[b] = src1[b] + INT_DIV (t, 255);
-                }
-              else
-                {
-                  guint t = (src1[b] - src2[b]) * ratio;
-                  dest[b] = src1[b] - INT_DIV (t, 255);
-                }
-            }
-        }
-      else
-        {
-          for (b = 0; b < alpha; b++)
+          if (has_alpha1 && !has_alpha2)
             dest[b] = src1[b];
+
+          m++;
+
+          src1 += bytes1;
+          src2 += bytes2;
+          dest += bytes1;
         }
+    }
+  else
+    {
+      const guchar mask_alpha = opacity;
 
-      if (has_alpha1)
-        dest[alpha] = affect[alpha] ? new_alpha : src1[alpha];
+      while (length --)
+        {
+          for (b = 0; b < bytes; b++)
+            dest[b] = (affect[b] ?
+                       INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
+                       src1[b]);
 
-      if (mask)
-        m++;
+          if (has_alpha1 && !has_alpha2)
+            dest[b] = src1[b];
 
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes1;
-   }
+          src1 += bytes1;
+          src2 += bytes2;
+          dest += bytes1;
+        }
+    }
 }
 
 /*  replace the contents of one pixel row with the other

@@ -365,7 +365,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
-  gimp_projection_flush_now (gimp_image_get_projection (display->image));
+  gimp_projection_flush_now (display->image->projection);
   gimp_display_flush_now (display);
 
   gimp_draw_tool_start (draw_tool, display);
@@ -456,7 +456,7 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   gimp_paint_core_interpolate (core, drawable, paint_options, time);
 
-  gimp_projection_flush_now (gimp_image_get_projection (display->image));
+  gimp_projection_flush_now (display->image->projection);
   gimp_display_flush_now (display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

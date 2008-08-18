@@ -67,8 +67,7 @@ image_undo_group_start_invoker (GimpProcedure      *procedure,
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -95,8 +94,7 @@ image_undo_group_end_invoker (GimpProcedure      *procedure,
         gimp_image_undo_group_end (image);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -119,8 +117,7 @@ image_undo_is_enabled_invoker (GimpProcedure      *procedure,
       enabled = gimp_image_undo_is_enabled (image);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], enabled);
@@ -156,8 +153,7 @@ image_undo_disable_invoker (GimpProcedure      *procedure,
         disabled = gimp_image_undo_disable (image);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], disabled);
@@ -193,8 +189,7 @@ image_undo_enable_invoker (GimpProcedure      *procedure,
         enabled = gimp_image_undo_enable (image);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], enabled);
@@ -230,8 +225,7 @@ image_undo_freeze_invoker (GimpProcedure      *procedure,
         frozen = gimp_image_undo_freeze (image);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], frozen);
@@ -267,8 +261,7 @@ image_undo_thaw_invoker (GimpProcedure      *procedure,
         thawed = gimp_image_undo_thaw (image);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], thawed);

@@ -71,6 +71,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define PLUG_IN_PROC  "plug-in-fractalexplorer"
+
 /**********************************************************************
   Global variables
  *********************************************************************/
@@ -1045,7 +1047,7 @@ add_objects_list (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (view, "row-activated",
+  g_signal_connect (view, "row_activated",
                     G_CALLBACK (activate_fractal_callback),
                     NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), view);
@@ -1111,10 +1113,10 @@ fractalexplorer_rescan_list (GtkWidget *widget,
       return;
     }
 
-  dlg = gimp_dialog_new (_("Rescan for Fractals"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
                          gtk_widget_get_toplevel (view),
                          GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         gimp_standard_help_func, NULL,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

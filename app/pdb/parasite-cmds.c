@@ -60,8 +60,7 @@ parasite_find_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals->values[1], parasite);
@@ -87,8 +86,7 @@ parasite_attach_invoker (GimpProcedure      *procedure,
       gimp_parasite_attach (gimp, parasite);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -109,8 +107,7 @@ parasite_detach_invoker (GimpProcedure      *procedure,
       gimp_parasite_detach (gimp, name);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -127,7 +124,7 @@ parasite_list_invoker (GimpProcedure      *procedure,
 
   parasites = gimp_parasite_list (gimp, &num_parasites);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals->values[1], num_parasites);
   gimp_value_take_stringarray (&return_vals->values[2], parasites, num_parasites);
@@ -160,8 +157,7 @@ image_parasite_find_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals->values[1], parasite);
@@ -189,8 +185,7 @@ image_parasite_attach_invoker (GimpProcedure      *procedure,
       gimp_image_parasite_attach (image, parasite);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -213,8 +208,7 @@ image_parasite_detach_invoker (GimpProcedure      *procedure,
       gimp_image_parasite_detach (image, name);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -238,8 +232,7 @@ image_parasite_list_invoker (GimpProcedure      *procedure,
       parasites = gimp_image_parasite_list (image, &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -276,8 +269,7 @@ drawable_parasite_find_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals->values[1], parasite);
@@ -305,8 +297,7 @@ drawable_parasite_attach_invoker (GimpProcedure      *procedure,
       gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -329,8 +320,7 @@ drawable_parasite_detach_invoker (GimpProcedure      *procedure,
       gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -354,8 +344,7 @@ drawable_parasite_list_invoker (GimpProcedure      *procedure,
       parasites = gimp_item_parasite_list (GIMP_ITEM (drawable), &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -392,8 +381,7 @@ vectors_parasite_find_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals->values[1], parasite);
@@ -421,8 +409,7 @@ vectors_parasite_attach_invoker (GimpProcedure      *procedure,
       gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -445,8 +432,7 @@ vectors_parasite_detach_invoker (GimpProcedure      *procedure,
       gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -470,8 +456,7 @@ vectors_parasite_list_invoker (GimpProcedure      *procedure,
       parasites = gimp_item_parasite_list (GIMP_ITEM (vectors), &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {

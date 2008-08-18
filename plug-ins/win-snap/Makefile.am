@@ -8,15 +8,15 @@ libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
+winsnap_LDFLAGS = -mwindows
+
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = win-snap
+libexec_PROGRAMS = winsnap
 
-win_snap_SOURCES = \
+winsnap_SOURCES = \
 	winsnap.c	\
 	winsnap.h
-
-win_snap_LDFLAGS = -mwindows
 
 EXTRA_DIST = \
 	resource.h	\

@@ -72,7 +72,7 @@ plugins_query_invoker (GimpProcedure      *procedure,
                                             &plugin_real_name,
                                             &plugin_install_time);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals->values[1], num_plugins);
   gimp_value_take_stringarray (&return_vals->values[2], menu_path, num_plugins);
@@ -120,8 +120,7 @@ plugin_domain_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -154,8 +153,7 @@ plugin_help_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -189,8 +187,7 @@ plugin_menu_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -223,8 +220,7 @@ plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -274,8 +270,7 @@ plugin_icon_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

@@ -278,16 +278,6 @@ main (int    argc,
   gchar          *basename;
   gint            i;
 
-#if defined (__GNUC__) && defined (_WIN64)
-  /* mingw-w64, at least the unstable build from late July 2008,
-   * starts subsystem:windows programs in main(), but passes them
-   * bogus argc and argv. __argc and __argv are OK, though, so just
-   * use them.
-   */
-  argc = __argc;
-  argv = __argv;
-#endif
-
   g_thread_init (NULL);
 
 #ifdef GIMP_UNSTABLE
@@ -431,11 +421,7 @@ main (int    argc,
 
 #ifdef G_OS_WIN32
 
-/* Provide WinMain in case we build GIMP as a subsystem:windows
- * application. Well, we do. When built with mingw, though, user code
- * execution still starts in main() in that case. So WinMain() gets
- * used on MSVC builds only.
- */
+/* In case we build this as a windowed application. Well, we do. */
 
 #ifdef __GNUC__
 #  ifndef _stdcall

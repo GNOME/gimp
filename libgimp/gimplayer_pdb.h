@@ -36,9 +36,6 @@ G_GNUC_INTERNAL gint32 _gimp_layer_new                 (gint32                im
                                                         const gchar          *name,
                                                         gdouble               opacity,
                                                         GimpLayerModeEffects  mode);
-gint32                 gimp_layer_new_from_visible     (gint32                image_ID,
-                                                        gint32                dest_image_ID,
-                                                        const gchar          *name);
 gint32                 gimp_layer_new_from_drawable    (gint32                drawable_ID,
                                                         gint32                dest_image_ID);
 G_GNUC_INTERNAL gint32 _gimp_layer_copy                (gint32                layer_ID,

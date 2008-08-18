@@ -38,8 +38,6 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-scale-dialog.h"
-#include "display/gimpdisplayshell-scroll.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcolordialog.h"
@@ -633,12 +631,9 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpDisplay *display;
-  GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_display_shell_scale_shrink_wrap (shell,
+  gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (display->shell),
                                         FALSE);
 }
 

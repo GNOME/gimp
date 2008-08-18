@@ -413,30 +413,31 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 15)
+        status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
         {
-          status = GIMP_PDB_CALLING_ERROR;
-          break;
+          mvals.tile_size = param[3].data.d_float;
+          mvals.tile_height = param[4].data.d_float;
+          mvals.tile_spacing = param[5].data.d_float;
+          mvals.tile_neatness = param[6].data.d_float;
+          mvals.tile_allow_split = (param[7].data.d_int32) ? TRUE : FALSE;
+          mvals.light_dir = param[8].data.d_float;
+          mvals.color_variation = param[9].data.d_float;
+          mvals.antialiasing = (param[10].data.d_int32) ? TRUE : FALSE;
+          mvals.color_averaging = (param[11].data.d_int32) ? TRUE : FALSE;
+          mvals.tile_type = param[12].data.d_int32;
+          mvals.tile_surface = param[13].data.d_int32;
+          mvals.grout_color = param[14].data.d_int32;
         }
-
-      mvals.tile_size = param[3].data.d_float;
-      mvals.tile_height = param[4].data.d_float;
-      mvals.tile_spacing = param[5].data.d_float;
-      mvals.tile_neatness = param[6].data.d_float;
-      mvals.tile_allow_split = (param[7].data.d_int32) ? TRUE : FALSE;
-      mvals.light_dir = param[8].data.d_float;
-      mvals.color_variation = param[9].data.d_float;
-      mvals.antialiasing = (param[10].data.d_int32) ? TRUE : FALSE;
-      mvals.color_averaging = (param[11].data.d_int32) ? TRUE : FALSE;
-      mvals.tile_type = param[12].data.d_int32;
-      mvals.tile_surface = param[13].data.d_int32;
-      mvals.grout_color = param[14].data.d_int32;
-
-      if (mvals.tile_type    < SQUARES || mvals.tile_type    > TRIANGLES ||
-          mvals.tile_surface < SMOOTH  || mvals.tile_surface > ROUGH     ||
-          mvals.grout_color  < BW      || mvals.grout_color  > FG_BG)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
+      if (status == GIMP_PDB_SUCCESS &&
+          (mvals.tile_type < SQUARES || mvals.tile_type > TRIANGLES))
+        status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS &&
+          (mvals.tile_surface < SMOOTH || mvals.tile_surface > ROUGH))
+        status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS &&
+          (mvals.grout_color < BW || mvals.grout_color > FG_BG))
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -1572,7 +1573,7 @@ grid_render (GimpDrawable *drawable,
     }
 
   size = (grid_rows + grid_row_pad) * (grid_cols + grid_col_pad);
-  frac_size = size * mvals.color_variation;
+  frac_size = (gint) (size * mvals.color_variation);
   count = 0;
 
   for (i = -grid_row_pad; i < grid_rows; i++)
@@ -1785,7 +1786,7 @@ grid_render (GimpDrawable *drawable,
           }
 
         if (!preview)
-          gimp_progress_update ((gdouble) count++ / (gdouble) size);
+          gimp_progress_update ((double) count++ / (double) size);
       }
 
   if (preview)
@@ -1795,9 +1796,7 @@ grid_render (GimpDrawable *drawable,
                                 (x2 - x1) * bytes);
     }
   else
-    {
-      gimp_progress_update (1.0);
-    }
+    gimp_progress_update (1.0);
 }
 
 static void
@@ -1834,16 +1833,12 @@ process_poly (Polygon      *poly,
   /*  If the magnitude of direction inside the polygon is greater than
    *  THRESHOLD, split the polygon into two new polygons
    */
-  if (magnitude > MAG_THRESHOLD &&
-      (2 * distance / mvals.tile_size) < 0.5 && allow_split)
-    {
-      split_poly (poly, drawable, col, dir, color_vary, x1, y1, x2, y2, dest);
-    }
+  if (magnitude > MAG_THRESHOLD && (2 * distance / mvals.tile_size) < 0.5 && allow_split)
+    split_poly (poly, drawable, col, dir, color_vary, x1, y1, x2, y2, dest);
+  /*  Otherwise, render the original polygon
+   */
   else
-    {
-      /*  Otherwise, render the original polygon  */
-      render_poly (poly, drawable, col, color_vary, x1, y1, x2, y2, dest);
-    }
+    render_poly (poly, drawable, col, color_vary, x1, y1, x2, y2, dest);
 }
 
 static void
@@ -1857,8 +1852,7 @@ render_poly (Polygon      *poly,
              gint          y2,
              guchar       *dest)
 {
-  gdouble cx = 0.0;
-  gdouble cy = 0.0;
+  gdouble cx = 0.0, cy = 0.0;
 
   polygon_find_center (poly, &cx, &cy);
 
@@ -1887,8 +1881,7 @@ split_poly (Polygon      *poly,
 {
   Polygon new_poly;
   gdouble spacing;
-  gdouble cx = 0.0;
-  gdouble cy = 0.0;
+  gdouble cx = 0.0, cy = 0.0;
   gdouble magnitude;
   gdouble vec[2];
   gdouble pt[2];
@@ -1932,9 +1925,7 @@ split_poly (Polygon      *poly,
     {
       if (mvals.color_averaging)
         find_poly_color (&new_poly, drawable, col, vary, x1, y1, x2, y2);
-
       scale_poly (&new_poly, cx, cy, scale);
-
       if (mvals.color_averaging)
         fill_poly_color (&new_poly, drawable, col, x1, y1, x2, y2, dest);
       else
@@ -1943,10 +1934,10 @@ split_poly (Polygon      *poly,
 }
 
 static void
-clip_poly (gdouble *dir,
-           gdouble *pt,
-           Polygon *poly,
-           Polygon *poly_new)
+clip_poly (gdouble  *dir,
+           gdouble  *pt,
+           Polygon  *poly,
+           Polygon  *poly_new)
 {
   gint    i;
   gdouble x1, y1, x2, y2;
@@ -1985,9 +1976,7 @@ clip_point (gdouble *dir,
 
   /*  If both points are to be clipped, ignore  */
   if (side1 < 0.0 && side2 < 0.0)
-    {
-      return;
-    }
+    return;
   /*  If both points are non-clipped, set point  */
   else if (side1 >= 0.0 && side2 >= 0.0)
     {
@@ -2021,11 +2010,10 @@ clip_point (gdouble *dir,
           polygon_add_point (poly_new, x2 + pt[0], y2 + pt[1]);
         }
       else
-        {
-          polygon_add_point (poly_new, dir[0] * t + pt[0], dir[1] * t + pt[1]);
-        }
+        polygon_add_point (poly_new, dir[0] * t + pt[0], dir[1] * t + pt[1]);
     }
 }
+
 
 static void
 find_poly_dir (Polygon *poly,
@@ -2062,18 +2050,15 @@ find_poly_dir (Polygon *poly,
   loc[1] = 0.0;
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
-
   min_x = (gint) dmin_x;
   min_y = (gint) dmin_y;
   max_x = (gint) dmax_x;
   max_y = (gint) dmax_y;
-
   size_y = max_y - min_y;
   size_x = max_x - min_x;
 
   min_scanlines = g_new (gint, size_y);
   max_scanlines = g_new (gint, size_y);
-
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x;
@@ -2170,7 +2155,6 @@ find_poly_color (Polygon      *poly,
   bytes = drawable->bpp;
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
-
   min_x = (gint) dmin_x;
   min_y = (gint) dmin_y;
   max_x = (gint) dmax_x;
@@ -2181,7 +2165,6 @@ find_poly_color (Polygon      *poly,
 
   min_scanlines = g_new (int, size_y);
   max_scanlines = g_new (int, size_y);
-
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x;
@@ -2202,11 +2185,9 @@ find_poly_color (Polygon      *poly,
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
                        drawable->width, drawable->height,
                        FALSE, FALSE);
-
   for (i = 0; i < size_y; i++)
     {
       y = i + min_y;
-
       if (y >= y1 && y < y2)
         {
           for (j = min_scanlines[i]; j < max_scanlines[i]; j++)
@@ -2292,30 +2273,30 @@ fill_poly_color (Polygon      *poly,
 
   bytes = drawable->bpp;
 
-  if (poly_npts)
-    {
-      pts_tmp = poly->pts;
-      xs = (gint) pts_tmp[poly_npts - 1].x;
-      ys = (gint) pts_tmp[poly_npts - 1].y;
-      xe = (gint) pts_tmp->x;
-      ye = (gint) pts_tmp->y;
+  /* begin loop */
+  if(poly_npts) {
+    pts_tmp = poly->pts;
+    xs = (gint) pts_tmp[poly_npts - 1].x;
+    ys = (gint) pts_tmp[poly_npts - 1].y;
+    xe = (gint) pts_tmp->x;
+    ye = (gint) pts_tmp->y;
 
-      calc_spec_vec (vecs, xs, ys, xe, ye);
+    calc_spec_vec (vecs, xs, ys, xe, ye);
 
-      for (i = 1; i < poly_npts; i++)
-        {
-          xs = (gint) (pts_tmp->x);
-          ys = (gint) (pts_tmp->y);
-          pts_tmp++;
-          xe = (gint) pts_tmp->x;
-          ye = (gint) pts_tmp->y;
+    for (i = 1; i < poly_npts; i++)
+      {
+        xs = (gint) (pts_tmp->x);
+        ys = (gint) (pts_tmp->y);
+        pts_tmp++;
+        xe = (gint) pts_tmp->x;
+        ye = (gint) pts_tmp->y;
 
-          calc_spec_vec (vecs+i, xs, ys, xe, ye);
-        }
-    }
+        calc_spec_vec (vecs+i, xs, ys, xe, ye);
+      }
+  }
+  /* end loop */
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
-
   min_x = (gint) dmin_x;
   min_y = (gint) dmin_y;
   max_x = (gint) dmax_x;
@@ -2326,46 +2307,46 @@ fill_poly_color (Polygon      *poly,
 
   min_scanlines = min_scanlines_iter = g_new (gint, size_y);
   max_scanlines = max_scanlines_iter = g_new (gint, size_y);
-
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
       max_scanlines[i] = min_x * supersample;
     }
 
-  if(poly_npts)
-    {
-      pts_tmp = poly->pts;
-      xs = (gint) pts_tmp[poly_npts-1].x;
-      ys = (gint) pts_tmp[poly_npts-1].y;
-      xe = (gint) pts_tmp->x;
-      ye = (gint) pts_tmp->y;
+  /* begin loop */
+  if(poly_npts) {
+    pts_tmp = poly->pts;
+    xs = (gint) pts_tmp[poly_npts-1].x;
+    ys = (gint) pts_tmp[poly_npts-1].y;
+    xe = (gint) pts_tmp->x;
+    ye = (gint) pts_tmp->y;
 
-      xs *= supersample;
-      ys *= supersample;
-      xe *= supersample;
-      ye *= supersample;
+    xs *= supersample;
+    ys *= supersample;
+    xe *= supersample;
+    ye *= supersample;
 
-      convert_segment (xs, ys, xe, ye, min_y * supersample,
-                       min_scanlines, max_scanlines);
+    convert_segment (xs, ys, xe, ye, min_y * supersample,
+                     min_scanlines, max_scanlines);
 
-      for (i = 1; i < poly_npts; i++)
-        {
-          xs = (gint) pts_tmp->x;
-          ys = (gint) pts_tmp->y;
-          pts_tmp++;
-          xe = (gint) pts_tmp->x;
-          ye = (gint) pts_tmp->y;
+    for (i = 1; i < poly_npts; i++)
+      {
+        xs = (gint) pts_tmp->x;
+        ys = (gint) pts_tmp->y;
+        pts_tmp++;
+        xe = (gint) pts_tmp->x;
+        ye = (gint) pts_tmp->y;
 
-          xs *= supersample;
-          ys *= supersample;
-          xe *= supersample;
-          ye *= supersample;
+        xs *= supersample;
+        ys *= supersample;
+        xe *= supersample;
+        ye *= supersample;
 
-          convert_segment (xs, ys, xe, ye, min_y * supersample,
-                           min_scanlines, max_scanlines);
-        }
-    }
+        convert_segment (xs, ys, xe, ye, min_y * supersample,
+                         min_scanlines, max_scanlines);
+      }
+  }
+  /* end loop */
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
                        drawable->width, drawable->height,
@@ -2398,10 +2379,8 @@ fill_poly_color (Polygon      *poly,
                   if (x >= x1 && x < x2)
                     {
                       val = 0;
-
                       for (k = 0; k < supersample; k++)
                         val += vals[j + k];
-
                       val /= supersample2;
 
                       if (val > 0)
@@ -2487,7 +2466,6 @@ fill_poly_image (Polygon      *poly,
     }
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
-
   min_x = (gint) dmin_x;
   min_y = (gint) dmin_y;
   max_x = (gint) dmax_x;
@@ -2498,7 +2476,6 @@ fill_poly_image (Polygon      *poly,
 
   min_scanlines = g_new (gint, size_y);
   max_scanlines = g_new (gint, size_y);
-
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
@@ -2528,7 +2505,6 @@ fill_poly_image (Polygon      *poly,
     gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0,
                          drawable->width, drawable->height,
                          TRUE, TRUE);
-
   vals = g_new (gint, size_x);
   for (i = 0; i < size_y; i++)
     {
@@ -2608,13 +2584,11 @@ calc_spec_vec (SpecVec *vec,
 
   vec->base_x = x1;
   vec->base_y = y1;
-
   r = sqrt (SQR (x2 - x1) + SQR (y2 - y1));
-
   if (r > 0.0)
     {
       vec->norm_x = -(y2 - y1) / r;
-      vec->norm_y =  (x2 - x1) / r;
+      vec->norm_y = (x2 - x1) / r;
     }
   else
     {
@@ -2680,14 +2654,12 @@ convert_segment (gint  x1,
       tmp = y2; y2 = y1; y1 = tmp;
       tmp = x2; x2 = x1; x1 = tmp;
     }
-
   ydiff = y2 - y1;
 
   if (ydiff)
     {
       xinc = (gdouble) (x2 - x1) / (gdouble) ydiff;
       xstart = x1 + 0.5 * xinc;
-
       for (y = y1; y < y2; y++)
         {
           min[y - offset] = MIN (min[y - offset], xstart);
@@ -2710,9 +2682,7 @@ polygon_add_point (Polygon *poly,
       poly->npts++;
     }
   else
-    {
-      g_warning ("can't add more points");
-    }
+    g_print ( _("Unable to add additional point.\n"));
 }
 
 static gboolean

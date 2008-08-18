@@ -63,8 +63,7 @@ progress_init_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -93,8 +92,7 @@ progress_update_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -116,8 +114,7 @@ progress_pulse_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -146,8 +143,7 @@ progress_set_text_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -170,8 +166,7 @@ progress_end_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -196,8 +191,7 @@ progress_get_window_handle_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], window);
@@ -228,8 +222,7 @@ progress_install_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -255,8 +248,7 @@ progress_uninstall_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -282,8 +274,7 @@ progress_cancel_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

@@ -128,20 +128,13 @@ sub marshal_inargs {
 
 sub marshal_outargs {
     my $proc = shift;
-    my $result;
+
+    my $result = <<CODE;
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+CODE
+
     my $argc = 0;
     my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
-
-    if ($success) {
-	$result = <<CODE;
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-CODE
-    } else {
-	$result = <<CODE;
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-CODE
-    }
 
     if (scalar @outargs) {
 	my $outargs = "";
@@ -184,14 +177,13 @@ CODE
     else {
 	if ($success) {
 	    $result =~ s/return_vals =/return/;
-	    $result =~ s/       error/error/;
 	}
 	else {
 	    $result =~ s/  return_vals =/\n  return/;
-	    $result =~ s/       error/error/;
 	}
     }
 
+    $result =~ s/, success\);$/, TRUE);/m unless $success;
     $result;
 }
 

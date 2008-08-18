@@ -422,11 +422,7 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
 
   if (shell->dot_for_dot)
     {
-      if (shell->unit != GIMP_UNIT_PIXEL)
-        {
-          gimp_display_shell_scale_update_rulers (shell);
-        }
-
+      gimp_display_shell_scale_setup (shell);
       gimp_display_shell_scaled (shell);
     }
   else
@@ -496,15 +492,21 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
        * has change size
        */
       gimp_display_shell_shrink_wrap (shell, FALSE);
+      gimp_display_shell_center_image_on_next_size_allocate (shell);
     }
   else
     {
       gint scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
       gint scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
 
-      gimp_display_shell_scroll_set_offset (shell,
-                                            shell->offset_x + scaled_previous_origin_x,
-                                            shell->offset_y + scaled_previous_origin_y);
+      /* Note that we can't use gimp_display_shell_scroll_private() here
+       * because that would expose the image twice, causing unwanted
+       * flicker.
+       */
+      gimp_display_shell_scale_by_values (shell, gimp_zoom_model_get_factor (shell->zoom),
+                                          shell->offset_x + scaled_previous_origin_x,
+                                          shell->offset_y + scaled_previous_origin_y,
+                                          FALSE);
     }
 }
 
@@ -629,8 +631,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
 
   if (! shell->dot_for_dot)
     {
-      gimp_display_shell_scroll_clamp_and_update (shell);
-
+      gimp_display_shell_scale_setup (shell);
       gimp_display_shell_scaled (shell);
 
       gimp_display_shell_expose_full (shell);

@@ -1541,7 +1541,7 @@ pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs
             Py_XDECREF(read_method);
             PyErr_SetString(PyExc_TypeError,
                             "svg_file must be an object that has a \"read\" "
-                            "method, or a filename (str)");
+                            "method, or a filename (str)");   
             return NULL;
         }
 
@@ -1583,8 +1583,7 @@ pygimp_vectors_import_from_file(PyObject *self, PyObject *args, PyObject *kwargs
     }
 
     if (!success) {
-        PyErr_Format(pygimp_error,
-                     "Vectors import failed: %s", gimp_get_pdb_error());
+        PyErr_SetString(pygimp_error, "Vectors import failed");
         return NULL;
     }
 
@@ -1615,8 +1614,7 @@ pygimp_vectors_import_from_string(PyObject *self, PyObject *args, PyObject *kwar
                                               &num_vectors, &vectors);
 
     if (!success) {
-        PyErr_Format(pygimp_error,
-                     "Vectors import failed: %s", gimp_get_pdb_error());
+        PyErr_SetString(pygimp_error, "Vectors import failed");
         return NULL;
     }
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-14 22:40+0900\n"
+"POT-Creation-Date: 2008-07-02 23:09+0900\n"
 "PO-Revision-Date: 2008-05-25 17:06+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -258,37 +258,37 @@ msgstr ""
 msgid "Skip animation for table caps"
 msgstr "'<A>, </A>' の記述を省略"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: ../plug-ins/pygimp/plug-ins/python-console.py:46
 msgid "Python Console"
 msgstr "Python コンソール"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+#: ../plug-ins/pygimp/plug-ins/python-console.py:132
 msgid "Python Procedure Browser"
 msgstr "Python プロシージャブラウザ"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "ファイル '%s' を書き込み用に開けません： %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: ../plug-ins/pygimp/plug-ins/python-console.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "ファイル '%s' に書き込めません： %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+#: ../plug-ins/pygimp/plug-ins/python-console.py:184
 msgid "Save Python-Fu Console Output"
 msgstr "Python-Fu コンソール出力を保存"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
 msgid "Interactive GIMP Python interpreter"
 msgstr "Python インタプリタを起動します "
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+#: ../plug-ins/pygimp/plug-ins/python-console.py:223
 msgid "_Console"
 msgstr "コンソール(_C)"
 

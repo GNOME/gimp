@@ -528,7 +528,7 @@ explorer_dialog (void)
   GSList    *group = NULL;
   gint       i;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init ("fractal-explorer", TRUE);
 
   path = gimp_gimprc_query ("fractalexplorer-path");
 
@@ -560,9 +560,9 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new ("Fractal Explorer", PLUG_IN_BINARY,
+    gimp_dialog_new ("Fractal Explorer", "fractal-explorer",
                      NULL, 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
+                     gimp_standard_help_func, HELP_ID,
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1189,7 +1189,7 @@ explorer_dialog (void)
   cmap_preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (cmap_preview, 32, 32);
   gtk_container_add (GTK_CONTAINER (abox), cmap_preview);
-  g_signal_connect (cmap_preview, "size-allocate",
+  g_signal_connect (cmap_preview, "size_allocate",
                     G_CALLBACK (cmap_preview_size_allocate), NULL);
   gtk_widget_show (cmap_preview);
 

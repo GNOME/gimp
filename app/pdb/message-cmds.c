@@ -61,8 +61,7 @@ message_invoker (GimpProcedure      *procedure,
                          domain, message);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -78,7 +77,7 @@ message_get_handler_invoker (GimpProcedure      *procedure,
 
   handler = gimp->message_handler;
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_enum (&return_vals->values[1], handler);
 
   return return_vals;
@@ -102,8 +101,7 @@ message_set_handler_invoker (GimpProcedure      *procedure,
       gimp->message_handler = handler;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

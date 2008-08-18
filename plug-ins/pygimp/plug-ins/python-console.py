@@ -41,18 +41,7 @@ def do_console():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
 
-    class GimpConsole(pyconsole.Console):
-        def __init__(self, quit_func=None):
-            banner = ('GIMP %s Python Console\nPython %s\n' %
-                      (gimp.pdb.gimp_version(), sys.version))
-            pyconsole.Console.__init__(self,
-                                       locals=namespace, banner=banner,
-                                       quit_func=quit_func)
-        def _commit(self):
-            pyconsole.Console._commit(self)
-            gimp.displays_flush()
-
-    class ConsoleDialog(gimpui.Dialog):
+    class Console(gimpui.Dialog):
         def __init__(self):
             gimpui.Dialog.__init__(self, title=_("Python Console"),
                                    role=PROC_NAME, help_id=PROC_NAME,
@@ -66,7 +55,11 @@ def do_console():
                                                RESPONSE_CLEAR,
                                                RESPONSE_SAVE))
 
-            self.cons = GimpConsole(quit_func=lambda: gtk.main_quit())
+            banner = ('GIMP %s Python Console\nPython %s\n' %
+                      (gimp.pdb.gimp_version(), sys.version))
+
+            self.cons = pyconsole.Console(locals=namespace, banner=banner,
+                                          quit_func=lambda: gtk.main_quit())
 
             self.connect('response', self.response)
 
@@ -208,9 +201,17 @@ def do_console():
 
         def run(self):
             self.show_all()
+
+            # flush the displays every half second
+            def timeout():
+                gimp.displays_flush()
+                return True
+
+            gobject.timeout_add(500, timeout)
             gtk.main()
 
-    ConsoleDialog().run()
+    console = Console()
+    console.run()
 
 register(
     PROC_NAME,

@@ -73,8 +73,7 @@ flip_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -157,8 +156,7 @@ perspective_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -226,8 +224,7 @@ rotate_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -302,8 +299,7 @@ scale_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -373,8 +369,7 @@ shear_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -448,8 +443,7 @@ transform_2d_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);

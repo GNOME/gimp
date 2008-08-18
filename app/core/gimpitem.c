@@ -577,7 +577,7 @@ gimp_item_convert (GimpItem  *item,
  * different from the name it already has, and pushes an entry onto the
  * undo stack for the item's image.  If @new_name is NULL or empty, the
  * default name for the item's class is used.  If the name is changed,
- * the GimpObject::name-changed signal is emitted for the item.
+ * the "name_changed" signal is emitted for the item.
  *
  * Returns: %TRUE if the @item could be renamed, %FALSE otherwise.
  */

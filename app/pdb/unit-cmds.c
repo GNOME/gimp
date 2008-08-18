@@ -47,7 +47,7 @@ unit_get_number_of_units_invoker (GimpProcedure      *procedure,
 
   num_units = _gimp_unit_get_number_of_units (gimp);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_int (&return_vals->values[1], num_units);
 
   return return_vals;
@@ -66,7 +66,7 @@ unit_get_number_of_built_in_units_invoker (GimpProcedure      *procedure,
 
   num_units = _gimp_unit_get_number_of_built_in_units (gimp);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_int (&return_vals->values[1], num_units);
 
   return return_vals;
@@ -105,8 +105,7 @@ unit_new_invoker (GimpProcedure      *procedure,
                                 symbol, abbreviation, singular, plural);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], unit_id);
@@ -134,8 +133,7 @@ unit_get_deletion_flag_invoker (GimpProcedure      *procedure,
       deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], deletion_flag);
@@ -163,8 +161,7 @@ unit_set_deletion_flag_invoker (GimpProcedure      *procedure,
       _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -187,8 +184,7 @@ unit_get_identifier_invoker (GimpProcedure      *procedure,
       identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], identifier);
@@ -216,8 +212,7 @@ unit_get_factor_invoker (GimpProcedure      *procedure,
       factor = _gimp_unit_get_factor (gimp, unit_id);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals->values[1], factor);
@@ -245,8 +240,7 @@ unit_get_digits_invoker (GimpProcedure      *procedure,
       digits = _gimp_unit_get_digits (gimp, unit_id);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], digits);
@@ -274,8 +268,7 @@ unit_get_symbol_invoker (GimpProcedure      *procedure,
       symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], symbol);
@@ -303,8 +296,7 @@ unit_get_abbreviation_invoker (GimpProcedure      *procedure,
       abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], abbreviation);
@@ -332,8 +324,7 @@ unit_get_singular_invoker (GimpProcedure      *procedure,
       singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], singular);
@@ -361,8 +352,7 @@ unit_get_plural_invoker (GimpProcedure      *procedure,
       plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], plural);

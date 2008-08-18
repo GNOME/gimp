@@ -2507,17 +2507,6 @@ gimp_image_set_tattoo_state (GimpImage  *image,
 }
 
 
-/*  projection  */
-
-GimpProjection *
-gimp_image_get_projection (const GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return image->projection;
-}
-
-
 /*  layers / channels / vectors  */
 
 GimpContainer *

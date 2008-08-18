@@ -5,12 +5,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-10 10:21+0200\n"
-"PO-Revision-Date: 2008-08-10 10:21+0200\n"
+"POT-Creation-Date: 2008-07-22 21:27+0200\n"
+"PO-Revision-Date: 2008-07-22 13:35+0200\n"
 "Last-Translator: Frco. Javier Rial Rodríguez <fjrial@cesga.es>\n"
 "Language-Team: Galician <g11n@mancomun.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type:  text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
@@ -1468,6 +1468,14 @@ msgstr "Perfil: (ningún)"
 msgid "Profile: %s"
 msgstr "Perfil: %s"
 
+#: ../modules/colorsel_triangle.c:102
+msgid "Painter-style triangle color selector"
+msgstr "Selector de cor triangular ao estilo Painter"
+
+#: ../modules/colorsel_triangle.c:138
+msgid "Triangle"
+msgstr "Triángulo"
+
 #: ../modules/colorsel_water.c:82
 msgid "Watercolor style color selector"
 msgstr "Selector de cor estilo acuarela"
@@ -1479,14 +1487,6 @@ msgstr "Acuarela"
 #: ../modules/colorsel_water.c:186
 msgid "Pressure"
 msgstr "Presión"
-
-#: ../modules/colorsel_wheel.c:95
-msgid "HSV color wheel"
-msgstr "Roda de cores HSV"
-
-#: ../modules/colorsel_wheel.c:126
-msgid "Wheel"
-msgstr "Roda"
 
 #: ../modules/controller_linux_input.c:58
 msgid "Button 0"
@@ -1830,9 +1830,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada de MIDI para GIMP"
-
-#~ msgid "Painter-style triangle color selector"
-#~ msgstr "Selector de cor triangular ao estilo Painter"
-
-#~ msgid "Triangle"
-#~ msgstr "Triángulo"

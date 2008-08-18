@@ -51,7 +51,7 @@ palettes_refresh_invoker (GimpProcedure      *procedure,
 {
   gimp_data_factory_data_refresh (gimp->palette_factory);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
 static GValueArray *
@@ -76,8 +76,7 @@ palettes_get_list_invoker (GimpProcedure      *procedure,
                                                              filter, &num_palettes);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -111,8 +110,7 @@ palettes_get_palette_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -168,8 +166,7 @@ palettes_get_palette_entry_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {

@@ -303,8 +303,7 @@ gimp_procedure_execute (GimpProcedure  *procedure,
                         GValueArray    *args,
                         GError        **error)
 {
-  GValueArray *return_vals;
-  GError      *pdb_error = NULL;
+  GValueArray *return_vals = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -315,11 +314,10 @@ gimp_procedure_execute (GimpProcedure  *procedure,
 
   if (! gimp_procedure_validate_args (procedure,
                                       procedure->args, procedure->num_args,
-                                      args, FALSE, &pdb_error))
+                                      args, FALSE, error))
     {
-      return_vals = gimp_procedure_get_return_values (procedure, FALSE,
-                                                      pdb_error);
-      g_propagate_error (error, pdb_error);
+      return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+      g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
       return return_vals;
     }
@@ -332,15 +330,13 @@ gimp_procedure_execute (GimpProcedure  *procedure,
                                                                args,
                                                                error);
 
+  /*  If there are no return arguments, assume an execution error  */
   if (! return_vals)
     {
-      pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
-                               _("Procedure '%s' returned no return values"),
-                               gimp_object_get_name (GIMP_OBJECT (procedure)));
+      return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+      g_value_set_enum (return_vals->values, GIMP_PDB_EXECUTION_ERROR);
 
-      return_vals = gimp_procedure_get_return_values (procedure, FALSE,
-                                                      pdb_error);
-      g_propagate_error (error, pdb_error);
+      return return_vals;
     }
 
   return return_vals;
@@ -396,74 +392,36 @@ gimp_procedure_get_arguments (GimpProcedure *procedure)
 
 GValueArray *
 gimp_procedure_get_return_values (GimpProcedure *procedure,
-                                  gboolean       success,
-                                  const GError  *error)
+                                  gboolean       success)
 {
   GValueArray *args;
   GValue       value = { 0, };
+  gint         n_args;
   gint         i;
 
-  g_return_val_if_fail (success == FALSE || GIMP_IS_PROCEDURE (procedure),
-                        NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure) ||
+                        success == FALSE, NULL);
 
-  if (success)
-    {
-      args = g_value_array_new (procedure->num_values + 1);
-
-      g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
-      g_value_set_enum (&value, GIMP_PDB_SUCCESS);
-      g_value_array_append (args, &value);
-      g_value_unset (&value);
-
-      for (i = 0; i < procedure->num_values; i++)
-        {
-          g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->values[i]));
-          g_value_array_append (args, &value);
-          g_value_unset (&value);
-        }
-    }
+  if (procedure)
+    n_args = procedure->num_values + 1;
   else
-    {
-      args = g_value_array_new ((error && error->message) ? 2 : 1);
+    n_args = 1;
 
-      g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
+  args = g_value_array_new (n_args);
 
-      /*  errors in the GIMP_PDB_ERROR domain are calling errors  */
-      if (error && error->domain == GIMP_PDB_ERROR)
-        {
-          switch ((GimpPdbErrorCode) error->code)
-            {
-            case GIMP_PDB_PROCEDURE_NOT_FOUND:
-            case GIMP_PDB_INVALID_ARGUMENT:
-            case GIMP_PDB_INVALID_RETURN_VALUE:
-            case GIMP_PDB_INTERNAL_ERROR:
-              g_value_set_enum (&value, GIMP_PDB_CALLING_ERROR);
-              break;
+  g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
+  g_value_set_enum (&value,
+                    success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR);
+  g_value_array_append (args, &value);
+  g_value_unset (&value);
 
-            case GIMP_PDB_CANCELLED:
-              g_value_set_enum (&value, GIMP_PDB_CANCEL);
-              break;
-
-            default:
-              g_assert_not_reached ();
-            }
-        }
-      else
-        {
-          g_value_set_enum (&value, GIMP_PDB_EXECUTION_ERROR);
-        }
-
-      g_value_array_append (args, &value);
-      g_value_unset (&value);
-
-      if (error && error->message)
-        {
-          g_value_init (&value, G_TYPE_STRING);
-          g_value_set_string (&value, error->message);
-          g_value_array_append (args, &value);
-          g_value_unset (&value);
-        }
-    }
+  if (procedure)
+    for (i = 0; i < procedure->num_values; i++)
+      {
+        g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->values[i]));
+        g_value_array_append (args, &value);
+        g_value_unset (&value);
+      }
 
   return args;
 }
@@ -553,8 +511,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
         {
           if (return_vals)
             {
-              g_set_error (error,
-                           GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                            _("Procedure '%s' returned a wrong value type "
                              "for return value '%s' (#%d). "
                              "Expected %s, got %s."),
@@ -565,8 +522,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
             }
           else
             {
-              g_set_error (error,
-                           GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                            _("Procedure '%s' has been called with a "
                              "wrong value type for argument '%s' (#%d). "
                              "Expected %s, got %s."),
@@ -598,7 +554,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                                    _("Procedure '%s' returned an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -626,7 +582,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                                    _("Procedure '%s' returned an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -658,7 +614,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                                    _("Procedure '%s' returned "
                                      "'%s' as return value '%s' "
                                      "(#%d, type %s). "

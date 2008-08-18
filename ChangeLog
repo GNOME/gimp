@@ -1,5 +1,9 @@
 2008-08-18  Daniel Eddeland <danedde@svn.gnome.org>
 
+	Tried to fix oddities that came with merge
+
+2008-08-18  Daniel Eddeland <danedde@svn.gnome.org>
+
 	* menus/text-tool-menu.xml
 	* app/tools/gimptexttool.c
 	* app/tools/gimptexttool.h: Fixed some warnings and bad

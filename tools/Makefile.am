@@ -23,7 +23,7 @@ gimp_remote_2_5_SOURCES = \
 
 gimp_remote_2_5_LDADD = \
 	$(GTK_LIBS)	\
-	$(XMU_LIBS)
+	$(LIBXMU)
 
 gimptool_2_0_SOURCES = \
 	gimptool.c

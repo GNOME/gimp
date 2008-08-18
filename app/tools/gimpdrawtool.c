@@ -28,6 +28,7 @@
 
 #include "base/boundary.h"
 
+#include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 

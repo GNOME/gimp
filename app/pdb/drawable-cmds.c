@@ -68,7 +68,7 @@ drawable_is_valid_invoker (GimpProcedure      *procedure,
   valid = (GIMP_IS_DRAWABLE (drawable) &&
            ! gimp_item_is_removed (GIMP_ITEM (drawable)));
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_boolean (&return_vals->values[1], valid);
 
   return return_vals;
@@ -94,8 +94,7 @@ drawable_is_layer_invoker (GimpProcedure      *procedure,
       layer = GIMP_IS_LAYER (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], layer);
@@ -123,8 +122,7 @@ drawable_is_text_layer_invoker (GimpProcedure      *procedure,
       text_layer = gimp_drawable_is_text_layer (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], text_layer);
@@ -152,8 +150,7 @@ drawable_is_layer_mask_invoker (GimpProcedure      *procedure,
       layer_mask = GIMP_IS_LAYER_MASK (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], layer_mask);
@@ -181,8 +178,7 @@ drawable_is_channel_invoker (GimpProcedure      *procedure,
       channel = GIMP_IS_CHANNEL (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], channel);
@@ -210,8 +206,7 @@ drawable_type_invoker (GimpProcedure      *procedure,
       type = gimp_drawable_type (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals->values[1], type);
@@ -239,8 +234,7 @@ drawable_type_with_alpha_invoker (GimpProcedure      *procedure,
       type_with_alpha = gimp_drawable_type_with_alpha (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals->values[1], type_with_alpha);
@@ -268,8 +262,7 @@ drawable_has_alpha_invoker (GimpProcedure      *procedure,
       has_alpha = gimp_drawable_has_alpha (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], has_alpha);
@@ -297,8 +290,7 @@ drawable_is_rgb_invoker (GimpProcedure      *procedure,
       is_rgb = gimp_drawable_is_rgb (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], is_rgb);
@@ -326,8 +318,7 @@ drawable_is_gray_invoker (GimpProcedure      *procedure,
       is_gray = gimp_drawable_is_gray (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], is_gray);
@@ -355,8 +346,7 @@ drawable_is_indexed_invoker (GimpProcedure      *procedure,
       is_indexed = gimp_drawable_is_indexed (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], is_indexed);
@@ -384,8 +374,7 @@ drawable_bpp_invoker (GimpProcedure      *procedure,
       bpp = gimp_drawable_bytes (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], bpp);
@@ -413,8 +402,7 @@ drawable_width_invoker (GimpProcedure      *procedure,
       width = gimp_item_width (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], width);
@@ -442,8 +430,7 @@ drawable_height_invoker (GimpProcedure      *procedure,
       height = gimp_item_height (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], height);
@@ -472,8 +459,7 @@ drawable_offsets_invoker (GimpProcedure      *procedure,
       gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -508,8 +494,7 @@ drawable_delete_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -532,8 +517,7 @@ drawable_get_image_invoker (GimpProcedure      *procedure,
       image = gimp_item_get_image (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_image (&return_vals->values[1], image);
@@ -562,8 +546,7 @@ drawable_set_image_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -586,8 +569,7 @@ drawable_get_name_invoker (GimpProcedure      *procedure,
       name = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -615,8 +597,7 @@ drawable_set_name_invoker (GimpProcedure      *procedure,
       success = gimp_item_rename (GIMP_ITEM (drawable), name, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -639,8 +620,7 @@ drawable_get_visible_invoker (GimpProcedure      *procedure,
       visible = gimp_item_get_visible (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], visible);
@@ -668,8 +648,7 @@ drawable_set_visible_invoker (GimpProcedure      *procedure,
       gimp_item_set_visible (GIMP_ITEM (drawable), visible, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -692,8 +671,7 @@ drawable_get_linked_invoker (GimpProcedure      *procedure,
       linked = gimp_item_get_linked (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], linked);
@@ -721,8 +699,7 @@ drawable_set_linked_invoker (GimpProcedure      *procedure,
       gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -745,8 +722,7 @@ drawable_get_tattoo_invoker (GimpProcedure      *procedure,
       tattoo = gimp_item_get_tattoo (GIMP_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_uint (&return_vals->values[1], tattoo);
@@ -774,8 +750,7 @@ drawable_set_tattoo_invoker (GimpProcedure      *procedure,
       gimp_item_set_tattoo (GIMP_ITEM (drawable), tattoo);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -802,8 +777,7 @@ drawable_mask_bounds_invoker (GimpProcedure      *procedure,
       non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -841,8 +815,7 @@ drawable_mask_intersect_invoker (GimpProcedure      *procedure,
       non_empty = gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -886,8 +859,7 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -912,8 +884,7 @@ drawable_free_shadow_invoker (GimpProcedure      *procedure,
       gimp_drawable_free_shadow_tiles (drawable);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -942,8 +913,7 @@ drawable_update_invoker (GimpProcedure      *procedure,
       gimp_drawable_update (drawable, x, y, width, height);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -995,8 +965,7 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1055,8 +1024,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -1079,8 +1047,7 @@ drawable_fill_invoker (GimpProcedure      *procedure,
       gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -1113,8 +1080,7 @@ drawable_offset_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -1181,8 +1147,7 @@ drawable_thumbnail_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1264,8 +1229,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1304,8 +1268,7 @@ drawable_foreground_extract_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

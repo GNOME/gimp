@@ -66,8 +66,7 @@ file_load_invoker (GimpProcedure      *procedure,
                                     error);
 
   if (! uri)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
     file_procedure_find (gimp->plug_in_manager->load_procs, uri, error);
@@ -75,8 +74,7 @@ file_load_invoker (GimpProcedure      *procedure,
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = GIMP_PROCEDURE (file_proc);
 
@@ -155,8 +153,7 @@ file_load_layer_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], layer);
@@ -220,8 +217,7 @@ file_load_layers_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -252,8 +248,7 @@ file_save_invoker (GimpProcedure      *procedure,
                                     error);
 
   if (! uri)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
     file_procedure_find (gimp->plug_in_manager->save_procs, uri, error);
@@ -261,8 +256,7 @@ file_save_invoker (GimpProcedure      *procedure,
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = GIMP_PROCEDURE (file_proc);
 
@@ -322,8 +316,7 @@ file_load_thumbnail_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -356,8 +349,7 @@ file_save_thumbnail_invoker (GimpProcedure      *procedure,
       success = file_utils_save_thumbnail (image, filename);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -380,8 +372,7 @@ temp_name_invoker (GimpProcedure      *procedure,
       name = gimp_get_temp_filename (gimp, extension);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals->values[1], name);
@@ -419,8 +410,7 @@ register_magic_load_handler_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -451,8 +441,7 @@ register_load_handler_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -483,8 +472,7 @@ register_save_handler_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -512,8 +500,7 @@ register_file_handler_mime_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -543,8 +530,7 @@ register_thumbnail_loader_invoker (GimpProcedure      *procedure,
       g_free (canon_thumb);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 void

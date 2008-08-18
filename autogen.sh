@@ -17,6 +17,7 @@ LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
 
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.9.6
+GLIB_REQUIRED_VERSION=2.16.0
 INTLTOOL_REQUIRED_VERSION=0.35.5
 LIBTOOL_REQUIRED_VERSION=1.5
 
@@ -170,6 +171,21 @@ if test x$AUTOMAKE != x; then
 fi
 
 
+echo -n "checking for glib-gettextize ... "
+if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
+    VER=`glib-gettextize --version \
+         | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
+    check_version $VER $GLIB_REQUIRED_VERSION
+else
+    echo
+    echo "  You must have glib-gettextize installed to compile $PROJECT."
+    echo "  glib-gettextize is part of glib-2.0, so you should already"
+    echo "  have it. Make sure it is in your PATH."
+    echo
+    DIE=1
+fi
+
+
 echo -n "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
 if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`intltoolize --version \
@@ -276,7 +292,8 @@ fi
 $AUTOMAKE --add-missing || exit $?
 $AUTOCONF || exit $?
 
-intltoolize --automake || exit $?
+glib-gettextize --force || exit $?
+intltoolize --force --automake || exit $?
 
 
 cd $ORIGDIR

@@ -1267,7 +1267,7 @@ HELP
   GList *list, *vectors_list = NULL;
 
   success = gimp_vectors_import_file (image, filename,
-                                      merge, scale, -1, &vectors_list, error);
+                                      merge, scale, -1, &vectors_list, NULL);
 
   if (success)
     {
@@ -1330,7 +1330,7 @@ HELP
   GList *list, *vectors_list = NULL;
 
   success = gimp_vectors_import_buffer (image, string, length,
-                                        merge, scale, -1, &vectors_list, error);
+                                        merge, scale, -1, &vectors_list, NULL);
 
   if (success)
     {

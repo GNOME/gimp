@@ -33,9 +33,6 @@
 #include "tile-private.h"
 
 
-static void  tile_manager_allocate_tiles (TileManager *tm);
-
-
 GType
 gimp_tile_manager_get_type (void)
 {
@@ -154,8 +151,13 @@ tile_manager_get (TileManager *tm,
                   gboolean     wantread,
                   gboolean     wantwrite)
 {
-  Tile *tile;
-  gint  ntiles;
+  Tile **tiles;
+  Tile **tile_ptr;
+  gint   ntiles;
+  gint   nrows, ncols;
+  gint   right_tile;
+  gint   bottom_tile;
+  gint   i, j, k;
 
   g_return_val_if_fail (tm != NULL, NULL);
 
@@ -165,16 +167,46 @@ tile_manager_get (TileManager *tm,
     return NULL;
 
   if (! tm->tiles)
-    tile_manager_allocate_tiles (tm);
+    {
+      tm->tiles = g_new (Tile *, ntiles);
+      tiles = tm->tiles;
 
-  tile = tm->tiles[tile_num];
+      nrows = tm->ntile_rows;
+      ncols = tm->ntile_cols;
+
+      right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
+      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
+
+      for (i = 0, k = 0; i < nrows; i++)
+        {
+          for (j = 0; j < ncols; j++, k++)
+            {
+              Tile *new = tile_new (tm->bpp);
+
+              tile_attach (new, tm, k);
+
+              if (j == (ncols - 1))
+                new->ewidth = right_tile;
+
+              if (i == (nrows - 1))
+                new->eheight = bottom_tile;
+
+              new->size = new->ewidth * new->eheight * new->bpp;
+
+              tiles[k] = new;
+            }
+        }
+    }
+
+  tile_ptr = &tm->tiles[tile_num];
 
   if (G_UNLIKELY (wantwrite && ! wantread))
     g_warning ("WRITE-ONLY TILE... UNTESTED!");
 
 #ifdef DEBUG_TILE_MANAGER
-  if (G_UNLIKELY (tile->share_count && tile->write_count))
-    g_printerr (">> MEEPITY %d,%d <<\n", tile->share_count, tile->write_count);
+  if (G_UNLIKELY ((*tile_ptr)->share_count && (*tile_ptr)->write_count))
+    g_printerr (">> MEEPITY %d,%d <<\n",
+                (*tile_ptr)->share_count, (*tile_ptr)->write_count);
 #endif
 
   if (wantread)
@@ -189,59 +221,59 @@ tile_manager_get (TileManager *tm,
               tm->cached_num  = -1;
             }
 
-          if (tile->share_count > 1)
+          if ((*tile_ptr)->share_count > 1)
             {
               /* Copy-on-write required */
-              Tile *new = tile_new (tile->bpp);
+              Tile *new = tile_new ((*tile_ptr)->bpp);
 
-              new->ewidth  = tile->ewidth;
-              new->eheight = tile->eheight;
-              new->valid   = tile->valid;
+              new->ewidth  = (*tile_ptr)->ewidth;
+              new->eheight = (*tile_ptr)->eheight;
+              new->valid   = (*tile_ptr)->valid;
 
               new->size    = new->ewidth * new->eheight * new->bpp;
               new->data    = g_new (guchar, new->size);
 
-              if (tile->rowhint)
+              if ((*tile_ptr)->rowhint)
                 {
                   tile_allocate_rowhints (new);
 
-                  memcpy (new->rowhint, tile->rowhint,
+                  memcpy (new->rowhint, (*tile_ptr)->rowhint,
                           new->eheight * sizeof (TileRowHint));
                 }
 
-              if (tile->data)
+              if ((*tile_ptr)->data)
                 {
-                  memcpy (new->data, tile->data, new->size);
+                  memcpy (new->data, (*tile_ptr)->data, new->size);
                 }
               else
                 {
-                  tile_lock (tile);
-                  memcpy (new->data, tile->data, new->size);
-                  tile_release (tile, FALSE);
+                  tile_lock (*tile_ptr);
+                  memcpy (new->data, (*tile_ptr)->data, new->size);
+                  tile_release (*tile_ptr, FALSE);
                 }
 
-              tile_detach (tile, tm, tile_num);
-              tile_attach (new, tm, tile_num);
+              tile_detach (*tile_ptr, tm, tile_num);
 
-              tile = new;
-              tm->tiles[tile_num] = tile;
+              tile_attach (new, tm, tile_num);
+              *tile_ptr = new;
             }
 
-          tile->write_count++;
-          tile->dirty = TRUE;
+          (*tile_ptr)->write_count++;
+          (*tile_ptr)->dirty = TRUE;
         }
 #ifdef DEBUG_TILE_MANAGER
       else
         {
-          if (G_UNLIKELY (tile->write_count))
-            g_printerr ("STINK! r/o on r/w tile (%d)\n", tile->write_count);
+          if (G_UNLIKELY ((*tile_ptr)->write_count))
+            g_printerr ("STINK! r/o on r/w tile (%d)\n",
+                        (*tile_ptr)->write_count);
         }
 #endif
 
-      tile_lock (tile);
+      tile_lock (*tile_ptr);
     }
 
-  return tile;
+  return *tile_ptr;
 }
 
 Tile *
@@ -287,43 +319,6 @@ tile_manager_validate_tile (TileManager *tm,
 }
 
 static void
-tile_manager_allocate_tiles (TileManager *tm)
-{
-  Tile       **tiles;
-  const gint   nrows       = tm->ntile_rows;
-  const gint   ncols       = tm->ntile_cols;
-  const gint   right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
-  const gint   bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
-  gint         i, j, k;
-
-  g_assert (tm->tiles == NULL);
-
-  tiles = g_new (Tile *, nrows * ncols);
-
-  for (i = 0, k = 0; i < nrows; i++)
-    {
-      for (j = 0; j < ncols; j++, k++)
-        {
-          Tile *new = tile_new (tm->bpp);
-
-          tile_attach (new, tm, k);
-
-          if (j == (ncols - 1))
-            new->ewidth = right_tile;
-
-          if (i == (nrows - 1))
-            new->eheight = bottom_tile;
-
-          new->size = new->ewidth * new->eheight * new->bpp;
-
-          tiles[k] = new;
-        }
-    }
-
-  tm->tiles = tiles;
-}
-
-static void
 tile_manager_invalidate_tile (TileManager  *tm,
                               gint          tile_num)
 {
@@ -340,24 +335,25 @@ tile_manager_invalidate_tile (TileManager  *tm,
       tm->cached_num  = -1;
     }
 
-  if (tile->listhead)
-    tile_cache_flush (tile);
-
   if (G_UNLIKELY (tile->share_count > 1))
     {
-      /* This tile is shared.  Replace it with a new invalid tile. */
+      /* This tile is shared.  Replace it with a new, invalid tile. */
       Tile *new = tile_new (tile->bpp);
+
+      g_print ("invalidating shared tile (executing buggy code!!!)\n");
 
       new->ewidth  = tile->ewidth;
       new->eheight = tile->eheight;
       new->size    = tile->size;
 
       tile_detach (tile, tm, tile_num);
-      tile_attach (new, tm, tile_num);
 
+      tile_attach (new, tm, tile_num);
       tile = new;
-      tm->tiles[tile_num] = tile;
     }
+
+  if (tile->listhead)
+    tile_cache_flush (tile);
 
   tile->valid = FALSE;
 
@@ -395,12 +391,20 @@ tile_manager_map_tile (TileManager *tm,
                        gint         ypixel,
                        Tile        *srctile)
 {
+  gint num;
+
   g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
 
-  tile_manager_map (tm,
-                    tile_manager_get_tile_num (tm, xpixel, ypixel),
-                    srctile);
+  num = tile_manager_get_tile_num (tm, xpixel, ypixel);
+
+  if (G_UNLIKELY (num < 0))
+    {
+      g_warning ("%s: tile coordinates out of range.", G_STRLOC);
+      return;
+    }
+
+  tile_manager_map (tm, num, srctile);
 }
 
 void
@@ -408,21 +412,63 @@ tile_manager_map (TileManager *tm,
                   gint         tile_num,
                   Tile        *srctile)
 {
-  Tile *tile;
+  Tile **tiles;
+  Tile **tile_ptr;
+  gint   ntiles;
+  gint   nrows, ncols;
+  gint   right_tile;
+  gint   bottom_tile;
+  gint   i, j, k;
 
   g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
-  g_return_if_fail (tile_num >= 0);
-  g_return_if_fail (tile_num < tm->ntile_rows * tm->ntile_cols);
+
+  ntiles = tm->ntile_rows * tm->ntile_cols;
+
+  if (G_UNLIKELY ((tile_num < 0) || (tile_num >= ntiles)))
+    {
+      g_warning ("%s: tile out of range", G_STRLOC);
+      return;
+    }
 
   if (G_UNLIKELY (! tm->tiles))
     {
       g_warning ("%s: empty tile level - initializing", G_STRLOC);
 
-      tile_manager_allocate_tiles (tm);
+      tm->tiles = g_new (Tile *, ntiles);
+      tiles = tm->tiles;
+
+      nrows = tm->ntile_rows;
+      ncols = tm->ntile_cols;
+
+      right_tile  = tm->width  - ((ncols - 1) * TILE_WIDTH);
+      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
+
+      for (i = 0, k = 0; i < nrows; i++)
+        {
+          for (j = 0; j < ncols; j++, k++)
+            {
+              Tile *new = tile_new (tm->bpp);
+
+#ifdef DEBUG_TILE_MANAGER
+              g_printerr (",");
+#endif
+              tile_attach (new, tm, k);
+
+              if (j == (ncols - 1))
+                new->ewidth = right_tile;
+
+              if (i == (nrows - 1))
+                new->eheight = bottom_tile;
+
+              new->size = new->ewidth * new->eheight * new->bpp;
+
+              tiles[k] = new;
+            }
+        }
     }
 
-  tile = tm->tiles[tile_num];
+  tile_ptr = &tm->tiles[tile_num];
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr (")");
@@ -431,15 +477,15 @@ tile_manager_map (TileManager *tm,
   if (G_UNLIKELY (! srctile->valid))
     g_warning("%s: srctile not validated yet!  please report", G_STRLOC);
 
-  if (G_UNLIKELY (tile->ewidth  != srctile->ewidth  ||
-                  tile->eheight != srctile->eheight ||
-                  tile->bpp     != srctile->bpp))
+  if (G_UNLIKELY ((*tile_ptr)->ewidth  != srctile->ewidth  ||
+                  (*tile_ptr)->eheight != srctile->eheight ||
+                  (*tile_ptr)->bpp     != srctile->bpp))
     {
       g_warning ("%s: nonconformant map (%p -> %p)",
-                 G_STRLOC, srctile, tile);
+                 G_STRLOC, srctile, *tile_ptr);
     }
 
-  tile_detach (tile, tm, tile_num);
+  tile_detach (*tile_ptr, tm, tile_num);
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr (">");
@@ -450,8 +496,7 @@ tile_manager_map (TileManager *tm,
 #endif
 
   tile_attach (srctile, tm, tile_num);
-
-  tm->tiles[tile_num] = srctile;
+  *tile_ptr = srctile;
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr ("}\n");
@@ -581,11 +626,16 @@ tile_manager_get_memsize (const TileManager *tm,
   return memsize;
 }
 
-static inline gint
-tile_manager_locate_tile (TileManager *tm,
-                          Tile        *tile)
+void
+tile_manager_get_tile_coordinates (TileManager *tm,
+                                   Tile        *tile,
+                                   gint        *x,
+                                   gint        *y)
 {
   TileLink *tl;
+
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (x != NULL && y != NULL);
 
   for (tl = tile->tlink; tl; tl = tl->next)
     {
@@ -596,10 +646,11 @@ tile_manager_locate_tile (TileManager *tm,
   if (G_UNLIKELY (tl == NULL))
     {
       g_warning ("%s: tile not attached to manager", G_STRLOC);
-      return 0;
+      return;
     }
 
-  return tl->tile_num;
+  *x = TILE_WIDTH * (tl->tile_num % tm->ntile_cols);
+  *y = TILE_HEIGHT * (tl->tile_num / tm->ntile_cols);
 }
 
 void
@@ -608,35 +659,15 @@ tile_manager_get_tile_col_row (TileManager *tm,
                                gint        *tile_col,
                                gint        *tile_row)
 {
-  gint tile_num;
+  gint tile_x;
+  gint tile_y;
 
-  g_return_if_fail (tm != NULL);
-  g_return_if_fail (tile != NULL);
-  g_return_if_fail (tile_col != NULL && tile_row != NULL);
+  g_return_if_fail (tm && tile && tile_col && tile_row);
 
-  tile_num = tile_manager_locate_tile (tm, tile);
+  tile_manager_get_tile_coordinates (tm, tile, &tile_x, &tile_y);
 
-  *tile_col = tile_num % tm->ntile_cols;
-  *tile_row = tile_num / tm->ntile_cols;
-}
-
-void
-tile_manager_get_tile_coordinates (TileManager *tm,
-                                   Tile        *tile,
-                                   gint        *x,
-                                   gint        *y)
-{
-  gint tile_col;
-  gint tile_row;
-
-  g_return_if_fail (tm != NULL);
-  g_return_if_fail (tile != NULL);
-  g_return_if_fail (x != NULL && y != NULL);
-
-  tile_manager_get_tile_col_row (tm, tile, &tile_col, &tile_row);
-
-  *x = TILE_WIDTH  * tile_col;
-  *y = TILE_HEIGHT * tile_row;
+  *tile_col = tile_x / TILE_WIDTH;
+  *tile_row = tile_y / TILE_HEIGHT;
 }
 
 void

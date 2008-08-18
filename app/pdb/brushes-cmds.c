@@ -50,7 +50,7 @@ brushes_refresh_invoker (GimpProcedure      *procedure,
 {
   gimp_data_factory_data_refresh (gimp->brush_factory);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
 static GValueArray *
@@ -75,8 +75,7 @@ brushes_get_list_invoker (GimpProcedure      *procedure,
                                                            filter, &num_brushes);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -114,8 +113,7 @@ brushes_get_brush_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -147,8 +145,7 @@ brushes_get_spacing_invoker (GimpProcedure      *procedure,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals->values[1], spacing);
@@ -174,8 +171,7 @@ brushes_set_spacing_invoker (GimpProcedure      *procedure,
       gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -224,8 +220,7 @@ brushes_get_brush_data_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {

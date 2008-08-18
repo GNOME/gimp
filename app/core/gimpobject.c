@@ -184,7 +184,7 @@ gimp_object_get_property (GObject    *object,
  * @name: the @object's new name
  *
  * Sets the @object's name. Takes care of freeing the old name and
- * emitting the ::name_changed signal if the old and new name differ.
+ * emitting the "name_changed" signal if the old and new name differ.
  **/
 void
 gimp_object_set_name (GimpObject  *object,
@@ -284,7 +284,7 @@ gimp_object_get_name (const GimpObject *object)
  * gimp_object_name_changed:
  * @object: a #GimpObject
  *
- * Causes the ::name-changed signal to be emitted.
+ * Causes the "name-changed" signal to be emitted.
  **/
 void
 gimp_object_name_changed (GimpObject *object)
@@ -303,7 +303,7 @@ gimp_object_name_changed (GimpObject *object)
  *
  * In general you should be using gimp_object_set_name() instead. But
  * if you ever need to free the object name but don't want the
- * ::name-changed signal to be emitted, then use this function. Never
+ * "name-changed" signal to be emitted, then use this function. Never
  * ever free the object name directly!
  **/
 void

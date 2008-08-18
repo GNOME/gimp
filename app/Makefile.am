@@ -69,7 +69,7 @@ EXTRA_DIST = \
 	wilber.ico
 
 if OS_WIN32
-win32_ldflags = -mwindows $(WIN32_LARGE_ADDRESS_AWARE)
+win32_ldflags = -mwindows -Wl,--large-address-aware
 endif
 
 if USE_BINRELOC

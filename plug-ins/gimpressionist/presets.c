@@ -635,9 +635,9 @@ create_save_preset (GtkWidget *parent)
     }
 
   window =
-    gimp_dialog_new (_("Save Current"), PLUG_IN_BINARY,
+    gimp_dialog_new (_("Save Current"), "gimpressionist",
                      gtk_widget_get_toplevel (parent), 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
+                     gimp_standard_help_func, PLUG_IN_NAME,
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,

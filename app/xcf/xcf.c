@@ -330,8 +330,7 @@ xcf_load_invoker (GimpProcedure      *procedure,
                    gimp_filename_to_utf8 (filename), g_strerror (save_errno));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_image (&return_vals->values[1], image);
@@ -423,8 +422,7 @@ xcf_save_invoker (GimpProcedure      *procedure,
                    gimp_filename_to_utf8 (filename), g_strerror (save_errno));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   gimp_unset_busy (gimp);
 

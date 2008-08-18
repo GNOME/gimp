@@ -195,7 +195,6 @@ file_save_cmd_callback (GtkAction *action,
   GimpImage    *image;
   GtkWidget    *widget;
   GimpSaveMode  save_mode;
-  const gchar  *uri;
   gboolean      saved = FALSE;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
@@ -207,25 +206,24 @@ file_save_cmd_callback (GtkAction *action,
   if (! gimp_image_get_active_drawable (image))
     return;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
-
   switch (save_mode)
     {
     case GIMP_SAVE_MODE_SAVE:
     case GIMP_SAVE_MODE_SAVE_AND_CLOSE:
-      /*  Only save if the image has been modified, or if it is new.  */
-      if ((image->dirty ||
-           ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag) ||
-          uri == NULL)
+      /*  Only save if the image has been modified  */
+      if (image->dirty ||
+          ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag)
         {
-          GimpPlugInProcedure *save_proc = gimp_image_get_save_proc (image);
+          const gchar         *uri;
+          GimpPlugInProcedure *save_proc = NULL;
+
+          uri       = gimp_object_get_name (GIMP_OBJECT (image));
+          save_proc = gimp_image_get_save_proc (image);
 
           if (uri && ! save_proc)
-            {
-              save_proc =
-                file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                                     uri, NULL);
-            }
+            save_proc =
+              file_procedure_find (image->gimp->plug_in_manager->save_procs,
+                                   uri, NULL);
 
           if (uri && save_proc)
             {
@@ -289,8 +287,6 @@ file_save_cmd_callback (GtkAction *action,
         }
       else
         {
-          gimp_message (image->gimp, G_OBJECT (display),
-                        GIMP_MESSAGE_INFO, _("No changes need to be saved"));
           saved = TRUE;
           break;
         }

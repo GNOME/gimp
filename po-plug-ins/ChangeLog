@@ -1,24 +1,3 @@
-2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
-
-	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
-
-2008-08-11  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
-
-	 gl.po: Updated Galician translation
-
-2008-08-11  Sven Neumann  <sven@gimp.org>
-
-	* POTFILES.in: fixed some changed filenames that Mitch forgot to
-	change.
-
-2008-08-11  Michael Natterer  <mitch@gimp.org>
-
-	* POTFILES.in: follow file plug-in renamings.
-
-2008-08-8  Djihed Afifi <djihed@gmail.com> 
-
-	* ar.po: Updated Arabic Translation by .
-
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
 	* de.po: Updated German translation.

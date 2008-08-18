@@ -55,13 +55,12 @@
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "plug_in_winsnap"
-#define PLUG_IN_PROC        "plug-in-winsnap"
+#define HELP_ID             "plug-in-winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
-#define PLUG_IN_BINARY      "win-snap"
 
 /*
  * Application definitions
@@ -854,12 +853,12 @@ snap_dialog (void)
   decorations      = winsnapvals.decor;
 
   /* Init GTK  */
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init ("winsnap", FALSE);
 
   /* Main Dialog */
-  dialog = gimp_dialog_new (PLUG_IN_PRINT_NAME, PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (PLUG_IN_PRINT_NAME, "winsnap",
                             NULL, 0,
-			    gimp_standard_help_func, PLUG_IN_PROC,
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             _("Grab"),        GTK_RESPONSE_OK,
@@ -867,9 +866,9 @@ snap_dialog (void)
 			    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -985,7 +984,7 @@ query(void)
   static const GimpParamDef return_vals[] = { OUT_ARGS };
 
   /* the installation of the plugin */
-  gimp_install_procedure (PLUG_IN_PROC,
+  gimp_install_procedure (PLUG_IN_NAME,
                           N_("Capture a window or desktop image"),
                           PLUG_IN_HELP,
                           PLUG_IN_AUTHOR,
@@ -999,7 +998,7 @@ query(void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/New/Acquire");
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/New/Acquire");
 }
 
 /* Return values storage */
@@ -1038,7 +1037,7 @@ run (const gchar      *name,
   values[1].data.d_int32 = 0;
 
   /* Get the data from last run */
-  gimp_get_data (PLUG_IN_PROC, &winsnapvals);
+  gimp_get_data(PLUG_IN_NAME, &winsnapvals);
 
   /* How are we running today? */
   switch (run_mode) {
@@ -1073,7 +1072,7 @@ run (const gchar      *name,
      */
     if (run_mode == GIMP_RUN_INTERACTIVE) {
       /* Store variable states for next run */
-      gimp_set_data (PLUG_IN_PROC, &winsnapvals, sizeof(WinSnapValues));
+      gimp_set_data(PLUG_IN_NAME, &winsnapvals, sizeof(WinSnapValues));
     }
 
     /* Set return values */

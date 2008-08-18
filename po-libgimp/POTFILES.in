@@ -3,7 +3,6 @@
 
 [encoding: UTF-8]
 
-libgimp/gimp.c
 libgimp/gimpbrushmenu.c
 libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
@@ -59,15 +58,15 @@ libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
 libgimpwidgets/gimpwidgetsenums.c
 
-modules/display-filter-color-blind.c
-modules/display-filter-gamma.c
-modules/display-filter-high-contrast.c
-modules/display-filter-lcms.c
-modules/display-filter-proof.c
-modules/color-selector-cmyk.c
-modules/color-selector-cmyk-lcms.c
-modules/color-selector-water.c
-modules/color-selector-wheel.c
-modules/controller-linux-input.c
-modules/controller-dx-dinput.c
-modules/controller-midi.c
+modules/cdisplay_colorblind.c
+modules/cdisplay_gamma.c
+modules/cdisplay_highcontrast.c
+modules/cdisplay_lcms.c
+modules/cdisplay_proof.c
+modules/colorsel_cmyk.c
+modules/colorsel_cmyk_lcms.c
+modules/colorsel_triangle.c
+modules/colorsel_water.c
+modules/controller_linux_input.c
+modules/controller_dx_dinput.c
+modules/controller_midi.c

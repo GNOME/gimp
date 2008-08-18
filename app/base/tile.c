@@ -257,7 +257,7 @@ tile_attach (Tile *tile,
              void *tm,
              gint  tile_num)
 {
-  TileLink *new;
+  TileLink *tmp;
 
   if ((tile->share_count > 0) && (! tile->valid))
     {
@@ -277,13 +277,13 @@ tile_attach (Tile *tile,
 #endif
 
   /* link this tile into the tile's tilelink chain */
-  new = g_slice_new (TileLink);
+  tmp = g_slice_new (TileLink);
 
-  new->tm       = tm;
-  new->tile_num = tile_num;
-  new->next     = tile->tlink;
+  tmp->tm       = tm;
+  tmp->tile_num = tile_num;
+  tmp->next     = tile->tlink;
 
-  tile->tlink = new;
+  tile->tlink = tmp;
 }
 
 void
