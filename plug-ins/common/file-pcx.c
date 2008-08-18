@@ -46,7 +46,9 @@ static void   run        (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static gint32 load_image (const gchar      *filename);
+static gint32 load_image (const gchar      *filename,
+                          GError          **error);
+
 static void   load_1     (FILE             *fp,
                           gint              width,
                           gint              height,
@@ -73,7 +75,9 @@ static void   readline   (FILE             *fp,
 
 static gint   save_image (const gchar      *filename,
                           gint32            image,
-                          gint32            layer);
+                          gint32            layer,
+                          GError          **error);
+
 static void   save_8     (FILE             *fp,
                           gint              width,
                           gint              height,
@@ -162,12 +166,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -181,7 +186,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -205,6 +210,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
           export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -238,7 +244,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+                            &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -250,6 +257,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -327,7 +341,8 @@ pcx_header_to_buffer (guint8 *buf)
 }
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   FILE         *fd;
   GimpDrawable *drawable;
@@ -339,10 +354,12 @@ load_image (const gchar *filename)
   guint8        header_buf[128];
 
   fd = g_fopen (filename, "rb");
-  if (!fd)
+
+  if (! fd)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -351,8 +368,9 @@ load_image (const gchar *filename)
 
   if (fread (header_buf, 128, 1, fd) == 0)
     {
-      g_message (_("Could not read header from '%s'"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not read header from '%s'"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -360,8 +378,9 @@ load_image (const gchar *filename)
 
   if (pcx_header.manufacturer != 10)
     {
-      g_message (_("'%s' is not a PCX file"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a PCX file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -582,9 +601,10 @@ readline (FILE   *fp,
 }
 
 static gint
-save_image (const gchar *filename,
-            gint32       image,
-            gint32       layer)
+save_image (const gchar  *filename,
+            gint32        image,
+            gint32        layer,
+            GError      **error)
 {
   FILE          *fp;
   GimpPixelRgn   pixel_rgn;
@@ -642,8 +662,9 @@ save_image (const gchar *filename,
 
   if ((fp = g_fopen (filename, "wb")) == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -727,10 +748,12 @@ save_image (const gchar *filename,
 
   if (fclose (fp) != 0)
     {
-      g_message (_("Writing to file '%s' failed: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Writing to file '%s' failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
   return TRUE;
 }
 

@@ -288,13 +288,13 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+    }
 
-      if (status == GIMP_PDB_EXECUTION_ERROR && error)
-        {
-          *nreturn_vals = 2;
-          values[1].type          = GIMP_PDB_STRING;
-          values[1].data.d_string = error->message;
-        }
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;

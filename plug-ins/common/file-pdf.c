@@ -502,7 +502,7 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
-  if (status == GIMP_PDB_EXECUTION_ERROR && error)
+  if (status != GIMP_PDB_SUCCESS && error)
     {
       *nreturn_vals = 2;
       values[1].type          = GIMP_PDB_STRING;

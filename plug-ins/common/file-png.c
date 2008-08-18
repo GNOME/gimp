@@ -414,13 +414,6 @@ run (const gchar      *name,
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (error)
-            {
-              *nreturn_vals = 2;
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
         }
     }
   else if (strcmp (name, SAVE_PROC)  == 0 ||
@@ -544,13 +537,6 @@ run (const gchar      *name,
           else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
-
-              if (error)
-                {
-                  *nreturn_vals = 2;
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-                }
             }
         }
 
@@ -597,11 +583,20 @@ run (const gchar      *name,
           save_defaults ();
         }
       else
-        status = GIMP_PDB_CALLING_ERROR;
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
