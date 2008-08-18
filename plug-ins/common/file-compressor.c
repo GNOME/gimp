@@ -131,25 +131,27 @@ struct _Compressor
 
 
 static void                query          (void);
-static void                run            (const gchar       *name,
-                                           gint               nparams,
-                                           const GimpParam   *param,
-                                           gint              *nreturn_vals,
-                                           GimpParam        **return_vals);
+static void                run            (const gchar        *name,
+                                           gint                nparams,
+                                           const GimpParam    *param,
+                                           gint               *nreturn_vals,
+                                           GimpParam         **return_vals);
 
-static GimpPDBStatusType   save_image     (const Compressor  *compressor,
-                                           const gchar       *filename,
-                                           gint32             image_ID,
-                                           gint32             drawable_ID,
-                                           gint32             run_mode);
-static gint32              load_image     (const Compressor  *compressor,
-                                           const gchar       *filename,
-                                           gint32             run_mode,
-                                           GimpPDBStatusType *status);
+static GimpPDBStatusType   save_image     (const Compressor   *compressor,
+                                           const gchar        *filename,
+                                           gint32              image_ID,
+                                           gint32              drawable_ID,
+                                           gint32              run_mode,
+                                           GError            **error);
+static gint32              load_image     (const Compressor   *compressor,
+                                           const gchar        *filename,
+                                           gint32              run_mode,
+                                           GimpPDBStatusType  *status,
+                                           GError            **error);
 
-static gboolean            valid_file     (const gchar       *filename);
-static const gchar       * find_extension (const Compressor  *compressor,
-                                           const gchar       *filename);
+static gboolean            valid_file     (const gchar        *filename);
+static const gchar       * find_extension (const Compressor   *compressor,
+                                           const gchar        *filename);
 
 
 static const Compressor compressors[] =
@@ -288,6 +290,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
   gint32             image_ID;
   gint               i;
 
@@ -310,7 +313,7 @@ run (const gchar      *name,
           image_ID = load_image (compressor,
                                  param[1].data.d_string,
                                  param[0].data.d_int32,
-                                 &status);
+                                 &status, &error);
 
           if (image_ID != -1 && status == GIMP_PDB_SUCCESS)
             {
@@ -344,7 +347,8 @@ run (const gchar      *name,
                                  param[3].data.d_string,
                                  param[1].data.d_int32,
                                  param[2].data.d_int32,
-                                 param[0].data.d_int32);
+                                 param[0].data.d_int32,
+                                 &error);
 
           break;
         }
@@ -353,15 +357,23 @@ run (const gchar      *name,
   if (i == G_N_ELEMENTS (compressors))
     status = GIMP_PDB_CALLING_ERROR;
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static GimpPDBStatusType
-save_image (const Compressor *compressor,
-            const gchar      *filename,
-            gint32            image_ID,
-            gint32            drawable_ID,
-            gint32            run_mode)
+save_image (const Compressor  *compressor,
+            const gchar       *filename,
+            gint32             image_ID,
+            gint32             drawable_ID,
+            gint32             run_mode,
+            GError           **error)
 {
   const gchar *ext;
   gchar       *tmpname;
@@ -386,6 +398,10 @@ save_image (const Compressor *compressor,
     {
       g_unlink (tmpname);
       g_free (tmpname);
+
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_get_pdb_error ());
+
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -461,8 +477,9 @@ save_image (const Compressor *compressor,
 
     if (in == NULL)
       {
-        g_message (_("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for reading: %s"),
+                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
         g_free (tmpname);
 
         return GIMP_PDB_EXECUTION_ERROR;
@@ -470,10 +487,11 @@ save_image (const Compressor *compressor,
 
     if (out == NULL)
       {
-        g_message (_("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
         g_free (tmpname);
-        
+
         return GIMP_PDB_EXECUTION_ERROR;
       }
 
@@ -520,10 +538,11 @@ save_image (const Compressor *compressor,
 }
 
 static gint32
-load_image (const Compressor  *compressor,
-            const gchar       *filename,
-            gint32             run_mode,
-            GimpPDBStatusType *status)
+load_image (const Compressor   *compressor,
+            const gchar        *filename,
+            gint32              run_mode,
+            GimpPDBStatusType  *status,
+            GError            **error)
 {
   gint32       image_ID;
   const gchar *ext;
@@ -619,18 +638,20 @@ load_image (const Compressor  *compressor,
 
     if (in == NULL)
       {
-        g_message (_("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for reading: %s"),
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
         g_free (tmpname);
-       
+
         *status = GIMP_PDB_EXECUTION_ERROR;
         return -1;
       }
 
     if (out == NULL)
       {
-        g_message (_("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
         g_free (tmpname);
 
         *status = GIMP_PDB_EXECUTION_ERROR;
@@ -680,11 +701,15 @@ load_image (const Compressor  *compressor,
   if (image_ID != -1)
     {
       *status = GIMP_PDB_SUCCESS;
+
       gimp_image_set_filename (image_ID, filename);
     }
   else
     {
       *status = GIMP_PDB_EXECUTION_ERROR;
+
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_get_pdb_error ());
     }
 
   return image_ID;
