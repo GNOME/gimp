@@ -163,7 +163,7 @@ query (void)
   gimp_install_procedure (PIXELIZE_PROC,
                           N_("Simplify image into an array of solid-colored squares"),
                           "Pixelize the contents of the specified drawable "
-                          "with speficied pixelizing width.",
+                          "with specified pixelizing width.",
                           "Spencer Kimball & Peter Mattis, Tracy Scott, "
                           "(ported to 1.0 by) Eiichi Takamori",
                           "Spencer Kimball & Peter Mattis, Tracy Scott",
