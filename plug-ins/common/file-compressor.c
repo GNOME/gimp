@@ -407,48 +407,58 @@ save_image (const Compressor  *compressor,
 
 #ifndef G_OS_WIN32
   {
-    gint pid;
+    FILE *f;
+    gint  pid;
+
+    f = g_fopen (filename, "wb");
+
+    if (! f)
+      {
+        g_unlink (tmpname);
+        g_free (tmpname);
+
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
+
+        return GIMP_PDB_EXECUTION_ERROR;
+      }
 
     /* fork off a compressor process */
     if ((pid = fork ()) < 0)
       {
         g_message ("fork() failed: %s", g_strerror (errno));
+
+        fclose (f);
+        g_unlink (tmpname);
         g_free (tmpname);
 
         return GIMP_PDB_EXECUTION_ERROR;
       }
-    else if (pid == 0)
+    else if (pid == 0)  /* child process */
       {
-        FILE *f;
-
-        if (!(f = g_fopen (filename, "wb")))
-          {
-            g_message (_("Could not open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (filename), g_strerror (errno));
-            g_free (tmpname);
-            _exit (127);
-          }
-
         /* make stdout for this process be the output file */
         if (dup2 (fileno (f), fileno (stdout)) == -1)
-          g_message ("dup2() failed: %s", g_strerror (errno));
+          g_printerr ("dup2() failed: %s", g_strerror (errno));
 
         /* and compress into it */
         execlp (compressor->save_program,
                 compressor->save_program,
                 compressor->save_options, tmpname, NULL);
 
-        g_message ("execlp(\"%s %s\") failed: %s",
-                   compressor->save_program,
-                   compressor->save_options,
-                   g_strerror (errno));
-        g_free (tmpname);
+        g_printerr ("execlp(\"%s %s\") failed: %s",
+                    compressor->save_program,
+                    compressor->save_options,
+                    g_strerror (errno));
+
         _exit(127);
       }
     else
       {
         gint wpid;
         gint process_status;
+
+        fclose (f);
 
         wpid = waitpid (pid, &process_status, 0);
 
@@ -459,6 +469,8 @@ save_image (const Compressor  *compressor,
             g_message ("%s exited abnormally on file '%s'",
                        compressor->save_program,
                        gimp_filename_to_utf8 (tmpname));
+
+            g_unlink (tmpname);
             g_free (tmpname);
 
             return GIMP_PDB_EXECUTION_ERROR;
@@ -562,12 +574,28 @@ load_image (const Compressor   *compressor,
 
 #ifndef G_OS_WIN32
   {
-    gint pid;
+    FILE *f;
+    gint  pid;
+
+    f = g_fopen (tmpname, "wb");
+
+    if (! f)
+      {
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+        g_free (tmpname);
+
+        *status = GIMP_PDB_EXECUTION_ERROR;
+        return -1;
+      }
 
     /* fork off a compressor and wait for it */
     if ((pid = fork ()) < 0)
       {
         g_message ("fork() failed: %s", g_strerror (errno));
+
+        g_unlink (tmpname);
         g_free (tmpname);
 
         *status = GIMP_PDB_EXECUTION_ERROR;
@@ -575,39 +603,28 @@ load_image (const Compressor   *compressor,
       }
     else if (pid == 0)  /* child process */
       {
-        FILE *f;
-
-        if (! (f = g_fopen (tmpname, "wb")))
-          {
-            g_message (_("Could not open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-            g_free (tmpname);
-            _exit(127);
-          }
-
         /* make stdout for this child process be the temp file */
         if (dup2 (fileno (f), fileno (stdout)) == -1)
-          {
-            g_free (tmpname);
-            g_message ("dup2() failed: %s", g_strerror (errno));
-          }
+          g_printerr ("dup2() failed: %s", g_strerror (errno));
 
         /* and uncompress into it */
         execlp (compressor->load_program,
                 compressor->load_program,
                 compressor->load_options, filename, NULL);
 
-        g_message ("execlp(\"%s %s\") failed: %s",
-                   compressor->load_program,
-                   compressor->load_options,
-                   g_strerror (errno));
-        g_free (tmpname);
+        g_printerr ("execlp(\"%s %s\") failed: %s",
+                    compressor->load_program,
+                    compressor->load_options,
+                    g_strerror (errno));
+
         _exit(127);
       }
     else  /* parent process */
       {
         gint wpid;
         gint process_status;
+
+        fclose (f);
 
         wpid = waitpid (pid, &process_status, 0);
 
@@ -618,6 +635,8 @@ load_image (const Compressor   *compressor,
             g_message ("%s exited abnormally on file '%s'",
                        compressor->load_program,
                        gimp_filename_to_utf8 (filename));
+
+            g_unlink (tmpname);
             g_free (tmpname);
 
             *status = GIMP_PDB_EXECUTION_ERROR;
