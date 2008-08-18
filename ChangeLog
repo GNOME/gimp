@@ -2,24 +2,22 @@
 
 	* plug-ins/common/file-raw.c
 	* plug-ins/common/file-tga.c
-	* plug-ins/common/file-tiff-load.c
+	* plug-ins/common/file-tiff-load.c	
 	* plug-ins/common/file-tiff-save.c: pass error messages with the
-	return values instead of calling gimp_message().
+	return values instead of calling g_message().
 
 2008-08-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-pnm.c
 	* plug-ins/common/file-ps.c
 	* plug-ins/common/file-psp.c: for the most common errors, pass the
-	error message with the return values instead of calling
-	gimp_message().
+	error message with the return values instead of calling g_message().
 
 2008-08-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-mng.c
-	* plug-ins/common/file-pcx.c: for the most common errors,
-	pass the error message with the return values instead of calling
-	gimp_message().
+	* plug-ins/common/file-pcx.c: for the most common errors, pass the
+	error message with the return values instead of calling g_message().
 
 	* plug-ins/common/file-gif-save.c
 	* plug-ins/common/file-pdf.c
@@ -35,7 +33,7 @@
 	* plug-ins/common/file-gif-load.c
 	* plug-ins/common/file-gif-save.c: for the most common errors,
 	pass the error message with the return values instead of calling
-	gimp_message().
+	g_message().
 
 	* plug-ins/common/file-png.c: unmarked a string for translation.
 	This error condition can't possibly happen.
@@ -47,7 +45,7 @@
 
 	* plug-ins/common/file-dicom.c: for the most common errors, pass
 	the error message with the return values instead of calling
-	gimp_message().
+	g_message().
 
 2008-08-17  Sven Neumann  <sven@gimp.org>
 
