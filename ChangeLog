@@ -1,9 +1,20 @@
 2008-08-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-uri/uri.c: pass error messages with the return
+	values instead of calling g_message().
+
+	* plug-ins/file-uri/uri-backend-libcurl.c
+	* plug-ins/file-uri/uri-backend-gnomevfs.c
+	* plug-ins/file-uri/uri-backend-gvfs.c
+	* plug-ins/file-uri/uri-backend-wget.c: set errors in the 
+	G_FILE_ERROR domain and other minor cleanups.
+
+2008-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/file-compressor.c: open the temporary file
-	before doing the fork. This allows us to return an error message
-	if the file can't be opened. Also changed the code to not use
-	g_message() from the child process.
+	before forking. This allows us to return an error message if the
+	file can't be opened. Also changed the code to not use g_message()
+	from the child process.
 
 2008-08-18  Sven Neumann  <sven@gimp.org>
 

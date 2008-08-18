@@ -91,7 +91,8 @@ uri_backend_load_image (const gchar  *uri,
 
   if (pipe (p) != 0)
     {
-      g_set_error (error, 0, 0, "pipe() failed: %s", g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,,
+                   "pipe() failed: %s", g_strerror (errno));
       return FALSE;
     }
 
@@ -100,7 +101,8 @@ uri_backend_load_image (const gchar  *uri,
 
   if ((pid = fork()) < 0)
     {
-      g_set_error (error, 0, 0, "fork() failed: %s", g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,,
+                   "fork() failed: %s", g_strerror (errno));
       return FALSE;
     }
   else if (pid == 0)
@@ -122,7 +124,6 @@ uri_backend_load_image (const gchar  *uri,
       execlp ("wget",
               "wget", "-v", "-e", "server-response=off", "-T", timeout_str,
               uri, "-O", tmpname, NULL);
-      g_set_error (error, 0, 0, "exec() failed: wget: %s", g_strerror (errno));
       _exit (127);
     }
   else
@@ -157,7 +158,7 @@ uri_backend_load_image (const gchar  *uri,
       /* Eat any Location lines */
       if (redirect && fgets (buf, sizeof (buf), input) == NULL)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
@@ -177,7 +178,7 @@ uri_backend_load_image (const gchar  *uri,
       /*  The second line is the local copy of the file  */
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
@@ -196,7 +197,7 @@ uri_backend_load_image (const gchar  *uri,
     read_connect:
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
@@ -219,13 +220,13 @@ uri_backend_load_image (const gchar  *uri,
 
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
       else if (! connected)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("A network error occurred: %s"), buf);
 
           DEBUG (buf);
@@ -248,7 +249,7 @@ uri_backend_load_image (const gchar  *uri,
       /*  The fifth line is either the length of the file or an error  */
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
@@ -258,7 +259,7 @@ uri_backend_load_image (const gchar  *uri,
         }
       else
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("A network error occurred: %s"), buf);
 
           DEBUG (buf);
@@ -270,7 +271,7 @@ uri_backend_load_image (const gchar  *uri,
 
       if (sscanf (buf, "Length: %37s", sizestr) != 1)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        "Could not parse wget's file length message");
           return FALSE;
         }
@@ -366,7 +367,7 @@ uri_backend_load_image (const gchar  *uri,
 
       if (! finished)
         {
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        "wget exited before finishing downloading URI\n'%s'",
                        uri);
           return FALSE;
@@ -382,7 +383,7 @@ uri_backend_save_image (const gchar  *uri,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  g_set_error (error, 0, 0, "EEK");
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED, "not implemented");
 
   return FALSE;
 }

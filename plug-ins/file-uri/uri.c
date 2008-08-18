@@ -51,11 +51,13 @@ static void                run           (const gchar      *name,
                                           GimpParam       **return_vals);
 
 static gint32              load_image    (const gchar      *uri,
-                                          GimpRunMode       run_mode);
+                                          GimpRunMode       run_mode,
+                                          GError          **error);
 static GimpPDBStatusType   save_image    (const gchar      *uri,
                                           gint32            image_ID,
                                           gint32            drawable_ID,
-                                          gint32            run_mode);
+                                          gint32            run_mode,
+                                          GError          **error);
 
 static gchar             * get_temp_name (const gchar      *uri,
                                           gboolean         *name_image);
@@ -173,15 +175,19 @@ run (const gchar      *name,
 
   if (! uri_backend_init (PLUG_IN_BINARY, TRUE, run_mode, &error))
     {
-      g_message (error->message);
-      g_clear_error (&error);
+      if (error)
+        {
+          *nreturn_vals = 2;
+          values[1].type          = GIMP_PDB_STRING;
+          values[1].data.d_string = error->message;
+        }
 
       return;
     }
 
   if (! strcmp (name, LOAD_PROC) && uri_backend_get_load_protocols ())
     {
-      image_ID = load_image (param[2].data.d_string, run_mode);
+      image_ID = load_image (param[2].data.d_string, run_mode, &error);
 
       if (image_ID != -1)
         {
@@ -197,7 +203,7 @@ run (const gchar      *name,
       status = save_image (param[3].data.d_string,
                            param[1].data.d_int32,
                            param[2].data.d_int32,
-                           run_mode);
+                           run_mode, &error);
     }
   else
     {
@@ -206,21 +212,28 @@ run (const gchar      *name,
 
   uri_backend_shutdown ();
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static gint32
-load_image (const gchar *uri,
-            GimpRunMode  run_mode)
+load_image (const gchar  *uri,
+            GimpRunMode   run_mode,
+            GError      **error)
 {
   gchar    *tmpname    = NULL;
   gint32    image_ID   = -1;
   gboolean  name_image = FALSE;
-  GError   *error      = NULL;
 
   tmpname = get_temp_name (uri, &name_image);
 
-  if (uri_backend_load_image (uri, tmpname, run_mode, &error))
+  if (uri_backend_load_image (uri, tmpname, run_mode, error))
     {
       image_ID = gimp_file_load (run_mode, tmpname, tmpname);
 
@@ -231,11 +244,11 @@ load_image (const gchar *uri,
           else
             gimp_image_set_filename (image_ID, "");
         }
-    }
-  else if (error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "%s", gimp_get_pdb_error ());
+        }
     }
 
   g_unlink (tmpname);
@@ -245,43 +258,38 @@ load_image (const gchar *uri,
 }
 
 static GimpPDBStatusType
-save_image (const gchar *uri,
-            gint32       image_ID,
-            gint32       drawable_ID,
-            gint32       run_mode)
+save_image (const gchar  *uri,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            gint32        run_mode,
+            GError      **error)
 {
-  gchar  *tmpname;
-  GError *error = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  gchar             *tmpname;
 
   tmpname = get_temp_name (uri, NULL);
 
-  if (! (gimp_file_save (run_mode,
-                         image_ID,
-                         drawable_ID,
-                         tmpname,
-                         tmpname) && valid_file (tmpname)))
+  if (gimp_file_save (run_mode,
+                      image_ID,
+                      drawable_ID,
+                      tmpname,
+                      tmpname) && valid_file (tmpname))
     {
-      g_unlink (tmpname);
-      g_free (tmpname);
-
-      return GIMP_PDB_EXECUTION_ERROR;
+      if (uri_backend_save_image (uri, tmpname, run_mode, error))
+        {
+          status = GIMP_PDB_SUCCESS;
+        }
     }
-
-  if (! uri_backend_save_image (uri, tmpname, run_mode, &error))
+  else
     {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-
-      g_unlink (tmpname);
-      g_free (tmpname);
-
-      return GIMP_PDB_EXECUTION_ERROR;
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_get_pdb_error ());
     }
 
   g_unlink (tmpname);
   g_free (tmpname);
 
-  return GIMP_PDB_SUCCESS;
+  return status;
 }
 
 static gchar *

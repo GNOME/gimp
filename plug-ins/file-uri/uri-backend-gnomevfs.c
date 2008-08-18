@@ -78,7 +78,8 @@ uri_backend_init (const gchar  *plugin_name,
 {
   if (! gnome_vfs_init ())
     {
-      g_set_error (error, 0, 0, "Could not initialize GnomeVFS");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", "Could not initialize GnomeVFS");
       return FALSE;
     }
 
@@ -267,7 +268,7 @@ copy_uri (const gchar  *src_uri,
 
   if (result != GNOME_VFS_OK)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading: %s"),
                    src_uri, gnome_vfs_result_to_string (result));
       return FALSE;
@@ -278,7 +279,7 @@ copy_uri (const gchar  *src_uri,
 
   if (result != GNOME_VFS_OK)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for writing: %s"),
                    dest_uri, gnome_vfs_result_to_string (result));
       gnome_vfs_close (read_handle);
@@ -307,7 +308,7 @@ copy_uri (const gchar  *src_uri,
           if (result != GNOME_VFS_ERROR_EOF)
             {
               memsize = g_format_size_for_display (sizeof (buffer));
-              g_set_error (error, 0, 0,
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Failed to read %s from '%s': %s"),
                            memsize, src_uri,
                            gnome_vfs_result_to_string (result));
@@ -356,7 +357,7 @@ copy_uri (const gchar  *src_uri,
       if (chunk_written < chunk_read)
         {
           memsize = g_format_size_for_display (chunk_read);
-          g_set_error (error, 0, 0,
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Failed to write %s to '%s': %s"),
                        memsize, dest_uri,
                        gnome_vfs_result_to_string (result));

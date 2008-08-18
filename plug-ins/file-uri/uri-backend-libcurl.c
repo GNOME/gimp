@@ -54,7 +54,8 @@ uri_backend_init (const gchar  *plugin_name,
 
   if (curl_global_init (CURL_GLOBAL_ALL))
     {
-      g_set_error (error, 0, 0, _("Could not initialize libcurl"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("Could not initialize libcurl"));
       return FALSE;
     }
 
@@ -156,8 +157,9 @@ uri_backend_load_image (const gchar  *uri,
 
   if ((out_file = g_fopen (tmpname, "wb")) == NULL)
     {
-      g_set_error (error, 0, 0,
-                   _("Could not open output file for writing"));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename),  g_strerror (errno));
       return FALSE;
     }
 
@@ -182,7 +184,7 @@ uri_backend_load_image (const gchar  *uri,
   if ((result = curl_easy_perform (curl_handle)) != 0)
     {
       fclose (out_file);
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading: %s"),
                    uri, curl_easy_strerror (result));
       curl_easy_cleanup (curl_handle);
@@ -194,7 +196,7 @@ uri_backend_load_image (const gchar  *uri,
   if (response_code != 200)
     {
       fclose (out_file);
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Opening '%s' for reading resulted in HTTP "
                      "response code: %d"),
                    uri, response_code);
@@ -216,8 +218,7 @@ uri_backend_save_image (const gchar  *uri,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  g_set_error (error, 0, 0,
-               "EEK! uri_backend_save_image() should not have been called!");
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED, "not implemented");
 
   return FALSE;
 }
