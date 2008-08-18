@@ -699,7 +699,7 @@ load_image (const gchar  *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error while reading '%s'. File corrupted?"),
                    gimp_filename_to_utf8 (filename));
       return image;
