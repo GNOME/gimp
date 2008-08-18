@@ -60,7 +60,6 @@ libexec_PROGRAMS = \
 	colorify \
 	colormap-remap \
 	compose \
-	compressor \
 	contrast-normalize \
 	contrast-retinex \
 	contrast-stretch \
@@ -86,6 +85,7 @@ libexec_PROGRAMS = \
 	engrave \
 	$(FILE_AA) \
 	file-cel \
+	file-compressor \
 	file-csource \
 	file-desktop-link \
 	file-dicom \
@@ -585,19 +585,6 @@ compose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-compressor_SOURCES = \
-	compressor.c
-
-compressor_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 contrast_normalize_SOURCES = \
 	contrast-normalize.c
 
@@ -978,6 +965,19 @@ file_cel_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+file_compressor_SOURCES = \
+	file-compressor.c
+
+file_compressor_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
