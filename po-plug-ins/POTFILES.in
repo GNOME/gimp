@@ -30,7 +30,6 @@ plug-ins/common/color-to-alpha.c
 plug-ins/common/colorify.c
 plug-ins/common/colormap-remap.c
 plug-ins/common/compose.c
-plug-ins/common/compressor.c
 plug-ins/common/contrast-normalize.c
 plug-ins/common/contrast-retinex.c
 plug-ins/common/contrast-stretch-hsv.c
@@ -56,6 +55,7 @@ plug-ins/common/emboss.c
 plug-ins/common/engrave.c
 plug-ins/common/file-aa.c
 plug-ins/common/file-cel.c
+plug-ins/common/file-compressor.c
 plug-ins/common/file-csource.c
 plug-ins/common/file-desktop-link.c
 plug-ins/common/file-dicom.c
