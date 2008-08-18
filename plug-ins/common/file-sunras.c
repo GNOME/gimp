@@ -96,10 +96,12 @@ static void   run        (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static gint32 load_image (const gchar      *filename);
-static gint   save_image (const gchar      *filename,
-                          gint32            image_ID,
-                          gint32            drawable_ID);
+static gint32    load_image    (const gchar  *filename,
+                                GError      **error);
+static gboolean  save_image    (const gchar  *filename,
+                                gint32        image_ID,
+                                gint32        drawable_ID,
+                                GError      **error);
 
 static void   set_color_table  (gint32, L_SUNFILEHEADER *, const guchar *);
 static gint32 create_new_image (const gchar   *filename,
@@ -251,12 +253,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -269,7 +272,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
 	{
@@ -341,7 +344,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+                          &error))
 	    {
 	      /*  Store psvals data  */
 	      gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
@@ -360,12 +364,20 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   gint32 image_ID;
   FILE *ifp;
@@ -375,8 +387,9 @@ load_image (const gchar *filename)
   ifp = g_fopen (filename, "rb");
   if (!ifp)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -385,15 +398,18 @@ load_image (const gchar *filename)
   read_sun_header (ifp, &sunhdr);
   if (sunhdr.l_ras_magic != RAS_MAGIC)
     {
-      g_message (_("Could not open '%s' as SUN-raster-file"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not open '%s' as SUN-raster-file"),
+                   gimp_filename_to_utf8 (filename));
       fclose (ifp);
       return (-1);
     }
 
   if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
     {
-      g_message (_("The type of this SUN-rasterfile is not supported"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s",
+                   _("The type of this SUN-rasterfile is not supported"));
       fclose (ifp);
       return (-1);
     }
@@ -507,14 +523,15 @@ load_image (const gchar *filename)
 }
 
 
-static gint
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID)
+static gboolean
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            GError      **error)
 {
-  FILE* ofp;
+  FILE*         ofp;
   GimpImageType drawable_type;
-  gint retval;
+  gboolean      retval;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -541,8 +558,9 @@ save_image (const gchar *filename,
   ofp = g_fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

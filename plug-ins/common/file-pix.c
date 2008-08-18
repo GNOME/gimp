@@ -81,10 +81,12 @@ static void     run       (const gchar      *name,
 
 /* Local Helper Functions */
 
-static gint32   load_image (const gchar     *filename);
+static gint32   load_image (const gchar     *filename,
+                            GError         **error);
 static gboolean save_image (const gchar     *filename,
 			    gint32           image_ID,
-			    gint32           drawable_ID);
+			    gint32           drawable_ID,
+                            GError         **error);
 
 static guint16  get_short  (FILE            *file);
 static void     put_short  (guint16          value,
@@ -188,6 +190,7 @@ run (const gchar      *name,
   gint32            image_ID;
   gint32            drawable_ID;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  GError           *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -201,7 +204,7 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       /* Perform the image load */
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
 	{
@@ -242,7 +245,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+                            &error))
 	    {
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
@@ -254,6 +258,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -306,7 +317,8 @@ put_short (guint16  value,
  */
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   gint       i, j, tile_height, row;
   FILE      *file = NULL;
@@ -324,10 +336,12 @@ load_image (const gchar *filename)
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
   file = g_fopen (filename, "rb");
-  if (NULL == file)
+
+  if (! file)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -480,9 +494,10 @@ load_image (const gchar *filename)
  */
 
 static gboolean
-save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+save_image (const gchar  *filename,
+	    gint32        image_ID,
+	    gint32        drawable_ID,
+            GError      **error)
 {
   gint       depth, i, j, row, tile_height, writelen, rectHeight;
   gboolean   savingColor = TRUE;
@@ -503,10 +518,11 @@ save_image (const gchar *filename,
 
   /* Open the output file. */
   file = g_fopen (filename, "wb");
-  if (!file)
+  if (! file)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

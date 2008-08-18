@@ -99,13 +99,13 @@ static struct
 
 static gint num_useable_layers;
 
-static gchar *selection_modes[] = {"incremental",
-                                   "angular",
-                                   "random",
-                                   "velocity",
-                                   "pressure",
-                                   "xtilt",
-                                   "ytilt"};
+static const gchar *selection_modes[] = { "incremental",
+                                          "angular",
+                                          "random",
+                                          "velocity",
+                                          "pressure",
+                                          "xtilt",
+                                          "ytilt" };
 
 static GimpPixPipeParams gihparams;
 
@@ -139,18 +139,20 @@ static void   run      (const gchar      *name,
 			gint             *nreturn_vals,
 			GimpParam       **return_vals);
 
-static gint32    gih_load_image      (const gchar  *filename);
-static gboolean  gih_load_one_brush  (gint          fd,
-				      gint32        image_ID);
+static gint32    gih_load_image      (const gchar   *filename,
+                                      GError       **error);
+static gboolean  gih_load_one_brush  (gint           fd,
+				      gint32         image_ID);
 
-static gboolean  gih_save_dialog     (gint32        image_ID);
-static gboolean  gih_save_one_brush  (gint          fd,
-				      GimpPixelRgn *pixel_rgn,
-				      gchar        *name);
-static gboolean  gih_save_image      (const gchar  *filename,
-				      gint32        image_ID,
-				      gint32        orig_image_ID,
-				      gint32        drawable_ID);
+static gboolean  gih_save_dialog     (gint32         image_ID);
+static gboolean  gih_save_one_brush  (gint           fd,
+				      GimpPixelRgn  *pixel_rgn,
+				      gchar         *name);
+static gboolean  gih_save_image      (const gchar   *filename,
+				      gint32         image_ID,
+				      gint32         orig_image_ID,
+				      gint32         drawable_ID,
+                                      GError       **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -258,6 +260,7 @@ run (const gchar      *name,
   gchar             *layer_name;
   gint               i;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -271,7 +274,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = gih_load_image (param[1].data.d_string);
+      image_ID = gih_load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
 	{
@@ -337,7 +340,8 @@ run (const gchar      *name,
 	  if (gihparams.rows < 1) gihparams.rows = 1;
 	  if (gihparams.cols < 1) gihparams.cols = 1;
 
-	  gihparams.ncells = num_useable_layers * gihparams.rows * gihparams.cols;
+	  gihparams.ncells = (num_useable_layers *
+                              gihparams.rows * gihparams.cols);
 
 	  if (gihparams.cellwidth == 1 && gihparams.cellheight == 1)
 	    {
@@ -409,7 +413,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (gih_save_image (param[3].data.d_string,
-			      image_ID, orig_image_ID, drawable_ID))
+			      image_ID, orig_image_ID, drawable_ID, &error))
 	    {
 	      gimp_set_data (SAVE_PROC, &info, sizeof (info));
 	    }
@@ -425,6 +429,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -489,7 +500,7 @@ gih_load_one_brush (gint   fd,
       name = g_new (gchar, bn_size);
       if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP brush pipe file."));
+          g_message (_("Error in GIMP brush pipe file."));
 	  g_free (name);
 	  return FALSE;
 	}
@@ -630,7 +641,8 @@ gih_load_one_brush (gint   fd,
 }
 
 static gint32
-gih_load_image (const gchar *filename)
+gih_load_image (const gchar  *filename,
+                GError      **error)
 {
   gint     fd;
   gint     i;
@@ -646,8 +658,9 @@ gih_load_image (const gchar *filename)
 
   if (fd == -1)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -700,7 +713,9 @@ gih_load_image (const gchar *filename)
     {
       if (! gih_load_one_brush (fd, image_ID))
 	{
-	  g_message (_("Couldn't load one brush in the pipe, giving up."));
+	  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       "%s",
+                       _("Couldn't load one brush in the pipe, giving up."));
 	  close (fd);
 	  g_free (name);
 	  g_string_free (buffer, TRUE);
@@ -1228,21 +1243,22 @@ gih_save_one_brush (gint          fd,
 }
 
 static gboolean
-gih_save_image (const gchar *filename,
-		gint32       image_ID,
-		gint32       orig_image_ID,
-		gint32       drawable_ID)
+gih_save_image (const gchar  *filename,
+		gint32        image_ID,
+		gint32        orig_image_ID,
+		gint32        drawable_ID,
+                GError      **error)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
   GimpParasite *pipe_parasite;
-  gchar *header;
-  gchar *parstring;
+  gchar  *header;
+  gchar  *parstring;
   gint32 *layer_ID;
-  gint fd;
-  gint nlayers, layer, row, col;
-  gint imagew, imageh, offsetx, offsety;
-  gint k, x, y, thisx, thisy, xnext, ynext, thisw, thish;
+  gint    fd;
+  gint    nlayers, layer, row, col;
+  gint    imagew, imageh, offsetx, offsety;
+  gint    k, x, y, thisx, thisy, xnext, ynext, thisw, thish;
 
   if (gihparams.ncells < 1)
     return FALSE;
@@ -1255,8 +1271,9 @@ gih_save_image (const gchar *filename,
 
   if (fd == -1)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
