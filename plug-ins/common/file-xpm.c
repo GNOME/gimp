@@ -105,15 +105,16 @@ static void       run                 (const gchar      *name,
                                        gint             *nreturn_vals,
                                        GimpParam       **return_vals);
 
-static gint32     load_image          (const gchar      *filename);
+static gint32     load_image          (const gchar      *filename,
+                                       GError          **error);
 static guchar   * parse_colors        (XpmImage         *xpm_image);
 static void       parse_image         (gint32            image_ID,
                                        XpmImage         *xpm_image,
                                        guchar           *cmap);
 static gboolean   save_image          (const gchar      *filename,
                                        gint32            image_ID,
-                                       gint32            drawable_ID);
-
+                                       gint32            drawable_ID,
+                                       GError          **error);
 static gboolean   save_dialog         (void);
 
 
@@ -212,12 +213,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -231,7 +233,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -311,8 +313,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           if (save_image (param[3].data.d_string,
-                          image_ID,
-                          drawable_ID))
+                          image_ID, drawable_ID, &error))
             {
               gimp_set_data ("file_xpm_save", &xpmvals, sizeof (XpmSaveVals));
             }
@@ -330,11 +331,19 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   XpmImage  xpm_image;
   guchar   *cmap;
@@ -350,12 +359,14 @@ load_image (const gchar *filename)
       break;
 
     case XpmOpenFailed:
-      g_message (_("Error opening file '%s'"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error opening file '%s'"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
 
     case XpmFileInvalid:
-      g_message (_("XPM file invalid"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("XPM file invalid"));
       return -1;
 
     default:
@@ -578,9 +589,10 @@ create_colormap_from_hash (gpointer gkey,
 }
 
 static gboolean
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID)
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            GError      **error)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
@@ -604,7 +616,7 @@ save_image (const gchar *filename,
   gint       i, j, k;
   gint       threshold = xpmvals.threshold;
 
-  gboolean   rc = FALSE;
+  gboolean   success = FALSE;
 
   /* get some basic stats about the image */
   alpha   = gimp_drawable_has_alpha (drawable_ID);
@@ -690,6 +702,7 @@ save_image (const gchar *filename,
           gimp_progress_update ((gdouble) (i+j) / (gdouble) height);
         }
     }
+
   g_free (buffer);
 
   if (indexed)
@@ -747,8 +760,26 @@ save_image (const gchar *filename,
   image->data       = ibuff;
 
   /* do the save */
-  rc = (XpmWriteFileFromXpmImage ((char *) filename,
-                                  image, NULL) == XpmSuccess);
+  switch (XpmWriteFileFromXpmImage ((char *) filename, image, NULL))
+    {
+    case XpmSuccess:
+      success = TRUE;
+      break;
+
+    case XpmOpenFailed:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error opening file '%s'"),
+                   gimp_filename_to_utf8 (filename));
+      break;
+
+    case XpmFileInvalid:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", _("XPM file invalid"));
+      break;
+
+    default:
+      break;
+    }
 
   /* clean up resources */
   gimp_drawable_detach (drawable);
@@ -758,7 +789,7 @@ save_image (const gchar *filename,
   if (hash)
     g_hash_table_destroy (hash);
 
-  return rc;
+  return success;
 }
 
 static gboolean

@@ -1,5 +1,12 @@
 2008-08-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/file-xbm.c
+	* plug-ins/common/file-xpm.c
+	* plug-ins/common/file-xwd.c: for the most common errors, pass the
+	error message with the return values instead of calling g_message().
+
+2008-08-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/file-wmf.c: pass error message with the return
 	values instead of calling g_message().
 
