@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % entities SYSTEM "entities.docbook">
+%entities;
+<!ENTITY builddate SYSTEM "builddate.xml">
+]>
+
+<book id="pygimp-reference" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <bookinfo>
+    <pubdate>&builddate;</pubdate>
+    <title>PyGimp Reference Manual</title>
+    <edition>for version version;</edition>
+    <releaseinfo>for PyGimp version version;</releaseinfo>
+    <abstract>
+      <para>This reference describes the classes of the gimp python 
+module.</para>
+    </abstract>
+  </bookinfo>
+  <toc>
+  </toc>
+
+  <!--<xi:include href="pygimp-introduction.xml"/>-->
+
+  <xi:include href="pygimp-classes.xml"/>
+
+<!--
+  <index>
+    <title>Index</title>
+  </index>
+-->
+
+</book>

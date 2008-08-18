@@ -9,7 +9,7 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
-SUBDIRS = plug-ins
+SUBDIRS = plug-ins doc
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -122,7 +122,8 @@ pygimp_PYTHON = \
 	gimpshelf.py	\
 	gimpui.py	\
 	gimpthumb.py	\
-	gimpcolor.py
+	gimpcolor.py	\
+	gimpplugin2.py
 
 pygimp_DATA = pygimp-logo.png
 

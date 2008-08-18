@@ -1,0 +1,512 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-drawable">
+  <refmeta>
+    <refentrytitle>gimp.Drawable</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.Drawable</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.Drawable</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--attach-new-parasite">attach_new_parasite</link></methodname>
+        <methodparam><parameter>parasite</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--fill">fill</link></methodname>
+        <methodparam><parameter>fill_mode</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--flush">flush</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--get-pixel">get_pixel</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--get-pixel-rgn">get_pixel_rgn</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+        <methodparam><parameter>width</parameter></methodparam>
+        <methodparam><parameter>height</parameter></methodparam>
+        <methodparam><parameter>dirty</parameter><initializer>True</initializer></methodparam>
+        <methodparam><parameter>shadow</parameter><initializer>False</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--get-tile">get_tile</link></methodname>
+        <methodparam><parameter>shadow</parameter></methodparam>
+        <methodparam><parameter>row</parameter></methodparam>
+        <methodparam><parameter>colum</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--get-tile2">get_tile2</link></methodname>
+        <methodparam><parameter>shadow</parameter></methodparam>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--mask-intersect">mask_intersect</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--merge-shadow">merge_shadow</link></methodname>
+        <methodparam><parameter>undo</parameter><initializer>False</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--offset">offset</link></methodname>
+        <methodparam><parameter>wrap_around</parameter></methodparam>
+        <methodparam><parameter>fill_type</parameter></methodparam>
+        <methodparam><parameter>offset_x</parameter></methodparam>
+        <methodparam><parameter>offset_y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--parasite-attach">parasite_attach</link></methodname>
+        <methodparam><parameter>parasite</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--parasite-detach">parasite_detach</link></methodname>
+        <methodparam><parameter>parasite</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--parasite-find">parasite_find</link></methodname>
+        <methodparam><parameter>parasite_name</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--parasite-list">parasite_list</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--set-pixel">set_pixel</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+        <methodparam><parameter>value</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-drawable--set-pixel">update</link></methodname>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-drawable">
+    <title>Attributes</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"bpp"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable's bytes-per-pixel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"height"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable's height in pixel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_grey"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable is a grayscale type (Gray, GrayA).</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_indexed"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable is an indexed type (Indexed, IndexedA).</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_layer_mask"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable is a layer mas.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_rgb"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable is an RGB type (RGB, RGBA).</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"image"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The image to which the drawable is attached.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"name"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The drawable's name.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"linked"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The link state of the drawable.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"tattoo"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The drawable's tattoo.</para>
+                <para>A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"offsets"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>A 2-Tuple containing the drawable's x and y offset of the top left hand corner to it's image.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"has_alpha"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable has an alpha channel.</para>
+		<para>This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"mask_bounds"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The bounding box of the current selection in relation to the drawable.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"type"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable's type.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"type"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable's type with alpha.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"visible"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para><literal>True</literal> if the drawable is visible.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"type"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable's width in pixels.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+  <refsect1 id="methods-drawable">
+    <title>Methods</title>
+    <refsect2 id="method-drawable--fill">
+      <title>gimp.Drawable.fill</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>fill</methodname>
+      <methodparam>fill_mode</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>fill_mode</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The fill mode to use.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on success.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Fills the drawable with the specified fill mode.</para>
+      <para>This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined. This procedure is unlike the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--flush">
+      <title>gimp.Drawable.flush</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>flush</methodname>
+      </methodsynopsis></programlisting>
+      <para>This function causes all tile data in the tile list of the drawable to be transferred to the core. It is usually called in situations where a plug-in acts on a drawable, and then needs to read the results of its actions. Data transferred back from the core will not generally be valid unless gimp_drawable_flush() has been called beforehand.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--get-pixel">
+      <title>gimp.Drawable.fill</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get-pixel</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The x coordinate.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The y coordinate.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A string representing the pixel data. Each character of the string represents a byte of the color.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Gets the value of the pixel at the specified coordinates.</para>
+      <para>This procedure gets the pixel value at the specified coordinates. The pixel value is returned as a string. Each character of the string represents a byte of the color. For example if the drawable's mode is MODE_RGB then the first character is the red component of the color, the second character the green component and the third the blue.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--get-pixel-rgn">
+      <title>gimp.Drawable.get_pixel_rgn</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get_pixel_rgn</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      <methodparam>width</methodparam>
+      <methodparam>height</methodparam>
+      <methodparam>dirty<initializer>True</initializer></methodparam>
+      <methodparam>shadow<initializer>False</initializer></methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>width</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>height</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>dirty</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>shadow</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.PixelRgn</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Fills the drawable with the specified fill mode.</para>
+      <para>This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined. This procedure is unlike the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--get-tile">
+      <title>gimp.Drawable.get_tile</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get_tile</methodname>
+      <methodparam>shadow</methodparam>
+      <methodparam>col</methodparam>
+      <methodparam>row</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>shadow</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>row</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>col</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A gimp.Tile or <literal>None</literal></simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Gets a tile at (row, col). Either on or off the shadow buffer.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--get-tile2">
+      <title>gimp.Drawable.get_tile2</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get_tile2</methodname>
+      <methodparam>shadow</methodparam>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>shadow</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A gimp.Tile or <literal>None</literal></simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Gets the tile that contains the pixel (x, y).</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--mask-intersect">
+      <title>gimp.Drawable.mask_intersect</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>mask_intersect</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A 4-tuple containing the x and y coordinate, width and height of the intersection between the drawable and the selection.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Find the bounding box of the current selection in relation to the drawable.</para>
+      <para>This procedure returns whether there is an intersection between the drawable and the selection. Unlike gimp_drawable_mask_bounds(), the intersection's bounds are returned as a 4-tuple with x, y, width, height. If there is no selection the returned bounds are the extents of the whole drawable.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--merge-shadow">
+      <title>gimp.Drawable.merge_shadow</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>merge_shadow</methodname>
+      <methodparam>undo</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on success.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Merges the shadow buffer with the drawable.</para>
+      <para>This procedure combines the contents of the image's shadow buffer (for temporary processing) with the drawable. The <parameter>undo</parameter> parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.</para>
+    </refsect2>
+
+    <refsect2 id="method-drawable--offset">
+      <title>gimp.Drawable.offset</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>offset</methodname>
+      <methodparam>wrap_around</methodparam>
+      <methodparam>fill_type</methodparam>
+      <methodparam>offset_x</methodparam>
+      <methodparam>offset_y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>wrap_around</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>If <literal>True</literal> wrap image around else fill vacated regions. </simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>fill_type</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Fill vacated regions of the drawable with background or transparent. </simpara>
+            </listitem>
+        </varlistentry>        <varlistentry>
+          <term><parameter>offset_x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Offset the drawable by this ammount of pixels in the x direction.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Offset the drawable by this ammount of pixels in the y direction.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on success.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Offsets the drawable by the specified amounts in the x and y directions.</para>
+      <para>This procedure offsets the drawable by the amounts specified by <parameter>offset_x</parameter> and <parameter>offset_y</parameter>. If <parameter>wrap_around</parameter> is set to <literal>True</literal>, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the <parameter>fill_type</parameter> parameter..</para>
+    </refsect2>
+  </refsect1>
+</refentry>

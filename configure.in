@@ -1990,6 +1990,7 @@ plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/psd/Makefile
 plug-ins/pygimp/Makefile
+plug-ins/pygimp/doc/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile

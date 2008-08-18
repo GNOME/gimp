@@ -1,0 +1,129 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-pixel-fetcher">
+  <refmeta>
+    <refentrytitle>gimp.PixelFetcher</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.PixelFetcher</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.PixelFetcher</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-pixel-fetcher--get-pixel">get_pixel</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-pixel-fetcher--put-pixel">put_pixel</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+        <methodparam><parameter>value</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-pixel-fetcher">
+    <title>Attributes</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"bg_color"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para></para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"edge_mode"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para></para>
+              </entry>
+            </row>          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+  <refsect1 id="methods-pixel-fetcher">
+    <title>Methods</title>
+    <refsect2 id="method-pixel-fetcher--get_pixel">
+      <title>gimp.PixelFetcher.get_pixel</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get_pixel</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixels x position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixels y position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem>
+            <simpara>The pixel value at position x, y of the pixel fetcher's drawable.</simpara>
+           </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Returns the pixel value at position <parameter>x</parameter>, <parameter>y</parameter> of the pixel fetcher's drawable.</para>
+      <para>Returns a string who's length is equal to the bytes-per-pixel value of the fetcher's drawable. Each character represents one color channel.</para>
+    </refsect2>
+    <refsect2 id="method-pixel-fetcher--put_pixel">
+      <title>gimp.PixelFetcher.put_pixel</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>put_pixel</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      <methodparam>value</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixels x position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixels y position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>value</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The new pixels value.</simpara>
+            </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Sets the pixel value of the pixel fetcher's drawable to <parameter>value</parameter>.</para>
+      <para>Sets the pixel value of the pixel fetcher's drawable to <parameter>value</parameter>. <parameter>value</parameter> muss be a string with it's length equal to the pixel fetcher's drawable byte-per-pixel value. Each character of the sting represents one color channel.</para>
+    </refsect2>
+  </refsect1>
+</refentry>

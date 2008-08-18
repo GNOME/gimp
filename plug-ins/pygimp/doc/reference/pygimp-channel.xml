@@ -1,0 +1,199 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-channel">
+  <refmeta>
+    <refentrytitle>gimp.Channel</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.Channel</refname>
+      <refpurpose>Channel objects represent a Gimp Image's color channels.</refpurpose>
+  </refnamediv>
+
+  <refsect1 id="synopsis-channel">
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.Channel</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-channel--copy">copy</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-channel--combine-masks">combine_mask</link></methodname>
+        <methodparam><parameter>channel</parameter></methodparam>
+        <methodparam><parameter>operation</parameter></methodparam>
+        <methodparam><parameter>offset_x</parameter></methodparam>
+        <methodparam><parameter>offset_y</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="ancestry-channel">
+    <title>Ancestry</title>
+    <synopsis>
+      +-- <link linkend="class-drawable">gimp.Drawable</link>
+    </synopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-channel">
+    <title>Attributes</title>
+    <para><link linkend="attributes-drawable">gimp.Channel Attributes</link></para>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"color"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The channel's compositing color.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"opacity"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The channel's opacity.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"show_masked"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The channel's composite method. If it <literal>True</literal>, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+
+  <refsect1 id="description-channel">
+    <title>Description</title>
+    <para>Channel objects represent a Gimp Image's color channels.</para>
+  </refsect1>
+
+  <refsect1 id="constructor-channel">
+    <title>Constructor</title>
+    <programlisting><constructorsynopsis language="python">
+    <methodname>gimp.Channel</methodname>
+    <methodparam><parameter>image</parameter></methodparam>
+    <methodparam><parameter>name</parameter></methodparam>
+    <methodparam><parameter>width</parameter></methodparam>
+    <methodparam><parameter>height</parameter></methodparam>
+    <methodparam><parameter>type</parameter></methodparam>
+    <methodparam><parameter>opacity</parameter></methodparam>
+    <methodparam><parameter>color</parameter></methodparam>
+    </constructorsynopsis></programlisting>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>image</parameter>&nbsp;:</term>
+          <listitem><simpara>The image to which to add the channel.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>name</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's name.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>width</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's width.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>height</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's height.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>type</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's type.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>opacity</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's opacity.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>color</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's compositing color.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><emphasis>Returns</emphasis>&nbsp;:</term>
+        <listitem><simpara>A new gimp.Channel object.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+    <para>Creats a new channel object</para>
+    <para>Creates a new channel with the specified width and height. Name, opacity, and color are also supplied parameters. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with the <link linkend="gimp-image--add-channel">gimp.Image.add_channel</link> command. Other attributes such as channel show masked, should be set with explicitly. The channel's contents are undefined initially.</para>
+  </refsect1>
+
+  <refsect1 id="methods-channel">
+    <title>Methods</title>
+
+    <refsect2 id="method-channel--copy">
+      <title>gimp.Channel.copy</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>copy</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Channel which is a copy of this channel.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Copys the channel.</para>
+      <para>This procedure copies the channel and returns the copy.</para>
+    </refsect2>
+
+    <refsect2 id="method-channel--combine-masks">
+      <title>gimp.Channel.combine_masks</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>combine_masks</methodname>
+      <methodparam>channel</methodparam>
+      <methodparam>operation</methodparam>
+      <methodparam>offset_x</methodparam>
+      <methodparam>offset_y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>channel</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The channel to be combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>operation</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The selection operation. One of <link linkend="gimp-enums-gimp-chanel-ops">gimp.enums.GimpChannelOps</link></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The x offset between upper left corner of this channel and the one combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The y offset between upper left corner of this channel and the one combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Channel.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Combines two channel masks.</para>
+      <para>This method combines <parameter>channel</parameter> with this channel using <parameter>operation</parameter>. The result is stored in this channel.</para>
+    </refsect2>
+
+  </refsect1>
+</refentry>

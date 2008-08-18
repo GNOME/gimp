@@ -1,0 +1,151 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-pixel-rgn">
+  <refmeta>
+    <refentrytitle>gimp.PixelRgn</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.PixelRgn</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.PixelRgn</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-pixel-rgn--resize">resize</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+        <methodparam><parameter>width</parameter></methodparam>
+        <methodparam><parameter>height</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-pixel-rgn">
+    <title>Attributes</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"bpp"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's bytes-per-pixel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"dirty"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para></para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"drawable"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The drawable the pixel region was created for.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"h"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's height. in pixel</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"rowstride"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's number of bytes per pixel row.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"shadow"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the pixel region uses shadow tile as opposed to normal tiles. If you draw on the shadow tiles, you must call <link linked="gimp-drawable--merge-shadow">gimp.Drawable.merge_shadow()</link> for changes to take effect.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"w"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's width in pixel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"x"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's x offset relativ to it's drawable.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"y"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The pixel region's y offset relativ to it's drawable.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+
+  <refsect1 id="methods-pixel-rgn">
+    <title>Methods</title>
+    <refsect2 id="method-pixel-rgn--resize">
+      <title>gimp.PixelRgn.resize</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>resize</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      <methodparam>width</methodparam>
+      <methodparam>height</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixel region's new x offset.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixel region's new y offset.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>width</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixel region's new width.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>height</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixel region's new height.</simpara>
+            </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Changes the position and the size of the pixel region.</para>
+    </refsect2>
+  </refsect1>
+</refentry>

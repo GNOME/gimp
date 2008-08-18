@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<chapter id="pygimp-class-reference"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<title>The PyGimp Class Reference</title>
+
+<xi:include href="pygimp.xml"/>
+<xi:include href="pygimp-channel.xml"/>
+<xi:include href="pygimp-drawable.xml"/>
+<xi:include href="pygimp-image.xml"/>
+<xi:include href="pygimp-layer.xml"/>
+<xi:include href="pygimp-parasite.xml"/>
+<xi:include href="pygimp-pixel-rgn.xml"/>
+<xi:include href="pygimp-pixel-fetcher.xml"/>
+
+</chapter>

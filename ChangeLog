@@ -1,3 +1,35 @@
+2008-08-18  Lars-Peter Clausen  <lars@metafoo.de>
+
+	Add new documenation based on the pygobject documentation system.
+
+	* configure.in
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/doc/Makefile.am
+	* plug-ins/pygimp/doc/html
+	* plug-ins/pygimp/doc/html/style.css
+	* plug-ins/pygimp/doc/xsl
+	* plug-ins/pygimp/doc/xsl/ref-html-style.xsl
+	* plug-ins/pygimp/doc/xsl/fixxref.py.in
+	* plug-ins/pygimp/doc/xsl/html.xsl
+	* plug-ins/pygimp/doc/xsl/devhelp.xsl
+	* plug-ins/pygimp/doc/xsl/pdf-style.xsl
+	* plug-ins/pygimp/doc/xsl/common.xsl
+	* plug-ins/pygimp/doc/xsl/pdf.xsl
+	* plug-ins/pygimp/doc/Makefile.am
+	* plug-ins/pygimp/doc/reference
+	* plug-ins/pygimp/doc/reference/pygimp-classes.xml
+	* plug-ins/pygimp/doc/reference/pygimp-pixel-fetcher.xml
+	* plug-ins/pygimp/doc/reference/entities.docbook
+	* plug-ins/pygimp/doc/reference/pygimp-drawable.xml
+	* plug-ins/pygimp/doc/reference/pygimp.xml
+	* plug-ins/pygimp/doc/reference/pygimp-image.xml
+	* plug-ins/pygimp/doc/reference/pygimp-pixel-rgn.xml
+	* plug-ins/pygimp/doc/reference/entities.docbook.in
+	* plug-ins/pygimp/doc/reference/pygimp-channel.xml
+	* plug-ins/pygimp/doc/reference/pygimp-parasite.xml
+	* plug-ins/pygimp/doc/reference/pygimp-ref.xml
+	* plug-ins/pygimp/doc/reference/pygimp-layer.xml
+
 2008-07-29  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpfu.py: Refactored the interactive mode code. Moved all

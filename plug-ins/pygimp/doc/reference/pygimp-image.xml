@@ -1,0 +1,537 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-image">
+  <refmeta>
+    <refentrytitle>gimp.Image</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.Image</refname>
+      <refpurpose>This is the object that represents an open image.</refpurpose>
+  </refnamediv>
+
+  <refsect1 id="synopsis-image">
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.Image</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--add-channel">add_channel</link></methodname>
+        <methodparam><parameter>channel</parameter></methodparam>
+        <methodparam><parameter>position</parameter><initializer>-1</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--add-hguide">add_hguide</link></methodname>
+        <methodparam><parameter>ypos</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--add-layer">add_layer</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+        <methodparam><parameter>position</parameter><initializer>-1</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--add-vguide">add_vguide</link></methodname>
+        <methodparam><parameter>xpos</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--attach-new-parasite">attach_new_parasite</link></methodname>
+        <methodparam><parameter>name</parameter></methodparam>
+        <methodparam><parameter>flags</parameter></methodparam>
+        <methodparam><parameter>data</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--attach-new-parasite">attach_new_parasite</link></methodname>
+        <methodparam><parameter>name</parameter></methodparam>
+        <methodparam><parameter>flags</parameter></methodparam>
+        <methodparam><parameter>data</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--clean-all">clean_all</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--crop">crop</link></methodname>
+        <methodparam><parameter>width</parameter></methodparam>
+        <methodparam><parameter>height</parameter></methodparam>
+        <methodparam><parameter>offset_x</parameter></methodparam>
+        <methodparam><parameter>offset_y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--delete-guid">delete_guide</link></methodname>
+        <methodparam><parameter>guide</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--disable-undo">disable_undo</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--duplicate">duplicate</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--enable-undo">enable_undo</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--find-next-guid">find_next_guide</link></methodname>
+        <methodparam><parameter>guide</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--flatten">flatten</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--free-shadow">free_shadow</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-channel-by-tattoo">get_channel_by_tattoo</link></methodname>
+        <methodparam><parameter>tatoo</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-component-active">get_component_active</link></methodname>
+        <methodparam><parameter>component</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-component-visible">get_component_visible</link></methodname>
+        <methodparam><parameter>component</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-guide-orientation">get_guide_orientation</link></methodname>
+        <methodparam><parameter>guide</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-guide-position">get_guide_position</link></methodname>
+        <methodparam><parameter>guide</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--get-layer-by-tattoo">get_layer_by_tattoo</link></methodname>
+        <methodparam><parameter>tattoo</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--lower-channel">lower_channel</link></methodname>
+        <methodparam><parameter>channel</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--lower-layer">lower_layer</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--lower-layer-to-bottom">lower_layar_to_bottom</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--merge-down">merge_down</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+        <methodparam><parameter>type</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--merge-visible-layers">merge_visible_layers</link></methodname>
+        <methodparam><parameter>type</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--new-layer">new_layer</link></methodname>
+        <methodparam><parameter>name</parameter><initializer>"New Layer"</initializer></methodparam>
+        <methodparam><parameter>width</parameter><initializer>-1</initializer></methodparam>
+        <methodparam><parameter>height</parameter><initializer>-1</initializer></methodparam>
+        <methodparam><parameter>offset_x</parameter><initializer>-1</initializer></methodparam>
+        <methodparam><parameter>offset_y</parameter><initializer>-1</initializer></methodparam>
+        <methodparam><parameter>alpha</parameter><initializer>True</initializer></methodparam>
+        <methodparam><parameter>pos</parameter><initializer>-1</initializer></methodparam>
+        <methodparam><parameter>opacity</parameter><initializer>100.0</initializer></methodparam>
+        <methodparam><parameter>mode</parameter><initializer>gimp.enums.NORMAL_MODE</initializer></methodparam>
+        <methodparam><parameter>fill_mode</parameter><initializer>-1</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--parasite-attach">parasite_attach</link></methodname>
+        <methodparam><parameter>parasite</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--parasite-detach">parasite_detach</link></methodname>
+        <methodparam><parameter>parasite</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--parasite-find">parasite_find</link></methodname>
+        <methodparam><parameter>parasite_name</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--parasite-list">parasite_list</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--pick-correlate-layer">pick_correlate_layer</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--raise-channel">raise_channel</link></methodname>
+        <methodparam><parameter>channel</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--raise-layer">raise_layer</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--raise-layer-to-top">raise_layer_to_top</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--remove-channel">remove_channel</link></methodname>
+        <methodparam><parameter>channel</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--remove-layer">remove_layer</link></methodname>
+        <methodparam><parameter>layer</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--resize-to-layers">resize_to_layers</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--scale">scale</link></methodname>
+        <methodparam><parameter>new_width</parameter></methodparam>
+        <methodparam><parameter>new_width</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--set-component-active">set_component_active</link></methodname>
+        <methodparam><parameter>component</parameter></methodparam>
+        <methodparam><parameter>active</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--set-component-visible">set_component_visible</link></methodname>
+        <methodparam><parameter>component</parameter></methodparam>
+        <methodparam><parameter>visible</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--undo-freeze">undo_freeze</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--undo-group-end">undo_group_end</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--undo-group-start">undo_group_start</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--undo-is-enabled">undo_is_enabled</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--undo-thaw">undo_thaw</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-image--unset-active-channel">unset_active_channel</link></methodname>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="ancestry-image">
+  </refsect1>
+
+  <refsect1 id="attributes-image">
+    <title>Attributes</title>
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"active_channel"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's active channel, or <literal>None</literal> if there is no active channel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"active_drawable"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's active drawable, or None if there is no active drawable.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"active_layer"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's active layer, or <literal>None</literal> if there is no active layer.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"base_type"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>This is the type of the image (eg RGB, INDEXED).</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"channels"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>A list of <link linked="gimp-channel">gimp.Channel</link> objects which containins the channels of the image.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"colormap"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's color map.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"dirty"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the dirty flag is set on the image.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"filename"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's filename. A file load or save handler might assign to this.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"floating_sel_attached_to"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The layer to which the floating selection is attached to, or <literal>None</literal>.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"floating_selection"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The floating selection layer, or <literal>None</literal> if there is no floating selection.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"height"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The image's height in pixel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"layers"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>A list of <link linked="gimp-layer">gimp.Layer</link> objects which containins the layers of the image..</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"name"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's name.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"resolution"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's resolution.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"selection"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The image's selection mask.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"tattoo_state"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The image's tattoo_state.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"unit"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The image's unit.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"vectors"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>A list of <link linked="gimp-layer">gimp.Vectors</link> objects which containins the vectors of the image..</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"width"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The image's width in pixel.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+
+  <refsect1 id="description-image">
+    <title>Description</title>
+    <para>Channel objects represent a Gimp Image's color channels.</para>
+  </refsect1>
+
+  <refsect1 id="constructor-image">
+    <title>Constructor</title>
+    <programlisting><constructorsynopsis language="python">
+    <methodname>gimp.Image</methodname>
+    <methodparam><parameter>image</parameter></methodparam>
+    <methodparam><parameter>name</parameter></methodparam>
+    <methodparam><parameter>width</parameter></methodparam>
+    <methodparam><parameter>height</parameter></methodparam>
+    <methodparam><parameter>type</parameter></methodparam>
+    <methodparam><parameter>opacity</parameter></methodparam>
+    <methodparam><parameter>color</parameter></methodparam>
+    </constructorsynopsis></programlisting>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>image</parameter>&nbsp;:</term>
+          <listitem><simpara>The image to which to add the channel.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>name</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's name.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>width</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's width.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>height</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's height.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>type</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's type.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>opacity</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's opacity.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>color</parameter>&nbsp;:</term>
+          <listitem><simpara>The channel's compositing color.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><emphasis>Returns</emphasis>&nbsp;:</term>
+        <listitem><simpara>A new gimp.Image object.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+    <para>Creats a new channel object</para>
+    <para>Creates a new channel with the specified width and height. Name, opacity, and color are also supplied parameters. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with the <link linkend="gimp-image--add-image">gimp.Image.add_channel</link> command. Other attributes such as channel show masked, should be set with explicitly. The channel's contents are undefined initially.</para>
+  </refsect1>
+
+  <refsect1 id="methods-image">
+    <title>Methods</title>
+
+    <refsect2 id="method-image--copy">
+      <title>gimp.Image.copy</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>copy</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Image which is a copy of this channel.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Copys the channel.</para>
+      <para>This procedure copies the channel and returns the copy.</para>
+    </refsect2>
+
+    <refsect2 id="method-image--combine-masks">
+      <title>gimp.Image.combine_masks</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>combine_masks</methodname>
+      <methodparam>channel</methodparam>
+      <methodparam>operation</methodparam>
+      <methodparam>offset_x</methodparam>
+      <methodparam>offset_y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>channel</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The channel to be combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>operation</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The selection operation. One of <link linkend="gimp-enums-gimp-chanel-ops">gimp.enums.GimpChannelOps</link></simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The x offset between upper left corner of this channel and the one combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The y offset between upper left corner of this channel and the one combined with.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Image.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Combines two channel masks.</para>
+      <para>This method combines <parameter>channel</parameter> with this channel using <parameter>operation</parameter>. The result is stored in this channel.</para>
+    </refsect2>
+
+  </refsect1>
+</refentry>

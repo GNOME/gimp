@@ -1,0 +1,145 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-parasite">
+  <refmeta>
+    <refentrytitle>gimp.Parasite</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.Parasite</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.Parasite</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-parasite--copy">copy</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-parasite--is-type">is_type</link></methodname>
+        <methodparam><parameter>name</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-parasite--has-flag">has_flag</link></methodname>
+        <methodparam><parameter>flag</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-parasite">
+    <title>Attributes</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"data"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The parasite's data.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"flags"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The parasite's flags.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_persistent"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the parasite is persistent.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_undoable"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para><literal>True</literal> if the parasite can be undone.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"name"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The parasite's name.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+  <refsect1 id="methods-parasite">
+    <title>Methods</title>
+    <refsect2 id="method-parasite--copy">
+      <title>gimp.Parasite.get_pixel</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>get_pixel</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem>
+            <simpara>A newly created gimp.Parasite which is a copy of this parasite.</simpara>
+           </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Returns the pixel value at position <parameter>x</parameter>, <parameter>y</parameter> of the pixel fetcher's drawable.</para>
+      <para>Returns a string who's length is equal to the bytes-per-pixel value of the fetcher's drawable. Each character represents one color channel.</para>
+    </refsect2>
+    <refsect2 id="method-parasite--put_pixel">
+      <title>gimp.Parasite.put_pixel</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>put_pixel</methodname>
+      <methodparam>x</methodparam>
+      <methodparam>y</methodparam>
+      <methodparam>value</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>x</parameter>&nbsp;:</term>
+            <listitem>      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-parasite--put-pixel">is_type</link></methodname>
+        <methodparam><parameter>name</parameter></methodparam>
+      </methodsynopsis>
+
+              <simpara>The pixels x position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The pixels y position.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>value</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The new pixels value.</simpara>
+            </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Sets the pixel value of the pixel fetcher's drawable to <parameter>value</parameter>.</para>
+      <para>Sets the pixel value of the pixel fetcher's drawable to <parameter>value</parameter>. <parameter>value</parameter> muss be a string with it's length equal to the pixel fetcher's drawable byte-per-pixel value. Each character of the sting represents one color channel.</para>
+    </refsect2>
+  </refsect1>
+</refentry>

@@ -1,0 +1,430 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="class-layer">
+  <refmeta>
+    <refentrytitle>gimp.Layer</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp.Layer</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+  <refsect1 id="synopsis-layer">
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>gimp.Layer</classname></ooclass>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--add-alpha">add_alpha</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--add-mask">add_mask</link></methodname>
+        <methodparam><parameter>mask</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--copy">copy</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--create-mask">create_mask</link></methodname>
+        <methodparam><parameter>mask_type</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--remove-mask">remove_mask</link></methodname>
+        <methodparam><parameter>mode</parameter></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--resize">resize</link></methodname>
+        <methodparam><parameter>new_width</parameter></methodparam>
+        <methodparam><parameter>new_height</parameter></methodparam>
+        <methodparam><parameter>x_offset</parameter><initializer>0</initializer></methodparam>
+        <methodparam><parameter>y_offset</parameter><initializer>0</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--resize-to-image-size">resize_to_image_size</link></methodname>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--scale">scale</link></methodname>
+        <methodparam><parameter>new_width</parameter></methodparam>
+        <methodparam><parameter>new_height</parameter></methodparam>
+        <methodparam><parameter>local_origin</parameter><initializer>False</initializer></methodparam>
+      </methodsynopsis>
+      <methodsynopsis language="python">
+        <methodname><link
+linkend="method-layer--set-offsets">set_offsets</link></methodname>
+        <methodparam><parameter>x</parameter></methodparam>
+        <methodparam><parameter>y</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+  <refsect1 id="ancestry-layer">
+    <title>Ancestry</title>
+    <synopsis>
+      +-- <link linkend="class-drawable">gimp.Drawable</link>
+    </synopsis>
+  </refsect1>
+
+  <refsect1 id="attributes-layer">
+    <title>Attributes</title>
+    <para><link linkend="attributes-drawable">gimp.Layer Attributes</link></para>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+        <tgroup cols="3">
+          <colspec column="1" colwidth="1in"/>
+          <colspec column="2" colwidth="1in"/>
+          <colspec column="3" colwidth="4in"/>
+          <tbody>
+            <row valign="top">
+              <entry>"apply_mask"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>True if the layer's mask is currently affecting the alpha channel.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"edit_mask"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>True if the layer or it's mask is currently active for editing.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"mask"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>The layer's mask or None if none exists.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"mode"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The layer's combination mode.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"opacity"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The layer's opacity.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"show_mask"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>True if the layer or its mask is visible.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"is_floating_sel"</entry>
+              <entry>Read</entry>
+              <entry>
+                <para>True if the layer is a floating selection.</para>
+              </entry>
+            </row>
+            <row valign="top">
+              <entry>"lock_alpha"</entry>
+              <entry>Read/Write</entry>
+              <entry>
+                <para>The lock alpha channel setting of the layer.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+  </refsect1>
+
+  <refsect1 id="description-layer">
+    <title>Description</title>
+    <para>Layer objects represent the layers of a Gimp image.</para>
+  </refsect1>
+
+  <refsect1 id="constructor-layer">
+    <title>Constructor</title>
+    <programlisting><constructorsynopsis language="python">
+    <methodname>gimp.Layer</methodname>
+    <methodparam><parameter>image</parameter></methodparam>
+    <methodparam><parameter>name</parameter></methodparam>
+    <methodparam><parameter>width</parameter></methodparam>
+    <methodparam><parameter>height</parameter></methodparam>
+    <methodparam><parameter>type</parameter><initializer>gimp.enums.RGB_IMAGE</initializer></methodparam>
+    <methodparam><parameter>opacity</parameter><initializer>100.0</initializer></methodparam>
+    <methodparam><parameter>mode</parameter><initializer>gimp.enums.NORMAL_MODE</initializer></methodparam>
+    </constructorsynopsis></programlisting>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>image</parameter>&nbsp;:</term>
+          <listitem><simpara>The image to which to add the layer.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>name</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's name.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>width</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's width.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>height</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's height.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>type</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's type.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>opacity</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's opacity.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><parameter>mode</parameter>&nbsp;:</term>
+          <listitem><simpara>The layer's combination mode.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><emphasis>Returns</emphasis>&nbsp;:</term>
+        <listitem><simpara>A new gimp.Layer object.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+    <para>Creats a new layer object</para>
+    <para>This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the <link linkend="method-image--add-layer">gimp.Image.add_layer</link> method. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.</para>
+
+  </refsect1>
+
+  <refsect1 id="methods-layer">
+    <title>Methods</title>
+    <refsect2 id="method-layer--add-alpha">
+      <title>gimp.Layer.add_alpha</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>add_alpha</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on success.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Adds an alpha channel to the layer if it doesn't already have one.</para>
+      <para>This procedure adds an additional component to the layer if it does not already possess an alpha channel. An alpha channel makes it possible to clear and erase to transparency, instead of the background color. This transforms layers of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--add-mask">
+      <title>gimp.Layer.add_mask</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>add_mask</methodname>
+      <methodparam>mask</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>mask</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The mask to add to the layer.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on success.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Adds a layer mask to the layer.</para>
+      <para>This procedure adds a layer mask to the layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the method <link linkend="method-layer--create-mask">create_mask</link>.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--copy">
+      <title>gimp.Layer.copy</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>copy</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Layer which is a copy of this layer.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Copys the layer.</para>
+      <para>This procedure copies the layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--create-mask">
+      <title>gimp.Layer.create_mask</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>create_mask</methodname>
+      <methodparam>mask_type</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>mask_type</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>The type of the created mask.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara>A newly created gimp.Channel.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Creates a layer mask for the layer.</para>
+      <para>This procedure creates a layer mask for the layer. Layer masks serve as an additional alpha channel for a layer. A number of different types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to <link linkend="method-layer--add-mask">add_mask</link>.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--remove-mask">
+      <title>gimp.Layer.remove_mask</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>remove_mask</methodname>
+      <methodparam>mask_type</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>mode</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Removal mode.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on succsess.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Removes the specified layer mask from the layer.</para>
+      <para>This procedure removes the specified layer mask from the layer.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--resize">
+      <title>gimp.Layer.resize</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>resize</methodname>
+      <methodparam>new_width</methodparam>
+      <methodparam>new_height</methodparam>
+      <methodparam>offset_x<initializer>0</initializer></methodparam>
+      <methodparam>offset_y<initializer>0</initializer></methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>new_width</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>New layer width in pixels.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>new_height</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>New layer height in pixels.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>x offset between upper left corner of old and new layers: (old - new).</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>y offset between upper left corner of old and new layers: (old - new).</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on succsess.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Resizes the layer to the specified extents.</para>
+      <para>This procedure resizes the layer so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--resize-to-image-size">
+      <title>gimp.Layer.resize_to_image_size</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>resize_to_image_size</methodname>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on succsess.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Resize a layer to the image size.</para>
+      <para>This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--scale">
+      <title>gimp.Layer.scale</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>scale</methodname>
+      <methodparam>new_width</methodparam>
+      <methodparam>new_height</methodparam>
+      <methodparam>local_origin<initializer>False</initializer></methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>new_width</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>New layer width in pixels.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>new_height</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>New layer height in pixels.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>local_origin</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>If <literal>True</literal> use a local origin (as opposed to the image origin).</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on succsess.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Scales the layer to the specified extents.</para>
+      <para>This procedure scales the layer so that its new width and height are equal to the supplied parameters. The <parameter>local_origin</parameter> parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.</para>
+    </refsect2>
+
+    <refsect2 id="method-layer--set-offsets">
+      <title>gimp.Layer.set_offsets</title>
+      <programlisting><methodsynopsis language="python">
+      <methodname>set_offsets</methodname>
+      <methodparam>offset_x</methodparam>
+      <methodparam>offset_y</methodparam>
+      </methodsynopsis></programlisting>
+      <variablelist>
+        <varlistentry>
+          <term><parameter>offset_x</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Offset in x direction.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><parameter>offset_y</parameter>&nbsp;:</term>
+            <listitem>
+              <simpara>Offset in y direction.</simpara>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><emphasis>Returns</emphasis>&nbsp;:</term>
+          <listitem><simpara><literal>True</literal> on succsess.</simpara></listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Sets the layer offsets.</para>
+      <para>This procedure sets the offsets for the layer. The offsets are relative to the image origin and can be any values. This operation is valid only on layers which have been added to an image.</para>
+    </refsect2>
+  </refsect1>
+</refentry>

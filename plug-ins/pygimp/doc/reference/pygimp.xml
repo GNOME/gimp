@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="module-gimp">
+  <refmeta>
+    <refentrytitle>gimp</refentrytitle>
+    <manvolnum>3</manvolnum>
+    <refmiscinfo>PyGimp Docs</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>gimp</refname>
+      <refpurpose></refpurpose>
+  </refnamediv>
+
+</refentry>
