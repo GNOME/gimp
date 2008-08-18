@@ -113,10 +113,13 @@ static int               mmap_read         (gint              fd,
                                             gint32            len,
                                             gint32            pos,
                                             gint              rowstride);
-static gint32            load_image        (const gchar      *filename);
+
+static gint32            load_image        (const gchar      *filename,
+                                            GError          **error);
 static GimpPDBStatusType save_image        (const gchar      *filename,
                                             gint32            image_id,
-                                            gint32            drawable_id);
+                                            gint32            drawable_id,
+                                            GError          **error);
 
 /* gui functions */
 static void              preview_update    (GimpPreviewArea   *preview);
@@ -207,11 +210,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_id;
-  gint32            drawable_id;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL; 
+  gint32             image_id;
+  gint32             drawable_id;
 
   run_mode = param[0].data.d_int32;
 
@@ -240,9 +244,12 @@ run (const gchar      *name,
 
           if (preview_fd < 0)
             {
-              g_message (_("Could not open '%s' for reading: %s"),
-                         gimp_filename_to_utf8 (param[1].data.d_string),
-                         g_strerror (errno));
+              g_set_error (&error,
+                           G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Could not open '%s' for reading: %s"),
+                           gimp_filename_to_utf8 (param[1].data.d_string),
+                           g_strerror (errno));
+
               status = GIMP_PDB_EXECUTION_ERROR;
             }
           else
@@ -265,7 +272,7 @@ run (const gchar      *name,
       /* we are okay, and the user clicked OK in the load dialog */
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_id = load_image (param[1].data.d_string);
+          image_id = load_image (param[1].data.d_string, &error);
 
           if (image_id != -1)
             {
@@ -310,12 +317,21 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = save_image (param[3].data.d_string, image_id, drawable_id);
+          status = save_image (param[3].data.d_string, image_id, drawable_id,
+                               &error);
         }
     }
 
-  values[0].data.d_status = status;
   g_free (runtime);
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
+  values[0].data.d_status = status;
 }
 
 
@@ -487,7 +503,8 @@ raw_load_palette (RawGimpData *data,
 static GimpPDBStatusType
 save_image (const gchar  *filename,
             gint32        image_id,
-            gint32        drawable_id)
+            gint32        drawable_id,
+            GError      **error)
 {
   GimpDrawable     *drawable;
   GimpPixelRgn      pixel_rgn;
@@ -525,8 +542,9 @@ save_image (const gchar  *filename,
 
   if (! fp)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -552,8 +570,9 @@ save_image (const gchar  *filename,
 
           if (! fp)
             {
-              g_message (_("Could not open '%s' for writing: %s"),
-                         gimp_filename_to_utf8 (newfile), g_strerror (errno));
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Could not open '%s' for writing: %s"),
+                           gimp_filename_to_utf8 (newfile), g_strerror (errno));
               return GIMP_PDB_EXECUTION_ERROR;
             }
 
@@ -628,7 +647,8 @@ save_image (const gchar  *filename,
 }
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   RawGimpData       *data;
   gint32             layer_id = -1;
@@ -642,8 +662,9 @@ load_image (const gchar *filename)
   data->fp = g_fopen (filename, "rb");
   if (! data->fp)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 

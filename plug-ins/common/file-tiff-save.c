@@ -108,7 +108,8 @@ static gboolean  save_paths             (TIFF         *tif,
 static gboolean  save_image             (const gchar  *filename,
                                          gint32        image,
                                          gint32        drawable,
-                                         gint32        orig_image);
+                                         gint32        orig_image,
+                                         GError      **error);
 
 static gboolean  save_dialog            (gboolean      has_alpha,
                                          gboolean      is_monochrome);
@@ -218,6 +219,7 @@ run (const gchar      *name,
   gint32             drawable;
   gint32             orig_image;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -341,7 +343,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image, drawable, orig_image))
+          if (save_image (param[3].data.d_string, image, drawable, orig_image,
+                          &error))
             {
               /*  Store mvals data  */
               gimp_set_data (SAVE_PROC, &tsvals, sizeof (TiffSaveVals));
@@ -358,6 +361,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -617,10 +627,11 @@ save_paths (TIFF   *tif,
 */
 
 static gboolean
-save_image (const gchar *filename,
-            gint32       image,
-            gint32       layer,
-            gint32       orig_image)  /* the export function might have created a duplicate */
+save_image (const gchar  *filename,
+            gint32        image,
+            gint32        layer,
+            gint32        orig_image,  /* the export function might have */
+            GError      **error)       /* created a duplicate            */
 {
   TIFF          *tif;
   gushort        red[256];
@@ -668,8 +679,9 @@ save_image (const gchar *filename,
 
   if (fd == -1)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -769,7 +781,9 @@ save_image (const gchar *filename,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_message ("TIFF save cannot handle indexed images with alpha channel.");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s",
+                   "TIFF save cannot handle indexed images with alpha channel.");
     default:
       return FALSE;
     }
