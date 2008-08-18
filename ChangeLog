@@ -1,4 +1,11 @@
-2008-08-06  Daniel Eddeland <danedde@svn.gnome.org>
+2008-08-18  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* menus/text-tool-menu.xml
+	* app/tools/gimptexttool.c
+	* app/tools/gimptexttool.h: Fixed some warnings and bad
+	functions in text-tool and its context menu
+
+2008-08-16  Daniel Eddeland <danedde@svn.gnome.org>
 
 	Merged 26402:26609 from trunk
 

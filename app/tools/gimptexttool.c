@@ -643,7 +643,6 @@ gimp_text_tool_motion (GimpTool        *tool,
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   if (text_tool->text_cursor_changing)
     {
-/*      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));*/
       if (text_tool->layout)
         {
           GimpItem   *item = GIMP_ITEM (text_tool->layer);
@@ -798,8 +797,6 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  /* FIXME: should do something fancy here... */
-
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
   if (tool->display == display)
@@ -829,8 +826,6 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
       gimp_rectangle_tool_cursor_update (tool, coords, state, display);
     }
   }
-
-
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
@@ -1316,35 +1311,38 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
   GtkWidget         *im_menu;
+  GtkWidget         *im_menuitem;
 
   if (gimp_tool_control_get_wants_all_key_events (tool->control))
       return;
 
   gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
-
   gimp_tool_control_set_show_context_menu (tool->control, TRUE);
 
   gtk_im_context_set_client_window (text_tool->im_context,
                                     GIMP_DISPLAY_SHELL (tool->display->shell)->canvas->window);
   gtk_im_context_focus_in (text_tool->im_context);
 
-
-
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
   text_tool->ui_manager = gimp_menu_factory_manager_new (dialog_factory->menu_factory,
                                                          "<TextTool>",
                                                          text_tool, FALSE);
 
-  im_menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
-                                       "/text-tool-popup/text-tool-input-methods")  ));
+  im_menuitem = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
+                                         "/text-tool-popup/text-tool-input-methods");
+  im_menu = gtk_menu_new ();
 
   gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context), GTK_MENU_SHELL (im_menu));
-
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (im_menuitem), im_menu);
+  gtk_widget_show (im_menuitem);
+  
   g_signal_connect (text_tool, "show-popup",
                     G_CALLBACK (gimp_text_tool_show_context_menu), NULL);
-/*
+
   if (!text_tool->layer) {gimp_text_tool_create_layer (text_tool, NULL); printf ("1\n");}
-  if (!text_tool->layer->text) printf ("2\n");
+  gimp_text_tool_update_layout (text_tool);
+
+/*  if (!text_tool->layer->text) printf ("2\n");
   if (!text_tool->layout) {printf ("3\n"); return;}
   if (!text_tool->layout->layout) printf ("4\n");
   */
@@ -1932,18 +1930,23 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_draw (draw_tool);
 
-  if (!text_tool->layer) return;
-  if (!text_tool->layer->text) return;
+  if (!text_tool->layer) {/* printf("d1\n");*/
+      return;}
+  /*
+  if (!text_tool->layer->text){/* printf("d2\n");*/
+/*    return;}
   /* There will be no layout if the function is called from the wrong place*/
-  if (!text_tool->layout) return;
-  if (!text_tool->layout->layout) return;
+  if (!text_tool->layout){/* printf("d3\n");*/
+      return;}
+  if (!text_tool->layout->layout){/* printf("d4\n");*/
+      return;}
 
   /*Turn on clipping for text-cursor and selections*/
   cliprect.x = x1;
   cliprect.width = x2 - x1;
   cliprect.y = y1;
   cliprect.height = y2 - y1;
-  gimp_canvas_set_clip_rect (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas,
+  gimp_canvas_set_clip_rect (GIMP_CANVAS (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas),
                              GIMP_CANVAS_STYLE_XOR, &cliprect);
 
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
@@ -2063,7 +2066,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       pango_layout_iter_free (line_iter);
     }
-  gimp_canvas_set_clip_rect (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas,
+  gimp_canvas_set_clip_rect (GIMP_CANVAS (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas),
                              GIMP_CANVAS_STYLE_XOR, NULL);
 }
 
@@ -2202,11 +2205,10 @@ gimp_text_tool_show_context_menu (GimpTool *tool, GimpCoords *coords)
 void
 gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
 {
+  GimpTool *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
-  GdkAtom       clipboard_atom;
 
-  clipboard_atom = gdk_atom_intern ("CLIPBOARD", FALSE);
-  clipboard = gtk_clipboard_get (clipboard_atom);
+  clipboard = gtk_widget_get_clipboard (tool->display->shell, GDK_SELECTION_CLIPBOARD);
   gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
   gimp_text_tool_update_proxy (text_tool);
 }
@@ -2214,18 +2216,32 @@ gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
 void
 gimp_text_tool_clipboard_copy (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
 {
+  GimpTool *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  clipboard = gtk_clipboard_get (gdk_atom_intern ("CLIPBOARD", FALSE));
+  if (use_CLIPBOARD)
+    clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                          GDK_SELECTION_CLIPBOARD);
+  else
+    clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                          GDK_SELECTION_CLIPBOARD);
+
   gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
 }
 
 void
 gimp_text_tool_clipboard_paste (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
 {
+  GimpTool *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  clipboard = gtk_clipboard_get (gdk_atom_intern ("CLIPBOARD", FALSE));
+  if (use_CLIPBOARD)
+    clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                          GDK_SELECTION_CLIPBOARD);
+  else
+    clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                          GDK_SELECTION_CLIPBOARD);
+
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
   gimp_text_tool_update_proxy (text_tool);
 }

@@ -54,7 +54,7 @@ struct _GimpTextTool
 
   GtkWidget     *editor;
   GtkWidget     *confirm_dialog;
-  GtkWidget     *ui_manager;
+  GimpUIManager *ui_manager;
   GtkIMContext  *im_context;
 
   gboolean       needs_im_reset;
