@@ -68,8 +68,6 @@ struct _GimpPlugIn
 
   GList               *temp_proc_frames;
 
-  GimpPDBErrorHandler  error_handler;
-
   GimpPlugInDef       *plug_in_def;     /*  Valid during query() and init()   */
 };
 

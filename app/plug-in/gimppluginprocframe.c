@@ -81,6 +81,7 @@ gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
   proc_frame->progress_created   = FALSE;
   proc_frame->progress_cancel_id = 0;
+  proc_frame->error_handler      = GIMP_PDB_ERROR_HANDLER_INTERNAL;
 
   if (progress)
     gimp_plug_in_progress_attach (progress);

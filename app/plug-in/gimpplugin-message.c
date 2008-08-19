@@ -407,17 +407,18 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
 }
 
 static void
-gimp_plug_in_handle_proc_error (GimpPlugIn   *plug_in,
-                                GimpProgress *progress,
-                                const gchar  *name,
-                                const GError *error)
+gimp_plug_in_handle_proc_error (GimpPlugIn          *plug_in,
+                                GimpPlugInProcFrame *proc_frame,
+                                const gchar         *name,
+                                const GError        *error)
 {
-  switch (gimp_plug_in_get_error_handler (plug_in))
+  switch (proc_frame->error_handler)
     {
     case GIMP_PDB_ERROR_HANDLER_INTERNAL:
       if (error->domain == GIMP_PDB_ERROR)
         {
-          gimp_message (plug_in->manager->gimp, G_OBJECT (progress),
+          gimp_message (plug_in->manager->gimp,
+                        G_OBJECT (proc_frame->progress),
                         GIMP_MESSAGE_ERROR,
                         _("Calling error for procedure '%s':\n"
                           "%s"),
@@ -425,7 +426,8 @@ gimp_plug_in_handle_proc_error (GimpPlugIn   *plug_in,
         }
       else
         {
-          gimp_message (plug_in->manager->gimp, G_OBJECT (progress),
+          gimp_message (plug_in->manager->gimp,
+                        G_OBJECT (proc_frame->progress),
                         GIMP_MESSAGE_ERROR,
                         _("Execution error for procedure '%s':\n"
                           "%s"),
@@ -536,7 +538,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
 
   if (error)
     {
-      gimp_plug_in_handle_proc_error (plug_in, proc_frame->progress,
+      gimp_plug_in_handle_proc_error (plug_in, proc_frame,
                                       canonical, error);
       g_error_free (error);
     }

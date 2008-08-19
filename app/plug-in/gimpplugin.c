@@ -162,8 +162,6 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
 
   plug_in->temp_proc_frames   = NULL;
 
-  plug_in->error_handler      = GIMP_PDB_ERROR_HANDLER_INTERNAL;
-
   plug_in->plug_in_def        = NULL;
 }
 
@@ -944,18 +942,30 @@ void
 gimp_plug_in_set_error_handler (GimpPlugIn          *plug_in,
                                 GimpPDBErrorHandler  handler)
 {
+  GimpPlugInProcFrame *proc_frame;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  plug_in->error_handler = handler;
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    proc_frame->error_handler = handler;
 }
 
 GimpPDBErrorHandler
 gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
 {
+  GimpPlugInProcFrame *proc_frame;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
                         GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
-  return plug_in->error_handler;
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    return proc_frame->error_handler;
+
+  return GIMP_PDB_ERROR_HANDLER_INTERNAL;
 }
 
 void
