@@ -4,7 +4,7 @@
 	* app/plug-in/gimppluginprocframe.[ch] (struct GimpPlugInProcFrame):
 	move the error_handler from the plug-in to the proc-frame.
 
-	* app/plug-in/gimppluginprocframe.c
+	* app/plug-in/gimpplugin.c
 	* app/plug-in/gimpplugin-message.c: changed accordingly.
 
 2008-08-19  Sven Neumann  <sven@gimp.org>
