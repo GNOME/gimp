@@ -1,5 +1,9 @@
 2008-08-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): formatting.
+
+2008-08-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimpplugin.[ch] (struct GimpPlugIn)
 	* app/plug-in/gimppluginprocframe.[ch] (struct GimpPlugInProcFrame):
 	move the error_handler from the plug-in to the proc-frame.

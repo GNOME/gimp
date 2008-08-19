@@ -318,10 +318,11 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
           strstr (opclass->categories, "blur")    ||
           strstr (opclass->categories, "edge")    ||
           strstr (opclass->categories, "render"))
-
-        gtk_list_store_insert_with_values (store, NULL, -1,
-                                           0, opclass->name,
-                                           -1);
+        {
+          gtk_list_store_insert_with_values (store, NULL, -1,
+                                             0, opclass->name,
+                                             -1);
+        }
     }
 
   g_list_free (opclasses);
