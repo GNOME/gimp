@@ -138,9 +138,10 @@ warning_dialog (const gchar *primary,
 }
 
 GimpPDBStatusType
-WriteBMP (const gchar *filename,
-          gint32       image,
-          gint32       drawable_ID)
+WriteBMP (const gchar  *filename,
+          gint32        image,
+          gint32        drawable_ID,
+          GError      **error)
 {
   FILE          *outfile;
   gint           Red[MAXCOLORS];
@@ -291,8 +292,9 @@ WriteBMP (const gchar *filename,
   outfile = g_fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
