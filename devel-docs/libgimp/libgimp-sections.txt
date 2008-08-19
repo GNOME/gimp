@@ -24,6 +24,7 @@ gimp_run_procedure
 gimp_run_procedure2
 gimp_destroy_params
 gimp_destroy_paramdefs
+gimp_get_pdb_error
 gimp_tile_width
 gimp_tile_height
 gimp_shm_ID
@@ -772,6 +773,8 @@ gimp_plugin_help_register
 gimp_plugin_icon_register
 gimp_plugin_menu_register
 gimp_plugin_menu_branch_register
+gimp_plugin_set_pdb_error_handler
+gimp_plugin_get_pdb_error_handler
 </SECTION>
 
 <SECTION>

@@ -1,3 +1,15 @@
+2008-08-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added gimp_get_pdb_error() and
+	gimp_plugin_{get,set}_pdb_error_handler().
+
+	* libgimp/tmpl/gimpplugin.sgml
+	* libgimp/tmpl/gimp.sgml: regenerated.
+
+	* libgimpbase/libgimpbase-sections.txt: added GimpPDBErrorHandler.
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2008-08-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_layer_new_from_visible().
