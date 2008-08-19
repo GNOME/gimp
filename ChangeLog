@@ -1,3 +1,9 @@
+2008-08-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-guides.c (gimp_image_find_guide): find guides
+	outside the image as well. This complements the change that we
+	also draw guides outside the image now.
+
 2008-08-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): formatting.

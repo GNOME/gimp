@@ -220,12 +220,6 @@ gimp_image_find_guide (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  if (x < 0 || x >= gimp_image_get_width  (image) ||
-      y < 0 || y >= gimp_image_get_height (image))
-    {
-      return NULL;
-    }
-
   for (list = image->guides; list; list = g_list_next (list))
     {
       gint position;
