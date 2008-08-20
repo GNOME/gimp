@@ -378,9 +378,11 @@ ico_create_color_to_palette_map (const guint32 *palette,
                                  gint           num_colors)
 {
   GHashTable *hash;
-  gint i;
+  gint        i;
 
-  hash = g_hash_table_new (g_int_hash, g_int_equal);
+  hash = g_hash_table_new_full (g_int_hash, g_int_equal,
+                                (GDestroyNotify) g_free,
+                                (GDestroyNotify) g_free);
 
   for (i = 0; i < num_colors; i++)
     {
@@ -399,20 +401,6 @@ ico_create_color_to_palette_map (const guint32 *palette,
 
   return hash;
 }
-
-
-static void
-ico_free_hash_item (gpointer data1,
-                    gpointer data2,
-                    gpointer data3)
-{
-  g_free (data1);
-  g_free (data2);
-
-  /* Shut up warnings: */
-  data3 = NULL;
-}
-
 
 static gint
 ico_get_palette_index (GHashTable *hash,
@@ -809,7 +797,7 @@ ico_write_icon (FILE   *fp,
                              &palette, &buffer);
   buffer32 = (guint32 *) buffer;
 
-  /* Set up colormap and andmap when necessary: */
+  /* Set up colormap and and_map when necessary: */
   if (header.bpp <= 8)
     {
       /* Create a colormap */
@@ -953,10 +941,7 @@ ico_write_icon (FILE   *fp,
      and_len, xor_len));
 
   if (color_to_slot)
-    {
-      g_hash_table_foreach (color_to_slot, ico_free_hash_item, NULL);
-      g_hash_table_destroy (color_to_slot);
-    }
+    g_hash_table_destroy (color_to_slot);
 
   g_free (palette);
   g_free (buffer);

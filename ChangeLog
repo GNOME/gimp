@@ -1,5 +1,10 @@
 2008-08-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-ico/ico-save.c: create GHashTable with destroy
+	notifiers.
+
+2008-08-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-faxg3/faxg3.c
 	* plug-ins/file-ico/ico.c
 	* plug-ins/file-ico/ico-load.[ch]
