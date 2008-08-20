@@ -399,10 +399,12 @@ static void      run              (const gchar      *name,
                                    gint             *nreturn_vals,
                                    GimpParam       **return_vals);
 
-static gint32    load_xjt_image   (const gchar      *filename);
+static gint32    load_xjt_image   (const gchar      *filename,
+                                   GError          **error);
 static gint      save_xjt_image   (const gchar      *filename,
                                    gint32            image_ID,
-                                   gint32            drawable_ID);
+                                   gint32            drawable_ID,
+                                   GError          **error);
 
 static gboolean  save_dialog      (void);
 
@@ -517,18 +519,19 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gchar        *l_env;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  const gchar       *l_env;
+  GError            *error  = NULL;
 
   g_pid = getpid ();
   xjt_debug = FALSE;
 
   INIT_I18N ();
 
-  l_env = getenv("XJT_DEBUG");
+  l_env = getenv ("XJT_DEBUG");
   if(l_env != NULL)
     {
       if((*l_env != 'n') && (*l_env != 'N')) xjt_debug = TRUE;
@@ -543,7 +546,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_xjt_image (param[1].data.d_string);
+      image_ID = load_xjt_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -608,7 +611,8 @@ run (const gchar      *name,
         {
           if (save_xjt_image (param[3].data.d_string,
                               param[1].data.d_int32,
-                              param[2].data.d_int32) <0)
+                              param[2].data.d_int32,
+                              &error) < 0)
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -622,6 +626,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -1635,9 +1646,10 @@ p_write_image_prp (const gchar *dirname,
 /* ---------------------- SAVE  -------------------------- */
 
 static gint
-save_xjt_image (const gchar *filename,
-                gint32       image_id,
-                gint32       drawable_id)
+save_xjt_image (const gchar  *filename,
+                gint32        image_id,
+                gint32        drawable_id,
+                GError      **error)
 {
   int     l_rc;
   int     l_len;
@@ -1703,8 +1715,9 @@ save_xjt_image (const gchar *filename,
   l_prop_file = g_strdup_printf ("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
   if (g_mkdir (l_dirname, 0777) != 0)
     {
-      g_message (_("Could not create working folder '%s': %s"),
-                 gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not create working folder '%s': %s"),
+                   gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
       goto cleanup;
     }
 
@@ -1712,8 +1725,9 @@ save_xjt_image (const gchar *filename,
   l_fp_prp = g_fopen (l_prop_file, "wb");
   if (l_fp_prp == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (l_prop_file), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (l_prop_file), g_strerror (errno));
       goto cleanup;
     }
 
@@ -3202,7 +3216,8 @@ p_next_lineindex (const gchar *file_buff,
  */
 
 static t_image_props *
-p_load_prop_file (const gchar *prop_filename)
+p_load_prop_file (const gchar  *prop_filename,
+                  GError      **error)
 {
   gint32 l_filesize;
   gint32 l_line_idx;
@@ -3220,14 +3235,16 @@ p_load_prop_file (const gchar *prop_filename)
   l_file_buff = p_load_linefile(prop_filename, &l_filesize);
   if(l_file_buff == NULL)
   {
-    g_message(_("Error: Could not read XJT property file '%s'."),
-               gimp_filename_to_utf8 (prop_filename));
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                 _("Error: Could not read XJT property file '%s'."),
+                 gimp_filename_to_utf8 (prop_filename));
     goto cleanup;
   }
   if(l_filesize == 0)
   {
-    g_message(_("Error: XJT property file '%s' is empty."),
-               gimp_filename_to_utf8 (prop_filename));
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                 _("Error: XJT property file '%s' is empty."),
+                 gimp_filename_to_utf8 (prop_filename));
     goto cleanup;
   }
 
@@ -3306,7 +3323,8 @@ cleanup:
 /* ---------------------- LOAD  -------------------------- */
 
 static gint32
-load_xjt_image (const gchar *filename)
+load_xjt_image (const gchar  *filename,
+                GError      **error)
 {
   int     l_rc;
   int     l_len;
@@ -3349,10 +3367,11 @@ load_xjt_image (const gchar *filename)
   l_dirname = gimp_temp_name (".tmpdir");
   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
 
-  if(g_mkdir(l_dirname, 0777) != 0)
+  if (g_mkdir (l_dirname, 0777) != 0)
     {
-      g_message (_("Could not create working folder '%s': %s"),
-                  gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not create working folder '%s': %s"),
+                   gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
       goto cleanup;
     }
 
@@ -3411,10 +3430,11 @@ load_xjt_image (const gchar *filename)
     goto cleanup;
 
   /* check and read Property file (PRP must exist in each xjt archive) */
-  l_image_prp_ptr = p_load_prop_file(l_prop_file);
+  l_image_prp_ptr = p_load_prop_file(l_prop_file, error);
   if (l_image_prp_ptr == NULL)
-    {  l_rc = -1;
-    goto cleanup;
+    {
+      l_rc = -1;
+      goto cleanup;
     }
 
 
@@ -3423,8 +3443,9 @@ load_xjt_image (const gchar *filename)
                                l_image_prp_ptr->image_height,
                                l_image_prp_ptr->image_type);
   if(l_image_id < 0)
-    { l_rc = -1;
-    goto cleanup;
+    {
+      l_rc = -1;
+      goto cleanup;
     }
 
   gimp_image_set_filename (l_image_id, filename);
