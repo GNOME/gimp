@@ -157,10 +157,10 @@ ico_read_size (FILE        *fp,
     {
       png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL,
                                         NULL);
-      if ( !png_ptr )
+      if (! png_ptr )
         return FALSE;
       info_ptr = png_create_info_struct (png_ptr);
-      if ( !info_ptr )
+      if (! info_ptr )
         {
           png_destroy_read_struct (&png_ptr, NULL, NULL);
           return FALSE;
@@ -257,10 +257,10 @@ ico_read_png (FILE    *fp,
   gint          i;
 
   png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  if ( !png_ptr )
+  if (! png_ptr )
     return FALSE;
   info = png_create_info_struct (png_ptr);
-  if ( !info )
+  if (! info )
     {
       png_destroy_read_struct (&png_ptr, NULL, NULL);
       return FALSE;
@@ -630,7 +630,8 @@ ico_load_layer (FILE        *fp,
 
 
 gint32
-ico_load_image (const gchar *filename)
+ico_load_image (const gchar  *filename,
+                GError      **error)
 {
   FILE        *fp;
   IcoLoadInfo *info;
@@ -646,10 +647,11 @@ ico_load_image (const gchar *filename)
                              gimp_filename_to_utf8 (filename));
 
   fp = g_fopen (filename, "rb");
-  if ( !fp )
+  if (! fp )
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -704,9 +706,10 @@ ico_load_image (const gchar *filename)
 }
 
 gint32
-ico_load_thumbnail_image (const gchar *filename,
-                          gint        *width,
-                          gint        *height)
+ico_load_thumbnail_image (const gchar  *filename,
+                          gint         *width,
+                          gint         *height,
+                          GError      **error)
 {
   FILE        *fp;
   IcoLoadInfo *info;
@@ -723,15 +726,16 @@ ico_load_thumbnail_image (const gchar *filename,
                              gimp_filename_to_utf8 (filename));
 
   fp = g_fopen (filename, "rb");
-  if ( !fp )
+  if (! fp )
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
   icon_count = ico_read_init (fp);
-  if ( !icon_count )
+  if (! icon_count )
     {
       fclose (fp);
       return -1;
@@ -741,7 +745,7 @@ ico_load_thumbnail_image (const gchar *filename,
      filename, icon_count));
 
   info = ico_read_info (fp, icon_count);
-  if ( !info )
+  if (! info )
     {
       fclose (fp);
       return -1;

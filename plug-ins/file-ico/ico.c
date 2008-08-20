@@ -157,6 +157,7 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   INIT_I18N ();
 
@@ -185,7 +186,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_ID = ico_load_image (param[1].data.d_string);
+          image_ID = ico_load_image (param[1].data.d_string, &error);
 
           if (image_ID != -1)
             {
@@ -212,7 +213,8 @@ run (const gchar      *name,
           gint         height   = param[1].data.d_int32;
           gint32       image_ID;
 
-          image_ID = ico_load_thumbnail_image (filename, &width, &height);
+          image_ID = ico_load_thumbnail_image (filename,
+                                               &width, &height, &error);
 
           if (image_ID != -1)
             {
@@ -259,7 +261,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = ico_save_image (file_name, image_ID, run_mode);
+          status = ico_save_image (file_name, image_ID, run_mode, &error);
         }
 
       if (export == GIMP_EXPORT_EXPORT)
@@ -270,7 +272,13 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
-  values[0].type          = GIMP_PDB_STATUS;
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 

@@ -324,10 +324,10 @@ ico_set_byte_in_data (guint8 *data,
 
 /* Create a colormap from the given buffer data */
 static guint32 *
-ico_create_palette(guchar *cmap,
-                   gint    num_colors,
-                   gint    num_colors_used,
-                   gint   *black_slot)
+ico_create_palette (const guchar *cmap,
+                    gint          num_colors,
+                    gint          num_colors_used,
+                    gint         *black_slot)
 {
   guchar *palette;
   gint    i;
@@ -374,8 +374,8 @@ ico_create_palette(guchar *cmap,
 
 
 static GHashTable *
-ico_create_color_to_palette_map (guint32 *palette,
-                                 gint     num_colors)
+ico_create_color_to_palette_map (const guint32 *palette,
+                                 gint           num_colors)
 {
   GHashTable *hash;
   gint i;
@@ -384,8 +384,9 @@ ico_create_color_to_palette_map (guint32 *palette,
 
   for (i = 0; i < num_colors; i++)
     {
-      gint *color, *slot;
-      guint8 *pixel = (guint8 *) &palette[i];
+      const guint8 *pixel = (const guint8 *) &palette[i];
+      gint         *color;
+      gint         *slot;
 
       color = g_new (gint, 1);
       slot = g_new (gint, 1);
@@ -526,8 +527,8 @@ ico_get_layer_num_colors (gint32    layer,
 }
 
 gboolean
-ico_cmap_contains_black (guchar *cmap,
-                         gint    num_colors)
+ico_cmap_contains_black (const guchar *cmap,
+                         gint          num_colors)
 {
   gint i;
 
@@ -988,9 +989,10 @@ ico_save_info_free (IcoSaveInfo  *info)
 }
 
 GimpPDBStatusType
-ico_save_image (const gchar *filename,
-                gint32       image,
-                gint32       run_mode)
+ico_save_image (const gchar  *filename,
+                gint32        image,
+                gint32        run_mode,
+                GError      **error)
 {
   FILE *fp;
 
@@ -1017,8 +1019,9 @@ ico_save_image (const gchar *filename,
 
   if (! (fp = g_fopen (filename, "wb")))
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
