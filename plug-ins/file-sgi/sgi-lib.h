@@ -70,7 +70,7 @@ extern int	sgiGetRow    (sgi_t *sgip,
                               unsigned short *row,
                               int y,
                               int z);
-extern sgi_t	*sgiOpen     (char *filename,
+extern sgi_t	*sgiOpen     (const char *filename,
                               int mode,
                               int comp,
                               int bpp,

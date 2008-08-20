@@ -62,10 +62,12 @@ static void     run         (const gchar      *name,
                              gint             *nreturn_vals,
                              GimpParam       **return_vals);
 
-static gint32   load_image  (const gchar      *filename);
+static gint32   load_image  (const gchar      *filename,
+                             GError          **error);
 static gint     save_image  (const gchar      *filename,
                              gint32            image_ID,
-                             gint32            drawable_ID);
+                             gint32            drawable_ID,
+                             GError          **error);
 
 static gboolean save_dialog (void);
 
@@ -155,12 +157,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -173,7 +176,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -256,7 +259,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+                          &error))
             {
               gimp_set_data (SAVE_PROC, &compression, sizeof (compression));
             }
@@ -274,6 +278,13 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
@@ -283,9 +294,10 @@ run (const gchar      *name,
  */
 
 static gint32
-load_image (const gchar *filename)  /* I - File to load */
+load_image (const gchar  *filename,
+            GError      **error)
 {
-  int            i,           /* Looping var */
+  gint           i,           /* Looping var */
                  x,           /* Current X coordinate */
                  y,           /* Current Y coordinate */
                  image_type,  /* Type of image */
@@ -307,11 +319,12 @@ load_image (const gchar *filename)  /* I - File to load */
   * Open the file for reading...
   */
 
-  sgip = sgiOpen ((char *) filename, SGI_READ, 0, 0, 0, 0, 0);
+  sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
-      g_message (_("Could not open '%s' for reading."),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not open '%s' for reading."),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     };
 
@@ -356,7 +369,9 @@ load_image (const gchar *filename)  /* I - File to load */
   image = gimp_image_new (sgip->xsize, sgip->ysize, image_type);
   if (image == -1)
     {
-      g_message ("Could not allocate new image");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Could not allocate new image: %s",
+                   gimp_get_pdb_error());
       return -1;
     }
 
@@ -474,9 +489,10 @@ load_image (const gchar *filename)  /* I - File to load */
  */
 
 static gint
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID)
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            GError      **error)
 {
   gint        i, j,        /* Looping var */
               x,           /* Current X coordinate */
@@ -525,12 +541,13 @@ save_image (const gchar *filename,
    * Open the file for writing...
    */
 
-  sgip = sgiOpen ((char *) filename, SGI_WRITE, compression, 1,
+  sgip = sgiOpen (filename, SGI_WRITE, compression, 1,
                   drawable->width, drawable->height, zsize);
   if (sgip == NULL)
     {
-      g_message (_("Could not open '%s' for writing."),
-                  gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Could not open '%s' for writing."),
+                   gimp_filename_to_utf8 (filename));
       return FALSE;
     };
 

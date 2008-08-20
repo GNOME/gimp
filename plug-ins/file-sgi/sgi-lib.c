@@ -246,13 +246,13 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
  */
 
 sgi_t *
-sgiOpen(char *filename,	/* I - File to open */
-        int  mode,	/* I - Open mode (SGI_READ or SGI_WRITE) */
-        int  comp,	/* I - Type of compression */
-        int  bpp,	/* I - Bytes per pixel */
-        int  xsize,	/* I - Width of image in pixels */
-        int  ysize,	/* I - Height of image in pixels */
-        int  zsize)	/* I - Number of channels */
+sgiOpen(const char *filename,	/* I - File to open */
+        int         mode,	/* I - Open mode (SGI_READ or SGI_WRITE) */
+        int         comp,	/* I - Type of compression */
+        int         bpp,	/* I - Bytes per pixel */
+        int         xsize,	/* I - Width of image in pixels */
+        int         ysize,	/* I - Height of image in pixels */
+        int         zsize)	/* I - Number of channels */
 {
   sgi_t	*sgip;		/* New SGI image file */
   FILE	*file;		/* Image file pointer */
