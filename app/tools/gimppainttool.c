@@ -90,6 +90,10 @@ static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
 
 static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
 
+static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
+                                              const GParamSpec      *pspec,
+                                              GimpTool              *tool);
+
 
 G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
 
@@ -121,8 +125,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 {
   GimpTool *tool = GIMP_TOOL (paint_tool);
 
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_motion_mode    (tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_scroll_lock    (tool->control, TRUE);
   gimp_tool_control_set_action_value_1 (tool->control,
                                         "context/context-opacity-set");
 
@@ -144,15 +148,17 @@ gimp_paint_tool_constructor (GType                  type,
                              guint                  n_params,
                              GObjectConstructParam *params)
 {
-  GObject       *object;
-  GimpTool      *tool;
-  GimpPaintInfo *paint_info;
-  GimpPaintTool *paint_tool;
+  GObject          *object;
+  GimpTool         *tool;
+  GimpPaintInfo    *paint_info;
+  GimpPaintTool    *paint_tool;
+  GimpPaintOptions *options;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   tool       = GIMP_TOOL (object);
   paint_tool = GIMP_PAINT_TOOL (object);
+  options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
   g_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));
@@ -164,6 +170,12 @@ gimp_paint_tool_constructor (GType                  type,
   paint_tool->core = g_object_new (paint_info->paint_type,
                                    "undo-desc", paint_info->blurb,
                                    NULL);
+
+  g_signal_connect_object (options, "notify::hard",
+                           G_CALLBACK (gimp_paint_tool_hard_notify),
+                           tool, 0);
+
+  gimp_paint_tool_hard_notify (options, NULL, tool);
 
   return object;
 }
@@ -705,4 +717,15 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+}
+
+static void
+gimp_paint_tool_hard_notify (GimpPaintOptions *options,
+                             const GParamSpec *pspec,
+                             GimpTool         *tool)
+{
+  gimp_tool_control_set_precision (tool->control,
+                                   options->hard ?
+                                   GIMP_CURSOR_PRECISION_PIXEL_CENTER :
+                                   GIMP_CURSOR_PRECISION_SUBPIXEL);
 }

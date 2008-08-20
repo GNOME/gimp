@@ -32,6 +32,18 @@ typedef enum
 } GimpCursorMode;
 
 
+#define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
+
+GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CURSOR_PRECISION_PIXEL_CENTER,
+  GIMP_CURSOR_PRECISION_PIXEL_BORDER,
+  GIMP_CURSOR_PRECISION_SUBPIXEL
+} GimpCursorPrecision;
+
+
 #define GIMP_TYPE_CANVAS_PADDING_MODE (gimp_canvas_padding_mode_get_type ())
 
 GType gimp_canvas_padding_mode_get_type (void) G_GNUC_CONST;

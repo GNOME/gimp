@@ -1529,11 +1529,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     }
 
   if (update_sw_cursor)
-    gimp_display_shell_update_cursor (shell,
-                                      (gint) display_coords.x,
-                                      (gint) display_coords.y,
-                                      (gint) image_coords.x,
-                                      (gint) image_coords.y);
+    {
+      GimpCursorPrecision precision = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
+
+      active_tool = tool_manager_get_active (gimp);
+
+      if (active_tool)
+        precision = gimp_tool_control_get_precision (active_tool->control);
+
+      gimp_display_shell_update_cursor (shell,
+                                        precision,
+                                        (gint) display_coords.x,
+                                        (gint) display_coords.y,
+                                        image_coords.x,
+                                        image_coords.y);
+    }
 
   return return_val;
 }

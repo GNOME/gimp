@@ -236,6 +236,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
 
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 

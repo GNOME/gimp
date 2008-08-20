@@ -186,6 +186,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                 gboolean           propagate_release)
 {
   GimpEditSelectionTool *edit_select;
+  GimpTool              *tool;
   GimpDisplayShell      *shell;
   GimpItem              *active_item;
   GimpChannel           *channel;
@@ -200,6 +201,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                               NULL);
 
   edit_select->propagate_release = propagate_release;
+
+  tool = GIMP_TOOL (edit_select);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
@@ -429,7 +432,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
         break;
       }
 
-    gimp_tool_control_set_snap_offsets (GIMP_TOOL (edit_select)->control,
+    gimp_tool_control_set_snap_offsets (tool->control,
                                         x1 - coords->x,
                                         y1 - coords->y,
                                         x2 - x1,
@@ -440,16 +443,17 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     edit_select->center_y = (y1 + y2) / 2.0;
   }
 
-  gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);
-  GIMP_TOOL (edit_select)->display = display;
+  gimp_tool_control_activate (tool->control);
+  tool->display = display;
 
-  tool_manager_push_tool (display->image->gimp, GIMP_TOOL (edit_select));
+  tool_manager_push_tool (display->image->gimp, tool);
 
   /*  pause the current selection  */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (GIMP_TOOL (edit_select), display,
+  gimp_tool_push_status_coords (tool, display,
+                                gimp_tool_control_get_precision (tool->control),
                                 _("Move: "), 0, ", ", 0, NULL);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), display);
@@ -579,8 +583,8 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
                                         gdouble                new_y,
                                         GimpDisplay           *display)
 {
-  GimpDrawTool *draw_tool          = GIMP_DRAW_TOOL (edit_select);
-  GimpTool     *tool               = GIMP_TOOL (edit_select);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (edit_select);
+  GimpTool     *tool      = GIMP_TOOL (edit_select);
   GimpItem     *active_item;
   gint          off_x, off_y;
   gdouble       motion_x, motion_y;
@@ -718,6 +722,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
   gimp_tool_pop_status (tool, display);
   gimp_tool_push_status_coords (tool, display,
+                                gimp_tool_control_get_precision (tool->control),
                                 _("Move: "),
                                 edit_select->cumlx,
                                 ", ",
@@ -772,7 +777,7 @@ static void
 gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
-  GimpDisplay           *display       = GIMP_TOOL (draw_tool)->display;
+  GimpDisplay           *display     = GIMP_TOOL (draw_tool)->display;
   GimpItem              *active_item;
 
   active_item = gimp_edit_selection_tool_get_active_item (edit_select,

@@ -203,6 +203,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_DRAWABLE   |
                                      GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
 
   tr_tool->function = TRANSFORM_CREATING;
   tr_tool->original = NULL;

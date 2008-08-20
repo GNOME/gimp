@@ -1080,6 +1080,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
           aspect_text = g_strdup_printf ("  (%.2f:1)", w / (gdouble) h);
 
           gimp_tool_push_status_coords (tool, display,
+                                        GIMP_CURSOR_PRECISION_PIXEL_CENTER,
                                         _("Rectangle: "),
                                         w, " × ", h, aspect_text);
           g_free (aspect_text);
@@ -1976,6 +1977,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, tool->display,
+                                GIMP_CURSOR_PRECISION_PIXEL_CENTER,
                                 _("Rectangle: "), 0, " × ", 0, NULL);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);

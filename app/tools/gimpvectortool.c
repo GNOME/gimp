@@ -192,6 +192,8 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_precision          (tool->control,
+                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PATHS);

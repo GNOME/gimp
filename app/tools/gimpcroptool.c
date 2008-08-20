@@ -172,6 +172,8 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   gimp_rectangle_tool_init (GIMP_RECTANGLE_TOOL (crop_tool));
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 
   crop_tool->current_image = NULL;

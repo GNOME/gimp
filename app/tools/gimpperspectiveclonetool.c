@@ -876,20 +876,25 @@ gimp_perspective_clone_tool_mode_notify (GimpPerspectiveCloneOptions *options,
                                          GParamSpec                  *pspec,
                                          GimpPerspectiveCloneTool    *clone_tool)
 {
+  GimpTool             *tool = GIMP_TOOL (clone_tool);
   GimpPerspectiveClone *clone;
 
   clone = GIMP_PERSPECTIVE_CLONE (GIMP_PAINT_TOOL (clone_tool)->core);
 
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_PAINT)
     {
-      gimp_tool_control_set_tool_cursor (GIMP_TOOL (clone_tool)->control,
+      /* GimpPaintTool's notify callback will set the right precision */
+      g_object_notify (G_OBJECT (options), "hard");
+
+      gimp_tool_control_set_tool_cursor (tool->control,
                                          GIMP_TOOL_CURSOR_CLONE);
 
       gimp_perspective_clone_set_transform (clone, &clone_tool->transform);
     }
   else
     {
-      GimpTool *tool = GIMP_TOOL (clone_tool);
+      gimp_tool_control_set_precision (tool->control,
+                                       GIMP_CURSOR_PRECISION_SUBPIXEL);
 
       gimp_tool_control_set_tool_cursor (tool->control,
                                          GIMP_TOOL_CURSOR_PERSPECTIVE);

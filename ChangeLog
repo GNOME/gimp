@@ -1,3 +1,50 @@
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
+	Bug 496772 – Position shown in the statusbar needs more
+	precision (for some tools)
+
+	* app/display/display-enums.[ch]: add enum GimpCursorPrecision
+	which can be one of { PIXEL_CENTER, PIXEL_BORDER, SUBPIXEL }.
+
+	* app/display/gimpdisplayshell-cursor.[ch]: add "precision"
+	parameter to gimp_display_shell_update_cursor() and pass it
+	on to the statusbar.
+
+	* app/display/gimpstatusbar.[ch]: add "precision" parameters to
+	the cursor coordinates APIs, offset the passed coords accordingly
+	and display them with one decimal point if SUBPIXEL is requested
+	and the display's unit is PIXEL. Keep a second floating-point
+	format string around at any time.
+
+	* app/tools/gimptoolcontrol.[ch]: add a "precision" member and API
+	so tools can configure the precision they need. Defalt to
+	PIXEL_CENTER since that's right for almost all tools.
+
+	* app/display/gimpdisplayshell-callbacks.c: pass the tool's
+	precision to gimp_display_shell_update_cursor().
+
+	* app/tools/gimptool.[ch]: add "precision" parameter to
+	gimp_tool_push_status_coords() and pass it on to the statusbar.
+
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: set precision in init() where
+	needed. Adjust the precision in the fly when needed, e.g. while
+	moving guides or when toggling hard-edge on paint tools. Also pass
+	an appropriate precision to gimp_tool_push_status_coords(), which
+	is not always the tool's precision as used for cursor display.
+
 2008-08-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c (script_fu_eval_run):

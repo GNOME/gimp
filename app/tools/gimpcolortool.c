@@ -254,6 +254,7 @@ gimp_color_tool_button_press (GimpTool        *tool,
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
       gimp_tool_push_status_coords (tool, display,
+                                    gimp_tool_control_get_precision (tool->control),
                                     _("Move Sample Point: "),
                                     color_tool->sample_point_x,
                                     ", ",
@@ -431,6 +432,7 @@ gimp_color_tool_motion (GimpTool        *tool,
       else
         {
           gimp_tool_push_status_coords (tool, display,
+                                        gimp_tool_control_get_precision (tool->control),
                                         color_tool->sample_point ?
                                         _("Move Sample Point: ") :
                                         _("Add Sample Point: "),

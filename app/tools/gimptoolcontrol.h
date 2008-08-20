@@ -36,43 +36,45 @@ typedef struct _GimpToolControlClass GimpToolControlClass;
 
 struct _GimpToolControl
 {
-  GimpObject         parent_instance;
+  GimpObject           parent_instance;
 
-  gboolean           active;             /*  state of tool activity          */
-  gint               paused_count;       /*  paused control count            */
+  gboolean             active;             /*  state of tool activity          */
+  gint                 paused_count;       /*  paused control count            */
 
-  gboolean           preserve;           /*  Preserve this tool across       *
-                                          *  drawable changes                */
-  gboolean           scroll_lock;        /*  allow scrolling or not          */
-  gboolean           handle_empty_image; /*  invoke the tool on images       *
-                                          *  without active drawable         */
-  gboolean           wants_click;        /*  wants click detection           */
-  GimpDirtyMask      dirty_mask;         /*  if preserve is FALSE, cancel    *
-                                          *  the tool on these events        */
-  GimpMotionMode     motion_mode;        /*  how to process motion events    *
-                                          *  before they go to the tool      */
-  gboolean           auto_snap_to;       /*  snap to guides automatically    */
-  gint               snap_offset_x;
-  gint               snap_offset_y;
-  gint               snap_width;
-  gint               snap_height;
+  gboolean             preserve;           /*  Preserve this tool across       *
+                                            *  drawable changes                */
+  gboolean             scroll_lock;        /*  allow scrolling or not          */
+  gboolean             handle_empty_image; /*  invoke the tool on images       *
+                                            *  without active drawable         */
+  gboolean             wants_click;        /*  wants click detection           */
+  GimpDirtyMask        dirty_mask;         /*  if preserve is FALSE, cancel    *
+                                            *  the tool on these events        */
+  GimpMotionMode       motion_mode;        /*  how to process motion events    *
+                                            *  before they go to the tool      */
+  gboolean             auto_snap_to;       /*  snap to guides automatically    */
+  gint                 snap_offset_x;
+  gint                 snap_offset_y;
+  gint                 snap_width;
+  gint                 snap_height;
 
-  gboolean           toggled;
+  GimpCursorPrecision  precision;
 
-  GimpCursorType     cursor;
-  GimpToolCursorType tool_cursor;
-  GimpCursorModifier cursor_modifier;
+  gboolean             toggled;
 
-  GimpCursorType     toggle_cursor;
-  GimpToolCursorType toggle_tool_cursor;
-  GimpCursorModifier toggle_cursor_modifier;
+  GimpCursorType       cursor;
+  GimpToolCursorType   tool_cursor;
+  GimpCursorModifier   cursor_modifier;
 
-  gchar             *action_value_1;
-  gchar             *action_value_2;
-  gchar             *action_value_3;
-  gchar             *action_value_4;
-  gchar             *action_object_1;
-  gchar             *action_object_2;
+  GimpCursorType       toggle_cursor;
+  GimpToolCursorType   toggle_tool_cursor;
+  GimpCursorModifier   toggle_cursor_modifier;
+
+  gchar               *action_value_1;
+  gchar               *action_value_2;
+  gchar               *action_value_3;
+  gchar               *action_value_4;
+  gchar               *action_object_1;
+  gchar               *action_object_2;
 };
 
 struct _GimpToolControlClass
@@ -129,6 +131,11 @@ void           gimp_tool_control_get_snap_offsets (GimpToolControl *control,
                                                    gint            *offset_y,
                                                    gint            *width,
                                                    gint            *height);
+
+void           gimp_tool_control_set_precision    (GimpToolControl     *control,
+                                                   GimpCursorPrecision  precision);
+GimpCursorPrecision
+               gimp_tool_control_get_precision    (GimpToolControl     *control);
 
 void           gimp_tool_control_set_toggled      (GimpToolControl *control,
                                                    gboolean         toggled);
