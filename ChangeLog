@@ -1,3 +1,7 @@
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.[ch]: formatting.
+
 2008-08-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/file-psd/psd.c

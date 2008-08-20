@@ -46,7 +46,6 @@
 
 
 #define HANDLE_SIZE  25
-
 #define TARGET_SIZE  15
 
 
@@ -197,8 +196,7 @@ gimp_perspective_clone_tool_constructor (GType                  type,
 
   tool       = GIMP_TOOL (object);
   clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (object);
-
-  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
+  options    = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   g_signal_connect_object (options,
                            "notify::clone-mode",
@@ -250,7 +248,6 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
 
   return TRUE;
 }
-
 
 static gboolean
 gimp_perspective_clone_tool_has_display (GimpTool    *tool,
@@ -535,7 +532,6 @@ gimp_perspective_clone_tool_motion (GimpTool        *tool,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
-
 
 static void
 gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,

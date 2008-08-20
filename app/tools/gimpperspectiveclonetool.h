@@ -95,10 +95,10 @@ struct _GimpPerspectiveCloneToolClass
 };
 
 
-void    gimp_perspective_clone_tool_register      (GimpToolRegisterCallback  callback,
-                                                   gpointer                  data);
+void    gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
+                                              gpointer                  data);
 
-GType   gimp_perspective_clone_tool_get_type      (void) G_GNUC_CONST;
+GType   gimp_perspective_clone_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_PERSPECTIVE_CLONE_TOOL_H__  */
