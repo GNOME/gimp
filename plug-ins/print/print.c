@@ -282,7 +282,9 @@ static GimpPDBStatusType
 page_setup (gint32 image_ID)
 {
   GtkPrintOperation  *operation;
+  GimpParam          *return_vals;
   gchar              *name;
+  gint                n_return_vals;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -297,21 +299,16 @@ page_setup (gint32 image_ID)
   /* now notify a running print procedure about this change */
   name = print_temp_proc_name (image_ID);
 
-  /* FIXME: This code has a race condition. The best solution
-   *        would be to catch the error somehow (see bug #344818).
+  /* we don't want the core to show an error message if the
+   * temporary procedure does not exist
    */
-  if (gimp_procedural_db_proc_exists (name))
-    {
-      GimpParam *return_vals;
-      gint       n_return_vals;
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-      return_vals = gimp_run_procedure (name,
-                                        &n_return_vals,
-                                        GIMP_PDB_IMAGE, image_ID,
-                                        GIMP_PDB_END);
-
-      gimp_destroy_params (return_vals, n_return_vals);
-    }
+  return_vals = gimp_run_procedure (name,
+                                    &n_return_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+  gimp_destroy_params (return_vals, n_return_vals);
 
   g_free (name);
 

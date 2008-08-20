@@ -1,3 +1,9 @@
+2008-08-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c (page_setup): use the new API to set the
+	PDB error handler in order to suppress a warning if the temporary
+	procedure does not exist (see bug #513291).
+
 2008-08-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render): add
