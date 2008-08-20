@@ -1,3 +1,13 @@
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.c: reindent prototypes.
+
+	Steal find_widget_under_pointer() from gtktooltip.c
+
+	(gimp_ui_manager_item_key_press): use the function to invoke help
+	for the widget under the pointer if there is no selected menu
+	item. Makes F1 work on insensitive menu items.
+
 2008-08-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c (page_setup): use the new API to set the
