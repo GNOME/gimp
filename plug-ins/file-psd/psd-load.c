@@ -105,7 +105,8 @@ static void             convert_1_bit              (const gchar *src,
 
 /* Main file load function */
 gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **load_error)
 {
   FILE                 *f;
   struct stat           st;
@@ -122,8 +123,9 @@ load_image (const gchar *filename)
   f = g_fopen (filename, "rb");
   if (f == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -205,7 +207,8 @@ load_image (const gchar *filename)
  load_error:
   if (error)
     {
-      g_message (_("Error loading PSD file:\n\n%s"), error->message);
+      g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error loading PSD file: %s"), error->message);
       g_error_free (error);
     }
 

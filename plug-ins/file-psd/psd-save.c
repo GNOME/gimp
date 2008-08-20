@@ -156,7 +156,8 @@ static void   save_layer_and_mask  (FILE          *fd,
 static void   save_data            (FILE          *fd,
                                     gint32         image_id);
 static gint   save_image           (const gchar   *filename,
-                                    gint32         image_id);
+                                    gint32         image_id,
+                                    GError       **error);
 static void   xfwrite              (FILE          *fd,
                                     gconstpointer  buf,
                                     glong          len,
@@ -237,8 +238,9 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode      run_mode;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GError           *error = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -284,10 +286,21 @@ run (const gchar      *name,
           break;
         }
 
-      if (save_image (param[3].data.d_string, image_id))
-        values[0].data.d_status = GIMP_PDB_SUCCESS;
+      if (save_image (param[3].data.d_string, image_id, &error))
+        {
+          values[0].data.d_status = GIMP_PDB_SUCCESS;
+        }
       else
-        values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_id);
@@ -395,7 +408,9 @@ write_pascalstring (FILE        *fd,
       xfwrite (fd, val, len, why);
     }
   else
-    write_gint16 (fd, 0, why);
+    {
+      write_gint16 (fd, 0, why);
+    }
 
   /* If total length (length byte + content) is not a multiple of PADDING,
      add zeros to pad it.  */
@@ -1518,8 +1533,9 @@ get_image_data (FILE   *fd,
 
 
 static gint
-save_image (const gchar *filename,
-            gint32       image_id)
+save_image (const gchar  *filename,
+            gint32        image_id,
+            GError      **error)
 {
   FILE   *fd;
   gint32 *layers;
@@ -1531,9 +1547,12 @@ save_image (const gchar *filename,
 
   if (gimp_image_width (image_id) > 30000 ||
       gimp_image_height (image_id) > 30000)
-  {
-      g_message (_("Unable to save '%s'.  The PSD file format does not support images that are more than 30,000 pixels wide or tall."),
-                 gimp_filename_to_utf8 (filename));
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unable to save '%s'.  The PSD file format does not "
+                     "support images that are more than 30,000 pixels wide "
+                     "or tall."),
+                   gimp_filename_to_utf8 (filename));
       return FALSE;
     }
 
@@ -1544,8 +1563,11 @@ save_image (const gchar *filename,
       drawable = gimp_drawable_get (layers[i]);
       if (drawable->width > 30000 || drawable->height > 30000)
         {
-          g_message (_("Unable to save '%s'.  The PSD file format does not support images with layers that are more than 30,000 pixels wide or tall."),
-                     gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unable to save '%s'.  The PSD file format does not "
+                         "support images with layers that are more than 30,000 "
+                         "pixels wide or tall."),
+                       gimp_filename_to_utf8 (filename));
           g_free (layers);
           return FALSE;
         }
@@ -1556,8 +1578,9 @@ save_image (const gchar *filename,
   fd = g_fopen (filename, "wb");
   if (fd == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

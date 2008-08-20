@@ -23,7 +23,8 @@
 #define __PSD_LOAD_H__
 
 
-gint32  load_image (const gchar *filename);
+gint32  load_image (const gchar  *filename,
+                    GError      **error);
 
 
 #endif /* __PSD_LOAD_H__ */
