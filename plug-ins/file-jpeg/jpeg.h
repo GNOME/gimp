@@ -53,9 +53,6 @@ extern gint             orig_quality;
 extern gint             orig_subsmp;
 extern gint             num_quant_tables;
 
-gint32    load_image                    (const gchar   *filename,
-                                         GimpRunMode    runmode,
-                                         gboolean       preview);
 
 void      destroy_preview               (void);
 
@@ -67,10 +64,6 @@ void      my_output_message             (j_common_ptr   cinfo);
 #ifdef HAVE_EXIF
 
 extern ExifData *exif_data;
-
-gint32    load_thumbnail_image          (const gchar   *filename,
-                                         gint          *width,
-                                         gint          *height);
 
 ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
                                          GError       **error);

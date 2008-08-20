@@ -44,9 +44,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "jpeg.h"
-#include "jpeg-settings.h"
 #include "jpeg-icc.h"
+#include "jpeg-load.h"
 #include "jpeg-save.h"
+#include "jpeg-settings.h"
 
 
 #define SCALE_WIDTH         125
@@ -200,7 +201,7 @@ background_jpeg_save (PreviewPersistent *pp)
           gtk_label_set_text (GTK_LABEL (preview_size), temp);
 
           /* and load the preview */
-          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE);
+          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL);
         }
 
       /* we cleanup here (load_image doesn't run in the background) */
@@ -249,11 +250,12 @@ background_jpeg_save (PreviewPersistent *pp)
 }
 
 gboolean
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID,
-            gint32       orig_image_ID,
-            gboolean     preview)
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            gint32        orig_image_ID,
+            gboolean      preview,
+            GError      **error)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
@@ -317,8 +319,9 @@ save_image (const gchar *filename,
    */
   if ((outfile = g_fopen (filename, "wb")) == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -752,7 +755,7 @@ make_preview (void)
                   preview_image_ID,
                   drawable_ID_global,
                   orig_image_ID_global,
-                  TRUE);
+                  TRUE, NULL);
 
       if (display_ID == -1)
         display_ID = gimp_display_new (preview_image_ID);

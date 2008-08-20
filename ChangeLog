@@ -1,5 +1,12 @@
 2008-08-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-jpeg/jpeg.[ch]
+	* plug-ins/file-jpeg/jpeg-load.[ch]
+	* plug-ins/file-jpeg/jpeg-save.[ch]: pass error messages with the
+	return values instead of calling g_message().
+
+2008-08-20  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-save.c (file_save): flush the image when done to
 	cause the actions to be updated (in particular File->Revert).
 
