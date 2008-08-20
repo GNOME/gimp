@@ -79,21 +79,24 @@ static void      run         (const gchar      *name,
                               GimpParam       **return_vals);
 
 /* return the image-ID of the new image, or -1 in case of an error */
-static gint32    load_image  (const  gchar *filename,
-                              gint32        from_frame,
-                              gint32        to_frame);
-static gboolean  load_dialog (const gchar  *name);
+static gint32    load_image  (const  gchar  *filename,
+                              gint32         from_frame,
+                              gint32         to_frame,
+                              GError       **error);
+static gboolean  load_dialog (const gchar   *filename);
 
-static gboolean  save_image  (const gchar  *filename,
-                              gint32        image_id,
-                              gint32        from_frame,
-                              gint32        to_frame);
-static gboolean  save_dialog (gint32        image_id);
+static gboolean  save_image  (const gchar   *filename,
+                              gint32         image_id,
+                              gint32         from_frame,
+                              gint32         to_frame,
+                              GError       **error);
+static gboolean  save_dialog (gint32         image_id);
 
-static gboolean  get_info    (const gchar  *filename,
-                              gint32       *width,
-                              gint32       *height,
-                              gint32       *frames);
+static gboolean  get_info    (const gchar   *filename,
+                              gint32        *width,
+                              gint32        *height,
+                              gint32        *frames,
+                              GError       **error);
 
 /*
  * GIMP interface
@@ -218,13 +221,14 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
-  gint32            pc;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  gint32            orig_image_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
+  gint32             pc;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  gint32             orig_image_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -274,7 +278,7 @@ run (const gchar      *name,
                         -1 : param[4].data.d_int32);
 
           image_ID = load_image (param[1].data.d_string,
-				 from_frame, to_frame);
+                                 from_frame, to_frame, &error);
 
 	  if (image_ID != -1)
 	    {
@@ -283,14 +287,16 @@ run (const gchar      *name,
 	      values[1].data.d_image = image_ID;
 	    }
 	  else
-	    status = GIMP_PDB_EXECUTION_ERROR;
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
 	  break;
 
 	case GIMP_RUN_INTERACTIVE:
 	  if (load_dialog (param[1].data.d_string))
 	    {
 	      image_ID = load_image (param[1].data.d_string,
-				     from_frame, to_frame);
+                                     from_frame, to_frame, &error);
 
 	      if (image_ID != -1)
 		{
@@ -299,10 +305,14 @@ run (const gchar      *name,
 		  values[1].data.d_image = image_ID;
 		}
 	      else
-		status = GIMP_PDB_EXECUTION_ERROR;
-	    }
+                {
+                  status = GIMP_PDB_EXECUTION_ERROR;
+                }
+            }
 	  else
-	    status = GIMP_PDB_CANCEL;
+            {
+              status = GIMP_PDB_CANCEL;
+            }
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
@@ -333,8 +343,10 @@ run (const gchar      *name,
 	    }
 	  if (! save_image (param[3].data.d_string, image_ID,
 			    param[5].data.d_int32,
-			    param[6].data.d_int32))
-	    status = GIMP_PDB_EXECUTION_ERROR;
+			    param[6].data.d_int32, &error))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
 	  break;
 
 	case GIMP_RUN_INTERACTIVE:
@@ -353,11 +365,16 @@ run (const gchar      *name,
 
 	  if (save_dialog (param[1].data.d_image))
 	    {
-	      if (! save_image (param[3].data.d_string, image_ID, from_frame, to_frame))
-		status = GIMP_PDB_EXECUTION_ERROR;
-	    }
+	      if (! save_image (param[3].data.d_string,
+                                image_ID, from_frame, to_frame, &error))
+                {
+                  status = GIMP_PDB_EXECUTION_ERROR;
+                }
+            }
 	  else
-	    status = GIMP_PDB_CANCEL;
+            {
+              status = GIMP_PDB_CANCEL;
+            }
 	  break;
 	}
 
@@ -388,7 +405,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  if (get_info (param[0].data.d_string, &width, &height, &frames))
+	  if (get_info (param[0].data.d_string,
+                        &width, &height, &frames, &error))
 	    {
 	      *nreturn_vals = 4;
 	      values[1].type = GIMP_PDB_INT32;
@@ -399,11 +417,22 @@ run (const gchar      *name,
 	      values[3].data.d_int32 = frames;
 	    }
 	  else
-	    status = GIMP_PDB_EXECUTION_ERROR;
-	}
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
     }
   else
-    status = GIMP_PDB_CALLING_ERROR;
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
 
   values[0].data.d_status = status;
 }
@@ -412,10 +441,11 @@ run (const gchar      *name,
  * Open FLI animation and return header-info
  */
 static gboolean
-get_info (const gchar *filename,
-	  gint32      *width,
-	  gint32      *height,
-	  gint32      *frames)
+get_info (const gchar  *filename,
+	  gint32       *width,
+	  gint32       *height,
+	  gint32       *frames,
+          GError      **error)
 {
   FILE *file;
   s_fli_header fli_header;
@@ -426,13 +456,16 @@ get_info (const gchar *filename,
 
   if (!file)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
   fli_read_header (file, &fli_header);
   fclose (file);
-  *width = fli_header.width;
+
+  *width  = fli_header.width;
   *height = fli_header.height;
   *frames = fli_header.frames;
 
@@ -443,26 +476,26 @@ get_info (const gchar *filename,
  * load fli animation and store as framestack
  */
 static gint32
-load_image (const gchar *filename,
-	    gint32       from_frame,
-	    gint32       to_frame)
+load_image (const gchar  *filename,
+	    gint32        from_frame,
+	    gint32        to_frame,
+            GError      **error)
 {
-  FILE *file;
+  FILE         *file;
   GimpDrawable *drawable;
-  gint32 image_id, layer_ID;
-
-  guchar *fb, *ofb, *fb_x;
-  guchar cm[768], ocm[768];
-  GimpPixelRgn pixel_rgn;
-  s_fli_header fli_header;
-
-  gint cnt;
+  gint32        image_id, layer_ID;
+  guchar       *fb, *ofb, *fb_x;
+  guchar        cm[768], ocm[768];
+  GimpPixelRgn  pixel_rgn;
+  s_fli_header  fli_header;
+  gint          cnt;
 
   file = g_fopen (filename ,"rb");
   if (!file)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -578,10 +611,11 @@ load_image (const gchar *filename,
  * (some code was taken from the GIF plugin.)
  */
 static gboolean
-save_image (const gchar *filename,
-	    gint32       image_id,
-	    gint32       from_frame,
-	    gint32       to_frame)
+save_image (const gchar  *filename,
+	    gint32        image_id,
+	    gint32        from_frame,
+	    gint32        to_frame,
+            GError      **error)
 {
   FILE *file;
   GimpDrawable *drawable;
@@ -712,8 +746,9 @@ save_image (const gchar *filename,
   file = g_fopen (filename ,"wb");
   if (!file)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   fseek (file, 128, SEEK_SET);
@@ -792,7 +827,7 @@ save_image (const gchar *filename,
  * Dialogs for interactive usage
  */
 static gboolean
-load_dialog (const gchar *name)
+load_dialog (const gchar *filename)
 {
   GtkWidget *dialog;
   GtkWidget *table;
@@ -801,7 +836,7 @@ load_dialog (const gchar *name)
   gint32     width, height, nframes;
   gboolean   run;
 
-  get_info (name, &width, &height, &nframes);
+  get_info (filename, &width, &height, &nframes, NULL);
 
   from_frame = 1;
   to_frame   = nframes;
