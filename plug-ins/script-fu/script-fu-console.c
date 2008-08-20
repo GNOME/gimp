@@ -514,10 +514,13 @@ script_fu_output_to_console (TsOutputType  type,
 
   if (console && console->text_view)
     {
-      GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (console->text_view));
+      GtkTextBuffer *buffer;
       GtkTextIter    cursor;
 
+      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (console->text_view));
+
       gtk_text_buffer_get_end_iter (buffer, &cursor);
+
       if (type == TS_OUTPUT_NORMAL)
         {
           gtk_text_buffer_insert (buffer, &cursor, text, len);
@@ -528,6 +531,7 @@ script_fu_output_to_console (TsOutputType  type,
                                                     text, len, "emphasis",
                                                     NULL);
         }
+
       script_fu_console_scroll_end (console->text_view);
     }
 }
@@ -697,11 +701,17 @@ script_fu_eval_run (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
+  static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpRunMode       run_mode;
 
+  *nreturn_vals = 1;
+  *return_vals = values;
+
+  values[0].type = GIMP_PDB_STATUS;
+
   run_mode = params[0].data.d_int32;
+
   set_run_mode_constant (run_mode);
 
   switch (run_mode)
@@ -710,23 +720,21 @@ script_fu_eval_run (const gchar      *name,
       /*  Disable Script-Fu output  */
       ts_register_output_func (NULL, NULL);
       if (ts_interpret_string (params[1].data.d_string) != 0)
-          status = GIMP_PDB_EXECUTION_ERROR;
+        status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      status = GIMP_PDB_CALLING_ERROR;
-      g_message (_("Script-Fu evaluation mode only allows "
-                   "non-interactive invocation"));
+      status        = GIMP_PDB_CALLING_ERROR;
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = _("Script-Fu evaluation mode only allows "
+                                  "non-interactive invocation");
       break;
 
     default:
       break;
     }
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
