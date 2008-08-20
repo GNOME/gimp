@@ -56,18 +56,18 @@ struct _GimpPerspectiveCloneClass
 };
 
 
-void    gimp_perspective_clone_register   (Gimp                      *gimp,
-                                           GimpPaintRegisterCallback  callback);
+void    gimp_perspective_clone_register      (Gimp                      *gimp,
+                                              GimpPaintRegisterCallback  callback);
 
 GType   gimp_perspective_clone_get_type         (void) G_GNUC_CONST;
 
+void    gimp_perspective_clone_set_transform    (GimpPerspectiveClone   *clone,
+                                                 GimpMatrix3            *transform);
 void    gimp_perspective_clone_get_source_point (GimpPerspectiveClone   *clone,
                                                  gdouble                 x,
                                                  gdouble                 y,
-                                                 gdouble                 *newx,
-                                                 gdouble                 *newy);
-void    gimp_perspective_clone_get_matrix       (GimpPerspectiveClone    *clone,
-                                                 GimpMatrix3             *matrix);
+                                                 gdouble                *newx,
+                                                 gdouble                *newy);
 
 
 #endif  /*  __GIMP_PERSPECTIVE_CLONE_H__  */

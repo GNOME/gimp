@@ -1,5 +1,19 @@
 2008-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpperspectiveclone.[ch]: make
+	gimp_perspective_clone_get_matrix() static, add
+	gimp_perspective_clone_set_transform().
+
+	* app/tools/gimpperspectiveclonetool.c
+	(gimp_perspective_clone_tool_mode_notify): use above set_transform()
+	API instead of poking into the object.
+
+	(gimp_perspective_clone_tool_constructor): call
+	gimp_perspective_clone_tool_mode_notify() to set up things instead
+	of duplicating code.
+
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.[ch]: formatting.
 
 2008-08-20  Sven Neumann  <sven@gimp.org>

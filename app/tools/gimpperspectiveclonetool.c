@@ -91,7 +91,7 @@ static void          gimp_perspective_clone_tool_oper_update   (GimpTool        
                                                                 gboolean         proximity,
                                                                 GimpDisplay     *display);
 
-static void          gimp_perspective_clone_tool_mode_notify   (GObject          *config,
+static void          gimp_perspective_clone_tool_mode_notify   (GimpPerspectiveCloneOptions *options,
                                                                 GParamSpec       *pspec,
                                                                 GimpPerspectiveCloneTool *clone_tool);
 
@@ -203,12 +203,7 @@ gimp_perspective_clone_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_perspective_clone_tool_mode_notify),
                            clone_tool, 0);
 
-  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
-    gimp_tool_control_set_tool_cursor (tool->control,
-                                       GIMP_TOOL_CURSOR_PERSPECTIVE);
-  else
-    gimp_tool_control_set_tool_cursor (tool->control,
-                                       GIMP_TOOL_CURSOR_CLONE);
+  gimp_perspective_clone_tool_mode_notify (options, NULL, clone_tool);
 
   return object;
 }
@@ -877,39 +872,20 @@ gimp_perspective_clone_tool_bounds (GimpPerspectiveCloneTool *tool,
 }
 
 static void
-gimp_perspective_clone_tool_mode_notify (GObject                  *config,
-                                         GParamSpec               *pspec,
-                                         GimpPerspectiveCloneTool *clone_tool)
+gimp_perspective_clone_tool_mode_notify (GimpPerspectiveCloneOptions *options,
+                                         GParamSpec                  *pspec,
+                                         GimpPerspectiveCloneTool    *clone_tool)
 {
-  GimpPerspectiveClone        *clone;
-  GimpPerspectiveCloneOptions *options;
+  GimpPerspectiveClone *clone;
 
   clone = GIMP_PERSPECTIVE_CLONE (GIMP_PAINT_TOOL (clone_tool)->core);
-  options = GIMP_PERSPECTIVE_CLONE_OPTIONS (config);
 
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_PAINT)
     {
       gimp_tool_control_set_tool_cursor (GIMP_TOOL (clone_tool)->control,
                                          GIMP_TOOL_CURSOR_CLONE);
 
-      clone->transform = clone_tool->transform;
-
-      clone->transform_inv = clone_tool->transform;
-      gimp_matrix3_invert (&clone->transform_inv);
-
-#if 0
-      /* print the matrix */
-
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[0][0]);
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[0][1]);
-      g_printerr ("%f\n",   (clone_tool->transform).coeff[0][2]);
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[1][0]);
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[1][1]);
-      g_printerr ("%f\n",   (clone_tool->transform).coeff[1][2]);
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[2][0]);
-      g_printerr ("%f\t",   (clone_tool->transform).coeff[2][1]);
-      g_printerr ("%f\n\n", (clone_tool->transform).coeff[2][2]);
-#endif
+      gimp_perspective_clone_set_transform (clone, &clone_tool->transform);
     }
   else
     {
