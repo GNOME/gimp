@@ -1,5 +1,10 @@
 2008-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render): add
+	PANGO_ALIGN_LEFT to the switch to fix warning about unhandled value.
+
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
 	Bug 496772 – Position shown in the statusbar needs more
 	precision (for some tools)
 
