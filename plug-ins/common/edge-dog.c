@@ -153,7 +153,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
+  static GimpParam   values[2];
   gint32             image_ID;
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
@@ -248,8 +248,10 @@ run (const gchar      *name,
         }
       else
         {
-          g_message (_("Cannot operate on indexed color images."));
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status        = GIMP_PDB_EXECUTION_ERROR;
+          *nreturn_vals = 2;
+          values[1].type          = GIMP_PDB_STRING;
+          values[1].data.d_string = _("Cannot operate on indexed color images.");
         }
 
       gimp_drawable_detach (drawable);

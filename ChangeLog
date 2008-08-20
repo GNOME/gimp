@@ -1,5 +1,19 @@
 2008-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/align-layers.c
+	* plug-ins/common/blur-gauss.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/edge-dog.c
+	* plug-ins/common/edge-neon.c
+	* plug-ins/common/edge-sobel.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/softglow.c
+	* plug-ins/gradient-flare/gradient-flare.c: pass error messages
+	with the return values instead of calling g_message().
+
+2008-08-20  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/file-gif-load.c: tons of cleanup: proper
 	prototypes, s/unsigned foo/gufoo/, indentation, ...
 
