@@ -41,8 +41,8 @@
 #include "gimpdisplayshell-scroll.h"
 
 
-#define OVERPAN_FACTOR     0.5
-#define MINIUM_STEP_AMOUNT 1.0
+#define OVERPAN_FACTOR      0.5
+#define MINIMUM_STEP_AMOUNT 1.0
 
 
 typedef struct
@@ -533,7 +533,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
                                    sw + (shell->disp_width - sw) / 2);
     }
 
-  shell->hsbdata->step_increment = MAX (shell->scale_x, MINIUM_STEP_AMOUNT);
+  shell->hsbdata->step_increment = MAX (shell->scale_x, MINIMUM_STEP_AMOUNT);
 }
 
 /**
@@ -575,5 +575,5 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
                                    sh + (shell->disp_height - sh) / 2);
     }
 
-  shell->vsbdata->step_increment = MAX (shell->scale_y, MINIUM_STEP_AMOUNT);
+  shell->vsbdata->step_increment = MAX (shell->scale_y, MINIMUM_STEP_AMOUNT);
 }
