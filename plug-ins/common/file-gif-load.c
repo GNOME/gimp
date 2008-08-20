@@ -262,39 +262,58 @@ run (const gchar      *name,
 #define GRAYSCALE        1
 #define COLOR            2
 
-typedef unsigned char CMap[3][MAXCOLORMAPSIZE];
+typedef guchar CMap[3][MAXCOLORMAPSIZE];
 
 static struct
 {
-  unsigned int Width;
-  unsigned int Height;
-  CMap         ColorMap;
-  unsigned int BitPixel;
-  unsigned int ColorResolution;
-  unsigned int Background;
-  unsigned int AspectRatio;
+  guint Width;
+  guint Height;
+  CMap  ColorMap;
+  guint BitPixel;
+  guint ColorResolution;
+  guint Background;
+  guint AspectRatio;
   /*
    **
    */
-  int          GrayScale;
+  gint  GrayScale;
 } GifScreen;
 
 static struct
 {
-  int transparent;
-  int delayTime;
-  int inputFlag;
-  int disposal;
+  gint transparent;
+  gint delayTime;
+  gint inputFlag;
+  gint disposal;
 } Gif89 = { -1, -1, -1, 0 };
 
-static int ReadColorMap (FILE *, int, CMap, int *);
-static int DoExtension  (FILE *, int);
-static int GetDataBlock (FILE *, unsigned char *);
-static int GetCode      (FILE *, int, int);
-static int LZWReadByte  (FILE *, int, int);
-static gint32 ReadImage (FILE *, const gchar *,
-                         int, int, CMap, int, int, int, int,
-                         guint, guint, guint, guint);
+static gboolean ReadColorMap (FILE        *fd,
+                              gint         number,
+                              CMap         buffer,
+                              gint        *format);
+static gint     DoExtension  (FILE        *fd,
+                              gint         label);
+static gint     GetDataBlock (FILE        *fd,
+                              guchar      *buf);
+static gint     GetCode      (FILE        *fd,
+                              gint         code_size,
+                              gboolean     flag);
+static gint     LZWReadByte  (FILE        *fd,
+                              gint         just_reset_LZW,
+                              gint         input_code_size);
+static gint32   ReadImage    (FILE        *fd,
+                              const gchar *filename,
+                              gint         len,
+                              gint         height,
+                              CMap         cmap,
+                              gint         ncols,
+                              gint         format,
+                              gint         interlace,
+                              gint         number,
+                              guint        leftpos,
+                              guint        toppos,
+                              guint        screenwidth,
+                              guint        screenheight);
 
 
 static gint32
@@ -326,7 +345,7 @@ load_image (const gchar  *filename,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (!ReadOK (fd, buf, 6))
+  if (! ReadOK (fd, buf, 6))
     {
       g_message ("Error reading magic number");
       return -1;
@@ -348,24 +367,24 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  if (!ReadOK (fd, buf, 7))
+  if (! ReadOK (fd, buf, 7))
     {
       g_message ("Failed to read screen descriptor");
       return -1;
     }
 
-  GifScreen.Width = LM_to_uint (buf[0], buf[1]);
-  GifScreen.Height = LM_to_uint (buf[2], buf[3]);
-  GifScreen.BitPixel = 2 << (buf[4] & 0x07);
+  GifScreen.Width           = LM_to_uint (buf[0], buf[1]);
+  GifScreen.Height          = LM_to_uint (buf[2], buf[3]);
+  GifScreen.BitPixel        = 2 << (buf[4] & 0x07);
   GifScreen.ColorResolution = (((buf[4] & 0x70) >> 3) + 1);
-  GifScreen.Background = buf[5];
-  GifScreen.AspectRatio = buf[6];
+  GifScreen.Background      = buf[5];
+  GifScreen.AspectRatio     = buf[6];
 
   if (BitSet (buf[4], LOCALCOLORMAP))
     {
       /* Global Colormap */
-      if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap,
-                        &GifScreen.GrayScale))
+      if (! ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap,
+                          &GifScreen.GrayScale))
         {
           g_message ("Error reading global colormap");
           return -1;
@@ -380,9 +399,9 @@ load_image (const gchar  *filename,
 
   highest_used_index = 0;
 
-  for (;;)
+  while (TRUE)
     {
-      if (!ReadOK (fd, &c, 1))
+      if (! ReadOK (fd, &c, 1))
         {
           g_message ("EOF / read error on image data");
           return image_ID; /* will be -1 if failed on first image! */
@@ -397,7 +416,7 @@ load_image (const gchar  *filename,
       if (c == '!')
         {
           /* Extension */
-          if (!ReadOK (fd, &c, 1))
+          if (! ReadOK (fd, &c, 1))
             {
               g_message ("EOF / read error on extension function code");
               return image_ID; /* will be -1 if failed on first image! */
@@ -415,7 +434,7 @@ load_image (const gchar  *filename,
 
       ++imageCount;
 
-      if (!ReadOK (fd, buf, 9))
+      if (! ReadOK (fd, buf, 9))
         {
           g_message ("Couldn't read left/top/width/height");
           return image_ID; /* will be -1 if failed on first image! */
@@ -427,7 +446,7 @@ load_image (const gchar  *filename,
 
       if (! useGlobalColormap)
         {
-          if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
+          if (! ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
             {
               g_message ("Error reading local colormap");
               return image_ID; /* will be -1 if failed on first image! */
@@ -473,11 +492,11 @@ load_image (const gchar  *filename,
   return image_ID;
 }
 
-static int
+static gboolean
 ReadColorMap (FILE *fd,
-              int   number,
+              gint  number,
               CMap  buffer,
-              int  *format)
+              gint *format)
 {
   guchar rgb[3];
   gint   flag;
@@ -487,11 +506,8 @@ ReadColorMap (FILE *fd,
 
   for (i = 0; i < number; ++i)
     {
-      if (!ReadOK (fd, rgb, sizeof (rgb)))
-        {
-          g_message ("Bad colormap");
-          return TRUE;
-        }
+      if (! ReadOK (fd, rgb, sizeof (rgb)))
+        return FALSE;
 
       buffer[CM_RED][i] = rgb[0];
       buffer[CM_GREEN][i] = rgb[1];
@@ -502,12 +518,12 @@ ReadColorMap (FILE *fd,
 
   *format = (flag) ? GRAYSCALE : COLOR;
 
-  return FALSE;
+  return TRUE;
 }
 
-static int
+static gint
 DoExtension (FILE *fd,
-             int   label)
+             gint  label)
 {
   static guchar  buf[256];
   gchar         *str;
@@ -517,19 +533,19 @@ DoExtension (FILE *fd,
     case 0x01:                  /* Plain Text Extension */
       str = "Plain Text Extension";
 #ifdef notdef
-      if (GetDataBlock (fd, (unsigned char *) buf) == 0)
+      if (GetDataBlock (fd, (guchar *) buf) == 0)
         ;
 
-      lpos = LM_to_uint (buf[0], buf[1]);
-      tpos = LM_to_uint (buf[2], buf[3]);
-      width = LM_to_uint (buf[4], buf[5]);
-      height = LM_to_uint (buf[6], buf[7]);
-      cellw = buf[8];
-      cellh = buf[9];
+      lpos       = LM_to_uint (buf[0], buf[1]);
+      tpos       = LM_to_uint (buf[2], buf[3]);
+      width      = LM_to_uint (buf[4], buf[5]);
+      height     = LM_to_uint (buf[6], buf[7]);
+      cellw      = buf[8];
+      cellh      = buf[9];
       foreground = buf[10];
       background = buf[11];
 
-      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
+      while (GetDataBlock (fd, (guchar *) buf) > 0)
         {
           PPM_ASSIGN (image[ypos][xpos],
                       cmap[CM_RED][v],
@@ -542,16 +558,17 @@ DoExtension (FILE *fd,
 #else
       break;
 #endif
+
     case 0xff:                  /* Application Extension */
       str = "Application Extension";
       break;
     case 0xfe:                  /* Comment Extension */
       str = "Comment Extension";
-      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
+      while (GetDataBlock (fd, (guchar *) buf) > 0)
         {
           gchar *comment = (gchar *) buf;
 
-          if (!g_utf8_validate (comment, -1, NULL))
+          if (! g_utf8_validate (comment, -1, NULL))
             continue;
 
           if (comment_parasite)
@@ -563,10 +580,11 @@ DoExtension (FILE *fd,
         }
       return TRUE;
       break;
+
     case 0xf9:                  /* Graphic Control Extension */
       str = "Graphic Control Extension";
-      (void) GetDataBlock (fd, (unsigned char *) buf);
-      Gif89.disposal = (buf[0] >> 2) & 0x7;
+      (void) GetDataBlock (fd, (guchar *) buf);
+      Gif89.disposal  = (buf[0] >> 2) & 0x7;
       Gif89.inputFlag = (buf[0] >> 1) & 0x1;
       Gif89.delayTime = LM_to_uint (buf[1], buf[2]);
       if ((buf[0] & 0x1) != 0)
@@ -574,13 +592,14 @@ DoExtension (FILE *fd,
       else
         Gif89.transparent = -1;
 
-      while (GetDataBlock (fd, (unsigned char *) buf) > 0)
-        ;
+      while (GetDataBlock (fd, (guchar *) buf) > 0);
+
       return FALSE;
       break;
+
     default:
-      str = (char *)buf;
-      sprintf ((char *)buf, "UNKNOWN (0x%02x)", label);
+      str = (gchar *)buf;
+      sprintf ((gchar *)buf, "UNKNOWN (0x%02x)", label);
       break;
     }
 
@@ -588,21 +607,20 @@ DoExtension (FILE *fd,
   g_print ("GIF: got a '%s'\n", str);
 #endif
 
-  while (GetDataBlock (fd, (unsigned char *) buf) > 0)
-    ;
+  while (GetDataBlock (fd, (guchar *) buf) > 0);
 
   return FALSE;
 }
 
-static int ZeroDataBlock = FALSE;
+static gint ZeroDataBlock = FALSE;
 
-static int
-GetDataBlock (FILE          *fd,
-              unsigned char *buf)
+static gint
+GetDataBlock (FILE   *fd,
+              guchar *buf)
 {
-  unsigned char count;
+  guchar count;
 
-  if (!ReadOK (fd, &count, 1))
+  if (! ReadOK (fd, &count, 1))
     {
       g_message ("Error in getting DataBlock size");
       return -1;
@@ -610,7 +628,7 @@ GetDataBlock (FILE          *fd,
 
   ZeroDataBlock = count == 0;
 
-  if ((count != 0) && (!ReadOK (fd, buf, count)))
+  if ((count != 0) && (! ReadOK (fd, buf, count)))
     {
       g_message ("Error in reading DataBlock");
       return -1;
@@ -619,14 +637,14 @@ GetDataBlock (FILE          *fd,
   return count;
 }
 
-static int
-GetCode (FILE *fd,
-         int   code_size,
-         int   flag)
+static gint
+GetCode (FILE     *fd,
+         gint      code_size,
+         gboolean  flag)
 {
-  static unsigned char buf[280];
-  static int curbit, lastbit, done, last_byte;
-  int i, j, ret, count;
+  static guchar buf[280];
+  static gint   curbit, lastbit, done, last_byte;
+  gint          i, j, ret, count;
 
   if (flag)
     {
@@ -669,20 +687,20 @@ GetCode (FILE *fd,
   return ret;
 }
 
-static int
+static gint
 LZWReadByte (FILE *fd,
-             int   just_reset_LZW,
-             int   input_code_size)
+             gint  just_reset_LZW,
+             gint  input_code_size)
 {
-  static int fresh = FALSE;
-  int code, incode;
-  static int code_size, set_code_size;
-  static int max_code, max_code_size;
-  static int firstcode, oldcode;
-  static int clear_code, end_code;
-  static int table[2][(1 << MAX_LZW_BITS)];
-  static int stack[(1 << (MAX_LZW_BITS)) * 2], *sp;
-  register int i;
+  static gint fresh = FALSE;
+  gint        code, incode;
+  static gint code_size, set_code_size;
+  static gint max_code, max_code_size;
+  static gint firstcode, oldcode;
+  static gint clear_code, end_code;
+  static gint table[2][(1 << MAX_LZW_BITS)];
+  static gint stack[(1 << (MAX_LZW_BITS)) * 2], *sp;
+  gint        i;
 
   if (just_reset_LZW)
     {
@@ -693,11 +711,11 @@ LZWReadByte (FILE *fd,
         }
 
       set_code_size = input_code_size;
-      code_size = set_code_size + 1;
-      clear_code = 1 << set_code_size;
-      end_code = clear_code + 1;
+      code_size     = set_code_size + 1;
+      clear_code    = 1 << set_code_size;
+      end_code      = clear_code + 1;
       max_code_size = 2 * clear_code;
-      max_code = clear_code + 2;
+      max_code      = clear_code + 2;
 
       GetCode (fd, 0, TRUE);
 
@@ -723,10 +741,10 @@ LZWReadByte (FILE *fd,
       fresh = FALSE;
       do
         {
-          firstcode = oldcode =
-            GetCode (fd, code_size, FALSE);
+          firstcode = oldcode = GetCode (fd, code_size, FALSE);
         }
       while (firstcode == clear_code);
+
       return firstcode;
     }
 
@@ -747,18 +765,19 @@ LZWReadByte (FILE *fd,
               table[0][i] = 0;
               table[1][i] = 0;
             }
-          code_size = set_code_size + 1;
+
+          code_size     = set_code_size + 1;
           max_code_size = 2 * clear_code;
-          max_code = clear_code + 2;
-          sp = stack;
-          firstcode = oldcode =
-            GetCode (fd, code_size, FALSE);
+          max_code      = clear_code + 2;
+          sp            = stack;
+          firstcode     = oldcode = GetCode (fd, code_size, FALSE);
+
           return firstcode;
         }
       else if (code == end_code)
         {
-          int count;
-          unsigned char buf[260];
+          gint   count;
+          guchar buf[260];
 
           if (ZeroDataBlock)
             return -2;
@@ -768,6 +787,7 @@ LZWReadByte (FILE *fd,
 
           if (count != 0)
             g_print ("GIF: missing EOD in data stream (common occurence)");
+
           return -2;
         }
 
@@ -810,6 +830,7 @@ LZWReadByte (FILE *fd,
       if (sp > stack)
         return *--sp;
     }
+
   return code;
 }
 
@@ -829,21 +850,21 @@ ReadImage (FILE        *fd,
            guint        screenheight)
 {
   static gint32 image_ID   = -1;
-  static gint frame_number = 1;
+  static gint   frame_number = 1;
 
-  gint32 layer_ID;
-  GimpPixelRgn pixel_rgn;
+  gint32        layer_ID;
+  GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
-  guchar *dest, *temp;
-  guchar c;
-  gint xpos = 0, ypos = 0, pass = 0;
-  gint cur_progress, max_progress;
-  gint v;
-  gint i, j;
-  gchar *framename;
-  gchar *framename_ptr;
-  gboolean alpha_frame = FALSE;
-  static int previous_disposal;
+  guchar       *dest, *temp;
+  guchar        c;
+  gint          xpos = 0, ypos = 0, pass = 0;
+  gint          cur_progress, max_progress;
+  gint          v;
+  gint          i, j;
+  gchar        *framename;
+  gchar        *framename_ptr;
+  gboolean      alpha_frame = FALSE;
+  static gint   previous_disposal;
 
   /* Guard against bogus frame size */
   if (len < 1 || height < 1)
@@ -855,7 +876,7 @@ ReadImage (FILE        *fd,
   /*
    **  Initialize the Compression routines
    */
-  if (!ReadOK (fd, &c, 1))
+  if (! ReadOK (fd, &c, 1))
     {
       g_message ("EOF / read error on image data");
       return -1;
@@ -920,7 +941,7 @@ ReadImage (FILE        *fd,
       gimp_progress_pulse ();
 
        /* If the colourmap is now different, we have to promote to RGB! */
-      if (!promote_to_rgb)
+      if (! promote_to_rgb)
         {
           for (i = 0; i < ncols; i++)
             {
@@ -1007,8 +1028,7 @@ ReadImage (FILE        *fd,
   max_progress = height;
 
   if (alpha_frame)
-    dest = (guchar *) g_malloc (len * height *
-                                (promote_to_rgb ? 4 : 2));
+    dest = (guchar *) g_malloc (len * height * (promote_to_rgb ? 4 : 2));
   else
     dest = (guchar *) g_malloc (len * height);
 
@@ -1017,7 +1037,7 @@ ReadImage (FILE        *fd,
              len, height, interlace ? " interlaced" : "", ncols);
 #endif
 
-  if (!alpha_frame && promote_to_rgb)
+  if (! alpha_frame && promote_to_rgb)
     {
       /* I don't see how one would easily construct a GIF in which
          this could happen, but it's a mad mad world. */
@@ -1114,7 +1134,7 @@ ReadImage (FILE        *fd,
         break;
     }
 
-fini:
+ fini:
   if (LZWReadByte (fd, FALSE, c) >= 0)
     g_print ("GIF: too much input data, ignoring extra...\n");
 
