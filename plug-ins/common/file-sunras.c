@@ -538,7 +538,8 @@ save_image (const gchar  *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      g_message (_("SUNRAS save cannot handle images with alpha channels"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("SUNRAS save cannot handle images with alpha channels"));
       return FALSE;
     }
 

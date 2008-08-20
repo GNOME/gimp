@@ -108,7 +108,8 @@ static void     run                      (const gchar      *name,
                                           GimpParam       **return_vals);
 
 static gboolean save_image               (const gchar      *filename,
-                                          GimpDrawable     *drawable);
+                                          GimpDrawable     *drawable,
+                                          GError          **error);
 static gboolean save_dialog              (gint32            image_ID);
 
 static gboolean color_comp               (guchar           *buffer,
@@ -172,6 +173,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpDrawable      *drawable;
+  GError            *error  = NULL;
 
   INIT_I18N ();
 
@@ -187,7 +189,7 @@ run (const gchar      *name,
 
   if (save_dialog (param[1].data.d_int32))
     {
-      if (save_image (param[3].data.d_string, drawable))
+      if (save_image (param[3].data.d_string, drawable, &error))
 	{
 	  gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
 	}
@@ -201,12 +203,20 @@ run (const gchar      *name,
       status = GIMP_PDB_CANCEL;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static gboolean
-save_image (const gchar  *filename,
-	    GimpDrawable *drawable)
+save_image (const gchar   *filename,
+	    GimpDrawable  *drawable,
+            GError       **error)
 {
   gint          row,col, cols, rows, x, y;
   gint          colcount, colspan, rowspan;
@@ -222,8 +232,9 @@ save_image (const gchar  *filename,
 
   if (! fp)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

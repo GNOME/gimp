@@ -1046,8 +1046,9 @@ load_image (const gchar  *filename,
                  &ChildPid);
   if (!ifp)
     {
-      g_message (_("Could not interpret '%s'"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
+                   _("Could not interpret Postscript file '%s'"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -1187,7 +1188,8 @@ save_image (const gchar  *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      g_message (_("PostScript save cannot handle images with alpha channels"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("PostScript save cannot handle images with alpha channels"));
       return FALSE;
     }
 

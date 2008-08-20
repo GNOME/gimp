@@ -44,16 +44,18 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gint      load_palette   (FILE        *fp,
-                                 guchar       palette[]);
-static gint32    load_image     (const gchar *file,
-                                 const gchar *brief);
-static gboolean  save_image     (const gchar *file,
-                                 const gchar *brief,
-                                 gint32       image,
-                                 gint32       layer);
-static void      palette_dialog (const gchar *title);
-static gboolean  need_palette   (const gchar *file);
+static gint      load_palette   (FILE         *fp,
+                                 guchar        palette[]);
+static gint32    load_image     (const gchar  *file,
+                                 const gchar  *brief,
+                                 GError      **error);
+static gboolean  save_image     (const gchar  *file,
+                                 const gchar  *brief,
+                                 gint32        image,
+                                 gint32        layer,
+                                 GError      **error);
+static void      palette_dialog (const gchar  *title);
+static gboolean  need_palette   (const gchar  *file);
 
 
 /* Globals... */
@@ -147,6 +149,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -190,7 +193,8 @@ run (const gchar      *name,
           gimp_set_data (SAVE_PROC, palette_file, data_length);
         }
 
-      image = load_image (param[1].data.d_string, param[2].data.d_string);
+      image = load_image (param[1].data.d_string, param[2].data.d_string,
+                          &error);
 
       if (image != -1)
         {
@@ -230,7 +234,7 @@ run (const gchar      *name,
 	}
 
       if (save_image (param[3].data.d_string, param[4].data.d_string,
-		      image_ID, drawable_ID))
+		      image_ID, drawable_ID, &error))
         {
           gimp_set_data (SAVE_PROC, palette_file, data_length);
         }
@@ -245,6 +249,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -270,8 +281,9 @@ need_palette (const gchar *file)
 /* Load CEL image into GIMP */
 
 static gint32
-load_image (const gchar *file,
-            const gchar *brief)
+load_image (const gchar  *file,
+            const gchar  *brief,
+            GError      **error)
 {
   FILE      *fp;            /* Read file pointer */
   guchar     header[32];    /* File header */
@@ -296,8 +308,9 @@ load_image (const gchar *file,
 
   if (fp == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (file), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (file), g_strerror (errno));
       return -1;
     }
 
@@ -481,7 +494,7 @@ load_image (const gchar *file,
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
 
-  return (image);
+  return image;
 }
 
 static gint
@@ -530,10 +543,11 @@ load_palette (FILE   *fp,
 }
 
 static gboolean
-save_image (const gchar *file,
-            const gchar *brief,
-            gint32       image,
-            gint32       layer)
+save_image (const gchar  *file,
+            const gchar  *brief,
+            gint32        image,
+            gint32        layer,
+            GError      **error)
 {
   FILE          *fp;            /* Write file pointer */
   guchar         header[32];    /* File header */
@@ -565,8 +579,9 @@ save_image (const gchar *file,
 
   if (fp == NULL)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (file), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (file), g_strerror (errno));
       return FALSE;
     }
 

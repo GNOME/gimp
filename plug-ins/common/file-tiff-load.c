@@ -290,6 +290,7 @@ run (const gchar      *name,
           g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for reading: %s"),
                        gimp_filename_to_utf8 (filename), g_strerror (errno));
+
           status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
@@ -305,8 +306,9 @@ run (const gchar      *name,
 
           if (pages.n_pages == 0)
             {
-              g_message (_("TIFF '%s' does not contain any directories"),
-                         gimp_filename_to_utf8 (filename));
+              g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("TIFF '%s' does not contain any directories"),
+                           gimp_filename_to_utf8 (filename));
 
               status = GIMP_PDB_EXECUTION_ERROR;
             }
