@@ -1,3 +1,16 @@
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginprocedure.c
+	* app/plug-in/gimptemporaryprocedure.c: don't just free the return
+	values when running procedures asynchronously. Instead examine
+	them and display the error message if there's one.
+
+	* app/plug-in/gimppluginmanager-call.c
+	(gimp_plug_in_manager_call_run_temp): return NULL if
+	procedure->plug_in is not set.
+
+	* app/plug-in/gimpplugin-message.c: comment.
+
 2008-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: removed indentation from blocks after

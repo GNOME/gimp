@@ -436,7 +436,7 @@ gimp_plug_in_handle_proc_error (GimpPlugIn          *plug_in,
       break;
 
     case GIMP_PDB_ERROR_HANDLER_PLUGIN:
-      /*  the plug-in is responsible for this error  */
+      /*  the plug-in is responsible for handling this error  */
       break;
     }
 }

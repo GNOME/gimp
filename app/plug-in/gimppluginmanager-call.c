@@ -289,7 +289,8 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                     GimpTemporaryProcedure *procedure,
                                     GValueArray            *args)
 {
-  GimpPlugIn *plug_in;
+  GValueArray *return_vals = NULL;
+  GimpPlugIn  *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -302,7 +303,6 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
   if (plug_in)
     {
       GimpPlugInProcFrame *proc_frame;
-      GValueArray         *return_vals;
       GPProcRun            proc_run;
 
       proc_frame = gimp_plug_in_proc_frame_push (plug_in, context, progress,
@@ -346,13 +346,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
       gimp_plug_in_proc_frame_unref (proc_frame, plug_in);
       g_object_unref (plug_in);
+    }
 
-      return return_vals;
-    }
-  else
-    {
-      /*  can we actually ever get here?  */
-      return gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
-                                               FALSE, NULL);
-    }
+  return return_vals;
 }

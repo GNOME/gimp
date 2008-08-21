@@ -231,11 +231,40 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
                                                plug_in_procedure,
                                                args, FALSE, display);
 
-  /*  In case of errors, gimp_plug_in_manager_call_run() may return
-   *  return_vals, even if run asynchronously.
-   */
   if (return_vals)
-    g_value_array_free (return_vals);
+    {
+      switch (g_value_get_enum (&return_vals->values[0]))
+        {
+        case GIMP_PDB_SUCCESS:
+          break;
+
+        case GIMP_PDB_CALLING_ERROR:
+          if (return_vals->n_values > 1 &&
+              G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            _("Calling error for procedure '%s':\n"
+                              "%s"),
+                            gimp_object_get_name (GIMP_OBJECT (procedure)),
+                            g_value_get_string (&return_vals->values[1]));
+            }
+          break;
+
+        case GIMP_PDB_EXECUTION_ERROR:
+          if (return_vals->n_values > 1 &&
+              G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                            _("Execution error for procedure '%s':\n"
+                              "%s"),
+                            gimp_object_get_name (GIMP_OBJECT (procedure)),
+                            g_value_get_string (&return_vals->values[1]));
+            }
+          break;
+        }
+
+      g_value_array_free (return_vals);
+    }
 }
 
 const gchar *
