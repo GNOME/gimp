@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCRIPT_FU_TEXT_CONSOLE_H__
-#define __SCRIPT_FU_TEXT_CONSOLE_H__
+#ifndef __SCRIPT_FU_EVAL_H__
+#define __SCRIPT_FU_EVAL_H__
 
 
-void  script_fu_text_console_run (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *params,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
+void  script_fu_eval_run (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *params,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
 
-#endif /*  __SCRIPT_FU_TEXT_CONSOLE_H__  */
+#endif /*  __SCRIPT_FU_EVAL_H__  */

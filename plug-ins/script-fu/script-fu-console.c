@@ -28,8 +28,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "tinyscheme/scheme.h"
-
 #include "scheme-wrapper.h"
 #include "script-fu-console.h"
 
@@ -692,49 +690,4 @@ script_fu_cc_key_function (GtkWidget        *widget,
     }
 
   return FALSE;
-}
-
-void
-script_fu_eval_run (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *params,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals)
-{
-  static GimpParam  values[2];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
-
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-
-  run_mode = params[0].data.d_int32;
-
-  set_run_mode_constant (run_mode);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_NONINTERACTIVE:
-      /*  Disable Script-Fu output  */
-      ts_register_output_func (NULL, NULL);
-      if (ts_interpret_string (params[1].data.d_string) != 0)
-        status = GIMP_PDB_EXECUTION_ERROR;
-      break;
-
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      status        = GIMP_PDB_CALLING_ERROR;
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = _("Script-Fu evaluation mode only allows "
-                                  "non-interactive invocation");
-      break;
-
-    default:
-      break;
-    }
-
-  values[0].data.d_status = status;
 }

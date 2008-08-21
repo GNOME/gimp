@@ -28,6 +28,7 @@
 #include "script-fu-types.h"
 
 #include "script-fu-console.h"
+#include "script-fu-eval.h"
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"

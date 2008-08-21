@@ -4,6 +4,7 @@
 [encoding: UTF-8]
 
 plug-ins/script-fu/script-fu-console.c
+plug-ins/script-fu/script-fu-eval.c
 plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c

@@ -1,5 +1,18 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-eval.[ch]: new files split out of
+	script-fu-console.c[ch].
+
+	* plug-ins/script-fu/script-fu-text-console.h: fixed comment.
+
+	* plug-ins/script-fu/script-fu-console.[ch]: removed script-fu-eval
+	procedure here.
+
+	* plug-ins/script-fu/script-fu.c: changed accordingly.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu.c (script_fu_run): formatting.
 
 2008-08-21  Sven Neumann  <sven@gimp.org>

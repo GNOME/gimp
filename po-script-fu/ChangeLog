@@ -1,5 +1,7 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* POTFILES.in: added plug-ins/script-fu/script-fu-eval.c
+
 	* POTFILES.skip: follow plug-in name changes.
 
 2008-08-19  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>

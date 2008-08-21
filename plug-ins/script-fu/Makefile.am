@@ -38,6 +38,8 @@ script_fu_SOURCES = \
 	script-fu.c			\
 	script-fu-console.c		\
 	script-fu-console.h		\
+	script-fu-eval.c		\
+	script-fu-eval.h		\
 	script-fu-interface.c		\
 	script-fu-interface.h		\
 	script-fu-text-console.h	\
