@@ -46,7 +46,7 @@ Changes in GIMP 2.5.2
 =====================
 
  - final touches on the combined Freehand/Polygon Select tool
- - added a dockable dialog for managing Color tool settings
+ - added a dialog for managing Color tool settings
  - prepared the code for changes in the upcoming GTK+ release
  - improved popup scale button
  - mark the center of rectangles/bounding rectangles during moves
