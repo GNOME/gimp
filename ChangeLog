@@ -1,5 +1,9 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.4.8 (interface age 8).
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.4.7 release.
 
 2008-08-21  Sven Neumann  <sven@gimp.org>
