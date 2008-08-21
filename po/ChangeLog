@@ -1,3 +1,7 @@
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: removed duplicate entry.
+
 2008-08-19  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
         * ru.po: updated and improved Russian translation.
