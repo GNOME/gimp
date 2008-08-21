@@ -1,5 +1,10 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* po-*/POTFILES.skip: added desktop/gimp.desktop.in. Seems to work
+	around what appears to be a bug in intltool-update (version 0.40.1).
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am (EXTRA_DIST): removed 'mkinstalldirs' which is not
 	any longer required due to the changes in the po directories.
 
