@@ -70,8 +70,7 @@ EXTRA_DIST = \
 	config.h.win32		\
 	gimp-zip.in		\
 	gimpdefs.msc		\
-	makefile.msc		\
-	mkinstalldirs
+	makefile.msc
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
