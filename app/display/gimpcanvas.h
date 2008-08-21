@@ -56,7 +56,7 @@ typedef struct _GimpCanvasClass GimpCanvasClass;
 
 struct _GimpCanvas
 {
-  GtkDrawingArea     parent_instance;
+  GtkContainer       parent_instance;
 
   GimpDisplayConfig *config;
 
@@ -67,7 +67,7 @@ struct _GimpCanvas
 
 struct _GimpCanvasClass
 {
-  GtkDrawingAreaClass  parent_class;
+  GtkContainerClass  parent_class;
 };
 
 

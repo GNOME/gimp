@@ -56,6 +56,8 @@ static void    gimp_canvas_get_property  (GObject         *object,
 
 static void    gimp_canvas_realize       (GtkWidget       *widget);
 static void    gimp_canvas_unrealize     (GtkWidget       *widget);
+static void    gimp_canvas_size_allocate (GtkWidget       *widget,
+                                          GtkAllocation   *allocation);
 static void    gimp_canvas_style_set     (GtkWidget       *widget,
                                           GtkStyle        *prev_style);
 
@@ -63,7 +65,7 @@ static GdkGC * gimp_canvas_gc_new       (GimpCanvas      *canvas,
                                          GimpCanvasStyle  style);
 
 
-G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_CONTAINER)
 
 #define parent_class gimp_canvas_parent_class
 
@@ -159,12 +161,13 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_set_property;
-  object_class->get_property = gimp_canvas_get_property;
+  object_class->set_property  = gimp_canvas_set_property;
+  object_class->get_property  = gimp_canvas_get_property;
 
-  widget_class->realize      = gimp_canvas_realize;
-  widget_class->unrealize    = gimp_canvas_unrealize;
-  widget_class->style_set    = gimp_canvas_style_set;
+  widget_class->realize       = gimp_canvas_realize;
+  widget_class->unrealize     = gimp_canvas_unrealize;
+  widget_class->size_allocate = gimp_canvas_size_allocate;
+  widget_class->style_set     = gimp_canvas_style_set;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
@@ -176,7 +179,12 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
 static void
 gimp_canvas_init (GimpCanvas *canvas)
 {
-  gint i;
+  GtkWidget *widget = GTK_WIDGET (canvas);
+  gint       i;
+
+  GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+
+  gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
 
   for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
     canvas->gc[i] = NULL;
@@ -226,9 +234,42 @@ gimp_canvas_get_property (GObject    *object,
 static void
 gimp_canvas_realize (GtkWidget *widget)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (widget);
+  GimpCanvas    *canvas = GIMP_CANVAS (widget);
+  GdkWindowAttr  attributes;
+  gint           attributes_mask;
 
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
+  attributes.window_type = GDK_WINDOW_CHILD;
+  attributes.x           = widget->allocation.x;
+  attributes.y           = widget->allocation.y;
+  attributes.width       = widget->allocation.width;
+  attributes.height      = widget->allocation.height;
+  attributes.wclass      = GDK_INPUT_OUTPUT;
+  attributes.visual      = gtk_widget_get_visual (widget);
+  attributes.colormap    = gtk_widget_get_colormap (widget);
+  attributes.event_mask  = (gtk_widget_get_events (widget) |
+                            GDK_EXPOSURE_MASK              |
+                            GDK_POINTER_MOTION_MASK        |
+                            GDK_POINTER_MOTION_HINT_MASK   |
+                            GDK_BUTTON_PRESS_MASK          |
+                            GDK_BUTTON_RELEASE_MASK        |
+                            GDK_STRUCTURE_MASK             |
+                            GDK_ENTER_NOTIFY_MASK          |
+                            GDK_LEAVE_NOTIFY_MASK          |
+                            GDK_FOCUS_CHANGE_MASK          |
+                            GDK_KEY_PRESS_MASK             |
+                            GDK_KEY_RELEASE_MASK           |
+                            GDK_PROXIMITY_OUT_MASK);
+
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+
+  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
+                                   &attributes, attributes_mask);
+  gdk_window_set_user_data (widget->window, widget);
+
+  widget->style = gtk_style_attach (widget->style, widget->window);
+  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
 
   canvas->stipple[0] =
     gdk_bitmap_create_from_data (widget->window,
@@ -266,6 +307,18 @@ gimp_canvas_unrealize (GtkWidget *widget)
     }
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_canvas_size_allocate (GtkWidget     *widget,
+                           GtkAllocation *allocation)
+{
+  widget->allocation = *allocation;
+
+  if (GTK_WIDGET_REALIZED (widget))
+    gdk_window_move_resize (widget->window,
+                            allocation->x, allocation->y,
+                            allocation->width, allocation->height);
 }
 
 static void

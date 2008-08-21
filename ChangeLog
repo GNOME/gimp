@@ -1,3 +1,15 @@
+2008-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.[ch]: turn into a GtkContainer subclass
+	mainly to reduce the diff to a local hack I'm at. Also swallow
+	some code that used to be called on the canvas widget externally.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): remove
+	the swallowed code.
+
+	* app/display/gimpdisplayshell-callbacks.h: remove canvas event
+	mask define.
+
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.5.4.

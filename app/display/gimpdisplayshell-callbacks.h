@@ -20,20 +20,6 @@
 #define __GIMP_DISPLAY_SHELL_CALLBACKS_H__
 
 
-#define GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
-                                              GDK_POINTER_MOTION_MASK      | \
-                                              GDK_POINTER_MOTION_HINT_MASK | \
-                                              GDK_BUTTON_PRESS_MASK        | \
-                                              GDK_BUTTON_RELEASE_MASK      | \
-                                              GDK_STRUCTURE_MASK           | \
-                                              GDK_ENTER_NOTIFY_MASK        | \
-                                              GDK_LEAVE_NOTIFY_MASK        | \
-                                              GDK_FOCUS_CHANGE_MASK        | \
-                                              GDK_KEY_PRESS_MASK           | \
-                                              GDK_KEY_RELEASE_MASK         | \
-                                              GDK_PROXIMITY_OUT_MASK)
-
-
 gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
                                                        GdkEvent         *event,
                                                        GimpDisplayShell *shell);
