@@ -1,5 +1,9 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.5.3 development release.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.[ch]
 	* app/plug-in/gimptemporaryprocedure.c: moved error handling for
 	asynchronous procedure calls to a central place. Use the plug-in
