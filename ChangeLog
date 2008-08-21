@@ -1,5 +1,9 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.4.7 release.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
         * configure.in: use AM_PROG_CC_C_O to fix warning with automake 1.10.
