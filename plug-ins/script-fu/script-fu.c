@@ -196,7 +196,7 @@ script_fu_run (const gchar      *name,
     }
 
   if (param != NULL)
-      set_run_mode_constant ((GimpRunMode)param[0].data.d_int32);
+    set_run_mode_constant ((GimpRunMode) param[0].data.d_int32);
 
   /*  Load all of the available scripts  */
   script_fu_find_scripts (path);
