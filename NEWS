@@ -21,7 +21,7 @@ Changes in GIMP 2.4.7
 - plugged a memory leak in gimp-text-get-extents-fontname PDB call
 - fixed potential timeout issues in org.gimp.GIMP.UI D-Bus service
 - fixed endianness issue in the ICO save plug-in (bug #529629)
-- translation fixes and updates (be, lt, nn, vi)
+- translation fixes and updates (be, it, lt, nn, vi)
 
 Contributors:
 
