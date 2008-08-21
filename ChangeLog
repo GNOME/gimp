@@ -1,3 +1,9 @@
+2008-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpforegroundselecttool.c
+	(gimp_foreground_select_tool_init): set precision back to
+	PIXEL_CENTER because it's set to SUBPIXEL by the parent class.
+
 2008-08-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scroll.c: Use a constant for the
