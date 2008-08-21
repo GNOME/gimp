@@ -29,8 +29,10 @@ Changes in GIMP 2.5.3
  - improved the behavior of the zoom button in the upper right corner of
    the image window
  - allow PDB procedures to pass an error message with their return values
- - changed almost all file plug-ins to pass their error messages with the
+ - changed all file plug-ins to pass their error messages with the
    return values instead of raising an error dialog
+ - adapt the display of the pointer position in the statusbar to the
+   pointer precision of the active tool
  - bug fixes and code cleanup
 
 
