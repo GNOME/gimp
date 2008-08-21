@@ -1,5 +1,18 @@
 2008-08-21  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginprocedure.[ch]
+	* app/plug-in/gimptemporaryprocedure.c: moved error handling for
+	asynchronous procedure calls to a central place. Use the plug-in
+	label instead of the procedure name for the error message.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-interface.[ch]: changed to actually
+	return a meaningful return status when a script-fu procedure is run.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.c
 	* app/plug-in/gimptemporaryprocedure.c: don't just free the return
 	values when running procedures asynchronously. Instead examine

@@ -233,36 +233,9 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
 
   if (return_vals)
     {
-      switch (g_value_get_enum (&return_vals->values[0]))
-        {
-        case GIMP_PDB_SUCCESS:
-          break;
-
-        case GIMP_PDB_CALLING_ERROR:
-          if (return_vals->n_values > 1 &&
-              G_VALUE_HOLDS_STRING (&return_vals->values[1]))
-            {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                            _("Calling error for procedure '%s':\n"
-                              "%s"),
-                            gimp_object_get_name (GIMP_OBJECT (procedure)),
-                            g_value_get_string (&return_vals->values[1]));
-            }
-          break;
-
-        case GIMP_PDB_EXECUTION_ERROR:
-          if (return_vals->n_values > 1 &&
-              G_VALUE_HOLDS_STRING (&return_vals->values[1]))
-            {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                            _("Execution error for procedure '%s':\n"
-                              "%s"),
-                            gimp_object_get_name (GIMP_OBJECT (procedure)),
-                            g_value_get_string (&return_vals->values[1]));
-            }
-          break;
-        }
-
+      gimp_plug_in_procedure_handle_return_values (plug_in_procedure,
+                                                   gimp, progress,
+                                                   return_vals);
       g_value_array_free (return_vals);
     }
 }
@@ -986,4 +959,50 @@ gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
     g_free (proc->thumb_loader);
 
   proc->thumb_loader = g_strdup (thumb_loader);
+}
+
+void
+gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
+                                             Gimp                *gimp,
+                                             GimpProgress        *progress,
+                                             GValueArray         *return_vals)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_if_fail (return_vals != NULL);
+
+  if (! return_vals->n_values > 0 ||
+      G_VALUE_TYPE (&return_vals->values[0]) != GIMP_TYPE_PDB_STATUS_TYPE)
+    {
+      return;
+    }
+
+  switch (g_value_get_enum (&return_vals->values[0]))
+    {
+    case GIMP_PDB_SUCCESS:
+      break;
+
+    case GIMP_PDB_CALLING_ERROR:
+      if (return_vals->n_values > 1 &&
+          G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        _("Calling error for '%s':\n"
+                          "%s"),
+                        gimp_plug_in_procedure_get_label (proc),
+                        g_value_get_string (&return_vals->values[1]));
+        }
+      break;
+
+    case GIMP_PDB_EXECUTION_ERROR:
+      if (return_vals->n_values > 1 &&
+          G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        _("Execution error for '%s':\n"
+                          "%s"),
+                        gimp_plug_in_procedure_get_label (proc),
+                        g_value_get_string (&return_vals->values[1]));
+        }
+      break;
+    }
 }
