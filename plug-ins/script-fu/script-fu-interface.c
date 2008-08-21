@@ -108,8 +108,11 @@ static void   script_fu_brush_callback      (gpointer              data,
  *  Local variables
  */
 
-static SFInterface *sf_interface = NULL;  /*  there can only be at most one
-                                              interactive interface  */
+static SFInterface       *sf_interface = NULL;  /*  there can only be at most
+                                                 *  oneinteractive interface
+                                                 */
+
+static GimpPDBStatusType  sf_status    = GIMP_PDB_SUCCESS;
 
 
 /*
@@ -165,9 +168,9 @@ script_fu_interface_report_cc (const gchar *command)
     gtk_main_iteration ();
 }
 
-void
-script_fu_interface (SFScript *script,
-                     gint      start_arg)
+GimpPDBStatusType
+script_fu_interface (SFScript  *script,
+                     gint       start_arg)
 {
   GtkWidget    *dialog;
   GtkWidget    *menu;
@@ -195,10 +198,10 @@ script_fu_interface (SFScript *script,
       g_message (message, sf_interface->title);
       g_free (message);
 
-      return;
+      return GIMP_PDB_CANCEL;
     }
 
-  g_return_if_fail (script != NULL);
+  g_return_val_if_fail (script != NULL, FALSE);
 
   if (!gtk_initted)
     {
@@ -209,12 +212,14 @@ script_fu_interface (SFScript *script,
       gtk_initted = TRUE;
     }
 
+  sf_status = GIMP_PDB_SUCCESS;
+
   sf_interface = g_slice_new0 (SFInterface);
 
   sf_interface->widgets = g_new0 (GtkWidget *, script->num_args);
 
   /* strip mnemonics from the menupath */
-  sf_interface->title = gimp_strip_uline (gettext (script->menu_path));
+  sf_interface->title   = gimp_strip_uline (gettext (script->menu_path));
 
   /* if this looks like a full menu path, use only the last part */
   if (sf_interface->title[0] == '<' &&
@@ -601,6 +606,8 @@ script_fu_interface (SFScript *script,
   gtk_widget_show (dialog);
 
   gtk_main ();
+
+  return sf_status;
 }
 
 static void
@@ -750,9 +757,11 @@ script_fu_response (GtkWidget *widget,
                                 FALSE);
 
       script_fu_ok (script);
-      /* fallthru */
+      gtk_widget_destroy (sf_interface->dialog);
+      break;
 
     default:
+      sf_status = GIMP_PDB_CANCEL;
       gtk_widget_destroy (sf_interface->dialog);
       break;
     }
@@ -898,10 +907,12 @@ script_fu_ok (SFScript *script)
   command = g_string_free (s, FALSE);
 
   /*  run the command through the interpreter  */
-  output = g_string_new ("");
+  output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
+
   if (ts_interpret_string (command))
     script_fu_error_msg (command, output->str);
+
   g_string_free (output, TRUE);
 
   g_free (command);

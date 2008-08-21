@@ -53,6 +53,7 @@ typedef struct
  *  Local Functions
  */
 
+static gboolean  script_fu_run_command    (const gchar            *command);
 static void      script_fu_load_script    (const GimpDatafileData *file_data,
                                            gpointer                user_data);
 static gboolean  script_fu_install_script (gpointer                foo,
@@ -670,24 +671,42 @@ script_fu_error_msg (const gchar *command,
 
 /*  private functions  */
 
+static gboolean
+script_fu_run_command (const gchar *command)
+{
+  GString  *output  = g_string_new ("");
+  gboolean  success = FALSE;
+
+  output = g_string_new ("");
+  ts_register_output_func (ts_gstring_output_func, output);
+
+  if (ts_interpret_string (command))
+    {
+      script_fu_error_msg (command, output->str);
+    }
+  else
+    {
+      success = TRUE;
+    }
+
+  g_string_free (output, TRUE);
+
+  return success;
+}
+
 static void
 script_fu_load_script (const GimpDatafileData *file_data,
                        gpointer                user_data)
 {
   if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
     {
-      gchar   *command;
       gchar   *escaped = script_fu_strescape (file_data->filename);
-      GString *output;
+      gchar   *command;
 
       command = g_strdup_printf ("(load \"%s\")", escaped);
       g_free (escaped);
 
-      output = g_string_new ("");
-      ts_register_output_func (ts_gstring_output_func, output);
-      if (ts_interpret_string (command))
-        script_fu_error_msg (command, output->str);
-      g_string_free (output, TRUE);
+      script_fu_run_command (command);
 
 #ifdef G_OS_WIN32
       /* No, I don't know why, but this is
@@ -888,6 +907,11 @@ script_fu_script_proc (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   SFScript          *script;
 
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  values[0].type = GIMP_PDB_STATUS;
+
   script = script_fu_find_script (name);
 
   if (! script)
@@ -912,7 +936,7 @@ script_fu_script_proc (const gchar      *name,
             /*  ...then acquire the rest of arguments (if any) with a dialog  */
             if (script->num_args > min_args)
               {
-                script_fu_interface (script, min_args);
+                status = script_fu_interface (script, min_args);
                 break;
               }
             /*  otherwise (if the script takes no more arguments), skip
@@ -928,7 +952,6 @@ script_fu_script_proc (const gchar      *name,
           if (status == GIMP_PDB_SUCCESS)
             {
               GString *s;
-              GString *output;
               gchar   *command;
               gint     i;
 
@@ -1015,11 +1038,7 @@ script_fu_script_proc (const gchar      *name,
               command = g_string_free (s, FALSE);
 
               /*  run the command through the interpreter  */
-              output = g_string_new ("");
-              ts_register_output_func (ts_gstring_output_func, output);
-              if (ts_interpret_string (command))
-                script_fu_error_msg (command, output->str);
-              g_string_free (output, TRUE);
+              script_fu_run_command (command);
 
               g_free (command);
             }
@@ -1028,7 +1047,6 @@ script_fu_script_proc (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           {
             GString *s;
-            GString *output;
             gchar   *command;
             gint     i;
 
@@ -1150,11 +1168,7 @@ script_fu_script_proc (const gchar      *name,
             command = g_string_free (s, FALSE);
 
             /*  run the command through the interpreter  */
-            output = g_string_new ("");
-            ts_register_output_func (ts_gstring_output_func, output);
-            if (ts_interpret_string (command))
-              script_fu_error_msg (command, output->str);
-            g_string_free (output, TRUE);
+            script_fu_run_command (command);
 
             g_free (command);
           }
@@ -1165,10 +1179,6 @@ script_fu_script_proc (const gchar      *name,
         }
     }
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
