@@ -496,9 +496,11 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
 
       cairo_translate (cr, widget->allocation.x, widget->allocation.y);
       cairo_rectangle (cr,
-                       0, 0, widget->allocation.width, widget->allocation.height);
+                       0, 0,
+                       widget->allocation.width, widget->allocation.height);
       cairo_rectangle (cr,
-                       nav_view->p_x, nav_view->p_y, nav_view->p_width, nav_view->p_height);
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
 
       cairo_set_source_rgba (cr,
                              color->red   / 65535.,
@@ -509,7 +511,8 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
       cairo_fill (cr);
 
       cairo_rectangle (cr,
-                       nav_view->p_x, nav_view->p_y, nav_view->p_width, nav_view->p_height);
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
 
       gdk_cairo_set_source_color  (cr, &widget->style->bg[widget->state]);
 
