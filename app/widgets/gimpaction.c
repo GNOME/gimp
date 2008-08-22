@@ -278,12 +278,22 @@ gimp_action_new (const gchar *name,
                  const gchar *tooltip,
                  const gchar *stock_id)
 {
-  return g_object_new (GIMP_TYPE_ACTION,
-                       "name",     name,
-                       "label",    label,
-                       "tooltip",  tooltip,
-                       "stock-id", stock_id,
-                       NULL);
+  GimpAction *action;
+
+  action = g_object_new (GIMP_TYPE_ACTION,
+                         "name",     name,
+                         "label",    label,
+                         "tooltip",  tooltip,
+                         "stock-id", stock_id,
+                         NULL);
+
+  if (stock_id)
+    {
+      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
+        g_object_set (action, "icon-name", stock_id, NULL);
+    }
+
+  return action;
 }
 
 gint

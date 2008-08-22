@@ -1,3 +1,18 @@
+2008-08-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpradioaction.c
+	* app/widgets/gimpstringaction.c
+	* app/widgets/gimptoggleaction.c: added basic support for icon
+	names for actions and dockables. Uses the stock-id as icon name
+	if the icon theme provides an icon under this name.
+
+	* app/dialogs/dialogs.c
+	* app/actions/documents-actions.c
+	* app/actions/dialogs-actions.c: use the "document-open-recent"
+	icon for the document history.
+
 2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpnavigationview.c: Adapted to play nicely with
