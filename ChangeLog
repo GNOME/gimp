@@ -1,5 +1,11 @@
 2008-08-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpnavigationview.c
+	* libgimpwidgets/gimpscrolledpreview.c: hardcode the colors to
+	black and white. Using theme colors doesn't make sense here.
+
+2008-08-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.[ch]: draw the navigation
 	popup using Cairo, just as we do it in the core now.
 

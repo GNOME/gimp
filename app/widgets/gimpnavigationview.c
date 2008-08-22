@@ -479,8 +479,8 @@ gimp_navigation_view_transform (GimpNavigationView *nav_view)
   nav_view->p_x = RINT (nav_view->x * ratiox);
   nav_view->p_y = RINT (nav_view->y * ratioy);
 
-  nav_view->p_width  = RINT (nav_view->width  * ratiox);
-  nav_view->p_height = RINT (nav_view->height * ratioy);
+  nav_view->p_width  = ceil (nav_view->width  * ratiox);
+  nav_view->p_height = ceil (nav_view->height * ratioy);
 }
 
 static void
@@ -492,7 +492,6 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
   if (view->renderer->viewable && nav_view->width && nav_view->height)
     {
       GtkWidget *widget = GTK_WIDGET (view);
-      GdkColor  *color  = &widget->style->fg[widget->state];
 
       cairo_translate (cr, widget->allocation.x, widget->allocation.y);
       cairo_rectangle (cr,
@@ -502,11 +501,7 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
                        nav_view->p_x, nav_view->p_y,
                        nav_view->p_width, nav_view->p_height);
 
-      cairo_set_source_rgba (cr,
-                             color->red   / 65535.,
-                             color->green / 65535.,
-                             color->blue  / 65535., 0.5);
-
+      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
       cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
       cairo_fill (cr);
 
@@ -514,8 +509,7 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
                        nav_view->p_x, nav_view->p_y,
                        nav_view->p_width, nav_view->p_height);
 
-      gdk_cairo_set_source_color  (cr, &widget->style->bg[widget->state]);
-
+      cairo_set_source_rgb (cr, 1, 1, 1);
       cairo_set_line_width (cr, 2);
       cairo_stroke (cr);
     }

@@ -708,7 +708,6 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
                                         GimpScrolledPreview *preview)
 {
   GtkAdjustment *adj;
-  GdkColor      *color;
   cairo_t       *cr;
   gdouble        x, y;
   gdouble        w, h;
@@ -741,19 +740,13 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
 
   cairo_rectangle (cr, x, y, w, h);
 
-  color = &widget->style->fg[widget->state];
-  cairo_set_source_rgba (cr,
-                         color->red   / 65535.,
-                         color->green / 65535.,
-                         color->blue  / 65535., 0.5);
-
+  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
   cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
   cairo_fill (cr);
 
   cairo_rectangle (cr, x, y, w, h);
 
-  gdk_cairo_set_source_color  (cr, &widget->style->bg[widget->state]);
-
+  cairo_set_source_rgb (cr, 1, 1, 1);
   cairo_set_line_width (cr, 2);
   cairo_stroke (cr);
 
