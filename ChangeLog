@@ -1,3 +1,11 @@
+2008-08-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.[ch]: add gimp_canvas_scroll() which
+	scrolls the canvas and makes the result visible immediately.
+
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll): use the new function.
+
 2008-08-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptoolbox.c: removed the "Use GEGL" check-box

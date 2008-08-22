@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
@@ -117,10 +118,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
 
-      gdk_window_scroll (shell->canvas->window, -x_offset, -y_offset);
-
-      /*  Make sure expose events are processed before scrolling again  */
-      gdk_window_process_updates (shell->canvas->window, FALSE);
+      gimp_canvas_scroll (GIMP_CANVAS (shell->canvas), -x_offset, -y_offset);
 
       /*  Update scrollbars and rulers  */
       gimp_display_shell_update_scrollbars_and_rulers (shell);

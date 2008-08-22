@@ -75,6 +75,10 @@ GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig *config);
 
+void         gimp_canvas_scroll            (GimpCanvas        *canvas,
+                                            gint               offset_x,
+                                            gint               offset_y);
+
 void         gimp_canvas_draw_cursor       (GimpCanvas        *canvas,
                                             gint               x,
                                             gint               y);

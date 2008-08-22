@@ -556,6 +556,32 @@ gimp_canvas_new (GimpDisplayConfig *config)
 }
 
 /**
+ * gimp_canvas_scroll:
+ * @canvas: the #GimpCanvas widget to scroll.
+ * @offset_x: the x scroll amount.
+ * @offset_y: the y scroll amount.
+ *
+ * Scrolls the canvas using gdk_window_scroll() and makes sure the result
+ * is displayed immediately by calling gdk_window_process_updates().
+ **/
+void
+gimp_canvas_scroll (GimpCanvas *canvas,
+                    gint        offset_x,
+                    gint        offset_y)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GIMP_IS_CANVAS (canvas));
+
+  widget = GTK_WIDGET (canvas);
+
+  gdk_window_scroll (widget->window, offset_x, offset_y);
+
+  /*  Make sure expose events are processed before scrolling again  */
+  gdk_window_process_updates (widget->window, FALSE);
+}
+
+/**
  * gimp_canvas_draw_cursor:
  * @canvas: the #GimpCanvas widget to draw on.
  * @x: x coordinate
