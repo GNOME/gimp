@@ -38,7 +38,8 @@
 #include "gimpviewrenderer.h"
 
 
-#define BORDER_PEN_WIDTH 3
+#define OUTER_BORDER_PEN_WIDTH 2
+#define INNER_BORDER_PEN_WIDTH 1
 
 
 enum
@@ -186,9 +187,6 @@ gimp_navigation_view_realize (GtkWidget *widget)
   nav_view->gc = gdk_gc_new (widget->window);
 
   gdk_gc_set_function (nav_view->gc, GDK_INVERT);
-  gdk_gc_set_line_attributes (nav_view->gc,
-                              BORDER_PEN_WIDTH,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
 }
 
 static void
@@ -231,38 +229,37 @@ gimp_navigation_view_expose (GtkWidget      *widget,
 }
 
 static void
+gimp_navigation_view_get_ratio (const GimpNavigationView *nav_view,
+                                gdouble                  *ratiox,
+                                gdouble                  *ratioy)
+{
+  GimpView  *view = GIMP_VIEW (nav_view);
+  GimpImage *image;
+
+  image = GIMP_IMAGE (view->renderer->viewable);
+
+  *ratiox = (gdouble) view->renderer->width  /
+            (gdouble) gimp_image_get_width  (image);
+  *ratioy = (gdouble) view->renderer->height /
+            (gdouble) gimp_image_get_height (image);
+}
+
+static void
 gimp_navigation_view_move_to (GimpNavigationView *nav_view,
                               gint                tx,
                               gint                ty)
 {
   GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
   gdouble    ratiox, ratioy;
   gdouble    x, y;
 
   if (! view->renderer->viewable)
     return;
 
-  tx = CLAMP (tx, 0, view->renderer->width  - nav_view->p_width);
-  ty = CLAMP (ty, 0, view->renderer->height - nav_view->p_height);
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  /*  transform to image coordinates  */
-  if (view->renderer->width != nav_view->p_width)
-    ratiox = ((gimp_image_get_width (image) - nav_view->width + 1.0) /
-              (view->renderer->width - nav_view->p_width));
-  else
-    ratiox = 1.0;
-
-  if (view->renderer->height != nav_view->p_height)
-    ratioy = ((gimp_image_get_height (image) - nav_view->height + 1.0) /
-              (view->renderer->height - nav_view->p_height));
-  else
-    ratioy = 1.0;
-
-  x = tx * ratiox;
-  y = ty * ratioy;
+  x = tx / ratiox;
+  y = ty / ratioy;
 
   g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
                  x, y, nav_view->width, nav_view->height);
@@ -501,16 +498,9 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
 static void
 gimp_navigation_view_transform (GimpNavigationView *nav_view)
 {
-  GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
-  gdouble    ratiox, ratioy;
+  gdouble ratiox, ratioy;
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  ratiox = ((gdouble) view->renderer->width  /
-            (gdouble) gimp_image_get_width  (image));
-  ratioy = ((gdouble) view->renderer->height /
-            (gdouble) gimp_image_get_height (image));
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
   nav_view->p_x = RINT (nav_view->x * ratiox);
   nav_view->p_y = RINT (nav_view->y * ratioy);
@@ -529,30 +519,48 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
       nav_view->width           &&
       nav_view->height)
     {
-      GimpImage *image;
+      GtkWidget *widget = GTK_WIDGET (view);
+      gint       start_x;
+      gint       start_y;
 
-      image = GIMP_IMAGE (view->renderer->viewable);
+      if (area)
+        gdk_gc_set_clip_rectangle (nav_view->gc, area);
 
-      if (nav_view->x      > 0                             ||
-          nav_view->y      > 0                             ||
-          nav_view->width  < gimp_image_get_width  (image) ||
-          nav_view->height < gimp_image_get_height (image))
-        {
-          GtkWidget *widget = GTK_WIDGET (view);
+      start_x = widget->allocation.x + nav_view->p_x;
+      start_y = widget->allocation.y + nav_view->p_y;
 
-          if (area)
-            gdk_gc_set_clip_rectangle (nav_view->gc, area);
+      /* Draw outer frame */
+      gdk_gc_set_line_attributes (nav_view->gc,
+                                  OUTER_BORDER_PEN_WIDTH,
+                                  GDK_LINE_SOLID,
+                                  GDK_CAP_BUTT,
+                                  GDK_JOIN_MITER);
 
-          gdk_draw_rectangle (widget->window, nav_view->gc,
-                              FALSE,
-                              widget->allocation.x + nav_view->p_x + 1,
-                              widget->allocation.y + nav_view->p_y + 1,
-                              MAX (1, nav_view->p_width  - BORDER_PEN_WIDTH),
-                              MAX (1, nav_view->p_height - BORDER_PEN_WIDTH));
+      gdk_draw_rectangle (widget->window,
+                          nav_view->gc,
+                          FALSE,
+                          start_x + OUTER_BORDER_PEN_WIDTH / 2,
+                          start_y + OUTER_BORDER_PEN_WIDTH / 2,
+                          nav_view->p_width  - OUTER_BORDER_PEN_WIDTH,
+                          nav_view->p_height - OUTER_BORDER_PEN_WIDTH);
 
-          if (area)
-            gdk_gc_set_clip_rectangle (nav_view->gc, NULL);
-        }
+      /* Draw inner frame */
+      gdk_gc_set_line_attributes (nav_view->gc,
+                                  INNER_BORDER_PEN_WIDTH,
+                                  GDK_LINE_ON_OFF_DASH,
+                                  GDK_CAP_BUTT,
+                                  GDK_JOIN_MITER);
+
+      gdk_draw_rectangle (widget->window,
+                          nav_view->gc,
+                          FALSE,
+                          start_x + OUTER_BORDER_PEN_WIDTH + INNER_BORDER_PEN_WIDTH / 2,
+                          start_y + OUTER_BORDER_PEN_WIDTH + INNER_BORDER_PEN_WIDTH / 2,
+                          nav_view->p_width  - OUTER_BORDER_PEN_WIDTH * 2 - INNER_BORDER_PEN_WIDTH,
+                          nav_view->p_height - OUTER_BORDER_PEN_WIDTH * 2 - INNER_BORDER_PEN_WIDTH);
+                          
+      if (area)
+        gdk_gc_set_clip_rectangle (nav_view->gc, NULL);
     }
 }
 
@@ -563,40 +571,30 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
                                  gdouble             width,
                                  gdouble             height)
 {
+  GtkWidget *navview;
   GimpView  *view;
-  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
 
-  view = GIMP_VIEW (nav_view);
+  navview = GTK_WIDGET (nav_view);
+  view    = GIMP_VIEW (nav_view);
 
   g_return_if_fail (view->renderer->viewable);
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
   /*  remove old marker  */
   if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, NULL);
+    gimp_navigation_view_draw_marker (nav_view, &navview->allocation);
 
-  nav_view->x = CLAMP (x, 0.0, gimp_image_get_width  (image) - 1.0);
-  nav_view->y = CLAMP (y, 0.0, gimp_image_get_height (image) - 1.0);
-
-  if (width < 0.0)
-    width = gimp_image_get_width (image);
-
-  if (height < 0.0)
-    height = gimp_image_get_height (image);
-
-  nav_view->width  = CLAMP (width,  1.0,
-                            gimp_image_get_width  (image) - nav_view->x);
-  nav_view->height = CLAMP (height, 1.0,
-                            gimp_image_get_height (image) - nav_view->y);
+  nav_view->x      = x;
+  nav_view->y      = y;
+  nav_view->width  = MAX (1.0, width);
+  nav_view->height = MAX (1.0, height);
 
   gimp_navigation_view_transform (nav_view);
 
   /*  draw new marker  */
   if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, NULL);
+    gimp_navigation_view_draw_marker (nav_view, &navview->allocation);
 }
 
 void

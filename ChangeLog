@@ -1,3 +1,12 @@
+2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.c: Adapted to play nicely with
+	the overscroll feature. Basically remove limitations of the
+	marker, but also draw the marker frame with an inner and outer
+	border so it is possible to see on what side the viewport is when
+	zoomed out and overscrolled to the max. This is further work on
+	bug #362915.
+
 2008-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.[ch]: turn into a GtkContainer subclass
