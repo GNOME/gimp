@@ -1,5 +1,11 @@
 2008-08-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpcanvas.h: #define GIMP_CANVAS_EVENT_MASK.
+
+	* app/display/gimpcanvas.c (gimp_canvas_realize): use it here.
+
+2008-08-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.[ch]: add gimp_canvas_scroll() which
 	scrolls the canvas and makes the result visible immediately.
 

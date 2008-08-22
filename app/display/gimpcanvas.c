@@ -240,27 +240,16 @@ gimp_canvas_realize (GtkWidget *widget)
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
-  attributes.window_type = GDK_WINDOW_CHILD;
   attributes.x           = widget->allocation.x;
   attributes.y           = widget->allocation.y;
   attributes.width       = widget->allocation.width;
   attributes.height      = widget->allocation.height;
+  attributes.window_type = GDK_WINDOW_CHILD;
   attributes.wclass      = GDK_INPUT_OUTPUT;
   attributes.visual      = gtk_widget_get_visual (widget);
   attributes.colormap    = gtk_widget_get_colormap (widget);
   attributes.event_mask  = (gtk_widget_get_events (widget) |
-                            GDK_EXPOSURE_MASK              |
-                            GDK_POINTER_MOTION_MASK        |
-                            GDK_POINTER_MOTION_HINT_MASK   |
-                            GDK_BUTTON_PRESS_MASK          |
-                            GDK_BUTTON_RELEASE_MASK        |
-                            GDK_STRUCTURE_MASK             |
-                            GDK_ENTER_NOTIFY_MASK          |
-                            GDK_LEAVE_NOTIFY_MASK          |
-                            GDK_FOCUS_CHANGE_MASK          |
-                            GDK_KEY_PRESS_MASK             |
-                            GDK_KEY_RELEASE_MASK           |
-                            GDK_PROXIMITY_OUT_MASK);
+                            GIMP_CANVAS_EVENT_MASK);
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
