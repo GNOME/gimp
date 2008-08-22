@@ -1,3 +1,8 @@
+2008-08-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_init): only create and
+	use a timer if GIMP_UNSTABLE is defined.
+
 2008-08-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpnavigationview.c
