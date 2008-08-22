@@ -287,7 +287,7 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view)
                     GDK_POINTER_MOTION_HINT_MASK |
                     GDK_BUTTON_MOTION_MASK       |
                     GDK_EXTENSION_EVENTS_ALL,
-                    window, cursor, GDK_CURRENT_TIME);
+                    NULL, cursor, GDK_CURRENT_TIME);
 
   gdk_cursor_unref (cursor);
 }

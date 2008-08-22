@@ -1,3 +1,10 @@
+2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_grab_pointer): Don't confine the cursor to
+	the navigation view window because that limitation only feels in
+	the way with overscroll.
+
 2008-08-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.h: #define GIMP_CANVAS_EVENT_MASK.
