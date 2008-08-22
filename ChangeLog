@@ -1,5 +1,10 @@
 2008-08-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpscrolledpreview.[ch]: draw the navigation
+	popup using Cairo, just as we do it in the core now.
+
+2008-08-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpnavigationview.c: indicate the viewport by
 	shading the outside region using Cairo.
 
