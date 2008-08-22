@@ -1,3 +1,8 @@
+2008-08-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpnavigationview.c: indicate the viewport by
+	shading the outside region using Cairo.
+
 2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpnavigationeditor.c: Align static function

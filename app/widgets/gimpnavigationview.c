@@ -70,17 +70,13 @@ struct _GimpNavigationView
   gint         motion_offset_x;
   gint         motion_offset_y;
   gboolean     has_grab;
-
-  GdkGC       *gc;
 };
 
 
-static void     gimp_navigation_view_realize        (GtkWidget      *widget);
-static void     gimp_navigation_view_unrealize      (GtkWidget      *widget);
 static void     gimp_navigation_view_size_allocate  (GtkWidget      *widget,
                                                      GtkAllocation  *allocation);
 static gboolean gimp_navigation_view_expose         (GtkWidget      *widget,
-                                                     GdkEventExpose *eevent);
+                                                     GdkEventExpose *event);
 static gboolean gimp_navigation_view_button_press   (GtkWidget      *widget,
                                                      GdkEventButton *bevent);
 static gboolean gimp_navigation_view_button_release (GtkWidget      *widget,
@@ -94,7 +90,7 @@ static gboolean gimp_navigation_view_key_press      (GtkWidget      *widget,
 
 static void     gimp_navigation_view_transform      (GimpNavigationView *nav_view);
 static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_view,
-                                                     GdkRectangle       *area);
+                                                     cairo_t            *cr);
 
 
 G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
@@ -142,8 +138,6 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_TYPE_NONE, 1,
                   GDK_TYPE_SCROLL_DIRECTION);
 
-  widget_class->realize              = gimp_navigation_view_realize;
-  widget_class->unrealize            = gimp_navigation_view_unrealize;
   widget_class->size_allocate        = gimp_navigation_view_size_allocate;
   widget_class->expose_event         = gimp_navigation_view_expose;
   widget_class->button_press_event   = gimp_navigation_view_button_press;
@@ -173,34 +167,6 @@ gimp_navigation_view_init (GimpNavigationView *view)
   view->motion_offset_x = 0;
   view->motion_offset_y = 0;
   view->has_grab        = FALSE;
-
-  view->gc              = NULL;
-}
-
-static void
-gimp_navigation_view_realize (GtkWidget *widget)
-{
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  nav_view->gc = gdk_gc_new (widget->window);
-
-  gdk_gc_set_function (nav_view->gc, GDK_INVERT);
-}
-
-static void
-gimp_navigation_view_unrealize (GtkWidget *widget)
-{
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
-
-  if (nav_view->gc)
-    {
-      g_object_unref (nav_view->gc);
-      nav_view->gc = NULL;
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -215,14 +181,22 @@ gimp_navigation_view_size_allocate (GtkWidget     *widget,
 
 static gboolean
 gimp_navigation_view_expose (GtkWidget      *widget,
-                             GdkEventExpose *eevent)
+                             GdkEventExpose *event)
 {
   if (GTK_WIDGET_DRAWABLE (widget))
     {
-      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+      cairo_t *cr;
 
-      gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget),
-                                        &eevent->area);
+      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+
+      cr = gdk_cairo_create (widget->window);
+
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
+
+      gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget), cr);
+
+      cairo_destroy (cr);
     }
 
   return TRUE;
@@ -511,56 +485,36 @@ gimp_navigation_view_transform (GimpNavigationView *nav_view)
 
 static void
 gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
-                                  GdkRectangle       *area)
+                                  cairo_t            *cr)
 {
   GimpView *view = GIMP_VIEW (nav_view);
 
-  if (view->renderer->viewable  &&
-      nav_view->width           &&
-      nav_view->height)
+  if (view->renderer->viewable && nav_view->width && nav_view->height)
     {
       GtkWidget *widget = GTK_WIDGET (view);
-      gint       start_x;
-      gint       start_y;
+      GdkColor  *color  = &widget->style->fg[widget->state];
 
-      if (area)
-        gdk_gc_set_clip_rectangle (nav_view->gc, area);
+      cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+      cairo_rectangle (cr,
+                       0, 0, widget->allocation.width, widget->allocation.height);
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y, nav_view->p_width, nav_view->p_height);
 
-      start_x = widget->allocation.x + nav_view->p_x;
-      start_y = widget->allocation.y + nav_view->p_y;
+      cairo_set_source_rgba (cr,
+                             color->red   / 65535.,
+                             color->green / 65535.,
+                             color->blue  / 65535., 0.5);
 
-      /* Draw outer frame */
-      gdk_gc_set_line_attributes (nav_view->gc,
-                                  OUTER_BORDER_PEN_WIDTH,
-                                  GDK_LINE_SOLID,
-                                  GDK_CAP_BUTT,
-                                  GDK_JOIN_MITER);
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+      cairo_fill (cr);
 
-      gdk_draw_rectangle (widget->window,
-                          nav_view->gc,
-                          FALSE,
-                          start_x + OUTER_BORDER_PEN_WIDTH / 2,
-                          start_y + OUTER_BORDER_PEN_WIDTH / 2,
-                          nav_view->p_width  - OUTER_BORDER_PEN_WIDTH,
-                          nav_view->p_height - OUTER_BORDER_PEN_WIDTH);
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y, nav_view->p_width, nav_view->p_height);
 
-      /* Draw inner frame */
-      gdk_gc_set_line_attributes (nav_view->gc,
-                                  INNER_BORDER_PEN_WIDTH,
-                                  GDK_LINE_ON_OFF_DASH,
-                                  GDK_CAP_BUTT,
-                                  GDK_JOIN_MITER);
+      gdk_cairo_set_source_color  (cr, &widget->style->bg[widget->state]);
 
-      gdk_draw_rectangle (widget->window,
-                          nav_view->gc,
-                          FALSE,
-                          start_x + OUTER_BORDER_PEN_WIDTH + INNER_BORDER_PEN_WIDTH / 2,
-                          start_y + OUTER_BORDER_PEN_WIDTH + INNER_BORDER_PEN_WIDTH / 2,
-                          nav_view->p_width  - OUTER_BORDER_PEN_WIDTH * 2 - INNER_BORDER_PEN_WIDTH,
-                          nav_view->p_height - OUTER_BORDER_PEN_WIDTH * 2 - INNER_BORDER_PEN_WIDTH);
-                          
-      if (area)
-        gdk_gc_set_clip_rectangle (nav_view->gc, NULL);
+      cairo_set_line_width (cr, 2);
+      cairo_stroke (cr);
     }
 }
 
@@ -571,19 +525,13 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
                                  gdouble             width,
                                  gdouble             height)
 {
-  GtkWidget *navview;
-  GimpView  *view;
+  GimpView *view;
 
   g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
 
-  navview = GTK_WIDGET (nav_view);
-  view    = GIMP_VIEW (nav_view);
+  view = GIMP_VIEW (nav_view);
 
   g_return_if_fail (view->renderer->viewable);
-
-  /*  remove old marker  */
-  if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, &navview->allocation);
 
   nav_view->x      = x;
   nav_view->y      = y;
@@ -593,8 +541,7 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
   gimp_navigation_view_transform (nav_view);
 
   /*  draw new marker  */
-  if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, &navview->allocation);
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 void
