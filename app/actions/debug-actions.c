@@ -24,6 +24,8 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpactiongroup.h"
 
 #include "debug-actions.h"
@@ -57,7 +59,31 @@ static const GimpActionEntry debug_actions[] =
     NULL }
 };
 
+static const GimpToggleActionEntry debug_toggle_actions[] =
+{
+  { "debug-use-gegl", NULL,
+    "Use _GEGL", NULL,
+    "If possible, use GEGL for image processing",
+    G_CALLBACK (debug_use_gegl_cmd_callback),
+    FALSE,
+    NULL }
+};
+
 #endif
+
+static void
+debug_actions_use_gegl_notify (GObject         *config,
+                               GParamSpec      *pspec,
+                               GimpActionGroup *group)
+{
+  gboolean active;
+
+  g_object_get (config,
+                "use-gegl", &active,
+                NULL);
+
+  gimp_action_group_set_action_active (group, "debug-use-gegl", active);
+}
 
 void
 debug_actions_setup (GimpActionGroup *group)
@@ -66,6 +92,15 @@ debug_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  debug_actions,
                                  G_N_ELEMENTS (debug_actions));
+
+  gimp_action_group_add_toggle_actions (group,
+                                        debug_toggle_actions,
+                                        G_N_ELEMENTS (debug_toggle_actions));
+
+  g_signal_connect_object (group->gimp->config,
+                           "notify::use-gegl",
+                           G_CALLBACK (debug_actions_use_gegl_notify),
+                           group, 0);
 #endif
 }
 

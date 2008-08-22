@@ -1,5 +1,18 @@
 2008-08-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptoolbox.c: removed the "Use GEGL" check-box
+	from the toolbox.
+
+	* app/config/gimpcoreconfig.c: changed the default for "use-gegl"
+	to FALSE (in preparation of the 2.6 release).
+
+	* app/actions/debug-commands.[ch]
+	* app/actions/debug-actions.c
+	* menus/image-menu.xml.in: added a "Use GEGL" check-box to the
+	Debug menu. Temporary solution until a final decision is made.
+
+2008-08-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpaction.c
 	* app/widgets/gimpdockable.c
 	* app/widgets/gimpradioaction.c
