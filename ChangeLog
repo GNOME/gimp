@@ -1,5 +1,10 @@
 2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpnavigationeditor.c: Align static function
+	prototypes.
+
+2008-08-22  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpnavigationview.c
 	(gimp_navigation_view_grab_pointer): Don't confine the cursor to
 	the navigation view window because that limitation only feels in

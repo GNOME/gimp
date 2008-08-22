@@ -56,44 +56,44 @@
 #define BORDER_PEN_WIDTH  3
 
 
-static void   gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
+static void        gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
-static void   gimp_navigation_editor_destroy           (GtkObject            *object);
+static void        gimp_navigation_editor_destroy           (GtkObject            *object);
 
-static void   gimp_navigation_editor_set_context       (GimpDocked           *docked,
-                                                        GimpContext          *context);
+static void        gimp_navigation_editor_set_context       (GimpDocked           *docked,
+                                                             GimpContext          *context);
 
-static GtkWidget * gimp_navigation_editor_new_private  (GimpMenuFactory      *menu_factory,
-                                                        GimpDisplayShell     *shell);
+static GtkWidget * gimp_navigation_editor_new_private       (GimpMenuFactory      *menu_factory,
+                                                             GimpDisplayShell     *shell);
 
-static void     gimp_navigation_editor_set_shell       (GimpNavigationEditor *view,
-                                                        GimpDisplayShell     *shell);
-static gboolean gimp_navigation_editor_button_release  (GtkWidget            *widget,
-                                                        GdkEventButton       *bevent,
-                                                        GimpDisplayShell     *shell);
-static void   gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
-                                                        gdouble               x,
-                                                        gdouble               y,
-                                                        gdouble               width,
-                                                        gdouble               height,
-                                                        GimpNavigationEditor *editor);
-static void   gimp_navigation_editor_zoom              (GimpNavigationView   *view,
-                                                        GimpZoomType          direction,
-                                                        GimpNavigationEditor *editor);
-static void   gimp_navigation_editor_scroll            (GimpNavigationView   *view,
-                                                        GdkScrollDirection    direction,
-                                                        GimpNavigationEditor  *editor);
+static void        gimp_navigation_editor_set_shell         (GimpNavigationEditor *editor,
+                                                             GimpDisplayShell     *shell);
+static gboolean    gimp_navigation_editor_button_release    (GtkWidget            *widget,
+                                                             GdkEventButton       *bevent,
+                                                             GimpDisplayShell     *shell);
+static void        gimp_navigation_editor_marker_changed    (GimpNavigationView   *view,
+                                                             gdouble               x,
+                                                             gdouble               y,
+                                                             gdouble               width,
+                                                             gdouble               height,
+                                                             GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_zoom              (GimpNavigationView   *view,
+                                                             GimpZoomType          direction,
+                                                             GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_scroll            (GimpNavigationView   *view,
+                                                             GdkScrollDirection    direction,
+                                                             GimpNavigationEditor *editor);
 
-static void   gimp_navigation_editor_zoom_adj_changed  (GtkAdjustment        *adj,
-                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_zoom_adj_changed  (GtkAdjustment        *adj,
+                                                             GimpNavigationEditor *editor);
 
-static void   gimp_navigation_editor_shell_scaled      (GimpDisplayShell     *shell,
-                                                        GimpNavigationEditor *editor);
-static void   gimp_navigation_editor_shell_scrolled    (GimpDisplayShell     *shell,
-                                                        GimpNavigationEditor *editor);
-static void   gimp_navigation_editor_shell_reconnect   (GimpDisplayShell     *shell,
-                                                        GimpNavigationEditor *editor);
-static void   gimp_navigation_editor_update_marker     (GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_scaled      (GimpDisplayShell     *shell,
+                                                             GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_scrolled    (GimpDisplayShell     *shell,
+                                                             GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_reconnect   (GimpDisplayShell     *shell,
+                                                             GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_update_marker     (GimpNavigationEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
