@@ -1,5 +1,10 @@
 2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* app/core/gimpgradient.c (gimp_gradient_segment_range_delete):
+	Don't dereference final_start_seg and final_end_seg if NULL.
+
+2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
+
 	Fix indentation in previous patch.
 
 	* tools/pdbgen/pdb/gradient.pdb
