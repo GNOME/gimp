@@ -1,3 +1,11 @@
+2008-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c (determine_scale): avoid
+	unnecessary scaling when scaling factor is 2^n.
+	(pixel_average): replaced with optimized pixel averager from
+	tile-pyramid.c (from the gimp-2-4 branch with some minor
+	corrections).
+
 2008-08-23  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-region.c (scale): replaced code that

@@ -170,7 +170,7 @@ determine_scale (PixelRegion *srcPR,
   *max_progress = ((height % TILE_HEIGHT) + 1) * ((width % TILE_WIDTH) + 1);
 
   /* determine scaling levels */
-  while (scalex >= 2)
+  while (scalex > 2)
     {
       scalex  /= 2;
       width   *=2;
@@ -179,7 +179,7 @@ determine_scale (PixelRegion *srcPR,
                         ((width % TILE_WIDTH) + 1));
     }
 
-  while (scaley >= 2)
+  while (scaley > 2)
     {
       scaley  /= 2;
       height  *= 2;
@@ -188,7 +188,7 @@ determine_scale (PixelRegion *srcPR,
                         ((width % TILE_WIDTH) + 1));
     }
 
-  while (scalex <= 0.5)
+  while (scalex < 0.5)
     {
       scalex  *= 2;
       width   /= 2;
@@ -197,7 +197,7 @@ determine_scale (PixelRegion *srcPR,
                         ((width % TILE_WIDTH) + 1));
     }
 
-  while (scaley <= 0.5)
+  while (scaley < 0.5)
     {
       scaley  *= 2;
       height  *= 2;
@@ -639,61 +639,78 @@ pixel_average (const guchar *p1,
                guchar       *p,
                const gint    bytes)
 {
-  gdouble sum, alphasum;
-  gdouble alpha;
-  gint    b;
-
-  for (b = 0; b < bytes; b++)
-    p[b]=0;
-
   switch (bytes)
     {
     case 1:
-      sum = ((p1[0] + p2[0] + p3[0] + p4[0]) / 4);
-
-      p[0] = (guchar) CLAMP (sum, 0, 255);
+      p[0] = (p1[0] + p2[0] + p3[0] + p4[0] + 2) >> 2;
       break;
 
     case 2:
-      alphasum = p1[1] +  p2[1] +  p3[1] +  p4[1];
+      {
+        guint a = p1[1] + p2[1] + p3[1] + p4[1];
 
-      if (alphasum > 0)
-        {
-          sum = p1[0] * p1[1] + p2[0] * p2[1] + p3[0] * p3[1] + p4[0] * p4[1];
-          sum /= alphasum;
+        switch (a)
+          {
+          case 0:    /* all transparent */
+            p[0] = p[1] = 0;
+            break;
 
-          alpha = alphasum / 4;
+          case 1020: /* all opaque */
+            p[0] = (p1[0]  + p2[0] + p3[0] + p4[0] + 2) >> 2;
+            p[1] = 255;
+            break;
 
-          p[0] = (guchar) CLAMP (sum, 0, 255);
-          p[1] = (guchar) CLAMP (alpha, 0, 255);
-        }
+          default:
+            p[0] = ((p1[0] * p1[1] +
+                     p2[0] * p2[1] +
+                     p3[0] * p3[1] +
+                     p4[0] * p4[1]) / a);
+            p[1] = (a + 2) >> 2;
+            break;
+          }
+      }
       break;
 
     case 3:
-      for (b = 0; b<3; b++)
-        {
-          sum = ((p1[b] + p2[b] + p3[b] + p4[b]) / 4);
-          p[b] = (guchar) CLAMP (sum, 0, 255);
-        }
+      p[0] = (p1[0] + p2[0] + p3[0] + p4[0] + 2) >> 2;
+      p[1] = (p1[1] + p2[1] + p3[1] + p4[1] + 2) >> 2;
+      p[2] = (p1[2] + p2[2] + p3[2] + p4[2] + 2) >> 2;
       break;
 
     case 4:
-      alphasum = p1[3] +  p2[3] +  p3[3] +  p4[3];
+      {
+        guint a = p1[3] + p2[3] + p3[3] + p4[3];
 
-      if (alphasum > 0)
-        {
-          for (b = 0; b<3; b++)
-            {
-              sum = p1[b] * p1[3] + p2[b] * p2[3] + p3[b] * p3[3] + p4[b] * p4[3];
-              sum /= alphasum;
+        switch (a)
+          {
+          case 0:    /* all transparent */
+            p[0] = p[1] = p[2] = p[3] = 0;
+            break;
 
-              p[b] = (guchar) CLAMP (sum, 0, 255);
-            }
+          case 1020: /* all opaque */
+            p[0] = (p1[0] + p2[0] + p3[0] + p4[0] + 2) >> 2;
+            p[1] = (p1[1] + p2[1] + p3[1] + p4[1] + 2) >> 2;
+            p[2] = (p1[2] + p2[2] + p3[2] + p4[2] + 2) >> 2;
+            p[3] = 255;
+            break;
 
-          alpha = alphasum / 4;
-
-          p[3] = (guchar) CLAMP (alpha, 0, 255);
-        }
+          default:
+            p[0] = ((p1[0] * p1[3] +
+                     p2[0] * p2[3] +
+                     p3[0] * p3[3] +
+                     p4[0] * p4[3]) / a);
+            p[1] = ((p1[1] * p1[3] +
+                     p2[1] * p2[3] +
+                     p3[1] * p3[3] +
+                     p4[1] * p4[3]) / a);
+            p[2] = ((p1[2] * p1[3] +
+                     p2[2] * p2[3] +
+                     p3[2] * p3[3] +
+                     p4[2] * p4[3]) / a);
+            p[3] = (a + 2) >> 2;
+            break;
+          }
+      }
       break;
     }
 }
@@ -705,7 +722,6 @@ scale_region (PixelRegion           *srcPR,
               GimpProgressFunc       progress_callback,
               gpointer               progress_data)
 {
-
   /* Copy and return if scale = 1.0 */
   if (srcPR->h == dstPR->h && srcPR->w == dstPR->w)
     {
@@ -822,7 +838,7 @@ gaussan_decimate (const guchar *pixels,
     case 3:
       for (b = 0; b < 3; b++ )
         {
-          sum  = p[b   ]     + p[3 + b] * 2 + p[6 + b];
+          sum  = p[b   ]       + p[3 + b]  * 2 + p[6 + b];
           sum += p[12 + b] * 2 + p[15 + b] * 4 + p[18 + b] * 2;
           sum += p[24 + b]     + p[27 + b] * 2 + p[30 + b];
           sum /= 16;
@@ -1201,7 +1217,7 @@ interpolate_bilinear (TileManager   *srcTM,
       alphasum = weighted_sum (xfrac, yfrac, p1[3], p2[3], p3[3], p4[3]);
       if (alphasum > 0)
         {
-          for (b = 0; b<3; b++)
+          for (b = 0; b < 3; b++)
             {
               sum = weighted_sum (xfrac, yfrac, p1[b] * p1[3], p2[b] * p2[3],
                                   p3[b] * p3[3], p4[b] * p4[3]);
@@ -1259,11 +1275,13 @@ interpolate_cubic (TileManager  *srcTM,
   for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
     for (x = x0 - 1; x <= x0 + 2; x++, i++)
       {
-        gint u,v;
+        gint u, v;
+
         u = (x > 0) ? x : 0;
         u = (u < src_width - 1) ? u : src_width - 1;
         v = (y > 0) ? y : 0;
         v = (v < src_height - 1) ? v : src_height - 1;
+
         read_pixel_data_1 (srcTM, u, v, ps + (i * src_bpp));
       }
 
@@ -1438,10 +1456,12 @@ interpolate_lanczos3 (TileManager        *srcTM,
       for (x = x0 - 2; x <= x0 + 3; x++, i++)
         {
           gint u, v;
+
           u = (x > 0) ? x : 0;
           u = (u < src_width - 1) ? u : src_width - 1;
           v = (y > 0) ? y : 0;
           v = (v < src_height - 1) ? v : src_height - 1;
+
           read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
         }
     }
@@ -1453,6 +1473,7 @@ interpolate_lanczos3 (TileManager        *srcTM,
   for (i = 3; i >= -2; i--)
     {
       gint pos = i * LANCZOS_SPP;
+
       kx_sum += x_kernel[2 + i] = kernel_lookup[ABS (x_shift - pos)];
       ky_sum += y_kernel[2 + i] = kernel_lookup[ABS (y_shift - pos)];
     }
