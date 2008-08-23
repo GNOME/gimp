@@ -498,8 +498,8 @@ scale (TileManager           *srcTM,
   const guint    src_height   = tile_manager_height (srcTM);
   const guint    dst_width    = tile_manager_width  (dstTM);
   const guint    dst_height   = tile_manager_height (dstTM);
-  const guint    dst_tilerows = tile_manager_tiles_per_row(dstTM);  /*  the number of tiles in each row      */
-  const guint    dst_tilecols = tile_manager_tiles_per_col(dstTM);  /*  the number of tiles in each columns  */
+  const guint    dst_tilerows = tile_manager_tiles_per_row (dstTM);  /*  the number of tiles in each row      */
+  const guint    dst_tilecols = tile_manager_tiles_per_col (dstTM);  /*  the number of tiles in each columns  */
   const gdouble  scaley = (gdouble) dst_height / (gdouble) src_height;
   const gdouble  scalex = (gdouble) dst_width  / (gdouble) src_width;
   gint           col, row;
@@ -529,8 +529,9 @@ scale (TileManager           *srcTM,
     {
       for (col = 0; col < dst_tilecols; col++)
         {
-          Tile        *dst_tile = tile_manager_get_at (dstTM,
-                                                       col, row, FALSE, FALSE);
+          Tile        *dst_tile    = tile_manager_get_at (dstTM,
+                                                          col, row,
+                                                          FALSE, FALSE);
           const guint  dst_ewidth  = tile_ewidth (dst_tile);
           const guint  dst_eheight = tile_eheight (dst_tile);
           const gint   x0          = col * TILE_WIDTH;
@@ -733,16 +734,16 @@ decimate_gauss (TileManager  *srcTM,
                 const gint    y0,
                 guchar       *pixel)
 {
-  gint    src_bpp    = tile_manager_bpp  (srcTM);
-  guint   src_width  = tile_manager_width  (srcTM);
-  guint   src_height = tile_manager_height (srcTM);
-  guchar  pixel1[4];
-  guchar  pixel2[4];
-  guchar  pixel3[4];
-  guchar  pixel4[4];
-  guchar  pixels[16 * 4];
-  gint    x, y, i;
-  guchar *p;
+  const gint  src_bpp    = tile_manager_bpp (srcTM);
+  const guint src_width  = tile_manager_width (srcTM);
+  const guint src_height = tile_manager_height (srcTM);
+  guchar      pixel1[4];
+  guchar      pixel2[4];
+  guchar      pixel3[4];
+  guchar      pixel4[4];
+  guchar      pixels[16 * 4];
+  gint        x, y, i;
+  guchar     *p;
 
   for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
     {
@@ -861,16 +862,16 @@ decimate_lanczos2 (TileManager  *srcTM,
                    const gint    y0,
                    guchar       *pixel)
 {
-  gint    src_bpp    = tile_manager_bpp  (srcTM);
-  guint   src_width  = tile_manager_width  (srcTM);
-  guint   src_height = tile_manager_height (srcTM);
-  guchar  pixel1[4];
-  guchar  pixel2[4];
-  guchar  pixel3[4];
-  guchar  pixel4[4];
-  guchar  pixels[36 * 4];
-  gint    x, y, i;
-  guchar *p;
+  const gint   src_bpp    = tile_manager_bpp (srcTM);
+  const guint  src_width  = tile_manager_width (srcTM);
+  const guint  src_height = tile_manager_height (srcTM);
+  guchar       pixel1[4];
+  guchar       pixel2[4];
+  guchar       pixel3[4];
+  guchar       pixel4[4];
+  guchar       pixels[36 * 4];
+  gint         x, y, i;
+  guchar      *p;
 
   for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
     for (x = x0 - 2; x <= x0 + 3; x++, i++)
@@ -913,10 +914,10 @@ gaussan_lanczos2 (const guchar *pixels,
    *
    */
   const guchar *p;
-  gdouble      sum;
-  gdouble      alphasum;
-  gdouble      alpha;
-  gint         b;
+  gdouble       sum;
+  gdouble       alphasum;
+  gdouble       alpha;
+  gint          b;
 
   for (b = 0; b < bytes; b++)
     pixel[b] = 0;
@@ -1058,7 +1059,8 @@ decimate_average (TileManager  *srcTM,
   read_pixel_data_1 (srcTM, x0, y1, pixel3);
   read_pixel_data_1 (srcTM, x1, y1, pixel4);
 
-  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, tile_manager_bpp (srcTM));
+  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel,
+                 tile_manager_bpp (srcTM));
 }
 
 static inline gdouble
@@ -1153,14 +1155,13 @@ interpolate_bilinear (TileManager   *srcTM,
                       const gdouble  yfrac,
                       guchar        *pixel)
 {
-  gint   src_bpp = tile_manager_bpp  (srcTM);
-  guchar p1[4];
-  guchar p2[4];
-  guchar p3[4];
-  guchar p4[4];
-
-  gint   b;
-  gdouble sum, alphasum;
+  const gint src_bpp = tile_manager_bpp  (srcTM);
+  guchar     p1[4];
+  guchar     p2[4];
+  guchar     p3[4];
+  guchar     p4[4];
+  gint       b;
+  gdouble    sum, alphasum;
 
   for (b = 0; b < src_bpp; b++)
     pixel[b] = 0;
@@ -1243,16 +1244,14 @@ interpolate_cubic (TileManager  *srcTM,
                    const gdouble yfrac,
                    guchar       *pixel)
 {
-  gint    src_bpp    = tile_manager_bpp  (srcTM);
-  guint   src_width  = tile_manager_width  (srcTM);
-  guint   src_height = tile_manager_height (srcTM);
-  gint    b, i;
-  gint    x, y;
-
-  guchar  ps[16 * 4];
-  gdouble p0, p1, p2, p3;
-
-  gdouble sum, alphasum;
+  const gint  src_bpp    = tile_manager_bpp (srcTM);
+  const guint src_width  = tile_manager_width (srcTM);
+  const guint src_height = tile_manager_height (srcTM);
+  gint        b, i;
+  gint        x, y;
+  guchar      ps[16 * 4];
+  gdouble     p0, p1, p2, p3;
+  gdouble     sum, alphasum;
 
   for (b = 0; b < src_bpp; b++)
     pixel[b] = 0;
@@ -1412,26 +1411,27 @@ lanczos3_mul (const guchar  *pixels,
 }
 
 static void
-interpolate_lanczos3 (TileManager        *srcTM,
-                      const gint          x0,
-                      const gint          y0,
-                      const gint          x1,
-                      const gint          y1,
-                      const gdouble       xfrac,
-                      const gdouble       yfrac,
-                      guchar              *pixel,
-                      const gfloat *kernel_lookup)
+interpolate_lanczos3 (TileManager   *srcTM,
+                      const gint     x0,
+                      const gint     y0,
+                      const gint     x1,
+                      const gint     y1,
+                      const gdouble  xfrac,
+                      const gdouble  yfrac,
+                      guchar        *pixel,
+                      const gfloat  *kernel_lookup)
 {
-  gint    src_bpp    = tile_manager_bpp  (srcTM);
-  guint   src_width  = tile_manager_width  (srcTM);
-  guint   src_height = tile_manager_height (srcTM);
-  gint    b, i;
-  gint    x, y;
-  gint    x_shift, y_shift;
-  gdouble kx_sum, ky_sum;
-  gdouble x_kernel[6], y_kernel[6];
-  guchar  pixels[36 * 4];
-  gdouble sum, alphasum;
+  const gint  src_bpp    = tile_manager_bpp  (srcTM);
+  const guint src_width  = tile_manager_width  (srcTM);
+  const guint src_height = tile_manager_height (srcTM);
+  const gint  x_shift    = (gint) (xfrac * LANCZOS_SPP + 0.5);
+  const gint  y_shift    = (gint) (yfrac * LANCZOS_SPP + 0.5);
+  gint        b, i;
+  gint        x, y;
+  gdouble     kx_sum, ky_sum;
+  gdouble     x_kernel[6], y_kernel[6];
+  guchar      pixels[36 * 4];
+  gdouble     sum, alphasum;
 
   for (b = 0; b < src_bpp; b++)
     pixel[b] = 0;
@@ -1451,8 +1451,6 @@ interpolate_lanczos3 (TileManager        *srcTM,
         }
     }
 
-  x_shift = (gint) (xfrac * LANCZOS_SPP + 0.5);
-  y_shift = (gint) (yfrac * LANCZOS_SPP + 0.5);
   kx_sum  = ky_sum = 0.0;
 
   for (i = 3; i >= -2; i--)
@@ -1518,15 +1516,15 @@ scale_pr (PixelRegion           *srcPR,
           PixelRegion           *dstPR,
           GimpInterpolationType  interpolation)
 {
-  gdouble scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
-  gdouble scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
-  gint    src_width  = srcPR->w;
-  gint    src_height = srcPR->h;
-  gint    bytes      = srcPR->bytes;
-  guchar *dstPtr     = dstPR->data;
-  gdouble xfrac, yfrac;
-  gint    b, x, sx0, sx1, y, sy0, sy1;
-  guchar  pixel[bytes];
+  const gdouble  scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
+  const gdouble  scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
+  const gint     src_width  = srcPR->w;
+  const gint     src_height = srcPR->h;
+  const gint     bytes      = srcPR->bytes;
+  guchar        *dstPtr     = dstPR->data;
+  gdouble        xfrac, yfrac;
+  gint           b, x, sx0, sx1, y, sy0, sy1;
+  guchar         pixel[bytes];
 
   for (y = 0; y < dstPR->h; y++)
    {
@@ -1583,12 +1581,12 @@ decimate_average_pr (PixelRegion *srcPR,
                      const gint   y1,
                      guchar      *pixel)
 {
-  gint    bytes = srcPR->bytes;
-  gint    width = srcPR->w;
-  guchar *p1    = srcPR->data + (y0 * width + x0) * bytes;
-  guchar *p2    = srcPR->data + (y0 * width + x1) * bytes;
-  guchar *p3    = srcPR->data + (y1 * width + x0) * bytes;
-  guchar *p4    = srcPR->data + (y1 * width + x1) * bytes;
+  const gint  bytes = srcPR->bytes;
+  const gint  width = srcPR->w;
+  guchar     *p1    = srcPR->data + (y0 * width + x0) * bytes;
+  guchar     *p2    = srcPR->data + (y0 * width + x1) * bytes;
+  guchar     *p3    = srcPR->data + (y1 * width + x0) * bytes;
+  guchar     *p4    = srcPR->data + (y1 * width + x1) * bytes;
 
   pixel_average (p1, p2, p3, p4, pixel, bytes);
 }
@@ -1603,15 +1601,14 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
                          const gdouble   yfrac,
                          guchar         *pixel)
 {
-  gint    bytes = srcPR->bytes;
-  gint    width = srcPR->w;
-  guchar *p1    = srcPR->data + (y0 * width + x0) * bytes;
-  guchar *p2    = srcPR->data + (y0 * width + x1) * bytes;
-  guchar *p3    = srcPR->data + (y1 * width + x0) * bytes;
-  guchar *p4    = srcPR->data + (y1 * width + x1) * bytes;
-
-  gint    b;
-  gdouble sum, alphasum;
+  const gint  bytes = srcPR->bytes;
+  const gint  width = srcPR->w;
+  guchar     *p1    = srcPR->data + (y0 * width + x0) * bytes;
+  guchar     *p2    = srcPR->data + (y0 * width + x1) * bytes;
+  guchar     *p3    = srcPR->data + (y1 * width + x0) * bytes;
+  guchar     *p4    = srcPR->data + (y1 * width + x1) * bytes;
+  gint        b;
+  gdouble     sum, alphasum;
 
   for (b = 0; b < bytes; b++)
     pixel[b] = 0;
