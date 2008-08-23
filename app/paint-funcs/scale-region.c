@@ -519,26 +519,6 @@ scale (TileManager           *srcTM,
         }
     }
 
-  /* if scale is 2^n */
-  if (src_width == dst_width && src_height == dst_height)
-    {
-      PixelRegion srcPR;
-      PixelRegion dstPR;
-
-      pixel_region_init (&srcPR, srcTM, 0, 0, src_width, src_height, FALSE);
-      pixel_region_init (&dstPR, dstTM, 0, 0, src_width, src_height, TRUE);
-
-      copy_region (&srcPR, &dstPR);
-
-      if (progress_callback)
-        {
-          *progress += dst_tilerows * dst_tilecols;
-          progress_callback (0, max_progress, *progress, progress_data);
-        }
-
-      return;
-    }
-
   if (interpolation == GIMP_INTERPOLATION_LANCZOS )
     kernel_lookup = create_lanczos3_lookup ();
 

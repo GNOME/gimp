@@ -1,5 +1,11 @@
 2008-08-24  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c (scale): removed optimization of
+	the case where the source and dest regions are the same size. This
+	should not happen any longer.
+
+2008-08-24  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c (determine_scale): avoid
 	unnecessary scaling when scaling factor is 2^n.
 	(pixel_average): replaced with optimized pixel averager from
