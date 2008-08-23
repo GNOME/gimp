@@ -47,11 +47,11 @@ static void        run   (const gchar       *name,
                           GimpParam        **return_vals);
 
 static GimpPDBStatusType  print_image       (gint32             image_ID,
-                                             gboolean           interactive);
+                                             gboolean           interactive,
+                                             GError           **error);
 static GimpPDBStatusType  page_setup        (gint32             image_ID);
 
-static void        print_show_error         (const gchar       *message,
-                                             gboolean           interactive);
+static void        print_show_error         (const gchar       *message);
 static void        print_operation_set_name (GtkPrintOperation *operation,
                                              gint               image_ID);
 
@@ -142,10 +142,11 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status;
-  gint32            image_ID;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status;
+  gint32             image_ID;
+  GError            *error = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -163,7 +164,13 @@ run (const gchar      *name,
 
   if (strcmp (name, PRINT_PROC_NAME) == 0)
     {
-      status = print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE);
+      status = print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE, &error);
+
+      if (error && run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          print_show_error (error->message);
+          g_clear_error (&error);
+        }
     }
   else if (strcmp (name, PAGE_SETUP_PROC_NAME) == 0)
     {
@@ -181,18 +188,26 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
 }
 
 static GimpPDBStatusType
-print_image (gint32    image_ID,
-             gboolean  interactive)
+print_image (gint32     image_ID,
+             gboolean   interactive,
+             GError   **error)
 {
-  GtkPrintOperation *operation;
-  gchar             *temp_proc;
-  GError            *error = NULL;
-  gint32             layer;
-  PrintData          data;
+  GtkPrintOperation       *operation;
+  GtkPrintOperationResult  result;
+  gchar                   *temp_proc;
+  gint32                   layer;
+  PrintData                data;
 
   /*  create a print layer from the projection  */
   layer = gimp_layer_new_from_visible (image_ID, image_ID, PRINT_PROC_NAME);
@@ -249,15 +264,15 @@ print_image (gint32    image_ID,
 
       gtk_print_operation_set_custom_tab_label (operation, _("Image Settings"));
 
-      gtk_print_operation_run (operation,
-                               GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-                               NULL, &error);
+      result = gtk_print_operation_run (operation,
+                                        GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
+                                        NULL, error);
     }
   else
     {
-      gtk_print_operation_run (operation,
-                               GTK_PRINT_OPERATION_ACTION_PRINT,
-                               NULL, &error);
+      result = gtk_print_operation_run (operation,
+                                        GTK_PRINT_OPERATION_ACTION_PRINT,
+                                        NULL, error);
     }
 
   gimp_uninstall_temp_proc (temp_proc);
@@ -269,13 +284,20 @@ print_image (gint32    image_ID,
   if (gimp_drawable_is_valid (layer))
     gimp_drawable_delete (layer);
 
-  if (error)
+  switch (result)
     {
-      print_show_error (error->message, interactive);
-      g_error_free (error);
+    case GTK_PRINT_OPERATION_RESULT_APPLY:
+    case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
+      return GIMP_PDB_SUCCESS;
+
+    case GTK_PRINT_OPERATION_RESULT_CANCEL:
+      return GIMP_PDB_CANCEL;
+
+    case GTK_PRINT_OPERATION_RESULT_ERROR:
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  return GIMP_PDB_SUCCESS;
+  return GIMP_PDB_EXECUTION_ERROR;
 }
 
 static GimpPDBStatusType
@@ -316,27 +338,20 @@ page_setup (gint32 image_ID)
 }
 
 static void
-print_show_error (const gchar *message,
-                  gboolean     interactive)
+print_show_error (const gchar *message)
 {
-  g_printerr ("Print: %s\n", message);
+  GtkWidget *dialog;
 
-  if (interactive)
-    {
-      GtkWidget *dialog;
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_ERROR,
+                                   GTK_BUTTONS_OK,
+                                   _("An error occurred while trying to print:"));
 
-      dialog = gtk_message_dialog_new (NULL, 0,
-                                       GTK_MESSAGE_ERROR,
-                                       GTK_BUTTONS_OK,
-                                       _("An error occurred "
-                                         "while trying to print:"));
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            message);
 
-      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                message);
-
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
-    }
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
 }
 
 static void

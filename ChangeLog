@@ -1,5 +1,11 @@
 2008-08-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c: return with a proper PDB status type
+	depending on the result of gtk_print_operation_run(). When run
+	non-interactively, pass the error message with the return values.
+
+2008-08-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/coolmetal-logo.scm: applied patch
 	from LightningIsMyName. Changes the script to not break if called
 	on a floating selection (bug #327681).
