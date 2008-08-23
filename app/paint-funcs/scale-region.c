@@ -494,15 +494,18 @@ scale (TileManager           *srcTM,
        gint                  *progress,
        gint                   max_progress)
 {
-  guint              src_width    = tile_manager_width  (srcTM);
-  guint              src_height   = tile_manager_height (srcTM);
-  guint              dst_width    = tile_manager_width  (dstTM);
-  guint              dst_height   = tile_manager_height (dstTM);
-  guint              dst_tilerows = tile_manager_tiles_per_row(dstTM);    /*  the number of tiles in each row      */
-  guint              dst_tilecols = tile_manager_tiles_per_col(dstTM);    /*  the number of tiles in each columns  */
-  gint               col, row;
-  guchar             pixel[4];
-  gfloat            *kernel_lookup = NULL;
+  const guint    src_width    = tile_manager_width  (srcTM);
+  const guint    src_height   = tile_manager_height (srcTM);
+  const guint    dst_width    = tile_manager_width  (dstTM);
+  const guint    dst_height   = tile_manager_height (dstTM);
+  const guint    dst_tilerows = tile_manager_tiles_per_row(dstTM);  /*  the number of tiles in each row      */
+  const guint    dst_tilecols = tile_manager_tiles_per_col(dstTM);  /*  the number of tiles in each columns  */
+  const gdouble  scaley = (gdouble) dst_height / (gdouble) src_height;
+  const gdouble  scalex = (gdouble) dst_width  / (gdouble) src_width;
+  gint           col, row;
+  guchar         pixel[4];
+
+  gfloat        *kernel_lookup = NULL;
 
   /* fall back if not enough pixels available */
   if (interpolation != GIMP_INTERPOLATION_NONE)
@@ -519,29 +522,29 @@ scale (TileManager           *srcTM,
         }
     }
 
-  if (interpolation == GIMP_INTERPOLATION_LANCZOS )
+  if (interpolation == GIMP_INTERPOLATION_LANCZOS)
     kernel_lookup = create_lanczos3_lookup ();
 
   for (row = 0; row < dst_tilerows; row++)
     {
       for (col = 0; col < dst_tilecols; col++)
         {
-          Tile  *dst_tile    = tile_manager_get_at (dstTM,
-                                                    col, row, FALSE, FALSE);
-          guint  dst_ewidth  = tile_ewidth (dst_tile);
-          guint  dst_eheight = tile_eheight (dst_tile);
-          gint   x0          = col * TILE_WIDTH;
-          gint   y0          = row * TILE_HEIGHT;
-          gint   x1          = x0 + dst_ewidth  - 1;
-          gint   y1          = y0 + dst_eheight - 1;
-          gint   x, y;
+          Tile        *dst_tile = tile_manager_get_at (dstTM,
+                                                       col, row, FALSE, FALSE);
+          const guint  dst_ewidth  = tile_ewidth (dst_tile);
+          const guint  dst_eheight = tile_eheight (dst_tile);
+          const gint   x0          = col * TILE_WIDTH;
+          const gint   y0          = row * TILE_HEIGHT;
+          const gint   x1          = x0 + dst_ewidth;
+          const gint   y1          = y0 + dst_eheight;
+          gint         y;
 
-          for (y = y0; y <= y1; y++)
+          for (y = y0; y < y1; y++)
             {
-              gdouble scaley = (gdouble) dst_height / (gdouble) src_height;
-              gdouble yfrac  = y / scaley;
-              gint    sy0    = (gint) yfrac;
-              gint    sy1    = sy0 + 1;
+              gdouble yfrac = y / scaley;
+              gint    sy0   = (gint) yfrac;
+              gint    sy1   = sy0 + 1;
+              gint    x;
 
               sy0 = (sy0 > 0) ? sy0 : 0;
               sy1 = (sy1 > 0) ? sy1 : 0;
@@ -550,12 +553,11 @@ scale (TileManager           *srcTM,
 
               yfrac = yfrac - sy0;
 
-              for (x = x0; x <= x1; x++)
+              for (x = x0; x < x1; x++)
                 {
-                  gdouble scalex  = (gdouble) dst_width / (gdouble) src_width;
-                  gdouble xfrac   = x / scalex;
-                  gint sx0        = (gint) xfrac;
-                  gint sx1        = sx0 + 1;
+                  gdouble xfrac = x / scalex;
+                  gint    sx0   = (gint) xfrac;
+                  gint    sx1   = sx0 + 1;
 
                   sx0 = (sx0 > 0) ? sx0 : 0;
                   sx1 = (sx1 > 0) ? sx1 : 0;
@@ -573,8 +575,7 @@ scale (TileManager           *srcTM,
 
                     case GIMP_INTERPOLATION_LINEAR:
                       if (scalex == 0.5 || scaley == 0.5)
-                        decimate_average (srcTM, sx0, sy0, sx1, sy1,
-                                          pixel);
+                        decimate_average (srcTM, sx0, sy0, sx1, sy1, pixel);
                       else
                         interpolate_bilinear (srcTM, sx0, sy0, sx1, sy1,
                                               xfrac, yfrac, pixel);
@@ -748,10 +749,12 @@ decimate_gauss (TileManager  *srcTM,
       for (x = x0 - 1; x <= x0 + 2; x++, i++)
         {
           gint u, v;
+
           u = (x > 0) ? x : 0;
           u = (u < src_width - 1) ? u : src_width - 1;
           v = (y > 0) ? y : 0;
           v = (v < src_height - 1) ? v : src_height - 1;
+
           read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
         }
     }
@@ -873,10 +876,12 @@ decimate_lanczos2 (TileManager  *srcTM,
     for (x = x0 - 2; x <= x0 + 3; x++, i++)
       {
         gint u, v;
+
         u = (x > 0) ? x : 0;
         u = (u < src_width - 1) ? u : src_width - 1;
         v = (y > 0) ? y : 0;
         v = (v < src_height - 1) ? v : src_height - 1;
+
         read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
       }
 
@@ -1157,8 +1162,8 @@ interpolate_bilinear (TileManager   *srcTM,
   gint   b;
   gdouble sum, alphasum;
 
-  for (b=0; b < src_bpp; b++)
-    pixel[b]=0;
+  for (b = 0; b < src_bpp; b++)
+    pixel[b] = 0;
 
   read_pixel_data_1 (srcTM, x0, y0, p1);
   read_pixel_data_1 (srcTM, x1, y0, p2);

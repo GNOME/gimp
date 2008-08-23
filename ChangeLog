@@ -1,5 +1,10 @@
 2008-08-24  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c (scale): sprinkled with const
+	qualifiers. Moved calculations out of the loops.
+
+2008-08-24  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c (scale): removed optimization of
 	the case where the source and dest regions are the same size. This
 	should not happen any longer.
