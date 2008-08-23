@@ -1307,7 +1307,7 @@ gradient_segment_range_blend_colors_invoker (GimpProcedure      *procedure,
           if (!end_seg)
             end_seg = gimp_gradient_segment_get_last (start_seg);
 
-            gimp_gradient_segment_range_blend (gradient,
+          gimp_gradient_segment_range_blend (gradient,
                                              start_seg, end_seg,
                                              &start_seg->left_color,
                                              &end_seg->right_color,

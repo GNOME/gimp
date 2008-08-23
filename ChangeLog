@@ -1,5 +1,12 @@
 2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
 
+	Fix indentation in previous patch.
+
+	* tools/pdbgen/pdb/gradient.pdb
+	* app/pdb/gradient-cmds.c
+
+2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* tools/pdbgen/pdb/gradient.pdb
 	(gimp_gradient_segment_range_blend_(colors|opacity)): Don't crash 
 	if the index of the last segment is out of range.
