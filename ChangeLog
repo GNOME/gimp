@@ -1,3 +1,9 @@
+2008-08-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm: applied patch
+	from LightningIsMyName. Changes the script to not break if called
+	on a floating selection (bug #327681).
+
 2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* app/core/gimpgradient.c (gimp_gradient_segment_range_delete):
