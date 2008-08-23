@@ -494,17 +494,14 @@ scale (TileManager           *srcTM,
        gint                  *progress,
        gint                   max_progress)
 {
-  const guint    src_width    = tile_manager_width  (srcTM);
-  const guint    src_height   = tile_manager_height (srcTM);
-  const guint    dst_width    = tile_manager_width  (dstTM);
-  const guint    dst_height   = tile_manager_height (dstTM);
-  const guint    dst_tilerows = tile_manager_tiles_per_row (dstTM);  /*  the number of tiles in each row      */
-  const guint    dst_tilecols = tile_manager_tiles_per_col (dstTM);  /*  the number of tiles in each columns  */
-  const gdouble  scaley = (gdouble) dst_height / (gdouble) src_height;
-  const gdouble  scalex = (gdouble) dst_width  / (gdouble) src_width;
-  gint           col, row;
-  guchar         pixel[4];
-
+  PixelRegion    region;
+  const guint    src_width  = tile_manager_width  (srcTM);
+  const guint    src_height = tile_manager_height (srcTM);
+  const guint    dst_width  = tile_manager_width  (dstTM);
+  const guint    dst_height = tile_manager_height (dstTM);
+  const gdouble  scaley     = (gdouble) dst_height / (gdouble) src_height;
+  const gdouble  scalex     = (gdouble) dst_width  / (gdouble) src_width;
+  gpointer       pr;
   gfloat        *kernel_lookup = NULL;
 
   /* fall back if not enough pixels available */
@@ -525,88 +522,86 @@ scale (TileManager           *srcTM,
   if (interpolation == GIMP_INTERPOLATION_LANCZOS)
     kernel_lookup = create_lanczos3_lookup ();
 
-  for (row = 0; row < dst_tilerows; row++)
+  pixel_region_init (&region, dstTM, 0, 0, dst_width, dst_height, TRUE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      for (col = 0; col < dst_tilecols; col++)
+      const gint x1  = region.x + region.w;
+      const gint y1  = region.y + region.h;
+      guchar    *row = region.data;
+      gint       y;
+
+      for (y = region.y; y < y1; y++)
         {
-          Tile        *dst_tile    = tile_manager_get_at (dstTM,
-                                                          col, row,
-                                                          FALSE, FALSE);
-          const guint  dst_ewidth  = tile_ewidth (dst_tile);
-          const guint  dst_eheight = tile_eheight (dst_tile);
-          const gint   x0          = col * TILE_WIDTH;
-          const gint   y0          = row * TILE_HEIGHT;
-          const gint   x1          = x0 + dst_ewidth;
-          const gint   y1          = y0 + dst_eheight;
-          gint         y;
+          guchar  *pixel = row;
+          gdouble  yfrac = y / scaley;
+          gint     sy0   = (gint) yfrac;
+          gint     sy1   = sy0 + 1;
+          gint     x;
 
-          for (y = y0; y < y1; y++)
+          sy0 = (sy0 > 0) ? sy0 : 0;
+          sy1 = (sy1 > 0) ? sy1 : 0;
+          sy0 = (sy0 < src_height - 1) ? sy0 : src_height - 1;
+          sy1 = (sy1 < src_height - 1) ? sy1 : src_height - 1;
+
+          yfrac = yfrac - sy0;
+
+          for (x = region.x; x < x1; x++)
             {
-              gdouble yfrac = y / scaley;
-              gint    sy0   = (gint) yfrac;
-              gint    sy1   = sy0 + 1;
-              gint    x;
+              gdouble xfrac = x / scalex;
+              gint    sx0   = (gint) xfrac;
+              gint    sx1   = sx0 + 1;
 
-              sy0 = (sy0 > 0) ? sy0 : 0;
-              sy1 = (sy1 > 0) ? sy1 : 0;
-              sy0 = (sy0 < src_height - 1) ? sy0 : src_height - 1;
-              sy1 = (sy1 < src_height - 1) ? sy1 : src_height - 1;
+              sx0 = (sx0 > 0) ? sx0 : 0;
+              sx1 = (sx1 > 0) ? sx1 : 0;
+              sx0 = (sx0 < src_width - 1) ? sx0 : src_width - 1;
+              sx1 = (sx1 < src_width - 1) ? sx1 : src_width - 1;
 
-              yfrac = yfrac - sy0;
+              xfrac = xfrac - sx0;
 
-              for (x = x0; x < x1; x++)
+              switch (interpolation)
                 {
-                  gdouble xfrac = x / scalex;
-                  gint    sx0   = (gint) xfrac;
-                  gint    sx1   = sx0 + 1;
+                case GIMP_INTERPOLATION_NONE:
+                  interpolate_nearest (srcTM, sx0, sy0, sx1, sy1,
+                                       xfrac, yfrac, pixel);
+                  break;
 
-                  sx0 = (sx0 > 0) ? sx0 : 0;
-                  sx1 = (sx1 > 0) ? sx1 : 0;
-                  sx0 = (sx0 < src_width - 1) ? sx0 : src_width - 1;
-                  sx1 = (sx1 < src_width - 1) ? sx1 : src_width - 1;
-
-                  xfrac = xfrac - sx0;
-
-                  switch (interpolation)
-                    {
-                    case GIMP_INTERPOLATION_NONE:
-                      interpolate_nearest (srcTM, sx0, sy0, sx1, sy1,
-                                           xfrac, yfrac, pixel);
-                      break;
-
-                    case GIMP_INTERPOLATION_LINEAR:
-                      if (scalex == 0.5 || scaley == 0.5)
-                        decimate_average (srcTM, sx0, sy0, sx1, sy1, pixel);
-                      else
-                        interpolate_bilinear (srcTM, sx0, sy0, sx1, sy1,
+                case GIMP_INTERPOLATION_LINEAR:
+                  if (scalex == 0.5 || scaley == 0.5)
+                    decimate_average (srcTM, sx0, sy0, sx1, sy1, pixel);
+                  else
+                    interpolate_bilinear (srcTM, sx0, sy0, sx1, sy1,
                                               xfrac, yfrac, pixel);
-                      break;
+                  break;
 
-                    case GIMP_INTERPOLATION_CUBIC:
-                      if (scalex == 0.5 || scaley == 0.5)
-                        decimate_gauss (srcTM, sx0, sy0, pixel);
-                      else
-                        interpolate_cubic (srcTM, sx0, sy0,
-                                           xfrac, yfrac, pixel);
-                      break;
+                case GIMP_INTERPOLATION_CUBIC:
+                  if (scalex == 0.5 || scaley == 0.5)
+                    decimate_gauss (srcTM, sx0, sy0, pixel);
+                  else
+                    interpolate_cubic (srcTM, sx0, sy0,
+                                       xfrac, yfrac, pixel);
+                  break;
 
-                    case GIMP_INTERPOLATION_LANCZOS:
-                      if (scalex == 0.5 || scaley == 0.5)
-                        decimate_lanczos2 (srcTM, sx0, sy0, pixel);
-                      else
-                        interpolate_lanczos3 (srcTM, sx0, sy0, sx1, sy1,
-                                              xfrac, yfrac, pixel,
-                                              kernel_lookup);
-                      break;
-                    }
-
-                  write_pixel_data_1 (dstTM, x, y, pixel);
+                case GIMP_INTERPOLATION_LANCZOS:
+                  if (scalex == 0.5 || scaley == 0.5)
+                    decimate_lanczos2 (srcTM, sx0, sy0, pixel);
+                  else
+                    interpolate_lanczos3 (srcTM, sx0, sy0, sx1, sy1,
+                                          xfrac, yfrac, pixel,
+                                          kernel_lookup);
+                  break;
                 }
+
+              pixel += region.bytes;
             }
 
-          if (progress_callback)
-            progress_callback (0, max_progress, ((*progress)++), progress_data);
+          row += region.rowstride;
         }
+
+      if (progress_callback)
+        progress_callback (0, max_progress, ((*progress)++), progress_data);
     }
 
   if (interpolation == GIMP_INTERPOLATION_LANCZOS)
