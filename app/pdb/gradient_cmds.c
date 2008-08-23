@@ -1226,6 +1226,9 @@ gradient_segment_range_blend_colors_invoker (GimpProcedure     *procedure,
 
       if (start_seg && GIMP_DATA (gradient)->writable)
         {
+          if (!end_seg)
+            end_seg = gimp_gradient_segment_get_last (start_seg);
+
           gimp_gradient_segment_range_blend (gradient,
                                              start_seg, end_seg,
                                              &start_seg->left_color,
@@ -1266,6 +1269,9 @@ gradient_segment_range_blend_opacity_invoker (GimpProcedure     *procedure,
 
       if (start_seg && GIMP_DATA (gradient)->writable)
         {
+          if (!end_seg)
+            end_seg = gimp_gradient_segment_get_last (start_seg);
+
           gimp_gradient_segment_range_blend (gradient,
                                              start_seg, end_seg,
                                              &start_seg->left_color,
