@@ -1,5 +1,11 @@
 2008-08-23  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c (scale): replaced code that
+	copies pixels from one tile-manager to another by a call to
+	copy_region().
+
+2008-08-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: return with a proper PDB status type
 	depending on the result of gtk_print_operation_run(). When run
 	non-interactively, pass the error message with the return values.

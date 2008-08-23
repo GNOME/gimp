@@ -522,37 +522,25 @@ scale (TileManager           *srcTM,
   /* if scale is 2^n */
   if (src_width == dst_width && src_height == dst_height)
     {
-      for (row = 0; row < dst_tilerows; row++)
+      PixelRegion srcPR;
+      PixelRegion dstPR;
+
+      pixel_region_init (&srcPR, srcTM, 0, 0, src_width, src_height, FALSE);
+      pixel_region_init (&dstPR, dstTM, 0, 0, src_width, src_height, TRUE);
+
+      copy_region (&srcPR, &dstPR);
+
+      if (progress_callback)
         {
-          for (col = 0; col < dst_tilecols; col++)
-            {
-              Tile   *dst_tile    = tile_manager_get_at (dstTM,
-                                                         col, row, TRUE, TRUE);
-              guchar *dst_data    = tile_data_pointer (dst_tile, 0, 0);
-              guint   dst_bpp     = tile_bpp (dst_tile);
-              guint   dst_ewidth  = tile_ewidth (dst_tile);
-              guint   dst_eheight = tile_eheight (dst_tile);
-              guint   dst_stride  = dst_ewidth * dst_bpp;
-              gint    x0          = col * TILE_WIDTH;
-              gint    y0          = row * TILE_HEIGHT;
-              gint    x1          = x0 + dst_ewidth - 1;
-              gint    y1          = y0 + dst_eheight - 1;
-
-              read_pixel_data (srcTM, x0, y0, x1, y1, dst_data, dst_stride);
-
-              tile_release (dst_tile, TRUE);
-
-              if (progress_callback)
-                progress_callback (0, max_progress, ((*progress)++),
-                                   progress_data);
-            }
+          *progress += dst_tilerows * dst_tilecols;
+          progress_callback (0, max_progress, *progress, progress_data);
         }
 
       return;
     }
 
   if (interpolation == GIMP_INTERPOLATION_LANCZOS )
-    kernel_lookup = create_lanczos3_lookup();
+    kernel_lookup = create_lanczos3_lookup ();
 
   for (row = 0; row < dst_tilerows; row++)
     {
@@ -1085,7 +1073,8 @@ sinc (const gdouble x)
 
 /*
  * allocate and fill lookup table of Lanczos windowed sinc function
- * use gfloat since errors due to granularity of array far exceed data precision
+ * use gfloat since errors due to granularity of array far exceed
+ * data precision
  */
 gfloat *
 create_lanczos_lookup (void)
