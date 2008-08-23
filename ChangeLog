@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* app/core/gimpgradient.c (gimp_gradient_segment_range_delete):
+	Don't dereference final_start_seg and final_end_seg if NULL.
+
+2008-08-23  Lars-Peter Clausen  <lars@metafoo.de>
+
+	Merged from trunk:
+
 	* tools/pdbgen/pdb/gradient.pdb
 	(gimp_gradient_segment_range_blend_(colors|opacity)): Don't crash 
 	if the index of the last segment is out of range.

@@ -1682,8 +1682,10 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   return;
 
  premature_return:
-  *final_start_seg = start_seg;
-  *final_end_seg   = end_seg;
+  if (final_start_seg)
+    *final_start_seg = start_seg;
+  if (final_end_seg)
+    *final_end_seg = end_seg;
 }
 
 void
