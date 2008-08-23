@@ -14,15 +14,14 @@ libexec_PROGRAMS = twain
 
 
 if OS_WIN32
-twain_LDFLAGS = -mwindows
-winlink = -luser32
+twain_LDFLAGS = -mwindows -luser32
 
 twainplatform = tw_win.c
 endif
 
 
 if HAVE_MAC_TWAIN
-maclink = -framework Carbon -framework TWAIN
+twain_LDFLAGS = -framework Carbon -framework TWAIN
 
 twainplatform = tw_mac.c
 
@@ -30,8 +29,6 @@ twaindatadir = $(gimpdatadir)/twain
 twaindata_DATA = gimp-twain.png
 endif
 
-
-AM_LDFLAGS = $(winlink) $(maclink)
 
 twain_SOURCES = \
 	tw_func.c	\
