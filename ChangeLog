@@ -1,5 +1,11 @@
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): Correct the positioning
+	calculation (while still retaining current overall behaviour).
+
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpnavigationview.c
 	(gimp_navigation_view_draw_marker): Use a define for border width.
 

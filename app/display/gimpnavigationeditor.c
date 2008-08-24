@@ -53,9 +53,6 @@
 #include "gimp-intl.h"
 
 
-#define BORDER_PEN_WIDTH  3
-
-
 static void        gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
 static void        gimp_navigation_editor_destroy           (GtkObject            *object);
@@ -282,15 +279,15 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                                          &view_marker_width,
                                          &view_marker_height);
 
-  x = (x_org + click_x -
-       view_marker_x -
-       0.5 * (view_marker_width  - BORDER_PEN_WIDTH) -
-       2   * style->xthickness);
+  x = (x_org + click_x       -
+       view_marker_x         -
+       view_marker_width / 2 -
+       style->xthickness * 4);
 
-  y = (y_org + click_y -
-       view_marker_y -
-       0.5 * (view_marker_height - BORDER_PEN_WIDTH) -
-       2   * style->ythickness);
+  y = (y_org + click_y        -
+       view_marker_y          -
+       view_marker_height / 2 -
+       style->ythickness  * 4);
 
   /* If the popup doesn't fit into the screen, we have a problem.
    * We move the popup onscreen and risk that the pointer is not
@@ -316,8 +313,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
   /* fill in then grab pointer */
   gimp_navigation_view_set_motion_offset (view,
-                                          0.5 * (view_marker_width  - BORDER_PEN_WIDTH),
-                                          0.5 * (view_marker_height - BORDER_PEN_WIDTH));
+                                          view_marker_width  / 2,
+                                          view_marker_height / 2);
   gimp_navigation_view_grab_pointer (view);
 }
 
