@@ -1,6 +1,11 @@
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_draw_marker): Use a define for border width.
+
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.c
 	(gimp_navigation_view_set_marker): Don't redraw the view, only
 	invalidate it. This causes the redraw to occur in an idle-handler
 	intead of each time this function is called, which reduces flicker

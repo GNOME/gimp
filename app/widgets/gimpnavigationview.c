@@ -38,8 +38,7 @@
 #include "gimpviewrenderer.h"
 
 
-#define OUTER_BORDER_PEN_WIDTH 2
-#define INNER_BORDER_PEN_WIDTH 1
+#define BORDER_WIDTH 2
 
 
 enum
@@ -510,7 +509,7 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
                        nav_view->p_width, nav_view->p_height);
 
       cairo_set_source_rgb (cr, 1, 1, 1);
-      cairo_set_line_width (cr, 2);
+      cairo_set_line_width (cr, BORDER_WIDTH);
       cairo_stroke (cr);
     }
 }
