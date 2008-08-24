@@ -1,5 +1,10 @@
 2008-08-24  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/plug-ins/python-fu-eval.py: Moved execution into
+	global namespace. Fixes import statements inside of evaled code.
+
+2008-08-24  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/pygimp-pdb.c (pdb_getattro): Fix wrong strcmp
 	evaluation.
 
