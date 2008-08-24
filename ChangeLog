@@ -1,3 +1,11 @@
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_set_marker): Don't redraw the view, only
+	invalidate it. This causes the redraw to occur in an idle-handler
+	intead of each time this function is called, which reduces flicker
+	when opening new images. Stil some flicker left though...
+
 2008-08-24  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-region.c (scale) (scale_pr): use a
