@@ -1,5 +1,11 @@
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): Set
+	page_size for the Ouput/Input Levels lower/upper adjustments to 0
+	to adapt to new and more correct value clamping in GTK+.
+
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* authors.xml: Updated for 2.6 release.
 
 	* AUTHORS: Regenerated.

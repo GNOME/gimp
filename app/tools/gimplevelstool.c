@@ -494,7 +494,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   spinbutton = gimp_spin_button_new (&data,
                                      config->low_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -540,7 +540,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   spinbutton = gimp_spin_button_new (&data,
                                      config->high_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -601,7 +601,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  low output spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->low_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -616,7 +616,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  high output spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->high_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
