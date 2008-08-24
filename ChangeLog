@@ -1,5 +1,11 @@
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* authors.xml: Updated for 2.6 release.
+
+	* AUTHORS: Regenerated.
+
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpnavigationeditor.c
 	(gimp_navigation_editor_popup): Prevent the popup from being
 	positioned far away from the click position. This is further work
