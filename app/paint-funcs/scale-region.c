@@ -494,15 +494,16 @@ scale (TileManager           *srcTM,
        gint                  *progress,
        gint                   max_progress)
 {
-  PixelRegion    region;
-  const guint    src_width  = tile_manager_width  (srcTM);
-  const guint    src_height = tile_manager_height (srcTM);
-  const guint    dst_width  = tile_manager_width  (dstTM);
-  const guint    dst_height = tile_manager_height (dstTM);
-  const gdouble  scaley     = (gdouble) dst_height / (gdouble) src_height;
-  const gdouble  scalex     = (gdouble) dst_width  / (gdouble) src_width;
-  gpointer       pr;
-  gfloat        *kernel_lookup = NULL;
+  PixelRegion     region;
+  const guint     src_width  = tile_manager_width  (srcTM);
+  const guint     src_height = tile_manager_height (srcTM);
+  const guint     dst_width  = tile_manager_width  (dstTM);
+  const guint     dst_height = tile_manager_height (dstTM);
+  const gdouble   scaley     = (gdouble) dst_height / (gdouble) src_height;
+  const gdouble   scalex     = (gdouble) dst_width  / (gdouble) src_width;
+  const gboolean  decimate   = (scalex == 0.5 || scaley == 0.5);
+  gpointer        pr;
+  gfloat         *kernel_lookup = NULL;
 
   /* fall back if not enough pixels available */
   if (interpolation != GIMP_INTERPOLATION_NONE)
@@ -528,10 +529,10 @@ scale (TileManager           *srcTM,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      const gint x1  = region.x + region.w;
-      const gint y1  = region.y + region.h;
-      guchar    *row = region.data;
-      gint       y;
+      const gint  x1  = region.x + region.w;
+      const gint  y1  = region.y + region.h;
+      guchar     *row = region.data;
+      gint        y;
 
       for (y = region.y; y < y1; y++)
         {
@@ -569,7 +570,7 @@ scale (TileManager           *srcTM,
                   break;
 
                 case GIMP_INTERPOLATION_LINEAR:
-                  if (scalex == 0.5 || scaley == 0.5)
+                  if (decimate)
                     decimate_average (srcTM, sx0, sy0, sx1, sy1, pixel);
                   else
                     interpolate_bilinear (srcTM, sx0, sy0, sx1, sy1,
@@ -577,7 +578,7 @@ scale (TileManager           *srcTM,
                   break;
 
                 case GIMP_INTERPOLATION_CUBIC:
-                  if (scalex == 0.5 || scaley == 0.5)
+                  if (decimate)
                     decimate_gauss (srcTM, sx0, sy0, pixel);
                   else
                     interpolate_cubic (srcTM, sx0, sy0,
@@ -585,7 +586,7 @@ scale (TileManager           *srcTM,
                   break;
 
                 case GIMP_INTERPOLATION_LANCZOS:
-                  if (scalex == 0.5 || scaley == 0.5)
+                  if (decimate)
                     decimate_lanczos2 (srcTM, sx0, sy0, pixel);
                   else
                     interpolate_lanczos3 (srcTM, sx0, sy0, sx1, sy1,
@@ -1511,15 +1512,16 @@ scale_pr (PixelRegion           *srcPR,
           PixelRegion           *dstPR,
           GimpInterpolationType  interpolation)
 {
-  const gdouble  scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
-  const gdouble  scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
-  const gint     src_width  = srcPR->w;
-  const gint     src_height = srcPR->h;
-  const gint     bytes      = srcPR->bytes;
-  guchar        *dstPtr     = dstPR->data;
-  gdouble        xfrac, yfrac;
-  gint           b, x, sx0, sx1, y, sy0, sy1;
-  guchar         pixel[bytes];
+  const gdouble   scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
+  const gdouble   scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
+  const gint      src_width  = srcPR->w;
+  const gint      src_height = srcPR->h;
+  const gint      bytes      = srcPR->bytes;
+  guchar         *dstPtr     = dstPR->data;
+  const gboolean  decimate   = (scalex == 0.5 || scaley == 0.5);
+  gdouble         xfrac, yfrac;
+  gint            b, x, sx0, sx1, y, sy0, sy1;
+  guchar          pixel[bytes];
 
   for (y = 0; y < dstPR->h; y++)
    {
@@ -1544,20 +1546,15 @@ scale_pr (PixelRegion           *srcPR,
             case GIMP_INTERPOLATION_LINEAR:
             case GIMP_INTERPOLATION_CUBIC:
             case GIMP_INTERPOLATION_LANCZOS:
-              if (scalex == 0.5 || scaley == 0.5)
+              if (decimate)
                 {
-                  decimate_average_pr (srcPR,
-                                       sx0, sy0,
-                                       sx1, sy1,
-                                       pixel);
+                  decimate_average_pr (srcPR, sx0, sy0, sx1, sy1, pixel);
                 }
               else
                 {
                   interpolate_bilinear_pr (srcPR,
-                                           sx0, sy0,
-                                           sx1, sy1,
-                                           xfrac, yfrac,
-                                           pixel);
+                                           sx0, sy0, sx1, sy1,
+                                           xfrac, yfrac, pixel);
                 }
               break;
             }

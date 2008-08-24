@@ -1,8 +1,13 @@
 2008-08-24  Sven Neumann  <sven@gimp.org>
 
-	* app/paint-funcs/scale-region.c: instead of iterating over tiles
-	manually and using write_pixel_data_1() to write the data, use
-	pixel_region_process() to iterate over the destination.
+	* app/paint-funcs/scale-region.c (scale) (scale_pr): use a
+	constant to decide if we should decimate or interpolate.
+
+2008-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c (scale): instead of iterating
+	over tiles manually and using write_pixel_data_1() to write the
+	data, use pixel_region_process() to iterate over the destination.
 
 2008-08-24  Sven Neumann  <sven@gimp.org>
 
