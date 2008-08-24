@@ -131,6 +131,12 @@ drw_get_tile(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 
     ensure_drawable(self);
 
+    if(row < 0 || row >= self->drawable->ntile_rows || 
+       col < 0 || col >= self->drawable->ntile_cols) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
     t = gimp_drawable_get_tile(self->drawable, shadow, row, col);
     return pygimp_tile_new(t, self);
 }
@@ -148,6 +154,11 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 	return NULL;
 
     ensure_drawable(self);
+    if(x < 0 || x >= self->drawable->width ||
+       y < 0 || y >= self->drawable->height) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
 
     t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
     return pygimp_tile_new(t, self);
@@ -474,7 +485,7 @@ drw_transform_flip_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwargs
 			      "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "iid|:transform_flip_simple", kwlist,
+				     "iid|i:transform_flip_simple", kwlist,
 				     &flip_type, &auto_center, &axis,
 				     &clip_result))
 	return NULL;
@@ -578,7 +589,7 @@ drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 			      "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "diiii|iii:transform_rotate", kwlist,
+				     "diiiii|iii:transform_rotate", kwlist,
 				     &angle, &auto_center, &center_x, &center_y,
 				     &transform_direction, &interpolation,
 				     &supersample, &recursion_level,

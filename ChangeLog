@@ -1,3 +1,9 @@
+2008-08-24  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/pygimp-drawable.c (drw_transform_rotate,
+	drw_transform_flip_simple): Fix method format string, so the
+	method is actual callable in a script.
+
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): Set
