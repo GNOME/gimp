@@ -227,11 +227,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   GimpNavigationView   *view;
   GdkScreen            *screen;
   gint                  x, y;
-  gint                  x_org, y_org;
-  gint                  view_marker_x;
-  gint                  view_marker_y;
-  gint                  view_marker_width;
-  gint                  view_marker_height;
+  gint                  view_marker_x, view_marker_y;
+  gint                  view_marker_width, view_marker_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -264,51 +261,61 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
       editor = GIMP_NAVIGATION_EDITOR (gtk_bin_get_child (GTK_BIN (bin)));
     }
 
-  screen = gtk_widget_get_screen (widget);
-
-  gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
-
   view = GIMP_NAVIGATION_VIEW (editor->view);
 
-  /* decide where to put the popup */
-  gdk_window_get_origin (widget->window, &x_org, &y_org);
+  /* Set poup screen */
+  screen = gtk_widget_get_screen (widget);
+  gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
 
   gimp_navigation_view_get_local_marker (view,
                                          &view_marker_x,
                                          &view_marker_y,
                                          &view_marker_width,
                                          &view_marker_height);
+  /* Position the popup */
+  {
+    gint x_origin, y_origin;
+    gint border_width, border_height;
+    gint screen_click_x, screen_click_y;
+    
+    gdk_window_get_origin (widget->window, &x_origin, &y_origin);
 
-  x = (x_org + click_x       -
-       view_marker_x         -
-       view_marker_width / 2 -
-       style->xthickness * 4);
+    screen_click_x = x_origin + click_x;
+    screen_click_y = y_origin + click_y;
+    border_width   = style->xthickness * 4;
+    border_height  = style->ythickness * 4;
 
-  y = (y_org + click_y        -
-       view_marker_y          -
-       view_marker_height / 2 -
-       style->ythickness  * 4);
+    x = screen_click_x -
+        border_width -
+        view_marker_x -
+        view_marker_width / 2;
 
-  /* If the popup doesn't fit into the screen, we have a problem.
-   * We move the popup onscreen and risk that the pointer is not
-   * in the square representing the viewable area anymore. Moving
-   * the pointer will make the image scroll by a large amount,
-   * but then it works as usual. Probably better than a popup that
-   * is completely unusable in the lower right of the screen.
-   *
-   * Warping the pointer would be another solution ...
-   */
+    y = screen_click_y -
+        border_height -
+        view_marker_y -
+        view_marker_height / 2;
 
-  x = CLAMP (x, 0, (gdk_screen_get_width (screen)  -
-                    GIMP_VIEW (view)->renderer->width  -
-                    4 * style->xthickness));
-  y = CLAMP (y, 0, (gdk_screen_get_height (screen) -
-                    GIMP_VIEW (view)->renderer->height -
-                    4 * style->ythickness));
+    /* If the popup doesn't fit into the screen, we have a problem.
+     * We move the popup onscreen and risk that the pointer is not
+     * in the square representing the viewable area anymore. Moving
+     * the pointer will make the image scroll by a large amount,
+     * but then it works as usual. Probably better than a popup that
+     * is completely unusable in the lower right of the screen.
+     *
+     * Warping the pointer would be another solution ...
+     */
 
-  gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
+    x = CLAMP (x, 0, gdk_screen_get_width (screen)  -
+               GIMP_VIEW (view)->renderer->width  -
+               border_width);
+    y = CLAMP (y, 0, gdk_screen_get_height (screen) -
+               GIMP_VIEW (view)->renderer->height -
+               border_height);
+
+    gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
+  }
+
   gtk_widget_show (shell->nav_popup);
-
   gdk_flush ();
 
   /* fill in then grab pointer */

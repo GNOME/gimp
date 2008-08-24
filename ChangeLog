@@ -1,6 +1,11 @@
 2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpnavigationeditor.c
+	(gimp_navigation_editor_popup): Further clarify and simplify.
+
+2008-08-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpnavigationeditor.c
 	(gimp_navigation_editor_popup): Correct the positioning
 	calculation (while still retaining current overall behaviour).
 
