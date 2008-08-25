@@ -29,6 +29,7 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
+#include "base/pixel-surround.h"
 
 #include "paint-funcs.h"
 #include "scale-region.h"
@@ -68,46 +69,43 @@ static void           scale_pr                 (PixelRegion           *srcPR,
                                                 PixelRegion           *dstPR,
                                                 GimpInterpolationType  interpolation);
 
-static void           interpolate_bilinear     (TileManager   *srcTM,
-                                                const gint     x0,
-                                                const gint     y0,
-                                                const gint     x1,
-                                                const gint     y1,
-                                                const gdouble  xfrac,
-                                                const gdouble  yfrac,
-                                                guchar        *pixel);
 static void           interpolate_nearest      (TileManager   *srcTM,
                                                 const gint     x0,
                                                 const gint     y0,
-                                                const gint     x1,
-                                                const gint     y1,
                                                 const gdouble  xfrac,
                                                 const gdouble  yfrac,
                                                 guchar        *pixel);
-static void           interpolate_cubic        (TileManager   *srcTM,
+static void           interpolate_bilinear     (PixelSurround *surround,
                                                 const gint     x0,
                                                 const gint     y0,
                                                 const gdouble  xfrac,
                                                 const gdouble  yfrac,
+                                                const gint     bytes,
                                                 guchar        *pixel);
-static void           decimate_gauss           (TileManager   *srcTM,
+static void           interpolate_cubic        (PixelSurround *surround,
                                                 const gint     x0,
                                                 const gint     y0,
+                                                const gdouble  xfrac,
+                                                const gdouble  yfrac,
+                                                const gint     bytes,
                                                 guchar        *pixel);
-static void           decimate_average         (TileManager   *srcTM,
+static void           decimate_gauss           (PixelSurround *surround,
                                                 const gint     x0,
                                                 const gint     y0,
-                                                const gint     x1,
-                                                const gint     y1,
+                                                const gint     bytes,
+                                                guchar        *pixel);
+static void           decimate_average         (PixelSurround *surround,
+                                                const gint     x0,
+                                                const gint     y0,
+                                                const gint     bytes,
                                                 guchar        *pixel);
 static gfloat *       create_lanczos3_lookup   (void);
-static void           interpolate_lanczos3     (TileManager   *srcTM,
+static void           interpolate_lanczos3     (PixelSurround *surround,
                                                 const gint     x0,
                                                 const gint     y0,
-                                                const gint     x1,
-                                                const gint     y1,
                                                 const gdouble  xfrac,
                                                 const gdouble  yfrac,
+                                                const gint     bytes,
                                                 guchar        *pixel,
                                                 const gfloat  *kernel_lookup);
 static void           decimate_average_pr      (PixelRegion   *srcPR,
@@ -124,12 +122,16 @@ static void           interpolate_bilinear_pr  (PixelRegion   *srcPR,
                                                 const gdouble  xfrac,
                                                 const gdouble  yfrac,
                                                 guchar        *pixel);
-static inline void    gaussian_lanczos2        (const guchar  *pixels,
+static inline void    gaussian_lanczos2        (const guchar  *src,
+                                                const gint     x,
+                                                const gint     y,
                                                 const gint     bytes,
+                                                const gint     stride,
                                                 guchar        *pixel);
-static inline void    decimate_lanczos2        (TileManager   *srcTM,
+static inline void    decimate_lanczos2        (PixelSurround *surround,
                                                 const gint     x0,
                                                 const gint     y0,
+                                                const gint     bytes,
                                                 guchar        *pixel);
 static inline void    pixel_average            (const guchar  *p1,
                                                 const guchar  *p2,
@@ -137,14 +139,17 @@ static inline void    pixel_average            (const guchar  *p1,
                                                 const guchar  *p4,
                                                 guchar        *pixel,
                                                 const gint     bytes);
-static inline void    gaussian_decimate        (const guchar  *pixels,
+static inline void    gaussian_decimate        (const guchar  *src,
+                                                const gint     x,
+                                                const gint     y,
                                                 const gint     bytes,
+                                                const gint     stride,
                                                 guchar        *pixel);
 static inline gdouble cubic_spline_fit         (const gdouble  dx,
-                                                const gint     pt0,
-                                                const gint     pt1,
-                                                const gint     pt2,
-                                                const gint     pt3);
+                                                const gdouble  x1,
+                                                const gdouble  y1,
+                                                const gdouble  x2,
+                                                const gdouble  y2);
 static inline gdouble weighted_sum             (const gdouble  dx,
                                                 const gdouble  dy,
                                                 const gint     s00,
@@ -155,11 +160,13 @@ static inline gdouble sinc                     (const gdouble  x);
 static inline gdouble lanczos3_mul_alpha       (const guchar  *pixels,
                                                 const gdouble *x_kernel,
                                                 const gdouble *y_kernel,
+                                                const gint     stride,
                                                 const gint     bytes,
                                                 const gint     byte);
 static inline gdouble lanczos3_mul             (const guchar  *pixels,
                                                 const gdouble *x_kernel,
                                                 const gdouble *y_kernel,
+                                                const gint     stride,
                                                 const gint     bytes,
                                                 const gint     byte);
 
@@ -188,8 +195,13 @@ scale_region (PixelRegion           *srcPR,
 
   if (srcPR->tiles != NULL && srcPR->data == NULL)
     {
+      GTimer *timer = g_timer_new ();
+
       scale_region_tile (srcPR, dstPR, interpolation,
                          progress_callback, progress_data);
+
+      g_printerr ("scale: %g sec\n", g_timer_elapsed (timer, NULL));
+      g_timer_destroy (timer);
       return;
     }
 
@@ -597,8 +609,10 @@ scale (TileManager           *srcTM,
        gint                   max_progress)
 {
   PixelRegion     region;
+  PixelSurround  *surround   = NULL;
   const guint     src_width  = tile_manager_width  (srcTM);
   const guint     src_height = tile_manager_height (srcTM);
+  const guint     bytes      = tile_manager_bpp (srcTM);
   const guint     dst_width  = tile_manager_width  (dstTM);
   const guint     dst_height = tile_manager_height (dstTM);
   const gdouble   scaley     = (gdouble) dst_height / (gdouble) src_height;
@@ -623,8 +637,24 @@ scale (TileManager           *srcTM,
         }
     }
 
-  if (interpolation == GIMP_INTERPOLATION_LANCZOS)
-    kernel_lookup = create_lanczos3_lookup ();
+  switch (interpolation)
+    {
+    case GIMP_INTERPOLATION_NONE:
+      break;
+
+    case GIMP_INTERPOLATION_LINEAR:
+      surround = pixel_surround_new (srcTM, 2, 2, PIXEL_SURROUND_SMEAR);
+      break;
+
+    case GIMP_INTERPOLATION_CUBIC:
+      surround = pixel_surround_new (srcTM, 4, 4, PIXEL_SURROUND_SMEAR);
+      break;
+
+    case GIMP_INTERPOLATION_LANCZOS:
+      surround = pixel_surround_new (srcTM, 6, 6, PIXEL_SURROUND_SMEAR);
+      kernel_lookup = create_lanczos3_lookup ();
+      break;
+    }
 
   pixel_region_init (&region, dstTM, 0, 0, dst_width, dst_height, TRUE);
 
@@ -642,13 +672,7 @@ scale (TileManager           *srcTM,
           guchar  *pixel = row;
           gdouble  yfrac = y / scaley;
           gint     sy0   = (gint) yfrac;
-          gint     sy1   = sy0 + 1;
           gint     x;
-
-          sy0 = (sy0 > 0) ? sy0 : 0;
-          sy1 = (sy1 > 0) ? sy1 : 0;
-          sy0 = (sy0 < src_height - 1) ? sy0 : src_height - 1;
-          sy1 = (sy1 < src_height - 1) ? sy1 : src_height - 1;
 
           yfrac = yfrac - sy0;
 
@@ -656,44 +680,38 @@ scale (TileManager           *srcTM,
             {
               gdouble xfrac = x / scalex;
               gint    sx0   = (gint) xfrac;
-              gint    sx1   = sx0 + 1;
-
-              sx0 = (sx0 > 0) ? sx0 : 0;
-              sx1 = (sx1 > 0) ? sx1 : 0;
-              sx0 = (sx0 < src_width - 1) ? sx0 : src_width - 1;
-              sx1 = (sx1 < src_width - 1) ? sx1 : src_width - 1;
 
               xfrac = xfrac - sx0;
 
               switch (interpolation)
                 {
                 case GIMP_INTERPOLATION_NONE:
-                  interpolate_nearest (srcTM, sx0, sy0, sx1, sy1,
-                                       xfrac, yfrac, pixel);
+                  interpolate_nearest (srcTM, sx0, sy0, xfrac, yfrac, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_LINEAR:
                   if (decimate)
-                    decimate_average (srcTM, sx0, sy0, sx1, sy1, pixel);
+                    decimate_average (surround, sx0, sy0, bytes, pixel);
                   else
-                    interpolate_bilinear (srcTM, sx0, sy0, sx1, sy1,
-                                          xfrac, yfrac, pixel);
+                    interpolate_bilinear (surround,
+                                          sx0, sy0, xfrac, yfrac, bytes, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_CUBIC:
                   if (decimate)
-                    decimate_gauss (srcTM, sx0, sy0, pixel);
+                    decimate_gauss (surround, sx0, sy0, bytes, pixel);
                   else
-                    interpolate_cubic (srcTM, sx0, sy0,
-                                       xfrac, yfrac, pixel);
+                    interpolate_cubic (surround,
+                                       sx0, sy0, xfrac, yfrac, bytes, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_LANCZOS:
                   if (decimate)
-                    decimate_lanczos2 (srcTM, sx0, sy0, pixel);
+                    decimate_lanczos2 (surround, sx0, sy0, bytes, pixel);
                   else
-                    interpolate_lanczos3 (srcTM, sx0, sy0, sx1, sy1,
-                                          xfrac, yfrac, pixel, kernel_lookup);
+                    interpolate_lanczos3 (surround,
+                                          sx0, sy0, xfrac, yfrac, bytes, pixel,
+                                          kernel_lookup);
                   break;
                 }
 
@@ -707,8 +725,11 @@ scale (TileManager           *srcTM,
         progress_callback (0, max_progress, ((*progress)++), progress_data);
     }
 
-  if (interpolation == GIMP_INTERPOLATION_LANCZOS)
+  if (kernel_lookup)
     g_free (kernel_lookup);
+
+  if (surround)
+    pixel_surround_destroy (surround);
 }
 
 static void inline
@@ -796,51 +817,38 @@ pixel_average (const guchar *p1,
 }
 
 static void
-decimate_gauss (TileManager  *srcTM,
-                const gint    x0,
-                const gint    y0,
-                guchar       *pixel)
+decimate_gauss (PixelSurround *surround,
+                const gint     x0,
+                const gint     y0,
+                const gint     bytes,
+                guchar        *pixel)
 {
-  const gint  src_bpp    = tile_manager_bpp (srcTM);
-  const guint src_width  = tile_manager_width (srcTM);
-  const guint src_height = tile_manager_height (srcTM);
-  guchar      pixel1[4];
-  guchar      pixel2[4];
-  guchar      pixel3[4];
-  guchar      pixel4[4];
-  guchar      pixels[4 * 4 * 4];
-  gint        x, y, i;
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0 - 1, y0 - 1, &stride);
+  guchar        pixel1[4];
+  guchar        pixel2[4];
+  guchar        pixel3[4];
+  guchar        pixel4[4];
 
-  for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
-    {
-      for (x = x0 - 1; x <= x0 + 2; x++, i++)
-        {
-          gint u, v;
+  gaussian_decimate (src, 0, 0, bytes, stride, pixel1);
+  gaussian_decimate (src, 1, 0, bytes, stride, pixel2);
+  gaussian_decimate (src, 0, 1, bytes, stride, pixel3);
+  gaussian_decimate (src, 1, 1, bytes, stride, pixel4);
 
-          u = (x > 0) ? x : 0;
-          u = (u < src_width - 1) ? u : src_width - 1;
-          v = (y > 0) ? y : 0;
-          v = (v < src_height - 1) ? v : src_height - 1;
-
-          read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
-        }
-    }
-
-  gaussian_decimate (pixels + (0 * src_bpp), src_bpp, pixel1);
-  gaussian_decimate (pixels + (1 * src_bpp), src_bpp, pixel2);
-  gaussian_decimate (pixels + (4 * src_bpp), src_bpp, pixel3);
-  gaussian_decimate (pixels + (5 * src_bpp), src_bpp, pixel4);
-
-  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
-
+  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, bytes);
 }
 
 static inline void
-gaussian_decimate (const guchar *pixels,
+gaussian_decimate (const guchar *src,
+                   const gint    x,
+                   const gint    y,
                    const gint    bytes,
+                   const gint    stride,
                    guchar       *pixel)
 {
-  const guchar *p = pixels;
+  const guchar *s0 = src + x * bytes + y * stride;
+  const guchar *s1 = s0 + stride;
+  const guchar *s2 = s1 + stride;
   guint         sum;
   guint         alphasum;
   gint          b;
@@ -848,24 +856,23 @@ gaussian_decimate (const guchar *pixels,
   switch (bytes)
     {
     case 1:
-      sum  = (p[0]     + p[1] * 2 + p[2]     +
-              p[4] * 2 + p[5] * 4 + p[6] * 2 +
-              p[8]     + p[9] * 2 + p[10]);
-      
+      sum  = (s0[0]     + s0[1] * 2 + s0[2]     +
+              s1[0] * 2 + s1[1] * 4 + s1[2] * 2 +
+              s2[0]     + s2[1] * 2 + s2[2]);
+
       pixel[0] = (sum + 8) >> 4;
       break;
 
     case 2:
-      
-      alphasum = (p[1]     + p[3]  * 2 + p[5]      +
-                  p[9] * 2 + p[11] * 4 + p[13] * 2 +
-                  p[17]    + p[19] * 2 + p[21]);
+      alphasum = (s0[1]     + s0[3] * 2 + s0[5]     +
+                  s1[1] * 2 + s1[3] * 4 + s1[5] * 2 +
+                  s2[1]     + s2[3] * 2 + s2[5]);
 
       if (alphasum > 0)
         {
-          sum = (p[0]  * p[1]     + p[2]  * p[3]  * 2 + p[4]  * p[5]      +
-                 p[8]  * p[9] * 2 + p[10] * p[11] * 4 + p[12] * p[13] * 2 +
-                 p[16] * p[17]    + p[18] * p[19] * 2 + p[20] * p[21]);
+          sum = (s0[0] * s0[1]     + s0[2] * s0[3] * 2 + s0[4] * s0[5]     +
+                 s1[0] * s1[1] * 2 + s1[2] * s1[3] * 4 + s1[4] * s1[5] * 2 +
+                 s2[0] * s2[1]     + s2[2] * s2[3] * 2 + s2[4] * s2[5]);
 
           pixel[0] = (sum + (alphasum >> 1)) / alphasum;
           pixel[1] = (alphasum + 8) >> 4;
@@ -879,26 +886,26 @@ gaussian_decimate (const guchar *pixels,
     case 3:
       for (b = 0; b < 3; b++ )
         {
-          sum = (p[b]          + p[3 + b]  * 2 + p[6 + b]      +
-                 p[12 + b] * 2 + p[15 + b] * 4 + p[18 + b] * 2 +
-                 p[24 + b]     + p[27 + b] * 2 + p[30 + b]);
+          sum = (s0[b]     + s0[3 + b] * 2 + s0[6 + b]     +
+                 s1[b] * 2 + s1[3 + b] * 4 + s1[6 + b] * 2 +
+                 s2[b]     + s2[3 + b] * 2 + s2[6 + b]);
 
           pixel[b] = (sum + 8) >> 4;
         }
       break;
 
     case 4:
-      alphasum  = (p[3]      + p[7]  * 2  + p[11]     +
-                   p[19] * 2 + p[23] * 4  + p[27] * 2 +
-                   p[35]     + p[39] * 2  + p[43]);
+      alphasum  = (s0[3]     + s0[7] * 2 + s0[11]     +
+                   s1[3] * 2 + s1[7] * 4 + s1[11] * 2 +
+                   s2[3]     + s2[7] * 2 + s2[11]);
 
       if (alphasum > 0)
         {
           for (b = 0; b < 3; b++)
             {
-              sum = (p[b]      * p[3]      + p[4 + b]  * p[7]  * 2 + p[8 + b]  * p[11]     +
-                     p[16 + b] * p[19] * 2 + p[20 + b] * p[23] * 4 + p[24 + b] * p[27] * 2 +
-                     p[32 + b] * p[35]     + p[36 + b] * p[39] * 2 + p[40 + b] * p[43]);
+              sum = (s0[b] * s0[3]     + s0[4 + b] * s0[7] * 2 + s0[8 + b] * s0[11]     +
+                     s1[b] * s1[3] * 2 + s1[4 + b] * s1[7] * 4 + s1[8 + b] * s1[11] * 2 +
+                     s2[b] * s2[3]     + s2[4 + b] * s2[7] * 2 + s2[8 + b] * s2[11]);
 
               pixel[b] = (sum + (alphasum >> 1)) / alphasum;
             }
@@ -914,46 +921,33 @@ gaussian_decimate (const guchar *pixels,
 }
 
 static inline void
-decimate_lanczos2 (TileManager  *srcTM,
-                   const gint    x0,
-                   const gint    y0,
-                   guchar       *pixel)
+decimate_lanczos2 (PixelSurround *surround,
+                   const gint     x0,
+                   const gint     y0,
+                   const gint     bytes,
+                   guchar        *pixel)
 {
-  const gint   src_bpp    = tile_manager_bpp (srcTM);
-  const guint  src_width  = tile_manager_width (srcTM);
-  const guint  src_height = tile_manager_height (srcTM);
-  guchar       pixel1[4];
-  guchar       pixel2[4];
-  guchar       pixel3[4];
-  guchar       pixel4[4];
-  guchar       pixels[6 * 6 * 4];
-  gint         x, y, i;
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0 - 2, y0 - 2, &stride);
+  guchar        pixel1[4];
+  guchar        pixel2[4];
+  guchar        pixel3[4];
+  guchar        pixel4[4];
 
-  for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
-    for (x = x0 - 2; x <= x0 + 3; x++, i++)
-      {
-        gint u, v;
+  gaussian_lanczos2 (src, 0, 0, bytes, stride, pixel1);
+  gaussian_lanczos2 (src, 1, 0, bytes, stride, pixel2);
+  gaussian_lanczos2 (src, 0, 1, bytes, stride, pixel3);
+  gaussian_lanczos2 (src, 1, 1, bytes, stride, pixel4);
 
-        u = (x > 0) ? x : 0;
-        u = (u < src_width - 1) ? u : src_width - 1;
-        v = (y > 0) ? y : 0;
-        v = (v < src_height - 1) ? v : src_height - 1;
-
-        read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
-      }
-
-  gaussian_lanczos2 (pixels + (0 * src_bpp), src_bpp, pixel1);
-  gaussian_lanczos2 (pixels + (1 * src_bpp), src_bpp, pixel2);
-  gaussian_lanczos2 (pixels + (6 * src_bpp), src_bpp, pixel3);
-  gaussian_lanczos2 (pixels + (7 * src_bpp), src_bpp, pixel4);
-
-  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
-
+  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, bytes);
 }
 
 static inline void
-gaussian_lanczos2 (const guchar *pixels,
+gaussian_lanczos2 (const guchar *src,
+                   const gint    x,
+                   const gint    y,
                    const gint    bytes,
+                   const gint    stride,
                    guchar       *pixel)
 {
   /*
@@ -965,54 +959,55 @@ gaussian_lanczos2 (const guchar *pixels,
    *   Ken Turkowski, Apple computer
    *
    */
-  const guchar *p = pixels;
-  guint         sum;
-  guint         alphasum;
+  const guchar *s0 = src + x * bytes + y * stride;
+  const guchar *s1 = s0 + stride;
+  const guchar *s2 = s1 + stride;
+  const guchar *s3 = s2 + stride;
+  const guchar *s4 = s3 + stride;
+  gdouble       sum;
+  gdouble       alphasum;
+  gdouble       alpha;
   gint          b;
 
   switch (bytes)
     {
     case 1:
-      sum  = p[0] + p[1] * -9 + p[2] * -16 + p[3] * -9 + p[4];
-      sum += p[6] * -9 + p[7] * 81 + p[8] * 144 + p[9] * 81 + p[10] * -9;
-      sum += p[12] * -16 +
-             p[13] * 144 + p[14] * 256 + p[15] * 144 + p[16] * -16;
-      sum += p[18] * -9 + p[19] * 81 + p[20] * 144 + p[21] * 81 + p[22] * -9;
-      sum += p[24] + p[25] * -9 + p[26] * -16 + p[27] * -9 + p[28];
+      sum  = s0[0]       + s0[1] *  -9 + s0[2] * -16 + s0[3] *  -9 + s0[4];
+      sum += s1[0] *  -9 + s1[1] *  81 + s1[2] * 144 + s1[3] *  81 + s1[4] * -9;
+      sum += s2[0] * -16 + s2[1] * 144 + s2[2] * 256 + s2[3] * 144 + s2[4] * -16;
+      sum += s3[0] *  -9 + s3[1] *  81 + s3[2] * 144 + s3[3] *  81 + s3[4] * -9;
+      sum += s4[0]       + s4[1] *  -9 + s4[2] * -16 + s4[3] *  -9 + s4[4];
 
-      pixel[0] = (sum + 512) >> 10;
+      sum /= 1024;
+
+      pixel[0] = CLAMP (sum, 0, 255);
       break;
 
     case 2:
-      alphasum =  p[1] + p[3] * -9 + p[5] * -16 + p[7] * -9 + p[9];
-      alphasum += p[13] * -9 +
-                  p[15] * 81 + p[17] * 144 + p[19] * 81 + p[21] * -9;
-      alphasum += p[25] * -16 +
-                  p[27] * 144 + p[29] * 256 + p[31] * 144 + p[33] * -16;
-      alphasum += p[37] * -9 +
-                  p[39] * 81 + p[41] * 144 + p[43] * 81 + p[45] * -9;
-      alphasum += p[49] + p[51] * -9 + p[53] * -16 + p[55] * -9 + p[57];
+      alphasum =  s0[1]       + s0[3] *  -9 + s0[5] * -16 + s0[7] *  -9 + s0[9];
+      alphasum += s1[1] *  -9 + s1[3] *  81 + s1[5] * 144 + s1[7] *  81 + s1[9] * -9;
+      alphasum += s2[1] * -16 + s2[3] * 144 + s2[5] * 256 + s2[7] * 144 + s2[9] * -16;
+      alphasum += s3[1] *  -9 + s3[3] *  81 + s3[5] * 144 + s3[7] *  81 + s3[9] * -9;
+      alphasum += s4[1]       + s4[3] *  -9 + s4[5] * -16 + s4[7] *  -9 + s4[9];
 
       if (alphasum > 0)
         {
-          sum =  p[0] * p[1] +
-                 p[2] * p[3] * -9 +
-                 p[4] * p[5] * -16 + p[6] * p[7] * -9 + p[8] * p[9];
-          sum += p[12] * p[13] * -9 +
-                 p[14] * p[15] * 81 +
-                 p[16] * p[17] * 144 + p[18] * p[19] * 81 + p[20] * p[21] * -9;
-          sum += p[24] * p[25] * -16 +
-                 p[26] * p[27] * 144 +
-                 p[28] * p[29] * 256 + p[30] * p[31] * 144 + p[32] * p[33] * -16;
-          sum += p[36] * p[37] * -9 +
-                 p[38] * p[39] * 81 +
-                 p[40] * p[41] * 144 + p[42] * p[43] * 81 + p[44] * p[45] * -9;
-          sum += p[48] * p[49] +
-                 p[50] * p[51] * -9 +
-                 p[52] * p[53] * -16 + p[54] * p[55] * -9 + p[56] * p[57];
+          sum =  (s0[0] * s0[1]       + s0[2] * s0[3] *  -9 +
+                  s0[4] * s0[5] * -16 + s0[6] * s0[7] *  -9 + s0[8] * s0[9]);
+          sum += (s1[0] * s1[1] *  -9 + s1[2] * s1[3] *  81 +
+                  s1[4] * s1[5] * 144 + s1[6] * s1[7] *  81 + s1[8] * s1[9] * -9);
+          sum += (s2[0] * s2[1] * -16 + s2[2] * s2[3] * 144 +
+                  s2[4] * s2[5] * 256 + s2[6] * s2[7] * 144 + s2[8] * s2[9] * -16);
+          sum += (s3[0] * s3[1] *  -9 + s3[2] * s3[3] *  81 +
+                  s3[4] * s3[5] * 144 + s3[6] * s3[7] *  81 + s3[8] * s3[9] * -9);
+          sum += (s4[0] * s4[1] +       s4[2] * s4[3] *  -9 +
+                  s4[4] * s4[5] * -16 + s4[6] * s4[7] *  -9 + s4[8] * s4[9]);
 
-          pixel[0] = (sum + (alphasum >> 1)) / alphasum;
-          pixel[1] = (alphasum + 512) >> 10;
+          sum /= alphasum;
+          alpha = alphasum / 1024;
+
+          pixel[0] = CLAMP (sum, 0, 255);
+          pixel[1] = CLAMP (alpha, 0, 255);
         }
       else
         {
@@ -1023,63 +1018,51 @@ gaussian_lanczos2 (const guchar *pixels,
     case 3:
       for (b = 0; b < 3; b++)
         {
-          sum =  p[b] +
-                 p[3 + b] * -9 + p[6 + b] * -16 + p[9 + b] * -9 + p[12 + b];
-          sum += p[18 + b] * -9 +
-                 p[21 + b] * 81 +
-                 p[24 + b] * 144 + p[27 + b] * 81 + p[30 + b] * -9;
-          sum += p[36 + b] * -16 +
-                 p[39 + b] * 144 +
-                 p[42 + b] * 256 + p[45 + b] * 144 + p[48 + b] * -16;
-          sum += p[54 + b] * -9 +
-                 p[57 + b] * 81 +
-                 p[60 + b] * 144 + p[63 + b] * 81 + p[66 + b] * -9;
-          sum += p[72 + b] +
-                 p[75 + b] * -9 + p[78 + b] * -16 + p[81 + b] * -9 + p[84 + b];
+          sum =  s0[b]       + s0[3 + b] *  -9 + s0[6 + b] * -16 + s0[9 + b] *  -9 + s0[12 + b];
+          sum += s1[b] *  -9 + s1[3 + b] *  81 + s1[6 + b] * 144 + s1[9 + b] *  81 + s1[12 + b] * -9;
+          sum += s2[b] * -16 + s2[3 + b] * 144 + s2[6 + b] * 256 + s2[9 + b] * 144 + s2[12 + b] * -16;
+          sum += s3[b] *  -9 + s3[3 + b] *  81 + s3[6 + b] * 144 + s3[9 + b] *  81 + s3[12 + b] * -9;
+          sum += s4[b]       + s4[3 + b] *  -9 + s4[6 + b] * -16 + s4[9 + b] *  -9 + s4[12 + b];
 
-          pixel[b] = (sum + 512) >> 10;
+          sum /= 1024;
+
+          pixel[b] = CLAMP (sum, 0, 255);
         }
       break;
 
     case 4:
-      alphasum =  p[3] + p[7] * -9 + p[11] * -16 + p[15] * -9 + p[19];
-      alphasum += p[27] * -9 +
-                  p[31] * 81 + p[35] * 144 + p[39] * 81 + p[43] * -9;
-      alphasum += p[51] * -16 +
-                  p[55] * 144 + p[59] * 256 + p[63] * 144 + p[67] * -16;
-      alphasum += p[75] * -9 +
-                  p[79] * 81 + p[83] * 144 + p[87] * 81 + p[91] * -9;
-      alphasum += p[99] + p[103] * -9 + p[107] * -16 + p[111] * -9 + p[115];
+      alphasum =  s0[3]       + s0[7] *  -9 + s0[11] * -16 + s0[15] *  -9 + s0[19];
+      alphasum += s1[3] *  -9 + s1[7] *  81 + s1[11] * 144 + s1[15] *  81 + s1[19] * -9;
+      alphasum += s2[3] * -16 + s2[7] * 144 + s2[11] * 256 + s2[15] * 144 + s2[19] * -16;
+      alphasum += s3[3] * -9  + s3[7] *  81 + s3[11] * 144 + s3[15] *  81 + s3[19] * -9;
+      alphasum += s4[3]       + s4[7] *  -9 + s4[11] * -16 + s4[15] *  -9 + s4[19];
 
       if (alphasum > 0)
         {
           for (b = 0; b < 3; b++)
             {
-              sum =  p[0 + b] * p[3] +
-                     p[4 + b] * p[7] * -9 +
-                     p[8 + b] * p[11] * -16 +
-                     p[12 + b] * p[15] * -9 + p[16 + b] * p[19];
-              sum += p[24 + b] * p[27] * -9 +
-                     p[28 + b] * p[31] * 81 +
-                     p[32 + b] * p[35] * 144 +
-                     p[36 + b] * p[39] * 81 + p[40 + b] * p[43] * -9;
-              sum += p[48 + b] * p[51] * -16 +
-                     p[52 + b] * p[55] * 144 +
-                     p[56 + b] * p[59] * 256 +
-                     p[60 + b] * p[63] * 144 + p[64 + b] * p[67] * -16;
-              sum += p[72 + b] * p[75] * -9 +
-                     p[76 + b] * p[79] * 81 +
-                     p[80 + b] * p[83] * 144 +
-                     p[84 + b] * p[87] * 81 + p[88 + b] * p[91] * -9;
-              sum += p[96 + b] * p[99] +
-                     p[100 + b] * p[103] * -9 +
-                    p[104 + b] * p[107] * -16 +
-                    p[108 + b] * p[111] * -9 + p[112 + b] * p[115];
+              sum =  (s0[0  + b] * s0[3]        + s0[ 4 + b] * s0[ 7] * -9 +
+                      s0[8  + b] * s0[11] * -16 + s0[12 + b] * s0[15] * -9 +
+                      s0[16 + b] * s0[19]);
+              sum += (s1[0  + b] * s1[3]  *  -9 + s1[ 4 + b] * s1[ 7] * 81 +
+                      s1[8  + b] * s1[11] * 144 + s1[12 + b] * s1[15] * 81 +
+                      s1[16 + b] * s1[19] * -9);
+              sum += (s2[0  + b] * s2[3]  * -16 + s2[ 4 + b] * s2[ 7] * 144 +
+                      s2[8  + b] * s2[11] * 256 + s2[12 + b] * s2[15] * 144 +
+                      s2[16 + b] * s2[19] * -16);
+              sum += (s3[0  + b] * s3[3]  * -9  + s3[ 4 + b] * s3[ 7] * 81 +
+                      s3[8  + b] * s3[11] * 144 + s3[12 + b] * s3[15] * 81 +
+                      s3[16 + b] * s3[19] * -9);
+              sum += (s4[0  + b] * s4[3]        + s4[ 4 + b] * s4[7]  * -9 +
+                      s4[8  + b] * s4[11] * -16 + s4[12 + b] * s4[15] * -9 +
+                      s4[16 + b] * s4[19]);
 
-              pixel[b] = (sum + (alphasum >> 1)) / alphasum;
+              sum /= alphasum;
+              pixel[b] = CLAMP (sum, 0, 255);
             }
 
-          pixel[3] = (alphasum + 512) >> 10;
+          alpha = alphasum / 1024;
+          pixel[3] = CLAMP (alpha, 0, 255);
         }
       else
         {
@@ -1090,25 +1073,17 @@ gaussian_lanczos2 (const guchar *pixels,
 }
 
 static void
-decimate_average (TileManager  *srcTM,
-                  const gint    x0,
-                  const gint    y0,
-                  const gint    x1,
-                  const gint    y1,
-                  guchar       *pixel)
+decimate_average (PixelSurround *surround,
+                  const gint     x0,
+                  const gint     y0,
+                  const gint     bytes,
+                  guchar        *pixel)
 {
-  guchar pixel1[4];
-  guchar pixel2[4];
-  guchar pixel3[4];
-  guchar pixel4[4];
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0, y0, &stride);
 
-  read_pixel_data_1 (srcTM, x0, y0, pixel1);
-  read_pixel_data_1 (srcTM, x1, y0, pixel2);
-  read_pixel_data_1 (srcTM, x0, y1, pixel3);
-  read_pixel_data_1 (srcTM, x1, y1, pixel4);
-
-  pixel_average (pixel1, pixel2, pixel3, pixel4, pixel,
-                 tile_manager_bpp (srcTM));
+  pixel_average (src, src + bytes, src + stride, src + stride + bytes,
+                 pixel, bytes);
 }
 
 static inline gdouble
@@ -1169,16 +1144,16 @@ static void
 interpolate_nearest (TileManager   *srcTM,
                      const gint     x0,
                      const gint     y0,
-                     const gint     x1,
-                     const gint     y1,
                      const gdouble  xfrac,
                      const gdouble  yfrac,
                      guchar        *pixel)
 {
-  gint x = (xfrac <= 0.5) ? x0 : x1;
-  gint y = (yfrac <= 0.5) ? y0 : y1;
+  const gint w = tile_manager_width (srcTM) - 1;
+  const gint h = tile_manager_height (srcTM) - 1;
+  const gint x = (xfrac <= 0.5) ? x0 : x0 + 1;
+  const gint y = (yfrac <= 0.5) ? y0 : y0 + 1;
 
-  read_pixel_data_1 (srcTM, x, y, pixel);
+  read_pixel_data_1 (srcTM, CLAMP (x, 0, w), CLAMP (y, 0, h), pixel);
 }
 
 static inline gdouble
@@ -1194,29 +1169,25 @@ weighted_sum (const gdouble dx,
 }
 
 static void
-interpolate_bilinear (TileManager   *srcTM,
+interpolate_bilinear (PixelSurround *surround,
                       const gint     x0,
                       const gint     y0,
-                      const gint     x1,
-                      const gint     y1,
                       const gdouble  xfrac,
                       const gdouble  yfrac,
+                      const gint     bytes,
                       guchar        *pixel)
 {
-  const gint src_bpp = tile_manager_bpp  (srcTM);
-  guchar     p1[4];
-  guchar     p2[4];
-  guchar     p3[4];
-  guchar     p4[4];
-  gdouble    sum, alphasum;
-  gint       b;
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0, y0, &stride);
+  const guchar *p1  = src;
+  const guchar *p2  = p1 + bytes;
+  const guchar *p3  = src + stride;
+  const guchar *p4  = p3 + bytes;
+  gdouble       sum;
+  gdouble       alphasum;
+  gint          b;
 
-  read_pixel_data_1 (srcTM, x0, y0, p1);
-  read_pixel_data_1 (srcTM, x1, y0, p2);
-  read_pixel_data_1 (srcTM, x0, y1, p3);
-  read_pixel_data_1 (srcTM, x1, y1, p4);
-
-  switch (src_bpp)
+  switch (bytes)
     {
     case 1:
       sum = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
@@ -1279,55 +1250,43 @@ interpolate_bilinear (TileManager   *srcTM,
   */
 
 static inline gdouble
-cubic_spline_fit (const gdouble dx,
-                  const gint    pt0,
-                  const gint    pt1,
-                  const gint    pt2,
-                  const gint    pt3)
+cubic_spline_fit (const gdouble  dx,
+                  const gdouble  pt0,
+                  const gdouble  pt1,
+                  const gdouble  pt2,
+                  const gdouble  pt3)
 {
-
   return (gdouble) ((( ( -pt0 + 3 * pt1 - 3 * pt2 + pt3 ) *   dx +
                        ( 2 * pt0 - 5 * pt1 + 4 * pt2 - pt3 ) ) * dx +
                      ( -pt0 + pt2 ) ) * dx + (pt1 + pt1) ) / 2.0;
 }
 
 static void
-interpolate_cubic (TileManager  *srcTM,
-                   const gint    x0,
-                   const gint    y0,
-                   const gdouble xfrac,
-                   const gdouble yfrac,
-                   guchar       *pixel)
+interpolate_cubic (PixelSurround *surround,
+                   const gint     x0,
+                   const gint     y0,
+                   const gdouble  xfrac,
+                   const gdouble  yfrac,
+                   const gint     bytes,
+                   guchar        *pixel)
 {
-  const gint  src_bpp    = tile_manager_bpp (srcTM);
-  const guint src_width  = tile_manager_width (srcTM);
-  const guint src_height = tile_manager_height (srcTM);
-  gint        b, i;
-  gint        x, y;
-  guchar      ps[16 * 4];
-  gdouble     p0, p1, p2, p3;
-  gdouble     sum, alphasum;
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0 - 1, y0 - 1, &stride);
+  const guchar *s0  = src;
+  const guchar *s1  = s0 + stride;
+  const guchar *s2  = s1 + stride;
+  const guchar *s3  = s2 + stride;
+  gint          b;
+  gdouble       p0, p1, p2, p3;
+  gdouble       sum, alphasum;
 
-  for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
-    for (x = x0 - 1; x <= x0 + 2; x++, i++)
-      {
-        gint u, v;
-
-        u = (x > 0) ? x : 0;
-        u = (u < src_width - 1) ? u : src_width - 1;
-        v = (y > 0) ? y : 0;
-        v = (v < src_height - 1) ? v : src_height - 1;
-
-        read_pixel_data_1 (srcTM, u, v, ps + (i * src_bpp));
-      }
-
-  switch (src_bpp)
+  switch (bytes)
     {
     case 1:
-      p0 = cubic_spline_fit (xfrac, ps[0 ], ps[1 ], ps[2 ], ps[3 ]);
-      p1 = cubic_spline_fit (xfrac, ps[4 ], ps[5 ], ps[6 ], ps[7 ]);
-      p2 = cubic_spline_fit (xfrac, ps[8 ], ps[9 ], ps[10], ps[11]);
-      p3 = cubic_spline_fit (xfrac, ps[12], ps[13], ps[14], ps[15]);
+      p0 = cubic_spline_fit (xfrac, s0[0], s0[1], s0[2], s0[3]);
+      p1 = cubic_spline_fit (xfrac, s1[0], s1[1], s1[2], s1[3]);
+      p2 = cubic_spline_fit (xfrac, s2[0], s2[1], s2[2], s2[3]);
+      p3 = cubic_spline_fit (xfrac, s3[0], s3[1], s3[2], s3[3]);
 
       sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
@@ -1335,23 +1294,27 @@ interpolate_cubic (TileManager  *srcTM,
       break;
 
     case 2:
-      p0 = cubic_spline_fit (xfrac, ps[1 ], ps[3 ], ps[5 ], ps[7 ]);
-      p1 = cubic_spline_fit (xfrac, ps[9 ], ps[11], ps[13], ps[15]);
-      p2 = cubic_spline_fit (xfrac, ps[17], ps[19], ps[21], ps[23]);
-      p3 = cubic_spline_fit (xfrac, ps[25], ps[27], ps[29], ps[31]);
+      p0 = cubic_spline_fit (xfrac, s0[1], s0[3], s0[5], s0[7]);
+      p1 = cubic_spline_fit (xfrac, s1[1], s1[3], s1[5], s1[7]);
+      p2 = cubic_spline_fit (xfrac, s2[1], s2[3], s2[5], s2[7]);
+      p3 = cubic_spline_fit (xfrac, s3[1], s3[3], s3[5], s3[7]);
 
       alphasum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
       if (alphasum > 0)
         {
-          p0 = cubic_spline_fit (xfrac, ps[0 ] * ps[1 ], ps[2 ] * ps[3 ],
-                                 ps[4 ] * ps[5 ], ps[6 ] * ps[7 ]);
-          p1 = cubic_spline_fit (xfrac, ps[8 ] * ps[9 ], ps[10] * ps[11],
-                                 ps[12] * ps[13], ps[14] * ps[15]);
-          p2 = cubic_spline_fit (xfrac, ps[16] * ps[17], ps[18] * ps[19],
-                                 ps[20] * ps[21], ps[22] * ps[23]);
-          p3 = cubic_spline_fit (xfrac, ps[24] * ps[25], ps[26] * ps[27],
-                                 ps[28] * ps[29], ps[30] * ps[31]);
+          p0 = cubic_spline_fit (xfrac,
+                                 s0[0] * s0[1], s0[2] * s0[3],
+                                 s0[4] * s0[5], s0[6] * s0[7]);
+          p1 = cubic_spline_fit (xfrac,
+                                 s1[0] * s1[1], s1[2] * s1[3],
+                                 s1[4] * s1[5], s1[6] * s1[7]);
+          p2 = cubic_spline_fit (xfrac,
+                                 s2[0] * s2[1], s2[2] * s2[3],
+                                 s2[4] * s2[5], s2[6] * s2[7]);
+          p3 = cubic_spline_fit (xfrac,
+                                 s3[0] * s3[1], s3[2] * s3[3],
+                                 s3[4] * s3[5], s3[6] * s3[7]);
 
           sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
           sum /= alphasum;
@@ -1368,10 +1331,10 @@ interpolate_cubic (TileManager  *srcTM,
     case 3:
       for (b = 0; b < 3; b++)
         {
-          p0 = cubic_spline_fit (xfrac, ps[   b], ps[3 + b], ps[6 + b], ps[9 + b]);
-          p1 = cubic_spline_fit (xfrac, ps[12 + b], ps[15 + b], ps[18 + b], ps[21 + b]);
-          p2 = cubic_spline_fit (xfrac, ps[24 + b], ps[27 + b], ps[30 + b], ps[33 + b]);
-          p3 = cubic_spline_fit (xfrac, ps[36 + b], ps[39 + b], ps[42 + b], ps[45 + b]);
+          p0 = cubic_spline_fit (xfrac, s0[b], s0[3 + b], s0[6 + b], s0[9 + b]);
+          p1 = cubic_spline_fit (xfrac, s1[b], s1[3 + b], s1[6 + b], s1[9 + b]);
+          p2 = cubic_spline_fit (xfrac, s2[b], s2[3 + b], s2[6 + b], s2[9 + b]);
+          p3 = cubic_spline_fit (xfrac, s3[b], s3[3 + b], s3[6 + b], s3[9 + b]);
 
           sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
@@ -1380,10 +1343,10 @@ interpolate_cubic (TileManager  *srcTM,
       break;
 
     case 4:
-      p0 = cubic_spline_fit (xfrac, ps[3],  ps[7],  ps[11], ps[15]);
-      p1 = cubic_spline_fit (xfrac, ps[19], ps[23], ps[27], ps[31]);
-      p2 = cubic_spline_fit (xfrac, ps[35], ps[39], ps[43], ps[47]);
-      p3 = cubic_spline_fit (xfrac, ps[51], ps[55], ps[59], ps[63]);
+      p0 = cubic_spline_fit (xfrac, s0[3], s0[7], s0[11], s0[15]);
+      p1 = cubic_spline_fit (xfrac, s1[3], s1[7], s1[11], s1[15]);
+      p2 = cubic_spline_fit (xfrac, s2[3], s2[7], s2[11], s2[15]);
+      p3 = cubic_spline_fit (xfrac, s3[3], s3[7], s3[11], s3[15]);
 
       alphasum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
@@ -1391,14 +1354,18 @@ interpolate_cubic (TileManager  *srcTM,
         {
           for (b = 0; b < 3; b++)
             {
-              p0 = cubic_spline_fit (xfrac, ps[0 + b] * ps[3],  ps[4 + b] * ps[7],
-                                     ps[8 + b] * ps[11], ps[12 + b] * ps[15]);
-              p1 = cubic_spline_fit (xfrac, ps[16 + b] * ps[19], ps[20 + b] * ps[23],
-                                     ps[24 + b] * ps[27], ps[28 + b] * ps[31]);
-              p2 = cubic_spline_fit (xfrac, ps[32 + b] * ps[35], ps[36 + b] * ps[39],
-                                     ps[40 + b] * ps[43], ps[44 + b] * ps[47]);
-              p3 = cubic_spline_fit (xfrac, ps[48 + b] * ps[51], ps[52 + b] * ps[55],
-                                     ps[56 + b] * ps[59], ps[60 + b] * ps[63]);
+              p0 = cubic_spline_fit (xfrac,
+                                     s0[0 + b] * s0[ 3], s0[ 4 + b] * s0[7],
+                                     s0[8 + b] * s0[11], s0[12 + b] * s0[15]);
+              p1 = cubic_spline_fit (xfrac,
+                                     s1[0 + b] * s1[ 3], s1[ 4 + b] * s1[7],
+                                     s1[8 + b] * s1[11], s1[12 + b] * s1[15]);
+              p2 = cubic_spline_fit (xfrac,
+                                     s2[0 + b] * s2[ 3], s2[ 4 + b] * s2[7],
+                                     s2[8 + b] * s2[11], s2[12 + b] * s2[15]);
+              p3 = cubic_spline_fit (xfrac,
+                                     s3[0 + b] * s3[ 3], s3[ 4 + b] * s3[7],
+                                     s3[8 + b] * s3[11], s3[12 + b] * s3[15]);
 
               sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
               sum /= alphasum;
@@ -1420,17 +1387,19 @@ static gdouble inline
 lanczos3_mul_alpha (const guchar  *pixels,
                     const gdouble *x_kernel,
                     const gdouble *y_kernel,
+                    const gint     stride,
                     const gint     bytes,
                     const gint     byte)
 {
-  const guchar *p     = pixels;
+  const guchar *row   = pixels;
   const guchar  alpha = bytes - 1;
   gdouble       sum   = 0.0;
   gint          x, y;
 
-  for (y = 0; y < 6; y++)
+  for (y = 0; y < 6; y++, row += stride)
     {
-      gdouble tmpsum = 0.0;
+      const guchar *p      = row;
+      gdouble       tmpsum = 0.0;
 
       for (x = 0; x < 6; x++, p += bytes)
         {
@@ -1448,16 +1417,18 @@ static gdouble inline
 lanczos3_mul (const guchar  *pixels,
               const gdouble *x_kernel,
               const gdouble *y_kernel,
+              const gint     stride,
               const gint     bytes,
               const gint     byte)
 {
-  const guchar *p   = pixels;
+  const guchar *row = pixels;
   gdouble       sum = 0.0;
   gint          x, y;
 
-  for (y = 0; y < 6; y++)
+  for (y = 0; y < 6; y++, row += stride)
     {
-      gdouble tmpsum = 0.0;
+      const guchar *p = row;
+      gdouble       tmpsum = 0.0;
 
       for (x = 0; x < 6; x++, p += bytes)
         {
@@ -1472,43 +1443,24 @@ lanczos3_mul (const guchar  *pixels,
 }
 
 static void
-interpolate_lanczos3 (TileManager   *srcTM,
+interpolate_lanczos3 (PixelSurround *surround,
                       const gint     x0,
                       const gint     y0,
-                      const gint     x1,
-                      const gint     y1,
                       const gdouble  xfrac,
                       const gdouble  yfrac,
+                      const gint     bytes,
                       guchar        *pixel,
                       const gfloat  *kernel_lookup)
 {
-  const gint  src_bpp    = tile_manager_bpp  (srcTM);
-  const guint src_width  = tile_manager_width  (srcTM);
-  const guint src_height = tile_manager_height (srcTM);
-  const gint  x_shift    = (gint) (xfrac * LANCZOS_SPP + 0.5);
-  const gint  y_shift    = (gint) (yfrac * LANCZOS_SPP + 0.5);
-  gint        b, i;
-  gint        x, y;
-  gdouble     kx_sum, ky_sum;
-  gdouble     x_kernel[6];
-  gdouble     y_kernel[6];
-  guchar      pixels[6 * 6 * 4];
-  gdouble     sum, alphasum;
-
-  for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
-    {
-      for (x = x0 - 2; x <= x0 + 3; x++, i++)
-        {
-          gint u, v;
-
-          u = (x > 0) ? x : 0;
-          u = (u < src_width - 1) ? u : src_width - 1;
-          v = (y > 0) ? y : 0;
-          v = (v < src_height - 1) ? v : src_height - 1;
-
-          read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
-        }
-    }
+  gint          stride;
+  const guchar *src = pixel_surround_lock (surround, x0 - 2, y0 - 2, &stride);
+  const gint    x_shift    = (gint) (xfrac * LANCZOS_SPP + 0.5);
+  const gint    y_shift    = (gint) (yfrac * LANCZOS_SPP + 0.5);
+  gint          b, i;
+  gdouble       kx_sum, ky_sum;
+  gdouble       x_kernel[6];
+  gdouble       y_kernel[6];
+  gdouble       sum, alphasum;
 
   kx_sum  = ky_sum = 0.0;
 
@@ -1527,21 +1479,23 @@ interpolate_lanczos3 (TileManager   *srcTM,
       y_kernel[2 + i] /= ky_sum;
     }
 
-  switch (src_bpp)
+  switch (bytes)
     {
     case 1:
-      sum      = lanczos3_mul (pixels, x_kernel, y_kernel, 1, 0);
-      pixel[0] = (guchar) CLAMP ((gint) sum, 0, 255);
+      sum = lanczos3_mul (src, x_kernel, y_kernel, stride, 1, 0);
+
+      pixel[0] = CLAMP ((gint) sum, 0, 255);
       break;
 
     case 2:
-      alphasum  = lanczos3_mul (pixels, x_kernel, y_kernel, 2, 1);
+      alphasum  = lanczos3_mul (src, x_kernel, y_kernel, stride, 2, 1);
       if (alphasum > 0)
         {
-          sum       = lanczos3_mul_alpha (pixels, x_kernel, y_kernel, 2, 0);
-          sum      /= alphasum;
-          pixel[0]  = (guchar) CLAMP (sum, 0, 255);
-          pixel[1]  = (guchar) CLAMP (alphasum, 0, 255);
+          sum = lanczos3_mul_alpha (src, x_kernel, y_kernel, stride, 2, 0);
+          sum /= alphasum;
+
+          pixel[0] = CLAMP (sum, 0, 255);
+          pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1552,23 +1506,25 @@ interpolate_lanczos3 (TileManager   *srcTM,
     case 3:
       for (b = 0; b < 3; b++)
         {
-          sum      = lanczos3_mul (pixels, x_kernel, y_kernel, 3, b);
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+          sum = lanczos3_mul (src, x_kernel, y_kernel, stride, 3, b);
+
+          pixel[b] = CLAMP (sum, 0, 255);
         }
       break;
 
     case 4:
-      alphasum = lanczos3_mul (pixels, x_kernel, y_kernel, 4, 3);
+      alphasum = lanczos3_mul (src, x_kernel, y_kernel, stride, 4, 3);
       if (alphasum > 0)
         {
           for (b = 0; b < 3; b++)
             {
-              sum      = lanczos3_mul_alpha (pixels, x_kernel, y_kernel, 4, b);
-              sum     /= alphasum;
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+              sum = lanczos3_mul_alpha (src, x_kernel, y_kernel, stride, 4, b);
+              sum /= alphasum;
+
+              pixel[b] = CLAMP (sum, 0, 255);
             }
 
-          pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
         {
