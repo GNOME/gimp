@@ -807,7 +807,7 @@ decimate_gauss (TileManager  *srcTM,
   guchar      pixel2[4];
   guchar      pixel3[4];
   guchar      pixel4[4];
-  guchar      pixels[16 * 4];
+  guchar      pixels[4 * 4 * 4];
   gint        x, y, i;
 
   for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
@@ -925,7 +925,7 @@ decimate_lanczos2 (TileManager  *srcTM,
   guchar       pixel2[4];
   guchar       pixel3[4];
   guchar       pixel4[4];
-  guchar       pixels[36 * 4];
+  guchar       pixels[6 * 6 * 4];
   gint         x, y, i;
 
   for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
@@ -1491,7 +1491,7 @@ interpolate_lanczos3 (TileManager   *srcTM,
   gdouble     kx_sum, ky_sum;
   gdouble     x_kernel[6];
   gdouble     y_kernel[6];
-  guchar      pixels[36 * 4];
+  guchar      pixels[6 * 6 * 4];
   gdouble     sum, alphasum;
 
   for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
