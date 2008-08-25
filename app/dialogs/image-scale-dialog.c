@@ -275,6 +275,7 @@ image_scale_confirm_response (GtkWidget        *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
+      gtk_widget_hide (dialog->dialog);
       dialog->callback (dialog->dialog,
                         GIMP_VIEWABLE (dialog->image),
                         dialog->width,
