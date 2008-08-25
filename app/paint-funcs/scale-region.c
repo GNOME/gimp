@@ -294,9 +294,8 @@ scale_region_buffer (PixelRegion           *srcPR,
   gint         levelx       = 0;
   gint         levely       = 0;
 
-  if (interpolation != GIMP_INTERPOLATION_NONE)
-    scale_determine_levels (srcPR, dstPR, &levelx, &levely);
-
+  /* determine scaling levels */
+  scale_determine_levels (srcPR, dstPR, &levelx, &levely);
   max_progress = scale_determine_progress (srcPR, dstPR, levelx, levely);
 
   pixel_region_init_data (&tmpPR0,
@@ -439,9 +438,8 @@ scale_region_tile (PixelRegion           *srcPR,
   gint         levelx       = 0;
   gint         levely       = 0;
 
-  if (interpolation != GIMP_INTERPOLATION_NONE)
-    scale_determine_levels (srcPR, dstPR, &levelx, &levely);
-
+  /* determine scaling levels */
+  scale_determine_levels (srcPR, dstPR, &levelx, &levely);
   max_progress = scale_determine_progress (srcPR, dstPR, levelx, levely);
 
   if (levelx == 0 && levely == 0)
