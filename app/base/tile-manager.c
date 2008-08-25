@@ -755,50 +755,48 @@ read_pixel_data_1 (TileManager *tm,
                    gint         y,
                    guchar      *buffer)
 {
-  if (x >= 0 && y >= 0 && x < tm->width && y < tm->height)
+  const gint num = tile_manager_get_tile_num (tm, x, y);
+
+  g_return_if_fail (num >= 0);
+
+  if (num != tm->cached_num)    /* must fetch a new tile */
     {
-      gint num = tile_manager_get_tile_num (tm, x, y);
-
-      if (num != tm->cached_num)    /* must fetch a new tile */
-        {
-          Tile *tile;
-
-          if (tm->cached_tile)
-            tile_release (tm->cached_tile, FALSE);
-
-          tm->cached_num  = -1;
-          tm->cached_tile = NULL;
-
-          /*  use a temporary variable instead of assigning to
-           *  tm->cached_tile directly to make sure tm->cached_num
-           *  and tm->cached_tile are always in a consistent state.
-           *  (the requested tile might be invalid and needs to be
-           *  validated, which would call tile_manager_get() recursively,
-           *  which in turn would clear the cached tile) See bug #472770.
-           */
-          tile = tile_manager_get (tm, num, TRUE, FALSE);
-
-          tm->cached_num  = num;
-          tm->cached_tile = tile;
-        }
+      Tile *tile;
 
       if (tm->cached_tile)
-        {
-          const guchar *src = tile_data_pointer (tm->cached_tile, x, y);
+        tile_release (tm->cached_tile, FALSE);
 
-           switch (tm->bpp)
-             {
-             case 4:
-               *buffer++ = *src++;
-             case 3:
-               *buffer++ = *src++;
-             case 2:
-               *buffer++ = *src++;
-             case 1:
-               *buffer++ = *src++;
-             }
-        }
+      tm->cached_num  = -1;
+      tm->cached_tile = NULL;
+
+      /*  use a temporary variable instead of assigning to
+       *  tm->cached_tile directly to make sure tm->cached_num
+       *  and tm->cached_tile are always in a consistent state.
+       *  (the requested tile might be invalid and needs to be
+       *  validated, which would call tile_manager_get() recursively,
+       *  which in turn would clear the cached tile) See bug #472770.
+       */
+      tile = tile_manager_get (tm, num, TRUE, FALSE);
+
+      tm->cached_num  = num;
+      tm->cached_tile = tile;
     }
+
+  {
+    const guchar *src = tile_data_pointer (tm->cached_tile, x, y);
+
+    switch (tm->bpp)
+      {
+      case 4:
+        *buffer++ = *src++;
+      case 3:
+        *buffer++ = *src++;
+      case 2:
+        *buffer++ = *src++;
+      case 1:
+        *buffer++ = *src++;
+      }
+  }
 }
 
 void

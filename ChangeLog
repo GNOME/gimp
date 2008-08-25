@@ -1,5 +1,12 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c (read_pixel_data_1): removed redundant
+	check that is already performed by tile_manager_get_tile_num().
+	Warn if an out-of-bounds read is requested, instead of silently
+	doing nothing.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-scale-dialog.c: hide the Scale dialog before
 	starting to perform the scale operation.
 
