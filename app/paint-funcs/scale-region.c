@@ -114,11 +114,14 @@ static void           interpolate_bilinear_pr (PixelRegion   *srcPR,
                                                const gdouble  xfrac,
                                                const gdouble  yfrac,
                                                guchar        *pixel);
-static void           determine_scale         (PixelRegion   *srcPR,
+static void           determine_levels        (PixelRegion   *srcPR,
                                                PixelRegion   *dstPR,
                                                gint          *levelx,
-                                               gint          *levely,
-                                               gint          *max_progress);
+                                               gint          *levely);
+static gint           determine_progress      (PixelRegion   *srcPR,
+                                               PixelRegion   *dstPR,
+                                               gint           levelx,
+                                               gint           levely);
 static inline void    gaussan_lanczos2        (const guchar  *pixels,
                                                const gint     bytes,
                                                guchar        *pixel);
@@ -160,18 +163,15 @@ static inline gdouble lanczos3_mul            (const guchar  *pixels,
 
 
 static void
-determine_scale (PixelRegion *srcPR,
-                 PixelRegion *dstPR,
-                 gint        *levelx,
-                 gint        *levely,
-                 gint        *max_progress)
+determine_levels (PixelRegion *srcPR,
+                  PixelRegion *dstPR,
+                  gint        *levelx,
+                  gint        *levely)
 {
   gdouble scalex = (gdouble) dstPR->w / (gdouble) srcPR->w;
   gdouble scaley = (gdouble) dstPR->h / (gdouble) srcPR->h;
   gint    width  = srcPR->w;
   gint    height = srcPR->h;
-
-  *max_progress = NUM_TILES (dstPR->w, dstPR->h);
 
   /* determine scaling levels */
   while (scalex > 2)
@@ -179,7 +179,6 @@ determine_scale (PixelRegion *srcPR,
       scalex  /= 2;
       width   *= 2;
       *levelx -= 1;
-      *max_progress += NUM_TILES (width, height);
     }
 
   while (scaley > 2)
@@ -187,7 +186,6 @@ determine_scale (PixelRegion *srcPR,
       scaley  /= 2;
       height  *= 2;
       *levely -= 1;
-      *max_progress += NUM_TILES (width, height);
     }
 
   while (scalex < 0.5)
@@ -195,7 +193,6 @@ determine_scale (PixelRegion *srcPR,
       scalex  *= 2;
       width   /= 2;
       *levelx += 1;
-      *max_progress += NUM_TILES (width, height);
     }
 
   while (scaley < 0.5)
@@ -203,8 +200,74 @@ determine_scale (PixelRegion *srcPR,
       scaley  *= 2;
       height  *= 2;
       *levely += 1;
-      *max_progress += NUM_TILES (width, height);
     }
+}
+
+static gint
+determine_progress (PixelRegion *srcPR,
+                    PixelRegion *dstPR,
+                    gint         levelx,
+                    gint         levely)
+{
+  gint width  = srcPR->w;
+  gint height = srcPR->h;
+  gint tiles  = 0;
+
+  while (levelx < 0 && levely < 0)
+    {
+      width  <<= 1;
+      height <<= 1;
+      levelx++;
+      levely++;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  while (levelx < 0)
+    {
+      width <<= 1;
+      levelx++;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  while (levely < 0)
+    {
+      height <<= 1;
+      levely++;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  while (levelx > 0 && levely > 0)
+    {
+      width  >>= 1;
+      height >>= 1;
+      levelx--;
+      levely--;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  while (levelx > 0)
+    {
+      width <<= 1;
+      levelx--;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  while (levely > 0)
+    {
+      height <<= 1;
+      levely--;
+
+      tiles += NUM_TILES (width, height);
+    }
+
+  tiles += NUM_TILES (dstPR->w, dstPR->h);
+
+  return tiles;
 }
 
 static void
@@ -224,7 +287,8 @@ scale_region_buffer (PixelRegion           *srcPR,
   gint         levely       = 0;
 
   /* determine scaling levels */
-  determine_scale (srcPR, dstPR, &levelx, &levely, &max_progress);
+  determine_levels (srcPR, dstPR, &levelx, &levely);
+  max_progress = determine_progress (srcPR, dstPR, levelx, levely);
 
   pixel_region_init_data (&tmpPR0,
                           g_memdup (srcPR->data, width * height * bytes),
@@ -367,7 +431,8 @@ scale_region_tile (PixelRegion           *srcPR,
   gint         levely       = 0;
 
   /* determine scaling levels */
-  determine_scale (srcPR, dstPR, &levelx, &levely, &max_progress);
+  determine_levels (srcPR, dstPR, &levelx, &levely);
+  max_progress = determine_progress (srcPR, dstPR, levelx, levely);
 
   if (levelx == 0 && levely == 0)
     {
