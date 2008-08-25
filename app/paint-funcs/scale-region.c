@@ -1616,14 +1616,11 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
   gint        b;
   gdouble     sum, alphasum;
 
-  for (b = 0; b < bytes; b++)
-    pixel[b] = 0;
-
   switch (bytes)
     {
     case 1:
-      sum      = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
-      pixel[0]     = (guchar) CLAMP (sum, 0, 255);
+      sum = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
+      pixel[0] = (guchar) CLAMP (sum, 0, 255);
       break;
 
     case 2:
@@ -1635,6 +1632,10 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
           sum /= alphasum;
           pixel[0] = (guchar) CLAMP (sum, 0, 255);
           pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
         }
       break;
 
@@ -1659,6 +1660,10 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
             }
 
           pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
         }
       break;
     }
