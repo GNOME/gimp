@@ -1,5 +1,17 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-private.h: provide a macro version of
+	tile_data_pointer().
+
+	* app/base/tile.c (tile_data_pointer): turned into a wrapper
+	around the TILE_DATA_POINTER() macro.
+
+	* app/base/tile-manager.c (read_pixel_data) (read_pixel_data_1)
+	(write_pixel_data) (write_pixel_data_1): access tile struct
+	members directly and use the new macro to access the tile data.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c (render_image_tile_fault):
 	formatting.
 

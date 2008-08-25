@@ -77,4 +77,11 @@ struct _Tile
 };
 
 
+/*  tile_data_pointer() as a macro so that it can be inlined  */
+
+#define TILE_DATA_POINTER(tile,x,y) \
+  ((tile)->data + \
+   (((y) % TILE_HEIGHT) * (tile)->ewidth + ((x) % TILE_WIDTH)) * (tile)->bpp)
+
+
 #endif /* __TILE_PRIVATE_H__ */
