@@ -1,5 +1,10 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpgradient.c (gimp_gradient_get_new_preview): fixed
+	rounding errors in color conversion.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-private.h: provide a macro version of
 	tile_data_pointer().
 

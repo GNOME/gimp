@@ -200,10 +200,10 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
       seg = gimp_gradient_get_color_at (gradient, context, seg, cur_x,
                                         FALSE, &color);
 
-      *p++ = color.r * 255.0;
-      *p++ = color.g * 255.0;
-      *p++ = color.b * 255.0;
-      *p++ = color.a * 255.0;
+      *p++ = ROUND (color.r * 255.0);
+      *p++ = ROUND (color.g * 255.0);
+      *p++ = ROUND (color.b * 255.0);
+      *p++ = ROUND (color.a * 255.0);
 
       cur_x += dx;
     }
