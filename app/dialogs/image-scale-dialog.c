@@ -171,7 +171,7 @@ image_scale_callback (GtkWidget             *widget,
       break;
 
     case GIMP_IMAGE_SCALE_OK:
-      /* If all is well, return directly after scaling image. */
+      gtk_widget_hide (widget);
       dialog->callback (dialog->dialog,
                         GIMP_VIEWABLE (dialog->image),
                         dialog->width,
