@@ -1,5 +1,11 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c (gaussian_decimate)
+	(gaussian_lanczos2): implemented uses integer arithmetic.
+	(pixel_average): reduced rounding errors.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpgradient.c (gimp_gradient_get_new_preview): fixed
 	rounding errors in color conversion.
 

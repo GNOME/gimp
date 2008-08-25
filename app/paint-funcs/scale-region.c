@@ -124,7 +124,7 @@ static void           interpolate_bilinear_pr  (PixelRegion   *srcPR,
                                                 const gdouble  xfrac,
                                                 const gdouble  yfrac,
                                                 guchar        *pixel);
-static inline void    gaussan_lanczos2         (const guchar  *pixels,
+static inline void    gaussian_lanczos2        (const guchar  *pixels,
                                                 const gint     bytes,
                                                 guchar        *pixel);
 static inline void    decimate_lanczos2        (TileManager   *srcTM,
@@ -137,7 +137,7 @@ static inline void    pixel_average            (const guchar  *p1,
                                                 const guchar  *p4,
                                                 guchar        *pixel,
                                                 const gint     bytes);
-static inline void    gaussan_decimate         (const guchar  *pixels,
+static inline void    gaussian_decimate        (const guchar  *pixels,
                                                 const gint     bytes,
                                                 guchar        *pixel);
 static inline gdouble cubic_spline_fit         (const gdouble  dx,
@@ -712,7 +712,7 @@ pixel_average (const guchar *p1,
             p[0] = ((p1[0] * p1[1] +
                      p2[0] * p2[1] +
                      p3[0] * p3[1] +
-                     p4[0] * p4[1]) / a);
+                     p4[0] * p4[1] + (a >> 1)) / a);
             p[1] = (a + 2) >> 2;
             break;
           }
@@ -746,15 +746,15 @@ pixel_average (const guchar *p1,
             p[0] = ((p1[0] * p1[3] +
                      p2[0] * p2[3] +
                      p3[0] * p3[3] +
-                     p4[0] * p4[3]) / a);
+                     p4[0] * p4[3] + (a >> 1)) / a);
             p[1] = ((p1[1] * p1[3] +
                      p2[1] * p2[3] +
                      p3[1] * p3[3] +
-                     p4[1] * p4[3]) / a);
+                     p4[1] * p4[3] + (a >> 1)) / a);
             p[2] = ((p1[2] * p1[3] +
                      p2[2] * p2[3] +
                      p3[2] * p3[3] +
-                     p4[2] * p4[3]) / a);
+                     p4[2] * p4[3] + (a >> 1)) / a);
             p[3] = (a + 2) >> 2;
             break;
           }
@@ -825,53 +825,49 @@ decimate_gauss (TileManager  *srcTM,
         }
     }
 
-  gaussan_decimate (pixels + (0 * src_bpp), src_bpp, pixel1);
-  gaussan_decimate (pixels + (1 * src_bpp), src_bpp, pixel2);
-  gaussan_decimate (pixels + (4 * src_bpp), src_bpp, pixel3);
-  gaussan_decimate (pixels + (5 * src_bpp), src_bpp, pixel4);
+  gaussian_decimate (pixels + (0 * src_bpp), src_bpp, pixel1);
+  gaussian_decimate (pixels + (1 * src_bpp), src_bpp, pixel2);
+  gaussian_decimate (pixels + (4 * src_bpp), src_bpp, pixel3);
+  gaussian_decimate (pixels + (5 * src_bpp), src_bpp, pixel4);
 
   pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
 
 }
 
 static inline void
-gaussan_decimate (const guchar *pixels,
-                  const gint    bytes,
-                  guchar       *pixel)
+gaussian_decimate (const guchar *pixels,
+                   const gint    bytes,
+                   guchar       *pixel)
 {
   const guchar *p = pixels;
-  gdouble       sum;
-  gdouble       alphasum;
-  gdouble       alpha;
+  guint         sum;
+  guint         alphasum;
   gint          b;
 
   switch (bytes)
     {
     case 1:
-      sum  = p[0]     + p[1] * 2 + p[2];
-      sum += p[4] * 2 + p[5] * 4 + p[6] * 2;
-      sum += p[8]     + p[9] * 2 + p[10];
-      sum /= 16;
-
-      pixel[0] = (guchar) CLAMP (sum, 0, 255);
+      sum  = (p[0]     + p[1] * 2 + p[2]     +
+              p[4] * 2 + p[5] * 4 + p[6] * 2 +
+              p[8]     + p[9] * 2 + p[10]);
+      
+      pixel[0] = (sum + 8) >> 4;
       break;
 
     case 2:
-      alphasum  = p[1]     + p[3]  * 2 + p[5];
-      alphasum += p[9] * 2 + p[11] * 4 + p[13] * 2;
-      alphasum += p[17]    + p[19] * 2 + p[21];
+      
+      alphasum = (p[1]     + p[3]  * 2 + p[5]      +
+                  p[9] * 2 + p[11] * 4 + p[13] * 2 +
+                  p[17]    + p[19] * 2 + p[21]);
 
       if (alphasum > 0)
         {
-          sum  = p[0]  * p[1]     + p[2]  * p[3]  * 2 + p[4]  * p[5];
-          sum += p[8]  * p[9] * 2 + p[10] * p[11] * 4 + p[12] * p[13] * 2;
-          sum += p[16] * p[17]    + p[18] * p[19] * 2 + p[20] * p[21];
-          sum /= alphasum;
+          sum = (p[0]  * p[1]     + p[2]  * p[3]  * 2 + p[4]  * p[5]      +
+                 p[8]  * p[9] * 2 + p[10] * p[11] * 4 + p[12] * p[13] * 2 +
+                 p[16] * p[17]    + p[18] * p[19] * 2 + p[20] * p[21]);
 
-          alpha = alphasum / 16;
-
-          pixel[0] = (guchar) CLAMP (sum,   0, 255);
-          pixel[1] = (guchar) CLAMP (alpha, 0, 255);
+          pixel[0] = (sum + (alphasum >> 1)) / alphasum;
+          pixel[1] = (alphasum + 8) >> 4;
         }
       else
         {
@@ -882,35 +878,31 @@ gaussan_decimate (const guchar *pixels,
     case 3:
       for (b = 0; b < 3; b++ )
         {
-          sum  = p[b   ]       + p[3 + b]  * 2 + p[6 + b];
-          sum += p[12 + b] * 2 + p[15 + b] * 4 + p[18 + b] * 2;
-          sum += p[24 + b]     + p[27 + b] * 2 + p[30 + b];
-          sum /= 16;
+          sum = (p[b]          + p[3 + b]  * 2 + p[6 + b]      +
+                 p[12 + b] * 2 + p[15 + b] * 4 + p[18 + b] * 2 +
+                 p[24 + b]     + p[27 + b] * 2 + p[30 + b]);
 
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+          pixel[b] = (sum + 8) >> 4;
         }
       break;
 
     case 4:
-      alphasum  = p[3]      + p[7]  * 2  + p[11];
-      alphasum += p[19] * 2 + p[23] * 4  + p[27] * 2;
-      alphasum += p[35]     + p[39] * 2  + p[43];
+      alphasum  = (p[3]      + p[7]  * 2  + p[11]     +
+                   p[19] * 2 + p[23] * 4  + p[27] * 2 +
+                   p[35]     + p[39] * 2  + p[43]);
 
       if (alphasum > 0)
         {
           for (b = 0; b < 3; b++)
             {
-              sum = p[   b]    * p[3]      + p[4 + b]  * p[7]  * 2 + p[8 + b]  * p[11];
-              sum += p[16 + b] * p[19] * 2 + p[20 + b] * p[23] * 4 + p[24 + b] * p[27] * 2;
-              sum += p[32 + b] * p[35]     + p[36 + b] * p[39] * 2 + p[40 + b] * p[43];
-              sum /= alphasum;
+              sum = (p[b]      * p[3]      + p[4 + b]  * p[7]  * 2 + p[8 + b]  * p[11]     +
+                     p[16 + b] * p[19] * 2 + p[20 + b] * p[23] * 4 + p[24 + b] * p[27] * 2 +
+                     p[32 + b] * p[35]     + p[36 + b] * p[39] * 2 + p[40 + b] * p[43]);
 
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+              pixel[b] = (sum + (alphasum >> 1)) / alphasum;
             }
 
-          alpha = alphasum / 16;
-
-          pixel[3] = (guchar) CLAMP (alpha, 0, 255);
+          pixel[3] = (alphasum + 8) >> 4;
         }
       else
         {
@@ -949,19 +941,19 @@ decimate_lanczos2 (TileManager  *srcTM,
         read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
       }
 
-  gaussan_lanczos2 (pixels + (0 * src_bpp), src_bpp, pixel1);
-  gaussan_lanczos2 (pixels + (1 * src_bpp), src_bpp, pixel2);
-  gaussan_lanczos2 (pixels + (6 * src_bpp), src_bpp, pixel3);
-  gaussan_lanczos2 (pixels + (7 * src_bpp), src_bpp, pixel4);
+  gaussian_lanczos2 (pixels + (0 * src_bpp), src_bpp, pixel1);
+  gaussian_lanczos2 (pixels + (1 * src_bpp), src_bpp, pixel2);
+  gaussian_lanczos2 (pixels + (6 * src_bpp), src_bpp, pixel3);
+  gaussian_lanczos2 (pixels + (7 * src_bpp), src_bpp, pixel4);
 
   pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
 
 }
 
 static inline void
-gaussan_lanczos2 (const guchar *pixels,
-                  const gint    bytes,
-                  guchar       *pixel)
+gaussian_lanczos2 (const guchar *pixels,
+                   const gint    bytes,
+                   guchar       *pixel)
 {
   /*
    *   Filter source taken from document:
@@ -973,9 +965,8 @@ gaussan_lanczos2 (const guchar *pixels,
    *
    */
   const guchar *p = pixels;
-  gdouble       sum;
-  gdouble       alphasum;
-  gdouble       alpha;
+  guint         sum;
+  guint         alphasum;
   gint          b;
 
   switch (bytes)
@@ -987,9 +978,8 @@ gaussan_lanczos2 (const guchar *pixels,
              p[13] * 144 + p[14] * 256 + p[15] * 144 + p[16] * -16;
       sum += p[18] * -9 + p[19] * 81 + p[20] * 144 + p[21] * 81 + p[22] * -9;
       sum += p[24] + p[25] * -9 + p[26] * -16 + p[27] * -9 + p[28];
-      sum /= 1024;
 
-      pixel[0] = (guchar) CLAMP (sum, 0, 255);
+      pixel[0] = (sum + 512) >> 10;
       break;
 
     case 2:
@@ -1019,12 +1009,9 @@ gaussan_lanczos2 (const guchar *pixels,
           sum += p[48] * p[49] +
                  p[50] * p[51] * -9 +
                  p[52] * p[53] * -16 + p[54] * p[55] * -9 + p[56] * p[57];
-          sum /= alphasum;
 
-          alpha = alphasum / 1024;
-
-          pixel[0] = (guchar) CLAMP (sum, 0, 255);
-          pixel[1] = (guchar) CLAMP (alpha, 0, 255);
+          pixel[0] = (sum + (alphasum >> 1)) / alphasum;
+          pixel[1] = (alphasum + 512) >> 10;
         }
       else
         {
@@ -1048,9 +1035,8 @@ gaussan_lanczos2 (const guchar *pixels,
                  p[60 + b] * 144 + p[63 + b] * 81 + p[66 + b] * -9;
           sum += p[72 + b] +
                  p[75 + b] * -9 + p[78 + b] * -16 + p[81 + b] * -9 + p[84 + b];
-          sum /= 1024;
 
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+          pixel[b] = (sum + 512) >> 10;
         }
       break;
 
@@ -1088,12 +1074,11 @@ gaussan_lanczos2 (const guchar *pixels,
                      p[100 + b] * p[103] * -9 +
                     p[104 + b] * p[107] * -16 +
                     p[108 + b] * p[111] * -9 + p[112 + b] * p[115];
-              sum /= alphasum;
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+
+              pixel[b] = (sum + (alphasum >> 1)) / alphasum;
             }
 
-          alpha = (gint) alphasum / 1024;
-          pixel[3] = (guchar) CLAMP (alpha, 0, 255);
+          pixel[3] = (alphasum + 512) >> 10;
         }
       else
         {
