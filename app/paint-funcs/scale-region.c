@@ -34,6 +34,10 @@
 #include "scale-region.h"
 
 
+#define NUM_TILES(w,h) ((((w) + (TILE_WIDTH - 1)) / TILE_WIDTH) *  \
+                        (((h) + (TILE_HEIGHT - 1)) / TILE_HEIGHT))
+
+
 static void           scale_region_buffer     (PixelRegion           *srcPR,
                                                PixelRegion           *dstPR,
                                                GimpInterpolationType  interpolation,
@@ -167,16 +171,15 @@ determine_scale (PixelRegion *srcPR,
   gint    width  = srcPR->w;
   gint    height = srcPR->h;
 
-  *max_progress = ((height % TILE_HEIGHT) + 1) * ((width % TILE_WIDTH) + 1);
+  *max_progress = NUM_TILES (dstPR->w, dstPR->h);
 
   /* determine scaling levels */
   while (scalex > 2)
     {
       scalex  /= 2;
-      width   *=2;
+      width   *= 2;
       *levelx -= 1;
-      *max_progress += (((height % TILE_HEIGHT) + 1) *
-                        ((width % TILE_WIDTH) + 1));
+      *max_progress += NUM_TILES (width, height);
     }
 
   while (scaley > 2)
@@ -184,8 +187,7 @@ determine_scale (PixelRegion *srcPR,
       scaley  /= 2;
       height  *= 2;
       *levely -= 1;
-      *max_progress += (((height % TILE_HEIGHT) + 1) *
-                        ((width % TILE_WIDTH) + 1));
+      *max_progress += NUM_TILES (width, height);
     }
 
   while (scalex < 0.5)
@@ -193,8 +195,7 @@ determine_scale (PixelRegion *srcPR,
       scalex  *= 2;
       width   /= 2;
       *levelx += 1;
-      *max_progress += (((height % TILE_HEIGHT) + 1) *
-                        ((width % TILE_WIDTH) + 1));
+      *max_progress += NUM_TILES (width, height);
     }
 
   while (scaley < 0.5)
@@ -202,8 +203,7 @@ determine_scale (PixelRegion *srcPR,
       scaley  *= 2;
       height  *= 2;
       *levely += 1;
-      *max_progress += (((height % TILE_HEIGHT) + 1) *
-                        ((width % TILE_WIDTH) + 1));
+      *max_progress += NUM_TILES (width, height);
     }
 }
 
@@ -361,8 +361,7 @@ scale_region_tile (PixelRegion           *srcPR,
   gint         width        = srcPR->w;
   gint         height       = srcPR->h;
   gint         bytes        = srcPR->bytes;
-  gint         max_progress = (((height % TILE_HEIGHT) + 1) *
-                               ((width % TILE_WIDTH) + 1));
+  gint         max_progress = 0;
   gint         progress     = 0;
   gint         levelx       = 0;
   gint         levely       = 0;
@@ -372,9 +371,8 @@ scale_region_tile (PixelRegion           *srcPR,
 
   if (levelx == 0 && levely == 0)
     {
-       scale (srcTM, dstTM, interpolation,
-              progress_callback,
-              progress_data, &progress, max_progress);
+      scale (srcTM, dstTM, interpolation,
+             progress_callback, progress_data, &progress, max_progress);
     }
 
   while (levelx < 0 && levely < 0)
@@ -474,8 +472,7 @@ scale_region_tile (PixelRegion           *srcPR,
   if (tmpTM != NULL)
     {
       scale (tmpTM, dstTM, interpolation,
-             progress_callback,
-             progress_data, &progress, max_progress);
+             progress_callback, progress_data, &progress, max_progress);
       tile_manager_unref (tmpTM);
     }
 
