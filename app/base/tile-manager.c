@@ -757,7 +757,8 @@ read_pixel_data_1 (TileManager *tm,
 {
   const gint num = tile_manager_get_tile_num (tm, x, y);
 
-  g_return_if_fail (num >= 0);
+  if (num < 0)
+    return;
 
   if (num != tm->cached_num)    /* must fetch a new tile */
     {

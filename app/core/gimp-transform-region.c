@@ -394,7 +394,8 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
   gint           n;
   gpointer       pr;
 
-  surround = pixel_surround_new (orig_tiles, 2, 2, bg_color);
+  surround = pixel_surround_new (orig_tiles, 2, 2, PIXEL_SURROUND_BACKGROUND);
+  pixel_surround_set_bg (surround, bg_color);
 
   uinc = m->coeff[0][0];
   vinc = m->coeff[1][0];
@@ -496,7 +497,8 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
   gint           n;
   gpointer       pr;
 
-  surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
+  surround = pixel_surround_new (orig_tiles, 4, 4, PIXEL_SURROUND_BACKGROUND);
+  pixel_surround_set_bg (surround, bg_color);
 
   uinc = m->coeff[0][0];
   vinc = m->coeff[1][0];
@@ -599,7 +601,9 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
   gpointer       pr;
 
   surround = pixel_surround_new (orig_tiles,
-                                 LANCZOS_WIDTH2, LANCZOS_WIDTH2, bg_color);
+                                 LANCZOS_WIDTH2, LANCZOS_WIDTH2,
+                                 PIXEL_SURROUND_BACKGROUND);
+  pixel_surround_set_bg (surround, bg_color);
 
   /* allocate and fill lanczos lookup table */
   lanczos = create_lanczos_lookup ();

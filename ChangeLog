@@ -1,5 +1,16 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c (read_pixel_data_1): changed to silently
+	return in case of out-of-bounds access. There's code that relies
+	on this.
+
+	* app/base/pixel-surround.[ch]: added SMEAR as another edge
+	strategy for the PixelSurround helper.
+
+	* core/gimp-transform-region.c: changed accordingly.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c: reverted last change; it was bogus.
 
 2008-08-25  Sven Neumann  <sven@gimp.org>

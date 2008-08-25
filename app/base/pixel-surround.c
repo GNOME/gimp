@@ -33,6 +33,8 @@
 struct _PixelSurround
 {
   TileManager *mgr;        /*  tile manager to access tiles from    */
+  gint         xmax;       /*  largest x coordinate in tile manager */
+  gint         ymax;       /*  largest y coordinate in tile manager */
   gint         bpp;        /*  bytes per pixel in tile manager      */
   gint         w;          /*  width of pixel surround area         */
   gint         h;          /*  height of pixel surround area        */
@@ -44,6 +46,7 @@ struct _PixelSurround
   gint         rowstride;  /*  rowstride of buffers                 */
   guchar      *bg;         /*  buffer filled with background color  */
   guchar      *buf;        /*  buffer used for combining tile data  */
+  PixelSurroundMode  mode;
 };
 
 
@@ -89,8 +92,37 @@ pixel_surround_get_data (PixelSurround *surround,
 
       *rowstride = surround->tile_w * surround->bpp;
 
-      return tile_data_pointer (surround->tile,
-                                x % TILE_WIDTH, y % TILE_HEIGHT);
+      return tile_data_pointer (surround->tile, x, y);
+    }
+  else if (surround->mode == PIXEL_SURROUND_SMEAR)
+    {
+      gint dummy;
+
+      if (x < 0)
+        {
+          x = 0;
+          *w = 1;
+        }
+      else if (x > surround->xmax)
+        {
+          x = surround->xmax;
+          *w = 1;
+        }
+
+      if (y < 0)
+        {
+          y = 0;
+          *h = 1;
+        }
+      else if (y > surround->ymax)
+        {
+          y = surround->ymax;
+          *h = 1;
+        }
+
+      /*  call ourselves with corrected coordinates  */
+      return pixel_surround_get_data (surround,
+                                      x, y, &dummy, &dummy, rowstride);
     }
   else
     {
@@ -121,29 +153,37 @@ pixel_surround_get_data (PixelSurround *surround,
  * Return value: a new #PixelSurround.
  */
 PixelSurround *
-pixel_surround_new (TileManager  *tiles,
-                    gint          width,
-                    gint          height,
-                    const guchar  bg[MAX_CHANNELS])
+pixel_surround_new (TileManager       *tiles,
+                    gint               width,
+                    gint               height,
+                    PixelSurroundMode  mode)
 {
   PixelSurround *surround;
-  guchar        *dest;
-  gint           pixels;
 
   g_return_val_if_fail (tiles != NULL, NULL);
 
   surround = g_slice_new0 (PixelSurround);
 
   surround->mgr       = tiles;
+  surround->xmax      = tile_manager_width (surround->mgr) - 1;
+  surround->ymax      = tile_manager_height (surround->mgr) - 1;
   surround->bpp       = tile_manager_bpp (tiles);
   surround->w         = width;
   surround->h         = height;
   surround->rowstride = width * surround->bpp;
-  surround->bg        = g_new (guchar, surround->rowstride * height);
+  surround->bg        = g_new0 (guchar, surround->rowstride * height);
   surround->buf       = g_new (guchar, surround->rowstride * height);
+  surround->mode      = mode;
 
-  dest = surround->bg;
-  pixels = width * height;
+  return surround;
+}
+
+void
+pixel_surround_set_bg (PixelSurround *surround,
+                       const guchar  *bg)
+{
+  guchar *dest   = surround->bg;
+  gint    pixels = surround->w * surround->h;
 
   while (pixels--)
     {
@@ -152,8 +192,6 @@ pixel_surround_new (TileManager  *tiles,
       for (i = 0; i < surround->bpp; i++)
         *dest++ = bg[i];
     }
-
-  return surround;
 }
 
 /**
