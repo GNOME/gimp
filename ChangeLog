@@ -1,5 +1,10 @@
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c: don't scale in several steps if
+	interpolation is GIMP_INTERPOLATION_NONE.
+
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c (gaussian_decimate)
 	(gaussian_lanczos2): implemented uses integer arithmetic.
 	(pixel_average): reduced rounding errors.
