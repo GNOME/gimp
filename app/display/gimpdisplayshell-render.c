@@ -959,8 +959,6 @@ render_image_tile_fault (RenderInfo *info)
       src[8] = src[5];  /* reusing existing pixel data */
     }
 
-
-
   if (tile[0])
     {
       src[0] = tile_data_pointer (tile[0], info->src_x - 1, info->src_y - 1);
