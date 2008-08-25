@@ -501,7 +501,8 @@ scale (TileManager           *srcTM,
   const guint     dst_height = tile_manager_height (dstTM);
   const gdouble   scaley     = (gdouble) dst_height / (gdouble) src_height;
   const gdouble   scalex     = (gdouble) dst_width  / (gdouble) src_width;
-  const gboolean  decimate   = (scalex == 0.5 || scaley == 0.5);
+  const gboolean  decimate   = (src_width  == 2 * dst_width ||
+                                src_height == 2 * dst_height);
   gpointer        pr;
   gfloat         *kernel_lookup = NULL;
 
@@ -739,7 +740,6 @@ decimate_gauss (TileManager  *srcTM,
   guchar      pixel4[4];
   guchar      pixels[16 * 4];
   gint        x, y, i;
-  guchar     *p;
 
   for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
     {
@@ -756,14 +756,10 @@ decimate_gauss (TileManager  *srcTM,
         }
     }
 
-  p = pixels + (0 * src_bpp);
-  gaussan_decimate (p, src_bpp, pixel1);
-  p = pixels + (1 * src_bpp);
-  gaussan_decimate (p, src_bpp, pixel2);
-  p = pixels + (4 * src_bpp);
-  gaussan_decimate (p, src_bpp, pixel3);
-  p = pixels + (5 * src_bpp);
-  gaussan_decimate (p, src_bpp, pixel4);
+  gaussan_decimate (pixels + (0 * src_bpp), src_bpp, pixel1);
+  gaussan_decimate (pixels + (1 * src_bpp), src_bpp, pixel2);
+  gaussan_decimate (pixels + (4 * src_bpp), src_bpp, pixel3);
+  gaussan_decimate (pixels + (5 * src_bpp), src_bpp, pixel4);
 
   pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
 
@@ -774,16 +770,11 @@ gaussan_decimate (const guchar *pixels,
                   const gint    bytes,
                   guchar       *pixel)
 {
-  const guchar *p;
+  const guchar *p = pixels;
   gdouble       sum;
   gdouble       alphasum;
   gdouble       alpha;
   gint          b;
-
-  for (b = 0; b < bytes; b++)
-    pixel[b] = 0;
-
-  p = pixels;
 
   switch (bytes)
     {
@@ -813,6 +804,10 @@ gaussan_decimate (const guchar *pixels,
           pixel[0] = (guchar) CLAMP (sum,   0, 255);
           pixel[1] = (guchar) CLAMP (alpha, 0, 255);
         }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
+        }
       break;
 
     case 3:
@@ -836,7 +831,7 @@ gaussan_decimate (const guchar *pixels,
         {
           for (b = 0; b < 3; b++)
             {
-              sum = p[   b] * p[3]      + p[4 + b] * p[7]  * 2 + p[8 + b] * p[11];
+              sum = p[   b]    * p[3]      + p[4 + b]  * p[7]  * 2 + p[8 + b]  * p[11];
               sum += p[16 + b] * p[19] * 2 + p[20 + b] * p[23] * 4 + p[24 + b] * p[27] * 2;
               sum += p[32 + b] * p[35]     + p[36 + b] * p[39] * 2 + p[40 + b] * p[43];
               sum /= alphasum;
@@ -847,6 +842,10 @@ gaussan_decimate (const guchar *pixels,
           alpha = alphasum / 16;
 
           pixel[3] = (guchar) CLAMP (alpha, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
         }
       break;
     }
@@ -867,7 +866,6 @@ decimate_lanczos2 (TileManager  *srcTM,
   guchar       pixel4[4];
   guchar       pixels[36 * 4];
   gint         x, y, i;
-  guchar      *p;
 
   for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
     for (x = x0 - 2; x <= x0 + 3; x++, i++)
@@ -882,14 +880,10 @@ decimate_lanczos2 (TileManager  *srcTM,
         read_pixel_data_1 (srcTM, u, v, pixels + (i * src_bpp));
       }
 
-  p = pixels + (0 * src_bpp);
-  gaussan_lanczos2 (p, src_bpp, pixel1);
-  p = pixels + (1 * src_bpp);
-  gaussan_lanczos2 (p, src_bpp, pixel2);
-  p = pixels + (6 * src_bpp);
-  gaussan_lanczos2 (p, src_bpp, pixel3);
-  p = pixels + (7 * src_bpp);
-  gaussan_lanczos2 (p, src_bpp, pixel4);
+  gaussan_lanczos2 (pixels + (0 * src_bpp), src_bpp, pixel1);
+  gaussan_lanczos2 (pixels + (1 * src_bpp), src_bpp, pixel2);
+  gaussan_lanczos2 (pixels + (6 * src_bpp), src_bpp, pixel3);
+  gaussan_lanczos2 (pixels + (7 * src_bpp), src_bpp, pixel4);
 
   pixel_average (pixel1, pixel2, pixel3, pixel4, pixel, src_bpp);
 
@@ -909,16 +903,11 @@ gaussan_lanczos2 (const guchar *pixels,
    *   Ken Turkowski, Apple computer
    *
    */
-  const guchar *p;
+  const guchar *p = pixels;
   gdouble       sum;
   gdouble       alphasum;
   gdouble       alpha;
   gint          b;
-
-  for (b = 0; b < bytes; b++)
-    pixel[b] = 0;
-
-  p = pixels;
 
   switch (bytes)
     {
@@ -967,6 +956,10 @@ gaussan_lanczos2 (const guchar *pixels,
 
           pixel[0] = (guchar) CLAMP (sum, 0, 255);
           pixel[1] = (guchar) CLAMP (alpha, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
         }
       break;
 
@@ -1032,6 +1025,10 @@ gaussan_lanczos2 (const guchar *pixels,
 
           alpha = (gint) alphasum / 1024;
           pixel[3] = (guchar) CLAMP (alpha, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
         }
       break;
     }
@@ -1156,11 +1153,8 @@ interpolate_bilinear (TileManager   *srcTM,
   guchar     p2[4];
   guchar     p3[4];
   guchar     p4[4];
-  gint       b;
   gdouble    sum, alphasum;
-
-  for (b = 0; b < src_bpp; b++)
-    pixel[b] = 0;
+  gint       b;
 
   read_pixel_data_1 (srcTM, x0, y0, p1);
   read_pixel_data_1 (srcTM, x1, y0, p2);
@@ -1185,6 +1179,10 @@ interpolate_bilinear (TileManager   *srcTM,
           pixel[0] = (guchar) CLAMP (sum, 0, 255);
           pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
         }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
+        }
       break;
 
     case 3:
@@ -1208,6 +1206,10 @@ interpolate_bilinear (TileManager   *srcTM,
             }
 
           pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
         }
       break;
     }
@@ -1248,9 +1250,6 @@ interpolate_cubic (TileManager  *srcTM,
   guchar      ps[16 * 4];
   gdouble     p0, p1, p2, p3;
   gdouble     sum, alphasum;
-
-  for (b = 0; b < src_bpp; b++)
-    pixel[b] = 0;
 
   for (y = y0 - 1, i = 0; y <= y0 + 2; y++)
     for (x = x0 - 1; x <= x0 + 2; x++, i++)
@@ -1303,7 +1302,12 @@ interpolate_cubic (TileManager  *srcTM,
           pixel[0] = (guchar) CLAMP (sum, 0, 255);
           pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
         }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
+        }
       break;
+
     case 3:
       for (b = 0; b < 3; b++)
         {
@@ -1346,6 +1350,10 @@ interpolate_cubic (TileManager  *srcTM,
             }
 
           pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+        }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
         }
       break;
     }
@@ -1429,9 +1437,6 @@ interpolate_lanczos3 (TileManager   *srcTM,
   guchar      pixels[36 * 4];
   gdouble     sum, alphasum;
 
-  for (b = 0; b < src_bpp; b++)
-    pixel[b] = 0;
-
   for (y = y0 - 2, i = 0; y <= y0 + 3; y++)
     {
       for (x = x0 - 2; x <= x0 + 3; x++, i++)
@@ -1480,6 +1485,10 @@ interpolate_lanczos3 (TileManager   *srcTM,
           pixel[0]  = (guchar) CLAMP (sum, 0, 255);
           pixel[1]  = (guchar) CLAMP (alphasum, 0, 255);
         }
+      else
+        {
+          pixel[0] = pixel[1] = 0;
+        }
       break;
 
     case 3:
@@ -1503,6 +1512,10 @@ interpolate_lanczos3 (TileManager   *srcTM,
 
           pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
         }
+      else
+        {
+          pixel[0] = pixel[1] = pixel[2] = pixel[3] = 0;
+        }
       break;
     }
 }
@@ -1517,26 +1530,28 @@ scale_pr (PixelRegion           *srcPR,
   const gint      src_width  = srcPR->w;
   const gint      src_height = srcPR->h;
   const gint      bytes      = srcPR->bytes;
-  guchar         *dstPtr     = dstPR->data;
-  const gboolean  decimate   = (scalex == 0.5 || scaley == 0.5);
-  gdouble         xfrac, yfrac;
-  gint            b, x, sx0, sx1, y, sy0, sy1;
-  guchar          pixel[bytes];
+  const gint      dst_width  = dstPR->w;
+  const gint      dst_height = dstPR->h;
+  const gboolean  decimate   = (src_width  == 2 * dst_width ||
+                                src_height == 2 * dst_height);
+  guchar         *pixel      = dstPR->data;
+  gint            x, y;
 
-  for (y = 0; y < dstPR->h; y++)
+  for (y = 0; y < dst_height; y++)
    {
-      yfrac = (y / scaley);
-      sy0   = (gint) yfrac;
-      sy1 = sy0 + 1;
-      sy1   = (sy1 < src_height - 1) ? sy1 : src_height - 1;
+     gdouble yfrac = (y / scaley);
+     gint    sy0   = (gint) yfrac;
+     gint    sy1   = sy0 + 1;
 
-      yfrac =  yfrac - sy0;
+     sy1   = (sy1 < src_height - 1) ? sy1 : src_height - 1;
+     yfrac =  yfrac - sy0;
 
-      for (x = 0; x < dstPR->w; x++)
+      for (x = 0; x < dst_width; x++)
         {
-          xfrac = (x / scalex);
-          sx0   = (gint) xfrac;
-          sx1   = sx0 + 1;
+          gdouble xfrac = (x / scalex);
+          gint    sx0   = (gint) xfrac;
+          gint    sx1   = sx0 + 1;
+
           sx1   = (sx1 < src_width - 1) ? sx1 : src_width - 1;
           xfrac =  xfrac - sx0;
 
@@ -1553,14 +1568,13 @@ scale_pr (PixelRegion           *srcPR,
               else
                 {
                   interpolate_bilinear_pr (srcPR,
-                                           sx0, sy0, sx1, sy1,
-                                           xfrac, yfrac, pixel);
+                                           sx0, sy0, sx1, sy1, xfrac, yfrac,
+                                           pixel);
                 }
               break;
             }
 
-          for (b = 0; b < bytes; b++, dstPtr++)
-            *dstPtr = pixel[b];
+          pixel += bytes;
         }
     }
 }

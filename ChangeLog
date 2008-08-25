@@ -1,3 +1,7 @@
+2008-08-25  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: some more cleanups.
+
 2008-08-24  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/plug-ins/python-fu-eval.py: Moved execution into
