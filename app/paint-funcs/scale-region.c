@@ -164,6 +164,38 @@ static inline gdouble lanczos3_mul             (const guchar  *pixels,
                                                 const gint     byte);
 
 
+
+void
+scale_region (PixelRegion           *srcPR,
+              PixelRegion           *dstPR,
+              GimpInterpolationType  interpolation,
+              GimpProgressFunc       progress_callback,
+              gpointer               progress_data)
+{
+  /* Copy and return if scale = 1.0 */
+  if (srcPR->h == dstPR->h && srcPR->w == dstPR->w)
+    {
+      copy_region (srcPR, dstPR);
+      return;
+    }
+
+  if (srcPR->tiles == NULL && srcPR->data != NULL)
+    {
+      scale_region_buffer (srcPR, dstPR, interpolation,
+                           progress_callback, progress_data);
+      return;
+    }
+
+  if (srcPR->tiles != NULL && srcPR->data == NULL)
+    {
+      scale_region_tile (srcPR, dstPR, interpolation,
+                         progress_callback, progress_data);
+      return;
+    }
+
+  g_assert_not_reached ();
+}
+
 static void
 scale_determine_levels (PixelRegion *srcPR,
                         PixelRegion *dstPR,
@@ -761,37 +793,6 @@ pixel_average (const guchar *p1,
       }
       break;
     }
-}
-
-void
-scale_region (PixelRegion           *srcPR,
-              PixelRegion           *dstPR,
-              GimpInterpolationType  interpolation,
-              GimpProgressFunc       progress_callback,
-              gpointer               progress_data)
-{
-  /* Copy and return if scale = 1.0 */
-  if (srcPR->h == dstPR->h && srcPR->w == dstPR->w)
-    {
-      copy_region (srcPR, dstPR);
-      return;
-    }
-
-  if (srcPR->tiles == NULL && srcPR->data != NULL)
-    {
-      scale_region_buffer (srcPR, dstPR, interpolation,
-                           progress_callback, progress_data);
-      return;
-    }
-
-  if (srcPR->tiles != NULL && srcPR->data == NULL)
-    {
-      scale_region_tile (srcPR, dstPR, interpolation,
-                         progress_callback, progress_data);
-      return;
-    }
-
-  g_assert_not_reached ();
 }
 
 static void
