@@ -902,7 +902,8 @@ pf_dealloc(PyGimpPixelFetcher *self)
 {
     gimp_pixel_fetcher_destroy(self->pf);
 
-    Py_DECREF(self->drawable);
+    Py_XDECREF(self->drawable);
+    
     PyObject_DEL(self);
 }
 
@@ -942,6 +943,9 @@ pf_init(PyGimpPixelFetcher *self, PyObject *args, PyObject *kwargs)
                                      &edge_mode))
         return -1;
 
+    if(!drw->drawable)
+        drw->drawable = gimp_drawable_get(drw->ID);
+    
     self->pf = gimp_pixel_fetcher_new(drw->drawable, shadow);
 
     Py_INCREF(drw);

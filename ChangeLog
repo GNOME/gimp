@@ -1,3 +1,9 @@
+2008-08-26  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/pygimp-tile.c
+	(pf_init): Ensure that the python drawables gimp drawable is set.
+	(pf_dealloc): Don't crash if the pixel fetchers init function failed.
+
 2008-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-surround.c: updated documentation.
