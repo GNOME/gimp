@@ -1,6 +1,16 @@
 2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll_unoverscrollify): New function.
+
+	* app/display/gimpdisplayshell-autoscroll.c
+	(gimp_display_shell_autoscroll_timeout): Make sure the autoscroll
+	does not result in overscroll. This more or less finalizes the
+	implementation of the enhancement request in bug #362915.
+
+2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scroll.c
 	(gimp_display_shell_scroll): If no scroll should be applied we can
 	return early.
 

@@ -137,6 +137,12 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
       info->time += AUTOSCROLL_DT;
 
+      gimp_display_shell_scroll_unoverscrollify (shell,
+                                                 scroll_amount_x,
+                                                 scroll_amount_y,
+                                                 &scroll_amount_x,
+                                                 &scroll_amount_y);
+
       gimp_display_shell_scroll (shell,
                                  scroll_amount_x,
                                  scroll_amount_y);

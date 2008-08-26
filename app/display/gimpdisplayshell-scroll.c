@@ -258,6 +258,66 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
 }
 
 /**
+ * gimp_display_shell_scroll_unoverscrollify:
+ * @shell:
+ * @in_offset_x:
+ * @in_offset_y:
+ * @out_offset_x:
+ * @out_offset_y:
+ *
+ * Takes a scroll offset and returns the offset that will not result
+ * in a scroll beyond the image border. If the image is already
+ * overscrolled, the return value is 0 for that given axis.
+ *
+ **/
+void
+gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
+                                           gint              in_offset_x,
+                                           gint              in_offset_y,
+                                           gint             *out_offset_x,
+                                           gint             *out_offset_y)
+{
+  gint sw, sh;
+  gint out_offset_x_dummy, out_offset_y_dummy;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! out_offset_x) out_offset_x = &out_offset_x_dummy;
+  if (! out_offset_y) out_offset_y = &out_offset_y_dummy;
+
+  *out_offset_x = in_offset_x;
+  *out_offset_y = in_offset_y;
+
+  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+  if (in_offset_x < 0)
+    {
+      *out_offset_x = MAX (in_offset_x,
+                           MIN (0, 0 - shell->offset_x));
+    }
+  else if (in_offset_x > 0)
+    {
+      gint min_offset = sw - shell->disp_width;
+
+      *out_offset_x = MIN (in_offset_x,
+                           MAX (0, min_offset - shell->offset_x));
+    }
+
+  if (in_offset_y < 0)
+    {
+      *out_offset_y = MAX (in_offset_y,
+                           MIN (0, 0 - shell->offset_y));
+    }
+  else if (in_offset_y > 0)
+    {
+      gint min_offset = sh - shell->disp_width;
+
+      *out_offset_y = MIN (in_offset_y,
+                           MAX (0, min_offset - shell->offset_y));
+    }
+}
+
+/**
  * gimp_display_shell_scroll_center_image:
  * @shell:
  * @horizontally:
