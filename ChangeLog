@@ -1,5 +1,11 @@
 2008-08-26  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-region.c: further simplified the code path
+	that is executed when a brush is scaled up. We don't need to scale
+	in several steps here.
+
+2008-08-26  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c: removed some unused parameters
 	from the code that is used for brush scaling. Added sanity checks.
 

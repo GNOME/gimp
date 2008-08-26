@@ -62,9 +62,6 @@ static void           scale                    (TileManager           *srcTM,
                                                 gpointer               progress_data,
                                                 gint                  *progress,
                                                 gint                   max_progress);
-static void           scale_pr                 (PixelRegion           *srcPR,
-                                                PixelRegion           *dstPR);
-
 static void           interpolate_nearest      (TileManager   *srcTM,
                                                 const gint     x0,
                                                 const gint     y0,
@@ -104,12 +101,6 @@ static void           interpolate_lanczos3     (PixelSurround *surround,
                                                 const gint     bytes,
                                                 guchar        *pixel,
                                                 const gfloat  *kernel_lookup);
-static void           decimate_average_pr      (PixelRegion   *srcPR,
-                                                const gint     x0,
-                                                const gint     y0,
-                                                const gint     x1,
-                                                const gint     y1,
-                                                guchar        *pixel);
 static void           interpolate_bilinear_pr  (PixelRegion   *srcPR,
                                                 const gint     x0,
                                                 const gint     y0,
@@ -318,143 +309,6 @@ scale_determine_progress (PixelRegion *srcPR,
   tiles += NUM_TILES (dstPR->w, dstPR->h);
 
   return tiles;
-}
-
-static void
-scale_region_buffer (PixelRegion *srcPR,
-                     PixelRegion *dstPR)
-{
-  PixelRegion  tmpPR0;
-  PixelRegion  tmpPR1;
-  const gint   bytes  = srcPR->bytes;
-  gint         width  = srcPR->w;
-  gint         height = srcPR->h;
-  gint         levelx = 0;
-  gint         levely = 0;
-
-  /* determine scaling levels */
-  scale_determine_levels (srcPR, dstPR, &levelx, &levely);
-
-  pixel_region_init_data (&tmpPR0,
-                          g_memdup (srcPR->data, width * height * bytes),
-                          bytes, width * bytes, 0, 0, width, height);
-
-  while (levelx < 0 && levely < 0)
-    {
-      width  <<= 1;
-      height <<= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-
-      levelx++;
-      levely++;
-    }
-
-  while (levelx < 0)
-    {
-      width <<= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-
-      levelx++;
-    }
-
-  while (levely < 0)
-    {
-      height <<= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-      levely++;
-    }
-
-  while (levelx > 0 && levely > 0)
-    {
-      width  >>= 1;
-      height >>= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-
-      levelx--;
-      levely--;
-    }
-
-  while (levelx > 0)
-    {
-      width <<= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-
-      levelx--;
-    }
-
-  while (levely > 0)
-    {
-      height <<= 1;
-
-      pixel_region_init_data (&tmpPR1,
-                              g_new (guchar, width * height * bytes),
-                              bytes, width * bytes, 0, 0, width, height);
-
-      scale_pr (&tmpPR0, &tmpPR1);
-
-      g_free (tmpPR0.data);
-      pixel_region_init_data (&tmpPR0,
-                              tmpPR1.data,
-                              bytes, width * bytes, 0, 0, width, height);
-
-      levely--;
-    }
-
-  scale_pr (&tmpPR0, dstPR);
-
-  g_free (tmpPR0.data);
-
-  return;
 }
 
 static void
@@ -1528,8 +1382,8 @@ interpolate_lanczos3 (PixelSurround *surround,
 }
 
 static void
-scale_pr (PixelRegion *srcPR,
-          PixelRegion *dstPR)
+scale_region_buffer (PixelRegion *srcPR,
+                     PixelRegion *dstPR)
 {
   const gdouble   scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
   const gdouble   scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
@@ -1538,8 +1392,6 @@ scale_pr (PixelRegion *srcPR,
   const gint      bytes      = srcPR->bytes;
   const gint      dst_width  = dstPR->w;
   const gint      dst_height = dstPR->h;
-  const gboolean  decimate   = (src_width  == 2 * dst_width ||
-                                src_height == 2 * dst_height);
   guchar         *pixel      = dstPR->data;
   gint            x, y;
 
@@ -1561,38 +1413,12 @@ scale_pr (PixelRegion *srcPR,
           sx1   = (sx1 < src_width - 1) ? sx1 : src_width - 1;
           xfrac =  xfrac - sx0;
 
-          if (decimate)
-            {
-              decimate_average_pr (srcPR, sx0, sy0, sx1, sy1, pixel);
-            }
-          else
-            {
-              interpolate_bilinear_pr (srcPR,
-                                       sx0, sy0, sx1, sy1, xfrac, yfrac,
-                                       pixel);
-            }
-
+          interpolate_bilinear_pr (srcPR,
+                                   sx0, sy0, sx1, sy1, xfrac, yfrac,
+                                   pixel);
           pixel += bytes;
         }
    }
-}
-
-static void
-decimate_average_pr (PixelRegion *srcPR,
-                     const gint   x0,
-                     const gint   y0,
-                     const gint   x1,
-                     const gint   y1,
-                     guchar      *pixel)
-{
-  const gint  bytes = srcPR->bytes;
-  const gint  width = srcPR->w;
-  guchar     *p1    = srcPR->data + (y0 * width + x0) * bytes;
-  guchar     *p2    = srcPR->data + (y0 * width + x1) * bytes;
-  guchar     *p3    = srcPR->data + (y1 * width + x0) * bytes;
-  guchar     *p4    = srcPR->data + (y1 * width + x1) * bytes;
-
-  pixel_average (p1, p2, p3, p4, pixel, bytes);
 }
 
 static void
