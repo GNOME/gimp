@@ -1,5 +1,11 @@
 2008-08-26  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/gimpmodule.c:
+	Don't set tp_new for PyGimpTile_Type and PyGimpPixelRgn_Type as both
+	don't have init functions.
+
+2008-08-26  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/pygimp-tile.c
 	(pf_init): Ensure that the python drawables gimp drawable is set.
 	(pf_dealloc): Don't crash if the pixel fetchers init function failed.

@@ -1811,7 +1811,6 @@ initgimp(void)
         return;
 
     PyGimpDisplay_Type.ob_type = &PyType_Type;
-    PyGimpDisplay_Type.ob_type = &PyType_Type;
     PyGimpDisplay_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpDisplay_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpDisplay_Type) < 0)
@@ -1831,13 +1830,11 @@ initgimp(void)
 
     PyGimpTile_Type.ob_type = &PyType_Type;
     PyGimpTile_Type.tp_alloc = PyType_GenericAlloc;
-    PyGimpTile_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpTile_Type) < 0)
         return;
 
     PyGimpPixelRgn_Type.ob_type = &PyType_Type;
     PyGimpPixelRgn_Type.tp_alloc = PyType_GenericAlloc;
-    PyGimpPixelRgn_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpPixelRgn_Type) < 0)
         return;
 
