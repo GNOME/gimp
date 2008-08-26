@@ -1,3 +1,10 @@
+2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-autoscroll.c
+	(gimp_display_shell_autoscroll_timeout): Pass the scroll amount in
+	variables that we can modify as we please before they actually
+	reach gimp_display_shell_scroll().
+
 2008-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): don't
