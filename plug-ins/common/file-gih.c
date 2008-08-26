@@ -906,7 +906,7 @@ gih_save_dialog (gint32 image_ID)
    * Spacing: __
    */
   spinbutton = gimp_spin_button_new (&adjustment, info.spacing,
-				     1, 1000, 1, 10, 10, 1, 0);
+				     1, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Spacing (percent):"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -936,7 +936,7 @@ gih_save_dialog (gint32 image_ID)
 
   spinbutton = gimp_spin_button_new (&adjustment,
 				     gihparams.cellwidth,
-				     2, gimp_image_width (image_ID), 1, 1, 1,
+				     2, gimp_image_width (image_ID), 1, 1, 0,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -959,7 +959,7 @@ gih_save_dialog (gint32 image_ID)
 
   spinbutton = gimp_spin_button_new (&adjustment,
 				     gihparams.cellheight,
-				     2, gimp_image_height (image_ID), 1, 1, 1,
+				     2, gimp_image_height (image_ID), 1, 1, 0,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -989,7 +989,7 @@ gih_save_dialog (gint32 image_ID)
    * Number of cells: ___
    */
   spinbutton = gimp_spin_button_new (&adjustment,
-				     gihparams.ncells, 1, 1000, 1, 10, 10,
+				     gihparams.ncells, 1, 1000, 1, 10, 0,
 				     1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Number of cells:"), 0.0, 0.5,
@@ -1049,7 +1049,7 @@ gih_save_dialog (gint32 image_ID)
    * Dimension: ___
    */
   spinbutton = gimp_spin_button_new (&adjustment, gihparams.dim,
-				     1, GIMP_PIXPIPE_MAXDIM, 1, 1, 1, 1, 0);
+				     1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Dimension:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -1069,7 +1069,7 @@ gih_save_dialog (gint32 image_ID)
       gint j;
 
       spinbutton = gimp_spin_button_new (&adjustment,
-					 gihparams.rank[i], 1, 100, 1, 1, 1,
+					 gihparams.rank[i], 1, 100, 1, 1, 0,
 					 1, 0);
       gtk_table_attach (GTK_TABLE (dimtable), spinbutton, 0, 1, i, i + 1,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

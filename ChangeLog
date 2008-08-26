@@ -1,3 +1,29 @@
+2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpwidgets.c
+
+	* plug-ins/common/file-xbm.c
+	* plug-ins/common/file-wmf.c
+	* plug-ins/common/file-svg.c
+	* plug-ins/common/file-gih.c
+	* plug-ins/common/blur-motion.c
+	* plug-ins/file-jpeg/jpeg-save.c
+	* plug-ins/lighting/lighting-ui.c
+	* plug-ins/map-object/map-object-ui.c
+
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimplevelstool.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/offset-dialog.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/dialogs/layer-options-dialog.c
+	* app/display/gimpdisplayshell-scale-dialog.c: Pass page_size = 0
+	to gimp_spin_button_new() to adapt to new and correct value
+	clamping in GTK+.
+
 2008-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-colorize.c (gimp_drawable_colorize): 

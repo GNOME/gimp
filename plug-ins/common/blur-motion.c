@@ -1082,7 +1082,7 @@ mblur_dialog (gint32        image_ID,
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  spinbutton = gimp_spin_button_new (&adj, 1, 0, 1, 1, 10, 1, 1, 2);
+  spinbutton = gimp_spin_button_new (&adj, 1, 0, 1, 1, 10, 0, 1, 2);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (entry), spinbutton, 1, 2, 0, 1);

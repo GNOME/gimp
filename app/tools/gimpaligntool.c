@@ -884,9 +884,9 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
                                      0,
-                                     -100000.,
-                                     100000.,
-                                     1., 20., 20., 1., 0);
+                                     -100000,
+                                     100000,
+                                     1, 20, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

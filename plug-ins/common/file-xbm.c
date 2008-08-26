@@ -1272,7 +1272,7 @@ save_dialog (gint32 drawable_ID)
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
 				     gimp_drawable_width (drawable_ID) - 1,
-				     1, 1, 1, 0, 0);
+				     1, 1, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Hot spot _X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -1282,7 +1282,7 @@ save_dialog (gint32 drawable_ID)
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
 				     gimp_drawable_height (drawable_ID) - 1,
-				     1, 1, 1, 0, 0);
+				     1, 1, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hot spot _Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);

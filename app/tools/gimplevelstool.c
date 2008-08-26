@@ -509,7 +509,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  input gamma spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->gamma[config->channel],
-                                     0.1, 10, 0.01, 0.1, 1, 0.5, 2);
+                                     0.1, 10, 0.01, 0.1, 0, 0.5, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);

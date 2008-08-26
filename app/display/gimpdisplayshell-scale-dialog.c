@@ -163,7 +163,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   spin = gimp_spin_button_new (&data->num_adj,
                                num, 1, 256,
-                               1, 8, 1, 1, 0);
+                               1, 8, 0, 1, 0);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
@@ -174,7 +174,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   spin = gimp_spin_button_new (&data->denom_adj,
                                denom, 1, 256,
-                               1, 8, 1, 1, 0);
+                               1, 8, 0, 1, 0);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);

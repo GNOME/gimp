@@ -585,7 +585,7 @@ load_dialog (const gchar *filename)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
-  spinbutton = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 1, 1, 2);
+  spinbutton = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -638,7 +638,7 @@ load_dialog (const gchar *filename)
                           ratio_x,
                           (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
                           (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
-                          0.01, 0.1, 1,
+                          0.01, 0.1, 0,
                           0.01, 4);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
@@ -660,7 +660,7 @@ load_dialog (const gchar *filename)
                           ratio_y,
                           (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
                           (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
-                          0.01, 0.1, 1,
+                          0.01, 0.1, 0,
                           0.01, 4);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);

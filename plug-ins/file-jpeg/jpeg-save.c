@@ -942,7 +942,7 @@ save_dialog (void)
   pg.restart = restart_markers_scale = spinbutton =
     gimp_spin_button_new (&pg.scale_data,
                           (jsvals.restart == 0) ? 1 : jsvals.restart,
-                          1.0, 64.0, 1.0, 1.0, 64.0, 1.0, 0);
+                          1.0, 64.0, 1.0, 1.0, 0, 1.0, 0);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 5, 6, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
