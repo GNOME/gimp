@@ -1,3 +1,10 @@
+2008-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): don't
+	hardcode the attach coords for the fixed containing the dynamics
+	labels but use the table's real width instead. Fixes broken table
+	layout in the airbrush options.
+
 2008-08-26  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-surround.c: attempt to fix the newly introduced
