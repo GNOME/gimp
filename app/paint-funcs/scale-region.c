@@ -1475,7 +1475,8 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
       for (b = 0; b < 3; b++)
         {
           sum  = weighted_sum (xfrac, yfrac, p1[b], p2[b], p3[b], p4[b]);
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+
+          pixel[b] = CLAMP (sum, 0, 255);
         }
       break;
 
