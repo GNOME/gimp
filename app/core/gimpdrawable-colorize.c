@@ -78,6 +78,8 @@ gimp_drawable_colorize (GimpDrawable *drawable,
     {
       Colorize cruft;
 
+      colorize_init (&cruft);
+
       gimp_colorize_config_to_cruft (config, &cruft);
 
       gimp_drawable_process (drawable, progress, _("Colorize"),

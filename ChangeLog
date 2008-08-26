@@ -1,3 +1,8 @@
+2008-08-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-colorize.c (gimp_drawable_colorize): 
+	added missing call to colorize_init().
+
 2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scroll.c
