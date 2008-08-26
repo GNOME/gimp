@@ -75,6 +75,8 @@ pixel_surround_new (TileManager       *tiles,
   PixelSurround *surround;
 
   g_return_val_if_fail (tiles != NULL, NULL);
+  g_return_val_if_fail (width < TILE_WIDTH, NULL);
+  g_return_val_if_fail (height < TILE_WIDTH, NULL);
 
   surround = g_slice_new0 (PixelSurround);
 
@@ -331,77 +333,73 @@ pixel_surround_get_data (PixelSurround *surround,
       return tile_data_pointer (surround->tile, x, y);
     }
 
-  switch (surround->mode)
+  if (surround->mode == PIXEL_SURROUND_SMEAR)
     {
-    case PIXEL_SURROUND_SMEAR:
-      {
-        const guchar *edata;
-        gint          ex = x;
-        gint          ey = y;
-        gint          estride;
-        gint          ecode = 0;
+      const guchar *edata;
+      gint          ex = x;
+      gint          ey = y;
+      gint          ew, eh;
+      gint          estride;
+      gint          ecode = 0;
 
-        if (ex < 0)
-          {
-            ex = 0;
-            ecode |= LEFT;
-          }
-        else if (ex > surround->xmax)
-          {
-            ex = surround->xmax;
-            ecode |= RIGHT;
-          }
+      if (ex < 0)
+        {
+          ex = 0;
+          ecode |= LEFT;
+        }
+      else if (ex > surround->xmax)
+        {
+          ex = surround->xmax;
+          ecode |= RIGHT;
+        }
 
-        if (ey < 0)
-          {
-            ey = 0;
-            ecode |= TOP;
-          }
-        else if (ey > surround->ymax)
-          {
-            ey = surround->ymax;
-            ecode |= BOTTOM;
-          }
+      if (ey < 0)
+        {
+          ey = 0;
+          ecode |= TOP;
+        }
+      else if (ey > surround->ymax)
+        {
+          ey = surround->ymax;
+          ecode |= BOTTOM;
+        }
 
-        /*  call ourselves with corrected coordinates  */
-        edata = pixel_surround_get_data (surround, ex, ey, w, h, &estride);
+      /*  call ourselves with corrected coordinates  */
+      edata = pixel_surround_get_data (surround, ex, ey, &ew, &eh, &estride);
 
-        /*  fill the virtual background tile  */
-        switch (ecode)
-          {
-          case (TOP | LEFT):
-          case (TOP | RIGHT):
-          case (BOTTOM | LEFT):
-          case (BOTTOM | RIGHT):
-            pixel_surround_set_bg (surround, edata);
-            break;
+      /*  fill the virtual background tile  */
+      switch (ecode)
+        {
+        case (TOP | LEFT):
+        case (TOP | RIGHT):
+        case (BOTTOM | LEFT):
+        case (BOTTOM | RIGHT):
+          pixel_surround_set_bg (surround, edata);
+          break;
 
-          case (TOP):
-          case (BOTTOM):
-            pixel_surround_fill_row (surround, edata, *w);
-            break;
+        case (TOP):
+        case (BOTTOM):
+          pixel_surround_fill_row (surround, edata, ew);
+          break;
 
-          case (LEFT):
-          case (RIGHT):
-            pixel_surround_fill_col (surround, edata, estride, *h);
-            break;
-          }
-      }
-      break;
-
-    case PIXEL_SURROUND_BACKGROUND:
-      if (x < 0)
-        *w = MIN (- x, surround->w);
-      else
-        *w = surround->w;
-      if (y < 0)
-        *h = MIN (- y, surround->h);
-      else
-        *h = surround->h;
-      break;
+        case (LEFT):
+        case (RIGHT):
+          pixel_surround_fill_col (surround, edata, estride, eh);
+          break;
+        }
     }
 
   /*   return a pointer to the virtual background tile  */
+
+  if (x < 0)
+    *w = MIN (- x, surround->w);
+  else
+    *w = surround->w;
+
+  if (y < 0)
+    *h = MIN (- y, surround->h);
+  else
+    *h = surround->h;
 
   *rowstride = surround->rowstride;
 
