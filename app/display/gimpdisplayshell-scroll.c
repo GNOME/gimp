@@ -94,6 +94,9 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  if (x_offset == 0 && y_offset == 0)
+    return;
+
   old_x = shell->offset_x;
   old_y = shell->offset_y;
 

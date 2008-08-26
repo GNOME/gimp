@@ -1,5 +1,11 @@
 2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scroll.c
+	(gimp_display_shell_scroll): If no scroll should be applied we can
+	return early.
+
+2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-autoscroll.c
 	(gimp_display_shell_autoscroll_timeout): Pass the scroll amount in
 	variables that we can modify as we please before they actually
