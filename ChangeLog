@@ -1,3 +1,8 @@
+2008-08-26  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-surround.c: attempt to fix the newly introduced
+	smear edge mode.
+
 2008-08-25  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-region.c: use PixelSurround to access the

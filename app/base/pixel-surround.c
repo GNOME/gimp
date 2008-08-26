@@ -49,99 +49,13 @@ struct _PixelSurround
   PixelSurroundMode  mode;
 };
 
+static const guchar * pixel_surround_get_data (PixelSurround *surround,
+                                               gint           x,
+                                               gint           y,
+                                               gint          *w,
+                                               gint          *h,
+                                               gint          *rowstride);
 
-/*  inlining this function gives a few percent speedup  */
-static inline const guchar *
-pixel_surround_get_data (PixelSurround *surround,
-                         gint           x,
-                         gint           y,
-                         gint          *w,
-                         gint          *h,
-                         gint          *rowstride)
-{
-  /*  do we still have a tile lock that we can use?  */
-  if (surround->tile)
-    {
-      if (x < surround->tile_x || x >= surround->tile_x + surround->tile_w ||
-          y < surround->tile_y || y >= surround->tile_y + surround->tile_h)
-        {
-          tile_release (surround->tile, FALSE);
-          surround->tile = NULL;
-        }
-    }
-
-  /*  if not, try to get one for the target pixel  */
-  if (! surround->tile)
-    {
-      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
-
-      if (surround->tile)
-        {
-          /*  store offset and size of the locked tile  */
-          surround->tile_x = x & ~(TILE_WIDTH - 1);
-          surround->tile_y = y & ~(TILE_HEIGHT - 1);
-          surround->tile_w = tile_ewidth (surround->tile);
-          surround->tile_h = tile_eheight (surround->tile);
-        }
-    }
-
-  if (surround->tile)
-    {
-      *w = surround->tile_x + surround->tile_w - x;
-      *h = surround->tile_y + surround->tile_h - y;
-
-      *rowstride = surround->tile_w * surround->bpp;
-
-      return tile_data_pointer (surround->tile, x, y);
-    }
-  else if (surround->mode == PIXEL_SURROUND_SMEAR)
-    {
-      gint dummy;
-
-      if (x < 0)
-        {
-          x = 0;
-          *w = 1;
-        }
-      else if (x > surround->xmax)
-        {
-          x = surround->xmax;
-          *w = 1;
-        }
-
-      if (y < 0)
-        {
-          y = 0;
-          *h = 1;
-        }
-      else if (y > surround->ymax)
-        {
-          y = surround->ymax;
-          *h = 1;
-        }
-
-      /*  call ourselves with corrected coordinates  */
-      return pixel_surround_get_data (surround,
-                                      x, y, &dummy, &dummy, rowstride);
-    }
-  else
-    {
-      /*   return a pointer to a virtual background tile  */
-      if (x < 0)
-        *w = MIN (- x, surround->w);
-      else
-        *w = surround->w;
-
-      if (y < 0)
-        *h = MIN (- y, surround->h);
-      else
-        *h = surround->h;
-
-      *rowstride = surround->rowstride;
-
-      return surround->bg;
-    }
-}
 
 /**
  * pixel_surround_new:
@@ -318,4 +232,178 @@ pixel_surround_destroy (PixelSurround *surround)
   g_free (surround->bg);
 
   g_slice_free (PixelSurround, surround);
+}
+
+
+enum
+{
+  LEFT   = 1 << 0,
+  RIGHT  = 1 << 1,
+  TOP    = 1 << 2,
+  BOTTOM = 1 << 3
+};
+
+static void
+pixel_surround_fill_row (PixelSurround *surround,
+                         const guchar  *src,
+                         gint           w)
+{
+  guchar *dest  = surround->bg;
+  gint    bytes = MIN (w, surround->w) * surround->bpp;
+  gint    rows  = surround->h;
+
+  while (rows--)
+    {
+      memcpy (dest, src, bytes);
+      dest += surround->rowstride;
+    }
+}
+
+static void
+pixel_surround_fill_col (PixelSurround *surround,
+                         const guchar  *src,
+                         gint           rowstride,
+                         gint           h)
+{
+  guchar *dest = surround->bg;
+  gint    cols = surround->w;
+  gint    rows = MIN (h, surround->h);
+
+  while (cols--)
+    {
+      const guchar *s = src;
+      guchar       *d = dest;
+      gint          r = rows;
+
+      while (r--)
+        {
+          memcpy (d, s, surround->bpp);
+
+          s += rowstride;
+          d += surround->rowstride;
+        }
+
+      dest += surround->bpp;
+    }
+}
+
+static const guchar *
+pixel_surround_get_data (PixelSurround *surround,
+                         gint           x,
+                         gint           y,
+                         gint          *w,
+                         gint          *h,
+                         gint          *rowstride)
+{
+  /*  do we still have a tile lock that we can use?  */
+  if (surround->tile)
+    {
+      if (x < surround->tile_x || x >= surround->tile_x + surround->tile_w ||
+          y < surround->tile_y || y >= surround->tile_y + surround->tile_h)
+        {
+          tile_release (surround->tile, FALSE);
+          surround->tile = NULL;
+        }
+    }
+
+  /*  if not, try to get one for the target pixel  */
+  if (! surround->tile)
+    {
+      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+
+      if (surround->tile)
+        {
+          /*  store offset and size of the locked tile  */
+          surround->tile_x = x & ~(TILE_WIDTH - 1);
+          surround->tile_y = y & ~(TILE_HEIGHT - 1);
+          surround->tile_w = tile_ewidth (surround->tile);
+          surround->tile_h = tile_eheight (surround->tile);
+        }
+    }
+
+  if (surround->tile)
+    {
+      *w = surround->tile_x + surround->tile_w - x;
+      *h = surround->tile_y + surround->tile_h - y;
+
+      *rowstride = surround->tile_w * surround->bpp;
+
+      return tile_data_pointer (surround->tile, x, y);
+    }
+
+  switch (surround->mode)
+    {
+    case PIXEL_SURROUND_SMEAR:
+      {
+        const guchar *edata;
+        gint          ex = x;
+        gint          ey = y;
+        gint          estride;
+        gint          ecode = 0;
+
+        if (ex < 0)
+          {
+            ex = 0;
+            ecode |= LEFT;
+          }
+        else if (ex > surround->xmax)
+          {
+            ex = surround->xmax;
+            ecode |= RIGHT;
+          }
+
+        if (ey < 0)
+          {
+            ey = 0;
+            ecode |= TOP;
+          }
+        else if (ey > surround->ymax)
+          {
+            ey = surround->ymax;
+            ecode |= BOTTOM;
+          }
+
+        /*  call ourselves with corrected coordinates  */
+        edata = pixel_surround_get_data (surround, ex, ey, w, h, &estride);
+
+        /*  fill the virtual background tile  */
+        switch (ecode)
+          {
+          case (TOP | LEFT):
+          case (TOP | RIGHT):
+          case (BOTTOM | LEFT):
+          case (BOTTOM | RIGHT):
+            pixel_surround_set_bg (surround, edata);
+            break;
+
+          case (TOP):
+          case (BOTTOM):
+            pixel_surround_fill_row (surround, edata, *w);
+            break;
+
+          case (LEFT):
+          case (RIGHT):
+            pixel_surround_fill_col (surround, edata, estride, *h);
+            break;
+          }
+      }
+      break;
+
+    case PIXEL_SURROUND_BACKGROUND:
+      if (x < 0)
+        *w = MIN (- x, surround->w);
+      else
+        *w = surround->w;
+      if (y < 0)
+        *h = MIN (- y, surround->h);
+      else
+        *h = surround->h;
+      break;
+    }
+
+  /*   return a pointer to the virtual background tile  */
+
+  *rowstride = surround->rowstride;
+
+  return surround->bg;
 }
