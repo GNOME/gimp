@@ -905,10 +905,12 @@ gaussian_lanczos2 (const guchar *src,
                       s4[16 + b] * s4[19]);
 
               sum /= alphasum;
+
               pixel[b] = CLAMP (sum, 0, 255);
             }
 
           alpha = alphasum / 1024;
+
           pixel[3] = CLAMP (alpha, 0, 255);
         }
       else
@@ -1038,7 +1040,8 @@ interpolate_bilinear (PixelSurround *surround,
     {
     case 1:
       sum = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
-      pixel[0] = (guchar) CLAMP (sum, 0, 255);
+
+      pixel[0] = CLAMP (sum, 0, 255);
       break;
 
     case 2:
@@ -1050,8 +1053,8 @@ interpolate_bilinear (PixelSurround *surround,
                               p3[0] * p3[1], p4[0] * p4[1]);
           sum /= alphasum;
 
-          pixel[0] = (guchar) CLAMP (sum, 0, 255);
-          pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[0] = CLAMP (sum, 0, 255);
+          pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1063,7 +1066,8 @@ interpolate_bilinear (PixelSurround *surround,
       for (b = 0; b < 3; b++)
         {
           sum = weighted_sum (xfrac, yfrac, p1[b], p2[b], p3[b], p4[b]);
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+
+          pixel[b] = CLAMP (sum, 0, 255);
         }
       break;
 
@@ -1077,10 +1081,11 @@ interpolate_bilinear (PixelSurround *surround,
                                   p1[b] * p1[3], p2[b] * p2[3],
                                   p3[b] * p3[3], p4[b] * p4[3]);
               sum /= alphasum;
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+
+              pixel[b] = CLAMP (sum, 0, 255);
             }
 
-          pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1137,7 +1142,7 @@ interpolate_cubic (PixelSurround *surround,
 
       sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
-      pixel[0]= (guchar) CLAMP (sum, 0, 255);
+      pixel[0]= CLAMP (sum, 0, 255);
       break;
 
     case 2:
@@ -1166,8 +1171,8 @@ interpolate_cubic (PixelSurround *surround,
           sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
           sum /= alphasum;
 
-          pixel[0] = (guchar) CLAMP (sum, 0, 255);
-          pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[0] = CLAMP (sum, 0, 255);
+          pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1185,7 +1190,7 @@ interpolate_cubic (PixelSurround *surround,
 
           sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
 
-          pixel[b] = (guchar) CLAMP (sum, 0, 255);
+          pixel[b] = CLAMP (sum, 0, 255);
         }
       break;
 
@@ -1217,10 +1222,10 @@ interpolate_cubic (PixelSurround *surround,
               sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
               sum /= alphasum;
 
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+              pixel[b] = CLAMP (sum, 0, 255);
             }
 
-          pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1331,7 +1336,7 @@ interpolate_lanczos3 (PixelSurround *surround,
     case 1:
       sum = lanczos3_mul (src, x_kernel, y_kernel, stride, 1, 0);
 
-      pixel[0] = CLAMP ((gint) sum, 0, 255);
+      pixel[0] = CLAMP (sum, 0, 255);
       break;
 
     case 2:
