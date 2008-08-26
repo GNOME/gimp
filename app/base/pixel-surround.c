@@ -62,7 +62,11 @@ static const guchar * pixel_surround_get_data (PixelSurround *surround,
  * @tiles:  tile manager
  * @width:  width of surround region
  * @height: height of surround region
- * @bg:     color to use for pixels that are not covered by the tile manager
+ * @mode:   how to deal with pixels that are not covered by the tile manager
+ *
+ * PixelSurround provides you a contiguous read-only view of the area
+ * surrounding a pixel. It is an efficient pixel access strategy for
+ * interpolation algorithms.
  *
  * Return value: a new #PixelSurround.
  */
@@ -94,6 +98,15 @@ pixel_surround_new (TileManager       *tiles,
   return surround;
 }
 
+/**
+ * pixel_surround_set_bg:
+ * @surround: a #PixelSurround
+ * @bg:       background color
+ *
+ * This sets the color that the #PixelSurround uses when in
+ * %PIXEL_SURROUND_BACKGROUND mode for pixels that are not covered by
+ * the tile manager.
+ */
 void
 pixel_surround_set_bg (PixelSurround *surround,
                        const guchar  *bg)
