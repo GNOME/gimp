@@ -5,7 +5,7 @@
 
 2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-scroll.[ch]
 	(gimp_display_shell_scroll_unoverscrollify): New function.
 
 	* app/display/gimpdisplayshell-autoscroll.c

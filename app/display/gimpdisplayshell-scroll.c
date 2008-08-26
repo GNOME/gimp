@@ -310,7 +310,7 @@ gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
     }
   else if (in_offset_y > 0)
     {
-      gint min_offset = sh - shell->disp_width;
+      gint min_offset = sh - shell->disp_height;
 
       *out_offset_y = MIN (in_offset_y,
                            MAX (0, min_offset - shell->offset_y));
