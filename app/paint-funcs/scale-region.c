@@ -49,10 +49,7 @@ static gint           scale_determine_progress (PixelRegion           *srcPR,
                                                 gint                   levely);
 
 static void           scale_region_buffer      (PixelRegion           *srcPR,
-                                                PixelRegion           *dstPR,
-                                                GimpInterpolationType  interpolation,
-                                                GimpProgressFunc       progress_callback,
-                                                gpointer               progress_data);
+                                                PixelRegion           *dstPR);
 static void           scale_region_tile        (PixelRegion           *srcPR,
                                                 PixelRegion           *dstPR,
                                                 GimpInterpolationType  interpolation,
@@ -66,8 +63,7 @@ static void           scale                    (TileManager           *srcTM,
                                                 gint                  *progress,
                                                 gint                   max_progress);
 static void           scale_pr                 (PixelRegion           *srcPR,
-                                                PixelRegion           *dstPR,
-                                                GimpInterpolationType  interpolation);
+                                                PixelRegion           *dstPR);
 
 static void           interpolate_nearest      (TileManager   *srcTM,
                                                 const gint     x0,
@@ -188,8 +184,10 @@ scale_region (PixelRegion           *srcPR,
 
   if (srcPR->tiles == NULL && srcPR->data != NULL)
     {
-      scale_region_buffer (srcPR, dstPR, interpolation,
-                           progress_callback, progress_data);
+      g_return_if_fail (interpolation == GIMP_INTERPOLATION_LINEAR);
+      g_return_if_fail (progress_callback == NULL);
+
+      scale_region_buffer (srcPR, dstPR);
       return;
     }
 
@@ -263,7 +261,7 @@ scale_determine_progress (PixelRegion *srcPR,
   gint height = srcPR->h;
   gint tiles  = 0;
 
-  /*  The logic here should be kept in sync with scale_region_buffer().  */
+  /*  The logic here should be kept in sync with scale_region_tile().  */
 
   while (levelx < 0 && levely < 0)
     {
@@ -323,24 +321,19 @@ scale_determine_progress (PixelRegion *srcPR,
 }
 
 static void
-scale_region_buffer (PixelRegion           *srcPR,
-                     PixelRegion           *dstPR,
-                     GimpInterpolationType  interpolation,
-                     GimpProgressFunc       progress_callback,
-                     gpointer               progress_data)
+scale_region_buffer (PixelRegion *srcPR,
+                     PixelRegion *dstPR)
 {
   PixelRegion  tmpPR0;
   PixelRegion  tmpPR1;
-  gint         width        = srcPR->w;
-  gint         height       = srcPR->h;
-  gint         bytes        = srcPR->bytes;
-  gint         max_progress = 0;
-  gint         levelx       = 0;
-  gint         levely       = 0;
+  const gint   bytes  = srcPR->bytes;
+  gint         width  = srcPR->w;
+  gint         height = srcPR->h;
+  gint         levelx = 0;
+  gint         levely = 0;
 
   /* determine scaling levels */
   scale_determine_levels (srcPR, dstPR, &levelx, &levely);
-  max_progress = scale_determine_progress (srcPR, dstPR, levelx, levely);
 
   pixel_region_init_data (&tmpPR0,
                           g_memdup (srcPR->data, width * height * bytes),
@@ -355,7 +348,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -374,7 +367,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -392,7 +385,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -410,7 +403,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -429,7 +422,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -447,7 +440,7 @@ scale_region_buffer (PixelRegion           *srcPR,
                               g_new (guchar, width * height * bytes),
                               bytes, width * bytes, 0, 0, width, height);
 
-      scale_pr (&tmpPR0, &tmpPR1, interpolation);
+      scale_pr (&tmpPR0, &tmpPR1);
 
       g_free (tmpPR0.data);
       pixel_region_init_data (&tmpPR0,
@@ -457,7 +450,7 @@ scale_region_buffer (PixelRegion           *srcPR,
       levely--;
     }
 
-  scale_pr (&tmpPR0, dstPR, interpolation);
+  scale_pr (&tmpPR0, dstPR);
 
   g_free (tmpPR0.data);
 
@@ -1535,9 +1528,8 @@ interpolate_lanczos3 (PixelSurround *surround,
 }
 
 static void
-scale_pr (PixelRegion           *srcPR,
-          PixelRegion           *dstPR,
-          GimpInterpolationType  interpolation)
+scale_pr (PixelRegion *srcPR,
+          PixelRegion *dstPR)
 {
   const gdouble   scalex     = (gdouble) dstPR->w / (gdouble) srcPR->w;
   const gdouble   scaley     = (gdouble) dstPR->h / (gdouble) srcPR->h;
@@ -1569,28 +1561,20 @@ scale_pr (PixelRegion           *srcPR,
           sx1   = (sx1 < src_width - 1) ? sx1 : src_width - 1;
           xfrac =  xfrac - sx0;
 
-          switch (interpolation)
+          if (decimate)
             {
-            case GIMP_INTERPOLATION_NONE:
-            case GIMP_INTERPOLATION_LINEAR:
-            case GIMP_INTERPOLATION_CUBIC:
-            case GIMP_INTERPOLATION_LANCZOS:
-              if (decimate)
-                {
-                  decimate_average_pr (srcPR, sx0, sy0, sx1, sy1, pixel);
-                }
-              else
-                {
-                  interpolate_bilinear_pr (srcPR,
-                                           sx0, sy0, sx1, sy1, xfrac, yfrac,
-                                           pixel);
-                }
-              break;
+              decimate_average_pr (srcPR, sx0, sy0, sx1, sy1, pixel);
+            }
+          else
+            {
+              interpolate_bilinear_pr (srcPR,
+                                       sx0, sy0, sx1, sy1, xfrac, yfrac,
+                                       pixel);
             }
 
           pixel += bytes;
         }
-    }
+   }
 }
 
 static void
@@ -1634,18 +1618,21 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
     {
     case 1:
       sum = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
-      pixel[0] = (guchar) CLAMP (sum, 0, 255);
+
+      pixel[0] = CLAMP (sum, 0, 255);
       break;
 
     case 2:
       alphasum = weighted_sum (xfrac, yfrac, p1[1], p2[1], p3[1], p4[1]);
       if (alphasum > 0)
         {
-          sum  = weighted_sum (xfrac, yfrac, p1[0] * p1[1], p2[0] * p2[1],
+          sum  = weighted_sum (xfrac, yfrac,
+                               p1[0] * p1[1], p2[0] * p2[1],
                                p3[0] * p3[1], p4[0] * p4[1]);
           sum /= alphasum;
-          pixel[0] = (guchar) CLAMP (sum, 0, 255);
-          pixel[1] = (guchar) CLAMP (alphasum, 0, 255);
+
+          pixel[0] = CLAMP (sum, 0, 255);
+          pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
         {
@@ -1667,13 +1654,15 @@ interpolate_bilinear_pr (PixelRegion    *srcPR,
         {
           for (b = 0; b < 3; b++)
             {
-              sum  = weighted_sum (xfrac, yfrac, p1[b] * p1[3], p2[b] * p2[3],
+              sum  = weighted_sum (xfrac, yfrac,
+                                   p1[b] * p1[3], p2[b] * p2[3],
                                    p3[b] * p3[3], p4[b] * p4[3]);
               sum /= alphasum;
-              pixel[b] = (guchar) CLAMP (sum, 0, 255);
+
+              pixel[b] = CLAMP (sum, 0, 255);
             }
 
-          pixel[3] = (guchar) CLAMP (alphasum, 0, 255);
+          pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
         {

@@ -1,3 +1,8 @@
+2008-08-26  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c: removed some unused parameters
+	from the code that is used for brush scaling. Added sanity checks.
+
 2008-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpwidgets.c
