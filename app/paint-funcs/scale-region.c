@@ -569,7 +569,12 @@ scale (TileManager           *srcTM,
         }
 
       if (progress_callback)
-        progress_callback (0, max_progress, ((*progress)++), progress_data);
+        {
+          (*progress)++;
+
+          if (*progress % 8 == 0)
+            progress_callback (0, max_progress, *progress, progress_data);
+        }
     }
 
   if (kernel_lookup)

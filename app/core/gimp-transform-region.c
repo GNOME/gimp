@@ -117,50 +117,50 @@ static inline void  normalize_coords       (const gint         coords,
                                             gdouble           *u,
                                             gdouble           *v);
 
-static inline gboolean supersample_dtest   (gdouble u0,
-                                            gdouble v0,
-                                            gdouble u1,
-                                            gdouble v1,
-                                            gdouble u2,
-                                            gdouble v2,
-                                            gdouble u3,
-                                            gdouble v3);
+static inline gboolean supersample_dtest   (const gdouble u0,
+                                            const gdouble v0,
+                                            const gdouble u1,
+                                            const gdouble v1,
+                                            const gdouble u2,
+                                            const gdouble v2,
+                                            const gdouble u3,
+                                            const gdouble v3);
 
 static void     sample_adapt      (PixelSurround *surround,
-                                   gdouble        uc,
-                                   gdouble        vc,
-                                   gdouble        u0,
-                                   gdouble        v0,
-                                   gdouble        u1,
-                                   gdouble        v1,
-                                   gdouble        u2,
-                                   gdouble        v2,
-                                   gdouble        u3,
-                                   gdouble        v3,
-                                   gint           level,
+                                   const gdouble  uc,
+                                   const gdouble  vc,
+                                   const gdouble  u0,
+                                   const gdouble  v0,
+                                   const gdouble  u1,
+                                   const gdouble  v1,
+                                   const gdouble  u2,
+                                   const gdouble  v2,
+                                   const gdouble  u3,
+                                   const gdouble  v3,
+                                   const  gint    level,
                                    guchar        *color,
-                                   gint           bpp,
-                                   gint           alpha);
+                                   const gint     bpp,
+                                   const gint     alpha);
 
 static void     sample_linear     (PixelSurround *surround,
-                                   gdouble        u,
-                                   gdouble        v,
+                                   const gdouble  u,
+                                   const gdouble  v,
                                    guchar        *color,
-                                   gint           bytes,
-                                   gint           alpha);
+                                   const gint     bytes,
+                                   const gint     alpha);
 static void     sample_cubic      (PixelSurround *surround,
-                                   gdouble        u,
-                                   gdouble        v,
+                                   const gdouble  u,
+                                   const gdouble  v,
                                    guchar        *color,
-                                   gint           bytes,
-                                   gint           alpha);
+                                   const gint     bytes,
+                                   const gint     alpha);
 static void     sample_lanczos    (PixelSurround *surround,
                                    const gfloat  *lanczos,
-                                   gdouble        u,
-                                   gdouble        v,
+                                   const gdouble  u,
+                                   const gdouble  v,
                                    guchar        *color,
-                                   gint           bytes,
-                                   gint           alpha);
+                                   const gint     bytes,
+                                   const gint     alpha);
 
 
 /*  public functions  */

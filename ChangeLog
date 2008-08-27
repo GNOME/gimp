@@ -1,5 +1,12 @@
 2008-08-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-transform-region.c: sprinkled more const qualifiers.
+
+	* app/paint-funcs/scale-region.c: call the progress callback less
+	often.
+
+2008-08-27  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformtool.c: moved hiding the dialog from 
 	gimp_transform_tool_real_transform() to gimp_transform_tool_doit().
 	Delay undrawing the preview in doit() until the transformation is
