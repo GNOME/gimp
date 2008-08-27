@@ -944,7 +944,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
     {
       GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
-      if (! menu_item)
+      if (! menu_item && GTK_IS_MENU (widget))
         {
           GdkWindow *window = GTK_MENU (widget)->toplevel->window;
           gint       x, y;

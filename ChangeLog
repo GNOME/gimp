@@ -1,3 +1,10 @@
+2008-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_item_key_press):
+	try the find_widget_under_pointer() hack only if the menu item's
+	parent is really a GtkMenu (not a GtkMenuBar). Fixes crash spotted
+	by rubikcube.
+
 2008-08-27  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-tile.c
