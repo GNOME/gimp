@@ -1699,17 +1699,11 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gboolean              show_transform;
 
-  if ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
-       options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
-      options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
-      options->direction    == GIMP_TRANSFORM_FORWARD)
-    {
-      show_transform = TRUE;
-    }
-  else
-    {
-      show_transfor = FALSE;
-    }
+  show_transform =
+    ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
+      options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
+     options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
+     options->direction    == GIMP_TRANSFORM_FORWARD);
 
   gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
                                          show_transform);
