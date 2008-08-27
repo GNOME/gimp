@@ -1,5 +1,10 @@
 2008-08-27  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_real_transform):
+	hide the tool dialog before starting to perform the transformation.
+
+2008-08-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.c: also use PixelSurround for the
 	linear interpolation. Sprinkled some const qualifiers.
 

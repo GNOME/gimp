@@ -1066,7 +1066,10 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   TileManager          *ret  = NULL;
 
   if (tr_tool->dialog)
-    gtk_widget_set_sensitive (tr_tool->dialog, FALSE);
+    {
+      gtk_widget_set_sensitive (tr_tool->dialog, FALSE);
+      gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+    }
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   tr_tool->progress_text, FALSE);
@@ -1694,16 +1697,22 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  gboolean              show_transform;
 
   if ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
        options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
       options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
       options->direction    == GIMP_TRANSFORM_FORWARD)
-    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
-                                           TRUE);
+    {
+      show_transform = TRUE;
+    }
   else
-    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
-                                           FALSE);
+    {
+      show_transfor = FALSE;
+    }
+
+  gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
+                                         show_transform);
 
   if (tr_tool->dialog)
     {
