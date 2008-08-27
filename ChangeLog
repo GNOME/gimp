@@ -1,3 +1,11 @@
+2008-08-27  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/pygimp-tile.c
+	(pr_subscript): Removed some unnecessary g_new/g_free and improved 
+	range checking.
+	(pr_ass_sub): Improved range checking.
+	(pygimp_pixel_rgn_new): Clamp pixel region size to the drawable's size.
+
 2008-08-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-transform-region.c: sprinkled more const qualifiers.
