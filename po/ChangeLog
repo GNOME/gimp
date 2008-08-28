@@ -1,3 +1,8 @@
+2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* fr.po: Fix 'Foreground' and 'Background' being swapped in the
+	French translation.
+
 2008-07-21  Ihar Hrachyshka <ihar.hrachyshka@gmail.com>
 
 	* be.po: Updated Belarusian translation by Hleb Valoshka.

@@ -2040,12 +2040,12 @@ msgstr "Couleur de p_remier plan"
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
 msgid "Fo_reground Color (Transparent)"
-msgstr "Couleur d'arrière-plan (transparent)"
+msgstr "Couleur de premier plan (transparent)"
 
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
 msgid "B_ackground Color (Transparent)"
-msgstr "Couleur de premier plan (transparent)"
+msgstr "Couleur d'arrière-plan (transparent)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
