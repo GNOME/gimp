@@ -386,9 +386,17 @@ N_("When the amount of pixel data exceeds this limit, GIMP will start to " \
    "work on images that wouldn't fit into memory otherwise.  If you have a " \
    "lot of RAM, you may want to set this to a higher value.")
 
-#define TOOLBOX_COLOR_AREA_BLURB NULL
-#define TOOLBOX_FOO_AREA_BLURB NULL
-#define TOOLBOX_IMAGE_AREA_BLURB NULL
+#define TOOLBOX_COLOR_AREA_BLURB \
+N_("Show the current foreground and background colors in the toolbox.")
+
+#define TOOLBOX_FOO_AREA_BLURB \
+N_("Show the currently selected brush, pattern and gradient in the toolbox.")
+
+#define TOOLBOX_IMAGE_AREA_BLURB \
+N_("Show the currently active image in the toolbox.")
+
+#define TOOLBOX_WILBER_BLURB \
+"Show the GIMP mascot at the top of the toolbox."
 
 #define TOOLBOX_WINDOW_HINT_BLURB \
 N_("The window type hint that is set on the toolbox. This may affect " \

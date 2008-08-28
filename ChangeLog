@@ -1,3 +1,13 @@
+2008-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.[ch]: allow to disable the Wilber image
+	shown at the top of the toolbox.
+
+	* app/widgets/gimptoolbox.c: honor the new gimprc option.
+
+	* app/config/gimprc-blurbs.h: document the old and new toolbox
+	preferences.
+
 2008-08-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangletool.c: some tiny formatting fixes.

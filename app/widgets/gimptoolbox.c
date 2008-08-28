@@ -97,34 +97,38 @@ static GtkWidget * toolbox_create_foo_area         (GimpToolbox    *toolbox,
 static GtkWidget * toolbox_create_image_area       (GimpToolbox    *toolbox,
                                                     GimpContext    *context);
 
-static void        toolbox_area_notify           (GimpGuiConfig  *config,
-                                                  GParamSpec     *pspec,
-                                                  GtkWidget      *area);
-static void        toolbox_tool_changed          (GimpContext    *context,
-                                                  GimpToolInfo   *tool_info,
-                                                  gpointer        data);
+static void        toolbox_area_notify             (GimpGuiConfig  *config,
+                                                    GParamSpec     *pspec,
+                                                    GtkWidget      *area);
+static void        toolbox_wilber_notify           (GimpGuiConfig  *config,
+                                                    GParamSpec     *pspec,
+                                                    GtkWidget      *wilber);
 
-static void        toolbox_tool_reorder          (GimpContainer  *container,
-                                                  GimpToolInfo   *tool_info,
-                                                  gint            index,
-                                                  GtkWidget      *wrap_box);
-static void        toolbox_tool_visible_notify   (GimpToolInfo   *tool_info,
-                                                  GParamSpec     *pspec,
-                                                  GtkWidget      *button);
+static void        toolbox_tool_changed            (GimpContext    *context,
+                                                    GimpToolInfo   *tool_info,
+                                                    gpointer        data);
 
-static void        toolbox_tool_button_toggled   (GtkWidget      *widget,
-                                                  GimpToolInfo   *tool_info);
-static gboolean    toolbox_tool_button_press     (GtkWidget      *widget,
-                                                  GdkEventButton *bevent,
-                                                  GimpToolbox    *toolbox);
+static void        toolbox_tool_reorder            (GimpContainer  *container,
+                                                    GimpToolInfo   *tool_info,
+                                                    gint            index,
+                                                    GtkWidget      *wrap_box);
+static void        toolbox_tool_visible_notify     (GimpToolInfo   *tool_info,
+                                                    GParamSpec     *pspec,
+                                                    GtkWidget      *button);
 
-static gboolean    toolbox_check_device          (GtkWidget      *widget,
-                                                  GdkEvent       *event,
-                                                  Gimp           *gimp);
+static void        toolbox_tool_button_toggled     (GtkWidget      *widget,
+                                                    GimpToolInfo   *tool_info);
+static gboolean    toolbox_tool_button_press       (GtkWidget      *widget,
+                                                    GdkEventButton *bevent,
+                                                    GimpToolbox    *toolbox);
 
-static void        toolbox_paste_received        (GtkClipboard   *clipboard,
-                                                  const gchar    *text,
-                                                  gpointer        data);
+static gboolean    toolbox_check_device            (GtkWidget      *widget,
+                                                    GdkEvent       *event,
+                                                    Gimp           *gimp);
+
+static void        toolbox_paste_received          (GtkClipboard   *clipboard,
+                                                    const gchar    *text,
+                                                    gpointer        data);
 
 
 G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
@@ -210,10 +214,16 @@ gimp_toolbox_constructor (GType                  type,
   gtk_frame_set_shadow_type (GTK_FRAME (toolbox->header), GTK_SHADOW_NONE);
   gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->header,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->header);
+
+  if (config->toolbox_wilber)
+    gtk_widget_show (toolbox->header);
 
   gimp_help_set_help_data (toolbox->header,
                            _("Drop image files here to open them"), NULL);
+
+  g_signal_connect_object (config, "notify::toolbox-wilber",
+                           G_CALLBACK (toolbox_wilber_notify),
+                           toolbox->header, 0);
 
   toolbox->tool_wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
@@ -498,7 +508,8 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-  if (gdk_rectangle_intersect (&event->area,
+  if (GTK_WIDGET_VISIBLE (toolbox->header) &&
+      gdk_rectangle_intersect (&event->area,
                                &toolbox->header->allocation,
                                &clip_rect))
     {
@@ -586,7 +597,8 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
       gtk_widget_set_size_request (toolbox->header,
                                    -1,
-                                   button_requisition.height * PANGO_SCALE_SMALL);
+                                   button_requisition.height *
+                                   PANGO_SCALE_SMALL);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
 
@@ -829,6 +841,17 @@ toolbox_area_notify (GimpGuiConfig *config,
 
   g_object_get (config, pspec->name, &visible, NULL);
   g_object_set (area, "visible", visible, NULL);
+}
+
+static void
+toolbox_wilber_notify (GimpGuiConfig *config,
+                       GParamSpec    *pspec,
+                       GtkWidget     *wilber)
+{
+  gboolean   visible;
+
+  g_object_get (config, pspec->name, &visible, NULL);
+  g_object_set (wilber, "visible", visible, NULL);
 }
 
 static void
