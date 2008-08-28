@@ -1,3 +1,7 @@
+2008-08-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangletool.c: some tiny formatting fixes.
+
 2008-08-28  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: use echo, not $echo in the Win32-specific code

@@ -97,14 +97,15 @@ typedef enum
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
 
 
-typedef struct
+typedef struct _GimpRectangleToolPrivate GimpRectangleToolPrivate;
+
+struct _GimpRectangleToolPrivate
 {
   /* The following members are "constants", that is, variables that are setup
    * during gimp_rectangle_tool_button_press and then only read.
    */
 
-  /*
-   * Wether or not the rectangle currently being rubber-banded was
+  /* Wether or not the rectangle currently being rubber-banded was
    * created from scatch.
    */
   gboolean                is_new;
@@ -123,7 +124,6 @@ typedef struct
    * rubber-banded).
    */
   gboolean                rect_adjusting;
-
 
 
   /* The rest of the members are internal state variables, that is, variables
@@ -200,7 +200,7 @@ typedef struct
 
   /* Synced with options->guide, only exists for drawing. */
   GimpRectangleGuide      guide;
-} GimpRectangleToolPrivate;
+};
 
 
 static void          gimp_rectangle_tool_iface_base_init      (GimpRectangleToolInterface *iface);
@@ -1064,7 +1064,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       private->function != GIMP_RECTANGLE_TOOL_EXECUTING)
     {
       gdouble pub_x1, pub_y1, pub_x2, pub_y2;
-      gint w, h;
+      gint    w, h;
 
       gimp_tool_pop_status (tool, display);
 
@@ -1090,8 +1090,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
     {
       GimpRectangleFunction function = GIMP_RECTANGLE_TOOL_CREATING;
-      gdouble               dx = snapped_x - private->lastx;
-      gdouble               dy = snapped_y - private->lasty;
+      gdouble               dx       = snapped_x - private->lastx;
+      gdouble               dy       = snapped_y - private->lasty;
 
       /* When the user starts to move the cursor, set the current
        * function to one of the corner-grabbed functions, depending on
@@ -1099,27 +1099,27 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
        */
       if (dx < 0)
         {
-          function = dy < 0 ?
-            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
-            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
+          function = (dy < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT);
         }
       else if (dx > 0)
         {
-          function = dy < 0 ?
-            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT :
-            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
+          function = (dy < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
         }
       else if (dy < 0)
         {
-          function = dx < 0 ?
-            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
-            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
+          function = (dx < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT);
         }
       else if (dy > 0)
         {
-          function = dx < 0 ?
-            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT :
-            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
+          function = (dx < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
         }
 
       gimp_rectangle_tool_set_function (rect_tool, function);
@@ -1153,7 +1153,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   private->lasty = snapped_y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
 }
 
 void
@@ -1221,7 +1220,6 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-
       g_object_set (options,
                     "fixed-center", ! options_private->fixed_center,
                     NULL);
@@ -1500,7 +1498,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  private        = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   rect_tool = GIMP_RECTANGLE_TOOL (tool);
 
   if (tool->display != display)
@@ -1764,6 +1762,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+
   switch (private->guide)
     {
     case GIMP_RECTANGLE_GUIDE_NONE:
@@ -2174,7 +2173,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
   g_signal_handlers_unblock_by_func (options,
                                      gimp_rectangle_tool_options_notify,
                                      rect_tool);
-
 }
 
 static void
