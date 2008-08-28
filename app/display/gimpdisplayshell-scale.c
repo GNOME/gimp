@@ -751,6 +751,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gint              viewport_x,
                              gint              viewport_y)
 {
+  gdouble scale_x, scale_y;
   gdouble image_focus_x, image_focus_y;
   gint    target_offset_x, target_offset_y;
 
@@ -766,8 +767,10 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                                        &image_focus_y,
                                        FALSE);
 
-  target_offset_x = scale * image_focus_x - viewport_x;
-  target_offset_y = scale * image_focus_y - viewport_y;
+  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+
+  target_offset_x = scale_x * image_focus_x - viewport_x;
+  target_offset_y = scale_y * image_focus_y - viewport_y;
 
   /* Note that we never come here if we need to
    * resize_windows_on_zoom

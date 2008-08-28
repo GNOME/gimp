@@ -1,5 +1,12 @@
 2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_to): Canonically calculate scale to use
+	for zoom-focus calculations so that it also works when not in Dot
+	by dot-mode.
+
+2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpimage.[ch]: Make the size-changed-detailed signal
 	also contain previous image size.
 
