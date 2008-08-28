@@ -1977,3 +1977,16 @@ _wrap_gimp_drawable_preview_new(PyGObject *self, PyObject *args, PyObject *kwarg
 
 %%
 new-constructor GIMP_TYPE_DRAWABLE_PREVIEW
+%%
+override gimp_ruler_get_range noargs
+static PyObject *
+_wrap_gimp_ruler_get_range(PyGObject *self)
+{
+    gdouble lower;
+    gdouble upper;
+    gdouble max_size;
+
+    gimp_ruler_get_range(GIMP_RULER(self->obj), &lower, &upper, &max_size);
+
+    return Py_BuildValue("(ddd)", lower, upper, max_size);
+}

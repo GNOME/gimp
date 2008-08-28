@@ -280,6 +280,27 @@
   (gtype-id "GIMP_TYPE_PROGRESS_BAR")
 )
 
+(define-object Ruler
+  (in-module "Gimp")
+  (parent "GtkWidget")
+  (c-name "GimpRuler")
+  (gtype-id "GIMP_TYPE_RULER")
+)
+
+(define-object HRuler
+  (in-module "Gimp")
+  (parent "GimpRuler")
+  (c-name "GimpHRuler")
+  (gtype-id "GIMP_TYPE_HRULER")
+)
+
+(define-object VRuler
+  (in-module "Gimp")
+  (parent "GimpRuler")
+  (c-name "GimpVRuler")
+  (gtype-id "GIMP_TYPE_VRULER")
+)
+
 (define-object ScrolledPreview
   (in-module "Gimp")
   (parent "GimpPreview")
@@ -575,7 +596,7 @@
   (is-constructor-of "GimpCellRendererToggle")
   (return-type "GtkCellRenderer*")
   (properties
-    '("stock-id", (argname "stock_id") (optional))
+    '("stock-id" (argname "stock_id") (optional))
   )
 )
 
@@ -3219,6 +3240,106 @@
 (define-function gimp_zoom_type_get_type
   (c-name "gimp_zoom_type_get_type")
   (return-type "GType")
+)
+
+
+;; From gimpruler.h
+
+(define-function gimp_ruler_get_type
+  (c-name "gimp_ruler_get_type")
+  (return-type "GType")
+)
+
+(define-method set_unit
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_unit")
+  (return-type "none")
+  (parameters
+    '("GimpUnit" "unit")
+  )
+)
+
+(define-method get_unit
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_unit")
+  (return-type "GimpUnit")
+)
+
+(define-method set_position
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_position")
+  (return-type "none")
+  (parameters
+    '("gdouble" "position")
+  )
+)
+
+(define-method get_position
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_position")
+  (return-type "gdouble")
+)
+
+(define-method set_range
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_range")
+  (return-type "none")
+  (parameters
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gdouble" "max_size")
+  )
+)
+
+(define-method get_range
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_range")
+  (return-type "none")
+  (parameters
+    '("gdouble*" "lower")
+    '("gdouble*" "upper")
+    '("gdouble*" "max_size")
+  )
+)
+
+
+
+;; From gimphruler.h
+
+(define-function gimp_hruler_get_type
+  (c-name "gimp_hruler_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_hruler_new
+  (c-name "gimp_hruler_new")
+  (is-constructor-of "GimpHRuler")
+  (return-type "GtkWidget*")
+  (properties
+    '("lower" (optional))
+    '("upper" (optional))
+    '("max-size" (argname "max_size") (optional))
+  )
+)
+
+
+
+;; From gimpvruler.h
+
+(define-function gimp_vruler_get_type
+  (c-name "gimp_vruler_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_vruler_new
+  (c-name "gimp_vruler_new")
+  (is-constructor-of "GimpVRuler")
+  (return-type "GtkWidget*")
+  (properties
+    '("lower" (optional))
+    '("upper" (optional))
+    '("max-size" (argname "max_size") (optional))
+  )
 )
 
 

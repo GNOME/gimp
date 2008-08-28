@@ -2,6 +2,12 @@
 
 	* plug-ins/pygimp/gimpui.defs
 	* plug-ins/pygimp/gimpui.override:
+	Wrapped GimpRuler, GimpHRuler and GimpVRuler widgets.
+
+2008-08-28  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpui.defs
+	* plug-ins/pygimp/gimpui.override:
 	Merged gimpui.{defs,override} from pygimp GSoC project.
 	Updates gimpui module to have bindings for most widgets functions.
  
