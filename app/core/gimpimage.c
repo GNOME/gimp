@@ -151,7 +151,9 @@ static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
 static void     gimp_image_real_size_changed_detailed
                                                  (GimpImage      *image,
                                                   gint            previous_origin_x,
-                                                  gint            previous_origin_y);
+                                                  gint            previous_origin_y,
+                                                  gint            previous_width,
+                                                  gint            previous_height);
 static void     gimp_image_real_colormap_changed (GimpImage      *image,
                                                   gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *image,
@@ -325,8 +327,10 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, size_changed_detailed),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT,
-                  G_TYPE_NONE, 2,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
 
@@ -1122,7 +1126,9 @@ gimp_image_get_description (GimpViewable  *viewable,
 static void
 gimp_image_real_size_changed_detailed (GimpImage *image,
                                        gint       previous_origin_x,
-                                       gint       previous_origin_y)
+                                       gint       previous_origin_y,
+                                       gint       previous_width,
+                                       gint       previous_height)
 {
   /* Whenever GimpImage::size-changed-detailed is emitted, so is
    * GimpViewable::size-changed. Clients choose what signal to listen
@@ -1503,7 +1509,11 @@ gimp_image_set_resolution (GimpImage *image,
       image->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
-      gimp_image_size_changed_detailed (image, 0, 0);
+      gimp_image_size_changed_detailed (image,
+                                        0,
+                                        0,
+                                        gimp_image_get_width (image),
+                                        gimp_image_get_height (image));
     }
 }
 
@@ -1841,13 +1851,17 @@ gimp_image_sample_point_removed (GimpImage       *image,
 void
 gimp_image_size_changed_detailed (GimpImage *image,
                                   gint       previous_origin_x,
-                                  gint       previous_origin_y)
+                                  gint       previous_origin_y,
+                                  gint       previous_width,
+                                  gint       previous_height)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[SIZE_CHANGED_DETAILED], 0,
                  previous_origin_x,
-                 previous_origin_y);
+                 previous_origin_y,
+                 previous_width,
+                 previous_height);
 }
 
 void

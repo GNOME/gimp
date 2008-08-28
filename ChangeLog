@@ -1,3 +1,25 @@
+2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimage.[ch]: Make the size-changed-detailed signal
+	also contain previous image size.
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Take the
+	previous image size into account and center the image if it starts
+	to fit (axis indepentently) in the viewport due to the resize.
+
+	* app/core/gimpundo.h
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimageundo.[ch]
+	* app/core/gimpimage-undo-push.[ch]: Manage the
+	previous-size-information.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-resize.c: Propagate previous size to the
+	size-changed-detailed signal emission and the undo-system.
+
 2008-08-28  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.[ch]: allow to disable the Wilber image
