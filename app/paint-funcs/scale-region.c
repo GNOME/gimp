@@ -292,7 +292,7 @@ scale_determine_progress (PixelRegion *srcPR,
 
   while (levelx > 0)
     {
-      width <<= 1;
+      width >>= 1;
       levelx--;
 
       tiles += NUM_TILES (width, height);
@@ -300,7 +300,7 @@ scale_determine_progress (PixelRegion *srcPR,
 
   while (levely > 0)
     {
-      height <<= 1;
+      height >>= 1;
       levely--;
 
       tiles += NUM_TILES (width, height);
@@ -405,7 +405,7 @@ scale_region_tile (PixelRegion           *srcPR,
 
   while (levelx > 0)
     {
-      width <<= 1;
+      width >>= 1;
 
       tmpTM = tile_manager_new (width, height, bytes);
       scale (srcTM, tmpTM, interpolation,
@@ -420,7 +420,7 @@ scale_region_tile (PixelRegion           *srcPR,
 
   while (levely > 0)
     {
-      height <<= 1;
+      height >>= 1;
 
       tmpTM = tile_manager_new (width, height, bytes);
       scale (srcTM, tmpTM, interpolation,

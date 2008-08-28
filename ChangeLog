@@ -1,3 +1,8 @@
+2008-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c (scale_determine_progress):
+	(scale_region_tile): fixed shift direction.
+
 2008-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.c (gimp_ui_manager_item_key_press):
