@@ -1,5 +1,10 @@
 2008-08-28  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use echo, not $echo in the Win32-specific code
+	that sets up the Python build variables.
+
+2008-08-28  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-region.c (scale_determine_progress):
 	(scale_region_tile): fixed shift direction.
 
