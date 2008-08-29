@@ -1,14 +1,14 @@
 # gimp ro translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+# Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-14 07:29+0000\n"
-"PO-Revision-Date: 2008-05-24 02:36+0200\n"
-"Last-Translator: Cristian Secară <cristi AT secarica DO ro>\n"
+"POT-Creation-Date: 2008-06-01 15:11+0000\n"
+"PO-Revision-Date: 2008-07-16 00:20+0200\n"
+"Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +35,7 @@ msgstr "Plugin-ul %s nu poate manipula straturi"
 #: ../libgimp/gimpexport.c:236
 #: ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
-msgstr "Îmbină straturile vizibile"
+msgstr "Combină straturile vizibile"
 
 # hm ?
 #: ../libgimp/gimpexport.c:226
@@ -343,9 +343,8 @@ msgid "Layer's _alpha channel"
 msgstr "Canalul _alfa al stratului"
 
 #: ../libgimpbase/gimpbaseenums.c:30
-#, fuzzy
 msgid "_Transfer layer's alpha channel"
-msgstr "Canalul alfa al stratului"
+msgstr "_Transferă canalul alfa al stratului"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
@@ -477,17 +476,18 @@ msgstr "Imagine"
 msgid "Pattern"
 msgstr "Model"
 
+# hm ?
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
-msgstr "Luminozitate"
+msgstr "_Luminozității (½*(max(R,G,B)+min(R,G,B)))"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
-msgstr "Luminozitate"
+msgstr "L_uminozității (0,21*R+0,71*G+0,07*B)"
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
-msgstr "Mediu"
+msgstr "Lu_minanței medii ((R+G+B)/3)"
 
 #: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
@@ -499,7 +499,7 @@ msgstr "Înnegrire"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr ""
+msgstr "Liniar"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -515,12 +515,10 @@ msgid "Square"
 msgstr "Pătrat"
 
 #: ../libgimpbase/gimpbaseenums.c:392
-#, fuzzy
 msgid "Conical (sym)"
 msgstr "Conic (simetric)"
 
 #: ../libgimpbase/gimpbaseenums.c:393
-#, fuzzy
 msgid "Conical (asym)"
 msgstr "Conic (asimetric)"
 
@@ -537,14 +535,12 @@ msgid "Shaped (dimpled)"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:397
-#, fuzzy
 msgid "Spiral (cw)"
-msgstr "Spirală (sensul acelor de ceas)"
+msgstr "Spirală (sens orar)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
-#, fuzzy
 msgid "Spiral (ccw)"
-msgstr "Spirală (sensul acelor de ceas)"
+msgstr "Spirală (sens anti-orar)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
@@ -597,32 +593,31 @@ msgstr "RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:530
-#, fuzzy
 msgid "Grayscale-alpha"
-msgstr "nivele de gri"
+msgstr "Scală de gri-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed-alpha"
-msgstr "Alfa indexat"
+msgstr "Alfa-indexat"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr ""
+msgstr "Fără"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr ""
+msgstr "Liniar"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
-msgstr ""
+msgstr "Cubic"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr ""
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -632,32 +627,34 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
+# la repetarea de la paint brush la gradient
 #: ../libgimpbase/gimpbaseenums.c:623
 #: ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Nimic"
 
 #: ../libgimpbase/gimpbaseenums.c:624
-#, fuzzy
 msgid "Sawtooth wave"
-msgstr "Undă în dinți de fierastrău"
+msgstr "Undă în dinte de ferăstrău"
 
 #: ../libgimpbase/gimpbaseenums.c:625
-#, fuzzy
 msgid "Triangular wave"
-msgstr "Undă triunghiulara"
+msgstr "Undă triunghiulară"
 
+# hm ? sau rulează ?
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
-msgstr ""
+msgstr "Execută interactiv"
 
+# hm ? sau rulează ?
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr ""
+msgstr "Execută non-interactiv"
 
+# hm ? sau rulează ?
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
-msgstr ""
+msgstr "Execută cu ultimele valori folosite"
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
@@ -681,51 +678,51 @@ msgstr "Elemente luminoase"
 
 #: ../libgimpbase/gimpbaseenums.c:744
 msgid "Normal (Forward)"
-msgstr ""
+msgstr "Normal (înainte)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "Corectiv (înapoi)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
-msgstr ""
+msgstr "Ajustează"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr ""
+msgstr "Clip"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr ""
+msgstr "Decupează urmărind rezultatul"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr ""
+msgstr "Decupează cu raport de aspect"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Procedură internă GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "Plugin GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
-msgstr ""
+msgstr "Extensie GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Procedură temporară"
 
 #: ../libgimpbase/gimpmemsize.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%d Byte"
 msgid_plural "%d Bytes"
-msgstr[0] "%d Octeți"
-msgstr[1] "%d Octeți"
-msgstr[2] "%d Octeți"
+msgstr[0] "%d octet"
+msgstr[1] "%d octeți"
+msgstr[2] "%d de octeți"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
@@ -753,24 +750,24 @@ msgid "%.1f MB"
 msgstr "%.1f MOcteți"
 
 #: ../libgimpbase/gimpmemsize.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "%d KOcteți"
+msgstr "%d MO"
 
 #: ../libgimpbase/gimpmemsize.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f GB"
-msgstr "%.2f MOcteți"
+msgstr "%.2f GO"
 
 #: ../libgimpbase/gimpmemsize.c:220
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB"
-msgstr "%.1f MOcteți"
+msgstr "%.1f GO"
 
 #: ../libgimpbase/gimpmemsize.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "%d KOcteți"
+msgstr "%d GO"
 
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
@@ -778,7 +775,7 @@ msgstr "%d KOcteți"
 #: ../modules/colorsel_cmyk_lcms.c:410
 #: ../modules/colorsel_cmyk_lcms.c:416
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(șir UTF-8 nevalid)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
@@ -841,9 +838,8 @@ msgid "Relative colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgid "intent|Saturation"
-msgstr "Saturare"
+msgstr "Saturație"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
@@ -1054,14 +1050,12 @@ msgid "Kilobytes"
 msgstr ""
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:205
-#, fuzzy
 msgid "Megabytes"
-msgstr "%d Octeți"
+msgstr "Megaocteți"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:206
-#, fuzzy
 msgid "Gigabytes"
-msgstr "%d Octeți"
+msgstr "Gigaocteți"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
@@ -1070,14 +1064,13 @@ msgid "Nothing selected"
 msgstr ""
 
 #: ../libgimpwidgets/gimppageselector.c:287
-#, fuzzy
 msgid "Select _All"
-msgstr "Selectează"
+msgstr "Selecte_ază tot"
 
 #: ../libgimpwidgets/gimppageselector.c:307
 #, fuzzy
 msgid "Select _range:"
-msgstr "Selectează"
+msgstr "Selectează _distanța:"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
@@ -1163,15 +1156,15 @@ msgstr "Linear"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
-msgstr "Inserează ca nou"
+msgstr "Lipește ca nou"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
-msgstr "Inserează în"
+msgstr "Lipește în"
 
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
-msgstr "R_esetează"
+msgstr "Re_setează"
 
 #: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
@@ -1189,11 +1182,11 @@ msgstr "Spațiere între _litere:"
 
 #: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
-msgstr "Spaţ_iere între rânduri"
+msgstr "Spaț_iere între rânduri"
 
 #: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
-msgstr "_Redimensionează"
+msgstr "Re_dimensionează"
 
 #: ../libgimpwidgets/gimpstock.c:191
 #: ../libgimpwidgets/gimpstock.c:319
@@ -1216,10 +1209,10 @@ msgstr "_Rotește"
 msgid "_Shear"
 msgstr "_Tunde"
 
-# valabil la unitățile de ,ăsură de la lungimea de la healing
+# valabil la unitățile de măsură de afișate ca drop-down menu
 #: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
-msgstr "Mai multe..."
+msgstr "Mai mult..."
 
 #: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
@@ -1227,7 +1220,7 @@ msgstr "Selecție unitate de măsură"
 
 #: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
-msgstr "Unitate de masură:"
+msgstr "Unitate de măsură"
 
 #: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
@@ -1307,7 +1300,7 @@ msgstr "Imagini"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
-msgstr "Măreşte"
+msgstr "Mărește"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
@@ -1852,11 +1845,11 @@ msgstr ""
 #: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
-msgstr ""
+msgstr "Controlor %03d"
 
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
-msgstr ""
+msgstr "Evenimente MIDI"
 
 #: ../modules/controller_midi.c:454
 msgid "GIMP"
@@ -1865,26 +1858,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Pattern source"
-#~ msgstr "Model sursă"
-#~ msgid "Linear"
-#~ msgstr "Linear"
-
-#, fuzzy
-#~ msgid "Lanczos (Best)"
-#~ msgstr "Cubic (Incet)"
-
-#, fuzzy
-#~ msgid "Could not open '%s' for reading: %s"
-#~ msgstr "Nu am putut redeschide %s\n"
-
-#, fuzzy
-#~ msgid "Loading module: '%s'\n"
-#~ msgstr "încarc modulul: \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Skipping module: '%s'\n"
-#~ msgstr "ignor modulul: \"%s\"\n"
 
