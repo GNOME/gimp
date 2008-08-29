@@ -301,7 +301,7 @@ gimp_ruler_get_property (GObject      *object,
 }
 
 /**
- * gimp_vruler_new:
+ * gimp_ruler_new:
  * @orientation: the ruler's orientation.
  *
  * Creates a new ruler.

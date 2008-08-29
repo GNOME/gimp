@@ -1,3 +1,7 @@
+2008-08-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpruler.c (gimp_ruler_new): fixed gtk-doc comment.
+
 2008-08-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/Makefile.am
