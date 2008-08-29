@@ -1,14 +1,14 @@
 # gimp ro translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+# Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-14 07:30+0000\n"
-"PO-Revision-Date: 2008-05-22 15:27+0200\n"
-"Last-Translator: Cristian Secară <cristi AT secarica DO ro>\n"
+"POT-Creation-Date: 2008-06-01 15:11+0000\n"
+"PO-Revision-Date: 2008-07-16 00:19+0200\n"
+"Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,124 +17,119 @@ msgstr ""
 
 #: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
-msgstr ""
+msgstr "Lipsește informația asupra excepției"
 
 #: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
-msgstr ""
+msgstr "A apărut o eroare în timpul execuției %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
-msgstr ""
+msgstr "_Mai multe informații"
 
 #: ../plug-ins/pygimp/gimpfu.py:506
 #: ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
-msgstr ""
+msgstr "Nu"
 
 #: ../plug-ins/pygimp/gimpfu.py:516
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: ../plug-ins/pygimp/gimpfu.py:558
 #: ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
-msgstr ""
+msgstr "Selecție de fișier Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
-msgstr ""
+msgstr "Selecție de folder Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr ""
+msgstr "Intraree pentru „%s” nu este validă"
 
 #: ../plug-ins/pygimp/gimpui.py:175
-#, fuzzy
 msgid "Python-Fu Color Selection"
-msgstr "Selecție culoare"
+msgstr "Selecție de culoare Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "Salvare ca XHTML colorat"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
-msgstr ""
+msgstr "Salvează ca XHTML colorat"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
-msgstr ""
+msgstr "XHTML colorat"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
-msgstr ""
+msgstr "_Sursă caracter"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
-msgstr ""
+msgstr "Cod sursă"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
-msgstr ""
+msgstr "Fișier text"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
-msgstr ""
+msgstr "Căsuță de intrare"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr ""
+msgstr "_Fișier de citit sau caracter pentru a fi utilizat"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
-msgstr ""
+msgstr "Dimensiune fo_nt în pixeli"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr ""
+msgstr "_Scrie un fișier CSS separat"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-#, fuzzy
 msgid "Python Console"
-msgstr "Selecție culoare"
+msgstr "Consolă Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-#, fuzzy
 msgid "_Browse..."
-msgstr "Afișare informații de ajutor"
+msgstr "_Răsfoiește..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
-msgstr ""
+msgstr "Navigator de procedură Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr ""
+msgstr "Nu s-a putut scrie în „%s”: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-#, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Selecție culoare"
+msgstr "Salvează ieșirea consolei Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-#, fuzzy
 msgid "_Console"
-msgstr "Selecție culoare"
+msgstr "_Consolă"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
@@ -253,7 +248,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
-msgstr "Cale către exportul HTML"
+msgstr "Cale pentru exportul HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
@@ -289,33 +284,30 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Adaugă o umbră de perspectivă la un strat și opțional scoate-l în relief"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "_Umbră de perspectivă și scoatere în relief..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
-msgstr ""
+msgstr "E_stomparea clarității umbrei"
 
+# hm ?
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
-msgstr ""
+msgstr "Î_n relief"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
-msgstr ""
+msgstr "_Umbră de perspectivă"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
-msgstr ""
+msgstr "Deplasare pe axa _X a umbrei de perspectivă"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Selecție culoare"
+msgstr "Deplasare pe axa _Y a umbrei de perspectivă"
 

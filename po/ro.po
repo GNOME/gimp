@@ -1,14 +1,14 @@
 # gimp ro translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+# Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-21 03:42+0000\n"
-"PO-Revision-Date: 2008-05-24 14:59+0200\n"
-"Last-Translator: Cristian Secară <cristi AT secarica DO ro>\n"
+"POT-Creation-Date: 2008-06-01 15:12+0000\n"
+"PO-Revision-Date: 2008-08-04 09:49+0200\n"
+"Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,6 +37,7 @@ msgstr ""
 "Spencer Kimball, Peter Mattis și echipa de dezvoltare GIMP."
 
 #: ../app/about.h:34
+#, fuzzy
 msgid ""
 "GIMP is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
 "\n"
@@ -44,6 +45,9 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License along with GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
+"GIMP este software liber; îl puteți redistribui și/sau modifica sub termenii GNU General Public License așa cum este publicată de Free Software Foundation; fie versiunea 2 a licenței, sau (la opțiunea dumneavoastră) oricare versiune ulterioară.\n"
+"\n"
+"GIMP este distribuit cu speranța că va fi folositor, dar FĂRĂ NICIO GARANȚIE; "
 
 #: ../app/app.c:209
 #, c-format
@@ -54,7 +58,7 @@ msgid ""
 msgstr ""
 "Imposibil de deschis un fișier swap de test.\n"
 "\n"
-"Pentru a evita pierderea de date, verificați locul și permisiunile directorului de swap definit în preferințe (în mod curent „%s”)."
+"Pentru a evita pierderea de date, verificați amplasarea și permisiunile directorului de swap definit în preferințe (în mod curent „%s”)."
 
 #: ../app/batch.c:76
 #, fuzzy, c-format
@@ -84,11 +88,12 @@ msgstr ""
 
 #: ../app/main.c:169
 msgid "Start a new GIMP instance"
-msgstr ""
+msgstr "Pornește o instanță GIMP nouă"
 
+# hm ?
 #: ../app/main.c:174
 msgid "Open images as new"
-msgstr "Deschide imaginile ca noi"
+msgstr "Deschide imagini ca noi"
 
 #: ../app/main.c:179
 #, fuzzy
@@ -102,7 +107,7 @@ msgstr "  -d, --no-data           Nu încărca pensule, gradienți, palete, mode
 
 #: ../app/main.c:189
 msgid "Do not load any fonts"
-msgstr ""
+msgstr "Nu încărca niciun font"
 
 #: ../app/main.c:194
 #, fuzzy
@@ -163,7 +168,7 @@ msgstr ""
 
 #: ../app/main.c:256
 msgid "Make all warnings fatal"
-msgstr ""
+msgstr "Formulează toate avertismentele ca fatale"
 
 #: ../app/main.c:261
 msgid "Output a gimprc file with default settings"
@@ -194,11 +199,12 @@ msgstr ""
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 
+# hm ? articulat ?
 #: ../app/main.c:557
 #: ../tools/gimp-remote.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "%s version %s"
-msgstr "Versiunea de GIMP"
+msgstr "%s versiunea %s"
 
 #: ../app/main.c:782
 msgid "Another GIMP instance is already running."
@@ -247,14 +253,12 @@ msgstr "Canale"
 #: ../app/actions/actions.c:111
 #: ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:181
-#, fuzzy
 msgid "Colormap"
-msgstr "Culoare"
+msgstr "Paletă de culori"
 
 #: ../app/actions/actions.c:114
-#, fuzzy
 msgid "Context"
-msgstr "/Ajutor/Informații legate de context..."
+msgstr "Context"
 
 #: ../app/actions/actions.c:117
 #: ../app/dialogs/dialogs.c:141
@@ -264,12 +268,11 @@ msgstr "(Nici o informație)"
 
 #: ../app/actions/actions.c:120
 msgid "Debug"
-msgstr ""
+msgstr "Depanare"
 
 #: ../app/actions/actions.c:123
-#, fuzzy
 msgid "Dialogs"
-msgstr "/Ferestre de dialog/Modele..."
+msgstr "Dialoguri"
 
 #: ../app/actions/actions.c:126
 #, fuzzy
@@ -285,9 +288,8 @@ msgstr "Strat de text"
 #: ../app/actions/actions.c:132
 #: ../app/dialogs/dialogs.c:162
 #: ../app/dialogs/preferences-dialog.c:1613
-#, fuzzy
 msgid "Document History"
-msgstr "/Ferestre de dialog/Istoric refaceri"
+msgstr "Istoric documente"
 
 #: ../app/actions/actions.c:135
 #, fuzzy
@@ -384,9 +386,8 @@ msgstr "Plugin-uri"
 #: ../app/actions/actions.c:180
 #: ../app/core/core-enums.c:858
 #: ../app/core/gimpchannel.c:362
-#, fuzzy
 msgid "Quick Mask"
-msgstr "Masca de selecție"
+msgstr "Mască rapidă"
 
 #: ../app/actions/actions.c:183
 #: ../app/dialogs/dialogs.c:197
@@ -417,13 +418,12 @@ msgstr "Modificare paleta de culori"
 #: ../app/dialogs/preferences-dialog.c:1855
 #: ../app/gui/gui.c:441
 msgid "Tool Options"
-msgstr "Opțiuni unelte"
+msgstr "Opțiuni instrumente"
 
 #: ../app/actions/actions.c:198
 #: ../app/dialogs/dialogs.c:158
-#, fuzzy
 msgid "Tools"
-msgstr "Cutie de unelte"
+msgstr "Instrumente"
 
 #: ../app/actions/actions.c:201
 #: ../app/dialogs/dialogs.c:177
@@ -474,11 +474,11 @@ msgstr "Duplică penelul"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
-msgstr "Coliază _locul penelului"
+msgstr "Copiază _locația penelului"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
-msgstr ""
+msgstr "Copiază locația penelului în clipboard"
 
 #: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
@@ -510,27 +510,27 @@ msgstr "Meniu zone tampon"
 
 #: ../app/actions/buffers-actions.c:46
 msgid "_Paste Buffer"
-msgstr "Inserează zona tam_pon"
+msgstr "Li_pește zona tampon"
 
 #: ../app/actions/buffers-actions.c:47
 msgid "Paste the selected buffer"
-msgstr "Inserează zona tampon selectată"
+msgstr "Lipește zona tampon selectată"
 
 #: ../app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
-msgstr "_Inserează zona tampon în"
+msgstr "Li_pește zona tampon în"
 
 #: ../app/actions/buffers-actions.c:53
 msgid "Paste the selected buffer into the selection"
-msgstr "Inserează zona tampon selectată în selecție"
+msgstr "Lipește zona tampon selectată în selecție"
 
 #: ../app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
-msgstr "Inserează zona tampon ca imagine _nouă"
+msgstr "Lipește zona tampon ca imagine _nouă"
 
 #: ../app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
-msgstr "Inserează zona tampon selectată ca imagine nouă"
+msgstr "Lipește zona tampon selectată ca imagine nouă"
 
 #: ../app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
@@ -541,38 +541,32 @@ msgid "Delete the selected buffer"
 msgstr "Șterge zona tampon selectată"
 
 #: ../app/actions/channels-actions.c:44
-#, fuzzy
 msgid "Channels Menu"
-msgstr "Canale"
+msgstr "Meniu canale"
 
 #: ../app/actions/channels-actions.c:48
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "/Modifică atributele canalului..."
+msgstr "_Editare atribute canal..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr ""
+msgstr "Editare nume canal, culoare și opacitate"
 
 #: ../app/actions/channels-actions.c:54
-#, fuzzy
 msgid "_New Channel..."
-msgstr "/Canal de culoare nou..."
+msgstr "Canal _nou..."
 
 #: ../app/actions/channels-actions.c:55
-#, fuzzy
 msgid "Create a new channel"
-msgstr "Strat nou"
+msgstr "Creează un canal nou"
 
 #: ../app/actions/channels-actions.c:60
-#, fuzzy
 msgid "_New Channel"
-msgstr "Canal nou"
+msgstr "Canal _nou"
 
 #: ../app/actions/channels-actions.c:61
-#, fuzzy
 msgid "Create a new channel with last used values"
-msgstr "Culoarea pentru noul canal"
+msgstr "Creează un canal nou cu ultimele valori folosite"
 
 #: ../app/actions/channels-actions.c:66
 #, fuzzy
@@ -631,9 +625,8 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr "Coboară canalul"
 
 #: ../app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "/Canal -> Selecție"
+msgstr "_Canal la selecție"
 
 #: ../app/actions/channels-actions.c:106
 #, fuzzy
@@ -643,9 +636,8 @@ msgstr "/Selecție/Salvează în Canal"
 #: ../app/actions/channels-actions.c:111
 #: ../app/actions/layers-actions.c:260
 #: ../app/actions/vectors-actions.c:173
-#, fuzzy
 msgid "_Add to Selection"
-msgstr "/Adaugă la selecție"
+msgstr "_Adaugă la selecție"
 
 #: ../app/actions/channels-actions.c:112
 #, fuzzy
@@ -682,13 +674,12 @@ msgstr "/Intersectează cu selecția"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:395
-#, fuzzy
 msgid "Channel Attributes"
-msgstr "Modifică atribute canalul"
+msgstr "Atribute canal"
 
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr "Editare atribute de canal"
+msgstr "Editare atribute canal"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
@@ -696,9 +687,8 @@ msgstr "Editare culoare canal"
 
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
-#, fuzzy
 msgid "_Fill opacity:"
-msgstr "Opacitate umplere:"
+msgstr "_Opacitate de umplere:"
 
 #: ../app/actions/channels-commands.c:116
 #: ../app/actions/channels-commands.c:117
@@ -729,56 +719,47 @@ msgstr "Copie goală a canalului"
 #: ../app/core/gimpselection.c:564
 #: ../app/pdb/selection_cmds.c:423
 #: ../app/pdb/selection_cmds.c:486
-#, fuzzy
 msgid "Channel to Selection"
-msgstr "/Canal -> Selecție"
+msgstr "Canal la Selecție"
 
 #: ../app/actions/colormap-actions.c:43
-#, fuzzy
 msgid "Colormap Menu"
-msgstr "Culoare"
+msgstr "Meniu paletă de culori"
 
 #: ../app/actions/colormap-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgid "_Edit Color..."
-msgstr "Culoarea punctului din stânga"
+msgstr "_Editare culoare..."
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
-#, fuzzy
 msgid "Edit color"
-msgstr "Culoarea punctului din stânga"
+msgstr "Editare culoare"
 
 #: ../app/actions/colormap-actions.c:56
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "Culoare adevărată"
+msgstr "_Adaugă o culoare din prim plan"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgid "Add current foreground color"
-msgstr "Prim Plan "
+msgstr "Adaugă culoarea de prim plan actuală"
 
 #: ../app/actions/colormap-actions.c:62
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "Culoare adevărată"
+msgstr "_Adaugă o culoare din fundal"
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgid "Add current background color"
-msgstr "Fundal"
+msgstr "Adaugă culoarea de fundal actuală"
 
 #: ../app/actions/colormap-commands.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Paletă de culori"
+msgstr "Editarea intrării #%d din paleta de culori"
 
 #: ../app/actions/colormap-commands.c:77
-#, fuzzy
 msgid "Edit Colormap Entry"
-msgstr "Paletă de culori"
+msgstr "Editare intrare paletă de culori"
 
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
@@ -800,7 +781,7 @@ msgstr "_Mod de a picta"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
-msgstr "Uneal_tă"
+msgstr "Instrumen_t"
 
 #: ../app/actions/context-actions.c:51
 #: ../app/dialogs/preferences-dialog.c:1915
@@ -862,9 +843,8 @@ msgid "Set foreground color to black, background color to white"
 msgstr "Fundal"
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "/Unelte/Interschimbă Culorile"
+msgstr "_Interschimbă culorile"
 
 #: ../app/actions/context-actions.c:72
 #, fuzzy
@@ -880,12 +860,12 @@ msgstr "(Nici o informație)"
 #: ../app/actions/sample-points-actions.c:47
 #: ../app/widgets/gimpcursorview.c:192
 msgid "_Sample Merged"
-msgstr "_Eșantion îmbinat"
+msgstr "_Eșantion combinat"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-points-actions.c:48
 msgid "Sample Merged"
-msgstr "Eșantion îmbinat"
+msgstr "Eșantion combinat"
 
 #: ../app/actions/data-commands.c:107
 #: ../app/actions/documents-commands.c:311
@@ -921,9 +901,8 @@ msgid "Untitled"
 msgstr "Neintitulat"
 
 #: ../app/actions/data-commands.c:231
-#, fuzzy
 msgid "Delete Object"
-msgstr "Elimină traseul"
+msgstr "Șterge obiectul"
 
 #: ../app/actions/data-commands.c:254
 #, fuzzy, c-format
@@ -972,15 +951,15 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:60
 msgid "Tool_box"
-msgstr "_Cutie de unelte"
+msgstr "_Cutie de instrumente"
 
 #: ../app/actions/dialogs-actions.c:61
 msgid "Raise the toolbox"
-msgstr "Ridică cutia de unelte"
+msgstr "Ridică cutia de instrumente"
 
 #: ../app/actions/dialogs-actions.c:69
 msgid "Tool _Options"
-msgstr "_Opțiuni unelte"
+msgstr "_Opțiuni instrumente"
 
 #: ../app/actions/dialogs-actions.c:70
 #, fuzzy
@@ -990,9 +969,8 @@ msgstr ""
 "Clic pentru a deschide fereastra cu modele."
 
 #: ../app/actions/dialogs-actions.c:75
-#, fuzzy
 msgid "_Device Status"
-msgstr "Stare dispozitiv"
+msgstr "Stare _dispozitiv"
 
 #: ../app/actions/dialogs-actions.c:76
 #, fuzzy
@@ -1010,16 +988,12 @@ msgid "Open the layers dialog"
 msgstr "Deschide dialogul de straturi"
 
 #: ../app/actions/dialogs-actions.c:87
-#, fuzzy
 msgid "_Channels"
-msgstr "Canale"
+msgstr "_Canale"
 
 #: ../app/actions/dialogs-actions.c:88
-#, fuzzy
 msgid "Open the channels dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de canale"
 
 #: ../app/actions/dialogs-actions.c:93
 msgid "_Paths"
@@ -1030,16 +1004,12 @@ msgid "Open the paths dialog"
 msgstr "Deschide dialogul de trasee"
 
 #: ../app/actions/dialogs-actions.c:99
-#, fuzzy
 msgid "Color_map"
-msgstr "Culoare"
+msgstr "_Paletă de culori"
 
 #: ../app/actions/dialogs-actions.c:100
-#, fuzzy
 msgid "Open the colormap dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de paletă de culori"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "Histogra_m"
@@ -1054,31 +1024,25 @@ msgid "_Selection Editor"
 msgstr "Editor de _selecție"
 
 #: ../app/actions/dialogs-actions.c:112
-#, fuzzy
 msgid "Open the selection editor"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide editorul de selecție"
 
 #: ../app/actions/dialogs-actions.c:117
-#, fuzzy
 msgid "Na_vigation"
-msgstr "Navigare: %s-%d.%d"
+msgstr "Na_vigare"
 
+# hm ?
 #: ../app/actions/dialogs-actions.c:118
-#, fuzzy
 msgid "Open the display navigation dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de navigare de afișare"
 
 #: ../app/actions/dialogs-actions.c:123
 msgid "Undo _History"
-msgstr "_Istoric de desfaceri"
+msgstr "_Istoric de anulări"
 
 #: ../app/actions/dialogs-actions.c:124
 msgid "Open the undo history dialog"
-msgstr "Deschide dialogul de istoric de desfaceri"
+msgstr "Deschide dialogul de istoric de anulări"
 
 #: ../app/actions/dialogs-actions.c:129
 #: ../app/dialogs/dialogs.c:141
@@ -1118,28 +1082,20 @@ msgstr ""
 "Clic pentru a deschide fereastra cu modele."
 
 #: ../app/actions/dialogs-actions.c:147
-#, fuzzy
 msgid "_Brushes"
-msgstr "Pensule"
+msgstr "_Peneluri"
 
 #: ../app/actions/dialogs-actions.c:148
-#, fuzzy
 msgid "Open the brushes dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de peneluri"
 
 #: ../app/actions/dialogs-actions.c:153
-#, fuzzy
 msgid "P_atterns"
-msgstr "Modele"
+msgstr "_Modele"
 
 #: ../app/actions/dialogs-actions.c:154
-#, fuzzy
 msgid "Open the patterns dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de modele"
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Gradients"
@@ -1150,16 +1106,12 @@ msgid "Open the gradients dialog"
 msgstr "Deschide dialogul de gradienți"
 
 #: ../app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "Pal_ettes"
-msgstr "Palete"
+msgstr "Pal_ete"
 
 #: ../app/actions/dialogs-actions.c:166
-#, fuzzy
 msgid "Open the palettes dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de palete"
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Fonts"
@@ -1187,11 +1139,11 @@ msgstr "Deschide dialogul de imagini"
 
 #: ../app/actions/dialogs-actions.c:189
 msgid "Document Histor_y"
-msgstr "_Istoric de documente"
+msgstr "_Istoric documente"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "Open the document history dialog"
-msgstr "Deschide dialogul de istoric al documentelor"
+msgstr "Deschide dialogul de istoric de documente"
 
 #: ../app/actions/dialogs-actions.c:195
 msgid "_Templates"
@@ -1203,35 +1155,27 @@ msgstr "Deschide dialogul de șabloane de imagini"
 
 #: ../app/actions/dialogs-actions.c:201
 msgid "T_ools"
-msgstr "_Unelte"
+msgstr "_Instrumente"
 
 #: ../app/actions/dialogs-actions.c:202
-#, fuzzy
 msgid "Open the tools dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de instrumente"
 
 #: ../app/actions/dialogs-actions.c:207
-#, fuzzy
 msgid "Error Co_nsole"
-msgstr "Consola de erori GIMP"
+msgstr "Co_nsolă de erori"
 
 #: ../app/actions/dialogs-actions.c:208
-#, fuzzy
 msgid "Open the error console"
-msgstr "Consola de erori GIMP"
+msgstr "Deschide consola de eroare"
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Preferences"
 msgstr "_Preferințe"
 
 #: ../app/actions/dialogs-actions.c:219
-#, fuzzy
 msgid "Open the preferences dialog"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide dialogul de preferințe"
 
 #: ../app/actions/dialogs-actions.c:224
 msgid "_Keyboard Shortcuts"
@@ -1242,14 +1186,12 @@ msgid "Open the keyboard shortcuts editor"
 msgstr "Deschide editorul de scurtături de tastatură"
 
 #: ../app/actions/dialogs-actions.c:230
-#, fuzzy
 msgid "_Module Manager"
-msgstr "Eroare în modul"
+msgstr "Gestionar de _module"
 
 #: ../app/actions/dialogs-actions.c:231
-#, fuzzy
 msgid "Open the module manager dialog"
-msgstr "Imagine nouă"
+msgstr "Deschide dialogul de gestionare de module"
 
 #: ../app/actions/dialogs-actions.c:236
 msgid "_Tip of the Day"
@@ -1266,35 +1208,33 @@ msgstr "_Despre"
 #: ../app/actions/dialogs-actions.c:243
 #: ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:490
-#, fuzzy
 msgid "About GIMP"
 msgstr "Despre GIMP"
 
 #: ../app/actions/dock-actions.c:43
-#, fuzzy
 msgid "M_ove to Screen"
-msgstr "Nici o selecție."
+msgstr "_Mută la ecran"
 
 #: ../app/actions/dock-actions.c:47
 #, fuzzy
 msgid "Close Dock"
 msgstr "Închide"
 
+# hm ?
 #: ../app/actions/dock-actions.c:52
 #: ../app/actions/view-actions.c:123
 #, fuzzy
 msgid "_Open Display..."
-msgstr "Afișare"
+msgstr "_Deschide afișajul..."
 
 #: ../app/actions/dock-actions.c:53
 #: ../app/actions/view-actions.c:124
 msgid "Connect to another display"
-msgstr ""
+msgstr "Conectează la alt afișor"
 
 #: ../app/actions/dock-actions.c:61
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "Mărește selecția"
+msgstr "Arată _selecția de imagini"
 
 #: ../app/actions/dock-actions.c:67
 #, fuzzy
@@ -1302,34 +1242,28 @@ msgid "Auto _Follow Active Image"
 msgstr "Salvare imagine"
 
 #: ../app/actions/dockable-actions.c:49
-#, fuzzy
 msgid "Dialogs Menu"
-msgstr "/Ferestre de dialog/Modele..."
+msgstr "Meniu dialoguri"
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "_Add Tab"
-msgstr "/Ferestre de dialog/Mesaje de eroare..."
+msgstr "_Adaugă un tab"
 
 #: ../app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
-msgstr "Dimensiune previzualizare:"
+msgstr "Dimensiune _previzualizare"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgid "_Tab Style"
-msgstr "/Unelte/Cutia de scule"
+msgstr "Stil _tab"
 
 #: ../app/actions/dockable-actions.c:58
-#, fuzzy
 msgid "_Close Tab"
-msgstr "redenumește stratul"
+msgstr "În_chide tabul"
 
 #: ../app/actions/dockable-actions.c:63
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "Selectează"
+msgstr "_Detașează tabul"
 
 #: ../app/actions/dockable-actions.c:81
 msgid "_Tiny"
@@ -1361,11 +1295,11 @@ msgstr "Imens"
 
 #: ../app/actions/dockable-actions.c:88
 msgid "_Enormous"
-msgstr ""
+msgstr "_Enorm"
 
 #: ../app/actions/dockable-actions.c:89
 msgid "_Gigantic"
-msgstr ""
+msgstr "_Gigantic"
 
 #: ../app/actions/dockable-actions.c:94
 msgid "_Icon"
@@ -1400,111 +1334,96 @@ msgid "View as _Grid"
 msgstr "Vizualizează ca _grilă"
 
 #: ../app/actions/documents-actions.c:42
-#, fuzzy
 msgid "Documents Menu"
-msgstr "Index document"
+msgstr "Meniu documente"
 
 #: ../app/actions/documents-actions.c:46
 msgid "_Open Image"
 msgstr "_Deschide o imagine"
 
-# hm ? sau intrarea ?
 #: ../app/actions/documents-actions.c:47
 msgid "Open the selected entry"
 msgstr "Deschide poziția selectată"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgid "_Raise or Open Image"
-msgstr "/Aplatizează imaginea"
+msgstr "_Ridică sau deschide imaginea"
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr ""
+msgstr "Ridică fereastra dacă este deja deschisă"
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "/Fișier/Deschide..."
+msgstr "_Dialogul de deschidere fișier"
 
 #: ../app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
-msgstr "Imagine nouă"
+msgstr "Deschide dialogul de imagine"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
-msgstr "Copiază _locul imaginii"
+msgstr "Copiază _locația imaginii"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr ""
+msgstr "Copiază locația imaginii în clipboard"
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "redenumește stratul"
+msgstr "_Elimină poziția"
 
-# hm ? sau obiectul ?
 #: ../app/actions/documents-actions.c:71
 msgid "Remove the selected entry"
-msgstr "Elimină intrarea selectată"
+msgstr "Elimină poziția selectată"
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgid "_Clear History"
-msgstr "Istoric refaceri: %s"
+msgstr "Șterge istori_cul"
 
 #: ../app/actions/documents-actions.c:77
-#, fuzzy
 msgid "Clear the entire document history"
-msgstr "/Ferestre de dialog/Istoric refaceri"
+msgstr "Șterge întreg istoricul de documente"
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgid "Recreate _Preview"
-msgstr ""
-"Generează o\n"
-"previzualizare"
+msgstr "Recreează _previzualizarea"
 
 #: ../app/actions/documents-actions.c:83
-#, fuzzy
 msgid "Recreate preview"
-msgstr ""
-"Generează o\n"
-"previzualizare"
+msgstr "Recreează previzualizarea"
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgid "Reload _all Previews"
-msgstr "Previzualizare"
+msgstr "Reîncarcă to_ate previzualizările"
 
 #: ../app/actions/documents-actions.c:89
-#, fuzzy
 msgid "Reload all previews"
-msgstr "Previzualizare"
+msgstr "Reîncarcă toate previzualizările"
 
+# hm ?
 #: ../app/actions/documents-actions.c:94
 msgid "Remove Dangling E_ntries"
-msgstr ""
+msgstr "Elimi_nă pozițiile care stau degeaba"
 
+# hm ?
 #: ../app/actions/documents-actions.c:95
-#, fuzzy
 msgid "Remove dangling entries"
-msgstr "Selecție Plutitoare"
+msgstr "Elimină pozițiile care stau degeaba"
 
 #: ../app/actions/documents-commands.c:187
-#, fuzzy
 msgid "Clear Document History"
-msgstr "/Ferestre de dialog/Istoric refaceri"
+msgstr "Șterge istoricul de documente"
 
+# hm ? sau pozițiile ?
 #: ../app/actions/documents-commands.c:210
 msgid "Remove all entries from the document history?"
-msgstr ""
+msgstr "Eliminați toate intrările din istoricul documentelor ?"
 
+# hm ? sau pozițiile ?
 #: ../app/actions/documents-commands.c:214
 msgid "Clearing the document history will permanently remove all currently listed entries."
-msgstr ""
+msgstr "Ștergerea istoricului de documente va elimina permanent toate intrările listate în mod curent."
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -1516,11 +1435,11 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:51
 msgid "_Equalize"
-msgstr ""
+msgstr "_Egalizează"
 
 #: ../app/actions/drawable-actions.c:52
 msgid "Automatic contrast enhancement"
-msgstr ""
+msgstr "Ameliorare de contrast automată"
 
 #: ../app/actions/drawable-actions.c:57
 msgid "In_vert"
@@ -1532,7 +1451,7 @@ msgstr "Inversează culorile"
 
 #: ../app/actions/drawable-actions.c:63
 msgid "_White Balance"
-msgstr ""
+msgstr "_Balans la alb"
 
 #: ../app/actions/drawable-actions.c:64
 #, fuzzy
@@ -1540,9 +1459,8 @@ msgid "Automatic white balance correction"
 msgstr "Deplasează straturi și selecții"
 
 #: ../app/actions/drawable-actions.c:69
-#, fuzzy
 msgid "_Offset..."
-msgstr "Decalaj"
+msgstr "_Decalaj..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
@@ -1565,7 +1483,7 @@ msgstr "_Vizibil"
 
 #: ../app/actions/drawable-actions.c:86
 msgid "Toggle visibility"
-msgstr ""
+msgstr "Comută vizibilitatea"
 
 #: ../app/actions/drawable-actions.c:95
 #: ../app/actions/image-actions.c:171
@@ -1601,7 +1519,7 @@ msgstr "Rotește _180°"
 
 #: ../app/actions/drawable-actions.c:117
 msgid "Turn upside-down"
-msgstr ""
+msgstr "Întoarce susul-în-jos"
 
 #: ../app/actions/drawable-actions.c:122
 #: ../app/actions/image-actions.c:198
@@ -1631,13 +1549,14 @@ msgstr "Inversarea nu operează pe straturi indexate."
 msgid "White Balance operates only on RGB color layers."
 msgstr "Balansul la alb operează numai pe straturi RGB."
 
+# meniu principal
 #: ../app/actions/edit-actions.c:63
 msgid "_Edit"
 msgstr "_Editare"
 
 #: ../app/actions/edit-actions.c:64
 msgid "_Paste as"
-msgstr "_Inserează ca"
+msgstr "Li_pește ca"
 
 #: ../app/actions/edit-actions.c:65
 msgid "_Buffer"
@@ -1645,16 +1564,16 @@ msgstr "_Zonă tampon"
 
 #: ../app/actions/edit-actions.c:68
 msgid "Undo History Menu"
-msgstr "Meniu istoric desfaceri"
+msgstr "Meniu de istoric de anulări"
 
 #: ../app/actions/edit-actions.c:72
 #: ../app/actions/edit-actions.c:302
 msgid "_Undo"
-msgstr "_Desfă"
+msgstr "An_ulează"
 
 #: ../app/actions/edit-actions.c:73
 msgid "Undo the last operation"
-msgstr "Desfă ultima operație"
+msgstr "Anulează ultima operație"
 
 #: ../app/actions/edit-actions.c:78
 #: ../app/actions/edit-actions.c:303
@@ -1663,36 +1582,36 @@ msgstr "_Refă"
 
 #: ../app/actions/edit-actions.c:79
 msgid "Redo the last operation that was undone"
-msgstr "Refă ultima operație care a fost desfăcută"
+msgstr "Refă ultima operație care a fost anulată"
 
 #: ../app/actions/edit-actions.c:84
 msgid "Strong Undo"
-msgstr ""
+msgstr "Anulare puternică"
 
 #: ../app/actions/edit-actions.c:85
 msgid "Undo the last operation, skipping visibility changes"
-msgstr ""
+msgstr "Anulează ultima operație, sărind peste modificările de vizibilitate"
 
 #: ../app/actions/edit-actions.c:90
 msgid "Strong Redo"
-msgstr ""
+msgstr "Refacere puternică"
 
 #: ../app/actions/edit-actions.c:91
 msgid "Redo the last operation that was undone, skipping visibility changes"
-msgstr ""
+msgstr "Refă ultima operație care a fost anulată, sărind peste modificările de vizibilitate"
 
 #: ../app/actions/edit-actions.c:96
 msgid "_Clear Undo History"
-msgstr "Șterge istori_cul de desfaceri"
+msgstr "Șterge istori_cul de anulări"
 
 #: ../app/actions/edit-actions.c:97
 msgid "Remove all operations from the undo history"
-msgstr "Elimină toate operațiile din istoricul de desfaceri"
+msgstr "Elimină toate operațiile din istoricul de anulări"
 
 #: ../app/actions/edit-actions.c:102
 #: ../app/actions/edit-actions.c:304
 msgid "_Fade..."
-msgstr "_Fondu..."
+msgstr "_Atenuează..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
@@ -1712,7 +1631,7 @@ msgstr "_Copiază"
 
 #: ../app/actions/edit-actions.c:115
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Copiază pixelii selectați în clipboard"
+msgstr "Copiază în clipboard pixelii selectați"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
@@ -1721,27 +1640,27 @@ msgstr "Copiază partea _vizibilă"
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy the selected region to the clipboard"
-msgstr "Copiază zona selectată în clipboard"
+msgstr "Copiază în clipboard zona selectată"
 
 #: ../app/actions/edit-actions.c:126
 msgid "_Paste"
-msgstr "Inserea_ză"
+msgstr "Li_pește"
 
 #: ../app/actions/edit-actions.c:127
 msgid "Paste the content of the clipboard"
-msgstr "Inserează conținutul clipboard-ului"
+msgstr "Lipește conținutul clipboard-ului"
 
 #: ../app/actions/edit-actions.c:132
 msgid "Paste _Into"
-msgstr "_Inserează în"
+msgstr "L_ipește în selecție"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Inserează conținutul clipboard-ului în selecția curentă"
+msgstr "Lipește conținutul clipboard-ului în selecția curentă"
 
 #: ../app/actions/edit-actions.c:138
 msgid "Paste as New"
-msgstr "Inserează ca imagine nouă"
+msgstr "Lipește ca imagine nouă"
 
 #: ../app/actions/edit-actions.c:139
 #: ../app/actions/edit-actions.c:145
@@ -1753,51 +1672,45 @@ msgid "_New Image"
 msgstr "Imagine _nouă"
 
 #: ../app/actions/edit-actions.c:150
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "/Modificare/Memorie tampon/Taie și memorează cu nume..."
+msgstr "_Taie cu nume..."
 
 #: ../app/actions/edit-actions.c:151
 msgid "Move the selected pixels to a named buffer"
-msgstr "Mută pixelii selectați într-o zonă tampon numită"
+msgstr "Mută pixelii selectați într-o zonă tampon denumită"
 
 #: ../app/actions/edit-actions.c:156
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "/Modificare/Memorie tampon/Memorează cu nume..."
+msgstr "_Copiază cu nume..."
 
 #: ../app/actions/edit-actions.c:157
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copiază pixelii selectați într-o zonă tampon numită"
+msgstr "Copiază pixelii selectați într-o zonă tampon denumită"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:162
-#, fuzzy
 msgid "Copy _Visible Named..."
-msgstr "/_Fișier"
+msgstr "Copiază partea _vizibilă cu nume..."
 
 #: ../app/actions/edit-actions.c:163
 msgid "Copy the selected region to a named buffer"
-msgstr "Copiază zona selectată într-o zonă tampon numită"
+msgstr "Copiază zona selectată într-o zonă tampon denumită"
 
-# hm ?
 #: ../app/actions/edit-actions.c:168
 msgid "_Paste Named..."
-msgstr "_Inserează cu nume..."
+msgstr "Li_pește cu numele..."
 
 #: ../app/actions/edit-actions.c:169
 msgid "Paste the content of a named buffer"
-msgstr "Inserează conținutul unei zone tampon numită"
+msgstr "Lipește conținutul unei zone tampon denumite"
 
 #: ../app/actions/edit-actions.c:174
-#, fuzzy
 msgid "Cl_ear"
-msgstr "Curăță"
+msgstr "Șt_erge"
 
 #: ../app/actions/edit-actions.c:175
-#, fuzzy
 msgid "Clear the selected pixels"
-msgstr "Elimină obiectul selectat din index"
+msgstr "Șterge pixelii selectați"
 
 #: ../app/actions/edit-actions.c:183
 msgid "Fill with _FG Color"
@@ -1805,16 +1718,15 @@ msgstr "Umple cu culoarea de _prim plan"
 
 #: ../app/actions/edit-actions.c:184
 msgid "Fill the selection using the foreground color"
-msgstr ""
+msgstr "Umple selecția folosind culoarea de prim plan"
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with B_G Color"
 msgstr "Umple cu culoarea de _fundal"
 
 #: ../app/actions/edit-actions.c:190
-#, fuzzy
 msgid "Fill the selection using the background color"
-msgstr "Fundal"
+msgstr "Umple selecția folosind culoarea de fundal"
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with P_attern"
@@ -1822,48 +1734,50 @@ msgstr "Umple cu un model"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the active pattern"
-msgstr ""
+msgstr "Umple selecția folosind modelul activ"
 
+# hm ?
 #: ../app/actions/edit-actions.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Refacere"
+msgstr "An_ulează operația %s"
 
+# hm ?
 #: ../app/actions/edit-actions.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "Re-Refacere"
+msgstr "_Refă operația %s"
 
 #: ../app/actions/edit-actions.c:291
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Fondu %s..."
+msgstr "_Atenuează operația %s..."
 
 #: ../app/actions/edit-commands.c:133
 msgid "Clear Undo History"
-msgstr "Șterge istoricul de desfaceri"
+msgstr "Șterge istoricul de anulări"
 
 #: ../app/actions/edit-commands.c:159
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "Sigur ștergeți istoricul de anulări ale imaginii ?"
 
 #: ../app/actions/edit-commands.c:171
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr ""
+msgstr "Ștergerea istoricului de anulări ale acestei imagini va elibera %s de memorie."
 
 #: ../app/actions/edit-commands.c:211
 msgid "Copied pixels to the clipboard"
-msgstr ""
+msgstr "Pixeli copiați ăn clipboard"
 
 #: ../app/actions/edit-commands.c:278
 #: ../app/actions/edit-commands.c:454
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Nu sunt date de imagine în clipboard pentru a fi lipite."
 
 #: ../app/actions/edit-commands.c:292
 msgid "Cut Named"
-msgstr ""
+msgstr "Taie cu nume"
 
 #: ../app/actions/edit-commands.c:295
 #: ../app/actions/edit-commands.c:336
@@ -1873,12 +1787,11 @@ msgstr "Introduceți un nume pentru această zonă tampon"
 
 #: ../app/actions/edit-commands.c:333
 msgid "Copy Named"
-msgstr ""
+msgstr "Copiază cu nume"
 
 #: ../app/actions/edit-commands.c:353
-#, fuzzy
 msgid "Copy Visible Named "
-msgstr "/_Fișier"
+msgstr "Copiază partea vizibilă cu nume"
 
 #: ../app/actions/edit-commands.c:470
 #, fuzzy
@@ -1906,24 +1819,20 @@ msgid "Error Console Menu"
 msgstr "Consola de erori GIMP"
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear"
-msgstr "Curăță"
+msgstr "Șt_erge"
 
 #: ../app/actions/error-console-actions.c:45
-#, fuzzy
 msgid "Clear error console"
-msgstr "Unealtă de masurare"
+msgstr "Șterge conținutul consolei de erori"
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgid "Select _All"
-msgstr "/Selecție/Selectează tot"
+msgstr "Selecte_ază tot"
 
 #: ../app/actions/error-console-actions.c:51
-#, fuzzy
 msgid "Select all errors"
-msgstr "Unealtă de masurare"
+msgstr "Selectează toate erorile"
 
 #: ../app/actions/error-console-actions.c:59
 #, fuzzy
@@ -1931,9 +1840,8 @@ msgid "_Save Error Log to File..."
 msgstr "Salvare jurnal de erori în fișier..."
 
 #: ../app/actions/error-console-actions.c:60
-#, fuzzy
 msgid "Save error log"
-msgstr "Unealtă de masurare"
+msgstr "Salvează jurnalul de erori"
 
 #: ../app/actions/error-console-actions.c:65
 #, fuzzy
@@ -1945,9 +1853,8 @@ msgid "Save selection"
 msgstr "Salvează selecția"
 
 #: ../app/actions/error-console-commands.c:84
-#, fuzzy
 msgid "Cannot save. Nothing is selected."
-msgstr "Nu pot salva, nu este nimic selectat!"
+msgstr "Nu se poate salva. Nu este nimic selectat."
 
 #: ../app/actions/error-console-commands.c:95
 #, fuzzy
@@ -1991,11 +1898,11 @@ msgstr "Deschide un fișier de imagine ca straturi"
 
 #: ../app/actions/file-actions.c:81
 msgid "Open _Location..."
-msgstr "Deschide un _loc..."
+msgstr "Deschide o _locație..."
 
 #: ../app/actions/file-actions.c:82
 msgid "Open an image file from a specified location"
-msgstr "Deschide o imagine dintr-un loc specificat"
+msgstr "Deschide o imagine dintr-o locație specificată"
 
 #: ../app/actions/file-actions.c:87
 msgid "Save as _Template..."
@@ -2060,7 +1967,7 @@ msgstr "Salvează și închide..."
 
 #: ../app/actions/file-actions.c:133
 msgid "Save this image and close its window"
-msgstr ""
+msgstr "Salvează această imagine și închide-i fereastra"
 
 #: ../app/actions/file-commands.c:247
 msgid "Saving canceled"
@@ -2130,14 +2037,12 @@ msgstr "Deschide imaginea ca straturi"
 
 #: ../app/actions/file-commands.c:464
 #: ../app/dialogs/file-open-dialog.c:75
-#, fuzzy
 msgid "Open Image"
-msgstr "Imagine nouă"
+msgstr "Deschidere imagine"
 
 #: ../app/actions/file-commands.c:539
-#, fuzzy
 msgid "(Unnamed Template)"
-msgstr "Inserează informația memorată cu nume"
+msgstr "(Șablon nedenumit)"
 
 #: ../app/actions/file-commands.c:587
 #, fuzzy, c-format
@@ -2154,14 +2059,12 @@ msgid "Fonts Menu"
 msgstr "Meniu fonturi"
 
 #: ../app/actions/fonts-actions.c:48
-#, fuzzy
 msgid "_Rescan Font List"
-msgstr "Opțiuni unelte"
+msgstr "Scanează din nou lista de fontu_ri"
 
 #: ../app/actions/fonts-actions.c:49
-#, fuzzy
 msgid "Rescan font list"
-msgstr "Opțiuni unelte"
+msgstr "Scanează din nou lista de fonturi"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
@@ -2183,19 +2086,16 @@ msgid "_Save Left Color To"
 msgstr "Culoare Directă"
 
 #: ../app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgid "Right Color Type"
-msgstr "Culoare Directă"
+msgstr "Tip de culoare din dreapta"
 
 #: ../app/actions/gradient-editor-actions.c:59
-#, fuzzy
 msgid "Load Right Color Fr_om"
-msgstr "Punctul din stânga al vecinului din dreapta"
+msgstr "Încarcă cul_oarea din dreapta din"
 
 #: ../app/actions/gradient-editor-actions.c:61
-#, fuzzy
 msgid "Sa_ve Right Color To"
-msgstr "Culoare Directă"
+msgstr "Sal_vează culoarea din dreapta în"
 
 #: ../app/actions/gradient-editor-actions.c:67
 #, fuzzy
@@ -2255,41 +2155,37 @@ msgstr "Punctul din stânga"
 
 #: ../app/actions/gradient-editor-actions.c:258
 #: ../app/actions/gradient-editor-actions.c:286
-#, fuzzy
 msgid "_Fixed"
-msgstr "_Fișier"
+msgstr "_Fixat"
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
-#, fuzzy
 msgid "F_oreground Color"
-msgstr "Prim Plan "
+msgstr "Cul_oare prim plan"
 
+# hm ? cine-i transparent ?
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
-#, fuzzy
 msgid "Fo_reground Color (Transparent)"
-msgstr "Prim Plan "
+msgstr "Cul_oare prim plan (transparent)"
 
+# hm ? cine-i transparent ?
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
-#, fuzzy
 msgid "B_ackground Color (Transparent)"
-msgstr "Activează simularea de transparență"
+msgstr "Cul_oare fundal (transparent)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
 msgstr "_Liniar"
 
 #: ../app/actions/gradient-editor-actions.c:319
-#, fuzzy
 msgid "_Curved"
-msgstr "Curbat"
+msgstr "_Curbat"
 
 #: ../app/actions/gradient-editor-actions.c:324
-#, fuzzy
 msgid "_Sinusoidal"
-msgstr "Sinusoidal"
+msgstr "_Sinusoidal"
 
 #: ../app/actions/gradient-editor-actions.c:329
 #, fuzzy
@@ -2404,9 +2300,8 @@ msgid "_Blending Function for Selection"
 msgstr "_Funcție de amestec pentru selecție"
 
 #: ../app/actions/gradient-editor-actions.c:797
-#, fuzzy
 msgid "Coloring _Type for Selection"
-msgstr "Tipul de colorare pentru selecție"
+msgstr "_Tip de colorare pentru selecție"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "_Flip Selection"
@@ -2561,11 +2456,11 @@ msgstr "Duplică gradientul"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "Copiază _locul gradientului"
+msgstr "Copiază _locația gradientului"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
-msgstr "Copiază locul fișierului gradient în clipboard"
+msgstr "Copiază locația fișierului gradient în clipboard"
 
 #: ../app/actions/gradients-actions.c:66
 #, fuzzy
@@ -2625,7 +2520,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:47
 msgid "Toolbox Menu"
-msgstr "Meniu de cutie de unelte"
+msgstr "Meniu de cutie de instrumente"
 
 #: ../app/actions/image-actions.c:51
 #: ../app/actions/image-actions.c:55
@@ -2647,7 +2542,7 @@ msgstr "_Mod"
 #: ../app/actions/image-actions.c:62
 #: ../app/actions/layers-actions.c:56
 msgid "_Transform"
-msgstr "_Transformă"
+msgstr "_Transformare"
 
 #: ../app/actions/image-actions.c:63
 msgid "_Guides"
@@ -2661,9 +2556,8 @@ msgstr "Refacere"
 #: ../app/actions/image-actions.c:67
 #: ../app/tools/gimplevelstool.c:606
 #: ../app/tools/gimpthresholdtool.c:235
-#, fuzzy
 msgid "_Auto"
-msgstr "Automat"
+msgstr "_Automat"
 
 #: ../app/actions/image-actions.c:68
 #: ../app/actions/plug-in-actions.c:94
@@ -2733,9 +2627,8 @@ msgid "_Crop to Selection"
 msgstr "De_cupează la selecție"
 
 #: ../app/actions/image-actions.c:115
-#, fuzzy
 msgid "Crop the image to the extents of the selection"
-msgstr "Deplasează straturi și selecții"
+msgstr "Decupează imaginea urmărind conturul selecției"
 
 #: ../app/actions/image-actions.c:120
 msgid "_Duplicate"
@@ -2748,22 +2641,22 @@ msgstr "Elimină canal"
 
 #: ../app/actions/image-actions.c:126
 msgid "Merge Visible _Layers..."
-msgstr "Îmbină straturi_le vizibile..."
+msgstr "Combină straturi_le vizibile..."
 
 #: ../app/actions/image-actions.c:127
 #: ../app/actions/layers-actions.c:135
 msgid "Merge all visible layers into one layer"
-msgstr "Îmbină toate straturile vizibile într-un singur strat"
+msgstr "Combină toate straturile vizibile într-un singur strat"
 
 #: ../app/actions/image-actions.c:132
 #: ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
-msgstr "A_platizează imaginea"
+msgstr "Aplati_zează imaginea"
 
 #: ../app/actions/image-actions.c:133
 #: ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
-msgstr "Îmbină toate straturile într-unul și elimină transparența"
+msgstr "Combină toate straturile într-unul și elimină transparența"
 
 #: ../app/actions/image-actions.c:138
 msgid "Configure G_rid..."
@@ -2779,7 +2672,7 @@ msgstr "Pr_oprietăți imagine"
 
 #: ../app/actions/image-actions.c:145
 msgid "Display information about this image"
-msgstr ""
+msgstr "Afișează informații despre această imagine"
 
 #: ../app/actions/image-actions.c:154
 #, fuzzy
@@ -2860,11 +2753,8 @@ msgstr "Rotire"
 
 #: ../app/actions/image-commands.c:420
 #: ../app/actions/layers-commands.c:599
-#, fuzzy
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
-"Nu pot să tai/copiez deoarece regiunea\n"
-"selectată este goală."
+msgstr "Nu se poate decupa deoarece selecția curentă este goală."
 
 #: ../app/actions/image-commands.c:613
 #, fuzzy
@@ -2909,7 +2799,7 @@ msgstr "/Vizualizare/O nouă vizualizare"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr ""
+msgstr "Creează o nouă vedere pentru această imagine"
 
 #: ../app/actions/images-actions.c:59
 #, fuzzy
@@ -2955,16 +2845,15 @@ msgstr "_Mod strat"
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
-msgstr "Unealtă pentru te_xt"
+msgstr "Instrument te_xt"
 
 #: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
-msgstr ""
+msgstr "Activează instrumentul text pe acest strat de text"
 
 #: ../app/actions/layers-actions.c:68
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "/Modifică atributele stratului..."
+msgstr "_Editare atribute strat..."
 
 #: ../app/actions/layers-actions.c:69
 #, fuzzy
@@ -2977,7 +2866,7 @@ msgstr "Strat _nou..."
 
 #: ../app/actions/layers-actions.c:75
 msgid "Create a new layer and add it to the image"
-msgstr ""
+msgstr "Creează un strat nou și adaugă-l la imagine"
 
 #: ../app/actions/layers-actions.c:80
 msgid "_New Layer"
@@ -2993,7 +2882,7 @@ msgstr "_Duplică stratul"
 
 #: ../app/actions/layers-actions.c:87
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr ""
+msgstr "Creează un duplicat al stratului și adaugă-l la imagine"
 
 #: ../app/actions/layers-actions.c:92
 msgid "_Delete Layer"
@@ -3004,76 +2893,68 @@ msgid "Delete this layer"
 msgstr "Șterge acest strat"
 
 #: ../app/actions/layers-actions.c:98
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "_Ridică stratul"
 
 #: ../app/actions/layers-actions.c:99
 msgid "Raise this layer one step in the layer stack"
-msgstr ""
+msgstr "Ridică acest strat o treaptă în stiva de straturi"
 
 #: ../app/actions/layers-actions.c:104
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "/Stivă/Mută în vârf"
+msgstr "Strat sus de _tot"
 
 #: ../app/actions/layers-actions.c:105
 msgid "Move this layer to the top of the layer stack"
-msgstr ""
+msgstr "Mută acest strat deasupra stivei de straturi"
 
 #: ../app/actions/layers-actions.c:110
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "/Stivă/Coboară Stratul"
+msgstr "Coboară stratu_l"
 
 #: ../app/actions/layers-actions.c:111
 msgid "Lower this layer one step in the layer stack"
-msgstr ""
+msgstr "Coboară acest strat o treaptă în stiva de straturi"
 
 #: ../app/actions/layers-actions.c:116
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "/Stivă/Mută la bază"
+msgstr "Strat jos de t_ot"
 
 #: ../app/actions/layers-actions.c:117
 msgid "Move this layer to the bottom of the layer stack"
-msgstr ""
+msgstr "Mută acest strat la baza stivei de straturi"
 
 #: ../app/actions/layers-actions.c:122
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "/Ancorează stratul"
+msgstr "_Ancorează stratul"
 
 #: ../app/actions/layers-actions.c:123
-#, fuzzy
 msgid "Anchor the floating layer"
-msgstr "Selecție Plutitoare"
+msgstr "Ancorează stratul putitor"
 
 #: ../app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
-msgstr "Îmbină în _jos"
+msgstr "Combină în _jos"
 
 #: ../app/actions/layers-actions.c:129
 msgid "Merge this layer with the one below it"
-msgstr "Îmbină acest strat cu cel de sub el"
+msgstr "Combină acest strat cu cel de sub el"
 
 #: ../app/actions/layers-actions.c:134
 msgid "Merge _Visible Layers..."
-msgstr "Îmbină straturile _vizibile"
+msgstr "Combină straturile _vizibile"
 
 #: ../app/actions/layers-actions.c:146
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "Informații despre scalare"
+msgstr "Aruncă informațiile _de text"
 
 #: ../app/actions/layers-actions.c:147
 msgid "Turn this text layer into a normal layer"
-msgstr ""
+msgstr "Transformă acest strat de text într-un strat normal"
 
 #: ../app/actions/layers-actions.c:152
-#, fuzzy
 msgid "Text to _Path"
-msgstr "Transferă textul către traseu"
+msgstr "_Text la traseu"
 
 #: ../app/actions/layers-actions.c:153
 #, fuzzy
@@ -3086,7 +2967,7 @@ msgstr "Text de-a lun_gul traseului"
 
 #: ../app/actions/layers-actions.c:159
 msgid "Warp this layer's text along the current path"
-msgstr ""
+msgstr "Deformează acest strat în lungul traseului curent"
 
 #: ../app/actions/layers-actions.c:164
 #, fuzzy
@@ -3095,7 +2976,7 @@ msgstr "/Dimensiune exterioară strat..."
 
 #: ../app/actions/layers-actions.c:165
 msgid "Adjust the layer dimensions"
-msgstr ""
+msgstr "Ajustează dimensiunile stratului"
 
 #: ../app/actions/layers-actions.c:170
 #, fuzzy
@@ -3104,7 +2985,7 @@ msgstr "/Strat -> Dimensiune imagine"
 
 #: ../app/actions/layers-actions.c:171
 msgid "Resize the layer to the size of the image"
-msgstr ""
+msgstr "Redimensionează stratul la dimensiunea imaginii"
 
 #: ../app/actions/layers-actions.c:176
 msgid "_Scale Layer..."
@@ -3112,12 +2993,11 @@ msgstr "_Scalează stratul..."
 
 #: ../app/actions/layers-actions.c:177
 msgid "Change the size of the layer content"
-msgstr ""
+msgstr "Modifică dimensiunea conținutului stratului"
 
 #: ../app/actions/layers-actions.c:183
-#, fuzzy
 msgid "Crop the layer to the extents of the selection"
-msgstr "Deplasează straturi și selecții"
+msgstr "Decupează stratul urmărind conturul selecției"
 
 #: ../app/actions/layers-actions.c:188
 #, fuzzy
@@ -3126,15 +3006,15 @@ msgstr "/Adauga un strat mască..."
 
 #: ../app/actions/layers-actions.c:189
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr ""
+msgstr "Adaugă o mască care permite editarea nedestructivă a transparenței"
 
 #: ../app/actions/layers-actions.c:194
 msgid "Add Alpha C_hannel"
-msgstr "A_daugă canal alfa"
+msgstr "A_daugă un canal alfa"
 
 #: ../app/actions/layers-actions.c:195
 msgid "Add transparency information to the layer"
-msgstr ""
+msgstr "Adaugă la strat informații despre transparență"
 
 #: ../app/actions/layers-actions.c:200
 msgid "_Remove Alpha Channel"
@@ -3142,7 +3022,7 @@ msgstr "E_limină canalul alfa"
 
 #: ../app/actions/layers-actions.c:201
 msgid "Remove transparency information from the layer"
-msgstr ""
+msgstr "Elimină din strat informațiile despre transparență"
 
 #: ../app/actions/layers-actions.c:209
 msgid "Lock Alph_a Channel"
@@ -3150,7 +3030,7 @@ msgstr "Blochează canalul _alfa"
 
 #: ../app/actions/layers-actions.c:210
 msgid "Keep transparency information on this layer from being modified"
-msgstr ""
+msgstr "Păstrează informațiile despre transparență "
 
 #: ../app/actions/layers-actions.c:216
 #, fuzzy
@@ -3182,9 +3062,10 @@ msgstr "elimină stratul mască"
 msgid "Apply Layer _Mask"
 msgstr "/Aplică stratul mască"
 
+# hm ? sigur masca e aia care se elimină ?
 #: ../app/actions/layers-actions.c:240
 msgid "Apply the effect of the layer mask and remove it"
-msgstr ""
+msgstr "Aplică efectul măștii de strat și elimin-o"
 
 #: ../app/actions/layers-actions.c:245
 #, fuzzy
@@ -3197,9 +3078,8 @@ msgid "Remove the layer mask and its effect"
 msgstr "Deplasează straturi și selecții"
 
 #: ../app/actions/layers-actions.c:254
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "/Masca -> Selecție"
+msgstr "_Mască la Selecție"
 
 #: ../app/actions/layers-actions.c:255
 #, fuzzy
@@ -3222,9 +3102,8 @@ msgid "Intersect the layer mask with the current selection"
 msgstr "/Intersectează cu selecția"
 
 #: ../app/actions/layers-actions.c:281
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "/Canal alfa -> Selecție"
+msgstr "Al_fa la selecție"
 
 #: ../app/actions/layers-actions.c:282
 msgid "Replace the selection with the layer's alpha channel"
@@ -3232,9 +3111,8 @@ msgstr "Înlocuiește selecția cu cu canalul alfa al stratului"
 
 #: ../app/actions/layers-actions.c:287
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "/Adaugă la selecție"
+msgstr "A_daugă la selecție"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Add the layer's alpha channel to the current selection"
@@ -3250,16 +3128,15 @@ msgstr "Intersectează canalul alfa al stratului cu selecția curentă"
 
 #: ../app/actions/layers-actions.c:308
 msgid "_Text to Selection"
-msgstr "_Text -> selecție"
+msgstr "_Text la selecție"
 
 #: ../app/actions/layers-actions.c:309
 msgid "Replace the selection with the text layer's outline"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:315
-#, fuzzy
 msgid "Add the text layer's outline to the current selection"
-msgstr "/Adaugă la selecție"
+msgstr "Adaugă conturul stratului de text la selecția curentă"
 
 #: ../app/actions/layers-actions.c:321
 #, fuzzy
@@ -3272,54 +3149,44 @@ msgid "Intersect the text layer's outline with the current selection"
 msgstr "/Intersectează cu selecția"
 
 #: ../app/actions/layers-actions.c:335
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "/Strat/Stivă/Stratul urmator"
+msgstr "Selec_tează stratul de sus"
 
 #: ../app/actions/layers-actions.c:336
-#, fuzzy
 msgid "Select the topmost layer"
-msgstr "/Strat/Stivă/Stratul urmator"
+msgstr "Selectează stratul cel mai de sus"
 
 #: ../app/actions/layers-actions.c:341
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "/Strat/Stivă/Stratul urmator"
+msgstr "Selectează stratul de _jos"
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgid "Select the bottommost layer"
-msgstr "/Strat/Stivă/Stratul urmator"
+msgstr "Selectează stratul cel mai de jos"
 
 #: ../app/actions/layers-actions.c:347
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "/Strat/Stivă/Stratul anterior"
+msgstr "Selectează stratul _precedent"
 
 #: ../app/actions/layers-actions.c:348
-#, fuzzy
 msgid "Select the layer above the current layer"
-msgstr "Numai stratul curent"
+msgstr "Selectează stratul de deasupra stratului curent"
 
 #: ../app/actions/layers-actions.c:353
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "/Strat/Stivă/Stratul urmator"
+msgstr "Selectează stratul _următor"
 
 #: ../app/actions/layers-actions.c:354
-#, fuzzy
 msgid "Select the layer below the current layer"
-msgstr "Numai stratul curent"
+msgstr "Selectează stratul de dedesubtul stratului curent"
 
 #: ../app/actions/layers-actions.c:362
-#, fuzzy
 msgid "Set Opacity"
-msgstr "Opțiuni strat nou"
+msgstr "Stabilește opacitatea"
 
 #: ../app/actions/layers-commands.c:202
-#, fuzzy
 msgid "Layer Attributes"
-msgstr "Modificare caracteristici strat"
+msgstr "Atribute strat"
 
 #: ../app/actions/layers-commands.c:205
 msgid "Edit Layer Attributes"
@@ -3335,13 +3202,12 @@ msgid "New Layer"
 msgstr "Strat nou"
 
 #: ../app/actions/layers-commands.c:244
-#, fuzzy
 msgid "Create a New Layer"
-msgstr "Strat nou"
+msgstr "Creare strat nou"
 
 #: ../app/actions/layers-commands.c:531
 msgid "Set Layer Boundary Size"
-msgstr "Stabilește dimensiune exterioară strat"
+msgstr "Stabilește dimensiunea exterioară a stratului"
 
 #: ../app/actions/layers-commands.c:572
 #: ../app/core/gimplayer.c:251
@@ -3349,14 +3215,12 @@ msgid "Scale Layer"
 msgstr "Scalează stratul"
 
 #: ../app/actions/layers-commands.c:609
-#, fuzzy
 msgid "Crop Layer"
-msgstr "/Strat/Ancorează Strat"
+msgstr "Decupează stratul"
 
 #: ../app/actions/layers-commands.c:748
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Strat/Masca -> Selecție"
+msgstr "Mască de strat la Selecție"
 
 #: ../app/actions/layers-commands.c:983
 #, fuzzy
@@ -3366,9 +3230,8 @@ msgstr "/Selecție/Salvează în Canal"
 #: ../app/actions/layers-commands.c:991
 #: ../app/core/gimplayer.c:1266
 #: ../app/dialogs/layer-add-mask-dialog.c:81
-#, fuzzy
 msgid "Add Layer Mask"
-msgstr "/Adauga un strat mască..."
+msgstr "Adaugă o mască de strat"
 
 #: ../app/actions/palette-editor-actions.c:44
 #, fuzzy
@@ -3376,14 +3239,12 @@ msgid "Palette Editor Menu"
 msgstr "Modificare paleta de culori"
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgid "_Delete Color"
-msgstr "/Unelte/Culorile implicite"
+msgstr "Șt_erge culoarea"
 
 #: ../app/actions/palette-editor-actions.c:55
-#, fuzzy
 msgid "Delete color"
-msgstr "/Unelte/Culorile implicite"
+msgstr "Șterge culoarea"
 
 #: ../app/actions/palette-editor-actions.c:63
 #, fuzzy
@@ -3434,56 +3295,48 @@ msgid "Edit Color Palette Entry"
 msgstr "Paletă de culori"
 
 #: ../app/actions/palettes-actions.c:44
-#, fuzzy
 msgid "Palettes Menu"
-msgstr "Palete"
+msgstr "Meniu de palete"
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgid "_New Palette"
-msgstr "/Traseu nou"
+msgstr "Paletă _nouă"
 
 #: ../app/actions/palettes-actions.c:49
-#, fuzzy
 msgid "New palette"
-msgstr "/Traseu nou"
+msgstr "Paletă nouă"
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "Import Paletă"
+msgstr "_Importă o paletă..."
 
 #: ../app/actions/palettes-actions.c:55
-#, fuzzy
 msgid "Import palette"
-msgstr "Import Paletă"
+msgstr "Importă o paletă"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "/Clonează traseul"
+msgstr "D_uplică paleta"
 
 #: ../app/actions/palettes-actions.c:61
-#, fuzzy
 msgid "Duplicate palette"
-msgstr "/Clonează traseul"
+msgstr "Duplică paleta"
 
 #: ../app/actions/palettes-actions.c:66
 msgid "_Merge Palettes..."
-msgstr "Î_mbină paletele..."
+msgstr "Co_mbină paletele..."
 
 #: ../app/actions/palettes-actions.c:67
 msgid "Merge palettes"
-msgstr "Îmbină paletele"
+msgstr "Combină paletele"
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "Copy Palette _Location"
-msgstr "Opțiuni personalizate paletă culori"
+msgstr "Copiază _locația paletei"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
-msgstr ""
+msgstr "Copiază locația fișierului paletă în clipboard"
 
 #: ../app/actions/palettes-actions.c:78
 #, fuzzy
@@ -3517,86 +3370,71 @@ msgstr "Modifică paleta de culori"
 
 #: ../app/actions/palettes-commands.c:74
 msgid "Merge Palette"
-msgstr "Îmbină paleta"
+msgstr "Combină paleta"
 
 #: ../app/actions/palettes-commands.c:78
 msgid "Enter a name for the merged palette"
-msgstr "Introduceți un nume pentru paleta îmbinată"
+msgstr "Introduceți un nume pentru paleta combinată"
 
 #: ../app/actions/patterns-actions.c:43
-#, fuzzy
 msgid "Patterns Menu"
-msgstr "Modele"
+msgstr "Meniu modele"
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "_Open Pattern as Image"
-msgstr "/Aplatizează imaginea"
+msgstr "Deschide m_odelul ca imagine"
 
 #: ../app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "Open pattern as image"
-msgstr ""
-"Modelul activ.\n"
-"Clic pentru a deschide fereastra cu modele."
+msgstr "Deschide m_odelul ca imagine"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "_New Pattern"
-msgstr "/Traseu nou"
+msgstr "Model _nou"
 
 #: ../app/actions/patterns-actions.c:54
-#, fuzzy
 msgid "New pattern"
-msgstr "/Traseu nou"
+msgstr "Model nou"
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "/Clonează traseul"
+msgstr "D_uplică modelul"
 
 #: ../app/actions/patterns-actions.c:60
-#, fuzzy
 msgid "Duplicate pattern"
-msgstr "/Clonează traseul"
+msgstr "Duplică modelul"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
-msgstr "Copiază _locul modelului"
+msgstr "Copiază _locația modelului"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
-msgstr ""
+msgstr "Copiază locația fișierului model în clipboard"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgid "_Delete Pattern"
-msgstr "/Elimină traseu"
+msgstr "Șterge mo_delul"
 
 #: ../app/actions/patterns-actions.c:72
-#, fuzzy
 msgid "Delete pattern"
-msgstr "/Elimină traseu"
+msgstr "Șterge modelul"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "Modele"
+msgstr "_Reîmprospătează modelele"
 
 #: ../app/actions/patterns-actions.c:78
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "Modele"
+msgstr "Reîmprospătează modelele"
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/Modifică atribute traseu"
+msgstr "_Editare model..."
 
 #: ../app/actions/patterns-actions.c:87
-#, fuzzy
 msgid "Edit pattern"
-msgstr "/Modifică atribute traseu"
+msgstr "Editare model"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
@@ -3604,7 +3442,7 @@ msgstr "Filt_re"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
-msgstr ""
+msgstr "Utilizate recent"
 
 #: ../app/actions/plug-in-actions.c:85
 msgid "_Blur"
@@ -3619,107 +3457,99 @@ msgid "Edge-De_tect"
 msgstr "De_tectare de muche"
 
 #: ../app/actions/plug-in-actions.c:88
-#, fuzzy
 msgid "En_hance"
-msgstr "/Filtre/Inbunătățire"
+msgstr "_Ameliorare"
 
 #: ../app/actions/plug-in-actions.c:89
 msgid "C_ombine"
 msgstr "C_ombină"
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgid "_Generic"
-msgstr "Centru X:"
+msgstr "_Generic"
 
 #: ../app/actions/plug-in-actions.c:91
 msgid "_Light and Shadow"
-msgstr ""
+msgstr "_Lumină și umbră"
 
 #: ../app/actions/plug-in-actions.c:92
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filtre/Destorsionări"
+msgstr "_Distorsiuni"
 
 #: ../app/actions/plug-in-actions.c:93
-#, fuzzy
 msgid "_Artistic"
-msgstr "/Filtre/Artistic"
+msgstr "_Artistic"
 
 #: ../app/actions/plug-in-actions.c:95
-#, fuzzy
 msgid "_Render"
-msgstr "Centru X:"
+msgstr "_Render"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Clouds"
-msgstr ""
+msgstr "_Nori"
 
 #: ../app/actions/plug-in-actions.c:97
-#, fuzzy
 msgid "_Nature"
-msgstr "Nume:"
+msgstr "_Natură"
 
 #: ../app/actions/plug-in-actions.c:99
 msgid "_Web"
-msgstr ""
+msgstr "_Web"
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
 msgid "An_imation"
-msgstr "/Filtre/Animație"
+msgstr "An_imație"
 
 #: ../app/actions/plug-in-actions.c:103
-#, fuzzy
 msgid "Reset all _Filters"
-msgstr "Tip umplere"
+msgstr "Resetează toate _filtrele"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all plug-ins to their default settings"
-msgstr ""
+msgstr "Resetează toate plugin-urile la valorile lor implicite"
 
+# hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:112
-#, fuzzy
 msgid "Re_peat Last"
-msgstr "/Filtre/Repetă ultimul filtru"
+msgstr "Re_petă ultimul"
 
 #: ../app/actions/plug-in-actions.c:113
 msgid "Rerun the last used plug-in using the same settings"
 msgstr ""
 
+# hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:118
-#, fuzzy
 msgid "R_e-Show Last"
-msgstr "/Filtre/Arată-l ultimul filtru"
+msgstr "_Arată din nou ultimul"
 
 #: ../app/actions/plug-in-actions.c:119
 msgid "Show the last used plug-in dialog again"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:503
-#, fuzzy, c-format
+#, c-format
 msgid "Re_peat \"%s\""
-msgstr "Repetă:"
+msgstr "Re_petă „%s”"
 
 #: ../app/actions/plug-in-actions.c:504
-#, fuzzy, c-format
+#, c-format
 msgid "R_e-Show \"%s\""
-msgstr "/Filtre/Arată-l ultimul filtru"
+msgstr "Arată din nou „%s”"
 
+# hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:518
-#, fuzzy
 msgid "Repeat Last"
-msgstr "/Filtre/Repetă ultimul filtru"
+msgstr "Repetă ultimul"
 
+# hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:520
-#, fuzzy
 msgid "Re-Show Last"
-msgstr "/Filtre/Arată-l ultimul filtru"
+msgstr "Arată din nou ultimul"
 
+# titlu
 #: ../app/actions/plug-in-commands.c:262
-#, fuzzy
 msgid "Reset all Filters"
-msgstr "Tip umplere"
+msgstr "Resetarea tututror filtrelor"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
@@ -3757,14 +3587,12 @@ msgid "Mask _Unselected Areas"
 msgstr "/Masca -> Selecție"
 
 #: ../app/actions/quick-mask-commands.c:105
-#, fuzzy
 msgid "Quick Mask Attributes"
-msgstr "Modifică atribute Qmask"
+msgstr "Atribute mască rapidă"
 
 #: ../app/actions/quick-mask-commands.c:108
-#, fuzzy
 msgid "Edit Quick Mask Attributes"
-msgstr "Modifică atribute Qmask"
+msgstr "Editare atribute mască rapidă"
 
 #: ../app/actions/quick-mask-commands.c:110
 #, fuzzy
@@ -3818,14 +3646,12 @@ msgid "Invert the selection"
 msgstr "Inversează selecția"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgid "_Float"
-msgstr "Numar:"
+msgstr "_Plutește"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgid "Create a floating selection"
-msgstr "Selecție Plutitoare"
+msgstr "Creează o selecție plutitoare"
 
 #: ../app/actions/select-actions.c:74
 #, fuzzy
@@ -3835,7 +3661,7 @@ msgstr "/Selecție/Pană..."
 # hm ?
 #: ../app/actions/select-actions.c:75
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Estompează claritatea bordurii de selecție în așa fel încât să pălească lin"
+msgstr "Estompează claritatea bordurii de selecție în așa fel încât să fie atenuată lin"
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
@@ -3847,44 +3673,36 @@ msgid "Remove fuzzyness from the selection"
 msgstr "Selecție Plutitoare"
 
 #: ../app/actions/select-actions.c:86
-#, fuzzy
 msgid "S_hrink..."
-msgstr "Decupez..."
+msgstr "_Micșorează..."
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgid "Contract the selection"
-msgstr "/Intersectează cu selecția"
+msgstr "Contractă selecția"
 
 #: ../app/actions/select-actions.c:92
-#, fuzzy
 msgid "_Grow..."
-msgstr "/Selecție/Marește..."
+msgstr "_Mărește..."
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgid "Enlarge the selection"
-msgstr "Selecție Plutitoare"
+msgstr "Lărgește selecția"
 
 #: ../app/actions/select-actions.c:98
-#, fuzzy
 msgid "Bo_rder..."
-msgstr "/Selecție/Margine..."
+msgstr "Bo_rdură..."
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgid "Replace the selection by its border"
-msgstr "Replicare selecție"
+msgstr "Înlocuiește selecția cu bordura ei"
 
 #: ../app/actions/select-actions.c:104
-#, fuzzy
 msgid "Save to _Channel"
-msgstr "/Selecție/Salvează în Canal"
+msgstr "Salvează în _canal"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgid "Save the selection to a channel"
-msgstr "/Selecție/Salvează în Canal"
+msgstr "Salvează selecția într-un canal"
 
 #: ../app/actions/select-actions.c:110
 #, fuzzy
@@ -3926,26 +3744,24 @@ msgstr "Selecție pană:"
 #: ../app/actions/select-commands.c:183
 #: ../app/core/gimpselection.c:177
 msgid "Shrink Selection"
-msgstr "Contractă selecția"
+msgstr "Micșorează selecția"
 
 #: ../app/actions/select-commands.c:187
-#, fuzzy
 msgid "Shrink selection by"
-msgstr "Micșorează selecția:"
+msgstr "Micșorează selecția cu"
 
 #: ../app/actions/select-commands.c:196
 msgid "_Shrink from image border"
-msgstr "_Contractă de la marginea imaginii"
+msgstr "_Micșorează de la marginea imaginii"
 
 #: ../app/actions/select-commands.c:217
 #: ../app/core/gimpselection.c:176
 msgid "Grow Selection"
-msgstr "Mărește selecția"
+msgstr "Mărire selecție"
 
 #: ../app/actions/select-commands.c:221
-#, fuzzy
 msgid "Grow selection by"
-msgstr "Mărește selecția:"
+msgstr "Mărește selecția cu"
 
 #: ../app/actions/select-commands.c:241
 #: ../app/core/gimpselection.c:175
@@ -3987,79 +3803,65 @@ msgid "Stroke Selection"
 msgstr "Micșorează selecția"
 
 #: ../app/actions/templates-actions.c:42
-#, fuzzy
 msgid "Templates Menu"
-msgstr "Replicare"
+msgstr "Meniu șablon"
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgid "_Create Image from Template..."
-msgstr "Comentariul folosit pentru noile imaginii"
+msgstr "_Creează o imagine din șablon..."
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
 msgstr "Creează o imagine nouă pe baza șablonului selectat"
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
 msgid "_New Template..."
-msgstr "Afișare"
+msgstr "Șablon _nou..."
 
 #: ../app/actions/templates-actions.c:53
-#, fuzzy
 msgid "Create a new template"
-msgstr "Comentariul folosit pentru noile imaginii"
+msgstr "Creează un șablon nou"
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgid "D_uplicate Template..."
-msgstr "/Clonează traseul"
+msgstr "D_uplică șablonul"
 
 #: ../app/actions/templates-actions.c:59
-#, fuzzy
 msgid "Duplicate the selected template"
-msgstr "doriți să replicați selecția"
+msgstr "Duplică șablonul selectat"
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgid "_Edit Template..."
-msgstr "/Elimină traseu"
+msgstr "_Editare șablon"
 
 #: ../app/actions/templates-actions.c:65
-#, fuzzy
 msgid "Edit the selected template"
-msgstr "Elimină obiectul selectat din index"
+msgstr "Editare șablon selectat"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgid "_Delete Template"
-msgstr "/Elimină stratul"
+msgstr "Șt_erge șablonul"
 
 #: ../app/actions/templates-actions.c:71
-#, fuzzy
 msgid "Delete the selected template"
-msgstr "Elimină obiectul selectat din index"
+msgstr "Șterge șablonul selectat"
 
 #: ../app/actions/templates-commands.c:121
-#, fuzzy
 msgid "New Template"
-msgstr "Afișare"
+msgstr "Șablon nou"
 
 #: ../app/actions/templates-commands.c:124
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Comentariul folosit pentru noile imaginii"
+msgstr "Creează un șablon nou"
 
 #: ../app/actions/templates-commands.c:183
 #: ../app/actions/templates-commands.c:186
-#, fuzzy
 msgid "Edit Template"
-msgstr "Replicare"
+msgstr "Editare șablon"
 
 #: ../app/actions/templates-commands.c:221
-#, fuzzy
 msgid "Delete Template"
-msgstr "/Elimină stratul"
+msgstr "Șterge șablonul"
 
 #: ../app/actions/templates-commands.c:247
 #, c-format
@@ -4071,40 +3873,40 @@ msgid "Open"
 msgstr "Deschide"
 
 #: ../app/actions/text-editor-actions.c:45
-#, fuzzy
 msgid "Load text from file"
-msgstr "Încarcă din"
+msgstr "Încarcă text din fișier"
 
 #: ../app/actions/text-editor-actions.c:50
 #: ../app/core/gimp-edit.c:430
 msgid "Clear"
-msgstr "Curăță"
+msgstr "Șterge"
 
 #: ../app/actions/text-editor-actions.c:51
 msgid "Clear all text"
-msgstr ""
+msgstr "Șterge tot textul"
 
+# hm ?
 #: ../app/actions/text-editor-actions.c:59
 msgid "LTR"
-msgstr ""
+msgstr "LTR"
 
 #: ../app/actions/text-editor-actions.c:60
 #: ../app/text/text-enums.c:51
 msgid "From left to right"
-msgstr ""
+msgstr "De la stânga la dreapta"
 
 #: ../app/actions/text-editor-actions.c:65
 msgid "RTL"
-msgstr ""
+msgstr "RTL"
 
 #: ../app/actions/text-editor-actions.c:66
 #: ../app/text/text-enums.c:52
 msgid "From right to left"
-msgstr ""
+msgstr "De la dreapta la stânga"
 
 #: ../app/actions/text-editor-commands.c:63
 msgid "Open Text File (UTF-8)"
-msgstr ""
+msgstr "Deschide fișier text (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:144
 #: ../app/config/gimpconfig-file.c:59
@@ -4121,13 +3923,13 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpimagemaptool.c:587
 #: ../app/xcf/xcf.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Nu s-a putut deschide „%s” pentru citire: %s"
 
 #: ../app/actions/tool-options-actions.c:56
 msgid "Tool Options Menu"
-msgstr "Meniu de opțiuni de unelte"
+msgstr "Meniu de opțiuni de instrumente"
 
 # hm ? sau la ?
 #: ../app/actions/tool-options-actions.c:60
@@ -4152,7 +3954,7 @@ msgstr "I_ntrare nouă..."
 
 #: ../app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
-msgstr "R_setează opțiunile de unelte"
+msgstr "R_setează opțiunile de instrumente"
 
 #: ../app/actions/tool-options-actions.c:82
 msgid "Reset to default values"
@@ -4160,15 +3962,15 @@ msgstr "Resetează la valorile implicite"
 
 #: ../app/actions/tool-options-actions.c:87
 msgid "Reset _all Tool Options"
-msgstr "Resetează to_ate opțiunile de unelte"
+msgstr "Resetează to_ate opțiunile de instrumente"
 
 #: ../app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
-msgstr "Resetează toate opțiunile de unelte"
+msgstr "Resetează toate opțiunile de instrumente"
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
-msgstr "Salvare opțiuni de unelte"
+msgstr "Salvare opțiuni de instrumente"
 
 #: ../app/actions/tool-options-commands.c:76
 msgid "Enter a name for the saved options"
@@ -4182,7 +3984,7 @@ msgstr "Opțiuni salvate"
 
 #: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
-msgstr "Redenumește opțiunile de unelte salvate"
+msgstr "Redenumește opțiunile de instrumente salvate"
 
 #: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
@@ -4191,7 +3993,7 @@ msgstr "Introduceți un nume nou pentru opțiunile salvate"
 # titlu fereastră
 #: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
-msgstr "Resetare opțiuni unelte"
+msgstr "Resetare opțiuni instrumente"
 
 #: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
@@ -4199,27 +4001,27 @@ msgstr "Sigur vreți să fie resetate toate opțiunile uneltelor la valorile imp
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
-msgstr "Meniu unelte"
+msgstr "Meniu instrumente"
 
 #: ../app/actions/tools-actions.c:50
 msgid "_Tools"
-msgstr "Unel_te"
+msgstr "Instrumen_te"
 
 #: ../app/actions/tools-actions.c:51
 msgid "_Selection Tools"
-msgstr "Unelte pentru _selecție"
+msgstr "Instrumente pentru _selecție"
 
 #: ../app/actions/tools-actions.c:52
 msgid "_Paint Tools"
-msgstr "Unelte pentru _pictură"
+msgstr "Instrumente pentru _pictură"
 
 #: ../app/actions/tools-actions.c:53
 msgid "_Transform Tools"
-msgstr "Unelte pentru _transformare"
+msgstr "Instrumente pentru _transformare"
 
 #: ../app/actions/tools-actions.c:54
 msgid "_Color Tools"
-msgstr "Unelte pentru _culoare"
+msgstr "Instrumente pentru _culoare"
 
 #: ../app/actions/tools-actions.c:57
 #, fuzzy
@@ -4246,28 +4048,20 @@ msgstr ""
 "<Shift> Până în vârf"
 
 #: ../app/actions/tools-actions.c:69
-#, fuzzy
 msgid "L_ower Tool"
-msgstr "Unealtă deplasare"
+msgstr "C_oboară instrumentul"
 
 #: ../app/actions/tools-actions.c:70
-#, fuzzy
 msgid "Lower tool"
-msgstr "Arată Calea"
+msgstr "Coboară instrumentul"
 
 #: ../app/actions/tools-actions.c:75
-#, fuzzy
 msgid "Lo_wer to Bottom"
-msgstr ""
-"Coboară Stratul       \n"
-"<Shift> Până la bază"
+msgstr "_Coboară jos de tot"
 
 #: ../app/actions/tools-actions.c:76
-#, fuzzy
 msgid "Lower tool to bottom"
-msgstr ""
-"Coboară Stratul       \n"
-"<Shift> Până la bază"
+msgstr "Coboară instrumentul jos de tot"
 
 #: ../app/actions/tools-actions.c:81
 msgid "_Reset Order & Visibility"
@@ -4282,18 +4076,16 @@ msgid "_Show in Toolbox"
 msgstr "_Arată în cutia de unelte"
 
 #: ../app/actions/tools-actions.c:99
-#, fuzzy
 msgid "_By Color"
-msgstr "Culoare RGB"
+msgstr "_După culoare"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
 msgstr "Selectează zone cu culori similare"
 
 #: ../app/actions/tools-actions.c:105
-#, fuzzy
 msgid "_Arbitrary Rotation..."
-msgstr "/Imagine/Transformare/Decalaj..."
+msgstr "Rotire _arbitrară..."
 
 #: ../app/actions/tools-actions.c:106
 msgid "Rotate by an arbitrary angle"
@@ -4304,19 +4096,16 @@ msgid "Paths Menu"
 msgstr "Meniu trasee"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgid "Path _Tool"
-msgstr "Unealtă pentru text"
+msgstr "Instrument _traseu"
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
 msgid "_Edit Path Attributes..."
-msgstr "/Modifică atribute traseu"
+msgstr "_Editare atribute traseu..."
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgid "Edit path attributes"
-msgstr "Modifică atribute traseu"
+msgstr "Editare atribute traseu"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
@@ -4361,7 +4150,7 @@ msgstr "Elimină traseul"
 
 #: ../app/actions/vectors-actions.c:83
 msgid "Merge _Visible Paths"
-msgstr "Îmbină traseele _vizibile"
+msgstr "Combină traseele _vizibile"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
@@ -4431,39 +4220,33 @@ msgid "Paint along the path with last values"
 msgstr "Culoarea pentru noul canal"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgid "Co_py Path"
-msgstr "/Copiază traseu"
+msgstr "Co_piază traseul"
 
 #: ../app/actions/vectors-actions.c:129
 msgid "Paste Pat_h"
-msgstr "Inserează _traseul"
+msgstr "Lipește _traseul"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "/Exportă traseu..."
+msgstr "E_xportă traseul..."
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "/Importă traseu..."
+msgstr "I_mportă un traseu..."
 
 #: ../app/actions/vectors-actions.c:162
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "/Traseu -> Selecție"
+msgstr "Traseu la slecție"
 
 #: ../app/actions/vectors-actions.c:163
 #: ../app/tools/gimpvectortool.c:1876
-#, fuzzy
 msgid "Path to selection"
-msgstr "Traseul -> Selecție"
+msgstr "Traseu la selecție"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "/Selecție -> Traseu"
+msgstr "_De la traseu"
 
 #: ../app/actions/vectors-actions.c:174
 msgid "Add"
@@ -4475,25 +4258,21 @@ msgid "Subtract"
 msgstr "Scădere"
 
 #: ../app/actions/vectors-actions.c:186
-#, fuzzy
 msgid "Intersect"
-msgstr "Interfață"
+msgstr "Intersectează"
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "/Selecție -> Traseu"
+msgstr "_Selecție la traseu"
 
 #: ../app/actions/vectors-actions.c:195
 #: ../app/actions/vectors-actions.c:201
-#, fuzzy
 msgid "Selection to path"
-msgstr "/Selecție -> Traseu"
+msgstr "Selecție la Traseu"
 
 #: ../app/actions/vectors-actions.c:200
-#, fuzzy
 msgid "To _Path"
-msgstr "redenumește stratul"
+msgstr "_La traseu"
 
 #: ../app/actions/vectors-actions.c:206
 #, fuzzy
@@ -4505,9 +4284,8 @@ msgid "Advanced options"
 msgstr "Opțiuni avansate"
 
 #: ../app/actions/vectors-commands.c:138
-#, fuzzy
 msgid "Path Attributes"
-msgstr "Modifică atribute traseu"
+msgstr "Atribute traseu"
 
 #: ../app/actions/vectors-commands.c:141
 msgid "Edit Path Attributes"
@@ -4528,7 +4306,7 @@ msgstr "Opțiuni strat nou"
 #: ../app/pdb/paths_cmds.c:612
 #: ../app/pdb/vectors_cmds.c:1115
 msgid "Path to Selection"
-msgstr "Traseul către selecție"
+msgstr "Traseu la selecție"
 
 #: ../app/actions/vectors-commands.c:369
 #: ../app/tools/gimpvectoroptions.c:199
@@ -4969,7 +4747,7 @@ msgstr "Normal"
 
 #: ../app/base/base-enums.c:112
 msgid "Dissolve"
-msgstr "Dizolvare"
+msgstr "Dizolvă"
 
 #: ../app/base/base-enums.c:113
 msgid "Behind"
@@ -4977,7 +4755,7 @@ msgstr "În spate"
 
 #: ../app/base/base-enums.c:114
 msgid "Multiply"
-msgstr "Multiplicare"
+msgstr "Multiplică"
 
 #: ../app/base/base-enums.c:115
 msgid "Screen"
@@ -5020,7 +4798,7 @@ msgstr "Culoare"
 
 #: ../app/base/base-enums.c:126
 msgid "Divide"
-msgstr "Împărțire"
+msgstr "Împarte"
 
 #: ../app/base/base-enums.c:127
 msgid "Dodge"
@@ -5044,26 +4822,23 @@ msgstr "Extragere granulație"
 
 #: ../app/base/base-enums.c:132
 msgid "Grain merge"
-msgstr "Îmbinare granulație"
+msgstr "Combinare granulație"
 
 #: ../app/base/base-enums.c:133
 msgid "Color erase"
 msgstr "Ștergere culoare"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgid "Erase"
-msgstr "Stapân"
+msgstr "Șterge"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgid "Replace"
-msgstr "Inlocuiește"
+msgstr "Înlocuiește"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgid "Anti erase"
-msgstr "Interfață"
+msgstr "Anti șterge"
 
 #: ../app/base/tile-swap.c:554
 msgid "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the swap directory in your Preferences."
@@ -5083,9 +4858,9 @@ msgstr "Nu am putut deschide fișierul %s"
 #: ../app/tools/gimpimagemaptool.c:586
 #: ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
 #: ../app/config/gimpconfig-file.c:79
 #: ../app/config/gimpconfig-file.c:102
@@ -5095,9 +4870,9 @@ msgstr "eroare de procesare: \"%s\"\n"
 
 #: ../app/config/gimpconfig-file.c:90
 #: ../app/tools/gimpimagemaptool.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading '%s': %s"
-msgstr "Eroare la deschiderea fișierului %s: %s"
+msgstr "Eroare la citirea „%s”: %s"
 
 #: ../app/config/gimpconfig-file.c:132
 #, c-format
@@ -5260,9 +5035,10 @@ msgstr ""
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
+# hm ? sigur istoricul e ăla care se salvează pe disc ?
 #: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
-msgstr ""
+msgstr "Adaugă toate fișierele deschise și salvate la istoricul de documente de pe disc."
 
 #: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
@@ -5398,7 +5174,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
-msgstr ""
+msgstr "Stabilește dimensiunea previzualizărilor în istoricul de anulări."
 
 #: ../app/config/gimprc-blurbs.h:422
 msgid "When enabled, pressing F1 will open the help browser."
@@ -5422,7 +5198,7 @@ msgstr ""
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 
-# valabil la alinierea de la healing tool
+# la alinierea de la healing tool
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53
 #: ../app/core/core-enums.c:252
@@ -5475,15 +5251,15 @@ msgstr "Selecție"
 
 #: ../app/core/core-enums.c:214
 msgid "Active layer"
-msgstr "Stratul activ"
+msgstr "Strat activ"
 
 #: ../app/core/core-enums.c:215
 msgid "Active channel"
-msgstr "Canalul activ"
+msgstr "Canal activ"
 
 #: ../app/core/core-enums.c:216
 msgid "Active path"
-msgstr "Traseul activ"
+msgstr "Trase activ"
 
 #: ../app/core/core-enums.c:247
 msgid "Foreground color"
@@ -5553,9 +5329,8 @@ msgid "Custom"
 msgstr "Personalizat"
 
 #: ../app/core/core-enums.c:405
-#, fuzzy
 msgid "Line"
-msgstr "Linear"
+msgstr "Linie"
 
 #: ../app/core/core-enums.c:406
 msgid "Long dashes"
@@ -5674,18 +5449,16 @@ msgid "Gigantic"
 msgstr "Gigantic"
 
 #: ../app/core/core-enums.c:607
-#, fuzzy
 msgid "View as list"
-msgstr "/Vizualizare/Agață-te de gidaje"
+msgstr "Vizualizare ca listă"
 
 #: ../app/core/core-enums.c:608
-#, fuzzy
 msgid "View as grid"
-msgstr "/Vizualizare/Agață-te de gidaje"
+msgstr "Vizualizare ca grilă"
 
 #: ../app/core/core-enums.c:670
 msgid "No thumbnails"
-msgstr "Nu sunt miniaturi"
+msgstr "Fără miniaturi"
 
 #: ../app/core/core-enums.c:671
 msgid "Normal (128x128)"
@@ -5716,27 +5489,24 @@ msgid "Rotate image"
 msgstr "Rotește imaginea"
 
 #: ../app/core/core-enums.c:853
-#, fuzzy
 msgid "Crop image"
-msgstr "Încarcă imagine"
+msgstr "Decupează imaginea"
 
 #: ../app/core/core-enums.c:854
-#, fuzzy
 msgid "Convert image"
-msgstr "Restaurez imaginea?"
+msgstr "Convertește imaginea"
 
 #: ../app/core/core-enums.c:855
-#, fuzzy
 msgid "Remove item"
-msgstr "redenumește stratul"
+msgstr "Elimină elementul"
 
 #: ../app/core/core-enums.c:856
 msgid "Merge layers"
-msgstr "Îmbină straturile"
+msgstr "Combină straturile"
 
 #: ../app/core/core-enums.c:857
 msgid "Merge paths"
-msgstr "Îmbină traseele"
+msgstr "Combină traseele"
 
 #: ../app/core/core-enums.c:859
 #: ../app/core/core-enums.c:890
@@ -5793,74 +5563,63 @@ msgstr "redimensionare strat"
 
 #: ../app/core/core-enums.c:868
 #: ../app/core/core-enums.c:898
-#, fuzzy
 msgid "Move item"
-msgstr "Deplasare: "
+msgstr "Mută elementul"
 
 #: ../app/core/core-enums.c:869
 msgid "Scale item"
 msgstr "Scalează elementul"
 
 #: ../app/core/core-enums.c:870
-#, fuzzy
 msgid "Resize item"
-msgstr "Restaurez imaginea?"
+msgstr "Redimensionează elementul"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgid "Add layer"
-msgstr "/Adauga un strat mască..."
+msgstr "Adaugă un strat"
 
 #: ../app/core/core-enums.c:872
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgid "Add layer mask"
-msgstr "adauga strat mască"
+msgstr "Adaugă o mască de strat"
 
 #: ../app/core/core-enums.c:873
 #: ../app/core/core-enums.c:911
-#, fuzzy
 msgid "Apply layer mask"
-msgstr "aplică stratul mască"
+msgstr "Aplică o mască de strat"
 
 #: ../app/core/core-enums.c:874
 #: ../app/core/core-enums.c:921
-#, fuzzy
 msgid "Floating selection to layer"
-msgstr "Selecție Plutitoare"
+msgstr "Selecție plutitoare la strat"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgid "Float selection"
-msgstr "Selecție Plutitoare"
+msgstr "Selecție plutitoare"
 
 #: ../app/core/core-enums.c:876
-#, fuzzy
 msgid "Anchor floating selection"
-msgstr "Selecție Plutitoare"
+msgstr "Ancorează selecția plutitoare"
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgid "Remove floating selection"
-msgstr "Selecție Plutitoare"
+msgstr "Elimină selecția plutitoare"
 
 #: ../app/core/core-enums.c:878
 #: ../app/core/gimp-edit.c:255
 msgid "Paste"
-msgstr "Inserează"
+msgstr "Lipește"
 
 #: ../app/core/core-enums.c:879
 #: ../app/core/gimp-edit.c:540
-#, fuzzy
 msgid "Cut"
-msgstr "Numar:"
+msgstr "Taie"
 
 #: ../app/core/core-enums.c:880
 #: ../app/tools/gimptexttool.c:141
 #: ../app/widgets/widgets-enums.c:265
-#, fuzzy
 msgid "Text"
-msgstr "text"
+msgstr "Text"
 
 #: ../app/core/core-enums.c:881
 #: ../app/core/core-enums.c:924
@@ -5871,21 +5630,18 @@ msgstr "Transformare"
 #: ../app/core/core-enums.c:882
 #: ../app/core/core-enums.c:925
 #: ../app/paint/gimppaintcore.c:134
-#, fuzzy
 msgid "Paint"
-msgstr "desen"
+msgstr "Desen"
 
 #: ../app/core/core-enums.c:883
 #: ../app/core/core-enums.c:928
-#, fuzzy
 msgid "Attach parasite"
-msgstr "atașează parazit"
+msgstr "Atașează un parazit"
 
 #: ../app/core/core-enums.c:884
 #: ../app/core/core-enums.c:929
-#, fuzzy
 msgid "Remove parasite"
-msgstr "elimină parazit"
+msgstr "Elimină parazitul"
 
 #: ../app/core/core-enums.c:885
 msgid "Import paths"
@@ -5909,14 +5665,12 @@ msgid "Image resolution change"
 msgstr "Schimbare rezoluție de imagine"
 
 #: ../app/core/core-enums.c:891
-#, fuzzy
 msgid "Change indexed palette"
-msgstr "Paletă indexată"
+msgstr "Modifică paleta indexată"
 
 #: ../app/core/core-enums.c:897
-#, fuzzy
 msgid "Rename item"
-msgstr "redenumește stratul"
+msgstr "Redenumește elementul"
 
 #: ../app/core/core-enums.c:901
 msgid "New layer"
@@ -5927,78 +5681,64 @@ msgid "Delete layer"
 msgstr "Șterge stratul"
 
 #: ../app/core/core-enums.c:903
-#, fuzzy
 msgid "Reposition layer"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "Repoziționează stratul"
 
 #: ../app/core/core-enums.c:904
-#, fuzzy
 msgid "Set layer mode"
-msgstr "mod strat"
+msgstr "Definește modul stratului"
 
 #: ../app/core/core-enums.c:905
-#, fuzzy
 msgid "Set layer opacity"
-msgstr "Opțiuni strat nou"
+msgstr "Definește opacitatea stratului"
 
 #: ../app/core/core-enums.c:906
 msgid "Lock/Unlock alpha channel"
-msgstr "Blochează/deblochează canalul alfa"
+msgstr "Blochează / deblochează canalul alfa"
 
 #: ../app/core/core-enums.c:907
-#, fuzzy
 msgid "Text layer"
 msgstr "Strat de text"
 
 #: ../app/core/core-enums.c:908
-#, fuzzy
 msgid "Text layer modification"
-msgstr "mod strat"
+msgstr "Modificare strat de text"
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgid "Delete layer mask"
-msgstr "elimină stratul mască"
+msgstr "Șterge masca de strat"
 
 #: ../app/core/core-enums.c:912
-#, fuzzy
 msgid "Show layer mask"
-msgstr "Strat nou"
+msgstr "Arată masca de strat"
 
 #: ../app/core/core-enums.c:913
-#, fuzzy
 msgid "New channel"
-msgstr "canal nou"
+msgstr "Canal nou"
 
 #: ../app/core/core-enums.c:914
-#, fuzzy
 msgid "Delete channel"
-msgstr "Elimină canal"
+msgstr "Șterge canalul"
 
 #: ../app/core/core-enums.c:915
-#, fuzzy
 msgid "Reposition channel"
-msgstr "Ridică canalul"
+msgstr "Repoziționează canalul"
 
 #: ../app/core/core-enums.c:916
-#, fuzzy
 msgid "Channel color"
-msgstr "Culoarea pentru noul canal"
+msgstr "Culoare canal"
 
 #: ../app/core/core-enums.c:917
-#, fuzzy
 msgid "New path"
 msgstr "Traseu nou"
 
 #: ../app/core/core-enums.c:919
-#, fuzzy
 msgid "Path modification"
-msgstr "Traseul -> Selecție"
+msgstr "Modificare de traseu"
 
 #: ../app/core/core-enums.c:920
-#, fuzzy
 msgid "Reposition path"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "Repoziționează traseul"
 
 #: ../app/core/core-enums.c:922
 msgid "FS rigor"
@@ -6015,45 +5755,41 @@ msgid "Ink"
 msgstr "Cerneală"
 
 #: ../app/core/core-enums.c:927
-#, fuzzy
 msgid "Select foreground"
-msgstr "Prim Plan "
+msgstr "Selectează prim planul"
 
+# hm ?
 #: ../app/core/core-enums.c:930
-#, fuzzy
 msgid "EEK: can't undo"
-msgstr "Nu pot reface %s"
+msgstr "Hopa: nu se poate anula"
 
 #: ../app/core/core-enums.c:1194
 msgid "Composite"
-msgstr ""
+msgstr "Compozit"
 
 #: ../app/core/core-enums.c:1228
 msgid "Message"
 msgstr "Mesaj"
 
 #: ../app/core/core-enums.c:1229
-#, fuzzy
 msgid "Warning"
-msgstr "[ Atenție ]"
+msgstr "Avertisment"
 
 #: ../app/core/core-enums.c:1230
-#, fuzzy
 msgid "Error"
-msgstr "Unealtă de masurare"
+msgstr "Eroare"
 
 #: ../app/core/core-enums.c:1258
 msgid "Ask what to do"
-msgstr ""
+msgstr "Întreabă ce este de făcut"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "Păstrează profilul încorporat"
 
 #: ../app/core/core-enums.c:1260
-#, fuzzy
 msgid "Convert to RGB workspace"
-msgstr "Modifică culoarea indexată"
+msgstr "Convertește la spațiul de lucru RGB"
 
 #: ../app/core/gimp-contexts.c:141
 #: ../app/core/gimptooloptions.c:239
@@ -6069,7 +5805,7 @@ msgstr ""
 #: ../app/core/gimp-edit.c:183
 #: ../app/core/gimp-edit.c:317
 msgid "Pasted Layer"
-msgstr "Strat inserat"
+msgstr "Strat lipit"
 
 #: ../app/core/gimp-edit.c:449
 msgid "Fill with Foreground Color"
@@ -6097,7 +5833,7 @@ msgstr "Zonă tampon globală"
 
 #: ../app/core/gimp-gradients.c:61
 msgid "FG to BG (RGB)"
-msgstr "Prim plan -> Fundal (RGB)"
+msgstr "Prim plan la fundal (RGB)"
 
 #: ../app/core/gimp-gradients.c:66
 #, fuzzy
@@ -6111,7 +5847,7 @@ msgstr "Prim plan -> Fundal (HSV)"
 
 #: ../app/core/gimp-gradients.c:76
 msgid "FG to Transparent"
-msgstr "Prim plan -> Transparent"
+msgstr "Prim plan la transparent"
 
 #: ../app/core/gimp-user-install.c:197
 #, c-format
@@ -6124,9 +5860,9 @@ msgid "It appears that you are using GIMP for the first time.  GIMP will now cre
 msgstr ""
 
 #: ../app/core/gimp-user-install.c:305
-#, fuzzy, c-format
+#, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "deschidere eșuată la %s: %s\n"
+msgstr "Copiere fișier „%s” la „%s”..."
 
 #: ../app/core/gimp-user-install.c:320
 #: ../app/core/gimp-user-install.c:346
@@ -6136,16 +5872,13 @@ msgstr "Creare folder „%s”..."
 
 #: ../app/core/gimp-user-install.c:331
 #: ../app/core/gimp-user-install.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr ""
-"Generează o\n"
-"previzualizare"
+msgstr "Nu se poate crea foloderul „%s”: %s"
 
 #: ../app/core/gimp.c:528
-#, fuzzy
 msgid "Initialization"
-msgstr "Factorul de scară:"
+msgstr "Inițializare"
 
 #. register all internal procedures
 #: ../app/core/gimp.c:603
@@ -6169,9 +5902,8 @@ msgstr "Fonturi (ar putea dura o vreme)"
 
 #. initialize the document history
 #: ../app/core/gimp.c:845
-#, fuzzy
 msgid "Documents"
-msgstr "Index document"
+msgstr "Documente"
 
 #. initialize the module list
 #: ../app/core/gimp.c:853
@@ -6180,9 +5912,9 @@ msgid "Modules"
 msgstr "Module"
 
 #: ../app/core/gimpbrush-load.c:177
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Nu am putut deschide fișierul %s"
+msgstr "Nu s-au putut citi %d octeți din „%s”: %s"
 
 #: ../app/core/gimpbrush-load.c:197
 #, fuzzy, c-format
@@ -6219,9 +5951,9 @@ msgstr "Fișierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 #: ../app/core/gimpbrush-load.c:276
 #: ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Eroare în fișierul de pensule al GIMP \"%s\"."
+msgstr "Șir UTF-8 nevalid în fișierul de penel „%s”."
 
 #: ../app/core/gimpbrush-load.c:283
 #: ../app/core/gimpitem.c:504
@@ -6229,7 +5961,7 @@ msgstr "Eroare în fișierul de pensule al GIMP \"%s\"."
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
 msgid "Unnamed"
-msgstr "Neintitulat"
+msgstr "Nedenumit"
 
 #: ../app/core/gimpbrush-load.c:377
 #, c-format
@@ -6292,9 +6024,8 @@ msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fișierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 
 #: ../app/core/gimpchannel-select.c:58
-#, fuzzy
 msgid "command|Rectangle Select"
-msgstr "Selectează"
+msgstr "Selecție dreptunghi"
 
 # hm ? sau imperativ ?
 #: ../app/core/gimpchannel-select.c:109
@@ -6307,12 +6038,12 @@ msgstr ""
 
 #: ../app/core/gimpchannel-select.c:432
 msgid "Alpha to Selection"
-msgstr "Canal alfa -> selecție"
+msgstr "Alfa la selecție"
 
 #: ../app/core/gimpchannel-select.c:470
 #, c-format
 msgid "%s Channel to Selection"
-msgstr "Canal %s -> selecție"
+msgstr "Canal %s la selecție"
 
 #: ../app/core/gimpchannel-select.c:518
 #: ../app/tools/gimpfuzzyselecttool.c:78
@@ -6329,23 +6060,20 @@ msgid "Channel"
 msgstr "Canal"
 
 #: ../app/core/gimpchannel.c:258
-#, fuzzy
 msgid "Rename Channel"
-msgstr "Ridică canalul"
+msgstr "Redenumește canalul"
 
 #: ../app/core/gimpchannel.c:259
-#, fuzzy
 msgid "Move Channel"
-msgstr "Ridică canalul"
+msgstr "Mută canalul"
 
 #: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
 msgstr "Canal de scalare"
 
 #: ../app/core/gimpchannel.c:261
-#, fuzzy
 msgid "Resize Channel"
-msgstr "Ridică canalul"
+msgstr "Redimensionează canalul"
 
 #: ../app/core/gimpchannel.c:262
 msgid "Flip Channel"
@@ -6357,9 +6085,8 @@ msgstr "Rotește canalul"
 
 #: ../app/core/gimpchannel.c:264
 #: ../app/core/gimpdrawable-transform.c:839
-#, fuzzy
 msgid "Transform Channel"
-msgstr "Transformare"
+msgstr "Transformă canalul"
 
 #: ../app/core/gimpchannel.c:265
 #, fuzzy
@@ -6372,53 +6099,45 @@ msgid "Feather Channel"
 msgstr "Elimină canal"
 
 #: ../app/core/gimpchannel.c:287
-#, fuzzy
 msgid "Sharpen Channel"
 msgstr "Canal de accentuare a clarității"
 
 #: ../app/core/gimpchannel.c:288
-#, fuzzy
 msgid "Clear Channel"
 msgstr "Șterge canalul"
 
 #: ../app/core/gimpchannel.c:289
-#, fuzzy
 msgid "Fill Channel"
 msgstr "Umple canalul"
 
 #: ../app/core/gimpchannel.c:290
-#, fuzzy
 msgid "Invert Channel"
 msgstr "Inversează canalul"
 
+# hm ?
 #: ../app/core/gimpchannel.c:291
-#, fuzzy
 msgid "Border Channel"
-msgstr "Coboară canalul"
+msgstr "Îngrădește canalul"
 
 #: ../app/core/gimpchannel.c:292
-#, fuzzy
 msgid "Grow Channel"
-msgstr "Coboară canalul"
+msgstr "Mărește canalul"
 
 #: ../app/core/gimpchannel.c:293
-#, fuzzy
 msgid "Shrink Channel"
-msgstr "Coboară canalul"
+msgstr "Micșorează canalul"
 
 #: ../app/core/gimpchannel.c:691
 msgid "Cannot stroke empty channel."
 msgstr ""
 
 #: ../app/core/gimpchannel.c:1590
-#, fuzzy
 msgid "Set Channel Color"
-msgstr "Culoarea pentru noul canal"
+msgstr "Stabilește culoarea canalului"
 
 #: ../app/core/gimpchannel.c:1638
-#, fuzzy
 msgid "Set Channel Opacity"
-msgstr "Opțiuni pentru noul canal"
+msgstr "Stabilește opacitatea canalului"
 
 #: ../app/core/gimpchannel.c:1706
 #: ../app/core/gimpselection.c:532
@@ -6427,19 +6146,22 @@ msgstr "Mască de selecție"
 
 #: ../app/core/gimpdata.c:446
 #: ../app/core/gimptoolpresets.c:297
-#, fuzzy, c-format
+#, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Nu s-a putut șterge „%s”: %s"
 
 #: ../app/core/gimpdatafactory.c:409
 #: ../app/core/gimpdatafactory.c:569
 #: ../app/core/gimpdatafactory.c:589
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to save data:\n"
 "\n"
 "%s"
-msgstr "Nu am reușit să citesc traseul din %s"
+msgstr ""
+"Salvarea datelor a eșuat:\n"
+"\n"
+"%s"
 
 #: ../app/core/gimpdatafactory.c:488
 #: ../app/core/gimpdatafactory.c:491
@@ -6452,19 +6174,22 @@ msgstr "copiază"
 #: ../app/core/gimpitem.c:325
 #, c-format
 msgid "%s copy"
-msgstr "%s copiere"
+msgstr "Copie a %s"
 
 #: ../app/core/gimpdatafactory.c:570
 msgid "You don't have a writable data folder configured."
-msgstr ""
+msgstr "Nu aveți configurat un folder de date scriibil."
 
 #: ../app/core/gimpdatafactory.c:731
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load data:\n"
 "\n"
 "%s"
-msgstr "Nu am reușit să citesc traseul din %s"
+msgstr ""
+"Încărcarea datelor a eșuat:\n"
+"\n"
+"%s"
 
 #: ../app/core/gimpdrawable-blend.c:245
 #: ../app/tools/gimpblendtool.c:108
@@ -6483,16 +6208,15 @@ msgstr "Umplere cu găleata"
 #: ../app/core/gimpdrawable-desaturate.c:97
 #: ../app/dialogs/desaturate-dialog.c:63
 msgid "Desaturate"
-msgstr "Desaturează"
+msgstr "Desaturare"
 
 #: ../app/core/gimpdrawable-equalize.c:77
 msgid "Equalize"
-msgstr ""
+msgstr "Egalizează"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
-#, fuzzy
 msgid "Foreground Extraction"
-msgstr "Prim Plan "
+msgstr "Extracție prim plan"
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -6513,7 +6237,6 @@ msgstr "Strat de text"
 msgid "Render Stroke"
 msgstr ""
 
-# hm ? sau imperativ ?
 #: ../app/core/gimpdrawable-transform.c:627
 #: ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
@@ -6611,20 +6334,18 @@ msgstr ""
 msgid "Arrange Objects"
 msgstr ""
 
+# hm ?
 #: ../app/core/gimpimage-colormap.c:63
-#, fuzzy
 msgid "Set Colormap"
-msgstr "Culoare"
+msgstr "Stabilește paleta de culori"
 
 #: ../app/core/gimpimage-colormap.c:118
-#, fuzzy
 msgid "Change Colormap entry"
-msgstr "Restaurez imaginea?"
+msgstr "Modifică intrarea din paleta de culori"
 
 #: ../app/core/gimpimage-colormap.c:138
-#, fuzzy
 msgid "Add Color to Colormap"
-msgstr "Culoare adevărată"
+msgstr "Adaugă o culoare la paleta de culori"
 
 #: ../app/core/gimpimage-convert.c:790
 #, fuzzy
@@ -6658,41 +6379,35 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Modifică culoarea indexată"
 
 #: ../app/core/gimpimage-crop.c:126
-#, fuzzy
 msgid "command|Crop Image"
-msgstr "Încarcă imagine"
+msgstr "Decupează imaginea"
 
 #: ../app/core/gimpimage-crop.c:129
 #: ../app/core/gimpimage-resize.c:90
-#, fuzzy
 msgid "Resize Image"
-msgstr "Restaurez imaginea?"
+msgstr "Redimensionează imaginea"
 
 #: ../app/core/gimpimage-guides.c:50
-#, fuzzy
 msgid "Add Horizontal Guide"
-msgstr "Orizontal"
+msgstr "Adaugă ghidaj orizontal"
 
 #: ../app/core/gimpimage-guides.c:72
-#, fuzzy
 msgid "Add Vertical Guide"
-msgstr "Vertical"
+msgstr "Adaugă ghidaj verical"
 
 #: ../app/core/gimpimage-guides.c:113
 #: ../app/tools/gimpmovetool.c:546
-#, fuzzy
 msgid "Remove Guide"
-msgstr "Refacere"
+msgstr "Elimină ghidajul"
 
 #: ../app/core/gimpimage-guides.c:138
-#, fuzzy
 msgid "Move Guide"
-msgstr "Refacere"
+msgstr "Mută ghidajul"
 
 #: ../app/core/gimpimage-item-list.c:53
 #, fuzzy
 msgid "Translate Items"
-msgstr "Elimină canal"
+msgstr "Tradu elementele"
 
 #: ../app/core/gimpimage-item-list.c:80
 msgid "Flip Items"
@@ -6710,24 +6425,23 @@ msgstr "Transformare"
 #: ../app/core/gimpimage-merge.c:102
 #: ../app/core/gimpimage-merge.c:114
 msgid "Merge Visible Layers"
-msgstr "Îmbină straturile vizibile"
+msgstr "Combină straturile vizibile"
 
 #: ../app/core/gimpimage-merge.c:165
-#, fuzzy
 msgid "Flatten Image"
-msgstr "/Aplatizează imaginea"
+msgstr "Aplatizează imaginea"
 
 #: ../app/core/gimpimage-merge.c:214
 msgid "Merge Down"
-msgstr "Îmbină în jos"
+msgstr "Combină în jos"
 
 #: ../app/core/gimpimage-merge.c:252
 msgid "Merge Visible Paths"
-msgstr "Îmbină traseele vizibile"
+msgstr "Combină traseele vizibile"
 
 #: ../app/core/gimpimage-merge.c:289
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Nu sunt suficiente straturi vizibile pentru a face o îmbinare. Trebuie să fie cel puțin două."
+msgstr "Nu sunt suficiente straturi vizibile pentru a face o combinare. Trebuie să fie cel puțin două."
 
 #: ../app/core/gimpimage-quick-mask.c:82
 #, fuzzy
@@ -6758,7 +6472,7 @@ msgstr "Nici o selecție."
 #: ../app/core/gimpimage-undo-push.c:855
 #, c-format
 msgid "Can't undo %s"
-msgstr "Nu se poate reface %s"
+msgstr "Nu se poate anula %s"
 
 #: ../app/core/gimpimage.c:1476
 #, fuzzy
@@ -6781,50 +6495,41 @@ msgid "Remove Parasite from Image"
 msgstr "elimină parazit"
 
 #: ../app/core/gimpimage.c:2857
-#, fuzzy
 msgid "Add Layer"
-msgstr "/Adauga un strat mască..."
+msgstr "Adaugă un strat"
 
 #: ../app/core/gimpimage.c:2922
 #: ../app/core/gimpimage.c:2935
-#, fuzzy
 msgid "Remove Layer"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "Elimină stratul"
 
 #: ../app/core/gimpimage.c:3077
-#, fuzzy
 msgid "Layer cannot be raised higher."
-msgstr "Stratul nu mai poate fi ridicat"
+msgstr "Stratul nu poate fi ridicat mai mult."
 
 #: ../app/core/gimpimage.c:3082
-#, fuzzy
 msgid "Raise Layer"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "Ridică Stratul"
 
 #: ../app/core/gimpimage.c:3099
-#, fuzzy
 msgid "Layer cannot be lowered more."
-msgstr "Stratul nu mai poate fi coborât"
+msgstr "Stratul nu poate fi coborât mai mult."
 
 #: ../app/core/gimpimage.c:3104
-#, fuzzy
 msgid "Lower Layer"
-msgstr "/Stivă/Coboară Stratul"
+msgstr "Coboară stratul"
 
 #: ../app/core/gimpimage.c:3115
-#, fuzzy
 msgid "Raise Layer to Top"
-msgstr "/Stivă/Mută în vârf"
+msgstr "Ridică stratul sus de tot"
 
 #: ../app/core/gimpimage.c:3130
-#, fuzzy
 msgid "Lower Layer to Bottom"
-msgstr "/Stivă/Mută la bază"
+msgstr "Coboară stratul jos de tot"
 
 #: ../app/core/gimpimage.c:3202
-#, fuzzy
 msgid "Add Channel"
-msgstr "/Adaugă canal de transparența"
+msgstr "Adaugă un canal"
 
 #: ../app/core/gimpimage.c:3247
 #: ../app/core/gimpimage.c:3258
@@ -6843,9 +6548,8 @@ msgid "Raise Channel"
 msgstr "/Ridică canalul"
 
 #: ../app/core/gimpimage.c:3327
-#, fuzzy
 msgid "Channel is already on top."
-msgstr "Stratul este deja în vârf"
+msgstr "Canalul se află deja sus de tot."
 
 #: ../app/core/gimpimage.c:3332
 #, fuzzy
@@ -6862,9 +6566,8 @@ msgid "Lower Channel"
 msgstr "Coboară canalul"
 
 #: ../app/core/gimpimage.c:3374
-#, fuzzy
 msgid "Channel is already on the bottom."
-msgstr "Stratul este deja la bază"
+msgstr "Canalul se află deja jos de tot"
 
 #: ../app/core/gimpimage.c:3379
 #, fuzzy
@@ -6872,14 +6575,12 @@ msgid "Lower Channel to Bottom"
 msgstr "Coboară canalul"
 
 #: ../app/core/gimpimage.c:3453
-#, fuzzy
 msgid "Add Path"
-msgstr "Trasee"
+msgstr "Adaugă un traseu"
 
 #: ../app/core/gimpimage.c:3499
-#, fuzzy
 msgid "Remove Path"
-msgstr "redenumește stratul"
+msgstr "Elimină traseul"
 
 #: ../app/core/gimpimage.c:3543
 #, fuzzy
@@ -6927,9 +6628,8 @@ msgstr ""
 
 #: ../app/core/gimpimagefile.c:547
 #: ../app/dialogs/preferences-dialog.c:1745
-#, fuzzy
 msgid "Folder"
-msgstr "Directorul de swap"
+msgstr "Folder"
 
 #: ../app/core/gimpimagefile.c:552
 #, fuzzy
@@ -6991,9 +6691,9 @@ msgstr[1] "%d straturi"
 msgstr[2] "%d de straturi"
 
 #: ../app/core/gimpimagefile.c:694
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Nu s-a putut deschide miniatura „%s”: %s"
 
 #: ../app/core/gimpitem.c:1132
 #, fuzzy
@@ -7012,34 +6712,25 @@ msgid "Remove Parasite from Item"
 msgstr "elimină parazit"
 
 #: ../app/core/gimplayer-floating-sel.c:99
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Selecție Plutitoare"
+msgstr "Elimină selecția plutitoare"
 
 #: ../app/core/gimplayer-floating-sel.c:131
-#, fuzzy
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr ""
-"Nu pot ancora acest strat deoarece\n"
-"nu este o selecție plutitoare."
+msgstr "Nu se poate ancora acest strat deoarece nu este o selecție plutitoare."
 
 #: ../app/core/gimplayer-floating-sel.c:138
-#, fuzzy
 msgid "Anchor Floating Selection"
-msgstr "Selecție Plutitoare"
+msgstr "Ancorează selecția plutitoare"
 
+# hm ?
 #: ../app/core/gimplayer-floating-sel.c:212
-#, fuzzy
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
-msgstr ""
-"Nu pot crea un nou strat din selecția \n"
-"plutitoare deoarece aparține unui strat\n"
-"de tip mască sau canal."
+msgstr "Nu se poate crea un nou strat din selecția plutitoare deoarece aparține unui strat de tip mască sau canal."
 
 #: ../app/core/gimplayer-floating-sel.c:218
-#, fuzzy
 msgid "Floating Selection to Layer"
-msgstr "Selecție Plutitoare"
+msgstr "Selecție plutitoare la strat"
 
 #: ../app/core/gimplayer.c:248
 #: ../app/tools/tools-enums.c:181
@@ -7061,7 +6752,6 @@ msgid "Resize Layer"
 msgstr "Redimensionează stratul"
 
 #: ../app/core/gimplayer.c:253
-#, fuzzy
 msgid "Flip Layer"
 msgstr "Întoarce stratul"
 
@@ -7077,11 +6767,13 @@ msgid "%s mask"
 msgstr "masca %s"
 
 #: ../app/core/gimplayer.c:449
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Floating Selection\n"
 "(%s)"
-msgstr "Selecție Plutitoare"
+msgstr ""
+"Selecție plutitoare\n"
+"(%s)"
 
 #: ../app/core/gimplayer.c:1243
 #, fuzzy
@@ -7119,16 +6811,15 @@ msgstr "/Elimină stratul mască"
 
 #: ../app/core/gimplayer.c:1639
 msgid "Add Alpha Channel"
-msgstr "Adaugă canal alfa"
+msgstr "Adaugă un canal alfa"
 
 #: ../app/core/gimplayer.c:1690
 msgid "Remove Alpha Channel"
 msgstr "Elimină canalul alfa"
 
 #: ../app/core/gimplayer.c:1712
-#, fuzzy
 msgid "Layer to Image Size"
-msgstr "/Strat -> Dimensiune imagine"
+msgstr "Strat la dimensiune imagine"
 
 #: ../app/core/gimplayermask.c:102
 #, fuzzy
@@ -7239,10 +6930,10 @@ msgstr "Mută selecția"
 msgid "Sharpen Selection"
 msgstr "Accentuează claritatea selecției"
 
+# hm ?
 #: ../app/core/gimpselection.c:172
-#, fuzzy
 msgid "Select None"
-msgstr "/Selecție/Deselectează tot"
+msgstr "Nu mai selcta nimic"
 
 #: ../app/core/gimpselection.c:173
 #, fuzzy
@@ -7316,11 +7007,11 @@ msgstr "pixeli"
 #. standard units
 #: ../app/core/gimpunit.c:59
 msgid "inch"
-msgstr "țol"
+msgstr "inci"
 
 #: ../app/core/gimpunit.c:59
 msgid "inches"
-msgstr "țoli"
+msgstr "inci"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
@@ -7330,13 +7021,11 @@ msgstr "milimetru"
 msgid "millimeters"
 msgstr "milimetri"
 
-# hm ?
 #. professional units
 #: ../app/core/gimpunit.c:63
 msgid "point"
 msgstr "point"
 
-# hm ?
 #: ../app/core/gimpunit.c:63
 msgid "points"
 msgstr "points"
@@ -7368,6 +7057,8 @@ msgstr "Vizitați saitul web GIMP"
 #: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
 msgstr ""
+"Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>\n"
+"Cristian Secară <cristi AT secarica DOT ro>"
 
 #: ../app/dialogs/about-dialog.c:531
 #, fuzzy
@@ -7376,7 +7067,7 @@ msgstr "vă este adus(ă) de către"
 
 #: ../app/dialogs/about-dialog.c:605
 msgid "This is an unstable development release."
-msgstr ""
+msgstr "Aceasta este o versiune instabilă de dezvoltare."
 
 #: ../app/dialogs/channel-options-dialog.c:145
 #, fuzzy
@@ -7408,9 +7099,8 @@ msgid "_Maximum number of colors:"
 msgstr "Numărul minim de culori:"
 
 #: ../app/dialogs/convert-dialog.c:216
-#, fuzzy
 msgid "_Remove unused colors from colormap"
-msgstr "Elimină culorile nefolosite din paleta finală"
+msgstr "Elimină culo_rile nefolosite din paleta de culori"
 
 #. dithering
 #: ../app/dialogs/convert-dialog.c:232
@@ -7436,12 +7126,11 @@ msgstr "Modifică culoarea indexată"
 
 #: ../app/dialogs/convert-dialog.c:402
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "Nu se poate face conversia la o paletă cu mai mult de 256 de culori."
 
 #: ../app/dialogs/desaturate-dialog.c:65
-#, fuzzy
 msgid "Remove Colors"
-msgstr "Ridică canalul"
+msgstr "Eliminare culori"
 
 #: ../app/dialogs/desaturate-dialog.c:75
 msgid "_Desaturate"
@@ -7449,7 +7138,7 @@ msgstr "_Desaturează"
 
 #: ../app/dialogs/desaturate-dialog.c:97
 msgid "Choose shade of gray based on:"
-msgstr ""
+msgstr "Nuanța de gri se calculează pe baza:"
 
 #: ../app/dialogs/dialogs-constructors.c:184
 #: ../app/gui/gui.c:171
@@ -7466,14 +7155,12 @@ msgid "Device Status"
 msgstr "Stare dispozitiv"
 
 #: ../app/dialogs/dialogs.c:137
-#, fuzzy
 msgid "Errors"
-msgstr "Unealtă de masurare"
+msgstr "Erori"
 
 #: ../app/dialogs/dialogs.c:162
-#, fuzzy
 msgid "History"
-msgstr "Histogramă"
+msgstr "Istoric"
 
 #: ../app/dialogs/dialogs.c:164
 #, fuzzy
@@ -7485,54 +7172,49 @@ msgid "Histogram"
 msgstr "Histogramă"
 
 #: ../app/dialogs/dialogs.c:189
-#, fuzzy
 msgid "Selection Editor"
-msgstr "Selecție: "
+msgstr "Editor de selecție"
 
 #: ../app/dialogs/dialogs.c:193
 msgid "Undo"
-msgstr "Desfacere"
+msgstr "Anulare"
 
 #: ../app/dialogs/dialogs.c:193
 msgid "Undo History"
-msgstr "Istoric de desfaceri"
+msgstr "Istoric anulări"
 
 #: ../app/dialogs/dialogs.c:203
-#, fuzzy
 msgid "Navigation"
-msgstr "Navigare: %s-%d.%d"
+msgstr "Navigare"
 
 #: ../app/dialogs/dialogs.c:203
-#, fuzzy
 msgid "Display Navigation"
-msgstr "Navigare: %s-%d.%d"
+msgstr "Afișează navigația"
 
 #: ../app/dialogs/dialogs.c:209
 msgid "FG/BG"
-msgstr "Prim plan/fundal"
+msgstr "Prim plan / fundal"
 
 #: ../app/dialogs/dialogs.c:209
 msgid "FG/BG Color"
-msgstr "Culoare prim plan/fundal"
+msgstr "Culoare prim plan / fundal"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr ""
+msgstr "Atenuare %s"
 
 #: ../app/dialogs/fade-dialog.c:123
 msgid "_Fade"
-msgstr "_Fondu"
+msgstr "_Atenuează"
 
 #: ../app/dialogs/fade-dialog.c:157
-#, fuzzy
 msgid "_Mode:"
-msgstr "_Mod"
+msgstr "_Mod:"
 
 #: ../app/dialogs/fade-dialog.c:163
-#, fuzzy
 msgid "_Opacity:"
-msgstr "Opacitate"
+msgstr "_Opacitate:"
 
 #: ../app/dialogs/file-open-dialog.c:230
 msgid "Open layers"
@@ -7540,12 +7222,11 @@ msgstr "Deschide straturi"
 
 #: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
-msgstr "Deschide un loc"
+msgstr "Deschide o locație"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
-#, fuzzy
 msgid "Enter location (URI):"
-msgstr "Tip de interpolare:"
+msgstr "Introduceți locația (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:309
 #: ../app/dialogs/file-save-dialog.c:352
@@ -7581,19 +7262,19 @@ msgstr "Confirmă dimensiunea imaginii"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
-msgstr "Îmbină straturile"
+msgstr "Combină straturile"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:66
 msgid "Layers Merge Options"
-msgstr "Opțiuni de îmbinare straturi"
+msgstr "Opțiuni de combinare straturi"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
-msgstr "Î_mbină"
+msgstr "Co_mbină"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:91
 msgid "Final, Merged Layer should be:"
-msgstr "Stratul final, îmbinat, ar trebui să fie:"
+msgstr "Stratul final, combinat, ar trebui să fie:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Expanded as necessary"
@@ -7605,7 +7286,7 @@ msgstr "Decupat după imagine"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "Clipped to bottom layer"
-msgstr "Decupat după stratul de la bază"
+msgstr "Decupat după stratul de jos de tot"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:109
 #, fuzzy
@@ -7660,9 +7341,8 @@ msgid "dialog-title|Scale Image"
 msgstr "Scalează imaginea"
 
 #: ../app/dialogs/image-scale-dialog.c:203
-#, fuzzy
 msgid "Confirm Scaling"
-msgstr "Scalare"
+msgstr "Confirmă scalarea"
 
 #: ../app/dialogs/image-scale-dialog.c:243
 #, c-format
@@ -7670,12 +7350,8 @@ msgid "Scaling the image to the chosen size will make it use more memory than wh
 msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:258
-#, fuzzy
 msgid "Scaling the image to the chosen size will shrink some layers completely away."
-msgstr ""
-"Dimensiunea de imagine aleasă va obliga\n"
-"la micșorarea unor strate la extrem.\n"
-"Sigur asta este ce dorești?"
+msgstr "Scalarea imaginii la dimensiunea aleasă va micșora unele straturi până la dispariție."
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
@@ -7703,9 +7379,8 @@ msgid "Initialize Layer Mask to:"
 msgstr "Inițializează masca stratului cu:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:140
-#, fuzzy
 msgid "In_vert mask"
-msgstr "Inversează"
+msgstr "In_versează masca"
 
 #: ../app/dialogs/layer-options-dialog.c:125
 msgid "Layer _name:"
@@ -7736,9 +7411,8 @@ msgid "Manage Loadable Modules"
 msgstr ""
 
 #: ../app/dialogs/module-dialog.c:167
-#, fuzzy
 msgid "Autoload"
-msgstr "Automat"
+msgstr "Încărcare automată"
 
 #: ../app/dialogs/module-dialog.c:174
 #, fuzzy
@@ -7751,19 +7425,16 @@ msgstr "<Fără module>"
 
 #: ../app/dialogs/module-dialog.c:436
 #: ../app/dialogs/module-dialog.c:445
-#, fuzzy
 msgid "On disk"
-msgstr "pe disc"
+msgstr "Pe disc"
 
 #: ../app/dialogs/module-dialog.c:436
-#, fuzzy
 msgid "Only in memory"
-msgstr "numai în memorie"
+msgstr "Doar în memorie"
 
 #: ../app/dialogs/module-dialog.c:445
-#, fuzzy
 msgid "No longer available"
-msgstr "Nu este disponibil nici un model"
+msgstr "Nu mai este disponibil"
 
 #: ../app/dialogs/module-dialog.c:481
 msgid "Load"
@@ -7799,7 +7470,7 @@ msgstr "Dată:"
 
 #: ../app/dialogs/module-dialog.c:510
 msgid "Location:"
-msgstr "Loc:"
+msgstr "Locație:"
 
 #: ../app/dialogs/module-dialog.c:511
 #: ../app/widgets/gimpcontrollereditor.c:233
@@ -7807,14 +7478,12 @@ msgid "State:"
 msgstr "Stare:"
 
 #: ../app/dialogs/module-dialog.c:512
-#, fuzzy
 msgid "Last error:"
-msgstr "Unealtă de masurare"
+msgstr "Ultima eroare:"
 
 #: ../app/dialogs/module-dialog.c:513
-#, fuzzy
 msgid "Available types:"
-msgstr "Tip umplere"
+msgstr "Tipuri disponibile:"
 
 #: ../app/dialogs/offset-dialog.c:104
 #, fuzzy
@@ -7822,14 +7491,12 @@ msgid "Offset Layer"
 msgstr "Strat de text"
 
 #: ../app/dialogs/offset-dialog.c:106
-#, fuzzy
 msgid "Offset Layer Mask"
-msgstr "/Elimină stratul mască"
+msgstr "Decalaj de mască de strat"
 
 #: ../app/dialogs/offset-dialog.c:108
-#, fuzzy
 msgid "Offset Channel"
-msgstr "Ridică canalul"
+msgstr "Decalaj de canal"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:114
@@ -7841,32 +7508,27 @@ msgstr "Decalaj"
 
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:123
-#, fuzzy
 msgid "_Offset"
-msgstr "Decalaj"
+msgstr "_Decalaj"
 
 #: ../app/dialogs/offset-dialog.c:180
 #: ../app/dialogs/resize-dialog.c:226
-#, fuzzy
 msgid "_X:"
-msgstr "X:"
+msgstr "_X:"
 
 #: ../app/dialogs/offset-dialog.c:182
 #: ../app/dialogs/resize-dialog.c:227
-#, fuzzy
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:209
-#, fuzzy
 msgid "Offset by  x/_2, y/2"
-msgstr "Decalaj cu (x/2),(y/2)"
+msgstr "Decalaj cu  x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:218
-#, fuzzy
 msgid "Edge Behavior"
-msgstr "Comportament ferestră de dialog"
+msgstr "Comportament margine"
 
 #: ../app/dialogs/offset-dialog.c:222
 #, fuzzy
@@ -7878,9 +7540,8 @@ msgid "Fill with _background color"
 msgstr "Umple cu culoarea de _fundal"
 
 #: ../app/dialogs/offset-dialog.c:228
-#, fuzzy
 msgid "Make _transparent"
-msgstr "Transparent"
+msgstr "Fă _transparent"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 #, fuzzy
@@ -7888,9 +7549,8 @@ msgid "Import a New Palette"
 msgstr "Import Paletă"
 
 #: ../app/dialogs/palette-import-dialog.c:166
-#, fuzzy
 msgid "_Import"
-msgstr "Import"
+msgstr "_Importă"
 
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:205
@@ -7899,13 +7559,12 @@ msgid "Select Source"
 msgstr "/Selecție/Ascuțime"
 
 #: ../app/dialogs/palette-import-dialog.c:227
-#, fuzzy
 msgid "I_mage"
-msgstr "Imagine"
+msgstr "I_magine"
 
 #: ../app/dialogs/palette-import-dialog.c:241
 msgid "Sample _Merged"
-msgstr "Eșantion î_mbinat"
+msgstr "Eșantion co_mbinat"
 
 #: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
@@ -7924,9 +7583,8 @@ msgstr "Alege directorul de palete"
 
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:305
-#, fuzzy
 msgid "Import Options"
-msgstr "Opțiuni unelte"
+msgstr "Opțiuni de import"
 
 #: ../app/dialogs/palette-import-dialog.c:319
 #, fuzzy
@@ -8072,40 +7730,33 @@ msgid "Resource Consumption"
 msgstr "Consum de resurse de sistem"
 
 #: ../app/dialogs/preferences-dialog.c:1571
-#, fuzzy
 msgid "Minimal number of _undo levels:"
-msgstr "Numărul minim de culori:"
+msgstr "Număr minim de nivel_uri de anulări:"
 
 #: ../app/dialogs/preferences-dialog.c:1574
-#, fuzzy
 msgid "Maximum undo _memory:"
-msgstr "numai în memorie"
+msgstr "_Memorie maximă pentru anulări:"
 
 #: ../app/dialogs/preferences-dialog.c:1577
-#, fuzzy
 msgid "Tile cache _size:"
-msgstr "Dimensiune:"
+msgstr "Dimen_siune cache mozaic:"
 
 #: ../app/dialogs/preferences-dialog.c:1580
-#, fuzzy
 msgid "Maximum _new image size:"
-msgstr "Dimensiunea maximă a imaginii:"
+msgstr "Dimensiune maximă imagi_ne nouă:"
 
 #: ../app/dialogs/preferences-dialog.c:1585
-#, fuzzy
 msgid "Number of _processors to use:"
-msgstr "Numar de procesoare utilizat"
+msgstr "Număr de _procesoare de utilizat:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1590
-#, fuzzy
 msgid "Image Thumbnails"
-msgstr "Mască imagine"
+msgstr "Miniaturi imagine"
 
 #: ../app/dialogs/preferences-dialog.c:1595
-#, fuzzy
 msgid "Size of _thumbnails:"
-msgstr "Încerc să scriu imaginea medalion:"
+msgstr "Dimensiune minia_turi:"
 
 #: ../app/dialogs/preferences-dialog.c:1599
 msgid "Maximum _filesize for thumbnailing:"
@@ -8113,23 +7764,20 @@ msgstr ""
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1603
-#, fuzzy
 msgid "Saving Images"
-msgstr "Salvare imagine"
+msgstr "Salvare imagini"
 
 #: ../app/dialogs/preferences-dialog.c:1606
 msgid "Confirm closing of unsa_ved images"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1616
-#, fuzzy
 msgid "Save document _history on exit"
-msgstr "Salvează poziția ferestrei la ieșire"
+msgstr "Salvează _istoricul documentelor la ieșire"
 
 #: ../app/dialogs/preferences-dialog.c:1625
-#, fuzzy
 msgid "User Interface"
-msgstr "Interfață"
+msgstr "Interfață utilizator"
 
 #: ../app/dialogs/preferences-dialog.c:1628
 msgid "Interface"
@@ -8137,9 +7785,8 @@ msgstr "Interfață"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1635
-#, fuzzy
 msgid "Previews"
-msgstr "Previzualizare"
+msgstr "Previzualizări"
 
 #: ../app/dialogs/preferences-dialog.c:1638
 #, fuzzy
@@ -8211,14 +7858,12 @@ msgid "General"
 msgstr "General"
 
 #: ../app/dialogs/preferences-dialog.c:1819
-#, fuzzy
 msgid "Show _tooltips"
-msgstr "Arată sugestii"
+msgstr "Arată suges_tiile"
 
 #: ../app/dialogs/preferences-dialog.c:1822
-#, fuzzy
 msgid "Show help _buttons"
-msgstr "Mărește selecția"
+msgstr "Arată _butoanele de ajutor"
 
 #: ../app/dialogs/preferences-dialog.c:1825
 msgid "Show tips on _startup"
@@ -8235,9 +7880,8 @@ msgid "H_elp browser to use:"
 msgstr "Arată informațiile de ajutor cu:"
 
 #: ../app/dialogs/preferences-dialog.c:1838
-#, fuzzy
 msgid "Web Browser"
-msgstr "Afișare informații de ajutor"
+msgstr "Browser web"
 
 #: ../app/dialogs/preferences-dialog.c:1842
 #, fuzzy
@@ -8281,7 +7925,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1924
 msgid "Move Tool"
-msgstr "Unealtă de mutare"
+msgstr "Instrument de mutare"
 
 #: ../app/dialogs/preferences-dialog.c:1928
 #, fuzzy
@@ -8290,7 +7934,7 @@ msgstr "Opțiuni strat nou"
 
 #: ../app/dialogs/preferences-dialog.c:1941
 msgid "Toolbox"
-msgstr "Cutie de unelte"
+msgstr "Cutie de instrumente"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1953
@@ -8504,11 +8148,11 @@ msgstr "C_alibrează..."
 
 #: ../app/dialogs/preferences-dialog.c:2395
 msgid "Color Management"
-msgstr "Gestiune de culori"
+msgstr "Gestiune culori"
 
 #: ../app/dialogs/preferences-dialog.c:2415
 msgid "_RGB profile:"
-msgstr ""
+msgstr "Profil _RGB:"
 
 #: ../app/dialogs/preferences-dialog.c:2416
 #, fuzzy
@@ -8517,7 +8161,7 @@ msgstr "Culoare Directă"
 
 #: ../app/dialogs/preferences-dialog.c:2417
 msgid "_CMYK profile:"
-msgstr ""
+msgstr "Profil _CMYK:"
 
 #: ../app/dialogs/preferences-dialog.c:2418
 #, fuzzy
@@ -8526,7 +8170,7 @@ msgstr "Culoare Directă"
 
 #: ../app/dialogs/preferences-dialog.c:2419
 msgid "_Monitor profile:"
-msgstr ""
+msgstr "Profil _monitor:"
 
 #: ../app/dialogs/preferences-dialog.c:2420
 #, fuzzy
@@ -8534,23 +8178,20 @@ msgid "Select Monitor Color Profile"
 msgstr "Culoare Directă"
 
 #: ../app/dialogs/preferences-dialog.c:2421
-#, fuzzy
 msgid "_Print simulation profile:"
-msgstr "Operatia de tip 'pensula de pictura' a eșuat."
+msgstr "_Profil de simulare de imprimantă:"
 
 #: ../app/dialogs/preferences-dialog.c:2422
-#, fuzzy
 msgid "Select Printer Color Profile"
-msgstr "Culoare Directă"
+msgstr "Selectează profilul de culoare al imprimantei"
 
 #: ../app/dialogs/preferences-dialog.c:2433
-#, fuzzy
 msgid "_Mode of operation:"
-msgstr "(Nici o informație)"
+msgstr "_Mod de operare:"
 
 #: ../app/dialogs/preferences-dialog.c:2463
 msgid "_Try to use the system monitor profile"
-msgstr ""
+msgstr "Încearcă să folosească profilul de monitor"
 
 #: ../app/dialogs/preferences-dialog.c:2473
 msgid "_Display rendering intent:"
@@ -8565,9 +8206,8 @@ msgid "Mark out of gamut colors"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2500
-#, fuzzy
 msgid "Select Warning Color"
-msgstr "Culoare Directă"
+msgstr "Selectează culoarea de avertisment"
 
 #: ../app/dialogs/preferences-dialog.c:2513
 #, fuzzy
@@ -8589,7 +8229,7 @@ msgstr "Configurează dispozitivele de intrare e_xtinse..."
 
 #: ../app/dialogs/preferences-dialog.c:2546
 msgid "_Save input device settings on exit"
-msgstr "_Salvează setările dispozitivelor de intrare la ieșire"
+msgstr "_Salvează setările dispozitivelor de intrare la ieșirea din program"
 
 #: ../app/dialogs/preferences-dialog.c:2550
 msgid "Save Input Device Settings _Now"
@@ -8609,7 +8249,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2591
 msgid "Window Management"
-msgstr "Gestiune de ferestre"
+msgstr "Gestiune ferestre"
 
 #: ../app/dialogs/preferences-dialog.c:2600
 #, fuzzy
@@ -8855,9 +8495,8 @@ msgid "Layer Size"
 msgstr "Dimensiune strat"
 
 #: ../app/dialogs/resize-dialog.c:294
-#, fuzzy
 msgid "Resize _layers:"
-msgstr "/Stivă/Ridică Stratul"
+msgstr "Redimensionare s_traturi:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -8866,7 +8505,7 @@ msgstr "Calibrare rezoluție monitor"
 # hm ? adresarea ?
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
-msgstr "Măsoară riglele și introdu mai jos lungimea lor:"
+msgstr "Măsoară riglele și introduce lungimea lor:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
@@ -8900,7 +8539,7 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:214
 msgid "Paint tool:"
-msgstr "Unealtă pentru pictură:"
+msgstr "Instrument pentru pictură:"
 
 #: ../app/dialogs/tips-dialog.c:90
 #, fuzzy
@@ -8985,9 +8624,8 @@ msgstr "Comentariul folosit pentru noile imaginii"
 
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:139
-#, fuzzy
 msgid "All files (*.*)"
-msgstr "Tip umplere"
+msgstr "Toate fișierele (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
@@ -8995,7 +8633,7 @@ msgstr ""
 
 #: ../app/dialogs/vectors-import-dialog.c:108
 msgid "_Merge imported paths"
-msgstr "Î_mbină traseele importate"
+msgstr "Co_mbină traseele importate"
 
 #: ../app/dialogs/vectors-import-dialog.c:118
 msgid "_Scale imported paths to fit image"
@@ -9007,23 +8645,22 @@ msgid "Path name:"
 msgstr "Nume strat:"
 
 #: ../app/display/display-enums.c:24
-#, fuzzy
 msgid "Tool icon"
-msgstr "Pictograma uneltei folosite"
+msgstr "Pictogramă instrument"
 
+# hm ?
 #: ../app/display/display-enums.c:25
-#, fuzzy
 msgid "Tool icon with crosshair"
-msgstr "Pictograma uneltei folosite + Cruce"
+msgstr "Pictogramă instrument cu cruce de cătare"
 
 # hm ?
 #: ../app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr "Numai cruce"
+msgstr "Numai cruce de cătare"
 
 #: ../app/display/display-enums.c:55
 msgid "From theme"
-msgstr "Din tema"
+msgstr "Din temă"
 
 #: ../app/display/display-enums.c:56
 #, fuzzy
@@ -9036,14 +8673,12 @@ msgid "Dark check color"
 msgstr "Culoare Directă"
 
 #: ../app/display/display-enums.c:58
-#, fuzzy
 msgid "Custom color"
-msgstr "/Unelte/Culorile implicite"
+msgstr "Culoare particularizată"
 
 #: ../app/display/display-enums.c:86
-#, fuzzy
 msgid "No action"
-msgstr "Nici o selecție."
+msgstr "Nicio acțiune"
 
 #: ../app/display/display-enums.c:87
 #, fuzzy
@@ -9195,9 +8830,8 @@ msgid "indexed"
 msgstr "indexat"
 
 #: ../app/display/gimpdisplayshell-title.c:286
-#, fuzzy
 msgid "(modified)"
-msgstr "Numai când este modificată"
+msgstr "(modificat)"
 
 #: ../app/display/gimpdisplayshell-title.c:291
 msgid "(clean)"
@@ -9215,9 +8849,8 @@ msgid "Cancel"
 msgstr "Renunță"
 
 #: ../app/display/gimpstatusbar.c:483
-#, fuzzy
 msgid "Other..."
-msgstr "/Selecție/Pană..."
+msgstr "Altele..."
 
 #: ../app/file/file-open.c:129
 #: ../app/file/file-save.c:111
@@ -9233,9 +8866,9 @@ msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 
 #: ../app/file/file-open.c:189
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-In could not open image"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Plugin-ul %s nu a putut deschide imaginea"
 
 #: ../app/file/file-open.c:474
 #, c-format
@@ -9252,11 +8885,9 @@ msgid "Color management has been disabled. It can be enabled again in the Prefer
 msgstr ""
 
 #: ../app/file/file-procedure.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown file type"
-msgstr ""
-"%s a eșuat.\n"
-"%s: Tip de fișier necunoscut."
+msgstr "Tip de fișier necunoscut"
 
 #: ../app/file/file-save.c:193
 #, fuzzy, c-format
@@ -9286,7 +8917,7 @@ msgstr "Aerograf"
 #: ../app/paint/gimpbrushcore.c:354
 #, c-format
 msgid "No brushes available for use with this tool."
-msgstr "Nu sunt disponibile peneluri pentru a fi folosite cu această unealtă."
+msgstr "Nu sunt disponibile peneluri pentru a fi folosite cu această instrument."
 
 #: ../app/paint/gimpclone.c:100
 #: ../app/tools/gimpclonetool.c:61
@@ -9294,33 +8925,34 @@ msgid "Clone"
 msgstr "Clonare"
 
 #: ../app/paint/gimpclone.c:141
-#, fuzzy, c-format
+#, c-format
 msgid "No patterns available for use with this tool."
-msgstr "Nu sunt disponibile pensule pentru a fi folosite cu această unealtă."
+msgstr "Nu sunt disponibile modele pentru a fi folosite cu acest instrument."
 
+# hm ? cum devine comandă ?
 #: ../app/paint/gimpconvolve.c:75
-#, fuzzy
 msgid "Convolve"
-msgstr "Conversie"
+msgstr "Convoluție"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr "Albește / Înnegrește"
+msgstr "Albește / înnegrește"
 
 #: ../app/paint/gimperaser.c:62
 #: ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Gumă de șters"
 
+# titlu
 #: ../app/paint/gimpheal.c:123
 #: ../app/tools/gimphealtool.c:53
 msgid "Heal"
-msgstr "Remediere"
+msgstr "Corectură"
 
 #: ../app/paint/gimpheal.c:162
 #, c-format
 msgid "Healing does not operate on indexed layers."
-msgstr "Remedierea nu operează pe straturi indexate."
+msgstr "Corectura nu operează pe straturi indexate."
 
 #: ../app/paint/gimppaintbrush.c:63
 #: ../app/tools/gimppaintbrushtool.c:51
@@ -9346,7 +8978,7 @@ msgstr "Clona de perspectivă nu operează pe straturi indexate."
 #: ../app/paint/gimpsmudge.c:78
 #: ../app/tools/gimpsmudgetool.c:53
 msgid "Smudge"
-msgstr "Mânjeală"
+msgstr "Mânjire"
 
 #: ../app/paint/gimpsourcecore.c:227
 #, c-format
@@ -9387,10 +9019,11 @@ msgstr "/Filtre/Combinate"
 msgid "Brightness-Contrast"
 msgstr "Luminozitate-Contrast"
 
+# titlu
 #: ../app/pdb/color_cmds.c:249
 #: ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
-msgstr ""
+msgstr "Posterizare"
 
 #: ../app/pdb/color_cmds.c:439
 #: ../app/pdb/color_cmds.c:516
@@ -9403,7 +9036,7 @@ msgstr "Curbe"
 msgid "Color Balance"
 msgstr "Balanță de culori"
 
-# hm ? sau colorează ?
+# titlu
 #: ../app/pdb/color_cmds.c:640
 #: ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
@@ -9412,7 +9045,7 @@ msgstr "Colorare"
 #: ../app/pdb/color_cmds.c:773
 #: ../app/tools/gimphuesaturationtool.c:112
 msgid "Hue-Saturation"
-msgstr "Nuanță-Saturație"
+msgstr "Nuanță / saturație"
 
 #: ../app/pdb/color_cmds.c:827
 #: ../app/tools/gimpthresholdtool.c:82
@@ -9609,11 +9242,11 @@ msgstr ""
 
 #: ../app/text/text-enums.c:81
 msgid "Left justified"
-msgstr ""
+msgstr "Aliniat la stânga"
 
 #: ../app/text/text-enums.c:82
 msgid "Right justified"
-msgstr ""
+msgstr "Aliniat la dreapta"
 
 #: ../app/text/text-enums.c:83
 msgid "Centered"
@@ -9645,9 +9278,8 @@ msgid "Rename Text Layer"
 msgstr "Redenumește stratul text"
 
 #: ../app/text/gimptextlayer.c:140
-#, fuzzy
 msgid "Move Text Layer"
-msgstr "Strat Plutitor"
+msgstr "Mută stratul text"
 
 #: ../app/text/gimptextlayer.c:141
 msgid "Scale Text Layer"
@@ -9681,9 +9313,8 @@ msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 
 #: ../app/text/gimptextlayer.c:583
-#, fuzzy
 msgid "Empty Text Layer"
-msgstr "Strat de text"
+msgstr "Strat de text gol"
 
 #: ../app/text/gimptextlayer-xcf.c:75
 #, c-format
@@ -9695,11 +9326,12 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimp-tools.c:314
-#, fuzzy
 msgid ""
 "This tool has\n"
 "no options."
-msgstr "Această unealtă nu are opțiuni."
+msgstr ""
+"Acest instrument\n"
+"nu are opțiuni."
 
 #: ../app/tools/gimpairbrushtool.c:55
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -9707,7 +9339,7 @@ msgstr "Aerograf: pictează cu presiune variabilă folosind un penel"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
-msgstr "_Aerograf"
+msgstr "Aerogra_f"
 
 #: ../app/tools/gimpairbrushtool.c:95
 #: ../app/tools/gimpconvolvetool.c:217
@@ -9730,7 +9362,7 @@ msgstr "Aliniere: aliniază sau aranjează straturi și alte obiecte"
 
 #: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
-msgstr "_Aliniază"
+msgstr "_Aliniere"
 
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
@@ -9784,7 +9416,7 @@ msgstr "Aliniază marginea dreaptă a țintei"
 
 #: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
-msgstr "Aliniază marginea de sus a țintei"
+msgstr "Aliniază marginea de sus de tot a țintei"
 
 #: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
@@ -9792,7 +9424,7 @@ msgstr "Aliniază mijlocul țintei"
 
 #: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
-msgstr "Aliniază marginea de jos a țintei"
+msgstr "Aliniază marginea de jos de tot a țintei"
 
 #: ../app/tools/gimpaligntool.c:820
 msgid "Distribute"
@@ -9812,7 +9444,7 @@ msgstr "Distribuie marginile din dreapta ale țintelor"
 
 #: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
-msgstr "Distribuie marginile de sus ale țintelor"
+msgstr "Distribuie marginile de sus de tot ale țintelor"
 
 #: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
@@ -9820,7 +9452,7 @@ msgstr "Distribuie centrele verticale ale țintelor"
 
 #: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
-msgstr "Distribuie marginile de jos ale țintelor"
+msgstr "Distribuie marginile de jos de tot ale țintelor"
 
 #: ../app/tools/gimpaligntool.c:879
 #: ../app/tools/gimpblendoptions.c:212
@@ -9835,15 +9467,13 @@ msgstr "Formă:"
 #: ../app/tools/gimpblendoptions.c:229
 #: ../app/tools/gimppaintoptions-gui.c:460
 msgid "Repeat:"
-msgstr "Repetă:"
+msgstr "Repetare:"
 
 #: ../app/tools/gimpblendoptions.c:247
-#, fuzzy
 msgid "Adaptive supersampling"
 msgstr "Supereșantionare adaptivă"
 
 #: ../app/tools/gimpblendoptions.c:255
-#, fuzzy
 msgid "Max depth:"
 msgstr "Adâncime maximă:"
 
@@ -9858,9 +9488,8 @@ msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Amestec: umple zona selectată cu un gradient color"
 
 #: ../app/tools/gimpblendtool.c:110
-#, fuzzy
 msgid "Blen_d"
-msgstr "Amestec:"
+msgstr "_Amestec"
 
 #: ../app/tools/gimpblendtool.c:163
 #, c-format
@@ -9869,9 +9498,9 @@ msgstr "Amestecarea nu operează pe straturi indexate."
 
 #: ../app/tools/gimpblendtool.c:399
 #: ../app/tools/gimppainttool.c:595
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained angles"
-msgstr "Masoară unghiuri și lungimi"
+msgstr "%s pentru unghiuri constrânse"
 
 #: ../app/tools/gimpblendtool.c:400
 #, c-format
@@ -9884,7 +9513,7 @@ msgstr "Amestec:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:103
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr "Luminozitate / Contrast: ajustează luminozitatea și contrastul"
+msgstr "Luminozitate / contrast: ajustează luminozitatea și contrastul"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "B_rightness-Contrast..."
@@ -9922,9 +9551,9 @@ msgstr ""
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "Fill Type  (%s)"
-msgstr "Tip umplere"
+msgstr "Tip umplere (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:239
@@ -9933,9 +9562,8 @@ msgid "Affected Area  (%s)"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:243
-#, fuzzy
 msgid "Fill whole selection"
-msgstr "Selecție Plutitoare"
+msgstr "Umple întreaga selecție"
 
 #: ../app/tools/gimpbucketfilloptions.c:244
 msgid "Fill similar colors"
@@ -9946,11 +9574,9 @@ msgid "Finding Similar Colors"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:269
-#, fuzzy
 msgid "Fill transparent areas"
-msgstr "Prim plan -> Transparent"
+msgstr "Umple zonele transparente"
 
-# hm ?
 #: ../app/tools/gimpbucketfilloptions.c:275
 #: ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160
@@ -9958,12 +9584,12 @@ msgstr "Prim plan -> Transparent"
 #: ../app/tools/gimpperspectiveclonetool.c:965
 #: ../app/tools/gimpselectionoptions.c:391
 msgid "Sample merged"
-msgstr "Eșantion îmbinat"
+msgstr "Eșantion combinat"
 
+# hm ?
 #: ../app/tools/gimpbucketfilloptions.c:294
-#, fuzzy
 msgid "Fill by:"
-msgstr "Opacitate umplere:"
+msgstr "Umple pe baza:"
 
 #: ../app/tools/gimpbucketfilltool.c:80
 msgid "Bucket Fill"
@@ -9971,11 +9597,11 @@ msgstr "Umplere cu găleata"
 
 #: ../app/tools/gimpbucketfilltool.c:81
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Umplere cu găleata: umple zona selectată cu o culoare sau model"
+msgstr "Umplere cu găleata: umple zona selectată cu o culoare sau un model"
 
 #: ../app/tools/gimpbucketfilltool.c:82
 msgid "_Bucket Fill"
-msgstr "_Umple cu găleata"
+msgstr "Umple_re cu găleata"
 
 #: ../app/tools/gimpbycolorselecttool.c:65
 msgid "Select by Color"
@@ -9986,17 +9612,16 @@ msgid "Select by Color Tool: Select regions with similar colors"
 msgstr "Selecție pe baza culorii: selectează zone cu culori similare"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
-#, fuzzy
 msgid "_By Color Select"
-msgstr "Selecție după culoare"
+msgstr "_Selecție după culoare"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr "Clonare: copiză selectiv dontr-o imagine sau model folosind un penel"
+msgstr "Clonare: copiză selectiv dintr-o imagine sau un model folosind un penel"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
-msgstr "_Clonează"
+msgstr "_Clonare"
 
 #: ../app/tools/gimpclonetool.c:86
 #: ../app/tools/gimpclonetool.c:89
@@ -10010,9 +9635,8 @@ msgid "%s to set a new clone source"
 msgstr ""
 
 #: ../app/tools/gimpclonetool.c:90
-#, fuzzy
 msgid "Click to set a new clone source"
-msgstr "Introduceți un nume pentru traseu"
+msgstr "Clic pentru a stabili o nouă sursă pentru clonare"
 
 #: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:960
@@ -10030,14 +9654,12 @@ msgid "Color Balance Tool: Adjust color distribution"
 msgstr "Balans de culoare: ajustează distribuția culorii"
 
 #: ../app/tools/gimpcolorbalancetool.c:94
-#, fuzzy
 msgid "Color _Balance..."
-msgstr "Balanța de culori"
+msgstr "_Balans de culoare..."
 
 #: ../app/tools/gimpcolorbalancetool.c:111
-#, fuzzy
 msgid "Adjust Color Balance"
-msgstr "Balanța de culori"
+msgstr "Ajustează balansul de culori"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
 #, fuzzy, c-format
@@ -10051,9 +9673,8 @@ msgstr "Selectează o memorie tampon pentru inserare:"
 
 #: ../app/tools/gimpcolorbalancetool.c:243
 #: ../app/tools/gimplevelstool.c:179
-#, fuzzy
 msgid "Adjust Color Levels"
-msgstr "Nivele de culoare:"
+msgstr "Ajustează nivelul culorilor"
 
 #: ../app/tools/gimpcolorbalancetool.c:259
 #: ../app/tools/gimphuesaturationtool.c:233
@@ -10089,40 +9710,34 @@ msgid "Colori_ze..."
 msgstr "Colorea_ză..."
 
 #: ../app/tools/gimpcolorizetool.c:109
-#, fuzzy
 msgid "Colorize the Image"
-msgstr "Decupat după imagine"
+msgstr "Colorare imagine"
 
 #: ../app/tools/gimpcolorizetool.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "Colorize operates only on RGB color layers."
-msgstr "Balanța de culori funcționează numai pe imagini RGB."
+msgstr "Colorarea operează numai pe straturi de culoare RGB."
 
 #: ../app/tools/gimpcolorizetool.c:188
-#, fuzzy
 msgid "Select Color"
-msgstr "Culoare Directă"
+msgstr "Selectează culoarea"
 
 #: ../app/tools/gimpcolorizetool.c:206
 #: ../app/tools/gimphuesaturationtool.c:362
-#, fuzzy
 msgid "_Hue:"
-msgstr "Noanță:"
+msgstr "_Nuanță:"
 
 #: ../app/tools/gimpcolorizetool.c:220
 #: ../app/tools/gimphuesaturationtool.c:398
-#, fuzzy
 msgid "_Saturation:"
-msgstr "Saturare:"
+msgstr "_Saturație:"
 
 #: ../app/tools/gimpcolorizetool.c:234
 #: ../app/tools/gimphuesaturationtool.c:380
-#, fuzzy
 msgid "_Lightness:"
-msgstr "Luminozitate:"
+msgstr "_Luminozitate:"
 
 #: ../app/tools/gimpcoloroptions.c:161
-#, fuzzy
 msgid "Sample average"
 msgstr "Medie eșantion"
 
@@ -10141,9 +9756,9 @@ msgstr ""
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Use info window  (%s)"
-msgstr "Folosește fereastra de informații"
+msgstr "Folosește fereastra de informații  (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
@@ -10199,15 +9814,15 @@ msgstr "Adaugă punct"
 
 #: ../app/tools/gimpconvolvetool.c:73
 msgid "Blur / Sharpen"
-msgstr "Estompare / Accentuare claritate"
+msgstr "Estompare / accentuare claritate"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr "Estompare / Accentuare claritate: estompează sau accentuează claritatea selectiv folosind un penel"
+msgstr "Estompare / accentuare claritate: estompează sau accentuează claritatea selectiv folosind un penel"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Bl_ur / Sharpen"
-msgstr "_Estompează / Accentuează claritatea"
+msgstr "Estompare / accent_uare claritate"
 
 #: ../app/tools/gimpconvolvetool.c:170
 msgid "Click to blur"
@@ -10237,19 +9852,18 @@ msgstr "%s pentru a estompa claritatea"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Conversie"
+msgstr "Tip de convoluție  (%s)"
 
 #: ../app/tools/gimpcropoptions.c:148
-#, fuzzy
 msgid "Current layer only"
 msgstr "Numai stratul curent"
 
+# hm ?
 #: ../app/tools/gimpcropoptions.c:154
-#, fuzzy
 msgid "Allow growing"
-msgstr "Permite redimensionarea ferestrei"
+msgstr "Permite creștere în afară"
 
 #: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
@@ -10260,50 +9874,45 @@ msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Decupare: elimină zonele de margine dintr-o imagine sau dintr-un strat"
 
 #: ../app/tools/gimpcroptool.c:121
-#, fuzzy
 msgid "_Crop"
-msgstr "Decupare"
+msgstr "De_cupează"
 
 #: ../app/tools/gimpcroptool.c:257
 msgid "Click or press Enter to crop"
-msgstr ""
+msgstr "Clic sau apăsați Enter pentru a decupa"
 
 #: ../app/tools/gimpcurvestool.c:151
 msgid "Curves Tool: Adjust color curves"
 msgstr "Curbe: ajustează curbele de culoare"
 
 #: ../app/tools/gimpcurvestool.c:152
-#, fuzzy
 msgid "_Curves..."
-msgstr "Curbe"
+msgstr "_Curbe..."
 
 #: ../app/tools/gimpcurvestool.c:178
-#, fuzzy
 msgid "Adjust Color Curves"
-msgstr "Nivele de culoare:"
+msgstr "Ajustează curbele de culoare"
 
 #: ../app/tools/gimpcurvestool.c:180
 msgid "Load Curves"
 msgstr "Încarcă curbe"
 
 #: ../app/tools/gimpcurvestool.c:181
-#, fuzzy
 msgid "Load curves settings from file"
-msgstr "Salvează starea dispozitivului la ieșire"
+msgstr "Încarcă setări de curbe din fișier"
 
 #: ../app/tools/gimpcurvestool.c:182
 msgid "Save Curves"
-msgstr "Salvează curbe"
+msgstr "Salvează curbele"
 
 #: ../app/tools/gimpcurvestool.c:183
-#, fuzzy
 msgid "Save curves settings to file"
-msgstr "Salvează starea dispozitivului la ieșire"
+msgstr "Salvează setările de curbe în fișier"
 
 #: ../app/tools/gimpcurvestool.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "Curves does not operate on indexed layers."
-msgstr "Invert nu funcționează pe imagini indexate."
+msgstr "Curbele nu poerează pe straturi indexate."
 
 #: ../app/tools/gimpcurvestool.c:358
 #, fuzzy
@@ -10355,15 +9964,15 @@ msgstr "Unealtă de masurare"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
-msgstr "Albire / Înnegrire"
+msgstr "Albire / înnegrire"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Albire / Înnegrire: iluminează sau întunecă selectiv folosind un penel"
+msgstr "Albire / înnegrire: iluminează sau întunecă selectiv folosind un penel"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr "Albește / Înne_grește"
+msgstr "Albire / înne_grire"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
@@ -10408,9 +10017,8 @@ msgstr "Expunere:"
 
 #: ../app/tools/gimpeditselectiontool.c:194
 #: ../app/tools/gimpeditselectiontool.c:1105
-#, fuzzy
 msgid "Move Floating Selection"
-msgstr "Selecție Plutitoare"
+msgstr "Mută selecția plutitoare"
 
 #: ../app/tools/gimpeditselectiontool.c:396
 #: ../app/tools/gimpeditselectiontool.c:664
@@ -10458,8 +10066,9 @@ msgstr "Fundal"
 #: ../app/tools/gimperasertool.c:146
 #, c-format
 msgid "Anti erase  (%s)"
-msgstr ""
+msgstr "Anti șterge  (%s)"
 
+# hm ? sau afectare ?
 #: ../app/tools/gimpflipoptions.c:129
 msgid "Affect:"
 msgstr "Afectează:"
@@ -10480,7 +10089,7 @@ msgstr "Întoarcere: inversează orizontal sau vertical stratul, selecția, sau 
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
-msgstr "_Întoarce"
+msgstr "_Întoarcere"
 
 #: ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:100
@@ -10547,15 +10156,13 @@ msgid "Smoothing:"
 msgstr "Netezire"
 
 #: ../app/tools/gimpforegroundselectoptions.c:340
-#, fuzzy
 msgid "Preview color:"
-msgstr "Previzualizare"
+msgstr "Previzualizare culoare:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:343
-#, fuzzy
 msgid "Color Sensitivity"
-msgstr "Sensibilitate"
+msgstr "Sensibilitate de culoare"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select"
@@ -10614,45 +10221,42 @@ msgstr "Selecție fu_zzy"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
-msgstr "Remediere: remediază neregularitățile imaginii"
+msgstr "Corectură: vindecă neregularitățile imaginii"
 
 #: ../app/tools/gimphealtool.c:55
 msgid "_Heal"
-msgstr "_Remediază"
+msgstr "Corec_tură"
 
 #: ../app/tools/gimphealtool.c:77
 #: ../app/tools/gimphealtool.c:80
 msgid "Click to heal"
-msgstr "Clic pentru a remedia"
+msgstr "Clic pentru a corecta"
 
 #: ../app/tools/gimphealtool.c:78
 #: ../app/tools/gimphealtool.c:82
 #, c-format
 msgid "%s to set a new heal source"
-msgstr "%s pentru a stabili o sursă de remediere nouă"
+msgstr "%s pentru a stabili o sursă nouă de corectură"
 
 #: ../app/tools/gimphealtool.c:81
 msgid "Click to set a new heal source"
-msgstr "Clic pentru a stabili o sursă de remediere nouă"
+msgstr "Clic pentru a stabili o sursă de corectură nouă"
 
 #: ../app/tools/gimphistogramoptions.c:127
-#, fuzzy
 msgid "Histogram Scale"
-msgstr "Histogramă"
+msgstr "Scală histogramă"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Nuanță-saturație: ajustează nuanța, saturația și luminozitatea"
+msgstr "Nuanță / saturație: ajustează nuanța, saturația și luminozitatea"
 
 #: ../app/tools/gimphuesaturationtool.c:114
-#, fuzzy
 msgid "Hue-_Saturation..."
-msgstr "Nuanța-Saturare"
+msgstr "Nuanță / _saturație..."
 
 #: ../app/tools/gimphuesaturationtool.c:131
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Reglare Nuanța / Luminozitate / Saturare"
+msgstr "Ajustare nuanță / luminozitate / saturație"
 
 #: ../app/tools/gimphuesaturationtool.c:173
 #, fuzzy, c-format
@@ -10665,74 +10269,60 @@ msgid "M_aster"
 msgstr "Stapân"
 
 #: ../app/tools/gimphuesaturationtool.c:229
-#, fuzzy
 msgid "Adjust all colors"
-msgstr "Nivele de culoare:"
+msgstr "Ajustează toate culorile"
 
 #: ../app/tools/gimphuesaturationtool.c:230
-#, fuzzy
 msgid "_R"
-msgstr "R"
+msgstr "_R"
 
 #: ../app/tools/gimphuesaturationtool.c:231
-#, fuzzy
 msgid "_Y"
-msgstr "Y"
+msgstr "_Y"
 
 #: ../app/tools/gimphuesaturationtool.c:232
-#, fuzzy
 msgid "_G"
-msgstr "G"
+msgstr "_G"
 
 #: ../app/tools/gimphuesaturationtool.c:233
-#, fuzzy
 msgid "_C"
-msgstr "C"
+msgstr "_C"
 
 #: ../app/tools/gimphuesaturationtool.c:234
-#, fuzzy
 msgid "_B"
-msgstr "B"
+msgstr "_B"
 
 #: ../app/tools/gimphuesaturationtool.c:235
-#, fuzzy
 msgid "_M"
-msgstr "M"
+msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:238
-#, fuzzy
 msgid "Select Primary Color to Adjust"
-msgstr "Culoare Directă"
+msgstr "Selectează culoarea primară de ajustat"
 
 #: ../app/tools/gimphuesaturationtool.c:326
-#, fuzzy
 msgid "_Overlap:"
-msgstr "Suprapunere"
+msgstr "_Suprapunere:"
 
 #: ../app/tools/gimphuesaturationtool.c:344
-#, fuzzy
 msgid "Adjust Selected Color"
-msgstr "Culoare Directă"
+msgstr "Ajustează culoarea selectată"
 
 #: ../app/tools/gimphuesaturationtool.c:418
-#, fuzzy
 msgid "R_eset Color"
-msgstr "/Unelte/Culorile implicite"
+msgstr "R_esetează culoarea"
 
 #: ../app/tools/gimpimagemaptool.c:233
-#, fuzzy
 msgid "_Preview"
-msgstr "Previzualizare"
+msgstr "_Previzualizare"
 
 #: ../app/tools/gimpimagemaptool.c:265
-#, fuzzy
 msgid "Quick Load"
-msgstr "Masca de selecție"
+msgstr "Înărcare rapidă"
 
 #: ../app/tools/gimpimagemaptool.c:294
-#, fuzzy
 msgid "Quick Save"
-msgstr "Masca de selecție"
+msgstr "Salvare rapidă"
 
 #: ../app/tools/gimpimagemaptool.c:610
 #, fuzzy, c-format
@@ -10785,7 +10375,7 @@ msgstr "Cerneală: pictează în stil caligrafic"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
-msgstr ""
+msgstr "Cernea_lă"
 
 #: ../app/tools/gimpiscissorstool.c:278
 msgid "Scissors"
@@ -10916,7 +10506,7 @@ msgstr "Redimensionează fereastra automat"
 #: ../app/tools/gimpmoveoptions.c:184
 #, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Comutare unealtă  (%s)"
+msgstr "Comutare instrument  (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:86
 msgid "Zoom"
@@ -10931,7 +10521,6 @@ msgid "tool|_Zoom"
 msgstr "_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:124
-#, fuzzy
 msgid "Use info window"
 msgstr "Folosește fereastra de informații"
 
@@ -10984,7 +10573,7 @@ msgstr "Masoară distanțe și unghiuri"
 
 #: ../app/tools/gimpmeasuretool.c:1000
 msgid "Distance:"
-msgstr "Distanțe:"
+msgstr "Distanță:"
 
 #: ../app/tools/gimpmoveoptions.c:140
 msgid "Pick a layer or guide"
@@ -11008,9 +10597,10 @@ msgstr "/Stivă/Mută în vârf"
 msgid "Move the active path"
 msgstr "Numai stratul curent"
 
+# hm ? sau mută ?
 #: ../app/tools/gimpmoveoptions.c:178
 msgid "Move:"
-msgstr "Mută:"
+msgstr "Mutare:"
 
 #: ../app/tools/gimpmovetool.c:125
 msgid "tool|Move"
@@ -11022,7 +10612,7 @@ msgstr "Mutare: mută straturi, selecții și alte obiecte"
 
 #: ../app/tools/gimpmovetool.c:127
 msgid "_Move"
-msgstr "_Mută"
+msgstr "_Mutare"
 
 #: ../app/tools/gimpmovetool.c:271
 #: ../app/tools/gimpmovetool.c:552
@@ -11107,7 +10697,7 @@ msgstr "Dimensiune"
 
 #: ../app/tools/gimppaintoptions-gui.c:343
 msgid "Fade out"
-msgstr "Estompare"
+msgstr "Atenuează în ieșire"
 
 #: ../app/tools/gimppaintoptions-gui.c:352
 #: ../app/tools/gimppaintoptions-gui.c:445
@@ -11116,7 +10706,7 @@ msgstr "Lungime:"
 
 #: ../app/tools/gimppaintoptions-gui.c:384
 msgid "Apply Jitter"
-msgstr "Fluctuație"
+msgstr "Aplică jitter"
 
 #: ../app/tools/gimppaintoptions-gui.c:389
 msgid "Amount:"
@@ -11153,7 +10743,7 @@ msgstr "Creion: pictează cu contururi dure folosind un penel"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
-msgstr ""
+msgstr "Creio_n"
 
 #: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone Tool: Clone from an image source after applying a perspective transformation"
@@ -11161,7 +10751,7 @@ msgstr "Clonare de perspectivă: clonează dintr-o sursă de imagine după aplic
 
 #: ../app/tools/gimpperspectiveclonetool.c:130
 msgid "_Perspective Clone"
-msgstr "Clonă de _perspectivă"
+msgstr "Clonă de perspecti_vă"
 
 #: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
@@ -11198,7 +10788,7 @@ msgstr "_Posterizează..."
 
 #: ../app/tools/gimpposterizetool.c:96
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "Posterizează (reduce numărul de culori)"
+msgstr "Posterizare (reducerea numărului de culori)"
 
 #: ../app/tools/gimpposterizetool.c:140
 #, c-format
@@ -11211,7 +10801,7 @@ msgstr "Nive_luri de posterizare:"
 
 #: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
+msgstr "Folosește toate straturile vizibile la micșorarea selecției"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:775
@@ -11237,11 +10827,11 @@ msgstr "Evidențiere"
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1037
 msgid "Auto Shrink"
-msgstr "Contractare automată"
+msgstr "Micșorare automată"
 
 #: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
-msgstr "Contractare îmbinată"
+msgstr "Micșorare combinată"
 
 #: ../app/tools/gimprectangleselectoptions.c:154
 msgid "Rounded corners"
@@ -11278,7 +10868,7 @@ msgstr "Rotire: rotește stratul, selecția, sau traseul"
 
 #: ../app/tools/gimprotatetool.c:87
 msgid "_Rotate"
-msgstr "_Rotește"
+msgstr "_Rotire"
 
 #: ../app/tools/gimprotatetool.c:142
 msgid "_Angle:"
@@ -11286,11 +10876,11 @@ msgstr "_Unghi:"
 
 #: ../app/tools/gimprotatetool.c:157
 msgid "Center _X:"
-msgstr "Centrează _X:"
+msgstr "Centrare _X:"
 
 #: ../app/tools/gimprotatetool.c:166
 msgid "Center _Y:"
-msgstr "Centrează _Y:"
+msgstr "Centrare _Y:"
 
 #: ../app/tools/gimpscaletool.c:78
 msgid "Scale"
@@ -11302,7 +10892,7 @@ msgstr "Scalare: scalează stratul, selecția, sau traseul"
 
 #: ../app/tools/gimpscaletool.c:80
 msgid "_Scale"
-msgstr "_Scalează"
+msgstr "_Scalare"
 
 #: ../app/tools/gimpscaletool.c:106
 msgid "command|Scale"
@@ -11336,10 +10926,10 @@ msgstr "Arată marginile interactiv"
 msgid "Select transparent areas"
 msgstr "Alege directorul de gradienți"
 
-# hm ?
+# hm ? sau selectat pe baza ?
 #: ../app/tools/gimpselectionoptions.c:410
 msgid "Select by:"
-msgstr "Selectează pe baza:"
+msgstr "Selecție pe baza:"
 
 #: ../app/tools/gimpselectiontool.c:251
 #, fuzzy
@@ -11383,9 +10973,8 @@ msgid "Click-Drag to move a copy of the selected pixels"
 msgstr ""
 
 #: ../app/tools/gimpselectiontool.c:308
-#, fuzzy
 msgid "Click to anchor the floating selection"
-msgstr "Selecție Plutitoare"
+msgstr "Clic pentru a ancora selecția plutitoare"
 
 #: ../app/tools/gimpsheartool.c:81
 msgid "Shear"
@@ -11396,9 +10985,8 @@ msgid "Shear Tool: Shear the layer, selection or path"
 msgstr "Tuns: tunde stratul, selecția, sau traseul"
 
 #: ../app/tools/gimpsheartool.c:83
-#, fuzzy
 msgid "S_hear"
-msgstr "Decupare"
+msgstr "_Tuns"
 
 #: ../app/tools/gimpsheartool.c:109
 msgid "command|Shear"
@@ -11414,11 +11002,11 @@ msgstr ""
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr "Mânjeală: mânjește selectiv folosind un penel"
+msgstr "Mânjire: mânjește selectiv folosind un penel"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
-msgstr "_Mânjește"
+msgstr "_Mânjire"
 
 #: ../app/tools/gimpsmudgetool.c:74
 msgid "Click to smudge"
@@ -11438,17 +11026,15 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:146
 msgid "Indentation of the first line"
-msgstr ""
+msgstr "Indentarea primei linii"
 
 #: ../app/tools/gimptextoptions.c:152
-#, fuzzy
 msgid "Adjust line spacing"
-msgstr "Spațiere:"
+msgstr "Ajustează spațierea liniilor"
 
 #: ../app/tools/gimptextoptions.c:158
-#, fuzzy
 msgid "Adjust letter spacing"
-msgstr "Spațiere:"
+msgstr "Ajustează spațierea literelor"
 
 #: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
@@ -11474,7 +11060,7 @@ msgstr "Culoare:"
 
 #: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
-msgstr ""
+msgstr "Aliniere:"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
@@ -11496,14 +11082,13 @@ msgid "Te_xt"
 msgstr "Te_xt"
 
 #: ../app/tools/gimptexttool.c:753
-#, fuzzy
 msgid "GIMP Text Editor"
-msgstr "Modificare paleta de culori"
+msgstr "Editor de text GIMP"
 
 #: ../app/tools/gimptexttool.c:864
 #: ../app/tools/gimptexttool.c:867
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Confirmare editare text"
 
 #: ../app/tools/gimptexttool.c:896
 msgid ""
@@ -11511,6 +11096,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Stratul pe care l-ați selectat este un strat text, dar a fost modificat prin folosirea altor instrumente. Editarea stratului cu instrumentul text va anula acele modificări.\n"
+"\n"
+"Puteți edita stratul, sau crea un strat de text nou din atributele lui de text."
 
 #: ../app/tools/gimpthresholdtool.c:83
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
@@ -11538,15 +11126,13 @@ msgid "Transform:"
 msgstr "Transformare:"
 
 #: ../app/tools/gimptransformoptions.c:255
-#, fuzzy
 msgid "Direction"
-msgstr "Opțiuni pentru simularea de nuanțe"
+msgstr "Direcție"
 
 #. the interpolation menu
 #: ../app/tools/gimptransformoptions.c:260
-#, fuzzy
 msgid "Interpolation:"
-msgstr "Tip de interpolare:"
+msgstr "Interpolare:"
 
 #: ../app/tools/gimptransformoptions.c:273
 #, fuzzy
@@ -11554,14 +11140,13 @@ msgid "Clipping:"
 msgstr "Scalez..."
 
 #: ../app/tools/gimptransformoptions.c:291
-#, fuzzy
 msgid "Preview:"
-msgstr "Previzualizare"
+msgstr "Previzualizare:"
 
 #: ../app/tools/gimptransformoptions.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "15 degrees  (%s)"
-msgstr "grade"
+msgstr "15 grade  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:336
 #, c-format
@@ -11569,7 +11154,6 @@ msgid "Keep aspect  (%s)"
 msgstr "Păstrează raportul de aspect  (%s)"
 
 #: ../app/tools/gimptransformtool.c:235
-#, fuzzy
 msgid "Transforming"
 msgstr "Transformare"
 
@@ -11600,21 +11184,22 @@ msgid "Polygonal"
 msgstr "Poligonal"
 
 #: ../app/tools/gimpvectoroptions.c:178
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Path to Selection\n"
 "%s  Add\n"
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"Canal -> Selecție \n"
-"<Shift> Adaugă       <Ctrl> Scade        <Shift><Ctrl> Intersectează"
+"Traseu la selecție\n"
+"%s  Adaugă\n"
+"%s  Scade\n"
+"%s  Intersectează"
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
-#, fuzzy
 msgid "Selection from Path"
-msgstr "/Selecție -> Traseu"
+msgstr "Selecție de la traseu"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -11629,14 +11214,12 @@ msgid "Add Stroke"
 msgstr ""
 
 #: ../app/tools/gimpvectortool.c:338
-#, fuzzy
 msgid "Add Anchor"
-msgstr "Ancorează stratul"
+msgstr "Adaugă ancoră"
 
 #: ../app/tools/gimpvectortool.c:361
-#, fuzzy
 msgid "Insert Anchor"
-msgstr "Ancorează stratul"
+msgstr "Inserează ancoră"
 
 #: ../app/tools/gimpvectortool.c:390
 msgid "Drag Handle"
@@ -11727,7 +11310,7 @@ msgstr ""
 #: ../app/tools/gimpvectortool.c:1193
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: simetric"
 
 #: ../app/tools/gimpvectortool.c:1197
 msgid "Click-Drag to move the component around"
@@ -11757,12 +11340,11 @@ msgstr "Comentariul folosit pentru noile imaginii"
 
 #: ../app/tools/gimpvectortool.c:1224
 msgid "Click to make this node angular"
-msgstr ""
+msgstr "Clic pentru a face angular acest nod"
 
 #: ../app/tools/gimpvectortool.c:1730
-#, fuzzy
 msgid "Delete Anchors"
-msgstr "Elimină selecția"
+msgstr "Șterge ancorele"
 
 #: ../app/tools/gimpvectortool.c:1903
 #, fuzzy
@@ -11804,14 +11386,12 @@ msgid "Height"
 msgstr "Înălțime"
 
 #: ../app/tools/tools-enums.c:151
-#, fuzzy
 msgid "Free select"
-msgstr "Din selecție"
+msgstr "Selecție liberă"
 
 #: ../app/tools/tools-enums.c:152
-#, fuzzy
 msgid "Fixed size"
-msgstr "Dimensiunea imaginii: %s"
+msgstr "Dimensiune fixă"
 
 #: ../app/tools/tools-enums.c:153
 msgid "Fixed aspect ratio"
@@ -11824,21 +11404,19 @@ msgstr "Traseu"
 
 #: ../app/tools/tools-enums.c:212
 msgid "Outline"
-msgstr ""
+msgstr "Contur"
 
 #: ../app/tools/tools-enums.c:215
-#, fuzzy
 msgid "Image + Grid"
-msgstr "mod imagine"
+msgstr "Imagine + grilă"
 
 #: ../app/tools/tools-enums.c:242
-#, fuzzy
 msgid "Number of grid lines"
-msgstr "Numărul minim de culori:"
+msgstr "Număr de linii grilă"
 
 #: ../app/tools/tools-enums.c:243
 msgid "Grid line spacing"
-msgstr "Spațiere linii grilă"
+msgstr "Spațiere linii de grilă"
 
 #: ../app/tools/tools-enums.c:271
 msgid "Design"
@@ -11900,7 +11478,7 @@ msgstr "/Importă traseu..."
 #: ../app/vectors/gimpvectors-import.c:336
 #, c-format
 msgid "No paths found in '%s'"
-msgstr ""
+msgstr "Nu s-au găsit căi în „%s”"
 
 #: ../app/vectors/gimpvectors-import.c:339
 #, c-format
@@ -11984,7 +11562,7 @@ msgstr "Spațiere:"
 #: ../app/widgets/gimpbrusheditor.c:224
 #: ../app/widgets/gimpbrushfactoryview.c:85
 msgid "Percentage of width of brush"
-msgstr ""
+msgstr "Procent de lățime al penelului"
 
 #: ../app/widgets/gimpbufferview.c:173
 #: ../app/widgets/gimpbufferview.c:257
@@ -12041,9 +11619,8 @@ msgid "Remove '%s' from the list of active filters"
 msgstr "Elimină obiectul selectat din index"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:561
-#, fuzzy
 msgid "No filter selected"
-msgstr "Selectie Strat"
+msgstr "Niciun filtru selecta"
 
 #: ../app/widgets/gimpcoloreditor.c:263
 msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
@@ -12070,44 +11647,36 @@ msgstr "Albastru:"
 
 #: ../app/widgets/gimpcolorframe.c:451
 #: ../app/widgets/gimpcolorframe.c:484
-#, fuzzy
 msgid "Value:"
-msgstr "Valoare"
+msgstr "Valoare:"
 
 #: ../app/widgets/gimpcolorframe.c:475
-#, fuzzy
 msgid "Hex:"
-msgstr "Noanță:"
+msgstr "Hexa:"
 
 #: ../app/widgets/gimpcolorframe.c:482
-#, fuzzy
 msgid "Hue:"
-msgstr "Noanță:"
+msgstr "Nuanță:"
 
 #: ../app/widgets/gimpcolorframe.c:483
-#, fuzzy
 msgid "Sat.:"
-msgstr "Stare:"
+msgstr "Saturație:"
 
 #: ../app/widgets/gimpcolorframe.c:501
-#, fuzzy
 msgid "Cyan:"
-msgstr "Bleu"
+msgstr "Azuriu:"
 
 #: ../app/widgets/gimpcolorframe.c:502
-#, fuzzy
 msgid "Magenta:"
-msgstr "Violet"
+msgstr "Purpuriu:"
 
 #: ../app/widgets/gimpcolorframe.c:503
-#, fuzzy
 msgid "Yellow:"
-msgstr "Galben"
+msgstr "Galben:"
 
 #: ../app/widgets/gimpcolorframe.c:504
-#, fuzzy
 msgid "Black:"
-msgstr "Numai negru"
+msgstr "Negru:"
 
 #: ../app/widgets/gimpcolorframe.c:524
 msgid "Alpha:"
@@ -12126,9 +11695,8 @@ msgid "n/a"
 msgstr ""
 
 #: ../app/widgets/gimpcolormapeditor.c:206
-#, fuzzy
 msgid "Color index:"
-msgstr "Index:"
+msgstr "Index culoare:"
 
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
@@ -12139,14 +11707,12 @@ msgid "Palette"
 msgstr "Paletă"
 
 #: ../app/widgets/gimpcontainerpopup.c:538
-#, fuzzy
 msgid "Smaller Previews"
-msgstr "Previzualizare"
+msgstr "Previzualizări mai mici"
 
 #: ../app/widgets/gimpcontainerpopup.c:543
-#, fuzzy
 msgid "Larger Previews"
-msgstr "Previzualizare"
+msgstr "Previzualizări mai mari"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
 msgid "_Dump events from this controller"
@@ -12154,16 +11720,15 @@ msgstr ""
 
 #: ../app/widgets/gimpcontrollereditor.c:206
 msgid "_Enable this controller"
-msgstr ""
+msgstr "Activ_ează acest controller"
 
 #: ../app/widgets/gimpcontrollereditor.c:227
 msgid "Name:"
 msgstr "Nume:"
 
 #: ../app/widgets/gimpcontrollereditor.c:341
-#, fuzzy
 msgid "Event"
-msgstr "Mediu"
+msgstr "Eveniment"
 
 #: ../app/widgets/gimpcontrollereditor.c:366
 #, fuzzy
@@ -12172,17 +11737,17 @@ msgstr "Gradient"
 
 #: ../app/widgets/gimpcontrollereditor.c:376
 msgid "Select the next event arriving from the controller"
-msgstr ""
+msgstr "Selectează următorul eveniment care sosește de la controller"
 
 #: ../app/widgets/gimpcontrollereditor.c:534
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr ""
+msgstr "Elimină acțiunea atribuită la „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:539
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr ""
+msgstr "Atribuie o acțiune la „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:661
 #, fuzzy, c-format
@@ -12244,11 +11809,11 @@ msgstr "Curbe"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:178
 msgid "Keyboard"
-msgstr ""
+msgstr "Tastatură"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:222
 msgid "Keyboard Events"
-msgstr ""
+msgstr "Evenimente de tastatură"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:223
 #: ../app/widgets/gimpcontrollerwheel.c:225
@@ -12441,14 +12006,12 @@ msgid "The given filename does not have any known file extension."
 msgstr ""
 
 #: ../app/widgets/gimpdnd-xds.c:214
-#, fuzzy
 msgid "File Exists"
-msgstr "Fișierul există!"
+msgstr "Fișierul există"
 
 #: ../app/widgets/gimpdnd-xds.c:219
-#, fuzzy
 msgid "_Replace"
-msgstr "Inlocuiește"
+msgstr "Î_nlocuiește"
 
 #: ../app/widgets/gimpdnd-xds.c:230
 #, c-format
@@ -12462,7 +12025,7 @@ msgstr ""
 # pe bara de titlu la închiderea panoului din dreapta
 #: ../app/widgets/gimpdock.c:287
 msgid "Close all Tabs?"
-msgstr "Închiderea tuturor filelor"
+msgstr "Închiderea tuturor taburilor"
 
 #: ../app/widgets/gimpdock.c:293
 msgid "Close all Tabs"
@@ -12476,9 +12039,9 @@ msgstr "Închideți toate taburile ?"
 #, c-format
 msgid "This window has %d tab open. Closing the window will also close all its tabs."
 msgid_plural "This window has %d tabs open. Closing the window will also close all its tabs."
-msgstr[0] "Aceastră fereastră are %d filă deschisă. Închiderea ferestrei va închide de asemenea toate filele ei."
-msgstr[1] "Aceastră fereastră are %d file deschise. Închiderea ferestrei va închide de asemenea toate filele ei."
-msgstr[2] "Aceastră fereastră are %d de file deschise. Închiderea ferestrei va închide de asemenea toate filele ei."
+msgstr[0] "Aceastră fereastră are %d tab deschis. Închiderea ferestrei va închide de asemenea toate taburile ei."
+msgstr[1] "Aceastră fereastră are %d taburi deschise. Închiderea ferestrei va închide de asemenea toate taburile ei."
+msgstr[2] "Aceastră fereastră are %d de taburi deschise. Închiderea ferestrei va închide de asemenea toate taburile ei."
 
 #: ../app/widgets/gimpdockable.c:166
 msgid "Configure this tab"
@@ -12503,21 +12066,19 @@ msgstr "Mesaj %s"
 
 #: ../app/widgets/gimpfiledialog.c:272
 msgid "Automatically Detected"
-msgstr ""
+msgstr "detectat automat"
 
 #: ../app/widgets/gimpfiledialog.c:282
 msgid "By Extension"
 msgstr "după extensie"
 
 #: ../app/widgets/gimpfiledialog.c:533
-#, fuzzy
 msgid "All files"
-msgstr "Tip umplere"
+msgstr "Toate fișierele"
 
 #: ../app/widgets/gimpfiledialog.c:538
-#, fuzzy
 msgid "All images"
-msgstr "Tip umplere"
+msgstr "Toate imaginile"
 
 #: ../app/widgets/gimpfiledialog.c:667
 #, c-format
@@ -12645,9 +12206,8 @@ msgid "_Background color:"
 msgstr "Culoare de _fundal:"
 
 #: ../app/widgets/gimpgrideditor.c:236
-#, fuzzy
 msgid "Spacing"
-msgstr "Spațiere:"
+msgstr "Spațiere"
 
 #: ../app/widgets/gimphelp.c:193
 #, fuzzy
@@ -12748,14 +12308,12 @@ msgid "Size in memory:"
 msgstr "Dimensiune în memorie:"
 
 #: ../app/widgets/gimpimagepropview.c:152
-#, fuzzy
 msgid "Undo steps:"
-msgstr "Refacere"
+msgstr "Trepte de anulare:"
 
 #: ../app/widgets/gimpimagepropview.c:155
-#, fuzzy
 msgid "Redo steps:"
-msgstr "Re-Refacere"
+msgstr "Trepte de refacere:"
 
 #: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of pixels:"
@@ -12806,7 +12364,7 @@ msgstr "Blochează canalul alfa"
 
 #: ../app/widgets/gimplayertreeview.c:322
 msgid "Lock:"
-msgstr "Blochează:"
+msgstr "Blocare:"
 
 #: ../app/widgets/gimplayertreeview.c:874
 msgid "Empty Layer"
@@ -12956,7 +12514,7 @@ msgid ""
 "%s%sClick to force update even if preview is up-to-date"
 msgstr ""
 "Clic pentru a actualiza previzualizarea\n"
-"%s%sClic pentru a forța actualizarea chiar și în cazul în care previzualizarea este "
+"%s%sClic pentru a forța actualizarea chiar și în cazul în care previzualizarea este actualizată"
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
@@ -13182,14 +12740,12 @@ msgid "Fancy"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:201
-#, fuzzy
 msgid "GIMP help browser"
-msgstr "Afișare informații de ajutor"
+msgstr "Navigator de ajutor GIMP"
 
 #: ../app/widgets/widgets-enums.c:202
-#, fuzzy
 msgid "Web browser"
-msgstr "Afișare informații de ajutor"
+msgstr "Navigator web"
 
 #: ../app/widgets/widgets-enums.c:229
 msgid "Linear"
@@ -13200,39 +12756,32 @@ msgid "Logarithmic"
 msgstr ""
 
 #: ../app/widgets/widgets-enums.c:263
-#, fuzzy
 msgid "Icon"
-msgstr "Numar:"
+msgstr "Pictogramă"
 
 #: ../app/widgets/widgets-enums.c:264
-#, fuzzy
 msgid "Current status"
-msgstr "Lățimea curentă:"
+msgstr "Stare curentă"
 
 #: ../app/widgets/widgets-enums.c:266
-#, fuzzy
 msgid "Description"
-msgstr "Opțiuni pentru simularea de nuanțe"
+msgstr "Descriere"
 
 #: ../app/widgets/widgets-enums.c:267
-#, fuzzy
 msgid "Icon & text"
-msgstr "/Unelte/Cutia de scule"
+msgstr "Pictogramă și text"
 
 #: ../app/widgets/widgets-enums.c:268
-#, fuzzy
 msgid "Icon & desc"
-msgstr "/Unelte/Cutia de scule"
+msgstr "Pictogramă și descriere"
 
 #: ../app/widgets/widgets-enums.c:269
-#, fuzzy
 msgid "Status & text"
-msgstr "/Unelte/Cutia de scule"
+msgstr "Stare și text"
 
 #: ../app/widgets/widgets-enums.c:270
-#, fuzzy
 msgid "Status & desc"
-msgstr "/Unelte/Cutia de scule"
+msgstr "Stare și descriere"
 
 #: ../app/widgets/widgets-enums.c:298
 #, fuzzy
@@ -13300,10 +12849,11 @@ msgstr "imagine GIMP XCF"
 msgid "Opening '%s'"
 msgstr "Deschidere „%s”"
 
+# hm ? unde trebuie pus %d ? (ce zice ?)
 #: ../app/xcf/xcf.c:309
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Eroare XCF: a fost găsită versiunea nesuportată %d de fișier XCF"
+msgstr "Eroare XCF: a fost găsită o versiune nesuportată %d de fișier XCF"
 
 #: ../app/xcf/xcf.c:375
 #, c-format
