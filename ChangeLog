@@ -1,3 +1,20 @@
+2008-08-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimphruler.[ch]
+	* libgimpwidgets/gimpvruler.[ch]: remove separate H/VRuler classes.
+
+	* libgimpwidgets/gimpruler.[ch]: add an "orientation" property
+	instead. Add gimp_ruler_new().
+
+	* libgimpwidgets/gimpwidgets.def: changed accordingly.
+
+	* app/dialogs/resolution-calibrate-dialog.c
+	* app/display/gimpdisplayshell.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/imagemap/imap_preview.c: ditto.
+
 2008-08-29  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpui.defs
