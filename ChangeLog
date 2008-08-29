@@ -1,3 +1,10 @@
+2008-08-29  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpui.defs
+	* plug-ins/pygimp/gimpui.override:
+	Removed wrappers for GimpRuler, GimpHRuler, GimpVRuler, as those
+	are going to be removed from libgimpwidgets.
+
 2008-08-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp.c: #include "gimpwidgets-utils.h", not
