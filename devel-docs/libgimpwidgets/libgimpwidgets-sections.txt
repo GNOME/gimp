@@ -568,6 +568,7 @@ gimp_aspect_type_get_type
 <FILE>gimpruler</FILE>
 <TITLE>GimpRuler</TITLE>
 GimpRuler
+gimp_ruler_new
 gimp_ruler_set_unit
 gimp_ruler_get_unit
 gimp_ruler_set_position
@@ -583,38 +584,6 @@ gimp_ruler_get_type
 GIMP_RULER_CLASS
 GIMP_IS_RULER_CLASS
 GIMP_RULER_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimphruler</FILE>
-<TITLE>GimpHRuler</TITLE>
-gimp_hruler_new
-<SUBSECTION Standard>
-GimpHRuler
-GimpHRulerClass
-GIMP_HRULER
-GIMP_IS_HRULER
-GIMP_TYPE_HRULER
-gimp_hruler_get_type
-GIMP_HRULER_CLASS
-GIMP_IS_HRULER_CLASS
-GIMP_HRULER_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpvruler</FILE>
-<TITLE>GimpVRuler</TITLE>
-gimp_vruler_new
-<SUBSECTION Standard>
-GimpVRuler
-GimpVRulerClass
-GIMP_VRULER
-GIMP_IS_VRULER
-GIMP_TYPE_VRULER
-gimp_vruler_get_type
-GIMP_VRULER_CLASS
-GIMP_IS_VRULER_CLASS
-GIMP_VRULER_GET_CLASS
 </SECTION>
 
 <SECTION>
