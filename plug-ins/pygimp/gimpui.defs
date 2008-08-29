@@ -336,6 +336,13 @@
   (gtype-id "GIMP_TYPE_BRUSH_SELECT_BUTTON")
 )
 
+(define-object Ruler
+  (in-module "Gimp")
+  (parent "GtkWidget")
+  (c-name "GimpRuler")
+  (gtype-id "GIMP_TYPE_RULER")
+)
+
 (define-object SizeEntry
   (in-module "Gimp")
   (parent "GtkTable")
@@ -3220,3 +3227,78 @@
   (c-name "gimp_zoom_type_get_type")
   (return-type "GType")
 )
+
+
+
+;; From gimpruler.h
+
+(define-function gimp_ruler_get_type
+  (c-name "gimp_ruler_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_ruler_new
+  (c-name "gimp_ruler_new")
+  (is-constructor-of "GimpRuler")
+  (return-type "GtkWidget*")
+  (properties
+    '("orientation")
+    '("lower" (optional))
+    '("upper" (optional))
+    '("max-size" (argname "max_size") (optional))
+  )
+)
+
+(define-method set_unit
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_unit")
+  (return-type "none")
+  (parameters
+    '("GimpUnit" "unit")
+  )
+)
+
+(define-method get_unit
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_unit")
+  (return-type "GimpUnit")
+)
+
+(define-method set_position
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_position")
+  (return-type "none")
+  (parameters
+    '("gdouble" "position")
+  )
+)
+
+(define-method get_position
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_position")
+  (return-type "gdouble")
+)
+
+(define-method set_range
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_set_range")
+  (return-type "none")
+  (parameters
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gdouble" "max_size")
+  )
+)
+
+(define-method get_range
+  (of-object "GimpRuler")
+  (c-name "gimp_ruler_get_range")
+  (return-type "none")
+  (parameters
+    '("gdouble*" "lower")
+    '("gdouble*" "upper")
+    '("gdouble*" "max_size")
+  )
+)
+
+
