@@ -1,3 +1,12 @@
+2008-08-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplayertreeview.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimppropwidgets.c
+	* libgimpwidgets/gimpscaleentry.c
+	* libgimpwidgets/gimpwidgets.c: use gtk_adjustment_get_value()
+	instead of adjustment->value.
+
 2008-08-29  Lars-Peter Clausen  <lars@metafoo.de>
 	
 	* plug-ins/pygimp/gimpui.defs

@@ -975,7 +975,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
 {
   gint *val = (gint *) data;
 
-  *val = RINT (adjustment->value);
+  *val = RINT (gtk_adjustment_get_value (adjustment));
 }
 
 /**
@@ -993,7 +993,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 {
   guint *val = (guint *) data;
 
-  *val = (guint) (adjustment->value + 0.5);
+  *val = (guint) (gtk_adjustment_get_value (adjustment) + 0.5);
 }
 
 /**
@@ -1007,7 +1007,8 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
                               gpointer       data)
 {
   gfloat *val = (gfloat *) data;
-  *val = adjustment->value;
+
+  *val = gtk_adjustment_get_value (adjustment);
 
 }
 
@@ -1023,7 +1024,7 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
 {
   gdouble *val = (gdouble *) data;
 
-  *val = adjustment->value;
+  *val = gtk_adjustment_get_value (adjustment);
 }
 
 /**

@@ -1291,56 +1291,55 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)
 {
   GParamSpec *param_spec;
+  gdouble     value;
 
   param_spec = get_param_spec (G_OBJECT (adjustment));
   if (! param_spec)
     return;
 
+  value = gtk_adjustment_get_value (adjustment);
+
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (gint) adjustment->value,
+                    param_spec->name, (gint) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (guint) adjustment->value,
+                    param_spec->name, (guint) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_LONG (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (glong) adjustment->value,
+                    param_spec->name, (glong) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_ULONG (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (gulong) adjustment->value,
+                    param_spec->name, (gulong) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_INT64 (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (gint64) adjustment->value,
+                    param_spec->name, (gint64) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
     {
       g_object_set (config,
-                    param_spec->name, (guint64) adjustment->value,
+                    param_spec->name, (guint64) value,
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
-      gdouble value;
-
       if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
                                               "opacity-scale")))
-        value = adjustment->value / 100.0;
-      else
-        value = adjustment->value;
+        value /= 100.0;
 
       g_object_set (config, param_spec->name, value, NULL);
     }
@@ -1420,7 +1419,7 @@ gimp_prop_adjustment_notify (GObject       *config,
       return;
     }
 
-  if (adjustment->value != value)
+  if (gtk_adjustment_get_value (adjustment) != value)
     {
       g_signal_handlers_block_by_func (adjustment,
                                        gimp_prop_adjustment_callback,
@@ -3528,14 +3527,15 @@ gimp_prop_stock_image_notify (GObject    *config,
                               GParamSpec *param_spec,
                               GtkWidget  *image)
 {
-  gchar *stock_id;
+  gchar       *stock_id;
+  GtkIconSize  icon_size;
 
   g_object_get (config,
                 param_spec->name, &stock_id,
                 NULL);
 
-  gtk_image_set_from_stock (GTK_IMAGE (image), stock_id,
-                            GTK_IMAGE (image)->icon_size);
+  gtk_image_get_stock (GTK_IMAGE (image), NULL, &icon_size);
+  gtk_image_set_from_stock (GTK_IMAGE (image), stock_id, icon_size);
 
   if (stock_id)
     g_free (stock_id);

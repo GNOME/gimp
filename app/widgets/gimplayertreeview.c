@@ -1001,7 +1001,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
   if (layer)
     {
-      gdouble opacity = adjustment->value / 100.0;
+      gdouble opacity = gtk_adjustment_get_value (adjustment) / 100.0;
 
       if (gimp_layer_get_opacity (layer) != opacity)
         {
@@ -1078,7 +1078,8 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
 
-  if (gimp_layer_get_opacity (layer) * 100.0 != view->opacity_adjustment->value)
+  if (gimp_layer_get_opacity (layer) * 100.0 !=
+      gtk_adjustment_get_value (view->opacity_adjustment))
     {
       BLOCK (view->opacity_adjustment,
              gimp_layer_tree_view_opacity_scale_changed);
