@@ -188,7 +188,8 @@ gimp_ruler_class_init (GimpRulerClass *klass)
 static void
 gimp_ruler_init (GimpRuler *ruler)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkWidget        *widget = GTK_WIDGET (ruler);
+  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
 
   widget->requisition.width  = widget->style->xthickness * 2 + 1;
   widget->requisition.height = widget->style->ythickness * 2 + RULER_WIDTH;
