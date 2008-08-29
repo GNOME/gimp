@@ -1,5 +1,10 @@
 2008-08-29  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_expose):
+	remove g_return_val_if_fail(), this is not a public function.
+
+2008-08-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimplayertreeview.c
 	* libgimpwidgets/gimpcolorscales.c
 	* libgimpwidgets/gimppropwidgets.c
