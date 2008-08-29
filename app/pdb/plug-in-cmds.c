@@ -72,7 +72,7 @@ plugins_query_invoker (GimpProcedure      *procedure,
                                             &plugin_real_name,
                                             &plugin_install_time);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (&return_vals->values[1], num_plugins);
   gimp_value_take_stringarray (&return_vals->values[2], menu_path, num_plugins);
@@ -120,7 +120,8 @@ plugin_domain_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -153,7 +154,8 @@ plugin_help_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -187,7 +189,8 @@ plugin_menu_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -220,7 +223,8 @@ plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -270,7 +274,71 @@ plugin_icon_register_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+plugin_set_pdb_error_handler_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  gboolean success = TRUE;
+  gint32 handler;
+
+  handler = g_value_get_enum (&args->values[0]);
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in)
+        {
+          gimp_plug_in_set_error_handler (plug_in, handler);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+plugin_get_pdb_error_handler_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gint32 handler = 0;
+
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    {
+      handler = gimp_plug_in_get_error_handler (plug_in);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (&return_vals->values[1], handler);
+
+  return return_vals;
 }
 
 void
@@ -531,6 +599,54 @@ register_plug_in_procs (GimpPDB *pdb)
                                                            "icon data",
                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plugin-set-pdb-error-handler
+   */
+  procedure = gimp_procedure_new (plugin_set_pdb_error_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-set-pdb-error-handler");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-set-pdb-error-handler",
+                                     "Sets an error handler for procedure calls.",
+                                     "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("handler",
+                                                  "handler",
+                                                  "Who is responsible for handling procedure call errors",
+                                                  GIMP_TYPE_PDB_ERROR_HANDLER,
+                                                  GIMP_PDB_ERROR_HANDLER_INTERNAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plugin-get-pdb-error-handler
+   */
+  procedure = gimp_procedure_new (plugin_get_pdb_error_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-get-pdb-error-handler");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-get-pdb-error-handler",
+                                     "Retrieves the active error handler for procedure calls.",
+                                     "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("handler",
+                                                      "handler",
+                                                      "Who is responsible for handling procedure call errors",
+                                                      GIMP_TYPE_PDB_ERROR_HANDLER,
+                                                      GIMP_PDB_ERROR_HANDLER_INTERNAL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

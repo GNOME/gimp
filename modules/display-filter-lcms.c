@@ -26,11 +26,7 @@
 #define LCMS_WIN_TYPES_ALREADY_DEFINED
 #endif
 
-#ifdef HAVE_LCMS_LCMS_H
-#include <lcms/lcms.h>
-#else
 #include <lcms.h>
-#endif
 
 #include <gtk/gtk.h>
 

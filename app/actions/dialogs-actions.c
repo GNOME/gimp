@@ -173,7 +173,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-image-list|gimp-image-grid",
     GIMP_HELP_IMAGE_DIALOG },
 
-  { "dialogs-document-history", GTK_STOCK_OPEN,
+  { "dialogs-document-history", "document-open-recent",
     N_("Document Histor_y"), "",
     N_("Open the document history dialog"),
     "gimp-document-list|gimp-document-grid",

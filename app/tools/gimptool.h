@@ -191,6 +191,7 @@ void          gimp_tool_push_status         (GimpTool            *tool,
                                              ...) G_GNUC_PRINTF(3,4);
 void          gimp_tool_push_status_coords  (GimpTool            *tool,
                                              GimpDisplay         *display,
+                                             GimpCursorPrecision  precision,
                                              const gchar         *title,
                                              gdouble              x,
                                              const gchar         *separator,

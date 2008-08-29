@@ -53,6 +53,7 @@
 #define GIMP_HELP_EDIT_PASTE                      "gimp-edit-paste"
 #define GIMP_HELP_EDIT_PASTE_INTO                 "gimp-edit-paste-into"
 #define GIMP_HELP_EDIT_PASTE_AS_NEW               "gimp-edit-paste-as-new"
+#define GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER         "gimp-edit-paste-as-new-layer"
 #define GIMP_HELP_EDIT_CLEAR                      "gimp-edit-clear"
 #define GIMP_HELP_EDIT_FILL_FG                    "gimp-edit-fill-fg"
 #define GIMP_HELP_EDIT_FILL_BG                    "gimp-edit-fill-bg"
@@ -136,6 +137,7 @@
 #define GIMP_HELP_LAYER_DIALOG_LOCK_ALPHA_BUTTON  "gimp-layer-dialog-lock-alpha-button"
 
 #define GIMP_HELP_LAYER_NEW                       "gimp-layer-new"
+#define GIMP_HELP_LAYER_NEW_FROM_VISIBLE          "gimp-layer-new-from-visible"
 #define GIMP_HELP_LAYER_DUPLICATE                 "gimp-layer-duplicate"
 #define GIMP_HELP_LAYER_ANCHOR                    "gimp-layer-anchor"
 #define GIMP_HELP_LAYER_MERGE_DOWN                "gimp-layer-merge-down"

@@ -88,7 +88,8 @@ text_fontname_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], text_layer);
@@ -131,7 +132,8 @@ text_get_extents_fontname_invoker (GimpProcedure      *procedure,
       g_free (real_fontname);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -208,7 +210,8 @@ text_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_layer (&return_vals->values[1], text_layer);
@@ -265,7 +268,8 @@ text_get_extents_invoker (GimpProcedure      *procedure,
       g_free (real_fontname);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {

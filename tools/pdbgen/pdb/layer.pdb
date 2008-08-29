@@ -65,6 +65,97 @@ CODE
     );
 }
 
+sub layer_new_from_visible {
+    $blurb = 'Create a new layer from what is visible in an image.';
+
+    $help = <<'HELP';
+This procedure creates a new layer from what is visible in the given image.
+The new layer still needs to be added to the destination image, as this is
+not automatic. Add the new layer with the gimp_image_add_layer() command.
+Other attributes such as layer mask modes, and offsets should be set with
+explicit procedure calls.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The source image from where the content is copied' },
+	{ name => 'dest_image', type => 'image',
+	  desc => 'The destination image to which to add the layer' },
+	{ name => 'name', type => 'string',
+	  desc => 'The layer name', null_ok => 1 }
+     );
+
+    @outargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The newly created layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpProjection *projection = gimp_image_get_projection (image);
+
+  layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
+                                     dest_image,
+                                     gimp_image_base_type_with_alpha (dest_image),
+                                     name,
+                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+}
+CODE
+    );
+}
+
+sub layer_new_from_drawable {
+    $blurb = 'Create a new layer by copying an existing drawable.';
+
+    $help = <<'HELP';
+This procedure creates a new layer as a copy of the specified drawable.  The
+new layer still needs to be added to the image, as this is not automatic.  Add
+the new layer with the gimp_image_add_layer() command. Other attributes such
+as layer mask modes, and offsets should be set with explicit procedure calls.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The source drawable from where the new layer is copied' },
+	{ name => 'dest_image', type => 'image',
+	  desc => 'The destination image to which to add the layer' }
+     );
+
+    @outargs = (
+	{ name => 'layer_copy', type => 'layer',
+	  desc => 'The newly copied layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GType     new_type;
+  GimpItem *new_item;
+
+  if (GIMP_IS_LAYER (drawable))
+    new_type = G_TYPE_FROM_INSTANCE (drawable);
+  else
+    new_type = GIMP_TYPE_LAYER;
+
+  if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
+    new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type);
+  else
+    new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
+
+  if (new_item)
+    layer_copy = GIMP_LAYER (new_item);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub layer_copy {
     $blurb = 'Copy a layer.';
 
@@ -124,7 +215,7 @@ layer mask still needs to be added to the layer. This can be done with a call
 to gimp_layer_add_mask().
 HELP
 
-    &std_pdb_misc;
+    &std_pdb_misc();
 
     @inargs = (
 	{ name => 'layer', type => 'layer',
@@ -558,55 +649,6 @@ CODE
     );
 }
 
-sub layer_new_from_drawable {
-    $blurb = 'Create a new layer by copying an existing drawable.';
-
-    $help = <<'HELP';
-This procedure creates a new layer as a copy of the specified drawable.  The
-new layer still needs to be added to the image, as this is not automatic.  Add
-the new layer with the gimp_image_add_layer() command. Other attributes such
-as layer mask modes, and offsets should be set with explicit procedure calls.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The source drawable from where the new layer is copied' },
-	{ name => 'dest_image', type => 'image',
-	  desc => 'The destination image to which to add the layer' }
-     );
-
-    @outargs = (
-	{ name => 'layer_copy', type => 'layer',
-	  desc => 'The newly copied layer' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GType     new_type;
-  GimpItem *new_item;
-
-  if (GIMP_IS_LAYER (drawable))
-    new_type = G_TYPE_FROM_INSTANCE (drawable);
-  else
-    new_type = GIMP_TYPE_LAYER;
-
-  if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-    new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type);
-  else
-    new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
-
-  if (new_item)
-    layer_copy = GIMP_LAYER (new_item);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub layer_get_lock_alpha {
     $blurb = 'Get the lock alpha channel setting of the specified layer.';
 
@@ -953,10 +995,12 @@ CODE
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
+              "core/gimpprojection.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(layer_new
+            layer_new_from_visible
             layer_new_from_drawable
             layer_copy
             layer_add_alpha

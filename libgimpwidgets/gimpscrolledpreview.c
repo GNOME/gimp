@@ -33,7 +33,6 @@
 
 
 #define POPUP_SIZE  100
-#define PEN_WIDTH     3
 
 
 typedef struct
@@ -76,16 +75,13 @@ static gboolean  gimp_scrolled_preview_nav_button_press    (GtkWidget           
                                                             GdkEventButton           *event,
                                                             GimpScrolledPreview      *preview);
 
-static void      gimp_scrolled_preview_nav_popup_realize   (GtkWidget                *widget,
-                                                            GimpScrolledPreview      *preview);
-static void      gimp_scrolled_preview_nav_popup_unrealize (GtkWidget                *widget,
-                                                            GimpScrolledPreview      *preview);
 static gboolean  gimp_scrolled_preview_nav_popup_event     (GtkWidget                *widget,
                                                             GdkEvent                 *event,
                                                             GimpScrolledPreview      *preview);
 static gboolean  gimp_scrolled_preview_nav_popup_expose    (GtkWidget                *widget,
                                                             GdkEventExpose           *event,
                                                             GimpScrolledPreview      *preview);
+
 static void      gimp_scrolled_preview_set_cursor          (GimpPreview              *preview);
 
 
@@ -595,12 +591,6 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
       gtk_container_add (GTK_CONTAINER (inner), area);
 
-      g_signal_connect (area, "realize",
-                        G_CALLBACK (gimp_scrolled_preview_nav_popup_realize),
-                        preview);
-      g_signal_connect (area, "unrealize",
-                        G_CALLBACK (gimp_scrolled_preview_nav_popup_unrealize),
-                        preview);
       g_signal_connect (area, "event",
                         G_CALLBACK (gimp_scrolled_preview_nav_popup_event),
                         preview);
@@ -647,32 +637,6 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
     }
 
   return TRUE;
-}
-
-static void
-gimp_scrolled_preview_nav_popup_realize (GtkWidget           *widget,
-                                         GimpScrolledPreview *preview)
-{
-  if (! preview->nav_gc)
-    {
-      preview->nav_gc = gdk_gc_new (widget->window);
-
-      gdk_gc_set_function (preview->nav_gc, GDK_INVERT);
-      gdk_gc_set_line_attributes (preview->nav_gc,
-                                  PEN_WIDTH,
-                                  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
-    }
-}
-
-static void
-gimp_scrolled_preview_nav_popup_unrealize (GtkWidget           *widget,
-                                           GimpScrolledPreview *preview)
-{
-  if (preview->nav_gc)
-    {
-      g_object_unref (preview->nav_gc);
-      preview->nav_gc = NULL;
-    }
 }
 
 static gboolean
@@ -744,10 +708,11 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
                                         GimpScrolledPreview *preview)
 {
   GtkAdjustment *adj;
+  cairo_t       *cr;
   gdouble        x, y;
   gdouble        w, h;
 
-  adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+  adj   = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
 
   x = adj->value / (adj->upper - adj->lower);
   w = adj->page_size / (adj->upper - adj->lower);
@@ -760,16 +725,32 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   if (w >= 1.0 && h >= 1.0)
     return FALSE;
 
-  gdk_gc_set_clip_rectangle (preview->nav_gc, &event->area);
+  x = floor (x * (gdouble) widget->allocation.width);
+  y = floor (y * (gdouble) widget->allocation.height);
+  w = MAX (1, ceil (w * (gdouble) widget->allocation.width));
+  h = MAX (1, ceil (h * (gdouble) widget->allocation.height));
 
-  gdk_draw_rectangle (widget->window, preview->nav_gc,
-                      FALSE,
-                      x * (gdouble) widget->allocation.width  + PEN_WIDTH / 2,
-                      y * (gdouble) widget->allocation.height + PEN_WIDTH / 2,
-                      MAX (1,
-                           ceil (w * widget->allocation.width)  - PEN_WIDTH),
-                      MAX (1,
-                           ceil (h * widget->allocation.height) - PEN_WIDTH));
+  cr = gdk_cairo_create (widget->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  cairo_rectangle (cr,
+                   0, 0, widget->allocation.width, widget->allocation.height);
+
+  cairo_rectangle (cr, x, y, w, h);
+
+  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+  cairo_fill (cr);
+
+  cairo_rectangle (cr, x, y, w, h);
+
+  cairo_set_source_rgb (cr, 1, 1, 1);
+  cairo_set_line_width (cr, 2);
+  cairo_stroke (cr);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }

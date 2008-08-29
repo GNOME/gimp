@@ -692,6 +692,21 @@ gimp_dockable_forall (GtkContainer *container,
 }
 
 static GtkWidget *
+gimp_dockable_get_icon (GimpDockable *dockable,
+                        GtkIconSize   size)
+{
+  GdkScreen    *screen = gtk_widget_get_screen (GTK_WIDGET (dockable));
+  GtkIconTheme *theme  = gtk_icon_theme_get_for_screen (screen);
+
+  if (gtk_icon_theme_has_icon (theme, dockable->stock_id))
+    {
+      return gtk_image_new_from_icon_name (dockable->stock_id, size);
+    }
+
+  return  gtk_image_new_from_stock (dockable->stock_id, size);
+}
+
+static GtkWidget *
 gimp_dockable_get_tab_widget_internal (GimpDockable *dockable,
                                        GimpContext  *context,
                                        GimpTabStyle  tab_style,
@@ -725,7 +740,7 @@ gimp_dockable_get_tab_widget_internal (GimpDockable *dockable,
     case GIMP_TAB_STYLE_ICON:
     case GIMP_TAB_STYLE_ICON_NAME:
     case GIMP_TAB_STYLE_ICON_BLURB:
-      icon = gtk_image_new_from_stock (dockable->stock_id, size);
+      icon = gimp_dockable_get_icon (dockable, size);
       break;
 
     case GIMP_TAB_STYLE_PREVIEW:
@@ -739,7 +754,7 @@ gimp_dockable_get_tab_widget_internal (GimpDockable *dockable,
                                           context, size);
 
         if (! icon)
-          icon = gtk_image_new_from_stock (dockable->stock_id, size);
+          icon = gimp_dockable_get_icon (dockable, size);
       }
       break;
 
@@ -1213,6 +1228,17 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                     "visible",  TRUE,
                     NULL);
 
+      if (dockable->stock_id)
+        {
+          if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (),
+                                       dockable->stock_id))
+            {
+              g_object_set (parent_menu_action,
+                            "icon-name", dockable->stock_id,
+                            NULL);
+            }
+        }
+
       if (! GTK_IS_MENU (child_menu_widget))
         {
           g_warning ("%s: child_menu_widget (%p) is not a GtkMenu",
@@ -1222,8 +1248,8 @@ gimp_dockable_show_menu (GimpDockable *dockable)
 
       /* FIXME */
       {
-        GtkWidget *image = gtk_image_new_from_stock (dockable->stock_id,
-                                                     GTK_ICON_SIZE_MENU);
+        GtkWidget *image = gimp_dockable_get_icon (dockable,
+                                                   GTK_ICON_SIZE_MENU);
 
         gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
                                        image);

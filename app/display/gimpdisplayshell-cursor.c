@@ -117,11 +117,12 @@ gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_update_cursor (GimpDisplayShell *shell,
-                                  gint              display_x,
-                                  gint              display_y,
-                                  gint              image_x,
-                                  gint              image_y)
+gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
+                                  GimpCursorPrecision  precision,
+                                  gint                 display_x,
+                                  gint                 display_y,
+                                  gdouble              image_x,
+                                  gdouble              image_y)
 {
   GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
@@ -159,7 +160,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
    *  possibly snapped...
    */
   gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar),
-                                image_x, image_y);
+                                precision, image_x, image_y);
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,

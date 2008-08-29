@@ -1,3 +1,60 @@
+2008-08-28  Priit Laes  <plaes at svn dot gnome dot org>
+
+	* et.po: Translation updated by Priit Laes
+
+2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* fr.po: Fix 'Foreground' and 'Background' being swapped in the
+	French translation.
+
+2008-08-27  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
+
+	* eu.po: Updated Basque translation.
+
+2008-08-25  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: removed duplicate entry.
+
+2008-08-19  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
+
+        * ru.po: updated and improved Russian translation.
+
+2008-08-18  Wadim Dziedzic  <wdziedzic@aviary.pl>
+
+	* pl.po: Updated Polish translation by Bartosz Kosiorek
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated German translation.
+
+2008-08-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
+2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
+
+2008-08-13  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Fixed German translation.
+
+2008-08-10  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
+
+	* gl.po: Updated Galician translation
+
+2008-08-8  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Updated Arabic Translation by Khaled Hosny.
+
+2008-08-07  Sven Neumann  <sven@gimp.org>
+
+	* de.po: Updated German translation.
+
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
 	* de.po: Updated German translation.

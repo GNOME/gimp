@@ -15,15 +15,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-11 17:20+0200\n"
-"PO-Revision-Date: 2008-07-11 17:20+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2008-08-16 19:31+0200\n"
+"PO-Revision-Date: 2008-08-16 19:34+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../libgimp/gimp.c:1043
+msgid "success"
+msgstr "Erfolg"
+
+#: ../libgimp/gimp.c:1046
+msgid "execution error"
+msgstr "Ausführungsfehler"
+
+#: ../libgimp/gimp.c:1049
+msgid "calling error"
+msgstr "Aufruffehler"
+
+#: ../libgimp/gimp.c:1052
+msgid "cancelled"
+msgstr "abgebrochen"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -111,7 +127,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Mit Standardeinstellungen in ein indiziertes Format umwandeln\n"
-"(Für bessere Resultate, sollten Sie diesen Schritt manuell durchführen)"
+"(Für bessere Resultate sollten Sie diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
@@ -125,7 +141,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Mit Standardeinstellungen in das Bitmap-Format umwandeln\n"
-"(Für bessere Resultate, sollten Sie diesen Schritt manuell durchführen)"
+"(Für bessere Resultate sollten Sie diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
@@ -628,7 +644,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../libgimpbase/gimpbaseenums.c:624 ../modules/cdisplay_lcms.c:195
+#: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
 msgstr "Keine"
 
@@ -646,7 +662,7 @@ msgstr "Interaktiv ausführen"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run non-interactively"
-msgstr "Nicht-Interaktiv ausführen"
+msgstr "Nicht-interaktiv ausführen"
 
 #: ../libgimpbase/gimpbaseenums.c:657
 msgid "Run with last used values"
@@ -674,11 +690,11 @@ msgstr "Glanzlichter"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
-msgstr "Normal (Vorwärts)"
+msgstr "Normal (vorwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
-msgstr "Korrigierend (Rückwärts)"
+msgstr "Korrigierend (rückwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
@@ -696,49 +712,50 @@ msgstr "Auf Ergebnis beschneiden"
 msgid "Crop with aspect"
 msgstr "Auf Seitenverhältnis beschneiden"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:880
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP-Prozedur"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "GIMP Plug-In"
 msgstr "GIMP-Plugin"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Extension"
 msgstr "GIMP-Erweiterung"
 
-#: ../libgimpbase/gimpbaseenums.c:885
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "Temporary Procedure"
 msgstr "Temporäre Prozedur"
 
-#: ../libgimpbase/gimpbaseenums.c:1047
+#: ../libgimpbase/gimpbaseenums.c:1045
 msgid "From left to right"
 msgstr "Von links nach rechts"
 
-#: ../libgimpbase/gimpbaseenums.c:1048
+#: ../libgimpbase/gimpbaseenums.c:1046
 msgid "From right to left"
 msgstr "Von rechts nach links"
 
-#: ../libgimpbase/gimpbaseenums.c:1078
+#: ../libgimpbase/gimpbaseenums.c:1076
 msgid "Left justified"
 msgstr "Linksbündig"
 
-#: ../libgimpbase/gimpbaseenums.c:1079
+#: ../libgimpbase/gimpbaseenums.c:1077
 msgid "Right justified"
 msgstr "Rechtsbündig"
 
-#: ../libgimpbase/gimpbaseenums.c:1080
+#: ../libgimpbase/gimpbaseenums.c:1078
 msgid "Centered"
 msgstr "Zentriert"
 
-#: ../libgimpbase/gimpbaseenums.c:1081
+#: ../libgimpbase/gimpbaseenums.c:1079
 msgid "Filled"
 msgstr "Blocksatz"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
-#: ../modules/colorsel_cmyk_lcms.c:417
+#: ../modules/display-filter-lcms.c:183
+#: ../modules/color-selector-cmyk-lcms.c:407
+#: ../modules/color-selector-cmyk-lcms.c:413
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültige UTF-8-Zeichenkette)"
 
@@ -799,7 +816,7 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
-"Die Farbe, mit der Farben markiert werden, die ausserhalb des Gamut liegen."
+"Die Farbe, mit der Farben markiert werden, die außerhalb des Gamut liegen."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -891,7 +908,7 @@ msgid ""
 "The original file has not been touched."
 msgstr ""
 "Fehler beim Schreiben in die temporäre Datei für »%s«: %s\n"
-"Die Originaldatei wurde nicht geändert."
+"Die Originaldatei wurde nicht verändert."
 
 #: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
@@ -1298,511 +1315,520 @@ msgstr "Vergrößern"
 msgid "Zoom out"
 msgstr "Verkleinern"
 
-#: ../modules/cdisplay_colorblind.c:67
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (Rotschwäche)"
 
-#: ../modules/cdisplay_colorblind.c:69
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (Grünschwäche)"
 
-#: ../modules/cdisplay_colorblind.c:71
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (Blauschwäche)"
 
-#: ../modules/cdisplay_colorblind.c:198
+#: ../modules/display-filter-color-blind.c:198
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Simulation von Farbenblindheit (Algorithmus von Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:261
+#: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: ../modules/cdisplay_colorblind.c:483
+#: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
 msgstr "Art der _Sehschwäche:"
 
-#: ../modules/cdisplay_gamma.c:90
+#: ../modules/display-filter-gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Farbfilter für Gamma-Anzeigen"
 
-#: ../modules/cdisplay_gamma.c:129
+#: ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:232
+#: ../modules/display-filter-gamma.c:232
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../modules/cdisplay_highcontrast.c:90
+#: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Farbfilter für Hochkontrastanzeigen"
 
-#: ../modules/cdisplay_highcontrast.c:129
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/cdisplay_highcontrast.c:232
+#: ../modules/display-filter-high-contrast.c:232
 msgid "Contrast c_ycles:"
 msgstr "Kontrast_verstärkung:"
 
-#: ../modules/cdisplay_lcms.c:106
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC-Farbprofil-Filter für farbverwaltete Bildschirme"
 
-#: ../modules/cdisplay_lcms.c:138
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "Farbverwaltung"
 
-#: ../modules/cdisplay_lcms.c:216
+#: ../modules/display-filter-lcms.c:212
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Dieser Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
+"Dieses Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
 "Einstellungsdialog."
 
-#: ../modules/cdisplay_lcms.c:230
+#: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
 msgstr "Arbeitsmodus:"
 
-#: ../modules/cdisplay_lcms.c:237
+#: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
 msgstr "Bildprofil:"
 
-#: ../modules/cdisplay_lcms.c:245
+#: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
 msgstr "Monitor-Profil:"
 
-#: ../modules/cdisplay_lcms.c:253
+#: ../modules/display-filter-lcms.c:249
 msgid "Print simulation profile:"
 msgstr "Drucksimulationsprofil:"
 
-#: ../modules/cdisplay_proof.c:101
+#: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
 msgstr "Farbandruck-Filter mittels ICC-Farbprofilen"
 
-#: ../modules/cdisplay_proof.c:149
+#: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
 msgstr "Farbandruck"
 
-#: ../modules/cdisplay_proof.c:315
+#: ../modules/display-filter-proof.c:311
 msgid "Choose an ICC Color Profile"
 msgstr "ICC-Farbprofil auswählen"
 
-#: ../modules/cdisplay_proof.c:342
+#: ../modules/display-filter-proof.c:338
 msgid "All files (*.*)"
 msgstr "Alle Dateien (*.*)"
 
-#: ../modules/cdisplay_proof.c:347
+#: ../modules/display-filter-proof.c:343
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC Farbprofil (*.icc, *.icm)"
+msgstr "ICC-Farbprofil (*.icc, *.icm)"
 
-#: ../modules/cdisplay_proof.c:405
+#: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:411
+#: ../modules/display-filter-proof.c:407
 msgid "_Intent:"
 msgstr "_Vorsatz:"
 
-#: ../modules/cdisplay_proof.c:416
+#: ../modules/display-filter-proof.c:412
 msgid "_Black Point Compensation"
 msgstr "Schwarzpunkt-Abgleich"
 
-#: ../modules/colorsel_cmyk.c:71
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "CMYK-Farbmischer"
 
-#: ../modules/colorsel_cmyk.c:102 ../modules/colorsel_cmyk_lcms.c:154
+#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:150
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:125 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:169
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:127 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:171
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:129 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:173
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:131 ../modules/colorsel_cmyk_lcms.c:179
+#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:175
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:135 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:179
 msgid "Cyan"
 msgstr "Cyan"
 
-#: ../modules/colorsel_cmyk.c:136 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:180
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:137 ../modules/colorsel_cmyk_lcms.c:185
+#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:181
 msgid "Yellow"
 msgstr "Gelb (Yellow)"
 
-#: ../modules/colorsel_cmyk.c:138 ../modules/colorsel_cmyk_lcms.c:186
+#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:182
 msgid "Black"
 msgstr "Schwarz (Key)"
 
-#: ../modules/colorsel_cmyk.c:172
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "Schwarzauszug:"
 
-#: ../modules/colorsel_cmyk.c:189
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
-"Der Prozentsatz an Schwarz, welcher aus den farbigen Tinten entnommen werden "
+"Der Prozentsatz an Schwarz, welcher aus den farbigen Tinten gemischt werden "
 "soll."
 
-#: ../modules/colorsel_cmyk_lcms.c:91
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-Farbwähler (mittels Farbprofil)"
 
-#: ../modules/colorsel_cmyk_lcms.c:399
+#: ../modules/color-selector-cmyk-lcms.c:395
 msgid "Profile: (none)"
 msgstr "Profil: (keines)"
 
-#: ../modules/colorsel_cmyk_lcms.c:420
+#: ../modules/color-selector-cmyk-lcms.c:416
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: ../modules/colorsel_triangle.c:102
-msgid "Painter-style triangle color selector"
-msgstr "Dreiecks-Farbauswahl im Stil von Painter"
-
-#: ../modules/colorsel_triangle.c:138
-msgid "Triangle"
-msgstr "Dreieck"
-
-#: ../modules/colorsel_water.c:82
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "Wasserfarben-Farbmischer"
 
-#: ../modules/colorsel_water.c:118
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "Wasserfarben"
 
-#: ../modules/colorsel_water.c:186
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "Druck"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/color-selector-wheel.c:98
+msgid "HSV color wheel"
+msgstr "HSV-Farbrad"
+
+#: ../modules/color-selector-wheel.c:129
+msgid "Wheel"
+msgstr "Rad"
+
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Taste 0"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Taste 1"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Taste 2"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Taste 3"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Taste 4"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Taste 5"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Taste 6"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Taste 7"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Taste 8"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Taste 9"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Maustaste"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Linke Taste"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Rechte Taste"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Mittlere Taste"
 
-#: ../modules/controller_linux_input.c:72
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Seitliche Taste"
 
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
-msgstr "Extra Taste"
+msgstr "Extra-Taste"
 
-#: ../modules/controller_linux_input.c:74
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Vorwärts-Taste"
 
-#: ../modules/controller_linux_input.c:75
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Zurück-Taste"
 
-#: ../modules/controller_linux_input.c:76
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Aufgaben-Taste "
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Rad-Taste"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Taste Gang-runter"
 
-#: ../modules/controller_linux_input.c:84
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Taste Gang-hoch"
 
-#: ../modules/controller_linux_input.c:90
-#: ../modules/controller_dx_dinput.c:443
+#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:443
 msgid "X Move Left"
 msgstr "X-Bewegung links"
 
-#: ../modules/controller_linux_input.c:91
-#: ../modules/controller_dx_dinput.c:446
+#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:446
 msgid "X Move Right"
 msgstr "X-Bewegung rechts"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y-Bewegung vorwärts"
 
-#: ../modules/controller_linux_input.c:93
+#: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y-Bewegung rückwärts"
 
-#: ../modules/controller_linux_input.c:94
-#: ../modules/controller_dx_dinput.c:461
+#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:461
 msgid "Z Move Up"
 msgstr "Z-Bewegung hoch"
 
-#: ../modules/controller_linux_input.c:95
-#: ../modules/controller_dx_dinput.c:464
+#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:464
 msgid "Z Move Down"
 msgstr "Z-Bewegung runter"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "X-Achsen-Neigung vorwärts"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "X-Achsen-Neigung rückwärts"
 
-#: ../modules/controller_linux_input.c:99
-#: ../modules/controller_dx_dinput.c:479
+#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:479
 msgid "Y Axis Tilt Right"
 msgstr "Y-Achsen-Neigung rechts"
 
-#: ../modules/controller_linux_input.c:100
-#: ../modules/controller_dx_dinput.c:482
+#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:482
 msgid "Y Axis Tilt Left"
 msgstr "Y-Achsen-Neigung links"
 
-#: ../modules/controller_linux_input.c:101
-#: ../modules/controller_dx_dinput.c:488
+#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:488
 msgid "Z Axis Turn Left"
 msgstr "Z-Achse links gedreht"
 
-#: ../modules/controller_linux_input.c:102
-#: ../modules/controller_dx_dinput.c:491
+#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:491
 msgid "Z Axis Turn Right"
 msgstr "Z-Achse rechts gedreht"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Horiz. Rad zurück gedreht"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Horiz. Rad vorwärts gedreht"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Nummernscheibe links gedreht"
 
-#: ../modules/controller_linux_input.c:107
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Nummernscheibe rechts gedreht"
 
-#: ../modules/controller_linux_input.c:108
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Rad links gedreht"
 
-#: ../modules/controller_linux_input.c:109
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Rad rechts gedreht"
 
-#: ../modules/controller_linux_input.c:178
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Linux-Eingabeereignissteuerung"
 
-#: ../modules/controller_linux_input.c:218
-#: ../modules/controller_dx_dinput.c:196 ../modules/controller_midi.c:212
+#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-dx-dinput.c:196 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Gerät:"
 
-#: ../modules/controller_linux_input.c:219
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
 "Der Name des Gerätes, von welchem Linux-Eingabeereignisse ausgelesen werden."
 
-#: ../modules/controller_linux_input.c:230
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linux-Eingabe"
 
-#: ../modules/controller_linux_input.c:513
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Linux-Eingabeereignisse"
 
-#: ../modules/controller_linux_input.c:525
-#: ../modules/controller_dx_dinput.c:1095 ../modules/controller_midi.c:505
+#: ../modules/controller-linux-input.c:525
+#: ../modules/controller-dx-dinput.c:1095 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Kein Gerät eingerichtet"
 
-#: ../modules/controller_linux_input.c:551 ../modules/controller_midi.c:454
-#: ../modules/controller_midi.c:480
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Von %s wird gelesen"
 
-#: ../modules/controller_linux_input.c:569
-#: ../modules/controller_linux_input.c:623 ../modules/controller_midi.c:436
-#: ../modules/controller_midi.c:497 ../modules/controller_midi.c:568
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Gerät nicht verfügbar: %s"
 
-#: ../modules/controller_linux_input.c:588
-#: ../modules/controller_dx_dinput.c:1120
+#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1120
 msgid "Device not available"
 msgstr "Gerät nicht verfügbar"
 
-#: ../modules/controller_linux_input.c:632 ../modules/controller_midi.c:577
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Dateiende"
 
-#: ../modules/controller_dx_dinput.c:156
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX-DirectInput-Eingabeereignissteuerung"
 
-#: ../modules/controller_dx_dinput.c:197
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "Das Gerätes, von welchem DirectInput-Ereignisse ausgelesen werden."
 
-#: ../modules/controller_dx_dinput.c:206
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
-msgstr "DirectX DirectInput"
+msgstr "DirectX-DirectInput"
 
-#: ../modules/controller_dx_dinput.c:420
+#: ../modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Taste %d"
 
-#: ../modules/controller_dx_dinput.c:423
+#: ../modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Taste %d gedrückt"
 
-#: ../modules/controller_dx_dinput.c:426
+#: ../modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Taste %d losgelassen"
 
-#: ../modules/controller_dx_dinput.c:452
+#: ../modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Y weggeschoben"
 
-#: ../modules/controller_dx_dinput.c:455
+#: ../modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Y herangezogen"
 
-#: ../modules/controller_dx_dinput.c:470
+#: ../modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X-Achsenneigung weggeschoben"
 
-#: ../modules/controller_dx_dinput.c:473
+#: ../modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X-Achsenneigung herangezogen"
 
-#: ../modules/controller_dx_dinput.c:502
+#: ../modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Schieber um %d erhöht"
 
-#: ../modules/controller_dx_dinput.c:505
+#: ../modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Schieber um %d verringert"
 
-#: ../modules/controller_dx_dinput.c:515
+#: ../modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X-Ansicht"
 
-#: ../modules/controller_dx_dinput.c:518
+#: ../modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y-Ansicht"
 
-#: ../modules/controller_dx_dinput.c:521
+#: ../modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d Eingabe"
 
-#: ../modules/controller_dx_dinput.c:1084
+#: ../modules/controller-dx-dinput.c:1084
 msgid "DirectInput Events"
 msgstr "DirectInput-Ereignisse"
 
-#: ../modules/controller_midi.c:164
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI-Ereignissteuerung"
 
-#: ../modules/controller_midi.c:203
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Der Name des Gerätes, von welchem MIDI-Ereignisse ausgelesen werden."
 
-#: ../modules/controller_midi.c:206
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Geben Sie »alsa« ein, um die ALSA-Steuerung zu verwenden."
 
-#: ../modules/controller_midi.c:221
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller_midi.c:222
+#: ../modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1810,33 +1836,33 @@ msgstr ""
 "Der MIDI-Kanal, von dem Ereignisse ausgelesen werden. Setzen Sie den Wert "
 "auf -1, um aus allen MIDI-Kanälen zu lesen."
 
-#: ../modules/controller_midi.c:226
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:355
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x an"
 
-#: ../modules/controller_midi.c:358
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x aus"
 
-#: ../modules/controller_midi.c:361
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Regler %03d"
 
-#: ../modules/controller_midi.c:408
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI-Ereignis"
 
-#: ../modules/controller_midi.c:426
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:428
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP-MIDI-Eingangssteuerung"

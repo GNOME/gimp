@@ -45,7 +45,7 @@ fonts_refresh_invoker (GimpProcedure      *procedure,
 {
   gimp_fonts_load (gimp);
 
-  return gimp_procedure_get_return_values (procedure, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GValueArray *
@@ -70,7 +70,8 @@ fonts_get_list_invoker (GimpProcedure      *procedure,
                                                           filter, &num_fonts);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {

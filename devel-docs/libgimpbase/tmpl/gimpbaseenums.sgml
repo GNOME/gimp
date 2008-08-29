@@ -240,6 +240,14 @@ Basic GIMP enumeration data types.
 @GIMP_PDB_PATH: 
 @GIMP_PDB_BOUNDARY: 
 
+<!-- ##### ENUM GimpPDBErrorHandler ##### -->
+<para>
+
+</para>
+
+@GIMP_PDB_ERROR_HANDLER_INTERNAL: 
+@GIMP_PDB_ERROR_HANDLER_PLUGIN: 
+
 <!-- ##### ENUM GimpPDBProcType ##### -->
 <para>
 

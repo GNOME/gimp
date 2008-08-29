@@ -70,6 +70,7 @@ enum
   PROP_TOOLBOX_COLOR_AREA,
   PROP_TOOLBOX_FOO_AREA,
   PROP_TOOLBOX_IMAGE_AREA,
+  PROP_TOOLBOX_WILBER,
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
@@ -124,7 +125,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
-                                    FALSE,
+                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
                                     "save-device-status",
@@ -195,6 +196,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "toolbox-image-area",
                                     TOOLBOX_IMAGE_AREA_BLURB,
                                     FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_WILBER,
+                                    "toolbox-wilber",
+                                    TOOLBOX_WILBER_BLURB,
+                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
@@ -347,7 +353,10 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TOOLBOX_IMAGE_AREA:
       gui_config->toolbox_image_area = g_value_get_boolean (value);
       break;
-    case PROP_THEME_PATH:
+    case PROP_TOOLBOX_WILBER:
+      gui_config->toolbox_wilber = g_value_get_boolean (value);
+      break;
+     case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
       gui_config->theme_path = g_value_dup_string (value);
       break;
@@ -461,6 +470,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TOOLBOX_IMAGE_AREA:
       g_value_set_boolean (value, gui_config->toolbox_image_area);
+      break;
+    case PROP_TOOLBOX_WILBER:
+      g_value_set_boolean (value, gui_config->toolbox_wilber);
       break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);

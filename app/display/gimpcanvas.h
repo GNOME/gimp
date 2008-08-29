@@ -42,6 +42,18 @@ typedef enum
 
 
 #define GIMP_CANVAS_NUM_STIPPLES  8
+#define GIMP_CANVAS_EVENT_MASK   (GDK_EXPOSURE_MASK            | \
+                                  GDK_POINTER_MOTION_MASK      |  \
+                                  GDK_POINTER_MOTION_HINT_MASK |  \
+                                  GDK_BUTTON_PRESS_MASK        |  \
+                                  GDK_BUTTON_RELEASE_MASK      |  \
+                                  GDK_STRUCTURE_MASK           |  \
+                                  GDK_ENTER_NOTIFY_MASK        |  \
+                                  GDK_LEAVE_NOTIFY_MASK        |  \
+                                  GDK_FOCUS_CHANGE_MASK        |  \
+                                  GDK_KEY_PRESS_MASK           |  \
+                                  GDK_KEY_RELEASE_MASK         |  \
+                                  GDK_PROXIMITY_OUT_MASK)
 
 
 #define GIMP_TYPE_CANVAS            (gimp_canvas_get_type ())
@@ -56,7 +68,7 @@ typedef struct _GimpCanvasClass GimpCanvasClass;
 
 struct _GimpCanvas
 {
-  GtkDrawingArea     parent_instance;
+  GtkContainer       parent_instance;
 
   GimpDisplayConfig *config;
 
@@ -67,13 +79,17 @@ struct _GimpCanvas
 
 struct _GimpCanvasClass
 {
-  GtkDrawingAreaClass  parent_class;
+  GtkContainerClass  parent_class;
 };
 
 
 GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig *config);
+
+void         gimp_canvas_scroll            (GimpCanvas        *canvas,
+                                            gint               offset_x,
+                                            gint               offset_y);
 
 void         gimp_canvas_draw_cursor       (GimpCanvas        *canvas,
                                             gint               x,

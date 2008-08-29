@@ -53,7 +53,7 @@ procedural_db_temp_name_invoker (GimpProcedure      *procedure,
 
   temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], temp_name);
 
   return return_vals;
@@ -77,7 +77,8 @@ procedural_db_dump_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_dump (gimp->pdb, filename);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -117,7 +118,8 @@ procedural_db_query_invoker (GimpProcedure      *procedure,
                                 error);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -165,7 +167,8 @@ procedural_db_proc_exists_invoker (GimpProcedure      *procedure,
       exists = (procedure != NULL);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], exists);
@@ -212,7 +215,8 @@ procedural_db_proc_info_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -281,7 +285,8 @@ procedural_db_proc_arg_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -345,7 +350,8 @@ procedural_db_proc_val_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -389,7 +395,8 @@ procedural_db_get_data_invoker (GimpProcedure      *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     {
@@ -426,7 +433,8 @@ procedural_db_get_data_size_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     g_value_set_int (&return_vals->values[1], bytes);
@@ -461,7 +469,8 @@ procedural_db_set_data_invoker (GimpProcedure      *procedure,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

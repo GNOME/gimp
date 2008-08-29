@@ -728,7 +728,7 @@ gimp_coordinates_new (GimpUnit         unit,
   GtkWidget           *sizeentry;
   GtkWidget           *chainbutton;
 
-  spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 1, 1, 2);
+  spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 0, 1, 2);
 
   if (spinbutton_width > 0)
     {

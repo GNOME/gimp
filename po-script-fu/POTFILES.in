@@ -4,6 +4,7 @@
 [encoding: UTF-8]
 
 plug-ins/script-fu/script-fu-console.c
+plug-ins/script-fu/script-fu-eval.c
 plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
@@ -90,7 +91,6 @@ plug-ins/script-fu/scripts/sota-chrome-logo.scm
 plug-ins/script-fu/scripts/speed-text.scm
 plug-ins/script-fu/scripts/spinning-globe.scm
 plug-ins/script-fu/scripts/spyrogimp.scm
-plug-ins/script-fu/scripts/starburst-logo.scm
 plug-ins/script-fu/scripts/starscape-logo.scm
 plug-ins/script-fu/scripts/swirltile.scm
 plug-ins/script-fu/scripts/swirly-pattern.scm

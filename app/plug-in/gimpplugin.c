@@ -939,6 +939,36 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
 }
 
 void
+gimp_plug_in_set_error_handler (GimpPlugIn          *plug_in,
+                                GimpPDBErrorHandler  handler)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    proc_frame->error_handler = handler;
+}
+
+GimpPDBErrorHandler
+gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
+                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    return proc_frame->error_handler;
+
+  return GIMP_PDB_ERROR_HANDLER_INTERNAL;
+}
+
+void
 gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
                             GimpTemporaryProcedure *proc)
 {

@@ -7,11 +7,48 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes in GIMP 2.5.3
+=====================
+
+ - some fixes for the 64-bit Windows platform
+ - optionally emulate brush dynamics when stroking a path or selection
+ - further work on the scroll-beyond-image-borders feature, improving the
+   behavior of the image display when zooming or when the image size changes
+ - added links to the user manual to the Tips dialog
+ - largely rewritten scaling code improves scaling quality, in particular
+   when scaling down
+ - allow to copy-on-write from the image projection
+ - added "Paste as new layer" to Edit menu
+ - added "New from visible" to the Layer menu allowing to create a new
+   layer from the image projection
+ - added new procedure	'gimp-layer-new-from-visible'.
+ - renamed all file plug-in executables to a have a file prefix
+ - changed the HSV color selector to use the GtkHSV widget
+ - changed the default for the 'trust-dirty-flag' gimprc property
+ - dropped the "Starburst" logo script
+ - improved the behavior of the zoom button in the upper right corner of
+   the image window
+ - allow PDB procedures to pass an error message with their return values
+ - changed all file plug-ins to pass their error messages with the
+   return values instead of raising an error dialog
+ - adapt the display of the pointer position in the statusbar to the
+   pointer precision of the active tool
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Alexia Death,
+  Tor Lillqvist, Geert Jordaens, Daniel Eddeland, Aurimas Juška,
+  Róman Joost, Luidnel Maignan, LightningIsMyName, Aurore Derriennic
+
+
+
 Changes in GIMP 2.5.2
 =====================
 
  - final touches on the combined Freehand/Polygon Select tool
- - added a dockable dialog for managing Color tool settings
+ - added a dialog for managing Color tool settings
  - prepared the code for changes in the upcoming GTK+ release
  - improved popup scale button
  - mark the center of rectangles/bounding rectangles during moves

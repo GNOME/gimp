@@ -16,13 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_PRIVATE_H__
-#define __GIMP_DISPLAY_SHELL_PRIVATE_H__
+#ifndef __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__
+#define __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__
 
 
-void gimp_display_shell_scroll_private (GimpDisplayShell *shell,
-                                        gint              x_offset,
-                                        gint              y_offset);
+void  gimp_display_shell_scale_dialog (GimpDisplayShell *shell);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_PRIVATE_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_SCALE_DIALOG_H__  */

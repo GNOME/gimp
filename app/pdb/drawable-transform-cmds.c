@@ -81,7 +81,8 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -157,7 +158,8 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -231,7 +233,8 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -317,7 +320,8 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -401,7 +405,8 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -449,7 +454,8 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -529,7 +535,8 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -607,7 +614,8 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -684,7 +692,8 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -759,7 +768,8 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -832,7 +842,8 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -903,7 +914,8 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -987,7 +999,8 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -1069,7 +1082,8 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -1161,7 +1175,8 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);
@@ -1251,7 +1266,8 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
     gimp_value_set_drawable (&return_vals->values[1], drawable);

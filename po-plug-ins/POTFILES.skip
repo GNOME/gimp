@@ -1,6 +1,7 @@
 app
 data/tips
 desktop
+desktop/gimp.desktop.in
 libgimp
 libgimpbase
 libgimpconfig

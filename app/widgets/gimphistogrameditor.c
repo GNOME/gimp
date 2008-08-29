@@ -391,7 +391,13 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
 
   if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (editor->drawable)))
     {
-      if (! editor->bg_histogram)
+      /* Only do the background histogram if the histogram is visible.
+       * This is a workaround for the fact that recalculating the
+       * histogram is expensive and that it is only validated when it
+       * is shown. So don't slow down painting by doing something that
+       * is not even seen by the user.
+       */
+      if (! editor->bg_histogram && GTK_WIDGET_DRAWABLE (editor))
         {
           if (gimp_histogram_editor_validate (editor))
             editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);

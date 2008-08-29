@@ -35,6 +35,8 @@ void   debug_dump_managers_cmd_callback      (GtkAction *action,
                                               gpointer   data);
 void   debug_dump_attached_data_cmd_callback (GtkAction *action,
                                               gpointer   data);
+void   debug_use_gegl_cmd_callback           (GtkAction *action,
+                                              gpointer   data);
 
 #endif /* ENABLE_DEBUG_MENU */
 

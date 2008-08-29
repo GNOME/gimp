@@ -71,10 +71,17 @@ struct _Tile
 
   TileLink *tlink;
 
-  Tile     *next;
-  Tile     *prev;       /* List pointers for the tile cache lists */
+  Tile     *next;       /* List pointers for the tile cache lists */
+  Tile     *prev;
   gpointer  listhead;   /* Pointer to the head of the list this tile is on */
 };
+
+
+/*  tile_data_pointer() as a macro so that it can be inlined  */
+
+#define TILE_DATA_POINTER(tile,x,y) \
+  ((tile)->data + \
+   (((y) % TILE_HEIGHT) * (tile)->ewidth + ((x) % TILE_WIDTH)) * (tile)->bpp)
 
 
 #endif /* __TILE_PRIVATE_H__ */

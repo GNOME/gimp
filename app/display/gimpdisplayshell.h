@@ -168,6 +168,8 @@ struct _GimpDisplayShell
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;
 
+  gboolean           size_allocate_from_configure_event;
+
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
   GimpDisplayOptions *no_image_options;

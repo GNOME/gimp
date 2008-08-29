@@ -164,8 +164,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->temp_context_id =
     gimp_statusbar_get_context_id (statusbar, "gimp-statusbar-temp");
 
-  statusbar->cursor_format_str[0] = '\0';
-  statusbar->length_format_str[0] = '\0';
+  statusbar->cursor_format_str[0]   = '\0';
+  statusbar->cursor_format_str_f[0] = '\0';
+  statusbar->length_format_str[0]   = '\0';
 
   statusbar->progress_active      = FALSE;
   statusbar->progress_shown       = FALSE;
@@ -496,8 +497,8 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   const gchar   *stock_id;
   gboolean       handle_msg = FALSE;
 
-  /*  don't accept a message if we are already displaying one  */
-  if (statusbar->temp_timeout_id)
+  /*  don't accept a message if we are already displaying a more severe one  */
+  if (statusbar->temp_timeout_id && statusbar->temp_severity > severity)
     return FALSE;
 
   /*  we can only handle short one-liners  */
@@ -536,7 +537,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
   g_object_unref (layout);
 
   if (handle_msg)
-    gimp_statusbar_push_temp (statusbar, stock_id, "%s", message);
+    gimp_statusbar_push_temp (statusbar, severity, stock_id, "%s", message);
 
   return handle_msg;
 }
@@ -792,14 +793,15 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
 }
 
 void
-gimp_statusbar_push_coords (GimpStatusbar *statusbar,
-                            const gchar   *context,
-                            const gchar   *stock_id,
-                            const gchar   *title,
-                            gdouble        x,
-                            const gchar   *separator,
-                            gdouble        y,
-                            const gchar   *help)
+gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
+                            const gchar         *context,
+                            const gchar         *stock_id,
+                            GimpCursorPrecision  precision,
+                            const gchar         *title,
+                            gdouble              x,
+                            const gchar         *separator,
+                            gdouble              y,
+                            const gchar         *help)
 {
   GimpDisplayShell *shell;
 
@@ -812,16 +814,46 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
 
   shell = statusbar->shell;
 
+  switch (precision)
+    {
+    case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
+      x = RINT (x + 0.5);
+      y = RINT (y + 0.5);
+      break;
+
+    case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
+      x = RINT (x);
+      y = RINT (y);
+      break;
+
+    case GIMP_CURSOR_PRECISION_SUBPIXEL:
+      break;
+    }
+
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      gimp_statusbar_push (statusbar, context,
-                           stock_id,
-                           statusbar->cursor_format_str,
-                           title,
-                           (gint) RINT (x),
-                           separator,
-                           (gint) RINT (y),
-                           help);
+      if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+        {
+          gimp_statusbar_push (statusbar, context,
+                               stock_id,
+                               statusbar->cursor_format_str_f,
+                               title,
+                               x,
+                               separator,
+                               y,
+                               help);
+        }
+      else
+        {
+          gimp_statusbar_push (statusbar, context,
+                               stock_id,
+                               statusbar->cursor_format_str,
+                               title,
+                               (gint) RINT (x),
+                               separator,
+                               (gint) RINT (y),
+                               help);
+        }
     }
   else /* show real world units */
     {
@@ -1030,32 +1062,36 @@ gimp_statusbar_pop (GimpStatusbar *statusbar,
 }
 
 void
-gimp_statusbar_push_temp (GimpStatusbar *statusbar,
-                          const gchar   *stock_id,
-                          const gchar   *format,
+gimp_statusbar_push_temp (GimpStatusbar       *statusbar,
+                          GimpMessageSeverity  severity,
+                          const gchar         *stock_id,
+                          const gchar         *format,
                           ...)
 {
   va_list args;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-  g_return_if_fail (format != NULL);
-
   va_start (args, format);
-  gimp_statusbar_push_temp_valist (statusbar, stock_id, format, args);
+  gimp_statusbar_push_temp_valist (statusbar, severity, stock_id, format, args);
   va_end (args);
 }
 
 void
-gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
-                                 const gchar   *stock_id,
-                                 const gchar   *format,
-                                 va_list        args)
+gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
+                                 GimpMessageSeverity  severity,
+                                 const gchar         *stock_id,
+                                 const gchar         *format,
+                                 va_list              args)
 {
   GimpStatusbarMsg *msg = NULL;
   gchar            *message;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (severity <= GIMP_MESSAGE_WARNING);
   g_return_if_fail (format != NULL);
+
+  /*  don't accept a message if we are already displaying a more severe one  */
+  if (statusbar->temp_timeout_id && statusbar->temp_severity > severity)
+    return;
 
   message = gimp_statusbar_vprintf (format, args);
 
@@ -1065,6 +1101,8 @@ gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
   statusbar->temp_timeout_id =
     g_timeout_add (MESSAGE_TIMEOUT,
                    (GSourceFunc) gimp_statusbar_temp_timeout, statusbar);
+
+  statusbar->temp_severity = severity;
 
   if (statusbar->messages)
     {
@@ -1126,13 +1164,12 @@ gimp_statusbar_pop_temp (GimpStatusbar *statusbar)
 }
 
 void
-gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
-                              gdouble        x,
-                              gdouble        y)
+gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
+                              GimpCursorPrecision  precision,
+                              gdouble              x,
+                              gdouble              y)
 {
   GimpDisplayShell *shell;
-  GtkTreeModel     *model;
-  GimpUnitStore    *store;
   gchar             buffer[CURSOR_LEN];
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
@@ -1152,19 +1189,46 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
       gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
     }
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-  store = GIMP_UNIT_STORE (model);
+  switch (precision)
+    {
+    case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
+      x = RINT (x + 0.5);
+      y = RINT (y + 0.5);
+      break;
 
-  gimp_unit_store_set_pixel_values (store, x, y);
+    case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
+      x = RINT (x);
+      y = RINT (y);
+      break;
+
+    case GIMP_CURSOR_PRECISION_SUBPIXEL:
+      break;
+    }
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
-      g_snprintf (buffer, sizeof (buffer),
-                  statusbar->cursor_format_str,
-                  "", (gint) RINT (x), ", ", (gint) RINT (y), "");
+      if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+        {
+          g_snprintf (buffer, sizeof (buffer),
+                      statusbar->cursor_format_str_f,
+                      "", x, ", ", y, "");
+        }
+      else
+        {
+          g_snprintf (buffer, sizeof (buffer),
+                      statusbar->cursor_format_str,
+                      "", (gint) RINT (x), ", ", (gint) RINT (y), "");
+        }
     }
   else /* show real world units */
     {
+      GtkTreeModel  *model;
+      GimpUnitStore *store;
+
+      model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
+      store = GIMP_UNIT_STORE (model);
+
+      gimp_unit_store_set_pixel_values (store, x, y);
       gimp_unit_store_get_values (store, shell->unit, &x, &y);
 
       g_snprintf (buffer, sizeof (buffer),
@@ -1269,6 +1333,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%d%%s%%d%%s");
+      g_snprintf (statusbar->cursor_format_str_f,
+                  sizeof (statusbar->cursor_format_str_f),
+                  "%%s%%.1f%%s%%.1f%%s");
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%d%%s");
@@ -1280,13 +1347,15 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                   "%%s%%.%df%%s%%.%df%%s",
                   _gimp_unit_get_digits (shell->display->gimp, shell->unit),
                   _gimp_unit_get_digits (shell->display->gimp, shell->unit));
+      strcpy (statusbar->cursor_format_str_f, statusbar->cursor_format_str);
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%.%df%%s",
                   _gimp_unit_get_digits (shell->display->gimp, shell->unit));
     }
 
-  gimp_statusbar_update_cursor (statusbar, image_width, image_height);
+  gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,
+                                image_width, image_height);
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 

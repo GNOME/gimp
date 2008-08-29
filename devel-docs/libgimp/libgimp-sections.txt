@@ -24,6 +24,7 @@ gimp_run_procedure
 gimp_run_procedure2
 gimp_destroy_params
 gimp_destroy_paramdefs
+gimp_get_pdb_error
 gimp_tile_width
 gimp_tile_height
 gimp_shm_ID
@@ -591,6 +592,8 @@ gimp_image_get_vectors_position
 <SECTION>
 <FILE>gimplayer</FILE>
 gimp_layer_new
+gimp_layer_new_from_drawable
+gimp_layer_new_from_visible
 gimp_layer_copy
 gimp_layer_scale
 gimp_layer_resize
@@ -604,7 +607,6 @@ gimp_layer_from_mask
 gimp_layer_get_mask
 gimp_layer_add_mask
 gimp_layer_remove_mask
-gimp_layer_new_from_drawable
 gimp_layer_get_lock_alpha
 gimp_layer_set_lock_alpha
 gimp_layer_get_preserve_trans
@@ -771,6 +773,8 @@ gimp_plugin_help_register
 gimp_plugin_icon_register
 gimp_plugin_menu_register
 gimp_plugin_menu_branch_register
+gimp_plugin_set_pdb_error_handler
+gimp_plugin_get_pdb_error_handler
 </SECTION>
 
 <SECTION>

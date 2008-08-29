@@ -158,13 +158,23 @@ gimp_string_action_new (const gchar *name,
                         const gchar *stock_id,
                         const gchar *value)
 {
-  return g_object_new (GIMP_TYPE_STRING_ACTION,
-                       "name",     name,
-                       "label",    label,
-                       "tooltip",  tooltip,
-                       "stock-id", stock_id,
-                       "value",    value,
-                       NULL);
+  GimpStringAction *action;
+
+  action = g_object_new (GIMP_TYPE_STRING_ACTION,
+                         "name",     name,
+                         "label",    label,
+                         "tooltip",  tooltip,
+                         "stock-id", stock_id,
+                         "value",    value,
+                         NULL);
+
+  if (stock_id)
+    {
+      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
+        g_object_set (action, "icon-name", stock_id, NULL);
+    }
+
+  return action;
 }
 
 static void

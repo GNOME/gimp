@@ -130,5 +130,11 @@ void          gimp_plug_in_procedure_set_mime_type   (GimpPlugInProcedure       
 void          gimp_plug_in_procedure_set_thumb_loader(GimpPlugInProcedure       *proc,
                                                       const gchar               *thumbnailer);
 
+void     gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure       *proc,
+                                                      Gimp                      *gimp,
+                                                      GimpProgress              *progress,
+
+                                                      GValueArray               *return_vals);
+
 
 #endif /* __GIMP_PLUG_IN_PROCEDURE_H__ */

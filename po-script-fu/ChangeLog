@@ -1,3 +1,37 @@
+2008-08-27  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
+
+	* eu.po: Updated Basque translation.
+
+2008-08-21  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/script-fu/script-fu-eval.c
+
+	* POTFILES.skip: follow plug-in name changes.
+
+2008-08-19  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
+
+        * ru.po: updated and improved Russian translation.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated German translation.
+
+2008-08-17  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed starburst-logo.scm.
+
+2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
+
+2008-08-10  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
+
+	* gl.po: Updated Galician translation
+
+2008-08-8  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Updated Arabic Translation by .
+
 2008-07-31  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Updated Arabic Translation by .

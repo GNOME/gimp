@@ -194,6 +194,8 @@ file_save (GimpImage           *image,
         }
     }
 
+  gimp_image_flush (image);
+
   g_object_unref (image);
 
  out:

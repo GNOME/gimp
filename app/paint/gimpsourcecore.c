@@ -368,7 +368,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           GimpImage *src_image = gimp_pickable_get_image (src_pickable);
           gint       off_x, off_y;
 
-          src_pickable = GIMP_PICKABLE (src_image->projection);
+          src_pickable = GIMP_PICKABLE (gimp_image_get_projection (src_image));
 
           gimp_item_offsets (GIMP_ITEM (source_core->src_drawable),
                              &off_x, &off_y);

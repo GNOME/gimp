@@ -7,6 +7,7 @@
     <menuitem action="layers-edit-attributes" />
     <separator />
     <menuitem action="layers-new" />
+    <menuitem action="layers-new-from-visible" />
 <!--
     <menuitem action="layers-raise" />
     <menuitem action="layers-raise-to-top" />

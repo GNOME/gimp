@@ -206,7 +206,7 @@ app/display/gimpdisplayshell-close.c
 app/display/gimpdisplayshell-dnd.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
-app/display/gimpdisplayshell-scale.c
+app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
@@ -269,11 +269,13 @@ app/pdb/vectors-cmds.c
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
 app/plug-in/gimpplugin-message.c
+app/plug-in/gimpplugin-progress.c
 app/plug-in/gimpplugin.c
 app/plug-in/gimppluginmanager-call.c
 app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginprocedure.c
+app/plug-in/gimppluginprocframe.c
 app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
 app/plug-in/plug-in-icc-profile.c

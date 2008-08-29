@@ -79,6 +79,48 @@ _gimp_layer_new (gint32                image_ID,
 }
 
 /**
+ * gimp_layer_new_from_visible:
+ * @image_ID: The source image from where the content is copied.
+ * @dest_image_ID: The destination image to which to add the layer.
+ * @name: The layer name.
+ *
+ * Create a new layer from what is visible in an image.
+ *
+ * This procedure creates a new layer from what is visible in the given
+ * image. The new layer still needs to be added to the destination
+ * image, as this is not automatic. Add the new layer with the
+ * gimp_image_add_layer() command. Other attributes such as layer mask
+ * modes, and offsets should be set with explicit procedure calls.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: GIMP 2.6
+ */
+gint32
+gimp_layer_new_from_visible (gint32       image_ID,
+                             gint32       dest_image_ID,
+                             const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-layer-new-from-visible",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_IMAGE, dest_image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
+}
+
+/**
  * gimp_layer_new_from_drawable:
  * @drawable_ID: The source drawable from where the new layer is copied.
  * @dest_image_ID: The destination image to which to add the layer.

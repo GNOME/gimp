@@ -17,6 +17,7 @@
   <contributor role="author" last-active="2.4">Henrik Brix Andersen</contributor>
   <contributor role="author" last-active="1.0">Karl-Johan Andersson</contributor>
   <contributor role="author" last-active="2.6">Nicola Archibald</contributor>
+  <contributor role="author" last-active="2.6">Luis Barrancos</contributor>
   <contributor role="author" last-active="1.0">John Beale</contributor>
   <contributor role="author" last-active="2.0">Zach Beane</contributor>
   <contributor role="author" last-active="1.0">Tom Bech</contributor>
@@ -28,7 +29,7 @@
   <contributor role="author" last-active="2.0">Stanislav Brabec</contributor>
   <contributor role="author" last-active="2.6">Hans Breuer</contributor>
   <contributor role="author" last-active="2.6">Simon Budig</contributor>
-  <contributor role="author" last-active="2.4">João S. O. Bueno</contributor>
+  <contributor role="author" last-active="2.6">João S. O. Bueno</contributor>
   <contributor role="documenter" last-active="1.2">Carey Bunks</contributor>
   <contributor role="author" last-active="2.4">Seth Burgess</contributor>
   <contributor role="author" last-active="1.0">Brent Burton</contributor>
@@ -41,6 +42,7 @@
   <contributor role="author" last-active="1.2">Winston Chang</contributor>
   <contributor role="author" last-active="2.4">Stephane Chauveau</contributor>
   <contributor role="author" last-active="2.4">Zbigniew Chyla</contributor>
+  <contributor role="author" last-active="2.6">Lars-Peter Clausen</contributor>
   <contributor role="author" last-active="2.0">Branko Collin</contributor>
   <contributor role="author" last-active="1.0">Ed Connel</contributor>
   <contributor role="author" last-active="1.2">Piers Cornwell</contributor>
@@ -49,14 +51,18 @@
   <contributor role="author" last-active="2.4">Jay Cox</contributor>
   <contributor role="author" last-active="2.6">Kevin Cozens</contributor>
   <contributor role="artist" last-active="2.4">Paul Davey</contributor>
+  <contributor role="author" last-active="2.6">Michael Deal</contributor>
+  <contributor role="author" last-active="2.6">Alexia Death</contributor>
   <contributor role="author" last-active="1.0">Brian Degenhardt</contributor>
   <contributor role="author" last-active="2.4">Karine Delvare</contributor>
+  <contributor role="author" last-active="2.6">Aurore Derriennic</contributor>
   <contributor role="author" last-active="1.0">Andreas Dilger</contributor>
   <contributor role="author" last-active="2.0">Austin Donnelly</contributor>
   <contributor role="author" last-active="1.0">Scott Draves</contributor>
   <contributor role="author" last-active="1.0">Daniel Dunbar</contributor>
   <contributor role="documenter" last-active="2.4">Dust</contributor>
   <contributor role="author" last-active="1.2">Misha Dynin</contributor>
+  <contributor role="author" last-active="2.6">Daniel Eddeland</contributor>
   <contributor role="author" last-active="2.4">Daniel Egger</contributor>
   <contributor role="documenter" last-active="2.6">Ulf-D. Ehlert</contributor>
   <contributor role="author" last-active="2.0">Morton Eriksen</contributor>
@@ -88,6 +94,7 @@
   <contributor role="author" last-active="2.4">Dov Grobgeld</contributor>
   <contributor role="author documenter" last-active="2.4">Michael Hammel</contributor>
   <contributor role="documenter" last-active="2.4">Julien Hardelin</contributor>
+  <contributor role="author" last-active="2.6">Marcus Heese</contributor>
   <contributor role="author" last-active="2.4">Robert Helgesson</contributor>
   <contributor role="author" last-active="2.0">James Henstridge</contributor>
   <contributor role="author" last-active="1.0">Eric Hernes</contributor>
@@ -95,21 +102,22 @@
   <contributor role="author" last-active="1.0">Christoph Hoegl</contributor>
   <contributor role="author" last-active="2.2">Wolfgang Hofer</contributor>
   <contributor role="author" last-active="2.2">Alan Horkan</contributor>
+  <contributor role="author" last-active="2.6">Daniel Hornung</contributor>
   <contributor role="author" last-active="1.2">Jan Hubička</contributor>
   <contributor role="author" last-active="1.2">Ben Jackson</contributor>
   <contributor role="documenter" last-active="1.2">Simon Janes</contributor>
   <contributor role="author" last-active="2.2">Tim Janik</contributor>
   <contributor role="author" last-active="2.4">Kristian Jantz</contributor>
-  <contributor role="author documenter" last-active="2.4">Róman Joost</contributor>
+  <contributor role="author documenter" last-active="2.6">Róman Joost</contributor>
   <contributor role="documenter" last-active="2.4">Hans de Jonge</contributor>
-  <contributor role="author" last-active="2.4">Geert Jordaens</contributor>
-  <contributor role="author" last-active="2.4">Aurimas Juška</contributor>
+  <contributor role="author" last-active="2.6">Geert Jordaens</contributor>
+  <contributor role="author" last-active="2.6">Aurimas Juška</contributor>
   <contributor role="author" last-active="1.0">Andrew Kieschnick</contributor>
   <contributor role="author" last-active="2.2">Peter Kirchgessner</contributor>
   <contributor role="author" last-active="1.0">Philipp Klaus</contributor>
   <contributor role="author" last-active="2.0">David Koblas</contributor>
   <contributor role="author" last-active="2.2">Daniel Kobras</contributor>
-  <contributor role="author" last-active="2.4">Øyvind Kolås</contributor>
+  <contributor role="author" last-active="2.6">Øyvind Kolås</contributor>
   <contributor role="author" last-active="2.4">Robert L Krawitz</contributor>
   <contributor role="documenter" last-active="2.4">Semka Kuloviæ-Debals</contributor>
   <contributor role="artist author" last-active="2.0">Tuomas Kuosmanen</contributor>
@@ -123,6 +131,7 @@
   <contributor role="author" last-active="1.2">Marco Lamberto</contributor>
   <contributor role="author" last-active="1.2">Jens Lautenbacher</contributor>
   <contributor role="author" last-active="2.0">Laramie Leavitt</contributor>
+  <contributor role="author" last-active="2.6">Tom Lechner</contributor>
   <contributor role="author" last-active="1.0">Elliot Lee</contributor>
   <contributor role="author" last-active="2.0">Marc Lehmann</contributor>
   <contributor role="author" last-active="1.2">Ray Lehtiniemi</contributor>
@@ -130,12 +139,14 @@
   <contributor role="author" last-active="2.4">Frederic Leroy</contributor>
   <contributor role="author" last-active="1.2">Raph Levien</contributor>
   <contributor role="author" last-active="1.0">Wing Tung Leung</contributor>
+  <contributor role="author" last-active="2.6">LightningIsMyName</contributor>
   <contributor role="author" last-active="2.4">Adrian Likins</contributor>
   <contributor role="author" last-active="2.6">Tor Lillqvist</contributor>
   <contributor role="author" last-active="1.2">Ingo Lütkebohle</contributor>
   <contributor role="author" last-active="1.0">Josh MacDonald</contributor>
   <contributor role="author documenter" last-active="1.0">Ed Mackey</contributor>
   <contributor role="author" last-active="1.2">Vidar Madsen</contributor>
+  <contributor role="author" last-active="2.6">Luidnel Maignan</contributor>
   <contributor role="author documenter" last-active="1.2">Ian Main</contributor>
   <contributor role="author" last-active="2.4">Kjartan Maraas</contributor>
   <contributor role="author" last-active="2.6">John Marshall</contributor>

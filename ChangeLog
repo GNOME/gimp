@@ -1,3 +1,7 @@
+2008-08-29  Daniel Eddeland <danedde@svn.gnome.org>
+
+	Merged 26402:26806 from trunk
+
 2008-08-18  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/tools/gimptexttool.c: Fixed PRIMARY clipboard and

@@ -219,7 +219,7 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_widget_show (table);
 
   editor->index_spinbutton = gimp_spin_button_new (&adj,
-                                                   0, 0, 0, 1, 10, 10, 1.0, 0);
+                                                   0, 0, 0, 1, 10, 0, 1.0, 0);
   editor->index_adjustment = GTK_ADJUSTMENT (adj);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Color index:"), 0.0, 0.5,

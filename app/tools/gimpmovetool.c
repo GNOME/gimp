@@ -262,6 +262,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
               move->guide_orientation = gimp_guide_get_orientation (guide);
 
               gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+              gimp_tool_control_set_precision   (tool->control,
+                                                 GIMP_CURSOR_PRECISION_PIXEL_BORDER);
+
               gimp_tool_control_activate (tool->control);
 
               gimp_display_shell_selection_control (shell,
@@ -366,6 +369,9 @@ gimp_move_tool_button_release (GimpTool              *tool,
       gimp_tool_pop_status (tool, display);
 
       gimp_tool_control_set_scroll_lock (tool->control, FALSE);
+      gimp_tool_control_set_precision   (tool->control,
+                                         GIMP_CURSOR_PRECISION_PIXEL_CENTER);
+
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)

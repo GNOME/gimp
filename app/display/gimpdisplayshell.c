@@ -67,6 +67,7 @@
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-progress.h"
@@ -116,6 +117,8 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
                                                     GdkEventAny      *aevent);
+static gboolean  gimp_display_shell_configure_event(GtkWidget        *widget,
+                                                    GdkEventConfigure*cevent);
 static gboolean
              gimp_display_shell_window_state_event (GtkWidget        *widget,
                                                     GdkEventWindowState *event);
@@ -210,6 +213,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
   widget_class->delete_event       = gimp_display_shell_delete_event;
+  widget_class->configure_event    = gimp_display_shell_configure_event;
   widget_class->window_state_event = gimp_display_shell_window_state_event;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
   widget_class->style_set          = gimp_display_shell_style_set;
@@ -324,6 +328,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->window_state           = 0;
   shell->zoom_on_resize         = FALSE;
   shell->show_transform_preview = FALSE;
+
+  shell->size_allocate_from_configure_event = FALSE;
 
   shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
@@ -575,6 +581,36 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 }
 
 static gboolean
+gimp_display_shell_configure_event (GtkWidget         *widget,
+                                    GdkEventConfigure *cevent)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+  gint              current_width;
+  gint              current_height;
+
+  /* Grab the size before we run the parent implementation */
+  current_width  = widget->allocation.width;
+  current_height = widget->allocation.height;
+
+  /* Run the parent implementation */
+  if (GTK_WIDGET_CLASS (parent_class)->configure_event)
+    GTK_WIDGET_CLASS (parent_class)->configure_event (widget, cevent);
+
+  /* If the window size has changed, make sure additoinal logic is run
+   * on size-allocate
+   */
+  if (shell->display        &&
+      shell->display->image &&
+      (cevent->width  != current_width ||
+       cevent->height != current_height))
+    {
+      shell->size_allocate_from_configure_event = TRUE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 gimp_display_shell_window_state_event (GtkWidget           *widget,
                                        GdkEventWindowState *event)
 {
@@ -715,6 +751,21 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
     return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
 
   return NULL;
+}
+
+static void
+gimp_display_shell_zoom_button_callback (GimpDisplayShell *shell,
+                                         GtkWidget        *zoom_button)
+{
+  shell->zoom_on_resize =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (zoom_button));
+
+  if (shell->zoom_on_resize &&
+      gimp_display_shell_scale_image_is_within_viewport (shell, NULL, NULL))
+    {
+      /* Implicitly make a View -> Fit Image in Window */
+      gimp_display_shell_scale_fit_in (shell);
+    }
 }
 
 
@@ -969,6 +1020,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                            GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
   shell->canvas = gimp_canvas_new (display->config);
+  gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
 
   gimp_display_shell_dnd_init (shell);
   gimp_display_shell_selection_init (shell);
@@ -1006,12 +1058,6 @@ gimp_display_shell_new (GimpDisplay       *display,
    */
   gtk_widget_set_extension_events (shell->hrule, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_set_extension_events (shell->vrule, GDK_EXTENSION_EVENTS_ALL);
-
-  /*  the canvas  */
-  gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
-  gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
-  gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
-  GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
 
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),
@@ -1078,9 +1124,9 @@ gimp_display_shell_new (GimpDisplay       *display,
                            _("Zoom image when window size changes"),
                            GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON);
 
-  g_signal_connect (shell->zoom_button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &shell->zoom_on_resize);
+  g_signal_connect_swapped (shell->zoom_button, "toggled",
+                            G_CALLBACK (gimp_display_shell_zoom_button_callback),
+                            shell);
 
   /*  create the contents of the lower_hbox  *********************************/
 
@@ -1205,8 +1251,13 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       gimp_display_shell_connect (shell);
 
-      /* after connecting to the image we want to center it */
-      gimp_display_shell_center_image_on_next_size_allocate (shell);
+      /* After connecting to the image we want to center it. Since we
+       * not even finnished creating the display shell, we can safely
+       * assume we will get a size-allocate later.
+       */
+      gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
+                                                                    TRUE,
+                                                                    TRUE);
     }
   else
     {
@@ -1246,7 +1297,8 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 
-  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_scroll_clamp_and_update (shell);
+
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);
@@ -1297,11 +1349,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
 
-  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
-  gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_scaled (shell);
-
   gimp_display_shell_unset_cursor (shell);
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
@@ -1323,35 +1370,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     gimp_ui_manager_update (shell->popup_manager, shell->display);
-}
-
-static void
-gimp_display_shell_center_image_callback (GimpDisplayShell *shell,
-                                          GtkAllocation    *allocation,
-                                          GtkWidget        *canvas)
-{
-  gint     sw, sh;
-  gboolean center_horizontally;
-  gboolean center_vertically;
-
-  gimp_display_shell_get_scaled_image_size (shell, &sw, &sh);
-
-  /* We only want to center on the axes on which the image is smaller
-   * than the display canvas. If it is larger, it will be centered on
-   * that axis later, and if we center on all axis unconditionally, we
-   * end up with the wrong centering if the image is larger than the
-   * display canvas.
-   */
-  center_horizontally = sw < shell->disp_width;
-  center_vertically   = sh < shell->disp_height;
-
-  gimp_display_shell_center_image (shell,
-                                   center_horizontally,
-                                   center_vertically);
-
-  g_signal_handlers_disconnect_by_func (canvas,
-                                        gimp_display_shell_center_image_callback,
-                                        shell);
 }
 
 static gboolean
@@ -1389,14 +1407,12 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
 
-  /* Not pretty, but we need to center the image as soon as the canvas
-   * has got its new size allocated. The centering will be wrong if we
-   * do it too early, and if we do it too late flickering will occur
-   * due to the image being rendered twice.
+  /* A size-allocate will always occur because the scrollbars will
+   * become visible forcing the canvas to become smaller
    */
-  g_signal_connect_swapped (shell->canvas, "size-allocate",
-                            G_CALLBACK (gimp_display_shell_center_image_callback),
-                            shell);
+  gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
+                                                                TRUE,
+                                                                TRUE);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,
@@ -1420,16 +1436,10 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 
   if (image)
     {
-      gdouble xres;
-      gdouble yres;
-
-      gimp_image_get_resolution (image, &xres, &yres);
-
-      shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom) *
-                        SCREEN_XRES (shell) / xres);
-
-      shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom) *
-                        SCREEN_YRES (shell) / yres);
+      gimp_display_shell_calculate_scale_x_and_y (shell,
+                                                  gimp_zoom_model_get_factor (shell->zoom),
+                                                  &shell->scale_x,
+                                                  &shell->scale_y);
 
       shell->x_dest_inc = gimp_image_get_width  (image);
       shell->y_dest_inc = gimp_image_get_height (image);
@@ -1474,7 +1484,8 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     {
       shell->unit = unit;
 
-      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scale_update_rulers (shell);
+
       gimp_display_shell_scaled (shell);
 
       g_object_notify (G_OBJECT (shell), "unit");
@@ -1884,6 +1895,12 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
 
       gtk_window_resize (GTK_WINDOW (shell), width, height);
     }
+
+  /* A wrap always means that we should center the image too. If the
+   * window changes size another center will be done in
+   * GimpDisplayShell::configure_event().
+   */
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
 /**

@@ -129,7 +129,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&shear->x_adj,
-                                 0, -65536, 65536, 1, 15, 1, 1, 0);
+                                 0, -65536, 65536, 1, 15, 0, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Shear magnitude _X:"),
                              0.0, 0.5, button, 1, TRUE);
@@ -139,7 +139,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                     tr_tool);
 
   button = gimp_spin_button_new (&shear->y_adj,
-                                 0, -65536, 65536, 1, 15, 1, 1, 0);
+                                 0, -65536, 65536, 1, 15, 0, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, _("Shear magnitude _Y:"),
                              0.0, 0.5, button, 1, TRUE);

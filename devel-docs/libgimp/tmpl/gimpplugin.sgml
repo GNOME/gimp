@@ -69,3 +69,20 @@ Functions useful for plugins, e.g. registration and progress indicators.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_plugin_set_pdb_error_handler ##### -->
+<para>
+
+</para>
+
+@handler: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_plugin_get_pdb_error_handler ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

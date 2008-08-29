@@ -64,49 +64,49 @@ typedef void (* RenderFunc) (RenderInfo *info);
 
 struct _RenderInfo
 {
-  GimpDisplayShell *shell;
-  TileManager      *src_tiles;
-  const guchar     *src;
-  guchar           *dest;
-  gboolean          src_is_premult;
-  gint              x, y;
-  gint              w, h;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              src_x;
-  gint              src_y;
-  gint              dest_bpp;
-  gint              dest_bpl;
-  gint              dest_width;
+  const GimpDisplayShell *shell;
+  TileManager            *src_tiles;
+  const guchar           *src;
+  guchar                 *dest;
+  gboolean                src_is_premult;
+  gint                    x, y;
+  gint                    w, h;
+  gdouble                 scalex;
+  gdouble                 scaley;
+  gint                    src_x;
+  gint                    src_y;
+  gint                    dest_bpp;
+  gint                    dest_bpl;
+  gint                    dest_width;
 
-  gint              zoom_quality;
+  gint                    zoom_quality;
 
   /* Bresenham helpers */
-  gint              x_dest_inc; /* amount to increment for each dest. pixel  */
-  gint              x_src_dec;  /* amount to decrement for each source pixel */
-  gint64            dx_start;   /* pixel fraction for first pixel            */
+  gint                    x_dest_inc; /* amount to increment for each dest. pixel  */
+  gint                    x_src_dec;  /* amount to decrement for each source pixel */
+  gint64                  dx_start;   /* pixel fraction for first pixel            */
 
-  gint              y_dest_inc;
-  gint              y_src_dec;
-  gint64            dy_start;
+  gint                    y_dest_inc;
+  gint                    y_src_dec;
+  gint64                  dy_start;
 
-  gint              footprint_x;
-  gint              footprint_y;
-  gint              footshift_x;
-  gint              footshift_y;
+  gint                    footprint_x;
+  gint                    footprint_y;
+  gint                    footshift_x;
+  gint                    footshift_y;
 
-  gint64            dy;
+  gint64                  dy;
 };
 
-static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
-                                                     GimpDisplayShell *shell,
-                                                     TileManager      *tiles,
-                                                     gint              level,
-                                                     gboolean          is_premult);
+static void  gimp_display_shell_render_info_scale   (RenderInfo             *info,
+                                                     const GimpDisplayShell *shell,
+                                                     TileManager            *tiles,
+                                                     gint                    level,
+                                                     gboolean                is_premult);
 
-static void  gimp_display_shell_render_setup_notify (GObject          *config,
-                                                     GParamSpec       *param_spec,
-                                                     Gimp             *gimp);
+static void  gimp_display_shell_render_setup_notify (GObject                *config,
+                                                     GParamSpec             *param_spec,
+                                                     Gimp                   *gimp);
 
 
 static guchar *tile_buf    = NULL;
@@ -189,20 +189,20 @@ gimp_display_shell_render_setup_notify (GObject    *config,
 
 /*  Render Image functions  */
 
-static void           render_image_rgb_a         (RenderInfo       *info);
-static void           render_image_gray_a        (RenderInfo       *info);
+static void           render_image_rgb_a         (RenderInfo             *info);
+static void           render_image_gray_a        (RenderInfo             *info);
 
-static const guchar * render_image_tile_fault    (RenderInfo       *info);
+static const guchar * render_image_tile_fault    (RenderInfo             *info);
 
 
-static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
-                                                  gint              x,
-                                                  gint              y,
-                                                  gint              w,
-                                                  gint              h,
-                                                  GdkRectangle     *highlight);
-static void  gimp_display_shell_render_mask      (GimpDisplayShell *shell,
-                                                  RenderInfo       *info);
+static void  gimp_display_shell_render_highlight (const GimpDisplayShell *shell,
+                                                  gint                    x,
+                                                  gint                    y,
+                                                  gint                    w,
+                                                  gint                    h,
+                                                  GdkRectangle           *highlight);
+static void  gimp_display_shell_render_mask      (const GimpDisplayShell *shell,
+                                                  RenderInfo             *info);
 
 
 /*****************************************************************/
@@ -213,12 +213,12 @@ static void  gimp_display_shell_render_mask      (GimpDisplayShell *shell,
 /*****************************************************************/
 
 void
-gimp_display_shell_render (GimpDisplayShell *shell,
-                           gint              x,
-                           gint              y,
-                           gint              w,
-                           gint              h,
-                           GdkRectangle     *highlight)
+gimp_display_shell_render (const GimpDisplayShell *shell,
+                           gint                    x,
+                           gint                    y,
+                           gint                    w,
+                           gint                    h,
+                           GdkRectangle           *highlight)
 {
   GimpProjection *projection;
   GimpImage      *image;
@@ -231,9 +231,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (w > 0 && h > 0);
 
   image = shell->display->image;
-  projection = image->projection;
 
-  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+  projection = gimp_image_get_projection (image);
+
+  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
@@ -319,8 +320,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     gint disp_xoffset, disp_yoffset;
     gint offset_x, offset_y;
 
-    gimp_display_shell_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
-    gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+    gimp_display_shell_scroll_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
+    gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
     gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
                         x + disp_xoffset, y + disp_yoffset,
@@ -342,19 +343,19 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 /*  This function highlights the given area by dimming all pixels outside. */
 
 static void
-gimp_display_shell_render_highlight (GimpDisplayShell *shell,
-                                     gint              x,
-                                     gint              y,
-                                     gint              w,
-                                     gint              h,
-                                     GdkRectangle     *highlight)
+gimp_display_shell_render_highlight (const GimpDisplayShell *shell,
+                                     gint                    x,
+                                     gint                    y,
+                                     gint                    w,
+                                     gint                    h,
+                                     GdkRectangle           *highlight)
 {
   guchar       *buf  = shell->render_buf;
   GdkRectangle  rect;
   gint          offset_x;
   gint          offset_y;
 
-  gimp_display_shell_get_render_start_offset (shell, &offset_x, &offset_y);
+  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
 
   rect.x      = x + offset_x;
   rect.y      = y + offset_y;
@@ -406,8 +407,8 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_render_mask (GimpDisplayShell *shell,
-                                RenderInfo       *info)
+gimp_display_shell_render_mask (const GimpDisplayShell *shell,
+                                RenderInfo             *info)
 {
   gint y, ye;
   gint x, xe;
@@ -591,11 +592,11 @@ render_image_rgb_a (RenderInfo *info)
 }
 
 static void
-gimp_display_shell_render_info_scale (RenderInfo       *info,
-                                      GimpDisplayShell *shell,
-                                      TileManager      *tiles,
-                                      gint              level,
-                                      gboolean          is_premult)
+gimp_display_shell_render_info_scale (RenderInfo             *info,
+                                      const GimpDisplayShell *shell,
+                                      TileManager            *tiles,
+                                      gint                    level,
+                                      gboolean                is_premult)
 {
   info->src_tiles      = tiles;
   info->src_is_premult = is_premult;
@@ -957,8 +958,6 @@ render_image_tile_fault (RenderInfo *info)
     {
       src[8] = src[5];  /* reusing existing pixel data */
     }
-
-
 
   if (tile[0])
     {

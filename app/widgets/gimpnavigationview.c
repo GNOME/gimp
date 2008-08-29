@@ -38,7 +38,7 @@
 #include "gimpviewrenderer.h"
 
 
-#define BORDER_PEN_WIDTH 3
+#define BORDER_WIDTH 2
 
 
 enum
@@ -69,17 +69,13 @@ struct _GimpNavigationView
   gint         motion_offset_x;
   gint         motion_offset_y;
   gboolean     has_grab;
-
-  GdkGC       *gc;
 };
 
 
-static void     gimp_navigation_view_realize        (GtkWidget      *widget);
-static void     gimp_navigation_view_unrealize      (GtkWidget      *widget);
 static void     gimp_navigation_view_size_allocate  (GtkWidget      *widget,
                                                      GtkAllocation  *allocation);
 static gboolean gimp_navigation_view_expose         (GtkWidget      *widget,
-                                                     GdkEventExpose *eevent);
+                                                     GdkEventExpose *event);
 static gboolean gimp_navigation_view_button_press   (GtkWidget      *widget,
                                                      GdkEventButton *bevent);
 static gboolean gimp_navigation_view_button_release (GtkWidget      *widget,
@@ -93,7 +89,7 @@ static gboolean gimp_navigation_view_key_press      (GtkWidget      *widget,
 
 static void     gimp_navigation_view_transform      (GimpNavigationView *nav_view);
 static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_view,
-                                                     GdkRectangle       *area);
+                                                     cairo_t            *cr);
 
 
 G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
@@ -141,8 +137,6 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_TYPE_NONE, 1,
                   GDK_TYPE_SCROLL_DIRECTION);
 
-  widget_class->realize              = gimp_navigation_view_realize;
-  widget_class->unrealize            = gimp_navigation_view_unrealize;
   widget_class->size_allocate        = gimp_navigation_view_size_allocate;
   widget_class->expose_event         = gimp_navigation_view_expose;
   widget_class->button_press_event   = gimp_navigation_view_button_press;
@@ -172,37 +166,6 @@ gimp_navigation_view_init (GimpNavigationView *view)
   view->motion_offset_x = 0;
   view->motion_offset_y = 0;
   view->has_grab        = FALSE;
-
-  view->gc              = NULL;
-}
-
-static void
-gimp_navigation_view_realize (GtkWidget *widget)
-{
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  nav_view->gc = gdk_gc_new (widget->window);
-
-  gdk_gc_set_function (nav_view->gc, GDK_INVERT);
-  gdk_gc_set_line_attributes (nav_view->gc,
-                              BORDER_PEN_WIDTH,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
-}
-
-static void
-gimp_navigation_view_unrealize (GtkWidget *widget)
-{
-  GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
-
-  if (nav_view->gc)
-    {
-      g_object_unref (nav_view->gc);
-      nav_view->gc = NULL;
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -217,17 +180,41 @@ gimp_navigation_view_size_allocate (GtkWidget     *widget,
 
 static gboolean
 gimp_navigation_view_expose (GtkWidget      *widget,
-                             GdkEventExpose *eevent)
+                             GdkEventExpose *event)
 {
   if (GTK_WIDGET_DRAWABLE (widget))
     {
-      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+      cairo_t *cr;
 
-      gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget),
-                                        &eevent->area);
+      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+
+      cr = gdk_cairo_create (widget->window);
+
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
+
+      gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget), cr);
+
+      cairo_destroy (cr);
     }
 
   return TRUE;
+}
+
+static void
+gimp_navigation_view_get_ratio (const GimpNavigationView *nav_view,
+                                gdouble                  *ratiox,
+                                gdouble                  *ratioy)
+{
+  GimpView  *view = GIMP_VIEW (nav_view);
+  GimpImage *image;
+
+  image = GIMP_IMAGE (view->renderer->viewable);
+
+  *ratiox = (gdouble) view->renderer->width  /
+            (gdouble) gimp_image_get_width  (image);
+  *ratioy = (gdouble) view->renderer->height /
+            (gdouble) gimp_image_get_height (image);
 }
 
 static void
@@ -236,33 +223,16 @@ gimp_navigation_view_move_to (GimpNavigationView *nav_view,
                               gint                ty)
 {
   GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
   gdouble    ratiox, ratioy;
   gdouble    x, y;
 
   if (! view->renderer->viewable)
     return;
 
-  tx = CLAMP (tx, 0, view->renderer->width  - nav_view->p_width);
-  ty = CLAMP (ty, 0, view->renderer->height - nav_view->p_height);
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  /*  transform to image coordinates  */
-  if (view->renderer->width != nav_view->p_width)
-    ratiox = ((gimp_image_get_width (image) - nav_view->width + 1.0) /
-              (view->renderer->width - nav_view->p_width));
-  else
-    ratiox = 1.0;
-
-  if (view->renderer->height != nav_view->p_height)
-    ratioy = ((gimp_image_get_height (image) - nav_view->height + 1.0) /
-              (view->renderer->height - nav_view->p_height));
-  else
-    ratioy = 1.0;
-
-  x = tx * ratiox;
-  y = ty * ratioy;
+  x = tx / ratiox;
+  y = ty / ratioy;
 
   g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
                  x, y, nav_view->width, nav_view->height);
@@ -290,7 +260,7 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view)
                     GDK_POINTER_MOTION_HINT_MASK |
                     GDK_BUTTON_MOTION_MASK       |
                     GDK_EXTENSION_EVENTS_ALL,
-                    window, cursor, GDK_CURRENT_TIME);
+                    NULL, cursor, GDK_CURRENT_TIME);
 
   gdk_cursor_unref (cursor);
 }
@@ -501,58 +471,46 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
 static void
 gimp_navigation_view_transform (GimpNavigationView *nav_view)
 {
-  GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
-  gdouble    ratiox, ratioy;
+  gdouble ratiox, ratioy;
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  ratiox = ((gdouble) view->renderer->width  /
-            (gdouble) gimp_image_get_width  (image));
-  ratioy = ((gdouble) view->renderer->height /
-            (gdouble) gimp_image_get_height (image));
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
   nav_view->p_x = RINT (nav_view->x * ratiox);
   nav_view->p_y = RINT (nav_view->y * ratioy);
 
-  nav_view->p_width  = RINT (nav_view->width  * ratiox);
-  nav_view->p_height = RINT (nav_view->height * ratioy);
+  nav_view->p_width  = ceil (nav_view->width  * ratiox);
+  nav_view->p_height = ceil (nav_view->height * ratioy);
 }
 
 static void
 gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
-                                  GdkRectangle       *area)
+                                  cairo_t            *cr)
 {
   GimpView *view = GIMP_VIEW (nav_view);
 
-  if (view->renderer->viewable  &&
-      nav_view->width           &&
-      nav_view->height)
+  if (view->renderer->viewable && nav_view->width && nav_view->height)
     {
-      GimpImage *image;
+      GtkWidget *widget = GTK_WIDGET (view);
 
-      image = GIMP_IMAGE (view->renderer->viewable);
+      cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+      cairo_rectangle (cr,
+                       0, 0,
+                       widget->allocation.width, widget->allocation.height);
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
 
-      if (nav_view->x      > 0                             ||
-          nav_view->y      > 0                             ||
-          nav_view->width  < gimp_image_get_width  (image) ||
-          nav_view->height < gimp_image_get_height (image))
-        {
-          GtkWidget *widget = GTK_WIDGET (view);
+      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+      cairo_fill (cr);
 
-          if (area)
-            gdk_gc_set_clip_rectangle (nav_view->gc, area);
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
 
-          gdk_draw_rectangle (widget->window, nav_view->gc,
-                              FALSE,
-                              widget->allocation.x + nav_view->p_x + 1,
-                              widget->allocation.y + nav_view->p_y + 1,
-                              MAX (1, nav_view->p_width  - BORDER_PEN_WIDTH),
-                              MAX (1, nav_view->p_height - BORDER_PEN_WIDTH));
-
-          if (area)
-            gdk_gc_set_clip_rectangle (nav_view->gc, NULL);
-        }
+      cairo_set_source_rgb (cr, 1, 1, 1);
+      cairo_set_line_width (cr, BORDER_WIDTH);
+      cairo_stroke (cr);
     }
 }
 
@@ -563,8 +521,7 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
                                  gdouble             width,
                                  gdouble             height)
 {
-  GimpView  *view;
-  GimpImage *image;
+  GimpView *view;
 
   g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
 
@@ -572,31 +529,15 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
 
   g_return_if_fail (view->renderer->viewable);
 
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  /*  remove old marker  */
-  if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, NULL);
-
-  nav_view->x = CLAMP (x, 0.0, gimp_image_get_width  (image) - 1.0);
-  nav_view->y = CLAMP (y, 0.0, gimp_image_get_height (image) - 1.0);
-
-  if (width < 0.0)
-    width = gimp_image_get_width (image);
-
-  if (height < 0.0)
-    height = gimp_image_get_height (image);
-
-  nav_view->width  = CLAMP (width,  1.0,
-                            gimp_image_get_width  (image) - nav_view->x);
-  nav_view->height = CLAMP (height, 1.0,
-                            gimp_image_get_height (image) - nav_view->y);
+  nav_view->x      = x;
+  nav_view->y      = y;
+  nav_view->width  = MAX (1.0, width);
+  nav_view->height = MAX (1.0, height);
 
   gimp_navigation_view_transform (nav_view);
 
-  /*  draw new marker  */
-  if (GTK_WIDGET_DRAWABLE (view))
-    gimp_navigation_view_draw_marker (nav_view, NULL);
+  /* Marker changed, invalidate */
+  gimp_view_renderer_invalidate (view->renderer);
 }
 
 void

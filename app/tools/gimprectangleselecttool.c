@@ -222,6 +222,8 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
   priv = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_RECT_SELECT);
   gimp_tool_control_set_dirty_mask  (tool->control,

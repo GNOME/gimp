@@ -385,6 +385,17 @@ typedef enum
 } GimpPDBArgType;
 
 
+#define GIMP_TYPE_PDB_ERROR_HANDLER (gimp_pdb_error_handler_get_type ())
+
+GType gimp_pdb_error_handler_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PDB_ERROR_HANDLER_INTERNAL,
+  GIMP_PDB_ERROR_HANDLER_PLUGIN
+} GimpPDBErrorHandler;
+
+
 #define GIMP_TYPE_PDB_PROC_TYPE (gimp_pdb_proc_type_get_type ())
 
 GType gimp_pdb_proc_type_get_type (void) G_GNUC_CONST;

@@ -65,7 +65,8 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -95,7 +96,8 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -168,7 +170,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
                                       NULL, error);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GValueArray *
@@ -195,7 +198,8 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
       gimp_image_convert_set_dither_matrix (matrix, width, height);
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void

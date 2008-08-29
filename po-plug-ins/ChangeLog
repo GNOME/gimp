@@ -1,3 +1,41 @@
+2008-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.in.in (GETTEXT_PACKAGE): is gimp20-std-plug-ins, not
+	gimp20-plug-ins. Fixes bug #549441.
+
+2008-08-25  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
+
+2008-08-19  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
+
+        * ru.po: updated and improved Russian translation.
+
+2008-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: compressor.c -> file-compressor.c
+
+2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
+
+	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.
+
+2008-08-11  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
+
+	 gl.po: Updated Galician translation
+
+2008-08-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fixed some changed filenames that Mitch forgot to
+	change.
+
+2008-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: follow file plug-in renamings.
+
+2008-08-8  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Updated Arabic Translation by .
+
 2008-08-05  Sven Neumann  <sven@gimp.org>
 
 	* de.po: Updated German translation.
