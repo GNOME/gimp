@@ -1,3 +1,8 @@
+2008-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* tools/test-clipboard.c (test_clipboard_paste): fix length
+	calculation (in fact, no calculation is needed at all).
+
 2008-08-29  Sven Neumann  <sven@gimp.org>
 
 	* authors.xml: fixed role of Aurore Derriennic.
