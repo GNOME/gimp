@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: gimp 2.5.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-30 14:21+0800\n"
-"PO-Revision-Date: 2008-08-30 14:24+0800\n"
+"PO-Revision-Date: 2008-08-30 14:28+0800\n"
 "Last-Translator: Yi-Shun Wang <dnextstep@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) <community@linuxhall.org>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -33,7 +33,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "版權所有 © 1995-2008\n"
-"Spencer Kimball、Peter Mattis 及 the GIMP 開發團隊"
+"Spencer Kimball、Peter Mattis 及 the GIMP 開發隊伍"
 
 #: ../app/about.h:34
 msgid ""
@@ -51,11 +51,11 @@ msgid ""
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"GIMP 是自由軟體，您可以遵照自由軟體基金會 (Free Software Foundation) 出版的 GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新發佈這一程式，或者自由選擇使用任何更新的版本。\n"
+"GIMP 是自由軟件，你可以遵照自由軟件基金會 (Free Software Foundation) 出版的 GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新發佈這一程式，或者自由選擇使用任何更新的版本。\n"
 "\n"
 "發佈 GIMP 的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的而隱含的擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
 "\n"
-"您應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，寫信給： Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+"你應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，寫信給： Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/app.c:214
 #, c-format
@@ -67,7 +67,7 @@ msgid ""
 msgstr ""
 "無法開啟測試用的交換記憶檔案。\n"
 "\n"
-"為了避免損失資料，請檢查您在偏好設定中所指定的交換檔目錄 (目前為“%s”) 的位置和權限是否正確。"
+"為了避免損失資料，請檢查你在偏好設定中所指定的交換檔目錄 (目前為“%s”) 的位置和權限是否正確。"
 
 #: ../app/batch.c:75
 #, c-format
@@ -105,7 +105,7 @@ msgstr "在不顯示使用者介面的模式下執行"
 
 #: ../app/main.c:174
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "不載入筆刷、漸層、圖樣..."
+msgstr "不載入筆刷、漸變色、圖樣..."
 
 #: ../app/main.c:179
 msgid "Do not load any fonts"
@@ -150,7 +150,7 @@ msgstr "傳送訊息到 console 而非對話盒"
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:230
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB 相容性模式 (off|on|warn)"
+msgstr "PDB 兼容性模式 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:236
@@ -179,7 +179,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP 無法初始化圖形介面。\n"
-"請確定您的圖形顯示環境設定無誤。"
+"請確定你的圖形顯示環境設定無誤。"
 
 #: ../app/main.c:392
 msgid "Another GIMP instance is already running."
@@ -187,16 +187,16 @@ msgstr "另一個 GIMP 實體已經在執行。"
 
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
-msgstr "GIMP 輸出。請輸入任何字元以關閉這個視窗。"
+msgstr "GIMP 輸出。請輸入任何字符以關閉這個視窗。"
 
 #: ../app/main.c:463
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr "(輸入任何字元以關閉這個視窗)\n"
+msgstr "(輸入任何字符以關閉這個視窗)\n"
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "GIMP 輸出。您可以將這個視窗最小化，但不關閉它。"
+msgstr "GIMP 輸出。你可以將這個視窗最小化，但不關閉它。"
 
 #: ../app/sanity.c:342
 #, c-format
@@ -205,7 +205,7 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"無法將您指定的檔案名稱編碼轉換為 UTF-8：%s\n"
+"無法將你指定的檔案名稱編碼轉換為 UTF-8：%s\n"
 "\n"
 "請檢查環境變數 G_FILE_NAME_ENCODING 的值。"
 
@@ -221,13 +221,13 @@ msgid ""
 msgstr ""
 "含有 GIMP 個人組態檔的目錄的名稱無法轉換至 UTF-8：%s\n"
 "\n"
-"最可能的原因是，檔案系統使用了 UTF-8 以外的編碼作為檔案名稱，而且您沒有正確設定來通知 Glib。請設定環境變數 G_FILENAME_ENCODING。"
+"最可能的原因是，檔案系統使用了 UTF-8 以外的編碼作為檔案名稱，而且你沒有正確設定來通知 Glib。請設定環境變數 G_FILENAME_ENCODING。"
 
 #. show versions of libraries used by GIMP
 #: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr "正在使用 %s 版本 %s（依版本 %s 編譯）"
+msgstr "正在使用 %s 版本 %s（根據版本 %s 編譯）"
 
 #: ../app/version.c:127 ../tools/gimp-remote.c:95
 #, c-format
@@ -265,7 +265,7 @@ msgstr "相關內容說明(_C)"
 
 #: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:150
 msgid "Pointer Information"
-msgstr "滑鼠指標資訊"
+msgstr "鼠標資訊"
 
 #: ../app/actions/actions.c:121
 msgid "Debug"
@@ -313,13 +313,13 @@ msgstr "字型"
 #: ../app/actions/actions.c:151 ../app/actions/dialogs-actions.c:141
 #: ../app/dialogs/dialogs.c:228 ../app/widgets/gimpgradienteditor.c:276
 msgid "Gradient Editor"
-msgstr "漸層編輯程序"
+msgstr "漸變色編輯程序"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:154 ../app/core/gimp.c:836
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradients"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../app/actions/actions.c:157
 msgid "Help"
@@ -755,7 +755,7 @@ msgstr "色盤(_P)"
 #: ../app/dialogs/palette-import-dialog.c:216
 #: ../app/dialogs/preferences-dialog.c:1940
 msgid "_Gradient"
-msgstr "漸層(_G)"
+msgstr "漸變色(_G)"
 
 #: ../app/actions/context-actions.c:55
 msgid "_Font"
@@ -805,7 +805,7 @@ msgstr "交換前景及背景顏色"
 #: ../app/actions/cursor-info-actions.c:40
 #, fuzzy
 msgid "Pointer Information Menu"
-msgstr "滑鼠指標資訊"
+msgstr "鼠標資訊"
 
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-points-actions.c:47
@@ -857,7 +857,7 @@ msgstr "刪除 “%s”？"
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "是否確定要同時在清單及磁碟裡刪除“%s”？"
+msgstr "是否確定要同時在清單及磁碟裏刪除“%s”？"
 
 #: ../app/actions/dialogs-actions.c:39
 msgid "Tool _Options"
@@ -986,15 +986,15 @@ msgstr "開啟圖樣對話盒"
 
 #: ../app/actions/dialogs-actions.c:135
 msgid "_Gradients"
-msgstr "漸層(_G)"
+msgstr "漸變色(_G)"
 
 #: ../app/actions/dialogs-actions.c:136
 msgid "Open the gradients dialog"
-msgstr "開啟漸層對話盒"
+msgstr "開啟漸變色對話盒"
 
 #: ../app/actions/dialogs-actions.c:142
 msgid "Open the gradient editor"
-msgstr "開啟漸層編輯器"
+msgstr "開啟漸變色編輯器"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "Pal_ettes"
@@ -1215,7 +1215,7 @@ msgstr "將分頁鎖定停駐(_K)"
 
 #: ../app/actions/dockable-actions.c:109
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr "保護這個分頁以免被滑鼠指標移動"
+msgstr "保護這個分頁以免被鼠標移動"
 
 #: ../app/actions/dockable-actions.c:115
 msgid "Show _Button Bar"
@@ -1942,7 +1942,7 @@ msgstr "重新整理字型清單"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
-msgstr "「漸層編輯程序」選單"
+msgstr "「漸變色編輯程序」選單"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgid "Left Color Type"
@@ -1986,7 +1986,7 @@ msgstr "混合端點時同時拉勻透明度(_Y)"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
-msgstr "編輯使用中的漸層"
+msgstr "編輯使用中的漸變色"
 
 #: ../app/actions/gradient-editor-actions.c:156
 msgid "_Left Neighbor's Right Endpoint"
@@ -2107,11 +2107,11 @@ msgstr "全部顯示"
 
 #: ../app/actions/gradient-editor-actions.c:773
 msgid "_Blending Function for Segment"
-msgstr "該區段中混色所用的函式(_B)"
+msgstr "該區段中混色所用的函數(_B)"
 
 #: ../app/actions/gradient-editor-actions.c:775
 msgid "Coloring _Type for Segment"
-msgstr "區段的著色方式(_T)"
+msgstr "區段的着色方式(_T)"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "_Flip Segment"
@@ -2143,11 +2143,11 @@ msgstr "重新分配區段中的控制點(_H)"
 
 #: ../app/actions/gradient-editor-actions.c:795
 msgid "_Blending Function for Selection"
-msgstr "所有選定的區段中混色所用的函式(_B)"
+msgstr "所有選定的區段中混色所用的函數(_B)"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "Coloring _Type for Selection"
-msgstr "所有選定的區段的著色方式(_T)"
+msgstr "所有選定的區段的着色方式(_T)"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "_Flip Selection"
@@ -2183,7 +2183,7 @@ msgstr "左端點的顏色"
 
 #: ../app/actions/gradient-editor-commands.c:88
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "漸層區段的左端點顏色"
+msgstr "漸變色區段的左端點顏色"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
@@ -2191,7 +2191,7 @@ msgstr "右端點顏色"
 
 #: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "漸層區段的右端點顏色"
+msgstr "漸變色區段的右端點顏色"
 
 #: ../app/actions/gradient-editor-commands.c:453
 msgid "Replicate Segment"
@@ -2199,7 +2199,7 @@ msgstr "複製區段"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr "複製漸層區段"
+msgstr "複製漸變色區段"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
@@ -2207,7 +2207,7 @@ msgstr "複製選擇區域"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
-msgstr "複製漸層選擇區域"
+msgstr "複製漸變色選擇區域"
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
@@ -2231,7 +2231,7 @@ msgstr "均勻地分割區段"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr "均勻地分割漸層區段"
+msgstr "均勻地分割漸變色區段"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
@@ -2239,7 +2239,7 @@ msgstr "均勻地分割所有區段"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr "均勻地分割所有漸層區段"
+msgstr "均勻地分割所有漸變色區段"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2249,41 +2249,41 @@ msgstr "分割"
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
-msgstr "請指定您選定的區段應該分為多少等份。"
+msgstr "請指定你選定的區段應該分為多少等份。"
 
 #: ../app/actions/gradient-editor-commands.c:597
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
-msgstr "請指定您選定的所有區段應該分為多少等份。"
+msgstr "請指定你選定的所有區段應該分為多少等份。"
 
 #: ../app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
-msgstr "「漸層」選單"
+msgstr "「漸變色」選單"
 
 #: ../app/actions/gradients-actions.c:48
 msgid "_New Gradient"
-msgstr "新增漸層(_N)"
+msgstr "新增漸變色(_N)"
 
 #: ../app/actions/gradients-actions.c:49
 msgid "New gradient"
-msgstr "新增漸層"
+msgstr "新增漸變色"
 
 #: ../app/actions/gradients-actions.c:54
 msgid "D_uplicate Gradient"
-msgstr "複製漸層(_U)"
+msgstr "複製漸變色(_U)"
 
 #: ../app/actions/gradients-actions.c:55
 msgid "Duplicate gradient"
-msgstr "複製漸層"
+msgstr "複製漸變色"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "複製漸層位置(_L)"
+msgstr "複製漸變色位置(_L)"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
-msgstr "複製漸層檔案位置到剪貼簿"
+msgstr "複製漸變色檔案位置到剪貼簿"
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
@@ -2295,27 +2295,27 @@ msgstr "另存為 POV-Ray"
 
 #: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
-msgstr "刪除漸層(_D)"
+msgstr "刪除漸變色(_D)"
 
 #: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
-msgstr "刪除漸層"
+msgstr "刪除漸變色"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
-msgstr "重新整理漸層(_R)"
+msgstr "重新整理漸變色(_R)"
 
 #: ../app/actions/gradients-actions.c:79
 msgid "Refresh gradients"
-msgstr "重新整理漸層"
+msgstr "重新整理漸變色"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "修改漸層(_E)..."
+msgstr "修改漸變色(_E)..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr "修改漸層"
+msgstr "修改漸變色"
 
 #: ../app/actions/gradients-commands.c:66
 #, c-format
@@ -2410,11 +2410,11 @@ msgstr "重設圖層為此圖片的大小"
 
 #: ../app/actions/image-actions.c:90
 msgid "_Print Size..."
-msgstr "列印大小(_P)..."
+msgstr "打印大小(_P)..."
 
 #: ../app/actions/image-actions.c:91
 msgid "Adjust the print resolution"
-msgstr "調整列印解析度"
+msgstr "調整打印解像度"
 
 #: ../app/actions/image-actions.c:96
 msgid "_Scale Image..."
@@ -2526,7 +2526,7 @@ msgstr "縮放中"
 
 #: ../app/actions/image-commands.c:306
 msgid "Set Image Print Resolution"
-msgstr "更改圖片解析度"
+msgstr "更改圖片解像度"
 
 #: ../app/actions/image-commands.c:362
 #: ../app/pdb/drawable-transform-cmds.c:148
@@ -2547,7 +2547,7 @@ msgstr "無法裁剪，因為選擇區域是空白的。"
 
 #: ../app/actions/image-commands.c:606
 msgid "Change Print Size"
-msgstr "改變列印的大小"
+msgstr "改變打印的大小"
 
 #: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
@@ -2747,7 +2747,7 @@ msgstr "文字轉換為路徑(_P)"
 # More detail explanation then original english -- Abel
 #: ../app/actions/layers-actions.c:159
 msgid "Create a path from this text layer"
-msgstr "依文字圖層輪廓製作路徑"
+msgstr "根據文字圖層輪廓製作路徑"
 
 #: ../app/actions/layers-actions.c:164
 msgid "Text alon_g Path"
@@ -2755,7 +2755,7 @@ msgstr "路徑上的文字(_G)"
 
 #: ../app/actions/layers-actions.c:165
 msgid "Warp this layer's text along the current path"
-msgstr "順著目前的路徑扭曲圖層的文字"
+msgstr "順着目前的路徑扭曲圖層的文字"
 
 #: ../app/actions/layers-actions.c:170
 msgid "Layer B_oundary Size..."
@@ -3311,7 +3311,7 @@ msgstr "重設所有濾鏡"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
-msgstr "您是否確定要將所有濾鏡參數還原為預設值？"
+msgstr "你是否確定要將所有濾鏡參數還原為預設值？"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
@@ -3451,7 +3451,7 @@ msgstr "儲存選擇區域為色版"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr "依選擇區域描邊(_S)..."
+msgstr "根據選擇區域描邊(_S)..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
@@ -3459,11 +3459,11 @@ msgstr "沿選擇區域描邊"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
-msgstr "依選擇區域描邊(_S)"
+msgstr "根據選擇區域描邊(_S)"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
-msgstr "用上次的設定依選擇區域描邊"
+msgstr "用上次的設定根據選擇區域描邊"
 
 #: ../app/actions/select-commands.c:153 ../app/core/gimpselection.c:167
 msgid "Feather Selection"
@@ -3520,7 +3520,7 @@ msgstr "目前沒有任何使用中的圖層或者色版可以用來描邊。"
 
 #: ../app/actions/select-commands.c:336 ../app/core/gimpselection.c:151
 msgid "Stroke Selection"
-msgstr "依選擇區域描邊"
+msgstr "根據選擇區域描邊"
 
 #: ../app/actions/templates-actions.c:42
 msgid "Templates Menu"
@@ -3532,7 +3532,7 @@ msgstr "從範本建立圖片(_C)"
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
-msgstr "依指定的範本製作新的圖片"
+msgstr "根據指定的範本製作新的圖片"
 
 #: ../app/actions/templates-actions.c:52
 msgid "_New Template..."
@@ -3587,7 +3587,7 @@ msgstr "刪除範本"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "是否確定要同時在清單及磁碟裡刪除範本“%s”？"
+msgstr "是否確定要同時在清單及磁碟裏刪除範本“%s”？"
 
 #: ../app/actions/text-editor-actions.c:44
 msgid "Open"
@@ -3707,7 +3707,7 @@ msgstr "重設工具選項"
 
 #: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "您是否確定要將所有工具選項還原為預設值？"
+msgstr "你是否確定要將所有工具選項還原為預設值？"
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
@@ -3779,11 +3779,11 @@ msgstr "在工具箱中顯示(_S)"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
-msgstr "依顏色(_B)"
+msgstr "根據顏色(_B)"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
-msgstr "依類似的顏色選擇區域"
+msgstr "根據類似的顏色選擇區域"
 
 #: ../app/actions/tools-actions.c:105
 msgid "_Arbitrary Rotation..."
@@ -3879,19 +3879,19 @@ msgstr "路徑下降至底層"
 
 #: ../app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
-msgstr "依路徑描邊(_K)..."
+msgstr "根據路徑描邊(_K)..."
 
 #: ../app/actions/vectors-actions.c:113
 msgid "Paint along the path"
-msgstr "順著路徑繪製"
+msgstr "順着路徑繪製"
 
 #: ../app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
-msgstr "依路徑描邊(_K)"
+msgstr "根據路徑描邊(_K)"
 
 #: ../app/actions/vectors-actions.c:119
 msgid "Paint along the path with last values"
-msgstr "用上次的設定依路徑描邊"
+msgstr "用上次的設定根據路徑描邊"
 
 #: ../app/actions/vectors-actions.c:124
 msgid "Co_py Path"
@@ -3979,7 +3979,7 @@ msgstr "路徑轉換為選擇區域"
 #: ../app/actions/vectors-commands.c:385 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1945 ../app/vectors/gimpvectors.c:200
 msgid "Stroke Path"
-msgstr "依路徑描邊"
+msgstr "根據路徑描邊"
 
 #: ../app/actions/view-actions.c:67
 msgid "_View"
@@ -4256,7 +4256,7 @@ msgstr "其它(_R)..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
-msgstr "設定自訂縮放因子"
+msgstr "設定自選縮放因子"
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
@@ -4498,7 +4498,7 @@ msgid ""
 "file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
-msgstr "無法開啟交換檔。GIMP 已耗盡記憶體，而且無法使用交換檔，這樣可能引致某部份圖片內容損壞。請您嘗試使用另一個檔案名稱儲存圖片，然後重新啟動 GIMP，在偏好設定中檢查有關交換檔資料夾的位置。"
+msgstr "無法開啟交換檔。GIMP 已耗盡記憶體，而且無法使用交換檔，這樣可能引致某部份圖片內容損壞。請你嘗試使用另一個檔案名稱儲存圖片，然後重新啟動 GIMP，在偏好設定中檢查有關交換檔資料夾的位置。"
 
 #: ../app/base/tile-swap.c:568
 #, c-format
@@ -4530,7 +4530,7 @@ msgstr "讀取“%s”時發生錯誤：%s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "分析‘%s’檔案的內容時出現錯誤，會改為使用預設的組態。您的組態檔案已被備份為‘%s’。"
+msgstr "分析‘%s’檔案的內容時出現錯誤，會改為使用預設的組態。你的組態檔案已被備份為‘%s’。"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -4547,7 +4547,7 @@ msgstr "啟用時，圖片會在它的圖片視窗獲得焦點時變成使用中
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr "如果決定了使用自選的顏色來填補圖片外圍的空白區域，則在這裡指定顏色。"
+msgstr "如果決定了使用自選的顏色來填補圖片外圍的空白區域，則在這裏指定顏色。"
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
@@ -4563,17 +4563,17 @@ msgstr "如果在未儲存圖片的情況下關閉視窗，必須先得到使用
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the pixel format to use for mouse pointers."
-msgstr "指定 GIMP 顯示滑鼠指標時使用的圖形。"
+msgstr "指定 GIMP 顯示鼠標時使用的圖形。"
 
 #: ../app/config/gimprc-blurbs.h:42
 msgid "Sets the type of mouse pointers to use."
-msgstr "指定 GIMP 以哪種方式顯示滑鼠指標。"
+msgstr "指定 GIMP 以哪種方式顯示鼠標。"
 
 #: ../app/config/gimprc-blurbs.h:45
 msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
-msgstr "在不同的情況下使用不同的滑鼠指標是很棒的，預設會使用這種方式顯示滑鼠指標。但是，它也會消耗一些資源，某些情況下您可能不希望使用這種設定。"
+msgstr "在不同的情況下使用不同的鼠標是很棒的，預設會使用這種方式顯示鼠標。但是，它也會消耗一些資源，某些情況下你可能不希望使用這種設定。"
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid ""
@@ -4598,19 +4598,19 @@ msgstr "一些工具，像模糊選擇區域或者填色，會以 seed-fill 運�
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr "在浮動視窗上設定的視窗類型提示。這可能會影響您的視窗管理程式裝飾與處理浮動視窗的方式。"
+msgstr "在浮動視窗上設定的視窗類型提示。這可能會影響你的視窗管理程式裝飾與處理浮動視窗的方式。"
 
 #: ../app/config/gimprc-blurbs.h:123
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "如啟用本選項，所有工具都會使用您選定的筆刷。"
+msgstr "如啟用本選項，所有工具都會使用你選定的筆刷。"
 
 #: ../app/config/gimprc-blurbs.h:129
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "如啟用本選項，所有工具都會使用您選定的漸層。"
+msgstr "如啟用本選項，所有工具都會使用你選定的漸變色。"
 
 #: ../app/config/gimprc-blurbs.h:132
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "如啟用本選項，所有工具都會使用您選定的圖樣。"
+msgstr "如啟用本選項，所有工具都會使用你選定的圖樣。"
 
 #: ../app/config/gimprc-blurbs.h:146
 msgid "Sets the browser used by the help system."
@@ -4638,7 +4638,7 @@ msgstr "程式會使用自己的色彩而不用系統分配的色彩；在 8 bit
 #: ../app/config/gimprc-blurbs.h:167
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
-msgstr "設定縮放及變換圖片時選用的內插法品質。"
+msgstr "設定縮放及變換圖片時選用的插值法品質。"
 
 #: ../app/config/gimprc-blurbs.h:174
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -4671,14 +4671,14 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "設定螢幕的水平解析度 (單位為 dpi)。如果設定為 0 的話，會向 X 伺服器查詢水平和垂直的解析度。"
+msgstr "設定螢幕的水平解像度 (單位為 dpi)。如果設定為 0 的話，會向 X 伺服器查詢水平和垂直的解像度。"
 
 #: ../app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "設定螢幕的垂直解析度 (單位為 dpi)。如果設定為 0 的話，會向 X 伺服器查詢水平和垂直的解析度。"
+msgstr "設定螢幕的垂直解像度 (單位為 dpi)。如果設定為 0 的話，會向 X 伺服器查詢水平和垂直的解像度。"
 
 #: ../app/config/gimprc-blurbs.h:208
 msgid ""
@@ -4764,71 +4764,71 @@ msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
-msgstr "如啟用本選項，所有對話盒都會顯示「求助」按鈕，讓您瀏覽相關的說明文件。不過即使沒有這個按鈕，仍然可以按鍵盤的 F1 代替。"
+msgstr "如啟用本選項，所有對話盒都會顯示「求助」按鈕，讓你瀏覽相關的說明文件。不過即使沒有這個按鈕，仍然可以按鍵盤的 F1 代替。"
 
 #: ../app/config/gimprc-blurbs.h:291
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
-msgstr "如啟用本選項，當使用繪畫工具時也一樣顯示滑鼠指標。"
+msgstr "如啟用本選項，當使用繪畫工具時也一樣顯示鼠標。"
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr "如啟用本選項，預設會將選單列顯示出來。您也可以在「顯示→顯示選單列」中更改本設定。"
+msgstr "如啟用本選項，預設會將選單列顯示出來。你也可以在「顯示→顯示選單列」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr "如啟用本選項，預設會將尺規顯示出來。您也可以在「顯示→顯示尺規」中更改本設定。"
+msgstr "如啟用本選項，預設會將尺規顯示出來。你也可以在「顯示→顯示尺規」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:303
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr "如啟用本選項，預設會將捲動列顯示出來。您也可以在「顯示→顯示捲動列」中更改本設定。"
+msgstr "如啟用本選項，預設會將捲動列顯示出來。你也可以在「顯示→顯示捲動列」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr "如啟用本選項，預設會將狀態列顯示出來。您也可以在「顯示→顯示狀態列」中更改本設定。"
+msgstr "如啟用本選項，預設會將狀態列顯示出來。你也可以在「顯示→顯示狀態列」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr "如啟用本選項，預設會將選擇區域周圍的虛線顯示出來。您也可以在「顯示→顯示選擇區域」中更改本設定。"
+msgstr "如啟用本選項，預設會將選擇區域周圍的虛線顯示出來。你也可以在「顯示→顯示選擇區域」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr "如啟用本選項，預設會將圖層邊界顯示出來。您也可以在「顯示→顯示圖層邊界」中更改本設定。"
+msgstr "如啟用本選項，預設會將圖層邊界顯示出來。你也可以在「顯示→顯示圖層邊界」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:319
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr "如啟用本選項，預設會將參考線顯示出來。您也可以在「顯示→顯示參考線」中更改本設定。"
+msgstr "如啟用本選項，預設會將參考線顯示出來。你也可以在「顯示→顯示參考線」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:323
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr "如啟用本選項，預設會將格線顯示出來。您也可以在「顯示→顯示格線」中更改本設定。"
+msgstr "如啟用本選項，預設會將格線顯示出來。你也可以在「顯示→顯示格線」中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:327
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr "如啟用本選項，預設會將取樣點顯示出來。您也可以在“顯示→顯示取樣點”中更改本設定。"
+msgstr "如啟用本選項，預設會將取樣點顯示出來。你也可以在“顯示→顯示取樣點”中更改本設定。"
 
 #: ../app/config/gimprc-blurbs.h:331
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr "當滑鼠指標停在項目上時顯示工具提示。"
+msgstr "當鼠標停在項目上時顯示工具提示。"
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid "What to do when the space bar is pressed in the image window."
@@ -4859,7 +4859,7 @@ msgstr ""
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
-msgstr "如啟用本選項，當某個選單項目被選中時，您可即時按下適當的按鍵組合，來更改代表這個選單項目的捷徑鍵。"
+msgstr "如啟用本選項，當某個選單項目被選中時，你可即時按下適當的按鍵組合，來更改代表這個選單項目的捷徑鍵。"
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when GIMP exits."
@@ -4903,7 +4903,7 @@ msgstr "交換前景及背景顏色"
 #: ../app/config/gimprc-blurbs.h:393
 #, fuzzy
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "顯示使用中的筆刷、圖樣及漸層(_B)"
+msgstr "顯示使用中的筆刷、圖樣及漸變色(_B)"
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid "Show the currently active image in the toolbox."
@@ -4913,7 +4913,7 @@ msgstr ""
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
-msgstr "在工具箱上設定的視窗類型提示。這可能會影響您的視窗管理程式裝飾與處理工具箱的方式。"
+msgstr "在工具箱上設定的視窗類型提示。這可能會影響你的視窗管理程式裝飾與處理工具箱的方式。"
 
 #: ../app/config/gimprc-blurbs.h:406
 msgid "Sets the manner in which transparency is displayed in images."
@@ -4940,7 +4940,7 @@ msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "每幅圖片都會將曾經使用操作程序保留在記憶中，以備將來復原時使用；這裡指定每幅圖片個別佔用的記憶體上限。但無論本設定為何值，復原次數的設定會優先考慮。"
+msgstr "每幅圖片都會將曾經使用操作程序保留在記憶中，以備將來復原時使用；這裏指定每幅圖片個別佔用的記憶體上限。但無論本設定為何值，復原次數的設定會優先考慮。"
 
 #: ../app/config/gimprc-blurbs.h:425
 msgid "Sets the size of the previews in the Undo History."
@@ -5384,7 +5384,7 @@ msgstr "圖片尺寸"
 
 #: ../app/core/core-enums.c:891
 msgid "Image resolution change"
-msgstr "圖片解析度改變"
+msgstr "圖片解像度改變"
 
 #: ../app/core/core-enums.c:893
 msgid "Change indexed palette"
@@ -5569,14 +5569,14 @@ msgstr "前景色至透明"
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
-msgstr "您似乎以前曾使用過 GIMP %s。GIMP 現在將把您的使用者設定值轉移為“%s”。"
+msgstr "你似乎以前曾使用過 GIMP %s。GIMP 現在將把你的使用者設定值轉移為“%s”。"
 
 #: ../app/core/gimp-user-install.c:158
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
-msgstr "這似乎是您第一次使用 GIMP。GIMP 現在將建立一個名為“%s”的資料夾並複製一些檔案進去。"
+msgstr "這似乎是你第一次使用 GIMP。GIMP 現在將建立一個名為“%s”的資料夾並複製一些檔案進去。"
 
 #: ../app/core/gimp-user-install.c:309
 #, c-format
@@ -5629,7 +5629,7 @@ msgstr "無法從‘%2$s’讀取 %1$d 位元組：%3$s"
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "分析筆刷檔 ‘%s’ 時出現嚴重錯誤：寬度等於 0。"
+msgstr "分析筆刷檔 ‘%s’ 時出現嚴重錯誤：闊度等於 0。"
 
 #: ../app/core/gimpbrush-load.c:206
 #, c-format
@@ -5762,7 +5762,7 @@ msgstr "選擇模糊區域"
 #: ../app/tools/gimpbycolorselecttool.c:82
 msgctxt "command"
 msgid "Select by Color"
-msgstr "依顏色選擇"
+msgstr "根據顏色選擇"
 
 #: ../app/core/gimpchannel.c:257
 msgid "Channel"
@@ -5882,7 +5882,7 @@ msgstr "%s 複製本"
 
 #: ../app/core/gimpdatafactory.c:576
 msgid "You don't have a writable data folder configured."
-msgstr "您沒有設定可寫入的資料夾。"
+msgstr "你沒有設定可寫入的資料夾。"
 
 #: ../app/core/gimpdatafactory.c:751
 #, c-format
@@ -5928,7 +5928,7 @@ msgstr "色彩平衡"
 #: ../app/core/gimpdrawable-colorize.c:73
 #: ../app/core/gimpdrawable-colorize.c:85 ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
-msgstr "著色"
+msgstr "着色"
 
 #: ../app/core/gimpdrawable-curves.c:165 ../app/core/gimpdrawable-curves.c:182
 #: ../app/tools/gimpcurvestool.c:136
@@ -5980,7 +5980,7 @@ msgstr "色調分離"
 
 #: ../app/core/gimpdrawable-stroke.c:324
 msgid "Render Stroke"
-msgstr "筆劃著色"
+msgstr "筆劃着色"
 
 #: ../app/core/gimpdrawable-threshold.c:71
 #: ../app/core/gimpdrawable-threshold.c:82 ../app/tools/gimpthresholdtool.c:90
@@ -6009,37 +6009,37 @@ msgstr "變換"
 #: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr "分析漸層檔案‘%s’的內容時出現嚴重錯誤：讀入第 %d 行時發生錯誤。"
+msgstr "分析漸變色檔案‘%s’的內容時出現嚴重錯誤：讀入第 %d 行時發生錯誤。"
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "分析漸層檔案 ‘%s’ 時出現嚴重錯誤：它不是 GIMP 漸層檔案。"
+msgstr "分析漸變色檔案 ‘%s’ 時出現嚴重錯誤：它不是 GIMP 漸變色檔案。"
 
 #: ../app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "漸層檔案‘%s’中含有無效的 UTF-8 字串。"
+msgstr "漸變色檔案‘%s’中含有無效的 UTF-8 字串。"
 
 #: ../app/core/gimpgradient-load.c:136
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-msgstr "分析漸層檔案 ‘%s’ 時出現嚴重錯誤：檔案內容第 %d 行已損壞。"
+msgstr "分析漸變色檔案 ‘%s’ 時出現嚴重錯誤：檔案內容第 %d 行已損壞。"
 
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr "分析漸層檔案 ‘%1$s’ 時出現嚴重錯誤：第 %3$d 行的片段 %2$d 已損壞。"
+msgstr "分析漸變色檔案 ‘%1$s’ 時出現嚴重錯誤：第 %3$d 行的片段 %2$d 已損壞。"
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "漸層檔案“%s”已損壞：區段不能超過 0-1 的範圍。"
+msgstr "漸變色檔案“%s”已損壞：區段不能超過 0-1 的範圍。"
 
 #: ../app/core/gimpgradient-load.c:334
 #, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "在‘%s’中找不到任何線性的漸層"
+msgstr "在‘%s’中找不到任何線性的漸變色"
 
 #: ../app/core/gimpgradient-load.c:344
 #, c-format
@@ -6207,7 +6207,7 @@ msgstr "無法復原 %s"
 
 #: ../app/core/gimpimage.c:1506
 msgid "Change Image Resolution"
-msgstr "更改圖片解析度"
+msgstr "更改圖片解像度"
 
 #: ../app/core/gimpimage.c:1550
 msgid "Change Image Unit"
@@ -6347,7 +6347,7 @@ msgstr "遠端檔案"
 
 #: ../app/core/gimpimagefile.c:568
 msgid "Click to create preview"
-msgstr "按這裡產生預覽圖"
+msgstr "按這裏產生預覽圖"
 
 #: ../app/core/gimpimagefile.c:574
 msgid "Loading preview..."
@@ -6652,11 +6652,11 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:113
 msgid "The horizontal image resolution."
-msgstr "圖片水平解析度。"
+msgstr "圖片水平解像度。"
 
 #: ../app/core/gimptemplate.c:118
 msgid "The vertical image resolution."
-msgstr "圖片垂直解析度。"
+msgstr "圖片垂直解像度。"
 
 #: ../app/core/gimptemplate.c:403 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -6736,7 +6736,7 @@ msgstr "GIMP 版本由以下人仕編寫："
 
 #: ../app/dialogs/about-dialog.c:605
 msgid "This is an unstable development release."
-msgstr "這是不穩定的發展釋出版本。"
+msgstr "這是不穩定的發展推出版本。"
 
 #: ../app/dialogs/channel-options-dialog.c:145
 msgid "Channel _name:"
@@ -6886,7 +6886,7 @@ msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
-msgstr "遠端儲存檔案需要依延伸檔名決定檔案格式。請選擇符合選取檔案格式的延伸檔名或完全不使用延伸檔名。"
+msgstr "遠端儲存檔案需要根據延伸檔名決定檔案格式。請選擇符合選取檔案格式的延伸檔名或完全不使用延伸檔名。"
 
 #: ../app/dialogs/file-save-dialog.c:428
 msgid "Extension Mismatch"
@@ -6957,7 +6957,7 @@ msgstr "確認圖片尺寸"
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr "您準備產生一幅大小為 %s 的圖片。"
+msgstr "你準備產生一幅大小為 %s 的圖片。"
 
 #: ../app/dialogs/image-new-dialog.c:321
 #, c-format
@@ -7007,7 +7007,7 @@ msgstr "圖片縮小至指定尺寸的話，會令某些圖層完全消失。"
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
-msgstr "這是否您想要的結果？"
+msgstr "這是否你想要的結果？"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
@@ -7045,7 +7045,7 @@ msgstr "圖片名稱(_N):"
 #: ../app/dialogs/layer-options-dialog.c:139
 #: ../app/tools/gimpmeasuretool.c:1062
 msgid "Width:"
-msgstr "寬度:"
+msgstr "闊度:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
 #: ../app/tools/gimpmeasuretool.c:1090
@@ -7066,7 +7066,7 @@ msgstr "模組總管"
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
-msgstr "您必須重新啟動 GIMP 來讓變更生效。"
+msgstr "你必須重新啟動 GIMP 來讓更改生效。"
 
 #: ../app/dialogs/module-dialog.c:191
 msgid "Module"
@@ -7134,7 +7134,7 @@ msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
-msgstr "移動至一半寬度及高度的位置(_2)"
+msgstr "移動至一半闊度及高度的位置(_2)"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:222
@@ -7227,11 +7227,11 @@ msgstr "重設所有偏好設定"
 
 #: ../app/dialogs/preferences-dialog.c:285
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "您是否確定要將所有偏好設定還原為預設值？"
+msgstr "你是否確定要將所有偏好設定還原為預設值？"
 
 #: ../app/dialogs/preferences-dialog.c:355
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "您必須重新啟動 GIMP 令以下的設定生效："
+msgstr "你必須重新啟動 GIMP 令以下的設定生效："
 
 #: ../app/dialogs/preferences-dialog.c:494
 msgid "Configure Input Devices"
@@ -7249,7 +7249,7 @@ msgstr "移除所有鍵盤捷徑鍵"
 
 #: ../app/dialogs/preferences-dialog.c:604
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "您是否確定要移除所有選單的鍵盤捷徑鍵？"
+msgstr "你是否確定要移除所有選單的鍵盤捷徑鍵？"
 
 #: ../app/dialogs/preferences-dialog.c:645
 msgid ""
@@ -7267,7 +7267,7 @@ msgstr "下次啟動 GIMP 時會將所有輸入裝置的設定還原為預設值
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
-msgstr "下次啟動 GIMP 時會將您的工具選項還原為預設值。"
+msgstr "下次啟動 GIMP 時會將你的工具選項還原為預設值。"
 
 #: ../app/dialogs/preferences-dialog.c:1283
 msgid "Show _menubar"
@@ -7463,7 +7463,7 @@ msgstr "顯示「求助」按鈕(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1811
 msgid "Use the online version"
-msgstr "使用線上的版本"
+msgstr "使用網上的版本"
 
 #: ../app/dialogs/preferences-dialog.c:1812
 msgid "Use a locally installed copy"
@@ -7475,7 +7475,7 @@ msgstr "使用者手冊:"
 
 #: ../app/dialogs/preferences-dialog.c:1820
 msgid "There's a local installation of the user manual."
-msgstr "這裡有本地端安裝的使用者手冊。"
+msgstr "這裏有本地端安裝的使用者手冊。"
 
 #: ../app/dialogs/preferences-dialog.c:1825
 msgid "The user manual is not installed locally."
@@ -7521,7 +7521,7 @@ msgstr "自動貼齊生效距離(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:1923
 msgid "Default _interpolation:"
-msgstr "預設使用的圖片內插法(_I):"
+msgstr "預設使用的圖片插值法(_I):"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1930
@@ -7553,7 +7553,7 @@ msgstr "顯示前景及背景顏色(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:1980
 msgid "Show active _brush, pattern & gradient"
-msgstr "顯示使用中的筆刷、圖樣及漸層(_B)"
+msgstr "顯示使用中的筆刷、圖樣及漸變色(_B)"
 
 #: ../app/dialogs/preferences-dialog.c:1984
 msgid "Show active _image"
@@ -7620,7 +7620,7 @@ msgstr "空白鍵被按下(_W):"
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2115
 msgid "Mouse Pointers"
-msgstr "滑鼠指標"
+msgstr "鼠標"
 
 #: ../app/dialogs/preferences-dialog.c:2119
 msgid "Show _brush outline"
@@ -7628,16 +7628,16 @@ msgstr "顯示筆刷輪廓(_B)"
 
 #: ../app/dialogs/preferences-dialog.c:2122
 msgid "Show pointer for paint _tools"
-msgstr "使用繪畫工具時顯示滑鼠指標(_T)"
+msgstr "使用繪畫工具時顯示鼠標(_T)"
 
 #: ../app/dialogs/preferences-dialog.c:2128
 msgid "Pointer _mode:"
-msgstr "滑鼠指標模式(_M):"
+msgstr "鼠標模式(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2131
 #, fuzzy
 msgid "Pointer re_ndering:"
-msgstr "滑鼠指標模式(_M):"
+msgstr "鼠標模式(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2143
 msgid "Image Window Appearance"
@@ -7701,7 +7701,7 @@ msgstr "檢查大小(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:2315
 msgid "Monitor Resolution"
-msgstr "螢幕解析度"
+msgstr "螢幕解像度"
 
 #: ../app/dialogs/preferences-dialog.c:2319
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
@@ -7757,11 +7757,11 @@ msgstr "選擇監視器顏色設定組合"
 
 #: ../app/dialogs/preferences-dialog.c:2441
 msgid "_Print simulation profile:"
-msgstr "列印模擬設定組合(_P):"
+msgstr "打印模擬設定組合(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "Select Printer Color Profile"
-msgstr "選擇印表機顏色設定組合"
+msgstr "選擇打印機顏色設定組合"
 
 #: ../app/dialogs/preferences-dialog.c:2453
 msgid "_Mode of operation:"
@@ -7916,11 +7916,11 @@ msgstr "選取色盤資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradient Folders"
-msgstr "漸層資料夾"
+msgstr "漸變色資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Gradient Folders"
-msgstr "選取漸層資料夾"
+msgstr "選取漸變色資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Font Folders"
@@ -7995,13 +7995,13 @@ msgstr "選取佈景主題資料夾"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
-msgstr "列印大小"
+msgstr "打印大小"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:161
 msgid "_Width:"
-msgstr "寬度(_W):"
+msgstr "闊度(_W):"
 
 #: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:206
 #: ../app/widgets/gimptemplateeditor.c:168
@@ -8012,12 +8012,12 @@ msgstr "高度(_E):"
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:264
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
-msgstr "水平解析度(_X):"
+msgstr "水平解像度(_X):"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:267
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
-msgstr "垂直解析度(_Y):"
+msgstr "垂直解像度(_Y):"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:308
@@ -8066,7 +8066,7 @@ msgstr "重設圖層大小(_L):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
-msgstr "調校螢幕解析度"
+msgstr "調校螢幕解像度"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
@@ -8091,13 +8091,13 @@ msgstr "品質"
 
 #: ../app/dialogs/scale-dialog.c:187
 msgid "I_nterpolation:"
-msgstr "內插法(_N):"
+msgstr "插值法(_N):"
 
 #: ../app/dialogs/scale-dialog.c:206
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and layer masks only."
-msgstr "索引色圖層永遠不使用內插法縮放。選取的內插法類型將只影響色版和圖層遮罩。"
+msgstr "索引色圖層永遠不使用插值法縮放。選取的插值法類型將只影響色版和圖層遮罩。"
 
 #: ../app/dialogs/stroke-dialog.c:102
 msgid "Choose Stroke Style"
@@ -8676,17 +8676,17 @@ msgstr "找不到圖案“%s”"
 #: ../app/pdb/gimppdb-utils.c:150
 #, c-format
 msgid "Invalid empty gradient name"
-msgstr "無效的空白漸層名稱"
+msgstr "無效的空白漸變色名稱"
 
 #: ../app/pdb/gimppdb-utils.c:160
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "找不到漸層“%s”"
+msgstr "找不到漸變色“%s”"
 
 #: ../app/pdb/gimppdb-utils.c:165
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "漸層“%s”不可編輯"
+msgstr "漸變色“%s”不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:186
 #, c-format
@@ -8836,7 +8836,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
-msgstr "圖片的解析度超出範圍，會使用預設的解析度代替。"
+msgstr "圖片的解像度超出範圍，會使用預設的解像度代替。"
 
 #: ../app/pdb/selection-tools-cmds.c:218 ../app/tools/gimpfreeselecttool.c:197
 msgid "Free Select"
@@ -8912,7 +8912,7 @@ msgstr ""
 "增效模組異常終止：“%s”\n"
 "(%s)\n"
 "\n"
-"已終止的增效模組可能會擾亂 GIMP 的內部狀態。為安全起見，您或許應該儲存圖片並重新啟動 GIMP。"
+"已終止的增效模組可能會擾亂 GIMP 的內部狀態。為安全起見，你或許應該儲存圖片並重新啟動 GIMP。"
 
 #: ../app/plug-in/gimppluginmanager-call.c:173
 #: ../app/plug-in/gimppluginmanager-call.c:223
@@ -9106,27 +9106,27 @@ msgstr "點選圖層、路徑或參考線，或使用拖曳來選擇多個圖層
 
 #: ../app/tools/gimpaligntool.c:596
 msgid "Click to pick this layer as first item"
-msgstr "按下這裡將這個圖層設為第一項目"
+msgstr "按下這裏將這個圖層設為第一項目"
 
 #: ../app/tools/gimpaligntool.c:604
 msgid "Click to add this layer to the list"
-msgstr "按下這裡將這個圖層加入清單"
+msgstr "按下這裏將這個圖層加入清單"
 
 #: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this guide as first item"
-msgstr "按下這裡將這個參考線設為第一項目"
+msgstr "按下這裏將這個參考線設為第一項目"
 
 #: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this guide to the list"
-msgstr "按下這裡將這個參考線加入清單"
+msgstr "按下這裏將這個參考線加入清單"
 
 #: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this path as first item"
-msgstr "按下這裡將這個路徑設為第一項目"
+msgstr "按下這裏將這個路徑設為第一項目"
 
 #: ../app/tools/gimpaligntool.c:628
 msgid "Click to add this path to the list"
-msgstr "按下這裡將這個路徑加入清單"
+msgstr "按下這裏將這個路徑加入清單"
 
 #: ../app/tools/gimpaligntool.c:766
 #, fuzzy
@@ -9198,7 +9198,7 @@ msgstr "偏移位置:"
 
 #: ../app/tools/gimpblendoptions.c:216 ../app/tools/gimppaintoptions-gui.c:648
 msgid "Gradient:"
-msgstr "漸層:"
+msgstr "漸變色:"
 
 #: ../app/tools/gimpblendoptions.c:232 ../app/widgets/gimpbrusheditor.c:146
 msgid "Shape:"
@@ -9224,7 +9224,7 @@ msgstr "界限值:"
 
 #: ../app/tools/gimpblendtool.c:108
 msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "混色工具：將選取的區域填上色彩漸層"
+msgstr "混色工具：將選取的區域填上色彩漸變色"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blen_d"
@@ -9243,7 +9243,7 @@ msgstr ""
 #: ../app/tools/gimpblendtool.c:401
 #, fuzzy, c-format
 msgid "%s to move the whole line"
-msgstr "請按這裡漂白線條"
+msgstr "請按這裏漂白線條"
 
 #: ../app/tools/gimpblendtool.c:405
 msgid "Blend: "
@@ -9347,7 +9347,7 @@ msgstr "填色"
 #: ../app/tools/gimpbucketfilltool.c:82
 #, fuzzy
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "混色工具：將選取的區域填上色彩漸層"
+msgstr "混色工具：將選取的區域填上色彩漸變色"
 
 #: ../app/tools/gimpbucketfilltool.c:83
 msgid "_Bucket Fill"
@@ -9355,7 +9355,7 @@ msgstr "填色(_B)"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
-msgstr "依顏色選擇"
+msgstr "根據顏色選擇"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
@@ -9385,7 +9385,7 @@ msgstr "%s 可以設定新的複製來源"
 
 #: ../app/tools/gimpclonetool.c:90
 msgid "Click to set a new clone source"
-msgstr "按下這裡可以設定新的複製來源"
+msgstr "按下這裏可以設定新的複製來源"
 
 #: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:936
@@ -9459,11 +9459,11 @@ msgstr "色彩化工具：色彩化這張圖片"
 
 #: ../app/tools/gimpcolorizetool.c:92
 msgid "Colori_ze..."
-msgstr "著色(_Z)..."
+msgstr "着色(_Z)..."
 
 #: ../app/tools/gimpcolorizetool.c:109
 msgid "Colorize the Image"
-msgstr "將圖片著色"
+msgstr "將圖片着色"
 
 #: ../app/tools/gimpcolorizetool.c:111
 #, fuzzy
@@ -9478,7 +9478,7 @@ msgstr "P_ilot 設定..."
 #: ../app/tools/gimpcolorizetool.c:156
 #, c-format
 msgid "Colorize operates only on RGB color layers."
-msgstr "著色只適用於 RGB 色系的圖層。"
+msgstr "着色只適用於 RGB 色系的圖層。"
 
 #: ../app/tools/gimpcolorizetool.c:221
 msgid "Select Color"
@@ -9586,7 +9586,7 @@ msgstr "點選使其模糊"
 
 #: ../app/tools/gimpconvolvetool.c:171
 msgid "Click to blur the line"
-msgstr "請按這裡以模糊此線條"
+msgstr "請按這裏以模糊此線條"
 
 #: ../app/tools/gimpconvolvetool.c:172
 #, c-format
@@ -9595,11 +9595,11 @@ msgstr "讓 %s 更銳利"
 
 #: ../app/tools/gimpconvolvetool.c:176
 msgid "Click to sharpen"
-msgstr "請按這裡銳利化"
+msgstr "請按這裏銳利化"
 
 #: ../app/tools/gimpconvolvetool.c:177
 msgid "Click to sharpen the line"
-msgstr "請按這裡讓線條更銳利"
+msgstr "請按這裏讓線條更銳利"
 
 #: ../app/tools/gimpconvolvetool.c:178
 #, fuzzy, c-format
@@ -9663,7 +9663,7 @@ msgstr "曲線不適用於索引色的圖層。"
 
 #: ../app/tools/gimpcurvestool.c:319
 msgid "Click to add a control point"
-msgstr "按下這裡加入控制點"
+msgstr "按下這裏加入控制點"
 
 #: ../app/tools/gimpcurvestool.c:324
 msgid "Click to add control points to all channels"
@@ -9721,11 +9721,11 @@ msgstr "漂白 / 燻黑(_G)"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
-msgstr "請按這裡漂白"
+msgstr "請按這裏漂白"
 
 #: ../app/tools/gimpdodgeburntool.c:174
 msgid "Click to dodge the line"
-msgstr "請按這裡漂白線條"
+msgstr "請按這裏漂白線條"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, fuzzy, c-format
@@ -9734,16 +9734,16 @@ msgstr "讓 %s 更銳利"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr "請按這裡燻黑"
+msgstr "請按這裏燻黑"
 
 #: ../app/tools/gimpdodgeburntool.c:180
 msgid "Click to burn the line"
-msgstr "請按這裡燻黑線條"
+msgstr "請按這裏燻黑線條"
 
 #: ../app/tools/gimpdodgeburntool.c:181
 #, fuzzy, c-format
 msgid "%s to dodge"
-msgstr "請按這裡漂白"
+msgstr "請按這裏漂白"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
@@ -9792,11 +9792,11 @@ msgstr "橡皮擦(_E)"
 
 #: ../app/tools/gimperasertool.c:97
 msgid "Click to erase"
-msgstr "請按這裡擦掉"
+msgstr "請按這裏擦掉"
 
 #: ../app/tools/gimperasertool.c:98
 msgid "Click to erase the line"
-msgstr "請按這裡擦掉線條"
+msgstr "請按這裏擦掉線條"
 
 #: ../app/tools/gimperasertool.c:99
 #, c-format
@@ -9944,7 +9944,7 @@ msgstr "自由選擇區域(_F)"
 
 #: ../app/tools/gimpfreeselecttool.c:1116
 msgid "Click to complete selection"
-msgstr "請按這裡完成選擇區域"
+msgstr "請按這裏完成選擇區域"
 
 #: ../app/tools/gimpfreeselecttool.c:1120
 #, fuzzy
@@ -10015,7 +10015,7 @@ msgstr "求助(_H)"
 #: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:80
 #, fuzzy
 msgid "Click to heal"
-msgstr "請按這裡擦掉"
+msgstr "請按這裏擦掉"
 
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:82
 #, fuzzy, c-format
@@ -10025,7 +10025,7 @@ msgstr "%s 可以設定新的複製來源"
 #: ../app/tools/gimphealtool.c:81
 #, fuzzy
 msgid "Click to set a new heal source"
-msgstr "按下這裡可以設定新的複製來源"
+msgstr "按下這裏可以設定新的複製來源"
 
 #: ../app/tools/gimphistogramoptions.c:127
 msgid "Histogram Scale"
@@ -10190,12 +10190,12 @@ msgstr ""
 
 #: ../app/tools/gimpiscissorstool.c:959
 msgid "Click to close the curve"
-msgstr "請按這裡以關閉曲線"
+msgstr "請按這裏以關閉曲線"
 
 #: ../app/tools/gimpiscissorstool.c:965
 #, fuzzy
 msgid "Click to add a point on this segment"
-msgstr "按下這裡加入控制點"
+msgstr "按下這裏加入控制點"
 
 #: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or press Enter to convert to a selection"
@@ -10207,7 +10207,7 @@ msgstr "按 Enter 來轉換為擇選區域"
 
 #: ../app/tools/gimpiscissorstool.c:1004
 msgid "Click or Click-Drag to add a point"
-msgstr "按下這裡或拖曳可以加入一個點"
+msgstr "按下這裏或拖曳可以加入一個點"
 
 #: ../app/tools/gimplevelstool.c:147
 msgid "Levels Tool: Adjust color levels"
@@ -10317,11 +10317,11 @@ msgstr "點選以放置水平和垂直參考線"
 
 #: ../app/tools/gimpmeasuretool.c:567
 msgid "Click to place a horizontal guide"
-msgstr "請按這裡放置水平參考線"
+msgstr "請按這裏放置水平參考線"
 
 #: ../app/tools/gimpmeasuretool.c:581
 msgid "Click to place a vertical guide"
-msgstr "請按這裡放置垂直參考線"
+msgstr "請按這裏放置垂直參考線"
 
 #: ../app/tools/gimpmeasuretool.c:595
 msgid "Click-Drag to add a new point"
@@ -10440,7 +10440,7 @@ msgstr ""
 #: ../app/tools/gimppaintoptions-gui.c:204
 #, fuzzy
 msgid "Velocity:"
-msgstr "選擇依:"
+msgstr "選擇根據:"
 
 #: ../app/tools/gimppaintoptions-gui.c:210
 msgid "Random:"
@@ -10473,15 +10473,15 @@ msgstr "總額:"
 
 #: ../app/tools/gimppaintoptions-gui.c:631
 msgid "Use color from gradient"
-msgstr "使用漸層中的顏色"
+msgstr "使用漸變色中的顏色"
 
 #: ../app/tools/gimppainttool.c:136
 msgid "Click to paint"
-msgstr "請按這裡繪製"
+msgstr "請按這裏繪製"
 
 #: ../app/tools/gimppainttool.c:137
 msgid "Click to draw the line"
-msgstr "請按這裡繪製線條"
+msgstr "請按這裏繪製線條"
 
 #: ../app/tools/gimppainttool.c:138
 #, c-format
@@ -10630,7 +10630,7 @@ msgstr "選取透明區域"
 
 #: ../app/tools/gimpregionselectoptions.c:227
 msgid "Select by:"
-msgstr "選擇依:"
+msgstr "選擇根據:"
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
@@ -10757,11 +10757,11 @@ msgstr "塗抹(_S)"
 
 #: ../app/tools/gimpsmudgetool.c:74
 msgid "Click to smudge"
-msgstr "請按這裡塗抹"
+msgstr "請按這裏塗抹"
 
 #: ../app/tools/gimpsmudgetool.c:75
 msgid "Click to smudge the line"
-msgstr "請按這裡塗抹線條"
+msgstr "請按這裏塗抹線條"
 
 #: ../app/tools/gimptextoptions.c:127
 msgid ""
@@ -10849,9 +10849,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"您選取的是文字圖層，但是它已經被其他的工具修改過了。使用文字工具來編輯此圖層會取消先前的修改。\n"
+"你選取的是文字圖層，但是它已經被其他的工具修改過了。使用文字工具來編輯此圖層會取消先前的修改。\n"
 "\n"
-"您可以編輯此圖層或以它的文字屬性建立一個新的文字圖層。"
+"你可以編輯此圖層或以它的文字屬性建立一個新的文字圖層。"
 
 #: ../app/tools/gimptexttool.c:1311
 #, fuzzy
@@ -10898,7 +10898,7 @@ msgstr "方向"
 #. the interpolation menu
 #: ../app/tools/gimptransformoptions.c:287
 msgid "Interpolation:"
-msgstr "內插法:"
+msgstr "插值法:"
 
 #: ../app/tools/gimptransformoptions.c:300
 #, fuzzy
@@ -11025,15 +11025,15 @@ msgstr "移動錨點"
 
 #: ../app/tools/gimpvectortool.c:1167
 msgid "Click to pick path to edit"
-msgstr "按下這裡可以選擇您準備編輯的路徑"
+msgstr "按下這裏可以選擇你準備編輯的路徑"
 
 #: ../app/tools/gimpvectortool.c:1171
 msgid "Click to create a new path"
-msgstr "按下這裡可以製作新的路徑"
+msgstr "按下這裏可以製作新的路徑"
 
 #: ../app/tools/gimpvectortool.c:1175
 msgid "Click to create a new component of the path"
-msgstr "按下這裡可以製作路徑的新元件"
+msgstr "按下這裏可以製作路徑的新元件"
 
 #: ../app/tools/gimpvectortool.c:1179
 #, fuzzy
@@ -11086,7 +11086,7 @@ msgstr "按下後拖曳將浮動選擇區域的位置固定"
 
 #: ../app/tools/gimpvectortool.c:1255
 msgid "Click to open up the path"
-msgstr "按下這裡可以開啟路徑"
+msgstr "按下這裏可以開啟路徑"
 
 #: ../app/tools/gimpvectortool.c:1259
 #, fuzzy
@@ -11127,7 +11127,7 @@ msgstr "長寬比"
 #: ../app/tools/tools-enums.c:149 ../app/widgets/gimpgrideditor.c:265
 #: ../app/widgets/gimpgrideditor.c:297
 msgid "Width"
-msgstr "寬度"
+msgstr "闊度"
 
 #: ../app/tools/tools-enums.c:150 ../app/widgets/gimpgrideditor.c:267
 #: ../app/widgets/gimpgrideditor.c:299
@@ -11264,7 +11264,7 @@ msgstr "重新安排捷徑鍵(_R)"
 #: ../app/widgets/gimpactionview.c:562
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "‘%3$s’ 群組中的 ‘%2$s’ 已經使用了捷徑鍵 ‘%1$s’。"
+msgstr "‘%3$s’ 羣組中的 ‘%2$s’ 已經使用了捷徑鍵 ‘%1$s’。"
 
 #: ../app/widgets/gimpactionview.c:566
 #, c-format
@@ -11300,7 +11300,7 @@ msgstr "間隔:"
 #: ../app/widgets/gimpbrusheditor.c:224
 #: ../app/widgets/gimpbrushfactoryview.c:85
 msgid "Percentage of width of brush"
-msgstr "筆刷寬度百分比"
+msgstr "筆刷闊度百分比"
 
 #: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
 #: ../app/widgets/gimpeditor.c:754
@@ -11516,7 +11516,7 @@ msgstr "向上滾動 (Alt)"
 #: ../app/widgets/gimpcontrollerkeyboard.c:116
 #, fuzzy
 msgid "Cursor Down"
-msgstr "滑鼠指標"
+msgstr "鼠標"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:120
 #: ../app/widgets/gimpcontrollerkeyboard.c:123
@@ -11528,7 +11528,7 @@ msgstr "滑鼠指標"
 #: ../app/widgets/gimpcontrollerkeyboard.c:141
 #, fuzzy
 msgid "Cursor Left"
-msgstr "滑鼠指標"
+msgstr "鼠標"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:145
 #: ../app/widgets/gimpcontrollerkeyboard.c:148
@@ -11594,7 +11594,7 @@ msgid ""
 msgstr ""
 "只能有一個使用中的鍵盤控制器。\n"
 "\n"
-"您的使用中控制器清單中已經有鍵盤控制器了。"
+"你的使用中控制器清單中已經有鍵盤控制器了。"
 
 #: ../app/widgets/gimpcontrollerlist.c:524
 msgid ""
@@ -11604,7 +11604,7 @@ msgid ""
 msgstr ""
 "只能有一個使用中的 wheel 控制器。\n"
 "\n"
-"您的使用中控制器清單中已經有 wheel 控制器了。"
+"你的使用中控制器清單中已經有 wheel 控制器了。"
 
 #: ../app/widgets/gimpcontrollerlist.c:551
 msgid "Remove Controller?"
@@ -11756,7 +11756,7 @@ msgstr "設定這個分頁"
 
 #: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here"
-msgstr "您可以拖曳浮動式對話盒放到這裡"
+msgstr "你可以拖曳浮動式對話盒放到這裏"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -11777,7 +11777,7 @@ msgstr "自動偵測"
 
 #: ../app/widgets/gimpfiledialog.c:289
 msgid "By Extension"
-msgstr "依延伸檔名"
+msgstr "根據延伸檔名"
 
 #: ../app/widgets/gimpfiledialog.c:605
 msgid "All files"
@@ -11798,7 +11798,7 @@ msgstr "檔案格式"
 
 #: ../app/widgets/gimpfileprocview.c:199
 msgid "Extensions"
-msgstr "依延伸檔名"
+msgstr "根據延伸檔名"
 
 #. Instant update toggle
 #: ../app/widgets/gimpgradienteditor.c:414
@@ -11923,7 +11923,7 @@ msgstr "GIMP 說明文件瀏覽器無法使用。"
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
-msgstr "安裝 GIMP 時似乎沒有同時安裝有關說明文件瀏覽器的增效模組。您可以使用網頁瀏覽器閱讀說明文件。"
+msgstr "安裝 GIMP 時似乎沒有同時安裝有關說明文件瀏覽器的增效模組。你可以使用網頁瀏覽器閱讀說明文件。"
 
 #: ../app/widgets/gimphelp.c:310
 msgid "Help browser doesn't start"
@@ -11943,17 +11943,17 @@ msgstr "GIMP 使用者手冊不見了"
 
 #: ../app/widgets/gimphelp.c:594
 msgid "_Read Online"
-msgstr "線上閱讀(_R)"
+msgstr "網上閱讀(_R)"
 
 #: ../app/widgets/gimphelp.c:618
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "GIMP 使用者手冊並未安裝在您的電腦上。"
+msgstr "GIMP 使用者手冊並未安裝在你的電腦上。"
 
 #: ../app/widgets/gimphelp.c:621
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
-msgstr "您可以安裝額外的說明檔套件或改變偏好設定來使用線上版本。"
+msgstr "你可以安裝額外的說明檔套件或改變偏好設定來使用網上版本。"
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -11993,11 +11993,11 @@ msgstr "像素尺寸:"
 
 #: ../app/widgets/gimpimagepropview.c:125
 msgid "Print size:"
-msgstr "列印尺寸:"
+msgstr "打印尺寸:"
 
 #: ../app/widgets/gimpimagepropview.c:128
 msgid "Resolution:"
-msgstr "解析度:"
+msgstr "解像度:"
 
 #: ../app/widgets/gimpimagepropview.c:131
 msgid "Color space:"
@@ -12088,7 +12088,7 @@ msgstr "自動"
 #: ../app/widgets/gimpmenudock.c:170
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr "啟用時對話框會自動跟隨您正在工作的圖片。"
+msgstr "啟用時對話框會自動跟隨你正在工作的圖片。"
 
 #: ../app/widgets/gimpmessagebox.c:443
 #, c-format
@@ -12192,7 +12192,7 @@ msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:185
 msgid "Line width:"
-msgstr "線條寬度:"
+msgstr "線條闊度:"
 
 #: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
@@ -12275,7 +12275,7 @@ msgid ""
 "Click to update preview\n"
 "%s%sClick to force update even if preview is up-to-date"
 msgstr ""
-"按下這裡更新預覽圖\n"
+"按下這裏更新預覽圖\n"
 "%s%s即使預覽圖是最新的，仍然強制更新內容"
 
 #: ../app/widgets/gimpthumbbox.c:348
@@ -12350,8 +12350,8 @@ msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
-"這是使用中的漸層。\n"
-"按下後可以開啟漸層對話盒。"
+"這是使用中的漸變色。\n"
+"按下後可以開啟漸變色對話盒。"
 
 #: ../app/widgets/gimptooloptionseditor.c:165
 msgid "Save options to..."
@@ -12405,7 +12405,7 @@ msgstr "開啟圖樣選擇對話盒。"
 
 #: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
-msgstr "開啟漸層選擇對話盒。"
+msgstr "開啟漸變色選擇對話盒。"
 
 # a gradient in reverse direction, used in "blend" tool options
 #: ../app/widgets/gimpviewablebox.c:224
