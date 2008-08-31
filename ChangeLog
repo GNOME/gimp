@@ -1,3 +1,10 @@
+2008-08-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_set_initial_scale): We need to set the scale
+	before using it. Fixes at least gimp_display_shell_fill() and
+	Image -> Duplicate giving weird initial scales.
+
 2008-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* tools/test-clipboard.c (test_clipboard_paste): fix length

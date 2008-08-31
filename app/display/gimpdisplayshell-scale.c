@@ -672,7 +672,6 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
   gint       shell_height;
   gint       screen_width;
   gint       screen_height;
-  gdouble    new_scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -684,16 +683,18 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
   screen_width  = gdk_screen_get_width (screen)  * 0.75;
   screen_height = gdk_screen_get_height (screen) * 0.75;
 
+  /* We need to zoom before we use SCALE[XY] */
+  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+
   shell_width  = SCALEX (shell, image_width);
   shell_height = SCALEY (shell, image_height);
-
-  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
 
   if (shell->display->config->initial_zoom_to_fit)
     {
       /*  Limit to the size of the screen...  */
       if (shell_width > screen_width || shell_height > screen_height)
         {
+          gdouble new_scale;
           gdouble current = gimp_zoom_model_get_factor (shell->zoom);
 
           new_scale = current * MIN (((gdouble) screen_height) / shell_height,
