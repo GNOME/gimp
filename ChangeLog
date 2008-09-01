@@ -1,5 +1,11 @@
 2008-09-01  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginshm.c (gimp_plug_in_shm_new): use the
+	constant INVALID_FILE_HANDLE instead of 0xFFFFFFFF. Fixes shared
+	memory tile transport on 64bit Windows systems.
+
+2008-09-01  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.[ch]: added clear_region().
 
 	* app/base/tile-manager-crop.c
