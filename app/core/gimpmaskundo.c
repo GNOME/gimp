@@ -139,8 +139,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      guchar empty = 0;
-
       new_tiles = tile_manager_new (x2 - x1, y2 - y1, 1);
 
       pixel_region_init (&srcPR,
@@ -155,7 +153,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                          x1, y1, x2 - x1, y2 - y1, TRUE);
 
-      color_region (&srcPR, &empty);
+      clear_region (&srcPR);
     }
   else
     {

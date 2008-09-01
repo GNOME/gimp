@@ -35,14 +35,13 @@ TileManager *
 tile_manager_crop (TileManager *tiles,
                    gint         border)
 {
-  PixelRegion   PR;
-  TileManager  *new_tiles;
-  gint          bytes, alpha;
-  gint          x1, y1, x2, y2;
-  gboolean      found;
-  gboolean      empty;
-  gpointer      pr;
-  const guchar  black[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  PixelRegion  region;
+  TileManager *new_tiles;
+  gint         bytes, alpha;
+  gint         x1, y1, x2, y2;
+  gboolean     found;
+  gboolean     empty;
+  gpointer     pr;
 
   g_return_val_if_fail (tiles != NULL, NULL);
 
@@ -55,22 +54,22 @@ tile_manager_crop (TileManager *tiles,
   x2 = 0;
   y2 = 0;
 
-  pixel_region_init (&PR, tiles, 0, 0, x1, y1, FALSE);
+  pixel_region_init (&region, tiles, 0, 0, x1, y1, FALSE);
 
-  for (pr = pixel_regions_register (1, &PR);
+  for (pr = pixel_regions_register (1, &region);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      const guchar *data = PR.data + alpha;
-      gint          ex   = PR.x + PR.w;
-      gint          ey   = PR.y + PR.h;
+      const guchar *data = region.data + alpha;
+      gint          ex   = region.x + region.w;
+      gint          ey   = region.y + region.h;
       gint          x, y;
 
-      for (y = PR.y; y < ey; y++)
+      for (y = region.y; y < ey; y++)
         {
           found = FALSE;
 
-          for (x = PR.x; x < ex; x++, data += bytes)
+          for (x = region.x; x < ex; x++, data += bytes)
             if (*data)
               {
                 if (x < x1)
@@ -129,22 +128,22 @@ tile_manager_crop (TileManager *tiles,
           pixel_region_init (&destPR, new_tiles,
                              0, 0, new_width, border,
                              TRUE);
-          color_region (&destPR, black);
+          clear_region (&destPR);
 
           pixel_region_init (&destPR, new_tiles,
                              0, border, border, (y2 - y1),
                              TRUE);
-          color_region (&destPR, black);
+          clear_region (&destPR);
 
           pixel_region_init (&destPR, new_tiles,
                              new_width - border, border, border, (y2 - y1),
                              TRUE);
-          color_region (&destPR, black);
+          clear_region (&destPR);
 
           pixel_region_init (&destPR, new_tiles,
                              0, new_height - border, new_width, border,
                              TRUE);
-          color_region (&destPR, black);
+          clear_region (&destPR);
         }
 
       pixel_region_init (&srcPR, tiles,

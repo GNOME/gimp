@@ -377,12 +377,11 @@ gimp_projection_initialize (GimpProjection *proj,
 
   if (! coverage)
     {
-      PixelRegion PR;
-      guchar      clear[4] = { 0, 0, 0, 0 };
+      PixelRegion region;
 
-      pixel_region_init (&PR, gimp_projection_get_tiles (proj),
-                         x, y, w, h, TRUE);
-      color_region (&PR, clear);
+      pixel_region_init (&region,
+                         gimp_projection_get_tiles (proj), x, y, w, h, TRUE);
+      clear_region (&region);
     }
 }
 
