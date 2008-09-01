@@ -338,9 +338,9 @@ gimp_projection_construct_channels (GimpProjection *proj,
  * @w:
  * @h:
  *
- * This function determines whether a visible layer with combine mode Normal
- * provides complete coverage over the specified area.  If not, the projection
- * is initialized to transparent black.
+ * This function determines whether a visible layer with combine mode
+ * Normal provides complete coverage over the specified area.  If not,
+ * the projection is initialized to transparent black.
  */
 static void
 gimp_projection_initialize (GimpProjection *proj,
@@ -364,6 +364,7 @@ gimp_projection_initialize (GimpProjection *proj,
 
       if (gimp_item_get_visible (item)                                  &&
           ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))              &&
+          ! gimp_layer_get_mask (GIMP_LAYER (item))                     &&
           gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE   &&
           (off_x <= x)                                                  &&
           (off_y <= y)                                                  &&
