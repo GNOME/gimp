@@ -1,3 +1,9 @@
+2008-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprojection-construct.c (gimp_projection_initialize):
+	also need to initialize the projection if the layer mask could
+	introduce transparency. Fixes bug #550024.
+
 2008-08-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-scale.c
