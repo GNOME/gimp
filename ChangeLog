@@ -1,3 +1,11 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed ALL_LINGUAS.
+
+	* po*/LINGUAS: introduced LINGUAS file instead. This allows to
+	keep individual lists of languages for each translation domain and
+	it makes it easier for translators to add a new language.
+
 2008-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginshm.c (gimp_plug_in_shm_new): use the

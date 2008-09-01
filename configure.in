@@ -410,14 +410,13 @@ fi
 # Internationalisation
 ######################
 
-# Note to translators: you MUST have .po files in all 6 directories:
-# po, po-libgimp, po-plug-ins, po-python, po-script-fu and po-tips
-# before adding your language code to ALL_LINGUAS.
-ALL_LINGUAS="ar be bg ca ca@valencia cs da de dz el en_CA en_GB eo es et eu fa fi fr ga gl gu he hu hr id is it ja km ko lt mk ms nb ne nl nn oc pa pl pt pt_BR ro ru rw sk sl sr sr@Latn sv tr tt uk vi xh yi zh_CN zh_TW"
-
 IT_PROG_INTLTOOL(0.35.5)
 AM_GLIB_GNU_GETTEXT
 
+
+###########
+# iso-codes
+###########
 
 AC_MSG_CHECKING([for iso-codes])
 PKG_CHECK_EXISTS(iso-codes,
@@ -437,7 +436,6 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 # Checks for required libraries
 ###############################
-
 
 PKG_CHECK_MODULES(BABL, babl >= babl_required_version, :,
   AC_MSG_ERROR([Test for babl failed. Please get it from http://gegl.org/]))
