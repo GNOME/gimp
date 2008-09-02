@@ -518,6 +518,8 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       gint     src_y;
       gint     src_width;
       gint     src_height;
+      gint     offsx = 0;
+      gint     offsy = 0;
 
       selection_id = gimp_image_get_selection (image_id);
 
@@ -532,8 +534,9 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
                                                   src_x, src_y,
                                                   src_width, src_height,
                                                   &width, &height, &bpp);
+      gimp_drawable_offsets (drawable->drawable_id, &offsx, &offsy);
       sel = gimp_drawable_get_sub_thumbnail_data (selection_id,
-                                                  src_x, src_y,
+                                                  src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
                                                   &width, &height, &bpp);
 
@@ -632,10 +635,10 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
 
   priv->drawable = drawable;
 
-  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &width, &height))
     {
-      width  = x2 - x1;
-      height = y2 - y1;
+      x2 = x1 + width;
+      y2 = y1 + height;
 
       priv->extents.x = x1;
       priv->extents.y = y1;
