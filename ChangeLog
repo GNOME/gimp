@@ -1,3 +1,15 @@
+2008-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpselectiondata.c (gimp_selection_data_get_name):
+	return a const string, no need to strdup it since it's only used
+	temporarily in this file.
+
+	(gimp_selection_data_get_image)
+	(gimp_selection_data_get_component)
+	(gimp_selection_data_get_item)
+	(gimp_selection_data_get_object): changed accordingly. Move
+	variables to local scopes and simplify.
+
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed ALL_LINGUAS definition.
