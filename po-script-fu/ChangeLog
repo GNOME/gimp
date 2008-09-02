@@ -1,3 +1,8 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* LINGUAS: removed language that has no translation in this
+	textdomain: tt.
+
 2008-08-29  Mugurel Tudor  <mugurelu@gnome.ro>
 
 	* ro.po: Translation updated by Cristian Secară
@@ -893,7 +898,8 @@
 
 2006-01-09  Priit Laes  <plaes@cvs.gnome.org>
 
-	* et.po: Translation updated by "Last-Translator: Olle Niit olle@paalalinn.com\n".
+	* et.po: Translation updated by "Last-Translator: Olle Niit
+	olle@paalalinn.com\n".
 
 2006-01-03  Clytie Siddall <clytie@riverland.net.au>
 
@@ -917,7 +923,7 @@
 
 2005-10-30  Takeshi AIHANA <aihana@gnome.gr.jp>
 
-	 * ja.po: Updated Japanese translation by
+	* ja.po: Updated Japanese translation by
 		OKANO Takayoshi <kano@na.rim.or.jp>.
 
 2005-10-26  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>

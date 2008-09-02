@@ -1,3 +1,8 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* LINGUAS: removed language that has no translation in this
+	textdomain: tt.
+
 2008-08-29  Mugurel Tudor  <mugurelu@gnome.ro>
 
 	* ro.po: Translation updated by Cristian Secară
