@@ -1,3 +1,8 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* ga.po: changed tips-locale to C, as the empty translation to ga
+	has been removed from the po-tips directory.
+
 2008-08-30  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
 
 	* zh_HK.po: Added Traditional Chinese translation (Hong Kong).
