@@ -1,5 +1,11 @@
 2008-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpruler.c: use gtk_widget_get_style() instead
+	of widget->style. Reduce indentation by one level in
+	gimp_ruler_draw_pos().
+
+2008-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpselectiondata.c: no need to set strlen(sting)+1
 	bytes on the GtkSelectionData because gtk_selection_data_set()
 	zero-terminates all data anyway.
