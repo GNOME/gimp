@@ -93,7 +93,7 @@ gimp_selection_data_set_uri_list (GtkSelectionData *selection,
     }
 
   gtk_selection_data_set (selection, selection->target,
-                          8, (guchar *) vals, strlen (vals) + 1);
+                          8, (guchar *) vals, strlen (vals));
 
   g_free (vals);
 }
@@ -361,7 +361,7 @@ gimp_selection_data_set_image (GtkSelectionData *selection,
   str = g_strdup_printf ("%d:%d", get_pid (), gimp_image_get_ID (image));
 
   gtk_selection_data_set (selection, selection->target,
-                          8, (guchar *) str, strlen (str) + 1);
+                          8, (guchar *) str, strlen (str));
 
   g_free (str);
 }
@@ -406,7 +406,7 @@ gimp_selection_data_set_component (GtkSelectionData *selection,
                          (gint) channel);
 
   gtk_selection_data_set (selection, selection->target,
-                          8, (guchar *) str, strlen (str) + 1);
+                          8, (guchar *) str, strlen (str));
 
   g_free (str);
 }
@@ -459,7 +459,7 @@ gimp_selection_data_set_item (GtkSelectionData *selection,
   str = g_strdup_printf ("%d:%d", get_pid (), gimp_item_get_ID (item));
 
   gtk_selection_data_set (selection, selection->target,
-                          8, (guchar *) str, strlen (str) + 1);
+                          8, (guchar *) str, strlen (str));
 
   g_free (str);
 }
@@ -506,8 +506,10 @@ gimp_selection_data_set_object (GtkSelectionData *selection,
       gchar *str;
 
       str = g_strdup_printf ("%d:%p:%s", get_pid (), object, name);
+
       gtk_selection_data_set (selection, selection->target,
-                              8, (guchar *) str, strlen (str) + 1);
+                              8, (guchar *) str, strlen (str));
+
       g_free (str);
     }
 }
