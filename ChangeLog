@@ -1,3 +1,8 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginshm.c: if INVALID_FILE_HANDLE is undefined,
+	define it as the constant that we used to use here.
+
 2008-09-02  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* libgimp/gimpzoompreview.c (gimp_zoom_preview_draw_buffer),
