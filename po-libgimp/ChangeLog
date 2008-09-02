@@ -1,5 +1,9 @@
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
+	* LINGUAS: added missing languages: az, lv.
+
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
 	* LINGUAS: removed language that has no translation in this
 	textdomain: tt.
 

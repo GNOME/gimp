@@ -1,6 +1,8 @@
 # please keep this list sorted alphabetically
 #
+am
 ar
+az
 be
 bg
 ca
@@ -23,16 +25,20 @@ ga
 gl
 gu
 he
-hu
+hi
 hr
+hu
 id
 is
 it
 ja
+ka
 km
 ko
 lt
+lv
 mk
+ml
 ms
 nb
 ne
@@ -51,6 +57,7 @@ sl
 sr
 sr@Latn
 sv
+th
 tr
 tt
 uk
@@ -58,4 +65,5 @@ vi
 xh
 yi
 zh_CN
+zh_HK
 zh_TW

@@ -1,5 +1,9 @@
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
+	* LINGUAS: added missing languages: am, az, hi, ka, lv, ml, th, zh_HK.
+
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
 	* ga.po: changed tips-locale to C, as the empty translation to ga
 	has been removed from the po-tips directory.
 
