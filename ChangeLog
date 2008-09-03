@@ -1,5 +1,11 @@
 2008-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontrollerkeyboard.c (struct _KeyboardEvent)
+	* app/widgets/gimpcontrollerwheel.c (struct _WheelEvent): made the
+	blurbs const.
+
+2008-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpnavigationview.c
 	(gimp_navigation_view_motion_notify): remove the call to
 	gdk_window_get_pointer() again.

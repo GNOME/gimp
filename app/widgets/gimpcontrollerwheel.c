@@ -44,7 +44,7 @@ struct _WheelEvent
   const GdkScrollDirection  direction;
   const GdkModifierType     modifiers;
   const gchar              *name;
-  gchar                    *blurb;
+  const gchar              *blurb;
 };
 
 
