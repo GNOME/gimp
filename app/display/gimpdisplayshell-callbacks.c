@@ -1137,15 +1137,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
           }
 
-        /* Ask for the pointer position, but ignore it except for cursor
-         * handling, so motion events sync with the button press/release events
-         */
-        if (mevent->is_hint)
-          {
-            gimp_display_shell_get_device_coords (shell,
-                                                  mevent->device,
-                                                  &display_coords);
-          }
+        /* Ask for more motion events in case the event was a hint */
+        gdk_event_request_motions (mevent);
 
         update_sw_cursor = TRUE;
 

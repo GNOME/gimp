@@ -1694,25 +1694,18 @@ static gint
 design_area_motion (GtkWidget      *widget,
                     GdkEventMotion *event)
 {
-  gint i;
+  gint    i;
   gdouble xo;
   gdouble yo;
   gdouble xn;
   gdouble yn;
-  gint px, py;
-  gdouble width = ifsDesign->area->allocation.width;
+  gdouble width  = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
 
   Aff2 trans, t1, t2, t3;
 
-  if (!(ifsDesign->button_state & GDK_BUTTON1_MASK)) return FALSE;
-
-  if (event->is_hint)
-    {
-      gtk_widget_get_pointer (ifsDesign->area, &px, &py);
-      event->x = px;
-      event->y = py;
-    }
+  if (! (ifsDesign->button_state & GDK_BUTTON1_MASK))
+    return FALSE;
 
   xo = (ifsDesign->op_x - ifsDesign->op_xcenter);
   yo = (ifsDesign->op_y - ifsDesign->op_ycenter);
@@ -1722,36 +1715,32 @@ design_area_motion (GtkWidget      *widget,
   switch (ifsDesign->op)
     {
     case OP_ROTATE:
-      {
-        aff2_translate (&t1,-ifsDesign->op_xcenter*width,
-                       -ifsDesign->op_ycenter*width);
-        aff2_scale (&t2,
-                   sqrt((SQR(xn)+SQR(yn))/(SQR(xo)+SQR(yo))),
-                   0);
-        aff2_compose (&t3, &t2, &t1);
-        aff2_rotate (&t1, - atan2(yn, xn) + atan2(yo, xo));
-        aff2_compose (&t2, &t1, &t3);
-        aff2_translate (&t3, ifsDesign->op_xcenter*width,
-                       ifsDesign->op_ycenter*width);
-        aff2_compose (&trans, &t3, &t2);
-        break;
-      }
+      aff2_translate (&t1,-ifsDesign->op_xcenter*width,
+                      -ifsDesign->op_ycenter*width);
+      aff2_scale (&t2,
+                  sqrt((SQR(xn)+SQR(yn))/(SQR(xo)+SQR(yo))),
+                  0);
+      aff2_compose (&t3, &t2, &t1);
+      aff2_rotate (&t1, - atan2(yn, xn) + atan2(yo, xo));
+      aff2_compose (&t2, &t1, &t3);
+      aff2_translate (&t3, ifsDesign->op_xcenter*width,
+                      ifsDesign->op_ycenter*width);
+      aff2_compose (&trans, &t3, &t2);
+      break;
+
     case OP_STRETCH:
-      {
-        aff2_translate (&t1,-ifsDesign->op_xcenter*width,
-                       -ifsDesign->op_ycenter*width);
-        aff2_compute_stretch (&t2, xo, yo, xn, yn);
-        aff2_compose (&t3, &t2, &t1);
-        aff2_translate (&t1, ifsDesign->op_xcenter*width,
-                       ifsDesign->op_ycenter*width);
-        aff2_compose (&trans, &t1, &t3);
-        break;
-      }
+      aff2_translate (&t1,-ifsDesign->op_xcenter*width,
+                      -ifsDesign->op_ycenter*width);
+      aff2_compute_stretch (&t2, xo, yo, xn, yn);
+      aff2_compose (&t3, &t2, &t1);
+      aff2_translate (&t1, ifsDesign->op_xcenter*width,
+                      ifsDesign->op_ycenter*width);
+      aff2_compose (&trans, &t1, &t3);
+      break;
+
     case OP_TRANSLATE:
-      {
-        aff2_translate (&trans,(xn-xo)*width,(yn-yo)*width);
-        break;
-      }
+      aff2_translate (&trans,(xn-xo)*width,(yn-yo)*width);
+      break;
     }
 
   for (i = 0; i < ifsvals.num_elements; i++)
@@ -1775,15 +1764,19 @@ design_area_motion (GtkWidget      *widget,
             aff2_compose (&elements[i]->trans, &trans,
                          &ifsD->selected_orig[i].trans);
           }
+
         aff_element_decompose_trans (elements[i],&elements[i]->trans,
                                     width, height, ifsvals.center_x,
                                     ifsvals.center_y);
         aff_element_compute_trans (elements[i],width, height,
-                              ifsvals.center_x, ifsvals.center_y);
+                                   ifsvals.center_x, ifsvals.center_y);
       }
 
   update_values ();
   design_area_redraw ();
+
+  /* Ask for more motion events in case the event was a hint */
+  gdk_event_request_motions (event);
 
   return FALSE;
 }

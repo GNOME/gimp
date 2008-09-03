@@ -1,5 +1,20 @@
 2008-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* libgimpwidgets/gimpcolorselect.c
+	* modules/color-selector-water.c
+	* plug-ins/ifs-compose/ifs-compose.c: instead of using
+	gdk_window_get_pointer() if GdkEventMotion::is_hint is TRUE,
+	simply always use the coords from the event and call
+	gdk_event_request_motions() to ask for more motion events. This is
+	the recommended way and also works for events from devices other
+	than the core pointer.
+
+	* plug-ins/ifs-compose/ifs-compose.c (design_area_motion): some
+	code cleanup while i was at it.
+
+2008-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpbutton.c: massively simplified. Don't fiddle
 	in GtkButton's internals (like setting "in_button" and forcing
 	redraws). Instead, simply remember the modifier state in
