@@ -1,3 +1,8 @@
+2008-09-03  Sven Neumann  <sven@gimp.org>
+
+	* README.i18n: removed lots of outdated information directed at
+	developers and only kept the most important hints for translators.
+
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginshm.c: if INVALID_FILE_HANDLE is undefined,
