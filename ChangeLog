@@ -1,5 +1,9 @@
 2008-09-03  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plugin-ins/pygimp/pygimp-tile.c: Removed trailing whitespace.
+
+2008-09-03  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plugin-ins/pygimp/pygimp.h: define PyInt_AsSsize_t as PyInt_AsLong
 	if the python version is smaller then 2.5.0.
 	* configure.in: Lower required python version to 2.4.
