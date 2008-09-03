@@ -1,3 +1,11 @@
+2008-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpbutton.c: massively simplified. Don't fiddle
+	in GtkButton's internals (like setting "in_button" and forcing
+	redraws). Instead, simply remember the modifier state in
+	button_press() and check it in clicked(); if the state is != 0,
+	stop the "clicked" emission and emit "extended-clicked" instead.
+
 2008-09-03  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* configure.in: bumped minimum required Python version to 2.5.0,

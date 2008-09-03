@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpbutton.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2000-2008 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,10 +36,9 @@ enum
 };
 
 
-static gboolean   gimp_button_button_press   (GtkWidget      *widget,
-                                              GdkEventButton *event);
-static gboolean   gimp_button_button_release (GtkWidget      *widget,
-                                              GdkEventButton *event);
+static gboolean   gimp_button_button_press (GtkWidget      *widget,
+                                            GdkEventButton *event);
+static void       gimp_button_clicked      (GtkButton      *button);
 
 
 G_DEFINE_TYPE (GimpButton, gimp_button, GTK_TYPE_BUTTON)
@@ -53,6 +52,7 @@ static void
 gimp_button_class_init (GimpButtonClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   button_signals[EXTENDED_CLICKED] =
     g_signal_new ("extended-clicked",
@@ -64,8 +64,9 @@ gimp_button_class_init (GimpButtonClass *klass)
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  widget_class->button_press_event   = gimp_button_button_press;
-  widget_class->button_release_event = gimp_button_button_release;
+  widget_class->button_press_event = gimp_button_button_press;
+
+  button_class->clicked            = gimp_button_clicked;
 }
 
 static void
@@ -118,52 +119,18 @@ gimp_button_button_press (GtkWidget      *widget,
       button->press_state = 0;
     }
 
-  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
-    return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
-
-  return TRUE;
+  return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 }
 
-static gboolean
-gimp_button_button_release (GtkWidget      *widget,
-                            GdkEventButton *bevent)
+static void
+gimp_button_clicked (GtkButton *button)
 {
-  GtkButton *button           = GTK_BUTTON (widget);
-  gboolean   extended_clicked = FALSE;
-
-  if (bevent->button == 1)
+  if (GIMP_BUTTON (button)->press_state &
+      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
     {
-      if (button->in_button &&
-          (GIMP_BUTTON (button)->press_state &
-           (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-        {
-          gimp_button_extended_clicked (GIMP_BUTTON (button),
-                                        GIMP_BUTTON (button)->press_state);
+      g_signal_stop_emission_by_name (button, "clicked");
 
-          extended_clicked = TRUE;
-
-          /* HACK: don't let GtkButton emit "clicked" by telling it that
-           * the mouse pointer is outside the widget
-           */
-          button->in_button = FALSE;
-        }
+      gimp_button_extended_clicked (GIMP_BUTTON (button),
+                                    GIMP_BUTTON (button)->press_state);
     }
-
-  if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
-    GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, bevent);
-
-  if (extended_clicked)
-    {
-      /* revert the above HACK and let the button draw itself in the
-       * correct state, because upchaining with "in_button" == FALSE
-       * messed it up
-       */
-      button->in_button = TRUE;
-
-      gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
-      gtk_widget_queue_draw (widget);
-      gdk_window_process_updates (widget->window, TRUE);
-   }
-
-  return TRUE;
 }
