@@ -1,3 +1,8 @@
+2008-09-03  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* configure.in: bumped minimum required Python version to 2.5.0,
+	because of PyInt_AsSsize_t. Fixes bug #550576.
+
 2008-09-03  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: removed lots of outdated information directed at
