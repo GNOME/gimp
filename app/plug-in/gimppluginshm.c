@@ -60,6 +60,10 @@
 
 #define USE_WIN32_SHM 1
 
+#ifndef INVALID_FILE_HANDLE
+#define INVALID_FILE_HANDLE ((HANDLE) 0xFFFFFFFF)
+#endif
+
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
 #include "plug-in-types.h"

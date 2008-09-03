@@ -1,0 +1,102 @@
+	This is the README for The GIMPressionist
+	(c) 1998, 1999 Vidar Madsen - vidar@prosalg.no
+
+	The GIMPressionist is free software, and may be distributed
+	freely, provided this file is included!
+
+	This program comes with no warranty, whatsoever. The author
+	can not be held liable for any damage caused by proper or
+	improper use of this program.
+
+
+--- Introduction
+
+The GIMPressionist is a plug-in for the GNU Image Manipulation Program,
+a.k.a. GIMP. It can be used to create natural looking painting effects
+and similar. It can also be run in a primitive "standalone" mode. 
+
+The current version is still a bit shaky, and is to be considered beta
+software. I'll do some serious testing, hopefully across a few more
+platforms, as soon as I can.
+
+The official Web-page is http://www.prosalg.no/~vidar/gimpressionist/ and
+will always contain a link to the latest released version. 
+
+
+--- Compiling / Installing
+
+To compile (hopefully):
+	make
+
+If you want to compile for GTK-1.1 and GIMP-1.1 instead, you will have
+to change the two variable at the top of Makefile. Possibly you would
+want to edit DEFAULTPATH as well, but that's not critical.
+
+To install plug-in and accompanying files:
+	make install
+
+The plug-in installs itself under $HOME/.gimp/plug-ins/ and copies a
+couple of files into the directory $HOME/.gimp/gimpressionist/.  The
+subdirectories 'Brushes', 'Paper' and 'Presets' will be created during
+"make install", and a few files will be added; As a minimum,
+'defaultbrush.pgm' and 'defaultpaper.pgm' under their respective
+directories. These are vanilla .PGM files, which could be edited (and
+created) with any decent program - like GIMP! :-) 
+
+
+--- Standalone
+
+As of version 0.99 and later, the GIMPressionist can also be run
+separately from GIMP. This is primarily intended for debugging
+purposes, though, as it still needs GIMP libraries to compile. In your
+shell, type: 
+	gimpressionist somefile.ppm
+
+The image specified must be a valid PPM file. No other formats are
+supported, and probably never will.
+
+If you click "OK", the PPM will be replaced with the "repainted" version.
+If you "Cancel", nothing will be done to the file. 
+
+
+--- File Formats
+
+The "normal" brushes are simply grayscale PGM files, which can be created
+with almost any program, including xv and of course GIMP. A number of
+brushes is included, so I guess a more in-depth explaination is not
+necessary. And, for those who might want to try it, GIMPressionist can
+also read GBR files, which is GIMP's native brush format. (You still
+need to copy them to the GIMPressionist's brush-directory, though. This
+will probably be fixed sometimes.)
+
+Version 0.99.4 introduced the concept of using "colored" brushes (although
+"pre-rendered" usually is more correct). The brushes' file format is a
+plain PPM file, but the layout is somewhat special (and kinda hard to
+explain);
+
+- The Red channel contains a shading map of the brush in question. Often
+  it resembles the overall image more or less completely.
+
+- The Green channel contains a high-light map. This is a pre-defined
+  image of the shiny parts of the brush. (Ordinary grayscale brushes
+  have this calculated automatically with a rough emboss-ish algorithm.)
+
+- The Blue channel functions as a brush mask. When applying a brush
+  stroke to the image, all areas colored blue in the file are first
+  "blacked out" of the image.
+
+
+--- Feedback
+
+If you have any comments, criticism, ideas for improvement or new
+features, or if you run into problems of any sort, let me know, so that I
+can (try to) fix it for the next release! (And, if you find platform-
+dependant bugs, please try to fix them and send me a patch!) 
+
+I'm also welcoming contributions in the form of brushes or textures! For
+this program to be valuable, it needs them... Bad! All contributions will
+be properly credited, of course. 
+
+Good luck and happy painting!
+
+Vidar Madsen <vidar@prosalg.no>

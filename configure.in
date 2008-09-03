@@ -1646,8 +1646,8 @@ m4_define([pycheck_error], [
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
-  AM_PATH_PYTHON(2.3.5,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.3.5 or newer], [it])])])
+  AM_PATH_PYTHON(2.5.0,,
+    [AC_MSG_ERROR([pycheck_error([Python 2.5.0 or newer], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
     [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
 

@@ -1,0 +1,61 @@
+Notes regarding GFig
+
+Bill Skaggs, July 3, 2004
+
+
+Most importantly: this version of Gfig has been massively revised.  It
+is very unstable.  It is likely to crash at any moment.  It is full of
+bugs.  Many things are incompletely implemented, and others do not
+work yet.  Play with it at your own risk.
+
+(If it does crash, though, it is not likely to corrupt the image, so
+in most cases you should be able to Exit the plug-in and continue
+working.) 
+
+A quick summary of recent changes:
+
+Gfig now works somewhat like the text tool.  It uses special dedicated
+"Gfig" layers.  A Gfig layer is defined by the presence of a parasite
+called "Gfig", which contains a representation of the figure.  (It is
+actually a Gfig file whose contents are attached to the layer as a
+parasite.) 
+
+If Gfig is run when the active layer is a Gfig layer, then it loads
+the figure that is stored there, so that it can be modified.  If the
+active layer is not a Gfig layer, then a new layer is created, and
+initialized to transparent.  
+
+The figure that you create is saved to the layer when you hit the
+Close button.  If you hit the Cancel button, the results of your work
+are not saved.  The GFig data parasite is not overwritten until you
+hit Close, so you can always revert to the previous version of the
+figure by hitting Cancel and then re-running GFig.
+
+Each object that you create in Gfig can have its own style.  Currently
+the only style attributes that work are foreground color and brush
+shape; others will be added shortly.
+
+When you start Gfig, and the dialog comes up, the background of the
+preview shows a represntation of the image you are working on.  Each
+time you do something in GFig, the result is reflected by a change in
+both the Gimp image and the GFig preview, so you can see in real time
+the results of everything that you do.  (The rendering could stand to
+be speeded up, though.)  You can turn the background display in the
+preview on or off by toggling Edit->Options->Show image.
+
+PLEASE NOTE: The Gfig file format has not yet stabilized.  Until it
+does, the parasite used to store the layer data is marked
+non-persistent, meaning it will not be stored in XCF files.  This will
+be trivial to change when the time comes.  The ordinary pixel data
+*is* stored in XCF files, though.  This means that if you save the
+image as XCF and re-open it, the GFig layers will be there but you
+will not be able to use GFig to modify them.
+
+ALSO NOTE: When GFig loads a GFig layer, it begins by clearing the
+layer to transparent and redrawing it as stored in the GFig parasite.
+This means that any changes you have made in the layer in the meantime
+will be lost.  It would be nice if GFig could give a warning that this
+is about to happen, but it is difficult to implement, because Gimp
+does not yet provide an easy way to tell whether a layer has been
+modified (as far as I know).
+

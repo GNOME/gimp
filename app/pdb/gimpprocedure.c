@@ -247,25 +247,25 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
 
 void
 gimp_procedure_set_static_strings (GimpProcedure *procedure,
-                                   gchar         *original_name,
-                                   gchar         *blurb,
-                                   gchar         *help,
-                                   gchar         *author,
-                                   gchar         *copyright,
-                                   gchar         *date,
-                                   gchar         *deprecated)
+                                   const gchar   *original_name,
+                                   const gchar   *blurb,
+                                   const gchar   *help,
+                                   const gchar   *author,
+                                   const gchar   *copyright,
+                                   const gchar   *date,
+                                   const gchar   *deprecated)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->original_name = original_name;
-  procedure->blurb         = blurb;
-  procedure->help          = help;
-  procedure->author        = author;
-  procedure->copyright     = copyright;
-  procedure->date          = date;
-  procedure->deprecated    = deprecated;
+  procedure->original_name = (gchar *) original_name;
+  procedure->blurb         = (gchar *) blurb;
+  procedure->help          = (gchar *) help;
+  procedure->author        = (gchar *) author;
+  procedure->copyright     = (gchar *) copyright;
+  procedure->date          = (gchar *) date;
+  procedure->deprecated    = (gchar *) deprecated;
 
   procedure->static_strings = TRUE;
 }

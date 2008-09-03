@@ -1,0 +1,99 @@
+==========================================================================
+
+	GFlare plug-in ver 0.25
+
+		Eiichi Takamori <taka@ma1.seikyou.ne.jp>
+
+==========================================================================
+
+  GFlare is a plug-in for GIMP.  The name "GFlare" is short for
+"Gradient Flare".  It renders lense flare effect using custom
+gradients.  The basic idea is suggested by Marcelo Malheiros,
+originally based on a 3DStudio MAX plug-in called LenZFX:
+	http://www.digimation.com/techsupp/lzfxfeat.htm
+
+INSTALL:
+
+1) Edit Makefile, if needed.
+
+2) Type "make install".
+
+3) Type "make install-data" if needed. (It copies sample gradients and
+   gflares under ~/.gimp)
+
+3) Add new entry to ~/.gimp/gimprc as
+     (gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
+
+3) Run GIMP. The menu path is <Image>/Filters/Effects/GFlare.
+
+
+HOW TO USE IT:
+
+  The document is not yet done. Try and see.
+
+  Main Dialog:
+  - Preview
+      click on it changes the position of GFlare
+  - Settings page
+    - Center, Radius (pixel), Rotation (degree), Hue Rotation (degree)
+    - Vector Angle (degree) and Vector Length (percentage to Radius)
+    - adaptive supersampling ... same as "Blend tool"
+  - Selector page
+    - ListBox
+    - New, Edit, Copy, Delete buttons. Edit button invokes GFlare Editor.
+
+  GFlare Editor:
+  - General page:
+  - Glow page:
+  - Rays page:
+  - Second Flares page:     
+
+  WARNING: This plug-in is in development stage, and the code is very
+alpha. The GFlare datafile format may be changed in future version.
+
+  Suggestions and ideas for user interface, flare algorithm, etc. are
+very welcome.
+
+
+KNOWN BUGS:
+
+  There are still lots of bugs, of course. ;-)
+  They seem related to GTK, and I don't know exactly how I can fix them.
+
+  * It warns at startup as:
+    ** WARNING **: file gdkwindow.c: line 422 (gdk_window_move_resize): "window != NULL"
+    If you are annoyed, accompanying "gtkviewport.c.patch" will shut up
+    the warning.
+  * Edit button remains prelighted when GFlare Editor dialog is done.
+  * Dialogs are not shown quickly at startup.
+  * Sometimes note tab labels are disappeared.
+  * Sometimes it crashes, but I don't know yet why it happens.
+
+TODO:
+  * Random hue scattering for Second Flares.
+  * Improve internal gradients.
+  * Currently number of Second Flares is fixed(30).
+  * Change opacity for one second flare dynamically, in inverse
+    proportion to the size of it.
+  * Reduce dialog size
+  * Add tweak ability "How to combine Glow, Rays, Second Flares in
+    what order"
+
+
+CREDITS:
+
+  Marcelo Marheiros and Federico Mena Quintero suggested a lot of
+ideas. Very Thanks!!
+
+  Marcelo made gradients whose names end with _1, _2, etc. The
+gradients whose names end with _101, _102 etc. are mine.
+
+  Quartic did awful Gradient Editor, and gradients PDB procedures.
+
+  A fair proportion of this code was taken from:
+
+  GIMP - The GNU Image Manipulation Program
+  Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+  Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero
+  federico@nuclecu.unam.mx

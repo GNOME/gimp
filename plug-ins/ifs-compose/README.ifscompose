@@ -1,0 +1,83 @@
+IfsCompose
+----------
+
+IfsCompose is a plug-in for GIMP that allows
+the creation of Iterated Function System fractals by direct
+manipulation onscreen of the component transforms.
+
+
+IFS Fractals
+------------
+
+You may be familiar with IFS's from the screen
+hack 'Flame'. They are also the basis of fractal image compression.
+
+For a brief introduction to IFS's see Foley and van Dam, et
+al,. _Computer Graphics, Principles and Practice_, 2nd Ed., 
+(Addison Wesley, 1990).
+
+The standard references in the field are Michael Barnsley's books (though
+I haven't looked at them yet):
+
+M. Barnsley, _Fractals Everywhere_, Academic Press Inc., 1988.
+M. Barnsley and L. Hurd, _Fractal Image Compression_, Jones and
+Bartlett.
+
+Briefly, you take a point and repeatedly apply one of a set of
+transformations to it, choosing randomly between them, and plot the
+point at each step. An interesting result (the Collage Theorem) says
+that if you can find a set of transformations that break up an image
+into smaller copies of itself, then the resulting fractal exactly
+reproduces the original image.  For example, here is a classic image
+of a leaf and the same image with the four component transforms
+colored distinctively.
+
+But the best way to appreciate this may to install this program and
+try it out. I've extended the basic concept as found in
+Foley and van Dam to include transformations in color space as
+well as in real space.
+
+Installation
+------------
+The included Makefile should work with minor modifications on most
+systems if you have installed Gimp normally. Put the resulting binary
+in ~/.gimp/plug-ins or the system-wide plug-ins directory.
+
+The included files gtkaspectframe.c/.h implement a modified frame
+widget that guarantees that the aspect ratio of the child widget
+remains constant when the parent is resized. It's sort of specialized,
+but if you think it would be useful for other purposes, let me know
+and I'll lobby for its inclusion in the standard gtk.
+
+Use
+---
+The interface is somewhat complex and it may take you a little while
+to get the hang of it. (There are 19 parameters for each
+transformation in your fractal, after all). The best way to learn is
+probably to start by making small changes, and seeing what they
+do. Click on the transformations (represented by polygons) in the
+design window to manipulate them interactively.
+
+Button-1: rotate/scale
+Button-2: distort
+Button-3: move
+
+If you hold down shift while clicking, you can select multiple polygons
+to apply the transformation to.
+
+Try not to click too near the center of a polygon, as this will
+amplify your actions.
+
+Note that if you render onto an image with an alpha channel, the
+background will be transparent (very useful for compositing several
+fractals), otherwise the background will be the current background.
+
+There are tutorials and some example images at:
+
+ http://www.gtk.org/~otaylor/IfsCompose/ifs_tutorial/tutorial.html
+ http://tigert.gimp.org/gimp/ifs-compose/
+
+
+Have fun!
+
+Owen Taylor

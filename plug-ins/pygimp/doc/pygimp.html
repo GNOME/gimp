@@ -1,0 +1,5402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Gimp Python Documentation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.77+"></HEAD
+><BODY
+CLASS="ARTICLE"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+></A
+>Gimp Python Documentation</H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+>James Henstridge</A
+></H3
+><DIV
+CLASS="AFFILIATION"
+><DIV
+CLASS="ADDRESS"
+><P
+CLASS="ADDRESS"
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:james@daa.com.au"
+>james@daa.com.au</A
+>&#62;</TT
+><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P
+></DIV
+></DIV
+><P
+CLASS="PUBDATE"
+>v0.4, 5 July 1999<BR></P
+><DIV
+><DIV
+CLASS="ABSTRACT"
+><A
+NAME="AEN11"
+></A
+><P
+></P
+><P
+>This document outlines the interfaces to Gimp-Python,
+      which is a set of Python modules that act as a wrapper to
+      <TT
+CLASS="FILENAME"
+>libgimp</TT
+> allowing the writing of
+      plug-ins for Gimp.  In this way, Gimp-Python is similar to
+      Script-Fu, except that you can use the full set of Python
+      extension modules from the plug-in.</P
+><P
+></P
+></DIV
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="#INTRODUCTION"
+>Introduction</A
+></DT
+><DD
+><DL
+><DT
+>1.1. <A
+HREF="#WHAT-IS-IT"
+>What is it?</A
+></DT
+><DT
+>1.2. <A
+HREF="#INSTALLATION"
+>Installation</A
+></DT
+></DL
+></DD
+><DT
+>2. <A
+HREF="#STRUCTURE-OF-PLUGIN"
+>The Structure Of A Plugin</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="#EXAMPLE-PLUGIN"
+>An Example Plugin</A
+></DT
+><DT
+>2.2. <A
+HREF="#IMPORTANT-MODULES"
+>Import Modules</A
+></DT
+><DT
+>2.3. <A
+HREF="#PLUGIN-FRAMEWORK"
+>Plugin Framework</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="#PROCEDURAL-DATABASE"
+>The Procedural Database</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#GIMP-PYTHON-MODEL"
+>The Gimp-Python Model</A
+></DT
+><DT
+>3.2. <A
+HREF="#PDB-PROCEDURES"
+>Procedural Database Procedures</A
+></DT
+><DT
+>3.3. <A
+HREF="#MORE-INFORMATION"
+>More Information</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="#GIMP-MODULE-PROCEDURES"
+>Gimp Module Procedures</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="#CONSTRUCTORS-AND-DESTRUCTORS"
+>Constructors and Object Deletion</A
+></DT
+><DT
+>4.2. <A
+HREF="#CONFIGURATION-INFORMATION"
+>Configuration Information</A
+></DT
+><DT
+>4.3. <A
+HREF="#PALETTE-OPERATIONS"
+>Palette Operations</A
+></DT
+><DT
+>4.4. <A
+HREF="#GRADIENT-OPERATIONS"
+>Gradient Operations</A
+></DT
+><DT
+>4.5. <A
+HREF="#PDB-REGISTRATION-FUNCTIONS"
+>PDB Registration Functions</A
+></DT
+><DT
+>4.6. <A
+HREF="#OTHER-FUNCTIONS"
+>Other Functions</A
+></DT
+><DT
+>4.7. <A
+HREF="#PARASITES"
+>Parasites</A
+></DT
+></DL
+></DD
+><DT
+>5. <A
+HREF="#GIMP-OBJECTS"
+>Gimp Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="#IMAGE-OBJECT"
+>Image Object</A
+></DT
+><DD
+><DL
+><DT
+>5.1.1. <A
+HREF="#IMAGE-OBJECT-MEMBERS"
+>Image Members</A
+></DT
+><DT
+>5.1.2. <A
+HREF="#IMAGE-OBJECT-METHODS"
+>Image Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.2. <A
+HREF="#CHANNEL-OBJECT"
+>Channel Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.2.1. <A
+HREF="#CHANNEL-OBJECT-MEMBERS"
+>Channel Members</A
+></DT
+><DT
+>5.2.2. <A
+HREF="#CHANNEL-OBJECT-METHODS"
+>Channel Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.3. <A
+HREF="#LAYER-OBJECT"
+>Layer Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.3.1. <A
+HREF="#LAYER-OBJECT-MEMBERS"
+>Layer Members</A
+></DT
+><DT
+>5.3.2. <A
+HREF="#LAYER-OBJECT-METHODS"
+>Layer Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.4. <A
+HREF="#DRAWABLE-OBJECT"
+>Drawable Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.4.1. <A
+HREF="#DRAWABLE-OBJECT-MEMBERS"
+>Drawable Members</A
+></DT
+><DT
+>5.4.2. <A
+HREF="#DRAWABLE-OBJECT-METHODS"
+>Drawable Methods</A
+></DT
+></DL
+></DD
+><DT
+>5.5. <A
+HREF="#TILE-OBJECT"
+>Tile Objects</A
+></DT
+><DD
+><DL
+><DT
+>5.5.1. <A
+HREF="#TILE-OBJECT-MEMBERS"
+>Tile Members</A
+></DT
+><DT
+>5.5.2. <A
+HREF="#TILE-OBJECT-METHODS"
+>Tile Methods</A
+></DT
+><DT
+>5.5.3. <A
+HREF="#TILE-OBJECT-MAPPING"
+>Tile Mapping Behaviour</A
+></DT
+></DL
+></DD
+><DT
+>5.6. <A
+HREF="#PREGION-OBJECT"
+>Pixel Regions</A
+></DT
+><DD
+><DL
+><DT
+>5.6.1. <A
+HREF="#PREGION-OBJECT-MEMBERS"
+>Pixel Region Members</A
+></DT
+><DT
+>5.6.2. <A
+HREF="#PREGION-OBJECT-METHODS"
+>Pixel Region Methods</A
+></DT
+><DT
+>5.6.3. <A
+HREF="#PREGION-OBJECT-MAPPING"
+>Pixel Region Mapping Behaviour</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
+HREF="#SUPPORT-MODULES"
+>Support Modules</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="#GIMPENUMS-MODULE"
+>The gimpenums Module</A
+></DT
+><DT
+>6.2. <A
+HREF="#AEN1468"
+>The gimpfu Module</A
+></DT
+><DT
+>6.3. <A
+HREF="#GIMPPLUGIN-MODULE"
+>The gimpplugin Module</A
+></DT
+><DT
+>6.4. <A
+HREF="#GIMPSHELF-MODULE"
+>The gimpshelf Module</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="#END-NOTE"
+>End Note</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H2
+CLASS="SECT1"
+><A
+NAME="INTRODUCTION"
+></A
+>1. Introduction</H2
+><DIV
+CLASS="SECT2"
+><H3
+CLASS="SECT2"
+><A
+NAME="WHAT-IS-IT"
+></A
+>1.1. What is it?</H3
+><P
+>Gimp-Python is a scripting extension for Gimp, similar to
+      Script-Fu.  The main difference is in what is called first.  In
+      Script-Fu, the script-fu plugin executes the script, while in
+      Gimp-Python the script is in control.</P
+><P
+>In fact, you will find that the Gimp-Python scripts start
+      with the line <TT
+CLASS="LITERAL"
+>&num;!/usr/bin/python</TT
+>.  The
+      gimp extension is loaded with the familiar
+      <TT
+CLASS="LITERAL"
+>import</TT
+> command.</P
+><P
+>Another point of difference between Gimp-Python and
+      Script-Fu is that Gimp-Python stores images, layers, channels
+      and other types as objects rather than just storing their ID.
+      This allows better type checking that is missing from Script-Fu,
+      and allows those types to act as objects, complete with
+      attributes and methods.</P
+><P
+>Also, Gimp-Python is not limited to just calling
+      procedures from the PDB.  It also implements the rest of
+      <TT
+CLASS="FILENAME"
+>libgimp</TT
+>, including tiles and pixel regions,
+      and access to other lower level functions.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="INSTALLATION"
+></A
+>1.2. Installation</H3
+><P
+>Gimp-python consists of a Python module written in C and
+      some native python support modules.  You can build pygimp with
+      the commands:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>./configure
+make
+make install</PRE
+><P
+>This will build and install gimpmodule and its supporting
+      modules, and install the sample plugins in gimp's plugin
+      directory.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="STRUCTURE-OF-PLUGIN"
+></A
+>2. The Structure Of A Plugin</H2
+><P
+>The majority of code in this package resides in
+    <TT
+CLASS="FILENAME"
+>gimpmodule.c</TT
+>, but this provides a poor
+    interface for implementing some portions of a plugin.  For this
+    reason, there is a python module called
+    <TT
+CLASS="FILENAME"
+>plugin.py</TT
+> that sets out a structure for
+    plugins and implements some things that were either too dificult
+    or impossible to do in C.</P
+><P
+>The main purpose of <TT
+CLASS="FILENAME"
+>plugin.py</TT
+> was to
+    implement an object oriented structure for plug-ins.  As well as
+    this, it handles tracebacks, which are otherwise ignored by
+    <TT
+CLASS="FILENAME"
+>libgimp</TT
+>, and gives a method to call
+    other Gimp-Python plug-ins without going through the procedural
+    database.</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="EXAMPLE-PLUGIN"
+></A
+>2.1. An Example Plugin</H3
+><P
+>As in a lot of manuals, the first thing you examine is an
+      example, so here is an example.  I have included it before
+      explaining what it does to allow more advanced programmers to
+      see the structure up front.  It is a translation of the clothify
+      Script-Fu extension:</P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN41"
+></A
+><P
+><B
+>Example 1. A sample python plugin</B
+></P
+><PRE
+CLASS="PROGRAMLISTING"
+>#!/usr/bin/python
+import math
+from gimpfu import *
+
+have_gimp11 = gimp.major_version &#62; 1 or \
+	      gimp.major_version == 1 and gimp.minor_version &#62;= 1
+
+def python_clothify(timg, tdrawable, bx=9, by=9,
+		    azimuth=135, elevation=45, depth=3):
+	bx = 9 ; by = 9 ; azimuth = 135 ; elevation = 45 ; depth = 3
+	width = tdrawable.width
+	height = tdrawable.height
+	img = gimp.image(width, height, RGB)
+	layer_one = gimp.layer(img, "X Dots", width, height, RGB_IMAGE,
+			       100, NORMAL_MODE)
+	img.disable_undo()
+	if have_gimp11:
+		pdb.gimp_edit_fill(layer_one)
+	else:
+		pdb.gimp_edit_fill(img, layer_one)
+	img.add_layer(layer_one, 0)
+	pdb.plug_in_noisify(img, layer_one, 0, 0.7, 0.7, 0.7, 0.7)
+	layer_two = layer_one.copy()
+	layer_two.mode = MULTIPLY_MODE
+	layer_two.name = "Y Dots"
+	img.add_layer(layer_two, 0)
+	pdb.plug_in_gauss_rle(img, layer_one, bx, 1, 0)
+	pdb.plug_in_gauss_rle(img, layer_two, by, 0, 1)
+	img.flatten()
+	bump_layer = img.active_layer
+	pdb.plug_in_c_astretch(img, bump_layer)
+	pdb.plug_in_noisify(img, bump_layer, 0, 0.2, 0.2, 0.2, 0.2)
+	pdb.plug_in_bump_map(img, tdrawable, bump_layer, azimuth,
+			     elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
+	gimp.delete(img)
+
+register(
+	"python_fu_clothify",
+	"Make the specified layer look like it is printed on cloth",
+	"Make the specified layer look like it is printed on cloth",
+	"James Henstridge",
+	"James Henstridge",
+	"1997-1999",
+	"&#60;Image&#62;/Filters/Artistic/Clothify",
+	"RGB*, GRAY*",
+	[
+		(PF_INT, "x_blur", "X Blur", 9),
+		(PF_INT, "y_blur", "Y Blur", 9),
+		(PF_INT, "azimuth", "Azimuth", 135),
+		(PF_INT, "elevation", "elevation", 45),
+		(PF_INT, "depth", "Depth", 3)
+	],
+	[],
+	python_clothify)
+
+main()</PRE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="IMPORTANT-MODULES"
+></A
+>2.2. Import Modules</H3
+><P
+>In this plugin, a number of modules are imported.  The
+      important ones are:</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimpfu</TT
+>: this module provides a
+	  simple interface for writing plugins, similar to what
+	  script-fu provides.  It provides the GUI for entering in
+	  parameters in interactive mode and performs some sanity
+	  checks when registering the plugin.</P
+><P
+>By using "from gimpfu import *", this module also
+	  provides an easy way to get all the commonly used symbols
+	  into the plugin's namespace.</P
+></LI
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimp</TT
+>: the main part of the gimp
+	  extension.  This is imported with gimpfu.</P
+></LI
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimpenums</TT
+>: a number of useful
+	  constants.  This is also automatically imported with
+	  gimpfu.</P
+></LI
+></UL
+><P
+>The pdb variable is a variable for accessing the
+      procedural database.  It is imported into the plugin's namespace
+      with gimpfu for convenience.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PLUGIN-FRAMEWORK"
+></A
+>2.3. Plugin Framework</H3
+><P
+>With pygimp-0.4, the gimpfu module was introduced.  It
+      simplifies writing plugins a lot.  It handles the run mode
+      (interactive, non interactive or run with last values),
+      providing a GUI for interactive mode and saving the last used
+      settings.</P
+><P
+>Using the gimpfu plugin, all you need to do is write the
+      function that should be run, make a call to
+      <TT
+CLASS="FUNCTION"
+>register</TT
+>, and finally a call to
+      <TT
+CLASS="FUNCTION"
+>main</TT
+> to get the plugin started.</P
+><P
+>If the plugin is to be run on an image, the first
+      parameter to the plugin function should be the image, and the
+      second should be the current drawable (do not worry about the
+      run_mode parameter).  Plugins that do not act on an existing
+      image (and hence go in the toolbox's menus) do not need these
+      parameters.  Any other parameters are specific to the
+      plugin.</P
+><P
+>After defining the plugin function, you need to call
+      <TT
+CLASS="FUNCTION"
+>register</TT
+> to register the plugin with gimp
+      (When the plugin is run to query it, this information is passed
+      to gimp.  When it is run interactively, this information is used
+      to construct the GUI).  The parameters to
+      <TT
+CLASS="FUNCTION"
+>register</TT
+> are:</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>name</TD
+></TR
+><TR
+><TD
+>blurb</TD
+></TR
+><TR
+><TD
+>help</TD
+></TR
+><TR
+><TD
+>author</TD
+></TR
+><TR
+><TD
+>copyright</TD
+></TR
+><TR
+><TD
+>date</TD
+></TR
+><TR
+><TD
+>menupath</TD
+></TR
+><TR
+><TD
+>imagetypes</TD
+></TR
+><TR
+><TD
+>params</TD
+></TR
+><TR
+><TD
+>results</TD
+></TR
+><TR
+><TD
+>function</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+>Most of these parameters are quite self explanatory.  The
+      menupath option should start with &#60;Image%gt;/ for image
+      plugins and &#60;Toolbox&#62;/ for toolbox plugins.  The remainder
+      of the menupath is a slash separated path to its menu item.</P
+><P
+>The params parameter holds a list parameters for the
+      function.  It is a list of tuples.  Note that you do not have to
+      specify the run_type, image or drawable parameters, as gimpfu
+      will add these automatically for you.  The tuple format is
+      (type, name, description, default [, extra]).  The allowed type
+      codes are:</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TBODY
+><TR
+><TD
+>PF_INT8</TD
+></TR
+><TR
+><TD
+>PF_INT16</TD
+></TR
+><TR
+><TD
+>PF_INT32</TD
+></TR
+><TR
+><TD
+>PF_INT</TD
+></TR
+><TR
+><TD
+>PF_FLOAT</TD
+></TR
+><TR
+><TD
+>PF_STRING</TD
+></TR
+><TR
+><TD
+>PF_VALUE</TD
+></TR
+><TR
+><TD
+>PF_INT8ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INT16ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INT32ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INTARRAY</TD
+></TR
+><TR
+><TD
+>PF_FLOATARRAY</TD
+></TR
+><TR
+><TD
+>PF_STRINGARRAY</TD
+></TR
+><TR
+><TD
+>PF_COLOR</TD
+></TR
+><TR
+><TD
+>PF_COLOUR</TD
+></TR
+><TR
+><TD
+>PF_REGION</TD
+></TR
+><TR
+><TD
+>PF_IMAGE</TD
+></TR
+><TR
+><TD
+>PF_LAYER</TD
+></TR
+><TR
+><TD
+>PF_CHANNEL</TD
+></TR
+><TR
+><TD
+>PF_DRAWABLE</TD
+></TR
+><TR
+><TD
+>PF_TOGGLE</TD
+></TR
+><TR
+><TD
+>PF_BOOL</TD
+></TR
+><TR
+><TD
+>PF_SLIDER</TD
+></TR
+><TR
+><TD
+>PF_SPINNER</TD
+></TR
+><TR
+><TD
+>PF_ADJUSTMENT</TD
+></TR
+><TR
+><TD
+>PF_FONT</TD
+></TR
+><TR
+><TD
+>PF_FILE</TD
+></TR
+><TR
+><TD
+>PF_BRUSH</TD
+></TR
+><TR
+><TD
+>PF_PATTERN</TD
+></TR
+><TR
+><TD
+>PF_GRADIENT</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+><P
+>These values map onto the standard PARAM_* constants.  The
+      reason to use the extra constants is that they give gimpfu more
+      information, so it can produce a better interface (for instance,
+      the PF_FONT type is equivalent to PARAM_STRING, but in the GUI
+      you get a small button that will bring up a font selection
+      dialog).</P
+><P
+>The PF_SLIDER, PF_SPINNER and PF_ADJUSTMENT types require
+      the extra parameter.  It is of the form (min, max, step), and
+      gives the limits for the spin button or slider.</P
+><P
+>The results parameter is a list of 3-tuples of the form
+      (type, name, description).  It defines the return values for the
+      function.  If there is only a single return value, the plugin
+      function should return just that value.  If there is more than
+      one, the plugin function should return a tuple of results.</P
+><P
+>The final parameter to <TT
+CLASS="FUNCTION"
+>register</TT
+> is
+      the plugin function itself.</P
+><P
+>After registering one or more plugin functions, you must
+      call the <TT
+CLASS="FUNCTION"
+>main</TT
+> function.  This will cause
+      the plugin to start running.  A GUI will be displayed when
+      needed, and your plugin function will be called at the
+      appropriate times.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="PROCEDURAL-DATABASE"
+></A
+>3. The Procedural Database</H2
+><P
+>The procedural database is a registry of things gimp and its
+    plugins can do.  When you install a procedure for your plugin, you
+    are extending the procedural database.</P
+><P
+>The procedural database is self documenting, in that when
+    you install a procedure in it, you also add documentation for it,
+    its parameters and return values.</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="GIMP-PYTHON-MODEL"
+></A
+>3.1. The Gimp-Python Model</H3
+><P
+>In Gimp-Python, the procedural database is represented by
+      the object <TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+>.  In most of my
+      plugins, I make an assignment from <TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+>
+      to <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+> for convenience.</P
+><P
+>You can query the procedural database with
+      <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+>'s method <TT
+CLASS="FUNCTION"
+>query</TT
+>.  Its
+      specification is:</P
+><PRE
+CLASS="SCREEN"
+>pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])</PRE
+><P
+>Each parameter is a regular expression that is checked
+      against the corresponding field in the procedural database.  The
+      method returns a list of the names of matching procedures.  If
+      <TT
+CLASS="FUNCTION"
+>query</TT
+> is called without any arguments, it will
+      return every procedure in the database.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PDB-PROCEDURES"
+></A
+>3.2. Procedural Database Procedures</H3
+><P
+>Procedures can be accessed as procedures, or by treating
+      <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+> as a mapping objest.  As an example,
+      the probedure <TT
+CLASS="FUNCTION"
+>gimp_edit_fill</TT
+> can be
+      accessed as either <TT
+CLASS="FUNCTION"
+>pdb.gimp_edit_fill</TT
+> or
+      <TT
+CLASS="FUNCTION"
+>pdb['gimp_edit_fill']</TT
+>.  The second form is
+      mainly for procedures whose names are not valid Python names (eg
+      in script-fu-..., the dashes are interpreted as minuses).</P
+><P
+>These procedure objects have a number of attribute:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>proc_name</DT
+><DD
+><P
+>The name of the procedure.</P
+></DD
+><DT
+>proc_blurb</DT
+><DD
+><P
+>A short peice of information about the procedure.</P
+></DD
+><DT
+>proc_help</DT
+><DD
+><P
+>More detailed information about the procedure.</P
+></DD
+><DT
+>proc_author</DT
+><DD
+><P
+>The author of the procedure.</P
+></DD
+><DT
+>proc_copyright</DT
+><DD
+><P
+>The copyright holder for the procedure (usually the
+            same as the author).</P
+></DD
+><DT
+>proc_date</DT
+><DD
+><P
+>The date when the procedure was written.</P
+></DD
+><DT
+>proc_type</DT
+><DD
+><P
+>The type of procedure.  This will be one of
+            PROC_PLUG_IN, PROC_EXTENSION or PROC_TEMPORARY.</P
+></DD
+><DT
+>nparams</DT
+><DD
+><P
+>The number of parameters the procedure takes.</P
+></DD
+><DT
+>nreturn_vals</DT
+><DD
+><P
+>The number of return values the procedure gives.</P
+></DD
+><DT
+>params</DT
+><DD
+><P
+>A description of parameters of the procedure.  It
+            takes the form of a tuple of 3-tuples, where each 3-tuple
+            describes a parameter.  The items in the 3-tuple are a
+            parameter type (one of the PARAM_* constants), a
+            name for the parameter, and a description of the
+            parameter.</P
+></DD
+><DT
+>return_vals</DT
+><DD
+><P
+>A description of the return values.  It takes the
+            same form as the <TT
+CLASS="LITERAL"
+>params</TT
+>
+            attribute.</P
+></DD
+></DL
+></DIV
+><P
+>A procedure object may also be called.  At this point,
+      Gimp-Python doesn't support keyword arguments for PDB
+      procedures.  Arguments are passed to the procedure in the normal
+      method.  The return depends on the number of return values:</P
+><P
+></P
+><UL
+><LI
+><P
+>If there are zero return values,
+	  <TT
+CLASS="LITERAL"
+>None</TT
+> is returned.</P
+></LI
+><LI
+><P
+>If there is only a single return value, it is
+	  returned.</P
+></LI
+><LI
+><P
+>If there are more return values, then they are
+	  returned as a tuple.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="MORE-INFORMATION"
+></A
+>3.3. More Information</H3
+><P
+>For more information on invoking PDB procedures, please
+      see the example plugins.  For information on individual
+      procedures, please see the PDB Browser plugin (in the Xtns
+      menu).  It alows you to peruse to the database
+      interactively.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="GIMP-MODULE-PROCEDURES"
+></A
+>4. Gimp Module Procedures</H2
+><P
+>The <TT
+CLASS="FILENAME"
+>gimp</TT
+> module contains a number of
+    procedures and functions, as well as the definitions of many gimp
+    types such as images, and the procedural database.  This section
+    explains the base level procedures.</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="CONSTRUCTORS-AND-DESTRUCTORS"
+></A
+>4.1. Constructors and Object Deletion</H3
+><P
+>There are a number of functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module that are used to create the objects
+      used to make up an image in Gimp.  Here is a set of descriptions
+      of these constructors:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.image</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure creates an image with the given
+            dimensions and type (type is one of
+            <TT
+CLASS="LITERAL"
+>RGB</TT
+>, <TT
+CLASS="LITERAL"
+>GRAY</TT
+> or
+            <TT
+CLASS="LITERAL"
+>INDEXED</TT
+>).</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new layer called
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, with the given dimensions and
+            <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_IMAGE</TT
+> constants),
+            <TT
+CLASS="LITERAL"
+>opacity</TT
+> (float between 0 and 100) and
+            a <TT
+CLASS="LITERAL"
+>mode</TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_MODE</TT
+> constants).  The layer can
+            then be added to the image with the
+            <TT
+CLASS="FUNCTION"
+>img.add_layer</TT
+> method.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.channel</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new channel object with the given
+            dimensions, <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_CHANNEL</TT
+> constants).  This channel can
+            then be added to an image.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.display</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new display window for the given image.
+            The window will not be displayed until a call to
+            <TT
+CLASS="FUNCTION"
+>gimp.displays_flush</TT
+> is made.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.parasite(name, flags, data)</TT
+></DT
+><DD
+><P
+>Create a new parasite.  The parasite can then be
+	    attached to gimp, an image or a drawable.  This is only
+	    available in gimp &#62;= 1.1</P
+></DD
+></DL
+></DIV
+><P
+>When any of these objects get removed from memory (such as
+      when their name goes out of range), the gimp thing it represents
+      does not get deleted with it (otherwise when your plugin
+      finished running, it would delete all its work).  In order to
+      delete the thing the Python object represents, you should use
+      the <TT
+CLASS="FUNCTION"
+>gimp.delete</TT
+> procedure.  It deletes the
+      gimp thing associated with the Python object given as a
+      parameter.  If the object is not an image, layer, channel,
+      drawable or display <TT
+CLASS="FUNCTION"
+>gimp.delete</TT
+> does
+      nothing.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="CONFIGURATION-INFORMATION"
+></A
+>4.2. Configuration Information</H3
+><P
+>There are a number of functions that can be used to gather
+      information about the environment the plugin is running in:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.color_cube</TT
+>() or
+	  <TT
+CLASS="FUNCTION"
+>gimp.colour_cube</TT
+>()</DT
+><DD
+><P
+>Returns the current colour cube.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gamma</TT
+>()</DT
+><DD
+><P
+>Returns the current gamma correction.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.install_cmap</TT
+>()</DT
+><DD
+><P
+>Returns non-zero if a colour map has been
+	    installed.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.use_xshm</TT
+>()</DT
+><DD
+><P
+>Returns non-zero if Gimp is using X shared
+	    memory.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gtkrc</TT
+>()</DT
+><DD
+><P
+>Returns the file name of the GTK configuration
+	    file.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PALETTE-OPERATIONS"
+></A
+>4.3. Palette Operations</H3
+><P
+>These functions alter the currently selected foreground
+      and background.</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.get_background</TT
+>()</DT
+><DD
+><P
+>Returns a 3-tuple containing the current background
+	    colour in RGB form.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.get_foreground</TT
+>()</DT
+><DD
+><P
+>Returns a 3-tuple containing the current foreground
+	    colour in RGB form.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.set_background</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>r</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>g</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>b</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the current background colour.  The three
+            arguments can be replaced by a single 3-tuple like that
+            returned by <TT
+CLASS="FUNCTION"
+>gimp.get_background</TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.set_foreground</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>r</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>g</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>b</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the current foreground colour.  Like
+            <TT
+CLASS="FUNCTION"
+>gimp.set_background</TT
+>, the arguments may
+            be replaced by a 3-tuple.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="GRADIENT-OPERATIONS"
+></A
+>4.4. Gradient Operations</H3
+><P
+>These functions perform operations on gradients:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gradients_get_active</TT
+>()</DT
+><DD
+><P
+>Returns the name of the active gradient.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gradients_set_active</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the active gradient.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gradients_get_list</TT
+>()</DT
+><DD
+><P
+>Returns a list of the names of the available
+	    gradients.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gradients_sample_uniform</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>num</I
+></TT
+>)</DT
+><DD
+><P
+>Returns a list of <TT
+CLASS="PARAMETER"
+><I
+>num</I
+></TT
+>
+            samples, where samples consist of 4-tuples of floats
+            representing the red, green, blue and alpha values for the
+            sample.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.gradients_sample_custom</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>pos</I
+></TT
+>)</DT
+><DD
+><P
+>Similar to
+            <TT
+CLASS="FUNCTION"
+>gimp.gradients_sample_uniform</TT
+>, except
+            the samples are taken at the positions given in the list
+            of floats <TT
+CLASS="PARAMETER"
+><I
+>pos</I
+></TT
+> instead of uniformly
+            through the gradient.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PDB-REGISTRATION-FUNCTIONS"
+></A
+>4.5. PDB Registration Functions</H3
+><P
+>These functions either install procedures into the PDB or
+      alert gimp to their special use (eg as file handlers).</P
+><P
+>For simple plugins, you will usually only need to use
+      <TT
+CLASS="FUNCTION"
+>register</TT
+> from gimpfu.</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.install_procedure</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>blurb</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>help</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>author</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>copyright</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>date</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>menu_path</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>image_types</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>params</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>ret_vals</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure is used to install a procedure into
+            the PDB.  The first eight parameters are strings,
+            <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+> is a one of the
+            <TT
+CLASS="LITERAL"
+>PROC_*</TT
+> constants, and the last two
+            parameters are sequences describing the parameters and
+            return values.  Their format is the same as the param and
+            ret_vals methods or PDB procedures.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.install_temp_proc</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>blurb</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>help</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>author</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>copyright</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>date</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>menu_path</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>image_types</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>type,
+          params</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>ret_vals</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure is used to install a procedure into
+            the PDB temporarily.  That is, it must be added again
+            every time gimp is run.  This procedure will be called the
+            same way as all other procedures for a plugin.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.uninstall_temp_proc</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>This removes a temporary procedure from the
+	    PDB.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.register_magic_load_handle</TT
+>r(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>magics</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can load files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:) with magic
+            information <TT
+CLASS="PARAMETER"
+><I
+>magics</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.register_load_handler</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can load files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:).</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.register_save_handler</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can save files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:).</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="OTHER-FUNCTIONS"
+></A
+>4.6. Other Functions</H3
+><P
+>These are the other functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module.</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.main</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>init_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>quit_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>query_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>run_func</I
+></TT
+>)</DT
+><DD
+><P
+>This function is the one that controls the execution
+            of a Gimp-Python plugin.  It is better to not use this
+            directly but rather subclass the plugin class, defined in
+            the <A
+HREF="#GIMPPLUGIN-MODULE"
+>Section 6.3</A
+>.</P
+></DD
+><DT
+><TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+></DT
+><DD
+><P
+>The procedural database object.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.progress_init</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>[label]</I
+></TT
+>)</DT
+><DD
+><P
+>(Re)Initialise the progress meter with
+            <TT
+CLASS="PARAMETER"
+><I
+>label</I
+></TT
+> (or the plugin name) as a
+            label in the window.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.progress_update</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>percnt</I
+></TT
+>)</DT
+><DD
+><P
+>Set the progress meter to
+	    <TT
+CLASS="PARAMETER"
+><I
+>percnt</I
+></TT
+> done.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.query_images</TT
+>()</DT
+><DD
+><P
+>Returns a list of all the image objects.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.quit</TT
+>()</DT
+><DD
+><P
+>Stops execution imediately and exits.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.displays_flush</TT
+>()</DT
+><DD
+><P
+>Update all the display windows.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.tile_width</TT
+>()</DT
+><DD
+><P
+>The maximum width of a tile.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.tile_height</TT
+>()</DT
+><DD
+><P
+>The maximum height of a tile.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.tile_cache_size</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>kb</I
+></TT
+>)</DT
+><DD
+><P
+>Set the size of the tile cache in kilobytes.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.tile_cache_ntiles</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>n</I
+></TT
+>)</DT
+><DD
+><P
+>Set the size of the tile cache in tiles.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.get_data</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>)</DT
+><DD
+><P
+>Get the information associated with
+            <TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>.  The data will be a string.
+            This function should probably be used through the <A
+HREF="#GIMPSHELF-MODULE"
+>Section 6.4</A
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.set_data</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+>)</DT
+><DD
+><P
+>Set the information in the string
+            <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+> with
+            <TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>.  The data will persist for the
+            whole gimp session.  Rather than directly accessing this
+            function, it is better to go through the <A
+HREF="#GIMPSHELF-MODULE"
+>Section 6.4</A
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.extension_ack</TT
+>()</DT
+><DD
+><P
+>Tells gimp that the plugin has finished its work,
+            while keeping the plugin connection open.  This is used by
+            an extension plugin to tell gimp it can continue, while
+            leaving the plugin connection open.  This is what the
+            script-fu plugin does so that only one scheme interpretter
+            is needed.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>gimp.extension_process</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>timeout</I
+></TT
+>)</DT
+><DD
+><P
+>Makes the plugin check for messages from gimp.
+            generally this is not needed, as messages are checked
+            during most calls in the gimp module.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PARASITES"
+></A
+>4.7. Parasites</H3
+><P
+>In gimp &#62;= 1.1, it is possible to attach arbitrary data to
+      an image through the use of parasites.  Parasites are simply
+      wrappers for the data, containing its name and some flags.
+      Parasites have the following parameters:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>data</DT
+><DD
+><P
+>The data for the parasite -- a string</P
+></DD
+><DT
+>flags</DT
+><DD
+><P
+>The flags for the parasite</P
+></DD
+><DT
+>is_persistent</DT
+><DD
+><P
+>True if this parasite is persistent</P
+></DD
+><DT
+>is_undoable</DT
+><DD
+><P
+>True if this parasite is undoable</P
+></DD
+><DT
+>name</DT
+><DD
+><P
+>The name of the parasite</P
+></DD
+></DL
+></DIV
+><P
+>Parasites also have the methods <TT
+CLASS="FUNCTION"
+>copy</TT
+>,
+      <TT
+CLASS="FUNCTION"
+>is_type</TT
+> and
+      <TT
+CLASS="FUNCTION"
+>has_flag</TT
+>.</P
+><P
+>There is a set of four functions that are used to
+      manipulate parasites.  They exist as functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module, and methods for image and
+      drawable objects.  They are:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+>parasite_find</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>find a parasite by its name.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>parasite_attach</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>parasite</I
+></TT
+>)</DT
+><DD
+><P
+>Attach a parasite to this object.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>attach_new_parasite</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>flags</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new parasite and attach it.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+>parasite_detach</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>Detach the named parasite</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="GIMP-OBJECTS"
+></A
+>5. Gimp Objects</H2
+><P
+>Gimp-Python implements a number of special object types that
+    represent the different types of parameters you can pass to a PDB
+    procedure.  Rather than just making these place holders, I have
+    added a number of members and methods to them that allow a lot of
+    configurability without directly calling PDB procedures.</P
+><P
+>There are also a couple of extra objects that allow low
+    level manipulation of images.  These are tile objects (working)
+    and pixel regions (not quite finished).</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="IMAGE-OBJECT"
+></A
+>5.1. Image Object</H3
+><P
+>This is the object that represents an open image.  In this
+      section, <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> represents a generic
+      image object.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="IMAGE-OBJECT-MEMBERS"
+></A
+>5.1.1. Image Members</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>active_channel</I
+></TT
+></DT
+><DD
+><P
+>This is the active channel of the image.  You can
+              also assign to this member, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no active
+              channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>active_layer</I
+></TT
+></DT
+><DD
+><P
+>This is the active layer of the image.  You can
+              also assign to this member, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no active
+              layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>base_type</I
+></TT
+></DT
+><DD
+><P
+>This is the type of the image (eg RGB, INDEXED).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>channels</I
+></TT
+></DT
+><DD
+><P
+>This is a list of the channels of the image.
+              Altering this list has no effect, and you can not assign
+              to this member.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>cmap</I
+></TT
+></DT
+><DD
+><P
+>This is the colour map for the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>filename</I
+></TT
+></DT
+><DD
+><P
+>This is the filename for the image.  A file load
+              or save handler might assign to this.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>This is the height of the image.  You can't assign
+              to this member.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>floating_selection</I
+></TT
+></DT
+><DD
+><P
+>The floating selection layer, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no floating
+              selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layers</I
+></TT
+></DT
+><DD
+><P
+>This is a list of the layers of the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>selection</I
+></TT
+></DT
+><DD
+><P
+>The selection mask for the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>This is the width of the image.  You can't assign
+              to this member.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="IMAGE-OBJECT-METHODS"
+></A
+>5.1.2. Image Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>add_channel</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>)</DT
+><DD
+><P
+>Adds <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+> to
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> in position
+              <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>add_layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>)</DT
+><DD
+><P
+>Adds <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+> to
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> in position
+              <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>add_layer_mask</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+>)</DT
+><DD
+><P
+>Adds the mask <TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+> to
+	      <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>clean_all</TT
+>()</DT
+><DD
+><P
+>Unsets the dirty flag on the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>disable_undo</TT
+>()</DT
+><DD
+><P
+>Disables undo for
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>enable_undo</TT
+>()</DT
+><DD
+><P
+>Enables undo for <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.
+              You might use these commands round a plugin, so that the
+              plugin's actions can be undone in a single step.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>flatten</TT
+>()</DT
+><DD
+><P
+>Returns the resulting layer after merging all the
+              visible layers, discarding non visible ones and
+              stripping the alpha channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_component_active</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>)</DT
+><DD
+><P
+>Returns true if <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>
+              (one of the <TT
+CLASS="LITERAL"
+>*_CHANNEL</TT
+> constants) is
+              active.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_component_visible</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>)</DT
+><DD
+><P
+>Returns true if <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>
+              is visible.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>set_component_active</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>active</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the activeness of
+	      <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>set_component_visible</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>active</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the visibility of
+	      <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>lower_channel</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Lowers <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>lower_layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Lowers <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>merge_visible_layers</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>Merges the visible layers of
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> using the given merge
+              type.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>pick_correlate_layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Returns the layer that is visible at the point
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if no layer matches.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>raise_channel</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Raises <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>raise_layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Raises <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>remove_channel</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Removes <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+> from
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>remove_layer</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Removes <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+> from
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>remove_layer_mask</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+>)</DT
+><DD
+><P
+>Removes the mask from
+              <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>, with the given
+              <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+> (either APPLY or
+              DISCARD).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>resize</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Resizes the image to size <TT
+CLASS="PARAMETER"
+><I
+>(width,
+              height)</I
+></TT
+> and places the old contents at
+              position <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="CHANNEL-OBJECT"
+></A
+>5.2. Channel Objects</H3
+><P
+>These objects represent a Gimp Image's colour channels.
+      In this section, <TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+> will refer
+      to a generic channel object.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="CHANNEL-OBJECT-MEMBERS"
+></A
+>5.2.1. Channel Members</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>color</I
+></TT
+></DT
+><DD
+><P
+>The colour of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>The width of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the channel belongs to, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if it isn't attached
+              yet.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+></DT
+><DD
+><P
+>The channel's layer (??) or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if one doesn't exist.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layer_mask</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the channel is a layer mask.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+></DT
+><DD
+><P
+>The opacity of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>show_masked</I
+></TT
+></DT
+><DD
+><P
+>The show_masked value of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>visible</I
+></TT
+></DT
+><DD
+><P
+>Non-zero if the channel is visible.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="CHANNEL-OBJECT-METHODS"
+></A
+>5.2.2. Channel Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>copy</TT
+>()</DT
+><DD
+><P
+>returns a copy of the channel.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="LAYER-OBJECT"
+></A
+>5.3. Layer Objects</H3
+><P
+>Layer objects represent the layers of a Gimp image.  In
+      this section I will refer to a generic layer called
+      <TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="LAYER-OBJECT-MEMBERS"
+></A
+>5.3.1. Layer Members</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>apply_mask</I
+></TT
+></DT
+><DD
+><P
+>The apply mask setting. (non zero if the layer
+              mask is being composited with the layer's alpha
+              channel).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>edit_mask</I
+></TT
+></DT
+><DD
+><P
+>The edit mask setting.  (non zero if the mask is
+              active, rather than the layer).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the layer is part of, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if the layer isn't
+              attached.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_floating_selection</I
+></TT
+></DT
+><DD
+><P
+>Non zero if this layer is the image's floating
+	      selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+></DT
+><DD
+><P
+>The layer's mask, or <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+>
+	      if it doesn't have one.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+></DT
+><DD
+><P
+>The mode of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+></DT
+><DD
+><P
+>The opacity of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>preserve_transparency</I
+></TT
+></DT
+><DD
+><P
+>The layer's preserve transparency setting.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="LAYER-OBJECT-METHODS"
+></A
+>5.3.2. Layer Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>add_alpha</TT
+>()</DT
+><DD
+><P
+>Adds an alpha component to the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>copy</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>[alpha]</I
+></TT
+>)</DT
+><DD
+><P
+>Creates a copy of the layer, optionally with an
+	      alpha layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>create_mask</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>Creates a layer mask of type
+	      <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>resize</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Resizes the layer to <TT
+CLASS="PARAMETER"
+><I
+>(w,
+              h)</I
+></TT
+>, positioning the original contents at
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>scale</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>origin</I
+></TT
+>)</DT
+><DD
+><P
+>Scales the layer to <TT
+CLASS="PARAMETER"
+><I
+>(w, h)</I
+></TT
+>,
+              using the specified <TT
+CLASS="PARAMETER"
+><I
+>origin</I
+></TT
+> (local
+              or image).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>set_offsets</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the offset of the layer, relative to the
+	      image's origin</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>translate</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Moves the layer to <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>
+              relative to its current position.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="DRAWABLE-OBJECT"
+></A
+>5.4. Drawable Objects</H3
+><P
+>Both layers and channels are drawables.  Hence there are a
+      number of operations that can be performed on both objects.
+      They also have some common attributes and methods.  In the
+      description of these attributes, I will refer to a generic
+      drawable called <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="DRAWABLE-OBJECT-MEMBERS"
+></A
+>5.4.1. Drawable Members</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_colour</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_color</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_rgb</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is colour.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_grey</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_gray</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is greyscale.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>has_alpha</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable has an alpha channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the drawable belongs to.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_indexed</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable uses an indexed colour
+	      scheme.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mask_bounds</I
+></TT
+></DT
+><DD
+><P
+>The bounds of the drawable's selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>offsets</I
+></TT
+></DT
+><DD
+><P
+>The offset of the top left hand corner of the
+	      drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+></DT
+><DD
+><P
+>The type of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>visible</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is visible.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>The width of the drawable.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="DRAWABLE-OBJECT-METHODS"
+></A
+>5.4.2. Drawable Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>fill</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>fill_type</I
+></TT
+>)</DT
+><DD
+><P
+>Fills the drawable with given
+	      <TT
+CLASS="PARAMETER"
+><I
+>fill_type</I
+></TT
+> (one of the
+	      <TT
+CLASS="LITERAL"
+>*_FILL</TT
+> constants).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>flush</TT
+>()</DT
+><DD
+><P
+>Flush the changes to the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_pixel_rgn</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>, [<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+>,
+	    [<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>])</DT
+><DD
+><P
+>Creates a pixel region for the drawable.  It will
+              cover the region with origin
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+> and dimensions <TT
+CLASS="PARAMETER"
+><I
+>w
+              x h</I
+></TT
+>.  The <TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+>
+              argument sets whether any changes to the pixel region
+              will be reflected in the drawable (default is TRUE).
+              The <TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+> argument sets whether
+              the pixel region acts on the shadow tiles or not
+              (default is FALSE).  If you draw on the shadow tiles,
+              you must call
+              <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>merge_shadow</TT
+>()
+              for changes to take effect.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_tile</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>row</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>col</I
+></TT
+>)</DT
+><DD
+><P
+>Get a tile at <TT
+CLASS="PARAMETER"
+><I
+>(row,
+	      col)</I
+></TT
+>. Either on or off the
+	      <TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+> buffer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_tile2</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Get the tile that contains the pixel
+	      <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>merge_shadow</TT
+>()</DT
+><DD
+><P
+>Merge the shadow buffer back into the
+	      drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>update</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>)</DT
+><DD
+><P
+>Update the given portion of the drawable.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="TILE-OBJECT"
+></A
+>5.5. Tile Objects</H3
+><P
+>Tile objects represent the way Gimp stores information.  A
+      tile is basically just a 64x64 pixel region of the drawable.
+      The reason Gimp breaks the image into small pieces like this is
+      so that the whole image doesn't have to be loaded into memory in
+      order to alter one part of it.  This becomes important with
+      larger images.</P
+><P
+>In Gimp-Python, you would use Tiles if you wanted to
+      perform some low level operation on the image, instead of using
+      procedures in the PDB.  This type of object gives a Gimp-Python
+      plugin the power of a C plugin, rather than just the power of a
+      Script-Fu script.  Tile objects are created with either the
+      <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_tile</TT
+>()
+      or
+      <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>get_tile2</TT
+>()
+      functions.  In this section, I will refer to a generic tile
+      object named <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-MEMBERS"
+></A
+>5.5.1. Tile Members</H4
+><P
+>All tile members are read only.</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+></DT
+><DD
+><P
+>If there have been changes to the tile since it
+	      was last flushed.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>drawable</I
+></TT
+></DT
+><DD
+><P
+>The drawable that the tile is from.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>eheight</I
+></TT
+></DT
+><DD
+><P
+>The actual height of the tile.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>ewidth</I
+></TT
+></DT
+><DD
+><P
+>The actual width of the tile.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>ref_count</I
+></TT
+></DT
+><DD
+><P
+>The reference count of the tile.  (this is
+	      independent of the Python object reference
+	      count).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the tile is part of the shadow
+	      buffer.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-METHODS"
+></A
+>5.5.2. Tile Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>flush</TT
+>()</DT
+><DD
+><P
+>Flush any changes in the tile.  Note that the tile
+	      is automatically flushed when the Python object is
+	      deleted from memory.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-MAPPING"
+></A
+>5.5.3. Tile Mapping Behaviour</H4
+><P
+>Tile objects also act as a mapping, or sequence.  You
+	can access the pixels in the tile in one of two ways.  You can
+	either access them with a single number, which refers to its
+	position in the tile
+	(eg. <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+><TT
+CLASS="LITERAL"
+>[64]</TT
+>
+	refers to the first pixel in the second row of a 64x64 pixel
+	tile).  The other way is with a tuple, representing the
+	coordinates on the tile
+	(eg. <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+><TT
+CLASS="LITERAL"
+>[0, 1]</TT
+>
+	refers to the first pixel on the second row of the
+	tile).</P
+><P
+>The type of these subscripts is a string of length
+	<TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+>.
+	When you assign to a subscript, the dirty flag is
+	automatically set on the tile, so you don't have to explicitly
+	set the flag, or flush the tile.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="PREGION-OBJECT"
+></A
+>5.6. Pixel Regions</H3
+><P
+>Pixel region objects give an interface for low level
+      operations to act on large regions of an image, instead of on
+      small 64x64 pixel tiles.  In this section I will refer to a
+      generic pixel region called <TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.  For
+      an example of a pixel region's use, please see the example
+      plugin <TT
+CLASS="FILENAME"
+>whirlpinch.py</TT
+>.</P
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-MEMBERS"
+></A
+>5.6.1. Pixel Region Members</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>drawable</I
+></TT
+></DT
+><DD
+><P
+>The drawable this pixel region is for.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel for the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>rowstride</I
+></TT
+></DT
+><DD
+><P
+>The rowstride for the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+></DT
+><DD
+><P
+>The x coordinate of the top left hand corner.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+></DT
+><DD
+><P
+>The y coordinate of the top left hand corner.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+></DT
+><DD
+><P
+>The width of the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+></DT
+><DD
+><P
+>The height of the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+></DT
+><DD
+><P
+>Non zero if changes to the pixel region will be
+	      reflected in the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the pixel region acts on the shadow
+	      tiles of the drawable.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-METHODS"
+></A
+>5.6.2. Pixel Region Methods</H4
+><P
+></P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+>resize</TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>)</DT
+><DD
+><P
+>resize the pixel region so that it operates on the
+	      the region with corner <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>
+	      with dimensions <TT
+CLASS="PARAMETER"
+><I
+>w x h</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-MAPPING"
+></A
+>5.6.3. Pixel Region Mapping Behaviour</H4
+><P
+>The pixel region acts as a mapping.  The index is a
+	2-tuple with components that are either integers or slices.
+	The subscripts may be read and assigned to.  The type of the
+	subscripts is a string containing the binary data of the
+	requested region.  Here is a description of the posible
+	operations:</P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the pixel at
+	      <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+></P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>x2</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the row starting at <TT
+CLASS="PARAMETER"
+><I
+>(x1,
+	      y)</I
+></TT
+>, width <TT
+CLASS="PARAMETER"
+><I
+>x2 -
+	      x1</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>y2</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the column starting at <TT
+CLASS="PARAMETER"
+><I
+>(x,
+	      y1)</I
+></TT
+>, height <TT
+CLASS="PARAMETER"
+><I
+>y2 -
+	      y1</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>x2</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the rectangle starting at <TT
+CLASS="PARAMETER"
+><I
+>(x1,
+	      y1)</I
+></TT
+>, width <TT
+CLASS="PARAMETER"
+><I
+>x2 - x1</I
+></TT
+>
+	      and height <TT
+CLASS="PARAMETER"
+><I
+>y2 - y1</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="SUPPORT-MODULES"
+></A
+>6. Support Modules</H2
+><P
+>This section describes the modules that help make using the
+    <TT
+CLASS="FILENAME"
+>gimp</TT
+> module easier.  These range from a set
+    of constants to storing persistent data.</P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="GIMPENUMS-MODULE"
+></A
+>6.1. The gimpenums Module</H3
+><P
+>This module contains all the constants found in the header
+      <TT
+CLASS="FILENAME"
+>libgimp/gimpenums.h</TT
+>, as well as some extra
+      constants that are available in Script-Fu.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN1468"
+></A
+>6.2. The gimpfu Module</H3
+><P
+>This module was fully described in an earlier section.  It
+      provides an easy interface for writing plugins, where you do not
+      need to worry about run_modes, GUI's and saving previous values.
+      It is the recommended module for writing plugins.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="GIMPPLUGIN-MODULE"
+></A
+>6.3. The gimpplugin Module</H3
+><P
+>This module provides the framework for writing Gimp
+      plugins in Python.  It gives more flexibility for writing
+      plugins than the gimpfu module, but does not offer as many
+      features (such as automatic GUI building).</P
+><P
+>To use this framework you subclass
+      <TT
+CLASS="FUNCTION"
+>gimpplugin.plugin</TT
+> like so:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>import gimpplugin
+class myplugin(gimpplugin.plugin):
+	def init(self):
+		# initialisation routines
+		# called when gimp starts.
+	def quit(self):
+		# clean up routines
+		# called when gimp exits (normally).
+	def query(self):
+		# called to find what functionality the plugin provides.
+		gimp.install_procedure("procname", ...)
+	# note that this method name matches the first arg of
+	# gimp.install_procedure
+	def procname(self, arg1, ...):
+		# do what ever this plugin should do</PRE
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="GIMPSHELF-MODULE"
+></A
+>6.4. The gimpshelf Module</H3
+><P
+>This module gives a nicer interface to the persistent
+      storage interface for Gimp plugins.  Due to the complicated
+      nature of Python objects (there is often a lot of connections
+      between them), it can be dificult to work out what to store in
+      gimp's persistent storage.  The python interface only allows
+      storage of strings, so this module wraps pickle and unpickle to
+      allow persistentstorage of any python object.</P
+><P
+>Here is some examples of using this module:</P
+><PRE
+CLASS="SCREEN"
+>&#62;&#62;&#62; from gimpshelf import shelf
+&#62;&#62;&#62; shelf['james'] = ['forty-two', (42, 42L, 42.0)]
+&#62;&#62;&#62; shelf.has_key('james')
+1
+&#62;&#62;&#62; shelf['james']
+['forty-two', (42, 42L, 42.0)]</PRE
+><P
+>Anything you store with
+      <TT
+CLASS="FUNCTION"
+>gimpshelf.shelf</TT
+> will exist until Gimp
+      exits.  This makes this interface perfect for when a plugin is
+      executed with the run mode
+      <TT
+CLASS="LITERAL"
+>RUN_WITH_LAST_VALS</TT
+>.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="END-NOTE"
+></A
+>7. End Note</H2
+><P
+>This package is not yet complete, but it has enough in it to
+    be useful for writing plugins for Gimp.  If you write any plugins
+    that might be useful as examples, please mail me at <A
+HREF="mailto:james@daa.com.au"
+TARGET="_top"
+>james@daa.com.au</A
+>.</P
+></DIV
+></DIV
+></BODY
+></HTML
+>

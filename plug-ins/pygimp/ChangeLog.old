@@ -1,0 +1,297 @@
+2006-04-28  Sven Neumann  <sven@gimp.org>
+
+	* doc/pygimp.sgml: applied documentation patch contributed by
+	Sylvain Fourmanoit (bug #339886).
+
+2005-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py (benchmark): removed
+	run-mode parameters again.  Seems to have been fixed in pygimp.
+
+2005-09-27  Sven Neumann  <sven@gimp.org>
+
+	* gimpmodule.c (pygimp_progress_install): undeprecated.
+
+2005-08-19  Sven Neumann  <sven@gimp.org>
+
+	* gimpmodule.c
+	* gimp-drawable.c: use canonical procedure names with
+	gimp_run_procedure().
+
+2005-08-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py: pass run-mode to PDB
+	calls.
+
+2005-08-03  Sven Neumann  <sven@gimp.org>
+
+	* pygimp-rgb.c: added wrapper for gimp_rgb_luminance().
+
+2005-07-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py: follow PDB API change.
+
+2005-07-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py: allow to have the
+	output images saved, made the code more robust, corrected some
+	mistakes.
+
+2005-07-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/benchmark-foreground-extract.py: show elapsed time.
+
+2005-07-16  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* plug-ins/benchmark-foreground-extract.py: added a rough
+	implementation of the foreground extraxtion benchmark as proposed
+	in the GrabCut paper. See comments in the file for details.
+
+2005-06-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/foggify.py: fixed capitalization of menu label.
+
+2004-12-19  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: added $(pygimp_DATA) to EXTRA_DIST.
+
+2003-02-08  Manish Singh  <yosh@gimp.org>
+
+	* gimpui.py: use dialog.run() for sub dialogs, since the main dialog
+	is also doing that. This does break consistency with the rest of
+	gimp, but will do for now. I wish there was a similar API that didn't
+	set the dialog modal. Fixed brush and pattern list to use the new
+	PDB names. Also make the filesel really have a title of "Files"
+
+	* gimpshelf.py: minor clean up, use cStringIO if available
+
+	* gimpfu.py: add support for Load/Save plug-ins. Use GtkImage
+	instead of deprecated GtkPixmap.
+
+	* gimpenums.py: regenerated
+
+	* plug-ins/Makefile.am
+	* plug-ins/colorhtml.py: the return of colorhtml to 1.3
+
+2003-01-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/gimpcons.py: import gtkcons only when we're about to use
+	it. This and below allows plug-in query to work even without an
+	interface.
+
+	* plug-ins/pdbbrowse.py: define BrowseWin (which needs gtk) only
+	when we need it and are guaranteed a gui setup.
+
+2002-11-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/Makefile.am (EXTRA_DIST): added missing file (#98034).
+
+2002-08-31  James Henstridge  <james@daa.com.au>
+
+	* gimpfu.py (RadioEntry): add PF_RADIO support to gimpfu based on
+	Yosh's patch.
+	(_interact): swap order of buttons to match other dialogs.
+
+2002-08-30  James Henstridge  <james@daa.com.au>
+
+	* pygimp-*.c: update to list all methods.  Convert no arg
+	functions to METH_NOARG (slight code size reduction).
+
+	* pygimp-drawable.c (PyGimpDrawable_Type): add getsets for common
+	drawable attributes.
+	(PyGimpLayer_Type): convert getattr and setattr to getsets.
+	(PyGimpChannel_Type): convert to getsets.
+
+	* gimpmodule.c (new_parasite): remove.  Superceded by
+	gimp.Parasite constructor.
+	(pygimp_image_list): rename to match actual API.
+
+	* pygimp-parasite.c (PyGimpParasite_Type): switch to getsets.
+	(para_init): add constructor.
+
+	* pygimp-tile.c (PyGimpPixelRgn_Type): convert to use getsets.
+	(PyGimpTile_Type): convert to use getsets.
+
+	* pygimp-image.c (PyGimpImage_Type): convert getattr and setattr
+	routines into getsets.
+
+2002-08-29  James Henstridge  <james@daa.com.au>
+
+	* pygimp-image.c (img_repr): check if gimp_image_get_filename()
+	returns NULL.
+
+	* plug-ins/gimpcons.py: fix up plugin, so that I can test the rest
+	of pygimp.
+
+	* *.py, plug-ins/*.py: many updates to Python code to work with
+	new PyGTK.  I can start a plug in now.
+
+2002-08-28  James Henstridge  <james@daa.com.au>
+
+	* *.c, pygimp.h: split module into multiple files, and convert
+	types to Python 2.2 style types.  Still need to fix some of the
+	getattr routines.
+
+	* gimpmodule.c: various updates to get it to compile with latest
+	gimp.  Still need to merge in changes to toplevel configure.in.
+
+2000-09-23  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* gimpmodule.c (newpfobject): use correct type for enums
+
+	* plug-ins/gtkcons.py (Console.run): set _ after evaluating a 
+	statement, so _ may be used as it is in the python interpreter.
+
+2000-09-20  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* plug-ins/pdbbrowse.py (pars): Oops.  When we did
+	s/PARAM_/PDB_/, we forgot to do s/6/4/ (the length
+	of the prefix changed).
+
+	* gimpmodule.c: Filter this through remove_cruft,
+	finishing the libgimp renaming (and further ensuring
+	that it won't work with older libgimps).
+
+2000-08-10  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* gimpenums.py: This file now autogenerated by
+	tools/pdbgen/enumcode-py.pl
+
+	* gimpfu.py: 
+	* gimpmodule.c: renaming fixes for libgimp 1.2
+
+	* plug-ins/pdbbrowse.py (pars): s/PARAM_/PDB_/
+
+2000-08-09  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* gimpmodule.c (chn_getattr): under "layer", remove the call to
+	gimp_channel_get_layer_id() as this function does not exist.  It
+	would be well for someone who knows pygimp better than I to review
+	this change, but it keeps pygimp from being *completely* broken.
+
+1999-11-11  James Henstridge  <james@daa.com.au>
+
+	* doc/pygimp.sgml: updated documentation.
+
+	* gimpmodule.c: applied patches from Hans Breuer to fix portability
+	problems and also win32 compatibility.
+
+	(lay_getattr): take is_rgb as a synonym for is_color/is_colour.
+	(drw_parasite_attach):
+	(drw_parasite_detach): change to new naming scheme.
+	(img_parasite_attach): 
+	(img_parasite_detach): same here.
+	(gimp_Parasite_find): 
+	(gimp_Parasite_attach): 
+	(gimp_Parasite_detach): same here.
+	(chn_getattr): added is_rgb as a synonym for is_colour, and
+	is_layer_mask as a synonym for layer_mask.
+
+1999-07-08  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/shadow_bevel.py: added {disable,enable}_undo() calls.  Also
+	made it possible to turn off the creation of a shadow.
+
+	* plug-ins/foggify.py: added disable_undo() and enable_undo() calls
+	round the plugin code.
+
+	* plug-ins/Makefile.am: forgot to add foggify and shadow_bevel to
+	the EXTRA_DIST list.
+
+	* gimpui.py: fixed some small bugs that caused an exception when
+	loading on some versions of python.  Weird thing is, it did not
+	cause problems on my computer (using 1.5.1)
+
+1999-07-05  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/foggify.py, plug-ins/shadow_bevel.py: two new example
+	scripts.
+
+1999-07-04  James Henstridge  <james@daa.com.au>
+
+	* gimpmodule.c: added support for parasites.  This new code is
+	conditionally compiled if GIMP_HAVE_PARASITES is defined.
+	Added other gimp 1.1 features to gimpmodule.
+
+1999-07-03  James Henstridge  <james@daa.com.au>
+
+	* gimpmodule.c (initgimp): added {major,minor,micro}_version constants
+	to gimpmodule.
+	(*) removed all the empty __doc__ strings -- they were just wasting
+	space, and I have other docs in there now.
+
+	* plug-ins/clothify.py (python_clothify): same here.
+
+	* plug-ins/sphere.py (python_sphere): some small hacks to get the
+	plugin to work with both gimp 1.0 and 1.1 -- using the pattern
+	"if pdb.gimp_whatever.nparams == n" to check if the img parameter
+	should be removed.
+
+	* plug-ins/pdbbrowse.py (BrowseWin.extension_pdb_browse): fixed
+	small bug.
+
+1999-07-02  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/whirlpinch.py (python_whirl_pinch): adjusted plug in to
+	work with drawable changes.
+
+	* gimpmodule.c: removed the drawable type -- now only layer or channel
+	types are used.  Also moved the drawable type's methods to both the
+	layer and channel object types.  Also added some of the attributes of
+	the drawable object to layer and channel objects (some aren't needed
+	anymore, since layers are clearly defined as layers, and channels
+	as channels).
+	Make tile and pixel region objects keep a reference to their
+	associated drawable.
+	Added attributes has_alpha, is_colour, is_grey and is_indexed to
+	layer and channel objects.
+
+1999-06-22  James Henstridge  <james@daa.com.au>
+
+	* gimpplugin.py: renamed from plugin.py.  This is mainly to reduce
+	namespace polution.
+	
+	* getvals.py: removed file.  It has been replaced by the much more
+	functional gimpfu module.
+
+	* plug-ins/gimpcons.py: added a browse button that will display the
+	pdbbrowse window, which can then be used to choose a pdb function.
+	The selected pdb function gets its prototype inserted on the
+	command line.
+
+	* plug-ins/pdbbrowse.py: converted to use GTK+ widgets and gimpfu.
+
+	* plug-ins/gimpcons.py: converted to use gimpfu and gtkcons.py.
+	
+	* plug-ings/gtkcons.py: a GTK replacement for tkcons.py.
+	
+	* plug-ins/whirlpinch.py, plug-ins/sphere.py: converted these two
+	to use gimpfu.
+	
+	* gimpshelf.py (shelf): some changes so that the gimp internal types
+	will pickle correctly.
+
+	* gimpmodule.c (initgimp): export the type objects for gimpmodule's
+	internal types.  This is mainly to help get pickling to work
+	correctly.
+	(_id2*): new functions to help convert id's to the builtin types.
+
+	* plug-ins/clothify.py: converted to use gimpfu module.
+
+1999-06-21  James Henstridge  <james@daa.com.au>
+
+	* gimpfu.py: a simplified interface to writing GIMP plugins.  It
+	handles all the user interaction stuff and saving the last used
+	values.  It uses pygtk, so should match the interface of the rest
+	of gimp.
+
+	* gimpui.py: new file that implements a number of useful widgets
+	for use with the interfaces of plugins.  It requires pygtk.
+
+	* gimpmodule.c (tuple_to_GParam): accept None for layer, channel
+	or drawable arguments to PDB functions.  This value gets treated
+	like an ID of -1.
+	(img_cmp, lay_cmp, chn_cmp, drw_cmp): added compare functions so
+	that the == operator works as expected with those object types.
+

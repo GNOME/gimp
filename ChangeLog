@@ -1,5 +1,10 @@
 2008-09-03  Daniel Eddeland <danedde@svn.gnome.org>
 
+	Merged 26837:26849 from trunk, and tried
+	to fix oddities, and fix make error
+
+2008-09-03  Daniel Eddeland <danedde@svn.gnome.org>
+
 	Merged 26806:26837 from trunk, and tried
 	to fix oddities in svn.
 

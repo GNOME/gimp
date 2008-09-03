@@ -1,0 +1,26 @@
+Fractal Explorer Plug-In Version 2 - (c) 1997 <cotting@mygale.org>
+#**********************************************************************
+# This is a data file for the Fractal Explorer plug-in for GIMP       *
+# Get the plug-in at                 http://www.mygale.org/~cotting   *
+#**********************************************************************
+fractaltype: 7
+xmin: 0.011789147742093
+xmax: 0.012022980488837
+ymin: 0.040065050125122
+ymax: 0.040298193693161
+iter: 92.025001525878906
+cx: -1.092000007629395
+cy: 0.232999995350838
+redstretch: 124.000000000000000
+greenstretch: 112.000000000000000
+bluestretch: 60.000000000000000
+redmode: 1
+greenmode: 0
+bluemode: 0
+redinvert: 1
+greeninvert: 1
+blueinvert: 1
+colormode: 0
+#**********************************************************************
+<EOF>
+#**********************************************************************

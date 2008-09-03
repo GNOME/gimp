@@ -1,0 +1,54 @@
+Load
+====
+Photoshop 2.0 and lower files are not supported due to lack of 
+file specs and test files.
+
+Add text names for colour modes
+
+Parasite for layer blending ranges per channel?
+
+Read & use global mask data
+
+Check for block over-run in read_channel_data
+
+Process errors from readers in read_channel_data
+
+Invert layer mask - channel_set_show_masked or invert mask + parasite
+
+decode more image resources
+
+Read in layer resources and process adjustment layers etc.
+add parasites as required - should be similar to image resources
+
+add layer support for:
+
+Text layers
+
+vector masks
+
+Image resources:
+================
+
+1005 - resolution
+  width and height units dropped.
+
+1007 - Display info
+  save colour space & colour as parasite if unable to display.
+
+1008 - caption - Add to XMP data block.
+
+1025 - Working path (not saved) - Load
+
+1026 - Layers Group Info - ?Load
+
+1033 1036
+  Better error handling for Jpeg decompression. Check for JPEG being included
+  Custom error function.
+
+1041 - Honour ICC untagged option
+
+2000-2998 - Paths
+  Add initial fill rule and clipboard parasites.
+
+2999 - Clipping path
+  Add as parasite to path record.

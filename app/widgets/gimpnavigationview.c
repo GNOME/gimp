@@ -255,7 +255,7 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view)
 
   window = GIMP_VIEW (nav_view)->event_window;
 
-  gdk_pointer_grab (window, TRUE,
+  gdk_pointer_grab (window, FALSE,
                     GDK_BUTTON_RELEASE_MASK      |
                     GDK_POINTER_MOTION_HINT_MASK |
                     GDK_BUTTON_MOTION_MASK       |
@@ -383,7 +383,6 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
 {
   GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
   GimpView           *view     = GIMP_VIEW (widget);
-  gint                x, y;
 
   if (! nav_view->has_grab)
     {
@@ -416,11 +415,9 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
-  gdk_window_get_pointer (view->event_window, &x, &y, NULL);
-
   gimp_navigation_view_move_to (nav_view,
-                                x - nav_view->motion_offset_x,
-                                y - nav_view->motion_offset_y);
+                                mevent->x - nav_view->motion_offset_x,
+                                mevent->y - nav_view->motion_offset_y);
 
   gdk_event_request_motions (mevent);
 

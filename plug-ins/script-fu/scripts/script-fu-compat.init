@@ -1,0 +1,369 @@
+;The Scheme code in this file provides some compatibility with scripts that
+;were originally written for use with the older SIOD based Script-Fu plug-in
+;of GIMP.
+;
+;All items defined in this file except for the random number routines are
+;deprecated. Existing scripts should be updated to avoid the use of the
+;compability functions and define statements which follow the random number 
+;generator routines.
+;
+;The items marked as deprecated at the end of this file may be removed
+;at some later date.
+
+
+;The random number generator routines below have been slightly reformatted.
+;A couple of define blocks which are not needed have been commented out.
+;The original file was called rand2.scm and can be found in:
+;http://www-2.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/scheme/code/math/random/
+
+; Minimal Standard Random Number Generator
+; Park & Miller, CACM 31(10), Oct 1988, 32 bit integer version.
+; better constants, as proposed by Park.
+; By Ozan Yigit
+
+;(define *seed* 1)
+
+(define (srand seed)
+  (set! *seed* seed)
+  *seed*
+)
+
+(define (msrg-rand)
+  (let (
+       (A 48271)
+       (M 2147483647)
+       (Q 44488)
+       (R 3399)
+       )
+    (let* (
+          (hi (quotient *seed* Q))
+          (lo (modulo *seed* Q))
+          (test (- (* A lo) (* R hi)))
+          )
+      (if (> test 0)
+        (set! *seed* test)
+        (set! *seed* (+ test M))
+      )
+    )
+  )
+  *seed*
+)
+
+; poker test
+; seed 1
+; cards 0-9 inclusive (random 10)
+; five cards per hand
+; 10000 hands
+;
+; Poker Hand     Example    Probability  Calculated
+; 5 of a kind    (aaaaa)      0.0001      0
+; 4 of a kind    (aaaab)      0.0045      0.0053
+; Full house     (aaabb)      0.009       0.0093
+; 3 of a kind    (aaabc)      0.072       0.0682
+; two pairs      (aabbc)      0.108       0.1104
+; Pair           (aabcd)      0.504       0.501
+; Bust           (abcde)      0.3024      0.3058
+
+(define (random n)
+  (let* (
+        (n (inexact->exact (truncate n)))
+        (M 2147483647)
+        (slop (modulo M n))
+        )
+    (let loop ((r (msrg-rand)))
+      (if (> r slop)
+        (modulo r n)
+        (loop (msrg-rand))
+      )
+    )
+  )
+)
+
+;(define (rngtest)
+;  (display "implementation ")
+;  (srand 1)
+;  (do
+;    ( (n 0 (+ n 1)) )
+;    ( (>= n 10000) )
+;    (msrg-rand)
+;  )
+;  (if (= *seed* 399268537)
+;      (display "looks correct.")
+;      (begin
+;        (display "failed.")
+;        (newline)
+;        (display "   current seed ") (display *seed*)
+;        (newline)
+;        (display "   correct seed 399268537")
+;      )
+;  )
+;  (newline)
+;)
+
+
+;This macro defines a while loop which is needed by some older scripts.
+;This is here since it is not defined in R5RS and could be handy to have.
+
+;This while macro was found at:
+;http://www.aracnet.com/~briand/scheme_eval.html
+(define-macro (while test . body)
+  `(let loop ()
+     (cond
+       (,test
+         ,@body
+         (loop)
+       )
+     )
+   )
+)
+
+
+;The following define block(s) require the tsx extension to be loaded
+
+(define (realtime)
+  (car (gettimeofday))
+)
+
+
+;Items below this line are for compatability with Script-Fu but
+;may be useful enough to keep around
+
+(define (delq item lis)
+  (let ((l))
+    (if (null? lis)
+      (set! l '())
+      (begin
+        (set! l (car lis))
+        (set! lis (cdr lis))
+        (while (not (null? lis))
+          (if (not (= item (car lis)))
+            (set! l (append l (list (car lis))))
+          )
+          (set! lis (cdr lis))
+        )
+      )
+    )
+
+    l
+  )
+)
+
+(define (make-list count fill)
+  (vector->list (make-vector count fill))
+)
+
+(define (strbreakup str sep)
+  (let* (
+        (seplen (string-length sep))
+        (start 0)
+        (end (string-length str))
+        (i start)
+        (l)
+        )
+
+    (if (= seplen 0)
+      (set! l (list str))
+      (begin
+        (while (<= i (- end seplen))
+          (if (substring-equal? sep str i (+ i seplen))
+            (begin
+               (if (= start 0)
+                 (set! l (list (substring str start i)))
+                 (set! l (append l (list (substring str start i))))
+               )
+               (set! start (+ i seplen))
+               (set! i (+ i seplen -1))
+            )
+          )
+
+          (set! i (+ i 1))
+        )
+
+        (set! l (append l (list (substring str start end))))
+      )
+    )
+
+    l
+  )
+)
+
+(define (substring-equal? str str2 start end)
+  (string=? str (substring str2 start end))
+)
+
+(define (string-trim str)
+  (string-trim-right (string-trim-left str))
+)
+
+(define (string-trim-left str)
+  (let (
+       (strlen (string-length str))
+       (i 0)
+       )
+
+    (while (and (< i strlen)
+                (char-whitespace? (string-ref str i))
+           )
+      (set! i (+ i 1))
+    )
+
+    (substring str i (string-length str))
+  )
+)
+
+(define (string-trim-right str)
+  (let ((i (- (string-length str) 1)))
+
+    (while (and (>= i 0)
+                (char-whitespace? (string-ref str i))
+           )
+      (set! i (- i 1))
+    )
+
+    (substring str 0 (+ i 1))
+  )
+)
+
+(define (unbreakupstr stringlist sep)
+  (let ((str (car stringlist)))
+
+    (set! stringlist (cdr stringlist))
+    (while (not (null? stringlist))
+      (set! str (string-append str sep (car stringlist)))
+      (set! stringlist (cdr stringlist))
+    )
+
+    str
+  )
+)
+
+
+;Items below this line are deprecated and should not be used in new scripts.
+
+(define aset vector-set!)
+(define aref vector-ref)
+(define fopen open-input-file)
+(define mapcar map)
+(define nil '())
+(define nreverse reverse)
+(define pow expt)
+(define prin1 write)
+
+(define (print obj . port)
+  (apply write obj port)
+  (newline)
+)
+
+(define strcat string-append)
+(define string-lessp string<?)
+(define symbol-bound? defined?)
+(define the-environment current-environment)
+
+(define *pi*
+  (* 4 (atan 1.0))
+)
+
+(define (butlast x)
+  (if (= (length x) 1)
+    '()
+    (reverse (cdr (reverse x)))
+  )
+)
+
+(define (cons-array count type)
+  (case type
+    ((long)   (make-vector count 0))
+    ((short)  (make-vector count 0))
+    ((byte)   (make-vector count 0))
+    ((double) (make-vector count 0.0))
+    ((string) (vector->list (make-vector count "")))
+    (else type)
+  )
+)
+
+(define (fmod a b)
+  (- a (* (truncate (/ a b)) b))
+)
+
+(define (fread arg1 file)
+
+  (define (fread-get-chars count file)
+    (let (
+         (str "")
+         (c)
+         )
+
+      (while (> count 0)
+        (set! count (- count 1))
+        (set! c (read-char file))
+        (if (eof-object? c)
+            (set! count 0)
+            (set! str (string-append str (make-string 1 c)))
+        )
+      )
+
+      (if (eof-object? c)
+          ()
+          str
+      )
+    )
+  )
+
+  (if (number? arg1)
+      (begin
+        (set! arg1 (inexact->exact (truncate arg1)))
+        (fread-get-chars arg1 file)
+      )
+      (begin
+        (set! arg1 (fread-get-chars (string-length arg1) file))
+        (string-length arg1)
+      )
+  )
+)
+
+(define (last x)
+  (cons (car (reverse x)) '())
+)
+
+(define (nth k list)
+  (list-ref list k)
+)
+
+(define (prog1 form1 . form2)
+  (let ((a form1))
+    (if (not (null? form2))
+      form2
+    )
+    a
+  )
+)
+
+(define (rand . modulus)
+  (if (null? modulus)
+    (msrg-rand)
+    (apply random modulus)
+  )
+)
+
+(define (strcmp str1 str2)
+  (if (string<? str1 str2)
+      -1
+      (if (string>? str1 str2)
+          1
+          0
+      )
+  )
+)
+
+(define (trunc n)
+  (inexact->exact (truncate n))
+)
+
+(define verbose
+  (lambda n
+    (if (or (null? n) (not (number? (car n))))
+      0
+      (car n)
+    )
+  )
+)

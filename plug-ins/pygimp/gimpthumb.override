@@ -1,0 +1,98 @@
+%%
+headers
+#include <Python.h>
+
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include <libgimpthumb/gimpthumb.h>
+%%
+modulename gimpthumb
+%%
+import gobject.GObject as PyGObject_Type
+import gtk.gdk.Pixbuf as PyGdkPixbuf_Type
+%%
+ignore-glob
+  *_get_type
+%%
+override gimp_thumb_init kwargs
+static PyObject *
+_wrap_gimp_thumb_init(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    char *creator, *thumb_basedir = NULL;
+
+    static char *kwlist[] = { "creator", "thumb_basedir", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "s|z:init", kwlist,
+                                     &creator, &thumb_basedir))
+        return NULL;
+
+    return PyBool_FromLong(gimp_thumb_init(creator, thumb_basedir));
+}
+%%
+override gimp_thumb_find_thumb kwargs
+static PyObject *
+_wrap_gimp_thumb_find_thumb(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    gchar *uri, *ret;
+    PyObject *py_size, *py_ret;
+    GimpThumbSize size;
+
+    static char *kwlist[] = { "uri", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "sO:find_thumb", kwlist,
+                                     &uri, &py_size))
+        return NULL;
+
+    if (pyg_enum_get_value(GIMP_TYPE_THUMB_SIZE, py_size, (gint *)&size))
+        return NULL;
+
+    ret = gimp_thumb_find_thumb(uri, &size);
+
+    if (ret == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
+    py_ret = Py_BuildValue("sN", ret,
+                           pyg_enum_from_gtype(GIMP_TYPE_THUMB_SIZE, size));
+    g_free(ret);
+    return py_ret;
+}
+%%
+override gimp_thumb_file_test kwargs
+static PyObject *
+_wrap_gimp_thumb_file_test(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    gchar *filename;
+    GimpThumbFileType ret;
+    gint64 mtime, size;
+    gint err_no;
+
+    static char *kwlist[] = { "filename", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s:file_test", kwlist,
+                                     &filename))
+        return NULL;
+
+    ret = gimp_thumb_file_test(filename, &mtime, &size, &err_no);
+
+    if (ret == GIMP_THUMB_FILE_TYPE_NONE) {
+        PyObject *v = Py_BuildValue("iss",
+                                    err_no, g_strerror(err_no), filename); 
+        if (v != NULL) {
+            PyErr_SetObject(PyExc_IOError, v);
+            Py_DECREF(v);
+        }
+
+        return NULL;
+    }
+
+    return Py_BuildValue("NNN", 
+                         pyg_enum_from_gtype(GIMP_TYPE_THUMB_FILE_TYPE, ret),
+                         PyLong_FromLongLong(mtime),
+                         PyLong_FromLongLong(size));
+}

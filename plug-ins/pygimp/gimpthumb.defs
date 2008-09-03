@@ -1,0 +1,312 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Thumbnail
+  (in-module "Gimp")
+  (parent "GObject")
+  (c-name "GimpThumbnail")
+  (gtype-id "GIMP_TYPE_THUMBNAIL")
+)
+
+;; Enumerations and flags ...
+
+(define-enum ThumbFileType
+  (in-module "Gimp")
+  (c-name "GimpThumbFileType")
+  (gtype-id "GIMP_TYPE_THUMB_FILE_TYPE")
+  (values
+    '("none" "GIMP_THUMB_FILE_TYPE_NONE")
+    '("regular" "GIMP_THUMB_FILE_TYPE_REGULAR")
+    '("folder" "GIMP_THUMB_FILE_TYPE_FOLDER")
+    '("special" "GIMP_THUMB_FILE_TYPE_SPECIAL")
+  )
+)
+
+(define-enum ThumbSize
+  (in-module "Gimp")
+  (c-name "GimpThumbSize")
+  (gtype-id "GIMP_TYPE_THUMB_SIZE")
+  (values
+    '("fail" "GIMP_THUMB_SIZE_FAIL")
+    '("normal" "GIMP_THUMB_SIZE_NORMAL")
+    '("large" "GIMP_THUMB_SIZE_LARGE")
+  )
+)
+
+(define-enum ThumbState
+  (in-module "Gimp")
+  (c-name "GimpThumbState")
+  (gtype-id "GIMP_TYPE_THUMB_STATE")
+  (values
+    '("unknown" "GIMP_THUMB_STATE_UNKNOWN")
+    '("remote" "GIMP_THUMB_STATE_REMOTE")
+    '("folder" "GIMP_THUMB_STATE_FOLDER")
+    '("special" "GIMP_THUMB_STATE_SPECIAL")
+    '("not-found" "GIMP_THUMB_STATE_NOT_FOUND")
+    '("exists" "GIMP_THUMB_STATE_EXISTS")
+    '("old" "GIMP_THUMB_STATE_OLD")
+    '("failed" "GIMP_THUMB_STATE_FAILED")
+    '("ok" "GIMP_THUMB_STATE_OK")
+  )
+)
+
+
+;; From ../../libgimpthumb/gimpthumb-enums.h
+
+(define-function gimp_thumb_file_type_get_type
+  (c-name "gimp_thumb_file_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_thumb_size_get_type
+  (c-name "gimp_thumb_size_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_thumb_state_get_type
+  (c-name "gimp_thumb_state_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From ../../libgimpthumb/gimpthumb-types.h
+
+
+
+;; From ../../libgimpthumb/gimpthumb-utils.h
+
+(define-function init
+  (c-name "gimp_thumb_init")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "creator")
+    '("const-gchar*" "thumb_basedir")
+  )
+)
+
+(define-function find_thumb
+  (c-name "gimp_thumb_find_thumb")
+  (return-type "gchar*")
+  (parameters
+    '("const-gchar*" "uri")
+    '("GimpThumbSize*" "size")
+  )
+)
+
+(define-function file_test
+  (c-name "gimp_thumb_file_test")
+  (return-type "GimpThumbFileType")
+  (parameters
+    '("const-gchar*" "filename")
+    '("gint64*" "mtime")
+    '("gint64*" "size")
+    '("gint*" "err_no")
+  )
+)
+
+(define-function name_from_uri
+  (c-name "gimp_thumb_name_from_uri")
+  (return-type "gchar*")
+  (parameters
+    '("const-gchar*" "uri")
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-function get_thumb_dir
+  (c-name "gimp_thumb_get_thumb_dir")
+  (return-type "const-gchar*")
+  (parameters
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-function ensure_thumb_dir
+  (c-name "gimp_thumb_ensure_thumb_dir")
+  (return-type "gboolean")
+  (parameters
+    '("GimpThumbSize" "size")
+    '("GError**" "error")
+  )
+)
+
+(define-function delete_for_uri
+  (c-name "gimp_thumbs_delete_for_uri")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-function name_from_uri_local
+  (c-name "gimp_thumb_name_from_uri_local")
+  (return-type "gchar*")
+  (parameters
+    '("const-gchar*" "uri")
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-function get_thumb_dir_local
+  (c-name "gimp_thumb_get_thumb_dir_local")
+  (return-type "gchar*")
+  (parameters
+    '("const-gchar*" "dirname")
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-function ensure_thumb_dir_local
+  (c-name "gimp_thumb_ensure_thumb_dir_local")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "dirname")
+    '("GimpThumbSize" "size")
+    '("GError**" "error")
+  )
+)
+
+(define-function delete_for_uri_local
+  (c-name "gimp_thumbs_delete_for_uri_local")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+
+
+;; From ../../libgimpthumb/gimpthumb.h
+
+
+
+;; From ../../libgimpthumb/gimpthumbnail.h
+
+(define-function gimp_thumbnail_get_type
+  (c-name "gimp_thumbnail_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_thumbnail_new
+  (c-name "gimp_thumbnail_new")
+  (is-constructor-of "GimpThumbnail")
+  (return-type "GimpThumbnail*")
+)
+
+(define-method set_uri
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_set_uri")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-method set_filename
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_set_filename")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "filename")
+    '("GError**" "error")
+  )
+)
+
+(define-method set_from_thumb
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_set_from_thumb")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "filename")
+    '("GError**" "error")
+  )
+)
+
+(define-method peek_image
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_peek_image")
+  (return-type "GimpThumbState")
+)
+
+(define-method peek_thumb
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_peek_thumb")
+  (return-type "GimpThumbState")
+  (parameters
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-method check_thumb
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_check_thumb")
+  (return-type "GimpThumbState")
+  (parameters
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-method load_thumb
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_load_thumb")
+  (return-type "GdkPixbuf*")
+  (parameters
+    '("GimpThumbSize" "size")
+    '("GError**" "error")
+  )
+)
+
+(define-method save_thumb
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_save_thumb")
+  (return-type "gboolean")
+  (parameters
+    '("GdkPixbuf*" "pixbuf")
+    '("const-gchar*" "software")
+    '("GError**" "error")
+  )
+)
+
+(define-method save_thumb_local
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_save_thumb_local")
+  (return-type "gboolean")
+  (parameters
+    '("GdkPixbuf*" "pixbuf")
+    '("const-gchar*" "software")
+    '("GError**" "error")
+  )
+)
+
+(define-method save_failure
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_save_failure")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "software")
+    '("GError**" "error")
+  )
+)
+
+(define-method delete_failure
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_delete_failure")
+  (return-type "none")
+)
+
+(define-method delete_others
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_delete_others")
+  (return-type "none")
+  (parameters
+    '("GimpThumbSize" "size")
+  )
+)
+
+(define-method has_failed
+  (of-object "GimpThumbnail")
+  (c-name "gimp_thumbnail_has_failed")
+  (return-type "gboolean")
+)
+
+
