@@ -366,8 +366,7 @@ test_clipboard_paste (GtkClipboard *clipboard,
                                                            FALSE));
   if (data)
     {
-      gsize bytes;
-      gint  fd;
+      gint fd;
 
       fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
@@ -378,9 +377,7 @@ test_clipboard_paste (GtkClipboard *clipboard,
           return FALSE;
         }
 
-      bytes = data->length * data->format / 8;
-
-      if (write (fd, data->data, bytes) < bytes)
+      if (write (fd, data->data, data->length) < data->length)
         {
           close (fd);
           g_printerr ("%s: write() failed: %s",

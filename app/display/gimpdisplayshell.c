@@ -1026,7 +1026,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gimp_display_shell_selection_init (shell);
 
   /*  the horizontal ruler  */
-  shell->hrule = gimp_hruler_new ();
+  shell->hrule = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
@@ -1040,7 +1040,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gimp_help_set_help_data (shell->hrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
   /*  the vertical ruler  */
-  shell->vrule = gimp_vruler_new ();
+  shell->vrule = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_events (GTK_WIDGET (shell->vrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 

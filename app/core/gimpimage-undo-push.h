@@ -27,7 +27,9 @@ GimpUndo * gimp_image_undo_push_image_type          (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_image_size          (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      gint           previous_origin_x,
-                                                     gint           previous_origin_y);
+                                                     gint           previous_origin_y,
+                                                     gint           previous_width,
+                                                     gint           prevoius_height);
 GimpUndo * gimp_image_undo_push_image_resolution    (GimpImage     *image,
                                                      const gchar   *undo_desc);
 GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,

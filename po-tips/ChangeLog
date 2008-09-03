@@ -1,3 +1,13 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* LINGUAS: removed languages that have no translation in this
+	textdomain: el, ga, id, oc, tr, tt, xh, yi.
+
+2008-08-29  Mugurel Tudor  <mugurelu@gnome.ro>
+
+	* ro.po: Translation updated by Cristian Secară
+	<cristi AT secarica DOT ro>
+
 2008-08-14  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation by Kiyotaka Nishibori.

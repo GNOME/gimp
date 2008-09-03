@@ -1,14 +1,14 @@
 # gimp ro translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+# Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-14 07:29+0000\n"
-"PO-Revision-Date: 2008-05-24 01:42+0200\n"
-"Last-Translator: Cristian Secară <cristi AT secarica DO ro>\n"
+"POT-Creation-Date: 2008-06-01 15:10+0000\n"
+"PO-Revision-Date: 2008-07-27 00:48+0200\n"
+"Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,31 +21,31 @@ msgstr "<big>Bun venit la programul GNU de manipulare de imagini !</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
-msgstr ""
+msgstr "<tt>Ctrl</tt>-clic pe instrumentul de umplere cu găleata determină folosirea de către aceasta a culorii de fundal în locul celei de prim plan. Similar, <tt>Ctrl</tt>-clic pe instrumentul pipetă determină stabilirea culorii de fundal în locul celei de prim plan."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
-msgstr ""
+msgstr "<tt>Ctrl</tt>-clic pe previzualizarea măștii de strat în dialogul de straturi comută efectul măștii de strat. <tt>Alt</tt>-clic pe previzualizarea măștii de strat în dialogul de straturi comută vizualizarea directă a măștii."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
-msgstr ""
+msgstr "Folosirea instrumentului de rotire cu tasta <tt>Ctrl</tt> apăsată va constrânge unghiul de rotire în incremente de 15 grade."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr ""
+msgstr "<tt>Shift</tt>-clic pe simbolul ochi din dialogul de straturi pentru a ascunde toate straturile în afară de acela. <tt>Shift</tt>-clic din nou pentru a arăta toate straturile."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
-msgstr ""
+msgstr "O selecție flotantă trebuie să fie ancorată la un strat nou, sau la ultimul strat activ înainte de a efectua alte operații asupra imaginii. Clic pe butonul „Strat nou” sau „Ancorează stratul” în dialogul de straturi, sau folosiți meniurile pentru a face același lucru."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
-msgstr ""
+msgstr "După ce ați activat „Scurtături dinamice de tastatură” în dialogul de preferințe, puteți reasigna scurtături de tastatură. Aceasta se face prin afișarea meniului, selectarea unui element al meniului și apăsarea combinației de taste dorite. Dacă „Salvează scurtăturile de tastatură” este activată, tema de combinații de taste este salvată la ieșirea GIMP. Pobabil că după asta ar trebui să dezactivați „Scurtături dinamice de tastatură”, pentru a preveni asignarea/reasignarea accidentală a scurtăturilor."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
-msgstr ""
+msgstr "Dați clic pe o riglă și trageți de ea pentru a așeza un ghidaj pe o imagine. Toate selecțiile trase vor acroșa la ghidaje. Puteți elimina ghidajele prin tragerea lor în afara imaginii cu instrumentul de mutare."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
@@ -101,11 +101,12 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
-msgstr ""
+msgstr "Puteți crea și edita selecții complexe utilizând instrumentul de traseu. Dialogul de trasee vă permite să lucrați pe trasee multiple și să le convertiți la selecții."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
+#, fuzzy
 msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
-msgstr ""
+msgstr "Puteți trage un strat din dialogul de straturi și să-i dați drumul peste cutia "
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."

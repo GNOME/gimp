@@ -1,3 +1,22 @@
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* LINGUAS: added missing languages: am, az, hi, ka, lv, ml, th, zh_HK.
+
+2008-09-02  Sven Neumann  <sven@gimp.org>
+
+	* ga.po: changed tips-locale to C, as the empty translation to ga
+	has been removed from the po-tips directory.
+
+2008-08-30  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
+
+	* zh_HK.po: Added Traditional Chinese translation (Hong Kong).
+	* zh_TW.po: Updated Traditional Chinese translation (Taiwan).
+
+2008-08-29  Mugurel Tudor  <mugurelu@gnome.ro>
+
+	* ro.po: Translation updated by Cristian Secară
+	<cristi AT secarica DOT ro>
+
 2008-08-28  Priit Laes  <plaes at svn dot gnome dot org>
 
 	* et.po: Translation updated by Priit Laes

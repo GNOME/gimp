@@ -193,7 +193,9 @@ struct _GimpImageClass
   void (* resolution_changed)           (GimpImage            *image);
   void (* size_changed_detailed)        (GimpImage            *image,
                                          gint                  previous_origin_x,
-                                         gint                  previous_origin_y);
+                                         gint                  previous_origin_y,
+                                         gint                  previous_width,
+                                         gint                  previous_height);
   void (* unit_changed)                 (GimpImage            *image);
   void (* quick_mask_changed)           (GimpImage            *image);
   void (* selection_control)            (GimpImage            *image,
@@ -329,7 +331,9 @@ void            gimp_image_selection_control     (GimpImage          *image,
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
 void            gimp_image_size_changed_detailed (GimpImage          *image,
                                                   gint                previous_origin_x,
-                                                  gint                previous_origin_y);
+                                                  gint                previous_origin_y,
+                                                  gint                previous_width,
+                                                  gint                previous_height);
 
 
 /*  undo  */
@@ -401,6 +405,11 @@ GimpTattoo      gimp_image_get_new_tattoo        (GimpImage          *image);
 gboolean        gimp_image_set_tattoo_state      (GimpImage          *image,
                                                   GimpTattoo          val);
 GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
+
+
+/*  projection  */
+
+GimpProjection * gimp_image_get_projection       (const GimpImage    *image);
 
 
 /*  layers / channels / vectors  */

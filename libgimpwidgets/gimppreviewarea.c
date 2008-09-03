@@ -220,13 +220,9 @@ static gboolean
 gimp_preview_area_expose (GtkWidget      *widget,
                           GdkEventExpose *event)
 {
-  GimpPreviewArea *area;
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (widget);
   GdkRectangle     rect;
   GdkRectangle     render;
-
-  g_return_val_if_fail (GIMP_IS_PREVIEW_AREA (widget), FALSE);
-
-  area = GIMP_PREVIEW_AREA (widget);
 
   if (! area->buf)
     return FALSE;

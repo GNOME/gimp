@@ -48,7 +48,7 @@
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimpmessagedialog.h"
-#include "gimpwidgets-utils.c"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"

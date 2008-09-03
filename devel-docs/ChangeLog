@@ -1,3 +1,14 @@
+2008-08-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets-docs.sgml: follow GimpRuler changes.
+
+	* libgimpwidgets/tmpl/gimpruler.sgml: regenerated.
+
+	* libgimpwidgets/tmpl/gimphruler.sgml
+	* libgimpwidgets/tmpl/gimpvruler.sgml: removed.
+
 2008-08-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_get_pdb_error() and

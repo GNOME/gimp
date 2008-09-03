@@ -319,7 +319,6 @@ gimp_image_merge_layers (GimpImage     *image,
   GimpLayer       *merge_layer;
   GimpLayer       *layer;
   GimpLayer       *bottom_layer;
-  guchar           bg[4] = {0, 0, 0, 0};
   GimpImageType    type;
   gint             count;
   gint             x1, y1, x2, y2;
@@ -418,6 +417,8 @@ gimp_image_merge_layers (GimpImage     *image,
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
+      guchar bg[4] = { 0, 0, 0, 0 };
+
       type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
@@ -471,15 +472,13 @@ gimp_image_merge_layers (GimpImage     *image,
       GIMP_ITEM (merge_layer)->offset_x = x1;
       GIMP_ITEM (merge_layer)->offset_y = y1;
 
-      /*  Set the layer to transparent  */
+      /*  clear the layer  */
       pixel_region_init (&src1PR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
                          0, 0,
                          (x2 - x1), (y2 - y1),
                          TRUE);
-
-      /*  set the region to 0's  */
-      color_region (&src1PR, bg);
+      clear_region (&src1PR);
 
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly

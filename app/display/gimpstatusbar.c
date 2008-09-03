@@ -291,7 +291,7 @@ gimp_statusbar_frame_size_request (GtkWidget      *widget,
 {
   GtkRequisition  child_requisition;
   gint            width   = 0;
-  gint            padding = 2 * widget->style->ythickness;
+  gint            padding = 2 * gtk_widget_get_style (widget)->ythickness;
 
   /*  also consider the children which can be invisible  */
 
@@ -1269,7 +1269,7 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
                                     PANGO_PIXELS (rect.width) : 0);
       y += PANGO_PIXELS (rect.y);
 
-      gdk_draw_pixbuf (widget->window, widget->style->black_gc,
+      gdk_draw_pixbuf (widget->window, gtk_widget_get_style (widget)->black_gc,
                        statusbar->icon,
                        0, 0,
                        x, y,

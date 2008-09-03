@@ -105,14 +105,14 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
       gtk_widget_show (image);
     }
 
-  ruler = gimp_hruler_new ();
+  ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_width, ruler_width);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ruler);
 
-  ruler = gimp_vruler_new ();
+  ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_height, ruler_height);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,

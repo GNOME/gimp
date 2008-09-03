@@ -494,7 +494,6 @@ gimp_channel_translate (GimpItem *item,
   GimpChannel *tmp_mask = NULL;
   gint         width, height;
   PixelRegion  srcPR, destPR;
-  guchar       empty = TRANSPARENT_OPACITY;
   gint         x1, y1, x2, y2;
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
@@ -539,7 +538,7 @@ gimp_channel_translate (GimpItem *item,
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (channel)),
                      gimp_item_height (GIMP_ITEM (channel)), TRUE);
-  color_region (&srcPR, &empty);
+  clear_region (&srcPR);
 
   if (width != 0 && height != 0)
     {
@@ -1195,7 +1194,6 @@ gimp_channel_real_clear (GimpChannel *channel,
                          gboolean     push_undo)
 {
   PixelRegion maskPR;
-  guchar      bg = TRANSPARENT_OPACITY;
 
   if (push_undo)
     {
@@ -1216,7 +1214,7 @@ gimp_channel_real_clear (GimpChannel *channel,
                          channel->x1, channel->y1,
                          channel->x2 - channel->x1,
                          channel->y2 - channel->y1, TRUE);
-      color_region (&maskPR, &bg);
+      clear_region (&maskPR);
     }
   else
     {
@@ -1226,7 +1224,7 @@ gimp_channel_real_clear (GimpChannel *channel,
                          0, 0,
                          gimp_item_width  (GIMP_ITEM (channel)),
                          gimp_item_height (GIMP_ITEM (channel)), TRUE);
-      color_region (&maskPR, &bg);
+      clear_region (&maskPR);
     }
 
   /*  we know the bounds  */
@@ -1247,7 +1245,6 @@ gimp_channel_real_all (GimpChannel *channel,
                        gboolean     push_undo)
 {
   PixelRegion maskPR;
-  guchar      bg = OPAQUE_OPACITY;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -1261,7 +1258,7 @@ gimp_channel_real_all (GimpChannel *channel,
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (channel)),
                      gimp_item_height (GIMP_ITEM (channel)), TRUE);
-  color_region (&maskPR, &bg);
+  clear_region (&maskPR);
 
   /*  we know the bounds  */
   channel->bounds_known = TRUE;
