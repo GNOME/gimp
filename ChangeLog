@@ -1,5 +1,15 @@
 2008-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_motion_notify): remove the call to
+	gdk_window_get_pointer() again.
+
+	(gimp_navigation_view_grab_pointer): instead, grab the pointer
+	properly with owner_events=FALSE so all events are reported with
+	respect to the widget's window.
+
+2008-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* libgimpwidgets/gimpcolorselect.c
 	* modules/color-selector-water.c
