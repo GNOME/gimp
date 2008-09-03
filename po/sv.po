@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-25 20:00+0200\n"
-"PO-Revision-Date: 2008-08-25 20:19+0100\n"
+"POT-Creation-Date: 2008-09-03 22:47+0200\n"
+"PO-Revision-Date: 2008-09-03 22:50+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -854,7 +854,7 @@ msgstr "Sampla sammanfogade"
 #: ../app/display/gimpdisplayshell-dnd.c:475
 #: ../app/widgets/gimplayertreeview.c:730
 #: ../app/widgets/gimptoolbox-dnd.c:155
-#: ../app/widgets/gimptoolbox.c:956
+#: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -867,7 +867,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125
-#: ../app/core/gimpimage.c:1413
+#: ../app/core/gimpimage.c:1419
 #: ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333
@@ -4878,39 +4878,51 @@ msgstr "Miniatyrbilden i öppna-dialogen uppdateras automatiskt om filen som fö
 msgid "When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you may want to set this to a higher value."
 msgstr "När mängden bildpunksdata överstiger den här gränsen kommer GIMP att börja skriva ut plattor till disk. Det här är mycket långsammare men det gör det möjligt att arbeta på bilder som annars inte skulle få plats i minnet. Om du har mycket RAM-minne kanske du vill ställa in det här till ett högre värde."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:390
+msgid "Show the current foreground and background colors in the toolbox."
+msgstr "Visa de aktuella för- och bakgrundsfärgerna i verktygslådan."
+
+#: ../app/config/gimprc-blurbs.h:393
+msgid "Show the currently selected brush, pattern and gradient in the toolbox."
+msgstr "Visa för närvarande aktiv pensel, mönster och gradient i verktygslådan."
+
+#: ../app/config/gimprc-blurbs.h:396
+msgid "Show the currently active image in the toolbox."
+msgstr "Visa den för närvarande aktiva bilden i verktygslådan."
+
+#: ../app/config/gimprc-blurbs.h:402
 msgid "The window type hint that is set on the toolbox. This may affect how your window manager decorates and handles the toolbox window."
 msgstr "Fönstertypen som sätts på verktygslådan. Detta kan påverka hur din fönsterhanterare dekorerar och hanterar verktygslådefönstret."
 
-#: ../app/config/gimprc-blurbs.h:398
+#: ../app/config/gimprc-blurbs.h:406
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Ställer in sättet på vilket transparens visas i bilder."
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:409
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Ställer in storleken på schackrutorna som används för transparens."
 
-#: ../app/config/gimprc-blurbs.h:404
+#: ../app/config/gimprc-blurbs.h:412
 msgid "When enabled, GIMP will not save an image if it has not been changed since it was opened."
 msgstr "När aktiverad kommer GIMP inte att spara en bild om den inte ändrats sedan den öppnades."
 
-#: ../app/config/gimprc-blurbs.h:408
+#: ../app/config/gimprc-blurbs.h:416
 msgid "Sets the minimal number of operations that can be undone. More undo levels are kept available until the undo-size limit is reached."
 msgstr "Ställer in det minsta antal åtgärder som kan ångras. Fler ångringsnivåer är tillgängliga tills storlekgränsen för ångring har nådd."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:420
 msgid "Sets an upper limit to the memory that is used per image to keep operations on the undo stack. Regardless of this setting, at least as many undo-levels as configured can be undone."
 msgstr "Ställer in en övre gräns för mängden minne som används per bild för att spara åtgärder på ångringsstacken. Oberoende av denna inställning sparas åtminstone så många ångringsåtgärder som angivits på annat håll."
 
-#: ../app/config/gimprc-blurbs.h:417
+#: ../app/config/gimprc-blurbs.h:425
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Ställer in storleken på förhandsgranskningar i ångringshistoriken."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:428
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "När aktiverad öppnar F1 hjälpläsaren."
 
-#: ../app/config/gimprc-blurbs.h:431
+#: ../app/config/gimprc-blurbs.h:439
 #, c-format
 msgid "Sets the external web browser to be used.  This can be an absolute path or the name of an executable to search for in the user's PATH. If the command contains '%s' it will be replaced with the URL, else the URL will be appended to the command with a space separating the two."
 msgstr "Anger den externa webbläsaren som skall användas. Detta kan vara en absolut sökväg eller namnet på en binärfil att leta efter i användarens PATH. Om kommandot innehållet \"%s\" ersätts det med URL:en; annars läggs URL:en till efter kommandot separerat med ett mellanslag."
@@ -5825,20 +5837,20 @@ msgstr "Öka kanal"
 msgid "Shrink Channel"
 msgstr "Minska kanal"
 
-#: ../app/core/gimpchannel.c:711
+#: ../app/core/gimpchannel.c:710
 #, c-format
 msgid "Cannot stroke empty channel."
 msgstr "Kan inte stryka tom kanal."
 
-#: ../app/core/gimpchannel.c:1633
+#: ../app/core/gimpchannel.c:1630
 msgid "Set Channel Color"
 msgstr "Ställ in kanalfärg"
 
-#: ../app/core/gimpchannel.c:1681
+#: ../app/core/gimpchannel.c:1678
 msgid "Set Channel Opacity"
 msgstr "Ställ in kanalopacitet"
 
-#: ../app/core/gimpchannel.c:1749
+#: ../app/core/gimpchannel.c:1746
 #: ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Markeringsmask"
@@ -5921,7 +5933,7 @@ msgid "Color Balance"
 msgstr "Färgbalans"
 
 #: ../app/core/gimpdrawable-colorize.c:73
-#: ../app/core/gimpdrawable-colorize.c:83
+#: ../app/core/gimpdrawable-colorize.c:85
 #: ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
 msgstr "Färglägg"
@@ -6121,12 +6133,12 @@ msgstr "Konverterar till indexerade färger (fas 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterar till indexerade färger (fas 3)"
 
-#: ../app/core/gimpimage-crop.c:126
+#: ../app/core/gimpimage-crop.c:130
 msgctxt "command"
 msgid "Crop Image"
 msgstr "Beskär bild"
 
-#: ../app/core/gimpimage-crop.c:129
+#: ../app/core/gimpimage-crop.c:133
 #: ../app/core/gimpimage-resize.c:90
 msgid "Resize Image"
 msgstr "Ändra storlek på bild"
@@ -6207,138 +6219,138 @@ msgstr "Ta bort sampelpunkt"
 msgid "Move Sample Point"
 msgstr "Flytta sampelpunkt"
 
-#: ../app/core/gimpimage-undo-push.c:859
+#: ../app/core/gimpimage-undo-push.c:863
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
 
-#: ../app/core/gimpimage.c:1500
+#: ../app/core/gimpimage.c:1506
 msgid "Change Image Resolution"
 msgstr "Ändra bildupplösning"
 
-#: ../app/core/gimpimage.c:1540
+#: ../app/core/gimpimage.c:1550
 msgid "Change Image Unit"
 msgstr "Ändra bildenhet"
 
-#: ../app/core/gimpimage.c:2370
+#: ../app/core/gimpimage.c:2384
 msgid "Attach Parasite to Image"
 msgstr "Koppla parasit till bild"
 
-#: ../app/core/gimpimage.c:2408
+#: ../app/core/gimpimage.c:2422
 msgid "Remove Parasite from Image"
 msgstr "Ta bort parasit från bild"
 
-#: ../app/core/gimpimage.c:2878
+#: ../app/core/gimpimage.c:2892
 msgid "Add Layer"
 msgstr "Lägg till lager"
 
-#: ../app/core/gimpimage.c:2943
-#: ../app/core/gimpimage.c:2956
+#: ../app/core/gimpimage.c:2957
+#: ../app/core/gimpimage.c:2970
 msgid "Remove Layer"
 msgstr "Ta bort lager"
 
-#: ../app/core/gimpimage.c:3098
+#: ../app/core/gimpimage.c:3112
 msgid "Layer cannot be raised higher."
 msgstr "Lagret kan inte höjas mer."
 
-#: ../app/core/gimpimage.c:3103
+#: ../app/core/gimpimage.c:3117
 msgid "Raise Layer"
 msgstr "Höj lager"
 
-#: ../app/core/gimpimage.c:3120
+#: ../app/core/gimpimage.c:3134
 msgid "Layer cannot be lowered more."
 msgstr "Lagret kan inte sänkas mer."
 
-#: ../app/core/gimpimage.c:3125
+#: ../app/core/gimpimage.c:3139
 msgid "Lower Layer"
 msgstr "Sänk lager"
 
-#: ../app/core/gimpimage.c:3136
+#: ../app/core/gimpimage.c:3150
 msgid "Raise Layer to Top"
 msgstr "Höj lager till överst"
 
-#: ../app/core/gimpimage.c:3151
+#: ../app/core/gimpimage.c:3165
 msgid "Lower Layer to Bottom"
 msgstr "Sänk lager till nederst"
 
-#: ../app/core/gimpimage.c:3223
+#: ../app/core/gimpimage.c:3237
 msgid "Add Channel"
 msgstr "Lägg till kanal"
 
-#: ../app/core/gimpimage.c:3268
-#: ../app/core/gimpimage.c:3279
+#: ../app/core/gimpimage.c:3282
+#: ../app/core/gimpimage.c:3293
 msgid "Remove Channel"
 msgstr "Ta bort kanal"
 
-#: ../app/core/gimpimage.c:3326
+#: ../app/core/gimpimage.c:3340
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan inte höjas mer."
 
-#: ../app/core/gimpimage.c:3331
+#: ../app/core/gimpimage.c:3345
 msgid "Raise Channel"
 msgstr "Höj kanal"
 
-#: ../app/core/gimpimage.c:3348
+#: ../app/core/gimpimage.c:3362
 msgid "Channel is already on top."
 msgstr "Kanalen är redan överst."
 
-#: ../app/core/gimpimage.c:3353
+#: ../app/core/gimpimage.c:3367
 msgid "Raise Channel to Top"
 msgstr "Höj kanal till toppen"
 
-#: ../app/core/gimpimage.c:3370
+#: ../app/core/gimpimage.c:3384
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan inte sänkas mer."
 
-#: ../app/core/gimpimage.c:3375
+#: ../app/core/gimpimage.c:3389
 msgid "Lower Channel"
 msgstr "Sänk kanal"
 
-#: ../app/core/gimpimage.c:3395
+#: ../app/core/gimpimage.c:3409
 msgid "Channel is already on the bottom."
 msgstr "Kanalen är redan underst."
 
-#: ../app/core/gimpimage.c:3400
+#: ../app/core/gimpimage.c:3414
 msgid "Lower Channel to Bottom"
 msgstr "Sänk kanal till nederst"
 
-#: ../app/core/gimpimage.c:3474
+#: ../app/core/gimpimage.c:3488
 msgid "Add Path"
 msgstr "Lägg till slinga"
 
-#: ../app/core/gimpimage.c:3520
+#: ../app/core/gimpimage.c:3534
 msgid "Remove Path"
 msgstr "Ta bort slinga"
 
-#: ../app/core/gimpimage.c:3564
+#: ../app/core/gimpimage.c:3578
 msgid "Path cannot be raised higher."
 msgstr "Slingan kan inte höjas mer."
 
-#: ../app/core/gimpimage.c:3569
+#: ../app/core/gimpimage.c:3583
 msgid "Raise Path"
 msgstr "Höj slinga"
 
-#: ../app/core/gimpimage.c:3586
+#: ../app/core/gimpimage.c:3600
 msgid "Path is already on top."
 msgstr "Slingan är redan överst."
 
-#: ../app/core/gimpimage.c:3591
+#: ../app/core/gimpimage.c:3605
 msgid "Raise Path to Top"
 msgstr "Höj slingan till överst"
 
-#: ../app/core/gimpimage.c:3608
+#: ../app/core/gimpimage.c:3622
 msgid "Path cannot be lowered more."
 msgstr "Slingan kan inte sänkas mer."
 
-#: ../app/core/gimpimage.c:3613
+#: ../app/core/gimpimage.c:3627
 msgid "Lower Path"
 msgstr "Sänk slinga"
 
-#: ../app/core/gimpimage.c:3633
+#: ../app/core/gimpimage.c:3647
 msgid "Path is already on the bottom."
 msgstr "Slingan är redan underst."
 
-#: ../app/core/gimpimage.c:3638
+#: ../app/core/gimpimage.c:3652
 msgid "Lower Path to Bottom"
 msgstr "Sänk slingan till underst"
 
@@ -7542,7 +7554,7 @@ msgid "Set layer or path as active"
 msgstr "Ställ in lager eller slinga som aktiv"
 
 #: ../app/dialogs/preferences-dialog.c:1960
-#: ../app/widgets/gimptoolbox.c:619
+#: ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
 msgstr "Verktygslåda"
 
@@ -8281,7 +8293,7 @@ msgstr "Navigera i bildvisningen"
 
 #: ../app/display/gimpdisplayshell.c:1269
 #: ../app/display/gimpdisplayshell.c:1359
-#: ../app/widgets/gimptoolbox.c:216
+#: ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
@@ -10608,7 +10620,7 @@ msgid "_Rectangle Select"
 msgstr "_Rekt. markering"
 
 #: ../app/tools/gimprectangletool.c:1084
-#: ../app/tools/gimprectangletool.c:1981
+#: ../app/tools/gimprectangletool.c:1980
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
@@ -12098,7 +12110,7 @@ msgstr "ICC-färgprofil (*.icc, *.icm)"
 msgid "Progress"
 msgstr "Förlopp"
 
-#: ../app/widgets/gimpselectiondata.c:241
+#: ../app/widgets/gimpselectiondata.c:242
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -12109,7 +12121,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/widgets/gimpselectiondata.c:245
+#: ../app/widgets/gimpselectiondata.c:246
 msgid "Invalid UTF-8"
 msgstr "Ogiltig UTF-8"
 
