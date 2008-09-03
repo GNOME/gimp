@@ -1,5 +1,10 @@
 2008-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_set_static_strings):
+	made the string parameters const.
+
+2008-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontrollerkeyboard.c (struct _KeyboardEvent)
 	* app/widgets/gimpcontrollerwheel.c (struct _WheelEvent): made the
 	blurbs const.
