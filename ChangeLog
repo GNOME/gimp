@@ -1,6 +1,11 @@
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
-	* app/widgets/gimpactionview.[ch]: add an GtkTreeModelFilter
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig-style.c: some more const.
+
+2008-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactionview.[ch]: add n GtkTreeModelFilter
 	between the GtkTreeView and the actual GtkTreeStore. Add API to
 	set the filter which is simply a string that's matched with
 	strstr(). Quite some things improvable here...
