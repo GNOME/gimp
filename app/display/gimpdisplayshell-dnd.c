@@ -187,7 +187,14 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
     return;
 
   if (! image)
-    return;
+    {
+      image = gimp_image_new (shell->display->gimp,
+                              gimp_item_width (GIMP_ITEM (viewable)),
+                              gimp_item_height (GIMP_ITEM (viewable)),
+                              GIMP_RGB);
+
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+    }
 
   if (GIMP_IS_LAYER (viewable))
     new_type = G_TYPE_FROM_INSTANCE (viewable);
@@ -560,7 +567,14 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
     return;
 
   if (! image)
-    return;
+    {
+      image = gimp_image_new (shell->display->gimp,
+                              gdk_pixbuf_get_width (pixbuf),
+                              gdk_pixbuf_get_height (pixbuf),
+                              GIMP_RGB);
+      
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+    }
 
   new_layer =
     gimp_layer_new_from_pixbuf (pixbuf, image,
