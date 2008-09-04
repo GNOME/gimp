@@ -25,6 +25,7 @@
 
 enum
 {
+  GIMP_ACTION_VIEW_COLUMN_VISIBLE,
   GIMP_ACTION_VIEW_COLUMN_ACTION,
   GIMP_ACTION_VIEW_COLUMN_STOCK_ID,
   GIMP_ACTION_VIEW_COLUMN_LABEL,
@@ -52,6 +53,8 @@ struct _GimpActionView
 
   GimpUIManager *manager;
   gboolean       show_shortcuts;
+
+  gchar         *filter;
 };
 
 struct _GimpActionViewClass
@@ -60,11 +63,14 @@ struct _GimpActionViewClass
 };
 
 
-GType       gimp_action_view_get_type (void) G_GNUC_CONST;
+GType       gimp_action_view_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_action_view_new      (GimpUIManager *manager,
-                                       const gchar   *select_action,
-                                       gboolean       show_shortcuts);
+GtkWidget * gimp_action_view_new        (GimpUIManager  *manager,
+                                         const gchar    *select_action,
+                                         gboolean        show_shortcuts);
+
+void        gimp_action_view_set_filter (GimpActionView *view,
+                                         const gchar    *filter);
 
 
 #endif  /*  __GIMP_ACTION_VIEW_H__  */
