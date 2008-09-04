@@ -1,5 +1,14 @@
 2008-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_initialize):
+	expose the preview when the tool is initialized. Fixes missing
+	redraws when the tool is selected from the menus (bug #550911).
+
+	(gimp_transform_tool_motion): expose the preview after
+	recalculating the transformation matrix.
+
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.c: improved the new DND code.
 
 2008-09-04  Tor Lillqvist  <tml@novell.com>

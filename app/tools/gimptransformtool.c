@@ -361,6 +361,8 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
+      gimp_transform_tool_expose_preview (tr_tool);
+
       tr_tool->function = TRANSFORM_CREATING;
 
       /*  Save the current transformation info  */
@@ -487,9 +489,9 @@ gimp_transform_tool_motion (GimpTool        *tool,
     {
       tr_tool_class->motion (tr_tool, display);
 
-      gimp_transform_tool_expose_preview (tr_tool);
-
       gimp_transform_tool_recalc (tr_tool, display);
+
+      gimp_transform_tool_expose_preview (tr_tool);
     }
 
   tr_tool->lastx = tr_tool->curx;
