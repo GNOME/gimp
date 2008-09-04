@@ -1,5 +1,14 @@
 2008-09-04  Tor Lillqvist  <tml@novell.com>
 
+	* app/base/base-utils.h
+	* app/base/base-utils.c: The return type of get_pid() should be
+	gint, not GPid. This matches also the C library on Windows, in
+	which the return type of getpid() is int, not a pointer or
+	intptr_t. The use for GPid in the GLib API is as a "handle" to a
+	descendant processes, returned by the g_spawn_*() functions, and
+	passed to the g_child_watch_*() functions, not as a "process
+	identifier".
+
 	* tools/gimptool.c: Make it compile without warnings also with gcc
 	-Wwrite-strings. Use cmd.exe instead of command.com to execute the
 	COPY and DEL commands on Windows.

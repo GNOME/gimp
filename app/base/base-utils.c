@@ -38,10 +38,10 @@
 
 /*  public functions  */
 
-GPid
+gint
 get_pid (void)
 {
-  return getpid ();
+  return (gint) getpid ();
 }
 
 gint
