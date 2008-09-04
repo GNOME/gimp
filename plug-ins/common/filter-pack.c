@@ -1545,7 +1545,7 @@ fp_range_change_events (GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      gdk_window_get_pointer (widget->window, &x, NULL, NULL);
+      x = mevent->x;
 
       if (x >= 0 && x < 256)
         {
@@ -1556,6 +1556,8 @@ fp_range_change_events (GtkWidget *widget,
           update_range_labels ();
           fp_create_smoothness_graph (AW.aliasing_preview);
         }
+
+      gdk_event_request_motions (mevent);
       break;
 
     default:

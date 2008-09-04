@@ -1,3 +1,15 @@
+2008-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/color-rotate/color-rotate-callbacks.c
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/sample-colorize.c: get rid of calls to
+	gdk_window_get_pointer(), use the coords from the motion event
+	and use gdk_event_request_motions().
+
+	* plug-ins/color-rotate/color-rotate-callbacks.[ch]: some
+	unrelated cleanup while i was at it.
+
 2008-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/make-installer.py
