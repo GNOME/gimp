@@ -1,11 +1,19 @@
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactionview.[ch]: add a column for the casefold
+	label of the action and filter on that.
+
+	* app/dialogs/keyboard-shortcuts-dialog.c: add a button to clear
+	the filter entry. Changed the label to "Search:".
+
+2008-09-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/gfig/gfig-dobject.h
 	* plug-ins/gfig/gfig-style.c: some more const.
 
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
-	* app/widgets/gimpactionview.[ch]: add n GtkTreeModelFilter
+	* app/widgets/gimpactionview.[ch]: add a GtkTreeModelFilter
 	between the GtkTreeView and the actual GtkTreeStore. Add API to
 	set the filter which is simply a string that's matched with
 	strstr(). Quite some things improvable here...

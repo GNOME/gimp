@@ -204,14 +204,15 @@ gimp_action_view_new (GimpUIManager *manager,
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
   store = gtk_tree_store_new (GIMP_ACTION_VIEW_NUM_COLUMNS,
-                              G_TYPE_BOOLEAN,         /* COLUMN_VISIBLE       */
-                              GTK_TYPE_ACTION,        /* COLUMN_ACTION        */
-                              G_TYPE_STRING,          /* COLUMN_STOCK_ID      */
-                              G_TYPE_STRING,          /* COLUMN_LABEL         */
-                              G_TYPE_STRING,          /* COLUMN_NAME          */
-                              G_TYPE_UINT,            /* COLUMN_ACCEL_KEY     */
-                              GDK_TYPE_MODIFIER_TYPE, /* COLUMN_ACCEL_MASK    */
-                              G_TYPE_CLOSURE);        /* COLUMN_ACCEL_CLOSURE */
+                              G_TYPE_BOOLEAN,         /* COLUMN_VISIBLE        */
+                              GTK_TYPE_ACTION,        /* COLUMN_ACTION         */
+                              G_TYPE_STRING,          /* COLUMN_STOCK_ID       */
+                              G_TYPE_STRING,          /* COLUMN_LABEL          */
+                              G_TYPE_STRING,          /* COLUMN_LABEL_CASEFOLD */
+                              G_TYPE_STRING,          /* COLUMN_NAME           */
+                              G_TYPE_UINT,            /* COLUMN_ACCEL_KEY      */
+                              GDK_TYPE_MODIFIER_TYPE, /* COLUMN_ACCEL_MASK     */
+                              G_TYPE_CLOSURE);        /* COLUMN_ACCEL_CLOSURE  */
 
   accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
 
@@ -241,6 +242,7 @@ gimp_action_view_new (GimpUIManager *manager,
           const gchar     *name          = gtk_action_get_name (action);
           gchar           *stock_id;
           gchar           *label;
+          gchar           *label_casefold;
           gchar           *tmp;
           guint            accel_key     = 0;
           GdkModifierType  accel_mask    = 0;
@@ -265,6 +267,8 @@ gimp_action_view_new (GimpUIManager *manager,
               g_free (label);
               label = g_strdup (name);
             }
+
+          label_casefold = g_utf8_casefold (label, -1);
 
           if (show_shortcuts)
             {
@@ -291,18 +295,20 @@ gimp_action_view_new (GimpUIManager *manager,
           gtk_tree_store_append (store, &action_iter, &group_iter);
 
           gtk_tree_store_set (store, &action_iter,
-                              GIMP_ACTION_VIEW_COLUMN_VISIBLE,       TRUE,
-                              GIMP_ACTION_VIEW_COLUMN_ACTION,        action,
-                              GIMP_ACTION_VIEW_COLUMN_STOCK_ID,      stock_id,
-                              GIMP_ACTION_VIEW_COLUMN_LABEL,         label,
-                              GIMP_ACTION_VIEW_COLUMN_NAME,          name,
-                              GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,     accel_key,
-                              GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,    accel_mask,
-                              GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE, accel_closure,
+                              GIMP_ACTION_VIEW_COLUMN_VISIBLE,        TRUE,
+                              GIMP_ACTION_VIEW_COLUMN_ACTION,         action,
+                              GIMP_ACTION_VIEW_COLUMN_STOCK_ID,       stock_id,
+                              GIMP_ACTION_VIEW_COLUMN_LABEL,          label,
+                              GIMP_ACTION_VIEW_COLUMN_LABEL_CASEFOLD, label_casefold,
+                              GIMP_ACTION_VIEW_COLUMN_NAME,           name,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,      accel_key,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,     accel_mask,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE,  accel_closure,
                               -1);
 
           g_free (stock_id);
           g_free (label);
+          g_free (label_casefold);
 
           if (select_action && ! strcmp (select_action, name))
             {
@@ -439,7 +445,10 @@ gimp_action_view_set_filter (GimpActionView *view,
     filter = NULL;
 
   g_free (view->filter);
-  view->filter = g_strdup (filter);
+  view->filter = NULL;
+
+  if (filter)
+    view->filter = g_utf8_casefold (filter, -1);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -462,12 +471,12 @@ gimp_action_view_set_filter (GimpActionView *view,
               gchar *name;
 
               gtk_tree_model_get (model, &child_iter,
-                                  GIMP_ACTION_VIEW_COLUMN_LABEL, &label,
-                                  GIMP_ACTION_VIEW_COLUMN_NAME,  &name,
+                                  GIMP_ACTION_VIEW_COLUMN_LABEL_CASEFOLD, &label,
+                                  GIMP_ACTION_VIEW_COLUMN_NAME,           &name,
                                   -1);
 
-              visible = (strstr (label, view->filter) != NULL ||
-                         strstr (name,  view->filter) != NULL);
+              visible = label && name && (strstr (label, view->filter) != NULL ||
+                                          strstr (name,  view->filter) != NULL);
 
               g_free (label);
               g_free (name);

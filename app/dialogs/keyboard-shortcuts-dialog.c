@@ -36,6 +36,13 @@
 
 
 static void
+keyboard_shortcuts_dialog_filter_clear (GtkButton *button,
+                                        GtkEntry  *entry)
+{
+  gtk_entry_set_text (entry, "");
+}
+
+static void
 keyboard_shortcuts_dialog_filter_changed (GtkEntry       *entry,
                                           GimpActionView *view)
 {
@@ -50,10 +57,11 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *button;
+  GtkWidget *image;
   GtkWidget *scrolled_window;
   GtkWidget *view;
   GtkWidget *box;
-  GtkWidget *button;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -80,7 +88,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("_Filter:"));
+  label = gtk_label_new_with_mnemonic (_("_Search:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -89,6 +97,20 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_widget_show (entry);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+
+  button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (keyboard_shortcuts_dialog_filter_clear),
+                    entry);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
