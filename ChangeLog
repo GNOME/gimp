@@ -1,5 +1,11 @@
 2008-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_drawable) (gimp_display_shell_drop_pixbuf):
+	handle drops on the empty image window.
+
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/keyboard-shortcuts-dialog.c: tweaked spacing between
 	entry and button and resolved a mnemnic conflict.
 
