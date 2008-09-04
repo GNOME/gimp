@@ -1,3 +1,8 @@
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/keyboard-shortcuts-dialog.c: tweaked spacing between
+	entry and button and resolved a mnemnic conflict.
+
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpactionview.[ch]: add a column for the casefold

@@ -55,6 +55,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *entrybox;
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *button;
@@ -92,8 +93,12 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  entrybox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), entrybox, TRUE, TRUE, 0);
+  gtk_widget_show (entrybox);
+
   entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (entrybox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
@@ -101,7 +106,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (entrybox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
@@ -138,7 +143,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_widget_show (box);
 
   button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
-                                       _("_Save keyboard shortcuts on exit"));
+                                       _("S_ave keyboard shortcuts on exit"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
