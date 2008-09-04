@@ -1,3 +1,9 @@
+2008-09-04  Tor Lillqvist  <tml@novell.com>
+
+	* tools/gimptool.c: Make it compile without warnings also with gcc
+	-Wwrite-strings. Use cmd.exe instead of command.com to execute the
+	COPY and DEL commands on Windows.
+
 2008-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c

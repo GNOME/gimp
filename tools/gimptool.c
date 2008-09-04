@@ -92,12 +92,12 @@ static struct {
 #ifdef G_OS_WIN32
 
 static gchar *
-win32_command (gchar *command)
+win32_command (const gchar *command)
 {
-  gchar *comspec = getenv ("COMSPEC");
+  const gchar *comspec = getenv ("COMSPEC");
 
   if (!comspec)
-    comspec = "command.com";
+    comspec = "cmd.exe";
 
   return g_strdup_printf ("%s /c %s", comspec, command);
 }
@@ -221,20 +221,25 @@ get_exec_prefix (gchar slash)
 #endif
 }
 
-static gchar *
+static const gchar *
 expand_and_munge (const gchar *value)
 {
+  const gchar *retval;
+
   if (starts_with_dir (value, "${prefix}"))
-    value = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
+    retval = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
   else if (starts_with_dir (value, "${exec_prefix}"))
-    value = g_strconcat (EXEC_PREFIX, value + strlen ("${exec_prefix}"), NULL);
-  if (starts_with_dir (value, EXEC_PREFIX))
-    value = g_strconcat (get_exec_prefix ('/'), value + strlen (EXEC_PREFIX), NULL);
+    retval = g_strconcat (EXEC_PREFIX, value + strlen ("${exec_prefix}"), NULL);
+  else
+    retval = g_strdup (value);
 
-  if (starts_with_dir (value, PREFIX))
-    value = g_strconcat (get_runtime_prefix ('/'), value + strlen (PREFIX), NULL);
+  if (starts_with_dir (retval, EXEC_PREFIX))
+    retval = g_strconcat (get_exec_prefix ('/'), retval + strlen (EXEC_PREFIX), NULL);
 
-  return value;
+  if (starts_with_dir (retval, PREFIX))
+    retval = g_strconcat (get_runtime_prefix ('/'), retval + strlen (PREFIX), NULL);
+
+  return retval;
 }
 
 static void
@@ -423,7 +428,7 @@ do_build_2 (const gchar *cflags,
 	    const gchar *what)
 {
   gchar       *cmd;
-  gchar       *dest_dir;
+  const gchar *dest_dir;
   const gchar *output_flag;
   gchar       *dest_exe;
   const gchar *here_comes_linker_flags = "";
