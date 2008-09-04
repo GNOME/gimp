@@ -1,3 +1,8 @@
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpprocview.[ch]: made the GimpParamDef parameter in
+	gimp_proc_view_new() const.
+
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/gimptool.c: add tons of const.
