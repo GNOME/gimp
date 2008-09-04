@@ -36,16 +36,16 @@
 #include "libgimpbase/gimpversion.h"
 
 
-static gboolean  silent  = FALSE;
-static gboolean  dry_run = FALSE;
-static gchar    *prefix;
-static gchar    *exec_prefix;
+static gboolean     silent  = FALSE;
+static gboolean     dry_run = FALSE;
+static gchar       *prefix;
+static const gchar *exec_prefix;
 
-static gchar    *env_cc;
-static gboolean  msvc_syntax = FALSE;
-static gchar    *env_cflags;
-static gchar    *env_ldflags;
-static gchar    *env_libs;
+static gboolean     msvc_syntax = FALSE;
+static const gchar *env_cc;
+static const gchar *env_cflags;
+static const gchar *env_ldflags;
+static const gchar *env_libs;
 
 
 #ifdef G_OS_WIN32
@@ -64,7 +64,7 @@ static gchar    *env_libs;
 
 static struct {
   const gchar *option;
-  gchar       *value;
+  const gchar *value;
 } dirs[] = {
   { "prefix",         PREFIX         },
   { "exec-prefix",    EXEC_PREFIX    },
@@ -105,16 +105,16 @@ win32_command (gchar *command)
 #endif
 
 static gboolean
-starts_with_dir (gchar *string,
-		 gchar *test)
+starts_with_dir (const gchar *string,
+		 const gchar *test)
 {
   return g_str_has_prefix (string, g_strconcat (test, "/", NULL)) ||
     strcmp (string, test) == 0;
 }
 
 static gchar *
-one_line_output (gchar *program,
-		 gchar *args)
+one_line_output (const gchar *program,
+		 const gchar *args)
 {
   gchar *command = g_strconcat (program, " ", args, NULL);
   FILE  *pipe    = popen (command, "r");
@@ -146,7 +146,7 @@ one_line_output (gchar *program,
 }
 
 static gchar *
-pkg_config (gchar *args)
+pkg_config (const gchar *args)
 {
 #ifdef G_OS_WIN32
   if (msvc_syntax)
@@ -156,7 +156,7 @@ pkg_config (gchar *args)
   return one_line_output ("pkg-config", args);
 }
 
-static gchar *
+static const gchar *
 get_runtime_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
@@ -204,7 +204,7 @@ get_runtime_prefix (gchar slash)
 #endif
 }
 
-static gchar *
+static const gchar *
 get_exec_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
@@ -222,7 +222,7 @@ get_exec_prefix (gchar slash)
 }
 
 static gchar *
-expand_and_munge (gchar *value)
+expand_and_munge (const gchar *value)
 {
   if (starts_with_dir (value, "${prefix}"))
     value = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
@@ -417,18 +417,18 @@ maybe_run (gchar *cmd)
 }
 
 static void
-do_build_2 (gchar *cflags,
-	    gchar *libs,
-	    gchar *install_dir,
-	    gchar *what)
+do_build_2 (const gchar *cflags,
+	    const gchar *libs,
+	    const gchar *install_dir,
+	    const gchar *what)
 {
-  gchar *cmd;
-  gchar *dest_dir;
-  gchar *output_flag;
-  gchar *dest_exe;
-  gchar *here_comes_linker_flags = "";
-  gchar *windows_subsystem_flag = "";
-  gchar *p, *q;
+  gchar       *cmd;
+  gchar       *dest_dir;
+  const gchar *output_flag;
+  gchar       *dest_exe;
+  const gchar *here_comes_linker_flags = "";
+  const gchar *windows_subsystem_flag = "";
+  gchar       *p, *q;
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);

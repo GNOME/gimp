@@ -1,5 +1,9 @@
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
+	* tools/gimptool.c: add tons of const.
+
+2008-09-04  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpreloc.c (set_gerror): made the error_message
 	variable const.
 
