@@ -343,7 +343,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_x         = 0;
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
-  
+
   shell->highlight              = NULL;
   shell->mask                   = NULL;
 

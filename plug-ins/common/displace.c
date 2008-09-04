@@ -843,10 +843,10 @@ displace_get_label_size (void)
       for (j = 0; j < 2; j++)
         {
           GtkRequisition  requisition;
-  
+
           gtk_button_set_label (GTK_BUTTON (toggle_x), gettext (mtext[i][j]));
           gtk_widget_size_request (toggle_x, &requisition);
-  
+
           if (requisition.width > label_maxwidth)
             label_maxwidth = requisition.width;
         }

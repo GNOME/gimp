@@ -117,7 +117,7 @@ for df in def_files:
          for s in doublesymbols:
             print "     : %s (line %d)" % s
          print
-         
+
       if unsortindex >= 0:
          print "  the .def-file is not properly sorted (line %d)" % (unsortindex + 2)
          print

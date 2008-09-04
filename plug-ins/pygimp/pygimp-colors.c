@@ -460,7 +460,7 @@ static PyGetSetDef rgb_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static Py_ssize_t 
+static Py_ssize_t
 rgb_length(PyObject *self)
 {
     return 4;
@@ -480,7 +480,7 @@ rgb_getitem(PyObject *self, Py_ssize_t pos)
 	return NULL;
     }
 
-    rgb = pyg_boxed_get(self, GimpRGB); 
+    rgb = pyg_boxed_get(self, GimpRGB);
 
     switch (pos) {
     case 0: val = rgb->r; break;
@@ -600,7 +600,7 @@ rgb_subscript(PyObject *self, PyObject *item)
 	else {
 	    PyErr_SetObject(PyExc_KeyError, item);
 	    return NULL;
-	} 
+	}
     } else {
 	PyErr_SetString(PyExc_TypeError,
 			"indices must be integers");
@@ -983,7 +983,7 @@ static PyGetSetDef hsv_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static Py_ssize_t 
+static Py_ssize_t
 hsv_length(PyObject *self)
 {
     return 4;
@@ -1003,7 +1003,7 @@ hsv_getitem(PyObject *self, Py_ssize_t pos)
 	return NULL;
     }
 
-    hsv = pyg_boxed_get(self, GimpHSV); 
+    hsv = pyg_boxed_get(self, GimpHSV);
 
     switch (pos) {
     case 0: val = hsv->h; scale_factor = 360.0; break;
@@ -1516,7 +1516,7 @@ hsl_getitem(PyObject *self, Py_ssize_t pos)
 	return NULL;
     }
 
-    hsl = pyg_boxed_get(self, GimpHSL); 
+    hsl = pyg_boxed_get(self, GimpHSL);
 
     switch (pos) {
     case 0: val = hsl->h; scale_factor = 360.0; break;
@@ -2020,7 +2020,7 @@ cmyk_getitem(PyObject *self, Py_ssize_t pos)
 	return NULL;
     }
 
-    cmyk = pyg_boxed_get(self, GimpCMYK); 
+    cmyk = pyg_boxed_get(self, GimpCMYK);
 
     switch (pos) {
     case 0: val = cmyk->c; break;

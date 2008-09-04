@@ -1,3 +1,7 @@
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
+	* tools/shadow.c: removed trailing whitespace.
+
 2008-08-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets.types

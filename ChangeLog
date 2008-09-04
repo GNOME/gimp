@@ -1,3 +1,51 @@
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/make-installer.py
+	* app/composite/ns.py
+	* app/dialogs/tips-dialog.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpnavigationeditor.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimpcroptool.c
+	* app/widgets/gtkscalebutton.c
+	* plug-ins/common/animation-play.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/file-raw.c
+	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_cern_parse.c
+	* plug-ins/imagemap/imap_csim_lex.c
+	* plug-ins/imagemap/imap_csim_parse.c
+	* plug-ins/imagemap/imap_ncsa_lex.c
+	* plug-ins/imagemap/imap_ncsa_parse.c
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpshelf.py
+	* plug-ins/pygimp/gimpthumbmodule.c
+	* plug-ins/pygimp/gimpui.py
+	* plug-ins/pygimp/gimpuimodule.c
+	* plug-ins/pygimp/plug-ins/benchmark-foreground-extract.py
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/palette-offset.py
+	* plug-ins/pygimp/plug-ins/palette-sort.py
+	* plug-ins/pygimp/plug-ins/palette-to-gradient.py
+	* plug-ins/pygimp/plug-ins/py-slice.py
+	* plug-ins/pygimp/plug-ins/python-console.py
+	* plug-ins/pygimp/plug-ins/python-eval.py
+	* plug-ins/pygimp/plug-ins/whirlpinch.py
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/script-fu/re/engine.c
+	* plug-ins/script-fu/re/regerror.c
+	* plug-ins/script-fu/tinyscheme/dynload.c
+	* plug-ins/twain/tw_func.c
+	* plug-ins/twain/tw_util.c
+	* plug-ins/twain/tw_win.c
+	* plug-ins/twain/twain.h
+	* tools/defcheck.py
+	* tools/gimppath2svg.py: removed trailing whitespace.
+
 2008-09-03  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plugin-ins/pygimp/pygimp-tile.c: Removed trailing whitespace.

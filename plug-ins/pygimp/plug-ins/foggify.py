@@ -38,10 +38,10 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     # create a layer mask for the new layer
     mask = fog.create_mask(0)
     fog.add_mask(mask)
-        
+
     # add some clouds to the layer
     pdb.plug_in_plasma(img, mask, int(time.time()), turbulence)
-        
+
     # apply the clouds to the layer
     fog.remove_mask(MASK_APPLY)
 

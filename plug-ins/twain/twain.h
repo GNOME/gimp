@@ -821,7 +821,7 @@ typedef struct {
 #define TWCB_NOCLEAR        2
 
 /* CAP_DEVICEEVENT values (DE_ means device event) */
-#define TWDE_CUSTOMEVENTS						0x8000			
+#define TWDE_CUSTOMEVENTS						0x8000
 #define TWDE_CHECKAUTOMATICCAPTURE	0
 #define TWDE_CHECKBATTERY						1
 #define TWDE_CHECKDEVICEONLINE			2

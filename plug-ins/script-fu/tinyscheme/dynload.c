@@ -13,8 +13,8 @@
 # define MAXPATHLEN 1024
 #endif
 
-static void make_filename(const char *name, char *filename); 
-static void make_init_fn(const char *name, char *init_fn); 
+static void make_filename(const char *name, char *filename);
+static void make_init_fn(const char *name, char *init_fn);
 
 #ifdef _WIN32
 # include <windows.h>
@@ -28,27 +28,27 @@ typedef void (*FARPROC)();
 #define PREFIX ""
 #define SUFFIX ".dll"
 
- static void display_w32_error_msg(const char *additional_message) 
- { 
-   LPVOID msg_buf; 
- 
-   FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, 
-		 NULL, GetLastError(), 0, 
-		 (LPTSTR)&msg_buf, 0, NULL); 
-   fprintf(stderr, "scheme load-extension: %s: %s", additional_message, msg_buf); 
-   LocalFree(msg_buf); 
- } 
+ static void display_w32_error_msg(const char *additional_message)
+ {
+   LPVOID msg_buf;
+
+   FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
+		 NULL, GetLastError(), 0,
+		 (LPTSTR)&msg_buf, 0, NULL);
+   fprintf(stderr, "scheme load-extension: %s: %s", additional_message, msg_buf);
+   LocalFree(msg_buf);
+ }
 
 static HMODULE dl_attach(const char *module) {
   HMODULE dll = LoadLibrary(module);
-  if (!dll) display_w32_error_msg(module); 
-  return dll; 
+  if (!dll) display_w32_error_msg(module);
+  return dll;
 }
 
 static FARPROC dl_proc(HMODULE mo, const char *proc) {
-  FARPROC procedure = GetProcAddress(mo,proc); 
-  if (!procedure) display_w32_error_msg(proc); 
-  return procedure; 
+  FARPROC procedure = GetProcAddress(mo,proc);
+  if (!procedure) display_w32_error_msg(proc);
+  return procedure;
 }
 
 static void dl_detach(HMODULE mo) {
@@ -65,7 +65,7 @@ static void dl_detach(HMODULE mo) {
 static HMODULE dl_attach(const char *module) {
   HMODULE so=dlopen(module,RTLD_LAZY);
   if(!so) {
-    fprintf(stderr, "Error loading scheme extension \"%s\": %s\n", module, dlerror()); 
+    fprintf(stderr, "Error loading scheme extension \"%s\": %s\n", module, dlerror());
   }
   return so;
 }
@@ -93,11 +93,11 @@ pointer scm_load_ext(scheme *sc, pointer args)
    char *name;
    HMODULE dll_handle;
    void (*module_init)(scheme *sc);
-   
+
    if ((args != sc->NIL) && is_string((first_arg = pair_car(args)))) {
       name = string_value(first_arg);
-      make_filename(name,filename);     
-      make_init_fn(name,init_fn);     
+      make_filename(name,filename);
+      make_init_fn(name,init_fn);
       dll_handle = dl_attach(filename);
       if (dll_handle == 0) {
          retval = sc -> F;
@@ -116,14 +116,14 @@ pointer scm_load_ext(scheme *sc, pointer args)
    else {
       retval = sc -> F;
    }
-   
+
   return(retval);
 }
 
 static void make_filename(const char *name, char *filename) {
  strcpy(filename,name);
  strcat(filename,SUFFIX);
-}         
+}
 
 static void make_init_fn(const char *name, char *init_fn) {
  const char *p=strrchr(name,'/');

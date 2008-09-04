@@ -333,17 +333,17 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
            */
           target_offset_x = shell->offset_x;
           target_offset_y = shell->offset_y;
- 
+
           if (! center_horizontally)
             {
               target_offset_x = MAX (shell->offset_x, 0);
             }
- 
+
           if (! center_vertically)
             {
               target_offset_y = MAX (shell->offset_y, 0);
             }
- 
+
           gimp_display_shell_scroll_set_offset (shell,
                                                 target_offset_x,
                                                 target_offset_y);

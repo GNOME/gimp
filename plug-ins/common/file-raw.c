@@ -213,7 +213,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL; 
+  GError            *error  = NULL;
   gint32             image_id;
   gint32             drawable_id;
 

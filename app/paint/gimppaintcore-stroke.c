@@ -338,7 +338,7 @@ gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
         {
           coords[i].pressure =  i * slope;
         }
-                
+
       /* Calculate pressure end ramp */
       for (i = length - ramp_length; i < length; i++)
         {

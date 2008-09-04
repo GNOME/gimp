@@ -174,9 +174,9 @@ int
 TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
 {
   TW_EVENT   twEvent;
-	
+
   twSession->twRC = TWRC_NOTDSEVENT;
-	
+
   /* Only ask Source Manager to process event if there is a Source connected. */
   if (DSM_IS_OPEN(twSession) && DS_IS_OPEN(twSession)) {
 		/*
@@ -189,16 +189,16 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
 		twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT,
 			(TW_MEMREF) &twEvent);
-		
+
 		/* Check the return code */
 		if (twSession->twRC == TWRC_NOTDSEVENT) {
 			return FALSE;
 		}
-		
+
 		/* Process the message as necessary */
 		processTwainMessage(twEvent.TWMessage, twSession);
   }
-	
+
   /* tell the caller what happened */
   return (twSession->twRC == TWRC_DSEVENT);
 }
@@ -214,14 +214,14 @@ int
 twainMessageLoop(pTW_SESSION twSession)
 {
   MSG msg;
-	
+
   while (GetMessage(&msg, NULL, 0, 0)) {
     if (DS_IS_CLOSED(twSession) || !TwainProcessMessage(&msg, twSession)) {
       TranslateMessage((LPMSG)&msg);
       DispatchMessage(&msg);
     }
   }
-	
+
   return msg.wParam;
 }
 
@@ -235,7 +235,7 @@ void
 LogLastWinError(void)
 {
 	LPVOID lpMsgBuf;
-	
+
 	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM |
@@ -247,9 +247,9 @@ LogLastWinError(void)
 		0,
 		NULL
 		);
-	
+
 	LogMessage("%s\n", lpMsgBuf);
-	
+
 	/* Free the buffer. */
 	LocalFree( lpMsgBuf );
 }

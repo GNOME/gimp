@@ -28,7 +28,7 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
     int pos = -1;
-	
+
     if (!PyArg_ParseTuple(args, "O!|i:add_channel",
 	                        &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
@@ -49,7 +49,7 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 {
     PyGimpLayer *lay;
     int pos = -1;
-	
+
     if (!PyArg_ParseTuple(args, "O!|i:add_layer", &PyGimpLayer_Type, &lay,
 			  &pos))
 	return NULL;
@@ -108,7 +108,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
             break;
         default:
             PyErr_SetString(pygimp_error, "Unknown image base type");
-            return NULL; 
+            return NULL;
     }
 
     if (fill_mode == -1)
@@ -293,7 +293,7 @@ img_pick_correlate_layer(PyGimpImage *self, PyObject *args)
 {
     int x,y;
     gint32 id;
-	
+
     if (!PyArg_ParseTuple(args, "ii:pick_correlate_layer", &x, &y))
 	return NULL;
 
@@ -311,7 +311,7 @@ static PyObject *
 img_raise_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
-	
+
     if (!PyArg_ParseTuple(args, "O!:raise_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
@@ -529,10 +529,10 @@ static PyObject *
 img_get_component_visible(PyGimpImage *self, PyObject *args)
 {
     int comp;
-	
+
     if (!PyArg_ParseTuple(args, "i:get_component_visible", &comp))
 	return NULL;
-	
+
     return PyBool_FromLong(gimp_image_get_component_visible(self->ID, comp));
 }
 
@@ -1014,7 +1014,7 @@ img_get_colormap(PyGimpImage *self, void *closure)
 		     self->ID);
 	return NULL;
     }
-	
+
     ret = PyString_FromStringAndSize((char *)cmap, n_colours * 3);
     g_free(cmap);
 

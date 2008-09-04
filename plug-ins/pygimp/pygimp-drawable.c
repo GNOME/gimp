@@ -131,7 +131,7 @@ drw_get_tile(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 
     ensure_drawable(self);
 
-    if(row < 0 || row >= self->drawable->ntile_rows || 
+    if(row < 0 || row >= self->drawable->ntile_rows ||
        col < 0 || col >= self->drawable->ntile_cols) {
         Py_INCREF(Py_None);
         return Py_None;

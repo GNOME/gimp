@@ -35,12 +35,12 @@
 #include "pygimp-util.h"
 
 
-void gimpui_register_classes(PyObject *d); 
+void gimpui_register_classes(PyObject *d);
 void gimpui_add_constants(PyObject *module, const gchar *strip_prefix);
 extern PyMethodDef gimpui_functions[];
 
 
-static char gimpui_doc[] = 
+static char gimpui_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 

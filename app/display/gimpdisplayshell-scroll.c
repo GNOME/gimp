@@ -405,7 +405,7 @@ gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *
       data->shell        = shell;
       data->horizontally = horizontally;
       data->vertically   = vertically;
-      
+
       g_signal_connect (shell->canvas, "size-allocate",
                         G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
                         data);

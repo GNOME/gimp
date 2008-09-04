@@ -24,7 +24,7 @@ def code_eval(code):
         import sys
         code = sys.stdin
     exec code in globals()
- 
+
 register(
         "python-fu-eval",
         "Evaluate Python code",

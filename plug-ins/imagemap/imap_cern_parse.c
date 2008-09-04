@@ -1165,7 +1165,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   int yystate;
   int yyn;
   int yyresult;
@@ -1470,7 +1470,7 @@ yyreduce:
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(2) - (5)].value), (gint) (yyvsp[(4) - (5)].value));
-		   polygon->points = g_list_append(polygon->points, 
+		   polygon->points = g_list_append(polygon->points,
 						   (gpointer) point);
 		}
     break;
@@ -1497,7 +1497,7 @@ yyreduce:
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
+		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n",
 					     NULL);
 		   g_strreplace(&info->description, description);
 		   g_free ((yyvsp[(2) - (2)].id));
@@ -1723,7 +1723,7 @@ yyreturn:
 #line 163 "imap_cern.y"
 
 
-static void 
+static void
 cern_error(char* s)
 {
    extern FILE *cern_in;
