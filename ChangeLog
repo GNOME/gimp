@@ -1,5 +1,14 @@
 2008-09-04  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpbasetypes.h
+	(struct GimpEnumDesc)
+	(struct GimpFlagsDesc): made the value_desc and value_help members
+	const, just as the corresponding GEnumValue and GFlagsValue
+	members. This is technically an API change but shouldn't hurt
+	since it totally reflects how they are used.
+
+2008-09-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/color-rotate/color-rotate-callbacks.c
 	* plug-ins/common/filter-pack.c
 	* plug-ins/common/nova.c
