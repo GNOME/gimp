@@ -11,6 +11,8 @@
     <menuitem action="text-tool-load" />
     <menuitem action="text-tool-clear" />
     <separator />
+    <menuitem action="text-tool-path-from-text" />
+    <separator />
     <menuitem action="text-tool-direction-ltr" />
     <menuitem action="text-tool-direction-rtl" />
     <separator />

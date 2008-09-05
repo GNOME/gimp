@@ -1,3 +1,18 @@
+2008-09-05  Bill Skaggs <weskaggs@gmail.com>
+
+	* app/actions/text-tool-actions.c: implemented "update" function
+	for the text tool context menu.  First pass, needs some
+	adjustments.
+
+	* app/tools/gimptextoptions.[ch]
+	* app/actions/text-tool-commands.[ch]
+	* app/actions/text-tool-actions.h
+	* menus/text-tool-menu.xml:    moved "text to path" from
+	a button in tool options to an entry in the context menu.
+
+	* app/tools/gimptexttool.[ch]: changes resulting from
+	both of the previous things.
+
 2008-09-03  Daniel Eddeland <danedde@svn.gnome.org>
 
 	Merged 26837:26849 from trunk, and tried

@@ -131,7 +131,6 @@ static void      gimp_text_tool_text_notify    (GimpText          *text,
 static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 
-static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_vectors_warped
                                                (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool,
@@ -422,7 +421,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
   if (x1 <= cx && x2 >= cx && y1 <= cy && y2 >= cy)
   {
     text_tool->text_cursor_changing = TRUE;
-    gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD); 
+    gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
     gimp_tool_control_activate (tool->control);
   }
   else
@@ -559,7 +558,6 @@ gimp_text_tool_button_release (GimpTool              *tool,
                 "y2", &y2,
                 NULL);
 
-              
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     gimp_text_tool_clipboard_copy (text_tool, FALSE);
   text_tool->text_cursor_changing = FALSE;
@@ -677,7 +675,7 @@ gimp_text_tool_motion (GimpTool        *tool,
 
           if (offset == old_cursor_offset)
               return;
-    
+
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
           gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
                                              &cursor, offset);
@@ -857,14 +855,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           if (text_tool->pending)
             gimp_text_tool_apply (text_tool);
 
-          if (options->to_vectors_button)
-            {
-              gtk_widget_set_sensitive (options->to_vectors_button, FALSE);
-              g_signal_handlers_disconnect_by_func (options->to_vectors_button,
-                                                    gimp_text_tool_create_vectors,
-                                                    text_tool);
-            }
-
           if (options->along_vectors_button)
             {
               gtk_widget_set_sensitive (options->along_vectors_button,
@@ -893,14 +883,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           g_signal_connect (text, "notify",
                             G_CALLBACK (gimp_text_tool_text_notify),
                             text_tool);
-
-          if (options->to_vectors_button)
-            {
-              g_signal_connect_swapped (options->to_vectors_button, "clicked",
-                                        G_CALLBACK (gimp_text_tool_create_vectors),
-                                        text_tool);
-              gtk_widget_set_sensitive (options->to_vectors_button, TRUE);
-            }
 
           if (options->along_vectors_button)
             {
@@ -1160,7 +1142,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   gimp_text_tool_update_layout (text_tool);
 }
 
-static void
+void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
   GimpVectors *vectors;
@@ -1335,10 +1317,11 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
                                          "/text-tool-popup/text-tool-input-methods");
   im_menu = gtk_menu_new ();
 
-  gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context), GTK_MENU_SHELL (im_menu));
+  gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context),
+                                        GTK_MENU_SHELL (im_menu));
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (im_menuitem), im_menu);
   gtk_widget_show (im_menuitem);
-  
+
   g_signal_connect (text_tool, "show-popup",
                     G_CALLBACK (gimp_text_tool_show_context_menu), NULL);
 
@@ -2206,10 +2189,21 @@ gimp_text_tool_show_context_menu (GimpTool *tool, GimpCoords *coords)
                                 NULL, NULL, NULL, NULL);
       return;
     }
+
+  gimp_ui_manager_update (text_tool->ui_manager, text_tool);
   gimp_ui_manager_ui_popup (text_tool->ui_manager,
                             "/text-tool-popup",
                             GTK_WIDGET (shell),
                             NULL, NULL, NULL, NULL);
+}
+
+gboolean
+gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
+{
+  if (text_tool->text_buffer)
+    return gtk_text_buffer_get_has_selection (text_tool->text_buffer);
+  else
+    return FALSE;
 }
 
 void

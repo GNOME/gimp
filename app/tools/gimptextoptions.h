@@ -53,9 +53,10 @@ struct _GimpTextOptions
   GimpViewType           font_view_type;
   GimpViewSize           font_view_size;
 
+  gboolean               use_editor;
+
   /*  options gui  */
   GtkWidget             *size_entry;
-  GtkWidget             *to_vectors_button;
   GtkWidget             *along_vectors_button;
 };
 

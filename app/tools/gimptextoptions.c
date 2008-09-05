@@ -62,6 +62,7 @@ enum
   PROP_INDENTATION,
   PROP_LINE_SPACING,
   PROP_LETTER_SPACING,
+  PROP_USE_EDITOR,
 
   PROP_FONT_VIEW_TYPE,
   PROP_FONT_VIEW_SIZE
@@ -173,6 +174,14 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
+                                    "use-editor",
+                                    N_("Use an external editor window for text "
+                                       "entry, instead of direct-on-canvas "
+                                       "editing"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FONT_VIEW_TYPE,
                                  "font-view-type", NULL,
                                  GIMP_TYPE_VIEW_TYPE,
@@ -192,7 +201,6 @@ static void
 gimp_text_options_init (GimpTextOptions *options)
 {
   options->size_entry           = NULL;
-  options->to_vectors_button    = NULL;
   options->along_vectors_button = NULL;
 }
 
@@ -238,6 +246,10 @@ gimp_text_options_get_property (GObject    *object,
       break;
     case PROP_LETTER_SPACING:
       g_value_set_double (value, options->letter_spacing);
+      break;
+
+    case PROP_USE_EDITOR:
+      g_value_set_boolean (value, options->use_editor);
       break;
 
     case PROP_FONT_VIEW_TYPE:
@@ -296,6 +308,10 @@ gimp_text_options_set_property (GObject      *object,
       break;
     case PROP_LETTER_SPACING:
       options->letter_spacing = g_value_get_double (value);
+      break;
+
+    case PROP_USE_EDITOR:
+      options->use_editor = g_value_get_boolean (value);
       break;
 
     case PROP_FONT_VIEW_TYPE:
@@ -458,6 +474,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
+  button = gimp_prop_check_button_new (config, "use-editor", _("Use editor"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   button = gimp_prop_check_button_new (config, "hinting", _("Hinting"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -515,14 +535,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
-
-  /*  Create a path from the current text  */
-  button = gtk_button_new_with_label (_("Path from Text"));
-  gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
-
-  options->to_vectors_button = button;
 
   button = gtk_button_new_with_label (_("Text along Path"));
   gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
