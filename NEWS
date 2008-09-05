@@ -7,6 +7,28 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes in GIMP 2.5.4
+=====================
+
+ - improved look and feel of the Navigation dialog and navigation popups
+ - improved positioning of the image in the image window
+ - by default turned off use of GEGL for color operations
+ - moved the "Use GEGL" checkbox to the Debug menu
+ - optimized the new scaling code
+ - various fixes to the Python bindings
+ - added Python bindings for most GIMP widgets to the gimpui module
+ - merged GimpHRuler and GimpVRuler classes into GimpRuler
+ - added Search entry to the Keyboard Shortcuts configuration dialog
+ - bug fixes and code cleanup
+ 
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Tor Lillqvist,
+  Lars-Peter Clausen, Michael Schumacher, LightningIsMyName
+
+
+ 
 Changes in GIMP 2.5.3
 =====================
 
