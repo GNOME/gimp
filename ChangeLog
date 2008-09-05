@@ -1,5 +1,12 @@
 2008-09-05  Michael Natterer  <mitch@gimp.org>
 
+	Bug 545325 – Scrollbars do not disappear automatically
+
+	* app/widgets/gimpcontainertreeview.c: autosize the columns after
+	each operation that can reduce the treeview's width.
+
+2008-09-05  Michael Natterer  <mitch@gimp.org>
+
 	Bug 550983 – The size displayed in the status bar isn't correct
 
 	* app/tools/gimprectangletool.c: use the right precision when

@@ -513,6 +513,8 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
     }
 
   parent_view_iface->set_container (view, container);
+
+  gtk_tree_view_columns_autosize (tree_view->view);
 }
 
 static void
@@ -573,6 +575,8 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
   if (iter)
     {
       gtk_list_store_remove (GTK_LIST_STORE (tree_view->model), iter);
+
+      gtk_tree_view_columns_autosize (tree_view->view);
 
       /*  If the store is empty after this remove, clear out renderers
        *  from all cells so they don't keep refing the viewables
@@ -673,12 +677,21 @@ gimp_container_tree_view_rename_item (GimpContainerView *view,
   if (iter)
     {
       gchar *name = gimp_viewable_get_description (viewable, NULL);
+      gchar *old_name;
+
+      gtk_tree_model_get (tree_view->model, iter,
+                          COLUMN_NAME, &old_name,
+                          -1);
 
       gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
                           COLUMN_NAME, name,
                           -1);
 
+      if (name && old_name && strlen (name) < strlen (old_name))
+        gtk_tree_view_columns_autosize (tree_view->view);
+
       g_free (name);
+      g_free (old_name);
     }
 }
 
