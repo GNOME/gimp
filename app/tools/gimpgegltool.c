@@ -224,13 +224,15 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
 static gboolean
 gimp_gegl_tool_operation_blacklisted (const gchar *name)
 {
-  static const gchar * const blacklist[] = { "introspect" };
-
+  static const gchar * const blacklist[] =
+  {
+    "convert-format", "gimp-", "introspect"
+  };
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (blacklist); i++)
     {
-      if (strcmp (name, blacklist[i]) == 0)
+      if (g_str_has_prefix (name, blacklist[i]))
         return TRUE;
     }
 
@@ -647,8 +649,6 @@ gimp_gegl_tool_config_class_init (GObjectClass *klass,
 
           if (copy)
             {
-              g_print ("installing property: %s\n", copy->name);
-
               g_object_class_install_property (klass, i + 1, copy);
             }
         }

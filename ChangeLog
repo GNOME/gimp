@@ -1,5 +1,10 @@
 2008-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpgegltool.c: blacklist "color-convert" and all GIMP
+	operations.
+
+2008-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpgegltool.c: added a blacklist of operations that
 	should not be shown. We may want to add more operations here.
 
