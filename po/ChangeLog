@@ -1,5 +1,9 @@
 2008-09-05  Sven Neumann  <sven@gimp.org>
 
+	* et.po: updated Estonian translation by  Alexia Death.
+
+2008-09-05  Sven Neumann  <sven@gimp.org>
+
 	* POTFILES.in: added app/widgets/gimpactioneditor.c.
 
 2008-09-04  Sven Neumann  <sven@gimp.org>
