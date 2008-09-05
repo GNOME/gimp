@@ -104,7 +104,7 @@ static void fits_delete_recordlist (FITS_RECORD_LIST *rl);
 static void fits_delete_hdulist (FITS_HDU_LIST *hl);
 static int  fits_nan_32 (unsigned char *value);
 static int  fits_nan_64 (unsigned char *value);
-static void fits_set_error (char *errmsg);
+static void fits_set_error (const char *errmsg);
 static void fits_drop_error (void);
 static FITS_RECORD_LIST *fits_read_header (FILE *fp, int *nrec);
 static FITS_HDU_LIST *fits_decode_header (FITS_RECORD_LIST *hdr,
@@ -496,7 +496,7 @@ char *fits_get_error (void)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-static void fits_set_error (char *errmsg)
+static void fits_set_error (const char *errmsg)
 
 {
   if (fits_n_error < FITS_MAX_ERROR)
@@ -724,7 +724,7 @@ FITS_HDU_LIST *fits_add_hdu (FITS_FILE *ff)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-int fits_add_card (FITS_HDU_LIST *hdulist, char *card)
+int fits_add_card (FITS_HDU_LIST *hdulist, const char *card)
 
 {int k;
 

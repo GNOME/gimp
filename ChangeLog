@@ -1,5 +1,9 @@
 2008-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/file-fits/fits-io.[ch]: add some const.
+
+2008-09-05  Michael Natterer  <mitch@gimp.org>
+
 	Bug 545325 – Scrollbars do not disappear automatically
 
 	* app/widgets/gimpcontainertreeview.c: autosize the columns after
