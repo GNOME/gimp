@@ -1,3 +1,17 @@
+2008-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpactioneditor.[ch]: new simple widget which
+	contains a GimpActionView plus the search entry.
+
+	* app/dialogs/keyboard-shortcuts-dialog.c: use the new widget
+	instead of implementing the search entry here.
+
+	* app/widgets/gimpcontrollereditor.c: use a GimpActionEditor
+	instead of GimpActionView so the actions become searchable here
+	too.
+
 2008-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptransformtool.c (gimp_transform_tool_initialize):

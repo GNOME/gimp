@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * gimpcontrollereditor.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpactioneditor.h"
 #include "gimpactionview.h"
 #include "gimpcontrollereditor.h"
 #include "gimpcontrollerinfo.h"
@@ -654,7 +655,6 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
 
   if (event_name)
     {
-      GtkWidget *scrolled_window;
       GtkWidget *view;
       gchar     *title;
 
@@ -694,25 +694,18 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                         G_CALLBACK (gimp_controller_editor_edit_response),
                         editor);
 
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                           GTK_SHADOW_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 12);
+      view = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
+                                     action_name, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (editor->edit_dialog)->vbox),
-                         scrolled_window);
-      gtk_widget_show (scrolled_window);
-
-      view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
-                                   action_name, FALSE);
-      gtk_widget_set_size_request (view, 300, 400);
-      gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+                         view);
       gtk_widget_show (view);
 
-      g_signal_connect (view, "row-activated",
+      g_signal_connect (GIMP_ACTION_EDITOR (view)->view, "row-activated",
                         G_CALLBACK (gimp_controller_editor_edit_activated),
                         editor);
 
-      editor->edit_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+      editor->edit_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view));
 
       g_object_add_weak_pointer (G_OBJECT (editor->edit_sel),
                                  (gpointer) &editor->edit_sel);

@@ -20,6 +20,8 @@ libappwidgets_a_sources = \
 	widgets-types.h			\
 	gimpaction.c			\
 	gimpaction.h			\
+	gimpactioneditor.c		\
+	gimpactioneditor.h		\
 	gimpactionfactory.c		\
 	gimpactionfactory.h		\
 	gimpactiongroup.c		\
