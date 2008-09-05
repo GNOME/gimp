@@ -1,5 +1,12 @@
 2008-09-05  Michael Natterer  <mitch@gimp.org>
 
+	Bug 550983 – The size displayed in the status bar isn't correct
+
+	* app/tools/gimprectangletool.c: use the right precision when
+	pushing the rectangle's size as coordinates to the statusbar.
+
+2008-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpactioneditor.[ch]: new simple widget which
