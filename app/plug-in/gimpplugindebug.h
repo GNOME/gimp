@@ -38,7 +38,7 @@ void               gimp_plug_in_debug_free (GimpPlugInDebug    *debug);
 gchar           ** gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
                                             const gchar        *name,
                                             GimpDebugWrapFlag   flag,
-                                            gchar             **args);
+                                            const gchar       **args);
 
 
 #endif /* __GIMP_PLUG_IN_DEBUG_H__ */

@@ -1,5 +1,13 @@
 2008-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugindebug.[ch] (gimp_plug_in_debug_argv): made
+	the "args" parameter const.
+
+	* app/plug-in/gimpplugin.c (gimp_plug_in_open): made some strings
+	const.
+
+2008-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/file-fits/fits-io.[ch]: add some const.
 
 2008-09-05  Michael Natterer  <mitch@gimp.org>
