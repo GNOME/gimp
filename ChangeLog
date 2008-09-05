@@ -1,3 +1,8 @@
+2008-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpgegltool.c: added a blacklist of operations that
+	should not be shown. We may want to add more operations here.
+
 2008-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugindebug.[ch] (gimp_plug_in_debug_argv): made
