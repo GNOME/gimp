@@ -1440,7 +1440,7 @@ add_merged_image (const gint32  image_id,
       block_end = block_start + block_len;
       fseek (f, block_start, SEEK_SET);
 
-      if (fread (&comp_mode, 2, 1, f) < 1)
+      if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
         {
           psd_set_error (feof (f), errno, error);
           return -1;
