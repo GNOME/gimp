@@ -585,7 +585,8 @@ GtkWidget *
 gimp_text_options_editor_new (GtkWindow       *parent,
                               GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
-                              const gchar     *title)
+                              const gchar     *title,
+                              GtkTextBuffer   *text_buffer)
 {
   GtkWidget   *editor;
   const gchar *font_name;
@@ -594,7 +595,7 @@ gimp_text_options_editor_new (GtkWindow       *parent,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  editor = gimp_text_editor_new (title, parent, menu_factory);
+  editor = gimp_text_editor_new (title, parent, menu_factory, text_buffer);
 
   font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
 

@@ -1,3 +1,12 @@
+2008-09-06  Bill Skaggs <weskaggs@gmail.com>
+	
+	* app/tools/gimptexttool.c
+	* app/tools/gimptextoptions.[ch]
+	* app/widgets/gimptexteditor.[ch]: Initial pass at making the
+	optional external editor work using a shared text buffer with
+	the canvas.  Works minimally, needs a lot of fixes.  Also a
+	few small code cleanups.
+	
 2008-09-05  Bill Skaggs <weskaggs@gmail.com>
 
 	* app/actions/text-tool-actions.c: implemented "update" function
