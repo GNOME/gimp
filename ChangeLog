@@ -1,5 +1,14 @@
 2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 544939 – PSD Plugin crash (maybe only PSD files created by
+	Paintshop Pro)
+
+	* plug-ins/file-psd/psd-load.c (add_layers): Fix integer underflow
+	and only attempt to read channel data if there is any channel
+	data.
+
+2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/file-psd/psd-load.c (add_layers): Also consider unknown
 	compression methods unsupported. This gives an error message
 	instead of a crash for PSD file attached to bug #544939. The PSD

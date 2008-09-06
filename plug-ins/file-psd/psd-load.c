@@ -35,6 +35,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define COMP_MODE_SIZE sizeof(guint16)
+
+
 /*  Local function prototypes  */
 static gint             read_header_block          (PSDimage     *img_a,
                                                     FILE         *f,
@@ -958,7 +962,6 @@ add_layers (const gint32  image_id,
 {
   PSDchannel          **lyr_chn;
   guchar               *pixels;
-  guint16               comp_mode;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels;
@@ -1089,16 +1092,21 @@ add_layers (const gint32  image_id,
                                 lyr_chn[cidx]->columns,
                                 lyr_chn[cidx]->rows);
 
-              if (fread (&comp_mode, 2, 1, f) < 1)
+              /* Only read channel data if there is more data than
+               * what compression method that is used
+               */
+              if (lyr_a[lidx]->chn_info[cidx].data_len > COMP_MODE_SIZE)
                 {
-                  psd_set_error (feof (f), errno, error);
-                  return -1;
-                }
-              comp_mode = GUINT16_FROM_BE (comp_mode);
-              IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
+                  guint16 comp_mode;
 
-              if (lyr_a[lidx]->chn_info[cidx].data_len - 2 > 0)
-                {
+                  if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+                  comp_mode = GUINT16_FROM_BE (comp_mode);
+                  IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
+
                   switch (comp_mode)
                     {
                       case PSD_COMP_RAW:        /* Planar raw data */
