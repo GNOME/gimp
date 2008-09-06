@@ -1,5 +1,10 @@
 2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationhuesaturation.c
+	(gimp_operation_hue_saturation_process): mapped_* -> mapped_*_hue.
+
+2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Bug 527085 – Hue/Saturation (working improperly)
 
 	* app/gegl/gimpoperationhuesaturation.c
