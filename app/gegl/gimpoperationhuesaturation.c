@@ -207,14 +207,33 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
 
       if (use_secondary_hue)
         {
-          hsl.h = (map_hue        (config, hue,           hsl.h) * primary_intensity +
-                   map_hue        (config, secondary_hue, hsl.h) * secondary_intensity);
+          gdouble mapped_primary;
+          gdouble mapped_secondary;
+          gdouble diff;
 
-          hsl.s = (map_saturation (config, hue,           hsl.s) * primary_intensity +
-                   map_saturation (config, secondary_hue, hsl.s) * secondary_intensity);
+          mapped_primary   = map_hue (config, hue, hsl.h);
+          mapped_secondary = map_hue (config, secondary_hue, hsl.h);
 
-          hsl.l = (map_lightness  (config, hue,           hsl.l) * primary_intensity +
-                   map_lightness  (config, secondary_hue, hsl.l) * secondary_intensity);
+          // Find nearest hue on the circle between primary and
+          // secondary hue
+          diff = mapped_primary - mapped_secondary;
+          if (diff < -0.5)
+            {
+              mapped_secondary -= 1.0;
+            }
+          else if (diff >= 0.5)
+            {
+              mapped_secondary += 1.0;
+            }
+
+          hsl.h = mapped_primary   * primary_intensity +
+                  mapped_secondary * secondary_intensity;
+
+          hsl.s = map_saturation (config, hue,           hsl.s) * primary_intensity +
+                  map_saturation (config, secondary_hue, hsl.s) * secondary_intensity;
+
+          hsl.l = map_lightness (config, hue,           hsl.l) * primary_intensity +
+                  map_lightness (config, secondary_hue, hsl.l) * secondary_intensity;
         }
       else
         {
