@@ -1,3 +1,10 @@
+2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/file-psd/psd-load.c (add_layers): Also consider unknown
+	compression methods unsupported. This gives an error message
+	instead of a crash for bug #544939. The PSD loader still fails to
+	read the correct compression method however.
+
 2008-09-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationhuesaturation.c
