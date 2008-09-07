@@ -1,3 +1,13 @@
+2008-09-07  Sven Neumann  <sven@gimp.org>
+
+	Applied 'gimp-decimate.diff' as announced on the mailing-list:
+
+	* app/gimp-log.[ch]: added log domain "scale".
+
+	* app/paint-funcs/scale-region.c: replaced decimation routines
+	with box filters. Only use the decimation routines to pre-scale
+	the image, always apply the interpolation for the final step.
+
 2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpnavigationview.c
