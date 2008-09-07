@@ -1,3 +1,7 @@
+2008-09-07  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* po/de.po: Minor bugfixes in German translation.
+
 2008-09-05  Sven Neumann  <sven@gimp.org>
 
 	* et.po: updated Estonian translation by  Alexia Death.
@@ -184,7 +188,7 @@
 
 2008-06-11  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
-        * ru.po: updated and improved Russian translation.
+	* ru.po: updated and improved Russian translation.
 
 2008-06-06  Sven Neumann  <sven@gimp.org>
 
@@ -193,8 +197,8 @@
 
 2008-06-02  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
-        * ru.po: updated and improved Russian translation.
-        
+	* ru.po: updated and improved Russian translation.
+
 2008-05-27  Claude Paroz  <claude@2xlibre.net>
 
 	* POTFILES.in: Deleted file no more in SVN.
@@ -207,7 +211,7 @@
 
 2008-05-23  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
-        * ru.po: updated Russian translation.
+	* ru.po: updated Russian translation.
 
 2008-05-23  Sven Neumann  <sven@gimp.org>
 

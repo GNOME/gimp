@@ -9141,7 +9141,7 @@ msgid ""
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "Die Prozedur »%s« hat eine ungültige ID für das Argument »%s« zurückgegeben. "
-"Sehr wahrscheinlich versucht ein Plugin ein Bild zu bearbeiten, dass nicht "
+"Sehr wahrscheinlich versucht ein Plugin ein Bild zu bearbeiten, das nicht "
 "mehr existiert."
 
 #: ../app/pdb/gimpprocedure.c:668
@@ -9234,7 +9234,7 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
-"Fahler beim Ausführen der Prozedur »%s«:\n"
+"Fehler beim Ausführen der Prozedur »%s«:\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:330
@@ -9307,7 +9307,7 @@ msgid ""
 "Execution error for '%s':\n"
 "%s"
 msgstr ""
-"Fahler beim Ausführen von »%s«:\n"
+"Fehler beim Ausführen von »%s«:\n"
 "%s"
 
 #: ../app/plug-in/plug-in-icc-profile.c:113
