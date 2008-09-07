@@ -1245,6 +1245,7 @@ gimp_channel_real_all (GimpChannel *channel,
                        gboolean     push_undo)
 {
   PixelRegion maskPR;
+  guchar      bg = OPAQUE_OPACITY;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -1258,7 +1259,7 @@ gimp_channel_real_all (GimpChannel *channel,
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (channel)),
                      gimp_item_height (GIMP_ITEM (channel)), TRUE);
-  clear_region (&maskPR);
+  color_region (&maskPR, &bg);
 
   /*  we know the bounds  */
   channel->bounds_known = TRUE;

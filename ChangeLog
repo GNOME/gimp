@@ -1,3 +1,10 @@
+2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 551141 – "Select all" does not work
+
+	* app/core/gimpchannel.c (gimp_channel_real_all): We don't want to
+	clear the region, we want to fill it with OPAQUE_OPACITY.
+
 2008-09-06  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/file-psd/psd-load.c (add_merged_image): Use the new
