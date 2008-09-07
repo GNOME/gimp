@@ -970,10 +970,10 @@ load_dialog (const gchar *filename)
   GtkWidget *combo;
   GtkWidget *button;
   GtkObject *adj;
-  gint32     size;
+  gint32     file_size;
   gboolean   run;
 
-  size = get_file_info (filename);
+  file_size = get_file_info (filename);
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -1041,7 +1041,7 @@ load_dialog (const gchar *filename)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("O_ffset:"), -1, 9,
-                              runtime->file_offset, 0, size, 1, 1000, 0,
+                              runtime->file_offset, 0, file_size, 1, 1000, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
@@ -1054,7 +1054,7 @@ load_dialog (const gchar *filename)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Width:"), -1, 9,
-                              runtime->image_width, 1, 4096, 1, 10, 0,
+                              runtime->image_width, 1, file_size, 1, 10, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
@@ -1067,7 +1067,7 @@ load_dialog (const gchar *filename)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                               _("_Height:"), -1, 9,
-                              runtime->image_height, 1, 4096, 1, 10, 0,
+                              runtime->image_height, 1, file_size, 1, 10, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 

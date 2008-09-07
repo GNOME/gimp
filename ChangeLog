@@ -1,5 +1,11 @@
 2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* plug-ins/common/file-raw.c (load_dialog): Set the allowed max
+	values for Width and Height to the size of the image to load
+	instead of an arbitrary max of 4096.
+
+2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Bug 551141 – "Select all" does not work
 
 	* app/core/gimpchannel.c (gimp_channel_real_all): We don't want to
