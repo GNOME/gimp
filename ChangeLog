@@ -1,5 +1,12 @@
 2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_set_marker): Invalidating the view renderer
+	is just plain wrong, revert to redrawing the view. We will need to
+	solve the flicker in some other way.
+
+2008-09-07  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/common/file-raw.c (load_dialog): Set the allowed max
 	values for Width and Height to the size of the image to load
 	instead of an arbitrary max of 4096.

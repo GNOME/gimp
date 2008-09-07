@@ -533,8 +533,8 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
 
   gimp_navigation_view_transform (nav_view);
 
-  /* Marker changed, invalidate */
-  gimp_view_renderer_invalidate (view->renderer);
+  /* Marker changed, redraw */
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 void
