@@ -1,5 +1,11 @@
 2008-09-08  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: some more updates.
+
+	* AUTHORS: regenerated.
+
+2008-09-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-psd/psd-save.c: applied patch from Dennis Ranke as
 	attached to bug #551231. Changes the PSD save plug-in to store
 	transparency data in the image data section. Also fixes bug #551232

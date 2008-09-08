@@ -66,7 +66,7 @@
   <contributor role="author" last-active="1.2">Misha Dynin</contributor>
   <contributor role="author" last-active="2.6">Daniel Eddeland</contributor>
   <contributor role="author" last-active="2.4">Daniel Egger</contributor>
-  <contributor role="documenter" last-active="2.6">Ulf-D. Ehlert</contributor>
+  <contributor role="author documenter" last-active="2.6">Ulf-D. Ehlert</contributor>
   <contributor role="author" last-active="2.0">Morton Eriksen</contributor>
   <contributor role="author" last-active="2.0">Larry Ewing</contributor>
   <contributor role="documenter" last-active="2.6">Alessandro Falappa</contributor>
@@ -90,7 +90,7 @@
   <contributor role="author" last-active="1.2">Heiko Goller</contributor>
   <contributor role="author" last-active="1.0">Marcelo de Gomensoro Malheiros</contributor>
   <contributor role="author" last-active="2.4">Saul Goode</contributor>
-  <contributor role="author" last-active="2.4">David Gowers</contributor>
+  <contributor role="author" last-active="2.6">David Gowers</contributor>
   <contributor role="author" last-active="2.0">Cameron Gregory</contributor>
   <contributor role="author" last-active="1.2">Pavel Grinfeld</contributor>
   <contributor role="author" last-active="2.4">Dov Grobgeld</contributor>
@@ -198,6 +198,7 @@
   <contributor role="documenter" last-active="2.6">Alexandre Prokoudine</contributor>
   <contributor role="author" last-active="2.6">Raphaël Quinet</contributor>
   <contributor role="documenter" last-active="2.4">Manuel Quiñones</contributor>
+  <contributor role="author" last-active="2.6">Dennis Ranke</contributor>
   <contributor role="author" last-active="1.2">Tom Rathborne</contributor>
   <contributor role="author" last-active="2.0">Jens Restemeier</contributor>
   <contributor role="author" last-active="2.4">Maurits Rijk</contributor>
