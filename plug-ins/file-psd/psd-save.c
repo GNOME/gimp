@@ -120,6 +120,9 @@ typedef struct PsdImageData
 
   GimpImageBaseType    baseType;
 
+  gint32               merged_layer;/* Merged image,
+                                       to be used for the image data section */
+
   gint                 nChannels;   /* Number of user channels in the image */
   gint32              *lChannels;   /* User channels in the image */
 
@@ -186,6 +189,8 @@ static void   write_pixel_data     (FILE          *fd,
                                     gint32         drawableID,
                                     glong         *ChanLenPosition,
                                     gint32         rowlenOffset);
+
+static gint32 create_merged_image  (gint32         imageID);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -692,7 +697,8 @@ save_header (FILE   *fd,
   write_gint32 (fd, 0, "reserved 1");      /* 6 for the 'reserved' field + 4 bytes for a long */
   write_gint16 (fd, 0, "reserved 1");      /* and 2 bytes for a short */
   write_gint16 (fd, (PSDImageData.nChannels +
-                     nChansLayer (PSDImageData.baseType, 0, 0)),
+                     nChansLayer (PSDImageData.baseType,
+                     gimp_drawable_has_alpha (PSDImageData.merged_layer), 0)),
                 "channels");
   write_gint32 (fd, PSDImageData.image_height, "rows");
   write_gint32 (fd, PSDImageData.image_width, "columns");
@@ -820,7 +826,8 @@ save_resources (FILE   *fd,
 
   /* --------------- Write Channel names --------------- */
 
-  if (PSDImageData.nChannels > 0)
+  if (PSDImageData.nChannels > 0 ||
+      gimp_drawable_has_alpha (PSDImageData.merged_layer))
     {
       xfwrite (fd, "8BIM", 4, "imageresources signature");
       write_gint16 (fd, 0x03EE, "0x03EE Id"); /* 1006 */
@@ -833,6 +840,10 @@ save_resources (FILE   *fd,
     write_gint32 (fd, 0, "0x03EE resource size");
 
     /* Write all strings */
+
+    /* if the merged_image contains transparency, write a name for it first */
+    if (gimp_drawable_has_alpha (PSDImageData.merged_layer))
+      write_string (fd, "Transparency", "channel name");
 
     for (i = PSDImageData.nChannels - 1; i >= 0; i--)
     {
@@ -1047,7 +1058,10 @@ save_layer_and_mask (FILE   *fd,
 
   /* Layer structure section */
 
-  write_gint16 (fd, PSDImageData.nLayers, "Layer structure count");
+  if (gimp_drawable_has_alpha (PSDImageData.merged_layer))
+    write_gint16 (fd, -PSDImageData.nLayers, "Layer structure count");
+  else
+    write_gint16 (fd, PSDImageData.nLayers, "Layer structure count");
 
   /* Layer records section */
   /* GIMP layers must be written in reverse order */
@@ -1254,6 +1268,7 @@ write_pixel_data (FILE   *fd,
   if ( gimp_drawable_has_alpha  (drawableID) &&
       !gimp_drawable_is_indexed (drawableID))
     colors -= 1;
+
   gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
 
   LengthsTable = g_new (gint16, height);
@@ -1267,21 +1282,26 @@ write_pixel_data (FILE   *fd,
 
   for (i = 0; i < bytes; i++)
     {
-      int chan;
+      gint chan;
+
       len = 0;
-      if (bytes != colors) /* Need to write alpha channel first */
+
+      if (bytes != colors && ltable_offset == 0) /* Need to write alpha channel first, except in image data section */
         {
           if (i == 0)
             {
-              if (ltable_offset > 0)
-                continue;
               chan = bytes - 1;
             }
           else
-            chan = i - 1;
+            {
+              chan = i - 1;
+            }
         }
       else
-        chan = i;
+        {
+          chan = i;
+        }
+
       if (ChanLenPosition)
         {
           write_gint16 (fd, 1, "Compression type (RLE)");
@@ -1423,24 +1443,17 @@ save_data (FILE   *fd,
 {
   gint ChanCount;
   gint i, j;
-  gint nChannel;
   gint32 imageHeight;                   /* Height of image */
   glong offset;                         /* offset in file of rle lengths */
   gint chan;
-  gint32 bottom_layer;
 
   IFDBG printf (" Function: save_data\n");
 
   ChanCount = (PSDImageData.nChannels +
-               nChansLayer (PSDImageData.baseType, 0, 0));
-
-  i = PSDImageData.nLayers - 1;  /* Layers to be written */
-  IFDBG printf ("\tProcessing %d layers\n", i);
+               nChansLayer (PSDImageData.baseType,
+               gimp_drawable_has_alpha (PSDImageData.merged_layer), 0));
 
   imageHeight = gimp_image_height (image_id);
-
-  nChannel = 0;
-
 
   write_gint16 (fd, 1, "RLE compression");
 
@@ -1452,37 +1465,12 @@ save_data (FILE   *fd,
     for (j = 0; j < imageHeight; j++)
       write_gint16 (fd, 0, "junk line lengths");
 
-  bottom_layer = PSDImageData.lLayers[PSDImageData.nLayers - 1];
+  IFDBG printf ("\t\tWriting compressed image data\n");
+  write_pixel_data (fd, PSDImageData.merged_layer,
+                    NULL, offset);
 
-  if (PSDImageData.nLayers != 1 ||
-      gimp_drawable_width  (bottom_layer) != gimp_image_width  (image_id) ||
-      gimp_drawable_height (bottom_layer) != gimp_image_height (image_id))
-    {
-      gint32 flat_image;
-      gint32 flat_drawable;
-
-      IFDBG printf ("\t\tCreating flattened image\n");
-      flat_image = gimp_image_duplicate (image_id);
-      gimp_image_undo_disable (flat_image);
-      flat_drawable = gimp_image_flatten (flat_image);
-
-      /* gimp_image_flatten() may fail if there are no visible layers */
-      if (flat_drawable != -1)
-        {
-          IFDBG printf ("\t\tWriting compressed flattened image data\n");
-          write_pixel_data (fd, flat_drawable, NULL, offset);
-        }
-
-      gimp_image_delete (flat_image);
-    }
-  else
-    {
-      IFDBG printf ("\t\tWriting compressed image data\n");
-      write_pixel_data (fd, PSDImageData.lLayers[PSDImageData.nLayers - 1],
-                        NULL, offset);
-    }
-
-  chan = nChansLayer (PSDImageData.baseType, 0, 0);
+  chan = nChansLayer (PSDImageData.baseType,
+                      gimp_drawable_has_alpha(PSDImageData.merged_layer), 0);
 
   for (i = PSDImageData.nChannels - 1; i >= 0; i--)
     {
@@ -1494,7 +1482,66 @@ save_data (FILE   *fd,
     }
 }
 
+static gint32
+create_merged_image (gint32 image_id)
+{
+  gint32  merged_layer;
 
+  merged_layer = gimp_layer_new_from_visible (image_id, image_id, SAVE_PROC);
+
+  if (gimp_image_base_type (image_id) != GIMP_INDEXED)
+    {
+      GimpPixelRgn  region;
+      gboolean      transparency_found = FALSE;
+      gpointer      pr;
+
+      gimp_pixel_rgn_init (&region,
+                           gimp_drawable_get (merged_layer),
+                           0, 0,
+                           gimp_image_width (image_id),
+                           gimp_image_height (image_id),
+                           TRUE, FALSE);
+
+      for (pr = gimp_pixel_rgns_register (1, &region);
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr))
+        {
+          guchar *data = region.data;
+          gint    y;
+
+          for (y = 0; y < region.h; y++)
+            {
+              guchar *d = data;
+              gint    x;
+
+              for (x = 0; x < region.w; x++)
+                {
+                  guint32 alpha = d[region.bpp - 1];
+
+                  if (alpha < 255)
+                    {
+                      gint i;
+
+                      transparency_found = TRUE;
+
+                      /* blend against white, photoshop does this. */
+                      for (i = 0; i < region.bpp - 1; i++)
+                        d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
+                    }
+
+                  d += region.bpp;
+                }
+
+              data += region.rowstride;
+            }
+        }
+
+      if (! transparency_found)
+        gimp_layer_flatten (merged_layer);
+    }
+
+  return merged_layer;
+}
 
 static void
 get_image_data (FILE   *fd,
@@ -1513,18 +1560,14 @@ get_image_data (FILE   *fd,
   PSDImageData.baseType = gimp_image_base_type (image_id);
   IFDBG printf ("\tGot base type: %d\n", PSDImageData.baseType);
 
-  /* PSD format does not support indexed layered images */
+  PSDImageData.merged_layer = create_merged_image (image_id);
 
-  if (PSDImageData.baseType == GIMP_INDEXED)
-    {
-      IFDBG printf ("\tFlattening indexed image\n");
-      gimp_image_flatten (image_id);
-    }
-
-  PSDImageData.lChannels = gimp_image_get_channels (image_id, &PSDImageData.nChannels);
+  PSDImageData.lChannels = gimp_image_get_channels (image_id,
+                                                    &PSDImageData.nChannels);
   IFDBG printf ("\tGot number of channels: %d\n", PSDImageData.nChannels);
 
-  PSDImageData.lLayers = gimp_image_get_layers (image_id, &PSDImageData.nLayers);
+  PSDImageData.lLayers = gimp_image_get_layers (image_id,
+                                                &PSDImageData.nLayers);
   IFDBG printf ("\tGot number of layers: %d\n", PSDImageData.nLayers);
 
   PSDImageData.layersDim = g_new (PSD_Layer_Dimension, PSDImageData.nLayers);
@@ -1605,6 +1648,10 @@ save_image (const gchar  *filename,
   /* If this is an indexed image, write now channel and layer info */
 
   save_data (fd, image_id);
+
+  /* Delete merged image now */
+
+  gimp_drawable_delete (PSDImageData.merged_layer);
 
   IFDBG printf ("----- Closing PSD file, done -----\n\n");
 
