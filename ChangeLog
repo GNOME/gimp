@@ -1,3 +1,8 @@
+2008-09-08  Roman Joost  <romanofski@gimp.org>
+
+	* authors.xml: updated documenters who contributed to the user
+	manual since 2.4
+
 2008-09-07  Sven Neumann  <sven@gimp.org>
 
 	Applied 'gimp-decimate.diff' as announced on the mailing-list:
