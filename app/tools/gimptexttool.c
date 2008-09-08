@@ -171,6 +171,13 @@ static void gimp_text_tool_enter_text          (GimpTextTool      *text_tool,
                                                 const gchar       *str);
 static void gimp_text_tool_text_buffer_changed (GtkTextBuffer     *text_buffer,
                                                 GimpTextTool      *text_tool);
+static void gimp_text_tool_text_buffer_mark_set (GtkTextBuffer    *text_buffer,
+                                                 GtkTextIter      *location,
+                                                 GtkTextMark      *mark,
+                                                 GimpTextTool     *text_tool);
+static void gimp_text_tool_use_editor_notify   (GimpTextOptions   *options,
+                                                GParamSpec        *pspec,
+                                                GimpTextTool      *text_tool);
 
 /* IM Context Callbacks
  */
@@ -268,6 +275,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   g_signal_connect (text_tool->text_buffer, "changed",
                     G_CALLBACK (gimp_text_tool_text_buffer_changed), text_tool);
+  g_signal_connect (text_tool->text_buffer, "mark-set",
+                    G_CALLBACK (gimp_text_tool_text_buffer_mark_set), text_tool);
 
   text_tool->im_context = gtk_im_multicontext_new ();
 
@@ -311,6 +320,10 @@ gimp_text_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_text_tool_proxy_notify),
                            text_tool, 0);
 
+  g_signal_connect_object (options, "notify::use-editor",
+                           G_CALLBACK (gimp_text_tool_use_editor_notify),
+                           text_tool, 0);
+
   return object;
 }
 
@@ -322,18 +335,12 @@ gimp_text_tool_dispose (GObject *object)
 
   gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
 
+  if (text_tool->editor)
+    gtk_widget_destroy (text_tool->editor);
+
   gimp_tool_control_set_wants_all_key_events (tool->control, FALSE);
   gimp_tool_control_set_show_context_menu (tool->control, FALSE);
 
-  gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
-  g_signal_handlers_disconnect_by_func (text_tool->im_context,
-                                        gimp_text_tool_commit_cb, text_tool);
-  g_signal_handlers_disconnect_by_func (text_tool->im_context,
-                                        gimp_text_tool_preedit_changed_cb,
-                                        text_tool);
-  g_signal_handlers_disconnect_by_func (text_tool,
-                                        gimp_text_tool_show_context_menu,
-                                        NULL);
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -358,6 +365,12 @@ gimp_text_tool_finalize (GObject *object)
     {
       g_object_unref (text_tool->text_buffer);
       text_tool->text_buffer = NULL;
+    }
+
+  if (text_tool->im_context)
+    {
+      g_object_unref (text_tool->im_context);
+      text_tool->im_context = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -404,6 +417,9 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+  g_signal_handlers_block_by_func (text_tool->text_buffer,
+                                   G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
+                                   text_tool);
 
   /* FIXME: this should certainly be done elsewhere */
   g_object_set (options,
@@ -480,7 +496,8 @@ gimp_text_tool_button_press (GimpTool        *tool,
               if (text && text_tool->text == text)
               {
                 gimp_text_tool_canvas_editor (text_tool);
-                gtk_text_buffer_set_text (text_tool->text_buffer, text_tool->text->text, -1);
+                gtk_text_buffer_set_text (text_tool->text_buffer,
+                                          text_tool->text->text, -1);
 
                 gimp_text_tool_update_layout (text_tool);
               }
@@ -579,6 +596,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
                                           GIMP_ITEM (text_tool->layer));
           text_tool->handle_rectangle_change_complete = TRUE;
 
+          g_signal_handlers_unblock_by_func (text_tool->text_buffer,
+                                           G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
+                                           text_tool);
+
           return;
         }
       else
@@ -634,6 +655,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
   gimp_rectangle_tool_button_release (tool, coords, time, state,
                                       release_type, display);
   text_tool->handle_rectangle_change_complete = TRUE;
+
+  g_signal_handlers_unblock_by_func (text_tool->text_buffer,
+                                     G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
+                                     text_tool);
 }
 
 void
@@ -840,9 +865,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
   g_return_if_fail (text == NULL || (layer != NULL && layer->text == text));
 
-  if (! text && text_tool->editor)
-    gtk_widget_destroy (text_tool->editor);
-
   if (text_tool->text != text)
     {
       GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (tool);
@@ -911,6 +933,23 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
         g_signal_connect_object (text_tool->layer, "notify::modified",
                                  G_CALLBACK (gimp_text_tool_layer_notify),
                                  text_tool, 0);
+    }
+}
+
+static void
+gimp_text_tool_use_editor_notify (GimpTextOptions *options,
+                                  GParamSpec      *pspec,
+                                  GimpTextTool    *text_tool)
+{
+  if (options->use_editor)
+    {
+      if (text_tool->text_buffer)
+        gimp_text_tool_editor (text_tool);
+    }
+  else
+    {
+      if (text_tool->editor)
+        gtk_widget_destroy (text_tool->editor);
     }
 }
 
@@ -2089,7 +2128,7 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
   GtkTextIter cursor, start, end;
 
   gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                   &cursor,
+                                    &cursor,
                                     gtk_text_buffer_get_insert (text_tool->text_buffer));
 
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
@@ -2097,20 +2136,31 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
   else
     gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
 
-  gimp_text_tool_update_proxy (text_tool);
+/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar *str)
 {
+  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+    gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
-  gimp_text_tool_update_proxy (text_tool);
+/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
 gimp_text_tool_text_buffer_changed (GtkTextBuffer *text_buffer,
                                     GimpTextTool  *text_tool)
+{
+  gimp_text_tool_update_proxy (text_tool);
+}
+
+static void
+gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
+                                     GtkTextIter   *iter,
+                                     GtkTextMark   *mark,
+                                     GimpTextTool  *text_tool)
 {
   gimp_text_tool_update_proxy (text_tool);
 }

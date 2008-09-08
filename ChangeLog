@@ -1,3 +1,8 @@
+2008-09-0  Bill Skaggs <weskaggs@gmail.com>
+
+	* app/tools/gimptexttool.c: More work on the external editor,
+	and some bug-fixes.
+	
 2008-09-06  Bill Skaggs <weskaggs@gmail.com>
 	
 	* app/tools/gimptexttool.c
