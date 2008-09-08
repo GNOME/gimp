@@ -153,7 +153,9 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_TEXT_TOOL,
                 GIMP_TYPE_TEXT_OPTIONS,
                 gimp_text_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_FONT_MASK,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_FONT_MASK       |
+                GIMP_CONTEXT_PALETTE_MASK /* for the color popup's palette tab */,
                 "gimp-text-tool",
                 _("Text"),
                 _("Text Tool: Create or edit text layers"),

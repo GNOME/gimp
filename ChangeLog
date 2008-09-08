@@ -1,3 +1,12 @@
+2008-09-08  Michael Natterer  <mitch@gimp.org>
+
+	Bug 551306 – Color picker for text tool does not show selected
+	palette
+
+	* app/tools/gimptexttool.c (gimp_text_tool_register): add
+	GIMP_CONTEXT_PALETTE_MASK to the tool option's context mask so the
+	color popup's palette follows the globally selected palette.
+
 2008-09-08  Sven Neumann  <sven@gimp.org>
 
 	* authors.xml: restored alphabetic order. Use real name instead of
