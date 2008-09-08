@@ -1,3 +1,13 @@
+2008-09-08  Sven Neumann  <sven@gimp.org>
+
+	* authors.xml: restored alphabetic order. Use real name instead of
+	a nick.
+
+	* AUTHORS: regenerated.
+
+	* app/dialogs/authors.xsl: changed rule to only include
+	contributors from the 2.6 development cycle in the About dialog.
+
 2008-09-08  Roman Joost  <romanofski@gimp.org>
 
 	* authors.xml: updated documenters who contributed to the user
