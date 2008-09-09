@@ -1,5 +1,13 @@
 2008-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scheme-wrapper.c: fix formatting of prototypes.
+
+	(script_fu_marshal_procedure_call): move variables to local scopes
+	where possible. Make this function a bit readable by indenting the
+	debug code in DEBUG_MARSHAL normally.
+
+2008-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* plug-ins/script-fu/Makefile.am: remove references to $(REGEXREPL).
 
