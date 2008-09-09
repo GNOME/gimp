@@ -1486,21 +1486,19 @@ save_data (FILE   *fd,
 static gint32
 create_merged_image (gint32 image_id)
 {
-  gint32  merged_layer;
+  gint32  projection;
 
-  merged_layer = gimp_layer_new_from_visible (image_id, image_id, SAVE_PROC);
+  projection = gimp_layer_new_from_visible (image_id, image_id, SAVE_PROC);
 
   if (gimp_image_base_type (image_id) != GIMP_INDEXED)
     {
+      GimpDrawable *drawable = gimp_drawable_get (projection);
       GimpPixelRgn  region;
       gboolean      transparency_found = FALSE;
       gpointer      pr;
 
-      gimp_pixel_rgn_init (&region,
-                           gimp_drawable_get (merged_layer),
-                           0, 0,
-                           gimp_image_width (image_id),
-                           gimp_image_height (image_id),
+      gimp_pixel_rgn_init (&region, drawable,
+                           0, 0, drawable->width, drawable->height,
                            TRUE, FALSE);
 
       for (pr = gimp_pixel_rgns_register (1, &region);
@@ -1537,11 +1535,13 @@ create_merged_image (gint32 image_id)
             }
         }
 
+      gimp_drawable_detach (drawable);
+
       if (! transparency_found)
-        gimp_layer_flatten (merged_layer);
+        gimp_layer_flatten (projection);
     }
 
-  return merged_layer;
+  return projection;
 }
 
 static void

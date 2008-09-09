@@ -1,3 +1,8 @@
+2008-09-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-psd/psd-save.c (create_merged_image): don't leak
+	the GimpDrawable.
+
 2008-09-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/file-psd/psd-save.c (save_data): Formating.
