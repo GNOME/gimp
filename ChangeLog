@@ -1,5 +1,12 @@
 2008-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scheme-wrapper.c
+	(script_fu_marshal_procedure_call): remove debug arrays to map the
+	values of registered enums to strings. Look up the strings
+	registered with the type system instead.
+
+2008-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scheme-wrapper.c: fix formatting of prototypes.
 
 	(script_fu_marshal_procedure_call): move variables to local scopes

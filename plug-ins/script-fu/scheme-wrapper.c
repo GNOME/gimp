@@ -17,8 +17,8 @@
  */
 
 #if 0
-#define DEBUG_MARSHALL       0  /* No need to define this until you need it */
-#define DEBUG_SCRIPTS        0
+#define DEBUG_MARSHALL 0  /* No need to define this until you need it */
+#define DEBUG_SCRIPTS  0
 #endif
 
 #include "config.h"
@@ -616,29 +616,12 @@ script_fu_marshal_procedure_call (scheme  *sc,
 #define typeflag(p) ((p)->_flag)
 #define type(p)     (typeflag(p)&T_MASKTYPE)
 
-  static const char *ret_types[] = {
-    "GIMP_PDB_INT32",       "GIMP_PDB_INT16",     "GIMP_PDB_INT8",
-    "GIMP_PDB_FLOAT",       "GIMP_PDB_STRING",    "GIMP_PDB_INT32ARRAY",
-    "GIMP_PDB_INT16ARRAY",  "GIMP_PDB_INT8ARRAY", "GIMP_PDB_FLOATARRAY",
-    "GIMP_PDB_STRINGARRAY", "GIMP_PDB_COLOR",     "GIMP_PDB_REGION",
-    "GIMP_PDB_DISPLAY",     "GIMP_PDB_IMAGE",     "GIMP_PDB_LAYER",
-    "GIMP_PDB_CHANNEL",     "GIMP_PDB_DRAWABLE",  "GIMP_PDB_SELECTION",
-    "GIMP_PDB_COLORARRY",   "GIMP_PDB_VECTORS",   "GIMP_PDB_PARASITE",
-    "GIMP_PDB_STATUS",      "GIMP_PDB_END"
-  };
-
   static const char *ts_types[] = {
     "T_NONE",
     "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
     "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
     "T_CHARACTER", "T_PORT",       "T_VECTOR",       "T_MACRO",
     "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
-  };
-
-  static const char *status_types[] = {
-    "GIMP_PDB_EXECUTION_ERROR", "GIMP_PDB_CALLING_ERROR",
-    "GIMP_PDB_PASS_THROUGH",    "GIMP_PDB_SUCCESS",
-    "GIMP_PDB_CANCEL"
   };
 
   g_printerr ("\nIn %s()\n", G_STRFUNC);
@@ -724,11 +707,19 @@ script_fu_marshal_procedure_call (scheme  *sc,
       a = sc->vptr->pair_cdr (a);
 
 #if DEBUG_MARSHALL
-      g_printerr ("    param %d - expecting type %s (%d)\n",
-                  i+1, ret_types[ params[i].type ], params[i].type);
-      g_printerr ("      passed arg is type %s (%d)\n",
-                  ts_types[ type(sc->vptr->pair_car (a)) ],
-                  type(sc->vptr->pair_car (a)));
+      {
+        const gchar *type_name;
+
+        gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
+                             params[i].type,
+                             &type_name, NULL, NULL, NULL);
+
+        g_printerr ("    param %d - expecting type %s (%d)\n",
+                    i + 1, type_name, params[i].type);
+        g_printerr ("      passed arg is type %s (%d)\n",
+                    ts_types[ type(sc->vptr->pair_car (a)) ],
+                    type(sc->vptr->pair_car (a)));
+      }
 #endif
 
       args[i].type = params[i].type;
@@ -1305,8 +1296,14 @@ script_fu_marshal_procedure_call (scheme  *sc,
     }
 
 #if DEBUG_MARSHALL
-  g_printerr ("    return value is %s\n",
-              status_types[ values[0].data.d_status ]);
+  {
+    const gchar *status_name;
+
+    gimp_enum_get_value (GIMP_TYPE_PDB_STATUS_TYPE,
+                         values[0].data.d_status,
+                         &status_name, NULL, NULL, NULL);
+    g_printerr ("    return value is %s\n", status_name);
+  }
 #endif
 
   switch (values[0].data.d_status)
@@ -1335,8 +1332,16 @@ script_fu_marshal_procedure_call (scheme  *sc,
           gint         j;
 
 #if DEBUG_MARSHALL
-          g_printerr ("      value %d is type %s (%d)\n",
-                      i, ret_types[ return_vals[i].type ], return_vals[i].type);
+          {
+            const gchar *type_name;
+
+            gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
+                                 return_vals[i].type,
+                                 &type_name, NULL, NULL, NULL);
+
+            g_printerr ("      value %d is type %s (%d)\n",
+                        i, type_name, return_vals[i].type);
+          }
 #endif
           switch (return_vals[i].type)
             {
