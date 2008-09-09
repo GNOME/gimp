@@ -1451,7 +1451,8 @@ save_data (FILE   *fd,
 
   ChanCount = (PSDImageData.nChannels +
                nChansLayer (PSDImageData.baseType,
-               gimp_drawable_has_alpha (PSDImageData.merged_layer), 0));
+                            gimp_drawable_has_alpha (PSDImageData.merged_layer),
+                            0));
 
   imageHeight = gimp_image_height (image_id);
 
