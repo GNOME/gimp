@@ -1,3 +1,8 @@
+2008-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* plug-ins/script-fu/Makefile.am: remove references to $(REGEXREPL).
+
 2008-09-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/file-psd/psd-save.c (create_merged_image): don't leak

@@ -65,7 +65,6 @@ LDADD = \
 	$(libtinyscheme)	\
 	$(libftx)		\
 	$(libre)		\
-	$(REGEXREPL)		\
 	$(GTK_LIBS)		\
 	$(SOCKET_LIBS)		\
 	$(WINSOCK_LIBS)		\

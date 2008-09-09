@@ -133,7 +133,6 @@ gimp_2_5_LDADD = \
 	$(libgimpmath)			\
 	$(libgimpconfig)		\
 	$(libgimpbase)			\
-	$(REGEXREPL)			\
 	$(GTK_LIBS)			\
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
@@ -177,7 +176,6 @@ gimp_console_2_5_LDADD = \
 	$(libgimpmath)			\
 	$(libgimpconfig)		\
 	$(libgimpbase)			\
-	$(REGEXREPL)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(CAIRO_LIBS)			\
 	$(PANGOFT2_LIBS)		\
