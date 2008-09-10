@@ -118,7 +118,7 @@ context_colors_swap_cmd_callback (GtkAction *action,
   gimp_context_swap_colors (context);
 }
 
-#define SELECT_COLOR_CMD_CALLBACK(name, fgbg, usec, usep) \
+#define SELECT_COLOR_CMD_CALLBACK(name, fgbg, use_colormap, use_palette) \
 void \
 context_##name##_##fgbg##ground_cmd_callback (GtkAction *action, \
                                               gint       value, \
@@ -129,7 +129,8 @@ context_##name##_##fgbg##ground_cmd_callback (GtkAction *action, \
   return_if_no_context (context, data); \
 \
   gimp_context_get_##fgbg##ground (context, &color); \
-  context_select_color ((GimpActionSelectType) value, &color, usec, usep); \
+  context_select_color ((GimpActionSelectType) value, &color, \
+                        use_colormap, use_palette); \
   gimp_context_set_##fgbg##ground (context, &color); \
 }
 

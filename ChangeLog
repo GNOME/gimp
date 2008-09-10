@@ -1,5 +1,13 @@
 2008-09-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c: made action labels more
+	consistent, use '°' instead of 'degrees'.
+
+	* app/actions/context-commands.c: cosmetic change in macro
+	parameters.
+
+2008-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/file-uri/uri-backend-wget.c
 	* plug-ins/file-xjt/xjt.c: s/while (1)/while (TRUE)/
 
