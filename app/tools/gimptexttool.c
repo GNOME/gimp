@@ -324,6 +324,10 @@ gimp_text_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_text_tool_use_editor_notify),
                            text_tool, 0);
 
+  g_object_set (options,
+                "highlight", FALSE,
+                NULL);
+
   return object;
 }
 
@@ -421,11 +425,6 @@ gimp_text_tool_button_press (GimpTool        *tool,
                                    G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
                                    text_tool);
 
-  /* FIXME: this should certainly be done elsewhere */
-  g_object_set (options,
-                "highlight", FALSE,
-                NULL);
-
   text_tool->x1 = coords->x;
   text_tool->y1 = coords->y;
 
@@ -487,7 +486,6 @@ gimp_text_tool_button_press (GimpTool        *tool,
           y > 0 && y < gimp_item_height (item))
         {
           /*  did the user click on a text layer?  */
-
           if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
             {
               /*enable keyboard-handling for the text*/
@@ -535,13 +533,19 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
   /*  create a new text layer  */
   text_tool->text_box_fixed = FALSE;
+  if (text_tool->text)
+    {
+      g_object_unref (text_tool->text);
+      text_tool->text = NULL;
+    }
+  gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
   gimp_text_tool_connect (text_tool, NULL, NULL);
   gimp_text_tool_canvas_editor (text_tool);
-  if (text_tool->text)
-    gtk_text_buffer_set_text (text_tool->text_buffer,
-                              text_tool->text->text, -1);
-  else
-    gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+/*   if (text_tool->text) */
+/*     gtk_text_buffer_set_text (text_tool->text_buffer, */
+/*                               text_tool->text->text, -1); */
+/*   else */
+/*     gtk_text_buffer_set_text (text_tool->text_buffer, "", -1); */
 }
 
 #define MIN_LAYER_WIDTH 20
@@ -943,7 +947,7 @@ gimp_text_tool_use_editor_notify (GimpTextOptions *options,
 {
   if (options->use_editor)
     {
-      if (text_tool->text_buffer)
+      if (text_tool->text && text_tool->text_buffer)
         gimp_text_tool_editor (text_tool);
     }
   else
@@ -1247,6 +1251,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
       g_object_set (text_tool->proxy,
                     "text", str,
+                    "box-mode", GIMP_TEXT_BOX_DYNAMIC,
                     NULL);
 
       g_free (str);
@@ -1734,7 +1739,7 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
       text_tool->text_box_fixed = TRUE;
 
-      if (! text)
+      if (! text || ! text->text || (text->text[0] == NULL))
         {
           /*
            * we can't set properties for the text layer, because
@@ -2135,8 +2140,6 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
     gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
   else
     gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
-
-/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
@@ -2146,7 +2149,6 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
-/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
@@ -2242,7 +2244,6 @@ gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
 
   clipboard = gtk_widget_get_clipboard (tool->display->shell, GDK_SELECTION_CLIPBOARD);
   gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
-  gimp_text_tool_update_proxy (text_tool);
 }
 
 void
@@ -2275,5 +2276,4 @@ gimp_text_tool_clipboard_paste (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
                                           GDK_SELECTION_PRIMARY);
 
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
-  gimp_text_tool_update_proxy (text_tool);
 }

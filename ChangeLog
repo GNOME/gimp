@@ -1,4 +1,10 @@
-2008-09-0  Bill Skaggs <weskaggs@gmail.com>
+2008-09-10  Bill Skaggs <weskaggs@gmail.com>
+
+	* app/tools/gimptexttool.c: Fix nasty bug that showed up when
+	starting a new layer by click&drag outside existing layer.
+	Also a few minor tweaks.
+	
+2008-09-08  Bill Skaggs <weskaggs@gmail.com>
 
 	* app/tools/gimptexttool.c: More work on the external editor,
 	and some bug-fixes.
