@@ -1,5 +1,11 @@
 2008-09-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactionview.c: factor out function that selects a
+	path and scrolls to that path. Keep the selected path visible if
+	it is still there after filtering.
+
+2008-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/context-actions.c: made action labels more
 	consistent, use '°' instead of 'degrees'.
 

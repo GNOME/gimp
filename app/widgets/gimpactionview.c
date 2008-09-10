@@ -47,6 +47,8 @@
 static void     gimp_action_view_dispose         (GObject         *object);
 static void     gimp_action_view_finalize        (GObject         *object);
 
+static void     gimp_action_view_select_path     (GimpActionView  *view,
+                                                  GtkTreePath     *path);
 static gboolean gimp_action_view_accel_find_func (GtkAccelKey     *key,
                                                   GClosure        *closure,
                                                   gpointer         data);
@@ -409,20 +411,8 @@ gimp_action_view_new (GimpUIManager *manager,
 
   if (select_path)
     {
-      GtkTreeSelection *sel = gtk_tree_view_get_selection (view);
-      GtkTreePath      *expand;
-
-      expand = gtk_tree_path_copy (select_path);
-      gtk_tree_path_up (expand);
-      gtk_tree_view_expand_row (view, expand, FALSE);
-
-      gtk_tree_selection_select_path (sel, select_path);
-
-      gtk_tree_view_scroll_to_cell (view, select_path, NULL,
-                                    TRUE, 0.5, 0.0);
-
+      gimp_action_view_select_path (GIMP_ACTION_VIEW (view), select_path);
       gtk_tree_path_free (select_path);
-      gtk_tree_path_free (expand);
     }
 
   return GTK_WIDGET (view);
@@ -432,14 +422,17 @@ void
 gimp_action_view_set_filter (GimpActionView *view,
                              const gchar    *filter)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
+  GtkTreeSelection    *sel;
+  GtkTreeModel        *filtered_model;
+  GtkTreeModel        *model;
+  GtkTreeIter          iter;
+  gboolean             iter_valid;
+  GtkTreeRowReference *selected_row = NULL;
 
   g_return_if_fail (GIMP_IS_ACTION_VIEW (view));
 
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
-  model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
+  filtered_model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filtered_model));
 
   if (filter && ! strlen (filter))
     filter = NULL;
@@ -449,6 +442,15 @@ gimp_action_view_set_filter (GimpActionView *view,
 
   if (filter)
     view->filter = g_utf8_casefold (filter, -1);
+
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      GtkTreePath *path = gtk_tree_model_get_path (filtered_model, &iter);
+
+      selected_row = gtk_tree_row_reference_new (filtered_model, path);
+    }
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -499,10 +501,41 @@ gimp_action_view_set_filter (GimpActionView *view,
     gtk_tree_view_expand_all (GTK_TREE_VIEW (view));
   else
     gtk_tree_view_collapse_all (GTK_TREE_VIEW (view));
+
+  gtk_tree_view_columns_autosize (GTK_TREE_VIEW (view));
+
+  if (selected_row)
+    {
+      if (gtk_tree_row_reference_valid (selected_row))
+        {
+          GtkTreePath *path = gtk_tree_row_reference_get_path (selected_row);
+
+          gimp_action_view_select_path (view, path);
+          gtk_tree_path_free (path);
+        }
+
+      gtk_tree_row_reference_free (selected_row);
+    }
 }
 
 
 /*  private functions  */
+
+static void
+gimp_action_view_select_path (GimpActionView *view,
+                              GtkTreePath    *path)
+{
+  GtkTreeView *tv = GTK_TREE_VIEW (view);
+  GtkTreePath *expand;
+
+  expand = gtk_tree_path_copy (path);
+  gtk_tree_path_up (expand);
+  gtk_tree_view_expand_row (tv, expand, FALSE);
+  gtk_tree_path_free (expand);
+
+  gtk_tree_view_set_cursor (tv, path, NULL, FALSE);
+  gtk_tree_view_scroll_to_cell (tv, path, NULL, TRUE, 0.5, 0.0);
+}
 
 static gboolean
 gimp_action_view_accel_find_func (GtkAccelKey *key,
