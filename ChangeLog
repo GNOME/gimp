@@ -1,5 +1,22 @@
 2008-09-10  Tor Lillqvist  <tml@novell.com>
 
+	* app/gui/gui-unique.c (gui_unique_win32_exit): Destroy the proxy
+	window here so that gimp_unique_win32_open() in app/unique.c won't
+	find it. This is important especially in a developer version where
+	the debug output window might be left open and the proxy window
+	still existing for a long time after the GTK+ main loop of the
+	GIMP GUI has finished. Thanks to Michael Schumacher for pointing
+	this out.
+
+	There is still a small race window here after GIMP has begun
+	closing down its GUI in gui_exit_callback() and before the proxy
+	window has gone away. If another GIMP starts during that interval,
+	it will find the proxy window and send it a message, which will
+	then either be ignored, or the proxy window will have been
+	destroyed before it gets the message. Let's ignore that. There is
+	a much wider time window during which multiple GIMP instances may
+	be started during GIMP startup anyway.
+
 	* app/gui/gui-unique.c: gui_unique_win32_message_handler() can be
 	static. Include file/file-open.h for file_open_from_command_line()
 	declaration. Fix copy/paste glitch in gui_unique_exit().

@@ -55,6 +55,7 @@ static void gui_unique_win32_init  (Gimp *gimp);
 static void gui_unique_win32_exit  (void);
 
 static Gimp            *unique_gimp      = NULL;
+static HWND             proxy_window     = NULL;          
 #endif
 
 
@@ -231,10 +232,10 @@ gui_unique_win32_init (Gimp *gimp)
 
   RegisterClassW (&wc);
 
-  CreateWindowExW (0,
-		   GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-		   GIMP_UNIQUE_WIN32_WINDOW_NAME,
-		   WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
+  proxy_window = CreateWindowExW (0,
+				  GIMP_UNIQUE_WIN32_WINDOW_CLASS,
+				  GIMP_UNIQUE_WIN32_WINDOW_NAME,
+				  WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
 }
 
 static void
@@ -243,6 +244,8 @@ gui_unique_win32_exit (void)
   g_return_if_fail (GIMP_IS_GIMP (unique_gimp));
 
   unique_gimp = NULL;
+
+  DestroyWindow (proxy_window);
 }
 
 
