@@ -134,7 +134,7 @@ typedef struct
 static IdleOpenData *
 idle_open_data_new (const gchar *name,
                     gint         len,
-		    gboolean     as_new)
+                    gboolean     as_new)
 {
   IdleOpenData *data = g_slice_new0 (IdleOpenData);
 
@@ -177,9 +177,9 @@ gui_unique_win32_idle_open (IdleOpenData *data)
 
 static LRESULT CALLBACK
 gui_unique_win32_message_handler (HWND   hWnd,
-				  UINT   uMsg,
-				  WPARAM wParam,
-				  LPARAM lParam)
+                                  UINT   uMsg,
+                                  WPARAM wParam,
+                                  LPARAM lParam)
 {
   switch (uMsg)
     {
@@ -233,9 +233,9 @@ gui_unique_win32_init (Gimp *gimp)
   RegisterClassW (&wc);
 
   proxy_window = CreateWindowExW (0,
-				  GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-				  GIMP_UNIQUE_WIN32_WINDOW_NAME,
-				  WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
+                                  GIMP_UNIQUE_WIN32_WINDOW_CLASS,
+                                  GIMP_UNIQUE_WIN32_WINDOW_NAME,
+                                  WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
 }
 
 static void

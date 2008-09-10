@@ -1,5 +1,7 @@
 2008-09-10  Tor Lillqvist  <tml@novell.com>
 
+	* app/gui/gui-unique.c: Untabify.
+
 	* app/gui/gui-unique.c (gui_unique_win32_exit): Destroy the proxy
 	window here so that gimp_unique_win32_open() in app/unique.c won't
 	find it. This is important especially in a developer version where
