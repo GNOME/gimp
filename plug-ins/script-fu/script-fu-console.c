@@ -597,6 +597,9 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       output = g_string_new ("");
       ts_register_output_func (ts_gstring_output_func, output);
+
+      gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
       if (ts_interpret_string (list->data) != 0)
         {
           script_fu_output_to_console (TS_OUTPUT_ERROR,
@@ -611,6 +614,8 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                        output->len,
                                        console);
         }
+
+      gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
       g_string_free (output, TRUE);
 

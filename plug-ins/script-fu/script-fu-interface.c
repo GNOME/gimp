@@ -911,7 +911,7 @@ script_fu_ok (SFScript *script)
   ts_register_output_func (ts_gstring_output_func, output);
 
   if (ts_interpret_string (command))
-    script_fu_error_msg (command, output->str);
+    g_message (_("Error while executing\n%s\n\n%s"), command, output->str);
 
   g_string_free (output, TRUE);
 

@@ -1309,16 +1309,34 @@ script_fu_marshal_procedure_call (scheme  *sc,
   switch (values[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      g_snprintf (error_str, sizeof (error_str),
-                  "Procedure execution of %s failed",
-                  proc_name);
+      if (nvalues > 1 && values[1].type == GIMP_PDB_STRING)
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed: %s",
+                      proc_name, values[1].data.d_string);
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed",
+                      proc_name);
+        }
       return foreign_error (sc, error_str, 0);
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      g_snprintf (error_str, sizeof (error_str),
-                  "Procedure execution of %s failed on invalid input arguments",
-                  proc_name);
+      if (nvalues > 1 && values[1].type == GIMP_PDB_STRING)
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments: %s",
+                      proc_name, values[1].data.d_string);
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments",
+                      proc_name);
+        }
       return foreign_error (sc, error_str, 0);
       break;
 

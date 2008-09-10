@@ -1,5 +1,36 @@
 2008-09-10  Michael Natterer  <mitch@gimp.org>
 
+	Change Script-Fu error handling to properly use the new error
+	message passing in PDB return values:
+
+	* plug-ins/script-fu/script-fu-scripts.[ch]: remove function
+	script_fu_error_msg().
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_ok): output
+	errors of interactive script-fu dialogs directly here with
+	g_message().
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_run_command):
+	add GError and return the error message instead of displaying it.
+
+	(script_fu_load_script): show the returned error here (and make it
+	more specific than the former script_fu_error_msg() did).
+
+	(script_fu_script_proc): return error messages via the procedure's
+	return values.
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	(script_fu_marshal_procedure_call): if an error message was
+	returned from the PDB call, pass it to foreign_error() so it ends
+	up where it should (consle, text console or error string).
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-text-console.c: set the error
+	handler to PLUGIN while interpreting scheme, we handle errors
+	from calling back into the PDB ourselves now.
+
+2008-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.h: fix prototype (foo() is
 	not a prototype, use foo(void) instead).
 

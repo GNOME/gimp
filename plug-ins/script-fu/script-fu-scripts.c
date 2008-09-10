@@ -53,28 +53,29 @@ typedef struct
  *  Local Functions
  */
 
-static gboolean  script_fu_run_command    (const gchar            *command);
-static void      script_fu_load_script    (const GimpDatafileData *file_data,
-                                           gpointer                user_data);
-static gboolean  script_fu_install_script (gpointer                foo,
-                                           GList                  *scripts,
-                                           gpointer                bar);
-static void      script_fu_install_menu   (SFMenu                 *menu);
-static gboolean  script_fu_remove_script  (gpointer                foo,
-                                           GList                  *scripts,
-                                           gpointer                bar);
-static void      script_fu_script_proc    (const gchar            *name,
-                                           gint                    nparams,
-                                           const GimpParam        *params,
-                                           gint                   *nreturn_vals,
-                                           GimpParam             **return_vals);
+static gboolean  script_fu_run_command    (const gchar             *command,
+                                           GError                 **error);
+static void      script_fu_load_script    (const GimpDatafileData  *file_data,
+                                           gpointer                 user_data);
+static gboolean  script_fu_install_script (gpointer                 foo,
+                                           GList                   *scripts,
+                                           gpointer                 bar);
+static void      script_fu_install_menu   (SFMenu                  *menu);
+static gboolean  script_fu_remove_script  (gpointer                 foo,
+                                           GList                   *scripts,
+                                           gpointer                 bar);
+static void      script_fu_script_proc    (const gchar             *name,
+                                           gint                     nparams,
+                                           const GimpParam         *params,
+                                           gint                    *nreturn_vals,
+                                           GimpParam              **return_vals);
 
-static SFScript *script_fu_find_script    (const gchar            *name);
-static void      script_fu_free_script    (SFScript               *script);
+static SFScript *script_fu_find_script    (const gchar             *name);
+static void      script_fu_free_script    (SFScript                *script);
 
-static void      script_fu_menu_map       (SFScript               *script);
-static gint      script_fu_menu_compare   (gconstpointer           a,
-                                           gconstpointer           b);
+static void      script_fu_menu_map       (SFScript                *script);
+static gint      script_fu_menu_compare   (gconstpointer            a,
+                                           gconstpointer            b);
 
 
 /*
@@ -661,18 +662,12 @@ script_fu_add_menu (scheme *sc, pointer a)
   return sc->NIL;
 }
 
-void
-script_fu_error_msg (const gchar *command,
-                     const gchar *msg)
-{
-  g_message (_("Error while executing\n%s\n\n%s"), command, msg);
-}
-
 
 /*  private functions  */
 
 static gboolean
-script_fu_run_command (const gchar *command)
+script_fu_run_command (const gchar  *command,
+                       GError      **error)
 {
   GString  *output  = g_string_new ("");
   gboolean  success = FALSE;
@@ -682,7 +677,7 @@ script_fu_run_command (const gchar *command)
 
   if (ts_interpret_string (command))
     {
-      script_fu_error_msg (command, output->str);
+      g_set_error_literal (error, 0, 0, output->str);
     }
   else
     {
@@ -700,13 +695,19 @@ script_fu_load_script (const GimpDatafileData *file_data,
 {
   if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
     {
-      gchar   *escaped = script_fu_strescape (file_data->filename);
-      gchar   *command;
+      gchar  *escaped = script_fu_strescape (file_data->filename);
+      gchar  *command;
+      GError *error   = NULL;
 
       command = g_strdup_printf ("(load \"%s\")", escaped);
       g_free (escaped);
 
-      script_fu_run_command (command);
+      if (! script_fu_run_command (command, &error))
+        {
+          g_message (_("Error while loading\n\"%s\"\n\n%s"),
+                     file_data->filename, error->message);
+          g_clear_error (&error);
+        }
 
 #ifdef G_OS_WIN32
       /* No, I don't know why, but this is
@@ -903,9 +904,10 @@ script_fu_script_proc (const gchar      *name,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
+  static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   SFScript          *script;
+  GError            *error  = NULL;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -1038,7 +1040,12 @@ script_fu_script_proc (const gchar      *name,
               command = g_string_free (s, FALSE);
 
               /*  run the command through the interpreter  */
-              script_fu_run_command (command);
+              if (! script_fu_run_command (command, &error))
+                {
+                  status                  = GIMP_PDB_EXECUTION_ERROR;
+                  *nreturn_vals           = 2;
+                  values[2].data.d_string = error->message;
+                }
 
               g_free (command);
             }
@@ -1168,7 +1175,12 @@ script_fu_script_proc (const gchar      *name,
             command = g_string_free (s, FALSE);
 
             /*  run the command through the interpreter  */
-            script_fu_run_command (command);
+            if (! script_fu_run_command (command, &error))
+              {
+                status                  = GIMP_PDB_EXECUTION_ERROR;
+                *nreturn_vals           = 2;
+                values[2].data.d_string = error->message;
+              }
 
             g_free (command);
           }

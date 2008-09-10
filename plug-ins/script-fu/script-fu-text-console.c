@@ -46,8 +46,12 @@ script_fu_text_console_run (const gchar      *name,
 
   ts_print_welcome ();
 
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
   /*  Run the interface  */
-  ts_interpret_stdin();
+  ts_interpret_stdin ();
+
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
