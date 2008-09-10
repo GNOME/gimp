@@ -49,6 +49,8 @@ static DBusGConnection *dbus_connection  = NULL;
 #endif
 
 #ifdef G_OS_WIN32
+#include "file/file-open.h"
+
 static void gui_unique_win32_init  (Gimp *gimp);
 static void gui_unique_win32_exit  (void);
 
@@ -69,10 +71,10 @@ gui_unique_init (Gimp *gimp)
 void
 gui_unique_exit (void)
 {
-#if HAVE_DBUS_GLIB
-  gui_dbus_service_exit ();
-#elif HAVE_DBUS_GLIB
+#ifdef G_OS_WIN32
   gui_unique_win32_exit ();
+#elif HAVE_DBUS_GLIB
+  gui_dbus_service_exit ();
 #endif
 }
 
@@ -172,7 +174,7 @@ gui_unique_win32_idle_open (IdleOpenData *data)
 }
 
 
-LRESULT CALLBACK
+static LRESULT CALLBACK
 gui_unique_win32_message_handler (HWND   hWnd,
 				  UINT   uMsg,
 				  WPARAM wParam,
