@@ -36,12 +36,12 @@
 #include "tinyscheme/dynload.h"
 #endif
 #include "ftx/ftx.h"
-#include "re/re.h"
 
 #include "script-fu-types.h"
 
 #include "script-fu-console.h"
 #include "script-fu-interface.h"
+#include "script-fu-regex.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 

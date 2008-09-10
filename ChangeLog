@@ -1,3 +1,14 @@
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/re/*: removed....
+
+	* plug-ins/script-fu/script-fu-regex.[ch]: and replaced with a
+	few-liner using GRegex. Seems to have some issues that need to be
+	sorted out.
+
+	* plug-ins/script-fu/scheme-wrapper.c: changed accordingly.
+
 2008-09-10  Michael Natterer  <mitch@gimp.org>
 
 	Change Script-Fu error handling to properly use the new error
