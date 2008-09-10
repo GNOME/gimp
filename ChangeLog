@@ -1,3 +1,8 @@
+2008-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/file-uri/uri-backend-wget.c
+	* plug-ins/file-xjt/xjt.c: s/while (1)/while (TRUE)/
+
 2008-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c

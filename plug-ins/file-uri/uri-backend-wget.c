@@ -316,7 +316,7 @@ uri_backend_load_image (const gchar  *uri,
 
       /*  Switch to byte parsing wget's output...  */
 
-      while (1)
+      while (TRUE)
         {
           dot = fgetc (input);
 
