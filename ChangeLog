@@ -1,5 +1,10 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpexport.c (struct ExportAction): make string members
+	const.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_load_script):
 	convert the filename to UTF-8 before displaying it in the error
 	message.
