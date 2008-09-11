@@ -627,7 +627,8 @@ script_fu_add_script (scheme  *sc,
 }
 
 pointer
-script_fu_add_menu (scheme *sc, pointer a)
+script_fu_add_menu (scheme  *sc,
+                    pointer  a)
 {
   SFScript    *script;
   SFMenu      *menu;
@@ -926,7 +927,7 @@ script_fu_script_proc (const gchar      *name,
     {
       GimpRunMode run_mode = params[0].data.d_int32;
 
-      set_run_mode_constant (run_mode);
+      ts_set_run_mode (run_mode);
 
       switch (run_mode)
         {

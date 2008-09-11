@@ -199,7 +199,8 @@ script_fu_server_run (const gchar      *name,
   GimpRunMode        run_mode;
 
   run_mode = params[0].data.d_int32;
-  set_run_mode_constant (run_mode);
+
+  ts_set_run_mode (run_mode);
 
   switch (run_mode)
     {
