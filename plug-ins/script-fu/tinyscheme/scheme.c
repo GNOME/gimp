@@ -4747,7 +4747,7 @@ void scheme_apply0(scheme *sc, const char *procname) {
      pointer carx=mk_symbol(sc,procname);
      pointer cdrx=sc->NIL;
 
-     dump_stack_reset(sc);
+     s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
      sc->envir = sc->global_env;
      sc->code = cons(sc,carx,cdrx);
      sc->interactive_repl=0;
@@ -4756,7 +4756,7 @@ void scheme_apply0(scheme *sc, const char *procname) {
      }
 
 void scheme_call(scheme *sc, pointer func, pointer args) {
-   dump_stack_reset(sc);
+   s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
    sc->envir = sc->global_env;
    sc->args = args;
    sc->code = func;
@@ -4793,7 +4793,13 @@ int main(int argc, char **argv) {
     printf(banner);
   }
   if(argc==2 && strcmp(argv[1],"-?")==0) {
-    printf("Usage: %s [-? | <file1> <file2> ... | -1 <file> <arg1> <arg2> ...]\n\tUse - as filename for stdin.\n",argv[0]);
+    printf("Usage: tinyscheme -?\n");
+    printf("or:    tinyscheme [<file1> <file2> ...]\n");
+    printf("followed by\n");
+    printf("          -1 <file> [<arg1> <arg2> ...]\n");
+    printf("          -c <Scheme commands> [<arg1> <arg2> ...]\n");
+    printf("assuming that the executable is named tinyscheme.\n");
+    printf("Use - as filename for stdin.\n");
     return 1;
   }
   if(!scheme_init(&sc)) {

@@ -1,3 +1,14 @@
+2008-09-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/CHANGES: Updating to match version
+	in official version of TinyScheme.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Applied changes from
+	official version of TinyScheme which adds entry point for nested
+	calling. Part of making it more suitable for Scheme->C->Scheme
+	calling. See SourceForge bug #1599945. Updated usage information
+	using text from Manual.txt.
+
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: forgot to remove plug-ins/script-fu/re here.
@@ -5277,9 +5288,9 @@
 
 2008-05-22  Kevin Cozens  <kcozens@cvs.gnome.org>
 
-        * plug-ins/script-fu/tinyscheme/scheme.c: Added extra check to stop
-        "(let x 5)" syntax from causing a segfault in Linux. See bug #508020.
-        Removed some excess whitespace.
+	* plug-ins/script-fu/tinyscheme/scheme.c: Added extra check to stop
+	"(let x 5)" syntax from causing a segfault in Linux. See bug #508020.
+	Removed some excess whitespace.
 
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
