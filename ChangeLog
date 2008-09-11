@@ -1,5 +1,10 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-modules.c (gimp_modules_unload): make a string
+	pointer const.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-regex.[ch]: namespace, copyright
 	headers, indentation, formatting, everything...
 
