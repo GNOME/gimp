@@ -704,9 +704,12 @@ script_fu_load_script (const GimpDatafileData *file_data,
 
       if (! script_fu_run_command (command, &error))
         {
+          gchar *display_name = g_filename_display_name (file_data->filename);
+
           g_message (_("Error while loading\n\"%s\"\n\n%s"),
-                     file_data->filename, error->message);
+                     display_name, error->message);
           g_clear_error (&error);
+          g_free (display_name);
         }
 
 #ifdef G_OS_WIN32

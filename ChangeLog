@@ -1,5 +1,11 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_load_script):
+	convert the filename to UTF-8 before displaying it in the error
+	message.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_run_command):
 	use g_set_error() instead of g_set_error_literal() which is only
 	available in glib 2.18.
