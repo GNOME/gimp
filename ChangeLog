@@ -78,9 +78,9 @@
 	window here so that gimp_unique_win32_open() in app/unique.c won't
 	find it. This is important especially in a developer version where
 	the debug output window might be left open and the proxy window
-	still existing for a long time after the GTK+ main loop of the
-	GIMP GUI has finished. Thanks to Michael Schumacher for pointing
-	this out.
+	otherwise would still exist for a long time after the GTK+ main
+	loop of the GIMP GUI has finished. Thanks to Michael Schumacher
+	for pointing this out.
 
 	There is still a small race window here after GIMP has begun
 	closing down its GUI in gui_exit_callback() and before the proxy
