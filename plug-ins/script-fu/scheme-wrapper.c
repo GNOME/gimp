@@ -104,64 +104,65 @@ struct named_constant const script_constants[] =
   { NULL, 0 }
 };
 
-/* The following constants are deprecated. They are */
-/* included to keep backwards compatability with    */
-/* older scripts used with version 2.0 of GIMP.     */
+/* The following constants are deprecated. They are
+ * included to keep backwards compatability with
+ * older scripts used with version 2.0 of GIMP.
+ */
 struct named_constant const old_constants[] =
 {
-  { "NORMAL",       GIMP_NORMAL_MODE       },
-  { "DISSOLVE",     GIMP_DISSOLVE_MODE     },
-  { "BEHIND",       GIMP_BEHIND_MODE       },
-  { "MULTIPLY",     GIMP_MULTIPLY_MODE     },
-  { "SCREEN",       GIMP_SCREEN_MODE       },
-  { "OVERLAY",      GIMP_OVERLAY_MODE      },
-  { "DIFFERENCE",   GIMP_DIFFERENCE_MODE   },
-  { "ADDITION",     GIMP_ADDITION_MODE     },
-  { "SUBTRACT",     GIMP_SUBTRACT_MODE     },
-  { "DARKEN-ONLY",  GIMP_DARKEN_ONLY_MODE  },
-  { "LIGHTEN-ONLY", GIMP_LIGHTEN_ONLY_MODE },
-  { "HUE",          GIMP_HUE_MODE          },
-  { "SATURATION",   GIMP_SATURATION_MODE   },
-  { "COLOR",        GIMP_COLOR_MODE        },
-  { "VALUE",        GIMP_VALUE_MODE        },
-  { "DIVIDE",       GIMP_DIVIDE_MODE       },
+  { "NORMAL",               GIMP_NORMAL_MODE       },
+  { "DISSOLVE",             GIMP_DISSOLVE_MODE     },
+  { "BEHIND",               GIMP_BEHIND_MODE       },
+  { "MULTIPLY",             GIMP_MULTIPLY_MODE     },
+  { "SCREEN",               GIMP_SCREEN_MODE       },
+  { "OVERLAY",              GIMP_OVERLAY_MODE      },
+  { "DIFFERENCE",           GIMP_DIFFERENCE_MODE   },
+  { "ADDITION",             GIMP_ADDITION_MODE     },
+  { "SUBTRACT",             GIMP_SUBTRACT_MODE     },
+  { "DARKEN-ONLY",          GIMP_DARKEN_ONLY_MODE  },
+  { "LIGHTEN-ONLY",         GIMP_LIGHTEN_ONLY_MODE },
+  { "HUE",                  GIMP_HUE_MODE          },
+  { "SATURATION",           GIMP_SATURATION_MODE   },
+  { "COLOR",                GIMP_COLOR_MODE        },
+  { "VALUE",                GIMP_VALUE_MODE        },
+  { "DIVIDE",               GIMP_DIVIDE_MODE       },
 
-  { "BLUR",         GIMP_BLUR_CONVOLVE     },
-  { "SHARPEN",      GIMP_SHARPEN_CONVOLVE  },
+  { "BLUR",                 GIMP_BLUR_CONVOLVE     },
+  { "SHARPEN",              GIMP_SHARPEN_CONVOLVE  },
 
-  { "WHITE-MASK",     GIMP_ADD_WHITE_MASK     },
-  { "BLACK-MASK",     GIMP_ADD_BLACK_MASK     },
-  { "ALPHA-MASK",     GIMP_ADD_ALPHA_MASK     },
-  { "SELECTION-MASK", GIMP_ADD_SELECTION_MASK },
-  { "COPY-MASK",      GIMP_ADD_COPY_MASK      },
+  { "WHITE-MASK",           GIMP_ADD_WHITE_MASK     },
+  { "BLACK-MASK",           GIMP_ADD_BLACK_MASK     },
+  { "ALPHA-MASK",           GIMP_ADD_ALPHA_MASK     },
+  { "SELECTION-MASK",       GIMP_ADD_SELECTION_MASK },
+  { "COPY-MASK",            GIMP_ADD_COPY_MASK      },
 
-  { "ADD",          GIMP_CHANNEL_OP_ADD       },
-  { "SUB",          GIMP_CHANNEL_OP_SUBTRACT  },
-  { "REPLACE",      GIMP_CHANNEL_OP_REPLACE   },
-  { "INTERSECT",    GIMP_CHANNEL_OP_INTERSECT },
+  { "ADD",                  GIMP_CHANNEL_OP_ADD       },
+  { "SUB",                  GIMP_CHANNEL_OP_SUBTRACT  },
+  { "REPLACE",              GIMP_CHANNEL_OP_REPLACE   },
+  { "INTERSECT",            GIMP_CHANNEL_OP_INTERSECT },
 
-  { "FG-BG-RGB",    GIMP_FG_BG_RGB_MODE       },
-  { "FG-BG-HSV",    GIMP_FG_BG_HSV_MODE       },
-  { "FG-TRANS",     GIMP_FG_TRANSPARENT_MODE  },
-  { "CUSTOM",       GIMP_CUSTOM_MODE          },
+  { "FG-BG-RGB",            GIMP_FG_BG_RGB_MODE       },
+  { "FG-BG-HSV",            GIMP_FG_BG_HSV_MODE       },
+  { "FG-TRANS",             GIMP_FG_TRANSPARENT_MODE  },
+  { "CUSTOM",               GIMP_CUSTOM_MODE          },
 
-  { "FG-IMAGE-FILL",    GIMP_FOREGROUND_FILL  },
-  { "BG-IMAGE-FILL",    GIMP_BACKGROUND_FILL  },
-  { "WHITE-IMAGE-FILL", GIMP_WHITE_FILL       },
-  { "TRANS-IMAGE-FILL", GIMP_TRANSPARENT_FILL },
+  { "FG-IMAGE-FILL",        GIMP_FOREGROUND_FILL  },
+  { "BG-IMAGE-FILL",        GIMP_BACKGROUND_FILL  },
+  { "WHITE-IMAGE-FILL",     GIMP_WHITE_FILL       },
+  { "TRANS-IMAGE-FILL",     GIMP_TRANSPARENT_FILL },
 
-  { "APPLY",        GIMP_MASK_APPLY   },
-  { "DISCARD",      GIMP_MASK_DISCARD },
+  { "APPLY",                GIMP_MASK_APPLY   },
+  { "DISCARD",              GIMP_MASK_DISCARD },
 
-  { "HARD",         GIMP_BRUSH_HARD },
-  { "SOFT",         GIMP_BRUSH_SOFT },
+  { "HARD",                 GIMP_BRUSH_HARD },
+  { "SOFT",                 GIMP_BRUSH_SOFT },
 
-  { "CONTINUOUS",   GIMP_PAINT_CONSTANT    },
-  { "INCREMENTAL",  GIMP_PAINT_INCREMENTAL },
+  { "CONTINUOUS",           GIMP_PAINT_CONSTANT    },
+  { "INCREMENTAL",          GIMP_PAINT_INCREMENTAL },
 
-  { "HORIZONTAL",   GIMP_ORIENTATION_HORIZONTAL },
-  { "VERTICAL",     GIMP_ORIENTATION_VERTICAL   },
-  { "UNKNOWN",      GIMP_ORIENTATION_UNKNOWN    },
+  { "HORIZONTAL",           GIMP_ORIENTATION_HORIZONTAL },
+  { "VERTICAL",             GIMP_ORIENTATION_VERTICAL   },
+  { "UNKNOWN",              GIMP_ORIENTATION_UNKNOWN    },
 
   { "LINEAR",               GIMP_GRADIENT_LINEAR               },
   { "BILINEAR",             GIMP_GRADIENT_BILINEAR             },
@@ -175,11 +176,11 @@ struct named_constant const old_constants[] =
   { "SPIRAL-CLOCKWISE",     GIMP_GRADIENT_SPIRAL_CLOCKWISE     },
   { "SPIRAL-ANTICLOCKWISE", GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE },
 
-  { "VALUE-LUT",      GIMP_HISTOGRAM_VALUE },
-  { "RED-LUT",        GIMP_HISTOGRAM_RED   },
-  { "GREEN-LUT",      GIMP_HISTOGRAM_GREEN },
-  { "BLUE-LUT",       GIMP_HISTOGRAM_BLUE  },
-  { "ALPHA-LUT",      GIMP_HISTOGRAM_ALPHA },
+  { "VALUE-LUT",            GIMP_HISTOGRAM_VALUE },
+  { "RED-LUT",              GIMP_HISTOGRAM_RED   },
+  { "GREEN-LUT",            GIMP_HISTOGRAM_GREEN },
+  { "BLUE-LUT",             GIMP_HISTOGRAM_BLUE  },
+  { "ALPHA-LUT",            GIMP_HISTOGRAM_ALPHA },
 
   { NULL, 0 }
 };
@@ -239,7 +240,7 @@ ts_interpret_string (const gchar *expr)
   sc.tracing = 1;
 #endif
 
-  sc.vptr->load_string (&sc, (char *)expr);
+  sc.vptr->load_string (&sc, (char *) expr);
 
   return sc.retcode;
 }
@@ -247,8 +248,8 @@ ts_interpret_string (const gchar *expr)
 const gchar *
 ts_get_success_msg (void)
 {
-  if (sc.vptr->is_string(sc.value))
-    return sc.vptr->string_value(sc.value);
+  if (sc.vptr->is_string (sc.value))
+    return sc.vptr->string_value (sc.value);
 
   return "Success";
 }
@@ -278,7 +279,7 @@ tinyscheme_init (const gchar *path,
 
   /* Initialize the TinyScheme extensions */
   init_ftx (&sc);
-  init_re (&sc);
+  script_fu_regex_init (&sc);
 
   /* register in the interpreter the gimp functions and types. */
   init_constants ();
@@ -343,7 +344,7 @@ set_run_mode_constant (GimpRunMode run_mode)
   symbol = sc.vptr->mk_symbol (&sc, "SF-RUN-MODE");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
                           sc.vptr->mk_integer (&sc, run_mode));
-  sc.vptr->setimmutable(symbol);
+  sc.vptr->setimmutable (symbol);
 }
 
 static void     convert_string                   (gchar     *str);

@@ -1,5 +1,13 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-regex.[ch]: namespace, copyright
+	headers, indentation, formatting, everything...
+
+	* plug-ins/script-fu/scheme-wrapper.c: changed accordingly. Some
+	formatting cleanup here too.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpexport.c (struct ExportAction): make string members
 	const.
 
