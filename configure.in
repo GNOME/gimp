@@ -2006,7 +2006,6 @@ plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile
-plug-ins/script-fu/re/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile

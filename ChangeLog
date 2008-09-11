@@ -1,5 +1,9 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: forgot to remove plug-ins/script-fu/re here.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scheme-wrapper.[ch]: reordered and renamed
 	functions to be consistent. Got rid of file-global "register_scripts"
 	variable. Pass more "scheme *sc" pointers around to reduce usage
