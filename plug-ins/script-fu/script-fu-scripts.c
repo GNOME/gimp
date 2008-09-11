@@ -677,7 +677,7 @@ script_fu_run_command (const gchar  *command,
 
   if (ts_interpret_string (command))
     {
-      g_set_error_literal (error, 0, 0, output->str);
+      g_set_error (error, 0, 0, "%s", output->str);
     }
   else
     {

@@ -1,5 +1,11 @@
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_run_command):
+	use g_set_error() instead of g_set_error_literal() which is only
+	available in glib 2.18.
+
+2008-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/Makefile.am
 	* plug-ins/script-fu/re/*: removed....
 
@@ -33,7 +39,7 @@
 	* plug-ins/script-fu/scheme-wrapper.c
 	(script_fu_marshal_procedure_call): if an error message was
 	returned from the PDB call, pass it to foreign_error() so it ends
-	up where it should (consle, text console or error string).
+	up where it should (console, text console or error string).
 
 	* plug-ins/script-fu/script-fu-console.c
 	* plug-ins/script-fu/script-fu-text-console.c: set the error
