@@ -1,3 +1,8 @@
+2008-09-11  Goran Rakić  <grakic@devbase.net>
+
+        * LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
+        * sr.po, sr@latin.po: Updated Serbian translation (by Miloš Popović)
+
 2008-09-11  Wadim Dziedzic  <wdziedzic@aviary.pl>
 
 	* pl.po: Updated Polish translation by Bartosz Kosiorek 

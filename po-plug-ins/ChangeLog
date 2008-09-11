@@ -1,3 +1,7 @@
+2008-09-11  Goran Rakić  <grakic@devbase.net>
+
+        * LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
+
 2008-09-09  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
 
 	* eu.po: Updated Basque translation.

@@ -3,7 +3,7 @@
 #
 # This file is distributed under the same license as the gimp package.
 #
-# Maintainer: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>
+# Maintainer: Branko Ivanović <popeye@one.ekof.bg.ac.yu>
 #
 #
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-11 23:29+0200\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
-"Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
+"Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +56,7 @@ msgstr ""
 #: ../plug-ins/pygimp/gimpui.py:177
 #, fuzzy
 msgid "Python-Fu Color Selection"
-msgstr "Скрипт-Фу Конзола"
+msgstr "Skript-Fu Konzola"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
@@ -251,12 +251,12 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
-msgstr "Скрипт-Фу Конзола"
+msgstr "Skript-Fu Konzola"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:61
 #, fuzzy
 msgid "_Browse..."
-msgstr "Тражи..."
+msgstr "Traži..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:139
 msgid "Python Procedure Browser"
@@ -275,7 +275,7 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/python-console.py:191
 #, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Скрипт-Фу Конзола"
+msgstr "Skript-Fu Konzola"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:217
 msgid "Interactive GIMP Python interpreter"
@@ -284,7 +284,7 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/python-console.py:222
 #, fuzzy
 msgid "_Console"
-msgstr "Скрипт-Фу Конзола"
+msgstr "Skript-Fu Konzola"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
@@ -316,4 +316,4 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Gimp-Python Console"
-#~ msgstr "Скрипт-Фу Конзола"
+#~ msgstr "Skript-Fu Konzola"
