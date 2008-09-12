@@ -1,3 +1,15 @@
+2008-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.h: changed GimpBrush::get_extension() to return
+	const gchar* instead of gchar*
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpcurve.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: changed accordingly.
+
 2008-09-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/CHANGES: Updating to match version

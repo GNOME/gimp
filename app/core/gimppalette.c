@@ -40,35 +40,35 @@
 
 /*  local function prototypes  */
 
-static void       gimp_palette_finalize         (GObject           *object);
+static void          gimp_palette_finalize          (GObject           *object);
 
-static gint64     gimp_palette_get_memsize      (GimpObject        *object,
-                                                 gint64            *gui_size);
+static gint64        gimp_palette_get_memsize       (GimpObject        *object,
+                                                     gint64            *gui_size);
 
-static void       gimp_palette_get_preview_size (GimpViewable      *viewable,
-                                                 gint               size,
-                                                 gboolean           popup,
-                                                 gboolean           dot_for_dot,
-                                                 gint              *width,
-                                                 gint              *height);
-static gboolean   gimp_palette_get_popup_size   (GimpViewable      *viewable,
-                                                 gint               width,
-                                                 gint               height,
-                                                 gboolean           dot_for_dot,
-                                                 gint              *popup_width,
-                                                 gint              *popup_height);
-static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
-                                                 GimpContext       *context,
-                                                 gint               width,
-                                                 gint               height);
-static gchar    * gimp_palette_get_description  (GimpViewable      *viewable,
-                                                 gchar            **tooltip);
-static gchar    * gimp_palette_get_extension    (GimpData          *data);
-static GimpData * gimp_palette_duplicate        (GimpData          *data);
+static void          gimp_palette_get_preview_size  (GimpViewable      *viewable,
+                                                     gint               size,
+                                                     gboolean           popup,
+                                                     gboolean           dot_for_dot,
+                                                     gint              *width,
+                                                     gint              *height);
+static gboolean      gimp_palette_get_popup_size    (GimpViewable      *viewable,
+                                                     gint               width,
+                                                     gint               height,
+                                                     gboolean           dot_for_dot,
+                                                     gint              *popup_width,
+                                                     gint              *popup_height);
+static TempBuf     * gimp_palette_get_new_preview   (GimpViewable      *viewable,
+                                                     GimpContext       *context,
+                                                     gint               width,
+                                                     gint               height);
+static gchar       * gimp_palette_get_description   (GimpViewable      *viewable,
+                                                     gchar            **tooltip);
+static const gchar * gimp_palette_get_extension     (GimpData          *data);
+static GimpData    * gimp_palette_duplicate         (GimpData          *data);
 
-static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
-static gint64     gimp_palette_entry_get_memsize(GimpPaletteEntry  *entry,
-                                                 gint64            *gui_size);
+static void          gimp_palette_entry_free        (GimpPaletteEntry  *entry);
+static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry  *entry,
+                                                     gint64            *gui_size);
 
 
 G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA)
@@ -289,7 +289,7 @@ gimp_palette_get_standard (void)
   return standard_palette;
 }
 
-static gchar *
+static const gchar *
 gimp_palette_get_extension (GimpData *data)
 {
   return GIMP_PALETTE_FILE_EXTENSION;
