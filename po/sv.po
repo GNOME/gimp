@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-03 22:47+0200\n"
-"PO-Revision-Date: 2008-09-03 22:50+0100\n"
+"POT-Creation-Date: 2008-09-12 08:23+0200\n"
+"PO-Revision-Date: 2008-09-12 08:24+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -688,7 +688,7 @@ msgid "New Channel Color"
 msgstr "Ny kanalfärg"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:524
+#: ../app/display/gimpdisplayshell-dnd.c:563
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773
 #: ../app/widgets/gimptoolbox-dnd.c:310
@@ -851,7 +851,7 @@ msgstr "Sampla sammanfogade"
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:475
+#: ../app/display/gimpdisplayshell-dnd.c:514
 #: ../app/widgets/gimplayertreeview.c:730
 #: ../app/widgets/gimptoolbox-dnd.c:155
 #: ../app/widgets/gimptoolbox.c:979
@@ -5339,7 +5339,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: ../app/core/core-enums.c:882
-#: ../app/tools/gimptexttool.c:158
+#: ../app/tools/gimptexttool.c:160
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
@@ -5842,15 +5842,15 @@ msgstr "Minska kanal"
 msgid "Cannot stroke empty channel."
 msgstr "Kan inte stryka tom kanal."
 
-#: ../app/core/gimpchannel.c:1630
+#: ../app/core/gimpchannel.c:1631
 msgid "Set Channel Color"
 msgstr "Ställ in kanalfärg"
 
-#: ../app/core/gimpchannel.c:1678
+#: ../app/core/gimpchannel.c:1679
 msgid "Set Channel Opacity"
 msgstr "Ställ in kanalopacitet"
 
-#: ../app/core/gimpchannel.c:1746
+#: ../app/core/gimpchannel.c:1747
 #: ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Markeringsmask"
@@ -7036,18 +7036,17 @@ msgstr "Skalning av bilden till vald storlek kommer helt att krympa bort några 
 msgid "Is this what you want to do?"
 msgstr "Är detta vad du vill göra?"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:50
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
 msgstr "Konfigurera tangentbordsgenvägar"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:83
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid "To edit a shortcut key, click on the corresponding row and type a new accelerator, or press backspace to clear."
 msgstr "För att redigera en genvägstangent, klicka på motsvarande rad och ange en ny snabbtangent, eller tryck på backsteg för att tömma."
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:91
-#: ../app/dialogs/preferences-dialog.c:1645
-msgid "_Save keyboard shortcuts on exit"
-msgstr "_Spara tangentbordsgenvägar vid avslut"
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:81
+msgid "S_ave keyboard shortcuts on exit"
+msgstr "S_para tangentbordsgenvägar vid avslut"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
@@ -7433,6 +7432,10 @@ msgstr "Använd dynamiska _tangentbordsgenvägar"
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Konfigurera _tangentbordsgenvägar..."
 
+#: ../app/dialogs/preferences-dialog.c:1645
+msgid "_Save keyboard shortcuts on exit"
+msgstr "_Spara tangentbordsgenvägar vid avslut"
+
 #: ../app/dialogs/preferences-dialog.c:1649
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Spara tangentbordsgenvägar _nu"
@@ -7466,7 +7469,7 @@ msgstr "Hjälpsystem"
 #: ../app/dialogs/preferences-dialog.c:1792
 #: ../app/dialogs/preferences-dialog.c:1886
 #: ../app/dialogs/preferences-dialog.c:2073
-#: ../app/widgets/gimpcontrollereditor.c:188
+#: ../app/widgets/gimpcontrollereditor.c:189
 msgid "General"
 msgstr "Generellt"
 
@@ -8333,22 +8336,22 @@ msgid_plural "If you don't save the image, changes from the last %d minutes will
 msgstr[0] "Om du inte sparar bilden kommer du att förlora ändringar gjorda den senaste minuten."
 msgstr[1] "Om du inte sparar bilden kommer du att förlora ändringar gjorda de senaste %d minuterna."
 
-#: ../app/display/gimpdisplayshell-dnd.c:208
-#: ../app/display/gimpdisplayshell-dnd.c:527
-#: ../app/display/gimpdisplayshell-dnd.c:580
+#: ../app/display/gimpdisplayshell-dnd.c:235
+#: ../app/display/gimpdisplayshell-dnd.c:566
+#: ../app/display/gimpdisplayshell-dnd.c:644
 msgid "Drop New Layer"
 msgstr "Släpp nytt lager"
 
-#: ../app/display/gimpdisplayshell-dnd.c:256
+#: ../app/display/gimpdisplayshell-dnd.c:295
 msgid "Drop New Path"
 msgstr "Släpp ny slinga"
 
-#: ../app/display/gimpdisplayshell-dnd.c:459
+#: ../app/display/gimpdisplayshell-dnd.c:498
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "Förkasta lager"
 
-#: ../app/display/gimpdisplayshell-dnd.c:568
+#: ../app/display/gimpdisplayshell-dnd.c:634
 #: ../app/widgets/gimplayertreeview.c:801
 #: ../app/widgets/gimptoolbox-dnd.c:358
 msgid "Dropped Buffer"
@@ -8502,7 +8505,7 @@ msgstr "Uppstart av GIMP"
 msgid "Airbrush"
 msgstr "Färgspruta"
 
-#: ../app/paint/gimpbrushcore.c:352
+#: ../app/paint/gimpbrushcore.c:353
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
@@ -8905,7 +8908,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Avbruten"
 
-#: ../app/plug-in/gimpplugin.c:635
+#: ../app/plug-in/gimpplugin.c:637
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -9011,7 +9014,7 @@ msgstr ""
 "strax hwila på mjuka tuvor."
 
 #: ../app/text/gimptext-compat.c:108
-#: ../app/tools/gimptexttool.c:875
+#: ../app/tools/gimptexttool.c:877
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -10001,12 +10004,12 @@ msgstr "_GEGL-operation..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "GEGL-operationer fungerar inte på indexerade lager."
 
-#: ../app/tools/gimpgegltool.c:303
+#: ../app/tools/gimpgegltool.c:324
 msgid "_Operation:"
 msgstr "_Operation:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:349
+#: ../app/tools/gimpgegltool.c:370
 msgid "Operation Settings"
 msgstr "Inställningar för operation"
 
@@ -10824,28 +10827,28 @@ msgstr "Slinga från text"
 msgid "Text along Path"
 msgstr "Text längs slinga"
 
-#: ../app/tools/gimptexttool.c:159
+#: ../app/tools/gimptexttool.c:161
 msgid "Text Tool: Create or edit text layers"
 msgstr "Textverktyg: Skapa eller redigera textlager"
 
-#: ../app/tools/gimptexttool.c:160
+#: ../app/tools/gimptexttool.c:162
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:952
+#: ../app/tools/gimptexttool.c:954
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: ../app/tools/gimptexttool.c:1068
-#: ../app/tools/gimptexttool.c:1071
+#: ../app/tools/gimptexttool.c:1070
+#: ../app/tools/gimptexttool.c:1073
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1077
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:1099
+#: ../app/tools/gimptexttool.c:1101
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -10855,7 +10858,7 @@ msgstr ""
 "\n"
 "Du kan redigera lagret eller skapa ett nytt textlager från dess textattribut."
 
-#: ../app/tools/gimptexttool.c:1311
+#: ../app/tools/gimptexttool.c:1313
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
@@ -10923,11 +10926,11 @@ msgstr "Behåll aspekt (%s)"
 msgid "Transforming"
 msgstr "Transformerar"
 
-#: ../app/tools/gimptransformtool.c:1163
+#: ../app/tools/gimptransformtool.c:1165
 msgid "There is no layer to transform."
 msgstr "Det finns inget lager att transformera."
 
-#: ../app/tools/gimptransformtool.c:1174
+#: ../app/tools/gimptransformtool.c:1176
 msgid "There is no path to transform."
 msgstr "Det finns ingen slinga att transformera."
 
@@ -11229,52 +11232,56 @@ msgstr "Inga slingor hittades i bufferten"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Misslyckades med att importera slinga från \"%s\": %s"
 
+#: ../app/widgets/gimpactioneditor.c:71
+msgid "_Search:"
+msgstr "_Sök:"
+
 #: ../app/widgets/gimpactiongroup.c:802
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:312
-#: ../app/widgets/gimpcontrollereditor.c:347
+#: ../app/widgets/gimpactionview.c:346
+#: ../app/widgets/gimpcontrollereditor.c:348
 msgid "Action"
 msgstr "Åtgärd"
 
-#: ../app/widgets/gimpactionview.c:341
+#: ../app/widgets/gimpactionview.c:375
 msgid "Shortcut"
 msgstr "Genväg"
 
-#: ../app/widgets/gimpactionview.c:367
+#: ../app/widgets/gimpactionview.c:401
 msgid "Name"
 msgstr "Namn"
 
-#: ../app/widgets/gimpactionview.c:499
-#: ../app/widgets/gimpactionview.c:703
+#: ../app/widgets/gimpactionview.c:641
+#: ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
 msgstr "Ändring av genväg misslyckades."
 
-#: ../app/widgets/gimpactionview.c:541
+#: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
 msgstr "Krockande genvägar"
 
-#: ../app/widgets/gimpactionview.c:547
+#: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
 msgstr "_Ändra genväg"
 
-#: ../app/widgets/gimpactionview.c:562
+#: ../app/widgets/gimpactionview.c:704
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Genvägen \"%s\" är redan tagen av \"%s\" från gruppen \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:566
+#: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Ändring av genvägen kommer ta bort den från \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:639
+#: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
 msgstr "Ogiltig genväg."
 
-#: ../app/widgets/gimpactionview.c:727
+#: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
 msgstr "Borttagning av genväg misslyckades."
 
@@ -11448,40 +11455,40 @@ msgstr "Mindre förhandsvisningar"
 msgid "Larger Previews"
 msgstr "Större förhandsvisningar"
 
-#: ../app/widgets/gimpcontrollereditor.c:201
+#: ../app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
 msgstr "S_para händelser från den här enheten"
 
-#: ../app/widgets/gimpcontrollereditor.c:206
+#: ../app/widgets/gimpcontrollereditor.c:207
 msgid "_Enable this controller"
 msgstr "_Aktivera den här enheten"
 
-#: ../app/widgets/gimpcontrollereditor.c:227
+#: ../app/widgets/gimpcontrollereditor.c:228
 msgid "Name:"
 msgstr "Namn:"
 
-#: ../app/widgets/gimpcontrollereditor.c:233
+#: ../app/widgets/gimpcontrollereditor.c:234
 msgid "State:"
 msgstr "Tillstånd:"
 
-#: ../app/widgets/gimpcontrollereditor.c:341
+#: ../app/widgets/gimpcontrollereditor.c:342
 msgid "Event"
 msgstr "Händelse"
 
-#: ../app/widgets/gimpcontrollereditor.c:366
+#: ../app/widgets/gimpcontrollereditor.c:367
 msgid "_Grab event"
 msgstr "_Fånga händelse"
 
-#: ../app/widgets/gimpcontrollereditor.c:376
+#: ../app/widgets/gimpcontrollereditor.c:377
 msgid "Select the next event arriving from the controller"
 msgstr "Välj nästa händelse som kommer från enheten"
 
-#: ../app/widgets/gimpcontrollereditor.c:534
+#: ../app/widgets/gimpcontrollereditor.c:535
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Ta bort åtgärden tilldelad \"%s\""
 
-#: ../app/widgets/gimpcontrollereditor.c:539
+#: ../app/widgets/gimpcontrollereditor.c:540
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Ställ in en åtgärd för \"%s\""
