@@ -377,7 +377,6 @@ static void finalize_cell(scheme *sc, pointer a);
 static int count_consecutive_cells(pointer x, int needed);
 static pointer find_slot_in_env(scheme *sc, pointer env, pointer sym, int all);
 static pointer mk_number(scheme *sc, num n);
-static pointer mk_empty_string(scheme *sc, int len, gunichar fill);
 static char *store_string(scheme *sc, int len, const char *str, gunichar fill);
 static pointer mk_vector(scheme *sc, int len);
 static pointer mk_atom(scheme *sc, char *q);
@@ -407,8 +406,9 @@ static pointer mk_continuation(scheme *sc, pointer d);
 static pointer reverse(scheme *sc, pointer a);
 static pointer reverse_in_place(scheme *sc, pointer term, pointer list);
 static pointer append(scheme *sc, pointer a, pointer b);
-static int list_length(scheme *sc, pointer a);
-static int eqv(pointer a, pointer b);
+int list_length(scheme *sc, pointer a);
+int eqv(pointer a, pointer b);
+
 static INLINE void dump_stack_mark(scheme *);
 static pointer opexe_0(scheme *sc, enum scheme_opcodes op);
 static pointer opexe_1(scheme *sc, enum scheme_opcodes op);
@@ -422,9 +422,6 @@ static void assign_syntax(scheme *sc, char *name);
 static int syntaxnum(pointer p);
 static void assign_proc(scheme *sc, enum scheme_opcodes, char *name);
 scheme *scheme_init_new(void);
-#if !STANDALONE
-void scheme_call(scheme *sc, pointer func, pointer args);
-#endif
 
 #define num_ivalue(n)       (n.is_fixnum?(n).value.ivalue:(long)(n).value.rvalue)
 #define num_rvalue(n)       (!n.is_fixnum?(n).value.rvalue:(double)(n).value.ivalue)
@@ -1018,7 +1015,7 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      return (x);
 }
 
-static pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
+INTERFACE pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
      strvalue(x) = store_string(sc,len,0,fill);
@@ -2111,7 +2108,7 @@ static pointer append(scheme *sc, pointer a, pointer b) {
 }
 
 /* equivalence of atoms */
-static int eqv(pointer a, pointer b) {
+int eqv(pointer a, pointer b) {
      if (is_string(a)) {
           if (is_string(b))
                return (strvalue(a) == strvalue(b));
@@ -3535,7 +3532,7 @@ static int is_list(scheme *sc, pointer a) {
     }
 }
 
-static int list_length(scheme *sc, pointer a) {
+int list_length(scheme *sc, pointer a) {
     int i=0;
     pointer slow, fast;
 
@@ -4743,27 +4740,38 @@ void scheme_define(scheme *sc, pointer envir, pointer symbol, pointer value) {
 }
 
 #if !STANDALONE
-void scheme_apply0(scheme *sc, const char *procname) {
-     pointer carx=mk_symbol(sc,procname);
-     pointer cdrx=sc->NIL;
+pointer scheme_apply0(scheme *sc, const char *procname)
+{ return scheme_eval(sc, cons(sc,mk_symbol(sc,procname),sc->NIL)); }
 
-     s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
-     sc->envir = sc->global_env;
-     sc->code = cons(sc,carx,cdrx);
-     sc->interactive_repl=0;
-     sc->retcode=0;
-     Eval_Cycle(sc,OP_EVAL);
-     }
-
-void scheme_call(scheme *sc, pointer func, pointer args) {
-   s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
-   sc->envir = sc->global_env;
-   sc->args = args;
-   sc->code = func;
-   sc->interactive_repl =0;
-   sc->retcode = 0;
-   Eval_Cycle(sc, OP_APPLY);
+/* "func" and "args" are assumed to be already eval'ed. */
+pointer scheme_call(scheme *sc, pointer func, pointer args)
+{
+  int old_repl = sc->interactive_repl;
+  sc->interactive_repl = 0;
+  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  sc->envir = sc->global_env;
+  sc->args = args;
+  sc->code = func;
+  sc->retcode = 0;
+  Eval_Cycle(sc, OP_APPLY);
+  sc->interactive_repl = old_repl;
+  return sc->value;
 }
+
+pointer scheme_eval(scheme *sc, pointer obj)
+{
+  int old_repl = sc->interactive_repl;
+  sc->interactive_repl = 0;
+  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  sc->args = sc->NIL;
+  sc->code = obj;
+  sc->retcode = 0;
+  Eval_Cycle(sc, OP_EVAL);
+  sc->interactive_repl = old_repl;
+  return sc->value;
+}
+
+
 #endif
 
 /* ========== Main ========== */

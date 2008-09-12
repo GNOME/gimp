@@ -141,8 +141,9 @@ SCHEME_EXPORT void scheme_set_output_port_file(scheme *sc, FILE *fin);
 void scheme_set_output_port_string(scheme *sc, char *start, char *past_the_end);
 SCHEME_EXPORT void scheme_load_file(scheme *sc, FILE *fin);
 SCHEME_EXPORT void scheme_load_string(scheme *sc, const char *cmd);
-void scheme_apply0(scheme *sc, const char *procname);
-SCHEME_EXPORT pointer scheme_apply1(scheme *sc, const char *procname, pointer);
+SCHEME_EXPORT pointer scheme_apply0(scheme *sc, const char *procname);
+SCHEME_EXPORT pointer scheme_call(scheme *sc, pointer func, pointer args);
+SCHEME_EXPORT pointer scheme_eval(scheme *sc, pointer obj);
 void scheme_set_external_data(scheme *sc, void *p);
 SCHEME_EXPORT void scheme_define(scheme *sc, pointer env, pointer symbol, pointer value);
 
@@ -155,10 +156,14 @@ pointer mk_symbol(scheme *sc, const char *name);
 pointer gensym(scheme *sc);
 pointer mk_string(scheme *sc, const char *str);
 pointer mk_counted_string(scheme *sc, const char *str, int len);
+pointer mk_empty_string(scheme *sc, int len, gunichar fill);
 pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
 void    putcharacter(scheme *sc, gunichar c);
 void    putstr(scheme *sc, const char *s);
+int list_length(scheme *sc, pointer a);
+int eqv(pointer a, pointer b);
+
 
 SCHEME_EXPORT void set_safe_foreign (scheme *sc, pointer data);
 SCHEME_EXPORT pointer foreign_error (scheme *sc, const char *s, pointer a);

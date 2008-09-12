@@ -1,3 +1,11 @@
+2008-09-12  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c
+	* plug-ins/script-fu/tinyscheme/scheme.h: Applied changes froh
+	official version of TinyScheme which expose more of the internals.
+	Part of making it more suitable for Scheme->C->Scheme calling.
+	See SourceForge bug #1599947.
+
 2008-09-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/guillotine.c: return the list of created images.
