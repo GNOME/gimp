@@ -1,3 +1,8 @@
+2008-09-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lcms.c (lcms_image_apply_profile): flush the
+	displays after closing the undo group. Should fix bug #552104.
+
 2008-09-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c

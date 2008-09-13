@@ -914,9 +914,10 @@ lcms_image_apply_profile (gint32                    image,
     }
 
   gimp_progress_update (1.0);
-  gimp_displays_flush ();
 
   gimp_image_undo_group_end (image);
+
+  gimp_displays_flush ();
 
   return TRUE;
 }
