@@ -118,7 +118,7 @@ static const GimpActionEntry edit_actions[] =
 
   { "edit-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
     N_("Copy _Visible"), "<control><shift>C",
-    N_("Copy what is visible in the the selected region"),
+    N_("Copy what is visible in the selected region"),
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
 

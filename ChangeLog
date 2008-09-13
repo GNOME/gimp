@@ -1,3 +1,8 @@
+2008-09-13  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* app/actions/edit-actions.c (edit_actions): removed double "the"
+	from translatable string. Fixes bug #552127.
+
 2008-09-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c (lcms_image_apply_profile): flush the
