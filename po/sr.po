@@ -18,8 +18,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -6496,6 +6495,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d пиксел"
 msgstr[1] "%d x %d пиксела"
 msgstr[2] "%d x %d пиксела"
+msgstr[3] "%d x %d пиксел"
 
 # bug: plural-forms
 #: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:325
@@ -6505,6 +6505,7 @@ msgid_plural "%d layers"
 msgstr[0] "%d слој"
 msgstr[1] "%d слоја"
 msgstr[2] "%d слојева"
+msgstr[3] "%d слој"
 
 #: ../app/core/gimpimagefile.c:675
 #, c-format
@@ -8203,9 +8204,10 @@ msgstr "Изгубићете измене уколико затворите те
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Постоји %d слика са несачуваним изменама:"
-msgstr[1] "Постоје %d слике са несачуваним изменама:"
-msgstr[2] "Постоји %d слика са несачуваним изменама:"
+msgstr[0] "%d слика има несачуване изменаме:"
+msgstr[1] "%d слике имају несачуване изменаме:"
+msgstr[2] "%d слика има несачуване изменаме:"
+msgstr[3] "Слика има несачуване измене:"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -8461,13 +8463,15 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
-"Уколико не сачувате слику, измене учињене последњег сата ће бити изгубљене."
+"Уколико не сачувате слику, измене учињене последњег %d сата ће бити изгубљене."
 msgstr[1] ""
 "Уколико не сачувате слику, измене учињене у последња %d сата ће бити "
 "изгубљене."
 msgstr[2] ""
 "Уколико не сачувате слику, измене учињене у последњих %d сати ће бити "
 "изгубљене."
+msgstr[3] ""
+"Уколико не сачувате слику, измене учињене последњег сата ће бити изгубљене."
 
 # bug: plural-forms
 #: ../app/display/gimpdisplayshell-close.c:264
@@ -8487,6 +8491,9 @@ msgstr[1] ""
 msgstr[2] ""
 "Уколико не сачувате слику, измене учињене у последњих сат и %d минута ће "
 "бити изгубљене."
+msgstr[3] ""
+"Уколико не сачувате слику, измене учињене у последњих сат и 1 минут ће бити "
+"изгубљене."
 
 # bug: plural-forms
 #: ../app/display/gimpdisplayshell-close.c:275
@@ -8495,13 +8502,15 @@ msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
-"Уколико не сачувате слику, измене учињене последњег минута ће бити изгубљене."
+"Уколико не сачувате слику, измене учињене последњег %d минута ће бити изгубљене."
 msgstr[1] ""
 "Уколико не сачувате слику, измене учињене у последња %d минута ће бити "
 "изгубљене."
 msgstr[2] ""
 "Уколико не сачувате слику, измене учињене у последњих %d минута бити "
 "изгубљене."
+msgstr[3] ""
+"Уколико не сачувате слику, измене учињене последњег минута ће бити изгубљене."
 
 #: ../app/display/gimpdisplayshell-dnd.c:235
 #: ../app/display/gimpdisplayshell-dnd.c:566
