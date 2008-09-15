@@ -1,5 +1,22 @@
 2008-09-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.[ch] (gimp_layer_add_mask): add GError
+	parameter and replace g_message() by g_set_error().
+
+	* app/core/gimplayermaskundo.c
+	* app/xcf/xcf-load.c
+	* app/actions/layers-commands.c: pass NULL errors since these
+	places know what they are doing. Ha ha...
+
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/image.pdb: pass the error so we get more real
+	error messages for failed PDB calls.
+
+	* app/pdb/image-cmds.c
+	* app/pdb/layer-cmds.c: regenerated.
+
+2008-09-15  Michael Natterer  <mitch@gimp.org>
+
 	Bug 552413 – Script triggers Gimp-Core-CRITICAL
 
 	* tools/pdbgen/pdb/image.pdb

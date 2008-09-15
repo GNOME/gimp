@@ -550,9 +550,8 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), error) &&
-          ! gimp_layer_get_mask (layer))
-        success = (gimp_layer_add_mask (layer, mask, TRUE) == mask);
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), error))
+        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;
     }

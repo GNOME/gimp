@@ -538,7 +538,7 @@ gimp_layer_duplicate (GimpItem *item,
 
           mask = gimp_item_duplicate (GIMP_ITEM (layer->mask),
                                       G_TYPE_FROM_INSTANCE (layer->mask));
-          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask), FALSE);
+          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask), FALSE, NULL);
         }
     }
 
@@ -1241,31 +1241,27 @@ gimp_layer_new_from_region (PixelRegion          *region,
 }
 
 GimpLayerMask *
-gimp_layer_add_mask (GimpLayer     *layer,
-                     GimpLayerMask *mask,
-                     gboolean       push_undo)
+gimp_layer_add_mask (GimpLayer      *layer,
+                     GimpLayerMask  *mask,
+                     gboolean        push_undo,
+                     GError        **error)
 {
   GimpImage *image;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! gimp_item_is_attached (GIMP_ITEM (layer)))
     push_undo = FALSE;
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (! image)
-    {
-      g_message (_("Cannot add layer mask to layer "
-                   "which is not part of an image."));
-      return NULL;
-    }
-
   if (layer->mask)
     {
-      g_message (_("Unable to add a layer mask since "
-                   "the layer already has one."));
+      g_set_error (error, 0, 0,
+                   _("Unable to add a layer mask since "
+                     "the layer already has one."));
       return NULL;
     }
 
@@ -1274,8 +1270,9 @@ gimp_layer_add_mask (GimpLayer     *layer,
       (gimp_item_height (GIMP_ITEM (layer)) !=
        gimp_item_height (GIMP_ITEM (mask))))
     {
-      g_message (_("Cannot add layer mask of different "
-                   "dimensions than specified layer."));
+      g_set_error (error, 0, 0,
+                   _("Cannot add layer mask of different "
+                     "dimensions than specified layer."));
       return NULL;
     }
 

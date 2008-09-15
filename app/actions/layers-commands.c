@@ -1049,7 +1049,7 @@ layers_add_mask_response (GtkWidget          *widget,
       if (layer_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      gimp_layer_add_mask (layer, mask, TRUE);
+      gimp_layer_add_mask (layer, mask, TRUE, NULL);
 
       gimp_image_undo_group_end (image);
 
