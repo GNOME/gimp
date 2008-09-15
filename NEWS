@@ -18,14 +18,19 @@ Changes in GIMP 2.5.4
  - various fixes to the Python bindings
  - added Python bindings for most GIMP widgets to the gimpui module
  - merged GimpHRuler and GimpVRuler classes into GimpRuler
- - added Search entry to the Keyboard Shortcuts configuration dialog
+ - added Search entry to the Keyboard Shortcuts and Input Controller
+   configuration dialogs
+ - allow to drop images (in addition to URIs) on the empty image window
+ - improved error handling in Script-Fu
+ - merged upstream TinyScheme changes into Script-Fu interpreter
  - bug fixes and code cleanup
  
 
 Contributors:
 
   Sven Neumann, Michael Natterer, Martin Nordholts, Tor Lillqvist,
-  Lars-Peter Clausen, Michael Schumacher, LightningIsMyName
+  Lars-Peter Clausen, Michael Schumacher, Kevin Cozens, LightningIsMyName,
+  David Gowers, Dennis Ranke
 
 
  
