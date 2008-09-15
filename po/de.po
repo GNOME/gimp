@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-04 23:45+0200\n"
-"PO-Revision-Date: 2008-09-04 23:45+0200\n"
+"POT-Creation-Date: 2008-09-15 12:01+0200\n"
+"PO-Revision-Date: 2008-09-15 12:01+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1533,7 +1533,7 @@ msgid "Copy _Visible"
 msgstr "_Sichtbares kopieren"
 
 #: ../app/actions/edit-actions.c:121
-msgid "Copy what is visible in the the selected region"
+msgid "Copy what is visible in the selected region"
 msgstr "Kopiert das was sichtbar und ausgewählt ist in die Zwischenablage"
 
 #: ../app/actions/edit-actions.c:126
@@ -5531,7 +5531,7 @@ msgstr "Einfügen"
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:158
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
@@ -6051,15 +6051,15 @@ msgstr "Kanal verkleinern"
 msgid "Cannot stroke empty channel."
 msgstr "Leere Kanäle können nicht nachgezogen werden."
 
-#: ../app/core/gimpchannel.c:1630
+#: ../app/core/gimpchannel.c:1631
 msgid "Set Channel Color"
 msgstr "Farbe für Kanal setzen"
 
-#: ../app/core/gimpchannel.c:1678
+#: ../app/core/gimpchannel.c:1679
 msgid "Set Channel Opacity"
 msgstr "Kanaldeckkraft setzen"
 
-#: ../app/core/gimpchannel.c:1746 ../app/core/gimpselection.c:520
+#: ../app/core/gimpchannel.c:1747 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
@@ -7284,15 +7284,11 @@ msgstr ""
 msgid "Is this what you want to do?"
 msgstr "Möchten Sie wirklich fortfahren?"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:69
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
 msgstr "Tastenkombinationen konfigurieren"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:92
-msgid "_Search:"
-msgstr "_Suche:"
-
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:138
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
@@ -7301,7 +7297,7 @@ msgstr ""
 "Zeile und geben Sie dann eine neue Tastenkombination ein oder drücken Sie "
 "die Rücktaste, um sie zu löschen."
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:146
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid "S_ave keyboard shortcuts on exit"
 msgstr "_Tastenkombination beim Beenden speichern"
 
@@ -7741,7 +7737,7 @@ msgstr "Hilfesystem"
 #: ../app/dialogs/preferences-dialog.c:1792
 #: ../app/dialogs/preferences-dialog.c:1886
 #: ../app/dialogs/preferences-dialog.c:2073
-#: ../app/widgets/gimpcontrollereditor.c:188
+#: ../app/widgets/gimpcontrollereditor.c:189
 msgid "General"
 msgstr "Allgemein"
 
@@ -8797,7 +8793,7 @@ msgstr "GIMP-Start"
 msgid "Airbrush"
 msgstr "Sprühpistole"
 
-#: ../app/paint/gimpbrushcore.c:352
+#: ../app/paint/gimpbrushcore.c:353
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Es sind keine Pinsel für dieses Werkzeug vorhanden."
@@ -9241,7 +9237,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: ../app/plug-in/gimpplugin.c:635
+#: ../app/plug-in/gimpplugin.c:637
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -9349,7 +9345,7 @@ msgstr ""
 "Franz jagt im komplett verwahrlosten\n"
 "Taxi quer durch Bayern. 012345689"
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:875
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:877
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -10338,12 +10334,12 @@ msgstr "_GEGL-Operationen …"
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "GEGL-Operationen funktionieren nicht mit indizierten Ebenen."
 
-#: ../app/tools/gimpgegltool.c:303
+#: ../app/tools/gimpgegltool.c:324
 msgid "_Operation:"
 msgstr "_Operation:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:349
+#: ../app/tools/gimpgegltool.c:370
 msgid "Operation Settings"
 msgstr "Operationseinstellungen"
 
@@ -11162,27 +11158,27 @@ msgstr "Pfad aus Text"
 msgid "Text along Path"
 msgstr "Text an Pfad"
 
-#: ../app/tools/gimptexttool.c:159
+#: ../app/tools/gimptexttool.c:161
 msgid "Text Tool: Create or edit text layers"
 msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 
-#: ../app/tools/gimptexttool.c:160
+#: ../app/tools/gimptexttool.c:162
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:952
+#: ../app/tools/gimptexttool.c:954
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
-#: ../app/tools/gimptexttool.c:1068 ../app/tools/gimptexttool.c:1071
+#: ../app/tools/gimptexttool.c:1070 ../app/tools/gimptexttool.c:1073
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1077
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1099
+#: ../app/tools/gimptexttool.c:1101
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11197,7 +11193,7 @@ msgstr ""
 "Sie können die Ebene bearbeiten oder eine neue Text-Ebene mit denselben "
 "Textattributen erstellen."
 
-#: ../app/tools/gimptexttool.c:1311
+#: ../app/tools/gimptexttool.c:1313
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
@@ -11565,52 +11561,56 @@ msgstr "Es wurden keine Pfade in der Ablage gefunden"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 
+#: ../app/widgets/gimpactioneditor.c:71
+msgid "_Search:"
+msgstr "_Suche:"
+
 #: ../app/widgets/gimpactiongroup.c:802
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:344
-#: ../app/widgets/gimpcontrollereditor.c:347
+#: ../app/widgets/gimpactionview.c:346
+#: ../app/widgets/gimpcontrollereditor.c:348
 msgid "Action"
 msgstr "Aktion"
 
-#: ../app/widgets/gimpactionview.c:373
+#: ../app/widgets/gimpactionview.c:375
 msgid "Shortcut"
 msgstr "Tastenkombination"
 
-#: ../app/widgets/gimpactionview.c:399
+#: ../app/widgets/gimpactionview.c:401
 msgid "Name"
 msgstr "Name"
 
-#: ../app/widgets/gimpactionview.c:608 ../app/widgets/gimpactionview.c:813
+#: ../app/widgets/gimpactionview.c:641 ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
 msgstr "Das Wechseln der Tastenkombination ist fehlgeschlagen."
 
-#: ../app/widgets/gimpactionview.c:650
+#: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
 msgstr "Kollidierende Tastenkombinationen"
 
-#: ../app/widgets/gimpactionview.c:656
+#: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
 msgstr "_Tastenkombination neu zuweisen"
 
-#: ../app/widgets/gimpactionview.c:671
+#: ../app/widgets/gimpactionview.c:704
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "Die Tastenkombination »%s« wird bereits von »%s« aus der Gruppe »%s« verwendet."
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Die Neuzuweisung dieser Tastenkombination wird sie von »%s« entfernen."
 
-#: ../app/widgets/gimpactionview.c:748
+#: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
 msgstr "Ungültige Tastenkombination."
 
-#: ../app/widgets/gimpactionview.c:837
+#: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
 msgstr "Das Entfernen der Tastenkombination ist fehlgeschlagen."
 
@@ -11779,40 +11779,40 @@ msgstr "Kleinere Vorschaubilder"
 msgid "Larger Previews"
 msgstr "Größere Vorschaubilder"
 
-#: ../app/widgets/gimpcontrollereditor.c:201
+#: ../app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
 msgstr "Ereignisse dieser Steuerung _mitschreiben"
 
-#: ../app/widgets/gimpcontrollereditor.c:206
+#: ../app/widgets/gimpcontrollereditor.c:207
 msgid "_Enable this controller"
 msgstr "Steuerung _einschalten"
 
-#: ../app/widgets/gimpcontrollereditor.c:227
+#: ../app/widgets/gimpcontrollereditor.c:228
 msgid "Name:"
 msgstr "Name:"
 
-#: ../app/widgets/gimpcontrollereditor.c:233
+#: ../app/widgets/gimpcontrollereditor.c:234
 msgid "State:"
 msgstr "Status:"
 
-#: ../app/widgets/gimpcontrollereditor.c:341
+#: ../app/widgets/gimpcontrollereditor.c:342
 msgid "Event"
 msgstr "Ereignis"
 
-#: ../app/widgets/gimpcontrollereditor.c:366
+#: ../app/widgets/gimpcontrollereditor.c:367
 msgid "_Grab event"
 msgstr "E_reignis abfangen"
 
-#: ../app/widgets/gimpcontrollereditor.c:376
+#: ../app/widgets/gimpcontrollereditor.c:377
 msgid "Select the next event arriving from the controller"
 msgstr "Das nächste Ereignis welches von der Steuerung kommt auswählen"
 
-#: ../app/widgets/gimpcontrollereditor.c:534
+#: ../app/widgets/gimpcontrollereditor.c:535
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Die mit »%s«verbundene Aktion entfernen"
 
-#: ../app/widgets/gimpcontrollereditor.c:539
+#: ../app/widgets/gimpcontrollereditor.c:540
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Eine Aktion mit »%s« verbinden"
