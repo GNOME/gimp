@@ -1,3 +1,17 @@
+2008-09-15  Michael Natterer  <mitch@gimp.org>
+
+	Bug 552413 – Script triggers Gimp-Core-CRITICAL
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb: add some more checks that produce
+	proper PDB error messages when adding and removing layer masks
+	instead of having the code run into assertions in the called core
+	functions. Also add some more checks when removing layers,
+	channels or vectors.
+
+	* app/pdb/image-cmds.c
+	* app/pdb/layer-cmds.c: regenerated.
+
 2008-09-14  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c (mk_vector), (opexe_2):

@@ -550,8 +550,9 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-        gimp_layer_add_mask (layer, mask, TRUE);
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), error) &&
+          ! gimp_layer_get_mask (layer))
+        success = (gimp_layer_add_mask (layer, mask, TRUE) == mask);
       else
         success = FALSE;
     }
@@ -577,7 +578,8 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+          gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else
         success = FALSE;

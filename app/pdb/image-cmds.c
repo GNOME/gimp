@@ -897,7 +897,10 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_layer (image, layer);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+        gimp_image_remove_layer (image, layer);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1084,7 +1087,10 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_channel (image, channel);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), error))
+        gimp_image_remove_channel (image, channel);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1223,7 +1229,10 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_vectors (image, vectors);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
+        gimp_image_remove_vectors (image, vectors);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1481,7 +1490,10 @@ image_add_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_layer_add_mask (layer, mask, TRUE))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), error) &&
+          ! gimp_layer_get_mask (layer))
+        success = (gimp_layer_add_mask (layer, mask, TRUE) == mask);
+      else
         success = FALSE;
     }
 
@@ -1508,7 +1520,11 @@ image_remove_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_apply_mask (layer, mode, TRUE);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+          gimp_layer_get_mask (layer))
+        gimp_layer_apply_mask (layer, mode, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
