@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-07 19:33+0200\n"
-"PO-Revision-Date: 2008-05-22 19:27+0200\n"
+"POT-Creation-Date: 2008-09-16 13:12+0200\n"
+"PO-Revision-Date: 2008-09-16 13:14+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -112,11 +112,7 @@ msgstr "Funció de selecció del degradat"
 msgid "Script-Fu Brush Selection"
 msgstr "Funció de selecció del pinzell"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Falten paràmetres per a fer la crida al «script-fu-register»"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:668
+#: ../plug-ins/script-fu/script-fu-interface.c:914
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -129,19 +125,36 @@ msgstr ""
 " \n"
 " %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Falten paràmetres per a fer la crida al «script-fu-register»"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:710
+#, c-format
+msgid ""
+"Error while loading\n"
+"\"%s\"\n"
+"\n"
+"%s"
+msgstr ""
+"S'ha produït un error en carregar\n"
+"«%s»\n"
+"\n"
+"%s"
+
+#: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
 msgstr "Opcions de servidor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:718
 msgid "_Start Server"
 msgstr "_Inicia el servidor"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:746
 msgid "Server port:"
 msgstr "Port del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:752
 msgid "Server logfile:"
 msgstr "Fitxer de registre del servidor:"
 

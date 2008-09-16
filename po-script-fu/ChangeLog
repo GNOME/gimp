@@ -1,6 +1,10 @@
+2008-09-16  Gil Forcada  <gforcada@gnome.org>
+
+	* ca.po: Minor fix to Catalan translation.
+
 2008-09-15  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
-        * ru.po: updated and improved Russian translation.
+	* ru.po: updated and improved Russian translation.
 
 2008-09-12  Daniel Nylander <po@danielnylander.se>
 
@@ -8,7 +12,7 @@
 
 2008-09-11  Goran Rakić  <grakic@devbase.net>
 
-        * LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
+	* LINGUAS, sr@latin.po, sr@Latn.po: Conversion from sr@Latn to sr@latin.
 
 2008-09-07  Gil Forcada  <gforcada@gnome.org>
 
