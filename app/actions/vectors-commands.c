@@ -200,7 +200,7 @@ vectors_raise_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_raise_vectors (image, vectors);
+  gimp_image_raise_vectors (image, vectors, NULL);
   gimp_image_flush (image);
 }
 
@@ -224,7 +224,7 @@ vectors_lower_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_lower_vectors (image, vectors);
+  gimp_image_lower_vectors (image, vectors, NULL);
   gimp_image_flush (image);
 }
 

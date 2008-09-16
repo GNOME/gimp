@@ -3096,20 +3096,22 @@ gimp_image_add_layers (GimpImage   *image,
 }
 
 gboolean
-gimp_image_raise_layer (GimpImage *image,
-                        GimpLayer *layer)
+gimp_image_raise_layer (GimpImage  *image,
+                        GimpLayer  *layer,
+                        GError    **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->layers,
                                           GIMP_OBJECT (layer));
 
   if (index == 0)
     {
-      g_message (_("Layer cannot be raised higher."));
+      g_set_error (error, 0, 0, "%s", _("Layer cannot be raised higher."));
       return FALSE;
     }
 
@@ -3118,20 +3120,22 @@ gimp_image_raise_layer (GimpImage *image,
 }
 
 gboolean
-gimp_image_lower_layer (GimpImage *image,
-                        GimpLayer *layer)
+gimp_image_lower_layer (GimpImage  *image,
+                        GimpLayer  *layer,
+                        GError    **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->layers,
                                           GIMP_OBJECT (layer));
 
   if (index == gimp_container_num_children (image->layers) - 1)
     {
-      g_message (_("Layer cannot be lowered more."));
+      g_set_error (error, 0, 0, "%s", _("Layer cannot be lowered more."));
       return FALSE;
     }
 
@@ -3324,20 +3328,22 @@ gimp_image_remove_channel (GimpImage   *image,
 }
 
 gboolean
-gimp_image_raise_channel (GimpImage   *image,
-                          GimpChannel *channel)
+gimp_image_raise_channel (GimpImage    *image,
+                          GimpChannel  *channel,
+                          GError      **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->channels,
                                           GIMP_OBJECT (channel));
 
   if (index == 0)
     {
-      g_message (_("Channel cannot be raised higher."));
+      g_set_error (error, 0, 0, "%s", _("Channel cannot be raised higher."));
       return FALSE;
     }
 
@@ -3349,39 +3355,31 @@ gboolean
 gimp_image_raise_channel_to_top (GimpImage   *image,
                                  GimpChannel *channel)
 {
-  gint index;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  index = gimp_container_get_child_index (image->channels,
-                                          GIMP_OBJECT (channel));
-
-  if (index == 0)
-    {
-      g_message (_("Channel is already on top."));
-      return FALSE;
-    }
 
   return gimp_image_position_channel (image, channel, 0,
                                       TRUE, _("Raise Channel to Top"));
 }
 
+
 gboolean
-gimp_image_lower_channel (GimpImage   *image,
-                          GimpChannel *channel)
+gimp_image_lower_channel (GimpImage    *image,
+                          GimpChannel  *channel,
+                          GError      **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->channels,
                                           GIMP_OBJECT (channel));
 
   if (index == gimp_container_num_children (image->channels) - 1)
     {
-      g_message (_("Channel cannot be lowered more."));
+      g_set_error (error, 0, 0, "%s", _("Channel cannot be lowered more."));
       return FALSE;
     }
 
@@ -3393,22 +3391,12 @@ gboolean
 gimp_image_lower_channel_to_bottom (GimpImage   *image,
                                     GimpChannel *channel)
 {
-  gint index;
   gint length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  index = gimp_container_get_child_index (image->channels,
-                                          GIMP_OBJECT (channel));
-
   length = gimp_container_num_children (image->channels);
-
-  if (index == length - 1)
-    {
-      g_message (_("Channel is already on the bottom."));
-      return FALSE;
-    }
 
   return gimp_image_position_channel (image, channel, length - 1,
                                       TRUE, _("Lower Channel to Bottom"));
@@ -3562,20 +3550,22 @@ gimp_image_remove_vectors (GimpImage   *image,
 }
 
 gboolean
-gimp_image_raise_vectors (GimpImage   *image,
-                          GimpVectors *vectors)
+gimp_image_raise_vectors (GimpImage    *image,
+                          GimpVectors  *vectors,
+                          GError      **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->vectors,
                                           GIMP_OBJECT (vectors));
 
   if (index == 0)
     {
-      g_message (_("Path cannot be raised higher."));
+      g_set_error (error, 0, 0, "%s", _("Path cannot be raised higher."));
       return FALSE;
     }
 
@@ -3587,39 +3577,30 @@ gboolean
 gimp_image_raise_vectors_to_top (GimpImage   *image,
                                  GimpVectors *vectors)
 {
-  gint index;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-
-  index = gimp_container_get_child_index (image->vectors,
-                                          GIMP_OBJECT (vectors));
-
-  if (index == 0)
-    {
-      g_message (_("Path is already on top."));
-      return FALSE;
-    }
 
   return gimp_image_position_vectors (image, vectors, 0,
                                       TRUE, _("Raise Path to Top"));
 }
 
 gboolean
-gimp_image_lower_vectors (GimpImage   *image,
-                          GimpVectors *vectors)
+gimp_image_lower_vectors (GimpImage    *image,
+                          GimpVectors  *vectors,
+                          GError      **error)
 {
   gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   index = gimp_container_get_child_index (image->vectors,
                                           GIMP_OBJECT (vectors));
 
   if (index == gimp_container_num_children (image->vectors) - 1)
     {
-      g_message (_("Path cannot be lowered more."));
+      g_set_error (error, 0, 0, "%s", _("Path cannot be lowered more."));
       return FALSE;
     }
 
@@ -3631,22 +3612,12 @@ gboolean
 gimp_image_lower_vectors_to_bottom (GimpImage   *image,
                                     GimpVectors *vectors)
 {
-  gint index;
   gint length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
-  index = gimp_container_get_child_index (image->vectors,
-                                          GIMP_OBJECT (vectors));
-
   length = gimp_container_num_children (image->vectors);
-
-  if (index == length - 1)
-    {
-      g_message (_("Path is already on the bottom."));
-      return FALSE;
-    }
 
   return gimp_image_position_vectors (image, vectors, length - 1,
                                       TRUE, _("Lower Path to Bottom"));

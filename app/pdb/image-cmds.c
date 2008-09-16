@@ -958,7 +958,7 @@ image_raise_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer (image, layer);
+      success = gimp_image_raise_layer (image, layer, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -982,7 +982,7 @@ image_lower_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer (image, layer);
+      success = gimp_image_lower_layer (image, layer, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1148,7 +1148,7 @@ image_raise_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_channel (image, channel);
+      success = gimp_image_raise_channel (image, channel, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1172,7 +1172,7 @@ image_lower_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_channel (image, channel);
+      success = gimp_image_lower_channel (image, channel, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1290,7 +1290,7 @@ image_raise_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors (image, vectors);
+      success = gimp_image_raise_vectors (image, vectors, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1314,7 +1314,7 @@ image_lower_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors (image, vectors);
+      success = gimp_image_lower_vectors (image, vectors, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -3339,7 +3339,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-layer",
                                      "Raise the specified layer in the image's layer stack",
-                                     "This procedure raises the specified layer one step in the existing layer stack. It will not move the layer if there is no layer above it.",
+                                     "This procedure raises the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer above it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3368,7 +3368,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-layer",
                                      "Lower the specified layer in the image's layer stack",
-                                     "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it.",
+                                     "This procedure lowers the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer below it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3554,7 +3554,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-channel",
                                      "Raise the specified channel in the image's channel stack",
-                                     "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
+                                     "This procedure raises the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel above it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3583,7 +3583,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-channel",
                                      "Lower the specified channel in the image's channel stack",
-                                     "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
+                                     "This procedure lowers the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel below it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3711,7 +3711,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-vectors",
                                      "Raise the specified vectors in the image's vectors stack",
-                                     "This procedure raises the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors above it.",
+                                     "This procedure raises the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors above it.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
@@ -3740,7 +3740,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-vectors",
                                      "Lower the specified vectors in the image's vectors stack",
-                                     "This procedure lowers the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors below it.",
+                                     "This procedure lowers the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors below it.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",

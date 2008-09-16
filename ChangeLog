@@ -1,5 +1,22 @@
 2008-09-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: added GError parameter to
+	gimp_image_{raise,lower}_{channel,layer,vectors} functions and
+	removed calls to g_message().
+
+	* app/actions/channels-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c: pass NULL for the GError
+	parameter as these actions are insensitive if they would fail.
+
+	* tools/pdbgen/pdb/image.pdb: changed accordingly. Corrected the
+	documentation.
+
+	* app/pdb/image-cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+2008-09-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-load.c (gimp_palette_load): unified error
 	messages.
 

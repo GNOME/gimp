@@ -709,7 +709,7 @@ sub image_raise_layer {
 
     $help = <<'HELP';
 This procedure raises the specified layer one step in the existing layer stack.
-It will not move the layer if there is no layer above it.
+The procecure call will fail if there is no layer above it.
 HELP
 
     &std_pdb_misc;
@@ -724,7 +724,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer (image, layer);
+  success = gimp_image_raise_layer (image, layer, error);
 }
 CODE
     );
@@ -735,7 +735,7 @@ sub image_lower_layer {
 
     $help = <<'HELP';
 This procedure lowers the specified layer one step in the existing layer stack.
-It will not move the layer if there is no layer below it.
+The procecure call will fail if there is no layer below it.
 HELP
 
     &std_pdb_misc;
@@ -750,7 +750,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer (image, layer);
+  success = gimp_image_lower_layer (image, layer, error);
 }
 CODE
     );
@@ -1089,7 +1089,7 @@ sub image_raise_channel {
 
     $help = <<'HELP';
 This procedure raises the specified channel one step in the existing
-channel stack. It will not move the channel if there is no channel
+channel stack. The procecure call will fail if there is no channel
 above it.
 HELP
 
@@ -1105,7 +1105,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_channel (image, channel);
+  success = gimp_image_raise_channel (image, channel, error);
 }
 CODE
     );
@@ -1116,7 +1116,7 @@ sub image_lower_channel {
 
     $help = <<'HELP';
 This procedure lowers the specified channel one step in the existing
-channel stack. It will not move the channel if there is no channel
+channel stack. The procecure call will fail if there is no channel
 below it.
 HELP
 
@@ -1132,7 +1132,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_channel (image, channel);
+  success = gimp_image_lower_channel (image, channel, error);
 }
 CODE
     );
@@ -1307,7 +1307,7 @@ sub image_raise_vectors {
 
     $help = <<'HELP';
 This procedure raises the specified vectors one step in the existing
-vectors stack. It will not move the vectors if there is no vectors
+vectors stack. The procecure call will fail if there is no vectors
 above it.
 HELP
 
@@ -1323,7 +1323,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors (image, vectors);
+  success = gimp_image_raise_vectors (image, vectors, error);
 }
 CODE
     );
@@ -1334,7 +1334,7 @@ sub image_lower_vectors {
 
     $help = <<'HELP';
 This procedure lowers the specified vectors one step in the existing
-vectors stack. It will not move the vectors if there is no vectors
+vectors stack. The procecure call will fail if there is no vectors
 below it.
 HELP
 
@@ -1350,7 +1350,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors (image, vectors);
+  success = gimp_image_lower_vectors (image, vectors, error);
 }
 CODE
     );

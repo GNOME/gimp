@@ -387,7 +387,7 @@ layers_raise_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer (image, layer);
+  gimp_image_raise_layer (image, layer, NULL);
   gimp_image_flush (image);
 }
 
@@ -411,7 +411,7 @@ layers_lower_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer (image, layer);
+  gimp_image_lower_layer (image, layer, NULL);
   gimp_image_flush (image);
 }
 
