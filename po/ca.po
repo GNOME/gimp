@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-07 19:21+0200\n"
-"PO-Revision-Date: 2008-09-07 17:52+0200\n"
+"POT-Creation-Date: 2008-09-16 13:15+0200\n"
+"PO-Revision-Date: 2008-09-16 13:16+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -862,7 +862,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1419
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
-#: ../app/pdb/image-cmds.c:2136 ../app/widgets/gimpdnd-xds.c:92
+#: ../app/pdb/image-cmds.c:2151 ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Sense títol"
 
@@ -1548,7 +1548,7 @@ msgid "Copy _Visible"
 msgstr "Copia _visible"
 
 #: ../app/actions/edit-actions.c:121
-msgid "Copy what is visible in the the selected region"
+msgid "Copy what is visible in the selected region"
 msgstr "Copia de la regió seleccionada tot el que està visible"
 
 #: ../app/actions/edit-actions.c:126
@@ -3051,7 +3051,7 @@ msgstr "Màscara de capa a la selecció"
 msgid "Please select a channel first"
 msgstr "Primer seleccioneu un canal"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Afegeix una màscara de capa"
@@ -5533,7 +5533,7 @@ msgstr "Enganxa"
 msgid "Cut"
 msgstr "Retalla"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:158
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
@@ -6651,7 +6651,7 @@ msgstr "Capgira la capa"
 msgid "Rotate Layer"
 msgstr "Gira la capa"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6666,42 +6666,39 @@ msgstr ""
 "Selecció flotant\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1260
-msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"No es pot afegir una màscara de capa a una capa que no és part d'una imatge."
-
-#: ../app/core/gimplayer.c:1267
+#: ../app/core/gimplayer.c:1263
+#, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No es pot afegir una màscara de capa perquè la capa ja en té una."
 
-#: ../app/core/gimplayer.c:1277
+#: ../app/core/gimplayer.c:1274
+#, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una màscara de capa de mida diferent de la capa "
 "especificada."
 
-#: ../app/core/gimplayer.c:1385
+#: ../app/core/gimplayer.c:1382
 msgid "Transfer Alpha to Mask"
 msgstr "Transfereix alfa a màscara"
 
-#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Aplica una màscara de capa"
 
-#: ../app/core/gimplayer.c:1558
+#: ../app/core/gimplayer.c:1555
 msgid "Delete Layer Mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: ../app/core/gimplayer.c:1670
+#: ../app/core/gimplayer.c:1667
 msgid "Add Alpha Channel"
 msgstr "Afegeix canal alfa"
 
-#: ../app/core/gimplayer.c:1724
+#: ../app/core/gimplayer.c:1721
 msgid "Remove Alpha Channel"
 msgstr "Suprimeix el canal alfa"
 
-#: ../app/core/gimplayer.c:1746
+#: ../app/core/gimplayer.c:1743
 msgid "Layer to Image Size"
 msgstr "Capa a mida de la imatge"
 
@@ -8761,7 +8758,7 @@ msgstr "Inici del GIMP"
 msgid "Airbrush"
 msgstr "Vaporitzador"
 
-#: ../app/paint/gimpbrushcore.c:352
+#: ../app/paint/gimpbrushcore.c:353
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "No es disposa de cap pinzell per a utilitzar amb aquesta eina."
@@ -9128,7 +9125,7 @@ msgstr ""
 "La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, de "
 "tipus %s). Aquest valor no és permès."
 
-#: ../app/pdb/image-cmds.c:2206
+#: ../app/pdb/image-cmds.c:2221
 #, c-format
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
@@ -9316,7 +9313,7 @@ msgstr ""
 "Posa'm a la bossa\n"
 "cinc dotzenes de licors."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:875
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:877
 msgid "Add Text Layer"
 msgstr "Afegeix capa de text"
 
@@ -11158,27 +11155,27 @@ msgstr "Camí a partir d'un text"
 msgid "Text along Path"
 msgstr "El text segueix el camí"
 
-#: ../app/tools/gimptexttool.c:159
+#: ../app/tools/gimptexttool.c:161
 msgid "Text Tool: Create or edit text layers"
 msgstr "Eina Text: crea o edita una capa de text"
 
-#: ../app/tools/gimptexttool.c:160
+#: ../app/tools/gimptexttool.c:162
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:952
+#: ../app/tools/gimptexttool.c:954
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
-#: ../app/tools/gimptexttool.c:1068 ../app/tools/gimptexttool.c:1071
+#: ../app/tools/gimptexttool.c:1070 ../app/tools/gimptexttool.c:1073
 msgid "Confirm Text Editing"
 msgstr "Confirma l'edició del text"
 
-#: ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1077
 msgid "Create _New Layer"
 msgstr "Crea una capa _nova"
 
-#: ../app/tools/gimptexttool.c:1099
+#: ../app/tools/gimptexttool.c:1101
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11192,7 +11189,7 @@ msgstr ""
 "\n"
 "Podeu editar la capa o crear-ne una nova amb els mateixos atributs."
 
-#: ../app/tools/gimptexttool.c:1311
+#: ../app/tools/gimptexttool.c:1313
 msgid "Reshape Text Layer"
 msgstr "Canvia la forma de la capa de text"
 
@@ -11570,46 +11567,46 @@ msgstr "_Cerca:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:344
+#: ../app/widgets/gimpactionview.c:346
 #: ../app/widgets/gimpcontrollereditor.c:348
 msgid "Action"
 msgstr "Acció"
 
-#: ../app/widgets/gimpactionview.c:373
+#: ../app/widgets/gimpactionview.c:375
 msgid "Shortcut"
 msgstr "Drecera"
 
-#: ../app/widgets/gimpactionview.c:399
+#: ../app/widgets/gimpactionview.c:401
 msgid "Name"
 msgstr "Nom"
 
-#: ../app/widgets/gimpactionview.c:608 ../app/widgets/gimpactionview.c:813
+#: ../app/widgets/gimpactionview.c:641 ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
 msgstr "No s'han pogut canviar les dreceres."
 
-#: ../app/widgets/gimpactionview.c:650
+#: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
 msgstr "Dreceres conflictives"
 
-#: ../app/widgets/gimpactionview.c:656
+#: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
 msgstr "_Reassigna dreceres"
 
-#: ../app/widgets/gimpactionview.c:671
+#: ../app/widgets/gimpactionview.c:704
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "La drecera «%s» ja està assignada a «%s» del grup «%s»."
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "En reassignar la drecera se suprimirà de «%s»."
 
-#: ../app/widgets/gimpactionview.c:748
+#: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
 msgstr "Drecera invàlida."
 
-#: ../app/widgets/gimpactionview.c:837
+#: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
 msgstr "No s'ha pogut suprimir la drecera."
 
@@ -12990,3 +12987,8 @@ msgstr "Assegureu-vos que la caixa d'eines és visible."
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No s'ha pogut iniciar «%s»: %s"
+
+#~ msgid "Cannot add layer mask to layer which is not part of an image."
+#~ msgstr ""
+#~ "No es pot afegir una màscara de capa a una capa que no és part d'una "
+#~ "imatge."
