@@ -1,3 +1,13 @@
+2008-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/actions.c: use the "tool options" icon for the
+	"context" action group since that's what its actions mostly
+	control.
+
+	* app/actions/dialogs-actions.c: use the "brush", "gradient" and
+	"palette" icons also for their resp. editors since that's also the
+	icons they use in their dockable tabs.
+
 2008-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.[ch] (gimp_layer_add_mask): add GError
