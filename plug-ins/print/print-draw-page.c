@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -165,23 +167,27 @@ print_draw_page (GtkPrintContext *context,
 static cairo_surface_t *
 print_cairo_surface_from_drawable (gint32 drawable_ID)
 {
-  GimpDrawable    *drawable   = gimp_drawable_get (drawable_ID);
+  GimpDrawable    *drawable      = gimp_drawable_get (drawable_ID);
   GimpPixelRgn     region;
-  GimpImageType    image_type = gimp_drawable_type (drawable_ID);
+  GimpImageType    image_type    = gimp_drawable_type (drawable_ID);
   cairo_surface_t *surface;
-  const gint       width      = drawable->width;
-  const gint       height     = drawable->height;
-  guchar          *cmap       = NULL;
+  const gint       width         = drawable->width;
+  const gint       height        = drawable->height;
+  guchar           cmap[3 * 256] = { 0, };
   guchar          *pixels;
   gint             stride;
-  guint            count      = 0;
-  guint            done       = 0;
+  guint            count         = 0;
+  guint            done          = 0;
   gpointer         pr;
 
   if (gimp_drawable_is_indexed (drawable_ID))
     {
-      cmap = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
-                                      NULL);
+      guchar *colors;
+      gint    num_colors;
+
+      colors = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
+                                        &num_colors);
+      memcpy (cmap, colors, 3 * num_colors);
     }
 
   surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable_ID) ?
