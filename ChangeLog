@@ -1,3 +1,8 @@
+2008-09-18  Simon Budig  <simon@gimp.org>
+
+	* app/gegl/gimpbrightnesscontrastconfig.c: fix the
+	brightness/contrast --> levels step by doing proper math (TM).
+
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb: gimp_drawable_mask_intersect()
