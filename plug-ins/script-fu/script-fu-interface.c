@@ -156,7 +156,8 @@ script_fu_interface_report_cc (const gchar *command)
 
       if (! g_str_has_prefix (command, "gimp-progress-"))
         {
-          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), command);
+          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
+                              command);
         }
       else
         {
@@ -910,8 +911,18 @@ script_fu_ok (SFScript *script)
   output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
 
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
   if (ts_interpret_string (command))
-    g_message (_("Error while executing\n%s\n\n%s"), command, output->str);
+    {
+      gchar *message = g_strdup_printf (_("Error while executing %s:"),
+                                        script->name);
+
+      g_message ("%s\n\n%s", message, output->str);
+      g_free (message);
+    }
+
+  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
   g_string_free (output, TRUE);
 
