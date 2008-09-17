@@ -184,7 +184,7 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
            * calculation of the brightness/contrast LUT in base/lut-funcs.h */
 
           levels->low_input[GIMP_HISTOGRAM_VALUE] =
-            (brightness * slant + 0.5 * slant - 0.5) / (slant - brightness * slant);
+            (- brightness * slant + 0.5 * slant - 0.5) / (slant - brightness * slant);
         }
 
       levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
@@ -196,7 +196,7 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
           value = 1.0;
 
           levels->high_input[GIMP_HISTOGRAM_VALUE] =
-            (brightness * slant + 0.5 * slant + 0.5) / (slant - brightness * slant);
+            (- brightness * slant + 0.5 * slant + 0.5) / (slant - brightness * slant);
         }
 
       levels->high_output[GIMP_HISTOGRAM_VALUE] = value;
