@@ -38,8 +38,6 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
 
   item = GIMP_ITEM (drawable);
 
-  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
-
   if (drawable->shadow)
     {
       if ((gimp_item_width  (item) != tile_manager_width  (drawable->shadow)) ||

@@ -1,3 +1,9 @@
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-shadow.c (gimp_drawable_get_shadow_tiles):
+	no need to check if the drawable is attached as shadow tiles are
+	per drawable now.
+
 2008-09-18  Simon Budig  <simon@gimp.org>
 
 	* app/gegl/gimpbrightnesscontrastconfig.c: fix the
