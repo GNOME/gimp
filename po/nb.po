@@ -10436,7 +10436,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
-msgstr "Antomatisk endring av vindusstørrelse"
+msgstr "Endre vindusstørrelse automatisk"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:188
