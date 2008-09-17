@@ -9080,7 +9080,7 @@ msgstr "Ressurskonfigurasjon"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
-msgstr "Kjører spørring på nye programtillegg"
+msgstr "Ser etter nye programtillegg"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
