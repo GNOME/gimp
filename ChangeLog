@@ -1,5 +1,13 @@
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: gimp_drawable_mask_intersect()
+	and gimp_drawable_mask_bounds() may only be used on attached
+	drawables. Added missing checks.
+
+	* app/pdb/drawable-cmds.c: regenerated.
+
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (CPPFLAGS): removed G*_DISABLE_SINGLE_INCLUDES until
 	we depend on newer versions of GLib and GTK+. Fixes bug #552669.
 
