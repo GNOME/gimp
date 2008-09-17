@@ -1,5 +1,8 @@
 2008-09-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_load_script):
+	tweaked error message.
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_ok): set the
 	PDB error handler to GIMP_PDB_ERROR_HANDLER_PLUGIN while
 	interpreting the script.
