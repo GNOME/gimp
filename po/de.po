@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 07:59+0200\n"
-"PO-Revision-Date: 2008-09-17 08:00+0200\n"
+"POT-Creation-Date: 2008-09-17 15:40+0200\n"
+"PO-Revision-Date: 2008-09-17 15:42+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6444,99 +6444,99 @@ msgstr "Parasit an Bild zuweisen"
 msgid "Remove Parasite from Image"
 msgstr "Parasit von Bild entfernen"
 
-#: ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2875
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:2957 ../app/core/gimpimage.c:2970
+#: ../app/core/gimpimage.c:2940 ../app/core/gimpimage.c:2953
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3114
+#: ../app/core/gimpimage.c:3097
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3119
+#: ../app/core/gimpimage.c:3102
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3138
+#: ../app/core/gimpimage.c:3121
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3143
+#: ../app/core/gimpimage.c:3126
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3154
+#: ../app/core/gimpimage.c:3137
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3169
+#: ../app/core/gimpimage.c:3152
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3241
+#: ../app/core/gimpimage.c:3214
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3286 ../app/core/gimpimage.c:3297
+#: ../app/core/gimpimage.c:3259 ../app/core/gimpimage.c:3270
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3346
+#: ../app/core/gimpimage.c:3319
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3351
+#: ../app/core/gimpimage.c:3324
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: ../app/core/gimpimage.c:3362
+#: ../app/core/gimpimage.c:3335
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3382
+#: ../app/core/gimpimage.c:3355
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3387
+#: ../app/core/gimpimage.c:3360
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3402
+#: ../app/core/gimpimage.c:3375
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3476
+#: ../app/core/gimpimage.c:3439
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3522
+#: ../app/core/gimpimage.c:3485
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3568
+#: ../app/core/gimpimage.c:3531
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3573
+#: ../app/core/gimpimage.c:3536
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3584
+#: ../app/core/gimpimage.c:3547
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3603
+#: ../app/core/gimpimage.c:3566
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3608
+#: ../app/core/gimpimage.c:3571
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3623
+#: ../app/core/gimpimage.c:3586
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -9025,7 +9025,7 @@ msgstr "Ungültiger, leerer Name der Zeichenmethode"
 msgid "Paint method '%s' does not exist"
 msgstr "Zeichenmethode »%s« existiert nicht"
 
-#: ../app/pdb/gimppdb-utils.c:306
+#: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid ""
 "Item '%s' (%d) can not be used because it has not been added to an image"
@@ -9033,28 +9033,33 @@ msgstr ""
 "Objekt »%s« (%d) kann nicht verwendet werden, da es zu keinem Bild "
 "hinzugefügt wurde"
 
-#: ../app/pdb/gimppdb-utils.c:325
+#: ../app/pdb/gimppdb-utils.c:327
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Objekt »%s« (%d) wurde bereits zu einem Bild hinzugefügt"
 
-#: ../app/pdb/gimppdb-utils.c:342
+#: ../app/pdb/gimppdb-utils.c:335
+#, c-format
+msgid "Trying to add item '%s' (%d) to wrong image"
+msgstr "Versuch das Objekt »%s« (%d) dem falschen Bild hinzuzufügen"
+
+#: ../app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
 msgstr "Ebene »%s« (%d) kann nicht verwendet werden, da sie keine Textebene ist"
 
-#: ../app/pdb/gimppdb-utils.c:383
+#: ../app/pdb/gimppdb-utils.c:395
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "Bild »%s« (%d) ist vom Typ »%s«, jedoch wurde ein Bild vom Typ »%s« erwartet"
 
-#: ../app/pdb/gimppdb-utils.c:406
+#: ../app/pdb/gimppdb-utils.c:418
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "Bild »%s« (%d) ist bereits vom Typ »%s«"
 
-#: ../app/pdb/gimppdb-utils.c:429
+#: ../app/pdb/gimppdb-utils.c:441
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Das Vektorobjekt %d besitzt keine Linie mit der Kennung %d"
