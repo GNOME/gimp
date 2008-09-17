@@ -1,5 +1,10 @@
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
+	* configure.in (CPPFLAGS): removed G*_DISABLE_SINGLE_INCLUDES until
+	we depend on newer versions of GLib and GTK+. Fixes bug #552669.
+
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c (run): call gimp_displays_flush() at the
 	end of all interactive uses. Fixes bug #552104.
 
