@@ -482,7 +482,7 @@ run (const gchar      *name,
     }
 
  done:
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
   if (config)
