@@ -117,7 +117,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           if (image->quick_mask_inverted)
             gimp_channel_invert (mask, FALSE);
 
-          gimp_image_add_channel (image, mask, 0, NULL);
+          gimp_image_add_channel (image, mask, 0);
 
           gimp_image_undo_group_end (image);
         }

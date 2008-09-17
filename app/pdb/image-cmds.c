@@ -863,13 +863,12 @@ image_add_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), error) &&
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
           gimp_pdb_image_is_base_type (image,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1),
-                                          error);
+          success = gimp_image_add_layer (image, layer, MAX (position, -1));
         }
       else
         {
@@ -1057,10 +1056,9 @@ image_add_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          success = gimp_image_add_channel (image, channel, MAX (position, -1),
-                                            error);
+          success = gimp_image_add_channel (image, channel, MAX (position, -1));
         }
       else
         {
@@ -1200,10 +1198,9 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          success = gimp_image_add_vectors (image, vectors, MAX (position, -1),
-                                            error);
+          success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
         }
       else
         {
@@ -1493,7 +1490,7 @@ image_add_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error))
         success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;

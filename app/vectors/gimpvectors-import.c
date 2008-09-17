@@ -305,7 +305,7 @@ gimp_vectors_import (GimpImage    *image,
                   vectors = gimp_vectors_new (image,
                                               ((merge || !path->id) ?
                                                _("Imported Path") : path->id));
-                  gimp_image_add_vectors (image, vectors, position, NULL);
+                  gimp_image_add_vectors (image, vectors, position);
                   gimp_vectors_freeze (vectors);
 
                   if (ret_vectors)

@@ -2852,10 +2852,9 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 }
 
 gboolean
-gimp_image_add_layer (GimpImage  *image,
-                      GimpLayer  *layer,
-                      gint        position,
-                      GError    **error)
+gimp_image_add_layer (GimpImage *image,
+                      GimpLayer *layer,
+                      gint       position)
 {
   GimpLayer *active_layer;
   GimpLayer *floating_sel;
@@ -2864,24 +2863,10 @@ gimp_image_add_layer (GimpImage  *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (g_object_is_floating (layer), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (gimp_item_get_image (GIMP_ITEM (layer)) != image)
-    {
-      g_set_error (error, 0, 0,
-                   _("Attempting to add layer to wrong image."));
-      return FALSE;
-    }
+  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image,
+                        FALSE);
 
   floating_sel = gimp_image_floating_sel (image);
-
-  if (floating_sel && gimp_layer_is_floating_sel (layer))
-    {
-      g_set_error (error, 0, 0,
-                   _("Trying to add floating layer to image which alyready "
-                     "has a floating selection."));
-      return FALSE;
-    }
 
   active_layer = gimp_image_get_active_layer (image);
 
@@ -3083,7 +3068,7 @@ gimp_image_add_layers (GimpImage   *image,
 
       gimp_item_translate (new_item, offset_x, offset_y, FALSE);
 
-      gimp_image_add_layer (image, GIMP_LAYER (new_item), position, NULL);
+      gimp_image_add_layer (image, GIMP_LAYER (new_item), position);
       position++;
     }
 
@@ -3212,24 +3197,17 @@ gimp_image_position_layer (GimpImage   *image,
 }
 
 gboolean
-gimp_image_add_channel (GimpImage    *image,
-                        GimpChannel  *channel,
-                        gint          position,
-                        GError      **error)
+gimp_image_add_channel (GimpImage   *image,
+                        GimpChannel *channel,
+                        gint         position)
 {
   GimpChannel *active_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (g_object_is_floating (channel), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (gimp_item_get_image (GIMP_ITEM (channel)) != image)
-    {
-      g_set_error (error, 0, 0,
-                   _("Attempting to add channel to wrong image."));
-      return FALSE;
-    }
+  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image,
+                        FALSE);
 
   active_channel = gimp_image_get_active_channel (image);
 
@@ -3444,24 +3422,17 @@ gimp_image_position_channel (GimpImage   *image,
 }
 
 gboolean
-gimp_image_add_vectors (GimpImage    *image,
-                        GimpVectors  *vectors,
-                        gint          position,
-                        GError      **error)
+gimp_image_add_vectors (GimpImage   *image,
+                        GimpVectors *vectors,
+                        gint         position)
 {
   GimpVectors *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (g_object_is_floating (vectors), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (gimp_item_get_image (GIMP_ITEM (vectors)) != image)
-    {
-      g_set_error (error, 0, 0,
-                   _("Attempting to add vectors to wrong image."));
-      return FALSE;
-    }
+  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image,
+                        FALSE);
 
   active_vectors = gimp_image_get_active_vectors (image);
 

@@ -1,3 +1,50 @@
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
+	Revert the change which adds GError parameters to
+	gimp_image_add_{channel,layer,vectors}():
+
+	* app/actions/channels-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimpselection.c
+	* app/core/gimptemplate.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpvectors-import.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/xcf/xcf-load.c: revert.
+
+	Instead, fix it at the PDB level:
+
+	* app/core/gimpimage.c: turn the "added to wrong image" warning
+	into a g_return_val_if_fail() assertion.
+
+	* app/pdb/gimppdb-utils.[ch] (gimp_pdb_item_is_floating): add a
+	"dest_image" parameter and fail if the passed item is not for this
+	image.
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/paths.pdb: pass the dest image to
+	gimp_pdb_item_is_floating().
+
+	* app/pdb/image-cmds.c
+	* app/pdb/layer-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
 2008-09-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_load_script):

@@ -223,7 +223,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
   gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
 
-  gimp_image_add_layer (new_image, new_layer, 0, NULL);
+  gimp_image_add_layer (new_image, new_layer, 0);
 
   gimp_image_undo_enable (new_image);
 
@@ -309,7 +309,7 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   gimp_object_take_name (GIMP_OBJECT (new_layer),
                          g_strdup_printf (_("%s Channel Copy"), desc));
 
-  gimp_image_add_layer (new_image, new_layer, 0, NULL);
+  gimp_image_add_layer (new_image, new_layer, 0);
 
   gimp_image_undo_enable (new_image);
 
@@ -358,7 +358,7 @@ gimp_toolbox_drop_pixbuf (GtkWidget *widget,
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-  gimp_image_add_layer (new_image, new_layer, 0, NULL);
+  gimp_image_add_layer (new_image, new_layer, 0);
 
   gimp_image_undo_enable (new_image);
 
