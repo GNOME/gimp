@@ -710,7 +710,7 @@ create_fits_header (FITS_FILE *ofp,
 {
   FITS_HDU_LIST *hdulist;
   int print_ctype3 = 0;   /* The CTYPE3-card may not be FITS-conforming */
-  static char *ctype3_card[] =
+  static const char *ctype3_card[] =
   {
     NULL, NULL, NULL,  /* bpp = 0: no additional card */
     "COMMENT Image type within GIMP: GIMP_GRAY_IMAGE",

@@ -1190,7 +1190,7 @@ create_cylinder_page (void)
   GtkObject    *adj;
   gint          i;
 
-  static gchar *labels[] = { N_("_Top:"), N_("_Bottom:") };
+  static const gchar *labels[] = { N_("_Top:"), N_("_Bottom:") };
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);

@@ -1,5 +1,18 @@
 2008-09-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/file-fits/fits.c
+	* plug-ins/gimpressionist/gimpressionist.h
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/utils.c
+	* plug-ins/gradient-flare/gradient-flare.c
+	* plug-ins/ifs-compose/ifs-compose-storage.c
+	* plug-ins/imagemap/imap_default_dialog.[ch]
+	* plug-ins/imagemap/imap_object.h
+	* plug-ins/map-object/map-object-ui.c: add const plus some minor
+	unrelated cleanups.
+
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch]: add GError parameter to
 	gimp_image_add_{channel,layer,vectors}() and remove calls to
 	g_warning(). Changed checks to be possible failures at all.

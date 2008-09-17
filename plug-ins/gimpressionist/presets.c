@@ -99,7 +99,7 @@ static void set_preset_description_text (const gchar *text)
 
 static char presetdesc[4096] = "";
 
-static char *factory_defaults = "<Factory defaults>";
+static const char *factory_defaults = "<Factory defaults>";
 
 static gchar *
 get_early_line_from_preset (gchar *full_path, const gchar *prefix)
@@ -134,7 +134,9 @@ get_early_line_from_preset (gchar *full_path, const gchar *prefix)
 }
 
 static gchar *
-get_object_name (gchar *dir, gchar *filename, void *context)
+get_object_name (const gchar *dir,
+                 gchar       *filename,
+                 void        *context)
 {
   gchar *ret = NULL, *unprocessed_line = NULL;
   gchar *full_path = NULL;
