@@ -50,14 +50,14 @@ typedef struct
 
 typedef struct
 {
-  GSList  *list;
-  gint     history;
+  GSList *list;
+  gint    history;
 } SFOption;
 
 typedef struct
 {
-  gchar   *type_name;
-  gint     history;
+  gchar *type_name;
+  gint   history;
 } SFEnum;
 
 typedef union
@@ -84,19 +84,24 @@ typedef union
 
 typedef struct
 {
-  gchar         *name;
-  gchar         *menu_path;
-  gchar         *blurb;
-  gchar         *author;
-  gchar         *copyright;
-  gchar         *date;
-  gchar         *img_types;
-  gint           num_args;
-  SFArgType     *arg_types;
-  gchar        **arg_labels;
-  SFArgValue    *arg_defaults;
-  SFArgValue    *arg_values;
-  GimpParamDef  *args;     /*  used only temporary until installed  */
+  SFArgType   type;
+  gchar      *label;
+  SFArgValue  default_value;
+  SFArgValue  value;
+} SFArg;
+
+typedef struct
+{
+  gchar        *name;
+  gchar        *menu_path;
+  gchar        *blurb;
+  gchar        *author;
+  gchar        *copyright;
+  gchar        *date;
+  gchar        *image_types;
+
+  gint          n_args;
+  SFArg        *args;
 } SFScript;
 
 

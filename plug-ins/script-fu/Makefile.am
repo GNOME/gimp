@@ -46,6 +46,8 @@ script_fu_SOURCES = \
 	script-fu-intl.h		\
 	script-fu-regex.c		\
 	script-fu-regex.h		\
+	script-fu-script.c		\
+	script-fu-script.h		\
 	script-fu-scripts.c		\
 	script-fu-scripts.h		\
 	script-fu-server.c		\

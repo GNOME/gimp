@@ -1,3 +1,29 @@
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-types.h: add struct SFArg which
+	keeps all a script argument's type, label, value and default
+	value.
+
+	(struct SFScript): replace separate arrays of type, label etc. by
+	one array of SFArg. Remove array of GimpParamDef because they are
+	only needed while registering the temp proc.
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-script.[ch]: new files implementing
+	script_fu_script_new(), script_fu_script_free(),
+	script_fu_script_register_proc() and
+	script_fu_script_unregister_proc().
+
+	* plug-ins/script-fu/script-fu-scripts.c: remove lots of code now
+	implemented in script-fu-script.c. Changed stuff according to the
+	introduction of SFArg. Moved variables to local scopes. Most
+	changes are in script_fu_add_script(), almost every line changed
+	and it's hopefully more readable now. Lots of cleanup all over the
+	place.
+
+	* plug-ins/script-fu/script-fu-interface.c: changed stuff
+	according to the introduction of SFArg
+
 2008-09-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/pyconsole.py: removed shebang as this
