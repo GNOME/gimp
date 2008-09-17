@@ -63,7 +63,7 @@ gimp_image_set_cmap (gint32        image_ID,
 /**
  * gimp_image_get_colormap:
  * @image_ID:   The image.
- * @num_colors: Number of colors in the colormap array.
+ * @num_colors: Returns the number of colors in the colormap array.
  *
  * Returns the image's colormap
  *
@@ -82,7 +82,8 @@ gimp_image_get_colormap (gint32  image_ID,
 
   cmap = _gimp_image_get_colormap (image_ID, &num_bytes);
 
-  *num_colors = num_bytes / 3;
+  if (num_colors)
+    *num_colors = num_bytes / 3;
 
   return cmap;
 }

@@ -1,3 +1,11 @@
+2008-09-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpimage.c (gimp_image_get_colormap): allow to pass
+	NULL for "num_colors".
+
+	* plug-ins/print/print-draw-page.c: added missing conversion
+	routines for indexed images. Fixes bug #552609.
+
 2008-09-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockable.c: cosmetic paranoia.
