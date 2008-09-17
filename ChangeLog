@@ -1,3 +1,41 @@
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: add GError parameter to
+	gimp_image_add_{channel,layer,vectors}() and remove calls to
+	g_warning(). Changed checks to be possible failures at all.
+
+	* app/widgets/gimpitemtreeview.h (GimpAddItemFunc): add the GError
+	here too.
+
+	* app/actions/channels-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimpselection.c
+	* app/core/gimptemplate.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpvectors-import.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/xcf/xcf-load.c: pass a NULL error.
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/paths.pdb: pass the error.
+
+	* app/pdb/image-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
 2008-09-16  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.5.5.

@@ -79,7 +79,7 @@ floating_sel_attach (GimpLayer    *layer,
                                               gimp_drawable_bytes (drawable));
 
   /*  add the layer to the image  */
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_add_layer (image, layer, 0, NULL);
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_rigor (layer, TRUE);

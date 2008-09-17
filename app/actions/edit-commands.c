@@ -339,7 +339,7 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       g_object_unref (buffer);
 
-      gimp_image_add_layer (image, layer, -1);
+      gimp_image_add_layer (image, layer, -1, NULL);
 
       gimp_image_flush (image);
     }

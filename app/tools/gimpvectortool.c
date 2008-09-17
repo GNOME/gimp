@@ -303,7 +303,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       vector_tool->undo_motion = TRUE;
 
-      gimp_image_add_vectors (display->image, vectors, -1);
+      gimp_image_add_vectors (display->image, vectors, -1, NULL);
       gimp_image_flush (display->image);
 
       gimp_vector_tool_set_vectors (vector_tool, vectors);

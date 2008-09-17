@@ -587,7 +587,7 @@ gimp_selection_save (GimpChannel *selection)
   /*  saved selections are not visible by default  */
   gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
 
-  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1, NULL);
 
   return new_channel;
 }

@@ -734,7 +734,7 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      item_view_class->add_item (item_view->image, new_item, dest_index);
+      item_view_class->add_item (item_view->image, new_item, dest_index, NULL);
     }
   else if (dest_viewable)
     {
