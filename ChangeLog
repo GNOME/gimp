@@ -1,5 +1,10 @@
 2008-09-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	fix indentation.
+
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/file-header.c
 	* plug-ins/common/file-psp.c
 	* plug-ins/common/file-xbm.c
