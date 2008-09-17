@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-15 12:01+0200\n"
-"PO-Revision-Date: 2008-09-15 12:01+0200\n"
+"POT-Creation-Date: 2008-09-17 07:59+0200\n"
+"PO-Revision-Date: 2008-09-17 08:00+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -859,9 +859,9 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1419
-#: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
+#: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:222
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
-#: ../app/pdb/image-cmds.c:2136 ../app/widgets/gimpdnd-xds.c:92
+#: ../app/pdb/image-cmds.c:2151 ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -3032,7 +3032,7 @@ msgstr "Auswahl aus Ebenenmaske"
 msgid "Please select a channel first"
 msgstr "Bitte wählen Sie zunächst einen Kanal aus"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
@@ -3663,9 +3663,9 @@ msgstr "Textdatei (UTF-8) öffnen"
 #: ../app/core/gimpbrush-load.c:420 ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:55
 #: ../app/core/gimpgradient-load.c:62 ../app/core/gimppalette-load.c:76
-#: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:315
-#: ../app/core/gimppalette-load.c:369 ../app/core/gimppalette-load.c:457
-#: ../app/core/gimppalette-load.c:600 ../app/core/gimppattern-load.c:76
+#: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:314
+#: ../app/core/gimppalette-load.c:368 ../app/core/gimppalette-load.c:456
+#: ../app/core/gimppalette-load.c:599 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:594 ../app/tools/gimplevelstool.c:725
 #: ../app/xcf/xcf.c:329
 #, c-format
@@ -6452,107 +6452,91 @@ msgstr "Ebene hinzufügen"
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3112
+#: ../app/core/gimpimage.c:3114
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3117
+#: ../app/core/gimpimage.c:3119
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3134
+#: ../app/core/gimpimage.c:3138
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3139
+#: ../app/core/gimpimage.c:3143
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3150
+#: ../app/core/gimpimage.c:3154
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3165
+#: ../app/core/gimpimage.c:3169
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3237
+#: ../app/core/gimpimage.c:3241
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3282 ../app/core/gimpimage.c:3293
+#: ../app/core/gimpimage.c:3286 ../app/core/gimpimage.c:3297
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3340
+#: ../app/core/gimpimage.c:3346
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3345
+#: ../app/core/gimpimage.c:3351
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
 #: ../app/core/gimpimage.c:3362
-msgid "Channel is already on top."
-msgstr "Dieser Kanal befindet sich bereits ganz oben."
-
-#: ../app/core/gimpimage.c:3367
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3384
+#: ../app/core/gimpimage.c:3382
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3389
+#: ../app/core/gimpimage.c:3387
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3409
-msgid "Channel is already on the bottom."
-msgstr "Dieser Kanal befindet sich bereits ganz unten."
-
-#: ../app/core/gimpimage.c:3414
+#: ../app/core/gimpimage.c:3402
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3488
+#: ../app/core/gimpimage.c:3476
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3534
+#: ../app/core/gimpimage.c:3522
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3578
+#: ../app/core/gimpimage.c:3568
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3583
+#: ../app/core/gimpimage.c:3573
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3600
-msgid "Path is already on top."
-msgstr "Dieser Pfad befindet sich bereits ganz oben."
-
-#: ../app/core/gimpimage.c:3605
+#: ../app/core/gimpimage.c:3584
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3622
+#: ../app/core/gimpimage.c:3603
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3627
+#: ../app/core/gimpimage.c:3608
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3647
-msgid "Path is already on the bottom."
-msgstr "Dieser Pfad befindet sich bereits ganz unten."
-
-#: ../app/core/gimpimage.c:3652
+#: ../app/core/gimpimage.c:3623
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -6667,7 +6651,7 @@ msgstr "Ebene spiegeln"
 msgid "Rotate Layer"
 msgstr "Ebene drehen"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6682,43 +6666,41 @@ msgstr ""
 "Schwebende Auswahl\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1260
-msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "Masken können nicht zu einer Ebene ohne Alphakanal hinzufügt werden."
-
-#: ../app/core/gimplayer.c:1267
+#: ../app/core/gimplayer.c:1263
+#, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, da diese Ebene bereits eine "
 "Maske hat."
 
-#: ../app/core/gimplayer.c:1277
+#: ../app/core/gimplayer.c:1274
+#, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1385
+#: ../app/core/gimplayer.c:1382
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: ../app/core/gimplayer.c:1558
+#: ../app/core/gimplayer.c:1555
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: ../app/core/gimplayer.c:1670
+#: ../app/core/gimplayer.c:1667
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: ../app/core/gimplayer.c:1724
+#: ../app/core/gimplayer.c:1721
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: ../app/core/gimplayer.c:1746
+#: ../app/core/gimplayer.c:1743
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
@@ -6748,7 +6730,7 @@ msgstr "Unbekannter Palettendateityp: %s"
 
 #: ../app/core/gimppalette-load.c:85 ../app/core/gimppalette-load.c:110
 #: ../app/core/gimppalette-load.c:131 ../app/core/gimppalette-load.c:160
-#: ../app/core/gimppalette-load.c:237
+#: ../app/core/gimppalette-load.c:236
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
@@ -6777,23 +6759,22 @@ msgstr ""
 "Fehler beim Laden der Palette »%s«: Falsche Anzahl von Spalten in Zeile %d. "
 "Der Standardwert wird verwendet."
 
-#. maybe we should just abort?
-#: ../app/core/gimppalette-load.c:184
+#: ../app/core/gimppalette-load.c:183
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Fehler beim Laden der Palette »%s«: Keine Rot-Komponente in Zeile %d."
 
-#: ../app/core/gimppalette-load.c:192
+#: ../app/core/gimppalette-load.c:191
 #, c-format
-msgid "Reading palette '%s': Missing GREEN component in line %d."
+msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Fehler beim Laden der Palette »%s«: Keine Grün-Komponente in Zeile %d."
 
-#: ../app/core/gimppalette-load.c:200
+#: ../app/core/gimppalette-load.c:199
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Fehler beim Laden der Palette »%s«: Keine Blau-Komponente in Zeile %d."
 
-#: ../app/core/gimppalette-load.c:210
+#: ../app/core/gimppalette-load.c:209
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
@@ -9168,7 +9149,7 @@ msgstr ""
 "Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, Typ %"
 "s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
 
-#: ../app/pdb/image-cmds.c:2206
+#: ../app/pdb/image-cmds.c:2221
 #, c-format
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
