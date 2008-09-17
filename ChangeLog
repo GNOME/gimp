@@ -1,5 +1,14 @@
 2008-09-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/file-header.c
+	* plug-ins/common/file-psp.c
+	* plug-ins/common/file-xbm.c
+	* plug-ins/common/file-xpm.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/mail.c: add const plus misc. cleanups.
+
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/file-fits/fits.c
 	* plug-ins/gimpressionist/gimpressionist.h
 	* plug-ins/gimpressionist/presets.c

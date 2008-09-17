@@ -93,32 +93,32 @@ static XBMSaveVals xsvals =
 
 /* Declare some local functions.
  */
-static void   query   (void);
-static void   run     (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query                   (void);
+static void      run                     (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
 
-static gint32    load_image              (const gchar  *filename,
-                                          GError      **error);
-static gint      save_image              (const gchar  *filename,
-                                          const gchar  *prefix,
-                                          const gchar  *comment,
-                                          gboolean      save_mask,
-                                          gint32        image_ID,
-                                          gint32        drawable_ID,
-                                          GError      **error);
-static gboolean  save_dialog             (gint32        drawable_ID);
+static gint32    load_image              (const gchar      *filename,
+                                          GError          **error);
+static gint      save_image              (const gchar      *filename,
+                                          const gchar      *prefix,
+                                          const gchar      *comment,
+                                          gboolean          save_mask,
+                                          gint32            image_ID,
+                                          gint32            drawable_ID,
+                                          GError          **error);
+static gboolean  save_dialog             (gint32            drawable_ID);
 #if 0
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
-static void      comment_entry_callback  (GtkWidget    *widget,
-                                          gpointer      data);
+static void      comment_entry_callback  (GtkWidget        *widget,
+                                          gpointer          data);
 #endif
-static void      prefix_entry_callback   (GtkWidget    *widget,
-                                          gpointer      data);
-static void      mask_ext_entry_callback (GtkWidget    *widget,
-                                          gpointer      data);
+static void      prefix_entry_callback   (GtkWidget        *widget,
+                                          gpointer          data);
+static void      mask_ext_entry_callback (GtkWidget        *widget,
+                                          gpointer          data);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -629,8 +629,8 @@ cpp_fgetc (FILE *fp)
 
 /* Match a string with a file. */
 static gint
-match (FILE  *fp,
-       gchar *s)
+match (FILE        *fp,
+       const gchar *s)
 {
   gint c;
 
@@ -704,25 +704,24 @@ get_int (FILE *fp)
 }
 
 
-static gint
+static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
   GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
-
-  FILE   *fp;
-  gint32  image_ID;
-  gint32  layer_ID;
-  guchar *data;
-  gint    intbits;
-  gint    width = 0;
-  gint    height = 0;
-  gint    x_hot = 0;
-  gint    y_hot = 0;
-  gint    c, i, j, k;
-  gint    tileheight, rowoffset;
-  gchar  *comment;
+  FILE         *fp;
+  gint32        image_ID;
+  gint32        layer_ID;
+  guchar       *data;
+  gint          intbits;
+  gint          width  = 0;
+  gint          height = 0;
+  gint          x_hot  = 0;
+  gint          y_hot  = 0;
+  gint          c, i, j, k;
+  gint          tileheight, rowoffset;
+  gchar        *comment;
 
   const guchar cmap[] =
   {
@@ -970,15 +969,15 @@ save_image (const gchar  *filename,
   GimpPixelRgn  pixel_rgn;
   FILE         *fp;
 
-  gint width, height, colors, dark;
-  gint intbits, lineints, need_comma, nints, rowoffset, tileheight;
-  gint c, i, j, k, thisbit;
+  gint          width, height, colors, dark;
+  gint          intbits, lineints, need_comma, nints, rowoffset, tileheight;
+  gint          c, i, j, k, thisbit;
 
-  gboolean has_alpha;
-  gint     bpp;
+  gboolean      has_alpha;
+  gint          bpp;
 
-  guchar *data, *cmap;
-  gchar  *intfmt;
+  guchar       *data, *cmap;
+  const gchar  *intfmt;
 
 #if 0
   if (save_mask)
