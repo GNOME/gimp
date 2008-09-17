@@ -1,5 +1,9 @@
 2008-09-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.c: cosmetic paranoia.
+
+2008-09-17  Michael Natterer  <mitch@gimp.org>
+
 	Revert the change which adds GError parameters to
 	gimp_image_add_{channel,layer,vectors}():
 

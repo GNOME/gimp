@@ -89,7 +89,7 @@ static void       gimp_dockable_remove            (GtkContainer   *container,
                                                    GtkWidget      *widget);
 static GType      gimp_dockable_child_type        (GtkContainer   *container);
 static void       gimp_dockable_forall            (GtkContainer   *container,
-                                                   gboolean       include_internals,
+                                                   gboolean        include_internals,
                                                    GtkCallback     callback,
                                                    gpointer        callback_data);
 
