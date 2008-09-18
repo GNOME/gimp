@@ -758,7 +758,8 @@ script_fu_script_proc (const gchar      *name,
                 {
                   status                  = GIMP_PDB_EXECUTION_ERROR;
                   *nreturn_vals           = 2;
-                  values[2].data.d_string = error->message;
+                  values[1].type          = GIMP_PDB_STRING;
+                  values[1].data.d_string = error->message;
                 }
 
               g_free (command);
@@ -779,7 +780,8 @@ script_fu_script_proc (const gchar      *name,
               {
                 status                  = GIMP_PDB_EXECUTION_ERROR;
                 *nreturn_vals           = 2;
-                values[2].data.d_string = error->message;
+                values[1].type          = GIMP_PDB_STRING;
+                values[1].data.d_string = error->message;
               }
 
             g_free (command);

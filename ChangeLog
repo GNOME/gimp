@@ -1,3 +1,10 @@
+2008-09-18  Michael Natterer  <mitch@gimp.org>
+
+	Bug 552785 – Script-fu run errors do not show in UI
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
+	fix the code that passes the error message back via the pipe.
+
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_run_command):
