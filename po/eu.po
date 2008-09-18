@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-09 14:05+0200\n"
-"PO-Revision-Date: 2008-09-09 14:06+0200\n"
+"POT-Creation-Date: 2008-09-18 15:46+0200\n"
+"PO-Revision-Date: 2008-09-18 15:47+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -839,9 +839,9 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1419
-#: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
+#: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:222
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
-#: ../app/pdb/image-cmds.c:2136 ../app/widgets/gimpdnd-xds.c:92
+#: ../app/pdb/image-cmds.c:2151 ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Izengabea"
 
@@ -1436,7 +1436,7 @@ msgstr "_Bufferra"
 msgid "Undo History Menu"
 msgstr "Desegite-historiaren menua"
 
-#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:308
+#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
 msgid "_Undo"
 msgstr "_Desegin"
 
@@ -1444,7 +1444,7 @@ msgstr "_Desegin"
 msgid "Undo the last operation"
 msgstr "Desegin azken eragiketa"
 
-#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:309
+#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:314
 msgid "_Redo"
 msgstr "_Berregin"
 
@@ -1476,7 +1476,7 @@ msgstr "_Garbitu desegite-historia"
 msgid "Remove all operations from the undo history"
 msgstr "Kendu eragiketa guztiak desegite-historiatik"
 
-#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:310
+#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
 msgid "_Fade..."
 msgstr "_Iraungi..."
 
@@ -1506,7 +1506,7 @@ msgid "Copy _Visible"
 msgstr "Kopia i_kusgaia"
 
 #: ../app/actions/edit-actions.c:121
-msgid "Copy what is visible in the the selected region"
+msgid "Copy what is visible in the selected region"
 msgstr "Kopiatu hautatutako eskualdean ikusgai dagoena"
 
 #: ../app/actions/edit-actions.c:126
@@ -1610,7 +1610,7 @@ msgstr "Bete _ereduarekin"
 msgid "Fill the selection using the active pattern"
 msgstr "Bete hautapena eredu aktiboa erabiliz"
 
-#: ../app/actions/edit-actions.c:281
+#: ../app/actions/edit-actions.c:279
 #, c-format
 msgid "_Undo %s"
 msgstr "_Desegin %s"
@@ -1620,7 +1620,7 @@ msgstr "_Desegin %s"
 msgid "_Redo %s"
 msgstr "_Berregin %s"
 
-#: ../app/actions/edit-actions.c:297
+#: ../app/actions/edit-actions.c:301
 #, c-format
 msgid "_Fade %s..."
 msgstr "_Iraungitu %s..."
@@ -2988,7 +2988,7 @@ msgstr "Geruzaren maskara hautapenera"
 msgid "Please select a channel first"
 msgstr "Hautatu kanal bat aurrenik"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Gehitu geruza-maskara"
@@ -3613,9 +3613,9 @@ msgstr "Ireki testu-fitxategia (UTF-8)"
 #: ../app/core/gimpbrush-load.c:420 ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:55
 #: ../app/core/gimpgradient-load.c:62 ../app/core/gimppalette-load.c:76
-#: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:315
-#: ../app/core/gimppalette-load.c:369 ../app/core/gimppalette-load.c:457
-#: ../app/core/gimppalette-load.c:600 ../app/core/gimppattern-load.c:76
+#: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:314
+#: ../app/core/gimppalette-load.c:368 ../app/core/gimppalette-load.c:456
+#: ../app/core/gimppalette-load.c:599 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:594 ../app/tools/gimplevelstool.c:725
 #: ../app/xcf/xcf.c:329
 #, c-format
@@ -5471,7 +5471,7 @@ msgstr "Kendu parasitoa"
 msgid "Import paths"
 msgstr "Inportatu bideak"
 
-#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:878
+#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:885
 msgid "Plug-In"
 msgstr "Plugin-a"
 
@@ -6341,115 +6341,99 @@ msgstr "Erantsi parasitoa irudiari"
 msgid "Remove Parasite from Image"
 msgstr "Kendu parasitoa iruditik"
 
-#: ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2875
 msgid "Add Layer"
 msgstr "Gehitu geruza"
 
-#: ../app/core/gimpimage.c:2957 ../app/core/gimpimage.c:2970
+#: ../app/core/gimpimage.c:2940 ../app/core/gimpimage.c:2953
 msgid "Remove Layer"
 msgstr "Kendu geruza"
 
-#: ../app/core/gimpimage.c:3112
+#: ../app/core/gimpimage.c:3097
 msgid "Layer cannot be raised higher."
 msgstr "Ezin da geruza gorago igo."
 
-#: ../app/core/gimpimage.c:3117
+#: ../app/core/gimpimage.c:3102
 msgid "Raise Layer"
 msgstr "Igo geruza"
 
-#: ../app/core/gimpimage.c:3134
+#: ../app/core/gimpimage.c:3121
 msgid "Layer cannot be lowered more."
 msgstr "Ezin da geruza gehiago jaitsi."
 
-#: ../app/core/gimpimage.c:3139
+#: ../app/core/gimpimage.c:3126
 msgid "Lower Layer"
 msgstr "Jaitsi geruza"
 
-#: ../app/core/gimpimage.c:3150
+#: ../app/core/gimpimage.c:3137
 msgid "Raise Layer to Top"
 msgstr "Igo geruza goienera"
 
-#: ../app/core/gimpimage.c:3165
+#: ../app/core/gimpimage.c:3152
 msgid "Lower Layer to Bottom"
 msgstr "Jaitsi geruza leku baxuenera"
 
-#: ../app/core/gimpimage.c:3237
+#: ../app/core/gimpimage.c:3214
 msgid "Add Channel"
 msgstr "Gehitu kanala"
 
-#: ../app/core/gimpimage.c:3282 ../app/core/gimpimage.c:3293
+#: ../app/core/gimpimage.c:3259 ../app/core/gimpimage.c:3270
 msgid "Remove Channel"
 msgstr "Kendu kanala"
 
-#: ../app/core/gimpimage.c:3340
+#: ../app/core/gimpimage.c:3319
 msgid "Channel cannot be raised higher."
 msgstr "Kanala ezin izan da gorago igo."
 
-#: ../app/core/gimpimage.c:3345
+#: ../app/core/gimpimage.c:3324
 msgid "Raise Channel"
 msgstr "Igo kanala"
 
-#: ../app/core/gimpimage.c:3362
-msgid "Channel is already on top."
-msgstr "Kanala leku goienean dago."
-
-#: ../app/core/gimpimage.c:3367
+#: ../app/core/gimpimage.c:3335
 msgid "Raise Channel to Top"
 msgstr "Igo kanala goienera"
 
-#: ../app/core/gimpimage.c:3384
+#: ../app/core/gimpimage.c:3355
 msgid "Channel cannot be lowered more."
 msgstr "Ezin izan da kanala gehiago jaitsi."
 
-#: ../app/core/gimpimage.c:3389
+#: ../app/core/gimpimage.c:3360
 msgid "Lower Channel"
 msgstr "Jaitsi kanala"
 
-#: ../app/core/gimpimage.c:3409
-msgid "Channel is already on the bottom."
-msgstr "Geruza leku baxuenean dago."
-
-#: ../app/core/gimpimage.c:3414
+#: ../app/core/gimpimage.c:3375
 msgid "Lower Channel to Bottom"
 msgstr "Jaitsi kanala leku baxuenera"
 
-#: ../app/core/gimpimage.c:3488
+#: ../app/core/gimpimage.c:3439
 msgid "Add Path"
 msgstr "Gehitu bidea"
 
-#: ../app/core/gimpimage.c:3534
+#: ../app/core/gimpimage.c:3485
 msgid "Remove Path"
 msgstr "Kendu bidea"
 
-#: ../app/core/gimpimage.c:3578
+#: ../app/core/gimpimage.c:3531
 msgid "Path cannot be raised higher."
 msgstr "Bidea ezin da gorago igo."
 
-#: ../app/core/gimpimage.c:3583
+#: ../app/core/gimpimage.c:3536
 msgid "Raise Path"
 msgstr "Igo bidea"
 
-#: ../app/core/gimpimage.c:3600
-msgid "Path is already on top."
-msgstr "Bidea leku goienean dago."
-
-#: ../app/core/gimpimage.c:3605
+#: ../app/core/gimpimage.c:3547
 msgid "Raise Path to Top"
 msgstr "Igo bidea goienera"
 
-#: ../app/core/gimpimage.c:3622
+#: ../app/core/gimpimage.c:3566
 msgid "Path cannot be lowered more."
 msgstr "Ezin da bidea gehiago jaitsi."
 
-#: ../app/core/gimpimage.c:3627
+#: ../app/core/gimpimage.c:3571
 msgid "Lower Path"
 msgstr "Jaitsi bidea"
 
-#: ../app/core/gimpimage.c:3647
-msgid "Path is already on the bottom."
-msgstr "Bidea leku baxuenean dago."
-
-#: ../app/core/gimpimage.c:3652
+#: ../app/core/gimpimage.c:3586
 msgid "Lower Path to Bottom"
 msgstr "Jaitsi bidea leku baxuenera"
 
@@ -6564,7 +6548,7 @@ msgstr "Irauli geruza"
 msgid "Rotate Layer"
 msgstr "Biratu geruza"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6579,39 +6563,37 @@ msgstr ""
 "Hautapen mugikorra\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1260
-msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "Ezin da geruza-maskara gehitu irudi baten zati ez den geruzari."
-
-#: ../app/core/gimplayer.c:1267
+#: ../app/core/gimplayer.c:1263
+#, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ezin da geruza-maskara gehitu, geruzak dagoeneko baduelako bat."
 
-#: ../app/core/gimplayer.c:1277
+#: ../app/core/gimplayer.c:1274
+#, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ezin da aipatutako geruzaren neurriak ez dituen geruza-maskara gehitu."
 
-#: ../app/core/gimplayer.c:1385
+#: ../app/core/gimplayer.c:1382
 msgid "Transfer Alpha to Mask"
 msgstr "Transferitu alfa maskarara"
 
-#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Aplikatu geruza-maskara"
 
-#: ../app/core/gimplayer.c:1558
+#: ../app/core/gimplayer.c:1555
 msgid "Delete Layer Mask"
 msgstr "Ezabatu geruza-maskara"
 
-#: ../app/core/gimplayer.c:1670
+#: ../app/core/gimplayer.c:1667
 msgid "Add Alpha Channel"
 msgstr "Gehitu alfa kanala"
 
-#: ../app/core/gimplayer.c:1724
+#: ../app/core/gimplayer.c:1721
 msgid "Remove Alpha Channel"
 msgstr "Kendu alfa kanala"
 
-#: ../app/core/gimplayer.c:1746
+#: ../app/core/gimplayer.c:1743
 msgid "Layer to Image Size"
 msgstr "Geruza irudi-tamainara"
 
@@ -6641,7 +6623,7 @@ msgstr "Paleta-fitxategi mota ezezaguna: %s"
 
 #: ../app/core/gimppalette-load.c:85 ../app/core/gimppalette-load.c:110
 #: ../app/core/gimppalette-load.c:131 ../app/core/gimppalette-load.c:160
-#: ../app/core/gimppalette-load.c:237
+#: ../app/core/gimppalette-load.c:236
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "Analisi-errore larria '%s' paleta-fitxategian: irakurketa-errorea %d lerroan."
@@ -6665,23 +6647,22 @@ msgstr ""
 "'%s' paleta kargatzen: zutabe-kopuru baliogabea %d lerroan. Balio lehenetsia "
 "erabiltzen."
 
-#. maybe we should just abort?
-#: ../app/core/gimppalette-load.c:184
+#: ../app/core/gimppalette-load.c:183
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "'%s' paleta kargatzen: osagai GORRIA falta da %d lerroan."
 
-#: ../app/core/gimppalette-load.c:192
+#: ../app/core/gimppalette-load.c:191
 #, c-format
-msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr "'%s' paleta kargatzen: osagai BERDEA falta da %d lerroan."
+msgid "Reading palette file '%s': Missing GREEN component in line %d."
+msgstr "'%s' paleta irakurtzen: osagai BERDEA falta da %d lerroan."
 
-#: ../app/core/gimppalette-load.c:200
+#: ../app/core/gimppalette-load.c:199
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "'%s' paleta kargatzen: osagai URDINA falta da %d lerroan."
 
-#: ../app/core/gimppalette-load.c:210
+#: ../app/core/gimppalette-load.c:209
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "'%s' paleta kargatzen: GBU balioa barrutitik kanpo dago %d lerroan."
@@ -8875,32 +8856,37 @@ msgstr "Margotzeko metodoaren izen huts baliogabea"
 msgid "Paint method '%s' does not exist"
 msgstr "Ez da margotzeko '%s' metodorik existitzen"
 
-#: ../app/pdb/gimppdb-utils.c:306
+#: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid "Item '%s' (%d) can not be used because it has not been added to an image"
 msgstr "'%s' elementua (%d) ezin da erabili, ez baita irudi bati gehitu"
 
-#: ../app/pdb/gimppdb-utils.c:325
+#: ../app/pdb/gimppdb-utils.c:327
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "'%s' elementua (%d) jadanik irudi bati gehitu zaio"
 
-#: ../app/pdb/gimppdb-utils.c:342
+#: ../app/pdb/gimppdb-utils.c:335
+#, c-format
+msgid "Trying to add item '%s' (%d) to wrong image"
+msgstr "'%s' (%d) elementua gehitzen saiatu da okerreko irudiari"
+
+#: ../app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
 msgstr "'%s' geruza (%d) ezin da erabili, ez delako testu-geruza bat"
 
-#: ../app/pdb/gimppdb-utils.c:383
+#: ../app/pdb/gimppdb-utils.c:395
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "'%s' irudia (%d) '%s' motakoa da, baina '%s' motako irudia espero zen"
 
-#: ../app/pdb/gimppdb-utils.c:406
+#: ../app/pdb/gimppdb-utils.c:418
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "'%s' irudia (%d) '%s' motakoa da jadanik"
 
-#: ../app/pdb/gimppdb-utils.c:429
+#: ../app/pdb/gimppdb-utils.c:441
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "%d. bektore-objektuak ez dauka trazurik %d IDarekin"
@@ -8991,7 +8977,7 @@ msgstr ""
 "'%1$s' prozedurak '%3$s' (#%4$d, %5$s mota) argumentua '%2$s' balioarekin "
 "deitu du. Balio hau barrutiz kanpo dago."
 
-#: ../app/pdb/image-cmds.c:2206
+#: ../app/pdb/image-cmds.c:2221
 #, c-format
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11385,46 +11371,46 @@ msgstr "_Bilatu:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "GBUA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:344
+#: ../app/widgets/gimpactionview.c:346
 #: ../app/widgets/gimpcontrollereditor.c:348
 msgid "Action"
 msgstr "Ekintza"
 
-#: ../app/widgets/gimpactionview.c:373
+#: ../app/widgets/gimpactionview.c:375
 msgid "Shortcut"
 msgstr "Laster-teklak"
 
-#: ../app/widgets/gimpactionview.c:399
+#: ../app/widgets/gimpactionview.c:401
 msgid "Name"
 msgstr "Izena"
 
-#: ../app/widgets/gimpactionview.c:608 ../app/widgets/gimpactionview.c:813
+#: ../app/widgets/gimpactionview.c:641 ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
 msgstr "Huts egin du laster-teklak aldatzeak."
 
-#: ../app/widgets/gimpactionview.c:650
+#: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
 msgstr "Gatazka laster-tekletan"
 
-#: ../app/widgets/gimpactionview.c:656
+#: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
 msgstr "Esleitu laster-tekla _berriro"
 
-#: ../app/widgets/gimpactionview.c:671
+#: ../app/widgets/gimpactionview.c:704
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "\"%1$s\" laster-tekla jadanik \"%3$s\" taldeko \"%2$s\" elementuak dauka."
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Laster-tekla berriro esleitzeak \"%s\"-(e)tik ezabatuko du."
 
-#: ../app/widgets/gimpactionview.c:748
+#: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
 msgstr "Laster-tekla baliobagea."
 
-#: ../app/widgets/gimpactionview.c:837
+#: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
 msgstr "Huts egin du laster-tekla kentzeak."
 
