@@ -1,3 +1,8 @@
+2008-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimplevelsconfig.c (gimp_levels_config_to_curves_config):
+	need to set the point at the index corresponding to the x value.
+
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve.c (gimp_curve_plot)
