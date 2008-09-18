@@ -324,11 +324,12 @@ gimp_dock_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_style_get (widget, "default-height", &default_height, NULL);
+  gtk_widget_style_get (widget,
+                        "default-height", &default_height,
+                        "font-scale",     &font_scale,
+                        NULL);
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
-
-  gtk_widget_style_get (widget, "font-scale", &font_scale, NULL);
 
   if (font_scale != 1.0)
     {
@@ -361,6 +362,9 @@ gimp_dock_style_set (GtkWidget *widget,
 
       gtk_rc_parse_string (rc_string);
       g_free (rc_string);
+
+      if (gtk_bin_get_child (GTK_BIN (widget)))
+        gtk_widget_reset_rc_styles (gtk_bin_get_child (GTK_BIN (widget)));
     }
 }
 

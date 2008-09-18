@@ -1,3 +1,9 @@
+2008-09-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.c (gimp_dock_style_set): reset the RC
+	styles of the dock's children after parsing the RC file snippet
+	for them. Fixes font size for detached dockables.
+
 2008-09-18  Tor Lillqvist  <tml@novell.com>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
