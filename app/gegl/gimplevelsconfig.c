@@ -596,30 +596,38 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      GimpCurve *curve = curves->curve[channel];
-      gdouble    gamma = config->gamma[channel];
-      gdouble    delta_in;
-      gdouble    delta_out;
+      GimpCurve  *curve    = curves->curve[channel];
+      const gint  n_points = gimp_curve_get_n_points (curve);
+      gdouble     gamma    = config->gamma[channel];
+      gdouble     delta_in;
+      gdouble     delta_out;
+      gdouble     x, y;
 
       delta_in  = config->high_input[channel] - config->low_input[channel];
       delta_out = config->high_output[channel] - config->low_output[channel];
 
-      gimp_curve_set_point (curve, 0,
-                            config->low_input[channel],
-                            config->low_output[channel]);
+      x = config->low_input[channel];
+      y = config->low_output[channel];
+
+      gimp_curve_set_point (curve,
+                            CLAMP (n_points * x, 0, n_points - 1), x, y);
 
       if (delta_out != 0 && gamma != 1.0)
         {
-          gimp_curve_set_point (curve, curve->n_points / 2,
-                                config->low_input[channel]  +
-                                  pow (gamma, gamma / (1 - gamma)) * delta_in,
-                                config->low_output[channel] +
-                                  pow (gamma, 1.0 / (1 - gamma)) * delta_out);
+          x = (config->low_input[channel] +
+               pow (gamma, gamma / (1 - gamma)) * delta_in);
+          y = (config->low_output[channel] +
+               pow (gamma, 1.0 / (1 - gamma)) * delta_out);
+
+          gimp_curve_set_point (curve,
+                                CLAMP (n_points * x, 0, n_points - 1), x, y);
         }
 
-      gimp_curve_set_point (curve, curve->n_points - 1,
-                            config->high_input[channel],
-                            config->high_output[channel]);
+      x = config->high_input[channel];
+      y = config->high_output[channel];
+
+      gimp_curve_set_point (curve,
+                            CLAMP (n_points * x, 0, n_points - 1), x, y);
     }
 
   return curves;
