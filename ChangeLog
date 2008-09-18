@@ -1,5 +1,15 @@
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c: made the font scale factor for the docks
+	configurable in gtkrc.
+
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: for documentation purposes, added the
+	default value for GimpDock::font-scale here. Changed all style
+	property names to use the canonical names.
+
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-shadow.c (gimp_drawable_get_shadow_tiles):
 	no need to check if the drawable is attached as shadow tiles are
 	per drawable now.
