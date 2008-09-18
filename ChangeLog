@@ -1,7 +1,7 @@
 2008-09-18  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/gimppluginshm.c: Use INVALID_HANDLE_VALUE instead of
-	INVALID_FILE_HANDLE which was an misunderstanding.
+	INVALID_FILE_HANDLE which was a misunderstanding.
 
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
