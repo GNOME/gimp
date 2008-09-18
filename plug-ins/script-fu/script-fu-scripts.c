@@ -653,8 +653,7 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
     {
       SFScript *script = list->data;
 
-      script_fu_script_install_proc (script,
-                                     script_fu_script_proc);
+      script_fu_script_install_proc (script, script_fu_script_proc);
     }
 
   return FALSE;
@@ -699,10 +698,16 @@ script_fu_script_proc (const gchar      *name,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[2] = { 0, };
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   SFScript          *script;
-  GError            *error  = NULL;
+  GError            *error     = NULL;
+
+  if (values[1].type == GIMP_PDB_STRING && values[1].data.d_string)
+    {
+      g_free (values[1].data.d_string);
+      values[1].data.d_string = NULL;
+    }
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -760,6 +765,9 @@ script_fu_script_proc (const gchar      *name,
                   *nreturn_vals           = 2;
                   values[1].type          = GIMP_PDB_STRING;
                   values[1].data.d_string = error->message;
+
+                  error->message = NULL;
+                  g_error_free (error);
                 }
 
               g_free (command);
@@ -782,6 +790,9 @@ script_fu_script_proc (const gchar      *name,
                 *nreturn_vals           = 2;
                 values[1].type          = GIMP_PDB_STRING;
                 values[1].data.d_string = error->message;
+
+                error->message = NULL;
+                g_error_free (error);
               }
 
             g_free (command);
