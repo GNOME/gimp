@@ -30,6 +30,7 @@
 
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
+#include "script-fu-script.h"
 
 #include "script-fu-intl.h"
 
@@ -770,21 +771,14 @@ script_fu_response (GtkWidget *widget,
 static void
 script_fu_ok (SFScript *script)
 {
-  gchar   *escaped;
-  GString *s, *output;
+  GString *output;
   gchar   *command;
-  gchar    buffer[G_ASCII_DTOSTR_BUF_SIZE];
   gint     i;
-
-  s = g_string_new ("(");
-  g_string_append (s, script->name);
 
   for (i = 0; i < script->n_args; i++)
     {
       SFArgValue *arg_value = &script->args[i].value;
       GtkWidget  *widget    = sf_interface->widgets[i];
-
-      g_string_append_c (s, ' ');
 
       switch (script->args[i].type)
         {
@@ -794,39 +788,15 @@ script_fu_ok (SFScript *script)
         case SF_CHANNEL:
         case SF_VECTORS:
         case SF_DISPLAY:
-          g_string_append_printf (s, "%d", arg_value->sfa_image);
-          break;
-
         case SF_COLOR:
-          {
-            guchar r, g, b;
-
-            gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
-            g_string_append_printf (s, "'(%d %d %d)",
-                                    (gint) r, (gint) g, (gint) b);
-          }
-          break;
-
         case SF_TOGGLE:
-          g_string_append (s, arg_value->sfa_toggle ? "TRUE" : "FALSE");
           break;
 
         case SF_VALUE:
-          g_free (arg_value->sfa_value);
-          arg_value->sfa_value =
-            g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-          g_string_append (s, arg_value->sfa_value);
-          break;
-
         case SF_STRING:
           g_free (arg_value->sfa_value);
           arg_value->sfa_value =
             g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-          escaped = script_fu_strescape (arg_value->sfa_value);
-          g_string_append_printf (s, "\"%s\"", escaped);
-          g_free (escaped);
           break;
 
         case SF_TEXT:
@@ -845,66 +815,24 @@ script_fu_ok (SFScript *script)
             arg_value->sfa_value = gtk_text_buffer_get_text (buffer,
                                                              &start, &end,
                                                              FALSE);
-
-            escaped = script_fu_strescape (arg_value->sfa_value);
-            g_string_append_printf (s, "\"%s\"", escaped);
-            g_free (escaped);
           }
           break;
 
         case SF_ADJUSTMENT:
-          g_ascii_dtostr (buffer, sizeof (buffer),
-                          arg_value->sfa_adjustment.value);
-          g_string_append (s, buffer);
-          break;
-
         case SF_FILENAME:
         case SF_DIRNAME:
-          escaped = script_fu_strescape (arg_value->sfa_file.filename);
-          g_string_append_printf (s, "\"%s\"", escaped);
-          g_free (escaped);
-          break;
-
         case SF_FONT:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_font);
-          break;
-
         case SF_PALETTE:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_palette);
-          break;
-
         case SF_PATTERN:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_pattern);
-          break;
-
         case SF_GRADIENT:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_gradient);
-          break;
-
         case SF_BRUSH:
-          g_ascii_dtostr (buffer, sizeof (buffer),
-                          arg_value->sfa_brush.opacity);
-
-          g_string_append_printf (s, "'(\"%s\" %s %d %d)",
-                                  arg_value->sfa_brush.name,
-                                  buffer,
-                                  arg_value->sfa_brush.spacing,
-                                  arg_value->sfa_brush.paint_mode);
-          break;
-
         case SF_OPTION:
-          g_string_append_printf (s, "%d", arg_value->sfa_option.history);
-          break;
-
         case SF_ENUM:
-          g_string_append_printf (s, "%d", arg_value->sfa_enum.history);
           break;
         }
     }
 
-  g_string_append_c (s, ')');
-
-  command = g_string_free (s, FALSE);
+  command = script_fu_script_get_command (script);
 
   /*  run the command through the interpreter  */
   output = g_string_new (NULL);

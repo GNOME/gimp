@@ -20,19 +20,27 @@
 #define __SCRIPT_FU_SCRIPT_H__
 
 
-SFScript * script_fu_script_new            (const gchar *name,
-                                            const gchar *menu_path,
-                                            const gchar *blurb,
-                                            const gchar *author,
-                                            const gchar *copyright,
-                                            const gchar *date,
-                                            const gchar *image_types,
-                                            gint         n_args);
-void       script_fu_script_free           (SFScript    *script);
+SFScript * script_fu_script_new                     (const gchar     *name,
+                                                     const gchar     *menu_path,
+                                                     const gchar     *blurb,
+                                                     const gchar     *author,
+                                                     const gchar     *copyright,
+                                                     const gchar     *date,
+                                                     const gchar     *image_types,
+                                                     gint             n_args);
+void       script_fu_script_free                    (SFScript        *script);
 
-void       script_fu_script_install_proc   (SFScript    *script,
-                                            GimpRunProc  run_proc);
-void       script_fu_script_uninstall_proc (SFScript    *script);
+void       script_fu_script_install_proc            (SFScript        *script,
+                                                     GimpRunProc      run_proc);
+void       script_fu_script_uninstall_proc          (SFScript        *script);
+
+gint       script_fu_script_collect_standard_args   (SFScript        *script,
+                                                     gint             n_params,
+                                                     const GimpParam *params);
+
+gchar    * script_fu_script_get_command             (SFScript        *script);
+gchar    * script_fu_script_get_command_from_params (SFScript        *script,
+                                                     const GimpParam *params);
 
 
 #endif /*  __SCRIPT_FU_SCRIPT__  */
