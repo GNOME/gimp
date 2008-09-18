@@ -158,6 +158,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -169,57 +170,68 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*  Get the specified image and drawable  */
-  image_ID = param[1].data.d_image;
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
-  /*  set the tile cache size so that the gaussian blur works well  */
-  gimp_tile_cache_ntiles (2 *
-                          (MAX (drawable->width, drawable->height) /
-                           gimp_tile_width () + 1));
-
-  if (strcmp (name, PLUG_IN_PROC) == 0)
+  if (! gimp_drawable_is_layer (param[2].data.d_drawable))
     {
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          /*  Possibly retrieve data  */
-          gimp_get_data (PLUG_IN_PROC, &dogvals);
-
-          /*  First acquire information with a dialog  */
-          if (! dog_dialog (image_ID, drawable))
-            return;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams != 7)
-            status = GIMP_PDB_CALLING_ERROR;
-
-          if (status == GIMP_PDB_SUCCESS)
-            {
-              dogvals.inner     = param[3].data.d_float;
-              dogvals.outer     = param[4].data.d_float;
-              dogvals.normalize = param[5].data.d_int32;
-              dogvals.invert    = param[6].data.d_int32;
-            }
-          if (status == GIMP_PDB_SUCCESS &&
-              (dogvals.inner <= 0.0 && dogvals.outer <= 0.0))
-            status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          /*  Possibly retrieve data  */
-          gimp_get_data (PLUG_IN_PROC, &dogvals);
-          break;
-
-        default:
-          break;
-        }
+      g_set_error (&error, 0, 0, "%s",
+                   _("Can operate on layers only "
+                     "(but was called on channel or mask)."));
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
-  else
+
+  if (status == GIMP_PDB_SUCCESS)
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      /*  Get the specified image and drawable  */
+      image_ID = param[1].data.d_image;
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+      /*  set the tile cache size so that the gaussian blur works well  */
+      gimp_tile_cache_ntiles (2 *
+                              (MAX (drawable->width, drawable->height) /
+                               gimp_tile_width () + 1));
+
+      if (strcmp (name, PLUG_IN_PROC) == 0)
+        {
+          switch (run_mode)
+            {
+            case GIMP_RUN_INTERACTIVE:
+              /*  Possibly retrieve data  */
+              gimp_get_data (PLUG_IN_PROC, &dogvals);
+
+              /*  First acquire information with a dialog  */
+              if (! dog_dialog (image_ID, drawable))
+                return;
+              break;
+
+            case GIMP_RUN_NONINTERACTIVE:
+              /*  Make sure all the arguments are there!  */
+              if (nparams != 7)
+                status = GIMP_PDB_CALLING_ERROR;
+
+              if (status == GIMP_PDB_SUCCESS)
+                {
+                  dogvals.inner     = param[3].data.d_float;
+                  dogvals.outer     = param[4].data.d_float;
+                  dogvals.normalize = param[5].data.d_int32;
+                  dogvals.invert    = param[6].data.d_int32;
+
+                  if (dogvals.inner <= 0.0 || dogvals.outer <= 0.0)
+                    status = GIMP_PDB_CALLING_ERROR;
+                }
+              break;
+
+            case GIMP_RUN_WITH_LAST_VALS:
+              /*  Possibly retrieve data  */
+              gimp_get_data (PLUG_IN_PROC, &dogvals);
+              break;
+
+            default:
+              break;
+            }
+        }
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -250,11 +262,19 @@ run (const gchar      *name,
         {
           status        = GIMP_PDB_EXECUTION_ERROR;
           *nreturn_vals = 2;
+
           values[1].type          = GIMP_PDB_STRING;
           values[1].data.d_string = _("Cannot operate on indexed color images.");
         }
 
       gimp_drawable_detach (drawable);
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;

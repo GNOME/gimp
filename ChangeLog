@@ -1,5 +1,14 @@
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/edge-dog.c: the plug-in can only run on layers,
+	not masks and channels. Added a check for this and bail out with
+	an error message. Fixes bug #552625.
+
+	* plug-ins/common/curve-bend.c: return error messages via the
+	procedure's return values.
+
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.c
 	* libgimp/gimp.c: minor cleanups.
 
