@@ -582,10 +582,10 @@ static gboolean
 script_fu_run_command (const gchar  *command,
                        GError      **error)
 {
-  GString  *output  = g_string_new ("");
+  GString  *output;
   gboolean  success = FALSE;
 
-  output = g_string_new ("");
+  output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
 
   if (ts_interpret_string (command))

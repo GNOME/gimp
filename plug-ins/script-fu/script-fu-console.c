@@ -595,7 +595,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
-      output = g_string_new ("");
+      output = g_string_new (NULL);
       ts_register_output_func (ts_gstring_output_func, output);
 
       gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
