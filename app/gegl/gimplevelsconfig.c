@@ -598,8 +598,11 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
     {
       GimpCurve *curve = curves->curve[channel];
       gdouble    gamma = config->gamma[channel];
-      gdouble    delta_in  = config->high_input[channel] - config->low_input[channel];
-      gdouble    delta_out = config->high_output[channel] - config->low_output[channel];
+      gdouble    delta_in;
+      gdouble    delta_out;
+
+      delta_in  = config->high_input[channel] - config->low_input[channel];
+      delta_out = config->high_output[channel] - config->low_output[channel];
 
       gimp_curve_set_point (curve, 0,
                             config->low_input[channel],

@@ -1,3 +1,9 @@
+2008-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve.c (gimp_curve_plot)
+	* app/gegl/gimplevelsconfig.c (gimp_levels_config_to_curves_config):
+	formatting.
+
 2008-09-18  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpcurve.c: comment fix

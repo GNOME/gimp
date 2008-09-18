@@ -1004,8 +1004,7 @@ gimp_curve_plot (GimpCurve *curve,
        * the control handle of the right tangent, to ensure that the curve
        * does not have an inflection point.
        */
-      slope = (curve->points[p4].y - y0) /
-              (curve->points[p4].x - x0);
+      slope = (curve->points[p4].y - y0) / (curve->points[p4].x - x0);
 
       y2 = y3 - slope * dx / 3.0;
       y1 = y0 + (y2 - y0) / 2.0;
@@ -1013,8 +1012,7 @@ gimp_curve_plot (GimpCurve *curve,
   else if (p1 != p2 && p3 == p4)
     {
       /* see previous case */
-      slope = (y3 - curve->points[p1].y) /
-              (x3 - curve->points[p1].x);
+      slope = (y3 - curve->points[p1].y) / (x3 - curve->points[p1].x);
 
       y1 = y0 + slope * dx / 3.0;
       y2 = y3 + (y1 - y3) / 2.0;
@@ -1025,13 +1023,11 @@ gimp_curve_plot (GimpCurve *curve,
        * parallel to the line between the opposite endpoint and the adjacent
        * neighbor.
        */
-      slope = (y3 - curve->points[p1].y) /
-              (x3 - curve->points[p1].x);
+      slope = (y3 - curve->points[p1].y) / (x3 - curve->points[p1].x);
 
       y1 = y0 + slope * dx / 3.0;
 
-      slope = (curve->points[p4].y - y0) /
-              (curve->points[p4].x - x0);
+      slope = (curve->points[p4].y - y0) / (curve->points[p4].x - x0);
 
       y2 = y3 - slope * dx / 3.0;
     }
