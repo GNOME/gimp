@@ -363,7 +363,7 @@ script_fu_add_script (scheme  *sc,
                  * is just so script-fus can be written with only
                  * POSIX directory separators.
                  */
-                gchar *filename = arg->default_values.sfa_file.filename;
+                gchar *filename = arg->default_value.sfa_file.filename;
 
                 while (*filename)
                   {
