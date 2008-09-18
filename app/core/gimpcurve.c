@@ -977,7 +977,7 @@ gimp_curve_plot (GimpCurve *curve,
 
   /*
    * the x values of the inner control points are fixed at
-   * x1 = 1/3*x0 + 2/3*x3   and  x2 = 2/3*x0 + 1/3*x3
+   * x1 = 2/3*x0 + 1/3*x3   and  x2 = 1/3*x0 + 2/3*x3
    * this ensures that the x values increase linearily with the
    * parameter t and enables us to skip the calculation of the x
    * values altogehter - just calculate y(t) evenly spaced.

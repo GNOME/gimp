@@ -1,3 +1,12 @@
+2008-09-18  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcurve.c: comment fix
+
+	* app/gegl/gimplevelsconfig.c: improve the levels->curves
+	transition. Not perfect, the result does not match a "real"
+	gamma correction, especially in the dark areas, where the
+	curves are too dark compared to the levels.
+
 2008-09-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/edge-dog.c: the plug-in can only run on layers,

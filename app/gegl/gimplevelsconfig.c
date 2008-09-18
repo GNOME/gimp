@@ -597,38 +597,26 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
        channel++)
     {
       GimpCurve *curve = curves->curve[channel];
-      gint       border_point;
-      gint       point;
+      gdouble    gamma = config->gamma[channel];
+      gdouble    delta_in  = config->high_input[channel] - config->low_input[channel];
+      gdouble    delta_out = config->high_output[channel] - config->low_output[channel];
 
-      if (config->low_input[channel]  > 0.0 ||
-          config->low_output[channel] > 0.0)
+      gimp_curve_set_point (curve, 0,
+                            config->low_input[channel],
+                            config->low_output[channel]);
+
+      if (delta_out != 0 && gamma != 1.0)
         {
-          border_point = gimp_curve_get_closest_point (curve, 0.0);
-          point = gimp_curve_get_closest_point (curve,
-                                                config->low_input[channel]);
-
-          gimp_curve_set_point (curve, point,
-                                config->low_input[channel],
-                                config->low_output[channel]);
-
-          if (point != border_point)
-            gimp_curve_set_point (curve, border_point, -1, -1);
+          gimp_curve_set_point (curve, curve->n_points / 2,
+                                config->low_input[channel]  +
+                                  pow (gamma, gamma / (1 - gamma)) * delta_in,
+                                config->low_output[channel] +
+                                  pow (gamma, 1.0 / (1 - gamma)) * delta_out);
         }
 
-      if (config->high_input[channel]  < 1.0 ||
-          config->high_output[channel] < 1.0)
-        {
-          border_point = gimp_curve_get_closest_point (curve, 1.0);
-          point = gimp_curve_get_closest_point (curve,
-                                                config->high_input[channel]);
-
-          gimp_curve_set_point (curve, point,
-                                config->high_input[channel],
-                                config->high_output[channel]);
-
-          if (point != border_point)
-            gimp_curve_set_point (curve, border_point, -1, -1);
-        }
+      gimp_curve_set_point (curve, curve->n_points - 1,
+                            config->high_input[channel],
+                            config->high_output[channel]);
     }
 
   return curves;
