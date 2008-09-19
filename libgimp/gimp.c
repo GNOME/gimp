@@ -998,7 +998,8 @@ gimp_destroy_params (GimpParam *params,
  * @paramdefs: the #GimpParamDef array to destroy
  * @n_params:  the number of elements in the array
  *
- * Destroys a #GimpParamDef array as returned by gimp_query_procedure()
+ * Destroys a #GimpParamDef array as returned by
+ * gimp_procedural_db_proc_info().
  **/
 void
 gimp_destroy_paramdefs (GimpParamDef *paramdefs,
