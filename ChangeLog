@@ -1,3 +1,10 @@
+2008-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c: move variables to local
+	scopes, fix some whitespace and indentation, some misc. cleanup,
+	remove comments about array calling conventions that had lots of
+	copy and paste errors.
+
 2008-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-actions.c: renamed "file-new-menu" to
