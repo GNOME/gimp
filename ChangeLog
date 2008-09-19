@@ -1,5 +1,11 @@
 2008-09-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help-browser/dialog.c (update_actions): allow to copy
+	selected text to the clipboard using Ctrl-C or the right-click
+	menu.
+
+2008-09-19  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/plug-in-actions.c (plug_in_actions_history_changed):
 	try to use the menu label with ellipsis instead of the result of
 	gimp_plug_in_procedure_get_label() which has ellipsis and
