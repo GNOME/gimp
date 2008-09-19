@@ -605,7 +605,7 @@ script_fu_marshal_procedure_call (scheme  *sc,
   gint             nreturn_vals;
   GimpParamDef    *params;
   GimpParamDef    *return_vals;
-  gchar            error_str[256];
+  gchar            error_str[1024];
   gint             i;
   gint             success = TRUE;
   pointer          intermediate_val;
