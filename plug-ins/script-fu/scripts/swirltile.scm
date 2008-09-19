@@ -66,4 +66,4 @@
 )
 
 (script-fu-menu-register "script-fu-swirl-tile"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

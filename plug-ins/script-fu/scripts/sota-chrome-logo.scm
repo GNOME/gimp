@@ -220,4 +220,4 @@
 )
 
 (script-fu-menu-register "script-fu-sota-chrome-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

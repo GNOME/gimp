@@ -151,4 +151,4 @@
 )
 
 (script-fu-menu-register "script-fu-t-o-p-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

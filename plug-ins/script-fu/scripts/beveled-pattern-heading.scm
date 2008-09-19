@@ -118,4 +118,4 @@
 )
 
 (script-fu-menu-register "script-fu-beveled-pattern-heading"
-                         "<Image>/File/New/Web Page Themes/Beveled Pattern")
+                         "<Image>/File/Create/Web Page Themes/Beveled Pattern")

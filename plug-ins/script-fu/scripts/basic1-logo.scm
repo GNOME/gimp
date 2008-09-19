@@ -102,4 +102,4 @@
 )
 
 (script-fu-menu-register "script-fu-basic1-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

@@ -236,4 +236,4 @@
 )
 
 (script-fu-menu-register "script-fu-3dtruchet"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

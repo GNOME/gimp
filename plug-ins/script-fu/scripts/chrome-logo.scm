@@ -129,4 +129,4 @@
 )
 
 (script-fu-menu-register "script-fu-chrome-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

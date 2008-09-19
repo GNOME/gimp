@@ -167,4 +167,4 @@
 )
 
 (script-fu-menu-register "script-fu-comic-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

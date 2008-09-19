@@ -91,4 +91,4 @@
 )
 
 (script-fu-menu-register "script-fu-swirly-pattern"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

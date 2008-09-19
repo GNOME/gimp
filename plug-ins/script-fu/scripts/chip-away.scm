@@ -203,4 +203,4 @@
 )
 
 (script-fu-menu-register "script-fu-chip-away-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

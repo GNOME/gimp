@@ -1,3 +1,16 @@
+2008-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-actions.c: renamed "file-new-menu" to
+	"file-create-menu" and changed the menu label from "New" to "Create".
+
+	* app/plug-in/plug-in-menu-path.c
+	* menus/image-menu.xml.in
+	* plug-ins/common/screenshot.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/*.scm
+	* plug-ins/twain/twain.c
+	* plug-ins/win-snap/winsnap.c: changed accordingly.
+
 2008-09-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.[ch] (gimp_destroy_paramdefs): fix docs: there is

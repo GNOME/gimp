@@ -209,4 +209,4 @@
 )
 
 (script-fu-menu-register "script-fu-round-button"
-                         "<Image>/File/New/Buttons")
+                         "<Image>/File/Create/Buttons")

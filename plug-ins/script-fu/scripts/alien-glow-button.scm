@@ -165,4 +165,4 @@
 )
 
 (script-fu-menu-register "script-fu-alien-glow-button"
-                         "<Image>/File/New/Web Page Themes/Alien Glow")
+                         "<Image>/File/Create/Web Page Themes/Alien Glow")
