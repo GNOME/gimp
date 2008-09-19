@@ -603,6 +603,10 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       gdouble     delta_out;
       gdouble     x, y;
 
+      /* clear the points set by default */
+      gimp_curve_set_point (curve, 0, -1, -1);
+      gimp_curve_set_point (curve, n_points - 1, -1, -1);
+
       delta_in  = config->high_input[channel] - config->low_input[channel];
       delta_out = config->high_output[channel] - config->low_output[channel];
 

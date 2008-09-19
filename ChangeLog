@@ -1,3 +1,11 @@
+2008-09-20  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpcurve.c: whitespace fix
+
+	* app/gegl/gimplevelsconfig.c: make sure that the points set by
+	default gets unset before calculating the levels->curves
+	transition. We don't want stray points in the corners.
+
 2008-09-19  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-types.h (struct SFScript): rename

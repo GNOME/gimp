@@ -358,7 +358,7 @@ gimp_curve_get_property (GObject    *object,
 
 static gint64
 gimp_curve_get_memsize (GimpObject *object,
-                          gint64     *gui_size)
+                        gint64     *gui_size)
 {
   GimpCurve *curve   = GIMP_CURVE (object);
   gint64     memsize = 0;
