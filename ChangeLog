@@ -1,3 +1,9 @@
+2008-09-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: also apply the menu
+	mapping on scripts that use script-fu-menu-register to add
+	themselves to the menus.
+
 2008-09-19  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c: move variables to local

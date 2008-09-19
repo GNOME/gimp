@@ -73,7 +73,7 @@ static void      script_fu_script_proc    (const gchar             *name,
 
 static SFScript *script_fu_find_script    (const gchar             *name);
 
-static void      script_fu_menu_map       (SFScript                *script);
+static gchar *   script_fu_menu_map       (const gchar             *menu_path);
 static gint      script_fu_menu_compare   (gconstpointer            a,
                                            gconstpointer            b);
 
@@ -140,6 +140,7 @@ script_fu_add_script (scheme  *sc,
   const gchar *copyright;
   const gchar *date;
   const gchar *image_types;
+  gchar       *mapped;
   gint         n_args;
   gint         i;
 
@@ -497,7 +498,13 @@ script_fu_add_script (scheme  *sc,
   /*  fill all values from defaults  */
   script_fu_script_reset (script, TRUE);
 
-  script_fu_menu_map (script);
+  mapped = script_fu_menu_map (script->menu_path);
+
+  if (mapped)
+    {
+      g_free (script->menu_path);
+      script->menu_path = mapped;
+    }
 
   {
     const gchar *key  = gettext (script->menu_path);
@@ -516,6 +523,7 @@ script_fu_add_menu (scheme  *sc,
   SFScript    *script;
   SFMenu      *menu;
   const gchar *name;
+  const gchar *path;
 
   /*  Check the length of a  */
   if (sc->vptr->list_length (sc, a) != 2)
@@ -529,7 +537,8 @@ script_fu_add_menu (scheme  *sc,
 
   if (! script)
     {
-      g_message ("Procedure %s in script-fu-menu-register does not exist", name);
+      g_message ("Procedure %s in script-fu-menu-register does not exist",
+                 name);
       return sc->NIL;
     }
 
@@ -539,7 +548,12 @@ script_fu_add_menu (scheme  *sc,
   menu->script = script;
 
   /*  Find the script menu path  */
-  menu->menu_path = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
+  path = sc->vptr->string_value (sc->vptr->pair_car (a));
+
+  menu->menu_path = script_fu_menu_map (path);
+
+  if (! menu->menu_path)
+    menu->menu_path = g_strdup (path);
 
   script_menu_list = g_list_prepend (script_menu_list, menu);
 
@@ -816,8 +830,8 @@ script_fu_find_script (const gchar *name)
   return (SFScript *) script;
 }
 
-static void
-script_fu_menu_map (SFScript *script)
+static gchar *
+script_fu_menu_map (const gchar *menu_path)
 {
   /*  for backward compatibility, we fiddle with some menu paths  */
   const struct
@@ -839,22 +853,18 @@ script_fu_menu_map (SFScript *script)
 
   for (i = 0; i < G_N_ELEMENTS (mapping); i++)
     {
-      if (g_str_has_prefix (script->menu_path, mapping[i].old))
+      if (g_str_has_prefix (menu_path, mapping[i].old))
         {
-          const gchar *suffix = script->menu_path + strlen (mapping[i].old);
-          gchar       *tmp;
+          const gchar *suffix = menu_path + strlen (mapping[i].old);
 
           if (! *suffix == '/')
             continue;
 
-          tmp = g_strconcat (mapping[i].new, suffix, NULL);
-
-          g_free (script->menu_path);
-          script->menu_path = tmp;
-
-          break;
+          return g_strconcat (mapping[i].new, suffix, NULL);
         }
     }
+
+  return NULL;
 }
 
 static gint
