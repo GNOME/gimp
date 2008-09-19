@@ -30,6 +30,8 @@
 #include "script-fu-script.h"
 #include "script-fu-scripts.h"
 
+#include "script-fu-intl.h"
+
 
 /*
  *  Local Functions
@@ -322,6 +324,127 @@ script_fu_script_uninstall_proc (SFScript *script)
   g_return_if_fail (script != NULL);
 
   gimp_uninstall_temp_proc (script->name);
+}
+
+gchar *
+script_fu_script_get_title (SFScript *script)
+{
+  gchar *title;
+  gchar *tmp;
+
+  g_return_val_if_fail (script != NULL, NULL);
+
+  /* strip mnemonics from the menupath */
+  title = gimp_strip_uline (gettext (script->menu_path));
+
+  /* if this looks like a full menu path, use only the last part */
+  if (title[0] == '<' && (tmp = strrchr (title, '/')) && tmp[1])
+    {
+      tmp = g_strdup (tmp + 1);
+
+      g_free (title);
+      title = tmp;
+    }
+
+  /* cut off ellipsis */
+  tmp = (strstr (title, "..."));
+  if (! tmp)
+    /* U+2026 HORIZONTAL ELLIPSIS */
+    tmp = strstr (title, "\342\200\246");
+
+  if (tmp && tmp == (title + strlen (title) - 3))
+    *tmp = '\0';
+
+  return title;
+}
+
+void
+script_fu_script_reset (SFScript *script,
+                        gboolean  reset_ids)
+{
+  gint i;
+
+  g_return_if_fail (script != NULL);
+
+  for (i = 0; i < script->n_args; i++)
+    {
+      SFArgValue *value         = &script->args[i].value;
+      SFArgValue *default_value = &script->args[i].default_value;
+
+      switch (script->args[i].type)
+        {
+        case SF_IMAGE:
+        case SF_DRAWABLE:
+        case SF_LAYER:
+        case SF_CHANNEL:
+        case SF_VECTORS:
+        case SF_DISPLAY:
+          if (reset_ids)
+            value->sfa_image = default_value->sfa_image;
+          break;
+
+        case SF_COLOR:
+          value->sfa_color = default_value->sfa_color;
+          break;
+
+        case SF_TOGGLE:
+          value->sfa_toggle = default_value->sfa_toggle;
+          break;
+
+        case SF_VALUE:
+        case SF_STRING:
+        case SF_TEXT:
+          g_free (value->sfa_value);
+          value->sfa_value = g_strdup (default_value->sfa_value);
+          break;
+
+        case SF_ADJUSTMENT:
+          value->sfa_adjustment.value = default_value->sfa_adjustment.value;
+          break;
+
+        case SF_FILENAME:
+        case SF_DIRNAME:
+          g_free (value->sfa_file.filename);
+          value->sfa_file.filename = g_strdup (default_value->sfa_file.filename);
+          break;
+
+        case SF_FONT:
+          g_free (value->sfa_font);
+          value->sfa_font = g_strdup (default_value->sfa_font);
+          break;
+
+        case SF_PALETTE:
+          g_free (value->sfa_palette);
+          value->sfa_palette = g_strdup (default_value->sfa_palette);
+          break;
+
+        case SF_PATTERN:
+          g_free (value->sfa_pattern);
+          value->sfa_pattern = g_strdup (default_value->sfa_pattern);
+          break;
+
+        case SF_GRADIENT:
+          g_free (value->sfa_gradient);
+          value->sfa_gradient = g_strdup (default_value->sfa_gradient);
+          break;
+
+        case SF_BRUSH:
+          g_free (value->sfa_brush.name);
+          value->sfa_brush.name = g_strdup (default_value->sfa_brush.name);
+          value->sfa_brush.opacity    = default_value->sfa_brush.opacity;
+          value->sfa_brush.spacing    = default_value->sfa_brush.spacing;
+          value->sfa_brush.paint_mode = default_value->sfa_brush.paint_mode;
+          break;
+
+        case SF_OPTION:
+          value->sfa_option.history = default_value->sfa_option.history;
+          break;
+
+        case SF_ENUM:
+          value->sfa_enum.history = default_value->sfa_enum.history;
+          break;
+        }
+    }
 }
 
 gint

@@ -1,3 +1,19 @@
+2008-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-script.[ch]: add new functions
+	script_fu_script_get_title() and script_fu_script_reset().
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
+	don't set all default values *and* values when parsing the script,
+	just set the defaults and call script_fu_script_reset() afterwards.
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	use the new script_fu_script_get_title().
+
+	(script_fu_reset): call script_fu_script_reset() and then update
+	the UI from the current values, instead of doing slightly
+	different things for each arg type.
+
 2008-09-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help-browser/dialog.c (update_actions): allow to copy

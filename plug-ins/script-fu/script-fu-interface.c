@@ -180,15 +180,15 @@ script_fu_interface (SFScript  *script,
   GtkWidget    *vbox2;
   GtkSizeGroup *group;
   GSList       *list;
-  gchar        *tmp;
   gchar        *title;
   gint          i;
 
   static gboolean gtk_initted = FALSE;
 
-  /*  Simply return if there is already an interface. This is an
-      ugly workaround for the fact that we can not process two
-      scripts at a time.  */
+  /* Simply return if there is already an interface. This is an
+   * ugly workaround for the fact that we can not process two
+   * scripts at a time.
+   */
   if (sf_interface != NULL)
     {
       gchar *message =
@@ -219,28 +219,7 @@ script_fu_interface (SFScript  *script,
   sf_interface = g_slice_new0 (SFInterface);
 
   sf_interface->widgets = g_new0 (GtkWidget *, script->n_args);
-
-  /* strip mnemonics from the menupath */
-  sf_interface->title   = gimp_strip_uline (gettext (script->menu_path));
-
-  /* if this looks like a full menu path, use only the last part */
-  if (sf_interface->title[0] == '<' &&
-      (tmp = strrchr (sf_interface->title, '/')) && tmp[1])
-    {
-      tmp = g_strdup (tmp + 1);
-
-      g_free (sf_interface->title);
-      sf_interface->title = tmp;
-    }
-
-  /* cut off ellipsis */
-  tmp = (strstr (sf_interface->title, "..."));
-  if (! tmp)
-    /* U+2026 HORIZONTAL ELLIPSIS */
-    tmp = strstr (sf_interface->title, "\342\200\246");
-
-  if (tmp && tmp == (sf_interface->title + strlen (sf_interface->title) - 3))
-    *tmp = '\0';
+  sf_interface->title   = script_fu_script_get_title (script);
 
   title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
 
@@ -256,7 +235,7 @@ script_fu_interface (SFScript  *script,
                      NULL);
   g_free (title);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (sf_interface->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -304,7 +283,8 @@ script_fu_interface (SFScript  *script,
       row -= start_arg;
 
       /*  we add a colon after the label;
-          some languages want an extra space here  */
+       *  some languages want an extra space here
+       */
       label_text = g_strdup_printf (_("%s:"), gettext (arg->label));
 
       switch (arg->type)
@@ -643,8 +623,7 @@ script_fu_interface_quit (SFScript *script)
   g_slice_free (SFInterface, sf_interface);
   sf_interface = NULL;
 
-  /*
-   *  We do not call gtk_main_quit() earlier to reduce the possibility
+  /*  We do not call gtk_main_quit() earlier to reduce the possibility
    *  that script_fu_script_proc() is called from gimp_extension_process()
    *  while we are not finished with the current script. This sucks!
    */
@@ -861,12 +840,14 @@ script_fu_reset (SFScript *script)
 {
   gint i;
 
+  script_fu_script_reset (script, FALSE);
+
   for (i = 0; i < script->n_args; i++)
     {
-      SFArg     *arg    = &script->args[i];
-      GtkWidget *widget = sf_interface->widgets[i];
+      SFArgValue *value  = &script->args[i].value;
+      GtkWidget  *widget = sf_interface->widgets[i];
 
-      switch (arg->type)
+      switch (script->args[i].type)
         {
         case SF_IMAGE:
         case SF_DRAWABLE:
@@ -878,18 +859,17 @@ script_fu_reset (SFScript *script)
 
         case SF_COLOR:
           gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget),
-                                       &arg->default_value.sfa_color);
+                                       &value->sfa_color);
           break;
 
         case SF_TOGGLE:
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                        arg->default_value.sfa_toggle);
+                                        value->sfa_toggle);
           break;
 
         case SF_VALUE:
         case SF_STRING:
-          gtk_entry_set_text (GTK_ENTRY (widget),
-                              arg->default_value.sfa_value);
+          gtk_entry_set_text (GTK_ENTRY (widget), value->sfa_value);
           break;
 
         case SF_TEXT:
@@ -897,63 +877,60 @@ script_fu_reset (SFScript *script)
             GtkWidget     *view;
             GtkTextBuffer *buffer;
 
-            g_free (arg->value.sfa_value);
-            arg->value.sfa_value = g_strdup (arg->default_value.sfa_value);
-
             view = gtk_bin_get_child (GTK_BIN (widget));
             buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 
-            gtk_text_buffer_set_text (buffer, arg->value.sfa_value, -1);
+            gtk_text_buffer_set_text (buffer, value->sfa_value, -1);
           }
           break;
 
         case SF_ADJUSTMENT:
-          gtk_adjustment_set_value (arg->value.sfa_adjustment.adj,
-                                    arg->default_value.sfa_adjustment.value);
+          gtk_adjustment_set_value (value->sfa_adjustment.adj,
+                                    value->sfa_adjustment.value);
           break;
 
         case SF_FILENAME:
         case SF_DIRNAME:
           gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (widget),
-                                         arg->default_value.sfa_file.filename);
+                                         value->sfa_file.filename);
           break;
 
         case SF_FONT:
           gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
-                                            arg->default_value.sfa_font);
+                                            value->sfa_font);
           break;
 
         case SF_PALETTE:
           gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
-                                                  arg->default_value.sfa_palette);
+                                                  value->sfa_palette);
           break;
 
         case SF_PATTERN:
           gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
-                                                  arg->default_value.sfa_pattern);
+                                                  value->sfa_pattern);
           break;
 
         case SF_GRADIENT:
           gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
-                                                    arg->default_value.sfa_gradient);
+                                                    value->sfa_gradient);
           break;
 
         case SF_BRUSH:
           gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget),
-                                              arg->default_value.sfa_brush.name,
-                                              arg->default_value.sfa_brush.opacity,
-                                              arg->default_value.sfa_brush.spacing,
-                                              arg->default_value.sfa_brush.paint_mode);
+                                              value->sfa_brush.name,
+                                              value->sfa_brush.opacity,
+                                              value->sfa_brush.spacing,
+                                              value->sfa_brush.paint_mode);
           break;
 
         case SF_OPTION:
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-                                    arg->default_value.sfa_option.history);
+                                    value->sfa_option.history);
           break;
 
         case SF_ENUM:
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget),
-                                         arg->default_value.sfa_enum.history);
+                                         value->sfa_enum.history);
           break;
         }
     }

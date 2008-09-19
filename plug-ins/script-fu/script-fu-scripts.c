@@ -240,7 +240,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_image =
                 sc->vptr->ivalue (sc->vptr->pair_car (a));
-              arg->value.sfa_image = arg->default_value.sfa_image;
               break;
 
             case SF_COLOR:
@@ -272,8 +271,6 @@ script_fu_add_script (scheme  *sc,
                 {
                   return foreign_error (sc, "script-fu-register: color defaults must be a list of 3 integers or a color name", 0);
                 }
-
-              arg->value.sfa_color = arg->default_value.sfa_color;
               break;
 
             case SF_TOGGLE:
@@ -282,7 +279,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_toggle =
                 (sc->vptr->ivalue (sc->vptr->pair_car (a))) ? TRUE : FALSE;
-              arg->value.sfa_toggle = arg->default_value.sfa_toggle;
               break;
 
             case SF_VALUE:
@@ -291,7 +287,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_value =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_value = g_strdup (arg->default_value.sfa_value);
               break;
 
             case SF_STRING:
@@ -301,7 +296,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_value =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_value = g_strdup (arg->default_value.sfa_value);
               break;
 
             case SF_ADJUSTMENT:
@@ -338,10 +332,6 @@ script_fu_add_script (scheme  *sc,
                 adj_list = sc->vptr->pair_cdr (adj_list);
                 arg->default_value.sfa_adjustment.type =
                   sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
-
-                arg->value.sfa_adjustment.adj = NULL;
-                arg->value.sfa_adjustment.value =
-                  arg->default_value.sfa_adjustment.value;
               }
               break;
 
@@ -374,9 +364,6 @@ script_fu_add_script (scheme  *sc,
                   }
               }
 #endif
-
-              arg->value.sfa_file.filename =
-                g_strdup (arg->default_value.sfa_file.filename);
               break;
 
             case SF_FONT:
@@ -385,7 +372,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_font =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_font = g_strdup (arg->default_value.sfa_font);
               break;
 
             case SF_PALETTE:
@@ -394,8 +380,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_palette =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_palette =
-                g_strdup (arg->default_value.sfa_palette);
               break;
 
             case SF_PATTERN:
@@ -404,8 +388,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_pattern =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_pattern =
-                g_strdup (arg->default_value.sfa_pattern);
               break;
 
             case SF_BRUSH:
@@ -418,26 +400,18 @@ script_fu_add_script (scheme  *sc,
                 brush_list = sc->vptr->pair_car (a);
                 arg->default_value.sfa_brush.name =
                   g_strdup (sc->vptr->string_value (sc->vptr->pair_car (brush_list)));
-                arg->value.sfa_brush.name =
-                  g_strdup (arg->default_value.sfa_brush.name);
 
                 brush_list = sc->vptr->pair_cdr (brush_list);
                 arg->default_value.sfa_brush.opacity =
                   sc->vptr->rvalue (sc->vptr->pair_car (brush_list));
-                arg->value.sfa_brush.opacity =
-                  arg->default_value.sfa_brush.opacity;
 
                 brush_list = sc->vptr->pair_cdr (brush_list);
                 arg->default_value.sfa_brush.spacing =
                   sc->vptr->ivalue (sc->vptr->pair_car (brush_list));
-                arg->value.sfa_brush.spacing =
-                  arg->default_value.sfa_brush.spacing;
 
                 brush_list = sc->vptr->pair_cdr (brush_list);
                 arg->default_value.sfa_brush.paint_mode =
                   sc->vptr->ivalue (sc->vptr->pair_car (brush_list));
-                arg->value.sfa_brush.paint_mode =
-                  arg->default_value.sfa_brush.paint_mode;
               }
               break;
 
@@ -447,8 +421,6 @@ script_fu_add_script (scheme  *sc,
 
               arg->default_value.sfa_gradient =
                 g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-              arg->value.sfa_gradient =
-                g_strdup (arg->default_value.sfa_gradient);
               break;
 
             case SF_OPTION:
@@ -467,9 +439,6 @@ script_fu_add_script (scheme  *sc,
                                       g_strdup (sc->vptr->string_value
                                                 (sc->vptr->pair_car (option_list))));
                   }
-
-                arg->default_value.sfa_option.history = 0;
-                arg->value.sfa_option.history = 0;
               }
               break;
 
@@ -512,8 +481,7 @@ script_fu_add_script (scheme  *sc,
                   g_enum_get_value_by_nick (g_type_class_peek (enum_type),
                                             sc->vptr->string_value (sc->vptr->pair_car (option_list)));
                 if (enum_value)
-                  arg->default_value.sfa_enum.history =
-                    arg->value.sfa_enum.history = enum_value->value;
+                  arg->default_value.sfa_enum.history = enum_value->value;
               }
               break;
             }
@@ -525,6 +493,9 @@ script_fu_add_script (scheme  *sc,
           return foreign_error (sc, "script-fu-register: missing default argument", 0);
         }
     }
+
+  /*  fill all values from defaults  */
+  script_fu_script_reset (script, TRUE);
 
   script_fu_menu_map (script);
 

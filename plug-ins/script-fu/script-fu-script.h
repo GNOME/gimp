@@ -34,6 +34,10 @@ void       script_fu_script_install_proc            (SFScript        *script,
                                                      GimpRunProc      run_proc);
 void       script_fu_script_uninstall_proc          (SFScript        *script);
 
+gchar    * script_fu_script_get_title               (SFScript        *script);
+void       script_fu_script_reset                   (SFScript        *script,
+                                                     gboolean         reset_ids);
+
 gint       script_fu_script_collect_standard_args   (SFScript        *script,
                                                      gint             n_params,
                                                      const GimpParam *params);
