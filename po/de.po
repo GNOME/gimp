@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 15:40+0200\n"
-"PO-Revision-Date: 2008-09-17 15:42+0200\n"
+"POT-Creation-Date: 2008-09-19 23:11+0200\n"
+"PO-Revision-Date: 2008-09-19 23:10+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1459,7 +1459,7 @@ msgstr "A_blagen"
 msgid "Undo History Menu"
 msgstr "Journal-Menü"
 
-#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:308
+#: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
 msgid "_Undo"
 msgstr "_Rückgängig"
 
@@ -1467,7 +1467,7 @@ msgstr "_Rückgängig"
 msgid "Undo the last operation"
 msgstr "Die letzte Operation rückgängig machen"
 
-#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:309
+#: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:314
 msgid "_Redo"
 msgstr "_Wiederherstellen"
 
@@ -1502,7 +1502,7 @@ msgstr "Journal _leeren"
 msgid "Remove all operations from the undo history"
 msgstr "Alle Einträge aus dem Journal entfernen"
 
-#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:310
+#: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
 msgid "_Fade..."
 msgstr "_Verblassen …"
 
@@ -1637,7 +1637,7 @@ msgstr "Mit _Muster füllen"
 msgid "Fill the selection using the active pattern"
 msgstr "Die Auswahl mit dem aktuellen Muster füllen"
 
-#: ../app/actions/edit-actions.c:281
+#: ../app/actions/edit-actions.c:279
 #, c-format
 msgid "_Undo %s"
 msgstr "_Rückgängig: %s"
@@ -1647,7 +1647,7 @@ msgstr "_Rückgängig: %s"
 msgid "_Redo %s"
 msgstr "_Wiederholen: %s"
 
-#: ../app/actions/edit-actions.c:297
+#: ../app/actions/edit-actions.c:301
 #, c-format
 msgid "_Fade %s..."
 msgstr "%s verblassen …"
@@ -1778,8 +1778,8 @@ msgid "_File"
 msgstr "_Datei"
 
 #: ../app/actions/file-actions.c:67
-msgid "Ne_w"
-msgstr "Ne_u"
+msgid "Create"
+msgstr "Erzeugen"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
@@ -5558,7 +5558,7 @@ msgstr "Parasit entfernen"
 msgid "Import paths"
 msgstr "Pfade importieren"
 
-#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:878
+#: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:885
 msgid "Plug-In"
 msgstr "Plugin"
 
@@ -8751,12 +8751,12 @@ msgstr "Ungültige Zeichenfolge in Adresse"
 msgid "not a GIMP Curves file"
 msgstr "keine GIMP-Kurvendatei"
 
-#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:708
+#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:707
 #, c-format
 msgid "parse error"
 msgstr "Syntaxfehler"
 
-#: ../app/gegl/gimplevelsconfig.c:661
+#: ../app/gegl/gimplevelsconfig.c:660
 #, c-format
 msgid "not a GIMP Levels file"
 msgstr "keine GIMP-Datei mit Einstellungen für Werte"
@@ -12973,3 +12973,6 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#~ msgid "Ne_w"
+#~ msgstr "Ne_u"
