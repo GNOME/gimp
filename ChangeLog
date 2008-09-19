@@ -1,5 +1,10 @@
 2008-09-19  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
+	fix warning about missing braces around array initializer.
+
+2008-09-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-script.[ch]: add new functions
 	script_fu_script_get_title() and script_fu_script_reset().
 

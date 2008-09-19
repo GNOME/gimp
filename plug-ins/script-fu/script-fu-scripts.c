@@ -669,7 +669,7 @@ script_fu_script_proc (const gchar      *name,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals)
 {
-  static GimpParam   values[2] = { 0, };
+  static GimpParam   values[2] = { { 0, }, { 0, } };
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   SFScript          *script;
   GError            *error     = NULL;
