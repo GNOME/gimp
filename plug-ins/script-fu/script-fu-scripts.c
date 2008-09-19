@@ -134,13 +134,12 @@ script_fu_add_script (scheme  *sc,
 {
   SFScript    *script;
   const gchar *name;
-  const gchar *menu_path;
+  const gchar *menu_label;
   const gchar *blurb;
   const gchar *author;
   const gchar *copyright;
   const gchar *date;
   const gchar *image_types;
-  gchar       *mapped;
   gint         n_args;
   gint         i;
 
@@ -155,8 +154,8 @@ script_fu_add_script (scheme  *sc,
   name = sc->vptr->string_value (sc->vptr->pair_car (a));
   a = sc->vptr->pair_cdr (a);
 
-  /*  Find the script menu_path  */
-  menu_path = sc->vptr->string_value (sc->vptr->pair_car (a));
+  /*  Find the script menu_label  */
+  menu_label = sc->vptr->string_value (sc->vptr->pair_car (a));
   a = sc->vptr->pair_cdr (a);
 
   /*  Find the script blurb  */
@@ -192,7 +191,7 @@ script_fu_add_script (scheme  *sc,
 
   /*  Create a new script  */
   script = script_fu_script_new (name,
-                                 menu_path,
+                                 menu_label,
                                  blurb,
                                  author,
                                  copyright,
@@ -498,16 +497,19 @@ script_fu_add_script (scheme  *sc,
   /*  fill all values from defaults  */
   script_fu_script_reset (script, TRUE);
 
-  mapped = script_fu_menu_map (script->menu_path);
-
-  if (mapped)
+  if (script->menu_label[0] == '<')
     {
-      g_free (script->menu_path);
-      script->menu_path = mapped;
+      gchar *mapped = script_fu_menu_map (script->menu_label);
+
+      if (mapped)
+        {
+          g_free (script->menu_label);
+          script->menu_label = mapped;
+        }
     }
 
   {
-    const gchar *key  = gettext (script->menu_path);
+    const gchar *key  = gettext (script->menu_label);
     GList       *list = g_tree_lookup (script_tree, key);
 
     g_tree_insert (script_tree, (gpointer) key, g_list_append (list, script));
@@ -881,10 +883,10 @@ script_fu_menu_compare (gconstpointer a,
                                gettext (menu_b->menu_path));
 
       if (retval == 0 &&
-          menu_a->script->menu_path && menu_b->script->menu_path)
+          menu_a->script->menu_label && menu_b->script->menu_label)
         {
-          retval = g_utf8_collate (gettext (menu_a->script->menu_path),
-                                   gettext (menu_b->script->menu_path));
+          retval = g_utf8_collate (gettext (menu_a->script->menu_label),
+                                   gettext (menu_b->script->menu_label));
         }
     }
 

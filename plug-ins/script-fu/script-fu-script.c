@@ -50,7 +50,7 @@ static gboolean   script_fu_script_param_init (SFScript        *script,
 
 SFScript *
 script_fu_script_new (const gchar *name,
-                      const gchar *menu_path,
+                      const gchar *menu_label,
                       const gchar *blurb,
                       const gchar *author,
                       const gchar *copyright,
@@ -63,7 +63,7 @@ script_fu_script_new (const gchar *name,
   script = g_slice_new0 (SFScript);
 
   script->name        = g_strdup (name);
-  script->menu_path   = g_strdup (menu_path);
+  script->menu_label  = g_strdup (menu_label);
   script->blurb       = g_strdup (blurb);
   script->author      = g_strdup (author);
   script->copyright   = g_strdup (copyright);
@@ -85,7 +85,7 @@ script_fu_script_free (SFScript *script)
 
   g_free (script->name);
   g_free (script->blurb);
-  g_free (script->menu_path);
+  g_free (script->menu_label);
   g_free (script->author);
   g_free (script->copyright);
   g_free (script->date);
@@ -171,7 +171,7 @@ void
 script_fu_script_install_proc (SFScript    *script,
                                GimpRunProc  run_proc)
 {
-  const gchar  *menu_path = NULL;
+  const gchar  *menu_label = NULL;
   GimpParamDef *args;
   gint          i;
 
@@ -179,8 +179,8 @@ script_fu_script_install_proc (SFScript    *script,
   g_return_if_fail (run_proc != NULL);
 
   /* Allow scripts with no menus */
-  if (strncmp (script->menu_path, "<None>", 6) != 0)
-    menu_path = script->menu_path;
+  if (strncmp (script->menu_label, "<None>", 6) != 0)
+    menu_label = script->menu_label;
 
   args = g_new0 (GimpParamDef, script->n_args + 1);
 
@@ -308,7 +308,7 @@ script_fu_script_install_proc (SFScript    *script,
                           script->author,
                           script->copyright,
                           script->date,
-                          menu_path,
+                          menu_label,
                           script->image_types,
                           GIMP_TEMPORARY,
                           script->n_args + 1, 0,
@@ -335,7 +335,7 @@ script_fu_script_get_title (SFScript *script)
   g_return_val_if_fail (script != NULL, NULL);
 
   /* strip mnemonics from the menupath */
-  title = gimp_strip_uline (gettext (script->menu_path));
+  title = gimp_strip_uline (gettext (script->menu_label));
 
   /* if this looks like a full menu path, use only the last part */
   if (title[0] == '<' && (tmp = strrchr (title, '/')) && tmp[1])

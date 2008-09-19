@@ -21,7 +21,7 @@
 
 
 SFScript * script_fu_script_new                     (const gchar     *name,
-                                                     const gchar     *menu_path,
+                                                     const gchar     *menu_label,
                                                      const gchar     *blurb,
                                                      const gchar     *author,
                                                      const gchar     *copyright,

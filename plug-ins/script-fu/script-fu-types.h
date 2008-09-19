@@ -93,7 +93,7 @@ typedef struct
 typedef struct
 {
   gchar        *name;
-  gchar        *menu_path;
+  gchar        *menu_label;
   gchar        *blurb;
   gchar        *author;
   gchar        *copyright;
