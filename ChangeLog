@@ -1,3 +1,8 @@
+2008-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/about-dialog.c: put translator comment on a single
+	line, looks better in the .po file.
+
 2008-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/Makefile.am
