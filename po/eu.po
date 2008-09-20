@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-18 15:46+0200\n"
-"PO-Revision-Date: 2008-09-18 15:47+0200\n"
+"POT-Creation-Date: 2008-09-20 13:28+0200\n"
+"PO-Revision-Date: 2008-09-20 13:29+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1744,8 +1744,8 @@ msgid "_File"
 msgstr "_Fitxategia"
 
 #: ../app/actions/file-actions.c:67
-msgid "Ne_w"
-msgstr "_Berria"
+msgid "Create"
+msgstr "Sortu"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
@@ -8593,12 +8593,12 @@ msgstr "Karaktere-sekuentzia baliogabea URIan"
 msgid "not a GIMP Curves file"
 msgstr "ez da GIMPen kurben fitxategia"
 
-#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:708
+#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
 msgstr "analisi-errorea"
 
-#: ../app/gegl/gimplevelsconfig.c:661
+#: ../app/gegl/gimplevelsconfig.c:664
 #, c-format
 msgid "not a GIMP Levels file"
 msgstr "ez da GIMPen mailen fitxategia"
