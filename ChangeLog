@@ -1,3 +1,12 @@
+2008-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-utils.[ch]: new files containing
+	script_fu_stresacpe().
+
+	* plug-ins/script-fu/script-fu-script.c
+	* plug-ins/script-fu/script-fu-scripts.[ch]: changed accordingly.
+
 2008-09-20  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpcurve.c: whitespace fix

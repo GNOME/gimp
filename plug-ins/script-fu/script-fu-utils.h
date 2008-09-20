@@ -16,15 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCRIPT_FU_SCRIPTS_H__
-#define __SCRIPT_FU_SCRIPTS_H__
+#ifndef __SCRIPT_FU_UTILS_H__
+#define __SCRIPT_FU_UTILS_H__
 
 
-void      script_fu_find_scripts  (const gchar *path);
-pointer   script_fu_add_script    (scheme      *sc,
-                                   pointer      a);
-pointer   script_fu_add_menu      (scheme      *sc,
-                                   pointer      a);
+gchar * script_fu_strescape (const gchar *source);
 
 
-#endif /*  __SCRIPT_FU_SCRIPTS__  */
+#endif /*  __SCRIPT_FU_UTILS__  */

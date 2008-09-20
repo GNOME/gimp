@@ -34,6 +34,9 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
+	script-fu-types.h		\
+	script-fu-enums.h		\
+	\
 	script-fu.c			\
 	script-fu-console.c		\
 	script-fu-console.h		\
@@ -52,8 +55,8 @@ script_fu_SOURCES = \
 	script-fu-scripts.h		\
 	script-fu-server.c		\
 	script-fu-server.h		\
-	script-fu-types.h		\
-	script-fu-enums.h		\
+	script-fu-utils.c		\
+	script-fu-utils.h		\
 	scheme-wrapper.c		\
 	scheme-wrapper.h
 

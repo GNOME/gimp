@@ -29,6 +29,7 @@
 
 #include "script-fu-script.h"
 #include "script-fu-scripts.h"
+#include "script-fu-utils.h"
 
 #include "script-fu-intl.h"
 

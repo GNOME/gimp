@@ -39,6 +39,7 @@
 #include "script-fu-interface.h"
 #include "script-fu-script.h"
 #include "script-fu-scripts.h"
+#include "script-fu-utils.h"
 
 #include "script-fu-intl.h"
 
@@ -891,48 +892,4 @@ script_fu_menu_compare (gconstpointer a,
     }
 
   return retval;
-}
-
-/*
- * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\' and '"'
- * in the string source by inserting a '\' before them.
- */
-gchar *
-script_fu_strescape (const gchar *source)
-{
-  const guchar *p;
-  gchar        *dest;
-  gchar        *q;
-
-  g_return_val_if_fail (source != NULL, NULL);
-
-  p = (const guchar *) source;
-
-  /* Each source byte needs maximally two destination chars */
-  q = dest = g_malloc (strlen (source) * 2 + 1);
-
-  while (*p)
-    {
-      switch (*p)
-        {
-        case '\b':
-        case '\f':
-        case '\n':
-        case '\r':
-        case '\t':
-        case '\\':
-        case '"':
-          *q++ = '\\';
-          /* fallthrough */
-        default:
-          *q++ = *p;
-          break;
-        }
-
-      p++;
-    }
-
-  *q = 0;
-
-  return dest;
 }
