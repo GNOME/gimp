@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-19 23:11+0200\n"
-"PO-Revision-Date: 2008-09-19 23:10+0200\n"
+"PO-Revision-Date: 2008-09-21 00:04+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1779,7 +1779,7 @@ msgstr "_Datei"
 
 #: ../app/actions/file-actions.c:67
 msgid "Create"
-msgstr "Erzeugen"
+msgstr "Erstellen"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
