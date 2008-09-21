@@ -57,24 +57,32 @@ header files installed.
   7. We use dbus-glib if available. Grab it from
      http://dbus.freedesktop.org/releases/dbus-glib/
 
-  8. You may want to install other third party libraries or programs
+  8. Access of remote files is implemented in the URI plug-in. There
+     are several possible implementations for this. The implementation
+     used is determined when you configure GIMP. By default the
+     GIO/GVfs backend is used. If you don't have GVfs support on your
+     target platform, you should pass the '--without-gvfs' option to
+     configure. The configure script will then try to detect another
+     method for accessing remote files.
+
+  9. You may want to install other third party libraries or programs
      that are needed for some of the available plugins. We recommend
      to check that the following libraries are installed: lcms,
      libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg
      and libwmf.
 
-  9. The Python extension requires Python development headers to be
+ 10. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
- 10. Configure GIMP by running the `configure' script. You may want
+ 11. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 11. Build GIMP by running `make'. The use of GNU make is recommended.
+ 12. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 12. Install GIMP by running `make install'. In order to avoid clashes
+ 13. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.5.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.5.

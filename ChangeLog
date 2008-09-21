@@ -1,3 +1,8 @@
+2008-09-21  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention more explicitely that the '--without-gvfs'
+	option should be used with configure if GVfs support is missing.
+
 2008-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/about-dialog.c: put translator comment on a single
