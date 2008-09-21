@@ -1,5 +1,15 @@
 2008-09-21  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/windows-actions.c: don't set a help ID on the
+	display menu items.
+
+	* app/widgets/gimphelp-ids.h: removed now unused help ID.
+
+	* app/menus/windows-menu.c: show a larger image preview in the
+	tooltip.
+
+2008-09-21  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: mention more explicitely that the '--without-gvfs'
 	option should be used with configure if GVfs support is missing.
 

@@ -27,6 +27,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpviewable.h"
 
@@ -65,6 +66,13 @@ static void   windows_menu_recent_add     (GimpContainer     *container,
 static void   windows_menu_recent_remove  (GimpContainer     *container,
                                            GimpSessionInfo   *info,
                                            GimpUIManager     *manager);
+
+static gboolean  windows_menu_display_query_tooltip (GtkWidget  *widget,
+                                                     gint        x,
+                                                     gint        y,
+                                                     gboolean    keyboard_mode,
+                                                     GtkTooltip *tooltip,
+                                                     GimpAction *action);
 
 
 void
@@ -181,11 +189,14 @@ windows_menu_image_notify (GimpDisplay      *display,
 
       if (! merge_id)
         {
+          GtkWidget   *widget;
           const gchar *ui_path;
           gchar       *action_name;
           gchar       *action_path;
+          gchar       *full_path;
 
-          ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
+          ui_path = g_object_get_data (G_OBJECT (manager),
+                                       "image-menu-ui-path");
 
           action_name = g_strdup_printf ("windows-display-%04d",
                                          gimp_display_get_ID (display));
@@ -201,8 +212,26 @@ windows_menu_image_notify (GimpDisplay      *display,
                                  GTK_UI_MANAGER_MENUITEM,
                                  FALSE);
 
-          g_free (action_path);
+          full_path = g_strconcat (action_path, "/", action_name, NULL);
+
+          widget = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
+                                              full_path);
+
+          if (widget)
+            {
+              GtkAction *action;
+
+              action = gimp_ui_manager_find_action (manager,
+                                                    "windows", action_name);
+
+              g_signal_connect_object (widget, "query-tooltip",
+                                       G_CALLBACK (windows_menu_display_query_tooltip),
+                                       action, 0);
+            }
+
           g_free (action_name);
+          g_free (action_path);
+          g_free (full_path);
         }
 
       g_free (merge_key);
@@ -323,4 +352,39 @@ windows_menu_recent_remove (GimpContainer   *container,
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
   g_free (merge_key);
+}
+
+static gboolean
+windows_menu_display_query_tooltip (GtkWidget  *widget,
+                                    gint        x,
+                                    gint        y,
+                                    gboolean    keyboard_mode,
+                                    GtkTooltip *tooltip,
+                                    GimpAction *action)
+{
+  GimpImage *image = GIMP_IMAGE (action->viewable);
+  gchar     *text;
+  gdouble    xres;
+  gdouble    yres;
+  gint       width;
+  gint       height;
+
+  text = gtk_widget_get_tooltip_text (widget);
+  gtk_tooltip_set_text (tooltip, text);
+  g_free (text);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
+                                   gimp_image_get_height (image),
+                                   GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE,
+                                   FALSE, xres, yres,
+                                   &width, &height, NULL);
+
+  gtk_tooltip_set_icon (tooltip,
+                        gimp_viewable_get_pixbuf (action->viewable,
+                                                  action->context,
+                                                  width, height));
+
+  return TRUE;
 }
