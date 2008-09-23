@@ -1,5 +1,11 @@
 2008-09-23  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in: added --without-wmf option to disable build of the
+	WMF plug-in.
+
+2008-09-23  Sven Neumann  <sven@gimp.org>
+
 	Move the "Use GEGL" check-box to the Colors menu (bug #548760):
 
 	* app/actions/Makefile.am

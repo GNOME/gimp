@@ -157,11 +157,16 @@ These are:
      causing any trouble at compile-time, you can build --without-exif.
      Get libexif from http://www.sourceforge.net/projects/libexif.
 
-  --without-mng, --without-aa.  The MNG plug-in needs libmng and
-     configure checks for its presense. If for some reason you don't
-     want to build the MNG plug-in even though the library is installed,
-     use --without-mng to disable it expliticely. The same switch exists
-     for aalib, use --without-aa if you run into problems.
+  --without-aa.  The AA plug-in needs libaa and configure checks for
+     its presense. Use --without-aa if you run into problems.
+
+  --without-mng.  The MNG plug-in needs libmng and configure checks
+     for its presense. If for some reason you don't want to build the
+     MNG plug-in even though the library is installed, use
+     --without-mng to disable it explicitly.
+
+  --without-wmf.  The WMF plug-in needs libwmf2 and configure checks for
+     its presense. Use --without-aa if you run into problems.
 
   --without-webkit.  If for some reason you don't want to build the 
      helpbrowser plug-in, you can use --without-webkit to disable 
