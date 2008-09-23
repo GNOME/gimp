@@ -22,8 +22,6 @@
 
 #include "actions-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -67,6 +65,8 @@ config_actions_setup (GimpActionGroup *group)
                                         config_toggle_actions,
                                         G_N_ELEMENTS (config_toggle_actions));
 
+  config_actions_use_gegl_notify (G_OBJECT (group->gimp->config), NULL, group);
+
   g_signal_connect_object (group->gimp->config,
                            "notify::use-gegl",
                            G_CALLBACK (config_actions_use_gegl_notify),
@@ -77,8 +77,4 @@ void
 config_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-#define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
-
-  SET_ACTIVE ("config-use-gegl", group->gimp->config->use_gegl);
 }
