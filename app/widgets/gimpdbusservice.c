@@ -33,7 +33,7 @@
 
 #include "gimpdbusservice.h"
 #include "gimpdbusservice-glue.h"
-#include "gimpuimanager.c"
+#include "gimpuimanager.h"
 
 
 typedef struct
