@@ -29,8 +29,6 @@
         <menuitem action="debug-dump-items" />
         <menuitem action="debug-dump-managers" />
         <menuitem action="debug-dump-attached-data" />
-        <separator />
-        <menuitem action="debug-use-gegl" />
       </menu>
 
       <separator />
@@ -487,6 +485,8 @@
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
       </placeholder>
+      <separator />
+      <menuitem action="config-use-gegl" />
       <separator />
       <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize" />

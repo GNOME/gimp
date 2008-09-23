@@ -16,27 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DEBUG_COMMANDS_H__
-#define __DEBUG_COMMANDS_H__
+#ifndef __CONFIG_COMMANDS_H__
+#define __CONFIG_COMMANDS_H__
 
 
-#ifdef GIMP_UNSTABLE
-#define ENABLE_DEBUG_MENU 1
-#endif
+void   config_use_gegl_cmd_callback (GtkAction *action,
+                                     gpointer   data);
 
 
-#ifdef ENABLE_DEBUG_MENU
-
-void   debug_mem_profile_cmd_callback        (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_menus_cmd_callback         (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_managers_cmd_callback      (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_attached_data_cmd_callback (GtkAction *action,
-                                              gpointer   data);
-
-#endif /* ENABLE_DEBUG_MENU */
-
-
-#endif /* __DEBUG_COMMANDS_H__ */
+#endif /* __CONFIG_COMMANDS_H__ */

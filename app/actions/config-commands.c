@@ -16,27 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DEBUG_COMMANDS_H__
-#define __DEBUG_COMMANDS_H__
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "actions-types.h"
+
+#include "core/gimp.h"
+
+#include "actions.h"
+#include "config-commands.h"
 
 
-#ifdef GIMP_UNSTABLE
-#define ENABLE_DEBUG_MENU 1
-#endif
+/*  public functions  */
 
+void
+config_use_gegl_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  GtkToggleAction *toggle_action = GTK_TOGGLE_ACTION (action);
+  Gimp            *gimp          = action_data_get_gimp (data);
 
-#ifdef ENABLE_DEBUG_MENU
-
-void   debug_mem_profile_cmd_callback        (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_menus_cmd_callback         (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_managers_cmd_callback      (GtkAction *action,
-                                              gpointer   data);
-void   debug_dump_attached_data_cmd_callback (GtkAction *action,
-                                              gpointer   data);
-
-#endif /* ENABLE_DEBUG_MENU */
-
-
-#endif /* __DEBUG_COMMANDS_H__ */
+  g_object_set (gimp->config,
+                "use-gegl", gtk_toggle_action_get_active (toggle_action),
+                NULL);
+}

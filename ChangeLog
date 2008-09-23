@@ -1,3 +1,25 @@
+2008-09-23  Sven Neumann  <sven@gimp.org>
+
+	Move the "Use GEGL" check-box to the Colors menu (bug #548760):
+
+	* app/actions/Makefile.am
+	* app/actions/config-actions.[ch]
+	* app/actions/config-commands.[ch]: new files holding the "config"
+	action group that includes the "use-gegl" toggle action.
+
+	* app/actions/debug-actions.c
+	* app/actions/debug-commands.[ch]: removed the "use-gegl" action
+	here.
+
+	* app/menus/menus.c
+	* app/actions/actions.c: added the new action group.
+
+	* app/widgets/gimphelp-ids.h: added a help ID for the "use-gegl"
+	action.
+
+	* menus/image-menu.xml.in: moved the "Use GEGL" check-box to the
+	Colors menu.
+
 2008-09-21  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/windows-actions.c: don't set a help ID on the
