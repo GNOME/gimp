@@ -1,3 +1,12 @@
+2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* tools/pdbgen/pdb/selection.pdb (selection_layer_alpha): Update
+	documentation, the layer does not need to have an alpha channel. A
+	layer without an alpha channel is considered opaque.
+
+	* app/pdb/selection-cmds.c 
+	* libgimp/gimpselection_pdb.c: Regenerated.
+
 2008-09-24  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb
