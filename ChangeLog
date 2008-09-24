@@ -1,3 +1,8 @@
+2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c: Added new utility function
+	gimp_rectangle_select_tool_get_operation(), and started using it.
+
 2008-09-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/pygimp-image.c: undef GIMP_DISABLE_DEPRECATED
