@@ -445,17 +445,27 @@ static PyObject *
 img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_width, new_height;
+    int interpolation = -1;
 
-    static char *kwlist[] = { "width", "height", NULL };
+    static char *kwlist[] = { "width", "height", "interpolation", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii:scale", kwlist,
-				     &new_width, &new_height))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|i:scale", kwlist,
+				     &new_width, &new_height, &interpolation))
 	return NULL;
 
-    if (!gimp_image_scale(self->ID, new_width, new_height)) {
-	PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-		     self->ID, new_width, new_height);
-	return NULL;
+    if (interpolation != -1) {
+        if (!gimp_image_scale_full(self->ID,
+                                   new_width, new_height, interpolation)) {
+            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
+    } else {
+        if (!gimp_image_scale(self->ID, new_width, new_height)) {
+            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
     }
 
     Py_INCREF(Py_None);

@@ -1,3 +1,9 @@
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-image.c: added optional interpolation
+	parameters to the image.scale() and layer.scale() methods.
+
 2008-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollereditor.c
