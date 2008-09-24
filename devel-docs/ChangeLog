@@ -1,3 +1,10 @@
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new scale procedures.
+
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimplayer.sgml: regenerated.
+
 2008-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: remove references to $(REGEXREPL).

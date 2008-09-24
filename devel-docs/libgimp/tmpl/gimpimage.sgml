@@ -155,6 +155,18 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_scale_full ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@new_width: 
+@new_height: 
+@interpolation: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_crop ##### -->
 <para>
 
