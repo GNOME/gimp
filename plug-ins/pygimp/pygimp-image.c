@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "pygimp.h"
 
 static PyObject *
@@ -500,7 +501,7 @@ static PyObject *
 img_free_shadow(PyGimpImage *self)
 {
     if (!gimp_image_free_shadow(self->ID)) {
-	PyErr_Format(pygimp_error, "could not free shadow on image (ID %d)",
+	PyErr_Format(pygimp_error, "could not free shadow tiles on image (ID %d)",
 		     self->ID);
 	return NULL;
     }

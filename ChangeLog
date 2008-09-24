@@ -1,5 +1,12 @@
 2008-09-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/pygimp-image.c: undef GIMP_DISABLE_DEPRECATED
+	as we need the deprecated gimp_image_free_shadow() here.
+
+	* plug-ins/pygimp/pygimp-drawable.c: added Drawable.free_shadow().
+
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/pygimp-drawable.c
 	* plug-ins/pygimp/pygimp-image.c: added optional interpolation
 	parameters to the image.scale() and layer.scale() methods.

@@ -94,6 +94,18 @@ drw_merge_shadow(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     return Py_None;
 }
 
+static PyObject *
+drw_free_shadow(PyGimpDrawable *self)
+{
+    if (!gimp_drawable_free_shadow(self->ID)) {
+	PyErr_Format(pygimp_error, "could not free shadow tiles on drawable (ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
 
 static PyObject *
 drw_fill(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
@@ -890,6 +902,7 @@ static PyMethodDef drw_methods[] = {
     {"flush",	(PyCFunction)drw_flush,	METH_NOARGS},
     {"update",	(PyCFunction)drw_update,	METH_VARARGS},
     {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS | METH_KEYWORDS},
+    {"free_shadow", (PyCFunction)drw_free_shadow, METH_NOARGS},
     {"fill",	(PyCFunction)drw_fill,	METH_VARARGS | METH_KEYWORDS},
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS | METH_KEYWORDS},
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS | METH_KEYWORDS},
