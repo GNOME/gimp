@@ -796,7 +796,7 @@ gimp_controller_editor_edit_response (GtkWidget            *dialog,
       g_free (stock_id);
       g_free (action_name);
 
-      gimp_controller_editor_sel_changed (editor->edit_sel, editor);
+      gimp_controller_editor_sel_changed (editor->sel, editor);
     }
 
   gtk_widget_destroy (dialog);

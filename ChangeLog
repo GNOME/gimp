@@ -1,3 +1,12 @@
+2008-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollereditor.c
+	(gimp_controller_editor_edit_response): call
+	gimp_controller_editor_sel_changed() with the right
+	GtkTreeSelection object (the editor's, not the action
+	list's). Fixes crash upon selecting an action for a controller
+	event. Spotted by Alexander Rabtchevich.
+
 2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* tools/pdbgen/pdb/selection.pdb (selection_layer_alpha): Update
