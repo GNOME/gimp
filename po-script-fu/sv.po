@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-12 08:24+0200\n"
-"PO-Revision-Date: 2008-09-12 08:25+0100\n"
+"POT-Creation-Date: 2008-09-24 19:05+0200\n"
+"PO-Revision-Date: 2008-09-24 19:05+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -51,88 +51,73 @@ msgstr "Script-Fu-procedurbläddrare"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:243
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:305
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:353
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-palettväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:506
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-gradientväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:515
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:914
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"Fel vid körning av\n"
-" %s\n"
-"\n"
-"%s"
+msgid "Error while executing %s:"
+msgstr "Fel vid körning av %s:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "För få argument till \"script-fu-register\"-anrop"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:710
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
-msgid ""
-"Error while loading\n"
-"\"%s\"\n"
-"\n"
-"%s"
-msgstr ""
-"Fel vid inläsning av\n"
-" %s\n"
-"\n"
-"%s"
+msgid "Error while loading %s:"
+msgstr "Fel vid inläsning av %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
