@@ -339,12 +339,11 @@ gimp_image_free_shadow (gint32 image_ID)
  *
  * This procedure resizes the image so that it's new width and height
  * are equal to the supplied parameters. Offsets are also provided
- * which describe the position of the previous image's content. No
- * bounds checking is currently provided, so don't supply parameters
- * that are out of bounds. All channels within the image are resized
- * according to the specified parameters; this includes the image
- * selection mask. All layers within the image are repositioned
- * according to the specified offsets.
+ * which describe the position of the previous image's content. All
+ * channels within the image are resized according to the specified
+ * parameters; this includes the image selection mask. All layers
+ * within the image are repositioned according to the specified
+ * offsets.
  *
  * Returns: TRUE on success.
  */
@@ -419,12 +418,10 @@ gimp_image_resize_to_layers (gint32 image_ID)
  *
  * This procedure scales the image so that its new width and height are
  * equal to the supplied parameters. Offsets are also provided which
- * describe the position of the previous image's content. No bounds
- * checking is currently provided, so don't supply parameters that are
- * out of bounds. All channels within the image are scaled according to
- * the specified parameters; this includes the image selection mask.
- * All layers within the image are repositioned according to the
- * specified offsets.
+ * describe the position of the previous image's content. All channels
+ * within the image are scaled according to the specified parameters;
+ * this includes the image selection mask. All layers within the image
+ * are repositioned according to the specified offsets.
  *
  * Returns: TRUE on success.
  */
@@ -1000,8 +997,8 @@ gimp_image_remove_layer (gint32 image_ID,
  *
  * Returns the position of the layer in the layer stack.
  *
- * This procedure determines the positioin of the specified layer in
- * the images layer stack. If the layer doesn't exist in the image, an
+ * This procedure determines the position of the specified layer in the
+ * images layer stack. If the layer doesn't exist in the image, an
  * error is returned.
  *
  * Returns: The position of the layer in the layer stack.
@@ -1244,7 +1241,7 @@ gimp_image_remove_channel (gint32 image_ID,
  *
  * Returns the position of the channel in the channel stack.
  *
- * This procedure determines the positioin of the specified channel in
+ * This procedure determines the position of the specified channel in
  * the images channel stack. If the channel doesn't exist in the image,
  * an error is returned.
  *
@@ -1422,7 +1419,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  * Returns the position of the vectors object in the vectors objects
  * stack.
  *
- * This procedure determines the positioin of the specified vectors
+ * This procedure determines the position of the specified vectors
  * object in the images vectors object stack. If the vectors object
  * doesn't exist in the image, an error is returned.
  *

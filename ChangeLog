@@ -1,3 +1,11 @@
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: fixed error and some typos in the
+	PDB documentation.
+
+	* app/pdb/image-cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2008-09-23  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
