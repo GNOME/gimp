@@ -1,5 +1,20 @@
 2008-09-24  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/image.pdb: added new scale procedures that
+	allow to specify the interpolation explicitly. Fixes bug #486977.
+	Also pass the progress parameter to the scale and rotate functions.
+
+	* app/pdb/image-cmds.c
+	* app/pdb/internal-procs.c
+	* app/pdb/layer-cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: fixed error and some typos in the
 	PDB documentation.
 

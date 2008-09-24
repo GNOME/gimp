@@ -255,15 +255,14 @@ CODE
 }
 
 sub image_scale {
-    $blurb = 'Scale the image to the specified extents.';
+    $blurb = 'Scale the image using the default interpolation method.';
 
     $help = <<'HELP';
+
 This procedure scales the image so that its new width and height are
-equal to the supplied parameters. Offsets are also provided which
-describe the position of the previous image's content. All channels
-within the image are scaled according to the specified parameters;
-this includes the image selection mask. All layers within the image
-are repositioned according to the specified offsets.
+equal to the supplied parameters. All layers and channels within the
+image are scaled according to the specified parameters; this includes
+the image selection mask. The default interpolation method is used.
 HELP
 
     &std_pdb_misc;
@@ -281,9 +280,55 @@ HELP
 	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
+  if (progress)
+    gimp_progress_start (progress, _("Scaling"), FALSE);
+
   gimp_image_scale (image, new_width, new_height,
                     gimp->config->interpolation_type,
-                    NULL);
+                    progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+}
+CODE
+    );
+}
+
+sub image_scale_full {
+    $blurb = 'Scale the image using a specific interpolation method.';
+
+    $help = <<'HELP';
+This procedure scales the image so that its new width and height are
+equal to the supplied parameters. All layers and channels within the
+image are scaled according to the specified parameters; this includes
+the image selection mask. This procedure allows you to specify the
+interpolation method explicitly.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New image width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New image height' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation' }
+    );
+
+    %invoke = (
+	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	code => <<'CODE'
+{
+  if (progress)
+    gimp_progress_start (progress, _("Scaling"), FALSE);
+
+  gimp_image_scale (image, new_width, new_height, interpolation, progress);
+
+  if (progress)
+    gimp_progress_end (progress);
 }
 CODE
     );
@@ -311,9 +356,9 @@ HELP
 	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image height: (0 < new_height <= height)' },
 	{ name => 'offx', type => '0 <= int32',
-	  desc => 'x offset: (0 <= offx <= (width - new_width))' },
+	  desc => 'X offset: (0 <= offx <= (width - new_width))' },
 	{ name => 'offy', type => '0 <= int32',
-	  desc => 'y offset: (0 <= offy <= (height - new_height))' }
+	  desc => 'Y offset: (0 <= offy <= (height - new_height))' }
     );
 
     %invoke = (
@@ -378,7 +423,13 @@ sub image_rotate {
 	headers => [ qw("core/gimpimage-rotate.h") ],
 	code => <<'CODE'
 {
-  gimp_image_rotate (image, context, rotate_type, NULL);
+  if (progress)
+    gimp_progress_start (progress, _("Rotating"), FALSE);
+
+  gimp_image_rotate (image, context, rotate_type, progress);
+
+  if (progress)
+    gimp_progress_end (progress);  
 }
 CODE
     );
@@ -2570,6 +2621,7 @@ CODE
               "base/temp-buf.h"
               "core/gimp.h"
               "core/gimplist.h"
+              "core/gimpprogress.h"
               "core/gimpunit.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
@@ -2582,7 +2634,7 @@ CODE
             image_width image_height
             image_free_shadow
             image_resize image_resize_to_layers
-            image_scale
+            image_scale image_scale_full
             image_crop image_flip image_rotate
             image_get_layers
             image_get_channels
@@ -2624,7 +2676,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..45,48..75]]);
+%exports = (app => [@procs], lib => [@procs[0..46,49..76]]);
 
 $desc = 'Image';
 

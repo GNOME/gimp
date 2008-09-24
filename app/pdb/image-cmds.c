@@ -48,6 +48,7 @@
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
 #include "vectors/gimpvectors.h"
@@ -400,9 +401,49 @@ image_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
       gimp_image_scale (image, new_width, new_height,
                         gimp->config->interpolation_type,
-                        NULL);
+                        progress);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_scale_full_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 new_width;
+  gint32 new_height;
+  gint32 interpolation;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  new_width = g_value_get_int (&args->values[1]);
+  new_height = g_value_get_int (&args->values[2]);
+  interpolation = g_value_get_enum (&args->values[3]);
+
+  if (success)
+    {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
+      gimp_image_scale (image, new_width, new_height, interpolation, progress);
+
+      if (progress)
+        gimp_progress_end (progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -488,7 +529,13 @@ image_rotate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_rotate (image, context, rotate_type, NULL);
+      if (progress)
+        gimp_progress_start (progress, _("Rotating"), FALSE);
+
+      gimp_image_rotate (image, context, rotate_type, progress);
+
+      if (progress)
+        gimp_progress_end (progress);  
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2776,8 +2823,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale",
-                                     "Scale the image to the specified extents.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are scaled according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
+                                     "Scale the image using the default interpolation method.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The default interpolation method is used.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -2800,6 +2847,48 @@ register_image_procs (GimpPDB *pdb)
                                                       "New image height",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-scale-full
+   */
+  procedure = gimp_procedure_new (image_scale_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-scale-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-scale-full",
+                                     "Scale the image using a specific interpolation method.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-width",
+                                                      "new width",
+                                                      "New image width",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-height",
+                                                      "new height",
+                                                      "New image height",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("interpolation",
+                                                  "interpolation",
+                                                  "Type of interpolation",
+                                                  GIMP_TYPE_INTERPOLATION_TYPE,
+                                                  GIMP_INTERPOLATION_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2838,13 +2927,13 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",
                                                       "offx",
-                                                      "x offset: (0 <= offx <= (width - new_width))",
+                                                      "X offset: (0 <= offx <= (width - new_width))",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offy",
                                                       "offy",
-                                                      "y offset: (0 <= offy <= (height - new_height))",
+                                                      "Y offset: (0 <= offy <= (height - new_height))",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

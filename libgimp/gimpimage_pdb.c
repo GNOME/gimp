@@ -414,14 +414,13 @@ gimp_image_resize_to_layers (gint32 image_ID)
  * @new_width: New image width.
  * @new_height: New image height.
  *
- * Scale the image to the specified extents.
+ * Scale the image using the default interpolation method.
  *
  * This procedure scales the image so that its new width and height are
- * equal to the supplied parameters. Offsets are also provided which
- * describe the position of the previous image's content. All channels
- * within the image are scaled according to the specified parameters;
- * this includes the image selection mask. All layers within the image
- * are repositioned according to the specified offsets.
+ * equal to the supplied parameters. All layers and channels within the
+ * image are scaled according to the specified parameters; this
+ * includes the image selection mask. The default interpolation method
+ * is used.
  *
  * Returns: TRUE on success.
  */
@@ -449,12 +448,56 @@ gimp_image_scale (gint32 image_ID,
 }
 
 /**
+ * gimp_image_scale_full:
+ * @image_ID: The image.
+ * @new_width: New image width.
+ * @new_height: New image height.
+ * @interpolation: Type of interpolation.
+ *
+ * Scale the image using a specific interpolation method.
+ *
+ * This procedure scales the image so that its new width and height are
+ * equal to the supplied parameters. All layers and channels within the
+ * image are scaled according to the specified parameters; this
+ * includes the image selection mask. This procedure allows you to
+ * specify the interpolation method explicitly.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_image_scale_full (gint32                image_ID,
+                       gint                  new_width,
+                       gint                  new_height,
+                       GimpInterpolationType interpolation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-scale-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, new_width,
+                                    GIMP_PDB_INT32, new_height,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_crop:
  * @image_ID: The image.
  * @new_width: New image width: (0 < new_width <= width).
  * @new_height: New image height: (0 < new_height <= height).
- * @offx: x offset: (0 <= offx <= (width - new_width)).
- * @offy: y offset: (0 <= offy <= (height - new_height)).
+ * @offx: X offset: (0 <= offx <= (width - new_width)).
+ * @offy: Y offset: (0 <= offy <= (height - new_height)).
  *
  * Crop the image to the specified extents.
  *
