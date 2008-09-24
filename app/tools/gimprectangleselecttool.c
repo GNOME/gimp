@@ -792,14 +792,31 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
         }
       else
         {
-          GimpTool *tool = GIMP_TOOL (rectangle);
+          GimpTool       *tool = GIMP_TOOL (rectangle);
+          GimpChannelOps  operation;
 
           /* prevent this change from halting the tool */
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
-          /* otherwise clear the selection */
-          gimp_channel_clear (selection, NULL, TRUE);
-          gimp_image_flush (image);
+          /* We can conceptually think of a click outside of the
+           * selection as adding a 0px selection. Behave intuitivly
+           * for the current selection mode
+           */
+          operation = gimp_rectangle_select_tool_get_operation (rect_sel_tool);
+          switch (operation)
+            {
+            case GIMP_CHANNEL_OP_REPLACE:
+            case GIMP_CHANNEL_OP_INTERSECT:
+              gimp_channel_clear (selection, NULL, TRUE);
+              gimp_image_flush (image);
+              break;
+
+            case GIMP_CHANNEL_OP_ADD:
+            case GIMP_CHANNEL_OP_SUBTRACT:
+            default:
+              /* Do nothing */
+              break;
+            }
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
         }

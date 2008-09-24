@@ -1,5 +1,16 @@
 2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 549925 – incorrect math: adding/substracting empty selection
+	deselects selection
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_select_tool_execute): Be more intuitive when
+	clicking outside the current selection for the selection modes Add
+	and Subtract. More specifically, don't alter the selection mask at
+	all.
+
+2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleselecttool.c: Added new utility function
 	gimp_rectangle_select_tool_get_operation(), and started using it.
 
