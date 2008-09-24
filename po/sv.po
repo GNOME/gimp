@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 10:00+0200\n"
-"PO-Revision-Date: 2008-09-19 10:02+0100\n"
+"POT-Creation-Date: 2008-09-24 19:05+0200\n"
+"PO-Revision-Date: 2008-09-24 19:06+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -227,7 +227,7 @@ msgstr "använder %s version %s (kompilerad mot version %s)"
 msgid "%s version %s"
 msgstr "%s version %s"
 
-#: ../app/actions/actions.c:100
+#: ../app/actions/actions.c:101
 #: ../app/actions/dialogs-actions.c:123
 #: ../app/dialogs/dialogs.c:224
 #: ../app/widgets/gimpbrusheditor.c:90
@@ -235,86 +235,90 @@ msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:103
+#: ../app/actions/actions.c:104
 #: ../app/core/gimp.c:824
 #: ../app/dialogs/dialogs.c:157
 #: ../app/dialogs/preferences-dialog.c:2738
 msgid "Brushes"
 msgstr "Penslar"
 
-#: ../app/actions/actions.c:106
+#: ../app/actions/actions.c:107
 #: ../app/dialogs/dialogs.c:169
 msgid "Buffers"
 msgstr "Buffertar"
 
-#: ../app/actions/actions.c:109
+#: ../app/actions/actions.c:110
 #: ../app/dialogs/dialogs.c:182
 msgid "Channels"
 msgstr "Kanaler"
 
-#: ../app/actions/actions.c:112
+#: ../app/actions/actions.c:113
 #: ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:190
 msgid "Colormap"
 msgstr "Färgkarta"
 
-#: ../app/actions/actions.c:115
+#: ../app/actions/actions.c:116
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: ../app/actions/actions.c:119
 msgid "Context"
 msgstr "Sammanhang"
 
-#: ../app/actions/actions.c:118
+#: ../app/actions/actions.c:122
 #: ../app/dialogs/dialogs.c:150
 msgid "Pointer Information"
 msgstr "Pekarinformation"
 
-#: ../app/actions/actions.c:121
+#: ../app/actions/actions.c:125
 msgid "Debug"
 msgstr "Felsök"
 
-#: ../app/actions/actions.c:124
+#: ../app/actions/actions.c:128
 msgid "Dialogs"
 msgstr "Dialoger"
 
-#: ../app/actions/actions.c:127
+#: ../app/actions/actions.c:131
 msgid "Dock"
 msgstr "Docka"
 
-#: ../app/actions/actions.c:130
+#: ../app/actions/actions.c:134
 msgid "Dockable"
 msgstr "Dockningsbar"
 
 #. Document History
-#: ../app/actions/actions.c:133
+#: ../app/actions/actions.c:137
 #: ../app/dialogs/dialogs.c:171
 #: ../app/dialogs/preferences-dialog.c:1589
 msgid "Document History"
 msgstr "Dokumenthistorik"
 
-#: ../app/actions/actions.c:136
+#: ../app/actions/actions.c:140
 msgid "Drawable"
 msgstr "Rityta"
 
-#: ../app/actions/actions.c:139
+#: ../app/actions/actions.c:143
 #: ../app/tools/tools-enums.c:300
 msgid "Edit"
 msgstr "Redigera"
 
-#: ../app/actions/actions.c:142
+#: ../app/actions/actions.c:146
 #: ../app/dialogs/dialogs.c:146
 msgid "Error Console"
 msgstr "Felkonsoll"
 
-#: ../app/actions/actions.c:145
+#: ../app/actions/actions.c:149
 msgid "File"
 msgstr "Fil"
 
-#: ../app/actions/actions.c:148
+#: ../app/actions/actions.c:152
 #: ../app/dialogs/dialogs.c:165
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Fonts"
 msgstr "Typsnitt"
 
-#: ../app/actions/actions.c:151
+#: ../app/actions/actions.c:155
 #: ../app/actions/dialogs-actions.c:141
 #: ../app/dialogs/dialogs.c:228
 #: ../app/widgets/gimpgradienteditor.c:276
@@ -322,36 +326,36 @@ msgid "Gradient Editor"
 msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:154
+#: ../app/actions/actions.c:158
 #: ../app/core/gimp.c:836
 #: ../app/dialogs/dialogs.c:161
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradients"
 msgstr "Gradienter"
 
-#: ../app/actions/actions.c:157
+#: ../app/actions/actions.c:161
 msgid "Help"
 msgstr "Hjälp"
 
-#: ../app/actions/actions.c:160
+#: ../app/actions/actions.c:164
 #: ../app/core/core-enums.c:212
 #: ../app/tools/tools-enums.c:242
 msgid "Image"
 msgstr "Bild"
 
 #. list & grid views
-#: ../app/actions/actions.c:163
+#: ../app/actions/actions.c:167
 #: ../app/dialogs/dialogs.c:155
 msgid "Images"
 msgstr "Bilder"
 
-#: ../app/actions/actions.c:166
+#: ../app/actions/actions.c:170
 #: ../app/dialogs/dialogs.c:178
 #: ../app/dialogs/resize-dialog.c:286
 msgid "Layers"
 msgstr "Lager"
 
-#: ../app/actions/actions.c:169
+#: ../app/actions/actions.c:173
 #: ../app/actions/dialogs-actions.c:153
 #: ../app/dialogs/dialogs.c:232
 #: ../app/widgets/gimppaletteeditor.c:155
@@ -359,7 +363,7 @@ msgid "Palette Editor"
 msgstr "Palettredigerare"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:172
+#: ../app/actions/actions.c:176
 #: ../app/core/gimp.c:832
 #: ../app/dialogs/dialogs.c:163
 #: ../app/dialogs/preferences-dialog.c:2746
@@ -367,67 +371,67 @@ msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:175
+#: ../app/actions/actions.c:179
 #: ../app/core/gimp.c:828
 #: ../app/dialogs/dialogs.c:159
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Patterns"
 msgstr "Mönster"
 
-#: ../app/actions/actions.c:178
+#: ../app/actions/actions.c:182
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Plug-Ins"
 msgstr "Insticksmoduler"
 
-#: ../app/actions/actions.c:181
+#: ../app/actions/actions.c:185
 #: ../app/core/core-enums.c:860
 #: ../app/core/gimpchannel.c:362
 msgid "Quick Mask"
 msgstr "Snabbmask"
 
-#: ../app/actions/actions.c:184
+#: ../app/actions/actions.c:188
 #: ../app/dialogs/dialogs.c:206
 msgid "Sample Points"
 msgstr "Sampelspunkter"
 
-#: ../app/actions/actions.c:187
+#: ../app/actions/actions.c:191
 msgid "Select"
 msgstr "Välj"
 
 #. initialize the template list
-#: ../app/actions/actions.c:190
+#: ../app/actions/actions.c:194
 #: ../app/core/gimp.c:845
 #: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "Mallar"
 
-#: ../app/actions/actions.c:193
+#: ../app/actions/actions.c:197
 msgid "Text Editor"
 msgstr "Textredigerare"
 
-#: ../app/actions/actions.c:196
+#: ../app/actions/actions.c:200
 #: ../app/dialogs/dialogs.c:138
 #: ../app/dialogs/preferences-dialog.c:1874
 #: ../app/gui/gui.c:421
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
-#: ../app/actions/actions.c:199
+#: ../app/actions/actions.c:203
 #: ../app/dialogs/dialogs.c:167
 msgid "Tools"
 msgstr "Verktyg"
 
-#: ../app/actions/actions.c:202
+#: ../app/actions/actions.c:206
 #: ../app/dialogs/dialogs.c:186
 #: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Slingor"
 
-#: ../app/actions/actions.c:205
+#: ../app/actions/actions.c:209
 msgid "View"
 msgstr "Visa"
 
-#: ../app/actions/actions.c:208
+#: ../app/actions/actions.c:212
 msgid "Windows"
 msgstr "Fönster"
 
@@ -742,6 +746,14 @@ msgstr "Redigera färgpalettpost nr. %d"
 msgid "Edit Colormap Entry"
 msgstr "Redigera färgpalettpost"
 
+#: ../app/actions/config-actions.c:39
+msgid "Use _GEGL"
+msgstr "Använd _GEGL"
+
+#: ../app/actions/config-actions.c:40
+msgid "If possible, use GEGL for image processing"
+msgstr "Om möjligt, använd GEGL för bildbehandling"
+
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
 msgstr "_Sammanhang"
@@ -872,7 +884,7 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:222
 #: ../app/core/gimppalette.c:333
 #: ../app/dialogs/palette-import-dialog.c:774
-#: ../app/pdb/image-cmds.c:2151
+#: ../app/pdb/image-cmds.c:2198
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Namnlös"
@@ -1793,8 +1805,8 @@ msgid "_File"
 msgstr "_Arkiv"
 
 #: ../app/actions/file-actions.c:67
-msgid "Ne_w"
-msgstr "N_y"
+msgid "Create"
+msgstr "Skapa"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
@@ -2591,6 +2603,7 @@ msgstr "Vänder"
 #: ../app/actions/image-commands.c:383
 #: ../app/pdb/drawable-transform-cmds.c:525
 #: ../app/pdb/drawable-transform-cmds.c:604
+#: ../app/pdb/image-cmds.c:533
 #: ../app/pdb/transform-tools-cmds.c:215
 #: ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
@@ -2616,6 +2629,10 @@ msgstr "Skala bild"
 #: ../app/dialogs/preferences-dialog.c:1919
 #: ../app/pdb/drawable-transform-cmds.c:682
 #: ../app/pdb/drawable-transform-cmds.c:758
+#: ../app/pdb/image-cmds.c:405
+#: ../app/pdb/image-cmds.c:441
+#: ../app/pdb/layer-cmds.c:289
+#: ../app/pdb/layer-cmds.c:334
 #: ../app/pdb/transform-tools-cmds.c:291
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
@@ -5516,7 +5533,7 @@ msgstr "Konvertera till RGB-arbetsrymd"
 #: ../app/core/gimp-contexts.c:155
 #: ../app/core/gimptooloptions.c:231
 #: ../app/gui/session.c:307
-#: ../app/menus/menus.c:430
+#: ../app/menus/menus.c:433
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -6436,8 +6453,8 @@ msgid "Rename Layer"
 msgstr "Byt namn på lager"
 
 #: ../app/core/gimplayer.c:250
-#: ../app/pdb/layer-cmds.c:378
-#: ../app/pdb/layer-cmds.c:414
+#: ../app/pdb/layer-cmds.c:434
+#: ../app/pdb/layer-cmds.c:470
 msgid "Move Layer"
 msgstr "Flytta lager"
 
@@ -6735,10 +6752,8 @@ msgstr "procent"
 msgid "Visit the GIMP website"
 msgstr "Besök webbplatsen för GIMP"
 
-#. Translators: insert your names here,
-#. * separated by newline
-#.
-#: ../app/dialogs/about-dialog.c:130
+#. Translators: insert your names here, separated by newline
+#: ../app/dialogs/about-dialog.c:128
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander\n"
@@ -6746,11 +6761,11 @@ msgstr ""
 "Christian Rose\n"
 "Tomas Ögren"
 
-#: ../app/dialogs/about-dialog.c:531
+#: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
 msgstr "GIMP presenteras av"
 
-#: ../app/dialogs/about-dialog.c:605
+#: ../app/dialogs/about-dialog.c:603
 msgid "This is an unstable development release."
 msgstr "Det här är en instabil utvecklingsutgåva."
 
@@ -8462,12 +8477,12 @@ msgid "not a GIMP Curves file"
 msgstr "inte en GIMP-kurvfil"
 
 #: ../app/gegl/gimpcurvesconfig.c:406
-#: ../app/gegl/gimplevelsconfig.c:707
+#: ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
 msgstr "tolkningsfel"
 
-#: ../app/gegl/gimplevelsconfig.c:660
+#: ../app/gegl/gimplevelsconfig.c:664
 #, c-format
 msgid "not a GIMP Levels file"
 msgstr "inte en GIMP-nivåfil"
@@ -8821,7 +8836,7 @@ msgstr "Proceduren \"%s\" returnerade \"%s\" som svarsvärde \"%s\" (nr. %d, typ
 msgid "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This value is out of range."
 msgstr "Proceduren \"%s\" har anropats med värdet \"%s\" för argumentet \"%s\" (nr. %d, typ %s). Det här värdet är utanför intervallet."
 
-#: ../app/pdb/image-cmds.c:2221
+#: ../app/pdb/image-cmds.c:2268
 #, c-format
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Bildupplösningen är utanför intervallet, använder standardupplösningen istället."
@@ -12626,6 +12641,8 @@ msgstr "Försäkra dig om att verktygslådan är synlig!"
 msgid "Couldn't start '%s': %s"
 msgstr "Kunde inte starta \"%s\": %s"
 
+#~ msgid "Ne_w"
+#~ msgstr "N_y"
 #~ msgid "Channel is already on top."
 #~ msgstr "Kanalen är redan överst."
 #~ msgid "Channel is already on the bottom."
@@ -14387,8 +14404,6 @@ msgstr "Kunde inte starta \"%s\": %s"
 #~ msgstr ""
 #~ "Du kan även trycka på \"Kalibrera\" nedan för att öppna ett fönster som "
 #~ "låter dig kalibrera bildskärmsupplösningen interaktivt."
-#~ msgid "Calibrate"
-#~ msgstr "Kalibrera"
 #~ msgid "/Tools/Selection Tools/Fu_zzy Select"
 #~ msgstr "/Verktyg/Markeringsverktyg/_Luddig markering"
 #~ msgid "Threshold Range:"
