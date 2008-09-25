@@ -157,6 +157,26 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
 
 /*  private functions  */
 
+/*
+ * Position the dropped item in the middle of the viewport.
+ */
+static void
+gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
+                                      GimpItem         *item)
+{
+  gint x, y;
+  gint width, height;
+  gint off_x, off_y;
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  off_x = x + (width  - gimp_item_width  (item)) / 2 - off_x;
+  off_y = y + (height - gimp_item_height (item)) / 2 - off_y;
+
+  gimp_item_translate (item, off_x, off_y, FALSE);
+}
 
 static void
 gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
@@ -235,21 +255,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                    _("Drop New Layer"));
 
       if (! new_image)
-        {
-          gint x, y;
-          gint width, height;
-          gint off_x, off_y;
-
-          gimp_item_offsets (new_item, &off_x, &off_y);
-
-          gimp_display_shell_untransform_viewport (shell,
-                                                   &x, &y, &width, &height);
-
-          off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-          off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-          gimp_item_translate (new_item, off_x, off_y, FALSE);
-        }
+        gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
@@ -554,8 +560,6 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
   if (new_item)
     {
       GimpLayer *new_layer = GIMP_LAYER (new_item);
-      gint       x, y, width, height;
-      gint       off_x, off_y;
 
       gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                            NULL, NULL, &desc, NULL);
@@ -565,14 +569,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      gimp_item_offsets (new_item, &off_x, &off_y);
-
-      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-      gimp_item_translate (new_item, off_x, off_y, FALSE);
+      gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_image_add_layer (dest_image, new_layer, -1);
 

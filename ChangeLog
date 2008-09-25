@@ -1,3 +1,10 @@
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_component)
+	(gimp_display_shell_drop_drawable): moved duplicate code into a
+	helper function.
+
 2008-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/print-draw-page.c
