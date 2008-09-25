@@ -641,21 +641,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
                                    _("Drop New Layer"));
 
       if (! new_image)
-        {
-          gint x, y;
-          gint width, height;
-          gint off_x, off_y;
-
-          gimp_display_shell_untransform_viewport (shell,
-                                                   &x, &y, &width, &height);
-
-          gimp_item_offsets (new_item, &off_x, &off_y);
-
-          off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-          off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-          gimp_item_translate (new_item, off_x, off_y, FALSE);
-        }
+        gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_image_add_layer (image, new_layer, -1);
 

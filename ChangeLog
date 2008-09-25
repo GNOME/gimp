@@ -1,3 +1,9 @@
+2008-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_pixbuf): use the new helper function here
+	too.
+
 2008-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c
