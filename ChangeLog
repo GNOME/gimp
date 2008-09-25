@@ -1,5 +1,14 @@
 2008-09-25  Michael Natterer  <mitch@gimp.org>
 
+	Bug 553530 – fatal error: Segmentation fault - when attempting to
+	bring up color-picker:
+
+	* modules/color-selector-wheel.c: declare gtk_hsv_get_type() if
+	not already done by GTK+. Fixes confusion about its return value
+	being 32 or 64 bit on 64 bit machines.
+
+2008-09-25  Michael Natterer  <mitch@gimp.org>
+
 	Bug 549195 – Color Wheel not working (GtkHSV):
 
 	* modules/color-selector-wheel.c: change packing and size requests
