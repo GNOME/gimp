@@ -188,6 +188,7 @@ print_cairo_surface_from_drawable (gint32 drawable_ID)
       colors = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
                                         &num_colors);
       memcpy (cmap, colors, 3 * num_colors);
+      g_free (colors);
     }
 
   surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable_ID) ?
@@ -246,8 +247,6 @@ print_cairo_surface_from_drawable (gint32 drawable_ID)
       if (count++ % 16 == 0)
         gimp_progress_update ((gdouble) done / (width * height));
     }
-
-  g_free (cmap);
 
   gimp_drawable_detach (drawable);
 
