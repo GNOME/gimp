@@ -1,3 +1,8 @@
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app.types: some updates; still a lot to do here...
+
 2008-09-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new scale procedures.

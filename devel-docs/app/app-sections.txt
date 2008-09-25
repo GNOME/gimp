@@ -449,6 +449,7 @@ Gimp
 gimp_new
 gimp_initialize
 gimp_restore
+gimp_is_restored
 gimp_exit
 gimp_load_config
 gimp_create_image
@@ -771,6 +772,7 @@ gimp_buffer_get_bytes
 gimp_buffer_get_image_type
 gimp_buffer_get_width
 gimp_buffer_get_height
+gimp_buffer_get_tiles
 <SUBSECTION Standard>
 GimpBufferClass
 GIMP_BUFFER
@@ -1064,6 +1066,7 @@ gimp_data_create_filename
 gimp_data_get_mime_type
 gimp_data_duplicate
 gimp_data_make_internal
+gimp_data_compare
 gimp_data_name_compare
 GIMP_DATA_ERROR
 gimp_data_error_quark
@@ -1561,6 +1564,7 @@ gimp_image_dirty
 gimp_image_clean
 gimp_image_clean_all
 gimp_image_flush
+gimp_image_get_projection
 gimp_image_get_foreground
 gimp_image_get_background
 gimp_image_get_color
@@ -2584,6 +2588,19 @@ gimp_value_dup_stringarray
 gimp_value_set_stringarray
 gimp_value_set_static_stringarray
 gimp_value_take_stringarray
+gimp_param_color_array_get_type
+GIMP_TYPE_PARAM_COLOR_ARRAY
+GIMP_PARAM_SPEC_COLOR_ARRAY
+GIMP_IS_PARAM_SPEC_COLOR_ARRAY
+GimpParamSpecColorArray
+gimp_color_array_get_type
+gimp_param_spec_color_array
+gimp_value_dup_colorarray
+gimp_value_get_colorarray
+gimp_value_set_colorarray
+gimp_value_set_static_colorarray
+gimp_value_take_colorarray
+
 <SUBSECTION Standard>
 GIMP_PARAM_SPEC_INT32
 GIMP_IS_PARAM_SPEC_INT32
@@ -2619,6 +2636,7 @@ gimp_canvas_set_clip_region
 gimp_canvas_set_custom_gc
 gimp_canvas_set_stipple_index
 gimp_canvas_set_bg_color
+gimp_canvas_scroll
 <SUBSECTION Standard>
 GimpCanvasClass
 GIMP_CANVAS
@@ -2784,7 +2802,6 @@ gimp_display_shell_get_padding
 <SECTION>
 <FILE>gimpdisplayshell-callbacks</FILE>
 <TITLE>GimpDisplayShell-callbacks</TITLE>
-GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK
 gimp_display_shell_events
 gimp_display_shell_canvas_realize
 gimp_display_shell_canvas_size_allocate
@@ -2898,19 +2915,22 @@ gimp_display_shell_render
 <SECTION>
 <FILE>gimpdisplayshell-scale</FILE>
 <TITLE>GimpDisplayShell-scale</TITLE>
-gimp_display_shell_scale_setup
+gimp_display_shell_update_scrollbars_and_rulers
+gimp_display_shell_scale_update_scrollbars
+gimp_display_shell_scale_update_rulers
 gimp_display_shell_scale_revert
 gimp_display_shell_scale_can_revert
 gimp_display_shell_scale_set_dot_for_dot
 gimp_display_shell_scale
-gimp_display_shell_scale_to
 gimp_display_shell_scale_fit_in
+gimp_display_shell_scale_image_is_within_viewport
 gimp_display_shell_scale_fill
+gimp_display_shell_scale_handle_zoom_revert
 gimp_display_shell_scale_by_values
 gimp_display_shell_scale_shrink_wrap
 gimp_display_shell_scale_resize
+gimp_display_shell_calculate_scale_x_and_y
 gimp_display_shell_set_initial_scale
-gimp_display_shell_scale_dialog
 </SECTION>
 
 <SECTION>
@@ -3450,8 +3470,8 @@ GIMP_PENCIL_OPTIONS_GET_CLASS
 <TITLE>GimpPerspectiveClone</TITLE>
 GimpPerspectiveClone
 gimp_perspective_clone_register
+gimp_perspective_clone_set_transform
 gimp_perspective_clone_get_source_point
-gimp_perspective_clone_get_matrix
 <SUBSECTION Standard>
 GimpPerspectiveCloneClass
 GIMP_PERSPECTIVE_CLONE
@@ -4062,6 +4082,7 @@ gimp_draw_tool_calc_distance_square
 gimp_draw_tool_in_radius
 gimp_draw_tool_draw_line
 gimp_draw_tool_draw_dashed_line
+gimp_draw_tool_draw_guide_line
 gimp_draw_tool_draw_rectangle
 gimp_draw_tool_draw_arc
 gimp_draw_tool_draw_rectangle_by_anchor
@@ -4342,7 +4363,6 @@ GIMP_IMAGE_MAP_TOOL_GET_CLASS
 <FILE>gimpimagemaptool-settings</FILE>
 <TITLE>GimpImageMapTool-settings</TITLE>
 gimp_image_map_tool_add_settings_gui
-gimp_image_map_tool_add_recent_settings
 gimp_image_map_tool_real_settings_import
 gimp_image_map_tool_real_settings_export
 </SECTION>
@@ -5002,6 +5022,8 @@ gimp_tool_control_set_toggle_cursor_modifier
 gimp_tool_control_get_cursor
 gimp_tool_control_get_tool_cursor
 gimp_tool_control_get_cursor_modifier
+gimp_tool_control_get_precision
+gimp_tool_control_set_precision
 gimp_tool_control_set_action_value_1
 gimp_tool_control_get_action_value_1
 gimp_tool_control_set_action_value_2
@@ -5357,6 +5379,7 @@ GIMP_ACTION_GROUP_GET_CLASS
 <TITLE>GimpActionView</TITLE>
 GimpActionView
 gimp_action_view_new
+gimp_action_view_set_filter
 <SUBSECTION Standard>
 GimpActionViewClass
 GIMP_ACTION_VIEW
@@ -5829,6 +5852,7 @@ GIMP_CONTAINER_POPUP_GET_CLASS
 <TITLE>GimpContainerTreeView</TITLE>
 GimpContainerTreeView
 gimp_container_tree_view_new
+gimp_container_tree_view_connect_name_edited
 <SUBSECTION Standard>
 GimpContainerTreeViewClass
 GIMP_CONTAINER_TREE_VIEW
@@ -7115,6 +7139,8 @@ gimp_view_popup_show
 <TITLE>GimpNavigationView</TITLE>
 GimpNavigationView
 gimp_navigation_view_set_marker
+gimp_navigation_view_set_motion_offset
+gimp_navigation_view_get_local_marker
 gimp_navigation_view_grab_pointer
 <SUBSECTION Standard>
 GimpNavigationViewClass
@@ -8009,6 +8035,7 @@ curves_lut_func
 <FILE>gimphistogram</FILE>
 GimpHistogram
 gimp_histogram_new
+gimp_histogram_duplicate
 gimp_histogram_ref
 gimp_histogram_unref
 gimp_histogram_calculate
@@ -8102,7 +8129,9 @@ pixel_regions_process_stop
 <SECTION>
 <FILE>pixel-surround</FILE>
 PixelSurround
+PixelSurroundMode
 pixel_surround_new
+pixel_surround_set_bg
 pixel_surround_lock
 pixel_surround_release
 pixel_surround_destroy
@@ -9034,12 +9063,14 @@ gimp_marshal_BOOLEAN__BOOLEAN
 gimp_marshal_BOOLEAN__ENUM_INT
 gimp_marshal_BOOLEAN__OBJECT_POINTER
 gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING
+gimp_marshal_BOOLEAN__STRING
 gimp_marshal_VOID__BOOLEAN
 gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT
 gimp_marshal_VOID__BOXED
 gimp_marshal_VOID__BOXED_ENUM
 gimp_marshal_VOID__DOUBLE
 gimp_marshal_VOID__DOUBLE_DOUBLE
+gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE
 gimp_marshal_VOID__ENUM
 gimp_marshal_VOID__ENUM_ENUM_BOXED_INT
 gimp_marshal_VOID__ENUM_OBJECT
@@ -9519,6 +9550,7 @@ blend_region
 shade_region
 copy_region
 copy_region_nocow
+clear_region
 add_alpha_region
 flatten_region
 extract_alpha_region
@@ -9715,6 +9747,7 @@ gimp_plug_in_procedure_get_help_domain
 gimp_plug_in_procedure_set_help_domain
 gimp_plug_in_procedure_get_locale_domain
 gimp_plug_in_procedure_set_locale_domain
+gimp_plug_in_procedure_handle_return_values
 <SUBSECTION Standard>
 GimpPlugInProcedureClass
 GIMP_PLUG_IN_PROCEDURE
@@ -9793,6 +9826,8 @@ gimp_plug_in_get_undo_desc
 gimp_plug_in_menu_register
 gimp_plug_in_add_temp_proc
 gimp_plug_in_remove_temp_proc
+gimp_plug_in_set_error_handler
+gimp_plug_in_get_error_handler
 WRITE_BUFFER_SIZE
 <SUBSECTION Standard>
 GimpPlugInClass
@@ -9865,7 +9900,7 @@ gimp_plug_in_proc_frame_init
 gimp_plug_in_proc_frame_dispose
 gimp_plug_in_proc_frame_ref
 gimp_plug_in_proc_frame_unref
-gimp_plug_in_proc_frame_get_return_vals
+gimp_plug_in_proc_frame_get_return_values
 </SECTION>
 
 <SECTION>
@@ -10049,12 +10084,10 @@ gimp_text_outline_get_type
 <SECTION>
 <FILE>gimpeditselectiontool</FILE>
 <TITLE>GimpEditSelectionTool</TITLE>
-GimpEditSelectionTool
 gimp_edit_selection_tool_start
 gimp_edit_selection_tool_key_press
 gimp_edit_selection_tool_translate
 <SUBSECTION Standard>
-GimpEditSelectionToolClass
 GIMP_EDIT_SELECTION_TOOL
 GIMP_IS_EDIT_SELECTION_TOOL
 GIMP_TYPE_EDIT_SELECTION_TOOL
@@ -10348,6 +10381,7 @@ gimp_selection_data_get_tool_info
 <SECTION>
 <FILE>gimphelp</FILE>
 gimp_help_show
+gimp_help_user_manual_is_installed
 </SECTION>
 
 <SECTION>
@@ -10911,6 +10945,7 @@ edit_copy_visible_cmd_callback
 edit_paste_cmd_callback
 edit_paste_into_cmd_callback
 edit_paste_as_new_cmd_callback
+edit_paste_as_new_layer_cmd_callback
 edit_named_cut_cmd_callback
 edit_named_copy_cmd_callback
 edit_named_copy_visible_cmd_callback
@@ -11019,6 +11054,7 @@ layers_raise_to_top_cmd_callback
 layers_lower_to_bottom_cmd_callback
 layers_new_cmd_callback
 layers_new_last_vals_cmd_callback
+layers_new_from_visible_cmd_callback
 layers_duplicate_cmd_callback
 layers_anchor_cmd_callback
 layers_merge_down_cmd_callback
