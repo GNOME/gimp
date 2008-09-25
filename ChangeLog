@@ -1,5 +1,10 @@
 2008-09-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/colorize.c (colorize_calculate): fix calculation of
+	final lookup table to not darken the image.
+
+2008-09-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.c
 	(gimp_display_shell_drop_pixbuf): use the new helper function here
 	too.
