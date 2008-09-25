@@ -55,7 +55,7 @@ static void gui_unique_win32_init  (Gimp *gimp);
 static void gui_unique_win32_exit  (void);
 
 static Gimp            *unique_gimp      = NULL;
-static HWND             proxy_window     = NULL;          
+static HWND             proxy_window     = NULL;
 #endif
 
 
@@ -157,6 +157,12 @@ idle_open_data_free (IdleOpenData *data)
 static gboolean
 gui_unique_win32_idle_open (IdleOpenData *data)
 {
+  /*  We want to be called again later in case that GIMP is not fully
+   *  started yet.
+   */
+  if (! gimp_is_restored (unique_gimp))
+    return TRUE;
+
   if (data->name)
     {
       file_open_from_command_line (unique_gimp, data->name, data->as_new);
@@ -202,6 +208,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
           g_object_watch_closure (unique_gimp, closure);
 
           source = g_idle_source_new ();
+          g_source_set_priority (source, G_PRIORITY_LOW);
           g_source_set_closure (source, closure);
           g_source_attach (source, NULL);
           g_source_unref (source);

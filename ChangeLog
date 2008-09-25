@@ -1,3 +1,22 @@
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp.[ch]: added a 'restored' flag to the Gimp object
+	and set it in gimp_real_restore(). Added method gimp_is_restored().
+
+	* app/gui/gui.c: call gui_unique_init() in gui_init() instead of
+	that later in gui_restore_after_callback(). By doing so we start
+	our DBus service (or message proxy window on Win32) much earlier
+	in the start process, thus reducing the time frame where two
+	instances of gimp can be launched.
+
+	* app/gui/gui-unique.c
+	* app/gui/gimpdbusservice.c: wait handling the queued file-open
+	requests until gimp is fully restored.
+
+	* app/gui/splash.c (splash_update): only run one iteration of the
+	main loop. Doing it in a while loop can cause us to get stuck if
+	the gimp-unique service already added an idle handler.
+
 2008-09-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 549925 – incorrect math: adding/substracting empty selection

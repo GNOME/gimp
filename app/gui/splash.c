@@ -252,7 +252,7 @@ splash_update (const gchar *text1,
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
                                  percentage);
 
-  while (gtk_events_pending ())
+  if (gtk_events_pending ())
     gtk_main_iteration ();
 }
 
