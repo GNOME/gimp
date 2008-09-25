@@ -1,5 +1,12 @@
 2008-09-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-jpeg/jpeg.[ch]
+	* plug-ins/file-jpeg/jpeg-save.[ch]
+	* plug-ins/file-jpeg/jpeg-settings.[ch]: introduced an enum for
+	the subsampling factor.
+
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
 	Bug 553412 – JPEG sampling factors not set to 1x1 on grayscale
 	images:
 

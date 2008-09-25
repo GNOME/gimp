@@ -45,15 +45,21 @@
 #include "config.h"
 
 #include <string.h>
+#include <setjmp.h>
 
 #include <glib/gstdio.h>
 
 #include <jpeglib.h>
 
+#ifdef HAVE_EXIF
+#include <libexif/exif-data.h>
+#endif /* HAVE_EXIF */
+
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "jpeg.h"
 #include "jpeg-quality.h"
 #include "jpeg-settings.h"
 
@@ -163,10 +169,10 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
  * Return Value: TRUE if a valid parasite was attached to the image
  */
 gboolean
-jpeg_restore_original_settings (gint32  image_ID,
-                                gint   *quality,
-                                gint   *subsmp,
-                                gint   *num_quant_tables)
+jpeg_restore_original_settings (gint32           image_ID,
+                                gint            *quality,
+                                JpegSubsampling *subsmp,
+                                gint            *num_quant_tables)
 {
   GimpParasite *parasite;
   const guchar *src;
@@ -219,24 +225,28 @@ jpeg_restore_original_settings (gint32  image_ID,
                   if (h[1] == 1 && v[1] == 1 && h[2] == 1 && v[2] == 1)
                     {
                       if (h[0] == 1 && v[0] == 1)
-                        *subsmp = 2;
+                        *subsmp = JPEG_SUPSAMPLING_1x1_1x1_1x1;
                       else if (h[0] == 2 && v[0] == 1)
-                        *subsmp = 1;
+                        *subsmp = JPEG_SUPSAMPLING_2x1_1x1_1x1;
                       else if (h[0] == 1 && v[0] == 2)
-                        *subsmp = 3;
+                        *subsmp = JPEG_SUPSAMPLING_1x2_1x1_1x1;
                       else if (h[0] == 2 && v[0] == 2)
-                        *subsmp = 0;
+                        *subsmp = JPEG_SUPSAMPLING_2x2_1x1_1x1;
                     }
                 }
+
               gimp_parasite_free (parasite);
               return TRUE;
             }
         }
+
       gimp_parasite_free (parasite);
     }
+
   *quality = -1;
   *subsmp = -1;
   *num_quant_tables = 0;
+
   return FALSE;
 }
 
