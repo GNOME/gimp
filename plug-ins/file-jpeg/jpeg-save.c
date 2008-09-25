@@ -268,6 +268,7 @@ save_image (const gchar  *filename,
   guchar   *data;
   guchar   *src, *s;
   gboolean  has_alpha;
+  gint      subsampling;
   gint      rowstride, yend;
   gint      i, j;
 
@@ -393,8 +394,10 @@ save_image (const gchar  *filename,
 
   cinfo.optimize_coding = jsvals.optimize;
 
+  subsampling = gimp_drawable_is_rgb (drawable_ID) ? jsvals.subsmp : 2;
+
   /*  smoothing is not supported with nonstandard sampling ratios  */
-  if (jsvals.subsmp != 1 && jsvals.subsmp != 3)
+  if (subsampling != 1 && subsampling != 3)
     cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
 
   if (jsvals.progressive)
@@ -402,7 +405,7 @@ save_image (const gchar  *filename,
       jpeg_simple_progression (&cinfo);
     }
 
-  switch (jsvals.subsmp)
+  switch (subsampling)
     {
     case 0:
     default:
@@ -812,8 +815,6 @@ save_dialog (void)
   GtkTextBuffer *text_buffer;
   GtkWidget     *scrolled_window;
   GtkWidget     *button;
-
-  GimpImageType  dtype;
   gchar         *text;
 
 
@@ -1091,19 +1092,27 @@ save_dialog (void)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp,
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              gimp_drawable_is_rgb (drawable_ID_global) ?
+                              jsvals.subsmp : 2,
                               G_CALLBACK (subsampling_changed),
                               entry);
 
-  dtype = gimp_drawable_type (drawable_ID_global);
-  if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE)
+  if ( gimp_drawable_is_rgb (drawable_ID_global))
     {
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  jsvals.subsmp,
+                                  G_CALLBACK (subsampling_changed),
+                                  entry);
+
       g_signal_connect (pg.use_orig_quality, "toggled",
                         G_CALLBACK (use_orig_qual_changed2),
                         pg.subsmp);
     }
   else
     {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 2);
+
       gtk_widget_set_sensitive (combo, FALSE);
     }
 
@@ -1346,8 +1355,12 @@ load_gui_defaults (JpegSaveGui *pg)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->smoothing),
                             jsvals.smoothing);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->subsmp),
-                                 jsvals.subsmp);
+  if (gimp_drawable_is_rgb (drawable_ID_global))
+    {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->subsmp),
+                                     jsvals.subsmp);
+    }
+
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->dct),
                                  jsvals.dct);
 }

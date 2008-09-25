@@ -1,3 +1,11 @@
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
+	Bug 553412 – JPEG sampling factors not set to 1x1 on grayscale
+	images:
+
+	* plug-ins/file-jpeg/jpeg-save.c: always set subsampling to 1x1
+	for grayscale images and indicate this properly in the UI.
+
 2008-09-25  Michael Natterer  <mitch@gimp.org>
 
 	Bug 553530 – fatal error: Segmentation fault - when attempting to
