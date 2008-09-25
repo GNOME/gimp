@@ -1,3 +1,12 @@
+2008-09-25  Michael Natterer  <mitch@gimp.org>
+
+	Bug 549195 – Color Wheel not working (GtkHSV):
+
+	* modules/color-selector-wheel.c: change packing and size requests
+	of the GtkHSV and its optional GtkAligmnent depending on the GTK+
+	version used to make it work with both the old and the new version
+	of the widget. Evil hacks, better don't look :)
+
 2008-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp.[ch]: added a 'restored' flag to the Gimp object
