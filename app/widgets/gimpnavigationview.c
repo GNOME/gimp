@@ -90,6 +90,12 @@ static gboolean gimp_navigation_view_key_press      (GtkWidget      *widget,
 static void     gimp_navigation_view_transform      (GimpNavigationView *nav_view);
 static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_view,
                                                      cairo_t            *cr);
+static void     gimp_navigation_view_move_to        (GimpNavigationView *nav_view,
+                                                     gint                tx,
+                                                     gint                ty);
+static void     gimp_navigation_view_get_ratio      (GimpNavigationView *nav_view,
+                                                     gdouble            *ratiox,
+                                                     gdouble            *ratioy);
 
 
 G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
@@ -199,43 +205,6 @@ gimp_navigation_view_expose (GtkWidget      *widget,
     }
 
   return TRUE;
-}
-
-static void
-gimp_navigation_view_get_ratio (const GimpNavigationView *nav_view,
-                                gdouble                  *ratiox,
-                                gdouble                  *ratioy)
-{
-  GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
-
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  *ratiox = (gdouble) view->renderer->width  /
-            (gdouble) gimp_image_get_width  (image);
-  *ratioy = (gdouble) view->renderer->height /
-            (gdouble) gimp_image_get_height (image);
-}
-
-static void
-gimp_navigation_view_move_to (GimpNavigationView *nav_view,
-                              gint                tx,
-                              gint                ty)
-{
-  GimpView  *view = GIMP_VIEW (nav_view);
-  gdouble    ratiox, ratioy;
-  gdouble    x, y;
-
-  if (! view->renderer->viewable)
-    return;
-
-  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
-
-  x = tx / ratiox;
-  y = ty / ratioy;
-
-  g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
-                 x, y, nav_view->width, nav_view->height);
 }
 
 void
@@ -465,51 +434,8 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
   return FALSE;
 }
 
-static void
-gimp_navigation_view_transform (GimpNavigationView *nav_view)
-{
-  gdouble ratiox, ratioy;
 
-  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
-
-  nav_view->p_x = RINT (nav_view->x * ratiox);
-  nav_view->p_y = RINT (nav_view->y * ratioy);
-
-  nav_view->p_width  = ceil (nav_view->width  * ratiox);
-  nav_view->p_height = ceil (nav_view->height * ratioy);
-}
-
-static void
-gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
-                                  cairo_t            *cr)
-{
-  GimpView *view = GIMP_VIEW (nav_view);
-
-  if (view->renderer->viewable && nav_view->width && nav_view->height)
-    {
-      GtkWidget *widget = GTK_WIDGET (view);
-
-      cairo_translate (cr, widget->allocation.x, widget->allocation.y);
-      cairo_rectangle (cr,
-                       0, 0,
-                       widget->allocation.width, widget->allocation.height);
-      cairo_rectangle (cr,
-                       nav_view->p_x, nav_view->p_y,
-                       nav_view->p_width, nav_view->p_height);
-
-      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
-      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
-      cairo_fill (cr);
-
-      cairo_rectangle (cr,
-                       nav_view->p_x, nav_view->p_y,
-                       nav_view->p_width, nav_view->p_height);
-
-      cairo_set_source_rgb (cr, 1, 1, 1);
-      cairo_set_line_width (cr, BORDER_WIDTH);
-      cairo_stroke (cr);
-    }
-}
+/*  public functions  */
 
 void
 gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
@@ -561,4 +487,90 @@ gimp_navigation_view_get_local_marker (GimpNavigationView *view,
   if (y)      *y      = view->p_y;
   if (width)  *width  = view->p_width;
   if (height) *height = view->p_height;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_navigation_view_transform (GimpNavigationView *nav_view)
+{
+  gdouble ratiox, ratioy;
+
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
+
+  nav_view->p_x = RINT (nav_view->x * ratiox);
+  nav_view->p_y = RINT (nav_view->y * ratioy);
+
+  nav_view->p_width  = ceil (nav_view->width  * ratiox);
+  nav_view->p_height = ceil (nav_view->height * ratioy);
+}
+
+static void
+gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
+                                  cairo_t            *cr)
+{
+  GimpView *view = GIMP_VIEW (nav_view);
+
+  if (view->renderer->viewable && nav_view->width && nav_view->height)
+    {
+      GtkWidget *widget = GTK_WIDGET (view);
+
+      cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+      cairo_rectangle (cr,
+                       0, 0,
+                       widget->allocation.width, widget->allocation.height);
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
+
+      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+      cairo_fill (cr);
+
+      cairo_rectangle (cr,
+                       nav_view->p_x, nav_view->p_y,
+                       nav_view->p_width, nav_view->p_height);
+
+      cairo_set_source_rgb (cr, 1, 1, 1);
+      cairo_set_line_width (cr, BORDER_WIDTH);
+      cairo_stroke (cr);
+    }
+}
+
+static void
+gimp_navigation_view_move_to (GimpNavigationView *nav_view,
+                              gint                tx,
+                              gint                ty)
+{
+  GimpView  *view = GIMP_VIEW (nav_view);
+  gdouble    ratiox, ratioy;
+  gdouble    x, y;
+
+  if (! view->renderer->viewable)
+    return;
+
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
+
+  x = tx / ratiox;
+  y = ty / ratioy;
+
+  g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
+                 x, y, nav_view->width, nav_view->height);
+}
+
+static void
+gimp_navigation_view_get_ratio (GimpNavigationView *nav_view,
+                                gdouble            *ratiox,
+                                gdouble            *ratioy)
+{
+  GimpView  *view = GIMP_VIEW (nav_view);
+  GimpImage *image;
+
+  image = GIMP_IMAGE (view->renderer->viewable);
+
+  *ratiox = (gdouble) view->renderer->width  /
+            (gdouble) gimp_image_get_width  (image);
+  *ratioy = (gdouble) view->renderer->height /
+            (gdouble) gimp_image_get_height (image);
 }
