@@ -1,3 +1,12 @@
+2008-09-27  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 551864 – plugin Flame fails for some settings on 64bit
+	machines
+
+	* plug-ins/flame/rect.c (render_rectangle): To handle p[0] and
+	p[1] being NaN, make sure that they are "within bounds" instead of
+	"not outside bounds".
+
 2008-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpnavigationview.c: reorder functions and add
