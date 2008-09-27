@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp python trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-09 00:28+0400\n"
+"POT-Creation-Date: 2008-09-15 18:32+0400\n"
 "PO-Revision-Date: 2008-01-24 02:46+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -250,37 +250,37 @@ msgstr "JavaScript для onmouseover и clicked"
 msgid "Skip animation for table caps"
 msgstr "Пропустить анимацию для заголовков таблицы"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:46
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Консоль Скрипт-Фу"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Просмотреть..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:132
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
 msgid "Python Procedure Browser"
 msgstr "Браузер процедур Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не удалось открыть '%s' для записи: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:176
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не удалось записать в '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:184
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
 msgid "Save Python-Fu Console Output"
 msgstr "Сохранить вывод консоли Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
 msgid "Interactive GIMP Python interpreter"
 msgstr "Интерактивный интерпретатор Python в GIMP"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:223
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
 msgid "_Console"
 msgstr "_Консоль"
 
