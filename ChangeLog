@@ -1,3 +1,10 @@
+2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_show_foreach)
+	(gimp_dialog_factories_hide_foreach): Increase readability with
+	widget = list->data.
+
 2008-09-27  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 551864 – plugin Flame fails for some settings on 64bit
