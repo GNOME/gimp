@@ -74,7 +74,7 @@
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
-        (select 0)
+        (selection 0)
         )
 
     (gimp-context-push)
@@ -107,7 +107,7 @@
     )
 
     ; Store it for later.
-    (set! select (car (gimp-selection-save image)))
+    (set! selection (car (gimp-selection-save image)))
     ; Try to lose the jaggies
     (gimp-selection-feather image 2)
 
@@ -153,13 +153,13 @@
     ;
     (if (= bevelling-whole-image TRUE)
         (gimp-selection-none image)        ; No selection to start with
-        (gimp-selection-load select)
+        (gimp-selection-load selection)
     )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.
 
     ; clean up
-    (gimp-image-remove-channel image select)
+    (gimp-image-remove-channel image selection)
     (if (= keep-bump-layer TRUE)
         (gimp-drawable-set-visible bump-layer 0)
         (gimp-image-remove-layer image bump-layer)

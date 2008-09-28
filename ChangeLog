@@ -1,5 +1,10 @@
 2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* plug-ins/script-fu/scripts/add-bevel.scm (script-fu-add-bevel):
+	Rename 'select' to 'selection' since that is what it holds.
+
+2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpdialogfactory.c
 	(gimp_dialog_factories_show_foreach)
 	(gimp_dialog_factories_hide_foreach): Increase readability with
