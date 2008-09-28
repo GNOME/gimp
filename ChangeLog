@@ -1,5 +1,17 @@
 2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 472403 – Add bevel script fu does not work if there is no
+	selection
+
+	* plug-ins/script-fu/scripts/add-bevel.scm (script-fu-add-bevel):
+	Applied modified patch from Barak Itkin that when there is no
+	selection makes the bevel be performed on the whole layer instead
+	of the whole image (which was broken in the first place). It also
+	fixes some bugs with setting the selection when there is no
+	initial selection.
+
+2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/script-fu/scripts/add-bevel.scm (script-fu-add-bevel):
 	Rename 'select' to 'selection' since that is what it holds.
 

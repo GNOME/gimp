@@ -27,7 +27,7 @@
 ; If there is a selection, it is bevelled.
 ; Otherwise if there is an alpha channel, the selection is taken from it
 ; and bevelled.
-; Otherwise the whole image is bevelled.
+; Otherwise the part of the layer inside the image boundries is bevelled.
 ;
 ; The selection is set on exit, so Select->Invert then Edit->Clear will
 ; leave a cut-out.  Then use Sven's add-shadow for that
@@ -46,6 +46,10 @@
 ; 1.04: Fixed undo handling, ensure that bumpmap is big enough,
 ;       (instead of resizing the image). Removed references to outdated
 ;       bumpmap plugin.     (Simon)
+; 1.05  When there is no selection, bevel the whole layer instead of the
+;       whole image (which was broken in the first place).
+;       Also fixed some bugs with setting the selection when there is no
+;       initial selection.     (Barak Itkin)
 ;
 
 (define (script-fu-add-bevel img
@@ -56,7 +60,6 @@
 
   (let* (
         (index 1)
-        (bevelling-whole-image FALSE)
         (greyness 0)
         (thickness (abs thickness))
         (type (car (gimp-drawable-type-with-alpha drawable)))
@@ -74,6 +77,8 @@
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
+
+        (selection-exists (car (gimp-selection-bounds image)))
         (selection 0)
         )
 
@@ -96,14 +101,8 @@
     ;
     ; Set the selection to the area we want to bevel.
     ;
-    (if (eq? 0 (car (gimp-selection-bounds image)))
-        (begin
-          (set! bevelling-whole-image TRUE) ; ...so we can restore things properly, and crop.
-          (if (car (gimp-drawable-has-alpha pic-layer))
-              (gimp-selection-layer-alpha pic-layer)
-              (gimp-selection-all image)
-          )
-        )
+    (if (= selection-exists 0)
+        (gimp-selection-layer-alpha pic-layer)
     )
 
     ; Store it for later.
@@ -151,7 +150,7 @@
     ;
     ; Restore things
     ;
-    (if (= bevelling-whole-image TRUE)
+    (if (= selection-exists 0)
         (gimp-selection-none image)        ; No selection to start with
         (gimp-selection-load selection)
     )
