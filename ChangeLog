@@ -1,3 +1,11 @@
+2008-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_show_foreach)
+	(gimp_dialog_factories_hide_foreach): remove some casts that were
+	always useless and are even more useless now after the recent
+	readability improvement.
+
 2008-09-29  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): reduced

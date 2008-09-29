@@ -1408,7 +1408,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
-      
+
       if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
         {
           GimpDialogVisibilityState visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
@@ -1417,7 +1417,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
             {
               visibility = GIMP_DIALOG_VISIBILITY_VISIBLE;
 
-              gtk_widget_hide (GTK_WIDGET (widget));
+              gtk_widget_hide (widget);
             }
           else
             {
@@ -1441,7 +1441,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
-      
+
       if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
         {
           GimpDialogVisibilityState visibility;
@@ -1453,15 +1453,13 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
           if (! GTK_WIDGET_VISIBLE (widget) &&
               visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
             {
-              GtkWindow *window = GTK_WINDOW (widget);
-
               /* Don't use gtk_window_present() here, we don't want the
                * keyboard focus to move.
                */
-              gtk_widget_show (GTK_WIDGET (window));
+              gtk_widget_show (widget);
 
-              if (GTK_WIDGET_VISIBLE (window))
-                gdk_window_raise (GTK_WIDGET (window)->window);
+              if (GTK_WIDGET_VISIBLE (widget))
+                gdk_window_raise (widget->window);
             }
         }
     }
