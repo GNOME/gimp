@@ -1,3 +1,9 @@
+2008-09-29  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): reduced
+	default window height to give a window aspect ratio of roughly 3:1
+	as requested by Peter.
+
 2008-09-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 472403 – Add bevel script fu does not work if there is no
