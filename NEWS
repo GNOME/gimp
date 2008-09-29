@@ -7,6 +7,28 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes since 2.5.4
+===================
+
+ - further improved error reporting and parameter checks for some procedures
+ - fixed printing of indexed images (bug #552609)
+ - further code cleanup in Script-Fu extension
+ - improved Brightness->Contrast -> Levels -> Curves parameter conversion
+ - made the font size in the docks configurable in the gtkrc file
+ - renamed File->New submenu to File->Create
+ - moved the "Use GEGL" check-box to the Colors menu
+ - added new scale procedures allowing to specify the interpolation
+   explicitly (bug #486977)
+ - lots of bug fixes
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Simon Budig,
+  Tor Lillqvist, Barak Itkin
+
+
+
 Changes in GIMP 2.5.4
 =====================
 
@@ -29,7 +51,7 @@ Changes in GIMP 2.5.4
 Contributors:
 
   Sven Neumann, Michael Natterer, Martin Nordholts, Tor Lillqvist,
-  Lars-Peter Clausen, Michael Schumacher, Kevin Cozens, LightningIsMyName,
+  Lars-Peter Clausen, Michael Schumacher, Kevin Cozens, Barak Itkin,
   David Gowers, Dennis Ranke
 
 
@@ -67,7 +89,7 @@ Contributors:
 
   Sven Neumann, Michael Natterer, Martin Nordholts, Alexia Death,
   Tor Lillqvist, Geert Jordaens, Daniel Eddeland, Aurimas Juška,
-  Róman Joost, Luidnel Maignan, LightningIsMyName, Aurore Derriennic
+  Róman Joost, Luidnel Maignan, Barak Itkin, Aurore Derriennic
 
 
 
