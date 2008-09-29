@@ -1,15 +1,11 @@
                    ------------------------------ 
                    GNU Image Manipulation Program
-                         Development Branch
+                            Version 2.6
                    ------------------------------
 
-This is the unstable development branch of GIMP. It is intended to
-developers only. If you are a user, please use the stable gimp-2-4
-branch or a tarball release from the 2.4 series.
-
-GIMP 2.5 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.5. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.5, you have to
+GIMP 2.6 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.6. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.6, you have to
 choose a separate prefix which is not in your default library search
 path. Otherwise your GIMP 2.4 or GIMP 2.2 installation will start to
 use the new libraries. You have been warned.
@@ -93,13 +89,13 @@ servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.4/gtkrc so
+http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.6/gtkrc so
 you can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-2.5/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-2.5/menurc.
+to ~/.gimp-2.6/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.6/menurc.
 
 
 Have fun,

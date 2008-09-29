@@ -1,5 +1,9 @@
 2008-09-29  Sven Neumann  <sven@gimp.org>
 
+	* README: prepared for the upcoming 2.6 release.
+
+2008-09-29  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.6.0.
 
 	* app/Makefile.am
