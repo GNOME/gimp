@@ -1,5 +1,14 @@
 2008-09-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcurve.c (gimp_curve_copy): no need to memcpy() the
+	arrays, they are properly copied by gimp_config_sync() now. Add
+	call to gimp_data_dirty() so GimpCurvesConfig gets notified.
+
+	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_set_property):
+	use gimp_config_copy() instead of copying the curve menually.
+
+2008-09-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c
 	(gimp_dialog_factories_show_foreach)
 	(gimp_dialog_factories_hide_foreach): remove some casts that were

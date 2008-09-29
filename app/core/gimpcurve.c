@@ -19,7 +19,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include <glib-object.h>
 
@@ -503,14 +502,11 @@ gimp_curve_copy (GimpConfig  *src,
 
   gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 
-  memcpy (dest_curve->points, src_curve->points,
-          sizeof (GimpVector2) * src_curve->n_points);
-  memcpy (dest_curve->samples, src_curve->samples,
-          sizeof (gdouble) * src_curve->n_samples);
-
   dest_curve->identity = src_curve->identity;
 
-  return FALSE;
+  gimp_data_dirty (GIMP_DATA (dest));
+
+  return TRUE;
 }
 
 
