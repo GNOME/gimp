@@ -1,5 +1,14 @@
 2008-09-29  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-splash.png: splash screen for GIMP 2.6. Created
+	by Alexia Death and edited together with Ville Pätsi.
+
+	* authors.xml: added the two splash screen artists.
+
+	* AUTHORS: regenerated.
+
+2008-09-29  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: prepared for the upcoming 2.6 release.
 
 2008-09-29  Martin Nordholts  <martinn@svn.gnome.org>
