@@ -1,3 +1,7 @@
+2008-09-29  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: prepared for the upcoming 2.6 release.
+
 2008-09-29  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 554125 – Tab key doesn't hide utility windows when there is no
