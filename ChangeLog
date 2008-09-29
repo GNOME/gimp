@@ -1,3 +1,23 @@
+2008-09-29  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 554125 – Tab key doesn't hide utility windows when there is no
+	image open.
+
+	* app/widgets/gimpdialogfactory.[ch]: Add 'toggle_visibility' to
+	GimpDialogFactory and as a parameter to gimp_dialog_factory_new(),
+	and set it there.
+
+	(gimp_dialog_factories_hide_foreach): Don't hide dialogs belonging
+	to factories with toggle_visibility FALSE.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): Move no-image event
+	handling to a new helper function, and make pressing Tab hide
+	windows.
+
+	* app/dialogs/dialogs.c (dialogs_init): Allow toggling visibility
+	for all factories except the display-factory.
+
 2008-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcurve.c (gimp_curve_copy): no need to memcpy() the

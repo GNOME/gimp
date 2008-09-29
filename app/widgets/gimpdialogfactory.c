@@ -146,6 +146,7 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
   factory->registered_dialogs = NULL;
   factory->session_infos      = NULL;
   factory->open_dialogs       = NULL;
+  factory->toggle_visibility  = FALSE;
 }
 
 static void
@@ -237,7 +238,8 @@ GimpDialogFactory *
 gimp_dialog_factory_new (const gchar       *name,
                          GimpContext       *context,
                          GimpMenuFactory   *menu_factory,
-                         GimpDialogNewFunc  new_dock_func)
+                         GimpDialogNewFunc  new_dock_func,
+                         gboolean           toggle_visibility)
 {
   GimpDialogFactory *factory;
   gpointer           key;
@@ -267,9 +269,10 @@ gimp_dialog_factory_new (const gchar       *name,
   g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
                        key, factory);
 
-  factory->context       = context;
-  factory->menu_factory  = menu_factory;
-  factory->new_dock_func = new_dock_func;
+  factory->context           = context;
+  factory->menu_factory      = menu_factory;
+  factory->new_dock_func     = new_dock_func;
+  factory->toggle_visibility = toggle_visibility;
 
   return factory;
 }
@@ -1404,6 +1407,9 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
                                     gpointer           data)
 {
   GList *list;
+
+  if (! factory->toggle_visibility)
+    return;
 
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {

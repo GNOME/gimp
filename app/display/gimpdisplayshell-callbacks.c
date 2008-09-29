@@ -539,6 +539,46 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
                                      shell->display);
 }
 
+static gboolean
+gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
+                                           GdkEvent         *event,
+                                           GimpDisplayShell *shell)
+{
+  switch (event->type)
+    {
+    case GDK_BUTTON_PRESS:
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
+
+        if (bevent->button == 3)
+          {
+            gimp_ui_manager_ui_popup (shell->popup_manager,
+                                      "/dummy-menubar/image-popup",
+                                      GTK_WIDGET (shell),
+                                      NULL, NULL, NULL, NULL);
+          }
+      }
+      break;
+
+    case GDK_KEY_PRESS:
+      {
+        GdkEventKey *kevent = (GdkEventKey *) event;
+
+        if (kevent->keyval == GDK_Tab ||
+            kevent->keyval == GDK_ISO_Left_Tab)
+          {
+            gimp_dialog_factories_toggle ();
+          }
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  return TRUE;
+}
+
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
@@ -573,16 +613,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   if (! image)
     {
-      if (event->type == GDK_BUTTON_PRESS &&
-          ((GdkEventButton *) event)->button == 3)
-        {
-          gimp_ui_manager_ui_popup (shell->popup_manager,
-                                    "/dummy-menubar/image-popup",
-                                    GTK_WIDGET (shell),
-                                    NULL, NULL, NULL, NULL);
-        }
-
-      return TRUE;
+      return gimp_display_shell_canvas_no_image_events (canvas, event, shell);
     }
 
   gdk_display = gtk_widget_get_display (canvas);
