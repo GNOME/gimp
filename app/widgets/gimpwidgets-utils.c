@@ -1078,11 +1078,33 @@ gimp_get_message_stock_id (GimpMessageSeverity severity)
 }
 
 void
+gimp_pango_layout_set_scale (PangoLayout *layout,
+                             gdouble      scale)
+{
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+
+  g_return_if_fail (PANGO_IS_LAYOUT (layout));
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (scale);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (layout, attrs);
+  pango_attr_list_unref (attrs);
+}
+
+void
 gimp_pango_layout_set_weight (PangoLayout *layout,
                               PangoWeight  weight)
 {
   PangoAttrList  *attrs;
   PangoAttribute *attr;
+
+  g_return_if_fail (PANGO_IS_LAYOUT (layout));
 
   attrs = pango_attr_list_new ();
 
