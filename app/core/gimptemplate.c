@@ -112,12 +112,14 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                        "xresolution",
                                        N_("The horizontal image resolution."),
                                        DEFAULT_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS);
+                                       GIMP_PARAM_STATIC_STRINGS |
+                                       GIMP_TEMPLATE_PARAM_COPY_FIRST);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
                                        "yresolution",
                                        N_("The vertical image resolution."),
                                        DEFAULT_RESOLUTION,
-                                       GIMP_PARAM_STATIC_STRINGS);
+                                       GIMP_PARAM_STATIC_STRINGS |
+                                       GIMP_TEMPLATE_PARAM_COPY_FIRST);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
                                  NULL,

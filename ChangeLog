@@ -1,5 +1,23 @@
 2008-09-30  Michael Natterer  <mitch@gimp.org>
 
+	Bug 546924 – "New Image" misscalculating dimensions for non-pixel
+	sized templates
+
+	* app/core/gimptemplate.h: added private param flag
+	GIMP_TEMPLATE_PARAM_COPY_FIRST.
+
+	* app/core/gimptemplate.c (gimp_template_class_init): set the flag
+	on the resolution properties.
+
+	* app/dialogs/image-new-dialog.c (image_new_template_changed):
+	make sure the resolution properties are copied first.
+
+	* libgimpconfig/gimpconfig-utils.c (gimp_config_sync): remove
+	comment about fixing the template editor. That's not true any
+	more.
+
+2008-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.[ch]: keep a "default_config" object
 	around and use it to reset the tool if it exists.
 
