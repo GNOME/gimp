@@ -1,3 +1,17 @@
+2008-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.[ch]: keep a "default_config" object
+	around and use it to reset the tool if it exists.
+
+	(gimp_image_map_tool_edit_as): set the default_config on the new
+	tool so "reset" goes back to the values the tool was started with.
+
+	* app/tools/gimpcolorbalencetool.c (gimp_color_balance_tool_reset)
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_reset)
+	* app/tools/gimphuesaturationtool.c (gimp_hue_saturation_tool_reset)
+	* app/tools/gimplevelstool.c (gimp_levels_tool_reset): use the
+	default config to reset the tool here too if it exists.
+
 2008-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: don't make the upper label bold. This change
