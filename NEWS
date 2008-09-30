@@ -7,8 +7,8 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
-Changes since 2.5.4
-===================
+Changes in GIMP 2.6.0
+=====================
 
  - further improved error reporting and parameter checks for some procedures
  - fixed printing of indexed images (bug #552609)

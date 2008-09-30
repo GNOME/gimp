@@ -1,3 +1,7 @@
+2008-09-30  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.6.0 release.
+
 2008-09-30  Michael Natterer  <mitch@gimp.org>
 
 	Bug 546924 – "New Image" misscalculating dimensions for non-pixel
