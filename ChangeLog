@@ -1,3 +1,7 @@
+2008-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-deserialize.c (gimp_rc_deserialize): formatting.
+
 2008-09-29  Sven Neumann  <sven@gimp.org>
 
 	* README: prepared for the upcoming 2.6 release.
