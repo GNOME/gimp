@@ -1,5 +1,10 @@
 2008-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: don't make the upper label bold. This change
+	compensates for the smaller width of the new splash screen.
+
+2008-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch]: added
 	gimp_pango_layout_set_scale().
 

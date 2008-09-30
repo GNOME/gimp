@@ -158,8 +158,6 @@ splash_create (gboolean be_verbose)
 
   /*  create the pango layouts  */
   splash->upper = gtk_widget_create_pango_layout (splash->area, "");
-  gimp_pango_layout_set_weight (splash->upper, PANGO_WEIGHT_SEMIBOLD);
-
   splash->lower = gtk_widget_create_pango_layout (splash->area, "");
   gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
 
