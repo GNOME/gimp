@@ -1,0 +1,254 @@
+                   ------------------------------
+                   GNU Image Manipulation Program
+                         Development Branch
+                   ------------------------------
+
+This is the unstable development branch of GIMP.  Here we are working
+towards the next stable release, which will be GIMP 2.6.
+
+
+Changes in GIMP 2.6.0
+=====================
+
+ - further improved error reporting and parameter checks for some procedures
+ - fixed printing of indexed images (bug #552609)
+ - further code cleanup in Script-Fu extension
+ - improved Brightness->Contrast -> Levels -> Curves parameter conversion
+ - made the font size in the docks configurable in the gtkrc file
+ - renamed File->New submenu to File->Create
+ - moved the "Use GEGL" check-box to the Colors menu
+ - added new scale procedures allowing to specify the interpolation
+   explicitly (bug #486977)
+ - lots of bug fixes
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Simon Budig,
+  Tor Lillqvist, Barak Itkin
+
+
+
+Changes in GIMP 2.5.4
+=====================
+
+ - improved look and feel of the Navigation dialog and navigation popups
+ - improved positioning of the image in the image window
+ - by default turned off use of GEGL for color operations
+ - moved the "Use GEGL" checkbox to the Debug menu
+ - optimized the new scaling code
+ - various fixes to the Python bindings
+ - added Python bindings for most GIMP widgets to the gimpui module
+ - merged GimpHRuler and GimpVRuler classes into GimpRuler
+ - added Search entry to the Keyboard Shortcuts and Input Controller
+   configuration dialogs
+ - allow to drop images (in addition to URIs) on the empty image window
+ - improved error handling in Script-Fu
+ - merged upstream TinyScheme changes into Script-Fu interpreter
+ - bug fixes and code cleanup
+ 
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Tor Lillqvist,
+  Lars-Peter Clausen, Michael Schumacher, Kevin Cozens, Barak Itkin,
+  David Gowers, Dennis Ranke
+
+
+ 
+Changes in GIMP 2.5.3
+=====================
+
+ - some fixes for the 64-bit Windows platform
+ - optionally emulate brush dynamics when stroking a path or selection
+ - further work on the scroll-beyond-image-borders feature, improving the
+   behavior of the image display when zooming or when the image size changes
+ - added links to the user manual to the Tips dialog
+ - largely rewritten scaling code improves scaling quality, in particular
+   when scaling down
+ - allow to copy-on-write from the image projection
+ - added "Paste as new layer" to Edit menu
+ - added "New from visible" to the Layer menu allowing to create a new
+   layer from the image projection
+ - added new procedure	'gimp-layer-new-from-visible'.
+ - renamed all file plug-in executables to a have a file prefix
+ - changed the HSV color selector to use the GtkHSV widget
+ - changed the default for the 'trust-dirty-flag' gimprc property
+ - dropped the "Starburst" logo script
+ - improved the behavior of the zoom button in the upper right corner of
+   the image window
+ - allow PDB procedures to pass an error message with their return values
+ - changed all file plug-ins to pass their error messages with the
+   return values instead of raising an error dialog
+ - adapt the display of the pointer position in the statusbar to the
+   pointer precision of the active tool
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Alexia Death,
+  Tor Lillqvist, Geert Jordaens, Daniel Eddeland, Aurimas Juška,
+  Róman Joost, Luidnel Maignan, Barak Itkin, Aurore Derriennic
+
+
+
+Changes in GIMP 2.5.2
+=====================
+
+ - final touches on the combined Freehand/Polygon Select tool
+ - added a dialog for managing Color tool settings
+ - prepared the code for changes in the upcoming GTK+ release
+ - improved popup scale button
+ - mark the center of rectangles/bounding rectangles during moves
+ - added dialog to query for using the online user manual
+ - allow to map dynamics to hardness for the Eraser tool
+ - provide gimp-remote functionality on Windows
+ - disable the build and install of the gimp-remote tool by default
+ - allow to scroll beyond the image borders
+ - added new PDB data type for transferring color arrays
+ - added new PDB function gimp-palette-get-colors
+ - added text search to the Help Browser plug-in
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Manish Singh,
+  Lars-Peter Clausen, Alexia Death, Tor Lillqvist, Róman Joost,
+  Jakub Steiner
+
+
+Changes in GIMP 2.5.1
+=====================
+
+ - further improvements to the status bar
+ - made the center point of rectangles snap to the grid and rulers
+ - improved Alpha to Logo filters
+ - better cursor feedback in the Intelligent Scissors tool
+ - rotate JPEG thumbnails according to the EXIF orientation
+ - improved event smoothing for paint tools
+ - prepared PSP plug-in to deal with newer versions of the file format
+ - allow plug-ins to work in parallel on different layers of the same image
+ - pass through GEGL command-line options
+ - added 22 new variations to the Flame plugin
+ - only show operations from relevant categories in the GEGL tool
+ - allow to enter the zoom ratio in the status bar
+ - don't keep the file-chooser dialogs around
+ - ported scan-convert code to Cairo, removing libart dependency
+ - allow the paint velocity to affect brush size, opacity and the like
+ - allow for random variations of the brush size, opacity and the like
+ - renamed Dialogs menu to Windows
+ - keep a list of recently closed docks in the Windows menu
+ - allow to go from Brightness-Contrast to Levels to Curves
+ - improved the handling of color tool settings
+ - merged the new Polygon Selection tool with the Freehand Select tool
+ - allow to lock dockables
+ - made Desaturate into a tool with preview in the image window
+ - ported translation contexts to msgctxt
+ - added GimpRuler widgets, an improved version of GtkRuler
+ - moving the selection mask now commits a pending rectangle selection
+ - added keyboard shortcut for resetting the brush scale (Backslash)
+ - ported the Help Browser plug-in to WebKit
+ - allow to use the online user manual
+ - added new translation (Icelandic)
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Øyvind Kolås,
+  Alexia Death, Ulf-D. Ehlert, Daniel Hornung, Michael Deal, Aurimas Juška,
+  Luis Barrancos
+
+
+
+Changes in GIMP 2.5.0
+=====================
+
+Core:
+
+ - improved rectangle tool drawing for narrow mode
+ - ported lots (but not all) drawing code to Cairo
+ - optimized image rendering by using pre-multiplied alpha
+ - use new GLib features such as GRegex
+ - use new GTK+ features such as the new GtkTooltip API
+ - much improved GimpCurve object
+ - cleaner and smaller tool options
+ - enable brush scaling for the Smudge tool
+ - added debugging framework that can be enabled at run-time
+ - depend on GEGL and use it optionally in some color operations
+ - optional GEGL processing for all color tools
+ - add proper settings objects for all color tools
+ - add list of recently used settings to all color tools
+ - added experimental GEGL tool to use arbitrary GEGL operations
+ - event filtering and smoothing for better paint tool performance
+ - added motion constraints in the Move Tool
+ - some operations do not any longer automatically add an alpha channel
+ - some preparation for tagging resource files
+ - cutting a selection doesn't clear the selection any longer
+ - added new polygon select tool
+ - load brushes and other data files recursively (search through subdirs)
+ - started work on language selector for the text tool (unfinished)
+ - allow to set opacity of the transform tool preview
+ - merged toolbox menu into the image menu
+ - always keep an image window around
+ - improved image statusbar
+ - dropped 'documents' in favor of ~/.recently-used.xbel
+ - started to work on text box functionality in the text tool
+ - numerous bug fixes and cleanups
+
+
+Plug-ins:
+
+ - dicom: improved handling of 16 bit image data
+ - help: use GIO to access the help index
+ - print: moved Page Setup out of the Print dialog
+ - psd-load: rewritten, cleaner and more features
+ - randomize: added previews
+ - ripple:  added a Phase Shift control
+ - screenshot: optionally add the mouse cursor image on an extra layer
+ - uri: use GIO/GVfs where available
+ - whirlpinch: allow a larger range for the whirl angle
+
+
+Python binding:
+
+ - allow to specify colors using CSS color names
+ - added new method Image.new_layer()
+
+
+Script-Fu:
+
+ - enforce R5RS syntax for 'let'
+ - improved Frosty Logo script
+
+
+PDB:
+
+ - added new text layer API
+ - added gimp-vectors-export-to-file and gimp-vectors-export-to-string
+ - added procedure to test for existance of a procedure in the PDB
+ - improved error handling for procedures
+
+
+Libraries:
+
+ - added some Cairo utilities
+ - allow to use markup in tooltips
+ - libgimpthumb doesn't any longer depend on other GIMP libraries
+
+
+Miscellaneous:
+
+ - use the gimptool program on Unix, too, instead of the gimptool script
+ - create the list of supported MIME types at compile-time
+ - gimp shows library versions when called with '--version --verbose'
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Bill Skaggs,
+  Øyvind Kolås, Manish Singh, Kevin Cozens, Alexia Death, Tor Lillqvist,
+  Marcus Heese, John Marshall, Joao S. O. Bueno, Jakub Steiner,
+  Simon Budig, Tom Lechner, Hans Breuer, ...
