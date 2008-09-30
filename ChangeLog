@@ -1,5 +1,10 @@
 2008-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.c (gimp_pango_layout_set_weight):
+	actually use the passed weight.
+
+2008-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpbaseconfig.c
 	* app/config/gimpguiconfig.c: reverted parts of commit 25812.
 	Restores compatibility with old gimprc files.

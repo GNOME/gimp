@@ -1086,7 +1086,7 @@ gimp_pango_layout_set_weight (PangoLayout *layout,
 
   attrs = pango_attr_list_new ();
 
-  attr = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
+  attr = pango_attr_weight_new (weight);
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (attrs, attr);
