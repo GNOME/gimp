@@ -1,5 +1,9 @@
 2008-10-01  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am (EXTRA_DIST): added ChangeLog.pre-2-6 and NEWS.pre-2-6.
+
+2008-10-01  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimptool.c: create the target directory and intermediate
 	parent directories as needed. Restores the behavior of the
 	gimptool shell script.
