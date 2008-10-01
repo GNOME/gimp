@@ -20,7 +20,9 @@
 
 #include "config.h"
 
+#ifndef _WIN32
 #define _GNU_SOURCE
+#endif
 
 #include <errno.h>
 #include <signal.h>

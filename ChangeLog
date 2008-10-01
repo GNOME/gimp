@@ -1,3 +1,8 @@
+2008-10-01  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/gimpplugin.c: Don't #define _GNU_SOURCE on Windows
+	as it confuses newest mingw headers.
+
 2008-10-01  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.6.1 (interface age 1).
