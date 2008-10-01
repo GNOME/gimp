@@ -1,5 +1,11 @@
 2008-10-01  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimptool.c: create the target directory and intermediate
+	parent directories as needed. Restores the behavior of the
+	gimptool shell script.
+
+2008-10-01  Sven Neumann  <sven@gimp.org>
+
 	* menus/Makefile.am (%.xml): added a dependency on configure.in to
 	make sure that the image-menu.xml file is rebuilt when the version
 	number is changed.

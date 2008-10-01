@@ -31,9 +31,15 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/stat.h>
+
 #include <glib.h>
 
 #include "libgimpbase/gimpversion.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 
 static gboolean     silent  = FALSE;
@@ -499,19 +505,19 @@ do_build_2 (const gchar *cflags,
 }
 
 static void
-do_build (char *what)
+do_build (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), NULL, what);
 }
 
 static void
-do_build_noui (char *what)
+do_build_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), NULL, what);
 }
 
 static void
-do_build_nogimpui (char *what)
+do_build_nogimpui (const gchar *what)
 {
   do_build (what);
 }
@@ -535,19 +541,19 @@ get_user_plugin_dir (gboolean forward_slashes)
 }
 
 static void
-do_install (char *what)
+do_install (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_noui (char *what)
+do_install_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_nogimpui (char *what)
+do_install_nogimpui (const gchar *what)
 {
   do_install (what);
 }
@@ -567,51 +573,56 @@ get_sys_plugin_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_admin (char *what)
+do_install_admin (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_admin_noui (char *what)
+do_install_admin_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_admin_nogimpui (char *what)
+do_install_admin_nogimpui (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_bin_2 (gchar *dir,
-		  gchar *what)
+do_install_bin_2 (const gchar *dir,
+		  const gchar *what)
 {
+  g_mkdir_with_parents (dir,
+                        S_IRUSR | S_IXUSR | S_IWUSR |
+                        S_IRGRP | S_IXGRP |
+                        S_IROTH | S_IXOTH);
+
   maybe_run (g_strconcat (COPY, " ", what, " ", dir, NULL));
 }
 
 static void
-do_install_bin (char *what)
+do_install_bin (const gchar *what)
 {
   do_install_bin_2 (get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_admin_bin (char *what)
+do_install_admin_bin (const gchar *what)
 {
   do_install_bin_2 (get_sys_plugin_dir (FALSE), what);
 }
 
 static void
-do_uninstall (gchar *dir,
-	      gchar *what)
+do_uninstall (const gchar *dir,
+	      const gchar *what)
 {
   maybe_run (g_strconcat (REMOVE, " ", dir, G_DIR_SEPARATOR_S, what, NULL));
 }
 
-static gchar *
-maybe_append_exe (gchar *what)
+static const gchar *
+maybe_append_exe (const gchar *what)
 {
 #ifdef G_OS_WIN32
   gchar *p = strrchr (what, '.');
@@ -624,13 +635,13 @@ maybe_append_exe (gchar *what)
 }
 
 static void
-do_uninstall_bin (char *what)
+do_uninstall_bin (const gchar *what)
 {
   do_uninstall (get_user_plugin_dir (FALSE), maybe_append_exe (what));
 }
 
 static void
-do_uninstall_admin_bin (char *what)
+do_uninstall_admin_bin (const gchar *what)
 {
   do_uninstall (get_sys_plugin_dir (FALSE), maybe_append_exe (what));
 }
@@ -649,7 +660,7 @@ get_user_script_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_script (char *what)
+do_install_script (const gchar *what)
 {
   do_install_bin_2 (get_user_script_dir (FALSE), what);
 }
@@ -671,19 +682,19 @@ get_sys_script_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_admin_script (char *what)
+do_install_admin_script (const gchar *what)
 {
   do_install_bin_2 (get_sys_script_dir (FALSE), what);
 }
 
 static void
-do_uninstall_script (char *what)
+do_uninstall_script (const gchar *what)
 {
   do_uninstall (get_user_script_dir (FALSE), what);
 }
 
 static void
-do_uninstall_admin_script (char *what)
+do_uninstall_admin_script (const gchar *what)
 {
   do_uninstall (get_sys_script_dir (FALSE), what);
 }
