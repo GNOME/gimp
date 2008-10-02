@@ -1,3 +1,8 @@
+2008-10-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-uri/uri-backend-wget.c: removed spurious commas
+	that broke the build.
+
 2008-10-01  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (EXTRA_DIST): added ChangeLog.pre-2-6 and NEWS.pre-2-6.

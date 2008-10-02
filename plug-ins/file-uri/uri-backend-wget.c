@@ -91,7 +91,7 @@ uri_backend_load_image (const gchar  *uri,
 
   if (pipe (p) != 0)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "pipe() failed: %s", g_strerror (errno));
       return FALSE;
     }
@@ -101,7 +101,7 @@ uri_backend_load_image (const gchar  *uri,
 
   if ((pid = fork()) < 0)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "fork() failed: %s", g_strerror (errno));
       return FALSE;
     }
