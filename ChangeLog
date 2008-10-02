@@ -1,3 +1,8 @@
+2008-10-02  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
+	add "text" to the list of blacklisted operations.
+
 2008-10-02  Michael Natterer  <mitch@gimp.org>
 
 	Bug 554646 – Opening Help crashes GIMP with lqr-plugin installed
