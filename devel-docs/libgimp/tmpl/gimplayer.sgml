@@ -75,6 +75,19 @@ Operations on a single layer.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_scale_full ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@new_width: 
+@new_height: 
+@local_origin: 
+@interpolation: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_resize ##### -->
 <para>
 

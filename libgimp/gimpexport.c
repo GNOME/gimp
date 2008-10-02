@@ -39,11 +39,11 @@ typedef void (* ExportFunc) (gint32  imageID,
 /* the export action structure */
 typedef struct
 {
-  ExportFunc  default_action;
-  ExportFunc  alt_action;
-  gchar      *reason;
-  gchar      *possibilities[2];
-  gint        choice;
+  ExportFunc   default_action;
+  ExportFunc   alt_action;
+  const gchar *reason;
+  const gchar *possibilities[2];
+  gint         choice;
 } ExportAction;
 
 

@@ -67,9 +67,13 @@ colorize_calculate (Colorize *colorize)
 
       gimp_hsl_to_rgb (&hsl, &rgb);
 
-      colorize->final_red_lookup[i]   = i * rgb.r;
-      colorize->final_green_lookup[i] = i * rgb.g;
-      colorize->final_blue_lookup[i]  = i * rgb.b;
+      /*  this used to read i * rgb.r,g,b in GIMP 2.4, but this produced
+       *  darkened results, multiplying with 255 is correct and preserves
+       *  the lightness unless modified with the slider.
+       */
+      colorize->final_red_lookup[i]   = 255.0 * rgb.r;
+      colorize->final_green_lookup[i] = 255.0 * rgb.g;
+      colorize->final_blue_lookup[i]  = 255.0 * rgb.b;
     }
 }
 

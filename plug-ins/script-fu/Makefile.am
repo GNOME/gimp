@@ -10,7 +10,6 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 libtinyscheme=tinyscheme/libtinyscheme.a
 libftx=ftx/libftx.a
-libre=re/libre.a
 
 if OS_WIN32
 mwindows = -mwindows
@@ -27,7 +26,7 @@ AM_CFLAGS = \
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = tinyscheme ftx re scripts
+SUBDIRS = tinyscheme ftx scripts
 
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -35,6 +34,9 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
+	script-fu-types.h		\
+	script-fu-enums.h		\
+	\
 	script-fu.c			\
 	script-fu-console.c		\
 	script-fu-console.h		\
@@ -45,12 +47,16 @@ script_fu_SOURCES = \
 	script-fu-text-console.h	\
 	script-fu-text-console.c	\
 	script-fu-intl.h		\
+	script-fu-regex.c		\
+	script-fu-regex.h		\
+	script-fu-script.c		\
+	script-fu-script.h		\
 	script-fu-scripts.c		\
 	script-fu-scripts.h		\
 	script-fu-server.c		\
 	script-fu-server.h		\
-	script-fu-types.h		\
-	script-fu-enums.h		\
+	script-fu-utils.c		\
+	script-fu-utils.h		\
 	scheme-wrapper.c		\
 	scheme-wrapper.h
 
@@ -64,8 +70,6 @@ LDADD = \
 	$(libgimpbase)		\
 	$(libtinyscheme)	\
 	$(libftx)		\
-	$(libre)		\
-	$(REGEXREPL)		\
 	$(GTK_LIBS)		\
 	$(SOCKET_LIBS)		\
 	$(WINSOCK_LIBS)		\

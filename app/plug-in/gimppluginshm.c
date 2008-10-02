@@ -60,10 +60,6 @@
 
 #define USE_WIN32_SHM 1
 
-#ifndef INVALID_FILE_HANDLE
-#define INVALID_FILE_HANDLE ((HANDLE) 0xFFFFFFFF)
-#endif
-
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
 #include "plug-in-types.h"
@@ -146,7 +142,7 @@ gimp_plug_in_shm_new (void)
     g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
     /* Create the file mapping into paging space */
-    shm->shm_handle = CreateFileMapping (INVALID_FILE_HANDLE, NULL,
+    shm->shm_handle = CreateFileMapping (INVALID_HANDLE_VALUE, NULL,
                                          PAGE_READWRITE, 0,
                                          TILE_MAP_SIZE,
                                          fileMapName);

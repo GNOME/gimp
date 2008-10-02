@@ -269,13 +269,13 @@ gimp_layer_flatten (gint32 layer_ID)
  * @new_height: New layer height.
  * @local_origin: Use a local origin (as opposed to the image origin).
  *
- * Scale the layer to the specified extents.
+ * Scale the layer using the default interpolation method.
  *
  * This procedure scales the layer so that its new width and height are
  * equal to the supplied parameters. The 'local-origin' parameter
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
- * to an image.
+ * to an image. The default interpolation method is used for scaling.
  *
  * Returns: TRUE on success.
  */
@@ -295,6 +295,54 @@ gimp_layer_scale (gint32   layer_ID,
                                     GIMP_PDB_INT32, new_width,
                                     GIMP_PDB_INT32, new_height,
                                     GIMP_PDB_INT32, local_origin,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_scale_full:
+ * @layer_ID: The layer.
+ * @new_width: New layer width.
+ * @new_height: New layer height.
+ * @local_origin: Use a local origin (as opposed to the image origin).
+ * @interpolation: Type of interpolation.
+ *
+ * Scale the layer using a specific interpolation method.
+ *
+ * This procedure scales the layer so that its new width and height are
+ * equal to the supplied parameters. The 'local-origin' parameter
+ * specifies whether to scale from the center of the layer, or from the
+ * image origin. This operation only works if the layer has been added
+ * to an image. This procedure allows you to specify the interpolation
+ * method explicitly.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_layer_scale_full (gint32                layer_ID,
+                       gint                  new_width,
+                       gint                  new_height,
+                       gboolean              local_origin,
+                       GimpInterpolationType interpolation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-layer-scale-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, new_width,
+                                    GIMP_PDB_INT32, new_height,
+                                    GIMP_PDB_INT32, local_origin,
+                                    GIMP_PDB_INT32, interpolation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

@@ -36,7 +36,7 @@ def do_console():
                  '__name__': '__main__', '__doc__': None,
                  'gimp': gimp, 'pdb': gimp.pdb,
                  'shelf': gimpshelf.shelf}
-    
+
     for s in gimpenums.__dict__.keys():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
@@ -109,7 +109,7 @@ def do_console():
                 return
 
             proc = pdb[proc_name]
-            
+
             cmd = ''
 
             if len(proc.return_vals) > 0:

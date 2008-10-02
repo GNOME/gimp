@@ -570,7 +570,9 @@ set_XpmImage (XpmColor *array,
     {
       array[index].g_color = NULL;
       array[index].c_color = colorstring;
-    } else {
+    }
+  else
+    {
       array[index].c_color = NULL;
       array[index].g_color = colorstring;
     }

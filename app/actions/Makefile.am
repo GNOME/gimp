@@ -23,6 +23,10 @@ libappactions_a_SOURCES = \
 	colormap-actions.h		\
 	colormap-commands.c		\
 	colormap-commands.h		\
+	config-actions.c		\
+	config-actions.h		\
+	config-commands.c		\
+	config-commands.h		\
 	context-actions.c		\
 	context-actions.h		\
 	context-commands.c		\

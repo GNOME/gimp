@@ -42,7 +42,7 @@ class nmx:
     def __init__(self, objfile=None):
         self.objects = dict()
         self.filename = None
-        
+
         if objfile != None:
             self.update(objfile)
             pass
@@ -71,7 +71,7 @@ class nmx:
             pass
 
         object = objfile
-        
+
         for (type, symbol) in symbols:
             if not self.objects.has_key(object):
                 self.objects.update({ object : dict({ "exports" : dict(), "imports" : dict() }) })

@@ -17,13 +17,13 @@
  */
 
 #if 0
-#define DEBUG_MARSHALL       0  /* No need to define this until you need it */
-#define DEBUG_SCRIPTS        0
+#define DEBUG_MARSHALL 0  /* No need to define this until you need it */
+#define DEBUG_SCRIPTS  0
 #endif
 
 #include "config.h"
 
-#include <string.h> /* memcpy, strcpy, strlen */
+#include <string.h>
 
 #include <glib/gstdio.h>
 
@@ -36,26 +36,46 @@
 #include "tinyscheme/dynload.h"
 #endif
 #include "ftx/ftx.h"
-#include "re/re.h"
 
 #include "script-fu-types.h"
 
 #include "script-fu-console.h"
 #include "script-fu-interface.h"
+#include "script-fu-regex.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
 #include "scheme-wrapper.h"
 
+
 #undef cons
 
-struct named_constant
+static void     ts_init_constants                (scheme    *sc);
+static void     ts_init_procedures               (scheme    *sc,
+                                                  gboolean   register_scipts);
+static void     convert_string                   (gchar     *str);
+static pointer  script_fu_marshal_procedure_call (scheme    *sc,
+                                                  pointer    a);
+static void     script_fu_marshal_destroy_args   (GimpParam *params,
+                                                  gint       n_params);
+
+static pointer  script_fu_register_call          (scheme    *sc,
+                                                  pointer    a);
+static pointer  script_fu_menu_register_call     (scheme    *sc,
+                                                  pointer    a);
+static pointer  script_fu_quit_call              (scheme    *sc,
+                                                  pointer    a);
+static pointer  script_fu_nil_call               (scheme    *sc,
+                                                  pointer    a);
+
+
+typedef struct
 {
   const gchar *name;
   gint         value;
-};
+} NamedConstant;
 
-struct named_constant const script_constants[] =
+static const NamedConstant const script_constants[] =
 {
   /* Useful values from libgimpbase/gimplimits.h */
   { "MIN-IMAGE-SIZE", GIMP_MIN_IMAGE_SIZE },
@@ -104,64 +124,65 @@ struct named_constant const script_constants[] =
   { NULL, 0 }
 };
 
-/* The following constants are deprecated. They are */
-/* included to keep backwards compatability with    */
-/* older scripts used with version 2.0 of GIMP.     */
-struct named_constant const old_constants[] =
+/* The following constants are deprecated. They are
+ * included to keep backwards compatability with
+ * older scripts used with version 2.0 of GIMP.
+ */
+static const NamedConstant const old_constants[] =
 {
-  { "NORMAL",       GIMP_NORMAL_MODE       },
-  { "DISSOLVE",     GIMP_DISSOLVE_MODE     },
-  { "BEHIND",       GIMP_BEHIND_MODE       },
-  { "MULTIPLY",     GIMP_MULTIPLY_MODE     },
-  { "SCREEN",       GIMP_SCREEN_MODE       },
-  { "OVERLAY",      GIMP_OVERLAY_MODE      },
-  { "DIFFERENCE",   GIMP_DIFFERENCE_MODE   },
-  { "ADDITION",     GIMP_ADDITION_MODE     },
-  { "SUBTRACT",     GIMP_SUBTRACT_MODE     },
-  { "DARKEN-ONLY",  GIMP_DARKEN_ONLY_MODE  },
-  { "LIGHTEN-ONLY", GIMP_LIGHTEN_ONLY_MODE },
-  { "HUE",          GIMP_HUE_MODE          },
-  { "SATURATION",   GIMP_SATURATION_MODE   },
-  { "COLOR",        GIMP_COLOR_MODE        },
-  { "VALUE",        GIMP_VALUE_MODE        },
-  { "DIVIDE",       GIMP_DIVIDE_MODE       },
+  { "NORMAL",               GIMP_NORMAL_MODE       },
+  { "DISSOLVE",             GIMP_DISSOLVE_MODE     },
+  { "BEHIND",               GIMP_BEHIND_MODE       },
+  { "MULTIPLY",             GIMP_MULTIPLY_MODE     },
+  { "SCREEN",               GIMP_SCREEN_MODE       },
+  { "OVERLAY",              GIMP_OVERLAY_MODE      },
+  { "DIFFERENCE",           GIMP_DIFFERENCE_MODE   },
+  { "ADDITION",             GIMP_ADDITION_MODE     },
+  { "SUBTRACT",             GIMP_SUBTRACT_MODE     },
+  { "DARKEN-ONLY",          GIMP_DARKEN_ONLY_MODE  },
+  { "LIGHTEN-ONLY",         GIMP_LIGHTEN_ONLY_MODE },
+  { "HUE",                  GIMP_HUE_MODE          },
+  { "SATURATION",           GIMP_SATURATION_MODE   },
+  { "COLOR",                GIMP_COLOR_MODE        },
+  { "VALUE",                GIMP_VALUE_MODE        },
+  { "DIVIDE",               GIMP_DIVIDE_MODE       },
 
-  { "BLUR",         GIMP_BLUR_CONVOLVE     },
-  { "SHARPEN",      GIMP_SHARPEN_CONVOLVE  },
+  { "BLUR",                 GIMP_BLUR_CONVOLVE     },
+  { "SHARPEN",              GIMP_SHARPEN_CONVOLVE  },
 
-  { "WHITE-MASK",     GIMP_ADD_WHITE_MASK     },
-  { "BLACK-MASK",     GIMP_ADD_BLACK_MASK     },
-  { "ALPHA-MASK",     GIMP_ADD_ALPHA_MASK     },
-  { "SELECTION-MASK", GIMP_ADD_SELECTION_MASK },
-  { "COPY-MASK",      GIMP_ADD_COPY_MASK      },
+  { "WHITE-MASK",           GIMP_ADD_WHITE_MASK     },
+  { "BLACK-MASK",           GIMP_ADD_BLACK_MASK     },
+  { "ALPHA-MASK",           GIMP_ADD_ALPHA_MASK     },
+  { "SELECTION-MASK",       GIMP_ADD_SELECTION_MASK },
+  { "COPY-MASK",            GIMP_ADD_COPY_MASK      },
 
-  { "ADD",          GIMP_CHANNEL_OP_ADD       },
-  { "SUB",          GIMP_CHANNEL_OP_SUBTRACT  },
-  { "REPLACE",      GIMP_CHANNEL_OP_REPLACE   },
-  { "INTERSECT",    GIMP_CHANNEL_OP_INTERSECT },
+  { "ADD",                  GIMP_CHANNEL_OP_ADD       },
+  { "SUB",                  GIMP_CHANNEL_OP_SUBTRACT  },
+  { "REPLACE",              GIMP_CHANNEL_OP_REPLACE   },
+  { "INTERSECT",            GIMP_CHANNEL_OP_INTERSECT },
 
-  { "FG-BG-RGB",    GIMP_FG_BG_RGB_MODE       },
-  { "FG-BG-HSV",    GIMP_FG_BG_HSV_MODE       },
-  { "FG-TRANS",     GIMP_FG_TRANSPARENT_MODE  },
-  { "CUSTOM",       GIMP_CUSTOM_MODE          },
+  { "FG-BG-RGB",            GIMP_FG_BG_RGB_MODE       },
+  { "FG-BG-HSV",            GIMP_FG_BG_HSV_MODE       },
+  { "FG-TRANS",             GIMP_FG_TRANSPARENT_MODE  },
+  { "CUSTOM",               GIMP_CUSTOM_MODE          },
 
-  { "FG-IMAGE-FILL",    GIMP_FOREGROUND_FILL  },
-  { "BG-IMAGE-FILL",    GIMP_BACKGROUND_FILL  },
-  { "WHITE-IMAGE-FILL", GIMP_WHITE_FILL       },
-  { "TRANS-IMAGE-FILL", GIMP_TRANSPARENT_FILL },
+  { "FG-IMAGE-FILL",        GIMP_FOREGROUND_FILL  },
+  { "BG-IMAGE-FILL",        GIMP_BACKGROUND_FILL  },
+  { "WHITE-IMAGE-FILL",     GIMP_WHITE_FILL       },
+  { "TRANS-IMAGE-FILL",     GIMP_TRANSPARENT_FILL },
 
-  { "APPLY",        GIMP_MASK_APPLY   },
-  { "DISCARD",      GIMP_MASK_DISCARD },
+  { "APPLY",                GIMP_MASK_APPLY   },
+  { "DISCARD",              GIMP_MASK_DISCARD },
 
-  { "HARD",         GIMP_BRUSH_HARD },
-  { "SOFT",         GIMP_BRUSH_SOFT },
+  { "HARD",                 GIMP_BRUSH_HARD },
+  { "SOFT",                 GIMP_BRUSH_SOFT },
 
-  { "CONTINUOUS",   GIMP_PAINT_CONSTANT    },
-  { "INCREMENTAL",  GIMP_PAINT_INCREMENTAL },
+  { "CONTINUOUS",           GIMP_PAINT_CONSTANT    },
+  { "INCREMENTAL",          GIMP_PAINT_INCREMENTAL },
 
-  { "HORIZONTAL",   GIMP_ORIENTATION_HORIZONTAL },
-  { "VERTICAL",     GIMP_ORIENTATION_VERTICAL   },
-  { "UNKNOWN",      GIMP_ORIENTATION_UNKNOWN    },
+  { "HORIZONTAL",           GIMP_ORIENTATION_HORIZONTAL },
+  { "VERTICAL",             GIMP_ORIENTATION_VERTICAL   },
+  { "UNKNOWN",              GIMP_ORIENTATION_UNKNOWN    },
 
   { "LINEAR",               GIMP_GRADIENT_LINEAR               },
   { "BILINEAR",             GIMP_GRADIENT_BILINEAR             },
@@ -175,11 +196,11 @@ struct named_constant const old_constants[] =
   { "SPIRAL-CLOCKWISE",     GIMP_GRADIENT_SPIRAL_CLOCKWISE     },
   { "SPIRAL-ANTICLOCKWISE", GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE },
 
-  { "VALUE-LUT",      GIMP_HISTOGRAM_VALUE },
-  { "RED-LUT",        GIMP_HISTOGRAM_RED   },
-  { "GREEN-LUT",      GIMP_HISTOGRAM_GREEN },
-  { "BLUE-LUT",       GIMP_HISTOGRAM_BLUE  },
-  { "ALPHA-LUT",      GIMP_HISTOGRAM_ALPHA },
+  { "VALUE-LUT",            GIMP_HISTOGRAM_VALUE },
+  { "RED-LUT",              GIMP_HISTOGRAM_RED   },
+  { "GREEN-LUT",            GIMP_HISTOGRAM_GREEN },
+  { "BLUE-LUT",             GIMP_HISTOGRAM_BLUE  },
+  { "ALPHA-LUT",            GIMP_HISTOGRAM_ALPHA },
 
   { NULL, 0 }
 };
@@ -189,84 +210,11 @@ static scheme sc;
 
 
 void
-ts_stdout_output_func (TsOutputType  type,
-                       const char   *string,
-                       int           len,
-                       gpointer      user_data)
-{
-  if (len < 0)
-    len = strlen (string);
-  fprintf (stdout, "%.*s", len, string);
-}
-
-void
-ts_gstring_output_func (TsOutputType  type,
-                        const char   *string,
-                        int           len,
-                        gpointer      user_data)
-{
-  GString *gstr = (GString *) user_data;
-
-  g_string_append_len (gstr, string, len);
-}
-
-void
-ts_set_print_flag (gint print_flag)
-{
-  sc.print_output = print_flag;
-}
-
-void
-ts_print_welcome (void)
-{
-  ts_output_string (TS_OUTPUT_NORMAL,
-                    "Welcome to TinyScheme, Version 1.38\n", -1);
-  ts_output_string (TS_OUTPUT_NORMAL,
-                    "Copyright (c) Dimitrios Souflis\n", -1);
-}
-
-void
-ts_interpret_stdin (void)
-{
-  scheme_load_file (&sc, stdin);
-}
-
-gint
-ts_interpret_string (const gchar *expr)
-{
-#if DEBUG_SCRIPTS
-  sc.print_output = 1;
-  sc.tracing = 1;
-#endif
-
-  sc.vptr->load_string (&sc, (char *)expr);
-
-  return sc.retcode;
-}
-
-const gchar *
-ts_get_success_msg (void)
-{
-  if (sc.vptr->is_string(sc.value))
-    return sc.vptr->string_value(sc.value);
-
-  return "Success";
-}
-
-
-static void  init_constants  (void);
-static void  init_procedures (void);
-
-static gboolean register_scripts = FALSE;
-
-void
 tinyscheme_init (const gchar *path,
-                 gboolean     local_register_scripts)
+                 gboolean     register_scripts)
 {
-  register_scripts = local_register_scripts;
-
   /* init the interpreter */
-  if (!scheme_init (&sc))
+  if (! scheme_init (&sc))
     {
       g_message ("Could not initialize TinyScheme!");
       return;
@@ -278,11 +226,11 @@ tinyscheme_init (const gchar *path,
 
   /* Initialize the TinyScheme extensions */
   init_ftx (&sc);
-  init_re (&sc);
+  script_fu_regex_init (&sc);
 
   /* register in the interpreter the gimp functions and types. */
-  init_constants ();
-  init_procedures ();
+  ts_init_constants (&sc);
+  ts_init_procedures (&sc, register_scripts);
 
   if (path)
     {
@@ -327,73 +275,124 @@ tinyscheme_init (const gchar *path,
     }
 }
 
+/* Create an SF-RUN-MODE constant for use in scripts.
+ * It is set to the run mode state determined by GIMP.
+ */
 void
-tinyscheme_deinit (void)
-{
-  scheme_deinit (&sc);
-}
-
-/* Create an SF-RUN-MODE constant for use in scripts.  */
-/* It is set to the run mode state determined by GIMP. */
-void
-set_run_mode_constant (GimpRunMode run_mode)
+ts_set_run_mode (GimpRunMode run_mode)
 {
   pointer symbol;
 
   symbol = sc.vptr->mk_symbol (&sc, "SF-RUN-MODE");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
                           sc.vptr->mk_integer (&sc, run_mode));
-  sc.vptr->setimmutable(symbol);
+  sc.vptr->setimmutable (symbol);
 }
 
-static void     convert_string                   (gchar  *str);
-static pointer  script_fu_marshal_procedure_call (scheme *sc, pointer  a);
-static void     script_fu_marshal_destroy_args   (GimpParam *params,
-                                                  gint       n_params);
+void
+ts_set_print_flag (gint print_flag)
+{
+  sc.print_output = print_flag;
+}
 
-static pointer  script_fu_register_call          (scheme *sc, pointer  a);
-static pointer  script_fu_menu_register_call     (scheme *sc, pointer  a);
-static pointer  script_fu_quit_call              (scheme *sc, pointer  a);
+void
+ts_print_welcome (void)
+{
+  ts_output_string (TS_OUTPUT_NORMAL,
+                    "Welcome to TinyScheme, Version 1.38\n", -1);
+  ts_output_string (TS_OUTPUT_NORMAL,
+                    "Copyright (c) Dimitrios Souflis\n", -1);
+}
 
+void
+ts_interpret_stdin (void)
+{
+  scheme_load_file (&sc, stdin);
+}
+
+gint
+ts_interpret_string (const gchar *expr)
+{
+#if DEBUG_SCRIPTS
+  sc.print_output = 1;
+  sc.tracing = 1;
+#endif
+
+  sc.vptr->load_string (&sc, (char *) expr);
+
+  return sc.retcode;
+}
+
+const gchar *
+ts_get_success_msg (void)
+{
+  if (sc.vptr->is_string (sc.value))
+    return sc.vptr->string_value (sc.value);
+
+  return "Success";
+}
+
+void
+ts_stdout_output_func (TsOutputType  type,
+                       const char   *string,
+                       int           len,
+                       gpointer      user_data)
+{
+  if (len < 0)
+    len = strlen (string);
+  fprintf (stdout, "%.*s", len, string);
+}
+
+void
+ts_gstring_output_func (TsOutputType  type,
+                        const char   *string,
+                        int           len,
+                        gpointer      user_data)
+{
+  GString *gstr = (GString *) user_data;
+
+  g_string_append_len (gstr, string, len);
+}
+
+
+/*  private functions  */
 
 /*
  * Below can be found the functions responsible for registering the
  * gimp functions and types against the scheme interpreter.
  */
-
-
 static void
-init_constants (void)
+ts_init_constants (scheme *sc)
 {
   const gchar **enum_type_names;
   gint          n_enum_type_names;
   gint          i;
   pointer       symbol;
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-directory");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_directory ()));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-directory");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-data-directory");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_data_directory ()));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-data-directory");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_data_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-plug-in-directory");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_plug_in_directory ()));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-plug-in-directory");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-locale-directory");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_locale_directory ()));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-locale-directory");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_locale_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-sysconf-directory");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_sysconf_directory ()));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-sysconf-directory");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_sysconf_directory ()));
+  sc->vptr->setimmutable (symbol);
 
   enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
 
@@ -413,10 +412,10 @@ init_constants (void)
               scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
               convert_string (scheme_name);
 
-              symbol = sc.vptr->mk_symbol (&sc, scheme_name);
-              sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                                      sc.vptr->mk_integer (&sc, value->value));
-              sc.vptr->setimmutable(symbol);
+              symbol = sc->vptr->mk_symbol (sc, scheme_name);
+              sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                                       sc->vptr->mk_integer (sc, value->value));
+              sc->vptr->setimmutable (symbol);
 
               g_free (scheme_name);
             }
@@ -428,94 +427,88 @@ init_constants (void)
   /* Constants used in the register block of scripts */
   for (i = 0; script_constants[i].name != NULL; ++i)
     {
-      symbol = sc.vptr->mk_symbol (&sc, script_constants[i].name);
-      sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                              sc.vptr->mk_integer (&sc,
-                                                   script_constants[i].value));
-      sc.vptr->setimmutable(symbol);
+      symbol = sc->vptr->mk_symbol (sc, script_constants[i].name);
+      sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                               sc->vptr->mk_integer (sc,
+                                                     script_constants[i].value));
+      sc->vptr->setimmutable (symbol);
     }
 
   /* Define string constant for use in building paths to files/directories */
-  symbol = sc.vptr->mk_symbol (&sc, "DIR-SEPARATOR");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, G_DIR_SEPARATOR_S));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "DIR-SEPARATOR");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, G_DIR_SEPARATOR_S));
+  sc->vptr->setimmutable (symbol);
 
   /* These constants are deprecated and will be removed at a later date. */
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-dir");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_directory () ));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-dir");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-data-dir");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_data_directory () ));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-data-dir");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_data_directory ()));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-plugin-dir");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_string (&sc, gimp_plug_in_directory () ));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-plugin-dir");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
+  sc->vptr->setimmutable (symbol);
 
   for (i = 0; old_constants[i].name != NULL; ++i)
     {
-      symbol = sc.vptr->mk_symbol (&sc, old_constants[i].name);
-      sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                              sc.vptr->mk_integer (&sc,
-                                                   old_constants[i].value));
-      sc.vptr->setimmutable(symbol);
+      symbol = sc->vptr->mk_symbol (sc, old_constants[i].name);
+      sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                               sc->vptr->mk_integer (sc,
+                                                     old_constants[i].value));
+      sc->vptr->setimmutable (symbol);
     }
 }
 
 static void
-init_procedures (void)
+ts_init_procedures (scheme   *sc,
+                    gboolean  register_scripts)
 {
-  gchar          **proc_list;
-  gchar           *proc_blurb;
-  gchar           *proc_help;
-  gchar           *proc_author;
-  gchar           *proc_copyright;
-  gchar           *proc_date;
-  GimpPDBProcType  proc_type;
-  gint             nparams;
-  gint             nreturn_vals;
-  GimpParamDef    *params;
-  GimpParamDef    *return_vals;
-  gint             num_procs;
-  gint             i;
-  gchar           *buff;
-  pointer          symbol;
+  gchar   **proc_list;
+  gint      num_procs;
+  gint      i;
+  pointer   symbol;
 
 #if USE_DL
-  symbol = sc.vptr->mk_symbol (&sc,"load-extension");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_foreign_func (&sc, scm_load_ext));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc,"load-extension");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc, scm_load_ext));
+  sc->vptr->setimmutable (symbol);
 #endif
 
-  symbol = sc.vptr->mk_symbol (&sc, "script-fu-register");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_foreign_func (&sc,
-                                                    script_fu_register_call));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "script-fu-register");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc,
+                                                      register_scripts ?
+                                                      script_fu_register_call :
+                                                      script_fu_nil_call));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "script-fu-menu-register");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_foreign_func (&sc,
-                                                    script_fu_menu_register_call));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "script-fu-menu-register");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc,
+                                                      register_scripts ?
+                                                      script_fu_menu_register_call :
+                                                      script_fu_nil_call));
+  sc->vptr->setimmutable (symbol);
 
-  symbol = sc.vptr->mk_symbol (&sc, "script-fu-quit");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_foreign_func (&sc, script_fu_quit_call));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "script-fu-quit");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc, script_fu_quit_call));
+  sc->vptr->setimmutable (symbol);
 
   /*  register the database execution procedure  */
-  symbol = sc.vptr->mk_symbol (&sc, "gimp-proc-db-call");
-  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                          sc.vptr->mk_foreign_func (&sc,
-                                                    script_fu_marshal_procedure_call));
-  sc.vptr->setimmutable(symbol);
+  symbol = sc->vptr->mk_symbol (sc, "gimp-proc-db-call");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc,
+                                                      script_fu_marshal_procedure_call));
+  sc->vptr->setimmutable (symbol);
 
   gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
                             &num_procs, &proc_list);
@@ -523,6 +516,17 @@ init_procedures (void)
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
     {
+      gchar           *proc_blurb;
+      gchar           *proc_help;
+      gchar           *proc_author;
+      gchar           *proc_copyright;
+      gchar           *proc_date;
+      GimpPDBProcType  proc_type;
+      gint             n_params;
+      gint             n_return_vals;
+      GimpParamDef    *params;
+      GimpParamDef    *return_vals;
+
       /*  lookup the procedure  */
       if (gimp_procedural_db_proc_info (proc_list[i],
                                         &proc_blurb,
@@ -531,39 +535,42 @@ init_procedures (void)
                                         &proc_copyright,
                                         &proc_date,
                                         &proc_type,
-                                        &nparams, &nreturn_vals,
+                                        &n_params, &n_return_vals,
                                         &params, &return_vals))
-      {
-         /* Build a define that will call the foreign function */
-         /* The Scheme statement was suggested by Simon Budig  */
-         if (nparams == 0)
-           {
-             buff = g_strdup_printf (" (define (%s)"
-                                     " (gimp-proc-db-call \"%s\"))",
-                                     proc_list[i], proc_list[i]);
-           }
-         else
-           {
-             buff = g_strdup_printf (" (define %s (lambda x"
-                                     " (apply gimp-proc-db-call (cons \"%s\" x))))",
-                                     proc_list[i], proc_list[i]);
-           }
+        {
+          gchar *buff;
 
-         /*  Execute the 'define'  */
-         sc.vptr->load_string (&sc, buff);
+          /* Build a define that will call the foreign function.
+           * The Scheme statement was suggested by Simon Budig.
+           */
+          if (n_params == 0)
+            {
+              buff = g_strdup_printf (" (define (%s)"
+                                      " (gimp-proc-db-call \"%s\"))",
+                                      proc_list[i], proc_list[i]);
+            }
+          else
+            {
+              buff = g_strdup_printf (" (define %s (lambda x"
+                                      " (apply gimp-proc-db-call (cons \"%s\" x))))",
+                                      proc_list[i], proc_list[i]);
+            }
 
-         g_free (buff);
+          /*  Execute the 'define'  */
+          sc->vptr->load_string (sc, buff);
 
-         /*  free the queried information  */
-         g_free (proc_blurb);
-         g_free (proc_help);
-         g_free (proc_author);
-         g_free (proc_copyright);
-         g_free (proc_date);
+          g_free (buff);
 
-         gimp_destroy_paramdefs (params, nparams);
-         gimp_destroy_paramdefs (return_vals, nreturn_vals);
-      }
+          /*  free the queried information  */
+          g_free (proc_blurb);
+          g_free (proc_help);
+          g_free (proc_author);
+          g_free (proc_copyright);
+          g_free (proc_date);
+
+          gimp_destroy_paramdefs (params, n_params);
+          gimp_destroy_paramdefs (return_vals, n_return_vals);
+        }
 
       g_free (proc_list[i]);
     }
@@ -583,7 +590,8 @@ convert_string (gchar *str)
 
 /* This is called by the Scheme interpreter to allow calls to GIMP functions */
 static pointer
-script_fu_marshal_procedure_call (scheme *sc, pointer a)
+script_fu_marshal_procedure_call (scheme  *sc,
+                                  pointer  a)
 {
   GimpParam       *args;
   GimpParam       *values = NULL;
@@ -599,15 +607,10 @@ script_fu_marshal_procedure_call (scheme *sc, pointer a)
   gint             nreturn_vals;
   GimpParamDef    *params;
   GimpParamDef    *return_vals;
-  gchar            error_str[256];
+  gchar            error_str[1024];
   gint             i;
-  gint             j;
   gint             success = TRUE;
-  pointer          intermediate_val;
   pointer          return_val = sc->NIL;
-  gchar           *string;
-  gint32           n_elements;
-  pointer          vector;
 
 #if DEBUG_MARSHALL
 /* These three #defines are from Tinyscheme (tinyscheme/scheme.c) */
@@ -615,32 +618,16 @@ script_fu_marshal_procedure_call (scheme *sc, pointer a)
 #define typeflag(p) ((p)->_flag)
 #define type(p)     (typeflag(p)&T_MASKTYPE)
 
-static const char *ret_types[] = {
-  "GIMP_PDB_INT32",       "GIMP_PDB_INT16",     "GIMP_PDB_INT8",
-  "GIMP_PDB_FLOAT",       "GIMP_PDB_STRING",    "GIMP_PDB_INT32ARRAY",
-  "GIMP_PDB_INT16ARRAY",  "GIMP_PDB_INT8ARRAY", "GIMP_PDB_FLOATARRAY",
-  "GIMP_PDB_STRINGARRAY", "GIMP_PDB_COLOR",     "GIMP_PDB_REGION",
-  "GIMP_PDB_DISPLAY",     "GIMP_PDB_IMAGE",     "GIMP_PDB_LAYER",
-  "GIMP_PDB_CHANNEL",     "GIMP_PDB_DRAWABLE",  "GIMP_PDB_SELECTION",
-  "GIMP_PDB_COLORARRY",   "GIMP_PDB_VECTORS",   "GIMP_PDB_PARASITE",
-  "GIMP_PDB_STATUS",      "GIMP_PDB_END"
-};
+  static const char *ts_types[] =
+  {
+    "T_NONE",
+    "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
+    "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
+    "T_CHARACTER", "T_PORT",       "T_VECTOR",       "T_MACRO",
+    "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
+  };
 
-static const char *ts_types[] = {
-  "T_NONE",
-  "T_STRING",    "T_NUMBER",     "T_SYMBOL",       "T_PROC",
-  "T_PAIR",      "T_CLOSURE",    "T_CONTINUATION", "T_FOREIGN",
-  "T_CHARACTER", "T_PORT",       "T_VECTOR",       "T_MACRO",
-  "T_PROMISE",   "T_ENVIRONMENT","T_ARRAY"
-};
-
-static const char *status_types[] = {
-  "GIMP_PDB_EXECUTION_ERROR", "GIMP_PDB_CALLING_ERROR",
-  "GIMP_PDB_PASS_THROUGH",    "GIMP_PDB_SUCCESS",
-  "GIMP_PDB_CANCEL"
-};
-
-g_printerr ("\nIn script_fu_marshal_procedure_call ()\n");
+  g_printerr ("\nIn %s()\n", G_STRFUNC);
 #endif
 
   /*  Make sure there are arguments  */
@@ -657,10 +644,8 @@ g_printerr ("\nIn script_fu_marshal_procedure_call ()\n");
     proc_name = g_strdup (sc->vptr->string_value (a));
 
 #ifdef DEBUG_MARSHALL
-g_printerr ("  proc name: %s\n", proc_name);
-#endif
-#if DEBUG_MARSHALL
-g_printerr ("  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
+  g_printerr ("  proc name: %s\n", proc_name);
+  g_printerr ("  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
 #endif
 
   /*  report the current command  */
@@ -678,7 +663,7 @@ g_printerr ("  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
                                       &params, &return_vals))
     {
 #ifdef DEBUG_MARSHALL
-g_printerr ("  Invalid procedure name\n");
+      g_printerr ("  Invalid procedure name\n");
 #endif
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid procedure name %s specified", proc_name);
@@ -698,11 +683,11 @@ g_printerr ("  Invalid procedure name\n");
     }
 
   /*  Check the supplied number of arguments  */
-  if ( (sc->vptr->list_length (sc, a) - 1) != nparams)
+  if ((sc->vptr->list_length (sc, a) - 1) != nparams)
     {
 #if DEBUG_MARSHALL
-g_printerr ("  Invalid number of arguments (expected %d but received %d)",
-                 nparams, (sc->vptr->list_length (sc, a) - 1));
+      g_printerr ("  Invalid number of arguments (expected %d but received %d)",
+                  nparams, (sc->vptr->list_length (sc, a) - 1));
 #endif
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid number of arguments for %s (expected %d but received %d)",
@@ -718,14 +703,26 @@ g_printerr ("  Invalid number of arguments (expected %d but received %d)",
 
   for (i = 0; i < nparams; i++)
     {
+      gint32  n_elements;
+      pointer vector;
+      gint    j;
+
       a = sc->vptr->pair_cdr (a);
 
 #if DEBUG_MARSHALL
-g_printerr ("    param %d - expecting type %s (%d)\n",
-                 i+1, ret_types[ params[i].type ], params[i].type);
-g_printerr ("      passed arg is type %s (%d)\n",
-                 ts_types[ type(sc->vptr->pair_car (a)) ],
-                 type(sc->vptr->pair_car (a)));
+      {
+        const gchar *type_name;
+
+        gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
+                             params[i].type,
+                             &type_name, NULL, NULL, NULL);
+
+        g_printerr ("    param %d - expecting type %s (%d)\n",
+                    i + 1, type_name, params[i].type);
+        g_printerr ("      passed arg is type %s (%d)\n",
+                    ts_types[ type(sc->vptr->pair_car (a)) ],
+                    type(sc->vptr->pair_car (a)));
+      }
 #endif
 
       args[i].type = params[i].type;
@@ -746,7 +743,7 @@ g_printerr ("      passed arg is type %s (%d)\n",
             {
               args[i].data.d_int32 = sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-g_printerr ("      int32 arg is '%d'\n", args[i].data.d_int32);
+              g_printerr ("      int32 arg is '%d'\n", args[i].data.d_int32);
 #endif
             }
           break;
@@ -758,7 +755,7 @@ g_printerr ("      int32 arg is '%d'\n", args[i].data.d_int32);
             {
               args[i].data.d_int16 = (gint16) sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-g_printerr ("      int16 arg is '%d'\n", args[i].data.d_int16);
+              g_printerr ("      int16 arg is '%d'\n", args[i].data.d_int16);
 #endif
             }
           break;
@@ -770,7 +767,7 @@ g_printerr ("      int16 arg is '%d'\n", args[i].data.d_int16);
             {
               args[i].data.d_int8 = (guint8) sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-g_printerr ("      int8 arg is '%u'\n", args[i].data.d_int8);
+              g_printerr ("      int8 arg is '%u'\n", args[i].data.d_int8);
 #endif
             }
           break;
@@ -782,7 +779,7 @@ g_printerr ("      int8 arg is '%u'\n", args[i].data.d_int8);
             {
               args[i].data.d_float = sc->vptr->rvalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-g_printerr ("      float arg is '%f'\n", args[i].data.d_float);
+              g_printerr ("      float arg is '%f'\n", args[i].data.d_float);
 #endif
             }
           break;
@@ -794,7 +791,7 @@ g_printerr ("      float arg is '%f'\n", args[i].data.d_float);
             {
               args[i].data.d_string = sc->vptr->string_value (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
+              g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
 #endif
             }
           break;
@@ -837,18 +834,18 @@ g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
                 }
 
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->vector_length (vector);
-g_printerr ("      int32 vector has %ld elements\n", count);
-if (count > 0)
-  {
-    g_printerr ("     ");
-    for (j = 0; j < count; ++j)
-      g_printerr (" %ld",
-                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    g_printerr ("\n");
-  }
-}
+              {
+                glong count = sc->vptr->vector_length (vector);
+                g_printerr ("      int32 vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" %ld",
+                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                    g_printerr ("\n");
+                  }
+              }
 #endif
             }
           break;
@@ -888,18 +885,18 @@ if (count > 0)
                 }
 
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->vector_length (vector);
-g_printerr ("      int16 vector has %ld elements\n", count);
-if (count > 0)
-  {
-    g_printerr ("     ");
-    for (j = 0; j < count; ++j)
-      g_printerr (" %ld",
-                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    g_printerr ("\n");
-  }
-}
+              {
+                glong count = sc->vptr->vector_length (vector);
+                g_printerr ("      int16 vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" %ld",
+                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                    g_printerr ("\n");
+                  }
+              }
 #endif
             }
           break;
@@ -941,18 +938,18 @@ if (count > 0)
                 }
 
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->vector_length (vector);
-g_printerr ("      int8 vector has %ld elements\n", count);
-if (count > 0)
-  {
-    g_printerr ("     ");
-    for (j = 0; j < count; ++j)
-      g_printerr (" %ld",
-                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    g_printerr ("\n");
-  }
-}
+              {
+                glong count = sc->vptr->vector_length (vector);
+                g_printerr ("      int8 vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" %ld",
+                                  sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
+                    g_printerr ("\n");
+                  }
+              }
 #endif
             }
           break;
@@ -994,18 +991,18 @@ if (count > 0)
                 }
 
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->vector_length (vector);
-g_printerr ("      float vector has %ld elements\n", count);
-if (count > 0)
-  {
-    g_printerr ("     ");
-    for (j = 0; j < count; ++j)
-      g_printerr (" %f",
-                  sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
-    g_printerr ("\n");
-  }
-}
+              {
+                glong count = sc->vptr->vector_length (vector);
+                g_printerr ("      float vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" %f",
+                                  sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
+                    g_printerr ("\n");
+                  }
+              }
 #endif
             }
           break;
@@ -1049,18 +1046,18 @@ if (count > 0)
                 }
 
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->list_length ( sc, sc->vptr->pair_car (a) );
-g_printerr ("      string vector has %ld elements\n", count);
-if (count > 0)
-  {
-    g_printerr ("     ");
-    for (j = 0; j < count; ++j)
-      g_printerr (" \"%s\"",
-                  args[i].data.d_stringarray[j]);
-    g_printerr ("\n");
-  }
-}
+              {
+                glong count = sc->vptr->list_length ( sc, sc->vptr->pair_car (a) );
+                g_printerr ("      string vector has %ld elements\n", count);
+                if (count > 0)
+                  {
+                    g_printerr ("     ");
+                    for (j = 0; j < count; ++j)
+                      g_printerr (" \"%s\"",
+                                  args[i].data.d_stringarray[j]);
+                    g_printerr ("\n");
+                  }
+              }
 #endif
             }
           break;
@@ -1075,8 +1072,8 @@ if (count > 0)
 
               gimp_rgb_set_alpha (&args[i].data.d_color, 1.0);
 #if DEBUG_MARSHALL
-g_printerr ("      (%s)\n",
-                 sc->vptr->string_value (sc->vptr->pair_car (a)));
+              g_printerr ("      (%s)\n",
+                          sc->vptr->string_value (sc->vptr->pair_car (a)));
 #endif
             }
           else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
@@ -1094,7 +1091,7 @@ g_printerr ("      (%s)\n",
 
               gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
 #if DEBUG_MARSHALL
-g_printerr ("      (%d %d %d)\n", r, g, b);
+              g_printerr ("      (%d %d %d)\n", r, g, b);
 #endif
             }
           else
@@ -1155,10 +1152,10 @@ g_printerr ("      (%d %d %d)\n", r, g, b);
                                        r, g, b, 255);
                 }
 #if DEBUG_MARSHALL
-{
-glong count = sc->vptr->vector_length (vector);
-g_printerr ("      color vector has %ld elements\n", count);
-}
+              {
+                glong count = sc->vptr->vector_length (vector);
+                g_printerr ("      color vector has %ld elements\n", count);
+              }
 #endif
             }
           break;
@@ -1184,11 +1181,11 @@ g_printerr ("      color vector has %ld elements\n", count);
               args[i].data.d_region.height =
                            sc->vptr->ivalue (sc->vptr->pair_car (region));
 #if DEBUG_MARSHALL
-g_printerr ("      (%d %d %d %d)\n",
-                 args[i].data.d_region.x,
-                 args[i].data.d_region.y,
-                 args[i].data.d_region.width,
-                 args[i].data.d_region.height);
+              g_printerr ("      (%d %d %d %d)\n",
+                          args[i].data.d_region.x,
+                          args[i].data.d_region.y,
+                          args[i].data.d_region.width,
+                          args[i].data.d_region.height);
 #endif
             }
           break;
@@ -1199,52 +1196,55 @@ g_printerr ("      (%d %d %d %d)\n",
             success = FALSE;
           if (success)
             {
-              /* parasite->name */
-              intermediate_val = sc->vptr->pair_car (a);
+              pointer temp_val;
 
-              if (!sc->vptr->is_string (sc->vptr->pair_car (intermediate_val)))
+              /* parasite->name */
+              temp_val = sc->vptr->pair_car (a);
+
+              if (!sc->vptr->is_string (sc->vptr->pair_car (temp_val)))
                 {
                   success = FALSE;
                   break;
                 }
 
               args[i].data.d_parasite.name =
-                sc->vptr->string_value (sc->vptr->pair_car (intermediate_val));
+                sc->vptr->string_value (sc->vptr->pair_car (temp_val));
 #if DEBUG_MARSHALL
-g_printerr ("      name '%s'\n", args[i].data.d_parasite.name);
+              g_printerr ("      name '%s'\n", args[i].data.d_parasite.name);
 #endif
 
               /* parasite->flags */
-              intermediate_val = sc->vptr->pair_cdr (intermediate_val);
+              temp_val = sc->vptr->pair_cdr (temp_val);
 
-              if (!sc->vptr->is_number (sc->vptr->pair_car (intermediate_val)))
+              if (!sc->vptr->is_number (sc->vptr->pair_car (temp_val)))
                 {
                   success = FALSE;
                   break;
                 }
 
               args[i].data.d_parasite.flags =
-                sc->vptr->ivalue (sc->vptr->pair_car (intermediate_val));
+                sc->vptr->ivalue (sc->vptr->pair_car (temp_val));
 #if DEBUG_MARSHALL
-g_printerr ("      flags %d", args[i].data.d_parasite.flags);
+              g_printerr ("      flags %d", args[i].data.d_parasite.flags);
 #endif
 
               /* parasite->data */
-              intermediate_val = sc->vptr->pair_cdr (intermediate_val);
+              temp_val = sc->vptr->pair_cdr (temp_val);
 
-              if (!sc->vptr->is_string (sc->vptr->pair_car (intermediate_val)))
+              if (!sc->vptr->is_string (sc->vptr->pair_car (temp_val)))
                 {
                   success = FALSE;
                   break;
                 }
 
               args[i].data.d_parasite.size =
-                sc->vptr->ivalue (sc->vptr->pair_car (intermediate_val));
+                sc->vptr->ivalue (sc->vptr->pair_car (temp_val));
               args[i].data.d_parasite.data =
-                sc->vptr->string_value (sc->vptr->pair_car (intermediate_val));
+                sc->vptr->string_value (sc->vptr->pair_car (temp_val));
+
 #if DEBUG_MARSHALL
-g_printerr (", size %d\n", args[i].data.d_parasite.size);
-g_printerr ("      data '%s'\n", (char *)args[i].data.d_parasite.data);
+              g_printerr (", size %d\n", args[i].data.d_parasite.size);
+              g_printerr ("      data '%s'\n", (char *)args[i].data.d_parasite.data);
 #endif
             }
           break;
@@ -1268,19 +1268,19 @@ g_printerr ("      data '%s'\n", (char *)args[i].data.d_parasite.data);
     }
 
   if (success)
+    {
 #if DEBUG_MARSHALL
-{
-g_printerr ("    calling %s...", proc_name);
+      g_printerr ("    calling %s...", proc_name);
 #endif
-    values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
+      values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
 #if DEBUG_MARSHALL
-g_printerr ("  done.\n");
-}
+      g_printerr ("  done.\n");
 #endif
+    }
   else
     {
 #if DEBUG_MARSHALL
-g_printerr ("  Invalid type for argument %d\n", i+1);
+      g_printerr ("  Invalid type for argument %d\n", i+1);
 #endif
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid type for argument %d to %s",
@@ -1292,7 +1292,7 @@ g_printerr ("  Invalid type for argument %d\n", i+1);
   if (! values)
     {
 #if DEBUG_MARSHALL
-g_printerr ("  Did not return status\n");
+      g_printerr ("  Did not return status\n");
 #endif
       g_snprintf (error_str, sizeof(error_str),
                   "Procedure execution of %s did not return a status",
@@ -1302,35 +1302,70 @@ g_printerr ("  Did not return status\n");
     }
 
 #if DEBUG_MARSHALL
-g_printerr ("    return value is %s\n",
-                 status_types[ values[0].data.d_status ]);
+  {
+    const gchar *status_name;
+
+    gimp_enum_get_value (GIMP_TYPE_PDB_STATUS_TYPE,
+                         values[0].data.d_status,
+                         &status_name, NULL, NULL, NULL);
+    g_printerr ("    return value is %s\n", status_name);
+  }
 #endif
 
   switch (values[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      g_snprintf (error_str, sizeof (error_str),
-                  "Procedure execution of %s failed",
-                  proc_name);
+      if (nvalues > 1 && values[1].type == GIMP_PDB_STRING)
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed: %s",
+                      proc_name, values[1].data.d_string);
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed",
+                      proc_name);
+        }
       return foreign_error (sc, error_str, 0);
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      g_snprintf (error_str, sizeof (error_str),
-                  "Procedure execution of %s failed on invalid input arguments",
-                  proc_name);
+      if (nvalues > 1 && values[1].type == GIMP_PDB_STRING)
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments: %s",
+                      proc_name, values[1].data.d_string);
+        }
+      else
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Procedure execution of %s failed on invalid input arguments",
+                      proc_name);
+        }
       return foreign_error (sc, error_str, 0);
       break;
 
     case GIMP_PDB_SUCCESS:
 #if DEBUG_MARSHALL
-g_printerr ("    values returned: %d\n", nvalues-1);
+      g_printerr ("    values returned: %d\n", nvalues-1);
 #endif
       for (i = nvalues - 2; i >= 0; --i)
         {
+          const gchar *string;
+          gint         j;
+
 #if DEBUG_MARSHALL
-g_printerr ("      value %d is type %s (%d)\n",
-                 i, ret_types[ return_vals[i].type ], return_vals[i].type);
+          {
+            const gchar *type_name;
+
+            gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE,
+                                 return_vals[i].type,
+                                 &type_name, NULL, NULL, NULL);
+
+            g_printerr ("      value %d is type %s (%d)\n",
+                        i, type_name, return_vals[i].type);
+          }
 #endif
           switch (return_vals[i].type)
             {
@@ -1345,7 +1380,7 @@ g_printerr ("      value %d is type %s (%d)\n",
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int32),
-                                                   return_val);
+                             return_val);
               set_safe_foreign (sc, return_val);
               break;
 
@@ -1353,7 +1388,7 @@ g_printerr ("      value %d is type %s (%d)\n",
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int16),
-                                                   return_val);
+                             return_val);
               set_safe_foreign (sc, return_val);
               break;
 
@@ -1361,7 +1396,7 @@ g_printerr ("      value %d is type %s (%d)\n",
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int8),
-                                                   return_val);
+                             return_val);
               set_safe_foreign (sc, return_val);
               break;
 
@@ -1369,7 +1404,7 @@ g_printerr ("      value %d is type %s (%d)\n",
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_real (sc,
                                                 values[i + 1].data.d_float),
-                                                return_val);
+                             return_val);
               set_safe_foreign (sc, return_val);
               break;
 
@@ -1378,15 +1413,12 @@ g_printerr ("      value %d is type %s (%d)\n",
               if (! string)
                 string = "";
               return_val = sc->vptr->cons (sc,
-                                           sc->vptr->mk_string (sc, string),
-                                           return_val);
+                             sc->vptr->mk_string (sc, string),
+                             return_val);
               set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT32ARRAY:
-              /*  integer arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
                 gint32  num_int32s = values[i].data.d_int32;
                 gint32 *array      = (gint32 *) values[i + 1].data.d_int32array;
@@ -1405,9 +1437,6 @@ g_printerr ("      value %d is type %s (%d)\n",
               break;
 
             case GIMP_PDB_INT16ARRAY:
-              /*  integer arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
                 gint32  num_int16s = values[i].data.d_int32;
                 gint16 *array      = (gint16 *) values[i + 1].data.d_int16array;
@@ -1426,13 +1455,10 @@ g_printerr ("      value %d is type %s (%d)\n",
               break;
 
             case GIMP_PDB_INT8ARRAY:
-              /*  integer arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
-                gint32  num_int8s  = values[i].data.d_int32;
-                guint8 *array      = (guint8 *) values[i + 1].data.d_int8array;
-                pointer vector     = sc->vptr->mk_vector (sc, num_int8s);
+                gint32  num_int8s = values[i].data.d_int32;
+                guint8 *array     = (guint8 *) values[i + 1].data.d_int8array;
+                pointer vector    = sc->vptr->mk_vector (sc, num_int8s);
 
                 return_val = sc->vptr->cons (sc, vector, return_val);
                 set_safe_foreign (sc, return_val);
@@ -1447,13 +1473,10 @@ g_printerr ("      value %d is type %s (%d)\n",
               break;
 
             case GIMP_PDB_FLOATARRAY:
-              /*  float arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
                 gint32   num_floats = values[i].data.d_int32;
-                gdouble *array  = (gdouble *) values[i + 1].data.d_floatarray;
-                pointer  vector = sc->vptr->mk_vector (sc, num_floats);
+                gdouble *array      = (gdouble *) values[i + 1].data.d_floatarray;
+                pointer  vector     = sc->vptr->mk_vector (sc, num_floats);
 
                 return_val = sc->vptr->cons (sc, vector, return_val);
                 set_safe_foreign (sc, return_val);
@@ -1468,13 +1491,10 @@ g_printerr ("      value %d is type %s (%d)\n",
               break;
 
             case GIMP_PDB_STRINGARRAY:
-              /*  string arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
                 gint    num_strings = values[i].data.d_int32;
-                gchar **array  = (gchar **) values[i + 1].data.d_stringarray;
-                pointer list   = sc->NIL;
+                gchar **array       = (gchar **) values[i + 1].data.d_stringarray;
+                pointer list        = sc->NIL;
 
                 return_val = sc->vptr->cons (sc, list, return_val);
                 set_safe_foreign (sc, return_val);
@@ -1482,14 +1502,16 @@ g_printerr ("      value %d is type %s (%d)\n",
                 for (j = num_strings - 1; j >= 0; j--)
                   {
                     list = sc->vptr->cons (sc,
-                                           sc->vptr->mk_string
-                                               (sc, array[j] ? array[j] : ""),
+                                           sc->vptr->mk_string (sc,
+                                                                array[j] ?
+                                                                array[j] : ""),
                                            list);
 
                     /* hook the current list into return_val, so that it
                      * inherits the set_safe_foreign()-protection.
                      * May be removed when tinyscheme fixes the GC issue
-                     * with foreign functions */
+                     * with foreign functions
+                     */
                     sc->vptr->set_car (return_val, list);
                   }
               }
@@ -1497,76 +1519,77 @@ g_printerr ("      value %d is type %s (%d)\n",
 
             case GIMP_PDB_COLOR:
               {
-                guchar r, g, b;
+                guchar   r, g, b;
+                gpointer temp_val;
 
                 gimp_rgb_get_uchar (&values[i + 1].data.d_color, &r, &g, &b);
 
-                intermediate_val = sc->vptr->cons (sc,
-                    sc->vptr->mk_integer (sc, r),
-                    sc->vptr->cons (sc,
-                        sc->vptr->mk_integer (sc, g),
-                        sc->vptr->cons (sc,
-                            sc->vptr->mk_integer (sc, b),
-                            sc->NIL)));
+                temp_val = sc->vptr->cons (sc,
+                             sc->vptr->mk_integer (sc, r),
+                             sc->vptr->cons (sc,
+                               sc->vptr->mk_integer (sc, g),
+                               sc->vptr->cons (sc,
+                                 sc->vptr->mk_integer (sc, b),
+                                 sc->NIL)));
                 return_val = sc->vptr->cons (sc,
-                                             intermediate_val,
+                                             temp_val,
                                              return_val);
                 set_safe_foreign (sc, return_val);
                 break;
               }
 
             case GIMP_PDB_COLORARRAY:
-              /*  color arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
                 gint32   num_colors = values[i].data.d_int32;
-                GimpRGB *array  = (GimpRGB *) values[i + 1].data.d_colorarray;
-                pointer  vector = sc->vptr->mk_vector (sc, num_colors);
+                GimpRGB *array      = (GimpRGB *) values[i + 1].data.d_colorarray;
+                pointer  vector     = sc->vptr->mk_vector (sc, num_colors);
 
                 return_val = sc->vptr->cons (sc, vector, return_val);
                 set_safe_foreign (sc, return_val);
 
                 for (j = 0; j < num_colors; j++)
                   {
-                    guchar r, g, b;
+                    guchar  r, g, b;
+                    pointer temp_val;
 
                     gimp_rgb_get_uchar (&array[j], &r, &g, &b);
 
-                    intermediate_val = sc->vptr->cons (sc,
-                        sc->vptr->mk_integer (sc, r),
-                        sc->vptr->cons (sc,
-                            sc->vptr->mk_integer (sc, g),
-                            sc->vptr->cons (sc,
-                                sc->vptr->mk_integer (sc, b),
-                                sc->NIL)));
+                    temp_val = sc->vptr->cons (sc,
+                                 sc->vptr->mk_integer (sc, r),
+                                 sc->vptr->cons (sc,
+                                   sc->vptr->mk_integer (sc, g),
+                                   sc->vptr->cons (sc,
+                                     sc->vptr->mk_integer (sc, b),
+                                     sc->NIL)));
                     return_val = sc->vptr->cons (sc,
-                                                 intermediate_val,
+                                                 temp_val,
                                                  return_val);
                     set_safe_foreign (sc, return_val);
                   }
               }
               break;
+
             case GIMP_PDB_REGION:
               {
-                gint32 x, y, w, h;
+                gint32  x, y, w, h;
+                pointer temp_val;
 
                 x = values[i + 1].data.d_region.x;
                 y = values[i + 1].data.d_region.y;
                 w = values[i + 1].data.d_region.width;
                 h = values[i + 1].data.d_region.height;
 
-                intermediate_val = sc->vptr->cons (sc,
-                    sc->vptr->mk_integer (sc, x),
-                    sc->vptr->cons (sc,
-                        sc->vptr->mk_integer (sc, y),
-                        sc->vptr->cons (sc,
-                            sc->vptr->mk_integer (sc, w),
-                            sc->vptr->cons (sc,
-                                sc->vptr->mk_integer (sc, h),
-                                sc->NIL))));
+                temp_val = sc->vptr->cons (sc,
+                             sc->vptr->mk_integer (sc, x),
+                             sc->vptr->cons (sc,
+                               sc->vptr->mk_integer (sc, y),
+                               sc->vptr->cons (sc,
+                                 sc->vptr->mk_integer (sc, w),
+                                 sc->vptr->cons (sc,
+                                   sc->vptr->mk_integer (sc, h),
+                                   sc->NIL))));
                 return_val = sc->vptr->cons (sc,
-                                             intermediate_val,
+                                             temp_val,
                                              return_val);
                 set_safe_foreign (sc, return_val);
                 break;
@@ -1576,34 +1599,37 @@ g_printerr ("      value %d is type %s (%d)\n",
             case GIMP_PDB_PARASITE:
               {
                 if (values[i + 1].data.d_parasite.name == NULL)
+                  {
                     return_val = foreign_error (sc, "Error: null parasite", 0);
+                  }
                 else
                   {
+                    GimpParasite *p = &values[i + 1].data.d_parasite;
+                    pointer       temp_val;
+
                     /* don't move the mk_foo() calls outside this function call,
-                     * otherwise they might be garbage collected away!  */
-                    intermediate_val = sc->vptr->cons (sc,
-                        sc->vptr->mk_string (sc,
-                                             values[i + 1].data.d_parasite.name),
-                        sc->vptr->cons (sc,
-                            sc->vptr->mk_integer (sc,
-                                                  values[i + 1].data.d_parasite.flags),
-                            sc->vptr->cons (sc,
-                                sc->vptr->mk_counted_string (sc,
-                                                             values[i + 1].data.d_parasite.data,
-                                                             values[i + 1].data.d_parasite.size),
-                                 sc->NIL)));
+                     * otherwise they might be garbage collected away!
+                     */
+                    temp_val = sc->vptr->cons (sc,
+                                 sc->vptr->mk_string (sc, p->name),
+                                 sc->vptr->cons (sc,
+                                   sc->vptr->mk_integer (sc, p->flags),
+                                   sc->vptr->cons (sc,
+                                     sc->vptr->mk_counted_string (sc,
+                                                                  p->data,
+                                                                  p->size),
+                                     sc->NIL)));
                     return_val = sc->vptr->cons (sc,
-                                                 intermediate_val,
+                                                 temp_val,
                                                  return_val);
                     set_safe_foreign (sc, return_val);
 
 #if DEBUG_MARSHALL
-g_printerr ("      name '%s'\n", values[i+1].data.d_parasite.name);
-g_printerr ("      flags %d", values[i+1].data.d_parasite.flags);
-g_printerr (", size %d\n", values[i+1].data.d_parasite.size);
-g_printerr ("      data '%.*s'\n",
-                 values[i+1].data.d_parasite.size,
-                 (char *)values[i+1].data.d_parasite.data);
+                    g_printerr ("      name '%s'\n", p->name);
+                    g_printerr ("      flags %d", p->flags);
+                    g_printerr (", size %d\n", p->size);
+                    g_printerr ("      data '%.*s'\n",
+                                p->size, (gchar *) p->data);
 #endif
                   }
               }
@@ -1623,14 +1649,15 @@ g_printerr ("      data '%.*s'\n",
       break;
     }
 
-  /* If we have no return value(s) from PDB call, return */
-  /* either TRUE or FALSE to indicate if call succeeded. */
+  /* If we have no return value(s) from PDB call, return
+   * either TRUE or FALSE to indicate if call succeeded.
+   */
   if (return_val == sc->NIL)
     {
       if (values[0].data.d_status == GIMP_PDB_SUCCESS)
-         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
+        return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
       else
-         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
+        return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
     }
 
   /*  free the proc name  */
@@ -1662,7 +1689,6 @@ g_printerr ("      data '%.*s'\n",
 #endif
 
   return return_val;
-
 }
 
 static void
@@ -1726,29 +1752,33 @@ script_fu_marshal_destroy_args (GimpParam *params,
 }
 
 static pointer
-script_fu_register_call (scheme *sc, pointer a)
+script_fu_register_call (scheme  *sc,
+                         pointer  a)
 {
-  if (register_scripts)
-    return script_fu_add_script (sc, a);
-  else
-    return sc->NIL;
+  return script_fu_add_script (sc, a);
 }
 
 static pointer
-script_fu_menu_register_call (scheme *sc, pointer a)
+script_fu_menu_register_call (scheme  *sc,
+                              pointer  a)
 {
-  if (register_scripts)
-    return script_fu_add_menu (sc, a);
-  else
-    return sc->NIL;
+  return script_fu_add_menu (sc, a);
 }
 
 static pointer
-script_fu_quit_call (scheme *sc, pointer a)
+script_fu_quit_call (scheme  *sc,
+                     pointer  a)
 {
   script_fu_server_quit ();
 
   scheme_deinit (sc);
 
+  return sc->NIL;
+}
+
+static pointer
+script_fu_nil_call (scheme  *sc,
+                    pointer  a)
+{
   return sc->NIL;
 }

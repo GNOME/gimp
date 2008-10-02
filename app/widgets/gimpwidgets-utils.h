@@ -90,6 +90,8 @@ void              gimp_widget_set_accel_help (GtkWidget       *widget,
 
 const gchar     * gimp_get_message_stock_id  (GimpMessageSeverity  severity);
 
+void          gimp_pango_layout_set_scale    (PangoLayout     *layout,
+                                              double           scale);
 void          gimp_pango_layout_set_weight   (PangoLayout     *layout,
                                               PangoWeight      weight);
 

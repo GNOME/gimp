@@ -303,7 +303,7 @@ path_set_points_invoker (GimpProcedure      *procedure,
           g_free (points);
 
           if (vectors)
-            gimp_image_add_vectors (image, vectors, 0);
+            success = gimp_image_add_vectors (image, vectors, 0);
           else
             success = FALSE;
         }

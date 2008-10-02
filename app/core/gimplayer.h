@@ -103,7 +103,8 @@ GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpChannel          *channel);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
                                                 GimpLayerMask        *mask,
-                                                gboolean              push_undo);
+                                                gboolean              push_undo,
+                                                GError              **error);
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);

@@ -175,4 +175,4 @@
 )
 
 (script-fu-menu-register "script-fu-carved-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

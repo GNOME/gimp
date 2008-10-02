@@ -184,4 +184,4 @@
 )
 
 (script-fu-menu-register "script-fu-alien-neon-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

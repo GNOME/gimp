@@ -52,7 +52,7 @@ typedef void (*OutputFunc_t)(gpointer, const char*, ...);
 struct AreaInfoDialog_t;
 
 struct ObjectClass_t {
-   gchar		*name;
+   const gchar		*name;
    AreaInfoDialog_t 	*info_dialog;
    GdkPixmap 		*icon;
    GdkBitmap 		*mask;

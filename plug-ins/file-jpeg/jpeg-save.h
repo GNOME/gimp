@@ -18,19 +18,19 @@
 
 typedef struct
 {
-  gdouble  quality;
-  gdouble  smoothing;
-  gboolean optimize;
-  gboolean progressive;
-  gboolean baseline;
-  gint     subsmp;
-  gint     restart;
-  gint     dct;
-  gboolean preview;
-  gboolean save_exif;
-  gboolean save_thumbnail;
-  gboolean save_xmp;
-  gboolean use_orig_quality;
+  gdouble          quality;
+  gdouble          smoothing;
+  gboolean         optimize;
+  gboolean         progressive;
+  gboolean         baseline;
+  JpegSubsampling  subsmp;
+  gint             restart;
+  gint             dct;
+  gboolean         preview;
+  gboolean         save_exif;
+  gboolean         save_thumbnail;
+  gboolean         save_xmp;
+  gboolean         use_orig_quality;
 } JpegSaveVals;
 
 extern JpegSaveVals     jsvals;

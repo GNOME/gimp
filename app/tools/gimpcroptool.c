@@ -338,7 +338,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
  * gimp_crop_tool_rectangle_change_complete:
  * @rectangle:
  *
- * Returns: 
+ * Returns:
  **/
 static gboolean
 gimp_crop_tool_rectangle_change_complete (GimpRectangleTool *rectangle)

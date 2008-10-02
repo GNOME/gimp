@@ -146,18 +146,6 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
   debug_print_qdata (GIMP_OBJECT (user_context));
 }
 
-void
-debug_use_gegl_cmd_callback (GtkAction *action,
-                             gpointer   data)
-{
-  GtkToggleAction *toggle_action = GTK_TOGGLE_ACTION (action);
-  Gimp            *gimp          = action_data_get_gimp (data);
-
-  g_object_set (gimp->config,
-                "use-gegl", gtk_toggle_action_get_active (toggle_action),
-                NULL);
-}
-
 
 /*  private functions  */
 

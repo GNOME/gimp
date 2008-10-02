@@ -3064,7 +3064,7 @@ p_scann_path_prop (gchar         *scan_ptr,
     }
   l_ptr = scan_ptr + strlen ("PATH");
 
-  while (1)
+  while (TRUE)
     {
       l_ptr = p_skip_blanks (l_ptr);
       l_ptr = p_scann_token (l_ptr, &l_param, &l_prop_id);

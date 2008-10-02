@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include "libgimpwidgets/gimpwidgets.h"
 
+gimp_action_editor_get_type
 gimp_action_factory_get_type
 gimp_action_get_type
 gimp_action_group_get_type
@@ -281,8 +282,10 @@ gimp_selection_get_type
 gimp_selection_options_get_type
 gimp_selection_tool_get_type
 gimp_session_info_get_type
+gimp_settings_box_get_type
 gimp_shear_tool_get_type
 gimp_size_box_get_type
+gimp_settings_editor_get_type
 gimp_smudge_get_type
 gimp_smudge_options_get_type
 gimp_smudge_tool_get_type

@@ -148,4 +148,4 @@
 )
 
 (script-fu-menu-register "script-fu-starscape-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

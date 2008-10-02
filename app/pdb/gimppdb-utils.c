@@ -299,34 +299,46 @@ gimp_pdb_item_is_attached (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_item_is_attached (item))
-    return TRUE;
+  if (! gimp_item_is_attached (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) can not be used because it has not "
+                     "been added to an image"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
 
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-               _("Item '%s' (%d) can not be used because it has not "
-                 "been added to an image"),
-               gimp_object_get_name (GIMP_OBJECT (item)),
-               gimp_item_get_ID (item));
-
-  return FALSE;
+  return TRUE;
 }
 
 gboolean
 gimp_pdb_item_is_floating (GimpItem  *item,
+                           GimpImage *dest_image,
                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (g_object_is_floating (item))
-    return TRUE;
+  if (! g_object_is_floating (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) has already been added to an image"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+  else if (gimp_item_get_image (item) != dest_image)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Trying to add item '%s' (%d) to wrong image"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
 
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-               _("Item '%s' (%d) has already been added to an image"),
-               gimp_object_get_name (GIMP_OBJECT (item)),
-               gimp_item_get_ID (item));
-
-  return FALSE;
+  return TRUE;
 }
 
 gboolean

@@ -183,4 +183,4 @@
 )
 
 (script-fu-menu-register "script-fu-3d-outline-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

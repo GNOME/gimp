@@ -197,4 +197,4 @@
 )
 
 (script-fu-menu-register "script-fu-blended-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

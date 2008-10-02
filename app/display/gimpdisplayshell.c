@@ -173,9 +173,9 @@ static const gchar display_rc_style[] =
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
-  GObjectClass   *object_class      = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class  = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class      = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   display_shell_signals[SCALED] =
     g_signal_new ("scaled",
@@ -343,7 +343,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_x         = 0;
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
-  
+
   shell->highlight              = NULL;
   shell->mask                   = NULL;
 
@@ -827,8 +827,13 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       options = shell->no_image_options;
 
+      /*
+       * These values are arbitrary. The width is determined by the
+       * menubar and the height is chosen to give a window aspect
+       * ratio of roughly 3:1 (as requested by the UI team).
+       */
       image_width  = GIMP_DEFAULT_IMAGE_WIDTH;
-      image_height = GIMP_DEFAULT_IMAGE_HEIGHT;
+      image_height = GIMP_DEFAULT_IMAGE_HEIGHT / 3;
     }
 
   shell->dot_for_dot = display->config->default_dot_for_dot;

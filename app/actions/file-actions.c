@@ -64,7 +64,7 @@ static void   file_actions_close_all_update    (GimpContainer   *images,
 static const GimpActionEntry file_actions[] =
 {
   { "file-menu",             NULL, N_("_File")        },
-  { "file-new-menu",         NULL, N_("Ne_w")         },
+  { "file-create-menu",      NULL, N_("Create")       },
   { "file-open-recent-menu", NULL, N_("Open _Recent") },
 
   { "file-open", GTK_STOCK_OPEN,

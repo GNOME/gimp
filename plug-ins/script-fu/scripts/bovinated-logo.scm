@@ -137,4 +137,4 @@
 )
 
 (script-fu-menu-register "script-fu-bovinated-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

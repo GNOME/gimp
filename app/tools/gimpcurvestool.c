@@ -566,13 +566,35 @@ static void
 gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpCurvesTool       *tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpCurvesConfig     *default_config;
   GimpHistogramChannel  channel;
+
+  default_config = GIMP_CURVES_CONFIG (image_map_tool->default_config);
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      gimp_curve_reset (tool->config->curve[channel], FALSE);
+      if (default_config)
+        {
+          GimpCurveType curve_type = tool->config->curve[channel]->curve_type;
+
+          g_object_freeze_notify (G_OBJECT (tool->config->curve[channel]));
+
+          gimp_config_copy (GIMP_CONFIG (default_config->curve[channel]),
+                            GIMP_CONFIG (tool->config->curve[channel]),
+                            0);
+
+          g_object_set (tool->config->curve[channel],
+                        "curve-type", curve_type,
+                        NULL);
+
+          g_object_thaw_notify (G_OBJECT (tool->config->curve[channel]));
+        }
+      else
+        {
+          gimp_curve_reset (tool->config->curve[channel], FALSE);
+        }
     }
 }
 

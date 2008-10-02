@@ -478,7 +478,6 @@
 #define GIMP_HELP_EXPORT_CONFIRM_DIALOG           "gimp-export-confirm-dialog"
 #define GIMP_HELP_UNIT_DIALOG                     "gimp-unit-dialog"
 
-#define GIMP_HELP_WINDOWS_SHOW_IMAGE_WINDOW       "gimp-windows-show-image-window"
 #define GIMP_HELP_WINDOWS_SHOW_DOCK               "gimp-windows-show-dock"
 #define GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK        "gimp-windows-open-recent-dock"
 
@@ -499,6 +498,8 @@
 #define GIMP_HELP_CONTROLLER_LINUX_INPUT          "gimp-controller-linux-input"
 #define GIMP_HELP_CONTROLLER_MIDI                 "gimp-controller-midi"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
+
+#define GIMP_HELP_CONFIG_USE_GEGL                 "gimp-config-use-gegl"
 
 
 #endif /* __GIMP_HELP_IDS_H__ */

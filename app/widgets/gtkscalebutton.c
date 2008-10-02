@@ -35,7 +35,9 @@
 
 #include "config.h"
 
+#ifndef _WIN32
 #define _GNU_SOURCE
+#endif
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -175,7 +177,7 @@ gimp_gtk_binding_signal_new (const gchar        *signal_name,
   guint signal_id;
 
   g_return_val_if_fail (signal_name != NULL, 0);
-  
+
   va_start (args, n_params);
 
   signal_id = g_signal_new_valist (signal_name, itype, signal_flags,
@@ -184,7 +186,7 @@ gimp_gtk_binding_signal_new (const gchar        *signal_name,
                                    return_type, n_params, args);
 
   va_end (args);
- 
+
   return signal_id;
 }
 

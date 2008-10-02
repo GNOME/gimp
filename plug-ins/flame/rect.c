@@ -274,21 +274,30 @@ render_rectangle (frame_spec    *spec,
               int k, color_index;
               double *p = points[j];
               bucket *b;
-              if (p[0] < bounds[0] ||
-                  p[1] < bounds[1] ||
-                  p[0] > bounds[2] ||
-                  p[1] > bounds[3])
-                continue;
-              color_index = (int) (p[2] * CMAP_SIZE);
-              if (color_index < 0)
-                color_index = 0;
-              else if (color_index > (CMAP_SIZE-1))
-                color_index = CMAP_SIZE-1;
-              b = buckets +
-                  (int) (width * (p[0] - bounds[0]) * size[0]) +
-                  width * (int) (height * (p[1] - bounds[1]) * size[1]);
-              for (k = 0; k < 4; k++)
-                bump_no_overflow(b[0][k], cmap[color_index][k], short);
+
+              /* Note that we must test if p[0] and p[1] is "within"
+               * the valid bounds rather than "not outside", because
+               * p[0] and p[1] might be NaN.
+               */
+              if (p[0] >= bounds[0] &&
+                  p[1] >= bounds[1] &&
+                  p[0] <= bounds[2] &&
+                  p[1] <= bounds[3])
+                {
+                  color_index = (int) (p[2] * CMAP_SIZE);
+
+                  if (color_index < 0)
+                    color_index = 0;
+                  else if (color_index > CMAP_SIZE - 1)
+                    color_index = CMAP_SIZE - 1;
+
+                  b = buckets +
+                      (int) (width * (p[0] - bounds[0]) * size[0]) +
+                      width * (int) (height * (p[1] - bounds[1]) * size[1]);
+
+                  for (k = 0; k < 4; k++)
+                    bump_no_overflow(b[0][k], cmap[color_index][k], short);
+                }
             }
         }
 

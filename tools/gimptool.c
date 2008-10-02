@@ -31,21 +31,27 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/stat.h>
+
 #include <glib.h>
 
 #include "libgimpbase/gimpversion.h"
 
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
-static gboolean  silent  = FALSE;
-static gboolean  dry_run = FALSE;
-static gchar    *prefix;
-static gchar    *exec_prefix;
 
-static gchar    *env_cc;
-static gboolean  msvc_syntax = FALSE;
-static gchar    *env_cflags;
-static gchar    *env_ldflags;
-static gchar    *env_libs;
+static gboolean     silent  = FALSE;
+static gboolean     dry_run = FALSE;
+static gchar       *prefix;
+static const gchar *exec_prefix;
+
+static gboolean     msvc_syntax = FALSE;
+static const gchar *env_cc;
+static const gchar *env_cflags;
+static const gchar *env_ldflags;
+static const gchar *env_libs;
 
 
 #ifdef G_OS_WIN32
@@ -64,7 +70,7 @@ static gchar    *env_libs;
 
 static struct {
   const gchar *option;
-  gchar       *value;
+  const gchar *value;
 } dirs[] = {
   { "prefix",         PREFIX         },
   { "exec-prefix",    EXEC_PREFIX    },
@@ -92,12 +98,12 @@ static struct {
 #ifdef G_OS_WIN32
 
 static gchar *
-win32_command (gchar *command)
+win32_command (const gchar *command)
 {
-  gchar *comspec = getenv ("COMSPEC");
+  const gchar *comspec = getenv ("COMSPEC");
 
   if (!comspec)
-    comspec = "command.com";
+    comspec = "cmd.exe";
 
   return g_strdup_printf ("%s /c %s", comspec, command);
 }
@@ -105,16 +111,16 @@ win32_command (gchar *command)
 #endif
 
 static gboolean
-starts_with_dir (gchar *string,
-		 gchar *test)
+starts_with_dir (const gchar *string,
+		 const gchar *test)
 {
   return g_str_has_prefix (string, g_strconcat (test, "/", NULL)) ||
     strcmp (string, test) == 0;
 }
 
 static gchar *
-one_line_output (gchar *program,
-		 gchar *args)
+one_line_output (const gchar *program,
+		 const gchar *args)
 {
   gchar *command = g_strconcat (program, " ", args, NULL);
   FILE  *pipe    = popen (command, "r");
@@ -146,7 +152,7 @@ one_line_output (gchar *program,
 }
 
 static gchar *
-pkg_config (gchar *args)
+pkg_config (const gchar *args)
 {
 #ifdef G_OS_WIN32
   if (msvc_syntax)
@@ -156,7 +162,7 @@ pkg_config (gchar *args)
   return one_line_output ("pkg-config", args);
 }
 
-static gchar *
+static const gchar *
 get_runtime_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
@@ -204,7 +210,7 @@ get_runtime_prefix (gchar slash)
 #endif
 }
 
-static gchar *
+static const gchar *
 get_exec_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
@@ -221,20 +227,25 @@ get_exec_prefix (gchar slash)
 #endif
 }
 
-static gchar *
-expand_and_munge (gchar *value)
+static const gchar *
+expand_and_munge (const gchar *value)
 {
+  const gchar *retval;
+
   if (starts_with_dir (value, "${prefix}"))
-    value = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
+    retval = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
   else if (starts_with_dir (value, "${exec_prefix}"))
-    value = g_strconcat (EXEC_PREFIX, value + strlen ("${exec_prefix}"), NULL);
-  if (starts_with_dir (value, EXEC_PREFIX))
-    value = g_strconcat (get_exec_prefix ('/'), value + strlen (EXEC_PREFIX), NULL);
+    retval = g_strconcat (EXEC_PREFIX, value + strlen ("${exec_prefix}"), NULL);
+  else
+    retval = g_strdup (value);
 
-  if (starts_with_dir (value, PREFIX))
-    value = g_strconcat (get_runtime_prefix ('/'), value + strlen (PREFIX), NULL);
+  if (starts_with_dir (retval, EXEC_PREFIX))
+    retval = g_strconcat (get_exec_prefix ('/'), retval + strlen (EXEC_PREFIX), NULL);
 
-  return value;
+  if (starts_with_dir (retval, PREFIX))
+    retval = g_strconcat (get_runtime_prefix ('/'), retval + strlen (PREFIX), NULL);
+
+  return retval;
 }
 
 static void
@@ -417,18 +428,18 @@ maybe_run (gchar *cmd)
 }
 
 static void
-do_build_2 (gchar *cflags,
-	    gchar *libs,
-	    gchar *install_dir,
-	    gchar *what)
+do_build_2 (const gchar *cflags,
+	    const gchar *libs,
+	    const gchar *install_dir,
+	    const gchar *what)
 {
-  gchar *cmd;
-  gchar *dest_dir;
-  gchar *output_flag;
-  gchar *dest_exe;
-  gchar *here_comes_linker_flags = "";
-  gchar *windows_subsystem_flag = "";
-  gchar *p, *q;
+  gchar       *cmd;
+  const gchar *dest_dir;
+  const gchar *output_flag;
+  gchar       *dest_exe;
+  const gchar *here_comes_linker_flags = "";
+  const gchar *windows_subsystem_flag = "";
+  gchar       *p, *q;
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);
@@ -494,19 +505,19 @@ do_build_2 (gchar *cflags,
 }
 
 static void
-do_build (char *what)
+do_build (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), NULL, what);
 }
 
 static void
-do_build_noui (char *what)
+do_build_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), NULL, what);
 }
 
 static void
-do_build_nogimpui (char *what)
+do_build_nogimpui (const gchar *what)
 {
   do_build (what);
 }
@@ -530,19 +541,19 @@ get_user_plugin_dir (gboolean forward_slashes)
 }
 
 static void
-do_install (char *what)
+do_install (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_noui (char *what)
+do_install_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_nogimpui (char *what)
+do_install_nogimpui (const gchar *what)
 {
   do_install (what);
 }
@@ -562,51 +573,56 @@ get_sys_plugin_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_admin (char *what)
+do_install_admin (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_admin_noui (char *what)
+do_install_admin_noui (const gchar *what)
 {
   do_build_2 (get_cflags_noui (), get_libs_noui (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_admin_nogimpui (char *what)
+do_install_admin_nogimpui (const gchar *what)
 {
   do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
-do_install_bin_2 (gchar *dir,
-		  gchar *what)
+do_install_bin_2 (const gchar *dir,
+		  const gchar *what)
 {
+  g_mkdir_with_parents (dir,
+                        S_IRUSR | S_IXUSR | S_IWUSR |
+                        S_IRGRP | S_IXGRP |
+                        S_IROTH | S_IXOTH);
+
   maybe_run (g_strconcat (COPY, " ", what, " ", dir, NULL));
 }
 
 static void
-do_install_bin (char *what)
+do_install_bin (const gchar *what)
 {
   do_install_bin_2 (get_user_plugin_dir (FALSE), what);
 }
 
 static void
-do_install_admin_bin (char *what)
+do_install_admin_bin (const gchar *what)
 {
   do_install_bin_2 (get_sys_plugin_dir (FALSE), what);
 }
 
 static void
-do_uninstall (gchar *dir,
-	      gchar *what)
+do_uninstall (const gchar *dir,
+	      const gchar *what)
 {
   maybe_run (g_strconcat (REMOVE, " ", dir, G_DIR_SEPARATOR_S, what, NULL));
 }
 
-static gchar *
-maybe_append_exe (gchar *what)
+static const gchar *
+maybe_append_exe (const gchar *what)
 {
 #ifdef G_OS_WIN32
   gchar *p = strrchr (what, '.');
@@ -619,13 +635,13 @@ maybe_append_exe (gchar *what)
 }
 
 static void
-do_uninstall_bin (char *what)
+do_uninstall_bin (const gchar *what)
 {
   do_uninstall (get_user_plugin_dir (FALSE), maybe_append_exe (what));
 }
 
 static void
-do_uninstall_admin_bin (char *what)
+do_uninstall_admin_bin (const gchar *what)
 {
   do_uninstall (get_sys_plugin_dir (FALSE), maybe_append_exe (what));
 }
@@ -644,7 +660,7 @@ get_user_script_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_script (char *what)
+do_install_script (const gchar *what)
 {
   do_install_bin_2 (get_user_script_dir (FALSE), what);
 }
@@ -666,19 +682,19 @@ get_sys_script_dir (gboolean forward_slashes)
 }
 
 static void
-do_install_admin_script (char *what)
+do_install_admin_script (const gchar *what)
 {
   do_install_bin_2 (get_sys_script_dir (FALSE), what);
 }
 
 static void
-do_uninstall_script (char *what)
+do_uninstall_script (const gchar *what)
 {
   do_uninstall (get_user_script_dir (FALSE), what);
 }
 
 static void
-do_uninstall_admin_script (char *what)
+do_uninstall_admin_script (const gchar *what)
 {
   do_uninstall (get_sys_script_dir (FALSE), what);
 }

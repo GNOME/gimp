@@ -1019,7 +1019,7 @@ xcf_load_layer (XcfInfo   *info,
       gimp_layer_mask_set_edit  (layer_mask, edit_mask);
       gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
 
-      gimp_layer_add_mask (layer, layer_mask, FALSE);
+      gimp_layer_add_mask (layer, layer_mask, FALSE, NULL);
     }
 
   /* attach the floating selection... */

@@ -245,6 +245,9 @@ image_new_template_changed (GimpContext    *context,
   if (!template->comment || !strlen (template->comment))
     comment = g_strdup (dialog->template->comment);
 
+  /*  make sure the resolution values are copied first (see bug #546924)  */
+  gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
+                    GIMP_TEMPLATE_PARAM_COPY_FIRST);
   gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
 
   if (comment)

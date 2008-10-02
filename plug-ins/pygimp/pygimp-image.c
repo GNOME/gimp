@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "pygimp.h"
 
 static PyObject *
@@ -28,7 +29,7 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
     int pos = -1;
-	
+
     if (!PyArg_ParseTuple(args, "O!|i:add_channel",
 	                        &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
@@ -49,7 +50,7 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 {
     PyGimpLayer *lay;
     int pos = -1;
-	
+
     if (!PyArg_ParseTuple(args, "O!|i:add_layer", &PyGimpLayer_Type, &lay,
 			  &pos))
 	return NULL;
@@ -108,7 +109,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
             break;
         default:
             PyErr_SetString(pygimp_error, "Unknown image base type");
-            return NULL; 
+            return NULL;
     }
 
     if (fill_mode == -1)
@@ -293,7 +294,7 @@ img_pick_correlate_layer(PyGimpImage *self, PyObject *args)
 {
     int x,y;
     gint32 id;
-	
+
     if (!PyArg_ParseTuple(args, "ii:pick_correlate_layer", &x, &y))
 	return NULL;
 
@@ -311,7 +312,7 @@ static PyObject *
 img_raise_channel(PyGimpImage *self, PyObject *args)
 {
     PyGimpChannel *chn;
-	
+
     if (!PyArg_ParseTuple(args, "O!:raise_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
@@ -445,17 +446,27 @@ static PyObject *
 img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_width, new_height;
+    int interpolation = -1;
 
-    static char *kwlist[] = { "width", "height", NULL };
+    static char *kwlist[] = { "width", "height", "interpolation", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii:scale", kwlist,
-				     &new_width, &new_height))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|i:scale", kwlist,
+				     &new_width, &new_height, &interpolation))
 	return NULL;
 
-    if (!gimp_image_scale(self->ID, new_width, new_height)) {
-	PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-		     self->ID, new_width, new_height);
-	return NULL;
+    if (interpolation != -1) {
+        if (!gimp_image_scale_full(self->ID,
+                                   new_width, new_height, interpolation)) {
+            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
+    } else {
+        if (!gimp_image_scale(self->ID, new_width, new_height)) {
+            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
     }
 
     Py_INCREF(Py_None);
@@ -490,7 +501,7 @@ static PyObject *
 img_free_shadow(PyGimpImage *self)
 {
     if (!gimp_image_free_shadow(self->ID)) {
-	PyErr_Format(pygimp_error, "could not free shadow on image (ID %d)",
+	PyErr_Format(pygimp_error, "could not free shadow tiles on image (ID %d)",
 		     self->ID);
 	return NULL;
     }
@@ -529,10 +540,10 @@ static PyObject *
 img_get_component_visible(PyGimpImage *self, PyObject *args)
 {
     int comp;
-	
+
     if (!PyArg_ParseTuple(args, "i:get_component_visible", &comp))
 	return NULL;
-	
+
     return PyBool_FromLong(gimp_image_get_component_visible(self->ID, comp));
 }
 
@@ -1014,7 +1025,7 @@ img_get_colormap(PyGimpImage *self, void *closure)
 		     self->ID);
 	return NULL;
     }
-	
+
     ret = PyString_FromStringAndSize((char *)cmap, n_colours * 3);
     g_free(cmap);
 

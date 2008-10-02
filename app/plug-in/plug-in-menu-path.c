@@ -43,27 +43,28 @@ struct _MenuPathMapping
 
 static const MenuPathMapping menu_path_mappings[] =
 {
-  { "<Toolbox>/Xtns/Languages",       NULL, "<Image>/Filters/Languages"        },
-  { "<Toolbox>/Xtns/Extensions",      NULL, "<Image>/Filters/Extensions"       },
+  { "<Toolbox>/Xtns/Languages",       NULL, "<Image>/Filters/Languages"           },
+  { "<Toolbox>/Xtns/Extensions",      NULL, "<Image>/Filters/Extensions"          },
 
-  { "<Toolbox>/Xtns/Buttons",         NULL, "<Image>/File/New/Buttons"         },
-  { "<Toolbox>/Xtns/Logos",           NULL, "<Image>/File/New/Logos"           },
-  { "<Toolbox>/Xtns/Misc",            NULL, "<Image>/File/New/Misc"            },
-  { "<Toolbox>/Xtns/Patterns",        NULL, "<Image>/File/New/Patterns"        },
-  { "<Toolbox>/Xtns/Web Page Themes", NULL, "<Image>/File/New/Web Page Themes" },
+  { "<Toolbox>/Xtns/Buttons",         NULL, "<Image>/File/Create/Buttons"         },
+  { "<Toolbox>/Xtns/Logos",           NULL, "<Image>/File/Create/Logos"           },
+  { "<Toolbox>/Xtns/Misc",            NULL, "<Image>/File/Create/Misc"            },
+  { "<Toolbox>/Xtns/Patterns",        NULL, "<Image>/File/Create/Patterns"        },
+  { "<Toolbox>/Xtns/Web Page Themes", NULL, "<Image>/File/Create/Web Page Themes" },
 
-  { "<Toolbox>/Xtns", "Buttons",            "<Image>/File/New"                 },
-  { "<Toolbox>/Xtns", "Logos",              "<Image>/File/New"                 },
-  { "<Toolbox>/Xtns", "Misc",               "<Image>/File/New"                 },
-  { "<Toolbox>/Xtns", "Patterns",           "<Image>/File/New"                 },
-  { "<Toolbox>/Xtns", "Web Page Themes",    "<Image>/File/New"                 },
+  { "<Toolbox>/Xtns", "Buttons",            "<Image>/File/Create"                 },
+  { "<Toolbox>/Xtns", "Logos",              "<Image>/File/Create"                 },
+  { "<Toolbox>/Xtns", "Misc",               "<Image>/File/Create"                 },
+  { "<Toolbox>/Xtns", "Patterns",           "<Image>/File/Create"                 },
+  { "<Toolbox>/Xtns", "Web Page Themes",    "<Image>/File/Create"                 },
 
-  { "<Toolbox>/Xtns",                 NULL, "<Image>/Filters/Extensions"       },
-  { "<Toolbox>/Help",                 NULL, "<Image>/Help"                     },
+  { "<Toolbox>/Xtns",                 NULL, "<Image>/Filters/Extensions"          },
+  { "<Toolbox>/Help",                 NULL, "<Image>/Help"                        },
 
-  { "<Toolbox>/File/Acquire",         NULL, "<Image>/File/New/Acquire"         },
-  { "<Image>/File/Acquire",           NULL, "<Image>/File/New/Acquire"         },
-  { NULL, NULL, NULL                                                           }
+  { "<Toolbox>/File/Acquire",         NULL, "<Image>/File/Create/Acquire"         },
+  { "<Image>/File/Acquire",           NULL, "<Image>/File/Create/Acquire"         },
+  { "<Image>/File/New",               NULL, "<Image>/File/Create"                 },
+  { NULL, NULL, NULL                                                              }
 };
 
 

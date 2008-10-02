@@ -81,4 +81,16 @@ typedef enum
 } GimpZoomQuality;
 
 
+#define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
+
+GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ZOOM_FOCUS_BEST_GUESS,    /* Make a best guess                       */
+  GIMP_ZOOM_FOCUS_POINTER,       /* Use the mouse cursor (if within canvas) */
+  GIMP_ZOOM_FOCUS_IMAGE_CENTER   /* Use the image center                    */
+} GimpZoomFocus;
+
+
 #endif /* __DISPLAY_ENUMS_H__ */

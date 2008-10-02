@@ -90,6 +90,12 @@ static gboolean gimp_navigation_view_key_press      (GtkWidget      *widget,
 static void     gimp_navigation_view_transform      (GimpNavigationView *nav_view);
 static void     gimp_navigation_view_draw_marker    (GimpNavigationView *nav_view,
                                                      cairo_t            *cr);
+static void     gimp_navigation_view_move_to        (GimpNavigationView *nav_view,
+                                                     gint                tx,
+                                                     gint                ty);
+static void     gimp_navigation_view_get_ratio      (GimpNavigationView *nav_view,
+                                                     gdouble            *ratiox,
+                                                     gdouble            *ratioy);
 
 
 G_DEFINE_TYPE (GimpNavigationView, gimp_navigation_view, GIMP_TYPE_VIEW)
@@ -199,43 +205,6 @@ gimp_navigation_view_expose (GtkWidget      *widget,
     }
 
   return TRUE;
-}
-
-static void
-gimp_navigation_view_get_ratio (const GimpNavigationView *nav_view,
-                                gdouble                  *ratiox,
-                                gdouble                  *ratioy)
-{
-  GimpView  *view = GIMP_VIEW (nav_view);
-  GimpImage *image;
-
-  image = GIMP_IMAGE (view->renderer->viewable);
-
-  *ratiox = (gdouble) view->renderer->width  /
-            (gdouble) gimp_image_get_width  (image);
-  *ratioy = (gdouble) view->renderer->height /
-            (gdouble) gimp_image_get_height (image);
-}
-
-static void
-gimp_navigation_view_move_to (GimpNavigationView *nav_view,
-                              gint                tx,
-                              gint                ty)
-{
-  GimpView  *view = GIMP_VIEW (nav_view);
-  gdouble    ratiox, ratioy;
-  gdouble    x, y;
-
-  if (! view->renderer->viewable)
-    return;
-
-  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
-
-  x = tx / ratiox;
-  y = ty / ratioy;
-
-  g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
-                 x, y, nav_view->width, nav_view->height);
 }
 
 void
@@ -465,6 +434,64 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
   return FALSE;
 }
 
+
+/*  public functions  */
+
+void
+gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
+                                 gdouble             x,
+                                 gdouble             y,
+                                 gdouble             width,
+                                 gdouble             height)
+{
+  GimpView *view;
+
+  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
+
+  view = GIMP_VIEW (nav_view);
+
+  g_return_if_fail (view->renderer->viewable);
+
+  nav_view->x      = x;
+  nav_view->y      = y;
+  nav_view->width  = MAX (1.0, width);
+  nav_view->height = MAX (1.0, height);
+
+  gimp_navigation_view_transform (nav_view);
+
+  /* Marker changed, redraw */
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
+gimp_navigation_view_set_motion_offset (GimpNavigationView *view,
+                                        gint                motion_offset_x,
+                                        gint                motion_offset_y)
+{
+  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+
+  view->motion_offset_x = motion_offset_x;
+  view->motion_offset_y = motion_offset_y;
+}
+
+void
+gimp_navigation_view_get_local_marker (GimpNavigationView *view,
+                                       gint               *x,
+                                       gint               *y,
+                                       gint               *width,
+                                       gint               *height)
+{
+  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+
+  if (x)      *x      = view->p_x;
+  if (y)      *y      = view->p_y;
+  if (width)  *width  = view->p_width;
+  if (height) *height = view->p_height;
+}
+
+
+/*  private functions  */
+
 static void
 gimp_navigation_view_transform (GimpNavigationView *nav_view)
 {
@@ -511,54 +538,39 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
     }
 }
 
-void
-gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
-                                 gdouble             x,
-                                 gdouble             y,
-                                 gdouble             width,
-                                 gdouble             height)
+static void
+gimp_navigation_view_move_to (GimpNavigationView *nav_view,
+                              gint                tx,
+                              gint                ty)
 {
-  GimpView *view;
+  GimpView  *view = GIMP_VIEW (nav_view);
+  gdouble    ratiox, ratioy;
+  gdouble    x, y;
 
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (nav_view));
+  if (! view->renderer->viewable)
+    return;
 
-  view = GIMP_VIEW (nav_view);
+  gimp_navigation_view_get_ratio (nav_view, &ratiox, &ratioy);
 
-  g_return_if_fail (view->renderer->viewable);
+  x = tx / ratiox;
+  y = ty / ratioy;
 
-  nav_view->x      = x;
-  nav_view->y      = y;
-  nav_view->width  = MAX (1.0, width);
-  nav_view->height = MAX (1.0, height);
-
-  gimp_navigation_view_transform (nav_view);
-
-  /* Marker changed, invalidate */
-  gimp_view_renderer_invalidate (view->renderer);
+  g_signal_emit (view, view_signals[MARKER_CHANGED], 0,
+                 x, y, nav_view->width, nav_view->height);
 }
 
-void
-gimp_navigation_view_set_motion_offset (GimpNavigationView *view,
-                                        gint                motion_offset_x,
-                                        gint                motion_offset_y)
+static void
+gimp_navigation_view_get_ratio (GimpNavigationView *nav_view,
+                                gdouble            *ratiox,
+                                gdouble            *ratioy)
 {
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
+  GimpView  *view = GIMP_VIEW (nav_view);
+  GimpImage *image;
 
-  view->motion_offset_x = motion_offset_x;
-  view->motion_offset_y = motion_offset_y;
-}
+  image = GIMP_IMAGE (view->renderer->viewable);
 
-void
-gimp_navigation_view_get_local_marker (GimpNavigationView *view,
-                                       gint               *x,
-                                       gint               *y,
-                                       gint               *width,
-                                       gint               *height)
-{
-  g_return_if_fail (GIMP_IS_NAVIGATION_VIEW (view));
-
-  if (x)      *x      = view->p_x;
-  if (y)      *y      = view->p_y;
-  if (width)  *width  = view->p_width;
-  if (height) *height = view->p_height;
+  *ratiox = (gdouble) view->renderer->width  /
+            (gdouble) gimp_image_get_width  (image);
+  *ratioy = (gdouble) view->renderer->height /
+            (gdouble) gimp_image_get_height (image);
 }

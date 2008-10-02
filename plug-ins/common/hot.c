@@ -142,19 +142,19 @@ static gdouble	compos_lim;          /* composite amplitude limit */
 static glong	ichroma_lim2;        /* chroma limit squared (scaled integer) */
 static gint	icompos_lim;         /* composite amplitude limit (scaled integer) */
 
-static void query        (void);
-static void run          (const gchar      *name,
-			  gint              nparam,
-			  const GimpParam  *param,
-			  gint             *nretvals,
-			  GimpParam       **retvals);
+static void       query         (void);
+static void       run           (const gchar      *name,
+                                 gint              nparam,
+                                 const GimpParam  *param,
+                                 gint             *nretvals,
+                                 GimpParam       **retvals);
 
-static gint pluginCore   (piArgs   *argp);
-static gint pluginCoreIA (piArgs   *argp);
-static gboolean hotp     (guint8  r,
-			  guint8  g,
-			  guint8  b);
-static void build_tab    (gint    m);
+static gboolean   pluginCore    (piArgs           *argp);
+static gboolean   plugin_dialog (piArgs           *argp);
+static gboolean   hotp          (guint8            r,
+                                 guint8            g,
+                                 guint8            b);
+static void       build_tab     (gint              m);
 
 /*
  * gc: apply the gamma correction specified for this video standard.
@@ -164,8 +164,8 @@ static void build_tab    (gint    m);
  * Future standards may use more complex functions.
  * (e.g. SMPTE 240M's "electro-optic transfer characteristic").
  */
-#define gc(x,m) pow(x, 1.0 / mode[m].gamma)
-#define inv_gc(x,m) pow(x, mode[m].gamma)
+#define gc(x,m)     pow(x, 1.0 / mode[m].gamma)
+#define inv_gc(x,m) pow(x,       mode[m].gamma)
 
 /*
  * pix_decode: decode an integer pixel value into a floating-point
@@ -231,14 +231,14 @@ run (const gchar      *name,
      GimpParam       **retvals)
 {
   static GimpParam rvals[1];
-  piArgs    args;
+  piArgs           args;
 
   *nretvals = 1;
   *retvals  = rvals;
 
   INIT_I18N ();
 
-  memset (&args, (int) 0, sizeof (args));
+  memset (&args, 0, sizeof (args));
   args.mode = -1;
 
   gimp_get_data (PLUG_IN_PROC, &args);
@@ -260,12 +260,19 @@ run (const gchar      *name,
 	  args.new_layerp = 1;
 	}
 
-      if (pluginCoreIA(&args) == -1)
+      if (plugin_dialog (&args))
 	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          if (! pluginCore (&args))
+            {
+              rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+            }
 	}
-      gimp_set_data (PLUG_IN_PROC, &args, sizeof (args));
+      else
+        {
+          rvals[0].data.d_status = GIMP_PDB_CANCEL;
+        }
 
+      gimp_set_data (PLUG_IN_PROC, &args, sizeof (args));
     break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -279,7 +286,7 @@ run (const gchar      *name,
       args.action     = param[4].data.d_int32;
       args.new_layerp = param[5].data.d_int32;
 
-      if (pluginCore(&args) == -1)
+      if (! pluginCore (&args))
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
@@ -288,7 +295,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* XXX: add code here for last-values running */
-      if (pluginCore (&args) == -1)
+      if (! pluginCore (&args))
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -296,40 +303,41 @@ run (const gchar      *name,
   }
 }
 
-static gint
+static gboolean
 pluginCore (piArgs *argp)
 {
-  GimpDrawable *drw, *ndrw=NULL;
-  GimpPixelRgn srcPr, dstPr;
-  gint retval = 0;
-  gint nl=0;
-  gint y, x, i;
-  gint Y, I, Q;
-  guint width, height, bpp;
-  gint sel_x1, sel_x2, sel_y1, sel_y2;
-  gint prog_interval;
-  guchar *src, *s, *dst, *d;
-  guchar r, prev_r=0, new_r=0;
-  guchar g, prev_g=0, new_g=0;
-  guchar b, prev_b=0, new_b=0;
-  gdouble fy, fc, t, scale;
-  gdouble pr, pg, pb;
-  gdouble py;
+  GimpDrawable *drw, *ndrw = NULL;
+  GimpPixelRgn  srcPr, dstPr;
+  gboolean      success = TRUE;
+  gint          nl      = 0;
+  gint          y, i;
+  gint          Y, I, Q;
+  guint         width, height, bpp;
+  gint          sel_x1, sel_x2, sel_y1, sel_y2;
+  gint          prog_interval;
+  guchar       *src, *s, *dst, *d;
+  guchar        r, prev_r=0, new_r=0;
+  guchar        g, prev_g=0, new_g=0;
+  guchar        b, prev_b=0, new_b=0;
+  gdouble       fy, fc, t, scale;
+  gdouble       pr, pg, pb;
+  gdouble       py;
 
   drw = gimp_drawable_get (argp->drawable);
 
-  width = drw->width;
+  width  = drw->width;
   height = drw->height;
-  bpp = drw->bpp;
+  bpp    = drw->bpp;
+
   if (argp->new_layerp)
     {
-      gchar name[40];
-      gchar *mode_names[] =
+      gchar        name[40];
+      const gchar *mode_names[] =
       {
 	"ntsc",
 	"pal",
       };
-      gchar *action_names[] =
+      const gchar *action_names[] =
       {
 	"lum redux",
 	"sat redux",
@@ -350,7 +358,7 @@ pluginCore (piArgs *argp)
   gimp_drawable_mask_bounds (drw->drawable_id,
 			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  width = sel_x2 - sel_x1;
+  width  = sel_x2 - sel_x1;
   height = sel_y2 - sel_y1;
 
   src = g_new (guchar, width * height * bpp);
@@ -381,6 +389,8 @@ pluginCore (piArgs *argp)
 
   for (y = sel_y1; y < sel_y2; y++)
     {
+      gint x;
+
       if (y % prog_interval == 0)
 	gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
 
@@ -497,9 +507,11 @@ pluginCore (piArgs *argp)
 			  pr = gc (pr, argp->mode);
 			  pg = gc (pg, argp->mode);
 			  pb = gc (pb, argp->mode);
-			  py = pr * mode[argp->mode].code[0][0] + pg *
-			    mode[argp->mode].code[0][1] + pb *
-			    mode[argp->mode].code[0][2];
+
+			  py = pr * mode[argp->mode].code[0][0] +
+                               pg * mode[argp->mode].code[0][1] +
+                               pb * mode[argp->mode].code[0][2];
+
 			  r = pix_encode (inv_gc (py + scale * (pr - py),
 						  argp->mode));
 			  g = pix_encode (inv_gc (py + scale * (pg - py),
@@ -507,10 +519,13 @@ pluginCore (piArgs *argp)
 			  b = pix_encode (inv_gc (py + scale * (pb - py),
 						  argp->mode));
 			}
+
 		      *d++ = new_r = r;
 		      *d++ = new_g = g;
 		      *d++ = new_b = b;
+
 		      s += 3;
+
 		      if (bpp == 4)
 			*d++ = *s++;
 		      else if (argp->new_layerp)
@@ -533,6 +548,7 @@ pluginCore (piArgs *argp)
 	    }
 	}
     }
+
   gimp_pixel_rgn_set_rect (&dstPr, dst, sel_x1, sel_y1, width, height);
 
   g_free (src);
@@ -552,11 +568,11 @@ pluginCore (piArgs *argp)
 
   gimp_displays_flush ();
 
-  return retval;
+  return success;
 }
 
-static gint
-pluginCoreIA (piArgs *argp)
+static gboolean
+plugin_dialog (piArgs *argp)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
@@ -632,10 +648,7 @@ pluginCoreIA (piArgs *argp)
 
   gtk_widget_destroy (dlg);
 
-  if (run)
-    return pluginCore (argp);
-  else
-    return -1;
+  return run;
 }
 
 /*

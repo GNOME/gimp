@@ -204,7 +204,9 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_TEXT_TOOL,
                 GIMP_TYPE_TEXT_OPTIONS,
                 gimp_text_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_FONT_MASK,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_FONT_MASK       |
+                GIMP_CONTEXT_PALETTE_MASK /* for the color popup's palette tab */,
                 "gimp-text-tool",
                 _("Text"),
                 _("Text Tool: Create or edit text layers"),
@@ -1029,6 +1031,26 @@ gimp_text_tool_text_notify (GimpText     *text,
                                       GIMP_ITEM (text_tool->layer));
       text_tool->handle_rectangle_change_complete = TRUE;
     }
+
+  /* if the text has changed, (probably because of an undo), we put
+     the new text into the text buffer */
+  if (strcmp (pspec->name, "text") == 0)
+    {
+      g_signal_handlers_block_by_func (text_tool->proxy,
+                                       gimp_text_tool_text_buffer_changed,
+                                       text_tool);
+
+      gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
+
+      g_signal_handlers_unblock_by_func (text_tool->proxy,
+                                         gimp_text_tool_text_buffer_changed,
+                                         text_tool);
+
+      /* force change of cursor and selection display */
+      gimp_text_tool_update_layout (text_tool);
+/*       gimp_text_tool_update_proxy (text_tool); */
+      return;
+    }
 }
 
 static gboolean
@@ -1739,7 +1761,7 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
       text_tool->text_box_fixed = TRUE;
 
-      if (! text || ! text->text || (text->text[0] == NULL))
+      if (! text || ! text->text || (text->text[0] == 0))
         {
           /*
            * we can't set properties for the text layer, because
@@ -1929,6 +1951,7 @@ gimp_text_tool_draw_text_selection (GimpDrawTool *draw_tool)
   layout = text_tool->layout->layout;
   line_iter = pango_layout_get_iter (layout);
   i = 0;
+
   /* Invert the selected letters by inverting all
    * lines containing selected letters, then
    * invert the unselected letters on these lines
@@ -1988,27 +2011,26 @@ gimp_text_tool_draw_text_selection (GimpDrawTool *draw_tool)
 static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GimpTool   *tool = GIMP_TOOL (draw_tool);
-  GdkRectangle    cliprect;
-  gint            width, height;
-  gint            x1, x2, y1, y2;
-  GtkTextIter     start;
+  GimpTextTool     *text_tool   = GIMP_TEXT_TOOL (draw_tool);
+  GimpTool         *tool        = GIMP_TOOL (draw_tool);
+  GimpDisplayShell *shell;
+  GdkRectangle      cliprect;
+  gint              width, height;
+  gint              x1, x2, y1, y2;
+  GtkTextIter       start;
 
-  GValue value = { 0, };
-
-
-  g_value_init (&value, G_TYPE_BOOLEAN);
-  g_value_set_boolean (&value, TRUE);
-  g_object_set_property (G_OBJECT(text_tool), "narrow-mode",
-                                    &value);
+  g_object_set (text_tool,
+                "narrow-mode", TRUE,
+                NULL);
 
   gimp_rectangle_tool_draw (draw_tool);
 
   if (!text_tool->layer) return;
   if (!text_tool->layer->text) return;
-  /* There will be no layout if the function is called from the wrong place*/
-  if (!text_tool->layout) gimp_text_tool_update_layout (text_tool);
+
+  /* There will be no layout if the function is called from the wrong place */
+  if (! text_tool->layout)
+    gimp_text_tool_update_layout (text_tool);
 
   g_object_get (text_tool,
                 "x1", &x1,
@@ -2016,7 +2038,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 "x2", &x2,
                 "y2", &y2,
                 NULL);
-  /*Turn on clipping for text-cursor and selections*/
+
+  /* Turn on clipping for text-cursor and selections */
   cliprect.x = x1;
   cliprect.width = x2 - x1;
   cliprect.y = y1;
@@ -2072,7 +2095,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       gimp_text_tool_draw_text_selection (draw_tool);
     }
   /* Turn off clipping when done*/
-  gimp_canvas_set_clip_rect (GIMP_CANVAS (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas),
+  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+  gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
                              GIMP_CANVAS_STYLE_XOR, NULL);
 }
 
@@ -2137,17 +2161,21 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
                                     gtk_text_buffer_get_insert (text_tool->text_buffer));
 
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    {
+      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    }
   else
     gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
 }
 
 static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
-                           const gchar *str)
+                           const gchar  *str)
 {
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    {
+      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    }
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
 }
 
@@ -2164,7 +2192,8 @@ gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
                                      GtkTextMark   *mark,
                                      GimpTextTool  *text_tool)
 {
-  gimp_text_tool_update_proxy (text_tool);
+  gimp_text_tool_update_layout (text_tool);
+/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
@@ -2173,7 +2202,7 @@ gimp_text_tool_update_layout (GimpTextTool *text_tool)
   GimpItem       *item;
   GimpImage      *image;
 
-  if (!text_tool->text)
+  if (! text_tool->text)
     {
       gimp_text_tool_update_proxy (text_tool);
       return;

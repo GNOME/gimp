@@ -180,7 +180,6 @@ gimp_palette_load (const gchar  *filename,
           if (tok)
             r = atoi (tok);
           else
-            /* maybe we should just abort? */
             g_message (_("Reading palette file '%s': "
                          "Missing RED component in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
@@ -189,7 +188,7 @@ gimp_palette_load (const gchar  *filename,
           if (tok)
             g = atoi (tok);
           else
-            g_message (_("Reading palette '%s': "
+            g_message (_("Reading palette file '%s': "
                          "Missing GREEN component in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 

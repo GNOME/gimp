@@ -124,9 +124,7 @@ about_dialog_create (GimpContext *context)
                              "authors",            authors,
                              "artists",            artists,
                              "documenters",        documenters,
-                             /* Translators: insert your names here,
-                              * separated by newline
-                              */
+                             /* Translators: insert your names here, separated by newline */
                              "translator-credits", _("translator-credits"),
                              NULL);
 

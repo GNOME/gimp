@@ -174,4 +174,4 @@
 )
 
 (script-fu-menu-register "script-fu-title-header"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

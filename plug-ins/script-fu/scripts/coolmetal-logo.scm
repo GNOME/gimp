@@ -187,4 +187,4 @@
 )
 
 (script-fu-menu-register "script-fu-cool-metal-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

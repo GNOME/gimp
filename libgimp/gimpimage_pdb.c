@@ -339,12 +339,11 @@ gimp_image_free_shadow (gint32 image_ID)
  *
  * This procedure resizes the image so that it's new width and height
  * are equal to the supplied parameters. Offsets are also provided
- * which describe the position of the previous image's content. No
- * bounds checking is currently provided, so don't supply parameters
- * that are out of bounds. All channels within the image are resized
- * according to the specified parameters; this includes the image
- * selection mask. All layers within the image are repositioned
- * according to the specified offsets.
+ * which describe the position of the previous image's content. All
+ * channels within the image are resized according to the specified
+ * parameters; this includes the image selection mask. All layers
+ * within the image are repositioned according to the specified
+ * offsets.
  *
  * Returns: TRUE on success.
  */
@@ -415,16 +414,13 @@ gimp_image_resize_to_layers (gint32 image_ID)
  * @new_width: New image width.
  * @new_height: New image height.
  *
- * Scale the image to the specified extents.
+ * Scale the image using the default interpolation method.
  *
  * This procedure scales the image so that its new width and height are
- * equal to the supplied parameters. Offsets are also provided which
- * describe the position of the previous image's content. No bounds
- * checking is currently provided, so don't supply parameters that are
- * out of bounds. All channels within the image are scaled according to
- * the specified parameters; this includes the image selection mask.
- * All layers within the image are repositioned according to the
- * specified offsets.
+ * equal to the supplied parameters. All layers and channels within the
+ * image are scaled according to the specified parameters; this
+ * includes the image selection mask. The default interpolation method
+ * is used.
  *
  * Returns: TRUE on success.
  */
@@ -452,12 +448,56 @@ gimp_image_scale (gint32 image_ID,
 }
 
 /**
+ * gimp_image_scale_full:
+ * @image_ID: The image.
+ * @new_width: New image width.
+ * @new_height: New image height.
+ * @interpolation: Type of interpolation.
+ *
+ * Scale the image using a specific interpolation method.
+ *
+ * This procedure scales the image so that its new width and height are
+ * equal to the supplied parameters. All layers and channels within the
+ * image are scaled according to the specified parameters; this
+ * includes the image selection mask. This procedure allows you to
+ * specify the interpolation method explicitly.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_image_scale_full (gint32                image_ID,
+                       gint                  new_width,
+                       gint                  new_height,
+                       GimpInterpolationType interpolation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-scale-full",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, new_width,
+                                    GIMP_PDB_INT32, new_height,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_crop:
  * @image_ID: The image.
  * @new_width: New image width: (0 < new_width <= width).
  * @new_height: New image height: (0 < new_height <= height).
- * @offx: x offset: (0 <= offx <= (width - new_width)).
- * @offy: y offset: (0 <= offy <= (height - new_height)).
+ * @offx: X offset: (0 <= offx <= (width - new_width)).
+ * @offy: Y offset: (0 <= offy <= (height - new_height)).
  *
  * Crop the image to the specified extents.
  *
@@ -1000,8 +1040,8 @@ gimp_image_remove_layer (gint32 image_ID,
  *
  * Returns the position of the layer in the layer stack.
  *
- * This procedure determines the positioin of the specified layer in
- * the images layer stack. If the layer doesn't exist in the image, an
+ * This procedure determines the position of the specified layer in the
+ * images layer stack. If the layer doesn't exist in the image, an
  * error is returned.
  *
  * Returns: The position of the layer in the layer stack.
@@ -1038,7 +1078,7 @@ gimp_image_get_layer_position (gint32 image_ID,
  * Raise the specified layer in the image's layer stack
  *
  * This procedure raises the specified layer one step in the existing
- * layer stack. It will not move the layer if there is no layer above
+ * layer stack. The procecure call will fail if there is no layer above
  * it.
  *
  * Returns: TRUE on success.
@@ -1072,7 +1112,7 @@ gimp_image_raise_layer (gint32 image_ID,
  * Lower the specified layer in the image's layer stack
  *
  * This procedure lowers the specified layer one step in the existing
- * layer stack. It will not move the layer if there is no layer below
+ * layer stack. The procecure call will fail if there is no layer below
  * it.
  *
  * Returns: TRUE on success.
@@ -1244,7 +1284,7 @@ gimp_image_remove_channel (gint32 image_ID,
  *
  * Returns the position of the channel in the channel stack.
  *
- * This procedure determines the positioin of the specified channel in
+ * This procedure determines the position of the specified channel in
  * the images channel stack. If the channel doesn't exist in the image,
  * an error is returned.
  *
@@ -1282,7 +1322,7 @@ gimp_image_get_channel_position (gint32 image_ID,
  * Raise the specified channel in the image's channel stack
  *
  * This procedure raises the specified channel one step in the existing
- * channel stack. It will not move the channel if there is no channel
+ * channel stack. The procecure call will fail if there is no channel
  * above it.
  *
  * Returns: TRUE on success.
@@ -1316,7 +1356,7 @@ gimp_image_raise_channel (gint32 image_ID,
  * Lower the specified channel in the image's channel stack
  *
  * This procedure lowers the specified channel one step in the existing
- * channel stack. It will not move the channel if there is no channel
+ * channel stack. The procecure call will fail if there is no channel
  * below it.
  *
  * Returns: TRUE on success.
@@ -1422,7 +1462,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  * Returns the position of the vectors object in the vectors objects
  * stack.
  *
- * This procedure determines the positioin of the specified vectors
+ * This procedure determines the position of the specified vectors
  * object in the images vectors object stack. If the vectors object
  * doesn't exist in the image, an error is returned.
  *
@@ -1460,7 +1500,7 @@ gimp_image_get_vectors_position (gint32 image_ID,
  * Raise the specified vectors in the image's vectors stack
  *
  * This procedure raises the specified vectors one step in the existing
- * vectors stack. It will not move the vectors if there is no vectors
+ * vectors stack. The procecure call will fail if there is no vectors
  * above it.
  *
  * Returns: TRUE on success.
@@ -1496,7 +1536,7 @@ gimp_image_raise_vectors (gint32 image_ID,
  * Lower the specified vectors in the image's vectors stack
  *
  * This procedure lowers the specified vectors one step in the existing
- * vectors stack. It will not move the vectors if there is no vectors
+ * vectors stack. The procecure call will fail if there is no vectors
  * below it.
  *
  * Returns: TRUE on success.

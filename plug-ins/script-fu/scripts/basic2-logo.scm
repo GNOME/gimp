@@ -124,4 +124,4 @@
 )
 
 (script-fu-menu-register "script-fu-basic2-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

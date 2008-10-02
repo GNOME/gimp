@@ -1,17 +1,19 @@
-Installation instructions for GIMP 2.5
+--------------------------------------
+Installation instructions for GIMP 2.6
 --------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
-GIMP 2.5 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.5. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.5, you have to
+GIMP 2.6 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.6. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.6, you have to
 choose a separate prefix which is not in your default library search
 path.
 
-GIMP 2.x is fully backward compatible to GIMP 2.0. Plug-ins and
-scripts written for GIMP 2.0 will continue to work and don't need to
-be changed nor recompiled to be used with GIMP 2.x.
+GIMP 2.6 is fully backward compatible to all earlier GIMP 2.x version.
+Plug-ins and scripts written for GIMP 2.4, or GIMP 2.2 or even 2.0,
+will continue to work and don't need to be changed nor recompiled to
+be used with GIMP 2.x.
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
@@ -57,27 +59,35 @@ header files installed.
   7. We use dbus-glib if available. Grab it from
      http://dbus.freedesktop.org/releases/dbus-glib/
 
-  8. You may want to install other third party libraries or programs
+  8. Access of remote files is implemented in the URI plug-in. There
+     are several possible implementations for this. The implementation
+     used is determined when you configure GIMP. By default the
+     GIO/GVfs backend is used. If you don't have GVfs support on your
+     target platform, you should pass the '--without-gvfs' option to
+     configure. The configure script will then try to detect another
+     method for accessing remote files.
+
+  9. You may want to install other third party libraries or programs
      that are needed for some of the available plugins. We recommend
      to check that the following libraries are installed: lcms,
      libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg
      and libwmf.
 
-  9. The Python extension requires Python development headers to be
+ 10. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
- 10. Configure GIMP by running the `configure' script. You may want
+ 11. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 11. Build GIMP by running `make'. The use of GNU make is recommended.
+ 12. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 12. Install GIMP by running `make install'. In order to avoid clashes
-     with other versions of GIMP, we install a binary called gimp-2.5.
+ 13. Install GIMP by running `make install'. In order to avoid clashes
+     with other versions of GIMP, we install a binary called gimp-2.6.
      By default there's also a link created so that you can type 'gimp'
-     to start gimp-2.5.
+     to start gimp-2.6.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -89,8 +99,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-2.5.x.tar.gz   # unpack the sources
-  % cd gimp-2.5.x                # change to the toplevel directory
+  % tar xvfz gimp-2.6.x.tar.gz   # unpack the sources
+  % cd gimp-2.6.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build GIMP
   % make install                 # install GIMP
@@ -125,8 +135,8 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from ~/.gimp-2.5 
-     (the directory .gimp-2.5 in the users home directory) to DIR.
+     GIMP uses to search for its configuration files from ~/.gimp-2.6 
+     (the directory .gimp-2.6 in the users home directory) to DIR.
 
   --enable-binreloc.  When compiled for Linux with this option enabled,
      GIMP will be binary relocatable.  Plug-ins and data files will
@@ -149,11 +159,16 @@ These are:
      causing any trouble at compile-time, you can build --without-exif.
      Get libexif from http://www.sourceforge.net/projects/libexif.
 
-  --without-mng, --without-aa.  The MNG plug-in needs libmng and
-     configure checks for its presense. If for some reason you don't
-     want to build the MNG plug-in even though the library is installed,
-     use --without-mng to disable it expliticely. The same switch exists
-     for aalib, use --without-aa if you run into problems.
+  --without-aa.  The AA plug-in needs libaa and configure checks for
+     its presense. Use --without-aa if you run into problems.
+
+  --without-mng.  The MNG plug-in needs libmng and configure checks
+     for its presense. If for some reason you don't want to build the
+     MNG plug-in even though the library is installed, use
+     --without-mng to disable it explicitly.
+
+  --without-wmf.  The WMF plug-in needs libwmf2 and configure checks for
+     its presense. Use --without-aa if you run into problems.
 
   --without-webkit.  If for some reason you don't want to build the 
      helpbrowser plug-in, you can use --without-webkit to disable 
@@ -224,8 +239,8 @@ These are:
      if you call configure with --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.5 the default gimp installation. Otherwise a link called
-     gimp pointing to the gimp-2.5 executable will be installed.
+     gimp-2.6 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.6 executable will be installed.
 
   --disable-gimp-console.  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
@@ -246,7 +261,7 @@ The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-2.5' in `app'.
+ - The main GIMP program 'gimp-2.6' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 

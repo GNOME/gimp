@@ -118,7 +118,7 @@ static const GimpActionEntry edit_actions[] =
 
   { "edit-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
     N_("Copy _Visible"), "<control><shift>C",
-    N_("Copy what is visible in the the selected region"),
+    N_("Copy what is visible in the selected region"),
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
@@ -254,7 +254,7 @@ void
 edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image       = action_data_get_image (data);
+  GimpImage    *image        = action_data_get_image (data);
   GimpDrawable *drawable     = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
@@ -264,38 +264,43 @@ edit_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      GimpUndo *undo;
-      GimpUndo *redo;
-
       drawable = gimp_image_get_active_drawable (image);
 
       undo_enabled = gimp_image_undo_is_enabled (image);
 
       if (undo_enabled)
         {
-          undo = gimp_undo_stack_peek (image->undo_stack);
-          redo = gimp_undo_stack_peek (image->redo_stack);
+          GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
+          GimpUndo *redo = gimp_undo_stack_peek (image->redo_stack);
 
           if (undo)
-            undo_name =
-              g_strdup_printf (_("_Undo %s"),
-                               gimp_object_get_name (GIMP_OBJECT (undo)));
+            {
+              undo_name =
+                g_strdup_printf (_("_Undo %s"),
+                                 gimp_object_get_name (GIMP_OBJECT (undo)));
+            }
 
           if (redo)
-            redo_name =
-              g_strdup_printf (_("_Redo %s"),
-                               gimp_object_get_name (GIMP_OBJECT (redo)));
+            {
+              redo_name =
+                g_strdup_printf (_("_Redo %s"),
+                                 gimp_object_get_name (GIMP_OBJECT (redo)));
+            }
 
           undo = gimp_image_undo_get_fadeable (image);
 
           if (GIMP_IS_DRAWABLE_UNDO (undo) &&
               GIMP_DRAWABLE_UNDO (undo)->src2_tiles)
-            fade_enabled = TRUE;
+            {
+              fade_enabled = TRUE;
+            }
 
           if (fade_enabled)
-            fade_name =
-              g_strdup_printf (_("_Fade %s..."),
-                               gimp_object_get_name (GIMP_OBJECT (undo)));
+            {
+              fade_name =
+                g_strdup_printf (_("_Fade %s..."),
+                                 gimp_object_get_name (GIMP_OBJECT (undo)));
+            }
         }
     }
 

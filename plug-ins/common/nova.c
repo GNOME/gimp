@@ -661,12 +661,12 @@ nova_center_preview_events (GtkWidget  *widget,
 
         if (mevent->state & GDK_BUTTON1_MASK)
           {
-            GdkModifierType mask;
-            gint            x, y;
+            gboolean retval = nova_center_update (widget, center,
+                                                  mevent->x, mevent->y);
 
-            gdk_window_get_pointer (widget->window, &x, &y, &mask);
+            gdk_event_request_motions (mevent);
 
-            return nova_center_update (widget, center, x, y);
+            return retval;
           }
       }
       break;

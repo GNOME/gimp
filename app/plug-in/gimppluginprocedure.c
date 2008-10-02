@@ -67,7 +67,7 @@ static void       gimp_plug_in_procedure_execute_async  (GimpProcedure  *procedu
                                                          GValueArray    *args,
                                                          GimpObject     *display);
 
-const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
+const gchar  * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -169,7 +169,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
     {
     case GIMP_ICON_TYPE_STOCK_ID:
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      memsize += gimp_string_get_memsize ((gchar *) proc->icon_data);
+      memsize += gimp_string_get_memsize ((const gchar *) proc->icon_data);
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:

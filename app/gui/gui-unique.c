@@ -49,10 +49,13 @@ static DBusGConnection *dbus_connection  = NULL;
 #endif
 
 #ifdef G_OS_WIN32
+#include "file/file-open.h"
+
 static void gui_unique_win32_init  (Gimp *gimp);
 static void gui_unique_win32_exit  (void);
 
 static Gimp            *unique_gimp      = NULL;
+static HWND             proxy_window     = NULL;
 #endif
 
 
@@ -69,10 +72,10 @@ gui_unique_init (Gimp *gimp)
 void
 gui_unique_exit (void)
 {
-#if HAVE_DBUS_GLIB
-  gui_dbus_service_exit ();
-#elif HAVE_DBUS_GLIB
+#ifdef G_OS_WIN32
   gui_unique_win32_exit ();
+#elif HAVE_DBUS_GLIB
+  gui_dbus_service_exit ();
 #endif
 }
 
@@ -131,7 +134,7 @@ typedef struct
 static IdleOpenData *
 idle_open_data_new (const gchar *name,
                     gint         len,
-		    gboolean     as_new)
+                    gboolean     as_new)
 {
   IdleOpenData *data = g_slice_new0 (IdleOpenData);
 
@@ -154,6 +157,12 @@ idle_open_data_free (IdleOpenData *data)
 static gboolean
 gui_unique_win32_idle_open (IdleOpenData *data)
 {
+  /*  We want to be called again later in case that GIMP is not fully
+   *  started yet.
+   */
+  if (! gimp_is_restored (unique_gimp))
+    return TRUE;
+
   if (data->name)
     {
       file_open_from_command_line (unique_gimp, data->name, data->as_new);
@@ -172,11 +181,11 @@ gui_unique_win32_idle_open (IdleOpenData *data)
 }
 
 
-LRESULT CALLBACK
+static LRESULT CALLBACK
 gui_unique_win32_message_handler (HWND   hWnd,
-				  UINT   uMsg,
-				  WPARAM wParam,
-				  LPARAM lParam)
+                                  UINT   uMsg,
+                                  WPARAM wParam,
+                                  LPARAM lParam)
 {
   switch (uMsg)
     {
@@ -199,6 +208,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
           g_object_watch_closure (unique_gimp, closure);
 
           source = g_idle_source_new ();
+          g_source_set_priority (source, G_PRIORITY_LOW);
           g_source_set_closure (source, closure);
           g_source_attach (source, NULL);
           g_source_unref (source);
@@ -229,10 +239,10 @@ gui_unique_win32_init (Gimp *gimp)
 
   RegisterClassW (&wc);
 
-  CreateWindowExW (0,
-		   GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-		   GIMP_UNIQUE_WIN32_WINDOW_NAME,
-		   WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
+  proxy_window = CreateWindowExW (0,
+                                  GIMP_UNIQUE_WIN32_WINDOW_CLASS,
+                                  GIMP_UNIQUE_WIN32_WINDOW_NAME,
+                                  WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
 }
 
 static void
@@ -241,6 +251,8 @@ gui_unique_win32_exit (void)
   g_return_if_fail (GIMP_IS_GIMP (unique_gimp));
 
   unique_gimp = NULL;
+
+  DestroyWindow (proxy_window);
 }
 
 

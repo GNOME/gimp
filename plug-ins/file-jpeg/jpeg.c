@@ -51,21 +51,21 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-gboolean      undo_touched;
-gboolean      load_interactive;
-gchar        *image_comment;
-gint32        display_ID;
-JpegSaveVals  jsvals;
-gint32        orig_image_ID_global;
-gint32        drawable_ID_global;
-gboolean      has_metadata;
-gint          orig_quality;
-gint          orig_subsmp;
-gint          num_quant_tables;
+gboolean         undo_touched;
+gboolean         load_interactive;
+gchar           *image_comment;
+gint32           display_ID;
+JpegSaveVals     jsvals;
+gint32           orig_image_ID_global;
+gint32           drawable_ID_global;
+gboolean         has_metadata;
+gint             orig_quality;
+JpegSubsampling  orig_subsmp;
+gint             num_quant_tables;
 
 
 #ifdef HAVE_EXIF
-ExifData     *exif_data = NULL;
+ExifData        *exif_data = NULL;
 #endif
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -213,7 +213,7 @@ run (const gchar      *name,
 
   has_metadata = FALSE;
   orig_quality = 0;
-  orig_subsmp = 0;
+  orig_subsmp = JPEG_SUPSAMPLING_2x2_1x1_1x1;
   num_quant_tables = 0;
 
   if (strcmp (name, LOAD_PROC) == 0)
@@ -441,7 +441,9 @@ run (const gchar      *name,
                   jsvals.use_orig_quality = TRUE;
                 }
 
-              if (orig_subsmp == 2 || (orig_subsmp > 0 && jsvals.subsmp == 0))
+              if (orig_subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1 ||
+                  (orig_subsmp > JPEG_SUPSAMPLING_1x1_1x1_1x1 &&
+                   jsvals.subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1))
                 jsvals.subsmp = orig_subsmp;
             }
           break;

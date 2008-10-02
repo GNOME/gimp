@@ -118,4 +118,4 @@
 )
 
 (script-fu-menu-register "script-fu-glowing-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

@@ -353,7 +353,7 @@ _gimp_reloc_init_lib (GError **error)
 static void
 set_gerror (GError **error, GimpBinrelocInitError errcode)
 {
-        gchar *error_message;
+        const gchar *error_message;
 
         if (error == NULL)
                 return;

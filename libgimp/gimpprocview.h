@@ -28,18 +28,18 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GtkWidget * gimp_proc_view_new (const gchar     *name,
-                                const gchar     *menu_path,
-                                const gchar     *blurb,
-                                const gchar     *help,
-                                const gchar     *author,
-                                const gchar     *copyright,
-                                const gchar     *date,
-                                GimpPDBProcType  type,
-                                gint             n_params,
-                                gint             n_return_vals,
-                                GimpParamDef    *params,
-                                GimpParamDef    *return_vals);
+GtkWidget * gimp_proc_view_new (const gchar        *name,
+                                const gchar        *menu_path,
+                                const gchar        *blurb,
+                                const gchar        *help,
+                                const gchar        *author,
+                                const gchar        *copyright,
+                                const gchar        *date,
+                                GimpPDBProcType     type,
+                                gint                n_params,
+                                gint                n_return_vals,
+                                const GimpParamDef *params,
+                                const GimpParamDef *return_vals);
 
 
 G_END_DECLS

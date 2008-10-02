@@ -33,12 +33,12 @@
 #include "pygimp-util.h"
 
 
-void gimpthumb_register_classes(PyObject *d); 
+void gimpthumb_register_classes(PyObject *d);
 void gimpthumb_add_constants(PyObject *module, const gchar *strip_prefix);
 extern PyMethodDef gimpthumb_functions[];
 
 
-static char gimpthumb_doc[] = 
+static char gimpthumb_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
@@ -48,7 +48,7 @@ PyMODINIT_FUNC
 initgimpthumb(void)
 {
     PyObject *m, *d;
-    
+
     pygimp_init_pygobject();
 
     m = Py_InitModule3("gimpthumb", gimpthumb_functions, gimpthumb_doc);

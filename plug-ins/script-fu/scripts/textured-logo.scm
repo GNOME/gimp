@@ -175,4 +175,4 @@
 )
 
 (script-fu-menu-register "script-fu-textured-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

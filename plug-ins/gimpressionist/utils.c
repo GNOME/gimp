@@ -250,14 +250,14 @@ reselect (GtkWidget *view,
 }
 
 static void
-readdirintolist_real(char         *subdir,
-                     GtkWidget    *view,
-                     char         *selected,
-                     gboolean      with_filename_column,
-                     gchar      *(*get_object_name_cb) (gchar *dir,
-                                                        gchar *filename,
-                                                        void  *context),
-                     void         *context)
+readdirintolist_real (const char   *subdir,
+                      GtkWidget    *view,
+                      char         *selected,
+                      gboolean      with_filename_column,
+                      gchar      *(*get_object_name_cb) (const gchar *dir,
+                                                         gchar       *filename,
+                                                         void        *context),
+                      void         *context)
 {
   gchar           *fpath;
   const gchar     *de;
@@ -353,14 +353,14 @@ readdirintolist_real(char         *subdir,
 }
 
 void
-readdirintolist_extended (char         *subdir,
+readdirintolist_extended (const char   *subdir,
                           GtkWidget    *view,
                           char         *selected,
                           gboolean      with_filename_column,
-                          gchar      *(*get_object_name_cb) (gchar *dir,
-                                                             gchar *filename,
-                                                             void *context),
-                          void * context)
+                          gchar      *(*get_object_name_cb) (const gchar *dir,
+                                                             gchar       *filename,
+                                                             void        *context),
+                          void         *context)
 {
   char *tmpdir;
   GList *thispath = parsepath ();
@@ -376,7 +376,9 @@ readdirintolist_extended (char         *subdir,
 }
 
 void
-readdirintolist (char *subdir, GtkWidget *view, char *selected)
+readdirintolist (const char *subdir,
+                 GtkWidget  *view,
+                 char       *selected)
 {
   readdirintolist_extended (subdir, view, selected, FALSE, NULL, NULL);
 }

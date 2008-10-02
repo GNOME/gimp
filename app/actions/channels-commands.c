@@ -181,7 +181,7 @@ channels_raise_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_raise_channel (image, channel);
+  gimp_image_raise_channel (image, channel, NULL);
   gimp_image_flush (image);
 }
 
@@ -205,7 +205,7 @@ channels_lower_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_lower_channel (image, channel);
+  gimp_image_lower_channel (image, channel, NULL);
   gimp_image_flush (image);
 }
 

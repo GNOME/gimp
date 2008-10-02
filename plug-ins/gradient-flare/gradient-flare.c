@@ -572,11 +572,10 @@ static GradientCacheItem  *gradient_cache_head  = NULL;
 static gint                gradient_cache_count = 0;
 
 
-static gchar *internal_gradients[] =
+static const gchar *internal_gradients[] =
 {
   "%white", "%white_grad", "%red_grad", "%blue_grad", "%yellow_grad", "%random"
 };
-static int internal_ngradients = G_N_ELEMENTS (internal_gradients);
 
 #ifdef DEBUG
 static gint     get_values_external_count = 0;
@@ -4712,11 +4711,11 @@ gradient_get_list (gint *num_gradients)
   gradient_cache_flush ();
   external_gradients = gimp_gradients_get_list (NULL, &external_ngradients);
 
-  *num_gradients = internal_ngradients + external_ngradients;
+  *num_gradients = G_N_ELEMENTS (internal_gradients) + external_ngradients;
   gradients = g_new (gchar *, *num_gradients);
 
   n = 0;
-  for (i = 0; i < internal_ngradients; i++)
+  for (i = 0; i < G_N_ELEMENTS (internal_gradients); i++)
     {
       gradients[n++] = g_strdup (internal_gradients[i]);
     }

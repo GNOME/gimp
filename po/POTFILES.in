@@ -18,6 +18,7 @@ app/actions/channels-actions.c
 app/actions/channels-commands.c
 app/actions/colormap-actions.c
 app/actions/colormap-commands.c
+app/actions/config-actions.c
 app/actions/context-actions.c
 app/actions/cursor-info-actions.c
 app/actions/data-commands.c
@@ -368,6 +369,7 @@ app/vectors/gimpvectors.c
 app/vectors/gimpvectors-export.c
 app/vectors/gimpvectors-import.c
 
+app/widgets/gimpactioneditor.c
 app/widgets/gimpactiongroup.c
 app/widgets/gimpactionview.c
 app/widgets/gimpbrusheditor.c

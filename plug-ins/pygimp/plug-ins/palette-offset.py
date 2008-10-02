@@ -20,8 +20,8 @@ gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def palette_offset(palette, amount):
     #If palette is read only, work on a copy:
-    editable = pdb.gimp_palette_is_editable(palette) 
-    if not editable:palette = pdb.gimp_palette_duplicate (palette)     
+    editable = pdb.gimp_palette_is_editable(palette)
+    if not editable:palette = pdb.gimp_palette_duplicate (palette)
 
     num_colors = pdb.gimp_palette_get_info (palette)
 

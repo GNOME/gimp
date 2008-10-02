@@ -109,13 +109,13 @@ logBegin(pTW_IMAGEINFO imageInfo, void *clientData)
 {
   int i;
   char buffer[256];
-		
+
   LogMessage("\n");
   LogMessage("*************************************\n");
   LogMessage("\n");
   LogMessage("Image transfer begin:\n");
   /*	LogMessage("\tClient data: %s\n", (char *) clientData); */
-		
+
   /* Log the image information */
   LogMessage("Image information:\n");
   LogMessage("\tXResolution: %f\n", FIX32ToFloat(imageInfo->XResolution));
@@ -129,19 +129,19 @@ logBegin(pTW_IMAGEINFO imageInfo, void *clientData)
       strcat(buffer, "1");
     else
       strcat(buffer, "0");
-			
+
     if (i != 7)
       strcat(buffer, ",");
   }
   LogMessage("%s}\n", buffer);
-		
+
   LogMessage("\tBitsPerPixel: %d\n", imageInfo->BitsPerPixel);
   LogMessage("\tPlanar: %s\n", (imageInfo->Planar ? "TRUE" : "FALSE"));
   LogMessage("\tPixelType: %d\n", imageInfo->PixelType);
   /* Compression */
-		
+
 }
-	
+
 void
 logData(pTW_IMAGEINFO imageInfo,
 	pTW_IMAGEMEMXFER imageMemXfer,
@@ -157,7 +157,7 @@ logData(pTW_IMAGEINFO imageInfo,
   LogMessage("\tYOffset = %d\n", imageMemXfer->YOffset);
   LogMessage("\tBytesWritten = %d\n", imageMemXfer->BytesWritten);
 }
-	
+
 #else
 
 /*

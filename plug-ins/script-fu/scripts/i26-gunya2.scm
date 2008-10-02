@@ -103,4 +103,4 @@
 )
 
 (script-fu-menu-register "script-fu-i26-gunya2"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

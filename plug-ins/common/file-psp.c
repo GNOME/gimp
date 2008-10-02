@@ -681,10 +681,10 @@ save_dialog (void)
 /* This helper method is used to get the name of the block for the known block
  * types. The enum PSPBlockID must cover the input values.
  */
-static gchar *
+static const gchar *
 block_name (gint id)
 {
-  static gchar *block_names[] =
+  static const gchar *block_names[] =
   {
     "IMAGE",
     "CREATOR",
@@ -859,8 +859,8 @@ read_extended_data_block (FILE     *f,
                           guint     total_len,
                           PSPimage *ia)
 {
-  long data_start;
-  guchar buf[4];
+  long    data_start;
+  guchar  buf[4];
   guint16 keyword;
   guint32 length;
 
@@ -894,15 +894,15 @@ read_creator_block (FILE     *f,
                     guint     total_len,
                     PSPimage *ia)
 {
-  long data_start;
-  guchar buf[4];
-  guint16 keyword;
-  guint32 length;
-  gchar *string;
-  gchar *title = NULL, *artist = NULL, *copyright = NULL, *description = NULL;
-  guint32 dword;
-  guint32 cdate = 0, mdate = 0, appid, appver;
-  GString *comment;
+  long          data_start;
+  guchar        buf[4];
+  guint16       keyword;
+  guint32       length;
+  gchar        *string;
+  gchar        *title = NULL, *artist = NULL, *copyright = NULL, *description = NULL;
+  guint32       dword;
+  guint32       cdate = 0, mdate = 0, appid, appver;
+  GString      *comment;
   GimpParasite *comment_parasite;
 
   data_start = ftell (f);
@@ -1082,10 +1082,10 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
   return -1;
 }
 
-static gchar *
+static const gchar *
 blend_mode_name (PSPBlendModes mode)
 {
-  static gchar *blend_mode_names[] =
+  static const gchar *blend_mode_names[] =
   {
     "NORMAL",
     "DARKEN",
@@ -1117,10 +1117,10 @@ blend_mode_name (PSPBlendModes mode)
   return err_name;
 }
 
-static gchar *
+static const gchar *
 bitmap_type_name (gint type)
 {
-  static gchar *bitmap_type_names[] =
+  static const gchar *bitmap_type_names[] =
   {
     "IMAGE",
     "TRANS_MASK",
@@ -1140,10 +1140,10 @@ bitmap_type_name (gint type)
   return err_name;
 }
 
-static gchar *
+static const gchar *
 channel_type_name (gint type)
 {
-  static char *channel_type_names[] =
+  static const gchar *channel_type_names[] =
   {
     "COMPOSITE",
     "RED",
@@ -1638,14 +1638,14 @@ read_tube_block (FILE     *f,
                  guint     total_len,
                  PSPimage *ia)
 {
-  guint16 version;
-  guchar name[514];
-  guint32 step_size, column_count, row_count, cell_count;
-  guint32 placement_mode, selection_mode;
-  gint i;
-  GimpPixPipeParams params;
-  GimpParasite *pipe_parasite;
-  gchar *parasite_text;
+  guint16            version;
+  guchar             name[514];
+  guint32            step_size, column_count, row_count, cell_count;
+  guint32            placement_mode, selection_mode;
+  gint               i;
+  GimpPixPipeParams  params;
+  GimpParasite      *pipe_parasite;
+  gchar             *parasite_text;
 
   gimp_pixpipe_params_init (&params);
 
@@ -1707,7 +1707,7 @@ read_tube_block (FILE     *f,
   return 0;
 }
 
-static gchar *
+static const gchar *
 compression_name (gint compression)
 {
   switch (compression)

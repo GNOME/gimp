@@ -1164,7 +1164,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   int yystate;
   int yyn;
   int yyresult;
@@ -1439,7 +1439,7 @@ yyreduce:
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
+		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n",
 					     NULL);
 		   g_strreplace(&info->description, description);
 		   g_free ((yyvsp[(2) - (2)].id));
@@ -1449,7 +1449,7 @@ yyreduce:
   case 20:
 #line 118 "imap_ncsa.y"
     {
-		   MapInfo_t *info = get_map_info();		      
+		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->default_url, (yyvsp[(2) - (2)].id));
 		   g_free ((yyvsp[(2) - (2)].id));
 		}
@@ -1507,7 +1507,7 @@ yyreduce:
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(1) - (3)].value), (gint) (yyvsp[(3) - (3)].value));
-		   polygon->points = g_list_append(polygon->points, 
+		   polygon->points = g_list_append(polygon->points,
 						   (gpointer) point);
 		}
     break;
@@ -1731,7 +1731,7 @@ yyreturn:
 #line 174 "imap_ncsa.y"
 
 
-static void 
+static void
 ncsa_error(char* s)
 {
    extern FILE *ncsa_in;

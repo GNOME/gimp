@@ -1,3 +1,7 @@
+2008-10-01  Bill Skaggs <weskaggs@gmail.com>
+
+	* Merged 26850:27710 from trunk, updating to 2.6.0 of trunk.
+	
 2008-09-10  Bill Skaggs <weskaggs@gmail.com>
 
 	* app/tools/gimptexttool.c: Fix nasty bug that showed up when
@@ -182,4 +186,3 @@
 
 	Creating soc-2008-text branch starting from rev 25808
 	of trunk.
-	

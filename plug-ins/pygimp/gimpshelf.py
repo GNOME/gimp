@@ -69,7 +69,7 @@ class Gimpshelf:
             return 1
         except gimp.error:
             return 0
-                
+
     def __getitem__(self, key):
         try:
             s = gimp.get_data(key)

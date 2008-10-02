@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -156,6 +157,26 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
 
 /*  private functions  */
 
+/*
+ * Position the dropped item in the middle of the viewport.
+ */
+static void
+gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
+                                      GimpItem         *item)
+{
+  gint x, y;
+  gint width, height;
+  gint off_x, off_y;
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  off_x = x + (width  - gimp_item_width  (item)) / 2 - off_x;
+  off_y = y + (height - gimp_item_height (item)) / 2 - off_y;
+
+  gimp_item_translate (item, off_x, off_y, FALSE);
+}
 
 static void
 gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
@@ -176,10 +197,11 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   GimpViewable *viewable,
                                   gpointer      data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image     = shell->display->image;
   GType             new_type;
   GimpItem         *new_item;
+  gboolean          new_image = FALSE;
 
   GIMP_LOG (DND, NULL);
 
@@ -187,7 +209,36 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
     return;
 
   if (! image)
-    return;
+    {
+      GimpImage         *src_image = gimp_item_get_image (GIMP_ITEM (viewable));
+      GimpDrawable      *drawable  = GIMP_DRAWABLE (viewable);
+      GimpImageBaseType  type;
+      gdouble            xres;
+      gdouble            yres;
+
+      type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+      image = gimp_create_image (shell->display->gimp,
+                                 gimp_item_width (GIMP_ITEM (viewable)),
+                                 gimp_item_height (GIMP_ITEM (viewable)),
+                                 type, TRUE);
+      gimp_image_undo_disable (image);
+
+      if (type == GIMP_INDEXED)
+        gimp_image_set_colormap (image,
+                                 gimp_image_get_colormap (src_image),
+                                 gimp_image_get_colormap_size (src_image),
+                                 FALSE);
+
+      gimp_image_get_resolution (src_image, &xres, &yres);
+      gimp_image_set_resolution (image, xres, yres);
+      gimp_image_set_unit (image, gimp_image_get_unit (src_image));
+
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      g_object_unref (image);
+
+      new_image = TRUE;
+    }
 
   if (GIMP_IS_LAYER (viewable))
     new_type = G_TYPE_FROM_INSTANCE (viewable);
@@ -198,23 +249,14 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   if (new_item)
     {
-      GimpLayer *new_layer;
-      gint       x, y, width, height;
-      gint       off_x, off_y;
-
-      new_layer = GIMP_LAYER (new_item);
+      GimpLayer *new_layer = GIMP_LAYER (new_item);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+      if (! new_image)
+        gimp_display_shell_dnd_position_item (shell, new_item);
 
-      gimp_item_offsets (new_item, &off_x, &off_y);
-
-      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-      gimp_item_translate (new_item, off_x, off_y, FALSE);
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
@@ -224,6 +266,9 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
       gimp_display_shell_dnd_flush (shell, image);
     }
+
+  if (new_image)
+    gimp_image_undo_enable (image);
 }
 
 static void
@@ -515,8 +560,6 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
   if (new_item)
     {
       GimpLayer *new_layer = GIMP_LAYER (new_item);
-      gint       x, y, width, height;
-      gint       off_x, off_y;
 
       gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                            NULL, NULL, &desc, NULL);
@@ -526,14 +569,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      gimp_item_offsets (new_item, &off_x, &off_y);
-
-      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-      gimp_item_translate (new_item, off_x, off_y, FALSE);
+      gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_image_add_layer (dest_image, new_layer, -1);
 
@@ -550,43 +586,62 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
                                 GdkPixbuf *pixbuf,
                                 gpointer   data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image     = shell->display->image;
   GimpLayer        *new_layer;
+  GimpImageType     image_type;
+  gboolean          new_image = FALSE;
 
   GIMP_LOG (DND, NULL);
 
   if (shell->display->gimp->busy)
     return;
 
+  switch (gdk_pixbuf_get_n_channels (pixbuf))
+    {
+    case 1: image_type = GIMP_GRAY_IMAGE;  break;
+    case 2: image_type = GIMP_GRAYA_IMAGE; break;
+    case 3: image_type = GIMP_RGB_IMAGE;   break;
+    case 4: image_type = GIMP_RGBA_IMAGE;  break;
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
+
   if (! image)
-    return;
+    {
+      image = gimp_create_image (shell->display->gimp,
+                                 gdk_pixbuf_get_width (pixbuf),
+                                 gdk_pixbuf_get_height (pixbuf),
+                                 GIMP_IMAGE_TYPE_BASE_TYPE (image_type),
+                                 FALSE);
+
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      g_object_unref (image);
+
+      gimp_image_undo_disable (image);
+
+      new_image = TRUE;
+    }
 
   new_layer =
-    gimp_layer_new_from_pixbuf (pixbuf, image,
-                                gimp_image_base_type_with_alpha (image),
+    gimp_layer_new_from_pixbuf (pixbuf, image, image_type,
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (new_layer)
     {
-      GimpItem *new_item;
-      gint      x, y, width, height;
-      gint      off_x, off_y;
+      GimpItem *new_item = GIMP_ITEM (new_layer);
 
       new_item = GIMP_ITEM (new_layer);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      gimp_item_offsets (new_item, &off_x, &off_y);
-
-      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-      gimp_item_translate (new_item, off_x, off_y, FALSE);
+      if (! new_image)
+        gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_image_add_layer (image, new_layer, -1);
 
@@ -594,4 +649,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
 
       gimp_display_shell_dnd_flush (shell, image);
     }
+
+  if (new_image)
+    gimp_image_undo_enable (image);
 }

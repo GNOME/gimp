@@ -7,30 +7,30 @@ AC_PREREQ(2.54)
 #   GIMP_INTERFACE_AGE += 1;
 
 m4_define([gimp_major_version], [2])
-m4_define([gimp_minor_version], [5])
-m4_define([gimp_micro_version], [4])
+m4_define([gimp_minor_version], [6])
+m4_define([gimp_micro_version], [1])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [0])
+m4_define([gimp_interface_age], [1])
 m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-# m4_define([gimp_version], [2.5.0])
+# m4_define([gimp_version], [2.6.0])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.5])
+m4_define([gimp_app_version], [2.6])
 m4_define([gimp_plugin_version], [2.0])
 m4_define([gimp_tool_version], [2.0])
 m4_define([gimp_pkgconfig_version], [2.0])
 m4_define([gimp_data_version], [2.0])
 m4_define([gimp_sysconf_version], [2.0])
-m4_define([gimp_user_version], [2.5])
+m4_define([gimp_user_version], [2.6])
 
 m4_define([gimp_unstable],
           m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
@@ -1151,13 +1151,14 @@ AM_CONDITIONAL(HAVE_PNG, test "x$have_libpng" = xyes)
 
 AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
 
-have_libmng=yes
+have_libmng=no
 if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
    test -n "$PNG_LIBS" && test -n "$JPEG_LIBS" && test -n "$Z_LIBS"; then
   AC_CHECK_LIB(mng, mng_create,
     [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
     [have_libmng="no (MNG library not found)"], -lz -lm)
   if test "$mng_ok" = yes; then
+    have_libmng=yes
     FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"
   else
     have_libmng="no (MNG header file not found)"
@@ -1408,22 +1409,26 @@ fi
 # Check for libwmf2
 ###################
 
+AC_ARG_WITH(wmf, [  --without-wmf           build without WMF support])
+
 have_libwmf=no
-AC_PATH_PROG(WMF_CONFIG, libwmf-config, no)
-if test "x$WMF_CONFIG" != "xno" ; then
-  have_libwmf=yes
-  AC_MSG_CHECKING(for libwmf >= wmf_required_version)
-  wmf_version=`$WMF_CONFIG --version`
-  if expr $wmf_version \>= wmf_required_version >/dev/null; then
-    AC_MSG_RESULT([yes (version $wmf_version)])
-    FILE_WMF='file-wmf$(EXEEXT)'
-    WMF_LIBS=`$WMF_CONFIG --libs`
-    WMF_CFLAGS=`$WMF_CONFIG --cflags`
+if test "x$with_wmf" != xno; then
+  AC_PATH_PROG(WMF_CONFIG, libwmf-config, no)
+  if test "x$WMF_CONFIG" != "xno" ; then
+    have_libwmf=yes
+    AC_MSG_CHECKING(for libwmf >= wmf_required_version)
+    wmf_version=`$WMF_CONFIG --version`
+    if expr $wmf_version \>= wmf_required_version >/dev/null; then
+      AC_MSG_RESULT([yes (version $wmf_version)])
+      FILE_WMF='file-wmf$(EXEEXT)'
+      WMF_LIBS=`$WMF_CONFIG --libs`
+      WMF_CFLAGS=`$WMF_CONFIG --cflags`
+    else
+      have_libwmf="no (libwmf is too old)"
+   fi
   else
-    have_libwmf="no (libwmf is too old)"
+    have_libwmf="no (libwmf not found)"
   fi
-else
-  have_libwmf="no (libwmf not found)"
 fi
 
 if test "x$have_libwmf" = xyes; then
@@ -1860,7 +1865,7 @@ AC_SUBST(MIME_TYPES)
 # Disable deprecated APIs
 #########################
 
-CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DG_DISABLE_SINGLE_INCLUDES -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES -DGTK_DISABLE_SINGLE_INCLUDES"
+CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
 
 if test "x$have_glib_2_19" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
@@ -2016,7 +2021,6 @@ plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile
-plug-ins/script-fu/re/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/script-fu/tinyscheme/Makefile

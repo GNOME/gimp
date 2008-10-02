@@ -229,7 +229,7 @@ openDSM(pTW_SESSION twSession)
       twSession->twainState = 3;
       return TRUE;
       break;
-	
+
     case TWRC_FAILURE:
     default:
       LogMessage("OpenDSM failure\n");
@@ -272,7 +272,7 @@ selectDS(pTW_SESSION twSession)
     LogMessage("User cancelled TWAIN source selection\n");
     break;
 
-  case TWRC_FAILURE:	
+  case TWRC_FAILURE:
   default:
     LogMessage("Error \"%s\" during TWAIN source selection\n",
 	       currentTwainError(twSession));
@@ -602,22 +602,22 @@ transferImage(pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
   TW_SETUPMEMXFER setupMemXfer;
   TW_IMAGEMEMXFER imageMemXfer;
   char *buffer;
-	
+
   /* Clear our structures */
   memset(&setupMemXfer, 0, sizeof(TW_SETUPMEMXFER));
   memset(&imageMemXfer, 0, sizeof(TW_IMAGEMEMXFER));
-	
+
   /* Find out how the source would like to transfer... */
   twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			    DG_CONTROL, DAT_SETUPMEMXFER, MSG_GET,
 			    (TW_MEMREF) &setupMemXfer);
-	
+
   /* Allocate the buffer for the transfer */
   buffer = g_new (char, setupMemXfer.Preferred);
   imageMemXfer.Memory.Flags = TWMF_APPOWNS | TWMF_POINTER;
   imageMemXfer.Memory.Length = setupMemXfer.Preferred;
   imageMemXfer.Memory.TheMem = (TW_MEMREF) buffer;
-	
+
   /* Get the data */
   do {
     /* Setup for the memory transfer */
@@ -628,18 +628,18 @@ transferImage(pTW_SESSION twSession, pTW_IMAGEINFO imageInfo)
     imageMemXfer.XOffset = TWON_DONTCARE32;
     imageMemXfer.YOffset = TWON_DONTCARE32;
     imageMemXfer.BytesWritten = TWON_DONTCARE32;
-		
+
     /* Get the next block of memory */
     twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			      DG_IMAGE, DAT_IMAGEMEMXFER, MSG_GET,
 			      (TW_MEMREF) &imageMemXfer);
-		
+
     if ((twSession->twRC == TWRC_SUCCESS) ||
 	(twSession->twRC == TWRC_XFERDONE)) {
       /* Call the callback function */
       if (!(*twSession->transferFunctions->txfrDataCb) (
 							imageInfo,
-							&imageMemXfer,	
+							&imageMemXfer,
 							twSession->clientData)) {
 	/* Callback function requested to cancel */
 	twSession->twRC = TWRC_CANCEL;
@@ -757,14 +757,14 @@ transferImages(pTW_SESSION twSession)
   do {
     /* Move to the new state */
     twSession->twainState = 6;
-		
+
     /* Begin the image transfer */
     if (!beginImageTransfer(twSession, &imageInfo))
       continue;
-		
+
     /* Call the image transfer function */
     transferImage(twSession, &imageInfo);
-		
+
   } while (endImageTransfer(twSession, &pendingCount));
 
   /*

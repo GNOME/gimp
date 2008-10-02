@@ -40,6 +40,13 @@ typedef struct my_error_mgr
   jmp_buf               setjmp_buffer;  /* for return to caller */
 } *my_error_ptr;
 
+typedef enum
+{
+  JPEG_SUPSAMPLING_2x2_1x1_1x1 = 0,  /* smallest file */
+  JPEG_SUPSAMPLING_2x1_1x1_1x1 = 1,  /* 4:2:2         */
+  JPEG_SUPSAMPLING_1x1_1x1_1x1 = 2,
+  JPEG_SUPSAMPLING_1x2_1x1_1x1 = 3
+} JpegSubsampling;
 
 extern gint32 volatile  preview_image_ID;
 extern gint32           preview_layer_ID;
@@ -50,7 +57,7 @@ extern gint32           display_ID;
 extern gchar           *image_comment;
 extern gboolean         has_metadata;
 extern gint             orig_quality;
-extern gint             orig_subsmp;
+extern JpegSubsampling  orig_subsmp;
 extern gint             num_quant_tables;
 
 

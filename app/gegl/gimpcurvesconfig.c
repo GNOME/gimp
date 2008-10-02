@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <glib/gstdio.h>
 
@@ -207,14 +205,8 @@ gimp_curves_config_set_property (GObject      *object,
 
         if (src_curve && dest_curve)
           {
-            gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
-
-            memcpy (dest_curve->points, src_curve->points,
-                    sizeof (GimpVector2) * src_curve->n_points);
-            memcpy (dest_curve->samples, src_curve->samples,
-                    sizeof (gdouble) * src_curve->n_samples);
-
-            dest_curve->identity = src_curve->identity;
+            gimp_config_copy (GIMP_CONFIG (src_curve),
+                              GIMP_CONFIG (dest_curve), 0);
           }
       }
       break;
@@ -339,8 +331,6 @@ gimp_curves_config_copy (GimpConfig  *src,
                         GIMP_CONFIG (dest_config->curve[channel]),
                         flags);
     }
-
-  g_object_notify (G_OBJECT (dest), "curve");
 
   dest_config->channel = src_config->channel;
 

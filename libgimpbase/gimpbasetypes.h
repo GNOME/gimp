@@ -45,16 +45,16 @@ typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
 
 struct _GimpEnumDesc
 {
-  gint   value;
-  gchar *value_desc;
-  gchar *value_help;
+  gint         value;
+  const gchar *value_desc;
+  const gchar *value_help;
 };
 
 struct _GimpFlagsDesc
 {
-  guint  value;
-  gchar *value_desc;
-  gchar *value_help;
+  guint        value;
+  const gchar *value_desc;
+  const gchar *value_help;
 };
 
 

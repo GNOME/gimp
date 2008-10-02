@@ -197,7 +197,7 @@ def calc_undistorted_coords(self, wx, wy, whirl, pinch, radius):
                 x = wx
                 y = wy
         return inside, float(x), float(y)
-        
+
 def bilinear(x, y, values):
         x = x % 1.0
         y = y % 1.0

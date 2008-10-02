@@ -573,13 +573,12 @@ run (const gchar      *name,
 {
   const gchar  *l_env;
   BenderDialog *cd;
-
   GimpDrawable *l_active_drawable    = NULL;
   gint32        l_active_drawable_id = -1;
   gint32        l_image_id           = -1;
   gint32        l_layer_id           = -1;
   gint32        l_layer_mask_id      = -1;
-  gint32        l_bent_layer_id      = -1;
+  GError       *error                = NULL;
 
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;
@@ -641,10 +640,12 @@ run (const gchar      *name,
 
               p_delta_gdouble (&bval.rotation, bval_from.rotation,
                                bval_to.rotation, total_steps, current_step);
-              /* note: iteration of curve and points arrays would not give useful results.
-               *       (there might be different number of points in the from/to bender values )
-               *       the iteration is done later, (see p_bender_calculate_iter_curve)
-               *       when the curve is calculated.
+              /* note: iteration of curve and points arrays would not
+               *       give useful results.  (there might be different
+               *       number of points in the from/to bender values )
+               *       the iteration is done later, (see
+               *       p_bender_calculate_iter_curve) when the curve
+               *       is calculated.
                */
 
               bval.total_steps = total_steps;
@@ -672,7 +673,9 @@ run (const gchar      *name,
 
   if (! gimp_drawable_is_layer (l_layer_id))
     {
-      g_message (_("Can operate on layers only (but was called on channel or mask)."));
+      g_set_error (&error, 0, 0, "%s",
+                   _("Can operate on layers only "
+                     "(but was called on channel or mask)."));
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -680,7 +683,8 @@ run (const gchar      *name,
   l_layer_mask_id = gimp_layer_get_mask (l_layer_id);
   if (l_layer_mask_id >= 0)
     {
-      g_message (_("Cannot operate on layers with masks."));
+      g_set_error (&error, 0, 0, "%s",
+                   _("Cannot operate on layers with masks."));
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -691,7 +695,8 @@ run (const gchar      *name,
       /* could not float the selection because selection rectangle
        * is completely empty return GIMP_PDB_EXECUTION_ERROR
        */
-       g_message (_("Cannot operate on empty selections."));
+      g_set_error (&error, 0, 0, "%s",
+                   _("Cannot operate on empty selections."));
        status = GIMP_PDB_EXECUTION_ERROR;
     }
   else
@@ -779,6 +784,8 @@ run (const gchar      *name,
 
       if (cd->run)
         {
+          gint32 l_bent_layer_id;
+
           gimp_image_undo_group_start (l_image_id);
 
           l_bent_layer_id = p_main_bend (cd, cd->drawable, cd->work_on_copy);
@@ -790,6 +797,9 @@ run (const gchar      *name,
             {
               p_store_values (cd);
             }
+
+          /* return the id of handled layer */
+          values[1].data.d_int32 = l_bent_layer_id;
         }
       else
         {
@@ -800,8 +810,14 @@ run (const gchar      *name,
         gimp_displays_flush ();
     }
 
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
   values[0].data.d_status = status;
-  values[1].data.d_int32 = l_bent_layer_id;   /* return the id of handled layer */
 }
 
 static int

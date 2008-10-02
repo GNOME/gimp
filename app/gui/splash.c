@@ -159,8 +159,7 @@ splash_create (gboolean be_verbose)
   /*  create the pango layouts  */
   splash->upper = gtk_widget_create_pango_layout (splash->area, "");
   splash->lower = gtk_widget_create_pango_layout (splash->area, "");
-
-  gimp_pango_layout_set_weight (splash->upper, PANGO_WEIGHT_BOLD);
+  gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
 
   /*  this sets the initial layout positions  */
   splash_position_layouts (splash, "", "", NULL);
@@ -252,7 +251,7 @@ splash_update (const gchar *text1,
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
                                  percentage);
 
-  while (gtk_events_pending ())
+  if (gtk_events_pending ())
     gtk_main_iteration ();
 }
 

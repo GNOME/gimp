@@ -26,7 +26,7 @@
 
 #include "core/gimp.h"
 
-#include "widgets/gimpactionview.h"
+#include "widgets/gimpactioneditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
 
@@ -40,8 +40,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *scrolled_window;
-  GtkWidget *view;
+  GtkWidget *editor;
   GtkWidget *box;
   GtkWidget *button;
 
@@ -66,19 +65,10 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
-
-  view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
-                               NULL, TRUE);
-  gtk_widget_set_size_request (view, 300, 400);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
-  gtk_widget_show (view);
+  editor = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
+                                   NULL, TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
+  gtk_widget_show (editor);
 
   box = gimp_hint_box_new (_("To edit a shortcut key, click on the "
                              "corresponding row and type a new "
@@ -88,7 +78,7 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   gtk_widget_show (box);
 
   button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
-                                       _("_Save keyboard shortcuts on exit"));
+                                       _("S_ave keyboard shortcuts on exit"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
