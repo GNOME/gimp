@@ -1386,7 +1386,8 @@ gimp_statusbar_scale_changed (GimpScaleComboBox *combo,
 {
   gimp_display_shell_scale (statusbar->shell,
                             GIMP_ZOOM_TO,
-                            gimp_scale_combo_box_get_scale (combo));
+                            gimp_scale_combo_box_get_scale (combo),
+                            GIMP_ZOOM_FOCUS_BEST_GUESS);
 }
 
 static guint

@@ -534,7 +534,10 @@ gimp_navigation_editor_zoom (GimpNavigationView   *view,
 
   if (editor->shell)
     {
-      gimp_display_shell_scale (editor->shell, direction, 0.0);
+      gimp_display_shell_scale (editor->shell,
+                                direction,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
     }
 }
 
@@ -588,8 +591,10 @@ static void
 gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
                                          GimpNavigationEditor *editor)
 {
-  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO,
-                            pow (2.0, gtk_adjustment_get_value (adj)));
+  gimp_display_shell_scale (editor->shell,
+                            GIMP_ZOOM_TO,
+                            pow (2.0, gtk_adjustment_get_value (adj)),
+                            GIMP_ZOOM_FOCUS_BEST_GUESS);
 }
 
 static void

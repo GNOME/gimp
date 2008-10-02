@@ -217,7 +217,10 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
 
       scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
 
-      gimp_display_shell_scale (dialog->shell, GIMP_ZOOM_TO, scale / 100.0);
+      gimp_display_shell_scale (dialog->shell,
+                                GIMP_ZOOM_TO,
+                                scale / 100.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
     }
   else
     {

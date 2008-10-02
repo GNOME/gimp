@@ -1,3 +1,30 @@
+2008-10-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 553534 – centering issues after image scaling and setting zoom
+	to 100%
+
+	* app/display/display-enums.h: Added a GimpZoomFocus enum with
+	'best guess', 'pointer' or 'image center' values.
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_display_shell_scale): Take a GimpZoomFocus parameter and
+	pass it on to
+
+	(gimp_display_shell_scale_get_zoom_focus): which returns the
+	requested zoom focus point if one was given, else makes a best
+	guess.
+
+	* app/actions/view-commands.c
+	* app/display/gimpstatusbar.c
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scale-dialog.c: For explicit-zoom
+	commands like "zoom to 100%", always use the image center as the
+	zoom focus point. For all other zooming, continue to use the
+	best-guess method.
+
+	* app/display/display-enums.c: Regenerated.
+
 2008-10-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/file-uri/uri-backend-wget.c: removed spurious commas

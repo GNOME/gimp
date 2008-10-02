@@ -134,27 +134,45 @@ view_zoom_cmd_callback (GtkAction *action,
   switch ((GimpActionSelectType) value)
     {
     case GIMP_ACTION_SELECT_FIRST:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_OUT_MAX, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_OUT_MAX,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     case GIMP_ACTION_SELECT_LAST:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_IN_MAX, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_IN_MAX,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     case GIMP_ACTION_SELECT_PREVIOUS:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_OUT, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_OUT,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     case GIMP_ACTION_SELECT_NEXT:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_IN, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_IN,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     case GIMP_ACTION_SELECT_SKIP_PREVIOUS:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_OUT_MORE, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_OUT_MORE,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     case GIMP_ACTION_SELECT_SKIP_NEXT:
-      gimp_display_shell_scale (shell, GIMP_ZOOM_IN_MORE, 0.0);
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_IN_MORE,
+                                0.0,
+                                GIMP_ZOOM_FOCUS_BEST_GUESS);
       break;
 
     default:
@@ -171,7 +189,10 @@ view_zoom_cmd_callback (GtkAction *action,
         /* scale = min *  (max / min)**(i/n), i = 0..n  */
         scale = pow (65536.0, scale / 512.0) / 256.0;
 
-        gimp_display_shell_scale (shell, GIMP_ZOOM_TO, scale);
+        gimp_display_shell_scale (shell,
+                                  GIMP_ZOOM_TO,
+                                  scale,
+                                  GIMP_ZOOM_FOCUS_BEST_GUESS);
         break;
       }
     }
@@ -194,7 +215,10 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
   if (value != 0 /* not Other... */)
     {
       if (fabs (value - gimp_zoom_model_get_factor (shell->zoom)) > 0.0001)
-        gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) value / 10000);
+        gimp_display_shell_scale (shell,
+                                  GIMP_ZOOM_TO,
+                                  (gdouble) value / 10000,
+                                  GIMP_ZOOM_FOCUS_IMAGE_CENTER);
     }
 }
 
