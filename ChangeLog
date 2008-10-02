@@ -1,5 +1,13 @@
 2008-10-02  Michael Natterer  <mitch@gimp.org>
 
+	Bug 554646 – Opening Help crashes GIMP with lqr-plugin installed
+
+	* app/widgets/gimphelp.c (gimp_help_get_help_domains): need to
+	assign (*foo)[i] and not *foo[i] of a gchar** returned via return
+	value location.
+
+2008-10-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimppluginprocframe.c: keep a reference to the
 	proc_frame's procedure. We can't asume it's always there since it
 	could be a temporary one and its plug-in might die during

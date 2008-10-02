@@ -503,13 +503,13 @@ gimp_help_get_help_domains (Gimp    *gimp,
   *domain_names = g_new0 (gchar *, n_domains + 1);
   *domain_uris  = g_new0 (gchar *, n_domains + 1);
 
-  *domain_names[0] = g_strdup ("http://www.gimp.org/help");
-  *domain_uris[0]  = gimp_help_get_default_domain_uri (gimp);
+  (*domain_names)[0] = g_strdup ("http://www.gimp.org/help");
+  (*domain_uris)[0]  = gimp_help_get_default_domain_uri (gimp);
 
   for (i = 0; i < n_domains; i++)
     {
-      *domain_names[i + 1] = plug_in_domains[i];
-      *domain_uris[i + 1]  = plug_in_uris[i];
+      (*domain_names)[i + 1] = plug_in_domains[i];
+      (*domain_uris)[i + 1]  = plug_in_uris[i];
     }
 
   g_free (plug_in_domains);
