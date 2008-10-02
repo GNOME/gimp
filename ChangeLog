@@ -1,3 +1,10 @@
+2008-10-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginprocframe.c: keep a reference to the
+	proc_frame's procedure. We can't asume it's always there since it
+	could be a temporary one and its plug-in might die during
+	procedure execution, taking the temp_proc with it.
+
 2008-10-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 553534 – centering issues after image scaling and setting zoom

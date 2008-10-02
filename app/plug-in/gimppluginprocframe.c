@@ -75,7 +75,7 @@ gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
 
   proc_frame->main_context       = g_object_ref (context);
   proc_frame->context_stack      = NULL;
-  proc_frame->procedure          = GIMP_PROCEDURE (procedure);
+  proc_frame->procedure          = procedure ? g_object_ref (procedure) : NULL;
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
@@ -116,6 +116,12 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
     {
       g_object_unref (proc_frame->main_context);
       proc_frame->main_context = NULL;
+    }
+
+  if (proc_frame->procedure)
+    {
+      g_object_unref (proc_frame->procedure);
+      proc_frame->procedure = NULL;
     }
 
   if (proc_frame->return_vals)
