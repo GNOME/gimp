@@ -49,7 +49,8 @@ INCLUDES = \
 #	-DG_DISABLE_CAST_CHECKS
 
 DEFINES = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"
+	-DG_LOG_DOMAIN=\"Gimp-Config\" \
+	$(GIMP_VERSION_DEFINES)
 
 all : \
 	$(PRJ_TOP)\config.h \

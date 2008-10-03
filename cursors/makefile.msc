@@ -60,6 +60,7 @@ CURSOR_LIST = \
 	tool_paths_segment	tool-paths-segment.png \
 	tool_pencil		tool-pencil.png \
 	tool_perspective		tool-perspective.png \
+	tool_polygon_select	tool-polygon-select.png \
 	tool_rect_select		tool-rect-select.png \
 	tool_resize		tool-resize.png \
 	tool_rotate		tool-rotate.png \

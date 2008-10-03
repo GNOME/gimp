@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h> /* memcmp */
 
 #include <glib-object.h>
 

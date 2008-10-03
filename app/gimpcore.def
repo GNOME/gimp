@@ -19,7 +19,6 @@ EXPORTS
 	color_balance
 	color_balance_create_lookup_tables
 	color_balance_init
-	color_balance_range_reset
 	colorize
 	colorize_calculate
 	colorize_init
@@ -257,7 +256,6 @@ EXPORTS
 	gimp_help
 	gimp_histogram_calculate
 	gimp_histogram_channel_get_type
-	gimp_histogram_free
 	gimp_histogram_get_count
 	gimp_histogram_get_maximum
 	gimp_histogram_get_mean
@@ -520,7 +518,6 @@ EXPORTS
 	gimp_rectangle_intersect
 	gimp_repeat_mode_get_type
 	gimp_restore
-	gimp_scan_convert_add_points
 	gimp_scan_convert_free
 	gimp_scan_convert_new
 	gimp_scan_convert_render
@@ -616,10 +613,6 @@ EXPORTS
 	hue_saturation
 	hue_saturation_calculate_transfers
 	hue_saturation_init
-	hue_saturation_partition_reset
-	levels_adjust_by_colors
-	levels_calculate_transfers
-	levels_channel_reset
 	levels_init
 	levels_lut_func
 	pixel_region_init
@@ -685,7 +678,6 @@ gimp_progress_set_value
 gimp_progress_start
 gimp_stroke_desc_new
 gimp_view_size_get_type
-levels_stretch
 gimp_templates_migrate
 file_utils_filename_from_uri
 gimp_drawable_get_sub_preview
@@ -710,13 +702,11 @@ gimp_data_factory_data_refresh
 gimp_layer_new_from_pixbuf
 gimp_viewable_get_new_pixbuf
 gimp_viewable_get_size
-gimp_documents_save
 gimp_container_clear
 gimp_dash_pattern_free
 gimp_dash_pattern_new_from_preset
 gimp_dash_pattern_copy
 gimp_dash_pattern_new_from_segments
-gimp_stroke_options_set_dash_pattern
 boundary_find
 boundary_sort
 gimp_contexts_clear
@@ -930,3 +920,65 @@ gimp_gegl_init
 gimp_image_get_guides
 gimp_image_get_sample_points
 gimp_plug_in_manager_get_menu_branches
+desaturate_region
+file_utils_filename_is_uri
+get_pid
+gimp_brightness_contrast_config_get_type
+gimp_brightness_contrast_config_set_node
+gimp_brightness_contrast_config_to_levels_config
+gimp_buffer_get_tiles
+gimp_color_balance_config_get_type
+gimp_color_balance_config_reset_range
+gimp_color_balance_config_to_cruft
+gimp_colorize_config_get_type
+gimp_colorize_config_to_cruft
+gimp_container_get_first_child
+gimp_context_display_changed
+gimp_curve_get_curve_type
+gimp_curve_get_n_points
+gimp_curve_get_n_samples
+gimp_curve_get_point
+gimp_curve_map_value
+gimp_curves_config_get_type
+gimp_curves_config_load_cruft
+gimp_curves_config_save_cruft
+gimp_curves_config_to_cruft
+gimp_desaturate_config_get_type
+gimp_display_options_no_image_get_type
+gimp_histogram_duplicate
+gimp_histogram_ref
+gimp_histogram_unref
+gimp_hue_saturation_config_get_type
+gimp_hue_saturation_config_reset_range
+gimp_hue_saturation_config_to_cruft
+gimp_image_get_projection
+gimp_image_map_config_compare
+gimp_image_map_config_get_type
+gimp_imagefile_set_mime_type
+gimp_is_restored
+gimp_item_is_attached
+gimp_layer_new_from_tiles
+gimp_levels_config_adjust_by_colors
+gimp_levels_config_get_type
+gimp_levels_config_load_cruft
+gimp_levels_config_reset_channel
+gimp_levels_config_save_cruft
+gimp_levels_config_stretch
+gimp_levels_config_to_cruft
+gimp_levels_config_to_curves_config
+gimp_list_set_sort_func
+gimp_marshal_BOOLEAN__STRING
+gimp_marshal_VOID__DOUBLE
+gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE
+gimp_operation_hue_saturation_map
+gimp_operation_levels_map_input
+gimp_perspective_clone_set_transform
+gimp_posterize_config_get_type
+gimp_recent_list_load
+gimp_scan_convert_compose_value
+gimp_stroke_options_take_dash_pattern
+gimp_threshold_config_get_type
+gimp_threshold_config_to_cruft
+gimp_tool_info_build_options_filename
+gimp_use_gegl
+gimp_vectors_make_bezier

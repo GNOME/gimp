@@ -4,12 +4,11 @@ XSLTPROC = xsltproc
 
 menudata_in_files = \
 	dockable-menu.xml.in	\
-	image-menu.xml.in	\
-	toolbox-menu.xml.in
+	image-menu.xml.in
 
 menudata_built_files = $(menudata_in_files:.xml.in=.xml)
 
-MENUS = dockable image toolbox
+MENUS = dockable image
 
 _MENUS = \
 	brushes buffers channels colormap-editor documents \

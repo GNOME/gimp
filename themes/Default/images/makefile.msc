@@ -91,6 +91,8 @@ STOCK_VARIABLES = \
 	stock_floating_selection_32	stock-floating-selection-32.png \
 	stock_floating_selection_48	stock-floating-selection-48.png \
 	stock_frame_64		stock-frame-64.png \
+	stock_gegl_16	stock-gegl-16.png \
+	stock_gegl_22	stock-gegl-22.png \
 	stock_gradient_bilinear_16		stock-gradient-bilinear-16.png	\
 	stock_gradient_conical_asymmetric_16		stock-gradient-conical-asymmetric-16.png	\
 	stock_gradient_conical_symmetric_16		stock-gradient-conical-symmetric-16.png	\
@@ -213,6 +215,9 @@ STOCK_VARIABLES = \
 	stock_transparency_24	stock-transparency-24.png \
 	stock_undo_history_16		stock-undo-history-16.png \
 	stock_undo_history_24		stock-undo-history-24.png \
+	stock_user_manual_16	stock-user-manual-16.png \
+	stock_user_manual_32	stock-user-manual-32.png \
+	stock_user_manual_64	stock-user-manual-64.png \
 	stock_vcenter_24	stock-vcenter-24.png	\
 	stock_vchain_24		stock-vchain-24.png	\
 	stock_vchain_broken_24		stock-vchain-broken-24.png	\
@@ -223,10 +228,6 @@ STOCK_VARIABLES = \
 	stock_warning_64		stock-warning-64.png	\
 	stock_web_16		stock-web-16.png	\
 	stock_web_24		stock-web-24.png	\
-	\
-	stock_wilber_16		stock-wilber-16.png	\
-	stock_wilber_64		stock-wilber-64.png	\
-	stock_wilber_eek_64		stock-wilber-eek-64.png	\
 	\
 	stock_zoom_follow_window_12	stock-zoom-follow-window-12.png
 
@@ -316,8 +317,10 @@ STOCK_TOOL_VARIABLES = \
 
 WILBER_VARIABLES = \
 	stock_wilber_16		stock-wilber-16.png	\
-	stock_wilber_48		stock-wilber-48.png	\
+	stock_wilber_22		stock-wilber-22.png	\
+#	stock_wilber_48		stock-wilber-48.png	\
 	stock_wilber_64		stock-wilber-64.png	\
+	stock_wilber_eek_64		stock-wilber-eek-64.png	\
 
 CORE_VARIABLES = \
 	stock_question_64 stock-question-64.png
@@ -332,7 +335,9 @@ gimp-core-pixbufs.h : $(CORE_IMAGES) makefile.msc
 	gdk-pixbuf-csource --raw --build-list $(CORE_VARIABLES) > gimp-core-pixbufs.h
 
 gimp-stock-pixbufs.h: $(STOCK_IMAGES) makefile.msc
-	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) $(STOCK_TOOL_VARIABLES) > gimp-stock-pixbufs.h
+	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) > gimp-stock-pixbufs.h
+	gdk-pixbuf-csource --raw --build-list $(STOCK_TOOL_VARIABLES) >> gimp-stock-pixbufs.h
+	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) >> gimp-stock-pixbufs.h
 
 gimp-wilber-pixbufs.h: $(WILBER_IMAGES) makefile.msc
 	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) > gimp-wilber-pixbufs.h

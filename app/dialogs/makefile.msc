@@ -27,7 +27,6 @@ OBJECTS = \
 	about-dialog.obj \
 	channel-options-dialog.obj \
 	convert-dialog.obj \
-	desaturate-dialog.obj \
 	dialogs-constructors.obj \
 	dialogs.obj \
 	fade-dialog.obj \

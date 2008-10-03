@@ -32,24 +32,25 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON0 = plugin_browser procedure_browser #gnomeprint
-COMMON1 = antialias AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colormap_remap colortoalpha compose compressor convmatrix csource cubism curve_bend
-COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
-COMMON3 = gauss gbr gee gee_zoom gif_load gif_save gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
-COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd_load psd_save psp randomize raw redeye retinex ripple rotate
-COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras svg tga threshold_alpha 
-COMMON6 = tiff_load tiff_save tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind xbm xwd zealouscrop
-COMMON7 = winprint winclipboard wiredebug 
-
-NOTNOW = wmf 
+COMMON0 = alien-map align-layers animation-optimize animation-play antialias apply-canvas 
+COMMON1 = blinds blur-gauss-selective blur-gauss blur-motion blur border-average bump-map 
+COMMON2 = cartoon channel-mixer checkerboard cml-explorer color-cube-analyze color-enhance color-exchange color-to-alpha colorify colormap-remap compose contrast-normalize contrast-retinex contrast-stretch-hsv contrast-stretch convolution-matrix crop-auto crop-zealous cubism curve-bend 
+COMMON3 = decompose deinterlace depth-merge despeckle destripe diffraction displace edge-dog edge-laplace edge-neon edge-sobel edge emboss engrave 
+## file-aa file-mng file-pdf file-wmf file-xpm 
+COMMON4 = file-cel file-compressor file-csource file-desktop-link file-dicom file-gbr file-gif-load file-gif-save file-gih file-glob file-header file-html-table file-pat file-pcx file-pix file-png file-pnm file-ps file-psp file-raw file-sunras file-svg file-tga file-tiff-load file-tiff-save file-xbm file-xwd film filter-pack fractal-trace 
+## mail 
+COMMON5 = gee-zoom gee gradient-map grid guillotine hot illusion iwarp jigsaw lcms lens-apply lens-distortion lens-flare max-rgb mosaic newsprint nl-filter noise-hsv noise-randomize noise-rgb noise-solid noise-spread nova oilify photocopy pixelize plasma plugin-browser polar-coords procedure-browser qbist red-eye-removal ripple rotate 
+COMMON6 = sample-colorize screenshot semi-flatten sharpen shift sinus smooth-palette softglow sparkle sphere-designer 
+COMMON7 = threshold-alpha tile-glass tile-paper tile-seamless tile-small tile unit-editor unsharp-mask value-invert value-propagate van-gogh-lic video warp waves web-browser whirl-pinch wind 
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare gfli gimpressionist ifscompose imagemap jpeg maze metadata pagecurl rcm sel2path sgi twain winicon winsnap xjt print help helpbrowser
+SEPARATE = lighting gfig gimpressionist imagemap maze metadata pagecurl twain print help
+## help-browser 
+SEPARATE_DASH = color-rotate file-bmp file-faxg3 file-fits file-fli file-ico file-jpeg file-psd file-sgi file-uri file-xjt fractal-explorer gradient-flare ifs-compose map-object selection-to-path win-snap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
-# ..\unofficial-plug-ins directory, go there, and do "nmake -f
-# makefile.msc unofficial".
+# ..\unofficial-plug-ins directory, go there, and do "nmake -f makefile.msc unofficial".
 
 UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace gimp_ace guash sel_gauss magiceye user_filter
 
@@ -81,11 +82,6 @@ sub-libs:
 	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -DUSE_MATH -DUSE_INTERFACE -DSTANDALONE=0" \
 		MODULE=tinyscheme OBJECTS="dynload.obj scheme.obj" $(TARGET)
 	cd ..\..
-	cd script-fu\re
-	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -I.. -DUSE_INTERFACE" \
-		MODULE=re OBJECTS="debug.obj regcomp.obj regerror.obj regexec.obj re.obj regfree.obj" \
-		$(TARGET)
-	cd ..\..
 	cd script-fu\ftx
 	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -I.. -DUSE_INTERFACE" \
 		MODULE=ftx OBJECTS="ftx.obj" EXTRA_EXPORT=/export:init_ftx $(TARGET)
@@ -110,11 +106,11 @@ sub-common-plugins :
 	for %d in ($(COMMON4)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON5)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON6)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
-#	for %d in ($(COMMON7)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON7)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 
 sub-one-common :
 	@cd common
-	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) $(TARGET)
 
 
 
@@ -130,17 +126,17 @@ separate-plugins-clean :
 
 
 sub-separate-plugins :
-# We must handle script-fu separately because of the dash, sigh
-	@cd script-fu
-	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
-	@cd ..
 	for %d in ($(SEPARATE)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=$(TARGET)
+	for %d in ($(SEPARATE_DASH)) do nmake -nologo -f makefile.msc sub-one-separate-dash DIR=%d TARGET=$(TARGET)
 
 
 sub-one-separate :
 	cd $(DIR)
 	nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
+sub-one-separate-dash :
+	cd $(DIR)
+	nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) $(TARGET)
 
 data-install : gimpressionist-data-install guash-data-install
 	-md $(GIMP)\scripts
@@ -175,13 +171,41 @@ guash-data-install :
 # If a plug-in has several object files, or needs extra libraries or
 # compiler flags, these are in an EXTRA_xxx part.
 
-!IFDEF EXTRA_FractalExplorer
+!IF "$(DIR)"=="color-rotate"
+STOCK_IMAGES = \
+	images/color-rotate-360.png \
+	images/color-rotate-a-b.png \
+	images/color-rotate-ccw.png \
+	images/color-rotate-cw.png \
+
+STOCK_VARS = \
+	color_rotate_360 images/color-rotate-360.png \
+	color_rotate_a_b images/color-rotate-a-b.png \
+	color_rotate_ccw images/color-rotate-ccw.png \
+	color_rotate_cw images/color-rotate-cw.png \
+
+images/color-rotate-stock-pixbufs.h: $(STOCK_IMAGES)
+	gdk-pixbuf-csource --rle --build-list $(STOCK_VARS) > images/color-rotate-stock-pixbufs.h
+
+EXTRA_DEPS = images/color-rotate-stock-pixbufs.h
+
 OBJECTS = \
-	Dialogs.obj \
-	FractalExplorer.obj
+	color-rotate-callbacks.obj \
+	color-rotate-dialog.obj \
+	color-rotate-draw.obj \
+	color-rotate-stock.obj \
+	color-rotate-utils.obj \
+	color-rotate.obj \
+
 !ENDIF
 
-!IFDEF EXTRA_Lighting
+!IF "$(DIR)"=="fractal-explorer"
+OBJECTS = \
+	fractal-explorer-dialogs.obj \
+	fractal-explorer.obj
+!ENDIF
+
+!IFDEF EXTRA_lighting
 STOCK_VARS = \
 	stock_intensity_ambient_high images/stock-intensity-ambient-high.png	\
 	stock_intensity_ambient_low images/stock-intensity-ambient-low.png		\
@@ -212,47 +236,32 @@ images/stock-pixbufs.h: $(STOCK_IMAGES)
 EXTRA_DEPS = images/stock-pixbufs.h
 
 OBJECTS = \
-	lighting_apply.obj \
-	lighting_image.obj \
-	lighting_main.obj \
-	lighting_preview.obj \
-	lighting_shade.obj \
-	lighting_stock.obj \
-	lighting_ui.obj
+	lighting-apply.obj \
+	lighting-image.obj \
+	lighting-main.obj \
+	lighting-preview.obj \
+	lighting-shade.obj \
+	lighting-stock.obj \
+	lighting-ui.obj
 !ENDIF
 
-!IFDEF EXTRA_MapObject
+!IF "$(DIR)"=="map-object"
 OBJECTS = \
 	arcball.obj \
-	mapobject_apply.obj \
-	mapobject_image.obj \
-	mapobject_main.obj \
-	mapobject_preview.obj \
-	mapobject_shade.obj \
-	mapobject_ui.obj
+	map-object-apply.obj \
+	map-object-image.obj \
+	map-object-main.obj \
+	map-object-preview.obj \
+	map-object-shade.obj \
+	map-object-ui.obj
 OPTIMIZE =
 !ENDIF
 
-!IFDEF EXTRA_bmp
+!IF "$(DIR)"=="file-bmp"
 OBJECTS = \
 	bmp.obj \
-	bmpread.obj \
-	bmpwrite.obj
-!ENDIF
-
-!IFDEF EXTRA_colormap_remap 
-OBJECTS = \
-	colormap-remap.obj
-!ENDIF
-
-!IFDEF EXTRA_plugin_browser
-OBJECTS = \
-	plugin-browser.obj
-!ENDIF
-
-!IFDEF EXTRA_procedure_browser
-OBJECTS = \
-	procedure-browser.obj
+	bmp-read.obj \
+	bmp-write.obj
 !ENDIF
 
 !IFDEF EXTRA_plugindetails
@@ -263,16 +272,16 @@ OBJECTS = \
 	plugin-browser.obj
 !ENDIF
 
-!IFDEF EXTRA_faxg3
+!IF "$(DIR)"=="file-faxg3"
 OBJECTS = \
 	faxg3.obj \
 	g3.obj
 !ENDIF
 
-!IFDEF EXTRA_fits
+!IF "$(DIR)"=="file-fits"
 OBJECTS = \
 	fits.obj \
-	fitsrw.obj
+	fits-io.obj
 !ENDIF
 
 !IFDEF EXTRA_flame
@@ -283,10 +292,10 @@ OBJECTS = \
 	rect.obj
 !ENDIF
 
-!IFDEF EXTRA_gfli
+!IF "$(DIR)"=="file-fli"
 OBJECTS = \
 	fli.obj \
-	gfli.obj
+	fli-gimp.obj
 !ENDIF
 
 !IFDEF EXTRA_gfig
@@ -346,19 +355,11 @@ OBJECTS = \
 	gfig-stock.obj
 !ENDIF
 
-!IFDEF EXTRA_gif_load
-OBJECTS = gif-load.obj
-!ENDIF
-
-!IFDEF EXTRA_gif_save
-OBJECTS = gif-save.obj
-!ENDIF
-
-!IFDEF EXTRA_ifscompose
+!IF "$(DIR)"=="ifs-compose"
 OBJECTS = \
-	ifscompose.obj \
-	ifscompose_storage.obj \
-	ifscompose_utils.obj
+	ifs-compose.obj \
+	ifs-compose-storage.obj \
+	ifs-compose-utils.obj
 !ENDIF
 
 !IFDEF EXTRA_imagemap
@@ -460,7 +461,17 @@ EXTRACFLAGS = -FIstring.h -FIstdlib.h -DYY_NO_UNISTD_H
 OPTIMIZE =
 !ENDIF
 
-!IFDEF EXTRA_jpeg
+!IF "$(DIR)"=="file-ico"
+EXTRACFLAGS = $(PNG_CFLAGS)
+EXTRALIBS = $(PNG_LIBS)
+OBJECTS = \
+	ico-dialog.obj \
+	ico-load.obj \
+	ico-save.obj \
+	ico.obj
+!ENDIF
+
+!IF "$(DIR)"=="file-jpeg"
 EXTRACFLAGS = -I$(JPEG) \
 !IFDEF EXIF
 	$(EXIF_CFLAGS) -DHAVE_EXIF -DHAVE_EXIF_0_6
@@ -486,17 +497,28 @@ OBJECTS = \
 
 !ENDIF
 
-!IFDEF EXTRA_lcms 
+!IF "$(DIR)"=="file-uri"
+OBJECTS = \
+	gimpmountoperation.obj \
+#	uri-backend-gnomevfs.obj \
+	uri-backend-gvfs.obj \
+#	uri-backend-libcurl.obj \
+#	uri-backend-wget.obj \
+	uri.obj
+!ENDIF
+
+!IF "$(DIR)"=="lcms"
 EXTRACFLAGS = $(LCMS_CFLAGS)
 EXTRALIBS = $(LCMS_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_maze
 OBJECTS = \
-	algorithms.obj \
-	handy.obj \
+	maze-algorithms.obj \
+	maze-dialog.obj \
+	maze-utils.obj \
 	maze.obj \
-	maze_face.obj
+
 !ENDIF
 
 !IFDEF EXTRA_mpeg
@@ -543,17 +565,9 @@ EXTRA_DEPS = pagecurl-icons.h
 
 !ENDIF
 
-!IFDEF EXTRA_png
+!IF "$(DIR)"=="file-png"
 EXTRACFLAGS = $(PNG_CFLAGS)
 EXTRALIBS = $(PNG_LIBS)
-!ENDIF
-
-!IFDEF EXTRA_psd_load
-OBJECTS = psd-load.obj
-!ENDIF
-
-!IFDEF EXTRA_psd_save
-OBJECTS = psd-save.obj
 !ENDIF
 
 !IFDEF EXTRA_print
@@ -562,49 +576,36 @@ OBJECTS = \
 	print-draw-page.obj \
 	print-page-layout.obj \
 	print-preview.obj \
-	print-settings.obj
+	print-settings.obj \
+	print-page-setup.obj \
+	print-utils.obj \
+
 EXTRALIBS = $(CAIRO_LIBS) $(GTHREAD_LIBS)
 !ENDIF
 
-!IFDEF EXTRA_gnomeprint
-EXTRACFLAGS = $(GNOMEPRINT_CFLAGS) $(LIBART_CFLAGS) $(GNOMECANVAS_CFLAGS) $(GNOMEPRINTUI_CFLAGS)
-EXTRALIBS = $(GNOMEPRINT_LIBS) $(GNOMEPRINTUI_LIBS)
-!ENDIF
-
-!IFDEF EXTRA_psp
+!IF "$(DIR)"=="file-psp"
 EXTRACFLAGS = $(ZLIB_CFLAGS)
 EXTRALIBS = $(ZLIB_LIBS)
 !ENDIF
 
-!IFDEF EXTRA_rcm
-STOCK_VARS = \
-        rcm_360         images/rcm-360.png     \
-        rcm_a_b         images/rcm-a-b.png     \
-        rcm_ccw         images/rcm-ccw.png     \
-        rcm_cw          images/rcm-cw.png      \
-
-STOCK_IMAGES = \
-        images/rcm-360.png     \
-        images/rcm-a-b.png     \
-        images/rcm-ccw.png     \
-        images/rcm-cw.png      \
-
-images/rcm-stock-pixbufs.h: $(STOCK_IMAGES)
-	gdk-pixbuf-csource --rle --build-list $(STOCK_VARS) > images/rcm-stock-pixbufs.h
-
-EXTRA_DEPS = images/rcm-stock-pixbufs.h
-
+!IF "$(DIR)"=="file-psd"
+EXTRACFLAGS = $(TIFF_CFLAGS) $(JPEG_CFLAGS)
+EXTRALIBS = $(TIFF_LIBS) $(JPEG)\libjpeg.lib $(ZLIB_LIBS) user32.lib
 OBJECTS = \
-	rcm.obj \
-	rcm_callback.obj \
-	rcm_dialog.obj \
-	rcm_gdk.obj \
-	rcm_misc.obj \
-	rcm_stock.obj
-OPTIMIZE = 
+	psd-image-res-load.obj \
+	psd-layer-res-load.obj \
+	psd-load.obj \
+#2nd!	psd-save.obj \
+	psd-thumb-load.obj \
+	psd-util.obj \
+	psd.obj
 !ENDIF
 
-!IFDEF EXTRA_script_fu
+!IF "$(DIR)"=="screenshot"
+EXTRALIBS = user32.lib
+!ENDIF
+
+!IF "$(DIR)"=="script-fu"
 OBJECTS = \
 	scheme-wrapper.obj \
 	script-fu.obj \
@@ -612,48 +613,44 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	script-fu-interface.obj \
-	script-fu-server.obj
+	script-fu-server.obj \
+	script-fu-eval.obj \
+	script-fu-regex.obj \
+	script-fu-script.obj \
+	script-fu-utils.obj \
 
-EXTRALIBS = tinyscheme\tinyscheme.lib re\re.lib ftx\ftx.lib kernel32.lib wsock32.lib
+EXTRALIBS = tinyscheme\tinyscheme.lib ftx\ftx.lib kernel32.lib wsock32.lib
 EXTRACFLAGS = -DREGEX_MALLOC -DUSE_INTERFACE -DSTANDALONE=0
 #HAVE_RESOURCE = YES
 !ENDIF
 
-!IFDEF EXTRA_sel2path
+!IF "$(DIR)"=="selection-to-path"
 OBJECTS = \
 	curve.obj \
 	edge.obj \
 	fit.obj \
 	math.obj \
 	pxl-outline.obj \
-	sel2path.obj \
-	sel2path_adv_dialog.obj \
 	spline.obj \
-	vector.obj
+	selection-to-path-dialog.obj \
+	selection-to-path.obj \
+	spline.obj \
+	vector.obj \
+
 !ENDIF
 
-!IFDEF EXTRA_sgi
+!IF "$(DIR)"=="file-sgi"
 OBJECTS = \
 	sgi.obj \
-	sgilib.obj
+	sgi-lib.obj
 !ENDIF
 
-!IFDEF EXTRA_svg
+!IF "$(DIR)"=="file-svg"
 EXTRACFLAGS = $(RSVG_CFLAGS)
 EXTRALIBS = $(RSVG_LIBS)
 !ENDIF
 
-!IFDEF EXTRA_tiff_load
-OBJECTS = tiff-load.obj
-EXTRA_tiff=1
-!ENDIF
-
-!IFDEF EXTRA_tiff_save
-OBJECTS = tiff-save.obj
-EXTRA_tiff=1
-!ENDIF
-
-!IFDEF EXTRA_tiff
+!IF "$(DIR)"=="file-tiff-load" || "$(DIR)"=="file-tiff-save"
 EXTRACFLAGS = $(TIFF_CFLAGS)
 EXTRALIBS = $(TIFF_LIBS) $(JPEG)\libjpeg.lib $(ZLIB_LIBS) user32.lib
 !ENDIF
@@ -697,7 +694,9 @@ OBJECTS = \
 	gimphelpdomain.obj \
 	gimphelpitem.obj \
 	gimphelplocale.obj \
-	help.obj
+	gimphelpprogress.obj \
+	help.obj \
+
 TEST_OBJECTS = \
 	gimp-help-lookup.obj
 !ENDIF
@@ -767,7 +766,7 @@ OBJECTS = \
 EXTRALIBS = user32.lib
 !ENDIF
 
-!IFDEF EXTRA_webbrowser
+!IF "$(DIR)"=="web-browser"
 EXTRALIBS = shell32.lib user32.lib
 !ENDIF
 
@@ -789,12 +788,14 @@ OBJECTS = \
 	main.obj
 !ENDIF
 
-!IFDEF EXTRA_winsnap
-HAVE_RESOURCE = YES
+!IF "$(DIR)"=="win-snap"
+OBJECTS = winsnap.obj
+#HAVE_RESOURCE = YES
+RESOURCE = winsnap.res
 EXTRALIBS = user32.lib gdi32.lib
 !ENDIF
 
-!IFDEF EXTRA_xjt
+!IF "$(DIR)"=="file-xjt"
 OBJECTS = \
 	xjt.obj \
 	xjpeg.obj

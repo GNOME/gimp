@@ -108,6 +108,11 @@ OBJECTS = \
 	gimp-tools.obj \
 	tools-enums.obj \
 	tools-utils.obj \
+	gimpdesaturatetool.obj \
+	gimpgegltool.obj \
+	gimpimagemaptool-settings.obj \
+	gimpiscissorsoptions.obj \
+	gimpregionselectoptions.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

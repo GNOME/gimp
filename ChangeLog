@@ -1,3 +1,9 @@
+2008-10-03  Hans Breuer  <hans@breuer.org>
+
+	* **/makefie.msc gimpdefs.msc app/gimpcore.def : updated
+	* app/core/gimpcurve.c : include <string.h> for memcmp()
+	* app/gegl/gimpcurvesconfig.c : include <string.h> for strcmp()
+
 2008-10-03  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c

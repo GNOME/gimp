@@ -21,15 +21,15 @@ DEPLIBS = $(INTL_LIBS) $(GLIB_LIBS) $(GTK2_LIBS)
 BIN = $(GIMP)\modules
 
 MODULES = \
-	colorsel_triangle-$(GIMP_VER).dll \
-	colorsel_water-$(GIMP_VER).dll \
-	colorsel_cmyk-$(GIMP_VER).dll \
-	cdisplay_colorblind-$(GIMP_VER).dll \
-	cdisplay_gamma-$(GIMP_VER).dll \
-	cdisplay_highcontrast-$(GIMP_VER).dll \
+	color-selector-water-$(GIMP_VER).dll \
+	color-selector-wheel-$(GIMP_VER).dll \
+	color-selector-cmyk-$(GIMP_VER).dll \
+	display-filter-color-blind-$(GIMP_VER).dll \
+	display-filter-gamma-$(GIMP_VER).dll \
+	display-filter-high-contrast-$(GIMP_VER).dll \
 !IFDEF LCMS_CFLAGS
-	cdisplay_lcms-$(GIMP_VER).dll \
-	cdisplay_proof-$(GIMP_VER).dll \
+	display-filter-lcms-$(GIMP_VER).dll \
+	display-filter-proof-$(GIMP_VER).dll \
 !ENDIF
 
 
@@ -42,54 +42,60 @@ install : all
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) \
+color-selector-triangle-$(GIMP_VER).dll : color-selector-triangle.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ color-selector-triangle.obj $(LDFLAGS) \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	..\libgimpmodule\gimpmodule-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-colorsel_water-$(GIMP_VER).dll : colorsel_water.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) \
+color-selector-water-$(GIMP_VER).dll : color-selector-water.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ color-selector-water.obj $(LDFLAGS) \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-colorsel_cmyk-$(GIMP_VER).dll : colorsel_cmyk.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_cmyk.obj $(LDFLAGS) \
+color-selector-wheel-$(GIMP_VER).dll : color-selector-wheel.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ color-selector-wheel.obj $(LDFLAGS) \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-cdisplay_colorblind-$(GIMP_VER).dll : cdisplay_colorblind.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_colorblind.obj $(LDFLAGS) \
+color-selector-cmyk-$(GIMP_VER).dll : color-selector-cmyk.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ color-selector-cmyk.obj $(LDFLAGS) \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS)
+
+display-filter-color-blind-$(GIMP_VER).dll : display-filter-color-blind.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ display-filter-color-blind.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	..\libgimpmodule\gimpmodule-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) \
+display-filter-gamma-$(GIMP_VER).dll : display-filter-gamma.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ display-filter-gamma.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) \
+display-filter-high-contrast-$(GIMP_VER).dll : display-filter-high-contrast.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ display-filter-high-contrast.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
-cdisplay_lcms-$(GIMP_VER).dll : cdisplay_lcms.obj
-	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_lcms.obj $(LDFLAGS) \
+display-filter-lcms-$(GIMP_VER).dll : display-filter-lcms.obj
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ display-filter-lcms.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS) $(LCMS_LIBS) user32.lib gdi32.lib
 
-cdisplay_proof-$(GIMP_VER).dll : cdisplay_proof.obj
-	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_proof.obj $(LDFLAGS) \
+display-filter-proof-$(GIMP_VER).dll : display-filter-proof.obj
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ display-filter-proof.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \

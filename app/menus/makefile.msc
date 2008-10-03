@@ -29,9 +29,10 @@ OBJECTS = \
 	image-menu.obj \
 	menus.obj \
 	plug-in-menus.obj \
-	toolbox-menu.obj \
+#	toolbox-menu.obj \
 	tool-options-menu.obj \
 	window-menu.obj \
+	windows-menu.obj \
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h
