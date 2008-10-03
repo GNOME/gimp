@@ -31,8 +31,9 @@
 #include "gimpruler.h"
 
 
-#define RULER_WIDTH  13
-#define MINIMUM_INCR  5
+#define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_X_SMALL
+#define RULER_WIDTH               13
+#define MINIMUM_INCR              5
 
 
 enum
@@ -61,6 +62,7 @@ typedef struct
 
   GdkPixmap      *backing_store;
   GdkGC          *non_gr_exp_gc;
+  gdouble         font_scale;
 
   gint            xsrc;
   gint            ysrc;
@@ -69,8 +71,8 @@ typedef struct
 
 static const struct
 {
-  gdouble  ruler_scale[16];
-  gint     subdivide[5];
+  const gdouble  ruler_scale[16];
+  const gint     subdivide[5];
 } ruler_metric =
 {
   { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
@@ -91,6 +93,8 @@ static void          gimp_ruler_realize       (GtkWidget      *widget);
 static void          gimp_ruler_unrealize     (GtkWidget      *widget);
 static void          gimp_ruler_size_allocate (GtkWidget      *widget,
                                                GtkAllocation  *allocation);
+static void          gimp_ruler_style_set     (GtkWidget      *widget,
+                                               GtkStyle       *prev_style);
 static gboolean      gimp_ruler_motion_notify (GtkWidget      *widget,
                                                GdkEventMotion *event);
 static gboolean      gimp_ruler_expose        (GtkWidget      *widget,
@@ -121,6 +125,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->realize             = gimp_ruler_realize;
   widget_class->unrealize           = gimp_ruler_unrealize;
   widget_class->size_allocate       = gimp_ruler_size_allocate;
+  widget_class->style_set           = gimp_ruler_style_set;
   widget_class->motion_notify_event = gimp_ruler_motion_notify;
   widget_class->expose_event        = gimp_ruler_expose;
 
@@ -183,6 +188,14 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                         G_MAXDOUBLE,
                                                         0.0,
                                                         GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_double ("font-scale",
+                                                                NULL, NULL,
+                                                                0.0,
+                                                                G_MAXDOUBLE,
+                                                                DEFAULT_RULER_FONT_SCALE,
+                                                                GIMP_PARAM_READABLE));
 }
 
 static void
@@ -203,6 +216,7 @@ gimp_ruler_init (GimpRuler *ruler)
   priv->max_size      = 0;
   priv->backing_store = NULL;
   priv->non_gr_exp_gc = NULL;
+  priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
 }
 
 static void
@@ -558,6 +572,19 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 
       gimp_ruler_make_pixmap (ruler);
     }
+}
+
+static void
+gimp_ruler_style_set (GtkWidget *widget,
+                      GtkStyle  *prev_style)
+{
+  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (widget);
+
+  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "font-scale", &priv->font_scale,
+                        NULL);
 }
 
 static gboolean
@@ -961,15 +988,16 @@ static PangoLayout *
 gimp_ruler_create_layout (GtkWidget   *widget,
                           const gchar *text)
 {
-  PangoLayout    *layout;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+  PangoLayout      *layout;
+  PangoAttrList    *attrs;
+  PangoAttribute   *attr;
 
   layout = gtk_widget_create_pango_layout (widget, text);
 
   attrs = pango_attr_list_new ();
 
-  attr = pango_attr_scale_new (PANGO_SCALE_X_SMALL);
+  attr = pango_attr_scale_new (priv->font_scale);
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (attrs, attr);

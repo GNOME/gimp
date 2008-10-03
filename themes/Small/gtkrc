@@ -98,6 +98,7 @@ widget "*GimpDockable.*" style "gimp-dockable-style"
 
 style "gimp-display-style" = "gimp-default-style"
 {
+  GimpRuler::font-scale          = 0.6444
   GimpUnitComboBox::label-scale  = 0.8333
   GimpScaleComboBox::label-scale = 0.8333
   GtkComboBox::arrow-size        = 8
