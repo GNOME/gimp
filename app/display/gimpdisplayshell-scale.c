@@ -90,9 +90,6 @@ gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display)
-    return;
-
   gimp_display_shell_scale_update_scrollbars (shell);
   gimp_display_shell_scale_update_rulers (shell);
 }
@@ -108,6 +105,9 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+
+  if (! shell->display)
+    return;
 
   image = shell->display->image;
 
@@ -164,6 +164,9 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
   gdouble    vertical_max_size;
   gint       scaled_viewport_offset_x;
   gint       scaled_viewport_offset_y;
+
+  if (! shell->display)
+    return;
 
   image = shell->display->image;
 
