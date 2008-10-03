@@ -120,9 +120,63 @@ static gboolean
 browser_open_url (const gchar *url)
 {
 #ifdef G_OS_WIN32
+  HINSTANCE hinst = ShellExecute (GetDesktopWindow(), "open", url, NULL, NULL, SW_SHOW);
+  
+  if ((gint) hinst <= 32)
+    {
+      const char *err;
+      
+      /* FIXME: should be translated when 2.6 got it's own branch */
+      switch ((gint) hinst)
+        {
+	  case 0 :
+	    err = ("The operating system is out of memory or resources.");
+	    break;
+	  case ERROR_FILE_NOT_FOUND :
+	    err = ("The specified file was not found.");
+	    break;
+	  case ERROR_PATH_NOT_FOUND :
+	    err = ("The specified path was not found.");
+	    break;
+	  case ERROR_BAD_FORMAT	:
+	    err = ("The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image).");
+	    break;
+	  case SE_ERR_ACCESSDENIED :
+	    err = ("The operating system denied access to the specified file.");
+	    break;
+	  case SE_ERR_ASSOCINCOMPLETE :
+	    err = ("The file name association is incomplete or invalid.");
+	    break;
+	  case SE_ERR_DDEBUSY :
+	    err = ("DDE transaction busy");
+	    break;
+	  case SE_ERR_DDEFAIL :
+	    err = ("The DDE transaction failed.");
+	    break;
+	  case SE_ERR_DDETIMEOUT :
+	    err = ("The DDE transaction timed out.");
+	    break;
+	  case SE_ERR_DLLNOTFOUND :
+	    err = ("The specified DLL was not found.");
+	    break;
+	  case SE_ERR_NOASSOC :
+	    err = ("There is no application associated with the given file name extension.");
+	    break;
+	  case SE_ERR_OOM :
+	    err = ("There was not enough memory to complete the operation.");
+	    break;
+	  case SE_ERR_SHARE:
+	    err = ("A sharing violation occurred.");
+	    break;
+	  default :
+	    err = ("Unknown Windows error.");
+	}
+      g_message (("Failed to open the url '%s'\n%s"), url, err);
+      /* FIXME: end of currently intentionaly untranslated */
+      return FALSE;
+    }
 
-  return ((gint) ShellExecute (GetDesktopWindow(), "open", url, NULL, NULL, SW_SHOW) > 32);
-
+  return TRUE;
 #else
 
   GError    *error = NULL;
