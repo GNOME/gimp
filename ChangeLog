@@ -1,3 +1,10 @@
+2008-10-03  Michael Natterer  <mitch@gimp.org>
+
+	Bug 554785 – Compile failure on uri-backend-libcurl
+
+	* plug-ins/file-uri/uri-backend-libcurl.c: apply patch from Robby
+	Workman which fixes the build for this file.
+
 2008-10-03  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed custom error message from checks for babl

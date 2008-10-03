@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <errno.h>
+
 #include <curl/curl.h>
 #include <curl/types.h>
 #include <curl/easy.h>
@@ -159,7 +161,7 @@ uri_backend_load_image (const gchar  *uri,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename),  g_strerror (errno));
+                   gimp_filename_to_utf8 (tmpname),  g_strerror (errno));
       return FALSE;
     }
 
