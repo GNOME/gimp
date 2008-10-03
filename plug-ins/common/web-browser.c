@@ -120,12 +120,13 @@ static gboolean
 browser_open_url (const gchar *url)
 {
 #ifdef G_OS_WIN32
-  HINSTANCE hinst = ShellExecute (GetDesktopWindow(), "open", url, NULL, NULL, SW_SHOW);
-  
+  HINSTANCE hinst = ShellExecute (GetDesktopWindow(),
+                                  "open", url, NULL, NULL, SW_SHOW);
+
   if ((gint) hinst <= 32)
     {
-      const char *err;
-      
+      const gchar *err;
+
       /* FIXME: should be translated when 2.6 got it's own branch */
       switch ((gint) hinst)
         {
@@ -171,8 +172,9 @@ browser_open_url (const gchar *url)
 	  default :
 	    err = ("Unknown Windows error.");
 	}
-      g_message (("Failed to open the url '%s'\n%s"), url, err);
-      /* FIXME: end of currently intentionaly untranslated */
+
+      g_message (("Failed to open '%s': %s"), url, err);
+
       return FALSE;
     }
 
