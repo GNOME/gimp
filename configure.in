@@ -437,13 +437,8 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 # Checks for required libraries
 ###############################
 
-PKG_CHECK_MODULES(BABL, babl >= babl_required_version, :,
-  AC_MSG_ERROR([Test for babl failed. Please get it from http://gegl.org/]))
-
-
-PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version, :,
-  AC_MSG_ERROR([Test for GEGL failed. Please get it from http://gegl.org/]))
-
+PKG_CHECK_MODULES(BABL, babl >= babl_required_version)
+PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version)
 
 AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
