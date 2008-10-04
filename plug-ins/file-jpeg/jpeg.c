@@ -442,9 +442,11 @@ run (const gchar      *name,
                 }
 
               if (orig_subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1 ||
-                  (orig_subsmp > JPEG_SUPSAMPLING_1x1_1x1_1x1 &&
+                  ((gint) orig_subsmp > 0 &&
                    jsvals.subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1))
-                jsvals.subsmp = orig_subsmp;
+                {
+                  jsvals.subsmp = orig_subsmp;
+                }
             }
           break;
         }
