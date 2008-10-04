@@ -1,3 +1,9 @@
+2008-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: depend on GTK+ 2.12.5 so motion history events of
+	extended input devices have proper timestamps needed by paint
+	tools.
+
 2008-10-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpruler.c: make the font scale factor
