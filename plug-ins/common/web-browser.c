@@ -42,7 +42,8 @@ static void     run              (const gchar      *name,
                                   const GimpParam  *param,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
-static gboolean browser_open_url (const gchar      *url);
+static gboolean browser_open_url (const gchar      *url,
+                                  GError          **error);
 
 #ifndef G_OS_WIN32
 static gchar*   strreplace       (const gchar      *string,
@@ -88,9 +89,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
+  static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
+  GError            *error = NULL;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
 
   run_mode = param[0].data.d_int32;
   status   = GIMP_PDB_SUCCESS;
@@ -101,23 +106,26 @@ run (const gchar      *name,
       param[0].data.d_string != NULL &&
       strlen (param[0].data.d_string))
     {
-      if (! browser_open_url (param[0].data.d_string))
-        status = GIMP_PDB_EXECUTION_ERROR;
+      if (! browser_open_url (param[0].data.d_string, &error))
+        {
+          status                  = GIMP_PDB_EXECUTION_ERROR;
+          *nreturn_vals           = 2;
+          values[1].type          = GIMP_PDB_STRING;
+          values[1].data.d_string = error->message;
+        }
     }
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 static gboolean
-browser_open_url (const gchar *url)
+browser_open_url (const gchar  *url,
+                  GError      **error)
 {
 #ifdef G_OS_WIN32
   HINSTANCE hinst = ShellExecute (GetDesktopWindow(),
@@ -173,7 +181,7 @@ browser_open_url (const gchar *url)
 	    err = ("Unknown Windows error.");
 	}
 
-      g_message (("Failed to open '%s': %s"), url, err);
+      g_set_error (error, 0, 0, ("Failed to open '%s': %s"), url, err);
 
       return FALSE;
     }
@@ -181,7 +189,7 @@ browser_open_url (const gchar *url)
   return TRUE;
 #else
 
-  GError    *error = NULL;
+  GError    *my_error = NULL;
   gchar     *browser;
   gchar     *argument;
   gchar     *cmd;
@@ -194,8 +202,9 @@ browser_open_url (const gchar *url)
 
   if (browser == NULL || ! strlen (browser))
     {
-      g_message (_("Web browser not specified.\n"
-                   "Please specify a web browser using the Preferences dialog."));
+      g_set_error (error, 0, 0,
+                   _("Web browser not specified.\n"
+                     "Please specify a web browser using the Preferences dialog."));
       g_free (browser);
       return FALSE;
     }
@@ -209,33 +218,37 @@ browser_open_url (const gchar *url)
   else
     cmd = g_strconcat (browser, " ", argument, NULL);
 
+  g_free (browser);
   g_free (argument);
 
   /* parse the cmd line */
-  if (! g_shell_parse_argv (cmd, NULL, &argv, &error))
+  if (! g_shell_parse_argv (cmd, NULL, &argv, &my_error))
     {
-      g_message (_("Could not parse the web browser command specified in the "
-                   "Preferences dialog:\n\n%s"),
-                 error->message);
-      g_error_free (error);
+      g_set_error (error, 0, 0,
+                   _("Could not parse the web browser command specified in the "
+                     "Preferences dialog:\n\n%s"),
+                   my_error->message);
+      g_error_free (my_error);
+      g_free (cmd);
       return FALSE;
     }
+
+  g_free (cmd);
 
   retval = g_spawn_async (NULL, argv, NULL,
                           G_SPAWN_SEARCH_PATH,
                           NULL, NULL,
-                          NULL, &error);
+                          NULL, &my_error);
 
   if (! retval)
     {
-      g_message (_("Could not execute the web browser specified in the "
-                   "Preferences dialog:\n\n%s"),
-                 error->message);
-      g_error_free (error);
+      g_set_error (error, 0, 0,
+                   _("Could not execute the web browser specified in the "
+                     "Preferences dialog:\n\n%s"),
+                   my_error->message);
+      g_error_free (my_error);
     }
 
-  g_free (browser);
-  g_free (cmd);
   g_strfreev (argv);
 
   return retval;

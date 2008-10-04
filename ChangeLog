@@ -1,3 +1,8 @@
+2008-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/web-browser.c: return errors via return_vals
+	instead of displaying them with g_message().
+
 2008-10-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpruler.c: increased ruler font scale from
