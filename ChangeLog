@@ -1,5 +1,10 @@
 2008-10-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-jpeg/jpeg-save.c: some cleanups to the subsampling
+	code; in an attempt to fix bug #555031.
+
+2008-10-04  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: updated GTK+ requirement.
 
 2008-10-04  Michael Natterer  <mitch@gimp.org>

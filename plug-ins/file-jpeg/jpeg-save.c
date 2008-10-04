@@ -399,8 +399,11 @@ save_image (const gchar  *filename,
                  jsvals.subsmp : JPEG_SUPSAMPLING_1x1_1x1_1x1);
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
-  if (subsampling != 1 && subsampling != 3)
-    cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
+  if (subsampling != JPEG_SUPSAMPLING_2x1_1x1_1x1 &&
+      subsampling != JPEG_SUPSAMPLING_1x2_1x1_1x1)
+    {
+      cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
+    }
 
   if (jsvals.progressive)
     {
@@ -1098,13 +1101,7 @@ save_dialog (void)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              gimp_drawable_is_rgb (drawable_ID_global) ?
-                              jsvals.subsmp : JPEG_SUPSAMPLING_1x1_1x1_1x1,
-                              G_CALLBACK (subsampling_changed),
-                              entry);
-
-  if ( gimp_drawable_is_rgb (drawable_ID_global))
+  if (gimp_drawable_is_rgb (drawable_ID_global))
     {
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   jsvals.subsmp,
@@ -1117,7 +1114,8 @@ save_dialog (void)
     }
   else
     {
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 2);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     JPEG_SUPSAMPLING_1x1_1x1_1x1);
 
       gtk_widget_set_sensitive (combo, FALSE);
     }
