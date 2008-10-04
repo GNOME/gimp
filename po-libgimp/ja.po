@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-03 00:21+0900\n"
-"PO-Revision-Date: 2008-09-27 21:05+0900\n"
+"POT-Creation-Date: 2008-10-04 18:18+0900\n"
+"PO-Revision-Date: 2008-10-04 14:02+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1099,7 +1099,9 @@ msgstr "範囲の選択(_R): "
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
-msgstr "ページとして開く(_P)"
+msgstr ""
+"ページを次の\n"
+"ように展開する(_P)"
 
 #: ../libgimpwidgets/gimppageselector.c:420
 msgid "Page 000"
@@ -1121,7 +1123,7 @@ msgstr "1ページを選択"
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d ページを選択"
-msgstr[1] "すべてのページ(%dページ)を選択"
+msgstr[1] "複数ページ(%dページ)を選択"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
