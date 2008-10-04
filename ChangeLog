@@ -1,5 +1,13 @@
 2008-10-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpruler.c: increased ruler font scale from
+	X_SMALL to SMALL as it appears to be too small for many users.
+
+	* themes/Default/gtkrc: follow that change here, but keep the
+	ruler font extra small in the Small theme.
+
+2008-10-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-jpeg/jpeg-save.c: some cleanups to the subsampling
 	code; in an attempt to fix bug #555031.
 

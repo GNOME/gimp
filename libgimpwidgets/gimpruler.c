@@ -31,7 +31,7 @@
 #include "gimpruler.h"
 
 
-#define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_X_SMALL
+#define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_SMALL
 #define RULER_WIDTH               13
 #define MINIMUM_INCR              5
 
