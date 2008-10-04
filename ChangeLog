@@ -1,5 +1,11 @@
 2008-10-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpruler.c: instead of hardcoding a size
+	request, implement GtkWidget::size_request and set the size
+	depending on the font-scale.
+
+2008-10-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-jpeg/jpeg.c (run): fixed problem introduced by the
 	use of an enum for the subsampling factor. Fixes bug #554890.
 

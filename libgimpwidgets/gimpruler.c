@@ -32,7 +32,6 @@
 
 
 #define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_SMALL
-#define RULER_WIDTH               13
 #define MINIMUM_INCR              5
 
 
@@ -93,6 +92,8 @@ static void          gimp_ruler_realize       (GtkWidget      *widget);
 static void          gimp_ruler_unrealize     (GtkWidget      *widget);
 static void          gimp_ruler_size_allocate (GtkWidget      *widget,
                                                GtkAllocation  *allocation);
+static void          gimp_ruler_size_request  (GtkWidget      *widget,
+                                               GtkRequisition *requisition);
 static void          gimp_ruler_style_set     (GtkWidget      *widget,
                                                GtkStyle       *prev_style);
 static gboolean      gimp_ruler_motion_notify (GtkWidget      *widget,
@@ -125,6 +126,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->realize             = gimp_ruler_realize;
   widget_class->unrealize           = gimp_ruler_unrealize;
   widget_class->size_allocate       = gimp_ruler_size_allocate;
+  widget_class->size_request        = gimp_ruler_size_request;
   widget_class->style_set           = gimp_ruler_style_set;
   widget_class->motion_notify_event = gimp_ruler_motion_notify;
   widget_class->expose_event        = gimp_ruler_expose;
@@ -201,12 +203,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
 static void
 gimp_ruler_init (GimpRuler *ruler)
 {
-  GtkWidget        *widget = GTK_WIDGET (ruler);
-  GtkStyle         *style  = gtk_widget_get_style (widget);
-  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
-
-  widget->requisition.width  = style->xthickness * 2 + 1;
-  widget->requisition.height = style->ythickness * 2 + RULER_WIDTH;
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
 
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
   priv->unit          = GIMP_PIXELS;
@@ -232,26 +229,16 @@ gimp_ruler_set_property (GObject      *object,
     {
     case PROP_ORIENTATION:
       {
-        GtkWidget *widget = GTK_WIDGET (ruler);
-        GtkStyle  *style  = gtk_widget_get_style (widget);
-
         priv->orientation = g_value_get_enum (value);
-        if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-          {
-            widget->requisition.width  = style->xthickness * 2 + 1;
-            widget->requisition.height = style->ythickness * 2 + RULER_WIDTH;
-          }
-        else
-          {
-            widget->requisition.width  = style->xthickness * 2 + RULER_WIDTH;
-            widget->requisition.height = style->ythickness * 2 + 1;
-          }
-        gtk_widget_queue_resize (widget);
+
+        gtk_widget_queue_resize (GTK_WIDGET (ruler));
       }
       break;
+
     case PROP_UNIT:
       gimp_ruler_set_unit (ruler, g_value_get_int (value));
       break;
+
     case PROP_LOWER:
       gimp_ruler_set_range (ruler,
                             g_value_get_double (value),
@@ -264,9 +251,11 @@ gimp_ruler_set_property (GObject      *object,
                             g_value_get_double (value),
                             priv->max_size);
       break;
+
     case PROP_POSITION:
       gimp_ruler_set_position (ruler, g_value_get_double (value));
       break;
+
     case PROP_MAX_SIZE:
       gimp_ruler_set_range (ruler,
                             priv->lower,
@@ -294,18 +283,23 @@ gimp_ruler_get_property (GObject      *object,
     case PROP_ORIENTATION:
       g_value_set_enum (value, priv->orientation);
       break;
+
     case PROP_UNIT:
       g_value_set_int (value, priv->unit);
       break;
+
     case PROP_LOWER:
       g_value_set_double (value, priv->lower);
       break;
+
     case PROP_UPPER:
       g_value_set_double (value, priv->upper);
       break;
+
     case PROP_POSITION:
       g_value_set_double (value, priv->position);
       break;
+
     case PROP_MAX_SIZE:
       g_value_set_double (value, priv->max_size);
       break;
@@ -575,10 +569,33 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 }
 
 static void
+gimp_ruler_size_request (GtkWidget      *widget,
+                         GtkRequisition *requisition)
+{
+  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (widget);
+  GtkStyle         *style = gtk_widget_get_style (widget);
+  gint              size;
+
+  /*  FIXME: should take font size into account  */
+  size = ROUND (18 * priv->font_scale);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      widget->requisition.width  = style->xthickness * 2 + 1;
+      widget->requisition.height = style->ythickness * 2 + size;
+    }
+  else
+    {
+      widget->requisition.width  = style->xthickness * 2 + size;
+      widget->requisition.height = style->ythickness * 2 + 1;
+    }
+}
+
+static void
 gimp_ruler_style_set (GtkWidget *widget,
                       GtkStyle  *prev_style)
 {
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
 
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_set (widget, prev_style);
 
