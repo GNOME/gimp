@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-03 00:22+0900\n"
-"PO-Revision-Date: 2008-09-28 13:10+0900\n"
+"POT-Creation-Date: 2008-10-04 20:23+0900\n"
+"PO-Revision-Date: 2008-10-04 18:18+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1036,7 +1036,7 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/file-jpeg/jpeg-load.c:828 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:272
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:188
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:190
 #: ../plug-ins/file-xjt/xjt.c:2560 ../plug-ins/file-xjt/xjt.c:2568
 #: ../plug-ins/flame/flame.c:412
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
@@ -1077,7 +1077,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
 #: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1626
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:161
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:163
 #: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
 #: ../plug-ins/flame/flame.c:443
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
@@ -3776,7 +3776,7 @@ msgstr "%s ページ"
 
 #: ../plug-ins/common/file-pdf.c:808
 msgid "Import from PDF"
-msgstr "PDF 読み込み"
+msgstr "PDF ドキュメントのインポート"
 
 #: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3100
 #: ../plug-ins/common/file-tiff-load.c:483
@@ -3979,12 +3979,12 @@ msgstr "PDF ドキュメント"
 #: ../plug-ins/common/file-ps.c:1050
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
-msgstr "ポストスクリプトファイル '%s' を解釈できませんでした"
+msgstr "PostScript ドキュメント '%s' を解釈できませんでした"
 
 #: ../plug-ins/common/file-ps.c:1192
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr "PostScript による保存はアルファチャンネルを取り扱えません"
+msgstr "PostScript 形式による保存はアルファチャンネルを取り扱えません"
 
 #: ../plug-ins/common/file-ps.c:1730 ../plug-ins/common/file-ps.c:1763
 #, c-format
@@ -3994,10 +3994,10 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
-"Ghostscript の開始でエラーが発生しました。Ghostscript がインストールされてい"
-"るか確認し、必要ならば環境変数 GS_PROG に Ghostscript へのパスを設定してくだ"
-"さい。\n"
-"（このエラーの詳細または原因は次のとおりです）\n"
+"Ghostscript 起動時にエラーが発生しました。\n"
+"Ghostscript がインストールされているか確認し、必要ならば環境変数 GS_PROG に "
+"Ghostscript へのパスを設定してください。\n"
+"（詳細または原因は次のとおりです）\n"
 "\n"
 "  %s"
 
@@ -4011,16 +4011,16 @@ msgstr "ページ %d"
 #: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1612
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:974
 msgid "Write error occurred"
-msgstr "書き出しエラー発生"
+msgstr "書き込みエラーが発生しました"
 
 #: ../plug-ins/common/file-ps.c:3095
 msgid "Import from PostScript"
-msgstr "PostScript 読み込み"
+msgstr "PostScript ドキュメントのインポート"
 
 #. Rendering
 #: ../plug-ins/common/file-ps.c:3138
 msgid "Rendering"
-msgstr "レンダリング"
+msgstr "解像度とサイズ"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3154 ../plug-ins/common/file-svg.c:916
@@ -4034,7 +4034,7 @@ msgstr "ページ: "
 
 #: ../plug-ins/common/file-ps.c:3200
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "読み込むページ (例： 1-4 あるいは 1,3,5-7)"
+msgstr "読み込むページ番号 (例： 1-4 あるいは 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3204 ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
@@ -4055,11 +4055,11 @@ msgstr "境界枠を調べる"
 #. Colouring
 #: ../plug-ins/common/file-ps.c:3226
 msgid "Coloring"
-msgstr "カラーリング"
+msgstr "色の設定"
 
 #: ../plug-ins/common/file-ps.c:3230
 msgid "B/W"
-msgstr "白黒"
+msgstr "モノクロ 2階調"
 
 #: ../plug-ins/common/file-ps.c:3232 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:66
@@ -4074,7 +4074,9 @@ msgstr "自動"
 
 #: ../plug-ins/common/file-ps.c:3243
 msgid "Text antialiasing"
-msgstr "文字アンチエイリアシング"
+msgstr ""
+"テキストの\n"
+"アンチエイリアス"
 
 #: ../plug-ins/common/file-ps.c:3248 ../plug-ins/common/file-ps.c:3260
 msgid "Weak"
@@ -4086,7 +4088,9 @@ msgstr "強く"
 
 #: ../plug-ins/common/file-ps.c:3255
 msgid "Graphic antialiasing"
-msgstr "グラフィックアンチエイリアシング"
+msgstr ""
+"グラフィックの\n"
+"アンチエイリアス"
 
 #: ../plug-ins/common/file-ps.c:3333
 msgid "Save as PostScript"
@@ -8007,7 +8011,7 @@ msgstr "波長(_W):"
 msgid "Waving"
 msgstr "波立たせています"
 
-#: ../plug-ins/common/web-browser.c:141
+#: ../plug-ins/common/web-browser.c:197
 msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences dialog."
@@ -8015,7 +8019,7 @@ msgstr ""
 "ウェブブラウザが指定されていません。\n"
 "環境設定ダイアログで使用するウェブブラウザを指定してください。"
 
-#: ../plug-ins/common/web-browser.c:161
+#: ../plug-ins/common/web-browser.c:217
 #, c-format
 msgid ""
 "Could not parse the web browser command specified in the Preferences "
@@ -8027,7 +8031,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/common/web-browser.c:175
+#: ../plug-ins/common/web-browser.c:231
 #, c-format
 msgid ""
 "Could not execute the web browser specified in the Preferences dialog:\n"
@@ -8671,7 +8675,7 @@ msgid "_Remember forever"
 msgstr "パスワードを記憶"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:127
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:129
 #: ../plug-ins/file-uri/uri-backend-wget.c:303
 #, c-format
 msgid "Downloading %s of image data"
@@ -8679,7 +8683,7 @@ msgstr "%s の画像データをダウンロードしています"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:164
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:226
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:134
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:136
 #: ../plug-ins/file-uri/uri-backend-wget.c:346
 #, c-format
 msgid "Downloaded %s of image data"
@@ -8698,7 +8702,7 @@ msgstr "%s の画像データをアップロードしました"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:253
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:297
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:156
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:158
 #: ../plug-ins/file-uri/uri-backend-wget.c:195
 msgid "Connecting to server"
 msgstr "サーバに接続しています"
@@ -8723,11 +8727,11 @@ msgstr "画像データをダウンロードしています（%2$s 中の %1$s �
 msgid "Uploading image (%s of %s)"
 msgstr "画像データをアップロードしています(%2$s 中の %1$s が完了)"
 
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:58
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:60
 msgid "Could not initialize libcurl"
 msgstr "libcurl を初期化できません"
 
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:200
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:202
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr "'%s' の書き込み用オープンに対する HTTP 応答コード： %d"
