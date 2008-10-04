@@ -1,5 +1,11 @@
 2008-10-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpruler.c: cache the PangoLayout. Use it not
+	only for drawing the numbers, but also to calculate the size
+	requisition depending on the actual font size.
+
+2008-10-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpruler.c: instead of hardcoding a size
 	request, implement GtkWidget::size_request and set the size
 	depending on the font-scale.

@@ -61,6 +61,7 @@ typedef struct
 
   GdkPixmap      *backing_store;
   GdkGC          *non_gr_exp_gc;
+  PangoLayout    *layout;
   gdouble         font_scale;
 
   gint            xsrc;
@@ -104,7 +105,8 @@ static gboolean      gimp_ruler_expose        (GtkWidget      *widget,
 static void          gimp_ruler_draw_ticks    (GimpRuler      *ruler);
 static void          gimp_ruler_draw_pos      (GimpRuler      *ruler);
 static void          gimp_ruler_make_pixmap   (GimpRuler      *ruler);
-static PangoLayout * gimp_ruler_create_layout (GtkWidget      *widget,
+
+static PangoLayout * gimp_ruler_get_layout    (GtkWidget      *widget,
                                                const gchar    *text);
 
 
@@ -547,6 +549,12 @@ gimp_ruler_unrealize (GtkWidget *widget)
       priv->non_gr_exp_gc = NULL;
     }
 
+  if (priv->layout)
+    {
+      g_object_unref (priv->layout);
+      priv->layout = NULL;
+    }
+
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->unrealize (widget);
 }
 
@@ -574,10 +582,14 @@ gimp_ruler_size_request (GtkWidget      *widget,
 {
   GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (widget);
   GtkStyle         *style = gtk_widget_get_style (widget);
+  PangoLayout      *layout;
+  PangoRectangle    ink_rect;
   gint              size;
 
-  /*  FIXME: should take font size into account  */
-  size = ROUND (18 * priv->font_scale);
+  layout = gimp_ruler_get_layout (widget, "0123456789");
+  pango_layout_get_pixel_extents (layout, &ink_rect, NULL);
+
+  size = 2 + ink_rect.height * 1.7;
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -602,6 +614,12 @@ gimp_ruler_style_set (GtkWidget *widget,
   gtk_widget_style_get (widget,
                         "font-scale", &priv->font_scale,
                         NULL);
+
+  if (priv->layout)
+    {
+      g_object_unref (priv->layout);
+      priv->layout = NULL;
+    }
 }
 
 static gboolean
@@ -691,7 +709,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   xthickness = style->xthickness;
   ythickness = style->ythickness;
 
-  layout = gimp_ruler_create_layout (widget, "012456789");
+  layout = gimp_ruler_get_layout (widget, "0123456789");
   pango_layout_get_extents (layout, &ink_rect, &logical_rect);
 
   digit_height = PANGO_PIXELS (ink_rect.height) + 2;
@@ -870,8 +888,6 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   cairo_fill (cr);
 out:
   cairo_destroy (cr);
-
-  g_object_unref (layout);
 }
 
 static void
@@ -1001,6 +1017,7 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
     }
 }
 
+
 static PangoLayout *
 gimp_ruler_create_layout (GtkWidget   *widget,
                           const gchar *text)
@@ -1023,4 +1040,21 @@ gimp_ruler_create_layout (GtkWidget   *widget,
   pango_attr_list_unref (attrs);
 
   return layout;
+}
+
+static PangoLayout *
+gimp_ruler_get_layout (GtkWidget   *widget,
+                       const gchar *text)
+{
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+
+  if (priv->layout)
+    {
+      pango_layout_set_text (priv->layout, text, -1);
+      return priv->layout;
+    }
+
+  priv->layout = gimp_ruler_create_layout (widget, text);
+
+  return priv->layout;
 }
