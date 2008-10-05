@@ -235,7 +235,6 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-open-as-layers",   image);
   SET_SENSITIVE ("file-save",             image && drawable);
   SET_SENSITIVE ("file-save-as",          image && drawable);
   SET_SENSITIVE ("file-save-a-copy",      image && drawable);

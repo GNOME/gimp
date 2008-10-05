@@ -49,7 +49,7 @@
 static void       file_open_dialog_response    (GtkWidget           *open_dialog,
                                                 gint                 response_id,
                                                 Gimp                *gimp);
-static gboolean   file_open_dialog_open_image  (GtkWidget           *open_dialog,
+static GimpImage *file_open_dialog_open_image  (GtkWidget           *open_dialog,
                                                 Gimp                *gimp,
                                                 const gchar         *uri,
                                                 const gchar         *entered_filename,
@@ -138,13 +138,24 @@ file_open_dialog_response (GtkWidget *open_dialog,
             continue;
         }
 
-      if (dialog->image)
+      if (dialog->open_as_layers)
         {
-          if (file_open_dialog_open_layers (open_dialog,
-                                            dialog->image,
-                                            list->data,
-                                            list->data,
-                                            dialog->file_proc))
+          if (! dialog->image)
+            {
+              dialog->image = file_open_dialog_open_image (open_dialog,
+                                                           gimp,
+                                                           list->data,
+                                                           list->data,
+                                                           dialog->file_proc);
+
+              if (dialog->image)
+                success = TRUE;
+            }
+          else if (file_open_dialog_open_layers (open_dialog,
+                                                 dialog->image,
+                                                 list->data,
+                                                 list->data,
+                                                 dialog->file_proc))
             {
               success = TRUE;
             }
@@ -169,7 +180,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   if (success)
     {
-      if (dialog->image)
+      if (dialog->open_as_layers && dialog->image)
         gimp_image_flush (dialog->image);
 
       gtk_widget_destroy (open_dialog);
@@ -183,7 +194,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
   g_slist_free (uris);
 }
 
-static gboolean
+static GimpImage *
 file_open_dialog_open_image (GtkWidget           *open_dialog,
                              Gimp                *gimp,
                              const gchar         *uri,
@@ -201,11 +212,7 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
                                            load_proc,
                                            &status, &error);
 
-  if (image)
-    {
-      return TRUE;
-    }
-  else if (status != GIMP_PDB_CANCEL)
+  if (! image && status != GIMP_PDB_CANCEL)
     {
       gchar *filename = file_utils_uri_display_name (uri);
 
@@ -216,7 +223,7 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
       g_free (filename);
     }
 
-  return FALSE;
+  return image;
 }
 
 static gboolean
@@ -246,8 +253,6 @@ file_open_dialog_open_layers (GtkWidget           *open_dialog,
                              _("Open layers"));
 
       g_list_free (new_layers);
-
-      gimp_image_flush (image);
 
       return TRUE;
     }

@@ -1,5 +1,29 @@
 2008-10-05  Michael Natterer  <mitch@gimp.org>
 
+	Allow to "Open as Layers" in the empty display:
+
+	* app/widgets/gimpfiledialog.[ch]: add member
+	"gboolean open_as_layers". Rename gimp_file_dialog_set_image() to
+	gimp_file_dialog_set_save_image() and add
+	gimp_file_dialog_set_open_image() which sets both the image to
+	load layers into and the "open_as_layers" boolean.
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response): look
+	at dialog->open_as_layers instead of dialog->image to decide whether
+	to open as layers (that's much more obvious). Enable open as layers
+	without existing image by creating the image if it doesn't exist.
+
+	* app/actions/file-commands.c (file_open_dialog_show): add "title"
+	parameter and take the uri from the image if none was passed. Use the
+	new gimp_file_dialog_set_open_image() instead of poking into the
+	dialog struct. Change callers to pass the title and not get the
+	uri from the image; instead always pass the image.
+
+	* app/actions/file-actions.c (file_actions_update): keep
+	"Open as Layers" sensitive even without image.
+
+2008-10-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-contiguous-region.c: some formatting cleanups.
 
 	(find_contiguous_segment): changed to return gboolean not gint.

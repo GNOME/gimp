@@ -403,10 +403,22 @@ gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
 }
 
 void
-gimp_file_dialog_set_image (GimpFileDialog *dialog,
-                            GimpImage      *image,
-                            gboolean        save_a_copy,
-                            gboolean        close_after_saving)
+gimp_file_dialog_set_open_image (GimpFileDialog *dialog,
+                                 GimpImage      *image,
+                                 gboolean        open_as_layers)
+{
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+
+  dialog->image          = image;
+  dialog->open_as_layers = open_as_layers;
+}
+
+void
+gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
+                                 GimpImage      *image,
+                                 gboolean        save_a_copy,
+                                 gboolean        close_after_saving)
 {
   const gchar *uri = NULL;
   gchar       *dirname;

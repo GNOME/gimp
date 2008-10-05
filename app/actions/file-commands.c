@@ -64,8 +64,9 @@
 
 /*  local function prototypes  */
 
-static void   file_open_dialog_show        (GtkWidget   *parent,
-                                            Gimp        *gimp,
+static void   file_open_dialog_show        (Gimp        *gimp,
+                                            GtkWidget   *parent,
+                                            const gchar *title,
                                             GimpImage   *image,
                                             const gchar *uri,
                                             gboolean     open_as_layers);
@@ -92,18 +93,16 @@ file_open_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   Gimp        *gimp;
-  GimpImage   *image;
   GtkWidget   *widget;
-  const gchar *uri = NULL;
+  GimpImage   *image;
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
   image = action_data_get_image (data);
 
-  if (image)
-    uri = gimp_object_get_name (GIMP_OBJECT (image));
-
-  file_open_dialog_show (widget, gimp, NULL, uri, FALSE);
+  file_open_dialog_show (gimp, widget,
+                         _("Open Image"),
+                         image, NULL, FALSE);
 }
 
 void
@@ -111,18 +110,20 @@ file_open_as_layers_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   Gimp        *gimp;
-  GimpDisplay *display;
   GtkWidget   *widget;
-  GimpImage   *image;
-  const gchar *uri;
+  GimpDisplay *display;
+  GimpImage   *image = NULL;
   return_if_no_gimp (gimp, data);
-  return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  image = display->image;
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  display = action_data_get_display (data);
 
-  file_open_dialog_show (widget, gimp, image, uri, TRUE);
+  if (display)
+    image = display->image;
+
+  file_open_dialog_show (gimp, widget,
+                         _("Open Image as Layers"),
+                         image, NULL, TRUE);
 }
 
 void
@@ -445,15 +446,18 @@ file_file_open_dialog (Gimp        *gimp,
                        const gchar *uri,
                        GtkWidget   *parent)
 {
-  file_open_dialog_show (parent, gimp, NULL, uri, FALSE);
+  file_open_dialog_show (gimp, parent,
+                         _("Open Image"),
+                         NULL, uri, FALSE);
 }
 
 
 /*  private functions  */
 
 static void
-file_open_dialog_show (GtkWidget   *parent,
-                       Gimp        *gimp,
+file_open_dialog_show (Gimp        *gimp,
+                       GtkWidget   *parent,
+                       const gchar *title,
                        GimpImage   *image,
                        const gchar *uri,
                        gboolean     open_as_layers)
@@ -466,27 +470,23 @@ file_open_dialog_show (GtkWidget   *parent,
 
   if (dialog)
     {
+      if (! uri && image)
+        uri = gimp_object_get_name (GIMP_OBJECT (image));
+
       if (! uri)
         uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-last-uri");
 
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
-      if (open_as_layers)
-        {
-          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image as Layers"));
-          GIMP_FILE_DIALOG (dialog)->image = image;
-        }
-      else
-        {
-          gtk_window_set_title (GTK_WINDOW (dialog), _("Open Image"));
-          GIMP_FILE_DIALOG (dialog)->image = NULL;
-        }
+      gimp_file_dialog_set_open_image (GIMP_FILE_DIALOG (dialog),
+                                       image, open_as_layers);
 
       parent = gtk_widget_get_toplevel (parent);
 
       if (GTK_IS_WINDOW (parent))
-        gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+        gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                      GTK_WINDOW (parent));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -528,8 +528,8 @@ file_save_dialog_show (GimpImage   *image,
     {
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog),
-                                  image, save_a_copy, close_after_saving);
+      gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
+                                       image, save_a_copy, close_after_saving);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
