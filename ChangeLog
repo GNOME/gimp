@@ -1,3 +1,9 @@
+2008-10-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-contiguous-region.c: some formatting cleanups.
+
+	(find_contiguous_segment): changed to return gboolean not gint.
+
 2008-10-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpruler.c: cache the PangoLayout. Use it not

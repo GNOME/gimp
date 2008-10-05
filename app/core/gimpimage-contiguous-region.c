@@ -73,7 +73,7 @@ static void ref_tiles                     (TileManager         *src,
                                            gint                 y,
                                            guchar             **s,
                                            guchar             **m);
-static gint find_contiguous_segment       (GimpImage           *image,
+static gboolean find_contiguous_segment   (GimpImage           *image,
                                            const guchar        *col,
                                            PixelRegion         *src,
                                            PixelRegion         *mask,
@@ -458,7 +458,7 @@ ref_tiles (TileManager  *src,
   *m = tile_data_pointer (*m_tile, x, y);
 }
 
-static int
+static gboolean
 find_contiguous_segment (GimpImage           *image,
                          const guchar        *col,
                          PixelRegion         *src,
@@ -604,7 +604,7 @@ find_contiguous_region_helper (GimpImage           *image,
   Tile   *tile;
   GQueue *coord_stack;
 
-  coord_stack = g_queue_new();
+  coord_stack = g_queue_new ();
 
   /* To avoid excessive memory allocation (y, start, end) tuples are
    * stored in interleaved format:
@@ -624,7 +624,7 @@ find_contiguous_region_helper (GimpImage           *image,
       for (x = start + 1; x < end; x++)
         {
           tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-          val = *(const guchar *) (tile_data_pointer (tile, x, y));
+          val = *(const guchar *) tile_data_pointer (tile, x, y);
           tile_release (tile, FALSE);
           if (val != 0)
             continue;
@@ -654,7 +654,7 @@ find_contiguous_region_helper (GimpImage           *image,
             }
         }
     }
-  while (!g_queue_is_empty (coord_stack));
+  while (! g_queue_is_empty (coord_stack));
 
   g_queue_free (coord_stack);
 }
