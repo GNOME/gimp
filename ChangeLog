@@ -1,5 +1,11 @@
 2008-10-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin-cleanup.c
+	* app/vectors/gimpanchor.c: #include <glib-object.h>, not
+	"glib-object.h".
+
+2008-10-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gegl-types.h: including ourselves serves no purpose.
 
 2008-10-05  Michael Natterer  <mitch@gimp.org>

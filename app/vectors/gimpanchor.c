@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include "glib-object.h"
+#include <glib-object.h>
 
 #include "vectors-types.h"
 

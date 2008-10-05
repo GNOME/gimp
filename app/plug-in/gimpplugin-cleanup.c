@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include "glib-object.h"
+#include <glib-object.h>
 
 #include "plug-in-types.h"
 
