@@ -1,3 +1,8 @@
+2008-10-05  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/tools/gimptexttool.c: Fixed clipping rectangle to
+	include shell->offset_x and y
+
 2008-10-01  Bill Skaggs <weskaggs@gmail.com>
 
 	* Merged 26850:27710 from trunk, updating to 2.6.0 of trunk.

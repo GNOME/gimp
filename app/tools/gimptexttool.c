@@ -2040,9 +2040,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 NULL);
 
   /* Turn on clipping for text-cursor and selections */
-  cliprect.x = x1;
+  cliprect.x = x1 - GIMP_DISPLAY_SHELL (tool->display->shell)->offset_x;
   cliprect.width = x2 - x1;
-  cliprect.y = y1;
+  cliprect.y = y1 - GIMP_DISPLAY_SHELL (tool->display->shell)->offset_y;
   cliprect.height = y2 - y1;
   gimp_canvas_set_clip_rect (GIMP_CANVAS (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas),
                              GIMP_CANVAS_STYLE_XOR, &cliprect);
