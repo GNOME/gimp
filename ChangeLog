@@ -1,5 +1,9 @@
 2008-10-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gegl-types.h: including ourselves serves no purpose.
+
+2008-10-05  Michael Natterer  <mitch@gimp.org>
+
 	Allow to "Open as Layers" in the empty display:
 
 	* app/widgets/gimpfiledialog.[ch]: add member

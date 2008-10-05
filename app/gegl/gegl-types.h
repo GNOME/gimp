@@ -23,7 +23,6 @@
 
 
 #include "core/core-types.h"
-#include "gegl/gegl-types.h"
 
 
 /*  operations  */
