@@ -1250,6 +1250,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
+  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) ==
+                        gimp_item_get_image (GIMP_ITEM (mask)), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! gimp_item_is_attached (GIMP_ITEM (layer)))

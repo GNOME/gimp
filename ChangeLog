@@ -1,3 +1,13 @@
+2008-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_add_mask): g_return_if_fail()
+	on the mask's image being the same as the layer's image. The PDB
+	already checks for this.
+
+	* app/core/gimpimage.c (gimp_image_add_layer,channel,vectors):
+	remove calls to gimp_item_set_image() because we only accept
+	itmes of this image anyway.
+
 2008-10-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugin-cleanup.c

@@ -2875,11 +2875,6 @@ gimp_image_add_layer (GimpImage *image,
   gimp_image_undo_push_layer_add (image, _("Add Layer"),
                                   layer, active_layer);
 
-  gimp_item_set_image (GIMP_ITEM (layer), image);
-
-  if (layer->mask)
-    gimp_item_set_image (GIMP_ITEM (layer->mask), image);
-
   /*  If the layer is a floating selection, set the ID  */
   if (gimp_layer_is_floating_sel (layer))
     image->floating_sel = layer;
@@ -3214,8 +3209,6 @@ gimp_image_add_channel (GimpImage   *image,
   gimp_image_undo_push_channel_add (image, _("Add Channel"),
                                     channel, active_channel);
 
-  gimp_item_set_image (GIMP_ITEM (channel), image);
-
   /*  add the layer to the list at the specified position  */
   if (position == -1)
     {
@@ -3438,8 +3431,6 @@ gimp_image_add_vectors (GimpImage   *image,
 
   gimp_image_undo_push_vectors_add (image, _("Add Path"),
                                     vectors, active_vectors);
-
-  gimp_item_set_image (GIMP_ITEM (vectors), image);
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
