@@ -1,5 +1,11 @@
 2008-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/file-gih.c
+	* plug-ins/common/file-xbm.c: setting a spin button's
+	page_increment to 1 is of no use, set it to 10 instead.
+
+2008-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-menu-path.c (menu_path_mappings): add a
 	fallback mapping from <Toolbox> to <Image> so we catch really
 	everything that wants to go to <Toolbox>.

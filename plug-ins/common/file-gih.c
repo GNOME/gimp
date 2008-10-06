@@ -936,7 +936,7 @@ gih_save_dialog (gint32 image_ID)
 
   spinbutton = gimp_spin_button_new (&adjustment,
 				     gihparams.cellwidth,
-				     2, gimp_image_width (image_ID), 1, 1, 0,
+				     2, gimp_image_width (image_ID), 1, 10, 0,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -959,7 +959,7 @@ gih_save_dialog (gint32 image_ID)
 
   spinbutton = gimp_spin_button_new (&adjustment,
 				     gihparams.cellheight,
-				     2, gimp_image_height (image_ID), 1, 1, 0,
+				     2, gimp_image_height (image_ID), 1, 10, 0,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

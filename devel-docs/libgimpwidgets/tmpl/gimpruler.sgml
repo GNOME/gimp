@@ -53,6 +53,11 @@ GimpRuler
 
 </para>
 
+<!-- ##### ARG GimpRuler:font-scale ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_ruler_new ##### -->
 <para>
 
