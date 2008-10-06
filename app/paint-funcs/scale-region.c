@@ -189,13 +189,8 @@ scale_region (PixelRegion           *srcPR,
 
   if (srcPR->tiles != NULL && srcPR->data == NULL)
     {
-      GTimer *timer = g_timer_new ();
-
       scale_region_tile (srcPR, dstPR, interpolation,
                          progress_callback, progress_data);
-
-      g_printerr ("scale: %g sec\n", g_timer_elapsed (timer, NULL));
-      g_timer_destroy (timer);
       return;
     }
 
