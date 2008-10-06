@@ -660,10 +660,8 @@ GetCode (FILE     *fd,
       if (done)
         {
           if (curbit >= lastbit)
-            {
-              g_message ("Ran off the end of my bits");
-              gimp_quit ();
-            }
+            g_message ("Ran off the end of my bits");
+
           return -1;
         }
 
@@ -706,7 +704,7 @@ LZWReadByte (FILE *fd,
     {
       if (input_code_size > MAX_LZW_BITS)
         {
-          g_message("Value out of range for code size (corrupted file?)");
+          g_message ("Value out of range for code size (corrupted file?)");
           return -1;
         }
 
