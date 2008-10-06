@@ -6,15 +6,15 @@
 # Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
-# Joaquim Perez <noguer@gmail.com>, 2008.
+# Quim Perez i Noguer <noguer@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-16 13:12+0200\n"
-"PO-Revision-Date: 2008-09-16 13:14+0200\n"
-"Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
-"Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
+"POT-Creation-Date: 2008-10-06 11:35+0200\n"
+"PO-Revision-Date: 2008-10-01 23:11+0200\n"
+"Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
+"Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -57,16 +57,16 @@ msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
 "interactiva de les funcions"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Una funció no pot processar dues seqüències al mateix temps."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ja esteu executant la funció «%s» ."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:243
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Funció: %s"
@@ -74,73 +74,58 @@ msgstr "Funció: %s"
 #  we add a colon after the label;
 #  some languages want an extra space here
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:305
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:353
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Funció de selecció del color"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "Funció de selecció del fitxer"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "Funció de selecció de la carpeta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "Funció de selecció del tipus de lletra"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "Funció de selecció de la paleta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "Funció de selecció del patró"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:506
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "Funció de selecció del degradat"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:515
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Funció de selecció del pinzell"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:914
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"S'ha produït un error mentre s'executava\n"
-"%s \n"
-" \n"
-" %s"
+msgid "Error while executing %s:"
+msgstr "S'ha produït un error mentre s'executava %s:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Falten paràmetres per a fer la crida al «script-fu-register»"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:710
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
-msgid ""
-"Error while loading\n"
-"\"%s\"\n"
-"\n"
-"%s"
-msgstr ""
-"S'ha produït un error en carregar\n"
-"«%s»\n"
-"\n"
-"%s"
+msgid "Error while loading %s:"
+msgstr "S'ha produït un error en carregar %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
@@ -2852,41 +2837,3 @@ msgstr "Opacitat de la lluentor"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Ombra amb reflex _Xach..."
-
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Mida de l'efecte (píxels * 3) "
-
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Mida de l'efecte (píxels * 5)"
-
-#~ msgid "Burst color"
-#~ msgstr "Color de l'explosió"
-
-# Quim: starbust és la llum d'una estrella.
-#~ msgid "Create a logo using a starburst gradient"
-#~ msgstr ""
-#~ "Crea un logotip on les lletres estan pintades amb un patró que recorda la "
-#~ "llum d'una estrella"
-
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Mida de l'efecte (píxels * 30)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
-#~ "shadow"
-#~ msgstr ""
-#~ "Omple la regió seleccionada (o canal alfa) amb un patró que recorda la "
-#~ "llum d'una estrella, i afegeix una ombra"
-
-#~ msgid "Starb_urst..."
-#~ msgstr "_Llum d'estrella..."
-
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Mida de l'efecte (píxels * 4)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Omple la regió seleccionada (o canal alfa) emprant una textura de roca "
-#~ "dura, il·luminada per un focus de llum i amb una ombra"
