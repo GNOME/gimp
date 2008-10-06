@@ -1,5 +1,11 @@
 2008-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-menu-path.c (menu_path_mappings): add a
+	fallback mapping from <Toolbox> to <Image> so we catch really
+	everything that wants to go to <Toolbox>.
+
+2008-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.c (gimp_context_real_set_display): paranoia
 	fix for hypothetical but harmful misbehavior: when setting the
 	display from !=NULL to NULL, also set the image to NULL instead of
