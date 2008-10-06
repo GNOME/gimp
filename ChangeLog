@@ -1,5 +1,14 @@
 2008-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_real_set_display): paranoia
+	fix for hypothetical but harmful misbehavior: when setting the
+	display from !=NULL to NULL, also set the image to NULL instead of
+	relying on whatever obscure implicit behavior of other parts of
+	GIMP which set a new display right away or make sure the image
+	goes away together with the display.
+
+2008-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_add_mask): g_return_if_fail()
 	on the mask's image being the same as the layer's image. The PDB
 	already checks for this.

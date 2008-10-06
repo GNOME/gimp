@@ -1766,8 +1766,12 @@ static void
 gimp_context_real_set_display (GimpContext *context,
                                gpointer     display)
 {
+  GimpObject *old_display;
+
   if (context->display == display)
     return;
+
+  old_display = context->display;
 
   context->display = display;
 
@@ -1781,6 +1785,10 @@ gimp_context_real_set_display (GimpContext *context,
 
       if (image)
         g_object_unref (image);
+    }
+  else if (old_display)
+    {
+      gimp_context_real_set_image (context, NULL);
     }
 
   g_object_notify (G_OBJECT (context), "display");
