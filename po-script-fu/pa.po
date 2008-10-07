@@ -2,267 +2,215 @@
 # Copyright (C) 2004 THE gimp-script-fu'S COPYRIGHT HOLDER
 #
 #
-# This file is distributed under the same license as the gimp-script-fu packageJaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
-# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
-# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
-# ASB <aalam@users.sf.net>, 2007.
-# A S Alam <apbrar@gmail.com>, 2007.
+# This file is distributed under the same license as the gimp-script-fu package
+#Jaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
+# ASB <aalam@users.sf.net>, 2005,2006,2007.
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-27 05:35+0100\n"
-"PO-Revision-Date: 2007-10-18 09:28+0530\n"
-"Last-Translator: A S Alam <apbrar@gmail.com>\n"
-"Language-Team:  <pa@li.org>\n"
+"POT-Creation-Date: 2008-09-17 11:19+0000\n"
+"PO-Revision-Date: 2008-10-07 06:35+0000\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-l10n@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: LoKalize 0.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:135
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:131
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Script-Fu Console"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਕਨਸੋਲ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Welcome to TinyScheme"
 msgstr "ਟਿਨੀ-ਸਕੀਮ ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:204
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Interactive Scheme Development"
 msgstr "ਇੰਟਰ-ਐਕਟਿਵ ਸਕੀਮ ਡਿਵੈਲਪਮਿੰਟ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:240
+#: ../plug-ins/script-fu/script-fu-console.c:236
 msgid "_Browse..."
 msgstr "ਝਲਕ(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:300
+#: ../plug-ins/script-fu/script-fu-console.c:294
 msgid "Save Script-Fu Console Output"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਕਨਸੋਲ ਆਉਟਪੁੱਟ ਸੰਭਾਲੋ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:347
+#: ../plug-ins/script-fu/script-fu-console.c:341
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ਨੂੰ ਲਿਖਣ ਲਈ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:376
+#: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "Script-Fu Procedure Browser"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਪਰੋਸੀਜ਼ਰ ਬਰਾਊਜ਼ਰ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:719
+#: ../plug-ins/script-fu/script-fu-eval.c:63
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਏਵੂਲੇਸ਼ਨ ਮੋਡ ਸਿਰਫ਼ ਨਾ-ਇੰਟਰਐਕਟਿਵ ਰੂਪ ਵਿੱਚ ਹੀ ਮਨਜ਼ੂਰ ਹੈ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਇੱਕੋ ਸਮੇਂ ਦੋ ਸਕ੍ਰਿਪਟਾਂ ਨੂੰ ਪਰੋਸੈਸ ਨਹੀਂ ਕਰ ਸਕਦੀ ਹੈ।"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ \"%s\" ਸਕ੍ਰਿਪਟ ਚਲਾ ਰਹੇ ਹੋ।"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:244
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#: ../plug-ins/script-fu/script-fu-interface.c:306
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:354
 msgid "Script-Fu Color Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਰੰਗ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu File Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਫਾਇਲ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Folder Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਫੋਲਡਰ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Font Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਫੋਂਟ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:489
 msgid "Script-Fu Palette Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:498
 msgid "Script-Fu Pattern Selection"
 msgstr "ਸਕਰਿਪਟ-fu ਪੈਟਰਨ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:507
 msgid "Script-Fu Gradient Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਗਰੇਡੀਐਂਟ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:516
 msgid "Script-Fu Brush Selection"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਬੁਰਸ਼ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-interface.c:918
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"ਚਲਾਉਣ ਸਮੇਂ ਗਲਤੀ\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while executing %s:"
+msgstr "%s ਚਲਾਉਣ ਸਮੇਂ ਗਲਤੀ:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:709
+#, c-format
+msgid "Error while loading %s:"
+msgstr "%s ਲੋਡ ਕਰਨ ਲਈ ਗਲਤੀ:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਸਰਵਰ ਚੋਣ"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:718
 msgid "_Start Server"
 msgstr "ਸਰਵਰ ਸਟਾਰਟ(_S)"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:746
 msgid "Server port:"
 msgstr "ਸਰਵਰ ਪੋਰਟ:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:752
 msgid "Server logfile:"
 msgstr "ਸਰਵਰ ਲਾਗ-ਫਾਇਲ:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਡਿਵੈਲਪਮਿੰਟ ਲਈ ਇੰਟਰ-ਐਕਟਿਵ ਕਨਸੋਲ"
 
-#: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ ਕਨਸੋਲ(_C)"
+#: ../plug-ins/script-fu/script-fu.c:117
+msgid "_Console"
+msgstr "ਕਨਸੋਲ(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "ਰਿਮੋਟ ਸਕ੍ਰਿਪਟ-ਫੂ ਓਪਰੇਸ਼ਨ ਲਈ ਸਰਵਰ"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:146
 msgid "_Start Server..."
 msgstr "ਸਰਵਰ ਸਟਾਰਟ(_S)..."
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_GIMP Online"
 msgstr "ਜੈਮਪ ਆਨਲਾਈਨ(_G)"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_User Manual"
 msgstr "ਯੂਜ਼ਰ ਮੈਨੂਅਲ(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Script-Fu"
 msgstr "ਸਕ੍ਰਿਪਟ-ਫੂ(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:304
-msgid "_Buttons"
-msgstr "ਬਟਨ(_B)"
-
-#: ../plug-ins/script-fu/script-fu.c:306
-msgid "_Logos"
-msgstr "ਲੋਗੋ(_L)"
-
 #: ../plug-ins/script-fu/script-fu.c:308
-msgid "_Misc"
-msgstr "ਫੁਟਕਲ(_M)"
-
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "_Patterns"
-msgstr "ਪੈਟਰਨ(_P)"
-
-#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "ਟੈਸਟ(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "_Utilities"
-msgstr "ਸਹੂਲਤਾਂ(_U)"
+#: ../plug-ins/script-fu/script-fu.c:311
+msgid "_Buttons"
+msgstr "ਬਟਨ(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "_Logos"
+msgstr "ਲੋਗੋ(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:315
+msgid "_Patterns"
+msgstr "ਪੈਟਰਨ(_P)"
+
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Web Page Themes"
 msgstr "ਵੈੱਬ ਪੇਜ਼ ਥੀਮ(_W)"
 
-#: ../plug-ins/script-fu/script-fu.c:318
-msgid "_Alien Glow"
-msgstr ""
-
 #: ../plug-ins/script-fu/script-fu.c:320
-msgid "_Beveled Pattern"
-msgstr ""
+msgid "_Alien Glow"
+msgstr "ਏਲੀਅਨ ਗਲੋ(_A)"
 
 #: ../plug-ins/script-fu/script-fu.c:322
+msgid "_Beveled Pattern"
+msgstr "ਬੀਵੀਲਡ ਪੈਟਰਨ(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "ਐਲਫਾ ਤੋਂ ਲੋਗੋ(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:327
-msgid "An_imation"
-msgstr "ਐਨੀਮੇਸ਼ਨ(_i)"
-
-#: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Animators"
-msgstr "ਐਨੀਮੇਟਰ(_A)"
-
-#: ../plug-ins/script-fu/script-fu.c:331
-msgid "_Artistic"
-msgstr "ਆਰਟਿਸਕ(_A)"
-
-#: ../plug-ins/script-fu/script-fu.c:333
-msgid "_Blur"
-msgstr "ਧੱਬਾ(_B)"
-
-#: ../plug-ins/script-fu/script-fu.c:335
-msgid "_Decor"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu.c:337
-msgid "_Effects"
-msgstr "ਪਰਭਾਵ(_E)"
-
-#: ../plug-ins/script-fu/script-fu.c:339
-msgid "En_hance"
-msgstr "ਇੰਹਾਂਸ(_h)"
-
-#: ../plug-ins/script-fu/script-fu.c:341
-msgid "_Light and Shadow"
-msgstr "ਲਾਈਟ ਅਤੇ ਛਾਂ(_L)"
-
-#: ../plug-ins/script-fu/script-fu.c:343
-msgid "S_hadow"
-msgstr "ਛਾਂ(_h)"
-
-#: ../plug-ins/script-fu/script-fu.c:345
-msgid "_Render"
-msgstr "ਰੈਂਡਰ(_R)"
-
-#: ../plug-ins/script-fu/script-fu.c:347
-msgid "_Alchemy"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "Re-read all available Script-Fu scripts"
 msgstr "ਸਭ ਉਪਲੱਬਧ ਸਕ੍ਰਿਪਟ-ਫੂ ਸਕ੍ਰਿਪਟਾਂ ਮੁੜ-ਪੜ੍ਹੋ"
 
-#: ../plug-ins/script-fu/script-fu.c:355
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Refresh Scripts"
 msgstr "ਸਕ੍ਰਿਪਟਾਂ ਤਾਜ਼ਾ ਕਰੋ(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:378
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -318,8 +266,7 @@ msgstr "ਡਿਫਾਲਟ ਬੰਪਮੈਪ ਸੈਟਿੰਗ"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -357,8 +304,7 @@ msgstr "ਫੋਂਟ"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -432,8 +378,7 @@ msgstr "ਛਾਂ ਧੱਬਾ ਰੇਡੀਅਸ"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -467,8 +412,6 @@ msgstr "3_D ਟਰੂਚੀਟ"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -587,7 +530,7 @@ msgstr "ਸਮਤਲ ਚਿੱਤਰ"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "ਚਮਕ ਰੰਗ"
 
@@ -697,7 +640,7 @@ msgstr "ਗਲੋ ਉਲਟ(_G)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr ""
+msgstr "ਟੈਕਸਟ ਦੇ ਦੁਆਲੇ ਏਲੀਅਨ ਗਲੋ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
@@ -838,7 +781,7 @@ msgstr "ਚੌੜਾਈ"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "ਬਲੈਂਡ ਐਨੀਮੇਸ਼ਨ ਲਈ ਘੱਟੋ-ਘੱਟ ਤਿੰਨ ਸਰੋਤ ਲੇਅਰਾਂ ਦੀ ਲੋੜ ਪੈਂਦੀ ਹੈ"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
@@ -878,7 +821,7 @@ msgstr "ਮਿਸ਼ਰਣ ਮੋਡ"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "ਬਲੈਂਡ ਬੈਕਗਰਾਊਂਡ, ਹਾਈਲਾਈਟ ਅਤੇ ਸ਼ੈਡੋ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -1053,7 +996,7 @@ msgstr "ਕਰਵ..."
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr ""
+msgstr "ਉੱਭਰੇ ਹੋਏ ਟੈਕਸਟ ਜਾਂ ਇੱਕ ਖਾਸ ਬੈਕਗਰਾਊਂਡ ਚਿੱਤਰ ਵਿੱਚ ਕਰਵ ਕੀਤੇ ਟੈਕਸਟ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1155,11 +1098,11 @@ msgstr "ਹਾਈਲਾਈਟ ਬੈਂਲਨਸ"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 msgid "Stencil C_hrome..."
-msgstr ""
+msgstr "ਸਟੈਨਸਿਲ ਚਕਰੋਮ(_h)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr ""
+msgstr "ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਲਈ ਇੱਕ ਸਧਾਰਨ ਚਰੋਮ ਪਰਭਾਵ ਲਾਗੂ ਕਰੋ"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
@@ -1294,6 +1237,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ)"
 
@@ -1343,7 +1288,7 @@ msgstr "ਥਰੈਸ਼ਹੋਲਡ (ਵੱਡਾ 1<-->255 ਛੋਟਾ)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr ""
+msgstr "ਫੈਲਾਓ(ਡਿਸਟਾਰਟ)(_D)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -1689,7 +1634,6 @@ msgid "Pattern (text)"
 msgstr "ਪੈਟਰਨ (ਟੈਕਸਟ)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "ਛਾਂ"
 
@@ -1716,10 +1660,6 @@ msgstr "ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਲਈ ਇੱਕ �
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "ਇੱਕ ਲੋਗੋ ਬਣਾਓ, ਜੋ ਕਿ ਗਲੋਇੰਗ ਹਾਟ ਮੈਂਟਲ ਵਰਗੇ ਜਾਪੇ"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1825,46 +1765,6 @@ msgstr "ਸਭ ਹਾਰੀਜ਼ਟਲ ਅਤੇ ਵਰਟੀਕਲ ਗਾਈ�
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "ਸਭ ਗਾਈਡਾਂ ਹਟਾਓ(_R)"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "BG ਧੁੰਦਲਾਪਨ"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "ਰੰਗਤ, ਸਤ੍ਰਿਪਤਾ ਅਤੇ ਮੁੱਲ ਡਿਸਟਰੀਬਿਊਸ਼ਨ ਮੁਤਾਬਕ ਗਰਾਫ਼ ਬਣਾਓ"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "_HSV ਗਰਾਫ ਡਰਾਅ ਕਰੋ..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "ਅੰਤ X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "ਅੰਤ Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "ਉੱਤੇ-ਖੱਬੇ ਤੋਂ ਹੇਠਾਂ-ਸੱਜੇ ਤੱਕ"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "ਗਰਾਫ ਸਕੇਲ"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "ਸ਼ੁਰੂਆਤ X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "ਸ਼ੁਰੂਆਤ Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "ਹੇਠਾਂ ਮੁੱਲ ਦੀ ਬਜਾਏ ਚੋਣ ਬਾਊਂਡ ਵਰਤੋਂ"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -2000,10 +1900,6 @@ msgstr "ਇੱਕ ਨੀਆਨ ਸਾਇਨ ਦੇ ਸਟਾਇਲ ਵਿੱਚ 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "ਛਾਂ ਬਣਾਓ"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -2264,7 +2160,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
-msgstr ""
+msgstr "ਪਲੈਅਟ"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
@@ -2342,26 +2238,6 @@ msgstr "ਇੱਕ ਸਪੀਡੀ ਟੈਕਸਟ ਪਰਭਾਵ ਨਾਲ ਇ�
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "ਸਪੀਡ ਟੈਕਸਟ..."
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "ਇੱਕ ਡਰਾਪ ਛਾਂ ਨਾਲ ਇੱਕ ਸੈਂਪਲ ਚੱਕਰ ਬਣਾਓ"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "ਲਾਈਟਿੰਗ (ਡਿਗਰੀ)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "ਰੇਡੀਅਸ (ਪਿਕਸਲ)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "ਗੋਲਾ ਰੰਗ"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "ਗੋਲਾ(_S)..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
@@ -2508,43 +2384,11 @@ msgstr "ਕਿਸਮ"
 msgid "_Spyrogimp..."
 msgstr "ਸਪਾਇਰੋ-ਜੈਮਪ(_S)..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "ਬੱਰਸਟ ਰੰਗ"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰੋ ਅਤੇ ਇੱਕ ਛਾਂ ਸ਼ਾਮਲ ਕਰੋ"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "ਸਟਾਰ-ਬਰੱਸਟ(_u)..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr "ਰਾਕ-ਵਰਗੇ ਟੈਕਸਟ, ਇੱਕ ਨੋਵਾ ਗਲੋ ਅਤੇ ਛਾਂ ਦੀ ਵਰਤੋਂ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "ਪਰਭਾਵ ਅਕਾਰ (ਪਿਕਸਲ *4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਰਾਕ-ਵਰਗੇ ਟੈਕਸਟ, ਇੱਕ ਨੋਵਾ ਗਲੋ ਅਤੇ ਛਾਂ ਨਾਲ ਭਰੋ"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "ਸਟਾਰ-ਸਕੋਪ(_r)..."
 
@@ -2636,7 +2480,8 @@ msgstr "ਆਖਰੀ ਬਲੈਂਡ"
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਇੱਕ ਟੈਕਸਟ ਭਰੋ ਅਤੇ ਹਾਈ-ਲਾਈਟ, ਛਾਂ ਅਤੇ ਇੱਕ ਮੋਸਿਕ ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ ਕਰੋ"
+msgstr ""
+"ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਇੱਕ ਟੈਕਸਟ ਭਰੋ ਅਤੇ ਹਾਈ-ਲਾਈਟ, ਛਾਂ ਅਤੇ ਇੱਕ ਮੋਸਿਕ ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2818,7 +2663,7 @@ msgstr "ਮਾਰਗ ਵਰਤੋਂ(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "ਮੁੱਢਲੇ ਸਿਧਾਂਤ(_B)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
@@ -2879,4 +2724,113 @@ msgstr "ਹਾਈਲਾਈਟ ਧੁੰਦਲਾਪਣ"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-ਪ੍ਰਭਾਵ..."
+
+#~ msgid "_Misc"
+#~ msgstr "ਫੁਟਕਲ(_M)"
+
+#~ msgid "_Utilities"
+#~ msgstr "ਸਹੂਲਤਾਂ(_U)"
+
+#~ msgid "An_imation"
+#~ msgstr "ਐਨੀਮੇਸ਼ਨ(_i)"
+
+#~ msgid "_Animators"
+#~ msgstr "ਐਨੀਮੇਟਰ(_A)"
+
+#~ msgid "_Artistic"
+#~ msgstr "ਆਰਟਿਸਕ(_A)"
+
+#~ msgid "_Blur"
+#~ msgstr "ਧੱਬਾ(_B)"
+
+#~ msgid "_Effects"
+#~ msgstr "ਪਰਭਾਵ(_E)"
+
+#~ msgid "En_hance"
+#~ msgstr "ਇੰਹਾਂਸ(_h)"
+
+#~ msgid "_Light and Shadow"
+#~ msgstr "ਲਾਈਟ ਅਤੇ ਛਾਂ(_L)"
+
+#~ msgid "S_hadow"
+#~ msgstr "ਛਾਂ(_h)"
+
+#~ msgid "_Render"
+#~ msgstr "ਰੈਂਡਰ(_R)"
+
+#~ msgid "Effect size (pixels * 3)"
+#~ msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 3)"
+
+#~ msgid "BG opacity"
+#~ msgstr "BG ਧੁੰਦਲਾਪਨ"
+
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr "ਰੰਗਤ, ਸਤ੍ਰਿਪਤਾ ਅਤੇ ਮੁੱਲ ਡਿਸਟਰੀਬਿਊਸ਼ਨ ਮੁਤਾਬਕ ਗਰਾਫ਼ ਬਣਾਓ"
+
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "_HSV ਗਰਾਫ ਡਰਾਅ ਕਰੋ..."
+
+#~ msgid "End X"
+#~ msgstr "ਅੰਤ X"
+
+#~ msgid "End Y"
+#~ msgstr "ਅੰਤ Y"
+
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "ਉੱਤੇ-ਖੱਬੇ ਤੋਂ ਹੇਠਾਂ-ਸੱਜੇ ਤੱਕ"
+
+#~ msgid "Graph scale"
+#~ msgstr "ਗਰਾਫ ਸਕੇਲ"
+
+#~ msgid "Start X"
+#~ msgstr "ਸ਼ੁਰੂਆਤ X"
+
+#~ msgid "Start Y"
+#~ msgstr "ਸ਼ੁਰੂਆਤ Y"
+
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "ਹੇਠਾਂ ਮੁੱਲ ਦੀ ਬਜਾਏ ਚੋਣ ਬਾਊਂਡ ਵਰਤੋਂ"
+
+#~ msgid "Effect size (pixels * 5)"
+#~ msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 5)"
+
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "ਇੱਕ ਡਰਾਪ ਛਾਂ ਨਾਲ ਇੱਕ ਸੈਂਪਲ ਚੱਕਰ ਬਣਾਓ"
+
+#~ msgid "Lighting (degrees)"
+#~ msgstr "ਲਾਈਟਿੰਗ (ਡਿਗਰੀ)"
+
+#~ msgid "Radius (pixels)"
+#~ msgstr "ਰੇਡੀਅਸ (ਪਿਕਸਲ)"
+
+#~ msgid "Sphere color"
+#~ msgstr "ਗੋਲਾ ਰੰਗ"
+
+#~ msgid "_Sphere..."
+#~ msgstr "ਗੋਲਾ(_S)..."
+
+#~ msgid "Burst color"
+#~ msgstr "ਬੱਰਸਟ ਰੰਗ"
+
+#~ msgid "Create a logo using a starburst gradient"
+#~ msgstr "ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਇੱਕ ਲੋਗੋ ਬਣਾਓ"
+
+#~ msgid "Effect size (pixels * 30)"
+#~ msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 30)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
+#~ "shadow"
+#~ msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰੋ ਅਤੇ ਇੱਕ ਛਾਂ ਸ਼ਾਮਲ ਕਰੋ"
+
+#~ msgid "Starb_urst..."
+#~ msgstr "ਸਟਾਰ-ਬਰੱਸਟ(_u)..."
+
+#~ msgid "Effect size (pixels * 4)"
+#~ msgstr "ਪਰਭਾਵ ਅਕਾਰ (ਪਿਕਸਲ *4)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
+#~ "glow, and shadow"
+#~ msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਰਾਕ-ਵਰਗੇ ਟੈਕਸਟ, ਇੱਕ ਨੋਵਾ ਗਲੋ ਅਤੇ ਛਾਂ ਨਾਲ ਭਰੋ"
 
