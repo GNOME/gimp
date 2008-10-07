@@ -1,5 +1,17 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-PDB\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GEGL_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
+	-I$(includedir)
+
 noinst_LIBRARIES = libapppdb.a libappinternal-procs.a
 
 libapppdb_a_SOURCES = \
@@ -68,18 +80,5 @@ libappinternal_procs_a_SOURCES = \
 	undo-cmds.c			\
 	unit-cmds.c			\
 	vectors-cmds.c
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-PDB\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GDK_PIXBUF_CFLAGS)	\
-	$(GEGL_CFLAGS)		\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)
 
 EXTRA_DIST = makefile.msc

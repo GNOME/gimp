@@ -1,5 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Menus\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappmenus.a
 
 libappmenus_a_SOURCES = \
@@ -21,17 +32,4 @@ libappmenus_a_SOURCES = \
 	windows-menu.c		\
 	windows-menu.h
 
-
-EXTRA_DIST = \
-	makefile.msc
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Menus\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)
+EXTRA_DIST = makefile.msc

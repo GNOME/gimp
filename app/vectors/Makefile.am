@@ -8,9 +8,8 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
-	$(GDK_PIXBUF_CFLAGS)	\
 	$(CAIRO_CFLAGS)		\
-	$(GLIB_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappvectors.a

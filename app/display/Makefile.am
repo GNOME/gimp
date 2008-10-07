@@ -1,5 +1,17 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Display\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GEGL_CFLAGS)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappdisplay.a
 
 libappdisplay_a_sources = \
@@ -73,18 +85,6 @@ libappdisplay_a_built_sources = display-enums.c
 libappdisplay_a_SOURCES = \
 	$(libappdisplay_a_built_sources)	\
 	$(libappdisplay_a_sources)
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Display\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	$(GEGL_CFLAGS)		\
-	-I$(includedir)
 
 EXTRA_DIST = makefile.msc
 
