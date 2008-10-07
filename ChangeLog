@@ -12,9 +12,11 @@
 
 2008-10-06  Sven Neumann  <sven@gimp.org>
 
+	Bug 555280 – some gif files will not be open
+
 	* plug-ins/common/file-gif-load.c (GetCode): be more tolerant and
 	continue loading with a warning message if there are bits missing
-	at the end of the file. Fixes bug #555280.
+	at the end of the file.
 
 2008-10-06  Sven Neumann  <sven@gimp.org>
 
@@ -106,8 +108,11 @@
 
 2008-10-05  Sven Neumann  <sven@gimp.org>
 
+	Bug 554890 – JPEG Save Options Dialog does not remember
+	Subsampling mode
+
 	* plug-ins/file-jpeg/jpeg.c (run): fixed problem introduced by the
-	use of an enum for the subsampling factor. Fixes bug #554890.
+	use of an enum for the subsampling factor.
 
 2008-10-04  Michael Natterer  <mitch@gimp.org>
 
@@ -162,10 +167,12 @@
 
 2008-10-03  Sven Neumann  <sven@gimp.org>
 
+	Bug 554966 – Gimp crashes creating a new image using a template
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_update_scrollbars)
 	(gimp_display_shell_scale_update_rulers): bail out early if
-	shell->display is NULL. Fixes crash reported on the mailing-list.
+	shell->display is NULL.
 
 2008-10-03  Michael Natterer  <mitch@gimp.org>
 
@@ -227,6 +234,8 @@
 	* app/display/display-enums.c: Regenerated.
 
 2008-10-02  Sven Neumann  <sven@gimp.org>
+
+	Bug 554898 – Compile failure on uri-backend-wget.c
 
 	* plug-ins/file-uri/uri-backend-wget.c: removed spurious commas
 	that broke the build.
