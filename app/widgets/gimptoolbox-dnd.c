@@ -93,6 +93,9 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   dock = GIMP_DOCK (toolbox);
 
+  gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
+                              gimp_toolbox_drop_uri_list,
+                              dock->context);
   gimp_dnd_uri_list_dest_add (toolbox->vbox,
                               gimp_toolbox_drop_uri_list,
                               dock->context);

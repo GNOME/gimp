@@ -1,5 +1,12 @@
 2008-10-07  Michael Natterer  <mitch@gimp.org>
 
+	Bug 555362 – gimp-remote is not working properly
+
+	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_dnd_init): add the
+	window itself as drop traget again so gimp-remote works.
+
+2008-10-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/*/Makefile.am: reorder sections consistently. Remove
 	redundant CFLAGS.
 
