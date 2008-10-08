@@ -1557,10 +1557,14 @@ add_merged_image (const gint32  image_id,
       if (img_a->transparency)
         {
           offset = 1;
+
           /* Free "Transparency" channel name */
-          alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
-          if (alpha_name)
-            g_free (alpha_name);
+          if (img_a->alpha_names)
+            {
+              alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
+              if (alpha_name)
+                g_free (alpha_name);
+            }
         }
       else
         offset = 0;

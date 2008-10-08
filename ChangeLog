@@ -1,3 +1,10 @@
+2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 555587 – PSD file crashes PSD plug-in
+
+	* plug-ins/file-psd/psd-load.c (add_merged_image): Handle
+	img_a->alpha_names being NULL.
+
 2008-10-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpruler.c: cosmetics.
