@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-04 20:23+0900\n"
-"PO-Revision-Date: 2008-10-04 18:18+0900\n"
+"POT-Creation-Date: 2008-10-08 21:54+0900\n"
+"PO-Revision-Date: 2008-10-08 00:00+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -599,7 +599,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:913 ../plug-ins/common/file-pcx.c:412
+#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
 #: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
@@ -3227,28 +3227,28 @@ msgstr "これは GIF ファイルではありません"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "非正方形ピクセルです。画像が潰れたように見えるかもしれません。"
 
-#: ../plug-ins/common/file-gif-load.c:915
+#: ../plug-ins/common/file-gif-load.c:913
 #, c-format
 msgid "Background (%d%s)"
 msgstr "背景 (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:938
+#: ../plug-ins/common/file-gif-load.c:936
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "(フレーム %2$d として) %1$s を開いています..."
 
-#: ../plug-ins/common/file-gif-load.c:967 ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:791
 #: ../plug-ins/common/iwarp.c:826
 #, c-format
 msgid "Frame %d"
 msgstr "フレーム %d"
 
-#: ../plug-ins/common/file-gif-load.c:969
+#: ../plug-ins/common/file-gif-load.c:967
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "フレーム %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1000
+#: ../plug-ins/common/file-gif-load.c:998
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3881,7 +3881,7 @@ msgstr "透明ピクセルの色の値を保存(_V)"
 msgid "Co_mpression level:"
 msgstr "圧縮レベル(_M): "
 
-#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1187
+#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1185
 msgid "_Load Defaults"
 msgstr "既定値を読み込み(_L)"
 
@@ -3899,7 +3899,7 @@ msgstr "PNM 画像"
 
 #: ../plug-ins/common/file-pnm.c:279
 msgid "PBM image"
-msgstr "PNM 画像"
+msgstr "PBM 画像"
 
 #: ../plug-ins/common/file-pnm.c:291
 msgid "PGM image"
@@ -8011,7 +8011,8 @@ msgstr "波長(_W):"
 msgid "Waving"
 msgstr "波立たせています"
 
-#: ../plug-ins/common/web-browser.c:197
+#: ../plug-ins/common/web-browser.c:206
+#, c-format
 msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences dialog."
@@ -8019,7 +8020,7 @@ msgstr ""
 "ウェブブラウザが指定されていません。\n"
 "環境設定ダイアログで使用するウェブブラウザを指定してください。"
 
-#: ../plug-ins/common/web-browser.c:217
+#: ../plug-ins/common/web-browser.c:228
 #, c-format
 msgid ""
 "Could not parse the web browser command specified in the Preferences "
@@ -8031,7 +8032,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/common/web-browser.c:231
+#: ../plug-ins/common/web-browser.c:246
 #, c-format
 msgid ""
 "Could not execute the web browser specified in the Preferences dialog:\n"
@@ -8196,7 +8197,7 @@ msgstr "BMP 形式で保存する"
 msgid "_Run-Length Encoded"
 msgstr "RLE エンコード(_R)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:896
+#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:899
 msgid "_Advanced Options"
 msgstr "詳細設定(_A)"
 
@@ -8366,71 +8367,71 @@ msgstr "JPEG プレビュー"
 msgid "File size: %02.01f kB"
 msgstr "ファイルサイズ: %02.01f kB"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:679
+#: ../plug-ins/file-jpeg/jpeg-save.c:682
 msgid "Calculating file size..."
 msgstr "ファイルサイズを計算しています..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:770 ../plug-ins/file-jpeg/jpeg-save.c:872
+#: ../plug-ins/file-jpeg/jpeg-save.c:773 ../plug-ins/file-jpeg/jpeg-save.c:875
 msgid "File size: unknown"
 msgstr "ファイルサイズ: 不明"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:823
+#: ../plug-ins/file-jpeg/jpeg-save.c:826
 msgid "Save as JPEG"
 msgstr "JPEG 形式で保存する"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:858
+#: ../plug-ins/file-jpeg/jpeg-save.c:861
 msgid "_Quality:"
 msgstr "品質(_Q):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:862
+#: ../plug-ins/file-jpeg/jpeg-save.c:865
 msgid "JPEG quality parameter"
 msgstr "JPEG 品質パラメータ"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:881
+#: ../plug-ins/file-jpeg/jpeg-save.c:884
 msgid "Enable preview to obtain the file size."
 msgstr "ファイル容量のプレビューを有効にします。"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:884
+#: ../plug-ins/file-jpeg/jpeg-save.c:887
 msgid "Sho_w preview in image window"
 msgstr "画像ウィンドウでプレビュー(_W)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:925
+#: ../plug-ins/file-jpeg/jpeg-save.c:928
 msgid "S_moothing:"
 msgstr "スムージング(_M):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:938
+#: ../plug-ins/file-jpeg/jpeg-save.c:941
 msgid "Frequency (rows):"
 msgstr "頻度(列):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:954
+#: ../plug-ins/file-jpeg/jpeg-save.c:957
 msgid "Use _restart markers"
 msgstr "リスタートマーカーを使用(_R)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:970
+#: ../plug-ins/file-jpeg/jpeg-save.c:973
 msgid "_Optimize"
 msgstr "最適化(_O)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:984
+#: ../plug-ins/file-jpeg/jpeg-save.c:987
 msgid "_Progressive"
 msgstr "プログレッシブ(_P)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1000
+#: ../plug-ins/file-jpeg/jpeg-save.c:1003
 msgid "Save _EXIF data"
 msgstr "EXIF データを保存(_E)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1017
+#: ../plug-ins/file-jpeg/jpeg-save.c:1020
 msgid "Save _thumbnail"
 msgstr "サムネイルを保存(_T)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1034
+#: ../plug-ins/file-jpeg/jpeg-save.c:1037
 msgid "Save _XMP data"
 msgstr "XMP データを保存(_X)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1049
+#: ../plug-ins/file-jpeg/jpeg-save.c:1052
 msgid "_Use quality settings from original image"
 msgstr "原画の品位設定を使用(_U)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1055
+#: ../plug-ins/file-jpeg/jpeg-save.c:1058
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8441,48 +8442,48 @@ msgstr ""
 "イズで保存できます"
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1079
+#: ../plug-ins/file-jpeg/jpeg-save.c:1082
 msgid "Su_bsampling:"
 msgstr "サブサンプリング(_B):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1086
+#: ../plug-ins/file-jpeg/jpeg-save.c:1089
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (最高品位)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1088
+#: ../plug-ins/file-jpeg/jpeg-save.c:1091
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1090
+#: ../plug-ins/file-jpeg/jpeg-save.c:1093
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1092
+#: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (最小ファイルサイズ)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1127
+#: ../plug-ins/file-jpeg/jpeg-save.c:1125
 msgid "_DCT method:"
 msgstr "DCT 変換方法(_D):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1133
+#: ../plug-ins/file-jpeg/jpeg-save.c:1131
 msgid "Fast Integer"
 msgstr "高速整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1134
+#: ../plug-ins/file-jpeg/jpeg-save.c:1132
 msgid "Integer"
 msgstr "整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1135
+#: ../plug-ins/file-jpeg/jpeg-save.c:1133
 msgid "Floating-Point"
 msgstr "浮動小数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1151
+#: ../plug-ins/file-jpeg/jpeg-save.c:1149
 msgid "Comment"
 msgstr "コメント"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1196
+#: ../plug-ins/file-jpeg/jpeg-save.c:1194
 msgid "Sa_ve Defaults"
 msgstr "既定値として保存(_V)"
 
