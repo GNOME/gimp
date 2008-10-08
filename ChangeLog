@@ -1,3 +1,7 @@
+2008-10-09  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.6.1 release.
+
 2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 555587 – PSD file crashes PSD plug-in
