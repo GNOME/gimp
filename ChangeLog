@@ -1,5 +1,9 @@
 2008-10-08  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpruler.c: cosmetics.
+
+2008-10-08  Michael Natterer  <mitch@gimp.org>
+
 	Quick hack I needed for debugging and which doesn't hurt:
 
 	* tools/test-clipboard.c (test_clipboard_paste): allow to paste to

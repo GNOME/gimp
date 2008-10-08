@@ -230,11 +230,8 @@ gimp_ruler_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_ORIENTATION:
-      {
-        priv->orientation = g_value_get_enum (value);
-
-        gtk_widget_queue_resize (GTK_WIDGET (ruler));
-      }
+      priv->orientation = g_value_get_enum (value);
+      gtk_widget_queue_resize (GTK_WIDGET (ruler));
       break;
 
     case PROP_UNIT:
@@ -272,10 +269,10 @@ gimp_ruler_set_property (GObject      *object,
 }
 
 static void
-gimp_ruler_get_property (GObject      *object,
-                         guint         prop_id,
-                         GValue       *value,
-                         GParamSpec   *pspec)
+gimp_ruler_get_property (GObject    *object,
+                         guint       prop_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
 {
   GimpRuler        *ruler = GIMP_RULER (object);
   GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
