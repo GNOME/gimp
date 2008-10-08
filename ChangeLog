@@ -1,3 +1,9 @@
+2008-10-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-cache.c: use a GMutex instead of a GStaticMutex
+	as the latter needs API that causes compiler warnings about
+	dereferencing of type-punned pointers.
+
 2008-10-07  Michael Natterer  <mitch@gimp.org>
 
 	Bug 555362 – gimp-remote is not working properly
