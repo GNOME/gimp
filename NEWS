@@ -5,3 +5,34 @@
 
 This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
+
+
+Overview of Changes from GIMP 2.6.0 to GIMP 2.6.1
+=================================================
+
+* Bugs fixed:
+
+ 555587 – PSD file crashes PSD plug-in
+ 555222 – PSD Load Plugin: unsupported compression mode
+ 555362 – gimp-remote is not working properly
+ 555280 – some gif files will not be open
+ 554890 – JPEG Save Options Dialog does not remember
+ 554966 – Gimp crashes creating a new image using a template
+ 554785 – Compile failure on uri-backend-libcurl
+ 554646 – Opening Help crashes GIMP with lqr-plugin installed
+ 553534 – centering issues after image scaling and setting zoom
+ 554898 – Compile failure on uri-backend-wget.c
+
+* Updated translations:
+
+ Belarusian (be)
+ Catalan (ca)
+ Finnish (fi)
+ French (fr)
+ Japanese (ja)
+ Macedonian (mk)
+ Punjab (pa)
+ Brazilian Portuguese (pt_BR)
+ Romanian (ro)
+ Slovenian (sl)
+ Swedish (sv)
