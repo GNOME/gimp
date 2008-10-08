@@ -1,5 +1,12 @@
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
+	* README
+	* NEWS
+	* configure.in: bumped version to 2.7.0 after creating a stable
+	gimp-2-6 branch.
+
+2008-10-09  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.6.1 release.
 
 2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
