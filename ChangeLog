@@ -1,3 +1,10 @@
+2008-10-08  Michael Natterer  <mitch@gimp.org>
+
+	Quick hack I needed for debugging and which doesn't hurt:
+
+	* tools/test-clipboard.c (test_clipboard_paste): allow to paste to
+	STDOUT by passing '-' as filename.
+
 2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/file-psd/psd-load.c (add_layers): Decrease scope of
