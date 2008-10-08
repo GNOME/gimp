@@ -1,5 +1,10 @@
 2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* plug-ins/file-psd/psd-load.c (add_layers): Decrease scope of
+	comp_mode and initialize it.
+
+2008-10-08  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Bug 555222 – PSD Load Plugin: unsupported compression mode
 
 	* plug-ins/file-psd/psd-load.c (add_layers): Some PSD files can

@@ -962,7 +962,6 @@ add_layers (const gint32  image_id,
 {
   PSDchannel          **lyr_chn;
   guchar               *pixels;
-  guint16               comp_mode;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels;
@@ -1056,6 +1055,8 @@ add_layers (const gint32  image_id,
           lyr_chn = g_new (PSDchannel *, lyr_a[lidx]->num_channels);
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
+              guint16 comp_mode = PSD_COMP_RAW;
+
               /* Allocate channel record */
               lyr_chn[cidx] = g_malloc (sizeof (PSDchannel) );
 
