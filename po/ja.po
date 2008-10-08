@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-03 00:18+0900\n"
-"PO-Revision-Date: 2008-10-01 00:09+0900\n"
+"POT-Creation-Date: 2008-10-08 21:50+0900\n"
+"PO-Revision-Date: 2008-10-08 00:21+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -664,7 +664,7 @@ msgstr "選択範囲との交わり(_I)"
 
 #: ../app/actions/channels-actions.c:124
 msgid "Intersect this channel with the current selection"
-msgstr "現在の選択範囲とチャンネルとの交差部分を新しい選択範囲にします"
+msgstr "現在の選択範囲とチャンネルの交差部分で新しい選択範囲を作成します"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:393
@@ -703,7 +703,7 @@ msgstr "チャンネル表示色"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
-#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s チャンネルのコピー"
@@ -860,12 +860,12 @@ msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:180 ../app/dialogs/file-open-dialog.c:213
-#: ../app/dialogs/file-open-dialog.c:259
+#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:520
-#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -1931,7 +1931,9 @@ msgstr "復帰(_V)"
 
 #: ../app/actions/file-actions.c:96
 msgid "Reload the image file from disk"
-msgstr "この画像ドキュメントをディスクから再読み込みします。"
+msgstr ""
+"この画像ドキュメントをディスクから再読み込みして編集前の状態（保存後の状態）"
+"に戻します"
 
 #: ../app/actions/file-actions.c:101
 msgid "Close all"
@@ -1947,7 +1949,7 @@ msgstr "終了(_Q)"
 
 #: ../app/actions/file-actions.c:108
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "GIMP を終了します。"
+msgstr "GIMP を終了します"
 
 #: ../app/actions/file-actions.c:116
 msgid "_Save"
@@ -1955,7 +1957,7 @@ msgstr "保存(_S)"
 
 #: ../app/actions/file-actions.c:117
 msgid "Save this image"
-msgstr "この画像を上書き保存します。"
+msgstr "この画像を上書き保存します"
 
 #: ../app/actions/file-actions.c:122
 msgid "Save _As..."
@@ -1989,11 +1991,20 @@ msgstr "保存して終了..."
 msgid "Save this image and close its window"
 msgstr "この画像を上書き保存して、画像ウィンドウを閉じます。"
 
-#: ../app/actions/file-commands.c:259
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/dialogs/file-open-dialog.c:76
+msgid "Open Image"
+msgstr "画像を開く"
+
+#: ../app/actions/file-commands.c:125
+msgid "Open Image as Layers"
+msgstr "レイヤーとして画像を開く"
+
+#: ../app/actions/file-commands.c:260
 msgid "Saving canceled"
 msgstr "保存をキャンセル"
 
-#: ../app/actions/file-commands.c:268 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -2005,54 +2016,51 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:293
+#: ../app/actions/file-commands.c:294
 msgid "No changes need to be saved"
 msgstr "保存が必要な変更はありません"
 
-#: ../app/actions/file-commands.c:300 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: ../app/actions/file-commands.c:306
+#: ../app/actions/file-commands.c:307
 msgid "Save a Copy of the Image"
 msgstr "画像のコピーを保存"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:327
 msgid "Create New Template"
 msgstr "新しいテンプレートを作成"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:331
 msgid "Enter a name for this template"
 msgstr "このテンプレートに対する名前を入力して下さい"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:357
 msgid "Revert failed. No file name associated with this image."
-msgstr "復帰に失敗しました。この画像に対するファイル名がありません。"
+msgstr ""
+"復帰に失敗しました\n"
+"この画像に結びつくドキュメント名が見つかりません"
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:370
 msgid "Revert Image"
-msgstr "画像の復帰"
+msgstr "復帰（画像を元に戻す）"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:396
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "'%s'から'%s'に復元"
+msgstr ""
+"' %2$s ' を再読み込みして\n"
+"画像 %1$s を元に戻しますか？"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:402
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"画像をディスクに保存されている状態に復元すると、操作履歴も含めたすべての変更"
-"が失われます。"
-
-#: ../app/actions/file-commands.c:477
-msgid "Open Image as Layers"
-msgstr "レイヤーとして画像を開く"
-
-#: ../app/actions/file-commands.c:482 ../app/dialogs/file-open-dialog.c:76
-msgid "Open Image"
-msgstr "画像を開く"
+"「復帰」を実行すると、この画像ドキュメントの名前で最後に保存されたときの状態"
+"に戻ります。\n"
+"保存されていない変更と操作履歴はすべて破棄されます。"
 
 #: ../app/actions/file-commands.c:557
 msgid "(Unnamed Template)"
@@ -2065,7 +2073,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"'%s' の復帰に失敗しました：\n"
+"'%s' の復帰に失敗しました\n"
 "\n"
 "%s"
 
@@ -3021,7 +3029,7 @@ msgstr "現在の選択範囲からレイヤーマスクを差し引きます"
 
 #: ../app/actions/layers-actions.c:279
 msgid "Intersect the layer mask with the current selection"
-msgstr "現在の選択範囲とレイヤーマスクの交差部分を新しい選択範囲にします"
+msgstr "現在の選択範囲とレイヤーマスクの交差部分で新しい選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:287
 msgid "Al_pha to Selection"
@@ -3029,7 +3037,7 @@ msgstr "不透明部分を選択範囲に(_P)"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "レイヤーの不透明部分を選択範囲にします"
+msgstr "レイヤーの不透明部分で選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
 msgid "A_dd to Selection"
@@ -3045,7 +3053,8 @@ msgstr "レイヤーの不透明部分を現在の選択範囲から引きます
 
 #: ../app/actions/layers-actions.c:306
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "レイヤーの不透明部分と現在の選択範囲の交差部分を新しい選択範囲にします"
+msgstr ""
+"現在の選択範囲とレイヤーの不透明部分との交差部分で新しい選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:314
 msgid "_Text to Selection"
@@ -3065,7 +3074,7 @@ msgstr "現在の選択範囲からテキストの輪郭を引きます"
 
 #: ../app/actions/layers-actions.c:333
 msgid "Intersect the text layer's outline with the current selection"
-msgstr "現在の選択範囲とテキストの輪郭の交差部分を新しい選択範囲にします"
+msgstr "現在の選択範囲とテキストの輪郭の交差部分で新しい選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:341
 msgid "Select _Top Layer"
@@ -3146,7 +3155,7 @@ msgstr "レイヤーマスクを選択範囲に"
 msgid "Please select a channel first"
 msgstr "最初にチャンネルを選択してください"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "レイヤーマスク追加"
@@ -3929,7 +3938,9 @@ msgstr "色域を選択(_B)"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
-msgstr "特定の色域を選択範囲に置き換えます"
+msgstr ""
+"特定色の領域で選択範囲を作成します\n"
+"（PhotoShopの「色域指定」ツールに相当します）"
 
 #: ../app/actions/tools-actions.c:105
 msgid "_Arbitrary Rotation..."
@@ -6542,95 +6553,95 @@ msgstr "画像からパラサイトを削除"
 msgid "Add Layer"
 msgstr "レイヤーの追加"
 
-#: ../app/core/gimpimage.c:2940 ../app/core/gimpimage.c:2953
+#: ../app/core/gimpimage.c:2935 ../app/core/gimpimage.c:2948
 msgid "Remove Layer"
 msgstr "レイヤーの削除"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3092
 msgid "Layer cannot be raised higher."
 msgstr "これ以上レイヤーを前面に移動させられません"
 
-#: ../app/core/gimpimage.c:3102
+#: ../app/core/gimpimage.c:3097
 msgid "Raise Layer"
 msgstr "レイヤーを前面へ"
 
-#: ../app/core/gimpimage.c:3121
+#: ../app/core/gimpimage.c:3116
 msgid "Layer cannot be lowered more."
 msgstr "これ以上レイヤーを背面に移動させられません"
 
-#: ../app/core/gimpimage.c:3126
+#: ../app/core/gimpimage.c:3121
 msgid "Lower Layer"
 msgstr "レイヤーを背面へ"
 
-#: ../app/core/gimpimage.c:3137
+#: ../app/core/gimpimage.c:3132
 msgid "Raise Layer to Top"
 msgstr "レイヤーを最前面へ"
 
-#: ../app/core/gimpimage.c:3152
+#: ../app/core/gimpimage.c:3147
 msgid "Lower Layer to Bottom"
 msgstr "レイヤーを最背面へ"
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3209
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: ../app/core/gimpimage.c:3259 ../app/core/gimpimage.c:3270
+#: ../app/core/gimpimage.c:3252 ../app/core/gimpimage.c:3263
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: ../app/core/gimpimage.c:3319
+#: ../app/core/gimpimage.c:3312
 msgid "Channel cannot be raised higher."
 msgstr "これ以上チャンネルを前面に移動させられません"
 
-#: ../app/core/gimpimage.c:3324
+#: ../app/core/gimpimage.c:3317
 msgid "Raise Channel"
 msgstr "チャンネルを前面へ"
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3328
 msgid "Raise Channel to Top"
 msgstr "チャンネルを最前面へ"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3348
 msgid "Channel cannot be lowered more."
 msgstr "これ以上チャンネルを背面に移動させられません"
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3353
 msgid "Lower Channel"
 msgstr "チャンネルを背面へ"
 
-#: ../app/core/gimpimage.c:3375
+#: ../app/core/gimpimage.c:3368
 msgid "Lower Channel to Bottom"
 msgstr "チャンネルを最背面へ"
 
-#: ../app/core/gimpimage.c:3439
+#: ../app/core/gimpimage.c:3432
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: ../app/core/gimpimage.c:3485
+#: ../app/core/gimpimage.c:3476
 msgid "Remove Path"
 msgstr "パスを削除"
 
-#: ../app/core/gimpimage.c:3531
+#: ../app/core/gimpimage.c:3522
 msgid "Path cannot be raised higher."
 msgstr "パスをこれ以上前面に移動させられません。"
 
-#: ../app/core/gimpimage.c:3536
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path"
 msgstr "パスを前面へ"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3538
 msgid "Raise Path to Top"
 msgstr "パスを最前面へ"
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3557
 msgid "Path cannot be lowered more."
 msgstr "パスをこれ以上背面に移動させられません。"
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3562
 msgid "Lower Path"
 msgstr "パスを背面へ"
 
-#: ../app/core/gimpimage.c:3586
+#: ../app/core/gimpimage.c:3577
 msgid "Lower Path to Bottom"
 msgstr "パスを最背面へ"
 
@@ -6749,7 +6760,7 @@ msgstr "レイヤーを反転"
 msgid "Rotate Layer"
 msgstr "レイヤーを回転"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6764,40 +6775,40 @@ msgstr ""
 "フローティング選択範囲\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1263
+#: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "既にレイヤーマスクがあります。これ以上レイヤーマスクを付加する事はできませ"
 "ん。"
 
-#: ../app/core/gimplayer.c:1274
+#: ../app/core/gimplayer.c:1276
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません。"
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
 msgstr "アルファチャンネルをマスクに変換"
 
-#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "レイヤーマスクを適用"
 
-#: ../app/core/gimplayer.c:1555
+#: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
 msgstr "レイヤーマスクを削除"
 
-#: ../app/core/gimplayer.c:1667
+#: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
-#: ../app/core/gimplayer.c:1721
+#: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
 msgstr "アルファチャンネルを削除"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
 msgstr "レイヤーをキャンバスに合わせる"
 
@@ -7177,7 +7188,7 @@ msgstr "モード(_M): "
 msgid "_Opacity:"
 msgstr "不透明度(_O): "
 
-#: ../app/dialogs/file-open-dialog.c:246
+#: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
 msgstr "レイヤーとして開く"
 
@@ -8678,7 +8689,7 @@ msgid "Drop layers"
 msgstr "レイヤーをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:631
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "ドロップされたバッファ"
 
@@ -8806,12 +8817,12 @@ msgstr "'%s:' は、不正な URI スキームです"
 msgid "Invalid character sequence in URI"
 msgstr "URI中に不適切な文字列が含まれます"
 
-#: ../app/gegl/gimpcurvesconfig.c:382
+#: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "GIMP のトーンカーブ設定ファイルではありません"
 
-#: ../app/gegl/gimpcurvesconfig.c:396 ../app/gegl/gimplevelsconfig.c:711
+#: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
 msgstr "解析エラー"
@@ -9125,7 +9136,7 @@ msgstr ""
 "プロシージャ '%s' は、%d 番目の引数に誤ったデータ型（ %s でなければいけないと"
 "ころに %s ）を用いて呼び出されました。"
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:203
+#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "プロシージャ '%s' には戻り値がありませんでした。"
@@ -9749,7 +9760,7 @@ msgstr "色域を選択"
 msgid "Select by Color Tool: Select regions with similar colors"
 msgstr ""
 "【色域を選択】\n"
-"特定色の領域を選択範囲に置き換えます\n"
+"特定色の領域で選択範囲を作成します\n"
 "（PhotoShopの「色域指定」ツールに相当します）"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
@@ -10331,8 +10342,8 @@ msgstr "前景抽出選択"
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "【前景抽出選択】\n"
-"画像から前景のオブジェクトを抽出し、選択範囲に置き換えます（PhotoShop の「抽"
-"出」フィルタに相当します）。"
+"画像から前景のオブジェクトを抽出し、選択範囲を作成します\n"
+"（PhotoShop の「抽出」フィルタに相当します）"
 
 #: ../app/tools/gimpforegroundselecttool.c:147
 msgid "F_oreground Select"
@@ -10609,7 +10620,7 @@ msgstr "電脳はさみ"
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
 "【電脳はさみ】\n"
-"境界を自動計算して、その形状を選択範囲にします\n"
+"境界を自動計算して、その形状で選択範囲を作成します\n"
 "（PhotoShopの「マグネット選択」ツールに相当します）"
 
 #: ../app/tools/gimpiscissorstool.c:280
@@ -11170,8 +11181,8 @@ msgstr "クリック-ドラッグで作成した範囲を、現在の選択範�
 #: ../app/tools/gimpselectiontool.c:282
 msgid "Click-Drag to intersect with the current selection"
 msgstr ""
-"クリック-ドラッグで作成した範囲と現在の選択範囲との交差部分を新たな選択範囲に"
-"します"
+"現在の選択範囲とクリック-ドラッグで作成した範囲の交差部分で新しい選択範囲を作"
+"成します"
 
 #: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to move the selection mask"
@@ -12261,15 +12272,15 @@ msgstr "自動判別"
 msgid "By Extension"
 msgstr "拡張子で判別"
 
-#: ../app/widgets/gimpfiledialog.c:605
+#: ../app/widgets/gimpfiledialog.c:617
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: ../app/widgets/gimpfiledialog.c:610
+#: ../app/widgets/gimpfiledialog.c:622
 msgid "All images"
 msgstr "すべての画像"
 
-#: ../app/widgets/gimpfiledialog.c:739
+#: ../app/widgets/gimpfiledialog.c:751
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "ファイルタイプを選択 (_T)  （現在の設定： %s）"
@@ -13029,7 +13040,7 @@ msgstr "通常のウィンドウ"
 
 #: ../app/widgets/widgets-enums.c:299
 msgid "Utility window"
-msgstr "画像ウィンドウに追随"
+msgstr "ユーティリティウィンドウ"
 
 #: ../app/widgets/widgets-enums.c:300
 msgid "Keep above"
