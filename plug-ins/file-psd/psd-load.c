@@ -962,6 +962,7 @@ add_layers (const gint32  image_id,
 {
   PSDchannel          **lyr_chn;
   guchar               *pixels;
+  guint16               comp_mode;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels;
@@ -1092,13 +1093,12 @@ add_layers (const gint32  image_id,
                                 lyr_chn[cidx]->columns,
                                 lyr_chn[cidx]->rows);
 
-              /* Only read channel data if there is more data than
-               * what compression method that is used
+              /* Only read channel data if there is any channel
+               * data. Note that the channel data can contain a
+               * compression method but no actual data.
                */
-              if (lyr_a[lidx]->chn_info[cidx].data_len > COMP_MODE_SIZE)
+              if (lyr_a[lidx]->chn_info[cidx].data_len >= COMP_MODE_SIZE)
                 {
-                  guint16 comp_mode;
-
                   if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
                     {
                       psd_set_error (feof (f), errno, error);
@@ -1106,7 +1106,9 @@ add_layers (const gint32  image_id,
                     }
                   comp_mode = GUINT16_FROM_BE (comp_mode);
                   IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
-
+                }
+              if (lyr_a[lidx]->chn_info[cidx].data_len > COMP_MODE_SIZE)
+                {
                   switch (comp_mode)
                     {
                       case PSD_COMP_RAW:        /* Planar raw data */
