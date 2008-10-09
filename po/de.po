@@ -16,9 +16,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
+"Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-25 11:14+0200\n"
+"POT-Creation-Date: 2008-10-09 20:49+0200\n"
 "PO-Revision-Date: 2008-09-25 11:15+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -692,9 +692,9 @@ msgid "New Channel Color"
 msgstr "Farbe für neuen Kanal"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:563
+#: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
-#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s (Kopie)"
@@ -852,12 +852,12 @@ msgid "Sample Merged"
 msgstr "Vereinigung prüfen"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:180 ../app/dialogs/file-open-dialog.c:213
-#: ../app/dialogs/file-open-dialog.c:259
+#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:514
-#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/display/gimpdisplayshell-dnd.c:520
+#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -1887,11 +1887,20 @@ msgstr "Speichern und schließen …"
 msgid "Save this image and close its window"
 msgstr "Dieses Bild speichern und das Bildfenster schließen"
 
-#: ../app/actions/file-commands.c:259
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/dialogs/file-open-dialog.c:76
+msgid "Open Image"
+msgstr "Bild öffnen"
+
+#: ../app/actions/file-commands.c:125
+msgid "Open Image as Layers"
+msgstr "Bild als Ebenen öffnen"
+
+#: ../app/actions/file-commands.c:260
 msgid "Saving canceled"
 msgstr "Speichern abgebrochen"
 
-#: ../app/actions/file-commands.c:268 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1903,56 +1912,48 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:293
+#: ../app/actions/file-commands.c:294
 msgid "No changes need to be saved"
 msgstr "Keine Änderungen zu speichern"
 
-#: ../app/actions/file-commands.c:300 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Bild speichern"
 
-#: ../app/actions/file-commands.c:306
+#: ../app/actions/file-commands.c:307
 msgid "Save a Copy of the Image"
 msgstr "Eine Kopie des Bildes speichern"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:327
 msgid "Create New Template"
 msgstr "Eine neue Vorlage erstellen"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:331
 msgid "Enter a name for this template"
 msgstr "Bitte geben Sie dieser Vorlage einen Namen"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:357
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Das Bild konnte nicht wiederhergestellt werden, da kein Dateiname mit dem "
 "Bild verknüpft ist."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:370
 msgid "Revert Image"
 msgstr "Bild wiederherstellen"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:396
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Wollen Sie von »%s« zu »%s« zurückkehren?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:402
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 "Indem Sie das Bild auf den zuletzt gespeicherten Stand zurücksetzen, werden "
 "alle Änderungen einschließlich des Journals verloren gehen."
-
-#: ../app/actions/file-commands.c:477
-msgid "Open Image as Layers"
-msgstr "Bild als Ebenen öffnen"
-
-#: ../app/actions/file-commands.c:482 ../app/dialogs/file-open-dialog.c:76
-msgid "Open Image"
-msgstr "Bild öffnen"
 
 #: ../app/actions/file-commands.c:557
 msgid "(Unnamed Template)"
@@ -2411,7 +2412,7 @@ msgstr "_Hilfslinien"
 msgid "I_nfo"
 msgstr "_Information"
 
-#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:645
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Automatisch"
@@ -3046,7 +3047,7 @@ msgstr "Auswahl aus Ebenenmaske"
 msgid "Please select a channel first"
 msgstr "Bitte wählen Sie zunächst einen Kanal aus"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
@@ -3373,7 +3374,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Schnellmaske umschalten"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1153
+#: ../app/display/gimpdisplayshell.c:1158
 msgid "Toggle Quick Mask"
 msgstr "Schnellmaske umschalten"
 
@@ -3680,7 +3681,7 @@ msgstr "Textdatei (UTF-8) öffnen"
 #: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:314
 #: ../app/core/gimppalette-load.c:368 ../app/core/gimppalette-load.c:456
 #: ../app/core/gimppalette-load.c:599 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:594 ../app/tools/gimplevelstool.c:725
+#: ../app/tools/gimpcurvestool.c:623 ../app/tools/gimplevelstool.c:743
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4363,11 +4364,11 @@ msgstr "A_ndere (%s) …"
 msgid "_Zoom (%s)"
 msgstr "_Vergrößerung (%s)"
 
-#: ../app/actions/view-commands.c:589
+#: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
 msgstr "Farbe des Leinwandrahmens"
 
-#: ../app/actions/view-commands.c:591
+#: ../app/actions/view-commands.c:615
 msgid "Set Custom Canvas Padding Color"
 msgstr "Benutzerdefinierte Farbe des Leinwandrahmens festlegen"
 
@@ -4559,8 +4560,8 @@ msgstr "Die Größenänderung der Auslagerungsdatei ist fehlgeschlagen: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:642
-#: ../app/tools/gimplevelstool.c:752 ../app/vectors/gimpvectors-export.c:83
+#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:676
+#: ../app/tools/gimplevelstool.c:796 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -5163,13 +5164,13 @@ msgstr ""
 "andernfalls wird die Adresse mit einem vorangehenden Leerzeichen direkt "
 "hinter den Befehl gesetzt."
 
-#: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:134
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:206
 #: ../app/plug-in/plug-in-rc.c:213
 msgid "fatal parse error"
 msgstr "Schwerwiegender Syntaxfehler"
 
-#: ../app/config/gimprc-deserialize.c:164
+#: ../app/config/gimprc-deserialize.c:163
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Der Wert für das Symbol %s ist keine gültige UTF-8-Zeichenkette"
@@ -6154,7 +6155,7 @@ msgid "Colorize"
 msgstr "Einfärben"
 
 #: ../app/core/gimpdrawable-curves.c:165 ../app/core/gimpdrawable-curves.c:182
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Kurven"
 
@@ -6186,7 +6187,7 @@ msgid "Invert"
 msgstr "Invertieren"
 
 #: ../app/core/gimpdrawable-levels.c:154 ../app/core/gimpdrawable-levels.c:170
-#: ../app/tools/gimplevelstool.c:146
+#: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Farbwerte"
 
@@ -6462,95 +6463,95 @@ msgstr "Parasit von Bild entfernen"
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:2940 ../app/core/gimpimage.c:2953
+#: ../app/core/gimpimage.c:2935 ../app/core/gimpimage.c:2948
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3092
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3102
+#: ../app/core/gimpimage.c:3097
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3121
+#: ../app/core/gimpimage.c:3116
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3126
+#: ../app/core/gimpimage.c:3121
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3137
+#: ../app/core/gimpimage.c:3132
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3152
+#: ../app/core/gimpimage.c:3147
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3209
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3259 ../app/core/gimpimage.c:3270
+#: ../app/core/gimpimage.c:3252 ../app/core/gimpimage.c:3263
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3319
+#: ../app/core/gimpimage.c:3312
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3324
+#: ../app/core/gimpimage.c:3317
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3328
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3348
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3353
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3375
+#: ../app/core/gimpimage.c:3368
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3439
+#: ../app/core/gimpimage.c:3432
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3485
+#: ../app/core/gimpimage.c:3476
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3531
+#: ../app/core/gimpimage.c:3522
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3536
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3538
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3557
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3562
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3586
+#: ../app/core/gimpimage.c:3577
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -6665,7 +6666,7 @@ msgstr "Ebene spiegeln"
 msgid "Rotate Layer"
 msgstr "Ebene drehen"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6680,41 +6681,41 @@ msgstr ""
 "Schwebende Auswahl\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1263
+#: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, da diese Ebene bereits eine "
 "Maske hat."
 
-#: ../app/core/gimplayer.c:1274
+#: ../app/core/gimplayer.c:1276
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: ../app/core/gimplayer.c:1555
+#: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: ../app/core/gimplayer.c:1667
+#: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: ../app/core/gimplayer.c:1721
+#: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
@@ -6903,11 +6904,11 @@ msgstr ""
 msgid "The horizontal image resolution."
 msgstr "Die horizontale Auflösung des Bildes."
 
-#: ../app/core/gimptemplate.c:118
+#: ../app/core/gimptemplate.c:119
 msgid "The vertical image resolution."
 msgstr "Die vertikale Auflösung des Bildes."
 
-#: ../app/core/gimptemplate.c:403 ../app/widgets/widgets-enums.c:24
+#: ../app/core/gimptemplate.c:405 ../app/widgets/widgets-enums.c:24
 msgid "Background"
 msgstr "Hintergrund"
 
@@ -7114,7 +7115,7 @@ msgstr "_Modus:"
 msgid "_Opacity:"
 msgstr "_Deckkraft:"
 
-#: ../app/dialogs/file-open-dialog.c:246
+#: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
 msgstr "Ebenen öffnen"
 
@@ -7210,17 +7211,17 @@ msgstr "Ein neues Bild erstellen"
 msgid "_Template:"
 msgstr "_Vorlagen:"
 
-#: ../app/dialogs/image-new-dialog.c:292
+#: ../app/dialogs/image-new-dialog.c:295
 msgid "Confirm Image Size"
 msgstr "Bildgröße bestätigen"
 
-#: ../app/dialogs/image-new-dialog.c:314
+#: ../app/dialogs/image-new-dialog.c:317
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Sie versuchen ein Bild der Größe %s anzulegen."
 
-#: ../app/dialogs/image-new-dialog.c:321
+#: ../app/dialogs/image-new-dialog.c:324
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -8545,20 +8546,20 @@ msgstr "Hoch"
 msgid "Image saved to '%s'"
 msgstr "Bild wurde nach »%s« gespeichert"
 
-#: ../app/display/gimpdisplayshell.c:1019
+#: ../app/display/gimpdisplayshell.c:1024
 msgid "Access the image menu"
 msgstr "Auf das Bildmenü zugreifen"
 
-#: ../app/display/gimpdisplayshell.c:1124
+#: ../app/display/gimpdisplayshell.c:1129
 msgid "Zoom image when window size changes"
 msgstr "Bild vergrößern, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:1174
+#: ../app/display/gimpdisplayshell.c:1179
 msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
 
-#: ../app/display/gimpdisplayshell.c:1269
-#: ../app/display/gimpdisplayshell.c:1359 ../app/widgets/gimptoolbox.c:222
+#: ../app/display/gimpdisplayshell.c:1274
+#: ../app/display/gimpdisplayshell.c:1364 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
@@ -8616,23 +8617,23 @@ msgstr[1] ""
 "Wenn Sie dieses Bild nicht speichern, gehen die Änderungen der letzten %d "
 "Minuten verloren."
 
-#: ../app/display/gimpdisplayshell-dnd.c:235
-#: ../app/display/gimpdisplayshell-dnd.c:566
-#: ../app/display/gimpdisplayshell-dnd.c:644
+#: ../app/display/gimpdisplayshell-dnd.c:255
+#: ../app/display/gimpdisplayshell-dnd.c:570
+#: ../app/display/gimpdisplayshell-dnd.c:641
 msgid "Drop New Layer"
 msgstr "Neue Ebene ablegen"
 
-#: ../app/display/gimpdisplayshell-dnd.c:295
+#: ../app/display/gimpdisplayshell-dnd.c:301
 msgid "Drop New Path"
 msgstr "Neuen Pfad ablegen"
 
-#: ../app/display/gimpdisplayshell-dnd.c:498
+#: ../app/display/gimpdisplayshell-dnd.c:504
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "Ebenen ablegen"
 
-#: ../app/display/gimpdisplayshell-dnd.c:634
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/display/gimpdisplayshell-dnd.c:631
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Importierte Ablage"
 
@@ -8758,12 +8759,12 @@ msgstr "»%s« ist kein gültiges Adressschema"
 msgid "Invalid character sequence in URI"
 msgstr "Ungültige Zeichenfolge in Adresse"
 
-#: ../app/gegl/gimpcurvesconfig.c:392
+#: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "keine GIMP-Kurvendatei"
 
-#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:711
+#: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
 msgstr "Syntaxfehler"
@@ -9085,7 +9086,7 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument Nr. %d "
 "aufgerufen. %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:203
+#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Prozedur »%s« hat sich ohne Rückgabewerte beendet"
@@ -9235,7 +9236,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: ../app/plug-in/gimpplugin.c:637
+#: ../app/plug-in/gimpplugin.c:639
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -9760,7 +9761,7 @@ msgstr "Der Farbabgleich funktioniert nur bei Ebenen im RGB-Modus."
 msgid "Select Range to Adjust"
 msgstr "Den zu bearbeitenden Bereich wählen"
 
-#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
 msgstr "Farbwerte anpassen"
 
@@ -9968,57 +9969,61 @@ msgstr "_Zuschneiden"
 msgid "Click or press Enter to crop"
 msgstr "Zum Zuschneiden anklicken oder die Eingabetaste drücken"
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "Kurven: Farbkurven korrigieren"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "_Kurven …"
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
 msgstr "Farbkurven korrigieren"
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
 msgstr "Kurven importieren"
 
-#: ../app/tools/gimpcurvestool.c:167
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Export Curves"
 msgstr "Kurven exportieren"
 
-#: ../app/tools/gimpcurvestool.c:217
+#: ../app/tools/gimpcurvestool.c:221
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr ""
 "Das Anpassen von Kurven funktioniert nicht mit Ebenen im indizierten "
 "Farbmodus."
 
-#: ../app/tools/gimpcurvestool.c:319
+#: ../app/tools/gimpcurvestool.c:323
 msgid "Click to add a control point"
 msgstr "Klicken Sie zum Hinzufügen eines Kontrollpunktes"
 
-#: ../app/tools/gimpcurvestool.c:324
+#: ../app/tools/gimpcurvestool.c:328
 msgid "Click to add control points to all channels"
 msgstr "Klicken Sie zum Hinzufügen eines Kontrollpunktes zu allen Kanälen"
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:372
+#: ../app/tools/gimpcurvestool.c:441 ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:459 ../app/tools/gimplevelstool.c:396
+#: ../app/tools/gimpcurvestool.c:467 ../app/tools/gimplevelstool.c:404
 msgid "R_eset Channel"
 msgstr "Kanal _zurücksetzen"
 
-#: ../app/tools/gimpcurvestool.c:549
+#: ../app/tools/gimpcurvestool.c:557
 msgid "Curve _type:"
 msgstr "Kurven_typ:"
 
-#: ../app/tools/gimpcurvestool.c:603
+#: ../app/tools/gimpcurvestool.c:632 ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Konnte Dateikopf von »%s« nicht lesen: %s"
+
+#: ../app/tools/gimpcurvestool.c:705
+msgid "Use _old curves file format"
+msgstr "_Altes Dateiformat für Kurven verwenden"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -10448,7 +10453,7 @@ msgstr "_Einstellungen:"
 msgid "Settings saved to '%s'"
 msgstr "Einstellungen unter »%s« gespeichert"
 
-#: ../app/tools/gimpimagemaptool.c:311
+#: ../app/tools/gimpimagemaptool.c:318
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -10543,65 +10548,69 @@ msgstr "Drücken Sie die Eingabetaste zum Umwandeln in eine Auswahl"
 msgid "Click or Click-Drag to add a point"
 msgstr "Klicken oder klicken und ziehen Sie, um einen Punkt hinzuzufügen"
 
-#: ../app/tools/gimplevelstool.c:147
+#: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
 msgstr "Werte: Farbwerte korrigieren"
 
-#: ../app/tools/gimplevelstool.c:148
+#: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
 msgstr "_Werte …"
 
-#: ../app/tools/gimplevelstool.c:170
+#: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
 msgstr "Farbwerte importieren"
 
-#: ../app/tools/gimplevelstool.c:171
+#: ../app/tools/gimplevelstool.c:175
 msgid "Export Levels"
 msgstr "Farbwerte exportieren"
 
-#: ../app/tools/gimplevelstool.c:224
+#: ../app/tools/gimplevelstool.c:228
 #, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Werte funktioniert nicht mit Ebenen im indizierten Modus."
 
-#: ../app/tools/gimplevelstool.c:306
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
 msgstr "Schwarz-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:310
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
 msgstr "Grau-Punkt wählen"
 
-#: ../app/tools/gimplevelstool.c:314
+#: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
 msgstr "Weiß-Punkt wählen"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:411
+#: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: ../app/tools/gimplevelstool.c:514
+#: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:556
+#: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
 msgstr "Zielwerte"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:633
+#: ../app/tools/gimplevelstool.c:641
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
-#: ../app/tools/gimplevelstool.c:647
+#: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
-#: ../app/tools/gimplevelstool.c:674
+#: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
 msgstr "Diese Einstellungen als Kurven bearbeiten"
+
+#: ../app/tools/gimplevelstool.c:825
+msgid "Use _old levels file format"
+msgstr "_Altes Dateiformat für Werte verwenden"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -12112,15 +12121,15 @@ msgstr "Automatisch bestimmen"
 msgid "By Extension"
 msgstr "Nach Endung"
 
-#: ../app/widgets/gimpfiledialog.c:605
+#: ../app/widgets/gimpfiledialog.c:617
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: ../app/widgets/gimpfiledialog.c:610
+#: ../app/widgets/gimpfiledialog.c:622
 msgid "All images"
 msgstr "Alle Bilder"
 
-#: ../app/widgets/gimpfiledialog.c:739
+#: ../app/widgets/gimpfiledialog.c:751
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Datei_typ: %s"
@@ -12470,39 +12479,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ungültiges UTF-8"
 
-#: ../app/widgets/gimpsettingsbox.c:226
+#: ../app/widgets/gimpsettingsbox.c:239
 msgid "Pick a setting from the list"
 msgstr "Eine Einstellung aus der Liste auswählen"
 
-#: ../app/widgets/gimpsettingsbox.c:247
+#: ../app/widgets/gimpsettingsbox.c:260
 msgid "Add settings to favorites"
 msgstr "Einstellungen zu Favoriten hinzufügen"
 
-#: ../app/widgets/gimpsettingsbox.c:275
+#: ../app/widgets/gimpsettingsbox.c:288
 msgid "_Import Settings from File..."
 msgstr "Einstellungen aus Datei i_mportieren..."
 
-#: ../app/widgets/gimpsettingsbox.c:281
+#: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "Einstellungen in Datei e_xportieren"
 
-#: ../app/widgets/gimpsettingsbox.c:288
+#: ../app/widgets/gimpsettingsbox.c:301
 msgid "_Manage Settings..."
 msgstr "Einstellungen _verwalten..."
 
-#: ../app/widgets/gimpsettingsbox.c:575
+#: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "Einstellungen zu Favoriten hinzufügen"
 
-#: ../app/widgets/gimpsettingsbox.c:578
+#: ../app/widgets/gimpsettingsbox.c:591
 msgid "Enter a name for the settings"
 msgstr "Bitte benennen Sie diese Einstellungen"
 
-#: ../app/widgets/gimpsettingsbox.c:579
+#: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "Meine Einstellungen"
 
-#: ../app/widgets/gimpsettingsbox.c:614
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Manage Saved Settings"
 msgstr "Meine Einstellungen verwalten"
 
@@ -12985,6 +12994,3 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "Ne_w"
-#~ msgstr "Ne_u"
