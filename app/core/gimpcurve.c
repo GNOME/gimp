@@ -809,7 +809,12 @@ gimp_curve_get_point (GimpCurve *curve,
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
   if (curve->curve_type == GIMP_CURVE_FREE)
-    return;
+    {
+      if (x) *x = -1.0;
+      if (y) *y = -1.0;
+
+      return;
+    }
 
   if (x) *x = curve->points[point].x;
   if (y) *y = curve->points[point].y;
