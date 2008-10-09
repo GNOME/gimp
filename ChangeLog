@@ -1,3 +1,33 @@
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
+	Bug 134956 – Curves tool doesn't save free curves
+
+	* app/core/gimpmarshal.list
+	* app/widgets/gimpsettingsbox.[ch]: add signal "file-dialog-setup"
+	and emit it when the export/import file chooser is fully
+	constructed. Callbacks can then do additional things to the
+	dialog, like adding custom buttons.
+
+	* app/tools/gimpcurvestool.h
+	* app/tools/gimplevelstool.h: add boolean member
+	"export_old_format".
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c (gimp_*_tool_dialog): connect to
+	the settings box' "file-dialog-setup".
+
+	(gimp_*_tool_export_setup): new callback which adds a toggle to
+	the file choosers that allows to export to the old format.
+	Default saving the new format, we defaulted to the old one before.
+
+	(gimp_*_tool_settings_export): check the "export_old_format"
+	boolean and only save the cruft format if it is TRUE; chain up
+	otherwise, which generically saves the new format.
+
+	* app/tools/gimplevelstool.c (gimp_levels_tool_settings_import):
+	add the same file format detection code as in the curves tool
+	so it transparently loads old and new levels files.
+
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c (gimp_user_install_detect_old):

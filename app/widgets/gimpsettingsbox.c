@@ -44,6 +44,7 @@
 
 enum
 {
+  FILE_DIALOG_SETUP,
   IMPORT,
   EXPORT,
   LAST_SIGNAL
@@ -127,6 +128,17 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  settings_box_signals[FILE_DIALOG_SETUP] =
+    g_signal_new ("file-dialog-setup",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpSettingsBoxClass, file_dialog_setup),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT_BOOLEAN,
+                  G_TYPE_NONE, 2,
+                  GTK_TYPE_FILE_CHOOSER_DIALOG,
+                  G_TYPE_BOOLEAN);
+
   settings_box_signals[IMPORT] =
     g_signal_new ("import",
                   G_TYPE_FROM_CLASS (klass),
@@ -152,6 +164,7 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
   object_class->set_property = gimp_settings_box_set_property;
   object_class->get_property = gimp_settings_box_get_property;
 
+  klass->file_dialog_setup   = NULL;
   klass->import              = NULL;
   klass->export              = NULL;
 
@@ -740,6 +753,10 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 
   gimp_help_connect (box->file_dialog, gimp_standard_help_func,
                      box->file_dialog_help_id, NULL);
+
+  /*  allow callbacks to add widgets to the dialog  */
+  g_signal_emit (box, settings_box_signals[FILE_DIALOG_SETUP], 0,
+                 box->file_dialog, save);
 
   gtk_widget_show (box->file_dialog);
 }
