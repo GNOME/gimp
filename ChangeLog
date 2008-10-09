@@ -1,5 +1,33 @@
 2008-10-09  Michael Natterer  <mitch@gimp.org>
 
+	Address Bug 554983 – Layers Projection using GEGL
+
+	* app/gegl/gimp-gegl-utils.[ch]: add (imcomplete) function
+	gimp_layer_mode_to_gegl_operation() from bug #554983.
+
+	* app/core/gimpdrawable.[ch]: add gimp_drawable_get_source_node()
+	which returns a GimpOperationTileSource for the drawable's
+	tiles.
+
+	(gimp_drawable_real_set_tiles)
+	(gimp_drawable_configure): set the node's "tiles" property.
+
+	* app/core/gimplayer.[ch]: add gimp_layer_get_node() which returns
+	a GeglNode with proxy "input" and "output" pads to be plugged
+	into the projection graph. The node has children for opacity,
+	mask, layer mode and layer offset.
+
+	(gimp_layer_translate)
+	(gimp_layer_add_mask)
+	(gimp_layer_apply_mask)
+	(gimp_layer_set_opacity)
+	(gimp_layer_set_mode): reconfigure the respective nodes.
+
+	* app/core/gimpimage.[ch]: keep a "graph" node around and destroy
+	it in finalize(). Not even a stub, just a silly GEGL dependency.
+
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
 	Add GEGL_CFLAGS and #includes as if gimpdrawable.h and gimpimage.h
 	had a GEGL dependency (they will have in the next commit, but I
 	wanted to keep the commit separate).

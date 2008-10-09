@@ -261,6 +261,12 @@ gimp_drawable_finalize (GObject *object)
 
   gimp_drawable_free_shadow_tiles (drawable);
 
+  if (drawable->source_node)
+    {
+      g_object_unref (drawable->source_node);
+      drawable->source_node = NULL;
+    }
+
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
 
@@ -702,6 +708,11 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
+
+  if (drawable->source_node)
+    gegl_node_set (drawable->source_node,
+                   "tile-manager", drawable->tiles,
+                   NULL);
 }
 
 static void
@@ -839,6 +850,11 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
+
+  if (drawable->source_node)
+    gegl_node_set (drawable->source_node,
+                   "tile-manager", drawable->tiles,
+                   NULL);
 }
 
 void
@@ -1010,6 +1026,25 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                         0, 0,
                         gimp_item_width  (item),
                         gimp_item_height (item));
+}
+
+GeglNode *
+gimp_drawable_get_source_node (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (drawable->source_node)
+    return drawable->source_node;
+
+  drawable->source_node = g_object_new (GEGL_TYPE_NODE,
+                                        "operation", "gimp-tilemanager-source",
+                                        NULL);
+  gegl_node_set (drawable->source_node,
+                 "tile-manager", drawable->tiles,
+                 "linear",       TRUE,
+                 NULL);
+
+  return drawable->source_node;
 }
 
 void

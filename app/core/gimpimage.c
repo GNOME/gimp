@@ -891,6 +891,12 @@ gimp_image_finalize (GObject *object)
       image->projection = NULL;
     }
 
+  if (image->graph)
+    {
+      g_object_unref (image->graph);
+      image->graph = NULL;
+    }
+
   if (image->colormap)
     {
       g_free (image->colormap);

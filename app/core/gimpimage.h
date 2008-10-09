@@ -126,6 +126,7 @@ struct _GimpImage
   GimpTattoo         tattoo_state;          /*  the last used tattoo         */
 
   GimpProjection    *projection;            /*  projection layers & channels */
+  GeglNode          *graph;                 /*  GEGL projection graph        */
 
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */

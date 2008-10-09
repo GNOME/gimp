@@ -40,6 +40,8 @@ struct _GimpDrawable
   TileManager   *tiles;              /* tiles for drawable data        */
   TileManager   *shadow;             /* shadow buffer tiles            */
 
+  GeglNode      *source_node;
+
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
   gboolean       has_alpha;          /* drawable has alpha             */
@@ -168,6 +170,8 @@ void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
                                                   GimpImageType       type,
                                                   gint                offset_x,
                                                   gint                offset_y);
+
+GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   TileManager        *tiles,

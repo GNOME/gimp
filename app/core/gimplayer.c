@@ -35,6 +35,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
@@ -67,6 +69,19 @@ enum
   PROP_MODE,
   PROP_LOCK_ALPHA
 };
+
+
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+GeglNode * gegl_node_add_child (GeglNode *self,
+                                GeglNode *child);
+
+#ifdef __GNUC__
+#warning FIXME: gegl_node_remove_child() needs to be public
+#endif
+GeglNode * gegl_node_remove_child (GeglNode *self,
+                                   GeglNode *child);
 
 
 static void   gimp_layer_pickable_iface_init (GimpPickableInterface *iface);
@@ -374,6 +389,12 @@ gimp_layer_finalize (GObject *object)
     {
       g_object_unref (layer->mask);
       layer->mask = NULL;
+    }
+
+  if (layer->node)
+    {
+      g_object_unref (layer->node);
+      layer->node = NULL;
     }
 
   if (layer->fs.backing_store)
@@ -691,6 +712,12 @@ gimp_layer_translate (GimpItem *item,
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, FALSE);
+
+  if (layer->shift_node)
+    gegl_node_set (layer->shift_node,
+                   "x", item->offset_x,
+                   "y", item->offset_y,
+                   NULL);
 
   /*  update the new region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1286,6 +1313,27 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
+  if (layer->node)
+    {
+      GeglNode *source;
+      GeglNode *mask;
+
+      layer->mask_node = gegl_node_new_child (layer->node,
+                                              "operation", "opacity",
+                                              NULL);
+
+      source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
+      gegl_node_connect_to (source,           "output",
+                            layer->mask_node, "input");
+
+      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+      gegl_node_connect_to (mask,             "output",
+                            layer->mask_node, "aux");
+
+      gegl_node_connect_to (layer->mask_node,  "output",
+                            layer->shift_node, "input");
+    }
+
   if (gimp_layer_mask_get_apply (mask) ||
       gimp_layer_mask_get_show (mask))
     {
@@ -1610,6 +1658,18 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (push_undo)
     gimp_image_undo_group_end (image);
 
+  if (layer->node)
+    {
+      GeglNode *source;
+
+      gegl_node_remove_child (layer->node, layer->mask_node);
+      layer->mask_node = NULL;
+
+      source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
+      gegl_node_connect_to (source,            "output",
+                            layer->shift_node, "input");
+    }
+
   /*  If applying actually changed the view  */
   if (view_changed)
     {
@@ -1836,6 +1896,77 @@ gimp_layer_is_floating_sel (const GimpLayer *layer)
   return (layer->fs.drawable != NULL);
 }
 
+GeglNode *
+gimp_layer_get_node (GimpLayer *layer)
+{
+  GeglNode *source;
+  gint      off_x, off_y;
+  GeglNode *input;
+  GeglNode *output;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  if (layer->node)
+    return layer->node;
+
+  layer->node = gegl_node_new ();
+
+  source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
+  gegl_node_add_child (layer->node, source);
+
+  if (layer->mask)
+    {
+      GeglNode *mask;
+
+      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+
+      layer->mask_node = gegl_node_new_child (layer->node,
+                                              "operation", "opacity",
+                                              NULL);
+      gegl_node_connect_to (mask,             "output",
+                            layer->mask_node, "aux");
+      gegl_node_connect_to (source,           "output",
+                            layer->mask_node, "input");
+    }
+
+  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  layer->shift_node = gegl_node_new_child (layer->node,
+                                           "operation", "shift",
+                                           "x",         off_x,
+                                           "y",         off_y,
+                                           NULL);
+
+  if (layer->mask_node)
+    gegl_node_connect_to (layer->mask_node,  "output",
+                          layer->shift_node, "input");
+  else
+    gegl_node_connect_to (source,            "output",
+                          layer->shift_node, "input");
+
+  layer->opacity_node = gegl_node_new_child (layer->node,
+                                             "operation", "opacity",
+                                             "value",     layer->opacity,
+                                             NULL);
+  gegl_node_connect_to (layer->shift_node,   "output",
+                        layer->opacity_node, "input");
+
+  layer->mode_node = gegl_node_new_child (layer->node,
+                                          "operation", gimp_layer_mode_to_gegl_operation (layer->mode),
+                                          NULL);
+  gegl_node_connect_to (layer->opacity_node, "output",
+                        layer->mode_node,    "aux");
+
+  input = gegl_node_get_input_proxy (layer->node, "input");
+  gegl_node_connect_to (input,            "output",
+                        layer->mode_node, "input");
+
+  output = gegl_node_get_output_proxy (layer->node, "output");
+  gegl_node_connect_to (layer->mode_node, "output",
+                        output,           "input");
+
+  return layer->node;
+}
+
 void
 gimp_layer_set_opacity (GimpLayer *layer,
                         gdouble    opacity,
@@ -1858,6 +1989,11 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
       g_signal_emit (layer, layer_signals[OPACITY_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "opacity");
+
+      if (layer->opacity_node)
+        gegl_node_set (layer->opacity_node,
+                       "opacity", layer->opacity,
+                       NULL);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -1894,6 +2030,11 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
+
+      if (layer->mode_node)
+        gegl_node_set (layer->mode_node,
+                       "operation", gimp_layer_mode_to_gegl_operation (layer->mode),
+                       NULL);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
