@@ -60,10 +60,13 @@ struct _GimpSettingsBoxClass
 {
   GtkHBoxClass  parent_class;
 
-  void (* import) (GimpSettingsBox *box,
-                   const gchar     *filename);
-  void (* export) (GimpSettingsBox *box,
-                   const gchar     *filename);
+  void (* file_dialog_setup) (GimpSettingsBox      *box,
+                              GtkFileChooserDialog *dialog,
+                              gboolean              export);
+  void (* import)            (GimpSettingsBox      *box,
+                              const gchar          *filename);
+  void (* export)            (GimpSettingsBox      *box,
+                              const gchar          *filename);
 };
 
 

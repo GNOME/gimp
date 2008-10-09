@@ -2,6 +2,46 @@
 
 	Merged from trunk:
 
+	This is not exactly a bugfix-only commit, but fixing this bug
+	was the original reason for all the curve and image map tool
+	refactorings that went into 2.6. It would be silly not to
+	fix it just because I simply forgot to hack the final step of
+	enabling all the new code. The two new translatable strings are
+	a PITA, sorry about that; but better than still only exporting
+	the old curves and levels formats in 2.6.
+
+	Bug 134956 – Curves tool doesn't save free curves
+
+	* app/core/gimpmarshal.list
+	* app/widgets/gimpsettingsbox.[ch]: add signal "file-dialog-setup"
+	and emit it when the export/import file chooser is fully
+	constructed. Callbacks can then do additional things to the
+	dialog, like adding custom buttons.
+
+	* app/tools/gimpcurvestool.h
+	* app/tools/gimplevelstool.h: add boolean member
+	"export_old_format".
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c (gimp_*_tool_dialog): connect to
+	the settings box' "file-dialog-setup".
+
+	(gimp_*_tool_export_setup): new callback which adds a toggle to
+	the file choosers that allows to export to the old format.
+	Default saving the new format, we defaulted to the old one before.
+
+	(gimp_*_tool_settings_export): check the "export_old_format"
+	boolean and only save the cruft format if it is TRUE; chain up
+	otherwise, which generically saves the new format.
+
+	* app/tools/gimplevelstool.c (gimp_levels_tool_settings_import):
+	add the same file format detection code as in the curves tool
+	so it transparently loads old and new levels files.
+
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
 	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_save_cruft):
 	when saving a curve of type GIMP_CURVE_FREE, don't use
 	gimp_curve_get_point() because that returns nothing for free

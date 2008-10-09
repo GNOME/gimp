@@ -101,6 +101,10 @@ static gboolean   gimp_curves_tool_settings_export(GimpImageMapTool     *image_m
                                                    const gchar          *filename,
                                                    GError              **error);
 
+static void       gimp_curves_tool_export_setup   (GimpSettingsBox      *settings_box,
+                                                   GtkFileChooserDialog *dialog,
+                                                   gboolean              export,
+                                                   GimpCurvesTool       *tool);
 static void       gimp_curves_tool_config_notify  (GObject              *object,
                                                    GParamSpec           *pspec,
                                                    GimpCurvesTool       *tool);
@@ -422,6 +426,10 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *bar;
   GtkWidget        *combo;
 
+  g_signal_connect (image_map_tool->settings_box, "file-dialog-setup",
+                    G_CALLBACK (gimp_curves_tool_export_setup),
+                    image_map_tool);
+
   main_vbox   = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
   label_group = gimp_image_map_tool_dialog_get_label_group (image_map_tool);
 
@@ -605,7 +613,6 @@ gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
   FILE           *file;
-  gboolean        success;
   gchar           header[64];
 
   file = g_fopen (filename, "rt");
@@ -631,6 +638,8 @@ gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
 
   if (g_str_has_prefix (header, "# GIMP Curves File\n"))
     {
+      gboolean success;
+
       rewind (file);
 
       success = gimp_curves_config_load_cruft (tool->config, file, error);
@@ -653,25 +662,55 @@ gimp_curves_tool_settings_export (GimpImageMapTool  *image_map_tool,
                                   GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
-  FILE           *file;
-  gboolean        success;
 
-  file = g_fopen (filename, "wt");
-
-  if (! file)
+  if (tool->export_old_format)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
-      return FALSE;
+      FILE     *file;
+      gboolean  success;
+
+      file = g_fopen (filename, "wt");
+
+      if (! file)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       g_strerror (errno));
+          return FALSE;
+        }
+
+      success = gimp_curves_config_save_cruft (tool->config, file, error);
+
+      fclose (file);
+
+      return success;
     }
 
-  success = gimp_curves_config_save_cruft (tool->config, file, error);
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
+                                                                    filename,
+                                                                    error);
+}
 
-  fclose (file);
+static void
+gimp_curves_tool_export_setup (GimpSettingsBox      *settings_box,
+                               GtkFileChooserDialog *dialog,
+                               gboolean              export,
+                               GimpCurvesTool       *tool)
+{
+  GtkWidget *button;
 
-  return success;
+  if (! export)
+    return;
+
+  button = gtk_check_button_new_with_mnemonic (_("Use _old curves file format"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                tool->export_old_format);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tool->export_old_format);
 }
 
 static void
