@@ -1,5 +1,18 @@
 2008-10-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_save_cruft):
+	when saving a curve of type GIMP_CURVE_FREE, don't use
+	gimp_curve_get_point() because that returns nothing for free
+	curves.
+
+	(gimp_curves_config_load_cruft): reset the curve before loading it.
+
+	* app/core/gimpcurve.c (gimp_curve_get_point): instead of above
+	mentioned uninitialized nonsense, at least return -1,-1 for free
+	curves.
+
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* tools/Makefile.am: change 2.6 to 2.7 here too.
 
