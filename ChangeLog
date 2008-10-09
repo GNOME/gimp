@@ -1,5 +1,14 @@
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
+	* data/images/Makefile.am
+	* data/images/gimp-devel-logo.png: added 128x128 version of
+	wilber-devel.png.
+
+	* app/dialogs/about-dialog.c (about_dialog_load_logo): use
+	gimp-devel-logo.png for unstable releasees.
+
+2008-10-09  Sven Neumann  <sven@gimp.org>
+
 	Bug 555697 – build fails if configured with --without-libjpeg
 	
 	* plug-ins/Makefile.am: applied patch from Simon Zilliken that

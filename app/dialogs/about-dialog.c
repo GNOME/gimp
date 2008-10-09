@@ -46,21 +46,21 @@
 
 typedef struct
 {
-  GtkWidget    *dialog;
+  GtkWidget   *dialog;
 
-  GtkWidget    *anim_area;
-  PangoLayout  *layout;
+  GtkWidget   *anim_area;
+  PangoLayout *layout;
 
-  gint          n_authors;
-  gint          shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
+  gint         n_authors;
+  gint         shuffle[G_N_ELEMENTS (authors) - 1];  /* NULL terminated */
 
-  guint         timer;
+  guint        timer;
 
-  gint          index;
-  gint          animstep;
-  gint          textrange[2];
-  gint          state;
-  gboolean      visible;
+  gint         index;
+  gint         animstep;
+  gint         textrange[2];
+  gint         state;
+  gboolean     visible;
 } GimpAboutDialog;
 
 
@@ -217,7 +217,11 @@ about_dialog_load_logo (void)
   gchar     *filename;
 
   filename = g_build_filename (gimp_data_directory (), "images",
+#ifdef GIMP_UNSTABLE
+                               "gimp-devel-logo.png",
+#else
                                "gimp-logo.png",
+#endif
                                NULL);
 
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
