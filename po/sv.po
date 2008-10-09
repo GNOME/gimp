@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 18:27+0200\n"
-"PO-Revision-Date: 2008-10-06 18:28+0100\n"
+"POT-Creation-Date: 2008-10-09 22:18+0200\n"
+"PO-Revision-Date: 2008-10-09 22:19+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -695,7 +695,7 @@ msgstr "Ny kanalfärg"
 #: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773
-#: ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s kanalkopia"
@@ -865,7 +865,7 @@ msgstr "Sampla sammanfogade"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:520
 #: ../app/widgets/gimplayertreeview.c:730
-#: ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -2427,7 +2427,7 @@ msgid "I_nfo"
 msgstr "I_nfo"
 
 #: ../app/actions/image-actions.c:61
-#: ../app/tools/gimplevelstool.c:645
+#: ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Auto"
@@ -3722,8 +3722,8 @@ msgstr "Öppna textfil (UTF-8)"
 #: ../app/core/gimppalette-load.c:456
 #: ../app/core/gimppalette-load.c:599
 #: ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:616
-#: ../app/tools/gimplevelstool.c:735
+#: ../app/tools/gimpcurvestool.c:623
+#: ../app/tools/gimplevelstool.c:743
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4608,8 +4608,8 @@ msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
 #: ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:239
-#: ../app/tools/gimpcurvestool.c:664
-#: ../app/tools/gimplevelstool.c:762
+#: ../app/tools/gimpcurvestool.c:676
+#: ../app/tools/gimplevelstool.c:796
 #: ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:422
 #, c-format
@@ -5958,7 +5958,7 @@ msgstr "Färglägg"
 
 #: ../app/core/gimpdrawable-curves.c:165
 #: ../app/core/gimpdrawable-curves.c:182
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Kurvor"
 
@@ -5992,7 +5992,7 @@ msgstr "Invertera"
 
 #: ../app/core/gimpdrawable-levels.c:154
 #: ../app/core/gimpdrawable-levels.c:170
-#: ../app/tools/gimplevelstool.c:146
+#: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Nivåer"
 
@@ -8353,7 +8353,7 @@ msgstr "Förkasta lager"
 
 #: ../app/display/gimpdisplayshell-dnd.c:631
 #: ../app/widgets/gimplayertreeview.c:801
-#: ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Förkastad buffert"
 
@@ -9445,7 +9445,7 @@ msgid "Select Range to Adjust"
 msgstr "Välj intervall att justera"
 
 #: ../app/tools/gimpcolorbalancetool.c:279
-#: ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
@@ -9655,57 +9655,62 @@ msgstr "_Beskär"
 msgid "Click or press Enter to crop"
 msgstr "Klicka eller tryck på Enter för att beskära"
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "Kurvverktyg: Justera färgkurvor"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "_Kurvor..."
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
 msgstr "Justera färgkurvor"
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
 msgstr "Importera kurvor"
 
-#: ../app/tools/gimpcurvestool.c:167
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Export Curves"
 msgstr "Exportera kurvor"
 
-#: ../app/tools/gimpcurvestool.c:217
+#: ../app/tools/gimpcurvestool.c:221
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Kurvor fungerar inte på indexerade lager."
 
-#: ../app/tools/gimpcurvestool.c:319
+#: ../app/tools/gimpcurvestool.c:323
 msgid "Click to add a control point"
 msgstr "Klicka för att lägga till en kontrollpunkt"
 
-#: ../app/tools/gimpcurvestool.c:324
+#: ../app/tools/gimpcurvestool.c:328
 msgid "Click to add control points to all channels"
 msgstr "Klicka för att lägga till kontrollpunkter till alla kanaler"
 
-#: ../app/tools/gimpcurvestool.c:433
-#: ../app/tools/gimplevelstool.c:372
+#: ../app/tools/gimpcurvestool.c:441
+#: ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:459
-#: ../app/tools/gimplevelstool.c:396
+#: ../app/tools/gimpcurvestool.c:467
+#: ../app/tools/gimplevelstool.c:404
 msgid "R_eset Channel"
 msgstr "Återstäl_l kanal"
 
-#: ../app/tools/gimpcurvestool.c:549
+#: ../app/tools/gimpcurvestool.c:557
 msgid "Curve _type:"
 msgstr "Kurv_typ:"
 
-#: ../app/tools/gimpcurvestool.c:625
+#: ../app/tools/gimpcurvestool.c:632
+#: ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Kunde inte läsa huvud från \"%s\": %s"
+
+#: ../app/tools/gimpcurvestool.c:705
+msgid "Use _old curves file format"
+msgstr "Använd _gamla filformatet för kurvor"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -10226,65 +10231,69 @@ msgstr "Tryck på Enter för att konvertera till en markering"
 msgid "Click or Click-Drag to add a point"
 msgstr "Klicka eller klicka och dra för att lägga till en punkt"
 
-#: ../app/tools/gimplevelstool.c:147
+#: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
 msgstr "Nivåverktyg: Justera färgnivåer"
 
-#: ../app/tools/gimplevelstool.c:148
+#: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
 msgstr "_Nivåer..."
 
-#: ../app/tools/gimplevelstool.c:170
+#: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
 msgstr "Importera nivåer"
 
-#: ../app/tools/gimplevelstool.c:171
+#: ../app/tools/gimplevelstool.c:175
 msgid "Export Levels"
 msgstr "Exportera nivåer"
 
-#: ../app/tools/gimplevelstool.c:224
+#: ../app/tools/gimplevelstool.c:228
 #, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Nivåer fungerar inte på indexerade lager."
 
-#: ../app/tools/gimplevelstool.c:306
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
 msgstr "Välj svartpunkt"
 
-#: ../app/tools/gimplevelstool.c:310
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
 msgstr "Välj gråpunkt"
 
-#: ../app/tools/gimplevelstool.c:314
+#: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
 msgstr "Välj vitpunkt"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:411
+#: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:514
+#: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:556
+#: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:633
+#: ../app/tools/gimplevelstool.c:641
 msgid "All Channels"
 msgstr "Alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:647
+#: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
 msgstr "Justera nivåer automatiskt"
 
-#: ../app/tools/gimplevelstool.c:674
+#: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
 msgstr "Redigera dessa inställningar som kurvor"
+
+#: ../app/tools/gimplevelstool.c:825
+msgid "Use _old levels file format"
+msgstr "Använd _gamla filformatet för nivåer"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -12137,39 +12146,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ogiltig UTF-8"
 
-#: ../app/widgets/gimpsettingsbox.c:226
+#: ../app/widgets/gimpsettingsbox.c:239
 msgid "Pick a setting from the list"
 msgstr "Välj en inställning från listan"
 
-#: ../app/widgets/gimpsettingsbox.c:247
+#: ../app/widgets/gimpsettingsbox.c:260
 msgid "Add settings to favorites"
 msgstr "Lägg till inställningar som favoriter"
 
-#: ../app/widgets/gimpsettingsbox.c:275
+#: ../app/widgets/gimpsettingsbox.c:288
 msgid "_Import Settings from File..."
 msgstr "_Importera inställningar från fil..."
 
-#: ../app/widgets/gimpsettingsbox.c:281
+#: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "_Exportera inställningar till fil..."
 
-#: ../app/widgets/gimpsettingsbox.c:288
+#: ../app/widgets/gimpsettingsbox.c:301
 msgid "_Manage Settings..."
 msgstr "_Hantera inställningar..."
 
-#: ../app/widgets/gimpsettingsbox.c:575
+#: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "Lägg till inställningar som favoriter"
 
-#: ../app/widgets/gimpsettingsbox.c:578
+#: ../app/widgets/gimpsettingsbox.c:591
 msgid "Enter a name for the settings"
 msgstr "Ange ett namn för inställningarna"
 
-#: ../app/widgets/gimpsettingsbox.c:579
+#: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "Sparade inställningar"
 
-#: ../app/widgets/gimpsettingsbox.c:614
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Manage Saved Settings"
 msgstr "Hantera sparade inställningar"
 
