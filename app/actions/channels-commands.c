@@ -166,7 +166,7 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
                               action_data_get_context (data),
                               GIMP_TRANSPARENT_FILL);
 
-  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -262,7 +262,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
                                            G_TYPE_FROM_INSTANCE (channel)));
     }
 
-  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -274,7 +274,7 @@ channels_delete_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_remove_channel (image, channel);
+  gimp_image_remove_channel (image, channel, TRUE, NULL);
   gimp_image_flush (image);
 }
 
@@ -356,7 +356,7 @@ channels_new_channel_response (GtkWidget            *widget,
                                       GIMP_TRANSPARENT_FILL);
         }
 
-      gimp_image_add_channel (options->image, new_channel, -1);
+      gimp_image_add_channel (options->image, new_channel, -1, TRUE);
       gimp_image_flush (options->image);
     }
 

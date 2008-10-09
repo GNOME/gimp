@@ -915,7 +915,7 @@ image_add_layer_invoker (GimpProcedure      *procedure,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1));
+          success = gimp_image_add_layer (image, layer, MAX (position, -1), TRUE);
         }
       else
         {
@@ -945,7 +945,7 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-        gimp_image_remove_layer (image, layer);
+        gimp_image_remove_layer (image, layer, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -1105,7 +1105,7 @@ image_add_channel_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          success = gimp_image_add_channel (image, channel, MAX (position, -1));
+          success = gimp_image_add_channel (image, channel, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1135,7 +1135,7 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), error))
-        gimp_image_remove_channel (image, channel);
+        gimp_image_remove_channel (image, channel, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -1247,7 +1247,7 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+          success = gimp_image_add_vectors (image, vectors, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1277,7 +1277,7 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
-        gimp_image_remove_vectors (image, vectors);
+        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
     }

@@ -137,7 +137,7 @@ gimp_image_duplicate (GimpImage *image)
         new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
       if (floating_layer != new_layer)
-        gimp_image_add_layer (new_image, new_layer, count++);
+        gimp_image_add_layer (new_image, new_layer, count++, FALSE);
     }
 
   /*  Copy the channels  */
@@ -162,7 +162,7 @@ gimp_image_duplicate (GimpImage *image)
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
         new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
-      gimp_image_add_channel (new_image, new_channel, count++);
+      gimp_image_add_channel (new_image, new_channel, count++, FALSE);
     }
 
   /*  Copy any vectors  */
@@ -184,7 +184,7 @@ gimp_image_duplicate (GimpImage *image)
       if (gimp_image_get_active_vectors (image) == vectors)
         active_vectors = new_vectors;
 
-      gimp_image_add_vectors (new_image, new_vectors, count++);
+      gimp_image_add_vectors (new_image, new_vectors, count++, FALSE);
     }
 
   /*  Copy the selection mask  */

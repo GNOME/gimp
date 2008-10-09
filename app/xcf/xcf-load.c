@@ -201,7 +201,8 @@ xcf_load_image (Gimp     *gimp,
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
         gimp_image_add_layer (image, layer,
-                              gimp_container_num_children (image->layers));
+                              gimp_container_num_children (image->layers),
+                              FALSE);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -242,7 +243,8 @@ xcf_load_image (Gimp     *gimp,
       /* add the channel to the image if its not the selection */
       if (channel != gimp_image_get_mask (image))
         gimp_image_add_channel (image, channel,
-                                gimp_container_num_children (image->channels));
+                                gimp_container_num_children (image->channels),
+                                FALSE);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1625,7 +1627,8 @@ xcf_load_old_path (XcfInfo   *info,
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
   gimp_image_add_vectors (image, vectors,
-                          gimp_container_num_children (image->vectors));
+                          gimp_container_num_children (image->vectors),
+                          FALSE);
 
   return TRUE;
 }
@@ -1814,7 +1817,8 @@ xcf_load_vector (XcfInfo   *info,
     }
 
   gimp_image_add_vectors (image, vectors,
-                          gimp_container_num_children (image->vectors));
+                          gimp_container_num_children (image->vectors),
+                          FALSE);
 
   return TRUE;
 }

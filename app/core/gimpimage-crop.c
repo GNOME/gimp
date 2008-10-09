@@ -203,7 +203,7 @@ gimp_image_crop (GimpImage   *image,
                                   -(lx1 - off_x),
                                   -(ly1 - off_y));
               else
-                gimp_image_remove_layer (image, GIMP_LAYER (item));
+                gimp_image_remove_layer (image, GIMP_LAYER (item), TRUE, NULL);
             }
         }
 

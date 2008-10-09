@@ -458,9 +458,12 @@ GimpVectors   * gimp_image_get_vectors_by_name   (const GimpImage    *image,
 
 gboolean        gimp_image_add_layer             (GimpImage          *image,
                                                   GimpLayer          *layer,
-                                                  gint                position);
+                                                  gint                position,
+                                                  gboolean            push_undo);
 void            gimp_image_remove_layer          (GimpImage          *image,
-                                                  GimpLayer          *layer);
+                                                  GimpLayer          *layer,
+                                                  gboolean            push_undo,
+                                                  GimpLayer          *new_active);
 
 void            gimp_image_add_layers            (GimpImage          *image,
                                                   GList              *layers,
@@ -489,9 +492,12 @@ gboolean        gimp_image_position_layer        (GimpImage          *image,
 
 gboolean        gimp_image_add_channel           (GimpImage          *image,
                                                   GimpChannel        *channel,
-                                                  gint                position);
+                                                  gint                position,
+                                                  gboolean            push_undo);
 void            gimp_image_remove_channel        (GimpImage          *image,
-                                                  GimpChannel        *channel);
+                                                  GimpChannel        *channel,
+                                                  gboolean            push_undo,
+                                                  GimpChannel        *new_active);
 
 gboolean        gimp_image_raise_channel         (GimpImage          *image,
                                                   GimpChannel        *channel,
@@ -511,9 +517,12 @@ gboolean        gimp_image_position_channel      (GimpImage          *image,
 
 gboolean        gimp_image_add_vectors           (GimpImage          *image,
                                                   GimpVectors        *vectors,
-                                                  gint                position);
+                                                  gint                position,
+                                                  gboolean            push_undo);
 void            gimp_image_remove_vectors        (GimpImage          *image,
-                                                  GimpVectors        *vectors);
+                                                  GimpVectors        *vectors,
+                                                  gboolean            push_undo,
+                                                  GimpVectors        *new_active);
 
 gboolean        gimp_image_raise_vectors         (GimpImage          *image,
                                                   GimpVectors        *vectors,

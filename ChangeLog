@@ -1,3 +1,64 @@
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
+	Remove the last code duplication from the undo system (or if not
+	the last then at least the most ugly):
+
+	* app/core/gimpimage.[ch] (gimp_image_add_layer,channel,vectors):
+	add "gboolean push_undo" parameter and add the item without
+	touching undo if it's TRUE. Changed assertions from
+	g_object_is_floating() to !gimp_item_is_attached() so they also
+	take items from the undo stack and not only newly created ones.
+
+	(gimp_image_remove_layer,channel,vectors): add "push_undo"
+	parameter here too. Also add a "new_active" parameter where an
+	optional new active item can be passed.
+
+	(gimp_image_remove_layer,channel): these functions must not be
+	called with push_undo=FALSE and a floating selection attached to
+	the layer/channel. This can't currently happen; added warnings in
+	case other code is changed and makes it happen anyway.
+
+	* app/core/gimpchannelundo.c
+	* app/core/gimplayerundo.c
+	* app/vectors/gimpvectorsundo.c: use above functions to add/remove
+	items instead of duplicating (parts of) their code. Pass
+	push_undo=FALSE and the previously active item to the remove()
+	functions.
+
+	* app/actions/channels-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpchannelundo.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayerundo.c
+	* app/core/gimpselection.c
+	* app/core/gimptemplate.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpvectors-import.c
+	* app/vectors/gimpvectorsundo.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/xcf/xcf-load.c
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly (pass TRUE
+	unless it's a new image like when loading and XCF file).
+
+	* app/pdb/image-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
 	* data/images/Makefile.am

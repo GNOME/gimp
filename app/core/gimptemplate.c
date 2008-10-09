@@ -408,7 +408,7 @@ gimp_template_create_image (Gimp         *gimp,
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
                               context, template->fill_type);
 
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_add_layer (image, layer, 0, FALSE);
 
   gimp_image_undo_enable (image);
   gimp_image_clean_all (image);

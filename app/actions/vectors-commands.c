@@ -187,7 +187,7 @@ vectors_new_last_vals_cmd_callback (GtkAction *action,
   new_vectors = gimp_vectors_new (image,
                                   vectors_name ? vectors_name : _("New Path"));
 
-  gimp_image_add_vectors (image, new_vectors, -1);
+  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -251,7 +251,7 @@ vectors_duplicate_cmd_callback (GtkAction *action,
 
   new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                    G_TYPE_FROM_INSTANCE (vectors)));
-  gimp_image_add_vectors (image, new_vectors, -1);
+  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -263,7 +263,7 @@ vectors_delete_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_remove_vectors (image, vectors);
+  gimp_image_remove_vectors (image, vectors, TRUE, NULL);
   gimp_image_flush (image);
 }
 
@@ -603,7 +603,7 @@ vectors_new_vectors_response (GtkWidget            *widget,
 
       new_vectors = gimp_vectors_new (options->image, vectors_name);
 
-      gimp_image_add_vectors (options->image, new_vectors, -1);
+      gimp_image_add_vectors (options->image, new_vectors, -1, TRUE);
 
       gimp_image_flush (options->image);
     }

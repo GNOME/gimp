@@ -260,7 +260,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      gimp_image_add_layer (image, new_layer, -1);
+      gimp_image_add_layer (image, new_layer, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 
@@ -300,7 +300,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Path"));
 
-      gimp_image_add_vectors (image, new_vectors, -1);
+      gimp_image_add_vectors (image, new_vectors, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 
@@ -571,7 +571,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
 
       gimp_display_shell_dnd_position_item (shell, new_item);
 
-      gimp_image_add_layer (dest_image, new_layer, -1);
+      gimp_image_add_layer (dest_image, new_layer, -1, TRUE);
 
       gimp_image_undo_group_end (dest_image);
 
@@ -643,7 +643,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       if (! new_image)
         gimp_display_shell_dnd_position_item (shell, new_item);
 
-      gimp_image_add_layer (image, new_layer, -1);
+      gimp_image_add_layer (image, new_layer, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 

@@ -22,7 +22,6 @@
 
 #include "vectors-types.h"
 
-#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
 #include "gimpvectors.h"
@@ -194,12 +193,8 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       vectors_undo->prev_position = gimp_image_get_vectors_index (undo->image,
                                                                   vectors);
 
-      gimp_container_remove (undo->image->vectors, GIMP_OBJECT (vectors));
-      gimp_item_removed (GIMP_ITEM (vectors));
-
-      if (vectors == gimp_image_get_active_vectors (undo->image))
-        gimp_image_set_active_vectors (undo->image,
-                                       vectors_undo->prev_vectors);
+      gimp_image_remove_vectors (undo->image, vectors, FALSE,
+                                 vectors_undo->prev_vectors);
     }
   else
     {
@@ -208,9 +203,8 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       /*  record the active vectors  */
       vectors_undo->prev_vectors = gimp_image_get_active_vectors (undo->image);
 
-      gimp_container_insert (undo->image->vectors, GIMP_OBJECT (vectors),
-                             vectors_undo->prev_position);
-      gimp_image_set_active_vectors (undo->image, vectors);
+      gimp_image_add_vectors (undo->image, vectors,
+                              vectors_undo->prev_position, FALSE);
 
       GIMP_ITEM (vectors)->removed = FALSE;
     }

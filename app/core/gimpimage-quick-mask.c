@@ -117,7 +117,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           if (image->quick_mask_inverted)
             gimp_channel_invert (mask, FALSE);
 
-          gimp_image_add_channel (image, mask, 0);
+          gimp_image_add_channel (image, mask, 0, TRUE);
 
           gimp_image_undo_group_end (image);
         }
@@ -138,7 +138,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
             floating_sel_anchor (floating_sel);
 
           gimp_selection_load (gimp_image_get_mask (image), mask);
-          gimp_image_remove_channel (image, mask);
+          gimp_image_remove_channel (image, mask, TRUE, NULL);
 
           if (! channel_was_active)
             gimp_image_unset_active_channel (image);

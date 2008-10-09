@@ -2854,7 +2854,8 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 gboolean
 gimp_image_add_layer (GimpImage *image,
                       GimpLayer *layer,
-                      gint       position)
+                      gint       position,
+                      gboolean   push_undo)
 {
   GimpLayer *active_layer;
   GimpLayer *floating_sel;
@@ -2862,7 +2863,7 @@ gimp_image_add_layer (GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-  g_return_val_if_fail (g_object_is_floating (layer), FALSE);
+  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image,
                         FALSE);
 
@@ -2872,10 +2873,11 @@ gimp_image_add_layer (GimpImage *image,
 
   old_has_alpha = gimp_image_has_alpha (image);
 
-  gimp_image_undo_push_layer_add (image, _("Add Layer"),
-                                  layer, active_layer);
+  if (push_undo)
+    gimp_image_undo_push_layer_add (image, _("Add Layer"),
+                                    layer, active_layer);
 
-  /*  If the layer is a floating selection, set the ID  */
+  /*  If the layer is a floating selection, set the fs pointer  */
   if (gimp_layer_is_floating_sel (layer))
     image->floating_sel = layer;
 
@@ -2907,7 +2909,7 @@ gimp_image_add_layer (GimpImage *image,
   gimp_image_set_active_layer (image, layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
-    gimp_image_alpha_changed (image);
+    image->flush_accum.alpha_changed = TRUE;
 
   if (gimp_layer_is_floating_sel (layer))
     gimp_image_floating_selection_changed (image);
@@ -2917,7 +2919,9 @@ gimp_image_add_layer (GimpImage *image,
 
 void
 gimp_image_remove_layer (GimpImage *image,
-                         GimpLayer *layer)
+                         GimpLayer *layer,
+                         gboolean   push_undo,
+                         GimpLayer *new_active)
 {
   GimpLayer *active_layer;
   gint       index;
@@ -2931,6 +2935,14 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (layer)))
     {
+      if (! push_undo)
+        {
+          g_warning ("%s() was called from an undo function while the layer "
+                     "had a floating selection. Please report this at "
+                     "http://www.gimp.org/bugs/", G_STRFUNC);
+          return;
+        }
+
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                    _("Remove Layer"));
       undo_group = TRUE;
@@ -2945,8 +2957,9 @@ gimp_image_remove_layer (GimpImage *image,
 
   old_has_alpha = gimp_image_has_alpha (image);
 
-  gimp_image_undo_push_layer_remove (image, _("Remove Layer"),
-                                     layer, index, active_layer);
+  if (push_undo)
+    gimp_image_undo_push_layer_remove (image, _("Remove Layer"),
+                                       layer, index, active_layer);
 
   g_object_ref (layer);
 
@@ -2970,7 +2983,11 @@ gimp_image_remove_layer (GimpImage *image,
     }
   else if (layer == active_layer)
     {
-      if (image->layer_stack)
+      if (new_active)
+        {
+          active_layer = new_active;
+        }
+      else if (image->layer_stack)
         {
           active_layer = image->layer_stack->data;
         }
@@ -2999,7 +3016,7 @@ gimp_image_remove_layer (GimpImage *image,
   g_object_unref (layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
-    gimp_image_alpha_changed (image);
+    image->flush_accum.alpha_changed = TRUE;
 
   if (undo_group)
     gimp_image_undo_group_end (image);
@@ -3063,7 +3080,7 @@ gimp_image_add_layers (GimpImage   *image,
 
       gimp_item_translate (new_item, offset_x, offset_y, FALSE);
 
-      gimp_image_add_layer (image, GIMP_LAYER (new_item), position);
+      gimp_image_add_layer (image, GIMP_LAYER (new_item), position, TRUE);
       position++;
     }
 
@@ -3194,20 +3211,22 @@ gimp_image_position_layer (GimpImage   *image,
 gboolean
 gimp_image_add_channel (GimpImage   *image,
                         GimpChannel *channel,
-                        gint         position)
+                        gint         position,
+                        gboolean     push_undo)
 {
   GimpChannel *active_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-  g_return_val_if_fail (g_object_is_floating (channel), FALSE);
+  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (channel)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image,
                         FALSE);
 
   active_channel = gimp_image_get_active_channel (image);
 
-  gimp_image_undo_push_channel_add (image, _("Add Channel"),
-                                    channel, active_channel);
+  if (push_undo)
+    gimp_image_undo_push_channel_add (image, _("Add Channel"),
+                                      channel, active_channel);
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
@@ -3235,7 +3254,9 @@ gimp_image_add_channel (GimpImage   *image,
 
 void
 gimp_image_remove_channel (GimpImage   *image,
-                           GimpChannel *channel)
+                           GimpChannel *channel,
+                           gboolean     push_undo,
+                           GimpChannel *new_active)
 {
   GimpChannel *active_channel;
   gint         index;
@@ -3248,6 +3269,14 @@ gimp_image_remove_channel (GimpImage   *image,
 
   if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (channel)))
     {
+      if (! push_undo)
+        {
+          g_warning ("%s() was called from an undo function while the channel "
+                     "had a floating selection. Please report this at "
+                     "http://www.gimp.org/bugs/", G_STRFUNC);
+          return;
+        }
+
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                    _("Remove Channel"));
       undo_group = TRUE;
@@ -3260,8 +3289,9 @@ gimp_image_remove_channel (GimpImage   *image,
   index = gimp_container_get_child_index (image->channels,
                                           GIMP_OBJECT (channel));
 
-  gimp_image_undo_push_channel_remove (image, _("Remove Channel"),
-                                       channel, index, active_channel);
+  if (push_undo)
+    gimp_image_undo_push_channel_remove (image, _("Remove Channel"),
+                                         channel, index, active_channel);
 
   g_object_ref (channel);
 
@@ -3270,21 +3300,31 @@ gimp_image_remove_channel (GimpImage   *image,
 
   if (channel == active_channel)
     {
-      gint n_children = gimp_container_num_children (image->channels);
-
-      if (n_children > 0)
+      if (new_active)
         {
-          index = CLAMP (index, 0, n_children - 1);
-
-          active_channel = (GimpChannel *)
-            gimp_container_get_child_by_index (image->channels, index);
-
-          gimp_image_set_active_channel (image, active_channel);
+          active_channel = new_active;
         }
       else
         {
-          gimp_image_unset_active_channel (image);
+          gint n_children = gimp_container_num_children (image->channels);
+
+          if (n_children > 0)
+            {
+              index = CLAMP (index, 0, n_children - 1);
+
+              active_channel = (GimpChannel *)
+                gimp_container_get_child_by_index (image->channels, index);
+            }
+          else
+            {
+              active_channel = NULL;
+            }
         }
+
+      if (active_channel)
+        gimp_image_set_active_channel (image, active_channel);
+      else
+        gimp_image_unset_active_channel (image);
     }
 
   g_object_unref (channel);
@@ -3417,20 +3457,22 @@ gimp_image_position_channel (GimpImage   *image,
 gboolean
 gimp_image_add_vectors (GimpImage   *image,
                         GimpVectors *vectors,
-                        gint         position)
+                        gint         position,
+                        gboolean     push_undo)
 {
   GimpVectors *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (g_object_is_floating (vectors), FALSE);
+  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (vectors)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image,
                         FALSE);
 
   active_vectors = gimp_image_get_active_vectors (image);
 
-  gimp_image_undo_push_vectors_add (image, _("Add Path"),
-                                    vectors, active_vectors);
+  if (push_undo)
+    gimp_image_undo_push_vectors_add (image, _("Add Path"),
+                                      vectors, active_vectors);
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
@@ -3458,7 +3500,9 @@ gimp_image_add_vectors (GimpImage   *image,
 
 void
 gimp_image_remove_vectors (GimpImage   *image,
-                           GimpVectors *vectors)
+                           GimpVectors *vectors,
+                           gboolean     push_undo,
+                           GimpVectors *new_active)
 {
   GimpVectors *active_vectors;
   gint         index;
@@ -3473,8 +3517,9 @@ gimp_image_remove_vectors (GimpImage   *image,
   index = gimp_container_get_child_index (image->vectors,
                                           GIMP_OBJECT (vectors));
 
-  gimp_image_undo_push_vectors_remove (image, _("Remove Path"),
-                                       vectors, index, active_vectors);
+  if (push_undo)
+    gimp_image_undo_push_vectors_remove (image, _("Remove Path"),
+                                         vectors, index, active_vectors);
 
   g_object_ref (vectors);
 
@@ -3483,18 +3528,25 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   if (vectors == active_vectors)
     {
-      gint n_children = gimp_container_num_children (image->vectors);
-
-      if (n_children > 0)
+      if (new_active)
         {
-          index = CLAMP (index, 0, n_children - 1);
-
-          active_vectors = (GimpVectors *)
-            gimp_container_get_child_by_index (image->vectors, index);
+          active_vectors = new_active;
         }
       else
         {
-          active_vectors = NULL;
+          gint n_children = gimp_container_num_children (image->vectors);
+
+          if (n_children > 0)
+            {
+              index = CLAMP (index, 0, n_children - 1);
+
+              active_vectors = (GimpVectors *)
+                gimp_container_get_child_by_index (image->vectors, index);
+            }
+          else
+            {
+              active_vectors = NULL;
+            }
         }
 
       gimp_image_set_active_vectors (image, active_vectors);

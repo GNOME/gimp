@@ -173,7 +173,7 @@ gimp_image_scale (GimpImage             *image,
     {
       GimpLayer *layer = list->data;
 
-      gimp_image_remove_layer (image, layer);
+      gimp_image_remove_layer (image, layer, TRUE, NULL);
     }
 
   g_list_free (remove);

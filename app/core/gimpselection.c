@@ -587,7 +587,7 @@ gimp_selection_save (GimpChannel *selection)
   /*  saved selections are not visible by default  */
   gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
 
-  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1, TRUE);
 
   return new_channel;
 }
@@ -766,7 +766,8 @@ gimp_selection_extract (GimpChannel  *selection,
               if (gimp_layer_is_floating_sel (GIMP_LAYER (pickable)))
                 floating_sel_remove (GIMP_LAYER (pickable));
               else
-                gimp_image_remove_layer (image, GIMP_LAYER (pickable));
+                gimp_image_remove_layer (image, GIMP_LAYER (pickable),
+                                         TRUE, NULL);
             }
           else if (GIMP_IS_LAYER_MASK (pickable))
             {
@@ -775,7 +776,8 @@ gimp_selection_extract (GimpChannel  *selection,
             }
           else if (GIMP_IS_CHANNEL (pickable))
             {
-              gimp_image_remove_channel (image, GIMP_CHANNEL (pickable));
+              gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
+                                         TRUE, NULL);
             }
         }
     }
