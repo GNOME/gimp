@@ -1,3 +1,8 @@
+2008-10-09  Sven Neumann  <sven@sven>
+
+	* app/core/gimp-user-install.c (gimp_user_install_detect_old):
+	use GIMP_MINOR_VERSION to determine the version to migrate from.
+
 2008-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_save_cruft):

@@ -212,7 +212,7 @@ gimp_user_install_detect_old (GimpUserInstall *install)
     {
       gint i;
 
-      for (i = 4; i >= 0; i -= 2)
+      for (i = (GIMP_MINOR_VERSION & ~1); i >= 0; i -= 2)
         {
           /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
           g_snprintf (version + 2, 2, "%d", i);
