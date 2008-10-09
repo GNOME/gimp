@@ -1,4 +1,4 @@
-2008-10-09  Sven Neumann  <sven@sven>
+2008-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c (gimp_user_install_detect_old):
 	use GIMP_MINOR_VERSION to determine the version to migrate from.
