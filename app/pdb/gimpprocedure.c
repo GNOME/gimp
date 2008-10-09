@@ -21,7 +21,7 @@
 #include <stdarg.h>
 #include <sys/types.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"

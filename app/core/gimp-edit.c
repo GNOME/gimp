@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 

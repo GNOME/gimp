@@ -1,5 +1,48 @@
 2008-10-09  Michael Natterer  <mitch@gimp.org>
 
+	Add GEGL_CFLAGS and #includes as if gimpdrawable.h and gimpimage.h
+	had a GEGL dependency (they will have in the next commit, but I
+	wanted to keep the commit separate).
+
+	* app/dialogs/Makefile.am
+	* app/file/Makefile.am
+	* app/gui/Makefile.am
+	* app/menus/Makefile.am
+	* app/paint/Makefile.am
+	* app/plug-in/Makefile.am
+	* app/text/Makefile.am
+	* app/vectors/Makefile.am
+	* app/widgets/Makefile.am
+	* app/xcf/Makefile.am: add GEGL_CFLAGS.
+
+	* app/actions/*.c
+	* app/core/*.c
+	* app/dialogs/*.c
+	* app/display/*.c
+	* app/file/*.c
+	* app/gui/*.c
+	* app/menus/*.c
+	* app/paint/*.c
+	* app/pdb/gimppdb-utils.c
+	* app/pdb/gimpprocedure.c
+	* app/plug-in/*.c
+	* app/text/*.c
+	* app/tools/*.c
+	* app/vectors/*.c
+	* app/widgets/*.c
+	* app/xcf/*.c: add <gegl.h> or replace <glib-object.h> by <gegl.h>
+	to all files which include a drawable subclass or gimpimage.h
+
+	* tools/pdbgen/app.pl: include <gegl.h> instead of <glib-object.h>
+	in all generated files.
+
+	* app/pdb/*-cmds.c: regenerated.
+
+	* data/images/gimp-splash.png: the goat is still sleeping.
+	By Aurore Derriennic.
+
+2008-10-09  Michael Natterer  <mitch@gimp.org>
+
 	Remove the last code duplication from the undo system (or if not
 	the last then at least the most ugly):
 

@@ -21,7 +21,7 @@
 #include <string.h>
 #include <time.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"

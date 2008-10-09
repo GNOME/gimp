@@ -26,6 +26,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"

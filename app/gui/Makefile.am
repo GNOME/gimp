@@ -9,6 +9,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
+	$(GEGL_CFLAGS)		\
 	$(GTK_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)

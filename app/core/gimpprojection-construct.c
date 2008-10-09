@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -29,7 +29,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimplayer.h"

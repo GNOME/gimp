@@ -21,13 +21,13 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"

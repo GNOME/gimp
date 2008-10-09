@@ -20,7 +20,7 @@
 
 #include <string.h> /* strlen */
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"

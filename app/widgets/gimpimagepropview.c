@@ -28,6 +28,7 @@
 #include <unistd.h>
 #endif
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 

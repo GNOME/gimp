@@ -34,7 +34,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
