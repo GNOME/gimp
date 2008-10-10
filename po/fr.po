@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-01 17:56+0200\n"
-"PO-Revision-Date: 2008-10-01 18:00+0200\n"
+"POT-Creation-Date: 2008-10-10 22:27+0200\n"
+"PO-Revision-Date: 2008-10-10 22:28+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -690,7 +690,7 @@ msgstr "Nouveau canal de couleur"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
-#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copie du canal %s"
@@ -849,12 +849,12 @@ msgid "Sample Merged"
 msgstr "Échantillonner sur tous les calques"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:180 ../app/dialogs/file-open-dialog.c:213
-#: ../app/dialogs/file-open-dialog.c:259
+#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:520
-#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -1874,11 +1874,20 @@ msgstr "Enregistrer et fermer..."
 msgid "Save this image and close its window"
 msgstr "Enregistre cette image et ferme sa fenêtre"
 
-#: ../app/actions/file-commands.c:259
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/dialogs/file-open-dialog.c:76
+msgid "Open Image"
+msgstr "Ouvrir une image"
+
+#: ../app/actions/file-commands.c:125
+msgid "Open Image as Layers"
+msgstr "Ouverture d'une image en tant que calques"
+
+#: ../app/actions/file-commands.c:260
 msgid "Saving canceled"
 msgstr "Enregistrement annulé"
 
-#: ../app/actions/file-commands.c:268 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1890,55 +1899,47 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:293
+#: ../app/actions/file-commands.c:294
 msgid "No changes need to be saved"
 msgstr "Il n'y a pas de modification à enregistrer"
 
-#: ../app/actions/file-commands.c:300 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Enregistrer l'image"
 
-#: ../app/actions/file-commands.c:306
+#: ../app/actions/file-commands.c:307
 msgid "Save a Copy of the Image"
 msgstr "Enregistrer une copie de l'image"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:327
 msgid "Create New Template"
 msgstr "Créer un nouveau modèle"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:331
 msgid "Enter a name for this template"
 msgstr "Saisissez un nom pour ce modèle"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:357
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Le rétablissement a échoué. Aucun nom de fichier associé à cette image."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:370
 msgid "Revert Image"
 msgstr "Rétablir l'image"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:396
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Rétablir « %s » à « %s » ?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:402
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 "En rétablissant à l'état enregistré sur le disque, vous perdrez toutes vos "
 "modifications ainsi que les informations d'annulation."
-
-#: ../app/actions/file-commands.c:477
-msgid "Open Image as Layers"
-msgstr "Ouverture d'une image en tant que calques"
-
-#: ../app/actions/file-commands.c:482 ../app/dialogs/file-open-dialog.c:76
-msgid "Open Image"
-msgstr "Ouvrir une image"
 
 #: ../app/actions/file-commands.c:557
 msgid "(Unnamed Template)"
@@ -2397,7 +2398,7 @@ msgstr "_Guides"
 msgid "I_nfo"
 msgstr "I_nformations"
 
-#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:645
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Auto"
@@ -3028,7 +3029,7 @@ msgstr "Masque de calque vers sélection"
 msgid "Please select a channel first"
 msgstr "Sélectionnez d'abord un canal"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1280
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Ajouter un masque de calque"
@@ -3661,7 +3662,7 @@ msgstr "Ouvrir un fichier texte (UTF-8)"
 #: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:314
 #: ../app/core/gimppalette-load.c:368 ../app/core/gimppalette-load.c:456
 #: ../app/core/gimppalette-load.c:599 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:616 ../app/tools/gimplevelstool.c:735
+#: ../app/tools/gimpcurvestool.c:623 ../app/tools/gimplevelstool.c:743
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4341,11 +4342,11 @@ msgstr "A_utre (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: ../app/actions/view-commands.c:589
+#: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
 msgstr "Définition des couleurs de remplissage du canevas"
 
-#: ../app/actions/view-commands.c:591
+#: ../app/actions/view-commands.c:615
 msgid "Set Custom Canvas Padding Color"
 msgstr "Définition des couleurs personnalisées de remplissage du canevas"
 
@@ -4536,8 +4537,8 @@ msgstr "Impossible de redimensionner le fichier d'échange : %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:664
-#: ../app/tools/gimplevelstool.c:762 ../app/vectors/gimpvectors-export.c:83
+#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:676
+#: ../app/tools/gimplevelstool.c:796 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -6139,7 +6140,7 @@ msgid "Colorize"
 msgstr "Coloriage"
 
 #: ../app/core/gimpdrawable-curves.c:165 ../app/core/gimpdrawable-curves.c:182
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Courbes"
 
@@ -6171,7 +6172,7 @@ msgid "Invert"
 msgstr "Inverser"
 
 #: ../app/core/gimpdrawable-levels.c:154 ../app/core/gimpdrawable-levels.c:170
-#: ../app/tools/gimplevelstool.c:146
+#: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Niveaux"
 
@@ -6357,7 +6358,7 @@ msgstr "Ajouter un guide horizontal"
 msgid "Add Vertical Guide"
 msgstr "Ajouter un guide vertical"
 
-#: ../app/core/gimpimage-guides.c:115 ../app/tools/gimpmovetool.c:554
+#: ../app/core/gimpimage-guides.c:115 ../app/tools/gimpmovetool.c:564
 msgid "Remove Guide"
 msgstr "Supprimer le guide"
 
@@ -6449,95 +6450,95 @@ msgstr "Supprimer le parasite de l'image"
 msgid "Add Layer"
 msgstr "Ajouter un calque"
 
-#: ../app/core/gimpimage.c:2940 ../app/core/gimpimage.c:2953
+#: ../app/core/gimpimage.c:2935 ../app/core/gimpimage.c:2948
 msgid "Remove Layer"
 msgstr "Supprimer le calque"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3092
 msgid "Layer cannot be raised higher."
 msgstr "Le calque ne peut pas être monté plus haut."
 
-#: ../app/core/gimpimage.c:3102
+#: ../app/core/gimpimage.c:3097
 msgid "Raise Layer"
 msgstr "Remonter le calque"
 
-#: ../app/core/gimpimage.c:3121
+#: ../app/core/gimpimage.c:3116
 msgid "Layer cannot be lowered more."
 msgstr "Le calque ne peut pas être descendu plus bas."
 
-#: ../app/core/gimpimage.c:3126
+#: ../app/core/gimpimage.c:3121
 msgid "Lower Layer"
 msgstr "Descendre le calque"
 
-#: ../app/core/gimpimage.c:3137
+#: ../app/core/gimpimage.c:3132
 msgid "Raise Layer to Top"
 msgstr "Envoyer le calque tout en haut"
 
-#: ../app/core/gimpimage.c:3152
+#: ../app/core/gimpimage.c:3147
 msgid "Lower Layer to Bottom"
 msgstr "Envoyer le Calque tout en bas"
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3209
 msgid "Add Channel"
 msgstr "Ajouter un canal"
 
-#: ../app/core/gimpimage.c:3259 ../app/core/gimpimage.c:3270
+#: ../app/core/gimpimage.c:3252 ../app/core/gimpimage.c:3263
 msgid "Remove Channel"
 msgstr "Supprimer le canal"
 
-#: ../app/core/gimpimage.c:3319
+#: ../app/core/gimpimage.c:3312
 msgid "Channel cannot be raised higher."
 msgstr "Le canal ne peut pas être plus haut."
 
-#: ../app/core/gimpimage.c:3324
+#: ../app/core/gimpimage.c:3317
 msgid "Raise Channel"
 msgstr "Remonter le canal"
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3328
 msgid "Raise Channel to Top"
 msgstr "Envoyer le canal au sommet de la pile"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3348
 msgid "Channel cannot be lowered more."
 msgstr "Le canal ne peut pas être plus bas."
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3353
 msgid "Lower Channel"
 msgstr "Descendre le canal"
 
-#: ../app/core/gimpimage.c:3375
+#: ../app/core/gimpimage.c:3368
 msgid "Lower Channel to Bottom"
 msgstr "Envoyer le canal au bas de la pile"
 
-#: ../app/core/gimpimage.c:3439
+#: ../app/core/gimpimage.c:3432
 msgid "Add Path"
 msgstr "Ajouter un chemin"
 
-#: ../app/core/gimpimage.c:3485
+#: ../app/core/gimpimage.c:3476
 msgid "Remove Path"
 msgstr "Supprimer le chemin"
 
-#: ../app/core/gimpimage.c:3531
+#: ../app/core/gimpimage.c:3522
 msgid "Path cannot be raised higher."
 msgstr "Le chemin ne peut pas être plus haut."
 
-#: ../app/core/gimpimage.c:3536
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path"
 msgstr "Monter le chemin"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3538
 msgid "Raise Path to Top"
 msgstr "Envoyer le chemin en haut de la pile"
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3557
 msgid "Path cannot be lowered more."
 msgstr "Le chemin ne peut pas être plus bas."
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3562
 msgid "Lower Path"
 msgstr "Descendre le chemin"
 
-#: ../app/core/gimpimage.c:3586
+#: ../app/core/gimpimage.c:3577
 msgid "Lower Path to Bottom"
 msgstr "Envoyer le chemin en bas de la pile"
 
@@ -6652,7 +6653,7 @@ msgstr "Retourner le calque"
 msgid "Rotate Layer"
 msgstr "Rotation du calque"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1327
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6667,41 +6668,41 @@ msgstr ""
 "Sélection flottante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1263
+#: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Impossible d'ajouter un masque au\n"
 "calque car il en a déjà un."
 
-#: ../app/core/gimplayer.c:1274
+#: ../app/core/gimplayer.c:1276
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossible d'ajouter un masque de\n"
 "dimensions différentes de celles du calque."
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
 msgstr "Transfert de l'alpha vers le masque"
 
-#: ../app/core/gimplayer.c:1554 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Appliquer le masque de calque"
 
-#: ../app/core/gimplayer.c:1555
+#: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
 msgstr "Supprimer le masque de calque"
 
-#: ../app/core/gimplayer.c:1667
+#: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
 msgstr "Ajouter un canal alpha"
 
-#: ../app/core/gimplayer.c:1721
+#: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
 msgstr "Supprimer le canal alpha"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
 msgstr "Mettre aux dimensions de l'image"
 
@@ -7105,7 +7106,7 @@ msgstr "_Mode :"
 msgid "_Opacity:"
 msgstr "_Opacité :"
 
-#: ../app/dialogs/file-open-dialog.c:246
+#: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
 msgstr "Ouvrir les calques"
 
@@ -8621,7 +8622,7 @@ msgid "Drop layers"
 msgstr "Déposer les calques"
 
 #: ../app/display/gimpdisplayshell-dnd.c:631
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Presse-papiers déposé"
 
@@ -8747,12 +8748,12 @@ msgstr "« %s » n'est pas un schéma URI valide"
 msgid "Invalid character sequence in URI"
 msgstr "Séquence de caractères non valide dans l'URI"
 
-#: ../app/gegl/gimpcurvesconfig.c:382
+#: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "pas un fichier de courbes GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:396 ../app/gegl/gimplevelsconfig.c:711
+#: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
 msgstr "erreur d'analyse"
@@ -9074,7 +9075,7 @@ msgstr ""
 "La procédure « %s » a été appelée avec un type erroné pour le paramètre n°%d. "
 "%s attendu, %s obtenu."
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:203
+#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "La procédure « %s » n'a renvoyé aucune valeur"
@@ -9758,7 +9759,7 @@ msgstr "La balance des couleurs fonctionne seulement sur des calques RVB."
 msgid "Select Range to Adjust"
 msgstr "Choisir l'intervalle à ajuster"
 
-#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
 msgstr "Ajuster les niveaux de couleur"
 
@@ -9974,55 +9975,59 @@ msgstr "Déc_oupage"
 msgid "Click or press Enter to crop"
 msgstr "Cliquer ou appuyer sur Entrée pour découper"
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "Outils courbes : ajuste les courbes de couleur"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "Co_urbes..."
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
 msgstr "Ajuster les courbes de couleur"
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
 msgstr "Importer des courbes"
 
-#: ../app/tools/gimpcurvestool.c:167
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Export Curves"
 msgstr "Exporter des courbes"
 
-#: ../app/tools/gimpcurvestool.c:217
+#: ../app/tools/gimpcurvestool.c:221
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Courbes ne fonctionne pas sur des calques en couleurs indexées."
 
-#: ../app/tools/gimpcurvestool.c:319
+#: ../app/tools/gimpcurvestool.c:323
 msgid "Click to add a control point"
 msgstr "Cliquez pour ajouter un point de contrôle."
 
-#: ../app/tools/gimpcurvestool.c:324
+#: ../app/tools/gimpcurvestool.c:328
 msgid "Click to add control points to all channels"
 msgstr "Cliquez pour ajouter des points de contrôle à tous les canaux."
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:372
+#: ../app/tools/gimpcurvestool.c:441 ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
 msgstr "Ca_nal :"
 
-#: ../app/tools/gimpcurvestool.c:459 ../app/tools/gimplevelstool.c:396
+#: ../app/tools/gimpcurvestool.c:467 ../app/tools/gimplevelstool.c:404
 msgid "R_eset Channel"
 msgstr "Ré_initialiser le canal"
 
-#: ../app/tools/gimpcurvestool.c:549
+#: ../app/tools/gimpcurvestool.c:557
 msgid "Curve _type:"
 msgstr "_Type de courbe :"
 
-#: ../app/tools/gimpcurvestool.c:625
+#: ../app/tools/gimpcurvestool.c:632 ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Impossible de lire l'en-tête de « %s » : %s"
+
+#: ../app/tools/gimpcurvestool.c:705
+msgid "Use _old curves file format"
+msgstr "Utiliser le format de fichier avec _anciennes courbes"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -10562,65 +10567,69 @@ msgstr "Appuyez sur Entrée pour convertir en sélection"
 msgid "Click or Click-Drag to add a point"
 msgstr "Cliquez-glissez pour ajouter un point"
 
-#: ../app/tools/gimplevelstool.c:147
+#: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
 msgstr "Outils de niveaux : ajuste les niveaux de couleur"
 
-#: ../app/tools/gimplevelstool.c:148
+#: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
 msgstr "Niveau_x..."
 
-#: ../app/tools/gimplevelstool.c:170
+#: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
 msgstr "Importer des niveaux"
 
-#: ../app/tools/gimplevelstool.c:171
+#: ../app/tools/gimplevelstool.c:175
 msgid "Export Levels"
 msgstr "Exporter les niveaux"
 
-#: ../app/tools/gimplevelstool.c:224
+#: ../app/tools/gimplevelstool.c:228
 #, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Niveaux ne fonctionne pas sur des calques en couleurs indexées."
 
-#: ../app/tools/gimplevelstool.c:306
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
 msgstr "Pointez le point noir"
 
-#: ../app/tools/gimplevelstool.c:310
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
 msgstr "Pointez le point gris"
 
-#: ../app/tools/gimplevelstool.c:314
+#: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
 msgstr "Pointez le point blanc"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:411
+#: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
 msgstr "Niveaux d'entrée"
 
-#: ../app/tools/gimplevelstool.c:514
+#: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:556
+#: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
 msgstr "Niveaux de sortie"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:633
+#: ../app/tools/gimplevelstool.c:641
 msgid "All Channels"
 msgstr "Tous les canaux"
 
-#: ../app/tools/gimplevelstool.c:647
+#: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
 msgstr "Ajuster les niveaux automatiquement"
 
-#: ../app/tools/gimplevelstool.c:674
+#: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
 msgstr "Modifier ces paramètres comme Courbes"
+
+#: ../app/tools/gimplevelstool.c:825
+msgid "Use _old levels file format"
+msgstr "Utiliser le format de fichier avec _anciens niveaux"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -10731,15 +10740,15 @@ msgstr ""
 msgid "_Move"
 msgstr "_Déplacement"
 
-#: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:560
+#: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:570
 msgid "Move Guide: "
 msgstr "Déplacer un guide :"
 
-#: ../app/tools/gimpmovetool.c:554
+#: ../app/tools/gimpmovetool.c:564
 msgid "Cancel Guide"
 msgstr "Annuler le guide"
 
-#: ../app/tools/gimpmovetool.c:560
+#: ../app/tools/gimpmovetool.c:570
 msgid "Add Guide: "
 msgstr "Ajouter un guide :"
 
@@ -12131,15 +12140,15 @@ msgstr "Détecté automatiquement"
 msgid "By Extension"
 msgstr "Selon l'extension"
 
-#: ../app/widgets/gimpfiledialog.c:605
+#: ../app/widgets/gimpfiledialog.c:617
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: ../app/widgets/gimpfiledialog.c:610
+#: ../app/widgets/gimpfiledialog.c:622
 msgid "All images"
 msgstr "Toutes les images"
 
-#: ../app/widgets/gimpfiledialog.c:739
+#: ../app/widgets/gimpfiledialog.c:751
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Sélectionner le _type de fichier (%s)"
@@ -12491,39 +12500,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "UTF-8 non valide"
 
-#: ../app/widgets/gimpsettingsbox.c:226
+#: ../app/widgets/gimpsettingsbox.c:239
 msgid "Pick a setting from the list"
 msgstr "Choisissez un paramètre dans la liste"
 
-#: ../app/widgets/gimpsettingsbox.c:247
+#: ../app/widgets/gimpsettingsbox.c:260
 msgid "Add settings to favorites"
 msgstr "Ajouter les paramètres dans les favoris"
 
-#: ../app/widgets/gimpsettingsbox.c:275
+#: ../app/widgets/gimpsettingsbox.c:288
 msgid "_Import Settings from File..."
 msgstr "_Importer des paramètres depuis un fichier..."
 
-#: ../app/widgets/gimpsettingsbox.c:281
+#: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "_Exporter les paramètres dans un fichier..."
 
-#: ../app/widgets/gimpsettingsbox.c:288
+#: ../app/widgets/gimpsettingsbox.c:301
 msgid "_Manage Settings..."
 msgstr "_Gérer des paramètres..."
 
-#: ../app/widgets/gimpsettingsbox.c:575
+#: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "Ajouter les paramètres aux favoris"
 
-#: ../app/widgets/gimpsettingsbox.c:578
+#: ../app/widgets/gimpsettingsbox.c:591
 msgid "Enter a name for the settings"
 msgstr "Saisissez un nom pour les paramètres"
 
-#: ../app/widgets/gimpsettingsbox.c:579
+#: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "Paramètres enregistrés"
 
-#: ../app/widgets/gimpsettingsbox.c:614
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Manage Saved Settings"
 msgstr "Gestion des paramètres enregistrés"
 
@@ -13020,4 +13029,3 @@ msgstr "Impossible de lancer « %s » : %s"
 
 #~ msgid "Path is already on the bottom."
 #~ msgstr "Le calque est déjà tout en bas."
-
