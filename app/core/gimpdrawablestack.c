@@ -198,6 +198,7 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
                               GimpDrawable      *drawable)
 {
   GimpDrawable *drawable_below;
+  GeglNode     *node_above;
   GeglNode     *node;
   gint          index;
 
@@ -208,26 +209,20 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
 
   if (index == 0)
     {
-      GeglNode *output;
-
-      output = gegl_node_get_output_proxy (stack->graph, "output");
-
-      gegl_node_connect_to (node,   "output",
-                            output, "input");
+      node_above = gegl_node_get_output_proxy (stack->graph, "output");
     }
   else
     {
       GimpDrawable *drawable_above;
-      GeglNode     *node_above;
 
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
       node_above = gimp_drawable_get_node (drawable_above);
-
-      gegl_node_connect_to (node,       "output",
-                            node_above, "input");
     }
+
+  gegl_node_connect_to (node,       "output",
+                        node_above, "input");
 
   drawable_below = (GimpDrawable *)
     gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index + 1);
@@ -246,6 +241,7 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
                                  GimpDrawable      *drawable)
 {
   GimpDrawable *drawable_below;
+  GeglNode     *node_above;
   GeglNode     *node;
   gint          index;
 
@@ -258,48 +254,33 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                           GIMP_OBJECT (drawable));
 
-  drawable_below = (GimpDrawable *)
-    gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index + 1);
-
   if (index == 0)
     {
-      if (drawable_below)
-        {
-          GeglNode *node_below;
-          GeglNode *output;
-
-          node_below = gimp_drawable_get_node (drawable_below);
-
-          output = gegl_node_get_output_proxy (stack->graph, "output");
-
-          gegl_node_disconnect (node,       "input");
-          gegl_node_connect_to (node_below, "output",
-                                output,     "input");
-        }
+      node_above = gegl_node_get_output_proxy (stack->graph, "output");
     }
   else
     {
       GimpDrawable *drawable_above;
-      GeglNode     *node_above;
 
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
       node_above = gimp_drawable_get_node (drawable_above);
+    }
 
-      if (drawable_below)
-        {
-          GeglNode *node_below;
+  drawable_below = (GimpDrawable *)
+    gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index + 1);
 
-          node_below = gimp_drawable_get_node (drawable_below);
+  if (drawable_below)
+    {
+      GeglNode *node_below = gimp_drawable_get_node (drawable_below);
 
-          gegl_node_disconnect (node,       "input");
-          gegl_node_connect_to (node_below, "output",
-                                node_above, "input");
-        }
-      else
-        {
-          gegl_node_disconnect (node_above, "input");
-        }
+      gegl_node_disconnect (node,       "input");
+      gegl_node_connect_to (node_below, "output",
+                            node_above, "input");
+    }
+  else
+    {
+      gegl_node_disconnect (node_above, "input");
     }
 }

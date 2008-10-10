@@ -1,5 +1,12 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawablestack.c
+	(gimp_drawable_stack_add_node)
+	(gimp_drawable_stack_remove_node): simplify by getting rid of code
+	duplication.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawablestack.[ch]: move all the code that creates
 	a graph of drawables and all adding/removing/reordering code from
 	GimpImage to this file.
