@@ -1,5 +1,38 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	Bug 554983 – Layers Projection using GEGL
+
+	First projection using GEGL, wheeeee. Disabled by default because
+	it doesn't work with floating selection (and will not, FS
+	refactoring is in the queue).
+
+	* app/core/gimpimage.[ch]: add gimp_image_get_graph() which
+	returns a GeglNode representing the image's projection.
+
+	(gimp_image_add_layer_node)
+	(gimp_image_remove_layer_node): new utility functions to add and
+	remove layer nodes to/from the graph.
+
+	(gimp_image_add_layer)
+	(gimp_image_remove_layer)
+	(gimp_image_position_layer): call them to keep the graph up to date.
+
+	* app/core/gimpdrawable.c (gimp_drawable_real_update): invalidate
+	the source node.
+
+	* app/core/gimpprojection.[ch]: keep a projection graph around and
+	add gimp_projection_get_sink_node() which returns the node that
+	writes to the projection tiles.
+
+	* app/core/gimpprojection-construct.c: add
+	gimp_projection_construct_gegl() which is a few-liner that uses a
+	GeglProcessor to run the projection graph.
+
+	(gimp_projection_construct): call the new function (disabled by
+	default).
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch]: add new functions
 	gimp_image_get_layer_by_index(), _channel_by_index() and
 	_vectors_by_index().

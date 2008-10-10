@@ -642,6 +642,25 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
+  if (drawable->source_node)
+    {
+      GObject       *operation;
+      GeglRectangle  rect;
+
+      g_object_get (drawable->source_node,
+                    "gegl-operation", &operation,
+                    NULL);
+
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      gegl_operation_invalidate (operation, &rect);
+
+      g_object_unref (operation);
+    }
+
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 

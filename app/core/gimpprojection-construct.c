@@ -41,6 +41,11 @@
 
 /*  local function prototypes  */
 
+static void   gimp_projection_construct_gegl     (GimpProjection *proj,
+                                                  gint            x,
+                                                  gint            y,
+                                                  gint            w,
+                                                  gint            h);
 static void   gimp_projection_construct_layers   (GimpProjection *proj,
                                                   gint            x,
                                                   gint            y,
@@ -150,12 +155,43 @@ gimp_projection_construct (GimpProjection *proj,
   /*  call functions which process the list of layers and
    *  the list of channels
    */
-  gimp_projection_construct_layers (proj, x, y, w, h);
+  if (FALSE)
+    gimp_projection_construct_gegl (proj, x, y, w, h);
+  else
+    gimp_projection_construct_layers (proj, x, y, w, h);
+
   gimp_projection_construct_channels (proj, x, y, w, h);
 }
 
 
 /*  private functions  */
+
+static void
+gimp_projection_construct_gegl (GimpProjection *proj,
+                                gint            x,
+                                gint            y,
+                                gint            w,
+                                gint            h)
+{
+  GeglNode      *sink;
+  GeglProcessor *processor;
+  GeglRectangle  rect;
+
+  sink = gimp_projection_get_sink_node (proj);
+
+  rect.x      = x;
+  rect.y      = y;
+  rect.width  = w;
+  rect.height = h;
+
+  processor = gegl_node_new_processor (sink, &rect);
+
+  while (gegl_processor_work (processor, NULL));
+
+  g_object_unref (processor);
+
+  proj->construct_flag = TRUE;
+}
 
 static void
 gimp_projection_construct_layers (GimpProjection *proj,
