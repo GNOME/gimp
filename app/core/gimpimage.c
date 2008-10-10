@@ -2576,8 +2576,8 @@ gimp_image_get_graph (GimpImage *image)
 
   for (list = reverse_list; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
-      GeglNode  *node  = gimp_layer_get_node (layer);
+      GimpDrawable *layer = list->data;
+      GeglNode     *node  = gimp_drawable_get_node (layer);
 
       gegl_node_add_child (image->graph, node);
 
@@ -2612,7 +2612,7 @@ gimp_image_add_layer_node (GimpImage *image,
 
   index = gimp_image_get_layer_index (image, layer);
 
-  node = gimp_layer_get_node (layer);
+  node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
 
   if (index == 0)
     {
@@ -2630,7 +2630,7 @@ gimp_image_add_layer_node (GimpImage *image,
 
       layer_above = gimp_image_get_layer_by_index (image, index - 1);
 
-      node_above = gimp_layer_get_node (layer_above);
+      node_above = gimp_drawable_get_node (GIMP_DRAWABLE (layer_above));
 
       gegl_node_connect_to (node,       "output",
                             node_above, "input");
@@ -2640,7 +2640,7 @@ gimp_image_add_layer_node (GimpImage *image,
 
   if (layer_below)
     {
-      GeglNode *node_below = gimp_layer_get_node (layer_below);
+      GeglNode *node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
 
       gegl_node_connect_to (node_below, "output",
                             node,       "input");
@@ -2658,7 +2658,7 @@ gimp_image_remove_layer_node (GimpImage *image,
 
   index = gimp_image_get_layer_index (image, layer);
 
-  node = gimp_layer_get_node (layer);
+  node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
 
   layer_below = gimp_image_get_layer_by_index (image, index + 1);
 
@@ -2666,8 +2666,10 @@ gimp_image_remove_layer_node (GimpImage *image,
     {
       if (layer_below)
         {
-          GeglNode *node_below = gimp_layer_get_node (layer_below);
+          GeglNode *node_below;
           GeglNode *output;
+
+          node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
 
           output = gegl_node_get_output_proxy (image->graph, "output");
 
@@ -2682,11 +2684,14 @@ gimp_image_remove_layer_node (GimpImage *image,
       GeglNode  *node_above;
 
       layer_above = gimp_image_get_layer_by_index (image, index - 1);
-      node_above = gimp_layer_get_node (layer_above);
+
+      node_above = gimp_drawable_get_node (GIMP_DRAWABLE (layer_above));
 
       if (layer_below)
         {
-          GeglNode *node_below = gimp_layer_get_node (layer_below);
+          GeglNode *node_below;
+
+          node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
 
           gegl_node_disconnect (node,       "input");
           gegl_node_connect_to (node_below, "output",
@@ -3172,7 +3177,8 @@ gimp_image_remove_layer (GimpImage *image,
     {
       gimp_image_remove_layer_node (image, layer);
 
-      gegl_node_remove_child (image->graph, gimp_layer_get_node (layer));
+      gegl_node_remove_child (image->graph,
+                              gimp_drawable_get_node (GIMP_DRAWABLE (layer)));
     }
 
   gimp_container_remove (image->layers, GIMP_OBJECT (layer));

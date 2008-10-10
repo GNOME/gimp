@@ -1,5 +1,16 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: add virtual function
+	GimpDrawable::get_node() which returns a node to be plugged into
+	the projection.
+
+	* app/core/gimplayer.[ch]: remove public get_node() api and
+	implement the virtual function instead.
+
+	* app/core/gimpimage.c: changed accordingly.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): flush
 	the image after setting active items back from temporarily
 	selected ones. Fixes menu item sensitivity.

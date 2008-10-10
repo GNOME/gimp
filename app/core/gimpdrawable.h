@@ -95,6 +95,7 @@ struct _GimpDrawableClass
                                            GimpImageType         type,
                                            gint                  offset_x,
                                            gint                  offset_y);
+  GeglNode    * (* get_node)              (GimpDrawable         *drawable);
 
   void          (* push_undo)             (GimpDrawable         *drawable,
                                            const gchar          *undo_desc,
@@ -172,6 +173,7 @@ void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
                                                   gint                offset_y);
 
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
+GeglNode      * gimp_drawable_get_node           (GimpDrawable       *drawable);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   TileManager        *tiles,

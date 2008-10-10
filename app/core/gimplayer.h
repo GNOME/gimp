@@ -127,8 +127,6 @@ GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 
 gboolean        gimp_layer_is_floating_sel     (const GimpLayer      *layer);
 
-GeglNode      * gimp_layer_get_node            (GimpLayer            *layer);
-
 void            gimp_layer_set_opacity         (GimpLayer            *layer,
                                                 gdouble               opacity,
                                                 gboolean              push_undo);

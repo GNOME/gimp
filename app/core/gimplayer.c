@@ -166,6 +166,8 @@ static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
                                                  GimpImageType       type,
                                                  gint                offset_x,
                                                  gint                offset_y);
+static GeglNode * gimp_layer_get_node           (GimpDrawable       *drawable);
+
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
@@ -275,6 +277,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
+  drawable_class->get_node              = gimp_layer_get_node;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -511,6 +514,86 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, FALSE);
+}
+
+static GeglNode *
+gimp_layer_get_node (GimpDrawable *drawable)
+{
+  GimpLayer *layer = GIMP_LAYER (drawable);
+  GeglNode  *source;
+  gint       off_x, off_y;
+  GeglNode  *input;
+  GeglNode  *output;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  if (layer->node)
+    return layer->node;
+
+  layer->node = gegl_node_new ();
+
+  source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
+  gegl_node_add_child (layer->node, source);
+
+  if (layer->mask)
+    {
+      GeglNode *mask;
+
+      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+
+      layer->mask_node = gegl_node_new_child (layer->node,
+                                              "operation", "opacity",
+                                              NULL);
+      gegl_node_connect_to (mask,             "output",
+                            layer->mask_node, "aux");
+      gegl_node_connect_to (source,           "output",
+                            layer->mask_node, "input");
+    }
+
+  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  layer->shift_node = gegl_node_new_child (layer->node,
+                                           "operation", "shift",
+                                           "x",         (gdouble) off_x,
+                                           "y",         (gdouble) off_y,
+                                           NULL);
+
+  if (layer->mask_node)
+    gegl_node_connect_to (layer->mask_node,  "output",
+                          layer->shift_node, "input");
+  else
+    gegl_node_connect_to (source,            "output",
+                          layer->shift_node, "input");
+
+  layer->opacity_node = gegl_node_new_child (layer->node,
+                                             "operation", "opacity",
+                                             "value",     layer->opacity,
+                                             NULL);
+  gegl_node_connect_to (layer->shift_node,   "output",
+                        layer->opacity_node, "input");
+
+  layer->mode_node = gegl_node_new_child (layer->node,
+                                          "operation", gimp_layer_mode_to_gegl_operation (layer->mode),
+                                          NULL);
+  gegl_node_connect_to (layer->opacity_node, "output",
+                        layer->mode_node,    "aux");
+
+  input  = gegl_node_get_input_proxy (layer->node, "input");
+  output = gegl_node_get_output_proxy (layer->node, "output");
+
+  if (gimp_item_get_visible (GIMP_ITEM (layer)))
+    {
+      gegl_node_connect_to (input,            "output",
+                            layer->mode_node, "input");
+      gegl_node_connect_to (layer->mode_node, "output",
+                            output,           "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
+
+  return layer->node;
 }
 
 static void
@@ -1932,85 +2015,6 @@ gimp_layer_is_floating_sel (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   return (layer->fs.drawable != NULL);
-}
-
-GeglNode *
-gimp_layer_get_node (GimpLayer *layer)
-{
-  GeglNode *source;
-  gint      off_x, off_y;
-  GeglNode *input;
-  GeglNode *output;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-
-  if (layer->node)
-    return layer->node;
-
-  layer->node = gegl_node_new ();
-
-  source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
-  gegl_node_add_child (layer->node, source);
-
-  if (layer->mask)
-    {
-      GeglNode *mask;
-
-      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
-
-      layer->mask_node = gegl_node_new_child (layer->node,
-                                              "operation", "opacity",
-                                              NULL);
-      gegl_node_connect_to (mask,             "output",
-                            layer->mask_node, "aux");
-      gegl_node_connect_to (source,           "output",
-                            layer->mask_node, "input");
-    }
-
-  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
-  layer->shift_node = gegl_node_new_child (layer->node,
-                                           "operation", "shift",
-                                           "x",         (gdouble) off_x,
-                                           "y",         (gdouble) off_y,
-                                           NULL);
-
-  if (layer->mask_node)
-    gegl_node_connect_to (layer->mask_node,  "output",
-                          layer->shift_node, "input");
-  else
-    gegl_node_connect_to (source,            "output",
-                          layer->shift_node, "input");
-
-  layer->opacity_node = gegl_node_new_child (layer->node,
-                                             "operation", "opacity",
-                                             "value",     layer->opacity,
-                                             NULL);
-  gegl_node_connect_to (layer->shift_node,   "output",
-                        layer->opacity_node, "input");
-
-  layer->mode_node = gegl_node_new_child (layer->node,
-                                          "operation", gimp_layer_mode_to_gegl_operation (layer->mode),
-                                          NULL);
-  gegl_node_connect_to (layer->opacity_node, "output",
-                        layer->mode_node,    "aux");
-
-  input  = gegl_node_get_input_proxy (layer->node, "input");
-  output = gegl_node_get_output_proxy (layer->node, "output");
-
-  if (gimp_item_get_visible (GIMP_ITEM (layer)))
-    {
-      gegl_node_connect_to (input,            "output",
-                            layer->mode_node, "input");
-      gegl_node_connect_to (layer->mode_node, "output",
-                            output,           "input");
-    }
-  else
-    {
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
-    }
-
-  return layer->node;
 }
 
 void
