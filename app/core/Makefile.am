@@ -156,6 +156,8 @@ libappcore_a_sources = \
 	gimpdrawable-transform.h		\
 	gimpdrawablemodundo.c			\
 	gimpdrawablemodundo.h			\
+	gimpdrawablestack.c			\
+	gimpdrawablestack.h			\
 	gimpdrawableundo.c			\
 	gimpdrawableundo.h			\
 	gimpfloatingselundo.c			\

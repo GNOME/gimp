@@ -38,6 +38,7 @@
 #include "gimp-parasites.h"
 #include "gimp-utils.h"
 #include "gimpcontext.h"
+#include "gimpdrawablestack.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
@@ -631,8 +632,8 @@ gimp_image_init (GimpImage *image)
   image->grid                  = NULL;
   image->sample_points         = NULL;
 
-  image->layers                = gimp_list_new (GIMP_TYPE_LAYER,   TRUE);
-  image->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, TRUE);
+  image->layers                = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
+  image->channels              = gimp_drawable_stack_new (GIMP_TYPE_CHANNEL);
   image->vectors               = gimp_list_new (GIMP_TYPE_VECTORS, TRUE);
   image->layer_stack           = NULL;
 

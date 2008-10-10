@@ -1,5 +1,16 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-types.h
+	* app/core/Makefile.am
+	* app/core/gimpdrawablestack.[ch]: new GimpList subclass stub
+	which will manage the subgraphs of layers and channels and is also
+	the first step towards layer tree.
+
+	* app/core/gimpimage.c (gimp_image_init): keep the layers and
+	channels in GimpDrawableStacks instead of plain GimpLists.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: add virtual function
 	GimpDrawable::get_node() which returns a node to be plugged into
 	the projection.
