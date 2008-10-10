@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: GIMP po-plugins fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-08 21:49+0200\n"
-"PO-Revision-Date: 2008-10-08 21:50+0100\n"
+"PO-Revision-Date: 2008-10-08 22:22+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -927,11 +927,11 @@ msgstr "Simule un dessin crayonné en améliorant les bords"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
-msgstr "Bande _dessinée"
+msgstr "_Dessin au crayon"
 
 #: ../plug-ins/common/cartoon.c:811
 msgid "Cartoon"
-msgstr "Bande dessinée"
+msgstr "Dessin au crayon"
 
 #: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:876
 msgid "_Mask radius:"
@@ -943,7 +943,7 @@ msgstr "Pour_centage de noir :"
 
 #: ../plug-ins/common/channel-mixer.c:175
 msgid "Alter colors by mixing RGB Channels"
-msgstr "Altére les couleurs en mélangeant les canaux RVB"
+msgstr "Altère les couleurs en mélangeant les canaux RVB"
 
 #: ../plug-ins/common/channel-mixer.c:180
 msgid "Channel Mi_xer..."
@@ -1989,11 +1989,11 @@ msgstr "Amélioration d'image Retinex"
 
 #: ../plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
-msgstr "Uniforme"
+msgstr "Identique"
 
 #: ../plug-ins/common/contrast-retinex.c:322
 msgid "Low"
-msgstr "Faible"
+msgstr "Bas"
 
 #: ../plug-ins/common/contrast-retinex.c:323
 msgid "High"
@@ -2001,7 +2001,7 @@ msgstr "Haut"
 
 #: ../plug-ins/common/contrast-retinex.c:334
 msgid "_Level:"
-msgstr "_Niveau :"
+msgstr "Ni_veau :"
 
 #: ../plug-ins/common/contrast-retinex.c:339
 msgid "_Scale:"
@@ -2228,7 +2228,7 @@ msgstr "Impossible d'opérer sur des sélections vides."
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:2932
 msgid "Curve Bend"
-msgstr "Courber"
+msgstr "Déformer selon une courbe"
 
 #. Preview area, top of column
 #. preview
@@ -2952,7 +2952,7 @@ msgstr "Fonction"
 
 #: ../plug-ins/common/emboss.c:478
 msgid "_Bumpmap"
-msgstr "_Carte en relief"
+msgstr "_Carte de relief"
 
 #: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
@@ -3217,9 +3217,9 @@ msgstr "Ce n'est pas un fichier GIF."
 
 #: ../plug-ins/common/file-gif-load.c:396
 msgid "Non-square pixels.  Image might look squashed."
-msgstr "Pixels non carrés. L'image peut apparaître criarde."
+msgstr "Pixels non carrés. L'image peut apparaître tassée."
 
-#: ../plug-ins/common/file-gif-load.c:913
+#: ../plug-ins/common/file-gif-load.c:915
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Arrière-plan (%d%s)"
@@ -3247,13 +3247,13 @@ msgid ""
 "play or re-save perfectly."
 msgstr ""
 "GIF : le type GIF composite %d est non documenté et n'est pas pris en "
-"charge. L'animation pourrait ne pas se jouer ou être ré-engistrée "
+"charge. L'animation pourrait ne pas se jouer ni être ré-enregistrée "
 "parfaitement."
 
 #: ../plug-ins/common/file-gif-save.c:447
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
-"Impossible de réduire les couleurs de manière plus poussée Enregistrement en "
+"Impossible de réduire les couleurs de manière plus poussée. Enregistrement en "
 "tant qu'image opaque."
 
 #: ../plug-ins/common/file-gif-save.c:562
@@ -3388,7 +3388,7 @@ msgstr "Erreur dans le fichier de brosse animée GIMP"
 
 #: ../plug-ins/common/file-gih.c:569
 msgid "GIMP brush file appears to be corrupted."
-msgstr "Le fichier de brosse GIMP semble être corrompu."
+msgstr "Le fichier de brosse GIMP semble être endommagé."
 
 #: ../plug-ins/common/file-gih.c:718
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3566,10 +3566,9 @@ msgstr ""
 msgid "Cell-_padding:"
 msgstr "_Bourrage des cellules :"
 
-# vérifier
 #: ../plug-ins/common/file-html-table.c:630
 msgid "The amount of cellpadding."
-msgstr "La quantité de bourrage de cellule"
+msgstr "Importance du bourrage de cellule."
 
 #: ../plug-ins/common/file-html-table.c:639
 msgid "Cell-_spacing:"
@@ -3577,7 +3576,7 @@ msgstr "_Espacement des cellules :"
 
 #: ../plug-ins/common/file-html-table.c:643
 msgid "The amount of cellspacing."
-msgstr "Quantité d'espacement entre les cellules."
+msgstr "Importance de l'espacement entre les cellules."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3818,7 +3817,7 @@ msgstr "Erreur lors du chargement du fichier PNG : %s"
 #: ../plug-ins/common/file-png.c:703
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "Erreur en lecture de « %s ». Fichier corrompu ?"
+msgstr "Erreur en lecture de « %s ». Fichier endommagé ?"
 
 #: ../plug-ins/common/file-png.c:834
 #, c-format
@@ -3938,7 +3937,7 @@ msgstr "L'image est plus haute que GIMP ne peut prendre en charge."
 
 #: ../plug-ins/common/file-pnm.c:575
 msgid "Unsupported maximum value."
-msgstr "Valeur maximale non prise en charge."
+msgstr "Valeur maximale non valide."
 
 #: ../plug-ins/common/file-pnm.c:780
 msgid "Error reading file."
@@ -4096,7 +4095,7 @@ msgstr "Taille de l'image"
 
 #: ../plug-ins/common/file-ps.c:3413
 msgid "_Keep aspect ratio"
-msgstr "Ratio d'aspect _fixe"
+msgstr "Proportions _fixes"
 
 #: ../plug-ins/common/file-ps.c:3419
 msgid ""
@@ -5710,7 +5709,7 @@ msgstr "Conserve les canaux _minimaux"
 
 #: ../plug-ins/common/mosaic.c:359
 msgid "Convert the image into irregular tiles"
-msgstr "Convertit l'image dans des morceaux irréguliers"
+msgstr "Convertit l'image en carreaux irréguliers"
 
 #: ../plug-ins/common/mosaic.c:364
 msgid "_Mosaic..."
@@ -5724,7 +5723,7 @@ msgstr "Recherche des bords"
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:556
 msgid "Rendering tiles"
-msgstr "Calcul des morceaux en cours"
+msgstr "Calcul des carreaux en cours"
 
 #: ../plug-ins/common/mosaic.c:589
 msgid "Mosaic"
@@ -5748,11 +5747,11 @@ msgstr "Triangles"
 
 #: ../plug-ins/common/mosaic.c:640
 msgid "_Tiling primitives:"
-msgstr "Primitives des morceaux :"
+msgstr "Primitives des carreaux :"
 
 #: ../plug-ins/common/mosaic.c:648
 msgid "Tile _size:"
-msgstr "Ta_ille d'un morceau :"
+msgstr "Ta_ille d'un carreau :"
 
 #: ../plug-ins/common/mosaic.c:660 ../plug-ins/common/tile-glass.c:303
 msgid "Tile _height:"
@@ -6107,7 +6106,7 @@ msgstr "Éparpiller"
 
 #: ../plug-ins/common/noise-spread.c:369
 msgid "Spread Amount"
-msgstr "Quantité d'éparpillement :"
+msgstr "Taux d'éparpillement :"
 
 #: ../plug-ins/common/nova.c:168
 msgid "Add a starburst to the image"
@@ -6213,19 +6212,19 @@ msgstr "Pourcentage de _blanc :"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr "Simplifie l'image comme un tableau fait de carrés de couleurs pleines"
+msgstr "Simplifie l'image en un tableau fait de carrés de couleurs pleines"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr "_Pixeliser..."
+msgstr "_Pixéliser..."
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
-msgstr "Pixelisation en cours"
+msgstr "Pixélisation en cours"
 
 #: ../plug-ins/common/pixelize.c:316
 msgid "Pixelize"
-msgstr "Pixeliser"
+msgstr "Pixéliser"
 
 #: ../plug-ins/common/pixelize.c:352
 msgid "Pixel _width:"
@@ -6463,7 +6462,7 @@ msgstr "Onduler"
 
 #: ../plug-ins/common/ripple.c:526
 msgid "_Retain tilability"
-msgstr "Garder la _raccordabilité"
+msgstr "Conserver le caractère _raccordable"
 
 #. Edges toggle box
 #: ../plug-ins/common/ripple.c:560
@@ -6521,8 +6520,6 @@ msgstr "Rotation"
 msgid "Colorize image using a sample image as a guide"
 msgstr "Colorie l'image en utilisant un échantillon d'image comme guide"
 
-# TODO étrange, je dirai Colorier l'échantillon, mais ce n'est pas du tout
-# ce que fait cette fonction, elle colorie à partir d'un échantillon
 #: ../plug-ins/common/sample-colorize.c:303
 msgid "_Sample Colorize..."
 msgstr "Color_ier à partir d'un échantillon..."
@@ -6633,7 +6630,7 @@ msgstr "Fenêtre spécifiée non trouvée"
 
 #: ../plug-ins/common/screenshot.c:975
 msgid "There was an error taking the screenshot."
-msgstr "Une erreur est survenu en prenant la capture d'écran."
+msgstr "Une erreur est survenue en prenant la capture d'écran."
 
 #: ../plug-ins/common/screenshot.c:1069
 msgid "S_nap"
@@ -6691,7 +6688,7 @@ msgstr "secondes"
 #: ../plug-ins/common/semi-flatten.c:68
 msgid "Replace partial transparency with the current background color"
 msgstr ""
-"Remplace la transparence partielle avec la couleur d'arrière-plan actuelle"
+"Remplace la transparence partielle par la couleur d'arrière-plan actuelle"
 
 #: ../plug-ins/common/semi-flatten.c:75
 msgid "_Semi-Flatten"
@@ -6704,7 +6701,7 @@ msgstr "Aplatir à moitié"
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr ""
-"Accentue la netteté de l'image (moins puissant que renforcer la netteté)"
+"Accentue la netteté de l'image (moins puissant que Renforcer la netteté)"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
@@ -6747,7 +6744,7 @@ msgstr "Déplacer _verticalement"
 
 #: ../plug-ins/common/shift.c:422
 msgid "Shift _amount:"
-msgstr "_Quantité de déplacement :"
+msgstr "Import_ance du déplacement :"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
@@ -6811,7 +6808,7 @@ msgstr "Couleurs"
 #. if in grey scale, the colors are necessarily black and white
 #: ../plug-ins/common/sinus.c:791
 msgid "The colors are white and black."
-msgstr "Les couleurs sont noires et blanches."
+msgstr "Les couleurs sont le noir et le blanc."
 
 #: ../plug-ins/common/sinus.c:802
 msgid "Bl_ack & white"
@@ -6956,7 +6953,7 @@ msgstr "Ajuste la longueur des pointes"
 
 #: ../plug-ins/common/sparkle.c:412
 msgid "Sp_ike points:"
-msgstr "Nb de po_intes :"
+msgstr "Nombre de po_intes :"
 
 #: ../plug-ins/common/sparkle.c:415
 msgid "Adjust the number of spikes"
@@ -7096,7 +7093,7 @@ msgstr "Texture"
 
 #: ../plug-ins/common/sphere-designer.c:1744
 msgid "Bumpmap"
-msgstr "Carte en relief"
+msgstr "Relief"
 
 #: ../plug-ins/common/sphere-designer.c:1746
 #: ../plug-ins/common/sphere-designer.c:2692
@@ -7164,7 +7161,7 @@ msgstr "Quantité :"
 
 #: ../plug-ins/common/sphere-designer.c:2770
 msgid "Exp.:"
-msgstr "Exp.  :"
+msgstr "Exp. :"
 
 #: ../plug-ins/common/sphere-designer.c:2777
 msgid "Transformations"
@@ -7642,7 +7639,7 @@ msgstr "Plus t_ransparent"
 
 #: ../plug-ins/common/value-propagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
-msgstr "Propage certaines couleurs à leurs pixels voisins"
+msgstr "Propage certaines couleurs aux pixels voisins"
 
 #: ../plug-ins/common/value-propagate.c:238
 msgid "_Value Propagate..."
@@ -8000,7 +7997,6 @@ msgid "Waving"
 msgstr "Calcul d'ondulations"
 
 #: ../plug-ins/common/web-browser.c:206
-#, c-format
 msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences dialog."
@@ -8028,13 +8024,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Impossible de démarrer le navigateur Web indiqué dans les préférences :\n"
+"Impossible de lancer le navigateur Web indiqué dans les préférences :\n"
 "\n"
 "%s"
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr "Distorsion d'une image et tournant et aspirant"
+msgstr "Distorsion d'une image en tournant et aspirant"
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
@@ -8058,7 +8054,7 @@ msgstr "Angle de ro_tation :"
 
 #: ../plug-ins/common/whirl-pinch.c:577
 msgid "_Pinch amount:"
-msgstr "Quantité d'_aspiration :"
+msgstr "Importance de l'_aspiration :"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
@@ -8387,7 +8383,7 @@ msgstr "A_fficher l'aperçu dans la fenêtre d'image"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:928
 msgid "S_moothing:"
-msgstr "A_doucissement :"
+msgstr "Ad_oucissement :"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:941
 msgid "Frequency (rows):"
@@ -8395,7 +8391,7 @@ msgstr "Fréquence (rangées) :"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:957
 msgid "Use _restart markers"
-msgstr "_Marqueurs de redémarrage"
+msgstr "_Marqueurs de reprise"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:973
 msgid "_Optimize"
@@ -8434,7 +8430,7 @@ msgstr ""
 #. Subsampling
 #: ../plug-ins/file-jpeg/jpeg-save.c:1082
 msgid "Su_bsampling:"
-msgstr "_Sous-échantillonage :"
+msgstr "_Sous-échantillonnage :"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1089
 msgid "1x1,1x1,1x1 (best quality)"
@@ -8483,9 +8479,9 @@ msgstr "Image JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:301
 msgid "Export Preview"
-msgstr "Exportation d'aperçu"
+msgstr "Exporter l'aperçu"
 
-#: ../plug-ins/file-psd/psd-load.c:215
+#: ../plug-ins/file-psd/psd-load.c:211
 #: ../plug-ins/file-psd/psd-thumb-load.c:131
 #, c-format
 msgid "Error loading PSD file: %s"
@@ -8494,7 +8490,7 @@ msgstr "Erreur lors du chargement du fichier PSD : %s"
 #: ../plug-ins/file-psd/psd-load.c:270
 #, c-format
 msgid "Not a valid photoshop document file"
-msgstr "Ce n'est pas un fichier de document Photoshop valide"
+msgstr "Ce n'est pas un document Photoshop valide"
 
 #: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
@@ -8520,7 +8516,7 @@ msgstr "Profondeur de bit non prise en charge : %d"
 #: ../plug-ins/file-psd/psd-load.c:604 ../plug-ins/file-psd/psd-load.c:785
 #, c-format
 msgid "The file is corrupt!"
-msgstr "Le fichier est corrompu."
+msgstr "Ce fichier est endommagé."
 
 #: ../plug-ins/file-psd/psd-load.c:545
 #, c-format
@@ -8730,7 +8726,7 @@ msgstr "L'ouverture de « %s » en lecture a produit le code de réponse HTTP�
 #: ../plug-ins/file-uri/uri-backend-wget.c:253
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr "wget a terminé anormalement sur l'URI « %s »"
+msgstr "wget s'est terminé anormalement sur l'URI « %s »"
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/file-uri/uri-backend-wget.c:190
@@ -8849,7 +8845,7 @@ msgstr "Dessin des flammes"
 
 #: ../plug-ins/flame/flame.c:319
 msgid "Flame works only on RGB drawables."
-msgstr "Les flammes n'opèrent que sur des images RVB."
+msgstr "« Flammes » n'opère que sur des images RVB."
 
 #: ../plug-ins/flame/flame.c:402
 #, c-format
@@ -8858,7 +8854,7 @@ msgstr "« %s » n'est pas un fichier correct"
 
 #: ../plug-ins/flame/flame.c:646
 msgid "Edit Flame"
-msgstr "Éditer flamme"
+msgstr "Modifier « Flammes »"
 
 #: ../plug-ins/flame/flame.c:669
 msgid "Directions"
@@ -8940,7 +8936,7 @@ msgstr "Exponentiel"
 
 #: ../plug-ins/flame/flame.c:767
 msgid "Power"
-msgstr "Puissant"
+msgstr "Puissance"
 
 #: ../plug-ins/flame/flame.c:768
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
@@ -8983,11 +8979,11 @@ msgstr "_Variation :"
 
 #: ../plug-ins/flame/flame.c:811
 msgid "Load Flame"
-msgstr "Charger flamme"
+msgstr "Charger « Flammes »"
 
 #: ../plug-ins/flame/flame.c:826
 msgid "Save Flame"
-msgstr "Enregistrer flamme"
+msgstr "Enregistrer « Flammes »"
 
 #: ../plug-ins/flame/flame.c:968
 msgid "Flame"
@@ -9419,7 +9415,7 @@ msgstr "Dégradé de forme"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
-msgstr "Dégrade vertical"
+msgstr "Dégradé vertical"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
@@ -9679,7 +9675,7 @@ msgstr "Erreur lors de la lecture du fichier"
 #: ../plug-ins/gfig/gfig-dobject.c:1044
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
-"Édition d'un objet en lecture seule - vous ne pourrez pas l'enregistrer"
+"Modification d'un objet en lecture seule : vous ne pourrez pas l'enregistrer"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
@@ -9719,7 +9715,7 @@ msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Erreur lors de l'enregistrement de la figure en tant que parasite : ne peut "
-"rattacher le parasite au drawable."
+"rattacher le parasite à l'objet graphique."
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
@@ -9730,7 +9726,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
-msgstr "Ne peut enregistrer que des tracés !"
+msgstr "Seuls des objets graphiques peuvent être enregistrés !"
 
 #: ../plug-ins/gimpressionist/brush.c:252
 msgid "Save Brush"
@@ -9754,11 +9750,11 @@ msgstr "Sélectionner :"
 
 #: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
-msgstr "Rapport d'aspect :"
+msgstr "Proportions :"
 
 #: ../plug-ins/gimpressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
-msgstr "Indique le rapport hauteur/largeur de la brosse"
+msgstr "Précise les proportions de la brosse"
 
 #: ../plug-ins/gimpressionist/brush.c:612
 #: ../plug-ins/gimpressionist/paper.c:206
@@ -9769,7 +9765,7 @@ msgstr "Relief :"
 #: ../plug-ins/gimpressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
-"Indique la quantité de repoussage à appliquer à l'image (en pourcentage)"
+"Précise l'importance du repoussage à appliquer à l'image (en pourcentage)"
 
 #: ../plug-ins/gimpressionist/color.c:60
 msgid "Co_lor"
@@ -9787,13 +9783,12 @@ msgstr "Au c_entre de la brosse"
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 "La couleur de dessin est la moyenne de tous les pixels de l'image originale "
-"sous la brosse"
+"situés sous la brosse"
 
 #: ../plug-ins/gimpressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
-"La couleur de dessin est la couleur de l'image originale au centre de la "
-"brosse"
+"La couleur de dessin est déterminée par le pixel au centre de la brosse"
 
 #: ../plug-ins/gimpressionist/color.c:94
 msgid "Color _noise:"
@@ -9893,7 +9888,7 @@ msgstr "Flou de l'ombre :"
 
 #: ../plug-ins/gimpressionist/general.c:271
 msgid "How much to blur the drop shadow"
-msgstr "Quantité de flou à appliquer à l'ombre portée"
+msgstr "Importance du flou à appliquer à l'ombre portée"
 
 #: ../plug-ins/gimpressionist/general.c:276
 msgid "Deviation threshold:"
@@ -9953,7 +9948,7 @@ msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
-"Si coché, la valeur (luminosité) de la région déterminera la direction de "
+"Si coché, la valeur (luminosité) de la région déterminera la direction du "
 "tracé"
 
 #: ../plug-ins/gimpressionist/orientation.c:160
@@ -10011,7 +10006,7 @@ msgstr "Manuel"
 
 #: ../plug-ins/gimpressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
-msgstr "Renseigne manuellement la direction du tracé"
+msgstr "Précise manuellement la direction du tracé"
 
 #: ../plug-ins/gimpressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
@@ -10279,7 +10274,8 @@ msgstr "Taille :"
 #: ../plug-ins/gimpressionist/size.c:160
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "La valeur (luminosité) de la région détermine la longueur de la brosse"
+msgstr "La valeur (luminosité) de la région détermine la longueur du coup "
+"de brosse"
 
 #: ../plug-ins/gimpressionist/size.c:164
 msgid ""
@@ -10419,7 +10415,7 @@ msgstr ""
 "entrée dans %s, comme :\n"
 "(gflare-path \"%s\")\n"
 "et que vous créez un dossier %s, vous pourrez enregistrer vos propres "
-"Éblouissements graduel dans ce dossier."
+"Éblouissements graduels dans ce dossier."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1484
 #, c-format
@@ -10697,9 +10693,10 @@ msgstr "Recherche du texte dans la page actuelle"
 
 #: ../plug-ins/help-browser/dialog.c:617
 msgid "Find _Again"
-msgstr "Rechercher à _nouveau"
+msgstr "Reprendre l_a recherche"
 
-#: ../plug-ins/help-browser/dialog.c:636
+#: ../plug-ins/help-browser/dialog.c:629
+#, fuzzy
 msgid "S_how Index"
 msgstr "Afficher le so_mmaire"
 
@@ -10739,14 +10736,14 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"Veuillez installer le paquet d'aide ou utilisez le manuel en ligne à http://"
-"docs.gimp.org/fr."
+"Veuillez installer le paquet d'aide ou utilisez le manuel en ligne à "
+"l'adresse http://docs.gimp.org/fr."
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 "Il vous manque peut-être des moteurs GIO et il faudrait alors installer "
-"GVFS ?"
+"GVFS."
 
 #: ../plug-ins/help/gimphelpdomain.c:216
 #, c-format
@@ -12282,7 +12279,7 @@ msgid ""
 msgstr ""
 "La taille de sélection est impaire.\n"
 "Le labyrinthe raccordable ne\n"
-"fonctionnera pas optimalement."
+"fonctionnera pas parfaitement."
 
 #: ../plug-ins/maze/maze.c:123
 msgid "Draw a labyrinth"
@@ -12361,7 +12358,7 @@ msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:216
 msgid "Curl up one of the image corners"
-msgstr "Fait un coin de page à un coin de l'image"
+msgstr "Fait un coin de page dans un coin de l'image"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
@@ -12469,7 +12466,7 @@ msgstr "_Imprimer..."
 
 #: ../plug-ins/print/print.c:118
 msgid "Adjust page size and orientation for printing"
-msgstr "Ajuster la taille et l'orientation des pages pour l'impression"
+msgstr "Ajuster la taille et l'orientation des pages en vue de l'impression"
 
 #: ../plug-ins/print/print.c:124
 msgid "Page Set_up"
