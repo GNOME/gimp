@@ -126,12 +126,6 @@ enum
 GeglNode * gegl_node_add_child (GeglNode *self,
                                 GeglNode *child);
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_remove_child() needs to be public
-#endif
-GeglNode * gegl_node_remove_child (GeglNode *self,
-                                   GeglNode *child);
-
 
 /*  local function prototypes  */
 
@@ -2554,155 +2548,52 @@ gimp_image_get_projection (const GimpImage *image)
 GeglNode *
 gimp_image_get_graph (GimpImage *image)
 {
-  GList    *list;
-  GList    *reverse_list = NULL;
-  GeglNode *previous     = NULL;
+  GeglNode *layers_node;
+#if 0
+  GeglNode *channels_node;
+  GeglNode *blend_node;
+#endif
+  GeglNode *output;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   if (image->graph)
     return image->graph;
 
-  for (list = GIMP_LIST (image->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      if (! gimp_layer_is_floating_sel (layer))
-        reverse_list = g_list_prepend (reverse_list, layer);
-    }
-
   image->graph = gegl_node_new ();
 
-  for (list = reverse_list; list; list = g_list_next (list))
-    {
-      GimpDrawable *layer = list->data;
-      GeglNode     *node  = gimp_drawable_get_node (layer);
+  layers_node =
+    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->layers));
 
-      gegl_node_add_child (image->graph, node);
+  gegl_node_add_child (image->graph, layers_node);
 
-      if (previous)
-        gegl_node_connect_to (previous, "output",
-                              node,     "input");
+#if 0
+  channels_node =
+    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->channels));
 
-      previous = node;
-    }
+  gegl_node_add_child (image->graph, channels_node);
 
-  if (previous)
-    {
-      GeglNode *output;
+  blend_node = gegl_node_new_child (image->graph,
+                                    "operation", "normal",
+                                    NULL);
 
-      output = gegl_node_get_output_proxy (image->graph, "output");
+  gegl_node_connect_to (layers_node,   "output",
+                        blend_node,    "input");
+  gegl_node_connect_to (channels_node, "output",
+                        blend_node,    "aux");
+#endif
 
-      gegl_node_connect_to (previous, "output",
-                            output,   "input");
-    }
+  output = gegl_node_get_output_proxy (image->graph, "output");
+
+#if 0
+  gegl_node_connect_to (blend_node, "output",
+                        output,     "input");
+#else
+  gegl_node_connect_to (layers_node, "output",
+                        output,      "input");
+#endif
 
   return image->graph;
-}
-
-/*  layer must be part of image->layers !!!  */
-static void
-gimp_image_add_layer_node (GimpImage *image,
-                           GimpLayer *layer)
-{
-  GimpLayer *layer_below;
-  GeglNode  *node;
-  gint       index;
-
-  index = gimp_image_get_layer_index (image, layer);
-
-  node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
-
-  if (index == 0)
-    {
-      GeglNode *output;
-
-      output = gegl_node_get_output_proxy (image->graph, "output");
-
-      gegl_node_connect_to (node,   "output",
-                            output, "input");
-    }
-  else
-    {
-      GimpLayer *layer_above;
-      GeglNode  *node_above;
-
-      layer_above = gimp_image_get_layer_by_index (image, index - 1);
-
-      node_above = gimp_drawable_get_node (GIMP_DRAWABLE (layer_above));
-
-      gegl_node_connect_to (node,       "output",
-                            node_above, "input");
-    }
-
-  layer_below = gimp_image_get_layer_by_index (image, index + 1);
-
-  if (layer_below)
-    {
-      GeglNode *node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
-
-      gegl_node_connect_to (node_below, "output",
-                            node,       "input");
-    }
-}
-
-/*  layer must be part of image->layers !!!  */
-static void
-gimp_image_remove_layer_node (GimpImage *image,
-                              GimpLayer *layer)
-{
-  GimpLayer *layer_below;
-  GeglNode  *node;
-  gint       index;
-
-  index = gimp_image_get_layer_index (image, layer);
-
-  node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
-
-  layer_below = gimp_image_get_layer_by_index (image, index + 1);
-
-  if (index == 0)
-    {
-      if (layer_below)
-        {
-          GeglNode *node_below;
-          GeglNode *output;
-
-          node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
-
-          output = gegl_node_get_output_proxy (image->graph, "output");
-
-          gegl_node_disconnect (node,       "input");
-          gegl_node_connect_to (node_below, "output",
-                                output,     "input");
-        }
-    }
-  else
-    {
-      GimpLayer *layer_above;
-      GeglNode  *node_above;
-
-      layer_above = gimp_image_get_layer_by_index (image, index - 1);
-
-      node_above = gimp_drawable_get_node (GIMP_DRAWABLE (layer_above));
-
-      if (layer_below)
-        {
-          GeglNode *node_below;
-
-          node_below = gimp_drawable_get_node (GIMP_DRAWABLE (layer_below));
-
-          gegl_node_disconnect (node,       "input");
-          gegl_node_connect_to (node_below, "output",
-                                node_above, "input");
-        }
-      else
-        {
-          gegl_node_disconnect (node_above, "input");
-        }
-    }
 }
 
 
@@ -3109,9 +3000,6 @@ gimp_image_add_layer (GimpImage *image,
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
   g_object_unref (layer);
 
-  if (! gimp_layer_is_floating_sel (layer) && image->graph)
-    gimp_image_add_layer_node (image, layer);
-
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
 
@@ -3173,14 +3061,6 @@ gimp_image_remove_layer (GimpImage *image,
   /*  Make sure we're not caching any old selection info  */
   if (layer == active_layer)
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
-  if (! gimp_layer_is_floating_sel (layer) && image->graph)
-    {
-      gimp_image_remove_layer_node (image, layer);
-
-      gegl_node_remove_child (image->graph,
-                              gimp_drawable_get_node (GIMP_DRAWABLE (layer)));
-    }
 
   gimp_container_remove (image->layers, GIMP_OBJECT (layer));
   image->layer_stack = g_slist_remove (image->layer_stack, layer);
@@ -3405,13 +3285,7 @@ gimp_image_position_layer (GimpImage   *image,
   if (push_undo)
     gimp_image_undo_push_layer_reposition (image, undo_desc, layer);
 
-  if (! gimp_layer_is_floating_sel (layer) && image->graph)
-    gimp_image_remove_layer_node (image, layer);
-
   gimp_container_reorder (image->layers, GIMP_OBJECT (layer), new_index);
-
-  if (! gimp_layer_is_floating_sel (layer) && image->graph)
-    gimp_image_add_layer_node (image, layer);
 
   if (gimp_item_get_visible (GIMP_ITEM (layer)))
     {
