@@ -1,3 +1,18 @@
+2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpdockseparator.c (gimp_dock_separator_new): Add a
+	GtkAnchorType member to GimpDockSeparator that specifies where a
+	dropped dockable shall be inserted.
+
+	(gimp_dock_separator_drag_drop): Get rid of the ugly hack where
+	the role of a given separator was based on its position as a child
+	in its container. Simply decide what role the separator has by
+	loooking at its anchor-member.
+
+	* app/widgets/gimpdock.c (gimp_dock_init)
+	(gimp_dock_add_book): Give the GimpDockSeparators their
+	appropriate roles directly at their construction.
+
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawablestack.c

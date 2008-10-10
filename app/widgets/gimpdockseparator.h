@@ -35,12 +35,14 @@ typedef struct _GimpDockSeparatorClass GimpDockSeparatorClass;
 
 struct _GimpDockSeparator
 {
-  GtkEventBox  parent_instance;
+  GtkEventBox    parent_instance;
 
-  GimpDock    *dock;
+  GimpDock      *dock;
 
-  GtkWidget   *frame;
-  GtkWidget   *label;
+  GtkWidget     *frame;
+  GtkWidget     *label;
+
+  GtkAnchorType  anchor;
 };
 
 struct _GimpDockSeparatorClass
@@ -51,7 +53,8 @@ struct _GimpDockSeparatorClass
 
 GType       gimp_dock_separator_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dock_separator_new            (GimpDock          *dock);
+GtkWidget * gimp_dock_separator_new            (GimpDock          *dock,
+                                                GtkAnchorType      anchor);
 
 void        gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
                                                 gboolean           show);

@@ -193,7 +193,7 @@ gimp_dock_init (GimpDock *dock)
   gtk_container_add (GTK_CONTAINER (dock->main_vbox), dock->vbox);
   gtk_widget_show (dock->vbox);
 
-  separator = gimp_dock_separator_new (dock);
+  separator = gimp_dock_separator_new (dock, GTK_ANCHOR_NORTH);
   gtk_box_pack_start (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
 }
@@ -472,7 +472,7 @@ gimp_dock_add_book (GimpDock     *dock,
       gtk_box_pack_start (GTK_BOX (dock->vbox), GTK_WIDGET (dockbook),
                           TRUE, TRUE, 0);
 
-      separator = gimp_dock_separator_new (dock);
+      separator = gimp_dock_separator_new (dock, GTK_ANCHOR_SOUTH);
       gtk_box_pack_end (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
     }
