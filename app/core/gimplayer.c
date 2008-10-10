@@ -106,6 +106,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
                                                  gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
+static void       gimp_layer_visibility_changed (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
@@ -250,6 +251,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->get_description     = gimp_layer_get_description;
 
   item_class->removed                 = gimp_layer_removed;
+  item_class->visibility_changed      = gimp_layer_visibility_changed;
   item_class->is_attached             = gimp_layer_is_attached;
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
@@ -521,6 +523,39 @@ gimp_layer_removed (GimpItem *item)
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);
+}
+
+static void
+gimp_layer_visibility_changed (GimpItem *item)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  if (layer->node)
+    {
+      GeglNode *input;
+      GeglNode *output;
+
+      input  = gegl_node_get_input_proxy (layer->node, "input");
+      output = gegl_node_get_output_proxy (layer->node, "output");
+
+      if (gimp_item_get_visible (item))
+        {
+          gegl_node_connect_to (input,            "output",
+                                layer->mode_node, "input");
+          gegl_node_connect_to (layer->mode_node, "output",
+                                output,           "input");
+        }
+      else
+        {
+          gegl_node_disconnect (layer->mode_node, "input");
+
+          gegl_node_connect_to (input,  "output",
+                                output, "input");
+        }
+    }
+
+  if (GIMP_ITEM_CLASS (parent_class)->visibility_changed)
+    GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static gboolean
@@ -1959,13 +1994,21 @@ gimp_layer_get_node (GimpLayer *layer)
   gegl_node_connect_to (layer->opacity_node, "output",
                         layer->mode_node,    "aux");
 
-  input = gegl_node_get_input_proxy (layer->node, "input");
-  gegl_node_connect_to (input,            "output",
-                        layer->mode_node, "input");
-
+  input  = gegl_node_get_input_proxy (layer->node, "input");
   output = gegl_node_get_output_proxy (layer->node, "output");
-  gegl_node_connect_to (layer->mode_node, "output",
-                        output,           "input");
+
+  if (gimp_item_get_visible (GIMP_ITEM (layer)))
+    {
+      gegl_node_connect_to (input,            "output",
+                            layer->mode_node, "input");
+      gegl_node_connect_to (layer->mode_node, "output",
+                            output,           "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
 
   return layer->node;
 }

@@ -1,5 +1,13 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.c: implement GimpItem::visibility-changed
+	and turn the layer's node into a nop when the layer is invisible.
+
+	(gimp_layer_get_node): connect the stuff to a nop here too for
+	invisible layers.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	Bug 554983 – Layers Projection using GEGL
 
 	First projection using GEGL, wheeeee. Disabled by default because
