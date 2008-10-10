@@ -1,3 +1,14 @@
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_translate)
+	(gimp_layer_get_node): the "shift" operation's x and y properties
+	are doubles not ints.
+
+	(gimp_layer_apply_mask): properly disconnect the mask node.
+
+	(gimp_layer_set_opacity): the opacity node has a "value" property,
+	not "opacity".
+
 2008-10-09  Michael Natterer  <mitch@gimp.org>
 
 	Address Bug 554983 – Layers Projection using GEGL

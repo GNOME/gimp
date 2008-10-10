@@ -715,8 +715,8 @@ gimp_layer_translate (GimpItem *item,
 
   if (layer->shift_node)
     gegl_node_set (layer->shift_node,
-                   "x", item->offset_x,
-                   "y", item->offset_y,
+                   "x", (gdouble) item->offset_x,
+                   "y", (gdouble) item->offset_y,
                    NULL);
 
   /*  update the new region  */
@@ -1662,6 +1662,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     {
       GeglNode *source;
 
+      gegl_node_disconnect (layer->mask_node, "input");
+      gegl_node_disconnect (layer->mask_node, "aux");
+
       gegl_node_remove_child (layer->node, layer->mask_node);
       layer->mask_node = NULL;
 
@@ -1932,8 +1935,8 @@ gimp_layer_get_node (GimpLayer *layer)
   gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
   layer->shift_node = gegl_node_new_child (layer->node,
                                            "operation", "shift",
-                                           "x",         off_x,
-                                           "y",         off_y,
+                                           "x",         (gdouble) off_x,
+                                           "y",         (gdouble) off_y,
                                            NULL);
 
   if (layer->mask_node)
@@ -1992,7 +1995,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
       if (layer->opacity_node)
         gegl_node_set (layer->opacity_node,
-                       "opacity", layer->opacity,
+                       "value", layer->opacity,
                        NULL);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
