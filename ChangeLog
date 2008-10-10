@@ -1,5 +1,16 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch]: add new functions
+	gimp_image_get_layer_by_index(), _channel_by_index() and
+	_vectors_by_index().
+
+	* app/core/gimpprojection-construct.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/xcf/xcf-load.c: use them instead of looking the items up
+	in image->container and casting the return value.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_translate)
 	(gimp_layer_get_node): the "shift" operation's x and y properties
 	are doubles not ints.

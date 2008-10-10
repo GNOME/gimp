@@ -1599,7 +1599,7 @@ gimp_image_has_alpha (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
 
-  layer = (GimpLayer *) gimp_container_get_child_by_index (image->layers, 0);
+  layer = gimp_image_get_layer_by_index (image, 0);
 
   return ((gimp_container_num_children (image->layers) > 1) ||
           (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
@@ -2780,6 +2780,36 @@ gimp_image_get_vectors_index (const GimpImage   *image,
                                          GIMP_OBJECT (vectors));
 }
 
+GimpLayer *
+gimp_image_get_layer_by_index (const GimpImage *image,
+                               gint             index)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return (GimpLayer *) gimp_container_get_child_by_index (image->layers,
+                                                          index);
+}
+
+GimpChannel *
+gimp_image_get_channel_by_index (const GimpImage *image,
+                                 gint             index)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return (GimpChannel *) gimp_container_get_child_by_index (image->channels,
+                                                            index);
+}
+
+GimpVectors *
+gimp_image_get_vectors_by_index (const GimpImage *image,
+                                 gint             index)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return (GimpVectors *) gimp_container_get_child_by_index (image->vectors,
+                                                            index);
+}
+
 static GimpItem *
 gimp_image_get_item_by_tattoo (GimpContainer *items,
                                GimpTattoo     tattoo)
@@ -3005,8 +3035,7 @@ gimp_image_remove_layer (GimpImage *image,
             {
               index = CLAMP (index, 0, n_children - 1);
 
-              active_layer = (GimpLayer *)
-                gimp_container_get_child_by_index (image->layers, index);
+              active_layer = gimp_image_get_layer_by_index (image, index);
             }
           else
             {
@@ -3318,8 +3347,7 @@ gimp_image_remove_channel (GimpImage   *image,
             {
               index = CLAMP (index, 0, n_children - 1);
 
-              active_channel = (GimpChannel *)
-                gimp_container_get_child_by_index (image->channels, index);
+              active_channel = gimp_image_get_channel_by_index (image, index);
             }
           else
             {
@@ -3546,8 +3574,7 @@ gimp_image_remove_vectors (GimpImage   *image,
             {
               index = CLAMP (index, 0, n_children - 1);
 
-              active_vectors = (GimpVectors *)
-                gimp_container_get_child_by_index (image->vectors, index);
+              active_vectors = gimp_image_get_vectors_by_index (image, index);
             }
           else
             {

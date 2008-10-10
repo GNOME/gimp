@@ -212,8 +212,7 @@ layer_select_advance (LayerSelect *layer_select,
   else if (index >= gimp_container_num_children (layer_select->image->layers))
     index = 0;
 
-  next_layer = (GimpLayer *)
-    gimp_container_get_child_by_index (layer_select->image->layers, index);
+  next_layer = gimp_image_get_layer_by_index (layer_select->image, index);
 
   if (next_layer && next_layer != current_layer)
     {

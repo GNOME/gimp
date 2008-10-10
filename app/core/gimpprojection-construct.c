@@ -101,8 +101,7 @@ gimp_projection_construct (GimpProjection *proj,
     {
       GimpDrawable *layer;
 
-      layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (image->layers,
-                                                                0));
+      layer = GIMP_DRAWABLE (gimp_image_get_layer_by_index (image, 0));
 
       if (gimp_drawable_has_alpha (layer)                         &&
           (gimp_item_get_visible (GIMP_ITEM (layer)))             &&
