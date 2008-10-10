@@ -1,5 +1,11 @@
 2008-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): flush
+	the image after setting active items back from temporarily
+	selected ones. Fixes menu item sensitivity.
+
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c: implement GimpItem::visibility-changed
 	and turn the layer's node into a nop when the layer is invisible.
 
