@@ -1,3 +1,11 @@
+2008-10-10  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): flush
+	the image after setting active items back from temporarily
+	selected ones. Fixes menu item sensitivity.
+
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

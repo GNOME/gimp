@@ -453,6 +453,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
     }
   else
     {
+      gboolean flush = FALSE;
+
       if (! config->move_tool_changes_active ||
           (release_type == GIMP_BUTTON_RELEASE_CANCEL))
         {
@@ -461,6 +463,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
               gimp_image_set_active_layer (display->image,
                                            move->old_active_layer);
               move->old_active_layer = NULL;
+
+              flush = TRUE;
             }
 
           if (move->old_active_vectors)
@@ -468,6 +472,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
               gimp_image_set_active_vectors (display->image,
                                              move->old_active_vectors);
               move->old_active_vectors = NULL;
+
+              flush = TRUE;
             }
         }
 
@@ -476,9 +482,13 @@ gimp_move_tool_button_release (GimpTool              *tool,
           if (move->floating_layer)
             {
               floating_sel_anchor (move->floating_layer);
-              gimp_image_flush (display->image);
+
+              flush = TRUE;
             }
         }
+
+      if (flush)
+        gimp_image_flush (display->image);
     }
 }
 
