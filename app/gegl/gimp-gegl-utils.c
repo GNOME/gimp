@@ -96,28 +96,28 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
   switch (mode)
     {
     case GIMP_NORMAL_MODE:        return "normal";
-    case GIMP_DISSOLVE_MODE:      return "normal"; /* "gimp-dissolve-mode" */
-    case GIMP_BEHIND_MODE:        return "normal"; /* "gimp-behind-mode" */
-    case GIMP_MULTIPLY_MODE:      return "normal"; /* "gimp-multiply-mode" */
-    case GIMP_SCREEN_MODE:        return "normal"; /* "gimp-screen_mode" */
-    case GIMP_OVERLAY_MODE:       return "normal"; /* "gimp-overlay-mode" */
-    case GIMP_DIFFERENCE_MODE:    return "normal"; /* "gimp-difference-mode" */
-    case GIMP_ADDITION_MODE:      return "normal"; /* "gimp-addition-mode" */
-    case GIMP_SUBTRACT_MODE:      return "normal"; /* "gimp-subtract-mode" */
-    case GIMP_DARKEN_ONLY_MODE:   return "normal"; /* "gimp-darken-mode" */
-    case GIMP_LIGHTEN_ONLY_MODE:  return "normal"; /* "gimp-lighten-mode" */
-    case GIMP_HUE_MODE:           return "normal"; /* "gimp-hue-mode" */
-    case GIMP_SATURATION_MODE:    return "normal"; /* "gimp-saturation-mode" */
-    case GIMP_COLOR_MODE:         return "normal"; /* "gimp-color-mode" */
-    case GIMP_VALUE_MODE:         return "normal"; /* "gimp-value-mode" */
-    case GIMP_DIVIDE_MODE:        return "normal"; /* "gimp-divide-mode" */
-    case GIMP_DODGE_MODE:         return "normal"; /* "gimp-dodge-mode" */
-    case GIMP_BURN_MODE:          return "normal"; /* "gimp-burn-mode" */
-    case GIMP_HARDLIGHT_MODE:     return "normal"; /* "gimp-hardlight-mode" */
-    case GIMP_SOFTLIGHT_MODE:     return "normal"; /* "gimp-softlight-mode" */
-    case GIMP_GRAIN_EXTRACT_MODE: return "normal"; /* "gimp-grain-extract-mode" */
-    case GIMP_GRAIN_MERGE_MODE:   return "normal"; /* "gimp-grain-merge-mode" */
-    case GIMP_COLOR_ERASE_MODE:   return "normal"; /* "gimp-color-erase-mode" */
+    case GIMP_DISSOLVE_MODE:      return "gimp-dissolve-mode";
+    case GIMP_BEHIND_MODE:        return "gimp-behind-mode";
+    case GIMP_MULTIPLY_MODE:      return "gimp-multiply-mode";
+    case GIMP_SCREEN_MODE:        return "gimp-screen_mode";
+    case GIMP_OVERLAY_MODE:       return "gimp-overlay-mode";
+    case GIMP_DIFFERENCE_MODE:    return "gimp-difference-mode";
+    case GIMP_ADDITION_MODE:      return "gimp-addition-mode";
+    case GIMP_SUBTRACT_MODE:      return "gimp-subtract-mode";
+    case GIMP_DARKEN_ONLY_MODE:   return "gimp-darken-mode";
+    case GIMP_LIGHTEN_ONLY_MODE:  return "gimp-lighten-mode";
+    case GIMP_HUE_MODE:           return "gimp-hue-mode";
+    case GIMP_SATURATION_MODE:    return "gimp-saturation-mode";
+    case GIMP_COLOR_MODE:         return "gimp-color-mode";
+    case GIMP_VALUE_MODE:         return "gimp-value-mode";
+    case GIMP_DIVIDE_MODE:        return "gimp-divide-mode";
+    case GIMP_DODGE_MODE:         return "gimp-dodge-mode";
+    case GIMP_BURN_MODE:          return "gimp-burn-mode";
+    case GIMP_HARDLIGHT_MODE:     return "gimp-hardlight-mode";
+    case GIMP_SOFTLIGHT_MODE:     return "gimp-softlight-mode";
+    case GIMP_GRAIN_EXTRACT_MODE: return "gimp-grain-extract-mode";
+    case GIMP_GRAIN_MERGE_MODE:   return "gimp-grain-merge-mode";
+    case GIMP_COLOR_ERASE_MODE:   return "gimp-color-erase-mode";
     default:
       break;
     }

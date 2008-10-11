@@ -1,5 +1,23 @@
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationpointcomposer.[ch]: add an empty abstract
+	GeglOperationPointComposer subclass which can be used to hook in
+	common debug or test or whatever code for below layer modes.
+
+	* app/gegl/gimpoperation*mode.[ch]: add empty stubs of layer mode
+	operations which do nothing but copying input to output.
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h: add them here and reordered things a bit.
+
+	* app/gegl/gimp-gegl.c (gimp_gegl_init): register the new
+	operations.
+
+	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):
+	return the new operations.
+
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationpointfilter.c: make it abstract.
 
 2008-10-11  Michael Natterer  <mitch@gimp.org>
