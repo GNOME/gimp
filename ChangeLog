@@ -1,3 +1,8 @@
+2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationadditionmode.c
+	(gimp_operation_addition_mode_process): Implement this one.
+
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):
