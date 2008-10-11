@@ -1,5 +1,11 @@
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):
+	don't return non-existing layer modes (in fact, return "normal"
+	for all modes).
+
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.[ch]: add a projection node and
 	implement GimpDrawable::get_node(). Reconfigure the node in
 	visibility_changed(), set_color(), set_opacity() and
