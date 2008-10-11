@@ -1,5 +1,10 @@
 2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimpdockseparator.c (gimp_dock_separator_drag_drop):
+	Initialize 'index'.
+
+2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpdockseparator.c (gimp_dock_separator_new): Add a
 	GtkAnchorType member to GimpDockSeparator that specifies where a
 	dropped dockable shall be inserted.

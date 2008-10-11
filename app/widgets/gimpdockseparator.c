@@ -196,7 +196,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
       if (dockable)
         {
           GtkWidget *dockbook;
-          gint       index;
+          gint       index = -1;
 
           g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
