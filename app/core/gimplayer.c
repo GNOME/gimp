@@ -525,14 +525,12 @@ gimp_layer_get_node (GimpDrawable *drawable)
   GeglNode  *input;
   GeglNode  *output;
 
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-
   if (layer->node)
     return layer->node;
 
   layer->node = gegl_node_new ();
 
-  source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
+  source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (layer->node, source);
 
   if (layer->mask)
