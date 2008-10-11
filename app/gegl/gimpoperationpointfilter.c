@@ -31,8 +31,8 @@
 static void   gimp_operation_point_filter_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpOperationPointFilter, gimp_operation_point_filter,
-               GEGL_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_ABSTRACT_TYPE (GimpOperationPointFilter, gimp_operation_point_filter,
+                        GEGL_TYPE_OPERATION_POINT_FILTER)
 
 #define parent_class gimp_operation_point_filter_parent_class
 

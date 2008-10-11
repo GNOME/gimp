@@ -1,5 +1,9 @@
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationpointfilter.c: make it abstract.
+
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):
 	don't return non-existing layer modes (in fact, return "normal"
 	for all modes).
