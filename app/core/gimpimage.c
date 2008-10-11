@@ -2549,10 +2549,8 @@ GeglNode *
 gimp_image_get_graph (GimpImage *image)
 {
   GeglNode *layers_node;
-#if 0
   GeglNode *channels_node;
   GeglNode *blend_node;
-#endif
   GeglNode *output;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -2567,7 +2565,6 @@ gimp_image_get_graph (GimpImage *image)
 
   gegl_node_add_child (image->graph, layers_node);
 
-#if 0
   channels_node =
     gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->channels));
 
@@ -2581,17 +2578,11 @@ gimp_image_get_graph (GimpImage *image)
                         blend_node,    "input");
   gegl_node_connect_to (channels_node, "output",
                         blend_node,    "aux");
-#endif
 
   output = gegl_node_get_output_proxy (image->graph, "output");
 
-#if 0
   gegl_node_connect_to (blend_node, "output",
                         output,     "input");
-#else
-  gegl_node_connect_to (layers_node, "output",
-                        output,      "input");
-#endif
 
   return image->graph;
 }

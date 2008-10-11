@@ -1,5 +1,19 @@
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.[ch]: add a projection node and
+	implement GimpDrawable::get_node(). Reconfigure the node in
+	visibility_changed(), set_color(), set_opacity() and
+	set_show_masked().
+
+	* app/core/gimpimage.c (gimp_image_get_graph): enable code that
+	projects the channels stack on top of the layer stack.
+
+	* app/core/gimpprojection-construct.c: remove the call to
+	gimp_projection_construct_channels() from the GEGL code path. Also
+	don't touch proj->construct_flag.
+
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_get_node): remove obsolete
 	assertion and redundant cast.
 

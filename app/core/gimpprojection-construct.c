@@ -143,8 +143,6 @@ gimp_projection_construct (GimpProjection *proj,
     }
 #endif
 
-  proj->construct_flag = FALSE;
-
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
@@ -156,11 +154,16 @@ gimp_projection_construct (GimpProjection *proj,
    *  the list of channels
    */
   if (FALSE)
-    gimp_projection_construct_gegl (proj, x, y, w, h);
+    {
+      gimp_projection_construct_gegl (proj, x, y, w, h);
+    }
   else
-    gimp_projection_construct_layers (proj, x, y, w, h);
+    {
+      proj->construct_flag = FALSE;
 
-  gimp_projection_construct_channels (proj, x, y, w, h);
+      gimp_projection_construct_layers (proj, x, y, w, h);
+      gimp_projection_construct_channels (proj, x, y, w, h);
+    }
 }
 
 
@@ -189,8 +192,6 @@ gimp_projection_construct_gegl (GimpProjection *proj,
   while (gegl_processor_work (processor, NULL));
 
   g_object_unref (processor);
-
-  proj->construct_flag = TRUE;
 }
 
 static void
