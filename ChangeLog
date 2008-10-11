@@ -1,3 +1,16 @@
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpprojection.h: add a "use_gegl" boolean member.
+
+	* app/core/gimpprojection-construct.c (gimp_projection_construct):
+	use the boolean instead of hardcoding FALSE.
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: add a "Use GEGL" action and
+	callback which sets the boolean and exposes the display.
+
+	* menus/image-menu.xml.in: add it to the "View" menu.
+
 2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationadditionmode.c

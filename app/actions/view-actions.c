@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpprojection.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
@@ -232,7 +233,14 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     N_("Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),
     FALSE,
-    GIMP_HELP_VIEW_FULLSCREEN }
+    GIMP_HELP_VIEW_FULLSCREEN },
+
+  { "view-use-gegl", GIMP_STOCK_GEGL,
+    "Use GEGL", NULL,
+    "Use GEGL to create this window's projection",
+    G_CALLBACK (view_use_gegl_cmd_callback),
+    FALSE,
+    NULL }
 };
 
 static const GimpEnumActionEntry view_zoom_actions[] =
@@ -657,6 +665,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-shrink-wrap", image);
   SET_SENSITIVE ("view-fullscreen",  image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
+  SET_ACTIVE    ("view-use-gegl",    image && display->image->projection->use_gegl);
 
   if (GIMP_IS_DISPLAY (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))

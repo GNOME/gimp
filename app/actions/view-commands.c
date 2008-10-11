@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpprojection.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -681,6 +682,25 @@ view_fullscreen_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_fullscreen (shell, active);
+}
+
+void
+view_use_gegl_cmd_callback (GtkAction *action,
+                            gpointer   data)
+{
+  GimpImage        *image;
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  gboolean   active;
+  return_if_no_image (image, data);
+  return_if_no_display (display, data);
+
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  image->projection->use_gegl = active;
+  gimp_display_shell_expose_full (shell);
 }
 
 

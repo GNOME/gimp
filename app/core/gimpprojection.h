@@ -64,6 +64,8 @@ struct _GimpProjection
 
   gboolean                  construct_flag;
   gboolean                  invalidate_preview;
+
+  gboolean                  use_gegl;
 };
 
 struct _GimpProjectionClass

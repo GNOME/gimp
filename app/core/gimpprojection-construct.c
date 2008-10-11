@@ -153,7 +153,7 @@ gimp_projection_construct (GimpProjection *proj,
   /*  call functions which process the list of layers and
    *  the list of channels
    */
-  if (FALSE)
+  if (proj->use_gegl)
     {
       gimp_projection_construct_gegl (proj, x, y, w, h);
     }
