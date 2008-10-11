@@ -1,5 +1,17 @@
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawablestack.c: add GimpContainer::add()
+	implementation, it's needed after all even though everybody uses
+	gimp_container_insert() on drawable stacks.
+
+	(gimp_drawable_stack_remove_node): no need to have a special check
+	for newly added nodes, this can't happen any more now that we have
+	an add() impl.
+
+	(gimp_drawable_stack_get_graph): free the reverse list.
+
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
 	Fix old bug in the GimpContainer implementation that wasn't
 	visible before the drawable stack completly b0rked when removing
 	the second-last item:

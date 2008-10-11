@@ -46,6 +46,8 @@ GeglNode * gegl_node_remove_child (GeglNode *self,
 
 static void   gimp_drawable_stack_finalize    (GObject           *object);
 
+static void   gimp_drawable_stack_add         (GimpContainer     *container,
+                                               GimpObject        *object);
 static void   gimp_drawable_stack_remove      (GimpContainer     *container,
                                                GimpObject        *object);
 static void   gimp_drawable_stack_reorder     (GimpContainer     *container,
@@ -71,6 +73,7 @@ gimp_drawable_stack_class_init (GimpDrawableStackClass *klass)
 
   object_class->finalize   = gimp_drawable_stack_finalize;
 
+  container_class->add     = gimp_drawable_stack_add;
   container_class->remove  = gimp_drawable_stack_remove;
   container_class->reorder = gimp_drawable_stack_reorder;
 }
@@ -92,6 +95,18 @@ gimp_drawable_stack_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_drawable_stack_add (GimpContainer *container,
+                         GimpObject    *object)
+{
+  GimpDrawableStack *stack = GIMP_DRAWABLE_STACK (container);
+
+  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+
+  if (stack->graph)
+    gimp_drawable_stack_add_node (stack, GIMP_DRAWABLE (object));
 }
 
 static void
@@ -181,6 +196,8 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
       previous = node;
     }
 
+  g_list_free (reverse_list);
+
   output = gegl_node_get_output_proxy (stack->graph, "output");
 
   if (previous)
@@ -245,11 +262,7 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
   GeglNode     *node;
   gint          index;
 
-  node = gimp_drawable_get_node (GIMP_DRAWABLE (drawable));
-
-  /*  bail out if the layer was newly added  */
-  if (! gegl_node_get_consumers (node, "output", NULL, NULL))
-    return;
+  node = gimp_drawable_get_node (drawable);
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                           GIMP_OBJECT (drawable));
