@@ -1,3 +1,20 @@
+2008-10-11  Michael Natterer  <mitch@gimp.org>
+
+	Fix old bug in the GimpContainer implementation that wasn't
+	visible before the drawable stack completly b0rked when removing
+	the second-last item:
+
+	* app/core/gimpcontainer.c: add default implementations of ::add()
+	and ::remove() and update container->num_children there instead of
+	in the gimp_container_add() and _remove() wrapper functions.
+	This way not only external callbacks connected to the "add" and
+	"remove" signals are called with the correct num_children, also
+	implemtations of ::add() and ::remove() in subclass have the right
+	number available before/after upchaining. Add paranoia code to the
+	wrapper functions which check if the subclass reall chains up.
+
+	* app/core/gimplist.c: chain up in add() and remove().
+
 2008-10-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpdockseparator.c (gimp_dock_separator_drag_drop):
