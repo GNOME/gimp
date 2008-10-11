@@ -1,21 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# zh_CN translation of gnome-tips-2.6.
+# Copyright (C) 2008 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2002-2004.
-#
+# redarmy <redarmy@linuxaid.com.cn>, 2008.
+# 神州散人 <kappa8086@gmail.com>, 2008.
+# Aron Xu <aronmalache@163.com>, 2008.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: gimp-tips 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2004-03-13 17:28+0800\n"
-"Last-Translator: redarmy <redarmy@linuxaid.com.cn>\n"
-"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"PO-Revision-Date: 2008-10-11 13:04+0800\n"
+"Last-Translator: Aron Xu <aronmalache@163.com>\n"
+"Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 msgstr "<big>欢迎使用 GIMP！</big>"
 
@@ -23,13 +26,13 @@ msgstr "<big>欢迎使用 GIMP！</big>"
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
-msgstr "<tt>Alt</tt>+点击图层对话框中的图层蒙板的预览可以直接查看蒙板。"
+msgstr "<tt>Alt</tt> 点击图层对话框中的图层蒙板的预览可以直接查看蒙板。"
 
 #: ../tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
-msgstr "<tt>Ctrl</tt>+点击图层对话框中的图层蒙板的预览可以切换图层蒙板的效果。"
+msgstr "<tt>Ctrl</tt> 点击图层对话框中的图层蒙板的预览可以切换图层蒙板的效果。"
 
 #: ../tips/gimp-tips.xml.in.h:4
 msgid ""
@@ -49,8 +52,8 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"<tt>Shift</tt>+点击图层对话框的眼睛图标可以隐藏除此以外的其它所有图层。再次"
-"<tt>Shift</tt>+点击显示所有的图层。"
+"<tt>Shift</tt>点击图层对话框的眼睛图标可以隐藏除此以外的其它所有图层。再次"
+"<tt>Shift</tt>点击显示所有的图层。"
 
 #: ../tips/gimp-tips.xml.in.h:7
 msgid ""
@@ -84,14 +87,13 @@ msgstr ""
 "可以用移动工具把参考线拖出图像外来删除它们。"
 
 #: ../tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
-msgstr "GIMP 可以撤销对图像所做的大多数修改，因此请放心尝试。"
+msgstr ""
+"GIMP 可以撤销对图像所做的大多数修改，因此请放心尝试。"
 
 #: ../tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -102,7 +104,6 @@ msgstr ""
 "没问题。"
 
 #: ../tips/gimp-tips.xml.in.h:12
-#, fuzzy
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -117,6 +118,8 @@ msgid ""
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
+"如果在图层对话框中图层名显示为<b>粗体</b>，该图层没有 alpha 通道。您可以用 "
+"图层-&gt;透明度-&gt;添加 Alpha 通道 来添加一个 alpha 通道。"
 
 #: ../tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -199,7 +202,6 @@ msgstr ""
 "的角度。"
 
 #: ../tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -208,7 +210,7 @@ msgid ""
 msgstr ""
 "当您需要保存图像留待以后继续编辑时，请尝试使用 XCF，GIMP 的主文件格式(使用文"
 "件扩展名<tt>.xcf</tt>)。这将保存图层还有您的工作进程的每个方面。一但一个项目"
-"完成了，您就可以把它保存为 JPEG、PNG、GIF、……"
+"完成了，您就可以把它保存为 JPEG、PNG、GIF……"
 
 #: ../tips/gimp-tips.xml.in.h:23
 msgid ""
@@ -243,7 +245,6 @@ msgstr ""
 "的新图像。"
 
 #: ../tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
