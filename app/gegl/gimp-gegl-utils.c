@@ -99,7 +99,7 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
     case GIMP_DISSOLVE_MODE:      return "gimp-dissolve-mode";
     case GIMP_BEHIND_MODE:        return "gimp-behind-mode";
     case GIMP_MULTIPLY_MODE:      return "gimp-multiply-mode";
-    case GIMP_SCREEN_MODE:        return "gimp-screen_mode";
+    case GIMP_SCREEN_MODE:        return "gimp-screen-mode";
     case GIMP_OVERLAY_MODE:       return "gimp-overlay-mode";
     case GIMP_DIFFERENCE_MODE:    return "gimp-difference-mode";
     case GIMP_ADDITION_MODE:      return "gimp-addition-mode";
