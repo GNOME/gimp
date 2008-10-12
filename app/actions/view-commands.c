@@ -691,7 +691,7 @@ view_use_gegl_cmd_callback (GtkAction *action,
   GimpImage        *image;
   GimpDisplay      *display;
   GimpDisplayShell *shell;
-  gboolean   active;
+  gboolean          active;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
@@ -700,7 +700,8 @@ view_use_gegl_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   image->projection->use_gegl = active;
-  gimp_display_shell_expose_full (shell);
+  gimp_image_update (image, 0, 0, image->width, image->height);
+  gimp_image_flush (image);
 }
 
 

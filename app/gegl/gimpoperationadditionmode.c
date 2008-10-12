@@ -71,10 +71,17 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
+if 1
       dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX];
       dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX];
       dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX];
       dest[ALPHA_PIX] = src[ALPHA_PIX];
+#else
+      dest[RED_PIX]   = src[RED_PIX]   * src[ALPHA_PIX] + aux[RED_PIX]   * aux[ALPHA_PIX];
+      dest[GREEN_PIX] = src[GREEN_PIX] * src[ALPHA_PIX] + aux[GREEN_PIX] * aux[ALPHA_PIX];
+      dest[BLUE_PIX]  = src[BLUE_PIX]  * src[ALPHA_PIX] + aux[BLUE_PIX]  * aux[ALPHA_PIX];
+      dest[ALPHA_PIX] = src[ALPHA_PIX] + aux[ALPHA_PIX] - src[ALPHA_PIX] * aux[ALPHA_PIX];
+#endif
 
       src  += 4;
       aux  += 4;
