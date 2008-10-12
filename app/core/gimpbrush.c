@@ -49,7 +49,7 @@ enum
   PROP_SPACING
 };
 
-static void        gimp_brush_tagged_init           (GimpTaggedInterface    *iface);
+static void          gimp_brush_tagged_init           (GimpTaggedInterface    *iface);
 
 static void          gimp_brush_set_property          (GObject       *object,
                                                        guint          property_id,
@@ -82,7 +82,7 @@ static gboolean      gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                        GimpCoords    *last_coords,
                                                        GimpCoords    *cur_coords);
 
-static gchar     * gimp_brush_get_checksum          (GimpTagged    *tagged);
+static gchar       * gimp_brush_get_checksum          (GimpTagged    *tagged);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
@@ -139,6 +139,12 @@ gimp_brush_class_init (GimpBrushClass *klass)
 }
 
 static void
+gimp_brush_tagged_init (GimpTaggedInterface    *iface)
+{
+  iface->get_checksum = gimp_brush_get_checksum;
+}
+
+static void
 gimp_brush_init (GimpBrush *brush)
 {
   brush->mask     = NULL;
@@ -149,12 +155,6 @@ gimp_brush_init (GimpBrush *brush)
   brush->x_axis.y =  0.0;
   brush->y_axis.x =  0.0;
   brush->y_axis.y = 15.0;
-}
-
-static void
-gimp_brush_tagged_init (GimpTaggedInterface    *iface)
-{
-  iface->get_checksum = gimp_brush_get_checksum;
 }
 
 static void
@@ -370,6 +370,37 @@ gimp_brush_real_want_null_motion (GimpBrush  *brush,
   return TRUE;
 }
 
+static gchar *
+gimp_brush_get_checksum (GimpTagged *tagged)
+{
+  GimpBrush            *brush = GIMP_BRUSH (tagged);
+  TempBuf              *buffer;
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+
+  if (! brush->mask)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+  buffer = brush->pixmap;
+  if (buffer)
+    {
+      g_checksum_update (checksum, temp_buf_data (buffer),
+                         buffer->width * buffer->height * buffer->bytes);
+    }
+  buffer = brush->mask;
+  g_checksum_update (checksum, temp_buf_data (buffer),
+                     buffer->width * buffer->height * buffer->bytes);
+
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+  g_checksum_free (checksum);
+
+  return checksum_string;
+}
 
 /*  public functions  */
 
@@ -527,37 +558,5 @@ gimp_brush_spacing_changed (GimpBrush *brush)
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
   g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
-}
-
-static gchar *
-gimp_brush_get_checksum (GimpTagged      *tagged)
-{
-  GimpBrush            *brush = GIMP_BRUSH (tagged);
-  TempBuf              *buffer;
-  GChecksum            *checksum;
-  gchar                *checksum_string;
-
-  if (! brush->mask)
-    {
-      return NULL;
-    }
-
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-
-  buffer = brush->pixmap;
-  if (buffer)
-    {
-      g_checksum_update (checksum, temp_buf_data (buffer),
-                         buffer->width * buffer->height * buffer->bytes);
-    }
-  buffer = brush->mask;
-  g_checksum_update (checksum, temp_buf_data (buffer),
-                     buffer->width * buffer->height * buffer->bytes);
-
-  checksum_string = g_strdup (g_checksum_get_string (checksum));
-
-  g_checksum_free (checksum);
-
-  return checksum_string;
 }
 

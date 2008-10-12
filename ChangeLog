@@ -1,3 +1,13 @@
+2008-10-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimpbrush.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: implementations of GimpTagged methods moved
+	right after the implementations of other vtable methods. GimpTagged
+	interface init functions moved right after class_init() functions.
+	Improved function header formatting.
+
 2008-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpprojection.h: add a "use_gegl" boolean member.

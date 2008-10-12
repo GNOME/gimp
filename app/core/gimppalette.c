@@ -105,17 +105,17 @@ gimp_palette_class_init (GimpPaletteClass *klass)
 }
 
 static void
+gimp_palette_tagged_init (GimpTaggedInterface  *iface)
+{
+  iface->get_checksum   = gimp_palette_get_checksum;
+}
+
+static void
 gimp_palette_init (GimpPalette *palette)
 {
   palette->colors    = NULL;
   palette->n_colors  = 0;
   palette->n_columns = 0;
-}
-
-static void
-gimp_palette_tagged_init (GimpTaggedInterface  *iface)
-{
-  iface->get_checksum   = gimp_palette_get_checksum;
 }
 
 static void
@@ -328,6 +328,37 @@ gimp_palette_duplicate (GimpData *data)
   return GIMP_DATA (new);
 }
 
+static gchar *
+gimp_palette_get_checksum (GimpTagged *tagged)
+{
+  GimpPalette          *palette = GIMP_PALETTE (tagged);
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+  GimpPaletteEntry     *entry;
+  GList                *color_iterator;
+
+  if (palette->n_colors < 1)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+  g_checksum_update (checksum, (const guchar *) &palette->n_colors,
+                     sizeof (palette->n_colors));
+  color_iterator = palette->colors;
+  while (color_iterator)
+    {
+      entry = (GimpPaletteEntry *) color_iterator->data;
+      g_checksum_update (checksum, (const guchar *) &entry->color,
+                         sizeof (entry->color));
+      color_iterator = g_list_next (color_iterator);
+    }
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+  g_checksum_free (checksum);
+
+  return checksum_string;
+}
+
 GimpPaletteEntry *
 gimp_palette_add_entry (GimpPalette   *palette,
                         gint           position,
@@ -519,33 +550,3 @@ gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
   return memsize;
 }
 
-static gchar *
-gimp_palette_get_checksum (GimpTagged          *tagged)
-{
-  GimpPalette          *palette = GIMP_PALETTE (tagged);
-  GChecksum            *checksum;
-  gchar                *checksum_string;
-  GimpPaletteEntry     *entry;
-  GList                *color_iterator;
-
-  if (palette->n_colors < 1)
-    {
-      return NULL;
-    }
-
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  g_checksum_update (checksum, (const guchar *) &palette->n_colors,
-                     sizeof (palette->n_colors));
-  color_iterator = palette->colors;
-  while (color_iterator)
-    {
-      entry = (GimpPaletteEntry *) color_iterator->data;
-      g_checksum_update (checksum, (const guchar *) &entry->color,
-                         sizeof (entry->color));
-      color_iterator = g_list_next (color_iterator);
-    }
-  checksum_string = g_strdup (g_checksum_get_string (checksum));
-  g_checksum_free (checksum);
-
-  return checksum_string;
-}

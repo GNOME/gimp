@@ -114,15 +114,15 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 }
 
 static void
-gimp_gradient_init (GimpGradient *gradient)
-{
-  gradient->segments = NULL;
-}
-
-static void
 gimp_gradient_tagged_init (GimpTaggedInterface         *iface)
 {
   iface->get_checksum   = gimp_gradient_get_checksum;
+}
+
+static void
+gimp_gradient_init (GimpGradient *gradient)
+{
+  gradient->segments = NULL;
 }
 
 static void
@@ -267,6 +267,52 @@ gimp_gradient_duplicate (GimpData *data)
   return GIMP_DATA (gradient);
 }
 
+static gchar *
+gimp_gradient_get_checksum (GimpTagged *tagged)
+{
+  GimpGradient         *gradient = GIMP_GRADIENT (tagged);
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+  GimpGradientSegment  *segment;
+
+  if (! gradient->segments)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+  segment = gradient->segments;
+  while (segment)
+    {
+      g_checksum_update (checksum, (const guchar *) &segment->left,
+                         sizeof (segment->left));
+      g_checksum_update (checksum, (const guchar *) &segment->middle,
+                         sizeof (segment->middle));
+      g_checksum_update (checksum, (const guchar *) &segment->right,
+                         sizeof (segment->right));
+
+      g_checksum_update (checksum, (const guchar *) &segment->left_color_type,
+                         sizeof (segment->left_color_type));
+      g_checksum_update (checksum, (const guchar *) &segment->left_color,
+                         sizeof (segment->left_color));
+      g_checksum_update (checksum, (const guchar *) &segment->right_color_type,
+                         sizeof (segment->right_color_type));
+      g_checksum_update (checksum, (const guchar *) &segment->right_color,
+                         sizeof (segment->right_color));
+
+      g_checksum_update (checksum, (const guchar *) &segment->type,
+                         sizeof (segment->type));
+      g_checksum_update (checksum, (const guchar *) &segment->color,
+                         sizeof (segment->color));
+
+      segment = segment->next;
+    }
+
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+  g_checksum_free (checksum);
+
+  return checksum_string;
+}
 
 /*  public functions  */
 
@@ -2008,52 +2054,5 @@ gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
 
   /* Works for convex decreasing and concave increasing */
   return 1.0 - sqrt(1.0 - pos * pos);
-}
-
-static gchar *
-gimp_gradient_get_checksum (GimpTagged         *tagged)
-{
-  GimpGradient         *gradient = GIMP_GRADIENT (tagged);
-  GChecksum            *checksum;
-  gchar                *checksum_string;
-  GimpGradientSegment  *segment;
-
-  if (! gradient->segments)
-    {
-      return NULL;
-    }
-
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-  segment = gradient->segments;
-  while (segment)
-    {
-      g_checksum_update (checksum, (const guchar *) &segment->left,
-                         sizeof (segment->left));
-      g_checksum_update (checksum, (const guchar *) &segment->middle,
-                         sizeof (segment->middle));
-      g_checksum_update (checksum, (const guchar *) &segment->right,
-                         sizeof (segment->right));
-
-      g_checksum_update (checksum, (const guchar *) &segment->left_color_type,
-                         sizeof (segment->left_color_type));
-      g_checksum_update (checksum, (const guchar *) &segment->left_color,
-                         sizeof (segment->left_color));
-      g_checksum_update (checksum, (const guchar *) &segment->right_color_type,
-                         sizeof (segment->right_color_type));
-      g_checksum_update (checksum, (const guchar *) &segment->right_color,
-                         sizeof (segment->right_color));
-
-      g_checksum_update (checksum, (const guchar *) &segment->type,
-                         sizeof (segment->type));
-      g_checksum_update (checksum, (const guchar *) &segment->color,
-                         sizeof (segment->color));
-
-      segment = segment->next;
-    }
-
-  checksum_string = g_strdup (g_checksum_get_string (checksum));
-  g_checksum_free (checksum);
-
-  return checksum_string;
 }
 

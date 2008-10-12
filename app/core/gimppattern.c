@@ -85,15 +85,15 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 }
 
 static void
-gimp_pattern_init (GimpPattern *pattern)
-{
-  pattern->mask = NULL;
-}
-
-static void
 gimp_pattern_tagged_init (GimpTaggedInterface  *iface)
 {
   iface->get_checksum   = gimp_pattern_get_checksum;
+}
+
+static void
+gimp_pattern_init (GimpPattern *pattern)
+{
+  pattern->mask = NULL;
 }
 
 static void
@@ -188,6 +188,30 @@ gimp_pattern_duplicate (GimpData *data)
   return GIMP_DATA (pattern);
 }
 
+static gchar *
+gimp_pattern_get_checksum (GimpTagged *tagged)
+{
+  GimpPattern          *pattern = GIMP_PATTERN (tagged);
+  TempBuf              *buffer;
+  GChecksum            *checksum;
+  gchar                *checksum_string;
+
+  if (! pattern->mask)
+    {
+      return NULL;
+    }
+
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+  buffer = pattern->mask;
+  g_checksum_update (checksum, temp_buf_data (buffer),
+                     buffer->width * buffer->height * buffer->bytes);
+  checksum_string = g_strdup (g_checksum_get_string (checksum));
+  g_checksum_free (checksum);
+
+  return checksum_string;
+}
+
 GimpData *
 gimp_pattern_new (const gchar *name)
 {
@@ -243,26 +267,3 @@ gimp_pattern_get_mask (const GimpPattern *pattern)
   return pattern->mask;
 }
 
-static gchar *
-gimp_pattern_get_checksum (GimpTagged          *tagged)
-{
-  GimpPattern          *pattern = GIMP_PATTERN (tagged);
-  TempBuf              *buffer;
-  GChecksum            *checksum;
-  gchar                *checksum_string;
-
-  if (! pattern->mask)
-    {
-      return NULL;
-    }
-
-  checksum = g_checksum_new (G_CHECKSUM_MD5);
-
-  buffer = pattern->mask;
-  g_checksum_update (checksum, temp_buf_data (buffer),
-                     buffer->width * buffer->height * buffer->bytes);
-  checksum_string = g_strdup (g_checksum_get_string (checksum));
-  g_checksum_free (checksum);
-
-  return checksum_string;
-}
