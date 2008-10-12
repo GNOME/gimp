@@ -39,6 +39,7 @@
 #include "gimptagcache.h"
 #include "gimplist.h"
 #include "gimp-utils.h"
+#include "config/gimpxmlparser.h"
 
 #include "gimp-intl.h"
 
@@ -400,11 +401,9 @@ void
 gimp_tag_cache_load (GimpTagCache      *cache)
 {
   gchar                *filename;
-  gchar                *buffer;
-  gsize                 length;
   GError               *error;
   GMarkupParser         markup_parser;
-  GMarkupParseContext  *parse_context;
+  GimpXmlParser        *xml_parser;
   ParseData             parse_data;
 
   g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
@@ -414,15 +413,6 @@ gimp_tag_cache_load (GimpTagCache      *cache)
 
   filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
   error = NULL;
-  if (! g_file_get_contents (filename, &buffer, &length, &error))
-    {
-      printf ("Error while reading tag cache: %s\n", error->message);
-      g_error_free (error);
-      g_free (filename);
-      return;
-    }
-  g_free (filename);
-
 
   parse_data.records = g_array_new (FALSE, FALSE, sizeof (GimpTagCacheRecord));
   memset (&parse_data.current_record, 0, sizeof (GimpTagCacheRecord));
@@ -432,9 +422,8 @@ gimp_tag_cache_load (GimpTagCache      *cache)
   markup_parser.text = gimp_tag_cache_load_text;
   markup_parser.passthrough = NULL;
   markup_parser.error = gimp_tag_cache_load_error;
-  parse_context = g_markup_parse_context_new (&markup_parser, 0,
-                                              &parse_data, NULL);
-  if (! g_markup_parse_context_parse (parse_context, buffer, length, &error))
+  xml_parser = gimp_xml_parser_new (&markup_parser, &parse_data);
+  if (! gimp_xml_parser_parse_file (xml_parser, filename, &error))
     {
       printf ("Failed to parse tag cache.\n");
     }
@@ -445,9 +434,9 @@ gimp_tag_cache_load (GimpTagCache      *cache)
                                             parse_data.records->len);
     }
 
-  g_markup_parse_context_free (parse_context);
+  g_free (filename);
+  gimp_xml_parser_free (xml_parser);
   g_array_free (parse_data.records, TRUE);
-  g_free (buffer);
 }
 
 static  void
