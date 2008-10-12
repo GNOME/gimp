@@ -1,17 +1,13 @@
-# translation of gimp-plug-ins.HEAD.km.po to Khmer
-# Poch Sokun <sokun_poch@khmeros.info>, 2006.
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
+# translation of km.po to Khmer
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Eng Vannak <evannak@khmeros.info>, 2006.
-# translation of km.po to
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.HEAD.km\n"
+"Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 17:46+0100\n"
-"PO-Revision-Date: 2007-09-10 15:34+0700\n"
+"PO-Revision-Date: 2008-08-25 10:23+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"

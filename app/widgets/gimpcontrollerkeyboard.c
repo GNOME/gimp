@@ -42,7 +42,7 @@ struct _KeyboardEvent
   const guint            keyval;
   const GdkModifierType  modifiers;
   const gchar           *name;
-  gchar                 *blurb;
+  const gchar           *blurb;
 };
 
 

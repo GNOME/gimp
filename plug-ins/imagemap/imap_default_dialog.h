@@ -53,7 +53,7 @@ void default_dialog_hide_cancel_button(DefaultDialog_t *dialog);
 void default_dialog_hide_apply_button(DefaultDialog_t *dialog);
 void default_dialog_hide_help_button(DefaultDialog_t *dialog);
 void default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title);
-void default_dialog_set_label(DefaultDialog_t *dialog, gchar *text);
+void default_dialog_set_label(DefaultDialog_t *dialog, const gchar *text);
 GtkWidget *default_dialog_add_table(DefaultDialog_t *dialog, gint rows,
 				    gint cols);
 

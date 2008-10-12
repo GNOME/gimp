@@ -94,6 +94,18 @@ drw_merge_shadow(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     return Py_None;
 }
 
+static PyObject *
+drw_free_shadow(PyGimpDrawable *self)
+{
+    if (!gimp_drawable_free_shadow(self->ID)) {
+	PyErr_Format(pygimp_error, "could not free shadow tiles on drawable (ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
 
 static PyObject *
 drw_fill(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
@@ -131,6 +143,12 @@ drw_get_tile(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 
     ensure_drawable(self);
 
+    if(row < 0 || row >= self->drawable->ntile_rows ||
+       col < 0 || col >= self->drawable->ntile_cols) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
     t = gimp_drawable_get_tile(self->drawable, shadow, row, col);
     return pygimp_tile_new(t, self);
 }
@@ -148,6 +166,11 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 	return NULL;
 
     ensure_drawable(self);
+    if(x < 0 || x >= self->drawable->width ||
+       y < 0 || y >= self->drawable->height) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
 
     t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
     return pygimp_tile_new(t, self);
@@ -474,7 +497,7 @@ drw_transform_flip_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwargs
 			      "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "iid|:transform_flip_simple", kwlist,
+				     "iid|i:transform_flip_simple", kwlist,
 				     &flip_type, &auto_center, &axis,
 				     &clip_result))
 	return NULL;
@@ -578,7 +601,7 @@ drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 			      "clip_result", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "diiii|iii:transform_rotate", kwlist,
+				     "diiiii|iii:transform_rotate", kwlist,
 				     &angle, &auto_center, &center_x, &center_y,
 				     &transform_direction, &interpolation,
 				     &supersample, &recursion_level,
@@ -879,6 +902,7 @@ static PyMethodDef drw_methods[] = {
     {"flush",	(PyCFunction)drw_flush,	METH_NOARGS},
     {"update",	(PyCFunction)drw_update,	METH_VARARGS},
     {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS | METH_KEYWORDS},
+    {"free_shadow", (PyCFunction)drw_free_shadow, METH_NOARGS},
     {"fill",	(PyCFunction)drw_fill,	METH_VARARGS | METH_KEYWORDS},
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS | METH_KEYWORDS},
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS | METH_KEYWORDS},
@@ -1377,20 +1401,33 @@ lay_resize_to_image_size(PyGimpLayer *self)
 static PyObject *
 lay_scale(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 {
-    unsigned int new_w, new_h;
+    int new_width, new_height;
+    int interpolation = -1;
     gboolean local_origin = FALSE;
 
     static char *kwlist[] = { "width", "height", "local_origin", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|i:scale", kwlist,
-				     &new_w, &new_h, &local_origin))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|ii:scale", kwlist,
+				     &new_width, &new_height,
+                                     &local_origin, &interpolation))
 	return NULL;
 
-    if (!gimp_layer_scale(self->ID, new_w, new_h, local_origin)) {
-	PyErr_Format(pygimp_error,
-		     "could not scale layer (ID %d) to size %dx%d",
-		     self->ID, new_w, new_h);
-	return NULL;
+    if (interpolation != -1) {
+        if (!gimp_layer_scale_full(self->ID,
+                                   new_width, new_height,
+                                   local_origin, interpolation)) {
+            PyErr_Format(pygimp_error,
+                         "could not scale layer (ID %d) to size %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
+    } else {
+        if (!gimp_layer_scale(self->ID, new_width, new_height, local_origin)) {
+            PyErr_Format(pygimp_error,
+                         "could not scale layer (ID %d) to size %dx%d",
+                         self->ID, new_width, new_height);
+            return NULL;
+        }
     }
 
     Py_INCREF(Py_None);

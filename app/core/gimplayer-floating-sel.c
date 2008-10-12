@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -79,7 +79,7 @@ floating_sel_attach (GimpLayer    *layer,
                                               gimp_drawable_bytes (drawable));
 
   /*  add the layer to the image  */
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_add_layer (image, layer, 0, TRUE);
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_rigor (layer, TRUE);
@@ -109,7 +109,7 @@ floating_sel_remove (GimpLayer *layer)
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 
   /*  remove the layer from the image  */
-  gimp_image_remove_layer (image, layer);
+  gimp_image_remove_layer (image, layer, TRUE, NULL);
 
   gimp_image_undo_group_end (image);
 }
@@ -148,7 +148,7 @@ floating_sel_anchor (GimpLayer *layer)
   drawable = layer->fs.drawable;
 
   /*  remove the floating selection  */
-  gimp_image_remove_layer (image, layer);
+  gimp_image_remove_layer (image, layer, TRUE, NULL);
 
   /*  end the group undo  */
   gimp_image_undo_group_end (image);

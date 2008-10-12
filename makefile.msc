@@ -16,12 +16,12 @@ SUBDIRS = \
 	libgimpthumb \
 	libgimpwidgets \
 	libgimp \
-#	libgimptool \
 	libgimpmodule \
 	cursors \
 	app \
 #	plug-ins \
-	modules
+	modules \
+	menus
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d

@@ -349,14 +349,24 @@ gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
   GimpTransferMode      range   = cb_tool->config->range;
 
-  g_object_freeze_notify (G_OBJECT (cb_tool->config));
+  g_object_freeze_notify (im_tool->config);
 
-  gimp_config_reset (GIMP_CONFIG (cb_tool->config));
+  if (im_tool->default_config)
+    {
+      gimp_config_copy (GIMP_CONFIG (im_tool->default_config),
+                        GIMP_CONFIG (im_tool->config),
+                        0);
+    }
+  else
+    {
+      gimp_config_reset (GIMP_CONFIG (im_tool->config));
+    }
+
   g_object_set (cb_tool->config,
                 "range", range,
                 NULL);
 
-  g_object_thaw_notify (G_OBJECT (cb_tool->config));
+  g_object_thaw_notify (im_tool->config);
 }
 
 static void

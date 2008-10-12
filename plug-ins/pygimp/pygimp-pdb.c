@@ -711,7 +711,7 @@ pdb_getattro(PyGimpPDB *self, PyObject *attr)
     }
 
     if (attr_name[0] == '_') {
-        if (strcmp(attr_name, "__members__")) {
+        if (!strcmp(attr_name, "__members__")) {
             return build_procedure_list();
         } else {
             return PyObject_GenericGetAttr((PyObject *)self, attr);

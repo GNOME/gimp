@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -70,6 +71,8 @@ static void   gimp_display_shell_size_changed_detailed_handler
                                                             (GimpImage        *image,
                                                              gint              previous_origin_x,
                                                              gint              previous_origin_y,
+                                                             gint              previous_width,
+                                                             gint              previous_height,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
@@ -485,9 +488,26 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
 }
 
 static void
+gimp_display_shell_image_size_starts_to_fit (GimpDisplayShell *shell,
+                                             gint              previous_width,
+                                             gint              previous_height,
+                                             gint              new_width,
+                                             gint              new_height,
+                                             gboolean         *horizontally,
+                                             gboolean         *vertically)
+{
+  *horizontally = SCALEX (shell, previous_width)  >  shell->disp_width  &&
+                  SCALEX (shell, new_width)       <= shell->disp_width;
+  *vertically   = SCALEY (shell, previous_height) >  shell->disp_height &&
+                  SCALEY (shell, new_height)      <= shell->disp_height;
+}
+
+static void
 gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                                   gint              previous_origin_x,
                                                   gint              previous_origin_y,
+                                                  gint              previous_width,
+                                                  gint              previous_height,
                                                   GimpDisplayShell *shell)
 {
   if (shell->display->config->resize_windows_on_resize)
@@ -499,12 +519,26 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
     }
   else
     {
-      gint scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
-      gint scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+      GimpImage *image;
+      gboolean   horizontally, vertically;
+      gint       scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
+      gint       scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+
+      image = GIMP_IMAGE (shell->display->image);
+
+      gimp_display_shell_image_size_starts_to_fit (shell,
+                                                   previous_width,
+                                                   previous_height,
+                                                   gimp_image_get_width (image),
+                                                   gimp_image_get_height (image),
+                                                   &horizontally,
+                                                   &vertically);
 
       gimp_display_shell_scroll_set_offset (shell,
                                             shell->offset_x + scaled_previous_origin_x,
                                             shell->offset_y + scaled_previous_origin_y);
+
+      gimp_display_shell_scroll_center_image (shell, horizontally, vertically);
     }
 }
 

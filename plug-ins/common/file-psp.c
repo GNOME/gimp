@@ -528,10 +528,12 @@ static void   run        (const gchar      *name,
                           const GimpParam  *param,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
-static gint32 load_image (const gchar      *filename);
+static gint32 load_image (const gchar      *filename,
+                          GError          **error);
 static gint   save_image (const gchar      *filename,
                           gint32            image_ID,
-                          gint32            drawable_ID);
+                          gint32            drawable_ID,
+                          GError          **error);
 
 /* Various local variables...
  */
@@ -607,7 +609,7 @@ query (void)
                                     "",
                                     "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 
-  /* Removed until Saving is implemented -- njl195@zepler.org */
+  /* commented out until saving is implemented */
 #if 0
   gimp_install_procedure (SAVE_PROC,
                           "saves images in the Paint Shop Pro PSP file format",
@@ -679,10 +681,10 @@ save_dialog (void)
 /* This helper method is used to get the name of the block for the known block
  * types. The enum PSPBlockID must cover the input values.
  */
-static gchar *
+static const gchar *
 block_name (gint id)
 {
-  static gchar *block_names[] =
+  static const gchar *block_names[] =
   {
     "IMAGE",
     "CREATOR",
@@ -857,8 +859,8 @@ read_extended_data_block (FILE     *f,
                           guint     total_len,
                           PSPimage *ia)
 {
-  long data_start;
-  guchar buf[4];
+  long    data_start;
+  guchar  buf[4];
   guint16 keyword;
   guint32 length;
 
@@ -892,15 +894,15 @@ read_creator_block (FILE     *f,
                     guint     total_len,
                     PSPimage *ia)
 {
-  long data_start;
-  guchar buf[4];
-  guint16 keyword;
-  guint32 length;
-  gchar *string;
-  gchar *title = NULL, *artist = NULL, *copyright = NULL, *description = NULL;
-  guint32 dword;
-  guint32 cdate = 0, mdate = 0, appid, appver;
-  GString *comment;
+  long          data_start;
+  guchar        buf[4];
+  guint16       keyword;
+  guint32       length;
+  gchar        *string;
+  gchar        *title = NULL, *artist = NULL, *copyright = NULL, *description = NULL;
+  guint32       dword;
+  guint32       cdate = 0, mdate = 0, appid, appver;
+  GString      *comment;
   GimpParasite *comment_parasite;
 
   data_start = ftell (f);
@@ -1080,10 +1082,10 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
   return -1;
 }
 
-static gchar *
+static const gchar *
 blend_mode_name (PSPBlendModes mode)
 {
-  static gchar *blend_mode_names[] =
+  static const gchar *blend_mode_names[] =
   {
     "NORMAL",
     "DARKEN",
@@ -1115,10 +1117,10 @@ blend_mode_name (PSPBlendModes mode)
   return err_name;
 }
 
-static gchar *
+static const gchar *
 bitmap_type_name (gint type)
 {
-  static gchar *bitmap_type_names[] =
+  static const gchar *bitmap_type_names[] =
   {
     "IMAGE",
     "TRANS_MASK",
@@ -1138,10 +1140,10 @@ bitmap_type_name (gint type)
   return err_name;
 }
 
-static gchar *
+static const gchar *
 channel_type_name (gint type)
 {
-  static char *channel_type_names[] =
+  static const gchar *channel_type_names[] =
   {
     "COMPOSITE",
     "RED",
@@ -1636,14 +1638,14 @@ read_tube_block (FILE     *f,
                  guint     total_len,
                  PSPimage *ia)
 {
-  guint16 version;
-  guchar name[514];
-  guint32 step_size, column_count, row_count, cell_count;
-  guint32 placement_mode, selection_mode;
-  gint i;
-  GimpPixPipeParams params;
-  GimpParasite *pipe_parasite;
-  gchar *parasite_text;
+  guint16            version;
+  guchar             name[514];
+  guint32            step_size, column_count, row_count, cell_count;
+  guint32            placement_mode, selection_mode;
+  gint               i;
+  GimpPixPipeParams  params;
+  GimpParasite      *pipe_parasite;
+  gchar             *parasite_text;
 
   gimp_pixpipe_params_init (&params);
 
@@ -1705,7 +1707,7 @@ read_tube_block (FILE     *f,
   return 0;
 }
 
-static gchar *
+static const gchar *
 compression_name (gint compression)
 {
   switch (compression)
@@ -1725,7 +1727,8 @@ compression_name (gint compression)
 /* The main function for loading PSP-images
  */
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   FILE *f;
   struct stat st;
@@ -1744,8 +1747,9 @@ load_image (const gchar *filename)
   f = g_fopen (filename, "rb");
   if (f == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -1917,9 +1921,10 @@ load_image (const gchar *filename)
 }
 
 static gint
-save_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID)
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            GError      **error)
 {
   g_message ("Saving not implemented yet");
 
@@ -1933,12 +1938,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   INIT_I18N ();
 
@@ -1952,7 +1958,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -2028,7 +2034,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+                          &error))
             {
               gimp_set_data (SAVE_PROC, &psvals, sizeof (PSPSaveVals));
             }
@@ -2044,6 +2051,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;

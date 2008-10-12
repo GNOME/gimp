@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -29,7 +29,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimplayer.h"
@@ -42,6 +41,11 @@
 
 /*  local function prototypes  */
 
+static void   gimp_projection_construct_gegl     (GimpProjection *proj,
+                                                  gint            x,
+                                                  gint            y,
+                                                  gint            w,
+                                                  gint            h);
 static void   gimp_projection_construct_layers   (GimpProjection *proj,
                                                   gint            x,
                                                   gint            y,
@@ -102,8 +106,7 @@ gimp_projection_construct (GimpProjection *proj,
     {
       GimpDrawable *layer;
 
-      layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (image->layers,
-                                                                0));
+      layer = GIMP_DRAWABLE (gimp_image_get_layer_by_index (image, 0));
 
       if (gimp_drawable_has_alpha (layer)                         &&
           (gimp_item_get_visible (GIMP_ITEM (layer)))             &&
@@ -140,8 +143,6 @@ gimp_projection_construct (GimpProjection *proj,
     }
 #endif
 
-  proj->construct_flag = FALSE;
-
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
@@ -152,12 +153,46 @@ gimp_projection_construct (GimpProjection *proj,
   /*  call functions which process the list of layers and
    *  the list of channels
    */
-  gimp_projection_construct_layers (proj, x, y, w, h);
-  gimp_projection_construct_channels (proj, x, y, w, h);
+  if (proj->use_gegl)
+    {
+      gimp_projection_construct_gegl (proj, x, y, w, h);
+    }
+  else
+    {
+      proj->construct_flag = FALSE;
+
+      gimp_projection_construct_layers (proj, x, y, w, h);
+      gimp_projection_construct_channels (proj, x, y, w, h);
+    }
 }
 
 
 /*  private functions  */
+
+static void
+gimp_projection_construct_gegl (GimpProjection *proj,
+                                gint            x,
+                                gint            y,
+                                gint            w,
+                                gint            h)
+{
+  GeglNode      *sink;
+  GeglProcessor *processor;
+  GeglRectangle  rect;
+
+  sink = gimp_projection_get_sink_node (proj);
+
+  rect.x      = x;
+  rect.y      = y;
+  rect.width  = w;
+  rect.height = h;
+
+  processor = gegl_node_new_processor (sink, &rect);
+
+  while (gegl_processor_work (processor, NULL));
+
+  g_object_unref (processor);
+}
 
 static void
 gimp_projection_construct_layers (GimpProjection *proj,
@@ -337,9 +372,9 @@ gimp_projection_construct_channels (GimpProjection *proj,
  * @w:
  * @h:
  *
- * This function determines whether a visible layer with combine mode Normal
- * provides complete coverage over the specified area.  If not, the projection
- * is initialized to transparent black.
+ * This function determines whether a visible layer with combine mode
+ * Normal provides complete coverage over the specified area.  If not,
+ * the projection is initialized to transparent black.
  */
 static void
 gimp_projection_initialize (GimpProjection *proj,
@@ -363,6 +398,7 @@ gimp_projection_initialize (GimpProjection *proj,
 
       if (gimp_item_get_visible (item)                                  &&
           ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))              &&
+          ! gimp_layer_get_mask (GIMP_LAYER (item))                     &&
           gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE   &&
           (off_x <= x)                                                  &&
           (off_y <= y)                                                  &&
@@ -376,12 +412,11 @@ gimp_projection_initialize (GimpProjection *proj,
 
   if (! coverage)
     {
-      PixelRegion PR;
-      guchar      clear[4] = { 0, 0, 0, 0 };
+      PixelRegion region;
 
-      pixel_region_init (&PR, gimp_projection_get_tiles (proj),
-                         x, y, w, h, TRUE);
-      color_region (&PR, clear);
+      pixel_region_init (&region,
+                         gimp_projection_get_tiles (proj), x, y, w, h, TRUE);
+      clear_region (&region);
     }
 }
 

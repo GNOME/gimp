@@ -109,4 +109,4 @@
 
 
 (script-fu-menu-register "script-fu-camo-pattern"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

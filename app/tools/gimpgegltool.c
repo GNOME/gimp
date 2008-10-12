@@ -221,29 +221,50 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
   g_free (pspecs);
 }
 
-/* Builds a GList of the class structures of all subtypes
- * of type.
+static gboolean
+gimp_gegl_tool_operation_blacklisted (const gchar *name)
+{
+  static const gchar * const blacklist[] =
+  {
+    "convert-format", "gimp-", "introspect", "stress", "text"
+  };
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (blacklist); i++)
+    {
+      if (g_str_has_prefix (name, blacklist[i]))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
+
+/* Builds a GList of the class structures of all subtypes of type.
  */
 static GList *
 gimp_get_subtype_classes (GType  type,
                           GList *classes)
 {
-  GObjectClass *klass;
-  GType        *ops;
-  guint         n_ops;
-  gint          i;
+  GeglOperationClass *klass;
+  GType              *ops;
+  guint               n_ops;
+  gint                i;
 
-  if (!type)
+  if (! type)
     return classes;
 
-  klass = g_type_class_ref (type);
+  klass = GEGL_OPERATION_CLASS (g_type_class_ref (type));
   ops = g_type_children (type, &n_ops);
 
   /* only add classes which have a name, this avoids
    * the abstract base classes
    */
-  if (GEGL_OPERATION_CLASS (klass)->name)
-    classes = g_list_prepend (classes, klass);
+  if (klass->name)
+    {
+      if (! gimp_gegl_tool_operation_blacklisted (klass->name))
+        classes = g_list_prepend (classes, klass);
+    }
 
   for (i = 0; i < n_ops; i++)
     classes = gimp_get_subtype_classes (ops[i], classes);
@@ -318,10 +339,11 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
           strstr (opclass->categories, "blur")    ||
           strstr (opclass->categories, "edge")    ||
           strstr (opclass->categories, "render"))
-
-        gtk_list_store_insert_with_values (store, NULL, -1,
-                                           0, opclass->name,
-                                           -1);
+        {
+          gtk_list_store_insert_with_values (store, NULL, -1,
+                                             0, opclass->name,
+                                             -1);
+        }
     }
 
   g_list_free (opclasses);
@@ -627,8 +649,6 @@ gimp_gegl_tool_config_class_init (GObjectClass *klass,
 
           if (copy)
             {
-              g_print ("installing property: %s\n", copy->name);
-
               g_object_class_install_property (klass, i + 1, copy);
             }
         }

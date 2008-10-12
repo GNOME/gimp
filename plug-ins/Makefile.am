@@ -10,6 +10,7 @@ endif
 
 if BUILD_JPEG
 file_jpeg = file-jpeg
+file_psd = file-psd
 endif
 
 if BUILD_PRINT
@@ -57,7 +58,7 @@ SUBDIRS = \
 	file-fli		\
 	$(file_ico)		\
 	$(file_jpeg)		\
-	file-psd		\
+	$(file_psd)		\
 	file-sgi		\
 	$(file_uri)		\
 	$(file_xjt)		\

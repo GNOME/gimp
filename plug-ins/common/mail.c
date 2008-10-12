@@ -122,32 +122,32 @@ typedef struct
 } m_info;
 
 
-static void   query (void);
-static void   run   (const gchar      *name,
-		     gint              nparams,
-		     const GimpParam  *param,
-		     gint             *nreturn_vals,
-		     GimpParam       **return_vals);
+static void               query                (void);
+static void               run                  (const gchar      *name,
+                                                gint              nparams,
+                                                const GimpParam  *param,
+                                                gint             *nreturn_vals,
+                                                GimpParam       **return_vals);
 
-static GimpPDBStatusType  save_image   (const gchar *filename,
-                                        gint32       image_ID,
-                                        gint32       drawable_ID,
-                                        gint32       run_mode);
+static GimpPDBStatusType  save_image           (const gchar      *filename,
+                                                gint32            image_ID,
+                                                gint32            drawable_ID,
+                                                gint32            run_mode);
 
-static gboolean   save_dialog          (void);
-static void       mail_entry_callback  (GtkWidget     *widget,
-                                        gchar         *data);
-static void       mesg_body_callback   (GtkTextBuffer *buffer,
-                                        gpointer       data);
+static gboolean           save_dialog          (void);
+static void               mail_entry_callback  (GtkWidget        *widget,
+                                                gchar            *data);
+static void               mesg_body_callback   (GtkTextBuffer    *buffer,
+                                                gpointer          data);
 
-static gboolean   valid_file     (const gchar  *filename);
-static void       create_headers (FILE         *mailpipe);
-static gchar    * find_extension (const gchar  *filename);
-static gboolean   to64           (const gchar  *filename,
-                                  FILE         *outfile,
-                                  GError      **error);
-static FILE     * sendmail_pipe  (gchar       **cmd,
-                                  GPid         *pid);
+static gboolean           valid_file           (const gchar      *filename);
+static void               create_headers       (FILE             *mailpipe);
+static gchar            * find_extension       (const gchar      *filename);
+static gboolean           to64                 (const gchar      *filename,
+                                                FILE             *outfile,
+                                                GError          **error);
+static FILE             * sendmail_pipe        (gchar           **cmd,
+                                                GPid             *pid);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =

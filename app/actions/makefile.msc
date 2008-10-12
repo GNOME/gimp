@@ -11,6 +11,7 @@ INCLUDES = \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
+	$(GEGL_CFLAGS)
 
 DEFINES = \
 	-DGIMP_COMPILATION \
@@ -35,6 +36,8 @@ OBJECTS = \
 	context-commands.obj \
 	colormap-actions.obj \
 	colormap-commands.obj \
+	config-actions.obj \
+	config-commands.obj \
 	cursor-info-actions.obj \
 	cursor-info-commands.obj \
 	data-commands.obj \
@@ -98,6 +101,8 @@ OBJECTS = \
 	view-commands.obj \
 	window-actions.obj \
 	window-commands.obj \
+	windows-actions.obj \
+	windows-commands.obj \
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

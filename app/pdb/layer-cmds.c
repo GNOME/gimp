@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -35,6 +35,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
 #include "gimppdb.h"
@@ -283,11 +284,66 @@ layer_scale_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                   gimp->config->interpolation_type, NULL,
-                                   local_origin);
+        {
+          if (progress)
+            gimp_progress_start (progress, _("Scaling"), FALSE);
+
+          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                     gimp->config->interpolation_type, progress,
+                                     local_origin);
+
+          if (progress)
+            gimp_progress_end (progress);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+layer_scale_full_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 new_width;
+  gint32 new_height;
+  gboolean local_origin;
+  gint32 interpolation;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  new_width = g_value_get_int (&args->values[1]);
+  new_height = g_value_get_int (&args->values[2]);
+  local_origin = g_value_get_boolean (&args->values[3]);
+  interpolation = g_value_get_enum (&args->values[4]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+        {
+          if (progress)
+            gimp_progress_start (progress, _("Scaling"), FALSE);
+
+          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                     interpolation, progress,
+                                     local_origin);
+
+          if (progress)
+            gimp_progress_end (progress);
+        }
+      else
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -550,8 +606,10 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-        gimp_layer_add_mask (layer, mask, TRUE);
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
+                                     gimp_item_get_image (GIMP_ITEM (layer)),
+                                     error))
+        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;
     }
@@ -577,7 +635,8 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+          gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else
         success = FALSE;
@@ -1191,8 +1250,8 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale",
-                                     "Scale the layer to the specified extents.",
-                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
+                                     "Scale the layer using the default interpolation method.",
+                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The default interpolation method is used for scaling.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1221,6 +1280,54 @@ register_layer_procs (GimpPDB *pdb)
                                                      "Use a local origin (as opposed to the image origin)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-scale-full
+   */
+  procedure = gimp_procedure_new (layer_scale_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-scale-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-scale-full",
+                                     "Scale the layer using a specific interpolation method.",
+                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-width",
+                                                      "new width",
+                                                      "New layer width",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-height",
+                                                      "new height",
+                                                      "New layer height",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("local-origin",
+                                                     "local origin",
+                                                     "Use a local origin (as opposed to the image origin)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("interpolation",
+                                                  "interpolation",
+                                                  "Type of interpolation",
+                                                  GIMP_TYPE_INTERPOLATION_TYPE,
+                                                  GIMP_INTERPOLATION_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

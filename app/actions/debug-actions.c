@@ -24,6 +24,8 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpactiongroup.h"
 
 #include "debug-actions.h"

@@ -43,6 +43,12 @@ struct _GimpLayer
 
   GimpLayerMask        *mask;             /*  possible layer mask        */
 
+  GeglNode             *node;
+  GeglNode             *mask_node;
+  GeglNode             *shift_node;
+  GeglNode             *opacity_node;
+  GeglNode             *mode_node;
+
   /*  Floating selections  */
   struct
   {
@@ -103,7 +109,8 @@ GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpChannel          *channel);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
                                                 GimpLayerMask        *mask,
-                                                gboolean              push_undo);
+                                                gboolean              push_undo,
+                                                GError              **error);
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);

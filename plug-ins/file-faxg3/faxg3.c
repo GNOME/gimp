@@ -61,7 +61,8 @@ static void   run        (const gchar      *name,
 			  gint             *nreturn_vals,
 			  GimpParam       **return_vals);
 
-static gint32 load_image (const gchar      *filename);
+static gint32 load_image (const gchar      *filename,
+                          GError          **error);
 
 static gint32 emitgimp   (gint              hcol,
                           gint              row,
@@ -120,14 +121,16 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode      run_mode;
-  gint32           image_ID;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  gint32            image_ID;
+  GError           *error = NULL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
@@ -135,19 +138,27 @@ run (const gchar      *name,
     {
       INIT_I18N();
 
-      *nreturn_vals = 2;
-      image_ID = load_image (param[1].data.d_string);
-      values[1].type = GIMP_PDB_IMAGE;
-      values[1].data.d_image = image_ID;
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
 	{
+          *nreturn_vals = 2;
+
 	  values[0].data.d_status = GIMP_PDB_SUCCESS;
+          values[1].type = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
 	}
       else
 	{
 	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
+        }
     }
 }
 
@@ -181,8 +192,10 @@ static	int  rs;		/* read buffer size */
 #define MAX_ROWS 4300
 #define MAX_COLS 1728		/* !! FIXME - command line parameter */
 
+
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   int data;
   int hibit;
@@ -216,8 +229,9 @@ load_image (const gchar *filename)
 
   if (fd < 0)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -289,7 +303,7 @@ load_image (const gchar *filename)
 	if ( p == NULL )	/* invalid code */
 	{
 	    g_printerr ("invalid code, row=%d, col=%d, file offset=%lx, skip to eol\n",
-		     row, col, (unsigned long) lseek( fd, 0, 1 ) - rs + rp );
+                        row, col, (unsigned long) lseek( fd, 0, 1 ) - rs + rp );
 	    while ( ( data & 0x03f ) != 0 )
 	    {
 		data >>= 1; hibit--;

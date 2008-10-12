@@ -292,4 +292,4 @@
 )
 
 (script-fu-menu-register "script-fu-glossy-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

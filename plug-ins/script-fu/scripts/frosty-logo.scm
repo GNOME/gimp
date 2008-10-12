@@ -199,4 +199,4 @@ this effect size, or they are not inside the canvas.")
 )
 
 (script-fu-menu-register "script-fu-frosty-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

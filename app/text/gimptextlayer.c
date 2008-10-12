@@ -23,7 +23,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <pango/pangoft2.h>
 
 #include "libgimpconfig/gimpconfig.h"

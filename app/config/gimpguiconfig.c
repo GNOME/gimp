@@ -70,6 +70,7 @@ enum
   PROP_TOOLBOX_COLOR_AREA,
   PROP_TOOLBOX_FOO_AREA,
   PROP_TOOLBOX_IMAGE_AREA,
+  PROP_TOOLBOX_WILBER,
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
@@ -82,7 +83,12 @@ enum
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
   PROP_TRANSIENT_DOCKS,
-  PROP_CURSOR_FORMAT
+  PROP_CURSOR_FORMAT,
+
+  /* ignored, only for backward compatibility: */
+  PROP_INFO_WINDOW_PER_DISPLAY,
+  PROP_SHOW_TOOL_TIPS,
+  PROP_SHOW_TIPS
 };
 
 
@@ -196,6 +202,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     TOOLBOX_IMAGE_AREA_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_WILBER,
+                                    "toolbox-wilber",
+                                    TOOLBOX_WILBER_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
@@ -262,6 +273,24 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
+                                    "info-window-per-display",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
+                                    "show-tool-tips", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
+                                    "show-tips", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -347,7 +376,10 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TOOLBOX_IMAGE_AREA:
       gui_config->toolbox_image_area = g_value_get_boolean (value);
       break;
-    case PROP_THEME_PATH:
+    case PROP_TOOLBOX_WILBER:
+      gui_config->toolbox_wilber = g_value_get_boolean (value);
+      break;
+     case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
       gui_config->theme_path = g_value_dup_string (value);
       break;
@@ -390,6 +422,12 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_CURSOR_FORMAT:
       gui_config->cursor_format = g_value_get_enum (value);
+      break;
+
+    case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_SHOW_TOOL_TIPS:
+    case PROP_SHOW_TIPS:
+      /* ignored */
       break;
 
     default:
@@ -462,6 +500,9 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_TOOLBOX_IMAGE_AREA:
       g_value_set_boolean (value, gui_config->toolbox_image_area);
       break;
+    case PROP_TOOLBOX_WILBER:
+      g_value_set_boolean (value, gui_config->toolbox_wilber);
+      break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);
       break;
@@ -500,6 +541,12 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
+      break;
+
+    case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_SHOW_TOOL_TIPS:
+    case PROP_SHOW_TIPS:
+      /* ignored */
       break;
 
     default:

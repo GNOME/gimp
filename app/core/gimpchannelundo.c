@@ -18,11 +18,10 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
-#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpchannel.h"
 #include "gimpchannelundo.h"
@@ -193,17 +192,8 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       channel_undo->prev_position = gimp_image_get_channel_index (undo->image,
                                                                   channel);
 
-      gimp_container_remove (undo->image->channels, GIMP_OBJECT (channel));
-      gimp_item_removed (GIMP_ITEM (channel));
-
-      if (channel == gimp_image_get_active_channel (undo->image))
-        {
-          if (channel_undo->prev_channel)
-            gimp_image_set_active_channel (undo->image,
-                                           channel_undo->prev_channel);
-          else
-            gimp_image_unset_active_channel (undo->image);
-        }
+      gimp_image_remove_channel (undo->image, channel, FALSE,
+                                 channel_undo->prev_channel);
     }
   else
     {
@@ -212,9 +202,8 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       /*  record the active channel  */
       channel_undo->prev_channel = gimp_image_get_active_channel (undo->image);
 
-      gimp_container_insert (undo->image->channels, GIMP_OBJECT (channel),
-                             channel_undo->prev_position);
-      gimp_image_set_active_channel (undo->image, channel);
+      gimp_image_add_channel (undo->image, channel,
+                              channel_undo->prev_position, FALSE);
 
       GIMP_ITEM (channel)->removed = FALSE;
     }

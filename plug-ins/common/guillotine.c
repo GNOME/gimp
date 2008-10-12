@@ -34,14 +34,15 @@
 
 /* Declare local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void    query      (void);
+static void    run        (const gchar      *name,
+                           gint              nparams,
+                           const GimpParam  *param,
+                           gint             *nreturn_vals,
+                           GimpParam       **return_vals);
 
-static void   guillotine (gint32            image_ID);
+static GList * guillotine (gint32            image_ID,
+                           gboolean          interactive);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -60,22 +61,29 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
+    { GIMP_PDB_INT32,      "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,      "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (unused)"      }
+  };
+  static const GimpParamDef return_vals[] =
+  {
+    { GIMP_PDB_INT32,      "image-count", "Number of images created"  },
+    { GIMP_PDB_INT32ARRAY, "image-ids",   "Output images"             }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Slice the image into subimages using guides"),
-                          "This function takes an image and blah blah.  Hooray!",
+                          "This function takes an image and slices it along "
+                          "its guides, creating new images. The original "
+                          "image is not modified.",
                           "Adam D. Moss (adam@foxbox.org)",
                           "Adam D. Moss (adam@foxbox.org)",
                           "1998",
                           N_("_Guillotine"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+                          G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
+                          args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Transform");
 }
@@ -87,25 +95,45 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  gint32            image_ID;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam  values[3];
+  GimpRunMode       run_mode = param[0].data.d_int32;
+  GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
 
-  *nreturn_vals = 1;
+  *nreturn_vals = 3;
   *return_vals  = values;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  values[0].type              = GIMP_PDB_STATUS;
+  values[0].data.d_status     = status;
+  values[1].type              = GIMP_PDB_INT32;
+  values[1].data.d_int32      = 0;
+  values[2].type              = GIMP_PDB_INT32ARRAY;
+  values[2].data.d_int32array = NULL;
 
   INIT_I18N();
 
-  image_ID = param[1].data.d_image;
-
   if (status == GIMP_PDB_SUCCESS)
     {
+      GList *images;
+      GList *list;
+      gint   i;
+
       gimp_progress_init (_("Guillotine"));
-      guillotine (image_ID);
-      gimp_displays_flush ();
+
+      images = guillotine (param[1].data.d_image,
+                           run_mode == GIMP_RUN_INTERACTIVE);
+
+      values[1].data.d_int32      = g_list_length (images);
+      values[2].data.d_int32array = g_new (gint32, values[1].data.d_int32);
+
+      for (list = images, i = 0; list; list = g_list_next (list), i++)
+        {
+          values[2].data.d_int32array[i] = GPOINTER_TO_INT (list->data);
+        }
+
+      g_list_free (images);
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_displays_flush ();
     }
 
   values[0].data.d_status = status;
@@ -119,9 +147,11 @@ guide_sort_func (gconstpointer a,
   return GPOINTER_TO_INT (a) - GPOINTER_TO_INT (b);
 }
 
-static void
-guillotine (gint32 image_ID)
+static GList *
+guillotine (gint32   image_ID,
+            gboolean interactive)
 {
+  GList    *images = NULL;
   gint      guide;
   gint      image_width;
   gint      image_height;
@@ -181,7 +211,8 @@ guillotine (gint32 image_ID)
       gchar *format;
 
       filename = gimp_image_get_filename (image_ID);
-      if (!filename)
+
+      if (! filename)
         filename = g_strdup (_("Untitled"));
 
       /* get the number horizontal and vertical slices */
@@ -212,7 +243,7 @@ guillotine (gint32 image_ID)
               if (new_image == -1)
                 {
                   g_warning ("Couldn't create new image.");
-                  return;
+                  return images;
                 }
 
               gimp_image_undo_disable (new_image);
@@ -247,7 +278,10 @@ guillotine (gint32 image_ID)
 
               gimp_image_undo_enable (new_image);
 
-              gimp_display_new (new_image);
+              if (interactive)
+                gimp_display_new (new_image);
+
+              images = g_list_prepend (images, GINT_TO_POINTER (new_image));
             }
         }
 
@@ -258,4 +292,6 @@ guillotine (gint32 image_ID)
 
   g_list_free (hguides);
   g_list_free (vguides);
+
+  return g_list_reverse (images);
 }

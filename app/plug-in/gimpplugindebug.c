@@ -109,7 +109,7 @@ gchar **
 gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
                          const gchar        *name,
                          GimpDebugWrapFlag   flag,
-                         gchar             **args)
+                         const gchar       **args)
 {
   GPtrArray  *argv;
   gchar     **arg;
@@ -134,7 +134,7 @@ gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
   for (arg = debug->args; *arg != NULL; arg++)
     g_ptr_array_add (argv, *arg);
 
-  for (arg = args; *arg != NULL; arg++)
+  for (arg = (gchar **) args; *arg != NULL; arg++)
     g_ptr_array_add (argv, *arg);
 
   g_ptr_array_add (argv, NULL);

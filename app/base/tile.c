@@ -53,7 +53,7 @@ static gint tile_exist_count  = 0;
 #endif
 
 
-static void tile_destroy (Tile *tile);
+static void  tile_destroy (Tile *tile);
 
 
 Tile *
@@ -333,9 +333,7 @@ tile_data_pointer (Tile *tile,
                    gint  xoff,
                    gint  yoff)
 {
-  gsize offset = (yoff % TILE_HEIGHT) * tile->ewidth + (xoff % TILE_WIDTH);
-
-  return (gpointer) (tile->data + offset * tile->bpp);
+  return TILE_DATA_POINTER (tile, xoff, yoff);
 }
 
 gint

@@ -382,6 +382,7 @@ EXPORTS
 	gimp_image_resize_to_layers
 	gimp_image_rotate
 	gimp_image_scale
+	gimp_image_scale_full
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
 	gimp_image_set_active_vectors
@@ -429,6 +430,7 @@ EXPORTS
 	gimp_layer_resize
 	gimp_layer_resize_to_image_size
 	gimp_layer_scale
+	gimp_layer_scale_full
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
 	gimp_layer_set_lock_alpha
@@ -536,10 +538,12 @@ EXPORTS
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
 	gimp_plugin_domain_register
+	gimp_plugin_get_pdb_error_handler
 	gimp_plugin_help_register
 	gimp_plugin_icon_register
 	gimp_plugin_menu_branch_register
 	gimp_plugin_menu_register
+	gimp_plugin_set_pdb_error_handler
 	gimp_posterize
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data

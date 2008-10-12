@@ -20,14 +20,14 @@
  */
 
 gboolean  jpeg_detect_original_settings  (struct jpeg_decompress_struct *cinfo,
-                                          gint32    image_ID);
+                                          gint32           image_ID);
 
-gboolean  jpeg_restore_original_settings (gint32    image_ID,
-                                          gint     *quality,
-                                          gint     *subsmp,
-                                          gint     *num_quant_tables);
+gboolean  jpeg_restore_original_settings (gint32           image_ID,
+                                          gint            *quality,
+                                          JpegSubsampling *subsmp,
+                                          gint            *num_quant_tables);
 
-guint   **jpeg_restore_original_tables   (gint32    image_ID,
-                                          gint      num_quant_tables);
+guint   **jpeg_restore_original_tables   (gint32           image_ID,
+                                          gint             num_quant_tables);
 
-void      jpeg_swap_original_settings    (gint32    image_ID);
+void      jpeg_swap_original_settings    (gint32           image_ID);

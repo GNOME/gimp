@@ -107,12 +107,13 @@ static void   run       (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  load_dialog   (TIFF              *tif,
-                                TiffSelectedPages *pages);
+static gboolean  load_dialog   (TIFF               *tif,
+                                TiffSelectedPages  *pages);
 
-static gint32    load_image    (const gchar       *filename,
-                                TIFF              *tif,
-                                TiffSelectedPages *pages);
+static gint32    load_image    (const gchar        *filename,
+                                TIFF               *tif,
+                                TiffSelectedPages  *pages,
+                                GError            **error);
 
 static void      load_rgba     (TIFF         *tif,
                                 channel_data *channel);
@@ -259,6 +260,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
   gint32             image;
   TiffSelectedPages  pages;
 
@@ -285,8 +287,10 @@ run (const gchar      *name,
 
       if (fd == -1)
         {
-          g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (filename), g_strerror (errno));
+          g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for reading: %s"),
+                       gimp_filename_to_utf8 (filename), g_strerror (errno));
+
           status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
@@ -302,8 +306,9 @@ run (const gchar      *name,
 
           if (pages.n_pages == 0)
             {
-              g_message (_("TIFF '%s' does not contain any directories"),
-                         gimp_filename_to_utf8 (filename));
+              g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("TIFF '%s' does not contain any directories"),
+                           gimp_filename_to_utf8 (filename));
 
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -337,7 +342,8 @@ run (const gchar      *name,
                 {
                   gimp_set_data (LOAD_PROC, &target, sizeof (target));
 
-                  image = load_image (param[1].data.d_string, tif, &pages);
+                  image = load_image (param[1].data.d_string, tif, &pages,
+                                      &error);
 
                   g_free (pages.pages);
 
@@ -370,6 +376,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -535,9 +548,10 @@ load_dialog (TIFF              *tif,
 }
 
 static gint32
-load_image (const gchar       *filename,
-            TIFF              *tif,
-            TiffSelectedPages *pages)
+load_image (const gchar        *filename,
+            TIFF               *tif,
+            TiffSelectedPages  *pages,
+            GError            **error)
 {
   gushort       bps, spp, photomet;
   guint16       orientation;
@@ -744,7 +758,8 @@ load_image (const gchar       *filename,
         {
           if ((image = gimp_image_new (cols, rows, image_type)) == -1)
             {
-              g_message ("Could not create a new image");
+              g_message ("Could not create a new image: %s",
+                         gimp_get_pdb_error ());
               return -1;
             }
 

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -119,7 +119,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
           GSList *list;
 
           for (list = invisible_list; list; list = g_slist_next (list))
-            gimp_image_remove_layer (image, list->data);
+            gimp_image_remove_layer (image, list->data, TRUE, NULL);
 
           gimp_image_undo_group_end (image);
           g_slist_free (invisible_list);
@@ -260,14 +260,14 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
       target_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                           GIMP_TYPE_VECTORS));
       pos = gimp_image_get_vectors_index (image, vectors);
-      gimp_image_remove_vectors (image, vectors);
+      gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       cur_item = cur_item->next;
 
       while (cur_item)
         {
           vectors = GIMP_VECTORS (cur_item->data);
           gimp_vectors_add_strokes (vectors, target_vectors);
-          gimp_image_remove_vectors (image, vectors);
+          gimp_image_remove_vectors (image, vectors, TRUE, NULL);
 
           cur_item = g_slist_next (cur_item);
         }
@@ -276,7 +276,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
 
       g_slist_free (merge_list);
 
-      gimp_image_add_vectors (image, target_vectors, pos);
+      gimp_image_add_vectors (image, target_vectors, pos, TRUE);
       gimp_unset_busy (image->gimp);
 
       gimp_image_undo_group_end (image);
@@ -319,7 +319,6 @@ gimp_image_merge_layers (GimpImage     *image,
   GimpLayer       *merge_layer;
   GimpLayer       *layer;
   GimpLayer       *bottom_layer;
-  guchar           bg[4] = {0, 0, 0, 0};
   GimpImageType    type;
   gint             count;
   gint             x1, y1, x2, y2;
@@ -418,6 +417,8 @@ gimp_image_merge_layers (GimpImage     *image,
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
+      guchar bg[4] = { 0, 0, 0, 0 };
+
       type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
@@ -471,15 +472,13 @@ gimp_image_merge_layers (GimpImage     *image,
       GIMP_ITEM (merge_layer)->offset_x = x1;
       GIMP_ITEM (merge_layer)->offset_y = y1;
 
-      /*  Set the layer to transparent  */
+      /*  clear the layer  */
       pixel_region_init (&src1PR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
                          0, 0,
                          (x2 - x1), (y2 - y1),
                          TRUE);
-
-      /*  set the region to 0's  */
-      color_region (&src1PR, bg);
+      clear_region (&src1PR);
 
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
@@ -575,7 +574,7 @@ gimp_image_merge_layers (GimpImage     *image,
                        active,
                        operation);
 
-      gimp_image_remove_layer (image, layer);
+      gimp_image_remove_layer (image, layer, TRUE, NULL);
 
       reverse_list = g_slist_next (reverse_list);
     }
@@ -591,16 +590,18 @@ gimp_image_merge_layers (GimpImage     *image,
           layer = list->data;
 
           list = g_list_next (list);
-          gimp_image_remove_layer (image, layer);
+          gimp_image_remove_layer (image, layer, TRUE, NULL);
         }
 
-      gimp_image_add_layer (image, merge_layer, position);
+      gimp_image_add_layer (image, merge_layer, position, TRUE);
     }
   else
     {
       /*  Add the layer to the image  */
-      gimp_image_add_layer (image, merge_layer,
-         gimp_container_num_children (image->layers) - position + 1);
+      gimp_image_add_layer
+        (image, merge_layer,
+         gimp_container_num_children (image->layers) - position + 1,
+         TRUE);
     }
 
   /* set the name after the original layers have been removed so we

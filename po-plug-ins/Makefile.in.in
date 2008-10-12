@@ -17,7 +17,7 @@
 # We have the following line for use by intltoolize:
 # INTLTOOL_MAKEFILE
 
-GETTEXT_PACKAGE = @GETTEXT_PACKAGE@-plug-ins
+GETTEXT_PACKAGE = @GETTEXT_PACKAGE@-std-plug-ins
 XGETTEXT_KEYWORDS=--keyword=_ --keyword=N_ --keyword=Q_:1g --keyword=C_:1c,2
 
 PACKAGE = @PACKAGE@

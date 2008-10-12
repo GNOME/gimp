@@ -112,13 +112,13 @@ create_shadow (GdkPixbuf *src)
                   sumb += src_pixels [src_y * src_rowstride +
                                       src_x * src_bpp + 2] *
                     filter->data [i * filter->size + j];
-                
+
                   if (src_bpp == 4)
                     suma += src_pixels [src_y * src_rowstride +
                                         src_x * src_bpp + 3] *
                     filter->data [i * filter->size + j];
 
-                
+
                 }
             }
 

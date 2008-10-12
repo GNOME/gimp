@@ -93,30 +93,33 @@ static XBMSaveVals xsvals =
 
 /* Declare some local functions.
  */
-static void   query   (void);
-static void   run     (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query                   (void);
+static void      run                     (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
 
-static gint32    load_image              (const gchar *filename);
-static gint      save_image              (const gchar *filename,
-                                          const gchar *prefix,
-                                          const gchar *comment,
-                                          gboolean     save_mask,
-                                          gint32       image_ID,
-                                          gint32       drawable_ID);
-static gboolean  save_dialog             (gint32       drawable_ID);
+static gint32    load_image              (const gchar      *filename,
+                                          GError          **error);
+static gint      save_image              (const gchar      *filename,
+                                          const gchar      *prefix,
+                                          const gchar      *comment,
+                                          gboolean          save_mask,
+                                          gint32            image_ID,
+                                          gint32            drawable_ID,
+                                          GError          **error);
+static gboolean  save_dialog             (gint32            drawable_ID);
 #if 0
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
-static void      comment_entry_callback  (GtkWidget   *widget,
-                                          gpointer     data);
+static void      comment_entry_callback  (GtkWidget        *widget,
+                                          gpointer          data);
 #endif
-static void      prefix_entry_callback   (GtkWidget   *widget,
-                                          gpointer     data);
-static void      mask_ext_entry_callback (GtkWidget   *widget,
-                                          gpointer     data);
+static void      prefix_entry_callback   (GtkWidget        *widget,
+                                          gpointer          data);
+static void      mask_ext_entry_callback (GtkWidget        *widget,
+                                          gpointer          data);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -131,6 +134,7 @@ MAIN ()
 #ifdef VERBOSE
 static int verbose = VERBOSE;
 #endif
+
 
 static void
 query (void)
@@ -232,12 +236,13 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status        = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  GimpParasite      *parasite = NULL;
+  GimpParasite      *parasite      = NULL;
   gchar             *mask_filename = NULL;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error         = NULL;
+  GimpExportReturn   export        = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -258,7 +263,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
@@ -441,12 +446,14 @@ run (const gchar      *name,
 			  xsvals.prefix,
 			  xsvals.comment,
 			  FALSE,
-			  image_ID, drawable_ID)
-              && (!xsvals.write_mask || save_image (mask_filename,
-                                                    mask_prefix,
-                                                    xsvals.comment,
-                                                    TRUE,
-                                                    image_ID, drawable_ID)))
+			  image_ID, drawable_ID,
+                          &error)
+              && (! xsvals.write_mask || save_image (mask_filename,
+                                                     mask_prefix,
+                                                     xsvals.comment,
+                                                     TRUE,
+                                                     image_ID, drawable_ID,
+                                                     &error)))
 	    {
 	      /*  Store xsvals data  */
 	      gimp_set_data (SAVE_PROC, &xsvals, sizeof (xsvals));
@@ -466,6 +473,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -615,8 +629,8 @@ cpp_fgetc (FILE *fp)
 
 /* Match a string with a file. */
 static gint
-match (FILE  *fp,
-       gchar *s)
+match (FILE        *fp,
+       const gchar *s)
 {
   gint c;
 
@@ -690,23 +704,24 @@ get_int (FILE *fp)
 }
 
 
-static gint
-load_image (const gchar *filename)
+static gint32
+load_image (const gchar  *filename,
+            GError      **error)
 {
-  FILE *fp;
-  gint32 image_ID, layer_ID;
-
   GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
-  guchar *data;
-  gint    intbits;
-  gint    width = 0;
-  gint    height = 0;
-  gint    x_hot = 0;
-  gint    y_hot = 0;
-  gint    c, i, j, k;
-  gint    tileheight, rowoffset;
-  gchar  *comment;
+  FILE         *fp;
+  gint32        image_ID;
+  gint32        layer_ID;
+  guchar       *data;
+  gint          intbits;
+  gint          width  = 0;
+  gint          height = 0;
+  gint          x_hot  = 0;
+  gint          y_hot  = 0;
+  gint          c, i, j, k;
+  gint          tileheight, rowoffset;
+  gchar        *comment;
 
   const guchar cmap[] =
   {
@@ -715,10 +730,11 @@ load_image (const gchar *filename)
   };
 
   fp = g_fopen (filename, "rb");
-  if (!fp)
+  if (! fp)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -941,26 +957,27 @@ load_image (const gchar *filename)
 }
 
 static gboolean
-save_image (const gchar *filename,
-	    const gchar *prefix,
-	    const gchar *comment,
-	    gboolean     save_mask,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+save_image (const gchar  *filename,
+	    const gchar  *prefix,
+	    const gchar  *comment,
+	    gboolean      save_mask,
+	    gint32        image_ID,
+	    gint32        drawable_ID,
+            GError      **error)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
   FILE         *fp;
 
-  gint width, height, colors, dark;
-  gint intbits, lineints, need_comma, nints, rowoffset, tileheight;
-  gint c, i, j, k, thisbit;
+  gint          width, height, colors, dark;
+  gint          intbits, lineints, need_comma, nints, rowoffset, tileheight;
+  gint          c, i, j, k, thisbit;
 
-  gboolean has_alpha;
-  gint     bpp;
+  gboolean      has_alpha;
+  gint          bpp;
 
-  guchar *data, *cmap;
-  gchar  *intfmt;
+  guchar       *data, *cmap;
+  const gchar  *intfmt;
 
 #if 0
   if (save_mask)
@@ -986,7 +1003,7 @@ save_image (const gchar *filename,
 
   has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  if (!has_alpha && save_mask)
+  if (! has_alpha && save_mask)
     {
       g_message (_("You cannot save a cursor mask for an image\n"
 		   "which has no alpha channel."));
@@ -1011,10 +1028,11 @@ save_image (const gchar *filename,
 
   /* Now actually save the data. */
   fp = g_fopen (filename, "w");
-  if (!fp)
+  if (! fp)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -1147,6 +1165,7 @@ save_image (const gchar *filename,
   /* Write the trailer. */
   fprintf (fp, " };\n");
   fclose (fp);
+
   return TRUE;
 }
 
@@ -1252,7 +1271,7 @@ save_dialog (gint32 drawable_ID)
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
 				     gimp_drawable_width (drawable_ID) - 1,
-				     1, 1, 1, 0, 0);
+				     1, 10, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Hot spot _X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -1262,7 +1281,7 @@ save_dialog (gint32 drawable_ID)
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
 				     gimp_drawable_height (drawable_ID) - 1,
-				     1, 1, 1, 0, 0);
+				     1, 10, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hot spot _Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);

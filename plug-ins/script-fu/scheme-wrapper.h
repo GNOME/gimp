@@ -16,35 +16,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef SCHEME_WRAPPER_H
-#define SCHEME_WRAPPER_H
+#ifndef __SCHEME_WRAPPER_H__
+#define __SCHEME_WRAPPER_H__
 
 #include "tinyscheme/scheme.h"
 
-void          ts_stdout_output_func   (TsOutputType    type,
-                                       const char     *string,
-                                       int             len,
-                                       gpointer        user_data);
+void          tinyscheme_init         (const gchar  *path,
+                                       gboolean      register_scripts);
 
-void          ts_gstring_output_func  (TsOutputType    type,
-                                       const char     *string,
-                                       int             len,
-                                       gpointer        user_data);
+void          ts_set_run_mode         (GimpRunMode   run_mode);
 
-void          ts_set_print_flag    (gint);
-void          ts_print_welcome     (void);
+void          ts_set_print_flag       (gint          print_flag);
+void          ts_print_welcome        (void);
 
-const gchar * ts_get_success_msg   (void);
+const gchar * ts_get_success_msg      (void);
 
-void          tinyscheme_init      (const gchar  *path,
-                                    gboolean      local_register_scripts);
-void          tinyscheme_deinit    (void);
-
-void          set_run_mode_constant (GimpRunMode run_mode);
-
-void          ts_interpret_stdin   (void);
+void          ts_interpret_stdin      (void);
 
 /* if the return value is 0, success. error otherwise. */
-gint          ts_interpret_string  (const gchar *);
+gint          ts_interpret_string     (const gchar  *expr);
 
-#endif /* SCHEME_WRAPPER_H */
+void          ts_stdout_output_func   (TsOutputType  type,
+                                       const char   *string,
+                                       int           len,
+                                       gpointer      user_data);
+void          ts_gstring_output_func  (TsOutputType  type,
+                                       const char   *string,
+                                       int           len,
+                                       gpointer      user_data);
+
+#endif /* __SCHEME_WRAPPER_H__ */

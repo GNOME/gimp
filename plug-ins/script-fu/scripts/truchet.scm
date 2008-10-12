@@ -169,4 +169,4 @@
 )
 
 (script-fu-menu-register "script-fu-truchet"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

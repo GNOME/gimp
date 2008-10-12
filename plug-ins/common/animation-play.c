@@ -1438,7 +1438,7 @@ play_callback (GtkToggleAction *action)
   playing = gtk_toggle_action_get_active (action);
 
   if (playing)
-    timer = g_timeout_add (get_frame_duration (frame_number) * 
+    timer = g_timeout_add (get_frame_duration (frame_number) *
                            get_duration_factor (duration_index),
                            advance_frame_callback, NULL);
 

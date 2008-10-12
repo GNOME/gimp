@@ -25,6 +25,7 @@ OBJECTS = \
 	colorize.obj \
 	cpercep.obj \
 	curves.obj \
+	desaturate.obj \
 	gimphistogram.obj \
 	gimplut.obj \
 	hue-saturation.obj \

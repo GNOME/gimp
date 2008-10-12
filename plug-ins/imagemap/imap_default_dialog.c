@@ -160,7 +160,7 @@ default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title)
 }
 
 void
-default_dialog_set_label(DefaultDialog_t *dialog, gchar *text)
+default_dialog_set_label(DefaultDialog_t *dialog, const gchar *text)
 {
    GtkWidget *label = gtk_label_new(text);
 

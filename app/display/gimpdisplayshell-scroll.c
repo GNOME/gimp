@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -33,6 +34,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
@@ -41,7 +43,8 @@
 #include "gimpdisplayshell-scroll.h"
 
 
-#define OVERPAN_FACTOR 0.5
+#define OVERPAN_FACTOR      0.5
+#define MINIMUM_STEP_AMOUNT 1.0
 
 
 typedef struct
@@ -92,6 +95,9 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  if (x_offset == 0 && y_offset == 0)
+    return;
+
   old_x = shell->offset_x;
   old_y = shell->offset_y;
 
@@ -116,10 +122,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
 
-      gdk_window_scroll (shell->canvas->window, -x_offset, -y_offset);
-
-      /*  Make sure expose events are processed before scrolling again  */
-      gdk_window_process_updates (shell->canvas->window, FALSE);
+      gimp_canvas_scroll (GIMP_CANVAS (shell->canvas), -x_offset, -y_offset);
 
       /*  Update scrollbars and rulers  */
       gimp_display_shell_update_scrollbars_and_rulers (shell);
@@ -256,6 +259,66 @@ gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
 }
 
 /**
+ * gimp_display_shell_scroll_unoverscrollify:
+ * @shell:
+ * @in_offset_x:
+ * @in_offset_y:
+ * @out_offset_x:
+ * @out_offset_y:
+ *
+ * Takes a scroll offset and returns the offset that will not result
+ * in a scroll beyond the image border. If the image is already
+ * overscrolled, the return value is 0 for that given axis.
+ *
+ **/
+void
+gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
+                                           gint              in_offset_x,
+                                           gint              in_offset_y,
+                                           gint             *out_offset_x,
+                                           gint             *out_offset_y)
+{
+  gint sw, sh;
+  gint out_offset_x_dummy, out_offset_y_dummy;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! out_offset_x) out_offset_x = &out_offset_x_dummy;
+  if (! out_offset_y) out_offset_y = &out_offset_y_dummy;
+
+  *out_offset_x = in_offset_x;
+  *out_offset_y = in_offset_y;
+
+  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+
+  if (in_offset_x < 0)
+    {
+      *out_offset_x = MAX (in_offset_x,
+                           MIN (0, 0 - shell->offset_x));
+    }
+  else if (in_offset_x > 0)
+    {
+      gint min_offset = sw - shell->disp_width;
+
+      *out_offset_x = MIN (in_offset_x,
+                           MAX (0, min_offset - shell->offset_x));
+    }
+
+  if (in_offset_y < 0)
+    {
+      *out_offset_y = MAX (in_offset_y,
+                           MIN (0, 0 - shell->offset_y));
+    }
+  else if (in_offset_y > 0)
+    {
+      gint min_offset = sh - shell->disp_height;
+
+      *out_offset_y = MIN (in_offset_y,
+                           MAX (0, min_offset - shell->offset_y));
+    }
+}
+
+/**
  * gimp_display_shell_scroll_center_image:
  * @shell:
  * @horizontally:
@@ -343,7 +406,7 @@ gimp_display_shell_scroll_center_image_on_next_size_allocate (GimpDisplayShell *
       data->shell        = shell;
       data->horizontally = horizontally;
       data->vertically   = vertically;
-      
+
       g_signal_connect (shell->canvas, "size-allocate",
                         G_CALLBACK (gimp_display_shell_scroll_center_image_callback),
                         data);
@@ -532,7 +595,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
                                    sw + (shell->disp_width - sw) / 2);
     }
 
-  shell->hsbdata->step_increment = MAX (shell->scale_x, 1.0);
+  shell->hsbdata->step_increment = MAX (shell->scale_x, MINIMUM_STEP_AMOUNT);
 }
 
 /**
@@ -574,5 +637,5 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
                                    sh + (shell->disp_height - sh) / 2);
     }
 
-  shell->vsbdata->step_increment = MAX (shell->scale_y, 1.0);
+  shell->vsbdata->step_increment = MAX (shell->scale_y, MINIMUM_STEP_AMOUNT);
 }

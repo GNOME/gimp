@@ -27,7 +27,21 @@ OBJECTS = \
 	gimpoperationposterize.obj \
 	gimpoperationthreshold.obj \
 	gimpoperationtilesink.obj \
-	gimpoperationtilesource.obj
+	gimpoperationtilesource.obj \
+	gimpbrightnesscontrastconfig.obj \
+	gimpcolorbalanceconfig.obj \
+	gimpcolorizeconfig.obj \
+	gimpcurvesconfig.obj \
+	gimpdesaturateconfig.obj \
+	gimphuesaturationconfig.obj \
+	gimplevelsconfig.obj \
+	gimpoperationcolorbalance.obj \
+	gimpoperationcurves.obj \
+	gimpoperationhuesaturation.obj \
+	gimpoperationlevels.obj \
+	gimpoperationpointfilter.obj \
+	gimpposterizeconfig.obj \
+	gimpthresholdconfig.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
@@ -38,8 +52,8 @@ INCLUDES = \
 
 DEFINES = \
 	-DGIMP_COMPILATION \
-	-DGIMP_APP_VERSION=\"2.4\" \
-	-DG_LOG_DOMAIN=\"Gimp-Gegl\"
+	-DG_LOG_DOMAIN=\"Gimp-Gegl\" \
+	$(GIMP_VERSION_DEFINES)
 
 all : \
 	$(PRJ_TOP)\config.h \

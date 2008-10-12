@@ -145,4 +145,4 @@
 )
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

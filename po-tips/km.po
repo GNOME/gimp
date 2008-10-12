@@ -1,15 +1,12 @@
-# translation of gimp-tips.HEAD.km.po to Khmer
-# eng vannak <evannak@khmeros.info>, 2006.
-# Poch Sokun <sokun_poch@khmeros.info>, 2006.
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# translation of km.po to Khmer
+# Eng Vannak <evannak@khmeros.info>, 2006.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD.km\n"
+"Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-13 14:41+0100\n"
-"PO-Revision-Date: 2007-09-11 16:10+0700\n"
+"PO-Revision-Date: 2008-08-25 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"

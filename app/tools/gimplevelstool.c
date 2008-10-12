@@ -94,6 +94,10 @@ static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
                                                    const gchar       *filename,
                                                    GError           **error);
 
+static void       gimp_levels_tool_export_setup   (GimpSettingsBox      *settings_box,
+                                                   GtkFileChooserDialog *dialog,
+                                                   gboolean              export,
+                                                   GimpLevelsTool       *tool);
 static void       gimp_levels_tool_config_notify  (GObject           *object,
                                                    GParamSpec        *pspec,
                                                    GimpLevelsTool    *tool);
@@ -361,6 +365,10 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkObject        *data;
   gint              border;
 
+  g_signal_connect (image_map_tool->settings_box, "file-dialog-setup",
+                    G_CALLBACK (gimp_levels_tool_export_setup),
+                    image_map_tool);
+
   main_vbox   = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
   label_group = gimp_image_map_tool_dialog_get_label_group (image_map_tool);
 
@@ -494,7 +502,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   spinbutton = gimp_spin_button_new (&data,
                                      config->low_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -509,7 +517,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  input gamma spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->gamma[config->channel],
-                                     0.1, 10, 0.01, 0.1, 1, 0.5, 2);
+                                     0.1, 10, 0.01, 0.1, 0, 0.5, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
@@ -540,7 +548,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   spinbutton = gimp_spin_button_new (&data,
                                      config->high_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -601,7 +609,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  low output spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->low_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -616,7 +624,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  high output spin  */
   spinbutton = gimp_spin_button_new (&data,
                                      config->high_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 10, 0.5, 0);
+                                     0, 255, 1, 10, 0, 0.5, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -698,14 +706,24 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
   GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
   GimpHistogramChannel  channel = tool->config->channel;
 
-  g_object_freeze_notify (G_OBJECT (tool->config));
+  g_object_freeze_notify (image_map_tool->config);
 
-  gimp_config_reset (GIMP_CONFIG (tool->config));
+  if (image_map_tool->default_config)
+    {
+      gimp_config_copy (GIMP_CONFIG (image_map_tool->default_config),
+                        GIMP_CONFIG (image_map_tool->config),
+                        0);
+    }
+  else
+    {
+      gimp_config_reset (GIMP_CONFIG (image_map_tool->config));
+    }
+
   g_object_set (tool->config,
                 "channel", channel,
                 NULL);
 
-  g_object_thaw_notify (G_OBJECT (tool->config));
+  g_object_thaw_notify (image_map_tool->config);
 }
 
 static gboolean
@@ -715,7 +733,7 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
   FILE           *file;
-  gboolean        success;
+  gchar           header[64];
 
   file = g_fopen (filename, "rt");
 
@@ -728,11 +746,34 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
       return FALSE;
     }
 
-  success = gimp_levels_config_load_cruft (tool->config, file, error);
+  if (! fgets (header, sizeof (header), file))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not read header from '%s': %s"),
+                   gimp_filename_to_utf8 (filename),
+                   g_strerror (errno));
+      fclose (file);
+      return FALSE;
+    }
+
+  if (g_str_has_prefix (header, "# GIMP Levels File\n"))
+    {
+      gboolean success;
+
+      rewind (file);
+
+      success = gimp_levels_config_load_cruft (tool->config, file, error);
+
+      fclose (file);
+
+      return success;
+    }
 
   fclose (file);
 
-  return success;
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
+                                                                    filename,
+                                                                    error);
 }
 
 static gboolean
@@ -741,25 +782,55 @@ gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  FILE           *file;
-  gboolean        success;
 
-  file = g_fopen (filename, "wt");
-
-  if (! file)
+  if (tool->export_old_format)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
-      return FALSE;
+      FILE     *file;
+      gboolean  success;
+
+      file = g_fopen (filename, "wt");
+
+      if (! file)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       g_strerror (errno));
+          return FALSE;
+        }
+
+      success = gimp_levels_config_save_cruft (tool->config, file, error);
+
+      fclose (file);
+
+      return success;
     }
 
-  success = gimp_levels_config_save_cruft (tool->config, file, error);
+  return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
+                                                                    filename,
+                                                                    error);
+}
 
-  fclose (file);
+static void
+gimp_levels_tool_export_setup (GimpSettingsBox      *settings_box,
+                               GtkFileChooserDialog *dialog,
+                               gboolean              export,
+                               GimpLevelsTool       *tool)
+{
+  GtkWidget *button;
 
-  return success;
+  if (! export)
+    return;
+
+  button = gtk_check_button_new_with_mnemonic (_("Use _old levels file format"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                tool->export_old_format);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tool->export_old_format);
 }
 
 static void

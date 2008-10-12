@@ -333,17 +333,17 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
            */
           target_offset_x = shell->offset_x;
           target_offset_y = shell->offset_y;
- 
+
           if (! center_horizontally)
             {
               target_offset_x = MAX (shell->offset_x, 0);
             }
- 
+
           if (! center_vertically)
             {
               target_offset_y = MAX (shell->offset_y, 0);
             }
- 
+
           gimp_display_shell_scroll_set_offset (shell,
                                                 target_offset_x,
                                                 target_offset_y);
@@ -539,6 +539,46 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
                                      shell->display);
 }
 
+static gboolean
+gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
+                                           GdkEvent         *event,
+                                           GimpDisplayShell *shell)
+{
+  switch (event->type)
+    {
+    case GDK_BUTTON_PRESS:
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
+
+        if (bevent->button == 3)
+          {
+            gimp_ui_manager_ui_popup (shell->popup_manager,
+                                      "/dummy-menubar/image-popup",
+                                      GTK_WIDGET (shell),
+                                      NULL, NULL, NULL, NULL);
+          }
+      }
+      break;
+
+    case GDK_KEY_PRESS:
+      {
+        GdkEventKey *kevent = (GdkEventKey *) event;
+
+        if (kevent->keyval == GDK_Tab ||
+            kevent->keyval == GDK_ISO_Left_Tab)
+          {
+            gimp_dialog_factories_toggle ();
+          }
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  return TRUE;
+}
+
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
@@ -573,16 +613,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   if (! image)
     {
-      if (event->type == GDK_BUTTON_PRESS &&
-          ((GdkEventButton *) event)->button == 3)
-        {
-          gimp_ui_manager_ui_popup (shell->popup_manager,
-                                    "/dummy-menubar/image-popup",
-                                    GTK_WIDGET (shell),
-                                    NULL, NULL, NULL, NULL);
-        }
-
-      return TRUE;
+      return gimp_display_shell_canvas_no_image_events (canvas, event, shell);
     }
 
   gdk_display = gtk_widget_get_display (canvas);
@@ -1009,11 +1040,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             switch (direction)
               {
               case GDK_SCROLL_UP:
-                gimp_display_shell_scale (shell, GIMP_ZOOM_IN, 0.0);
+                gimp_display_shell_scale (shell,
+                                          GIMP_ZOOM_IN,
+                                          0.0,
+                                          GIMP_ZOOM_FOCUS_BEST_GUESS);
                 break;
 
               case GDK_SCROLL_DOWN:
-                gimp_display_shell_scale (shell, GIMP_ZOOM_OUT, 0.0);
+                gimp_display_shell_scale (shell,
+                                          GIMP_ZOOM_OUT,
+                                          0.0,
+                                          GIMP_ZOOM_FOCUS_BEST_GUESS);
                 break;
 
               default:
@@ -1137,15 +1174,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
           }
 
-        /* Ask for the pointer position, but ignore it except for cursor
-         * handling, so motion events sync with the button press/release events
-         */
-        if (mevent->is_hint)
-          {
-            gimp_display_shell_get_device_coords (shell,
-                                                  mevent->device,
-                                                  &display_coords);
-          }
+        /* Ask for more motion events in case the event was a hint */
+        gdk_event_request_motions (mevent);
 
         update_sw_cursor = TRUE;
 
@@ -1529,11 +1559,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     }
 
   if (update_sw_cursor)
-    gimp_display_shell_update_cursor (shell,
-                                      (gint) display_coords.x,
-                                      (gint) display_coords.y,
-                                      (gint) image_coords.x,
-                                      (gint) image_coords.y);
+    {
+      GimpCursorPrecision precision = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
+
+      active_tool = tool_manager_get_active (gimp);
+
+      if (active_tool)
+        precision = gimp_tool_control_get_precision (active_tool->control);
+
+      gimp_display_shell_update_cursor (shell,
+                                        precision,
+                                        (gint) display_coords.x,
+                                        (gint) display_coords.y,
+                                        image_coords.x,
+                                        image_coords.y);
+    }
 
   return return_val;
 }

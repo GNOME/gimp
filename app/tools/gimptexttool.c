@@ -26,6 +26,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -153,7 +154,9 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_TEXT_TOOL,
                 GIMP_TYPE_TEXT_OPTIONS,
                 gimp_text_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_FONT_MASK,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_FONT_MASK       |
+                GIMP_CONTEXT_PALETTE_MASK /* for the color popup's palette tab */,
                 "gimp-text-tool",
                 _("Text"),
                 _("Text Tool: Create or edit text layers"),
@@ -801,7 +804,7 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
     }
 
-  gimp_image_add_vectors (text_tool->image, vectors, -1);
+  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
 }
@@ -827,7 +830,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 
   gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
 
-  gimp_image_add_vectors (text_tool->image, vectors, -1);
+  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
   gimp_image_set_active_vectors (text_tool->image, vectors);
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
@@ -890,7 +893,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   GIMP_ITEM (layer)->offset_x = text_tool->x1;
   GIMP_ITEM (layer)->offset_y = text_tool->y1;
 
-  gimp_image_add_layer (image, layer, -1);
+  gimp_image_add_layer (image, layer, -1, TRUE);
 
   if (text_tool->text_box_fixed)
     {

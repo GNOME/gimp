@@ -20,7 +20,9 @@
 
 #include "config.h"
 
+#ifndef _WIN32
 #define _GNU_SOURCE
+#endif
 
 #include <errno.h>
 #include <signal.h>
@@ -220,18 +222,20 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
                    GimpPlugInCallMode  call_mode,
                    gboolean            synchronous)
 {
-  gint       my_read[2];
-  gint       my_write[2];
-  gchar    **envp;
-  gchar     *args[9], **argv;
-  gint       argc;
-  gchar     *interp, *interp_arg;
-  gchar     *read_fd, *write_fd;
-  gchar     *mode, *stm;
-  GError    *error = NULL;
-  gboolean   debug;
-  guint      debug_flag;
-  guint      spawn_flags;
+  gint          my_read[2];
+  gint          my_write[2];
+  gchar       **envp;
+  const gchar  *args[9];
+  gchar       **argv;
+  gint          argc;
+  gchar        *interp, *interp_arg;
+  gchar        *read_fd, *write_fd;
+  const gchar  *mode;
+  gchar        *stm;
+  GError       *error = NULL;
+  gboolean      debug;
+  guint         debug_flag;
+  guint         spawn_flags;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (plug_in->call_mode == GIMP_PLUG_IN_CALL_NONE, FALSE);
@@ -331,7 +335,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   args[argc++] = stm;
   args[argc++] = NULL;
 
-  argv = args;
+  argv = (gchar **) args;
   envp = gimp_environ_table_get_envp (plug_in->manager->environ_table);
   spawn_flags = (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                  G_SPAWN_DO_NOT_REAP_CHILD      |
@@ -936,6 +940,36 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
     }
 
   return TRUE;
+}
+
+void
+gimp_plug_in_set_error_handler (GimpPlugIn          *plug_in,
+                                GimpPDBErrorHandler  handler)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    proc_frame->error_handler = handler;
+}
+
+GimpPDBErrorHandler
+gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
+                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    return proc_frame->error_handler;
+
+  return GIMP_PDB_ERROR_HANDLER_INTERNAL;
 }
 
 void

@@ -87,4 +87,4 @@
 )
 
 (script-fu-menu-register "script-fu-land"
-                         "<Image>/File/New/Patterns")
+                         "<Image>/File/Create/Patterns")

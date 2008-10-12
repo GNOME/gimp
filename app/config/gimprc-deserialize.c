@@ -51,8 +51,8 @@ gimp_rc_deserialize (GimpConfig *config,
   guint          i;
   guint          scope_id;
   guint          old_scope_id;
-  GTokenType         token;
-  GTokenType         next;
+  GTokenType     token;
+  GTokenType     next;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
@@ -86,9 +86,8 @@ gimp_rc_deserialize (GimpConfig *config,
     {
       next = g_scanner_peek_next_token (scanner);
 
-      if (G_UNLIKELY (next != token &&
-                      ! (token == G_TOKEN_SYMBOL &&
-                         next  == G_TOKEN_IDENTIFIER)))
+      if (G_UNLIKELY (next != token && ! (token == G_TOKEN_SYMBOL &&
+                                          next  == G_TOKEN_IDENTIFIER)))
         {
           break;
         }

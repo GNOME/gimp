@@ -207,14 +207,8 @@ gimp_curves_config_set_property (GObject      *object,
 
         if (src_curve && dest_curve)
           {
-            gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
-
-            memcpy (dest_curve->points, src_curve->points,
-                    sizeof (GimpVector2) * src_curve->n_points);
-            memcpy (dest_curve->samples, src_curve->samples,
-                    sizeof (gdouble) * src_curve->n_samples);
-
-            dest_curve->identity = src_curve->identity;
+            gimp_config_copy (GIMP_CONFIG (src_curve),
+                              GIMP_CONFIG (dest_curve), 0);
           }
       }
       break;
@@ -340,8 +334,6 @@ gimp_curves_config_copy (GimpConfig  *src,
                         flags);
     }
 
-  g_object_notify (G_OBJECT (dest), "curve");
-
   dest_config->channel = src_config->channel;
 
   g_object_notify (G_OBJECT (dest), "channel");
@@ -419,10 +411,12 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
+      gimp_curve_reset (curve, FALSE);
+
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
           if (index[i][j] < 0 || value[i][j] < 0)
-            gimp_curve_set_point (curve, j, -1, -1);
+            gimp_curve_set_point (curve, j, -1.0, -1.0);
           else
             gimp_curve_set_point (curve, j,
                                   (gdouble) index[i][j] / 255.0,
@@ -484,9 +478,11 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
 
       for (j = 0; j < curve->n_points; j++)
         {
-          gdouble x, y;
-
-          gimp_curve_get_point (curve, j, &x, &y);
+          /* don't use gimp_curve_get_point() becaue that doesn't
+           * work when the curve type is GIMP_CURVE_FREE
+           */
+          gdouble x = curve->points[j].x;
+          gdouble y = curve->points[j].y;
 
           if (x < 0.0 || y < 0.0)
             {

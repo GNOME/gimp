@@ -324,10 +324,10 @@ ico_set_byte_in_data (guint8 *data,
 
 /* Create a colormap from the given buffer data */
 static guint32 *
-ico_create_palette(guchar *cmap,
-                   gint    num_colors,
-                   gint    num_colors_used,
-                   gint   *black_slot)
+ico_create_palette (const guchar *cmap,
+                    gint          num_colors,
+                    gint          num_colors_used,
+                    gint         *black_slot)
 {
   guchar *palette;
   gint    i;
@@ -374,18 +374,21 @@ ico_create_palette(guchar *cmap,
 
 
 static GHashTable *
-ico_create_color_to_palette_map (guint32 *palette,
-                                 gint     num_colors)
+ico_create_color_to_palette_map (const guint32 *palette,
+                                 gint           num_colors)
 {
   GHashTable *hash;
-  gint i;
+  gint        i;
 
-  hash = g_hash_table_new (g_int_hash, g_int_equal);
+  hash = g_hash_table_new_full (g_int_hash, g_int_equal,
+                                (GDestroyNotify) g_free,
+                                (GDestroyNotify) g_free);
 
   for (i = 0; i < num_colors; i++)
     {
-      gint *color, *slot;
-      guint8 *pixel = (guint8 *) &palette[i];
+      const guint8 *pixel = (const guint8 *) &palette[i];
+      gint         *color;
+      gint         *slot;
 
       color = g_new (gint, 1);
       slot = g_new (gint, 1);
@@ -398,20 +401,6 @@ ico_create_color_to_palette_map (guint32 *palette,
 
   return hash;
 }
-
-
-static void
-ico_free_hash_item (gpointer data1,
-                    gpointer data2,
-                    gpointer data3)
-{
-  g_free (data1);
-  g_free (data2);
-
-  /* Shut up warnings: */
-  data3 = NULL;
-}
-
 
 static gint
 ico_get_palette_index (GHashTable *hash,
@@ -526,8 +515,8 @@ ico_get_layer_num_colors (gint32    layer,
 }
 
 gboolean
-ico_cmap_contains_black (guchar *cmap,
-                         gint    num_colors)
+ico_cmap_contains_black (const guchar *cmap,
+                         gint          num_colors)
 {
   gint i;
 
@@ -808,7 +797,7 @@ ico_write_icon (FILE   *fp,
                              &palette, &buffer);
   buffer32 = (guint32 *) buffer;
 
-  /* Set up colormap and andmap when necessary: */
+  /* Set up colormap and and_map when necessary: */
   if (header.bpp <= 8)
     {
       /* Create a colormap */
@@ -952,10 +941,7 @@ ico_write_icon (FILE   *fp,
      and_len, xor_len));
 
   if (color_to_slot)
-    {
-      g_hash_table_foreach (color_to_slot, ico_free_hash_item, NULL);
-      g_hash_table_destroy (color_to_slot);
-    }
+    g_hash_table_destroy (color_to_slot);
 
   g_free (palette);
   g_free (buffer);
@@ -988,9 +974,10 @@ ico_save_info_free (IcoSaveInfo  *info)
 }
 
 GimpPDBStatusType
-ico_save_image (const gchar *filename,
-                gint32       image,
-                gint32       run_mode)
+ico_save_image (const gchar  *filename,
+                gint32        image,
+                gint32        run_mode,
+                GError      **error)
 {
   FILE *fp;
 
@@ -1017,8 +1004,9 @@ ico_save_image (const gchar *filename,
 
   if (! (fp = g_fopen (filename, "wb")))
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 

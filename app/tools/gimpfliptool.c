@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -104,6 +105,8 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
+  gimp_tool_control_set_precision          (tool->control,
+                                            GIMP_CURSOR_PRECISION_PIXEL_CENTER);
   gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_toggle_cursor      (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor        (tool->control,

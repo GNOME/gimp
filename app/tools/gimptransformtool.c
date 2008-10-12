@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -203,6 +204,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_DRAWABLE   |
                                      GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
 
   tr_tool->function = TRANSFORM_CREATING;
   tr_tool->original = NULL;
@@ -359,6 +362,8 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
+      gimp_transform_tool_expose_preview (tr_tool);
+
       tr_tool->function = TRANSFORM_CREATING;
 
       /*  Save the current transformation info  */
@@ -485,9 +490,9 @@ gimp_transform_tool_motion (GimpTool        *tool,
     {
       tr_tool_class->motion (tr_tool, display);
 
-      gimp_transform_tool_expose_preview (tr_tool);
-
       gimp_transform_tool_recalc (tr_tool, display);
+
+      gimp_transform_tool_expose_preview (tr_tool);
     }
 
   tr_tool->lastx = tr_tool->curx;
@@ -1179,15 +1184,9 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       return;
     }
 
+  gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
-
-  if (gimp_display_shell_get_show_transform (shell))
-    {
-      gimp_display_shell_set_show_transform (shell, FALSE);
-
-      /* get rid of preview artifacts left outside the drawable's area */
-      gtk_widget_queue_draw (shell->canvas);
-    }
 
   gimp_set_busy (display->image->gimp);
 
@@ -1294,6 +1293,14 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
    */
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
+  if (gimp_display_shell_get_show_transform (shell))
+    {
+      gimp_display_shell_set_show_transform (shell, FALSE);
+
+      /* get rid of preview artifacts left outside the drawable's area */
+      gtk_widget_queue_draw (shell->canvas);
+    }
+
   gimp_unset_busy (display->image->gimp);
 
   gimp_image_flush (display->image);
@@ -1352,7 +1359,9 @@ gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
        options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
       options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
       options->direction    == GIMP_TRANSFORM_FORWARD)
-    gimp_transform_tool_force_expose_preview (tr_tool);
+    {
+      gimp_transform_tool_force_expose_preview (tr_tool);
+    }
 }
 
 static void
@@ -1692,16 +1701,16 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  gboolean              show_transform;
 
-  if ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
-       options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
-      options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
-      options->direction    == GIMP_TRANSFORM_FORWARD)
-    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
-                                           TRUE);
-  else
-    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
-                                           FALSE);
+  show_transform =
+    ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
+      options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
+     options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
+     options->direction    == GIMP_TRANSFORM_FORWARD);
+
+  gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
+                                         show_transform);
 
   if (tr_tool->dialog)
     {

@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -135,6 +136,8 @@ static void     gimp_rectangle_select_tool_real_select    (GimpRectangleSelectTo
                                                            gint                   y,
                                                            gint                   w,
                                                            gint                   h);
+static GimpChannelOps
+                gimp_rectangle_select_tool_get_operation  (GimpRectangleSelectTool    *rect_sel_tool);
 static void     gimp_rectangle_select_tool_update_option_defaults
                                                           (GimpRectangleSelectTool    *rect_sel_tool,
                                                            gboolean                    ignore_pending);
@@ -222,6 +225,8 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
   priv = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_RECT_SELECT);
   gimp_tool_control_set_dirty_mask  (tool->control,
@@ -424,15 +429,9 @@ gimp_rectangle_select_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-      GimpImage            *image   = tool->display->image;
-      GimpUndo             *undo;
-      GimpChannelOps        operation;
-
-      if (priv->use_saved_op)
-        operation = priv->operation;
-      else
-        operation = options->operation;
+      GimpImage      *image = tool->display->image;
+      GimpUndo       *undo;
+      GimpChannelOps  operation;
 
       undo = gimp_undo_stack_peek (image->undo_stack);
 
@@ -451,6 +450,8 @@ gimp_rectangle_select_tool_button_press (GimpTool        *tool,
 
       /* if the operation is "Replace", turn off the marching ants,
          because they are confusing */
+      operation = gimp_rectangle_select_tool_get_operation (rect_sel_tool);
+
       if (operation == GIMP_CHANNEL_OP_REPLACE)
         gimp_display_shell_set_show_selection (shell, FALSE);
     }
@@ -580,18 +581,14 @@ gimp_rectangle_select_tool_select (GimpRectangleTool *rectangle,
                                    gint               w,
                                    gint               h)
 {
-  GimpTool                       *tool;
-  GimpRectangleSelectTool        *rect_sel_tool;
-  GimpSelectionOptions           *options;
-  GimpImage                      *image;
-  GimpRectangleSelectToolPrivate *priv;
-  gboolean                        rectangle_exists;
-  GimpChannelOps                  operation;
+  GimpTool                *tool;
+  GimpRectangleSelectTool *rect_sel_tool;
+  GimpImage               *image;
+  gboolean                 rectangle_exists;
+  GimpChannelOps           operation;
 
   tool          = GIMP_TOOL (rectangle);
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (rectangle);
-  options       = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   image         = tool->display->image;
 
@@ -604,11 +601,9 @@ gimp_rectangle_select_tool_select (GimpRectangleTool *rectangle,
                       w > 0                              &&
                       h > 0);
 
-  if (priv->use_saved_op)
-    operation = priv->operation;
-  else
-    operation = options->operation;
 
+  operation = gimp_rectangle_select_tool_get_operation (rect_sel_tool);
+  
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
     GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_sel_tool)->select (rect_sel_tool,
@@ -663,6 +658,21 @@ gimp_rectangle_select_tool_real_select (GimpRectangleSelectTool *rect_sel_tool,
                                      options->feather_radius,
                                      TRUE);
     }
+}
+
+static GimpChannelOps
+gimp_rectangle_select_tool_get_operation (GimpRectangleSelectTool *rect_sel_tool)
+{
+  GimpRectangleSelectToolPrivate *priv;
+  GimpSelectionOptions           *options;
+
+  priv    = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
+  options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_sel_tool);
+
+  if (priv->use_saved_op)
+    return priv->operation;
+  else
+    return options->operation;
 }
 
 /**
@@ -783,14 +793,31 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
         }
       else
         {
-          GimpTool *tool = GIMP_TOOL (rectangle);
+          GimpTool       *tool = GIMP_TOOL (rectangle);
+          GimpChannelOps  operation;
 
           /* prevent this change from halting the tool */
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
-          /* otherwise clear the selection */
-          gimp_channel_clear (selection, NULL, TRUE);
-          gimp_image_flush (image);
+          /* We can conceptually think of a click outside of the
+           * selection as adding a 0px selection. Behave intuitivly
+           * for the current selection mode
+           */
+          operation = gimp_rectangle_select_tool_get_operation (rect_sel_tool);
+          switch (operation)
+            {
+            case GIMP_CHANNEL_OP_REPLACE:
+            case GIMP_CHANNEL_OP_INTERSECT:
+              gimp_channel_clear (selection, NULL, TRUE);
+              gimp_image_flush (image);
+              break;
+
+            case GIMP_CHANNEL_OP_ADD:
+            case GIMP_CHANNEL_OP_SUBTRACT:
+            default:
+              /* Do nothing */
+              break;
+            }
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
         }

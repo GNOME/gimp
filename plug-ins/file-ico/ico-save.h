@@ -23,12 +23,13 @@
 #define __ICO_SAVE_H__
 
 
-GimpPDBStatusType ico_save_image (const gchar *file_name,
-                                  gint32       image_ID,
-                                  gint32       run_mode);
+GimpPDBStatusType ico_save_image          (const gchar   *file_name,
+                                           gint32         image_ID,
+                                           gint32         run_mode,
+                                           GError       **error);
 
-gboolean ico_cmap_contains_black (guchar *cmap,
-                                  gint    num_colors);
+gboolean          ico_cmap_contains_black (const guchar  *cmap,
+                                           gint           num_colors);
 
 
 #endif /* __ICO_SAVE_H__ */

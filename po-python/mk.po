@@ -12,55 +12,57 @@
 # Jovan Naumovski <jovan@lugola.net>, 2006.
 # Blagoj <kapsarovb@on.net.mk>, 2007.
 # Marko <mark0d0da@gmail.com>, 2007.
+# Marko Doda <marko@lugola.net>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 03:41+0100\n"
-"PO-Revision-Date: 2007-10-27 18:09-0700\n"
-"Last-Translator: Marko <mark0d0da@gmail.com>\n"
-"Language-Team:  <mk@li.org>\n"
+"POT-Creation-Date: 2008-09-05 07:32+0000\n"
+"PO-Revision-Date: 2008-10-01 17:54+1000\n"
+"Last-Translator: Marko Doda <marko@lugola.net>\n"
+"Language-Team: American English <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
 msgstr "Недостига инфорамција за исклучок"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
 msgstr "Грешка се случи при работа %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
 msgstr "Пове_ќе информации"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
+#: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Pythоn-Fu избор на датотека"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
 msgstr "Pythоn-Fu избор на директориум"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Неточно внесено за %s"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu Избор на боја"
 
@@ -104,65 +106,31 @@ msgstr "Големина на _фонт во пиксели"
 msgid "_Write a separate CSS file"
 msgstr "_Напиши надворешна CSS датотека"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Python Конзола"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Прелистај..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Python пребарувач на процедури"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Неможе да се отвори %s за запишување: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Неможе да запише во %s:%s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Зачувај го конзолниот излез на Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Интерактивнен Гимп -Python изведувач"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Конзола"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Додади слој, магла"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "Маг_ла..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Име на слој"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Облаци"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Боја на маглата"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Турбуленција"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Провид_ност"
 
@@ -288,6 +256,40 @@ msgstr "Javascript за дејство кликнување и одбирање"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Скокни анимирање за наслови во табелата"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "Python Конзола"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_Прелистај..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+msgid "Python Procedure Browser"
+msgstr "Python пребарувач на процедури"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Неможе да се отвори %s за запишување: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Неможе да запише во %s:%s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+msgid "Save Python-Fu Console Output"
+msgstr "Зачувај го конзолниот излез на Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+msgid "Interactive GIMP Python interpreter"
+msgstr "Интерактивнен Гимп -Python интерпретатор"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+msgid "_Console"
+msgstr "_Конзола"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"

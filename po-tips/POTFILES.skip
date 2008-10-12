@@ -1,5 +1,6 @@
 app
 desktop
+desktop/gimp.desktop.in
 libgimp
 libgimpbase
 libgimpconfig

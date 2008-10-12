@@ -39,35 +39,35 @@
 #define EPSILON 1e-10
 
 
-static void       gimp_gradient_tagged_init      (GimpTaggedInterface  *iface);
-static void       gimp_gradient_finalize         (GObject           *object);
+static void          gimp_gradient_tagged_init      (GimpTaggedInterface  *iface);
+static void          gimp_gradient_finalize         (GObject           *object);
 
-static gint64     gimp_gradient_get_memsize      (GimpObject        *object,
-                                                  gint64            *gui_size);
+static gint64        gimp_gradient_get_memsize      (GimpObject        *object,
+                                                     gint64            *gui_size);
 
-static void       gimp_gradient_get_preview_size (GimpViewable      *viewable,
-                                                  gint               size,
-                                                  gboolean           popup,
-                                                  gboolean           dot_for_dot,
-                                                  gint              *width,
-                                                  gint              *height);
-static gboolean   gimp_gradient_get_popup_size   (GimpViewable      *viewable,
-                                                  gint               width,
-                                                  gint               height,
-                                                  gboolean           dot_for_dot,
-                                                  gint              *popup_width,
-                                                  gint              *popup_height);
-static TempBuf  * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
-                                                  GimpContext       *context,
-                                                  gint               width,
-                                                  gint               height);
-static gchar    * gimp_gradient_get_extension    (GimpData          *data);
-static GimpData * gimp_gradient_duplicate        (GimpData          *data);
+static void          gimp_gradient_get_preview_size (GimpViewable      *viewable,
+                                                     gint               size,
+                                                     gboolean           popup,
+                                                     gboolean           dot_for_dot,
+                                                     gint              *width,
+                                                     gint              *height);
+static gboolean      gimp_gradient_get_popup_size   (GimpViewable      *viewable,
+                                                     gint               width,
+                                                     gint               height,
+                                                     gboolean           dot_for_dot,
+                                                     gint              *popup_width,
+                                                     gint              *popup_height);
+static TempBuf     * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
+                                                     GimpContext       *context,
+                                                     gint               width,
+                                                     gint               height);
+static const gchar * gimp_gradient_get_extension    (GimpData          *data);
+static GimpData    * gimp_gradient_duplicate        (GimpData          *data);
 
 static GimpGradientSegment *
-           gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
-                                                  GimpGradientSegment *seg,
-                                                  gdouble              pos);
+              gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
+                                                     GimpGradientSegment *seg,
+                                                     gdouble              pos);
 
 
 static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
@@ -212,10 +212,10 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
       seg = gimp_gradient_get_color_at (gradient, context, seg, cur_x,
                                         FALSE, &color);
 
-      *p++ = color.r * 255.0;
-      *p++ = color.g * 255.0;
-      *p++ = color.b * 255.0;
-      *p++ = color.a * 255.0;
+      *p++ = ROUND (color.r * 255.0);
+      *p++ = ROUND (color.g * 255.0);
+      *p++ = ROUND (color.b * 255.0);
+      *p++ = ROUND (color.a * 255.0);
 
       cur_x += dx;
     }
@@ -306,7 +306,7 @@ gimp_gradient_get_standard (void)
   return standard_gradient;
 }
 
-static gchar *
+static const gchar *
 gimp_gradient_get_extension (GimpData *data)
 {
   return GIMP_GRADIENT_FILE_EXTENSION;
@@ -1695,8 +1695,10 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   return;
 
  premature_return:
-  *final_start_seg = start_seg;
-  *final_end_seg   = end_seg;
+  if (final_start_seg)
+    *final_start_seg = start_seg;
+  if (final_end_seg)
+    *final_end_seg = end_seg;
 }
 
 void

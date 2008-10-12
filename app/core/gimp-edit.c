@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -272,7 +272,7 @@ gimp_edit_paste (GimpImage    *image,
   if (drawable)
     floating_sel_attach (layer, drawable);
   else
-    gimp_image_add_layer (image, layer, 0);
+    gimp_image_add_layer (image, layer, 0, TRUE);
 
   /*  end the group undo  */
   gimp_image_undo_group_end (image);
@@ -332,7 +332,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
       return NULL;
     }
 
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_add_layer (image, layer, 0, TRUE);
 
   gimp_image_undo_enable (image);
 

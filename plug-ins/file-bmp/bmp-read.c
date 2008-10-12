@@ -42,16 +42,17 @@
 #define BI_BITFIELDS    3
 #endif
 
-static gint32 ReadImage (FILE     *fd,
-                         gint      width,
-                         gint      height,
-                         guchar    cmap[256][3],
-                         gint      ncols,
-                         gint      bpp,
-                         gint      compression,
-                         gint      rowbytes,
-                         gboolean  grey,
-                         const Bitmap_Channel *masks);
+static gint32 ReadImage (FILE                  *fd,
+                         gint                   width,
+                         gint                   height,
+                         guchar                 cmap[256][3],
+                         gint                   ncols,
+                         gint                   bpp,
+                         gint                   compression,
+                         gint                   rowbytes,
+                         gboolean               grey,
+                         const Bitmap_Channel  *masks,
+                         GError               **error);
 
 
 static gint32
@@ -93,6 +94,7 @@ ReadColorMap (FILE     *fd,
       buffer[i][2] = rgb[0];
       *grey = ((*grey) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
     }
+
   return TRUE;
 }
 
@@ -126,11 +128,13 @@ ReadChannelMasks (guint32 *tmp, Bitmap_Channel *masks, guint channels)
                i, masks[i].mask, masks[i].shiftin, (gint)masks[i].max_value);
 #endif
     }
+
   return TRUE;
 }
 
 gint32
-ReadBMP (const gchar *name)
+ReadBMP (const gchar  *name,
+         GError      **error)
 {
   FILE     *fd;
   guchar    buffer[64];
@@ -146,8 +150,9 @@ ReadBMP (const gchar *name)
 
   if (!fd)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -161,8 +166,9 @@ ReadBMP (const gchar *name)
      !strncmp (magick, "PI", 2) || !strncmp (magick, "CI", 2) ||
      !strncmp (magick, "CP", 2)))
     {
-      g_message (_("'%s' is not a valid BMP file"),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -170,22 +176,25 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 12))
         {
-          g_message (_("'%s' is not a valid BMP file"),
-                      gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s' is not a valid BMP file"),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
       if (!ReadOK (fd, magick, 2))
         {
-          g_message (_("'%s' is not a valid BMP file"),
-                      gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s' is not a valid BMP file"),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
     }
 
   if (!ReadOK (fd, buffer, 12))
     {
-      g_message (_("'%s' is not a valid BMP file"),
-                  gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -198,8 +207,9 @@ ReadBMP (const gchar *name)
 
   if (!ReadOK (fd, buffer, 4))
     {
-      g_message (_("'%s' is not a valid BMP file"),
-                  gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -211,8 +221,9 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 8))
         {
-          g_message (_("Error reading BMP file header from '%s'"),
-                      gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading BMP file header from '%s'"),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
 
@@ -237,10 +248,12 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 36))
         {
-          g_message (_("Error reading BMP file header from '%s'"),
-                      gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading BMP file header from '%s'"),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
+
       Bitmap_Head.biWidth   = ToL (&buffer[0x00]);      /* 12 */
       Bitmap_Head.biHeight  = ToL (&buffer[0x04]);      /* 16 */
       Bitmap_Head.biPlanes  = ToS (&buffer[0x08]);       /* 1A */
@@ -260,22 +273,24 @@ ReadBMP (const gchar *name)
       memset(masks, 0, sizeof(masks));
 
       if (Bitmap_Head.biCompr == BI_BITFIELDS)
-      {
-         if (!ReadOK (fd, buffer, 3 * sizeof (guint32)))
-         {
-            g_message (_("Error reading BMP file header from '%s'"),
-                       gimp_filename_to_utf8 (filename));
-            return -1;
-         }
-         Bitmap_Head.masks[0] = ToL(&buffer[0x00]);
-         Bitmap_Head.masks[1] = ToL(&buffer[0x04]);
-         Bitmap_Head.masks[2] = ToL(&buffer[0x08]);
+        {
+          if (!ReadOK (fd, buffer, 3 * sizeof (guint32)))
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading BMP file header from '%s'"),
+                           gimp_filename_to_utf8 (filename));
+              return -1;
+            }
+
+          Bitmap_Head.masks[0] = ToL(&buffer[0x00]);
+          Bitmap_Head.masks[1] = ToL(&buffer[0x04]);
+          Bitmap_Head.masks[2] = ToL(&buffer[0x08]);
          ReadChannelMasks (&Bitmap_Head.masks[0], masks, 3);
-      }
+        }
       else
-         switch (Bitmap_Head.biBitCnt)
-         {
-         case 32:
+        switch (Bitmap_Head.biBitCnt)
+          {
+          case 32:
             masks[0].mask     = 0x00ff0000;
             masks[0].shiftin  = 16;
             masks[0].max_value= (gfloat)255.0;
@@ -326,10 +341,12 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("Error reading BMP file header from '%s'"),
-                      gimp_filename_to_utf8 (filename));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading BMP file header from '%s'"),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
+
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
       Bitmap_Head.biHeight  =ToL (&buffer[0x04]);       /* 16 */
       Bitmap_Head.biPlanes  =ToS (&buffer[0x08]);       /* 1A */
@@ -350,8 +367,9 @@ ReadBMP (const gchar *name)
     }
   else
     {
-      g_message (_("Error reading BMP file header from '%s'"),
-                  gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading BMP file header from '%s'"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -371,30 +389,37 @@ ReadBMP (const gchar *name)
 
   /* Sanity checks */
 
-  if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0) {
-      g_message (_("Error reading BMP file header from '%s'"),
-                  gimp_filename_to_utf8 (filename));
-      return -1;
-  }
-
-  if (Bitmap_Head.biWidth < 0)
+  if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0)
     {
-      g_message (_("'%s' is not a valid BMP file"),
-                  gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
-  if (Bitmap_Head.biPlanes != 1) {
-      g_message (_("Error reading BMP file header from '%s'"),
-                  gimp_filename_to_utf8 (filename));
+  if (Bitmap_Head.biWidth < 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
-  }
+    }
 
-  if (Bitmap_Head.biClrUsed > 256) {
-      g_message (_("Error reading BMP file header from '%s'"),
-                  gimp_filename_to_utf8 (filename));
+  if (Bitmap_Head.biPlanes != 1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
       return -1;
-  }
+    }
+
+  if (Bitmap_Head.biClrUsed > 256)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+    }
 
   /* Windows and OS/2 declare filler so that rows are a multiple of
    * word length (32 bits == 4 bytes)
@@ -436,7 +461,8 @@ ReadBMP (const gchar *name)
                         Bitmap_Head.biCompr,
                         rowbytes,
                         Grey,
-                        masks);
+                        masks,
+                        error);
 
   if (image_ID < 0)
     return -1;
@@ -465,16 +491,17 @@ ReadBMP (const gchar *name)
 }
 
 static gint32
-ReadImage (FILE     *fd,
-           gint      width,
-           gint      height,
-           guchar    cmap[256][3],
-           gint      ncols,
-           gint      bpp,
-           gint      compression,
-           gint      rowbytes,
-           gboolean  grey,
-           const Bitmap_Channel *masks)
+ReadImage (FILE                  *fd,
+           gint                   width,
+           gint                   height,
+           guchar                 cmap[256][3],
+           gint                   ncols,
+           gint                   bpp,
+           gint                   compression,
+           gint                   rowbytes,
+           gboolean               grey,
+           const Bitmap_Channel  *masks,
+           GError               **error)
 {
   guchar             v, n;
   GimpPixelRgn       pixel_rgn;
@@ -499,7 +526,9 @@ ReadImage (FILE     *fd,
       (bpp == 16 && compression == BI_BITFIELDS) ||
       (bpp == 32 && compression == BI_BITFIELDS)))
     {
-      g_message (_("Unrecognized or invalid BMP compression format."));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s",
+                   _("Unrecognized or invalid BMP compression format."));
       return -1;
     }
 
@@ -550,11 +579,13 @@ ReadImage (FILE     *fd,
       g_message (_("Unsupported or invalid image width: %d"), width);
       return -1;
     }
+
   if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       return -1;
     }
+
   image = gimp_image_new (width, height, base_type);
   layer = gimp_layer_new (image, _("Background"),
                           width, height,

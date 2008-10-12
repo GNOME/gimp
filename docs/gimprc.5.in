@@ -208,8 +208,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 610)
-    (height 377)
+    (width 640)
+    (height 400)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -646,7 +646,7 @@ to be the default behaviour in older versions.  Possible values are yes and
 no.
 
 .TP
-(trust-dirty-flag no)
+(trust-dirty-flag yes)
 
 When enabled, GIMP will not save an image if it has not been changed since it
 was opened.  Possible values are yes and no.
@@ -728,20 +728,26 @@ specified the size defaults to being specified in kilobytes.
 .TP
 (toolbox-color-area yes)
 
-The toolbox-color-area property has no description.  Possible values are yes
-and no.
+Show the current foreground and background colors in the toolbox.  Possible
+values are yes and no.
 
 .TP
 (toolbox-foo-area no)
 
-The toolbox-foo-area property has no description.  Possible values are yes and
-no.
+Show the currently selected brush, pattern and gradient in the toolbox. 
+Possible values are yes and no.
 
 .TP
 (toolbox-image-area no)
 
-The toolbox-image-area property has no description.  Possible values are yes
-and no.
+Show the currently active image in the toolbox.  Possible values are yes and
+no.
+
+.TP
+(toolbox-wilber yes)
+
+Show the GIMP mascot at the top of the toolbox.  Possible values are yes and
+no.
 
 .TP
 (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
@@ -796,7 +802,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.5")
+(user-manual-online-uri "http://docs.gimp.org/2.6")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.

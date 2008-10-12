@@ -102,7 +102,7 @@ pixel_format=[
 def mode_name(mode):
   s = string.replace(mode.lower(), "gimp_composite_", "")
   return (s)
-  
+
 def pixel_depth_name(pixel_format):
   s = string.replace(pixel_format.lower(), "gimp_pixelformat_", "")
   return (s)
@@ -135,7 +135,7 @@ def print_function_table(fpout, name, function_table, requirements=[]):
 
   if len(function_table) < 1:
     return;
- 
+
   print >>fpout, 'static const struct install_table {'
   print >>fpout, '  GimpCompositeOperation mode;'
   print >>fpout, '  GimpPixelFormat A;'
@@ -148,7 +148,7 @@ def print_function_table(fpout, name, function_table, requirements=[]):
   for r in requirements:
     print >>fpout, '#if %s' % (r)
     pass
-  
+
   for mode in composite_modes:
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
@@ -168,9 +168,9 @@ def print_function_table(fpout, name, function_table, requirements=[]):
 
   print >>fpout, ' { 0, 0, 0, 0, NULL }'
   print >>fpout, '};'
-  
+
   return
-  
+
 def print_function_table_name(fpout, name, function_table):
 
   print >>fpout, ''
@@ -197,9 +197,9 @@ def print_function_table_name(fpout, name, function_table):
     pass
 
   print >>fpout, '};\n'
-  
+
   return
-  
+
 def load_function_table(filename):
   nmx = ns.nmx(filename)
 
@@ -210,12 +210,12 @@ def load_function_table(filename):
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
         for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
           key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
-            
+
           for a in ["GIMP_PIXELFORMAT_ANY", A]:
             for b in ["GIMP_PIXELFORMAT_ANY", B]:
               for d in ["GIMP_PIXELFORMAT_ANY", D]:
                 key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(a), pixel_depth_name(b), pixel_depth_name(d))
-                  
+
                 f = nmx.exports_re(key + ".*")
                 if f != None: gimp_composite_function["%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))] =  [f]
                 pass
@@ -231,7 +231,7 @@ def load_function_table(filename):
 
 def merge_function_tables(tables):
   main_table = copy.deepcopy(tables[0][1])
-  
+
   for t in tables[1:]:
     #print >>sys.stderr, t[0]
     for mode in composite_modes:
@@ -248,7 +248,7 @@ def merge_function_tables(tables):
         pass
       pass
     pass
-            
+
   return (main_table)
 
 
@@ -281,7 +281,7 @@ def gimp_composite_regression(fpout, function_tables, options):
   for r in options.requires:
     print >>fpout, '#if %s' % (r)
     pass
-  
+
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
   print >>fpout, '  double ft0;'
@@ -349,11 +349,11 @@ def gimp_composite_regression(fpout, function_tables, options):
 
             print >>fpout, '  gimp_composite_context_init (&generic_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD1);' % (
               mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
-              
+
             print >>fpout, '  ft0 = gimp_composite_regression_time_function (iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
             print >>fpout, '  ft1 = gimp_composite_regression_time_function (iterations, %s, &special_ctx);' % (generic_table[key][0])
             print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx))' % (mode_name(mode))
-            
+
             print >>fpout, '    {'
             print >>fpout, '      printf("%s_%s_%s_%s failed\\n");' % (mode_name(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             print >>fpout, '      return (1);'
@@ -364,11 +364,11 @@ def gimp_composite_regression(fpout, function_tables, options):
         pass
       pass
     pass
-  
+
   for r in options.requires:
     print >>fpout, '#endif'
     pass
-  
+
   print >>fpout, '  return (0);'
   print >>fpout, '}'
 
@@ -434,7 +434,7 @@ def gimp_composite_installer_install2(fpout, name, function_table, requirements=
   else:
     print >>fpout, '  /* nothing to do */'
     pass
-  
+
   print >>fpout, ''
   print >>fpout, '  return (FALSE);'
   print >>fpout, '}'
@@ -499,7 +499,7 @@ def gimp_composite_hfile(fpout, name, function_table):
   print >>fpout, 'void %s_install (void);' % (functionnameify(name))
   print >>fpout, ''
   print >>fpout, 'typedef void (*%s_table[%s][%s][%s][%s]);' % (functionnameify(name), "GIMP_COMPOSITE_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N", "GIMP_PIXELFORMAT_N")
-  
+
   return
 
 def gimp_composite_cfile(fpout, name, function_table, requirements=[], cpu_feature=[]):

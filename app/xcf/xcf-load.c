@@ -19,9 +19,9 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <string.h> /* strcmp, memcmp */
+#include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -201,7 +201,8 @@ xcf_load_image (Gimp     *gimp,
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
         gimp_image_add_layer (image, layer,
-                              gimp_container_num_children (image->layers));
+                              gimp_container_num_children (image->layers),
+                              FALSE);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -242,7 +243,8 @@ xcf_load_image (Gimp     *gimp,
       /* add the channel to the image if its not the selection */
       if (channel != gimp_image_get_mask (image))
         gimp_image_add_channel (image, channel,
-                                gimp_container_num_children (image->channels));
+                                gimp_container_num_children (image->channels),
+                                FALSE);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1019,7 +1021,7 @@ xcf_load_layer (XcfInfo   *info,
       gimp_layer_mask_set_edit  (layer_mask, edit_mask);
       gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
 
-      gimp_layer_add_mask (layer, layer_mask, FALSE);
+      gimp_layer_add_mask (layer, layer_mask, FALSE, NULL);
     }
 
   /* attach the floating selection... */
@@ -1527,8 +1529,7 @@ xcf_load_old_paths (XcfInfo   *info,
   while (num_paths-- > 0)
     xcf_load_old_path (info, image);
 
-  active_vectors = (GimpVectors *)
-    gimp_container_get_child_by_index (image->vectors, last_selected_row);
+  active_vectors = gimp_image_get_vectors_by_index (image, last_selected_row);
 
   if (active_vectors)
     gimp_image_set_active_vectors (image, active_vectors);
@@ -1625,7 +1626,8 @@ xcf_load_old_path (XcfInfo   *info,
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
   gimp_image_add_vectors (image, vectors,
-                          gimp_container_num_children (image->vectors));
+                          gimp_container_num_children (image->vectors),
+                          FALSE);
 
   return TRUE;
 }
@@ -1667,8 +1669,7 @@ xcf_load_vectors (XcfInfo   *info,
     if (! xcf_load_vector (info, image))
       return FALSE;
 
-  active_vectors = (GimpVectors *)
-    gimp_container_get_child_by_index (image->vectors, active_index);
+  active_vectors = gimp_image_get_vectors_by_index (image, active_index);
 
   if (active_vectors)
     gimp_image_set_active_vectors (image, active_vectors);
@@ -1814,7 +1815,8 @@ xcf_load_vector (XcfInfo   *info,
     }
 
   gimp_image_add_vectors (image, vectors,
-                          gimp_container_num_children (image->vectors));
+                          gimp_container_num_children (image->vectors),
+                          FALSE);
 
   return TRUE;
 }

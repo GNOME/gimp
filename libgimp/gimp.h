@@ -302,7 +302,7 @@ void           gimp_destroy_params      (GimpParam       *params,
 
 /* Destroy the an array of GimpParamDef's. This is useful for
  *  destroying the return values returned by a call to
- *  'gimp_query_procedure'.
+ *  'gimp_procedural_db_proc_info'.
  */
 void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
                                          gint             n_params);

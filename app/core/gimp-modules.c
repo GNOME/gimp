@@ -179,7 +179,7 @@ gimp_modules_unload (Gimp *gimp)
     {
       GimpConfigWriter *writer;
       GString          *str;
-      gchar            *p;
+      const gchar      *p;
       gchar            *filename;
       GError           *error = NULL;
 

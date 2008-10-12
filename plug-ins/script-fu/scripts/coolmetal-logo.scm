@@ -118,6 +118,14 @@
                                          gradient-reverse)
   (begin
     (gimp-image-undo-group-start img)
+
+    (if (car (gimp-layer-is-floating-sel logo-layer))
+        (begin
+            (gimp-floating-sel-to-layer logo-layer)
+            (set! logo-layer (car (gimp-image-get-active-layer img)))
+        )
+     )
+
     (apply-cool-metal-logo-effect img logo-layer size bg-color
                                   gradient gradient-reverse)
     (gimp-image-undo-group-end img)
@@ -179,4 +187,4 @@
 )
 
 (script-fu-menu-register "script-fu-cool-metal-logo"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

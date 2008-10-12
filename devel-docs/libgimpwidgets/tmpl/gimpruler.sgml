@@ -33,6 +33,11 @@ GimpRuler
 
 </para>
 
+<!-- ##### ARG GimpRuler:orientation ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpRuler:position ##### -->
 <para>
 
@@ -47,6 +52,20 @@ GimpRuler
 <para>
 
 </para>
+
+<!-- ##### ARG GimpRuler:font-scale ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_ruler_new ##### -->
+<para>
+
+</para>
+
+@orientation: 
+@Returns: 
+
 
 <!-- ##### FUNCTION gimp_ruler_set_unit ##### -->
 <para>

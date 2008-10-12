@@ -136,7 +136,7 @@ typedef struct {
 FITS_FILE     *fits_open (const char *filename, const char *openmode);
 void           fits_close (FITS_FILE *ff);
 FITS_HDU_LIST *fits_add_hdu (FITS_FILE *ff);
-int            fits_add_card (FITS_HDU_LIST *hdulist, char *card);
+int            fits_add_card (FITS_HDU_LIST *hdulist, const char *card);
 int            fits_write_header (FITS_FILE *ff, FITS_HDU_LIST *hdulist);
 FITS_HDU_LIST *fits_image_info (FITS_FILE *ff, int picind, int *hdupicind);
 FITS_HDU_LIST *fits_seek_image (FITS_FILE *ff, int picind);

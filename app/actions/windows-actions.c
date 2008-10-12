@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -212,7 +213,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           entry.accelerator = NULL;
           entry.tooltip     = NULL;
           entry.callback    = G_CALLBACK (windows_show_display_cmd_callback);
-          entry.help_id     = GIMP_HELP_WINDOWS_SHOW_IMAGE_WINDOW;
+          entry.help_id     = NULL;
 
           gimp_action_group_add_actions (group, &entry, 1);
 
@@ -268,7 +269,8 @@ windows_actions_dock_added (GimpDialogFactory *factory,
 {
   GtkAction       *action;
   GimpActionEntry  entry;
-  gchar           *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+  gchar           *action_name = g_strdup_printf ("windows-dock-%04d",
+                                                  dock->ID);
 
   entry.name        = action_name;
   entry.stock_id    = NULL;

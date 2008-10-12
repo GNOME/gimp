@@ -146,7 +146,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
+  static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
   GimpRunMode       run_mode;
   gint              image_id, layer_num;
@@ -168,7 +168,9 @@ run (const gchar      *name,
       gimp_image_get_layers (image_id, &layer_num);
       if (layer_num < 2)
         {
-          g_message (_("There are not enough layers to align."));
+          *nreturn_vals = 2;
+          values[1].type          = GIMP_PDB_STRING;
+          values[1].data.d_string = _("There are not enough layers to align.");
           return;
         }
       gimp_get_data (PLUG_IN_PROC, &VALS);

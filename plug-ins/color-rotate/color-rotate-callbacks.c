@@ -65,7 +65,7 @@ rcm_units_factor (gint units)
   }
 }
 
-gchar *
+const gchar *
 rcm_units_string (gint units)
 {
   switch (units)
@@ -348,9 +348,9 @@ rcm_combo_callback (GtkWidget *widget,
 /* Circle events */
 
 gboolean
-rcm_expose_event (GtkWidget *widget,
-		  GdkEvent  *event,
-		  RcmCircle *circle)
+rcm_expose_event (GtkWidget      *widget,
+		  GdkEventExpose *event,
+		  RcmCircle      *circle)
 {
   if (circle->action_flag == VIRGIN)
     {
@@ -365,25 +365,23 @@ rcm_expose_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_button_press_event (GtkWidget *widget,
-			GdkEvent  *event,
-			RcmCircle *circle)
+rcm_button_press_event (GtkWidget      *widget,
+			GdkEventButton *event,
+			RcmCircle      *circle)
 {
-  float           clicked_angle;
-  float          *alpha;
-  float          *beta;
-  GdkEventButton *bevent;
+  float  clicked_angle;
+  float *alpha;
+  float *beta;
 
   alpha  = &circle->angle->alpha;
   beta   = &circle->angle->beta;
-  bevent = (GdkEventButton *) event;
 
   circle->action_flag = DRAG_START;
-  clicked_angle = angle_mod_2PI (arctg (CENTER-bevent->y, bevent->x-CENTER));
+  clicked_angle = angle_mod_2PI (arctg (CENTER - event->y, event->x - CENTER));
   circle->prev_clicked = clicked_angle;
 
-  if ((sqrt (SQR (bevent->y-CENTER) +
-             SQR (bevent->x-CENTER)) > RADIUS * EACH_OR_BOTH) &&
+  if ((sqrt (SQR (event->y - CENTER) +
+             SQR (event->x - CENTER)) > RADIUS * EACH_OR_BOTH) &&
       (min_prox (*alpha, *beta, clicked_angle) < G_PI / 12))
     {
       circle->mode = EACH;
@@ -418,9 +416,9 @@ rcm_button_press_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_release_event (GtkWidget *widget,
-		   GdkEvent  *event,
-		   RcmCircle *circle)
+rcm_release_event (GtkWidget      *widget,
+		   GdkEventButton *event,
+		   RcmCircle      *circle)
 {
   if (circle->action_flag == DRAGING)
     {
@@ -440,11 +438,10 @@ rcm_release_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_motion_notify_event (GtkWidget *widget,
-			 GdkEvent  *event,
-			 RcmCircle *circle)
+rcm_motion_notify_event (GtkWidget      *widget,
+			 GdkEventMotion *event,
+			 RcmCircle      *circle)
 {
-  gint         x, y;
   gfloat       clicked_angle, delta;
   gfloat      *alpha, *beta;
   gint         cw_ccw;
@@ -460,8 +457,7 @@ rcm_motion_notify_event (GtkWidget *widget,
                                    &values,
                                    GDK_GC_FUNCTION);
 
-  gdk_window_get_pointer (widget->window, &x, &y, NULL);
-  clicked_angle = angle_mod_2PI (arctg (CENTER-y, x-CENTER));
+  clicked_angle = angle_mod_2PI (arctg (CENTER - event->y, event->x - CENTER));
 
   delta = clicked_angle - circle->prev_clicked;
   circle->prev_clicked = clicked_angle;
@@ -502,7 +498,9 @@ rcm_motion_notify_event (GtkWidget *widget,
 
       if (Current.RealTime)
         rcm_render_preview (Current.Bna->after);
-  }
+    }
+
+  gdk_event_request_motions (event);
 
   return TRUE;
 }
@@ -511,9 +509,9 @@ rcm_motion_notify_event (GtkWidget *widget,
 /* Gray circle events */
 
 gboolean
-rcm_gray_expose_event (GtkWidget *widget,
-		       GdkEvent  *event,
-		       RcmGray   *circle)
+rcm_gray_expose_event (GtkWidget      *widget,
+		       GdkEventExpose *event,
+		       RcmGray        *circle)
 {
   if (circle->action_flag == VIRGIN)
     {
@@ -532,17 +530,15 @@ rcm_gray_expose_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_gray_button_press_event (GtkWidget *widget,
-			     GdkEvent  *event,
-			     RcmGray   *circle)
+rcm_gray_button_press_event (GtkWidget      *widget,
+			     GdkEventButton *event,
+			     RcmGray        *circle)
 {
-  GtkStyle       *style = gtk_widget_get_style (widget);
-  GdkEventButton *bevent;
-  int             x, y;
+  GtkStyle *style = gtk_widget_get_style (widget);
+  int       x, y;
 
-  bevent = (GdkEventButton *) event;
-  x      = bevent->x - GRAY_CENTER - LITTLE_RADIUS;
-  y      = GRAY_CENTER - bevent->y + LITTLE_RADIUS;
+  x = event->x - GRAY_CENTER - LITTLE_RADIUS;
+  y = GRAY_CENTER - event->y + LITTLE_RADIUS;
 
   circle->action_flag = DRAG_START;
   circle->hue         = angle_mod_2PI(arctg(y, x));
@@ -573,9 +569,9 @@ rcm_gray_button_press_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_gray_release_event (GtkWidget *widget,
-			GdkEvent  *event,
-			RcmGray   *circle)
+rcm_gray_release_event (GtkWidget      *widget,
+			GdkEventButton *event,
+			RcmGray        *circle)
 {
   if (circle->action_flag == DRAGING)
     {
@@ -595,9 +591,9 @@ rcm_gray_release_event (GtkWidget *widget,
 }
 
 gboolean
-rcm_gray_motion_notify_event (GtkWidget *widget,
-			      GdkEvent  *event,
-			      RcmGray   *circle)
+rcm_gray_motion_notify_event (GtkWidget      *widget,
+			      GdkEventMotion *event,
+			      RcmGray        *circle)
 {
   gint        x, y;
   GdkGCValues values;
@@ -624,10 +620,8 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
                                        circle->hue, circle->satur); /* erase */
     }
 
-  gdk_window_get_pointer (widget->window, &x, &y, NULL);
-
-  x = x - GRAY_CENTER - LITTLE_RADIUS;
-  y = GRAY_CENTER - y + LITTLE_RADIUS;
+  x = event->x - GRAY_CENTER - LITTLE_RADIUS;
+  y = GRAY_CENTER - event->y + LITTLE_RADIUS;
 
   circle->hue   = angle_mod_2PI (arctg (y, x));
   circle->satur = sqrt (SQR (x) + SQR (y)) / GRAY_RADIUS;
@@ -647,6 +641,8 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
   if (Current.RealTime)
     rcm_render_preview (Current.Bna->after);
 
+  gdk_event_request_motions (event);
+
   return TRUE;
 }
 
@@ -655,10 +651,9 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
 
 void
 rcm_set_alpha (GtkWidget *entry,
-	       gpointer   data)
+               RcmCircle *circle)
 {
-  RcmCircle *circle = data;
-  GtkStyle  *style  = gtk_widget_get_style (circle->preview);
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -677,10 +672,9 @@ rcm_set_alpha (GtkWidget *entry,
 
 void
 rcm_set_beta (GtkWidget *entry,
-	      gpointer   data)
+              RcmCircle *circle)
 {
-  RcmCircle *circle = data;
-  GtkStyle  *style  = gtk_widget_get_style (circle->preview);
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -699,10 +693,9 @@ rcm_set_beta (GtkWidget *entry,
 
 void
 rcm_set_hue (GtkWidget *entry,
-	     gpointer   data)
+             RcmGray   *circle)
 {
-  RcmGray  *circle = data;
-  GtkStyle *style  = gtk_widget_get_style (circle->preview);
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -725,10 +718,9 @@ rcm_set_hue (GtkWidget *entry,
 
 void
 rcm_set_satur (GtkWidget *entry,
-	       gpointer   data)
+               RcmGray   *circle)
 {
-  RcmGray  *circle = data;
-  GtkStyle *style  = gtk_widget_get_style (circle->preview);
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -750,10 +742,9 @@ rcm_set_satur (GtkWidget *entry,
 
 void
 rcm_set_gray_sat (GtkWidget *entry,
-		  gpointer   data)
+                  RcmGray   *circle)
 {
-  RcmGray  *circle = data;
-  GtkStyle *style  = gtk_widget_get_style (circle->preview);
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
 
   circle->gray_sat = gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry));
 

@@ -159,8 +159,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 610)
-#     (height 377)
+#     (width 640)
+#     (height 400)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -503,7 +503,7 @@
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
 # 
-# (trust-dirty-flag no)
+# (trust-dirty-flag yes)
 
 # Remember the current tool, pattern, color, and brush across GIMP sessions. 
 # Possible values are yes and no.
@@ -567,20 +567,25 @@
 # 
 # (max-new-image-size 128M)
 
-# The toolbox-color-area property has no description.  Possible values are
-# yes and no.
+# Show the current foreground and background colors in the toolbox.  Possible
+# values are yes and no.
 # 
 # (toolbox-color-area yes)
 
-# The toolbox-foo-area property has no description.  Possible values are yes
-# and no.
+# Show the currently selected brush, pattern and gradient in the toolbox. 
+# Possible values are yes and no.
 # 
 # (toolbox-foo-area no)
 
-# The toolbox-image-area property has no description.  Possible values are
-# yes and no.
+# Show the currently active image in the toolbox.  Possible values are yes
+# and no.
 # 
 # (toolbox-image-area no)
+
+# Show the GIMP mascot at the top of the toolbox.  Possible values are yes
+# and no.
+# 
+# (toolbox-wilber yes)
 
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.
@@ -631,7 +636,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "http://docs.gimp.org/2.5")
+# (user-manual-online-uri "http://docs.gimp.org/2.6")
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values

@@ -171,9 +171,16 @@ gimp_dbus_service_activate (GimpDBusService  *service,
 
   g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
 
+  /*  We want to be called again later in case that GIMP is not fully
+   *  started yet.
+   */
+  if (! gimp_is_restored (service->gimp))
+    return TRUE;
+
   display = gimp_container_get_first_child (service->gimp->displays);
 
-  gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
+  if (display)
+    gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
 
   return TRUE;
 }
@@ -194,6 +201,7 @@ gimp_dbus_service_queue_open (GimpDBusService *service,
     {
       service->source = g_idle_source_new ();
 
+      g_source_set_priority (service->source, G_PRIORITY_LOW);
       g_source_set_callback (service->source,
                              (GSourceFunc) gimp_dbus_service_open_idle, service,
                              NULL);
@@ -215,7 +223,12 @@ gimp_dbus_service_queue_open (GimpDBusService *service,
 static gboolean
 gimp_dbus_service_open_idle (GimpDBusService *service)
 {
-  OpenData *data = g_queue_pop_tail (service->queue);
+  OpenData *data;
+
+  if (! service->gimp->restored)
+    return TRUE;
+
+  data = g_queue_pop_tail (service->queue);
 
   if (data)
     {

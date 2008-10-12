@@ -1,5 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"
+
+AM_CCASFLAGS = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir) 	\
+	-I$(top_srcdir)/app
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GLIB_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libapppaint-funcs.a
 
 libapppaint_funcs_a_SOURCES = \
@@ -13,21 +29,5 @@ libapppaint_funcs_a_SOURCES = \
 	scale-region.h		\
 	subsample-region.c	\
 	subsample-region.h
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"
-
-AM_CCASFLAGS = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir) 	\
-	-I$(top_srcdir)/app
 
 EXTRA_DIST = makefile.msc

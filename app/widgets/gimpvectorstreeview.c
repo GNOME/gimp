@@ -23,6 +23,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -252,7 +253,7 @@ gimp_vectors_tree_view_item_new (GimpImage *image)
 
   new_vectors = gimp_vectors_new (image, _("Empty Path"));
 
-  gimp_image_add_vectors (image, new_vectors, -1);
+  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
 
   return GIMP_ITEM (new_vectors);
 }

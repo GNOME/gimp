@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -328,7 +329,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
                               layer_fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
-  gimp_image_add_layer (image, new_layer, -1);
+  gimp_image_add_layer (image, new_layer, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -351,7 +352,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                      gimp_image_base_type_with_alpha (image),
                                      _("Visible"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image, layer, -1);
+  gimp_image_add_layer (image, layer, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -387,7 +388,7 @@ layers_raise_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer (image, layer);
+  gimp_image_raise_layer (image, layer, NULL);
   gimp_image_flush (image);
 }
 
@@ -411,7 +412,7 @@ layers_lower_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer (image, layer);
+  gimp_image_lower_layer (image, layer, NULL);
   gimp_image_flush (image);
 }
 
@@ -438,7 +439,7 @@ layers_duplicate_cmd_callback (GtkAction *action,
 
   new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
                                                G_TYPE_FROM_INSTANCE (layer)));
-  gimp_image_add_layer (image, new_layer, -1);
+  gimp_image_add_layer (image, new_layer, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -482,7 +483,7 @@ layers_delete_cmd_callback (GtkAction *action,
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_remove (layer);
   else
-    gimp_image_remove_layer (image, layer);
+    gimp_image_remove_layer (image, layer, TRUE, NULL);
 
   gimp_image_flush (image);
 }
@@ -517,7 +518,7 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
       gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
 
-      gimp_image_add_vectors (image, vectors, -1);
+      gimp_image_add_vectors (image, vectors, -1, TRUE);
       gimp_image_set_active_vectors (image, vectors);
 
       gimp_image_flush (image);
@@ -545,7 +546,7 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
       gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
 
-      gimp_image_add_vectors (image, new_vectors, -1);
+      gimp_image_add_vectors (image, new_vectors, -1, TRUE);
       gimp_image_set_active_vectors (image, new_vectors);
 
       gimp_image_flush (image);
@@ -961,7 +962,7 @@ layers_new_layer_response (GtkWidget          *widget,
           gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
                                       dialog->context,
                                       layer_fill_type);
-          gimp_image_add_layer (dialog->image, layer, -1);
+          gimp_image_add_layer (dialog->image, layer, -1, TRUE);
 
           gimp_image_flush (dialog->image);
         }
@@ -1049,7 +1050,7 @@ layers_add_mask_response (GtkWidget          *widget,
       if (layer_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      gimp_layer_add_mask (layer, mask, TRUE);
+      gimp_layer_add_mask (layer, mask, TRUE, NULL);
 
       gimp_image_undo_group_end (image);
 

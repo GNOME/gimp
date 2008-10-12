@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "pdb-types.h"
 
@@ -950,7 +950,7 @@ register_selection_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-layer-alpha",
                                      "Transfer the specified layer's alpha channel to the selection mask.",
-                                     "This procedure requires a layer with an alpha channel. The alpha channel information is used to create a selection mask such that for any pixel in the image defined in the specified layer, that layer pixel's alpha value is transferred to the selection mask. If the layer is undefined at a particular image pixel, the associated selection mask value is set to 0.",
+                                     "The alpha channel information is used to create a selection mask such that for any pixel in the image defined in the specified layer, that layer pixel's alpha value is transferred to the selection mask. If the layer is undefined at a particular image pixel, the associated selection mask value is set to 0. A layer without an alpha channel is considered opaque.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

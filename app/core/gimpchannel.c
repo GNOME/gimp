@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -65,6 +65,13 @@ enum
 };
 
 
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+GeglNode * gegl_node_add_child (GeglNode *self,
+                                GeglNode *child);
+
+
 static void gimp_channel_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_channel_finalize      (GObject          *object);
@@ -75,6 +82,7 @@ static gint64     gimp_channel_get_memsize   (GimpObject       *object,
 static gchar  * gimp_channel_get_description (GimpViewable     *viewable,
                                               gchar           **tooltip);
 
+static void       gimp_channel_visibility_changed (GimpItem    *item);
 static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
                                               GType             new_type);
@@ -150,6 +158,7 @@ static void      gimp_channel_set_tiles      (GimpDrawable     *drawable,
                                               GimpImageType     type,
                                               gint              offset_x,
                                               gint              offset_y);
+static GeglNode * gimp_channel_get_node      (GimpDrawable     *drawable);
 static void      gimp_channel_swap_pixels    (GimpDrawable     *drawable,
                                               TileManager      *tiles,
                                               gboolean          sparse,
@@ -244,31 +253,33 @@ gimp_channel_class_init (GimpChannelClass *klass)
   viewable_class->get_description  = gimp_channel_get_description;
   viewable_class->default_stock_id = "gimp-channel";
 
-  item_class->is_attached    = gimp_channel_is_attached;
-  item_class->duplicate      = gimp_channel_duplicate;
-  item_class->convert        = gimp_channel_convert;
-  item_class->translate      = gimp_channel_translate;
-  item_class->scale          = gimp_channel_scale;
-  item_class->resize         = gimp_channel_resize;
-  item_class->flip           = gimp_channel_flip;
-  item_class->rotate         = gimp_channel_rotate;
-  item_class->transform      = gimp_channel_transform;
-  item_class->stroke         = gimp_channel_stroke;
-  item_class->default_name   = _("Channel");
-  item_class->rename_desc    = _("Rename Channel");
-  item_class->translate_desc = _("Move Channel");
-  item_class->scale_desc     = _("Scale Channel");
-  item_class->resize_desc    = _("Resize Channel");
-  item_class->flip_desc      = _("Flip Channel");
-  item_class->rotate_desc    = _("Rotate Channel");
-  item_class->transform_desc = _("Transform Channel");
-  item_class->stroke_desc    = _("Stroke Channel");
+  item_class->visibility_changed   = gimp_channel_visibility_changed;
+  item_class->is_attached          = gimp_channel_is_attached;
+  item_class->duplicate            = gimp_channel_duplicate;
+  item_class->convert              = gimp_channel_convert;
+  item_class->translate            = gimp_channel_translate;
+  item_class->scale                = gimp_channel_scale;
+  item_class->resize               = gimp_channel_resize;
+  item_class->flip                 = gimp_channel_flip;
+  item_class->rotate               = gimp_channel_rotate;
+  item_class->transform            = gimp_channel_transform;
+  item_class->stroke               = gimp_channel_stroke;
+  item_class->default_name         = _("Channel");
+  item_class->rename_desc          = _("Rename Channel");
+  item_class->translate_desc       = _("Move Channel");
+  item_class->scale_desc           = _("Scale Channel");
+  item_class->resize_desc          = _("Resize Channel");
+  item_class->flip_desc            = _("Flip Channel");
+  item_class->rotate_desc          = _("Rotate Channel");
+  item_class->transform_desc       = _("Transform Channel");
+  item_class->stroke_desc          = _("Stroke Channel");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
   drawable_class->apply_region          = gimp_channel_apply_region;
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
+  drawable_class->get_node              = gimp_channel_get_node;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 
   klass->boundary       = gimp_channel_real_boundary;
@@ -325,6 +336,12 @@ gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel = GIMP_CHANNEL (object);
 
+  if (channel->node)
+    {
+      g_object_unref (channel->node);
+      channel->node = NULL;
+    }
+
   if (channel->segs_in)
     {
       g_free (channel->segs_in);
@@ -364,6 +381,39 @@ gimp_channel_get_description (GimpViewable  *viewable,
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
                                                               tooltip);
+}
+
+static void
+gimp_channel_visibility_changed (GimpItem *item)
+{
+  GimpChannel *channel = GIMP_CHANNEL (item);
+
+  if (channel->node)
+    {
+      GeglNode *input;
+      GeglNode *output;
+
+      input  = gegl_node_get_input_proxy (channel->node, "input");
+      output = gegl_node_get_output_proxy (channel->node, "output");
+
+      if (gimp_item_get_visible (item))
+        {
+          gegl_node_connect_to (input,              "output",
+                                channel->mode_node, "input");
+          gegl_node_connect_to (channel->mode_node, "output",
+                                output,             "input");
+        }
+      else
+        {
+          gegl_node_disconnect (channel->mode_node, "input");
+
+          gegl_node_connect_to (input,  "output",
+                                output, "input");
+        }
+    }
+
+  if (GIMP_ITEM_CLASS (parent_class)->visibility_changed)
+    GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static gboolean
@@ -494,7 +544,6 @@ gimp_channel_translate (GimpItem *item,
   GimpChannel *tmp_mask = NULL;
   gint         width, height;
   PixelRegion  srcPR, destPR;
-  guchar       empty = TRANSPARENT_OPACITY;
   gint         x1, y1, x2, y2;
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
@@ -539,7 +588,7 @@ gimp_channel_translate (GimpItem *item,
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (channel)),
                      gimp_item_height (GIMP_ITEM (channel)), TRUE);
-  color_region (&srcPR, &empty);
+  clear_region (&srcPR);
 
   if (width != 0 && height != 0)
     {
@@ -821,6 +870,89 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
                                                  offset_x, offset_y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
+}
+
+static GeglNode *
+gimp_channel_get_node (GimpDrawable *drawable)
+{
+  GimpChannel *channel = GIMP_CHANNEL (drawable);
+  GeglNode    *source;
+  GeglNode    *input;
+  GeglNode    *output;
+  GeglColor   *color;
+
+  g_printerr ("%s 1\n", G_STRFUNC);
+
+  if (channel->node)
+    return channel->node;
+
+  g_printerr ("%s 2\n", G_STRFUNC);
+
+  channel->node = gegl_node_new ();
+
+  source = gimp_drawable_get_source_node (drawable);
+  gegl_node_add_child (channel->node, source);
+
+  color = gegl_color_new (NULL);
+  gegl_color_set_rgba (color,
+                       channel->color.r,
+                       channel->color.g,
+                       channel->color.b,
+                       channel->color.a);
+
+  channel->color_node = gegl_node_new_child (channel->node,
+                                             "operation", "color",
+                                             "value",     color,
+                                             NULL);
+
+  g_object_unref (color);
+
+  channel->mask_node = gegl_node_new_child (channel->node,
+                                            "operation", "opacity",
+                                            NULL);
+  gegl_node_connect_to (channel->color_node, "output",
+                        channel->mask_node,  "input");
+
+  channel->invert_node = gegl_node_new_child (channel->node,
+                                              "operation", "invert",
+                                              NULL);
+
+  if (channel->show_masked)
+    {
+      gegl_node_connect_to (source,               "output",
+                            channel->invert_node, "input");
+      gegl_node_connect_to (channel->invert_node, "output",
+                            channel->mask_node,   "aux");
+    }
+  else
+    {
+      gegl_node_connect_to (source,             "output",
+                            channel->mask_node, "aux");
+    }
+
+  channel->mode_node = gegl_node_new_child (channel->node,
+                                            "operation", "normal",
+                                            NULL);
+  gegl_node_connect_to (channel->mask_node, "output",
+                        channel->mode_node, "aux");
+
+  input  = gegl_node_get_input_proxy (channel->node, "input");
+  output = gegl_node_get_output_proxy (channel->node, "output");
+
+  if (gimp_item_get_visible (GIMP_ITEM (channel)))
+    {
+      gegl_node_connect_to (input,              "output",
+                            channel->mode_node, "input");
+      gegl_node_connect_to (channel->mode_node, "output",
+                            output,             "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
+
+  return channel->node;
 }
 
 static void
@@ -1195,7 +1327,6 @@ gimp_channel_real_clear (GimpChannel *channel,
                          gboolean     push_undo)
 {
   PixelRegion maskPR;
-  guchar      bg = TRANSPARENT_OPACITY;
 
   if (push_undo)
     {
@@ -1216,7 +1347,7 @@ gimp_channel_real_clear (GimpChannel *channel,
                          channel->x1, channel->y1,
                          channel->x2 - channel->x1,
                          channel->y2 - channel->y1, TRUE);
-      color_region (&maskPR, &bg);
+      clear_region (&maskPR);
     }
   else
     {
@@ -1226,7 +1357,7 @@ gimp_channel_real_clear (GimpChannel *channel,
                          0, 0,
                          gimp_item_width  (GIMP_ITEM (channel)),
                          gimp_item_height (GIMP_ITEM (channel)), TRUE);
-      color_region (&maskPR, &bg);
+      clear_region (&maskPR);
     }
 
   /*  we know the bounds  */
@@ -1636,6 +1767,24 @@ gimp_channel_set_color (GimpChannel   *channel,
 
       channel->color = *color;
 
+      if (channel->color_node)
+        {
+          GeglColor *gegl_color;
+
+          gegl_color = gegl_color_new (NULL);
+          gegl_color_set_rgba (gegl_color,
+                               channel->color.r,
+                               channel->color.g,
+                               channel->color.b,
+                               channel->color.a);
+
+          gegl_node_set (channel->color_node,
+                         "value", gegl_color,
+                         NULL);
+
+          g_object_unref (gegl_color);
+        }
+
       gimp_drawable_update (GIMP_DRAWABLE (channel),
                             0, 0,
                             gimp_item_width  (GIMP_ITEM (channel)),
@@ -1684,6 +1833,24 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
       channel->color.a = opacity;
 
+      if (channel->color_node)
+        {
+          GeglColor *gegl_color;
+
+          gegl_color = gegl_color_new (NULL);
+          gegl_color_set_rgba (gegl_color,
+                               channel->color.r,
+                               channel->color.g,
+                               channel->color.b,
+                               channel->color.a);
+
+          gegl_node_set (channel->color_node,
+                         "value", gegl_color,
+                         NULL);
+
+          g_object_unref (gegl_color);
+        }
+
       gimp_drawable_update (GIMP_DRAWABLE (channel),
                             0, 0,
                             gimp_item_width  (GIMP_ITEM (channel)),
@@ -1710,6 +1877,28 @@ gimp_channel_set_show_masked (GimpChannel *channel,
   if (show_masked != channel->show_masked)
     {
       channel->show_masked = show_masked ? TRUE : FALSE;
+
+      if (channel->invert_node)
+        {
+          GeglNode *source;
+
+          source = gimp_drawable_get_source_node (GIMP_DRAWABLE (channel));
+
+          if (channel->show_masked)
+            {
+              gegl_node_connect_to (source,               "output",
+                                    channel->invert_node, "input");
+              gegl_node_connect_to (channel->invert_node, "output",
+                                    channel->mask_node,   "aux");
+            }
+          else
+            {
+              gegl_node_disconnect (channel->invert_node, "input");
+
+              gegl_node_connect_to (source,             "output",
+                                    channel->mask_node, "aux");
+            }
+        }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
                             0, 0,

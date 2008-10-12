@@ -33,9 +33,9 @@ SUBDIRS = \
 
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-2.5 gimp-console-2.5
+bin_PROGRAMS = gimp-2.7 gimp-console-2.7
 else
-bin_PROGRAMS = gimp-2.5
+bin_PROGRAMS = gimp-2.7
 endif
 
 app_sources = \
@@ -59,7 +59,7 @@ app_sources = \
 	gimp-log.h	\
 	gimp-intl.h
 
-gimp_2_5_SOURCES = $(app_sources)
+gimp_2_7_SOURCES = $(app_sources)
 
 
 EXTRA_DIST = \
@@ -102,9 +102,9 @@ AM_LDFLAGS = \
 	-u $(SYMPREFIX)gimp_image_map_config_get_type	\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
-gimp_2_5_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags) 
+gimp_2_7_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags) 
 
-gimp_2_5_LDADD = \
+gimp_2_7_LDADD = \
 	gui/libappgui.a			\
 	actions/libappactions.a		\
 	dialogs/libappdialogs.a		\
@@ -133,7 +133,6 @@ gimp_2_5_LDADD = \
 	$(libgimpmath)			\
 	$(libgimpconfig)		\
 	$(libgimpbase)			\
-	$(REGEXREPL)			\
 	$(GTK_LIBS)			\
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
@@ -147,13 +146,13 @@ gimp_2_5_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 
-gimp_console_2_5_SOURCES = $(app_sources)
+gimp_console_2_7_SOURCES = $(app_sources)
 
-gimp_console_2_5_CPPFLAGS = \
+gimp_console_2_7_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_5_LDADD = \
+gimp_console_2_7_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
@@ -177,7 +176,6 @@ gimp_console_2_5_LDADD = \
 	$(libgimpmath)			\
 	$(libgimpconfig)		\
 	$(libgimpbase)			\
-	$(REGEXREPL)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(CAIRO_LIBS)			\
 	$(PANGOFT2_LIBS)		\

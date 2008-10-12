@@ -33,7 +33,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32

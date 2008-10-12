@@ -31,6 +31,10 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#ifdef __GNUC__
+#warning FIXME: remove hacks here as soon as we depend on GTK 2.14
+#endif
+
 #ifndef __GTK_HSV_H__
 
 #define GTK_TYPE_HSV (gtk_hsv_get_type ())
@@ -38,6 +42,7 @@
 
 typedef struct _GtkHSV      GtkHSV;
 
+GType      gtk_hsv_get_type     (void) G_GNUC_CONST;
 GtkWidget* gtk_hsv_new          (void);
 void       gtk_hsv_set_color    (GtkHSV    *hsv,
                                  double     h,
@@ -86,7 +91,7 @@ static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
 static void   colorsel_wheel_size_allocate (GtkWidget         *frame,
                                             GtkAllocation     *allocation,
                                             ColorselWheel     *wheel);
-static void   colorsel_wheel_size_request  (GtkWidget         *hsv,
+static void   colorsel_wheel_size_request  (GtkWidget         *dont_use,
                                             GtkRequisition    *requisition,
                                             ColorselWheel     *wheel);
 static void   colorsel_wheel_changed       (GtkHSV            *hsv,
@@ -153,11 +158,19 @@ colorsel_wheel_init (ColorselWheel *wheel)
 
   if (gtk_check_version (2, 13, 7))
     {
+      /*  for old versions of GtkHSV, we pack the thing into an alignment
+       *  and force the alignment to have a small requisition, because
+       *  it will be smart enough to deal with a larger allocation
+       */
       GtkWidget *alignment;
 
       alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_container_add (GTK_CONTAINER (frame), alignment);
       gtk_widget_show (alignment);
+
+      g_signal_connect (alignment, "size-request",
+                        G_CALLBACK (colorsel_wheel_size_request),
+                        wheel);
 
       frame = alignment;
     }
@@ -166,9 +179,16 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_container_add (GTK_CONTAINER (frame), wheel->hsv);
   gtk_widget_show (wheel->hsv);
 
-  g_signal_connect (wheel->hsv, "size-request",
-                    G_CALLBACK (colorsel_wheel_size_request),
-                    wheel);
+  if (! gtk_check_version (2, 13, 7))
+    {
+      /*  for new versions of GtkHSV we don't need above alignment hack,
+       *  because it is smart enough by itself to cope with a larger
+       *  allocation than it requested
+       */
+      g_signal_connect (wheel->hsv, "size-request",
+                        G_CALLBACK (colorsel_wheel_size_request),
+                        wheel);
+    }
 
   g_signal_connect (wheel->hsv, "changed",
                     G_CALLBACK (colorsel_wheel_changed),
@@ -208,14 +228,14 @@ colorsel_wheel_size_allocate (GtkWidget     *frame,
 }
 
 static void
-colorsel_wheel_size_request (GtkWidget      *hsv,
+colorsel_wheel_size_request (GtkWidget      *dont_use,
                              GtkRequisition *requisition,
                              ColorselWheel  *wheel)
 {
   gint focus_width;
   gint focus_padding;
 
-  gtk_widget_style_get (hsv,
+  gtk_widget_style_get (wheel->hsv,
                         "focus-line-width", &focus_width,
                         "focus-padding",    &focus_padding,
                         NULL);

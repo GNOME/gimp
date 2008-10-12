@@ -39,20 +39,14 @@
 
 /* Misc functions */
 
-float  rcm_units_factor (gint        units);
+float         rcm_units_factor (gint        units);
 
-gchar *rcm_units_string (gint        units);
+const gchar * rcm_units_string (gint        units);
 
-void   rcm_set_pixmap   (GtkWidget **widget,
-                         GtkWidget  *parent,
-                         GtkWidget  *label_box,
-                         gchar     **pixmap_data);
-
-
-/* Ok Button */
-
-void rcm_ok_callback    (GtkWidget *widget,
-                         gpointer   data);
+void          rcm_set_pixmap   (GtkWidget **widget,
+                                GtkWidget  *parent,
+                                GtkWidget  *label_box,
+                                gchar     **pixmap_data);
 
 
 /* Circle buttons */
@@ -94,45 +88,46 @@ void rcm_combo_callback       (GtkWidget *widget,
 
 /* Circle events */
 
-gboolean rcm_expose_event        (GtkWidget *widget,
-                                  GdkEvent  *event,
-                                  RcmCircle *circle);
-gboolean rcm_button_press_event  (GtkWidget *widget,
-                                  GdkEvent  *event,
-                                  RcmCircle *circle);
-gboolean rcm_release_event       (GtkWidget *widget,
-                                  GdkEvent  *event,
-                                  RcmCircle *circle);
-gboolean rcm_motion_notify_event (GtkWidget *widget,
-                                  GdkEvent  *event,
-                                  RcmCircle *circle);
+gboolean rcm_expose_event        (GtkWidget      *widget,
+                                  GdkEventExpose *event,
+                                  RcmCircle      *circle);
+gboolean rcm_button_press_event  (GtkWidget      *widget,
+                                  GdkEventButton *event,
+                                  RcmCircle      *circle);
+gboolean rcm_release_event       (GtkWidget      *widget,
+                                  GdkEventButton *event,
+                                  RcmCircle      *circle);
+gboolean rcm_motion_notify_event (GtkWidget      *widget,
+                                  GdkEventMotion *event,
+                                  RcmCircle      *circle);
 
 
 /* Gray circle events */
 
-gboolean rcm_gray_expose_event        (GtkWidget *widget,
-                                       GdkEvent  *event,
-                                       RcmGray   *circle);
-gboolean rcm_gray_button_press_event  (GtkWidget *widget,
-                                       GdkEvent  *event,
-                                       RcmGray   *circle);
-gboolean rcm_gray_release_event       (GtkWidget *widget,
-                                       GdkEvent  *event,
-                                       RcmGray   *circle);
-gboolean rcm_gray_motion_notify_event (GtkWidget *widget,
-                                       GdkEvent  *event,
-                                       RcmGray   *circle);
+gboolean rcm_gray_expose_event        (GtkWidget      *widget,
+                                       GdkEventExpose *event,
+                                       RcmGray        *circle);
+gboolean rcm_gray_button_press_event  (GtkWidget      *widget,
+                                       GdkEventButton *event,
+                                       RcmGray        *circle);
+gboolean rcm_gray_release_event       (GtkWidget      *widget,
+                                       GdkEventButton *event,
+                                       RcmGray        *circle);
+gboolean rcm_gray_motion_notify_event (GtkWidget      *widget,
+                                       GdkEventMotion *event,
+                                       RcmGray        *circle);
 
 
 /* Spinbuttons */
 
 void rcm_set_alpha    (GtkWidget *entry,
-                       gpointer   data);
+                       RcmCircle *circle);
 void rcm_set_beta     (GtkWidget *entry,
-                       gpointer   data);
+                       RcmCircle *circle);
+
 void rcm_set_hue      (GtkWidget *entry,
-                       gpointer   data);
+                       RcmGray   *circle);
 void rcm_set_satur    (GtkWidget *entry,
-                       gpointer   data);
+                       RcmGray   *circle);
 void rcm_set_gray_sat (GtkWidget *entry,
-                       gpointer   data);
+                       RcmGray   *circle);

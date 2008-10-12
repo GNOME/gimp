@@ -998,7 +998,8 @@ gimp_destroy_params (GimpParam *params,
  * @paramdefs: the #GimpParamDef array to destroy
  * @n_params:  the number of elements in the array
  *
- * Destroys a #GimpParamDef array as returned by gimp_query_procedure()
+ * Destroys a #GimpParamDef array as returned by
+ * gimp_procedural_db_proc_info().
  **/
 void
 gimp_destroy_paramdefs (GimpParamDef *paramdefs,
@@ -1893,8 +1894,7 @@ gimp_proc_run (GPProcRun *proc_run)
       (* PLUG_IN_INFO.run_proc) (proc_run->name,
                                  proc_run->nparams,
                                  (GimpParam *) proc_run->params,
-                                 &n_return_vals,
-                                 &return_vals);
+                                 &n_return_vals, &return_vals);
 
       proc_return.name    = proc_run->name;
       proc_return.nparams = n_return_vals;
@@ -1909,10 +1909,7 @@ gimp_proc_run (GPProcRun *proc_run)
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {
-  GimpRunProc run_proc;
-
-  run_proc = (GimpRunProc) g_hash_table_lookup (temp_proc_ht,
-                                                (gpointer) proc_run->name);
+  GimpRunProc run_proc = g_hash_table_lookup (temp_proc_ht, proc_run->name);
 
   if (run_proc)
     {
@@ -1922,9 +1919,8 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 
       (* run_proc) (proc_run->name,
                     proc_run->nparams,
-                    (GimpParam*) proc_run->params,
-                    &n_return_vals,
-                    &return_vals);
+                    (GimpParam *) proc_run->params,
+                    &n_return_vals, &return_vals);
 
       proc_return.name    = proc_run->name;
       proc_return.nparams = n_return_vals;

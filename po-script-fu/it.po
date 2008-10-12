@@ -6,209 +6,207 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-12 02:22+0200\n"
-"PO-Revision-Date: 2008-05-12 02:24+0200\n"
+"POT-Creation-Date: 2008-09-20 10:42+0200\n"
+"PO-Revision-Date: 2008-09-20 10:43+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:133
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:131
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Welcome to TinyScheme"
 msgstr "Benvenuti a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Interactive Scheme Development"
 msgstr "Sviluppo interattivo in Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:238
+#: ../plug-ins/script-fu/script-fu-console.c:236
 msgid "_Browse..."
 msgstr "_Scorri..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:294
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:343
+#: ../plug-ins/script-fu/script-fu-console.c:341
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:372
+#: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:718
+#: ../plug-ins/script-fu/script-fu-eval.c:63
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
 "interattive"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu non può elaborare due o più script contemporaneamente."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Lo script \"%s\" è già in esecuzione."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
+#: ../plug-ins/script-fu/script-fu-interface.c:824
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Errore durante l'esecuzione di %s:"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:667
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"Errore durante l'esecuzione\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while loading %s:"
+msgstr "Errore durante il caricamento di: %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:718
 msgid "_Start Server"
 msgstr "Avvia il _server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:746
 msgid "Server port:"
 msgstr "Porta del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:752
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Console interattiva per sviluppo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Server per le operazioni Script-Fu remote"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:146
 msgid "_Start Server..."
 msgstr "Avvia _server..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_User Manual"
 msgstr "Manuale _utente"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Buttons"
 msgstr "P_ulsanti"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Patterns"
 msgstr "_Motivi"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Web Page Themes"
 msgstr "Temi per pagine _web"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Alien Glow"
 msgstr "Bagliore _alieno"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Beveled Pattern"
 msgstr "Motivo in _bassorilievo"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
 msgstr "_Classico gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Rileggere tutti gli Script-Fu disponibili"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -264,8 +262,7 @@ msgstr "Impostazioni predefinite mappa a sbalzo"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -303,8 +300,7 @@ msgstr "Carattere"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -381,8 +377,7 @@ msgstr "Raggio sfocatura ombra"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -416,7 +411,6 @@ msgstr "Truchet 3_D..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -536,7 +530,7 @@ msgstr "Immagine appiattita"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "Colore bagliore"
 
@@ -1281,6 +1275,8 @@ msgstr "Crea un logotipo metallico con riflessione e ombre in prospettiva"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "Dimensione effetto (pixel)"
 
@@ -1726,10 +1722,6 @@ msgstr ""
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "Crea un logotipo che sembri metallo incandescente"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "Dimensione effetto (pixel * 3)"
-
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
 msgstr "Incandescen_za..."
@@ -1980,10 +1972,6 @@ msgstr "Crea un logotipo con stile insegna al neon"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "Crea ombra"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "Dimensione effetto (pixel * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -2482,49 +2470,13 @@ msgstr "Tipo"
 msgid "_Spyrogimp..."
 msgstr "_Spirografo..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "Colore esplosione"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "Crea un logotipo usando un gradiente a esplosione di stella"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "Dimensione effetto (punti * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr ""
-"Riempie la regione o il livello alfa selezionati con un gradiente a "
-"esplosione di stella aggiungendo un'ombra"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "_Esplosione di stella..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
 "Crea un logotipo usando un effetto testo stile roccia con chiarore nova e "
 "ombra"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "Dimensione effetto (punti * 4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr ""
-"Riempie la regione o il livello alfa selezionati con una texture \"rocciosa"
-"\" aggiungendo un chiarore nova e ombra"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "_Cielo stellato..."
 

@@ -87,11 +87,12 @@ sub image_new {
     $blurb = 'Creates a new image with the specified width, height, and type.';
 
     $help = <<'HELP';
-Creates a new image, undisplayed with the specified extents and type. A layer
-should be created and added before this image is displayed, or subsequent calls
-to gimp_display_new() with this image as an argument will fail. Layers can be
-created using the gimp_layer_new() commands. They can be added to an image
-using the gimp_image_add_layer() command.
+Creates a new image, undisplayed with the specified extents and
+type. A layer should be created and added before this image is
+displayed, or subsequent calls to gimp_display_new() with this image
+as an argument will fail. Layers can be created using the
+gimp_layer_new() commands. They can be added to an image using the
+gimp_image_add_layer() command.
 HELP
 
     &std_pdb_misc;
@@ -190,13 +191,12 @@ sub image_resize {
     $blurb = 'Resize the image to the specified extents.';
 
     $help = <<'HELP';
-This procedure resizes the image so that it's new width and height are equal to
-the supplied parameters. Offsets are also provided which describe the position
-of the previous image's content. No bounds checking is currently provided, so
-don't supply parameters that are out of bounds. All channels within the image
-are resized according to the specified parameters; this includes the image
-selection mask. All layers within the image are repositioned according to the
-specified offsets.
+This procedure resizes the image so that it's new width and height are
+equal to the supplied parameters. Offsets are also provided which
+describe the position of the previous image's content. All channels
+within the image are resized according to the specified parameters;
+this includes the image selection mask. All layers within the image
+are repositioned according to the specified offsets.
 HELP
 
     &std_pdb_misc;
@@ -231,10 +231,10 @@ sub image_resize_to_layers {
     $blurb = 'Resize the image to fit all layers.';
 
     $help = <<'HELP';
-This procedure resizes the image to the bounding box of all layers of the
-image. All channels within the image are resized to the new size; this includes
-the image selection mask. All layers within the image are repositioned to the
-new image area.
+This procedure resizes the image to the bounding box of all layers of
+the image. All channels within the image are resized to the new size;
+this includes the image selection mask. All layers within the image
+are repositioned to the new image area.
 HELP
 
     &simon_pdb_misc('2004', '2.2');
@@ -255,16 +255,14 @@ CODE
 }
 
 sub image_scale {
-    $blurb = 'Scale the image to the specified extents.';
+    $blurb = 'Scale the image using the default interpolation method.';
 
     $help = <<'HELP';
-This procedure scales the image so that its new width and height are equal to
-the supplied parameters. Offsets are also provided which describe the position
-of the previous image's content. No bounds checking is currently provided, so
-don't supply parameters that are out of bounds. All channels within the image
-are scaled according to the specified parameters; this includes the image
-selection mask. All layers within the image are repositioned according to the
-specified offsets.
+
+This procedure scales the image so that its new width and height are
+equal to the supplied parameters. All layers and channels within the
+image are scaled according to the specified parameters; this includes
+the image selection mask. The default interpolation method is used.
 HELP
 
     &std_pdb_misc;
@@ -282,9 +280,55 @@ HELP
 	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
+  if (progress)
+    gimp_progress_start (progress, _("Scaling"), FALSE);
+
   gimp_image_scale (image, new_width, new_height,
                     gimp->config->interpolation_type,
-                    NULL);
+                    progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+}
+CODE
+    );
+}
+
+sub image_scale_full {
+    $blurb = 'Scale the image using a specific interpolation method.';
+
+    $help = <<'HELP';
+This procedure scales the image so that its new width and height are
+equal to the supplied parameters. All layers and channels within the
+image are scaled according to the specified parameters; this includes
+the image selection mask. This procedure allows you to specify the
+interpolation method explicitly.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New image width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New image height' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation' }
+    );
+
+    %invoke = (
+	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	code => <<'CODE'
+{
+  if (progress)
+    gimp_progress_start (progress, _("Scaling"), FALSE);
+
+  gimp_image_scale (image, new_width, new_height, interpolation, progress);
+
+  if (progress)
+    gimp_progress_end (progress);
 }
 CODE
     );
@@ -294,11 +338,12 @@ sub image_crop {
     $blurb = 'Crop the image to the specified extents.';
 
     $help = <<'HELP';
-This procedure crops the image so that it's new width and height are equal to
-the supplied parameters. Offsets are also provided which describe the position
-of the previous image's content. All channels and layers within the image are
-cropped to the new image extents; this includes the image selection mask. If
-any parameters are out of range, an error is returned.
+This procedure crops the image so that it's new width and height are
+equal to the supplied parameters. Offsets are also provided which
+describe the position of the previous image's content. All channels
+and layers within the image are cropped to the new image extents; this
+includes the image selection mask. If any parameters are out of range,
+an error is returned.
 HELP
 
     &std_pdb_misc;
@@ -311,9 +356,9 @@ HELP
 	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image height: (0 < new_height <= height)' },
 	{ name => 'offx', type => '0 <= int32',
-	  desc => 'x offset: (0 <= offx <= (width - new_width))' },
+	  desc => 'X offset: (0 <= offx <= (width - new_width))' },
 	{ name => 'offy', type => '0 <= int32',
-	  desc => 'y offset: (0 <= offy <= (height - new_height))' }
+	  desc => 'Y offset: (0 <= offy <= (height - new_height))' }
     );
 
     %invoke = (
@@ -378,7 +423,13 @@ sub image_rotate {
 	headers => [ qw("core/gimpimage-rotate.h") ],
 	code => <<'CODE'
 {
-  gimp_image_rotate (image, context, rotate_type, NULL);
+  if (progress)
+    gimp_progress_start (progress, _("Rotating"), FALSE);
+
+  gimp_image_rotate (image, context, rotate_type, progress);
+
+  if (progress)
+    gimp_progress_end (progress);  
 }
 CODE
     );
@@ -533,9 +584,10 @@ sub image_unset_active_channel {
     $blurb = 'Unsets the active channel in the specified image.';
 
     $help = <<'HELP';
-If an active channel exists, it is unset. There then exists no active channel,
-and if desired, one can be set through a call to 'Set Active Channel'. No error
-is returned in the case of no existing active channel.
+If an active channel exists, it is unset. There then exists no active
+channel, and if desired, one can be set through a call to 'Set Active
+Channel'. No error is returned in the case of no existing active
+channel.
 HELP
 
     &std_pdb_misc;
@@ -638,10 +690,11 @@ sub image_pick_correlate_layer {
     $blurb = 'Find the layer visible at the specified coordinates.';
 
     $help = <<'HELP';
-This procedure finds the layer which is visible at the specified coordinates.
-Layers which do not qualify are those whose extents do not pass within the
-specified coordinates, or which are transparent at the specified coordinates.
-This procedure will return -1 if no layer is found.
+This procedure finds the layer which is visible at the specified
+coordinates.  Layers which do not qualify are those whose extents do
+not pass within the specified coordinates, or which are transparent at
+the specified coordinates.  This procedure will return -1 if no layer
+is found.
 HELP
 
     &std_pdb_misc;
@@ -673,8 +726,9 @@ sub image_get_layer_position {
     $blurb = 'Returns the position of the layer in the layer stack.';
 
     $help = <<'HELP';
-This procedure determines the positioin of the specified layer in the images
-layer stack. If the layer doesn't exist in the image, an error is returned.
+This procedure determines the position of the specified layer in the
+images layer stack. If the layer doesn't exist in the image, an error
+is returned.
 HELP
 
     &simon_pdb_misc('2006', '2.4');
@@ -709,7 +763,7 @@ sub image_raise_layer {
 
     $help = <<'HELP';
 This procedure raises the specified layer one step in the existing layer stack.
-It will not move the layer if there is no layer above it.
+The procecure call will fail if there is no layer above it.
 HELP
 
     &std_pdb_misc;
@@ -724,7 +778,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer (image, layer);
+  success = gimp_image_raise_layer (image, layer, error);
 }
 CODE
     );
@@ -735,7 +789,7 @@ sub image_lower_layer {
 
     $help = <<'HELP';
 This procedure lowers the specified layer one step in the existing layer stack.
-It will not move the layer if there is no layer below it.
+The procecure call will fail if there is no layer below it.
 HELP
 
     &std_pdb_misc;
@@ -750,7 +804,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer (image, layer);
+  success = gimp_image_lower_layer (image, layer, error);
 }
 CODE
     );
@@ -818,12 +872,12 @@ sub image_merge_visible_layers {
     $blurb = 'Merge the visible image layers into one.';
 
     $help = <<'HELP';
-This procedure combines the visible layers into a single layer using the
-specified merge type. A merge type of EXPAND_AS_NECESSARY expands the final
-layer to encompass the areas of the visible layers. A merge type of
-CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type
-of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost
-layer.
+This procedure combines the visible layers into a single layer using
+the specified merge type. A merge type of EXPAND_AS_NECESSARY expands
+the final layer to encompass the areas of the visible layers. A merge
+type of CLIP_TO_IMAGE clips the final layer to the extents of the
+image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to
+the size of the bottommost layer.
 HELP
 
     &std_pdb_misc;
@@ -858,12 +912,13 @@ sub image_merge_down {
     $blurb = 'Merge the layer passed and the first visible layer below.';
 
     $help = <<'HELP';
-This procedure combines the passed layer and the first visible layer below it
-using the specified merge type. A merge type of EXPAND_AS_NECESSARY expands the
-final layer to encompass the areas of the visible layers. A merge type of
-CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type
-of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost
-layer.
+This procedure combines the passed layer and the first visible layer
+below it using the specified merge type. A merge type of
+EXPAND_AS_NECESSARY expands the final layer to encompass the areas of
+the visible layers. A merge type of CLIP_TO_IMAGE clips the final
+layer to the extents of the image. A merge type of
+CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
+bottommost layer.
 HELP
 
     &larry_pdb_misc('1998');
@@ -954,12 +1009,12 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), error) &&
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
       gimp_pdb_image_is_base_type (image,
 				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
 				   error))
     {
-      success = gimp_image_add_layer (image, layer, MAX (position, -1));
+      success = gimp_image_add_layer (image, layer, MAX (position, -1), TRUE);
     }
   else
     {
@@ -973,10 +1028,10 @@ sub image_remove_layer {
     $blurb = 'Remove the specified layer from the image.';
 
     $help = <<'HELP';
-This procedure removes the specified layer from the image. If the layer doesn't
-exist, an error is returned. If there are no layers left in the image, this
-call will fail. If this layer is the last layer remaining, the image will
-become empty and have no active layer.
+This procedure removes the specified layer from the image. If the
+layer doesn't exist, an error is returned. If there are no layers left
+in the image, this call will fail. If this layer is the last layer
+remaining, the image will become empty and have no active layer.
 HELP
 
     &std_pdb_misc;
@@ -991,7 +1046,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_layer (image, layer);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+    gimp_image_remove_layer (image, layer, TRUE, NULL);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1012,7 +1070,9 @@ sub image_add_layer_mask {
     %invoke = (
 	code => <<'CODE'
 {
-  if (! gimp_layer_add_mask (layer, mask, TRUE))
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error))
+    success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
+  else
     success = FALSE;
 }
 CODE
@@ -1034,7 +1094,11 @@ sub image_remove_layer_mask {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_apply_mask (layer, mode, TRUE);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+      gimp_layer_get_mask (layer))
+    gimp_layer_apply_mask (layer, mode, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1044,8 +1108,9 @@ sub image_get_channel_position {
     $blurb = 'Returns the position of the channel in the channel stack.';
 
     $help = <<'HELP';
-This procedure determines the positioin of the specified channel in the images
-channel stack. If the channel doesn't exist in the image, an error is returned.
+This procedure determines the position of the specified channel in
+the images channel stack. If the channel doesn't exist in the image,
+an error is returned.
 HELP
 
     &simon_pdb_misc('2006', '2.4');
@@ -1080,7 +1145,7 @@ sub image_raise_channel {
 
     $help = <<'HELP';
 This procedure raises the specified channel one step in the existing
-channel stack. It will not move the channel if there is no channel
+channel stack. The procecure call will fail if there is no channel
 above it.
 HELP
 
@@ -1096,7 +1161,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_channel (image, channel);
+  success = gimp_image_raise_channel (image, channel, error);
 }
 CODE
     );
@@ -1107,7 +1172,7 @@ sub image_lower_channel {
 
     $help = <<'HELP';
 This procedure lowers the specified channel one step in the existing
-channel stack. It will not move the channel if there is no channel
+channel stack. The procecure call will fail if there is no channel
 below it.
 HELP
 
@@ -1123,7 +1188,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_channel (image, channel);
+  success = gimp_image_lower_channel (image, channel, error);
 }
 CODE
     );
@@ -1152,9 +1217,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), error))
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
     {
-      success = gimp_image_add_channel (image, channel, MAX (position, -1));
+      success = gimp_image_add_channel (image, channel, MAX (position, -1), TRUE);
     }
   else
     {
@@ -1185,7 +1250,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_channel (image, channel);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), error))
+    gimp_image_remove_channel (image, channel, TRUE, NULL);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1213,9 +1281,9 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), error))
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
     {
-      success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+      success = gimp_image_add_vectors (image, vectors, MAX (position, -1), TRUE);
     }
   else
     {
@@ -1245,7 +1313,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_vectors (image, vectors);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
+    gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1255,7 +1326,7 @@ sub image_get_vectors_position {
     $blurb = 'Returns the position of the vectors object in the vectors objects stack.';
 
     $help = <<'HELP';
-This procedure determines the positioin of the specified vectors object in the
+This procedure determines the position of the specified vectors object in the
 images vectors object stack. If the vectors object doesn't exist in the image,
 an error is returned.
 HELP
@@ -1292,7 +1363,7 @@ sub image_raise_vectors {
 
     $help = <<'HELP';
 This procedure raises the specified vectors one step in the existing
-vectors stack. It will not move the vectors if there is no vectors
+vectors stack. The procecure call will fail if there is no vectors
 above it.
 HELP
 
@@ -1308,7 +1379,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors (image, vectors);
+  success = gimp_image_raise_vectors (image, vectors, error);
 }
 CODE
     );
@@ -1319,7 +1390,7 @@ sub image_lower_vectors {
 
     $help = <<'HELP';
 This procedure lowers the specified vectors one step in the existing
-vectors stack. It will not move the vectors if there is no vectors
+vectors stack. The procecure call will fail if there is no vectors
 below it.
 HELP
 
@@ -1335,7 +1406,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors (image, vectors);
+  success = gimp_image_lower_vectors (image, vectors, error);
 }
 CODE
     );
@@ -2431,7 +2502,8 @@ sub image_get_vectors_by_tattoo {
     $blurb = 'Find a vectors with a given tattoo in an image.';
 
     $help = <<'HELP';
-This procedure returns the vectors with the given tattoo in the specified image.
+This procedure returns the vectors with the given tattoo in the
+specified image.
 HELP
 
     &simon_pdb_misc('2005', '2.6');
@@ -2549,6 +2621,7 @@ CODE
               "base/temp-buf.h"
               "core/gimp.h"
               "core/gimplist.h"
+              "core/gimpprogress.h"
               "core/gimpunit.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
@@ -2561,7 +2634,7 @@ CODE
             image_width image_height
             image_free_shadow
             image_resize image_resize_to_layers
-            image_scale
+            image_scale image_scale_full
             image_crop image_flip image_rotate
             image_get_layers
             image_get_channels
@@ -2603,7 +2676,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..45,48..75]]);
+%exports = (app => [@procs], lib => [@procs[0..46,49..76]]);
 
 $desc = 'Image';
 

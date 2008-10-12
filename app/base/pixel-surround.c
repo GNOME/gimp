@@ -33,6 +33,8 @@
 struct _PixelSurround
 {
   TileManager *mgr;        /*  tile manager to access tiles from    */
+  gint         xmax;       /*  largest x coordinate in tile manager */
+  gint         ymax;       /*  largest y coordinate in tile manager */
   gint         bpp;        /*  bytes per pixel in tile manager      */
   gint         w;          /*  width of pixel surround area         */
   gint         h;          /*  height of pixel surround area        */
@@ -44,106 +46,73 @@ struct _PixelSurround
   gint         rowstride;  /*  rowstride of buffers                 */
   guchar      *bg;         /*  buffer filled with background color  */
   guchar      *buf;        /*  buffer used for combining tile data  */
+  PixelSurroundMode  mode;
 };
 
+static const guchar * pixel_surround_get_data (PixelSurround *surround,
+                                               gint           x,
+                                               gint           y,
+                                               gint          *w,
+                                               gint          *h,
+                                               gint          *rowstride);
 
-/*  inlining this function gives a few percent speedup  */
-static inline const guchar *
-pixel_surround_get_data (PixelSurround *surround,
-                         gint           x,
-                         gint           y,
-                         gint          *w,
-                         gint          *h,
-                         gint          *rowstride)
-{
-  /*  do we still have a tile lock that we can use?  */
-  if (surround->tile)
-    {
-      if (x < surround->tile_x || x >= surround->tile_x + surround->tile_w ||
-          y < surround->tile_y || y >= surround->tile_y + surround->tile_h)
-        {
-          tile_release (surround->tile, FALSE);
-          surround->tile = NULL;
-        }
-    }
-
-  /*  if not, try to get one for the target pixel  */
-  if (! surround->tile)
-    {
-      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
-
-      if (surround->tile)
-        {
-          /*  store offset and size of the locked tile  */
-          surround->tile_x = x & ~(TILE_WIDTH - 1);
-          surround->tile_y = y & ~(TILE_HEIGHT - 1);
-          surround->tile_w = tile_ewidth (surround->tile);
-          surround->tile_h = tile_eheight (surround->tile);
-        }
-    }
-
-  if (surround->tile)
-    {
-      *w = surround->tile_x + surround->tile_w - x;
-      *h = surround->tile_y + surround->tile_h - y;
-
-      *rowstride = surround->tile_w * surround->bpp;
-
-      return tile_data_pointer (surround->tile,
-                                x % TILE_WIDTH, y % TILE_HEIGHT);
-    }
-  else
-    {
-      /*   return a pointer to a virtual background tile  */
-      if (x < 0)
-        *w = MIN (- x, surround->w);
-      else
-        *w = surround->w;
-
-      if (y < 0)
-        *h = MIN (- y, surround->h);
-      else
-        *h = surround->h;
-
-      *rowstride = surround->rowstride;
-
-      return surround->bg;
-    }
-}
 
 /**
  * pixel_surround_new:
  * @tiles:  tile manager
  * @width:  width of surround region
  * @height: height of surround region
- * @bg:     color to use for pixels that are not covered by the tile manager
+ * @mode:   how to deal with pixels that are not covered by the tile manager
+ *
+ * PixelSurround provides you a contiguous read-only view of the area
+ * surrounding a pixel. It is an efficient pixel access strategy for
+ * interpolation algorithms.
  *
  * Return value: a new #PixelSurround.
  */
 PixelSurround *
-pixel_surround_new (TileManager  *tiles,
-                    gint          width,
-                    gint          height,
-                    const guchar  bg[MAX_CHANNELS])
+pixel_surround_new (TileManager       *tiles,
+                    gint               width,
+                    gint               height,
+                    PixelSurroundMode  mode)
 {
   PixelSurround *surround;
-  guchar        *dest;
-  gint           pixels;
 
   g_return_val_if_fail (tiles != NULL, NULL);
+  g_return_val_if_fail (width < TILE_WIDTH, NULL);
+  g_return_val_if_fail (height < TILE_WIDTH, NULL);
 
   surround = g_slice_new0 (PixelSurround);
 
   surround->mgr       = tiles;
+  surround->xmax      = tile_manager_width (surround->mgr) - 1;
+  surround->ymax      = tile_manager_height (surround->mgr) - 1;
   surround->bpp       = tile_manager_bpp (tiles);
   surround->w         = width;
   surround->h         = height;
   surround->rowstride = width * surround->bpp;
-  surround->bg        = g_new (guchar, surround->rowstride * height);
+  surround->bg        = g_new0 (guchar, surround->rowstride * height);
   surround->buf       = g_new (guchar, surround->rowstride * height);
+  surround->mode      = mode;
 
-  dest = surround->bg;
-  pixels = width * height;
+  return surround;
+}
+
+/**
+ * pixel_surround_set_bg:
+ * @surround: a #PixelSurround
+ * @bg:       background color
+ *
+ * This sets the color that the #PixelSurround uses when in
+ * %PIXEL_SURROUND_BACKGROUND mode for pixels that are not covered by
+ * the tile manager.
+ */
+void
+pixel_surround_set_bg (PixelSurround *surround,
+                       const guchar  *bg)
+{
+  guchar *dest   = surround->bg;
+  gint    pixels = surround->w * surround->h;
 
   while (pixels--)
     {
@@ -152,8 +121,6 @@ pixel_surround_new (TileManager  *tiles,
       for (i = 0; i < surround->bpp; i++)
         *dest++ = bg[i];
     }
-
-  return surround;
 }
 
 /**
@@ -280,4 +247,174 @@ pixel_surround_destroy (PixelSurround *surround)
   g_free (surround->bg);
 
   g_slice_free (PixelSurround, surround);
+}
+
+
+enum
+{
+  LEFT   = 1 << 0,
+  RIGHT  = 1 << 1,
+  TOP    = 1 << 2,
+  BOTTOM = 1 << 3
+};
+
+static void
+pixel_surround_fill_row (PixelSurround *surround,
+                         const guchar  *src,
+                         gint           w)
+{
+  guchar *dest  = surround->bg;
+  gint    bytes = MIN (w, surround->w) * surround->bpp;
+  gint    rows  = surround->h;
+
+  while (rows--)
+    {
+      memcpy (dest, src, bytes);
+      dest += surround->rowstride;
+    }
+}
+
+static void
+pixel_surround_fill_col (PixelSurround *surround,
+                         const guchar  *src,
+                         gint           rowstride,
+                         gint           h)
+{
+  guchar *dest = surround->bg;
+  gint    cols = surround->w;
+  gint    rows = MIN (h, surround->h);
+
+  while (cols--)
+    {
+      const guchar *s = src;
+      guchar       *d = dest;
+      gint          r = rows;
+
+      while (r--)
+        {
+          memcpy (d, s, surround->bpp);
+
+          s += rowstride;
+          d += surround->rowstride;
+        }
+
+      dest += surround->bpp;
+    }
+}
+
+static const guchar *
+pixel_surround_get_data (PixelSurround *surround,
+                         gint           x,
+                         gint           y,
+                         gint          *w,
+                         gint          *h,
+                         gint          *rowstride)
+{
+  /*  do we still have a tile lock that we can use?  */
+  if (surround->tile)
+    {
+      if (x < surround->tile_x || x >= surround->tile_x + surround->tile_w ||
+          y < surround->tile_y || y >= surround->tile_y + surround->tile_h)
+        {
+          tile_release (surround->tile, FALSE);
+          surround->tile = NULL;
+        }
+    }
+
+  /*  if not, try to get one for the target pixel  */
+  if (! surround->tile)
+    {
+      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+
+      if (surround->tile)
+        {
+          /*  store offset and size of the locked tile  */
+          surround->tile_x = x & ~(TILE_WIDTH - 1);
+          surround->tile_y = y & ~(TILE_HEIGHT - 1);
+          surround->tile_w = tile_ewidth (surround->tile);
+          surround->tile_h = tile_eheight (surround->tile);
+        }
+    }
+
+  if (surround->tile)
+    {
+      *w = surround->tile_x + surround->tile_w - x;
+      *h = surround->tile_y + surround->tile_h - y;
+
+      *rowstride = surround->tile_w * surround->bpp;
+
+      return tile_data_pointer (surround->tile, x, y);
+    }
+
+  if (surround->mode == PIXEL_SURROUND_SMEAR)
+    {
+      const guchar *edata;
+      gint          ex = x;
+      gint          ey = y;
+      gint          ew, eh;
+      gint          estride;
+      gint          ecode = 0;
+
+      if (ex < 0)
+        {
+          ex = 0;
+          ecode |= LEFT;
+        }
+      else if (ex > surround->xmax)
+        {
+          ex = surround->xmax;
+          ecode |= RIGHT;
+        }
+
+      if (ey < 0)
+        {
+          ey = 0;
+          ecode |= TOP;
+        }
+      else if (ey > surround->ymax)
+        {
+          ey = surround->ymax;
+          ecode |= BOTTOM;
+        }
+
+      /*  call ourselves with corrected coordinates  */
+      edata = pixel_surround_get_data (surround, ex, ey, &ew, &eh, &estride);
+
+      /*  fill the virtual background tile  */
+      switch (ecode)
+        {
+        case (TOP | LEFT):
+        case (TOP | RIGHT):
+        case (BOTTOM | LEFT):
+        case (BOTTOM | RIGHT):
+          pixel_surround_set_bg (surround, edata);
+          break;
+
+        case (TOP):
+        case (BOTTOM):
+          pixel_surround_fill_row (surround, edata, ew);
+          break;
+
+        case (LEFT):
+        case (RIGHT):
+          pixel_surround_fill_col (surround, edata, estride, eh);
+          break;
+        }
+    }
+
+  /*   return a pointer to the virtual background tile  */
+
+  if (x < 0)
+    *w = MIN (- x, surround->w);
+  else
+    *w = surround->w;
+
+  if (y < 0)
+    *h = MIN (- y, surround->h);
+  else
+    *h = surround->h;
+
+  *rowstride = surround->rowstride;
+
+  return surround->bg;
 }

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -61,6 +61,8 @@ gimp_image_rotate (GimpImage        *image,
   gdouble   progress_current = 1.0;
   gint      new_image_width;
   gint      new_image_height;
+  gint      previous_image_width;
+  gint      previous_image_height;
   gint      offset_x;
   gint      offset_y;
   gboolean  size_changed;
@@ -71,8 +73,11 @@ gimp_image_rotate (GimpImage        *image,
 
   gimp_set_busy (image->gimp);
 
-  center_x = (gdouble) gimp_image_get_width  (image) / 2.0;
-  center_y = (gdouble) gimp_image_get_height (image) / 2.0;
+  previous_image_width  = gimp_image_get_width  (image);
+  previous_image_height = gimp_image_get_height (image);
+
+  center_x              = previous_image_width  / 2.0;
+  center_y              = previous_image_height / 2.0;
 
   progress_max = (image->channels->num_children +
                   image->layers->num_children   +
@@ -192,7 +197,12 @@ gimp_image_rotate (GimpImage        *image,
       gdouble xres;
       gdouble yres;
 
-      gimp_image_undo_push_image_size (image, NULL, offset_x, offset_y);
+      gimp_image_undo_push_image_size (image,
+                                       NULL,
+                                       offset_x,
+                                       offset_y,
+                                       new_image_width,
+                                       new_image_height);
 
       g_object_set (image,
                     "width",  new_image_width,
@@ -208,7 +218,11 @@ gimp_image_rotate (GimpImage        *image,
   gimp_image_undo_group_end (image);
 
   if (size_changed)
-    gimp_image_size_changed_detailed (image, -offset_x, -offset_y);
+    gimp_image_size_changed_detailed (image,
+                                      -offset_x,
+                                      -offset_y,
+                                      previous_image_width,
+                                      previous_image_height);
 
   g_object_thaw_notify (G_OBJECT (image));
 

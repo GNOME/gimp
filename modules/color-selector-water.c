@@ -395,8 +395,8 @@ motion_notify_event (GtkWidget      *widget,
         }
     }
 
-  if (event->is_hint)
-    gdk_device_get_state (event->device, event->window, NULL, NULL);
+  /* Ask for more motion events in case the event was a hint */
+  gdk_event_request_motions (event);
 
   return TRUE;
 }

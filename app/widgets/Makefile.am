@@ -10,6 +10,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
+	$(GEGL_CFLAGS)		\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
@@ -20,6 +21,8 @@ libappwidgets_a_sources = \
 	widgets-types.h			\
 	gimpaction.c			\
 	gimpaction.h			\
+	gimpactioneditor.c		\
+	gimpactioneditor.h		\
 	gimpactionfactory.c		\
 	gimpactionfactory.h		\
 	gimpactiongroup.c		\

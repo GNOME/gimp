@@ -58,58 +58,60 @@ enum
 };
 
 
-static GObject * gimp_ui_manager_constructor    (GType               type,
-                                                 guint               n_params,
-                                                 GObjectConstructParam *params);
-static void     gimp_ui_manager_dispose         (GObject            *object);
-static void     gimp_ui_manager_finalize        (GObject            *object);
-static void     gimp_ui_manager_set_property    (GObject            *object,
-                                                 guint               prop_id,
-                                                 const GValue       *value,
-                                                 GParamSpec         *pspec);
-static void     gimp_ui_manager_get_property    (GObject            *object,
-                                                 guint               prop_id,
-                                                 GValue             *value,
-                                                 GParamSpec         *pspec);
-static void     gimp_ui_manager_connect_proxy   (GtkUIManager       *manager,
-                                                 GtkAction          *action,
-                                                 GtkWidget          *proxy);
-static GtkWidget * gimp_ui_manager_get_widget   (GtkUIManager       *manager,
-                                                 const gchar        *path);
-static GtkAction * gimp_ui_manager_get_action   (GtkUIManager       *manager,
-                                                 const gchar        *path);
-static void     gimp_ui_manager_real_update     (GimpUIManager      *manager,
-                                                 gpointer            update_data);
+static GObject *  gimp_ui_manager_constructor         (GType           type,
+                                                       guint           n_params,
+                                                       GObjectConstructParam *params);
+static void       gimp_ui_manager_dispose             (GObject        *object);
+static void       gimp_ui_manager_finalize            (GObject        *object);
+static void       gimp_ui_manager_set_property        (GObject        *object,
+                                                       guint           prop_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
+static void       gimp_ui_manager_get_property        (GObject        *object,
+                                                       guint           prop_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
+static void       gimp_ui_manager_connect_proxy       (GtkUIManager   *manager,
+                                                       GtkAction      *action,
+                                                       GtkWidget      *proxy);
+static GtkWidget *gimp_ui_manager_get_widget          (GtkUIManager   *manager,
+                                                       const gchar    *path);
+static GtkAction *gimp_ui_manager_get_action          (GtkUIManager   *manager,
+                                                       const gchar    *path);
+static void       gimp_ui_manager_real_update         (GimpUIManager  *manager,
+                                                       gpointer        update_data);
 static GimpUIManagerUIEntry *
-                gimp_ui_manager_entry_get       (GimpUIManager      *manager,
-                                                 const gchar        *ui_path);
-static gboolean gimp_ui_manager_entry_load      (GimpUIManager      *manager,
-                                                 GimpUIManagerUIEntry *entry,
-                                                 GError            **error);
+                  gimp_ui_manager_entry_get           (GimpUIManager  *manager,
+                                                       const gchar    *ui_path);
+static gboolean   gimp_ui_manager_entry_load          (GimpUIManager  *manager,
+                                                       GimpUIManagerUIEntry *entry,
+                                                       GError        **error);
 static GimpUIManagerUIEntry *
-                gimp_ui_manager_entry_ensure    (GimpUIManager      *manager,
-                                                 const gchar        *path);
-static void     gimp_ui_manager_menu_position   (GtkMenu            *menu,
-                                                 gint               *x,
-                                                 gint               *y,
-                                                 gpointer            data);
-static void     gimp_ui_manager_menu_pos        (GtkMenu            *menu,
-                                                 gint               *x,
-                                                 gint               *y,
-                                                 gboolean           *push_in,
-                                                 gpointer            data);
-static void
-            gimp_ui_manager_delete_popdown_data (GtkObject          *object,
-                                                 GimpUIManager      *manager);
-static void     gimp_ui_manager_item_realize    (GtkWidget          *widget,
-                                                 GimpUIManager      *manager);
-static void    gimp_ui_manager_menu_item_select (GtkWidget          *widget,
-                                                 GimpUIManager      *manager);
-static void  gimp_ui_manager_menu_item_deselect (GtkWidget          *widget,
-                                                 GimpUIManager      *manager);
-static gboolean gimp_ui_manager_item_key_press  (GtkWidget          *widget,
-                                                 GdkEventKey        *kevent,
-                                                 GimpUIManager      *manager);
+                  gimp_ui_manager_entry_ensure        (GimpUIManager  *manager,
+                                                       const gchar    *path);
+static void       gimp_ui_manager_menu_position       (GtkMenu        *menu,
+                                                       gint           *x,
+                                                       gint           *y,
+                                                       gpointer        data);
+static void       gimp_ui_manager_menu_pos            (GtkMenu        *menu,
+                                                       gint           *x,
+                                                       gint           *y,
+                                                       gboolean       *push_in,
+                                                       gpointer        data);
+static void       gimp_ui_manager_delete_popdown_data (GtkObject      *object,
+                                                       GimpUIManager  *manager);
+static void       gimp_ui_manager_item_realize        (GtkWidget      *widget,
+                                                       GimpUIManager  *manager);
+static void       gimp_ui_manager_menu_item_select    (GtkWidget      *widget,
+                                                       GimpUIManager  *manager);
+static void       gimp_ui_manager_menu_item_deselect  (GtkWidget      *widget,
+                                                       GimpUIManager  *manager);
+static gboolean   gimp_ui_manager_item_key_press      (GtkWidget      *widget,
+                                                       GdkEventKey    *kevent,
+                                                       GimpUIManager  *manager);
+static GtkWidget *find_widget_under_pointer           (GdkWindow      *window,
+                                                       gint           *x,
+                                                       gint           *y);
 
 
 G_DEFINE_TYPE (GimpUIManager, gimp_ui_manager, GTK_TYPE_UI_MANAGER)
@@ -942,6 +944,24 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
     {
       GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
+      if (! menu_item && GTK_IS_MENU (widget))
+        {
+          GdkWindow *window = GTK_MENU (widget)->toplevel->window;
+          gint       x, y;
+
+          gdk_window_get_pointer (window, &x, &y, NULL);
+          menu_item = find_widget_under_pointer (window, &x, &y);
+
+          if (menu_item && ! GTK_IS_MENU_ITEM (menu_item))
+            {
+              menu_item = gtk_widget_get_ancestor (menu_item,
+                                                   GTK_TYPE_MENU_ITEM);
+
+              if (! GTK_IS_MENU_ITEM (menu_item))
+                menu_item = NULL;
+            }
+        }
+
       /*  first, get the help page from the item...
        */
       if (menu_item)
@@ -1030,4 +1050,203 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
     }
 
   return TRUE;
+}
+
+
+/* Stuff below taken from gtktooltip.c
+ */
+
+#ifdef __GNUC__
+#warning FIXME: remove this crack as soon as a GTK+ widget_under_pointer() is available
+#endif
+
+struct ChildLocation
+{
+  GtkWidget *child;
+  GtkWidget *container;
+
+  gint x;
+  gint y;
+};
+
+static void
+child_location_foreach (GtkWidget *child,
+			gpointer   data)
+{
+  gint x, y;
+  struct ChildLocation *child_loc = data;
+
+  /* Ignore invisible widgets */
+  if (!GTK_WIDGET_DRAWABLE (child))
+    return;
+
+  /* (child_loc->x, child_loc->y) are relative to
+   * child_loc->container's allocation.
+   */
+
+  if (!child_loc->child &&
+      gtk_widget_translate_coordinates (child_loc->container, child,
+					child_loc->x, child_loc->y,
+					&x, &y))
+    {
+#ifdef DEBUG_TOOLTIP
+      g_print ("candidate: %s  alloc=[(%d,%d)  %dx%d]     (%d, %d)->(%d, %d)\n",
+	       gtk_widget_get_name (child),
+	       child->allocation.x,
+	       child->allocation.y,
+	       child->allocation.width,
+	       child->allocation.height,
+	       child_loc->x, child_loc->y,
+	       x, y);
+#endif /* DEBUG_TOOLTIP */
+
+      /* (x, y) relative to child's allocation. */
+      if (x >= 0 && x < child->allocation.width
+	  && y >= 0 && y < child->allocation.height)
+        {
+	  if (GTK_IS_CONTAINER (child))
+	    {
+	      struct ChildLocation tmp = { NULL, NULL, 0, 0 };
+
+	      /* Take (x, y) relative the child's allocation and
+	       * recurse.
+	       */
+	      tmp.x = x;
+	      tmp.y = y;
+	      tmp.container = child;
+
+	      gtk_container_forall (GTK_CONTAINER (child),
+				    child_location_foreach, &tmp);
+
+	      if (tmp.child)
+		child_loc->child = tmp.child;
+	      else
+		child_loc->child = child;
+	    }
+	  else
+	    child_loc->child = child;
+	}
+    }
+}
+
+/* Translates coordinates from dest_widget->window relative (src_x, src_y),
+ * to allocation relative (dest_x, dest_y) of dest_widget.
+ */
+static void
+window_to_alloc (GtkWidget *dest_widget,
+		 gint       src_x,
+		 gint       src_y,
+		 gint      *dest_x,
+		 gint      *dest_y)
+{
+  /* Translate from window relative to allocation relative */
+  if (!GTK_WIDGET_NO_WINDOW (dest_widget) && dest_widget->parent)
+    {
+      gint wx, wy;
+      gdk_window_get_position (dest_widget->window, &wx, &wy);
+
+      /* Offset coordinates if widget->window is smaller than
+       * widget->allocation.
+       */
+      src_x += wx - dest_widget->allocation.x;
+      src_y += wy - dest_widget->allocation.y;
+    }
+  else
+    {
+      src_x -= dest_widget->allocation.x;
+      src_y -= dest_widget->allocation.y;
+    }
+
+  if (dest_x)
+    *dest_x = src_x;
+  if (dest_y)
+    *dest_y = src_y;
+}
+
+static GtkWidget *
+find_widget_under_pointer (GdkWindow *window,
+			   gint      *x,
+			   gint      *y)
+{
+  GtkWidget *event_widget;
+  struct ChildLocation child_loc = { NULL, NULL, 0, 0 };
+
+  gdk_window_get_user_data (window, (void **)&event_widget);
+
+  if (!event_widget)
+    return NULL;
+
+#ifdef DEBUG_TOOLTIP
+  g_print ("event window %p (belonging to %p (%s))  (%d, %d)\n",
+	   window, event_widget, gtk_widget_get_name (event_widget),
+	   *x, *y);
+#endif
+
+  /* Coordinates are relative to event window */
+  child_loc.x = *x;
+  child_loc.y = *y;
+
+  /* We go down the window hierarchy to the widget->window,
+   * coordinates stay relative to the current window.
+   * We end up with window == widget->window, coordinates relative to that.
+   */
+  while (window && window != event_widget->window)
+    {
+      gint px, py;
+
+      gdk_window_get_position (window, &px, &py);
+      child_loc.x += px;
+      child_loc.y += py;
+
+      window = gdk_window_get_parent (window);
+    }
+
+  /* Failing to find widget->window can happen for e.g. a detached handle box;
+   * chaining ::query-tooltip up to its parent probably makes little sense,
+   * and users better implement tooltips on handle_box->child.
+   * so we simply ignore the event for tooltips here.
+   */
+  if (!window)
+    return NULL;
+
+  /* Convert the window relative coordinates to allocation
+   * relative coordinates.
+   */
+  window_to_alloc (event_widget,
+		   child_loc.x, child_loc.y,
+		   &child_loc.x, &child_loc.y);
+
+  if (GTK_IS_CONTAINER (event_widget))
+    {
+      GtkWidget *container = event_widget;
+
+      child_loc.container = event_widget;
+      child_loc.child = NULL;
+
+      gtk_container_forall (GTK_CONTAINER (event_widget),
+			    child_location_foreach, &child_loc);
+
+      /* Here we have a widget, with coordinates relative to
+       * child_loc.container's allocation.
+       */
+
+      if (child_loc.child)
+	event_widget = child_loc.child;
+      else if (child_loc.container)
+	event_widget = child_loc.container;
+
+      /* Translate to event_widget's allocation */
+      gtk_widget_translate_coordinates (container, event_widget,
+					child_loc.x, child_loc.y,
+					&child_loc.x, &child_loc.y);
+
+    }
+
+  /* We return (x, y) relative to the allocation of event_widget. */
+  if (x)
+    *x = child_loc.x;
+  if (y)
+    *y = child_loc.y;
+
+  return event_widget;
 }

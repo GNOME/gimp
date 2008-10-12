@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -46,7 +46,6 @@
 
 #define EPSILON  0.00001
 
-
 enum
 {
   SET_BRUSH,
@@ -56,70 +55,72 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_brush_core_finalize          (GObject          *object);
+static void     gimp_brush_core_finalize           (GObject          *object);
 
-static gboolean gimp_brush_core_start             (GimpPaintCore    *core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   GimpCoords       *coords,
-                                                   GError          **error);
-static gboolean gimp_brush_core_pre_paint         (GimpPaintCore    *core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   GimpPaintState    paint_state,
-                                                   guint32           time);
-static void     gimp_brush_core_post_paint        (GimpPaintCore    *core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   GimpPaintState    paint_state,
-                                                   guint32           time);
-static void     gimp_brush_core_interpolate       (GimpPaintCore    *core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   guint32           time);
+static gboolean gimp_brush_core_start              (GimpPaintCore    *core,
+                                                    GimpDrawable     *drawable,
+                                                    GimpPaintOptions *paint_options,
+                                                    GimpCoords       *coords,
+                                                    GError          **error);
+static gboolean gimp_brush_core_pre_paint          (GimpPaintCore    *core,
+                                                    GimpDrawable     *drawable,
+                                                    GimpPaintOptions *paint_options,
+                                                    GimpPaintState    paint_state,
+                                                    guint32           time);
+static void     gimp_brush_core_post_paint         (GimpPaintCore    *core,
+                                                    GimpDrawable     *drawable,
+                                                    GimpPaintOptions *paint_options,
+                                                    GimpPaintState    paint_state,
+                                                    guint32           time);
+static void     gimp_brush_core_interpolate        (GimpPaintCore    *core,
+                                                    GimpDrawable     *drawable,
+                                                    GimpPaintOptions *paint_options,
+                                                    guint32           time);
 
-static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore    *paint_core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options);
+static TempBuf *gimp_brush_core_get_paint_area     (GimpPaintCore    *paint_core,
+                                                    GimpDrawable     *drawable,
+                                                    GimpPaintOptions *paint_options);
 
-static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
-                                                   GimpBrush        *brush);
+static void     gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
+                                                    GimpBrush        *brush);
 
-static inline void rotate_pointers                (gulong          **p,
-                                                   guint32           n);
-static TempBuf * gimp_brush_core_subsample_mask   (GimpBrushCore    *core,
-                                                   TempBuf          *mask,
-                                                   gdouble           x,
-                                                   gdouble           y);
-static TempBuf * gimp_brush_core_pressurize_mask  (GimpBrushCore    *core,
-                                                   TempBuf          *brush_mask,
-                                                   gdouble           x,
-                                                   gdouble           y,
-                                                   gdouble           pressure);
-static TempBuf * gimp_brush_core_solidify_mask    (GimpBrushCore    *core,
-                                                   TempBuf          *brush_mask,
-                                                   gdouble           x,
-                                                   gdouble           y);
-static TempBuf * gimp_brush_core_scale_mask       (GimpBrushCore    *core,
-                                                   GimpBrush        *brush);
-static TempBuf * gimp_brush_core_scale_pixmap     (GimpBrushCore    *core,
-                                                   GimpBrush        *brush);
+static inline void rotate_pointers                 (gulong          **p,
+                                                    guint32           n);
+static TempBuf * gimp_brush_core_subsample_mask    (GimpBrushCore    *core,
+                                                    TempBuf          *mask,
+                                                    gdouble           x,
+                                                    gdouble           y);
+static TempBuf * gimp_brush_core_pressurize_mask   (GimpBrushCore    *core,
+                                                    TempBuf          *brush_mask,
+                                                    gdouble           x,
+                                                    gdouble           y,
+                                                    gdouble           pressure);
+static TempBuf * gimp_brush_core_solidify_mask     (GimpBrushCore    *core,
+                                                    TempBuf          *brush_mask,
+                                                    gdouble           x,
+                                                    gdouble           y);
+static gdouble   gimp_brush_core_clamp_brush_scale (GimpBrushCore    *core,
+                                                    gdouble           scale);
+static TempBuf * gimp_brush_core_scale_mask        (GimpBrushCore    *core,
+                                                    GimpBrush        *brush);
+static TempBuf * gimp_brush_core_scale_pixmap      (GimpBrushCore    *core,
+                                                    GimpBrush        *brush);
 
-static void      gimp_brush_core_invalidate_cache (GimpBrush        *brush,
-                                                   GimpBrushCore    *core);
+static void      gimp_brush_core_invalidate_cache  (GimpBrush        *brush,
+                                                    GimpBrushCore    *core);
 
 
 /*  brush pipe utility functions  */
-static void      paint_line_pixmap_mask           (GimpImage        *dest,
-                                                   GimpDrawable     *drawable,
-                                                   TempBuf          *pixmap_mask,
-                                                   TempBuf          *brush_mask,
-                                                   guchar           *d,
-                                                   gint              x,
-                                                   gint              y,
-                                                   gint              bytes,
-                                                   gint              width,
-                                                   GimpBrushApplicationMode  mode);
+static void      paint_line_pixmap_mask            (GimpImage        *dest,
+                                                    GimpDrawable     *drawable,
+                                                    TempBuf          *pixmap_mask,
+                                                    TempBuf          *brush_mask,
+                                                    guchar           *d,
+                                                    gint              x,
+                                                    gint              y,
+                                                    gint              bytes,
+                                                    gint              width,
+                                                    GimpBrushApplicationMode  mode);
 
 
 G_DEFINE_TYPE (GimpBrushCore, gimp_brush_core, GIMP_TYPE_PAINT_CORE)
@@ -691,10 +692,9 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                        &paint_core->cur_coords,
                                                        TRUE);
 
-  /* else use scale from start(), we don't support on-the-fly scaling */
+  core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
 
-  gimp_brush_scale_size (core->brush, core->scale,
-                         &brush_width, &brush_height);
+  gimp_brush_scale_size (core->brush, core->scale, &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
@@ -782,7 +782,11 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
   scale = paint_options->brush_scale;
 
   if (scale > 0.0)
-    mask = gimp_brush_scale_mask (core->main_brush, scale);
+    {
+      scale = gimp_brush_core_clamp_brush_scale (core, scale);
+
+      mask = gimp_brush_scale_mask (core->main_brush, scale);
+    }
 
   if (mask)
     {
@@ -1263,6 +1267,16 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
   return dest;
 }
 
+static gdouble
+gimp_brush_core_clamp_brush_scale (GimpBrushCore *core,
+                                   gdouble        scale)
+{
+  TempBuf *mask = core->main_brush->mask;
+
+  /* ensure that the final brush mask remains >= 0.5 pixel along both axes */
+  return MAX (0.5 / (gfloat) MIN (mask->width, mask->height), scale);
+}
+
 static TempBuf *
 gimp_brush_core_scale_mask (GimpBrushCore *core,
                             GimpBrush     *brush)
@@ -1271,7 +1285,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   gint height;
 
   if (core->scale <= 0.0)
-    return NULL;
+    return NULL; /* Should never happen now, with scale clamping. */
 
   if (core->scale == 1.0)
     return brush->mask;

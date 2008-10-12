@@ -999,7 +999,7 @@ query(void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/New/Acquire");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Create/Acquire");
 }
 
 /* Return values storage */

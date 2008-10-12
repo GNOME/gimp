@@ -190,15 +190,16 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
                                      GIMP_DIRTY_DRAWABLE        |
                                      GIMP_DIRTY_SELECTION);
 
-  image_map_tool->drawable     = NULL;
-  image_map_tool->operation    = NULL;
-  image_map_tool->config       = NULL;
-  image_map_tool->image_map    = NULL;
+  image_map_tool->drawable       = NULL;
+  image_map_tool->operation      = NULL;
+  image_map_tool->config         = NULL;
+  image_map_tool->default_config = NULL;
+  image_map_tool->image_map      = NULL;
 
-  image_map_tool->shell        = NULL;
-  image_map_tool->main_vbox    = NULL;
-  image_map_tool->settings_box = NULL;
-  image_map_tool->label_group  = NULL;
+  image_map_tool->shell          = NULL;
+  image_map_tool->main_vbox      = NULL;
+  image_map_tool->settings_box   = NULL;
+  image_map_tool->label_group    = NULL;
 }
 
 static GObject *
@@ -237,6 +238,12 @@ gimp_image_map_tool_finalize (GObject *object)
     {
       g_object_unref (image_map_tool->config);
       image_map_tool->config = NULL;
+    }
+
+  if (image_map_tool->default_config)
+    {
+      g_object_unref (image_map_tool->default_config);
+      image_map_tool->default_config = NULL;
     }
 
   if (image_map_tool->shell)
@@ -467,7 +474,16 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
     }
   else if (tool->config)
     {
-      gimp_config_reset (GIMP_CONFIG (tool->config));
+      if (tool->default_config)
+        {
+          gimp_config_copy (GIMP_CONFIG (tool->default_config),
+                            GIMP_CONFIG (tool->config),
+                            0);
+        }
+      else
+        {
+          gimp_config_reset (GIMP_CONFIG (tool->config));
+        }
     }
 }
 
@@ -674,9 +690,9 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
 
   new_tool = tool_manager_get_active (display->gimp);
 
-  gimp_config_copy (config,
-                    GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
-                    0);
+  GIMP_IMAGE_MAP_TOOL (new_tool)->default_config = g_object_ref (config);
+
+  gimp_image_map_tool_reset (GIMP_IMAGE_MAP_TOOL (new_tool));
 }
 
 GtkWidget *

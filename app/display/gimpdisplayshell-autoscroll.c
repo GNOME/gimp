@@ -130,14 +130,22 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
   if (dx || dy)
     {
-      GimpDisplay *display     = shell->display;
-      GimpTool    *active_tool = tool_manager_get_active (display->gimp);
+      GimpDisplay *display         = shell->display;
+      GimpTool    *active_tool     = tool_manager_get_active (display->gimp);
+      gint         scroll_amount_x = AUTOSCROLL_DX * dx;
+      gint         scroll_amount_y = AUTOSCROLL_DX * dy;
 
       info->time += AUTOSCROLL_DT;
 
+      gimp_display_shell_scroll_unoverscrollify (shell,
+                                                 scroll_amount_x,
+                                                 scroll_amount_y,
+                                                 &scroll_amount_x,
+                                                 &scroll_amount_y);
+
       gimp_display_shell_scroll (shell,
-                                 AUTOSCROLL_DX * (gdouble) dx,
-                                 AUTOSCROLL_DX * (gdouble) dy);
+                                 scroll_amount_x,
+                                 scroll_amount_y);
 
       gimp_display_shell_untransform_coordinate (shell,
                                                  &device_coords,

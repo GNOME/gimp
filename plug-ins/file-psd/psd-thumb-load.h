@@ -23,9 +23,10 @@
 #define __PSD_THUMB_LOAD_H__
 
 
-gint32 load_thumbnail_image (const gchar *filename,
-                             gint        *width,
-                             gint        *height);
+gint32 load_thumbnail_image (const gchar  *filename,
+                             gint         *width,
+                             gint         *height,
+                             GError      **error);
 
 
 #endif /* __PSD_THUMB_LOAD_H__ */

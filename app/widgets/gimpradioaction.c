@@ -80,13 +80,24 @@ gimp_radio_action_new (const gchar *name,
                        const gchar *stock_id,
                        gint         value)
 {
-  return g_object_new (GIMP_TYPE_RADIO_ACTION,
-                       "name",     name,
-                       "label",    label,
-                       "tooltip",  tooltip,
-                       "stock-id", stock_id,
-                       "value",    value,
-                       NULL);
+  GtkRadioAction *action;
+
+  action = g_object_new (GIMP_TYPE_RADIO_ACTION,
+                         "name",     name,
+                         "label",    label,
+                         "tooltip",  tooltip,
+                         "value",    value,
+                         NULL);
+
+  if (stock_id)
+    {
+      if (gtk_icon_factory_lookup_default (stock_id))
+        g_object_set (action, "stock-id", stock_id, NULL);
+      else
+        g_object_set (action, "icon-name", stock_id, NULL);
+    }
+
+  return action;
 }
 
 

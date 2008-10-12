@@ -414,13 +414,6 @@ run (const gchar      *name,
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (error)
-            {
-              *nreturn_vals = 2;
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
         }
     }
   else if (strcmp (name, SAVE_PROC)  == 0 ||
@@ -544,13 +537,6 @@ run (const gchar      *name,
           else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
-
-              if (error)
-                {
-                  *nreturn_vals = 2;
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-                }
             }
         }
 
@@ -597,11 +583,20 @@ run (const gchar      *name,
           save_defaults ();
         }
       else
-        status = GIMP_PDB_CALLING_ERROR;
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;
@@ -704,7 +699,7 @@ load_image (const gchar  *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error while reading '%s'. File corrupted?"),
                    gimp_filename_to_utf8 (filename));
       return image;
@@ -1349,8 +1344,7 @@ save_image (const gchar  *filename,
       break;
 
     default:
-      g_set_error (error, 0, 0,
-                   "%s", _("Image type can't be saved as PNG"));
+      g_set_error (error, 0, 0, "Image type can't be saved as PNG");
       return FALSE;
     }
 

@@ -294,6 +294,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_PATH => 'GIMP_PDB_VECTORS',
 		       GIMP_PDB_BOUNDARY => 'GIMP_PDB_COLORARRAY' }
 	},
+    GimpPDBErrorHandler =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_PDB_ERROR_HANDLER_INTERNAL
+			  GIMP_PDB_ERROR_HANDLER_PLUGIN) ],
+	  mapping => { GIMP_PDB_ERROR_HANDLER_INTERNAL => '0',
+		       GIMP_PDB_ERROR_HANDLER_PLUGIN => '1' }
+	},
     GimpPDBProcType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

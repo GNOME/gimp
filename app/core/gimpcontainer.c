@@ -88,6 +88,11 @@ static void       gimp_container_get_property    (GObject          *object,
 static gint64     gimp_container_get_memsize     (GimpObject       *object,
                                                   gint64           *gui_size);
 
+static void       gimp_container_real_add        (GimpContainer    *container,
+                                                  GimpObject       *object);
+static void       gimp_container_real_remove     (GimpContainer    *container,
+                                                  GimpObject       *object);
+
 static gboolean   gimp_container_serialize       (GimpConfig       *config,
                                                   GimpConfigWriter *writer,
                                                   gpointer          data);
@@ -170,8 +175,8 @@ gimp_container_class_init (GimpContainerClass *klass)
 
   gimp_object_class->get_memsize = gimp_container_get_memsize;
 
-  klass->add                     = NULL;
-  klass->remove                  = NULL;
+  klass->add                     = gimp_container_real_add;
+  klass->remove                  = gimp_container_real_remove;
   klass->reorder                 = NULL;
   klass->freeze                  = NULL;
   klass->thaw                    = NULL;
@@ -303,6 +308,21 @@ gimp_container_get_memsize (GimpObject *object,
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
+
+static void
+gimp_container_real_add (GimpContainer *container,
+                         GimpObject    *object)
+{
+  container->num_children++;
+}
+
+static void
+gimp_container_real_remove (GimpContainer *container,
+                            GimpObject    *object)
+{
+  container->num_children--;
+}
+
 
 typedef struct
 {
@@ -515,9 +535,8 @@ gboolean
 gimp_container_add (GimpContainer *container,
                     GimpObject    *object)
 {
-  GimpContainerHandler *handler;
-  GList                *list;
-  gulong                handler_id;
+  GList *list;
+  gint   n_children;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
@@ -534,7 +553,8 @@ gimp_container_add (GimpContainer *container,
 
   for (list = container->handlers; list; list = g_list_next (list))
     {
-      handler = (GimpContainerHandler *) list->data;
+      GimpContainerHandler *handler = list->data;
+      gulong                handler_id;
 
       handler_id = g_signal_connect (object,
                                      handler->signame,
@@ -558,9 +578,18 @@ gimp_container_add (GimpContainer *container,
       break;
     }
 
-  container->num_children++;
+  n_children = container->num_children;
 
   g_signal_emit (container, container_signals[ADD], 0, object);
+
+  if (n_children == container->num_children)
+    {
+      g_warning ("%s: GimpContainer::add() implementation did not "
+                 "chain up. Please report this at http://www.gimp.org/bugs/",
+                 G_STRFUNC);
+
+      container->num_children++;
+    }
 
   return TRUE;
 }
@@ -569,9 +598,8 @@ gboolean
 gimp_container_remove (GimpContainer *container,
                        GimpObject    *object)
 {
-  GimpContainerHandler *handler;
-  GList                *list;
-  gulong                handler_id;
+  GList *list;
+  gint   n_children;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
@@ -588,7 +616,8 @@ gimp_container_remove (GimpContainer *container,
 
   for (list = container->handlers; list; list = g_list_next (list))
     {
-      handler = (GimpContainerHandler *) list->data;
+      GimpContainerHandler *handler = list->data;
+      gulong                handler_id;
 
       handler_id = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
                                                          handler->quark));
@@ -601,10 +630,18 @@ gimp_container_remove (GimpContainer *container,
         }
     }
 
-  container->num_children--;
+  n_children = container->num_children;
 
-  g_signal_emit (container, container_signals[REMOVE], 0,
-                 object);
+  g_signal_emit (container, container_signals[REMOVE], 0, object);
+
+  if (n_children == container->num_children)
+    {
+      g_warning ("%s: GimpContainer::remove() implementation did not "
+                 "chain up. Please report this at http://www.gimp.org/bugs/",
+                 G_STRFUNC);
+
+      container->num_children--;
+    }
 
   switch (container->policy)
     {

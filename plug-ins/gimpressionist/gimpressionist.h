@@ -136,11 +136,13 @@ gchar *findfile (const gchar *);
 
 void unselectall (GtkWidget *list);
 void reselect (GtkWidget *list, char *fname);
-void readdirintolist (char *subdir, GtkWidget *view, char *selected);
-void readdirintolist_extended (char *subdir, GtkWidget *view, char *selected,
+void readdirintolist (const char *subdir, GtkWidget *view, char *selected);
+void readdirintolist_extended (const char *subdir,
+                               GtkWidget *view, char *selected,
                                gboolean with_filename_column,
-                               gchar *(*get_object_name_cb)
-                               (gchar *dir, gchar *filename, void *context),
+                               gchar *(*get_object_name_cb) (const gchar *dir,
+                                                             gchar *filename,
+                                                             void *context),
                                void * context);
 
 GtkWidget *create_one_column_list (GtkWidget *parent,

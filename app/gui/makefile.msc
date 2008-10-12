@@ -35,6 +35,8 @@ OBJECTS = \
 	session.obj \
 	splash.obj \
 	themes.obj \
+	gimpdbusservice.obj \
+	gui-unique.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

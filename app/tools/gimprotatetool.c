@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -199,7 +200,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (scale);
 
-  button = gimp_spin_button_new (&adj, 0, -1, 1, 1, 10, 1, 1, 2);
+  button = gimp_spin_button_new (&adj, 0, -1, 1, 1, 10, 0, 1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center _X:"),
                              0.0, 0.5, button, 1, TRUE);

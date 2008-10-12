@@ -66,10 +66,12 @@ static void      run                   (const gchar      *name,
                                         const GimpParam  *param,
                                         gint             *nreturn_vals,
                                         GimpParam       **return_vals);
-static gint32    load_image            (const gchar      *filename);
+static gint32    load_image            (const gchar      *filename,
+                                        GError          **error);
 static gboolean  save_image            (const gchar      *filename,
                                         gint32            image_ID,
-                                        gint32            drawable_ID);
+                                        gint32            drawable_ID,
+                                        GError          **error);
 static void      dicom_loader          (guint8           *pix_buf,
                                         DicomInfo        *info,
                                         GimpPixelRgn     *pixel_rgn);
@@ -190,6 +192,7 @@ run (const gchar      *name,
   gint32             image_ID;
   gint32             drawable_ID;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   INIT_I18N ();
 
@@ -202,7 +205,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
 	{
@@ -214,7 +217,14 @@ run (const gchar      *name,
       else
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+
+          if (error)
+            {
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+            }
+ 	}
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -226,6 +236,7 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
 	  export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
 				      GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
@@ -260,9 +271,19 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    status = GIMP_PDB_EXECUTION_ERROR;
-	}
+	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+                            &error))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+
+              if (error)
+                {
+                  *nreturn_vals = 2;
+                  values[1].type          = GIMP_PDB_STRING;
+                  values[1].data.d_string = error->message;
+                }
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
@@ -276,7 +297,8 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **error)
 {
   GimpPixelRgn    pixel_rgn;
   gint32 volatile image_ID          = -1;
@@ -297,10 +319,11 @@ load_image (const gchar *filename)
   /* open the file */
   DICOM = g_fopen (filename, "rb");
 
-  if (!DICOM)
+  if (! DICOM)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -325,8 +348,9 @@ load_image (const gchar *filename)
   fread (buf, 1, 4, DICOM); /* This should be dicom */
   if (g_ascii_strncasecmp (buf,"DICM",4) != 0)
     {
-      g_message (_("'%s' is not a DICOM file."),
-                 gimp_filename_to_utf8 (filename));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a DICOM file."),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -721,7 +745,8 @@ toggle_endian2 (guint16 *buf16,
 static gboolean
 save_image (const gchar  *filename,
 	    gint32        image_ID,
-	    gint32        drawable_ID)
+	    gint32        drawable_ID,
+            GError      **error)
 {
   FILE          *DICOM;
   GimpImageType  drawable_type;
@@ -771,9 +796,10 @@ save_image (const gchar  *filename,
 
   if (!DICOM)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       gimp_drawable_detach (drawable);
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 

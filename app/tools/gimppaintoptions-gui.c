@@ -228,7 +228,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
        * label positions in RTL mode.
        */
       fixed = gtk_fixed_new ();
-      gtk_table_attach (GTK_TABLE (table), fixed, 0, 6, 0, 1,
+      gtk_table_attach (GTK_TABLE (table), fixed, 0, n_dynamics + 2, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (fixed);
 

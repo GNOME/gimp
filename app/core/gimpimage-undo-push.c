@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -82,7 +82,9 @@ GimpUndo *
 gimp_image_undo_push_image_size (GimpImage   *image,
                                  const gchar *undo_desc,
                                  gint         previous_origin_x,
-                                 gint         previous_origin_y)
+                                 gint         previous_origin_y,
+                                 gint         previous_width,
+                                 gint         previous_height)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -91,6 +93,8 @@ gimp_image_undo_push_image_size (GimpImage   *image,
                                GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE,
                                "previous-origin-x", previous_origin_x,
                                "previous-origin-y", previous_origin_y,
+                               "previous-width",    previous_width,
+                               "previous-height",   previous_height,
                                NULL);
 }
 

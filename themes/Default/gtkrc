@@ -36,26 +36,27 @@ style "gimp-default-style"
       { "images/stock-warning-64.png", *, *, "gtk-dialog" }
     }
 
-  GtkPaned::handle_size             = 6
-  GimpDock::default_height          = 300
+  GtkPaned::handle-size             = 6
+  GimpDock::default-height          = 300
+  GimpDock::font-scale              = 0.8333
   GimpDockSeparator::height         = 6
-  GimpMenuDock::minimal_width       = 200
-  GimpMenuDock::menu_preview_size   = button
-  GimpToolbox::tool_icon_size       = button
-  GimpToolbox::button_relief        = none
-  GimpDockbook::tab_border          = 0
-  GimpDockbook::tab_icon_size       = button
-  GimpColorNotebook::tab_border     = 0
-  GimpColorNotebook::tab_icon_size  = button
-  GimpDockable::content_border      = 2
-  GimpEditor::content_spacing       = 2
-  GimpEditor::button_spacing        = 2
-  GimpEditor::button_icon_size      = menu
-  GimpDataEditor::minimal_height    = 96
-  GtkDialog::content_area_border    = 0
-  GtkDialog::button_spacing         = 6
-  GtkDialog::action_area_border     = 12
-  GimpUnitComboBox::appears_as_list = 0
+  GimpMenuDock::minimal-width       = 200
+  GimpMenuDock::menu-preview-size   = button
+  GimpToolbox::tool-icon-size       = button
+  GimpToolbox::button-relief        = none
+  GimpDockbook::tab-border          = 0
+  GimpDockbook::tab-icon-size       = button
+  GimpColorNotebook::tab-border     = 0
+  GimpColorNotebook::tab-icon-size  = button
+  GimpDockable::content-border      = 2
+  GimpEditor::content-spacing       = 2
+  GimpEditor::button-spacing        = 2
+  GimpEditor::button-icon-size      = menu
+  GimpDataEditor::minimal-height    = 96
+  GtkDialog::content-area-border    = 0
+  GtkDialog::button-spacing         = 6
+  GtkDialog::action-area-border     = 12
+  GimpUnitComboBox::appears-as-list = 0
 }
 
 class "GtkWidget" style "gimp-default-style"
@@ -63,7 +64,7 @@ class "GtkWidget" style "gimp-default-style"
 
 style "gimp-tool-dialog-style" = "gimp-default-style"
 {
-  GtkDialog::action_area_border = 6
+  GtkDialog::action-area-border = 6
 }
 
 class "GimpToolDialog" style "gimp-tool-dialog-style"
@@ -79,10 +80,10 @@ widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 
 style "gimp-dockable-style" = "gimp-default-style"
 {
-  GimpFrame::label_bold       = 0
-  GimpFrame::label_spacing    = 2
-  GtkButton::focus_line_width = 1
-  GtkButton::focus_padding    = 0
+  GimpFrame::label-bold       = 0
+  GimpFrame::label-spacing    = 2
+  GtkButton::focus-line_width = 1
+  GtkButton::focus-padding    = 0
 }
 
 widget "*GimpDockable.*" style "gimp-dockable-style"
@@ -90,12 +91,13 @@ widget "*GimpDockable.*" style "gimp-dockable-style"
 
 style "gimp-display-style" = "gimp-default-style"
 {
+  GimpRuler::font-scale          = 0.8333
   GimpUnitComboBox::label-scale  = 0.8333
   GimpScaleComboBox::label-scale = 0.8333
   GtkComboBox::arrow-size        = 8
   GtkButton::inner-border        = { 0, 0, 0, 0 }
-  GtkButton::focus_line_width    = 0
-  GtkButton::focus_padding       = 0
+  GtkButton::focus-line_width    = 0
+  GtkButton::focus-padding       = 0
 }
 
 widget "*GimpDisplayShell.*" style "gimp-display-style"

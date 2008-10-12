@@ -286,7 +286,8 @@ copy_uri (const gchar  *src_uri,
 
   if (! g_vfs_is_active (vfs))
     {
-      g_set_error (error, 0, 0, "Initialization of GVfs failed");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "Initialization of GVfs failed");
       return FALSE;
     }
 

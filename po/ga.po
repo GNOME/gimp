@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2004-03-21 18:59+0100\n"
+"PO-Revision-Date: 2008-09-02 08:35+0200\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish  <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -7138,7 +7138,7 @@ msgstr ""
 #.
 #: app/dialogs/tips-parser.c:165
 msgid "tips-locale:C"
-msgstr "tips-locale:ga"
+msgstr "tips-locale:C"
 
 #: app/dialogs/user-install-dialog.c:134
 msgid ""

@@ -276,8 +276,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-    gimp_layer_add_mask (layer, mask, TRUE);
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
+                                 gimp_item_get_image (GIMP_ITEM (layer)),
+                                 error))
+    success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
   else
     success = FALSE;
 }
@@ -305,7 +307,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+      gimp_layer_get_mask (layer))
     gimp_layer_apply_mask (layer, mode, TRUE);
   else
     success = FALSE;
@@ -315,14 +318,14 @@ CODE
 }
 
 sub layer_scale {
-    $blurb = 'Scale the layer to the specified extents.';
+    $blurb = 'Scale the layer using the default interpolation method.';
 
     $help = <<'HELP';
 This procedure scales the layer so that its new width and height are
 equal to the supplied parameters. The 'local-origin' parameter
 specifies whether to scale from the center of the layer, or from the
 image origin. This operation only works if the layer has been added to
-an image.
+an image. The default interpolation method is used for scaling.
 HELP
 
     &std_pdb_misc;
@@ -342,11 +345,72 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
-    gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                               gimp->config->interpolation_type, NULL,
-                               local_origin);
+    {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
+      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                 gimp->config->interpolation_type, progress,
+                                 local_origin);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub layer_scale_full {
+    $blurb = 'Scale the layer using a specific interpolation method.';
+
+    $help = <<'HELP';
+This procedure scales the layer so that its new width and height are
+equal to the supplied parameters. The 'local-origin' parameter
+specifies whether to scale from the center of the layer, or from the
+image origin. This operation only works if the layer has been added to
+an image. This procedure allows you to specify the interpolation
+method explicitly.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer height' },
+	{ name => 'local_origin', type => 'boolean',
+	  desc => 'Use a local origin (as opposed to the image origin)' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+    {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
+      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                 interpolation, progress,
+                                 local_origin);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+  else
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -995,6 +1059,7 @@ CODE
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
+              "core/gimpprogress.h"
               "core/gimpprojection.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
@@ -1005,7 +1070,7 @@ CODE
             layer_copy
             layer_add_alpha
             layer_flatten
-            layer_scale
+            layer_scale layer_scale_full
             layer_resize layer_resize_to_image_size
 	    layer_translate
             layer_set_offsets

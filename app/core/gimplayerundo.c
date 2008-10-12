@@ -18,14 +18,12 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
-#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplayerundo.h"
 
 
@@ -197,44 +195,8 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       layer_undo->prev_position = gimp_image_get_layer_index (undo->image,
                                                               layer);
 
-      gimp_container_remove (undo->image->layers, GIMP_OBJECT (layer));
-      undo->image->layer_stack = g_slist_remove (undo->image->layer_stack,
-                                                 layer);
-
-      if (gimp_layer_is_floating_sel (layer))
-        {
-          /*  invalidate the boundary *before* setting the
-           *  floating_sel pointer to NULL because the selection's
-           *  outline is affected by the floating_sel and won't be
-           *  completely cleared otherwise (bug #160247).
-           */
-          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
-          undo->image->floating_sel = NULL;
-
-          /*  activate the underlying drawable  */
-          floating_sel_activate_drawable (layer);
-
-          gimp_image_floating_selection_changed (undo->image);
-        }
-      else if (layer == gimp_image_get_active_layer (undo->image))
-        {
-          if (layer_undo->prev_layer)
-            {
-              gimp_image_set_active_layer (undo->image, layer_undo->prev_layer);
-            }
-          else if (undo->image->layer_stack)
-            {
-              gimp_image_set_active_layer (undo->image,
-                                           undo->image->layer_stack->data);
-            }
-          else
-            {
-              gimp_image_set_active_layer (undo->image, NULL);
-            }
-        }
-
-      gimp_item_removed (GIMP_ITEM (layer));
+      gimp_image_remove_layer (undo->image, layer, FALSE,
+                               layer_undo->prev_layer);
     }
   else
     {
@@ -243,16 +205,8 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       /*  record the active layer  */
       layer_undo->prev_layer = gimp_image_get_active_layer (undo->image);
 
-      /*  if this is a floating selection, set the fs pointer  */
-      if (gimp_layer_is_floating_sel (layer))
-        undo->image->floating_sel = layer;
-
-      gimp_container_insert (undo->image->layers,
-                             GIMP_OBJECT (layer), layer_undo->prev_position);
-      gimp_image_set_active_layer (undo->image, layer);
-
-      if (gimp_layer_is_floating_sel (layer))
-        gimp_image_floating_selection_changed (undo->image);
+      gimp_image_add_layer (undo->image, layer,
+                            layer_undo->prev_position, FALSE);
 
       GIMP_ITEM (layer)->removed = FALSE;
 

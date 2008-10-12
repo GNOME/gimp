@@ -28,6 +28,7 @@
 #include "script-fu-types.h"
 
 #include "script-fu-console.h"
+#include "script-fu-eval.h"
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
@@ -196,7 +197,7 @@ script_fu_run (const gchar      *name,
     }
 
   if (param != NULL)
-      set_run_mode_constant ((GimpRunMode)param[0].data.d_int32);
+    ts_set_run_mode ((GimpRunMode) param[0].data.d_int32);
 
   /*  Load all of the available scripts  */
   script_fu_find_scripts (path);
@@ -306,20 +307,20 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Image>/Filters/Languages/Script-Fu",
                                     N_("_Test"));
 
-  gimp_plugin_menu_branch_register ("<Image>/File/New",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create",
                                     N_("_Buttons"));
-  gimp_plugin_menu_branch_register ("<Image>/File/New",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create",
                                     N_("_Logos"));
-  gimp_plugin_menu_branch_register ("<Image>/File/New",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create",
                                     N_("_Patterns"));
 
-  gimp_plugin_menu_branch_register ("<Image>/File/New",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create",
                                     N_("_Web Page Themes"));
-  gimp_plugin_menu_branch_register ("<Image>/File/New/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create/Web Page Themes",
                                     N_("_Alien Glow"));
-  gimp_plugin_menu_branch_register ("<Image>/File/New/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create/Web Page Themes",
                                     N_("_Beveled Pattern"));
-  gimp_plugin_menu_branch_register ("<Image>/File/New/Web Page Themes",
+  gimp_plugin_menu_branch_register ("<Image>/File/Create/Web Page Themes",
                                     N_("_Classic.Gimp.Org"));
 
   gimp_plugin_menu_branch_register ("<Image>/Filters",

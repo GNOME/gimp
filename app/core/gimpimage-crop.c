@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -87,9 +87,13 @@ gimp_image_crop (GimpImage   *image,
                  gboolean     crop_layers)
 {
   gint width, height;
+  gint previous_width, previous_height;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  previous_width  = gimp_image_get_width (image);
+  previous_height = gimp_image_get_height (image);
 
   width  = x2 - x1;
   height = y2 - y1;
@@ -129,7 +133,12 @@ gimp_image_crop (GimpImage   *image,
                                      _("Resize Image"));
 
       /*  Push the image size to the stack  */
-      gimp_image_undo_push_image_size (image, NULL, x1, y1);
+      gimp_image_undo_push_image_size (image,
+                                       NULL,
+                                       x1,
+                                       y1,
+                                       width,
+                                       height);
 
       /*  Set the new width and height  */
       g_object_set (image,
@@ -194,7 +203,7 @@ gimp_image_crop (GimpImage   *image,
                                   -(lx1 - off_x),
                                   -(ly1 - off_y));
               else
-                gimp_image_remove_layer (image, GIMP_LAYER (item));
+                gimp_image_remove_layer (image, GIMP_LAYER (item), TRUE, NULL);
             }
         }
 
@@ -267,7 +276,11 @@ gimp_image_crop (GimpImage   *image,
                          gimp_image_get_width  (image),
                          gimp_image_get_height (image));
 
-      gimp_image_size_changed_detailed (image, -x1, -y1);
+      gimp_image_size_changed_detailed (image,
+                                        -x1,
+                                        -y1,
+                                        previous_width,
+                                        previous_height);
 
       g_object_thaw_notify (G_OBJECT (image));
     }

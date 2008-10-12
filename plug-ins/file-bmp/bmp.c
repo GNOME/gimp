@@ -157,12 +157,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -193,7 +194,7 @@ run (const gchar      *name,
 
        if (status == GIMP_PDB_SUCCESS)
          {
-           image_ID = ReadBMP (param[1].data.d_string);
+           image_ID = ReadBMP (param[1].data.d_string, &error);
 
            if (image_ID != -1)
              {
@@ -246,7 +247,8 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-        status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
+        status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID,
+                           &error);
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
@@ -254,6 +256,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;

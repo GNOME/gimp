@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -211,7 +212,7 @@ gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      item_view_class->add_item (item_view->image, new_item, index);
+      item_view_class->add_item (item_view->image, new_item, index, TRUE);
       gimp_image_flush (item_view->image);
       return;
     }
@@ -261,7 +262,8 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   if (src_image != item_view->image)
     GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, item_view->image);
 
-  gimp_image_add_channel (item_view->image, GIMP_CHANNEL (new_item), index);
+  gimp_image_add_channel (item_view->image, GIMP_CHANNEL (new_item), index,
+                          TRUE);
   gimp_image_flush (item_view->image);
 }
 
@@ -320,7 +322,7 @@ gimp_channel_tree_view_item_new (GimpImage *image)
                                   gimp_image_get_height (image),
                                   _("Empty Channel"), &color);
 
-  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 

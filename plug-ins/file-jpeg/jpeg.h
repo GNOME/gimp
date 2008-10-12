@@ -40,6 +40,13 @@ typedef struct my_error_mgr
   jmp_buf               setjmp_buffer;  /* for return to caller */
 } *my_error_ptr;
 
+typedef enum
+{
+  JPEG_SUPSAMPLING_2x2_1x1_1x1 = 0,  /* smallest file */
+  JPEG_SUPSAMPLING_2x1_1x1_1x1 = 1,  /* 4:2:2         */
+  JPEG_SUPSAMPLING_1x1_1x1_1x1 = 2,
+  JPEG_SUPSAMPLING_1x2_1x1_1x1 = 3
+} JpegSubsampling;
 
 extern gint32 volatile  preview_image_ID;
 extern gint32           preview_layer_ID;
@@ -50,12 +57,9 @@ extern gint32           display_ID;
 extern gchar           *image_comment;
 extern gboolean         has_metadata;
 extern gint             orig_quality;
-extern gint             orig_subsmp;
+extern JpegSubsampling  orig_subsmp;
 extern gint             num_quant_tables;
 
-gint32    load_image                    (const gchar   *filename,
-                                         GimpRunMode    runmode,
-                                         gboolean       preview);
 
 void      destroy_preview               (void);
 
@@ -67,10 +71,6 @@ void      my_output_message             (j_common_ptr   cinfo);
 #ifdef HAVE_EXIF
 
 extern ExifData *exif_data;
-
-gint32    load_thumbnail_image          (const gchar   *filename,
-                                         gint          *width,
-                                         gint          *height);
 
 ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
                                          GError       **error);

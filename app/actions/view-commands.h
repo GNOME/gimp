@@ -87,5 +87,8 @@ void   view_shrink_wrap_cmd_callback           (GtkAction *action,
 void   view_fullscreen_cmd_callback            (GtkAction *action,
                                                 gpointer   data);
 
+void   view_use_gegl_cmd_callback              (GtkAction *action,
+                                                gpointer   data);
+
 
 #endif /* __VIEW_COMMANDS_H__ */

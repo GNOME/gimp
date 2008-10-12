@@ -38,7 +38,7 @@
 
 static const GimpActionEntry documents_actions[] =
 {
-  { "documents-popup", GTK_STOCK_OPEN,
+  { "documents-popup", "document-open-recent",
     N_("Documents Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCUMENT_DIALOG },
 
@@ -48,13 +48,13 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_open_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
-  { "documents-raise-or-open", GTK_STOCK_OPEN,
+  { "documents-raise-or-open", NULL,
     N_("_Raise or Open Image"), "",
     N_("Raise window if already open"),
     G_CALLBACK (documents_raise_or_open_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
-  { "documents-file-open-dialog", GTK_STOCK_OPEN,
+  { "documents-file-open-dialog", NULL,
     N_("File Open _Dialog"), "",
     N_("Open image dialog"),
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
@@ -84,13 +84,13 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_recreate_preview_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
-  { "documents-reload-previews", GTK_STOCK_REFRESH,
+  { "documents-reload-previews", NULL,
     N_("Reload _all Previews"), "",
     N_("Reload all previews"),
     G_CALLBACK (documents_reload_previews_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
-  { "documents-remove-dangling", GTK_STOCK_REFRESH,
+  { "documents-remove-dangling", NULL,
     N_("Remove Dangling E_ntries"), "",
     N_("Remove dangling entries"),
     G_CALLBACK (documents_remove_dangling_cmd_callback),

@@ -172,43 +172,45 @@ struct mnglib_userdata_t
  * Function prototypes
  */
 
-static mng_ptr  myalloc       (mng_size_t  size);
-static void     myfree        (mng_ptr     ptr,
-                               mng_size_t  size);
-static mng_bool myopenstream  (mng_handle  handle);
-static mng_bool myclosestream (mng_handle  handle);
-static mng_bool mywritedata   (mng_handle  handle,
-                               mng_ptr     buf,
-                               mng_uint32  size,
-                               mng_uint32 *written_size);
+static mng_ptr   myalloc       (mng_size_t  size);
+static void      myfree        (mng_ptr     ptr,
+                                mng_size_t  size);
+static mng_bool  myopenstream  (mng_handle  handle);
+static mng_bool  myclosestream (mng_handle  handle);
+static mng_bool  mywritedata   (mng_handle  handle,
+                                mng_ptr     buf,
+                                mng_uint32  size,
+                                mng_uint32 *written_size);
 
 
-static gint32   parse_chunks_type_from_layer_name   (const gchar *str);
-static gint32   parse_disposal_type_from_layer_name (const gchar *str);
-static gint32   parse_ms_tag_from_layer_name        (const gchar *str);
-static gint     find_unused_ia_colour               (guchar      *pixels,
-                                                     gint         numpixels,
-                                                     gint        *colors);
-static gboolean ia_has_transparent_pixels           (guchar      *pixels,
-                                                     gint         numpixels);
+static gint32    parse_chunks_type_from_layer_name   (const gchar *str);
+static gint32    parse_disposal_type_from_layer_name (const gchar *str);
+static gint32    parse_ms_tag_from_layer_name        (const gchar *str);
+static gint      find_unused_ia_colour               (guchar      *pixels,
+                                                      gint         numpixels,
+                                                      gint        *colors);
+static gboolean  ia_has_transparent_pixels           (guchar      *pixels,
+                                                      gint         numpixels);
 
+static gboolean  respin_cmap     (png_structp       png_ptr,
+                                  png_infop         png_info_ptr,
+                                  guchar           *remap,
+                                  gint32            image_id,
+                                  GimpDrawable     *drawable);
 
-static gboolean respin_cmap     (png_structp       png_ptr,
-                                 png_infop         png_info_ptr,
-                                 guchar           *remap,
-                                 gint32            image_id,
-                                 GimpDrawable     *drawable);
-static gboolean mng_save_image  (const gchar      *filename,
-                                 gint32            image_id,
-                                 gint32            drawable_id,
-                                 gint32            original_image_id);
-static gint     mng_save_dialog (gint32            image_id);
-static void     query           (void);
-static void     run             (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
+static gboolean  mng_save_image  (const gchar      *filename,
+                                  gint32            image_id,
+                                  gint32            drawable_id,
+                                  gint32            original_image_id,
+                                  GError          **error);
+static gboolean  mng_save_dialog (gint32            image_id);
+
+static void      query           (void);
+static void      run             (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
 
 /*
@@ -505,10 +507,11 @@ respin_cmap (png_structp  png_ptr,
 
 
 static gboolean
-mng_save_image (const gchar *filename,
-                gint32       image_id,
-                gint32       drawable_id,
-                gint32       original_image_id)
+mng_save_image (const gchar  *filename,
+                gint32        image_id,
+                gint32        drawable_id,
+                gint32        original_image_id,
+                GError      **error)
 {
   gboolean        ret = FALSE;
   gint            rows, cols;
@@ -568,8 +571,9 @@ mng_save_image (const gchar *filename,
 
   if (NULL == userdata->fp)
     {
-      g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       goto err;
     }
 
@@ -655,7 +659,7 @@ mng_save_image (const gchar *filename,
                              MNG_BACKGROUNDCOLOR_MANDATORY,
                              0, MNG_BACKGROUNDIMAGE_NOTILE) != MNG_NOERROR)
         {
-          g_warning("Unable to mng_putchunk_back() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_back() in mng_save_image()");
           goto err3;
         }
 
@@ -663,7 +667,7 @@ mng_save_image (const gchar *filename,
                              gimp_rgb_luminance_uchar (&bgcolor),
                              red, green, blue) != MNG_NOERROR)
         {
-          g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_bkgd() in mng_save_image()");
           goto err3;
         }
     }
@@ -691,7 +695,7 @@ mng_save_image (const gchar *filename,
                              (mng_uint32) (xres * 39.37),
                              (mng_uint32) (yres * 39.37), 1) != MNG_NOERROR)
         {
-          g_warning("Unable to mng_putchunk_phyg() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_phyg() in mng_save_image()");
           goto err3;
         }
 
@@ -699,7 +703,7 @@ mng_save_image (const gchar *filename,
                              (mng_uint32) (xres * 39.37),
                              (mng_uint32) (yres * 39.37), 1) != MNG_NOERROR)
         {
-          g_warning("Unable to mng_putchunk_phys() in mng_save_image()");
+          g_warning ("Unable to mng_putchunk_phys() in mng_save_image()");
           goto err3;
         }
     }
@@ -901,9 +905,10 @@ mng_save_image (const gchar *filename,
 
       if ((outfile = g_fopen (temp_file_name, "wb")) == NULL)
         {
-          g_message (_("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (temp_file_name),
-                     g_strerror (errno));
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (temp_file_name),
+                       g_strerror (errno));
           g_unlink (temp_file_name);
           goto err3;
         }
@@ -1064,9 +1069,10 @@ mng_save_image (const gchar *filename,
       infile = g_fopen (temp_file_name, "rb");
       if (NULL == infile)
         {
-          g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (temp_file_name),
-                     g_strerror (errno));
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for reading: %s"),
+                       gimp_filename_to_utf8 (temp_file_name),
+                       g_strerror (errno));
           g_unlink (temp_file_name);
           goto err3;
         }
@@ -1226,7 +1232,7 @@ mng_save_image (const gchar *filename,
 
 /* The interactive dialog. */
 
-static gint
+static gboolean
 mng_save_dialog (gint32 image_id)
 {
   GtkWidget *dialog;
@@ -1244,7 +1250,6 @@ mng_save_dialog (gint32 image_id)
   GtkObject *spinbutton_adj;
   gint       num_layers;
   gboolean   run;
-
 
   dialog = gimp_dialog_new (_("Save as MNG"), PLUG_IN_BINARY,
                             NULL, 0,
@@ -1540,7 +1545,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam values[2];
 
   INIT_I18N ();
 
@@ -1551,14 +1556,11 @@ run (const gchar      *name,
 
   if (strcmp (name, SAVE_PROC) == 0)
     {
-      GimpRunMode      run_mode;
-      gint32           image_id, original_image_id;
-      gint32           drawable_id;
-      GimpExportReturn export = GIMP_EXPORT_IGNORE;
-
-      run_mode = param[0].data.d_int32;
-      image_id = original_image_id = param[1].data.d_int32;
-      drawable_id = param[2].data.d_int32;
+      GimpRunMode      run_mode          = param[0].data.d_int32;
+      gint32           image_id          = param[1].data.d_int32;
+      gint32           original_image_id = image_id;
+      gint32           drawable_id       = param[2].data.d_int32;
+      GimpExportReturn export            = GIMP_EXPORT_IGNORE;
 
       if ((run_mode == GIMP_RUN_INTERACTIVE)
           || (run_mode == GIMP_RUN_WITH_LAST_VALS))
@@ -1575,9 +1577,10 @@ run (const gchar      *name,
         }
 
       if (export == GIMP_EXPORT_CANCEL)
-        values[0].data.d_status = GIMP_PDB_CANCEL;
-      else if ((export == GIMP_EXPORT_IGNORE)
-               || (export == GIMP_EXPORT_EXPORT))
+        {
+          values[0].data.d_status = GIMP_PDB_CANCEL;
+        }
+      else if (export == GIMP_EXPORT_IGNORE || export == GIMP_EXPORT_EXPORT)
         {
           if (run_mode == GIMP_RUN_INTERACTIVE)
             {
@@ -1656,12 +1659,25 @@ run (const gchar      *name,
 
           if (values[0].data.d_status == GIMP_PDB_SUCCESS)
             {
+              GError *error = NULL;
+
               if (mng_save_image (param[3].data.d_string,
                                   image_id, drawable_id,
-                                  original_image_id))
-                gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
+                                  original_image_id, &error))
+                {
+                  gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
+                }
               else
-                values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+                {
+                  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+                  if (error)
+                    {
+                      *nreturn_vals = 2;
+                      values[1].type          = GIMP_PDB_STRING;
+                      values[1].data.d_string = error->message;
+                    }
+                }
             }
 
           if (export == GIMP_EXPORT_EXPORT)
@@ -1670,8 +1686,11 @@ run (const gchar      *name,
 
     }
   else
-    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+    {
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+    }
 }
+
 
 
 /* Only query and run are implemented by this plug-in. */

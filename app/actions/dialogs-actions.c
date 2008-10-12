@@ -119,7 +119,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG },
 
-  { "dialogs-brush-editor", NULL,
+  { "dialogs-brush-editor", GIMP_STOCK_BRUSH,
     N_("Brush Editor"), NULL,
     N_("Open the brush editor"),
     "gimp-brush-editor",
@@ -137,7 +137,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-gradient-list|gimp-gradient-grid",
     GIMP_HELP_GRADIENT_DIALOG },
 
-  { "dialogs-gradient-editor", NULL,
+  { "dialogs-gradient-editor", GIMP_STOCK_GRADIENT,
     N_("Gradient Editor"), NULL,
     N_("Open the gradient editor"),
     "gimp-gradient-editor",
@@ -149,7 +149,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-palette-list|gimp-palette-grid",
     GIMP_HELP_PALETTE_DIALOG },
 
-  { "dialogs-palette-editor", NULL,
+  { "dialogs-palette-editor", GIMP_STOCK_PALETTE,
     N_("Palette Editor"), NULL,
     N_("Open the palette editor"),
     "gimp-palette-editor",
@@ -173,7 +173,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-image-list|gimp-image-grid",
     GIMP_HELP_IMAGE_DIALOG },
 
-  { "dialogs-document-history", GTK_STOCK_OPEN,
+  { "dialogs-document-history", "document-open-recent",
     N_("Document Histor_y"), "",
     N_("Open the document history dialog"),
     "gimp-document-list|gimp-document-grid",

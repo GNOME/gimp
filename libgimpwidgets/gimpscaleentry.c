@@ -66,7 +66,7 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
                                    gimp_scale_entry_unconstrained_adjustment_callback,
                                    adjustment);
 
-  gtk_adjustment_set_value (other_adj, adjustment->value);
+  gtk_adjustment_set_value (other_adj, gtk_adjustment_get_value (adjustment));
 
   g_signal_handlers_unblock_by_func (other_adj,
                                      gimp_scale_entry_unconstrained_adjustment_callback,
@@ -104,7 +104,7 @@ gimp_scale_entry_exp_adjustment_callback (GtkAdjustment *adjustment,
                                    gimp_scale_entry_log_adjustment_callback,
                                    adjustment);
 
-  value = exp (adjustment->value);
+  value = exp (gtk_adjustment_get_value (adjustment));
   if (other_adj->lower <= 0.0)
     value += other_adj->lower  - 0.1;
 

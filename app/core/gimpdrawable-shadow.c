@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -37,8 +37,6 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   item = GIMP_ITEM (drawable);
-
-  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
   if (drawable->shadow)
     {

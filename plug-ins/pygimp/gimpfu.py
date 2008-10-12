@@ -385,7 +385,7 @@ def _interact(proc_name, start_params):
         exc_str = exc_only_str = _('Missing exception information')
 
         try:
-            etype, value, tb = sys.exc_info()        
+            etype, value, tb = sys.exc_info()
             exc_str = ''.join(traceback.format_exception(etype, value, tb))
             exc_only_str = ''.join(traceback.format_exception_only(etype, value))
         finally:
@@ -414,7 +414,7 @@ def _interact(proc_name, start_params):
         expander.add(scrolled)
         scrolled.show()
 
-        
+
         label = gtk.Label(exc_str)
         label.set_alignment(0.0, 0.0)
         label.set_padding(6, 6)
@@ -442,7 +442,7 @@ def _interact(proc_name, start_params):
         def __init__ (self, default=''):
             gtk.ScrolledWindow.__init__(self)
             self.set_shadow_type(gtk.SHADOW_IN)
-            
+
             self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
             self.set_size_request(100, -1)
 
@@ -453,7 +453,7 @@ def _interact(proc_name, start_params):
             self.buffer = self.view.get_buffer()
 
             self.set_value(str(default))
-            
+
         def set_value(self, text):
             self.buffer.set_text(text)
 
@@ -551,7 +551,7 @@ def _interact(proc_name, start_params):
 
     class ComboEntry(gtk.ComboBox):
         def __init__(self, default=0, items=()):
-            store = gtk.ListStore(str)    
+            store = gtk.ListStore(str)
             for item in items:
                 store.append([item])
 
@@ -715,10 +715,10 @@ def _interact(proc_name, start_params):
         table.attach(wid, 2,3, i,i+1, yoptions=0)
 
         if pf_type != PF_TEXT:
-            tooltips.set_tip(wid, desc, None)         
+            tooltips.set_tip(wid, desc, None)
         else:
             #Attach tip to TextView, not to ScrolledWindow
-            tooltips.set_tip(wid.view, desc, None)         
+            tooltips.set_tip(wid.view, desc, None)
         wid.show()
 
         wid.desc = desc
@@ -763,7 +763,7 @@ def _run(proc_name, params):
     if run_mode == RUN_NONINTERACTIVE:
         return apply(func, params[1:])
 
-    script_params = _registered_plugins_[proc_name][8] 
+    script_params = _registered_plugins_[proc_name][8]
 
     min_args = 0
     if len(params) > 1:

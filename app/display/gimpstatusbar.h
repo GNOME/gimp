@@ -52,6 +52,7 @@ struct _GimpStatusbar
   GimpMessageSeverity  temp_severity;
 
   gchar                cursor_format_str[CURSOR_FORMAT_LENGTH];
+  gchar                cursor_format_str_f[CURSOR_FORMAT_LENGTH];
   gchar                length_format_str[CURSOR_FORMAT_LENGTH];
 
   GtkWidget           *cursor_label;
@@ -93,6 +94,7 @@ void        gimp_statusbar_push_valist      (GimpStatusbar       *statusbar,
 void        gimp_statusbar_push_coords      (GimpStatusbar       *statusbar,
                                              const gchar         *context,
                                              const gchar         *stock_id,
+                                             GimpCursorPrecision  precision,
                                              const gchar         *title,
                                              gdouble              x,
                                              const gchar         *separator,
@@ -133,6 +135,7 @@ void        gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
 void        gimp_statusbar_pop_temp         (GimpStatusbar       *statusbar);
 
 void        gimp_statusbar_update_cursor    (GimpStatusbar       *statusbar,
+                                             GimpCursorPrecision  precision,
                                              gdouble              x,
                                              gdouble              y);
 void        gimp_statusbar_clear_cursor     (GimpStatusbar       *statusbar);

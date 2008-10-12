@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-14 22:34+0900\n"
-"PO-Revision-Date: 2008-08-09 09:41+0900\n"
+"POT-Creation-Date: 2008-10-03 00:25+0900\n"
+"PO-Revision-Date: 2008-09-23 22:21+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -21,198 +21,201 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: 465,278,170,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:133
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:131
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Welcome to TinyScheme"
 msgstr "Welcome to TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Interactive Scheme Development"
 msgstr "Interactive Scheme Development"
 
-#: ../plug-ins/script-fu/script-fu-console.c:238
+#: ../plug-ins/script-fu/script-fu-console.c:236
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:294
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu コンソールの出力を保存"
 
-#: ../plug-ins/script-fu/script-fu-console.c:343
+#: ../plug-ins/script-fu/script-fu-console.c:341
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "ファイル '%s' を書き込み用で開けませんでした： %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:372
+#: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu プロシージャブラウザ"
 
-#: ../plug-ins/script-fu/script-fu-console.c:719
+#: ../plug-ins/script-fu/script-fu-eval.c:63
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu は２つのスクリプトを同時に実行できません。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "すでに \"%s\" スクリプトを実行中です。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "色の選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "ファイルの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "フォルダの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "フォントの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "パレットの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "パターンの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "グラデーションの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
+#: ../plug-ins/script-fu/script-fu-interface.c:824
+#, c-format
+msgid "Error while executing %s:"
+msgstr ""
+"'%s' 実行中にエラーが発生しました。\n"
+"（詳細または原因は次のとおりです。）"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "'script-fu-register' を呼ぶための引数が不足しています。"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:667
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while loading %s:"
 msgstr ""
-"実行中にエラーが発生しました：\n"
-"%s\n"
-"%s"
+"\"%s\"読込み中にエラーが発生しました。\n"
+"（詳細または原因は次のとおりです。）"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu サーバオプション"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:718
 msgid "_Start Server"
 msgstr "サーバスタート(_S)"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:746
 msgid "Server port:"
 msgstr "サーバポート:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:752
 msgid "Server logfile:"
 msgstr "サーバログファイル:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Script-Fu 開発のための対話的コンソールです"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "Script-Fu コンソール(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Script-Fu をリモート操作するためのサーバを開始します"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:146
 msgid "_Start Server..."
 msgstr "サーバスタート(_S)..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_GIMP Online"
 msgstr "GIMP 関連のウェブサイト"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_User Manual"
 msgstr "ユーザーマニュアル(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Script-Fu"
 msgstr "Script-Fu(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Test"
 msgstr "テスト(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Buttons"
 msgstr "ボタン(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Logos"
 msgstr "ロゴ(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Patterns"
 msgstr "パターン(_P)"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Web Page Themes"
 msgstr "Web ページテーマ(_W)"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Alien Glow"
 msgstr "エイリアン発光(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Beveled Pattern"
 msgstr "ベベルパターン(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
 msgstr "クラシック Gimp.Org(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "ロゴ効果(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "Re-read all available Script-Fu scripts"
 msgstr "使用可能なスクリプトをディスクから再読み込みします"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Refresh Scripts"
 msgstr "スクリプトリを再読み込み(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -271,8 +274,7 @@ msgstr "標準のバンプマップ設定"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -310,8 +312,7 @@ msgstr "フォント"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -327,8 +328,8 @@ msgstr "輪郭ぼかし半径"
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
-"3D アウトライン・ロゴ（ファイル > 画像の生成 > ロゴ > 3D アウトライン）と同じ"
-"効果を選択範囲（または不透明部分）に適用します。"
+"3D アウトラインロゴ（【ファイル】 →  【画像の生成】 → 【ロゴ】 → 【3D アウト"
+"ライン】）と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -375,7 +376,7 @@ msgstr "影ぼかし半径"
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
@@ -388,8 +389,7 @@ msgstr "影ぼかし半径"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -423,7 +423,6 @@ msgstr "立体曲線タイル(_D)..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -542,7 +541,7 @@ msgstr "平坦画像"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "発光色"
 
@@ -645,8 +644,8 @@ msgstr "文字色"
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
 msgstr ""
-"エイリアン発光・ロゴ（ファイル > 画像の生成 > ロゴ > エイリアン発光）と同じ効"
-"果を選択範囲（または不透明部分）に適用します。"
+"エイリアン発光ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【エイリアン発"
+"光】）と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
@@ -663,8 +662,9 @@ msgstr "発光サイズ (ピクセル * 4)"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
 msgstr ""
-"エイリアンネオン・ロゴ（ファイル > 画像の生成 > ロゴ > エイリアンネオン）と同"
-"じ効果を選択範囲（または不透明部分）に適用します。"
+"エイリアンネオン・ロゴ（画像ウィンドウのメニュー【ファイル】→【画像の生成】→"
+"【ロゴ】→【エイリアンネオン】）と同じ効果を選択範囲（または不透明部分）に適用"
+"します。"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
@@ -696,8 +696,8 @@ msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
 msgstr ""
-"基本 I ・ロゴ（ファイル > 画像の生成 > ロゴ > 基本 I ）と同じ効果を選択範囲"
-"（または不透明部分）に適用します。"
+"基本 I ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【基本 I】）と同じ効"
+"果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
@@ -714,8 +714,8 @@ msgstr "基本 I (_B)..."
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
 msgstr ""
-"基本 II ・ロゴ（ファイル > 画像の生成 > ロゴ > 基本 II ）と同じ効果を選択範囲"
-"（または不透明部分）に適用します。"
+"基本 II ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 > 【基本 II】）と同じ"
+"効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -839,8 +839,8 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"ブレンド・ロゴ（ファイル > 画像の生成 > ロゴ > ブレンド）と同じ効果を選択範囲"
-"（または不透明部分）に適用します。"
+"ブレンドロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ブレンド】）と同じ"
+"効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -896,8 +896,8 @@ msgstr "オフセット (ピクセル)"
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
 msgstr ""
-"牛模様・ロゴ（ファイル > 画像の生成 > ロゴ > 牛模様）と同じ効果を選択範囲（ま"
-"たは不透明部分）に適用します。"
+"牛模様ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【牛模様】）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
@@ -1042,8 +1042,8 @@ msgstr "チョークの色"
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
 msgstr ""
-"チョーク・ロゴ（ファイル > 画像の生成 > ロゴ > チョーク）と同じ効果を選択範囲"
-"（または不透明部分）に適用します。"
+"チョークロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【チョーク】）と同じ"
+"効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
@@ -1056,8 +1056,8 @@ msgstr "チョーク(_C)..."
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
-"かじり取り・ロゴ（ファイル > 画像の生成 > ロゴ > かじり取り）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"かじり取りロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【かじり取り】）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1142,8 +1142,8 @@ msgstr "ステンシルクローム(_H)..."
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
 msgstr ""
-"クローム・ロゴ（ファイル > 画像の生成 > ロゴ > クローム）と同じ効果を選択範囲"
-"（または不透明部分）に適用します。"
+"クロームロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【クローム】）と同じ"
+"効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
@@ -1246,8 +1246,8 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
-"コミック本・ロゴ（ファイル > 画像の生成 > ロゴ > コミック本）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"コミック本ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【コミック本】）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1273,8 +1273,8 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"冷たい金属・ロゴ（ファイル > 画像の生成 > ロゴ > 冷たい金属）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"冷たい金属ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【冷たい金属】）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1286,6 +1286,8 @@ msgstr "反射と遠近感のあるシャドウが付加された、メタリッ
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "効果サイズ (ピクセル)"
 
@@ -1517,18 +1519,14 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
-"霜・ロゴ（ファイル > 画像の生成 > ロゴ > 霜）と同じ効果を選択範囲（または不透"
-"明部分）に適用します。"
+"霜ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【霜】）と同じ効果を選択範"
+"囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
 msgstr "シャドウが付いた、凍った雰囲気のロゴを生成します。"
 
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-msgid "Matte"
-msgstr "つや消し"
-
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
 msgstr "霜(_F)..."
 
@@ -1666,8 +1664,8 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"光沢・ロゴ（ファイル > 画像の生成 > ロゴ > 光沢）と同じ効果を選択範囲（または"
-"不透明部分）に適用します。"
+"光沢ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【光沢】）と同じ効果を選"
+"択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1726,16 +1724,12 @@ msgstr "パターンをオーバーレイで使う"
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 msgstr ""
-"白熱の輝き・ロゴ（ファイル > 画像の生成 > ロゴ > 白熱の輝き）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"白熱の輝きロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【白熱の輝き】）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "白熱灯のフィラメントのように輝くロゴを生成します。"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "効果サイズ (ピクセル * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1744,8 +1738,8 @@ msgstr "白熱の輝き(_W)..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"グラデーションベベル・ロゴ（ファイル > 画像の生成 > ロゴ > グラデーションベベ"
-"ル）と同じ効果を選択範囲（または不透明部分）に適用します。"
+"グラデーションベベル・ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【グラ"
+"デーションベベル】）と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1973,8 +1967,8 @@ msgstr "矩形(_R)..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
 msgstr ""
-"ネオン・ロゴ（ファイル > 画像の生成 > ロゴ > ネオン）と同じ効果を選択範囲（ま"
-"たは不透明部分）の境界部分に適用します。"
+"ネオンロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ネオン】）と同じ効果"
+"を選択範囲（または不透明部分）の境界部分に適用します。"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -1983,10 +1977,6 @@ msgstr "ネオンサインのようなロゴを生成します"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "影を作成"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "効果サイズ (ピクセル * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -2255,7 +2245,7 @@ msgstr "現在のカラーマップを指定のパレット(カラーマップ)�
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
-msgstr "指定するパレット："
+msgstr "指定するパレット: "
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
@@ -2484,49 +2474,13 @@ msgstr "種類"
 msgid "_Spyrogimp..."
 msgstr "Spyrogimp(_S)..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "爆発色"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "超新星爆発のようなグラデーションで描かれたロゴを生成します。"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "効果サイズ (ピクセル * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr ""
-"超新星爆発・ロゴ（ファイル > 画像の生成 > ロゴ > 超新星爆発）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "超新星爆発(_U)..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
 "星のきらめきが描かれた背景に、岩のようなテクスチャとドロップシャドウが施され"
 "たロゴを生成します。"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "効果サイズ (ピクセル * 4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr ""
-"星のきらめき・ロゴ（ファイル > 画像の生成 > ロゴ > 星のきらめき）と同じ効果を"
-"選択範囲（または不透明部分）に適用します。"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "星のきらめき(_R)..."
 
@@ -2565,8 +2519,8 @@ msgstr "渦巻(_S)..."
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
 msgstr ""
-"粒子の軌跡・ロゴ（ファイル > 画像の生成 > ロゴ > 粒子の軌跡）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"粒子の軌跡ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【粒子の軌跡】）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2625,8 +2579,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"テクスチャ・ロゴ（ファイル > 画像の生成 > ロゴ > テクスチャ）と同じ効果を選択"
-"範囲（または不透明部分）に適用します。"
+"テクスチャ・ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【テクスチャ】）"
+"と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2786,51 +2740,51 @@ msgstr "ユーザーマニュアルへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用（英文）(_S)"
+msgstr "選択範囲の作成と使用（英語）(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr "ファイルを開く・作成・保存（英文）(_F)"
+msgstr "ファイルを開く・作成・保存（英語）(_F)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く（英文）(_S)"
+msgstr "シンプルなオブジェクトを描く（英語）(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方（英文）(_D)"
+msgstr "ダイアログの使い方（英語）(_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
-msgstr "プラグインレジストリ（英文）(_R)"
+msgstr "プラグインレジストリ（英語）(_R)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
-msgstr "パスを使う（英文）(_P)"
+msgstr "パスを使う（英語）(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr "基本コンセプト（英文）(_B)"
+msgstr "基本コンセプト（英語）(_B)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト（英文）(_D)"
+msgstr "開発者用ウェブサイト（英語）(_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
-msgstr "メインのウェブサイト（英文）(_M)"
+msgstr "メインのウェブサイト（英語）(_M)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには（英文）(_P)"
+msgstr "ウェブ用画像を作成するには（英語）(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル（英文）(_U)"
+msgstr "ユーザーマニュアル（英語）(_U)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ画像を修正する（英文）(_W)"
+msgstr "デジカメ画像を修正する（英語）(_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
@@ -2871,6 +2825,44 @@ msgstr "ハイライト不透明度"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Xach 効果(_X)..."
+
+#~ msgid "Matte"
+#~ msgstr "つや消し"
+
+#~ msgid "Effect size (pixels * 3)"
+#~ msgstr "効果サイズ (ピクセル * 3)"
+
+#~ msgid "Effect size (pixels * 5)"
+#~ msgstr "効果サイズ (ピクセル * 5)"
+
+#~ msgid "Effect size (pixels * 4)"
+#~ msgstr "効果サイズ (ピクセル * 4)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
+#~ "glow, and shadow"
+#~ msgstr ""
+#~ "星のきらめき・ロゴ（ファイル > 画像の生成 > ロゴ > 星のきらめき）と同じ効"
+#~ "果を選択範囲（または不透明部分）に適用します。"
+
+#~ msgid "Burst color"
+#~ msgstr "爆発色"
+
+#~ msgid "Create a logo using a starburst gradient"
+#~ msgstr "超新星爆発のようなグラデーションで描かれたロゴを生成します。"
+
+#~ msgid "Effect size (pixels * 30)"
+#~ msgstr "効果サイズ (ピクセル * 30)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
+#~ "shadow"
+#~ msgstr ""
+#~ "超新星爆発・ロゴ（ファイル > 画像の生成 > ロゴ > 超新星爆発）と同じ効果を"
+#~ "選択範囲（または不透明部分）に適用します。"
+
+#~ msgid "Starb_urst..."
+#~ msgstr "超新星爆発(_U)..."
 
 #~ msgid "_Utilities"
 #~ msgstr "ユーティリティ(_U)"

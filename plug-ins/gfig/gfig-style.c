@@ -38,32 +38,31 @@
 #include "gfig-style.h"
 
 
-static void gfig_read_parameter_string   (gchar **text,
-                                          gint    nitems,
-                                          gchar  *name,
-                                          gchar **style_entry);
+static void gfig_read_parameter_string   (gchar       **text,
+                                          gint          nitems,
+                                          const gchar  *name,
+                                          gchar       **style_entry);
 
+static void gfig_read_parameter_int      (gchar       **text,
+                                          gint          nitems,
+                                          const gchar  *name,
+                                          gint         *style_entry);
 
-static void gfig_read_parameter_int      (gchar **text,
-                                          gint    nitems,
-                                          gchar  *name,
-                                          gint   *style_entry);
+static void gfig_read_parameter_double   (gchar        **text,
+                                          gint           nitems,
+                                          const gchar   *name,
+                                          gdouble       *style_entry);
 
-static void gfig_read_parameter_double   (gchar  **text,
-                                          gint     nitems,
-                                          gchar   *name,
-                                          gdouble *style_entry);
-
-static void gfig_read_parameter_gimp_rgb (gchar  **text,
-                                          gint     nitems,
-                                          gchar   *name,
-                                          GimpRGB *style_entry);
+static void gfig_read_parameter_gimp_rgb (gchar        **text,
+                                          gint           nitems,
+                                          const gchar   *name,
+                                          GimpRGB       *style_entry);
 
 static void
-gfig_read_parameter_string (gchar **text,
-                            gint    nitems,
-                            gchar  *name,
-                            gchar  **style_entry)
+gfig_read_parameter_string (gchar       **text,
+                            gint          nitems,
+                            const gchar  *name,
+                            gchar        **style_entry)
 {
   gint  n = 0;
   gchar *ptr;
@@ -94,10 +93,10 @@ gfig_read_parameter_string (gchar **text,
 
 
 static void
-gfig_read_parameter_int (gchar **text,
-                         gint    nitems,
-                         gchar  *name,
-                         gint   *style_entry)
+gfig_read_parameter_int (gchar       **text,
+                         gint          nitems,
+                         const gchar  *name,
+                         gint         *style_entry)
 {
   gint  n = 0;
   gchar *ptr;
@@ -125,10 +124,10 @@ gfig_read_parameter_int (gchar **text,
 }
 
 static void
-gfig_read_parameter_double (gchar  **text,
-                            gint     nitems,
-                            gchar   *name,
-                            gdouble *style_entry)
+gfig_read_parameter_double (gchar        **text,
+                            gint           nitems,
+                            const gchar   *name,
+                            gdouble       *style_entry)
 {
   gint   n = 0;
   gchar *ptr;
@@ -157,10 +156,10 @@ gfig_read_parameter_double (gchar  **text,
 }
 
 static void
-gfig_read_parameter_gimp_rgb (gchar  **text,
-                              gint     nitems,
-                              gchar   *name,
-                              GimpRGB *style_entry)
+gfig_read_parameter_gimp_rgb (gchar        **text,
+                              gint           nitems,
+                              const gchar   *name,
+                              GimpRGB       *style_entry)
 {
   gint   n = 0;
   gchar *ptr;

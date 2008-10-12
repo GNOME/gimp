@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -43,6 +43,8 @@ enum
   PROP_0,
   PROP_PREVIOUS_ORIGIN_X,
   PROP_PREVIOUS_ORIGIN_Y,
+  PROP_PREVIOUS_WIDTH,
+  PROP_PREVIOUS_HEIGHT,
   PROP_GRID,
   PROP_PARASITE_NAME
 };
@@ -101,6 +103,22 @@ gimp_image_undo_class_init (GimpImageUndoClass *klass)
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_Y,
                                    g_param_spec_int ("previous-origin-y",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PREVIOUS_WIDTH,
+                                   g_param_spec_int ("previous-width",
+                                                     NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PREVIOUS_HEIGHT,
+                                   g_param_spec_int ("previous-height",
                                                      NULL, NULL,
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE,
@@ -200,6 +218,12 @@ gimp_image_undo_set_property (GObject      *object,
     case PROP_PREVIOUS_ORIGIN_Y:
       image_undo->previous_origin_y = g_value_get_int (value);
       break;
+    case PROP_PREVIOUS_WIDTH:
+      image_undo->previous_width = g_value_get_int (value);
+      break;
+    case PROP_PREVIOUS_HEIGHT:
+      image_undo->previous_height = g_value_get_int (value);
+      break;
     case PROP_GRID:
       {
         GimpGrid *grid = g_value_get_object (value);
@@ -233,6 +257,12 @@ gimp_image_undo_get_property (GObject    *object,
       break;
     case PROP_PREVIOUS_ORIGIN_Y:
       g_value_set_int (value, image_undo->previous_origin_y);
+      break;
+    case PROP_PREVIOUS_WIDTH:
+      g_value_set_int (value, image_undo->previous_width);
+      break;
+    case PROP_PREVIOUS_HEIGHT:
+      g_value_set_int (value, image_undo->previous_height);
       break;
     case PROP_GRID:
       g_value_set_object (value, image_undo->grid);
@@ -299,17 +329,23 @@ gimp_image_undo_pop (GimpUndo            *undo,
         gint height;
         gint previous_origin_x;
         gint previous_origin_y;
+        gint previous_width;
+        gint previous_height;
 
         width             = image_undo->width;
         height            = image_undo->height;
         previous_origin_x = image_undo->previous_origin_x;
         previous_origin_y = image_undo->previous_origin_y;
+        previous_width    = image_undo->previous_width;
+        previous_height   = image_undo->previous_height;
 
         /* Transform to a redo */
         image_undo->width             = gimp_image_get_width  (image);
         image_undo->height            = gimp_image_get_height (image);
         image_undo->previous_origin_x = -previous_origin_x;
         image_undo->previous_origin_y = -previous_origin_y;
+        image_undo->previous_width    = width;
+        image_undo->previous_height   = height;
 
         g_object_set (image,
                       "width",  width,
@@ -325,6 +361,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
             accum->size_changed      = TRUE;
             accum->previous_origin_x = previous_origin_x;
             accum->previous_origin_y = previous_origin_y;
+            accum->previous_width    = previous_width;
+            accum->previous_height   = previous_height;
           }
       }
       break;

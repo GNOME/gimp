@@ -23,6 +23,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -185,6 +186,8 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_PIXEL_CENTER);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 

@@ -34,15 +34,15 @@
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
-static gint   save_image (const gchar      *filename,
-			  gint32            image_ID,
-			  gint32            drawable_ID);
+static void       query      (void);
+static void       run        (const gchar      *name,
+                              gint              nparams,
+                              const GimpParam  *param,
+                              gint             *nreturn_vals,
+                              GimpParam       **return_vals);
+static gboolean   save_image (const gchar      *filename,
+                              gint32            image_ID,
+                              gint32            drawable_ID);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -94,9 +94,6 @@ run (const gchar      *name,
   static GimpParam  values[2];
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -109,6 +106,10 @@ run (const gchar      *name,
 
   if (strcmp (name, SAVE_PROC) == 0)
     {
+      gint32           image_ID;
+      gint32           drawable_ID;
+      GimpExportReturn export = GIMP_EXPORT_CANCEL;
+
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -127,6 +128,7 @@ run (const gchar      *name,
 	      return;
 	    }
 	  break;
+
 	default:
 	  break;
 	}
@@ -147,7 +149,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static int
+static gboolean
 save_image (const gchar *filename,
 	    gint32       image_ID,
 	    gint32       drawable_ID)
@@ -155,16 +157,16 @@ save_image (const gchar *filename,
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
-  FILE *fp;
-  gint x, y, b, c;
-  gchar *backslash = "\\\\";
-  gchar *quote = "\\\"";
-  gchar *newline = "\"\n\t\"";
-  gchar buf[4];
-  guchar *d = NULL;
-  guchar *data;
-  guchar *cmap;
-  gint colors;
+  FILE          *fp;
+  gint           x, y, b, c;
+  const gchar   *backslash = "\\\\";
+  const gchar   *quote     = "\\\"";
+  const gchar   *newline   = "\"\n\t\"";
+  gchar          buf[4];
+  guchar        *d         = NULL;
+  guchar        *data;
+  guchar        *cmap;
+  gint           colors;
 
   if ((fp = g_fopen (filename, "w")) == NULL)
     return FALSE;
@@ -179,10 +181,16 @@ save_image (const gchar *filename,
   fprintf (fp, "static unsigned int width = %d;\n", drawable->width);
   fprintf (fp, "static unsigned int height = %d;\n\n", drawable->height);
   fprintf (fp, "/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */\n\n");
+
   switch (drawable_type)
     {
     case GIMP_RGB_IMAGE:
-      fprintf (fp, "#define HEADER_PIXEL(data,pixel) {\\\n  pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n  pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n  pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n  data += 4; \\\n}\n");
+      fprintf (fp,
+               "#define HEADER_PIXEL(data,pixel) {\\\n"
+               "pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n"
+               "pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n"
+               "pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n"
+               "data += 4; \\\n}\n");
       fprintf (fp, "static char *header_data =\n\t\"");
 
       data = g_new (guchar, drawable->width * drawable->bpp);
@@ -191,6 +199,7 @@ save_image (const gchar *filename,
       for (y = 0; y < drawable->height; y++)
 	{
 	  gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+
 	  for (x = 0; x < drawable->width; x++)
 	    {
 	      d = data + x * drawable->bpp;
@@ -201,12 +210,14 @@ save_image (const gchar *filename,
 	      buf[3] = (d[2] & 0x3F) + 33;
 
 	      for (b = 0; b < 4; b++)
-		if (buf[b] == '"')
-		  fwrite (quote, 1, 2, fp);
-		else if (buf[b] == '\\')
-		  fwrite (backslash, 1, 2, fp);
-		else
-		  fwrite (buf + b, 1, 1, fp);
+                {
+                  if (buf[b] == '"')
+                    fwrite (quote, 1, 2, fp);
+                  else if (buf[b] == '\\')
+                    fwrite (backslash, 1, 2, fp);
+                  else
+                    fwrite (buf + b, 1, 1, fp);
+                }
 
 	      c++;
 	      if (c >= 16)
@@ -216,24 +227,33 @@ save_image (const gchar *filename,
 		}
 	    }
 	}
+
       fprintf (fp, "\";\n");
       break;
 
     case GIMP_INDEXED_IMAGE:
-      fprintf (fp, "#define HEADER_PIXEL(data,pixel) {\\\n  pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n  pixel[1] = header_data_cmap[(unsigned char)data[0]][1]; \\\n  pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \\\n  data ++; }\n\n");
+      fprintf (fp,
+               "#define HEADER_PIXEL(data,pixel) {\\\n"
+               "pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n"
+               "pixel[1] = header_data_cmap[(unsigned char)data[0]][1]; \\\n"
+               "pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \\\n"
+               "data ++; }\n\n");
       /* save colormap */
       cmap = gimp_image_get_colormap (image_ID, &colors);
 
       fprintf (fp, "static char header_data_cmap[256][3] = {");
-      fprintf(fp, "\n\t{%3d,%3d,%3d}", (int)cmap[0], (int)cmap[1], (int)cmap[2]);
+      fprintf (fp, "\n\t{%3d,%3d,%3d}", (int)cmap[0], (int)cmap[1], (int)cmap[2]);
+
       for (c = 1; c < colors; c++)
-        fprintf(fp, ",\n\t{%3d,%3d,%3d}", (int)cmap[3*c], (int)cmap[3*c+1], (int)cmap[3*c+2]);
+        fprintf (fp, ",\n\t{%3d,%3d,%3d}", (int)cmap[3*c], (int)cmap[3*c+1], (int)cmap[3*c+2]);
+
       /* fill the rest */
       for ( ; c < 256; c++)
-        fprintf(fp, ",\n\t{255,255,255}");
+        fprintf (fp, ",\n\t{255,255,255}");
+
       /* close bracket */
-      fprintf(fp, "\n\t};\n");
-      g_free(cmap);
+      fprintf (fp, "\n\t};\n");
+      g_free (cmap);
 
       /* save image */
       fprintf (fp, "static char header_data[] = {\n\t");
@@ -244,11 +264,12 @@ save_image (const gchar *filename,
       for (y = 0; y < drawable->height; y++)
         {
           gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+
           for (x = 0; x < drawable->width-1; x++)
 	    {
 	      d = data + x * drawable->bpp;
 
-              fprintf(fp, "%d,", (int)d[0]);
+              fprintf (fp, "%d,", (int)d[0]);
 
 	      c++;
 	      if (c >= 16)
@@ -259,17 +280,19 @@ save_image (const gchar *filename,
 	    }
 
           if (y != drawable->height - 1)
-            fprintf(fp, "%d,\n\t", (int)d[1]);
+            fprintf (fp, "%d,\n\t", (int)d[1]);
           else
-            fprintf(fp, "%d\n\t", (int)d[1]);
+            fprintf (fp, "%d\n\t", (int)d[1]);
+
           c = 0; /* reset line counter */
         }
       fprintf (fp, "};\n");
       break;
+
     default:
       g_warning ("unhandled drawable type (%d)", drawable_type);
       return FALSE;
-    } /* switch (drawable_type) */
+    }
 
   fclose (fp);
 

@@ -48,6 +48,9 @@ struct _GimpCurvesTool
   GtkWidget            *yrange;
   GtkWidget            *graph;
   GtkWidget            *curve_type;
+
+  /* export dialog */
+  gboolean              export_old_format;
 };
 
 struct _GimpCurvesToolClass

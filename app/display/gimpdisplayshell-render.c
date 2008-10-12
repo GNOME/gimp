@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -958,8 +959,6 @@ render_image_tile_fault (RenderInfo *info)
     {
       src[8] = src[5];  /* reusing existing pixel data */
     }
-
-
 
   if (tile[0])
     {

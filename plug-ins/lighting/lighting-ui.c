@@ -451,7 +451,7 @@ create_light_page (void)
   spin_intensity = gimp_spin_button_new (&adj,
                                          mapvals.lightsource[k].intensity,
                                          0.0, 100.0,
-                                         0.01, 0.1, 1.0, 0.0, 2);
+                                         0.01, 0.1, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                                  _("_Intensity:"), 0.0, 0.5,
                                  spin_intensity, 1, TRUE);
@@ -472,7 +472,7 @@ create_light_page (void)
   spin_pos_x = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].position.x,
                                      -100.0, 100.0,
-                                     0.1, 1.0, 1.0, 0.0, 2);
+                                     0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
                                  _("_X:"), 0.0, 0.5,
                                  spin_pos_x, 1, TRUE);
@@ -487,7 +487,7 @@ create_light_page (void)
   spin_pos_y = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].position.y,
                                      -100.0, 100.0,
-                                     0.1, 1.0, 1.0, 0.0, 2);
+                                     0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
                              _("_Y:"), 0.0, 0.5,
                              spin_pos_y, 1, TRUE);
@@ -502,7 +502,7 @@ create_light_page (void)
   spin_pos_z = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].position.z,
                                      -100.0, 100.0,
-                                     0.1, 1.0, 1.0, 0.0, 2);
+                                     0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
                              _("_Z:"), 0.0, 0.5,
                              spin_pos_z, 1, TRUE);
@@ -522,7 +522,7 @@ create_light_page (void)
 
   spin_dir_x = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].direction.x,
-                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+                                     -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 1,
                              _("X:"), 0.0, 0.5,
                              spin_dir_x, 1, TRUE);
@@ -536,7 +536,7 @@ create_light_page (void)
 
   spin_dir_y = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].direction.y,
-                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+                                     -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 2,
                              _("Y:"), 0.0, 0.5,
                                  spin_dir_y, 1, TRUE);
@@ -550,7 +550,7 @@ create_light_page (void)
 
   spin_dir_z = gimp_spin_button_new (&adj,
                                      mapvals.lightsource[k].direction.z,
-                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+                                     -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 3,
                              _("Z:"), 0.0, 0.5,
                              spin_dir_z, 1, TRUE);
@@ -641,7 +641,7 @@ create_material_page (void)
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
-                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -674,7 +674,7 @@ create_material_page (void)
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
-                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -707,7 +707,7 @@ create_material_page (void)
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
-                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -739,7 +739,7 @@ create_material_page (void)
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
-                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -855,7 +855,7 @@ create_bump_page (void)
                              _("Cu_rve:"), 0.0, 0.5, combo, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
-                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Ma_ximum height:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);

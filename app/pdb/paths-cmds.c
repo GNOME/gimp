@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -162,7 +162,7 @@ path_delete_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_image_remove_vectors (image, vectors);
+        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -303,7 +303,7 @@ path_set_points_invoker (GimpProcedure      *procedure,
           g_free (points);
 
           if (vectors)
-            gimp_image_add_vectors (image, vectors, 0);
+            success = gimp_image_add_vectors (image, vectors, 0, TRUE);
           else
             success = FALSE;
         }

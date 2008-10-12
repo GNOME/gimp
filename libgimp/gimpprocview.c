@@ -44,28 +44,28 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * gimp_proc_view_create_params (GimpParamDef *params,
-                                                 gint          n_params,
-                                                 GtkSizeGroup *name_group,
-                                                 GtkSizeGroup *type_group,
-                                                 GtkSizeGroup *desc_group);
+static GtkWidget * gimp_proc_view_create_params (const GimpParamDef *params,
+                                                 gint                n_params,
+                                                 GtkSizeGroup       *name_group,
+                                                 GtkSizeGroup       *type_group,
+                                                 GtkSizeGroup       *desc_group);
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_proc_view_new (const gchar     *name,
-                    const gchar     *menu_path,
-                    const gchar     *blurb,
-                    const gchar     *help,
-                    const gchar     *author,
-                    const gchar     *copyright,
-                    const gchar     *date,
-                    GimpPDBProcType  type,
-                    gint             n_params,
-                    gint             n_return_vals,
-                    GimpParamDef    *params,
-                    GimpParamDef    *return_vals)
+gimp_proc_view_new (const gchar        *name,
+                    const gchar        *menu_path,
+                    const gchar        *blurb,
+                    const gchar        *help,
+                    const gchar        *author,
+                    const gchar        *copyright,
+                    const gchar        *date,
+                    GimpPDBProcType     type,
+                    gint                n_params,
+                    gint                n_return_vals,
+                    const GimpParamDef *params,
+                    const GimpParamDef *return_vals)
 {
   GtkWidget    *main_vbox;
   GtkWidget    *frame;
@@ -241,11 +241,11 @@ gimp_proc_view_new (const gchar     *name,
 /*  private functions  */
 
 static GtkWidget *
-gimp_proc_view_create_params (GimpParamDef *params,
-                              gint          n_params,
-                              GtkSizeGroup *name_group,
-                              GtkSizeGroup *type_group,
-                              GtkSizeGroup *desc_group)
+gimp_proc_view_create_params (const GimpParamDef *params,
+                              gint                n_params,
+                              GtkSizeGroup       *name_group,
+                              GtkSizeGroup       *type_group,
+                              GtkSizeGroup       *desc_group)
 {
   GtkWidget *table;
   gint       i;

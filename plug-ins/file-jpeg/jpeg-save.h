@@ -18,19 +18,19 @@
 
 typedef struct
 {
-  gdouble  quality;
-  gdouble  smoothing;
-  gboolean optimize;
-  gboolean progressive;
-  gboolean baseline;
-  gint     subsmp;
-  gint     restart;
-  gint     dct;
-  gboolean preview;
-  gboolean save_exif;
-  gboolean save_thumbnail;
-  gboolean save_xmp;
-  gboolean use_orig_quality;
+  gdouble          quality;
+  gdouble          smoothing;
+  gboolean         optimize;
+  gboolean         progressive;
+  gboolean         baseline;
+  JpegSubsampling  subsmp;
+  gint             restart;
+  gint             dct;
+  gboolean         preview;
+  gboolean         save_exif;
+  gboolean         save_thumbnail;
+  gboolean         save_xmp;
+  gboolean         use_orig_quality;
 } JpegSaveVals;
 
 extern JpegSaveVals     jsvals;
@@ -39,10 +39,11 @@ extern gint32           orig_image_ID_global;
 extern gint32           drawable_ID_global;
 
 
-gboolean    save_image         (const gchar *filename,
-                                gint32       image_ID,
-                                gint32       drawable_ID,
-                                gint32       orig_image_ID,
-                                gboolean     preview);
+gboolean    save_image         (const gchar  *filename,
+                                gint32        image_ID,
+                                gint32        drawable_ID,
+                                gint32        orig_image_ID,
+                                gboolean      preview,
+                                GError      **error);
 gboolean    save_dialog        (void);
 void        load_save_defaults (void);

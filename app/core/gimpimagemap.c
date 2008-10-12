@@ -155,7 +155,13 @@ gimp_image_map_init (GimpImageMap *image_map)
   image_map->apply_data    = NULL;
   image_map->PRI           = NULL;
   image_map->idle_id       = 0;
+
+#ifdef GIMP_UNSTABLE
   image_map->timer         = g_timer_new ();
+#else
+  image_map->timer         = NULL;
+#endif
+
   image_map->pixel_count   = 0;
 
   if (image_map->timer)

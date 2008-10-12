@@ -23,6 +23,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -772,7 +773,7 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   gimp_object_take_name (GIMP_OBJECT (new_item),
                          g_strdup_printf (_("%s Channel Copy"), desc));
 
-  gimp_image_add_layer (item_view->image, GIMP_LAYER (new_item), index);
+  gimp_image_add_layer (item_view->image, GIMP_LAYER (new_item), index, TRUE);
   gimp_image_flush (item_view->image);
 }
 
@@ -801,7 +802,7 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-  gimp_image_add_layer (image, new_layer, index);
+  gimp_image_add_layer (image, new_layer, index, TRUE);
   gimp_image_flush (image);
 }
 
@@ -840,7 +841,7 @@ gimp_layer_tree_view_item_new (GimpImage *image)
                               gimp_image_base_type_with_alpha (image),
                               _("Empty Layer"), 1.0, GIMP_NORMAL_MODE);
 
-  gimp_image_add_layer (image, new_layer, -1);
+  gimp_image_add_layer (image, new_layer, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -1001,7 +1002,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
   if (layer)
     {
-      gdouble opacity = adjustment->value / 100.0;
+      gdouble opacity = gtk_adjustment_get_value (adjustment) / 100.0;
 
       if (gimp_layer_get_opacity (layer) != opacity)
         {
@@ -1078,7 +1079,8 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
 
-  if (gimp_layer_get_opacity (layer) * 100.0 != view->opacity_adjustment->value)
+  if (gimp_layer_get_opacity (layer) * 100.0 !=
+      gtk_adjustment_get_value (view->opacity_adjustment))
     {
       BLOCK (view->opacity_adjustment,
              gimp_layer_tree_view_opacity_scale_changed);

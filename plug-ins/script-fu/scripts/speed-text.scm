@@ -98,4 +98,4 @@
 )
 
 (script-fu-menu-register "script-fu-speed-text"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

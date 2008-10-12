@@ -178,12 +178,24 @@ OBJECTS = \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
 	gtkwrapbox.obj \
+	gimpactioneditor.obj \
+	gimpcairo-wilber.obj \
+	gimplanguageentry.obj \
+	gimplanguagestore-parser.obj \
+	gimplanguagestore.obj \
+	gimpradioaction.obj \
+	gimpscalebutton.obj \
+	gimpsettingsbox.obj \
+	gimpsettingseditor.obj \
+	gimptoggleaction.obj \
+	gimpwindow.obj \
+	gtkscalebutton.obj \
 #	widgets-enums.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
-	-I$(top_srcdir) \
-	-I$(top_srcdir)/app \
+	-I $(PRJ_TOP) \
+	-I $(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
 	-I$(includedir)
 

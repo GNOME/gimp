@@ -66,9 +66,10 @@ gint32           preview_layer_ID;
 
 
 gint32
-load_image (const gchar *filename,
-            GimpRunMode  runmode,
-            gboolean     preview)
+load_image (const gchar  *filename,
+            GimpRunMode   runmode,
+            gboolean      preview,
+            GError      **error)
 {
   GimpPixelRgn     pixel_rgn;
   GimpDrawable    *drawable;
@@ -104,8 +105,9 @@ load_image (const gchar *filename,
 
   if ((infile = g_fopen (filename, "rb")) == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -590,9 +592,10 @@ term_source (j_decompress_ptr cinfo)
 }
 
 gint32
-load_thumbnail_image (const gchar *filename,
-                      gint        *width,
-                      gint        *height)
+load_thumbnail_image (const gchar  *filename,
+                      gint         *width,
+                      gint         *height,
+                      GError      **error)
 {
   gint32 volatile  image_ID;
   ExifData        *exif_data;
@@ -821,8 +824,9 @@ load_thumbnail_image (const gchar *filename,
 
   if ((infile = g_fopen (filename, "rb")) == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
 
       if (exif_data)
         {

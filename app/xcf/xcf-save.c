@@ -19,9 +19,9 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <string.h> /* strcpy, strlen */
+#include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"

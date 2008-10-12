@@ -38,34 +38,32 @@ static void      tile_cache_flush_internal (Tile     *tile);
 static gboolean  tile_idle_preswap         (gpointer  data);
 
 
-static gboolean initialize = TRUE;
-
 typedef struct _TileList
 {
   Tile *first;
   Tile *last;
 } TileList;
 
-static const gulong  max_tile_size   = TILE_WIDTH * TILE_HEIGHT * 4;
-static gulong        cur_cache_size  = 0;
-static gulong        max_cache_size  = 0;
-static gulong        cur_cache_dirty = 0;
-static TileList      clean_list      = { NULL, NULL };
-static TileList      dirty_list      = { NULL, NULL };
-static guint         idle_swapper    = 0;
+static const gulong  max_tile_size    = TILE_WIDTH * TILE_HEIGHT * 4;
+static gulong        cur_cache_size   = 0;
+static gulong        max_cache_size   = 0;
+static gulong        cur_cache_dirty  = 0;
+static TileList      clean_list       = { NULL, NULL };
+static TileList      dirty_list       = { NULL, NULL };
+static guint         idle_swapper     = 0;
 
 
 #ifdef ENABLE_MP
 
-static GStaticMutex   tile_cache_mutex = G_STATIC_MUTEX_INIT;
+static GMutex       *tile_cache_mutex = NULL;
 
-#define CACHE_LOCK    g_static_mutex_lock (&tile_cache_mutex)
-#define CACHE_UNLOCK  g_static_mutex_unlock (&tile_cache_mutex)
+#define TILE_CACHE_LOCK    g_mutex_lock (tile_cache_mutex)
+#define TILE_CACHE_UNLOCK  g_mutex_unlock (tile_cache_mutex)
 
 #else
 
-#define CACHE_LOCK   /* nothing */
-#define CACHE_UNLOCK /* nothing */
+#define TILE_CACHE_LOCK   /* nothing */
+#define TILE_CACHE_UNLOCK /* nothing */
 
 #endif
 
@@ -73,15 +71,16 @@ static GStaticMutex   tile_cache_mutex = G_STATIC_MUTEX_INIT;
 void
 tile_cache_init (gulong tile_cache_size)
 {
-  if (initialize)
-    {
-      initialize = FALSE;
+#ifdef ENABLE_MP
+  g_return_if_fail (tile_cache_mutex == NULL);
 
-      clean_list.first = clean_list.last = NULL;
-      dirty_list.first = dirty_list.last = NULL;
+  tile_cache_mutex = g_mutex_new ();
+#endif
 
-      max_cache_size = tile_cache_size;
-    }
+  clean_list.first = clean_list.last = NULL;
+  dirty_list.first = dirty_list.last = NULL;
+
+  max_cache_size = tile_cache_size;
 }
 
 void
@@ -97,6 +96,11 @@ tile_cache_exit (void)
     g_warning ("tile cache not empty (%ld bytes left)", cur_cache_size);
 
   tile_cache_set_size (0);
+
+#ifdef ENABLE_MP
+  g_mutex_free (tile_cache_mutex);
+  tile_cache_mutex = NULL;
+#endif
 }
 
 void
@@ -105,7 +109,7 @@ tile_cache_insert (Tile *tile)
   TileList *list;
   TileList *newlist;
 
-  CACHE_LOCK;
+  TILE_CACHE_LOCK;
 
   if (! tile->data)
     goto out;
@@ -191,23 +195,23 @@ tile_cache_insert (Tile *tile)
     }
 
 out:
-  CACHE_UNLOCK;
+  TILE_CACHE_UNLOCK;
 }
 
 void
 tile_cache_flush (Tile *tile)
 {
-  CACHE_LOCK;
+  TILE_CACHE_LOCK;
 
   tile_cache_flush_internal (tile);
 
-  CACHE_UNLOCK;
+  TILE_CACHE_UNLOCK;
 }
 
 void
 tile_cache_set_size (gulong cache_size)
 {
-  CACHE_LOCK;
+  TILE_CACHE_LOCK;
 
   max_cache_size = cache_size;
 
@@ -217,7 +221,7 @@ tile_cache_set_size (gulong cache_size)
         break;
     }
 
-  CACHE_UNLOCK;
+  TILE_CACHE_UNLOCK;
 }
 
 static void
@@ -291,7 +295,7 @@ tile_idle_preswap (gpointer data)
       return FALSE;
     }
 
-  CACHE_LOCK;
+  TILE_CACHE_LOCK;
 
   if ((tile = dirty_list.first))
     {
@@ -317,7 +321,7 @@ tile_idle_preswap (gpointer data)
       cur_cache_dirty -= tile->size;
     }
 
-  CACHE_UNLOCK;
+  TILE_CACHE_UNLOCK;
 
   return TRUE;
 }

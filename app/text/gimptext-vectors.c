@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #define PANGO_ENABLE_ENGINE
 #include <pango/pangoft2.h>

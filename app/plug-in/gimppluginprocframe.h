@@ -24,23 +24,25 @@
 
 struct _GimpPlugInProcFrame
 {
-  gint           ref_count;
+  gint                 ref_count;
 
-  GimpContext   *main_context;
-  GList         *context_stack;
+  GimpContext         *main_context;
+  GList               *context_stack;
 
-  GimpProcedure *procedure;
-  GMainLoop     *main_loop;
+  GimpProcedure       *procedure;
+  GMainLoop           *main_loop;
 
-  GValueArray   *return_vals;
+  GValueArray         *return_vals;
 
-  GimpProgress  *progress;
-  gboolean       progress_created;
-  gulong         progress_cancel_id;
+  GimpProgress        *progress;
+  gboolean             progress_created;
+  gulong               progress_cancel_id;
+
+  GimpPDBErrorHandler  error_handler;
 
   /*  lists of things to clean up on dispose  */
-  GList         *image_cleanups;
-  GList         *item_cleanups;
+  GList               *image_cleanups;
+  GList               *item_cleanups;
 };
 
 

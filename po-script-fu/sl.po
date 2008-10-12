@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0 scriptfu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
-"PO-Revision-Date: 2007-09-23 22:32+0100\n"
+"POT-Creation-Date: 2008-09-17 11:19+0000\n"
+"PO-Revision-Date: 2008-09-20 19:15+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,247 +20,196 @@ msgstr ""
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:135
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:131
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Script-Fu Console"
 msgstr "Konzola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Welcome to TinyScheme"
 msgstr "Dobrodošli v TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:204
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Interactive Scheme Development"
 msgstr "Interaktivni razvoj shem"
 
-#: ../plug-ins/script-fu/script-fu-console.c:240
+#: ../plug-ins/script-fu/script-fu-console.c:236
 msgid "_Browse..."
 msgstr "_Prebrskaj ..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:300
+#: ../plug-ins/script-fu/script-fu-console.c:294
 msgid "Save Script-Fu Console Output"
 msgstr "Shrani izpis konzole Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:347
+#: ../plug-ins/script-fu/script-fu-console.c:341
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ni mogoče odpreti za pisanje: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:376
+#: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "Script-Fu Procedure Browser"
 msgstr "Brskalnik procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:719
+#: ../plug-ins/script-fu/script-fu-eval.c:63
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:244
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#: ../plug-ins/script-fu/script-fu-interface.c:306
 #, c-format
 msgid "%s:"
 msgstr "%s: "
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:354
 msgid "Script-Fu Color Selection"
 msgstr "Izbira barv Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu File Selection"
 msgstr "Izbira datoteke Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Folder Selection"
 msgstr "Izbira mape Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Font Selection"
 msgstr "Izbira pisave Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:489
 msgid "Script-Fu Palette Selection"
 msgstr "Izbira palete Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:498
 msgid "Script-Fu Pattern Selection"
 msgstr "Izbira vzorca Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:507
 msgid "Script-Fu Gradient Selection"
 msgstr "Izbira preliva Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:516
 msgid "Script-Fu Brush Selection"
 msgstr "Izbira čopiča Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-interface.c:918
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"Napaka pri izvajanju\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while executing %s:"
+msgstr "Napaka pri izvajanju %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Premalo argumentov za klic 'script-fu-register'"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:709
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Napaka pri nalaganju %s:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
 msgstr "Možnosti strežnika Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:718
 msgid "_Start Server"
 msgstr "_Zaženi strežnik"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:746
 msgid "Server port:"
 msgstr "Vrata strežnika:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:752
 msgid "Server logfile:"
 msgstr "Dnevniška datoteka strežnika:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivna konzola za razvoj Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Konzola Script-Fu"
+#: ../plug-ins/script-fu/script-fu.c:117
+msgid "_Console"
+msgstr "_Konzola"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Strežnik za oddaljeno upravljanje Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:146
 msgid "_Start Server..."
 msgstr "_Zaženi strežnik ..."
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:303
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:304
-msgid "_Buttons"
-msgstr "_Gumbi"
-
-#: ../plug-ins/script-fu/script-fu.c:306
-msgid "_Logos"
-msgstr "_Logotipi"
-
 #: ../plug-ins/script-fu/script-fu.c:308
-msgid "_Misc"
-msgstr "_Razno"
-
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "_Patterns"
-msgstr "_Vzorci"
-
-#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Preizkusi"
 
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "_Utilities"
-msgstr "_Pripomočki"
+#: ../plug-ins/script-fu/script-fu.c:311
+msgid "_Buttons"
+msgstr "_Gumbi"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "_Logos"
+msgstr "_Logotipi"
+
+#: ../plug-ins/script-fu/script-fu.c:315
+msgid "_Patterns"
+msgstr "_Vzorci"
+
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Web Page Themes"
 msgstr "_Teme spletnih strani"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Alien Glow"
 msgstr "_Svetleči napis  ..."
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Beveled Pattern"
 msgstr "_Izbočeni vzorec"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "Alfa v _logotip"
 
-#: ../plug-ins/script-fu/script-fu.c:327
-msgid "An_imation"
-msgstr "An_imacija"
-
-#: ../plug-ins/script-fu/script-fu.c:329
-msgid "_Animators"
-msgstr "_Animatorji"
-
-#: ../plug-ins/script-fu/script-fu.c:331
-msgid "_Artistic"
-msgstr "_Umetniško"
-
-#: ../plug-ins/script-fu/script-fu.c:333
-msgid "_Blur"
-msgstr "Za_briši"
-
-#: ../plug-ins/script-fu/script-fu.c:335
-msgid "_Decor"
-msgstr "_Okrasi"
-
-#: ../plug-ins/script-fu/script-fu.c:337
-msgid "_Effects"
-msgstr "_Učinki"
-
-#: ../plug-ins/script-fu/script-fu.c:339
-msgid "En_hance"
-msgstr "Iz_boljšaj"
-
-#: ../plug-ins/script-fu/script-fu.c:341
-msgid "_Light and Shadow"
-msgstr "_Svetloba in senca"
-
-#: ../plug-ins/script-fu/script-fu.c:343
-msgid "S_hadow"
-msgstr "Sen_ca"
-
-#: ../plug-ins/script-fu/script-fu.c:345
-msgid "_Render"
-msgstr "_Upodobi"
-
-#: ../plug-ins/script-fu/script-fu.c:347
-msgid "_Alchemy"
-msgstr "_Alkemija"
-
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Ponovno preberi vse dosegljive skripte Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:355
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Refresh Scripts"
 msgstr "_Osveži skripte"
 
-#: ../plug-ins/script-fu/script-fu.c:378
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "Ko je odprto pogovorno okno Script-Fu, ne smete uporabiti \"Osveži skripte\".  Prosimo, zaprite vsa okna Script-Fu in poskusite znova."
 
@@ -312,8 +261,7 @@ msgstr "Privzete vrednosti preslikave odtisa "
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -351,8 +299,7 @@ msgstr "Pisava"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -426,8 +373,7 @@ msgstr "Polmer zabrisanosti sence"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -461,8 +407,6 @@ msgstr "Vzorec Truchet 3_D  ..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -581,7 +525,7 @@ msgstr "Splošči sliko"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "Barva žarenja"
 
@@ -1264,6 +1208,8 @@ msgstr "Ustvari metalni logotip z odsevi in sencami v perspektivi"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "Velikost učinka (slikovne točke)"
 
@@ -1649,7 +1595,6 @@ msgid "Pattern (text)"
 msgstr "Vzorec (besedilo)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Senca"
 
@@ -1676,10 +1621,6 @@ msgstr "Izbranemu področju (ali alfi) doda učinek žareče vroče kovine"
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "Ustvarite logotip z videzom žareče vročega jekla"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "Velikost učinka (slikovne točke * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1783,46 +1724,6 @@ msgstr "Odstrani vsa vodoravna in navpična vodila"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_Odstrani vsa vodila"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Prekrivnost ozadja"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Ustvari grafikon porazdelitve nasičenosti, vrednosti in obarvanosti"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Nariši graf _HSV ..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Končni X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Končni Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Od levo zgoraj do desno spodaj"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Merilo grafikona"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Začetni X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Začetni Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Uporabi mere izbora namesto spodnjih vrednosti"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1958,10 +1859,6 @@ msgstr "Ustvari logotip v slogu neonskih znakov"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "Ustvari senco"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "Velikost učinka (slikovne točke * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -2301,26 +2198,6 @@ msgstr "Ustvari logotip z hitrostnim učinkom besedila"
 msgid "Speed Text..."
 msgstr "Hitrost besedila ..."
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Ustvari enostavno kroglo, ki meče senco"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Osvetlitev (v stopinjah)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Polmer (v slikovnih točkah)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Barva krogle"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Krogla ..."
-
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Ustvari animacijo z zrcaljenjem trenutne slike na sukajočo kroglo"
@@ -2466,39 +2343,11 @@ msgstr "Vrsta"
 msgid "_Spyrogimp..."
 msgstr "_Spiro-gimp ..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "Barva poka"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "Ustvari logotip z uporabo preliva eksplozije zvezde"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "Velikost učinka (slikovne točke * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
-msgstr "Zapolni izbrano področje (ali alfo) s prelivom eksplozije zvezde in dodano senco"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "_Eksplozija zvezde ..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr "Ustvari logotip s kamnito teksturo, žarjenjem nove in senco"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "Velikost učinka (slikovne točke * 4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid "Fill the selected region (or alpha) with a rock-like texture, a nova glow, and shadow"
-msgstr "Zapolni izbrano področje (ali alfo) s kamnito teksturo, žarjenjem nove in senco"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "Zvezdno _nebo ..."
 
@@ -2825,4 +2674,87 @@ msgstr "Poudari prekrivnost"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr " _Xach-učinek ..."
+
+#~ msgid "_Misc"
+#~ msgstr "_Razno"
+#~ msgid "_Utilities"
+#~ msgstr "_Pripomočki"
+#~ msgid "An_imation"
+#~ msgstr "An_imacija"
+#~ msgid "_Animators"
+#~ msgstr "_Animatorji"
+#~ msgid "_Artistic"
+#~ msgstr "_Umetniško"
+#~ msgid "_Blur"
+#~ msgstr "Za_briši"
+#~ msgid "_Decor"
+#~ msgstr "_Okrasi"
+#~ msgid "_Effects"
+#~ msgstr "_Učinki"
+#~ msgid "En_hance"
+#~ msgstr "Iz_boljšaj"
+#~ msgid "_Light and Shadow"
+#~ msgstr "_Svetloba in senca"
+#~ msgid "S_hadow"
+#~ msgstr "Sen_ca"
+#~ msgid "_Render"
+#~ msgstr "_Upodobi"
+#~ msgid "_Alchemy"
+#~ msgstr "_Alkemija"
+#~ msgid "Effect size (pixels * 3)"
+#~ msgstr "Velikost učinka (slikovne točke * 3)"
+#~ msgid "BG opacity"
+#~ msgstr "Prekrivnost ozadja"
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr "Ustvari grafikon porazdelitve nasičenosti, vrednosti in obarvanosti"
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Nariši graf _HSV ..."
+#~ msgid "End X"
+#~ msgstr "Končni X"
+#~ msgid "End Y"
+#~ msgstr "Končni Y"
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "Od levo zgoraj do desno spodaj"
+#~ msgid "Graph scale"
+#~ msgstr "Merilo grafikona"
+#~ msgid "Start X"
+#~ msgstr "Začetni X"
+#~ msgid "Start Y"
+#~ msgstr "Začetni Y"
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Uporabi mere izbora namesto spodnjih vrednosti"
+#~ msgid "Effect size (pixels * 5)"
+#~ msgstr "Velikost učinka (slikovne točke * 5)"
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "Ustvari enostavno kroglo, ki meče senco"
+#~ msgid "Lighting (degrees)"
+#~ msgstr "Osvetlitev (v stopinjah)"
+#~ msgid "Radius (pixels)"
+#~ msgstr "Polmer (v slikovnih točkah)"
+#~ msgid "Sphere color"
+#~ msgstr "Barva krogle"
+#~ msgid "_Sphere..."
+#~ msgstr "_Krogla ..."
+#~ msgid "Burst color"
+#~ msgstr "Barva poka"
+#~ msgid "Create a logo using a starburst gradient"
+#~ msgstr "Ustvari logotip z uporabo preliva eksplozije zvezde"
+#~ msgid "Effect size (pixels * 30)"
+#~ msgstr "Velikost učinka (slikovne točke * 30)"
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
+#~ "shadow"
+#~ msgstr ""
+#~ "Zapolni izbrano področje (ali alfo) s prelivom eksplozije zvezde in "
+#~ "dodano senco"
+#~ msgid "Starb_urst..."
+#~ msgstr "_Eksplozija zvezde ..."
+#~ msgid "Effect size (pixels * 4)"
+#~ msgstr "Velikost učinka (slikovne točke * 4)"
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
+#~ "glow, and shadow"
+#~ msgstr ""
+#~ "Zapolni izbrano področje (ali alfo) s kamnito teksturo, žarjenjem nove in "
+#~ "senco"
 

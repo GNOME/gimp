@@ -34,7 +34,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -305,7 +305,7 @@ gimp_vectors_import (GimpImage    *image,
                   vectors = gimp_vectors_new (image,
                                               ((merge || !path->id) ?
                                                _("Imported Path") : path->id));
-                  gimp_image_add_vectors (image, vectors, position);
+                  gimp_image_add_vectors (image, vectors, position, TRUE);
                   gimp_vectors_freeze (vectors);
 
                   if (ret_vectors)

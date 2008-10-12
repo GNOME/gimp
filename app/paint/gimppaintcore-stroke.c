@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "paint-types.h"
 
@@ -338,7 +338,7 @@ gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
         {
           coords[i].pressure =  i * slope;
         }
-                
+
       /* Calculate pressure end ramp */
       for (i = length - ramp_length; i < length; i++)
         {

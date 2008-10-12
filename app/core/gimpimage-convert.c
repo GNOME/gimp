@@ -133,7 +133,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"

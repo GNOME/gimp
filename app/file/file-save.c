@@ -33,7 +33,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
@@ -193,6 +193,8 @@ file_save (GimpImage           *image,
                        gimp_plug_in_procedure_get_label (file_proc));
         }
     }
+
+  gimp_image_flush (image);
 
   g_object_unref (image);
 

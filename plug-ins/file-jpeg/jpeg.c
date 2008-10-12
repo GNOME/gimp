@@ -51,21 +51,21 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-gboolean      undo_touched;
-gboolean      load_interactive;
-gchar        *image_comment;
-gint32        display_ID;
-JpegSaveVals  jsvals;
-gint32        orig_image_ID_global;
-gint32        drawable_ID_global;
-gboolean      has_metadata;
-gint          orig_quality;
-gint          orig_subsmp;
-gint          num_quant_tables;
+gboolean         undo_touched;
+gboolean         load_interactive;
+gchar           *image_comment;
+gint32           display_ID;
+JpegSaveVals     jsvals;
+gint32           orig_image_ID_global;
+gint32           drawable_ID_global;
+gboolean         has_metadata;
+gint             orig_quality;
+JpegSubsampling  orig_subsmp;
+gint             num_quant_tables;
 
 
 #ifdef HAVE_EXIF
-ExifData     *exif_data = NULL;
+ExifData        *exif_data = NULL;
 #endif
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -196,8 +196,8 @@ run (const gchar      *name,
   gint32             drawable_ID;
   gint32             orig_image_ID;
   GimpParasite      *parasite;
-  gboolean           err;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -213,7 +213,7 @@ run (const gchar      *name,
 
   has_metadata = FALSE;
   orig_quality = 0;
-  orig_subsmp = 0;
+  orig_subsmp = JPEG_SUPSAMPLING_2x2_1x1_1x1;
   num_quant_tables = 0;
 
   if (strcmp (name, LOAD_PROC) == 0)
@@ -230,7 +230,7 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
+      image_ID = load_image (param[1].data.d_string, run_mode, FALSE, &error);
 
       if (image_ID != -1)
         {
@@ -259,7 +259,7 @@ run (const gchar      *name,
           gint         width    = 0;
           gint         height   = 0;
 
-          image_ID = load_thumbnail_image (filename, &width, &height);
+          image_ID = load_thumbnail_image (filename, &width, &height, &error);
 
           if (image_ID != -1)
             {
@@ -430,6 +430,7 @@ run (const gchar      *name,
                * over the JPEG encoding parameters.
                */
               run_mode = GIMP_RUN_INTERACTIVE;
+
               /* If this image was loaded from a JPEG file and has not been
                * saved yet, try to use some of the settings from the
                * original file if they are better than the default values.
@@ -439,8 +440,13 @@ run (const gchar      *name,
                   jsvals.quality = orig_quality;
                   jsvals.use_orig_quality = TRUE;
                 }
-              if (orig_subsmp == 2 || (orig_subsmp > 0 && jsvals.subsmp == 0))
-                jsvals.subsmp = orig_subsmp;
+
+              if (orig_subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1 ||
+                  ((gint) orig_subsmp > 0 &&
+                   jsvals.subsmp == JPEG_SUPSAMPLING_1x1_1x1_1x1))
+                {
+                  jsvals.subsmp = orig_subsmp;
+                }
             }
           break;
         }
@@ -462,7 +468,7 @@ run (const gchar      *name,
           drawable_ID_global = drawable_ID;
 
           /*  First acquire information with a dialog  */
-          err = save_dialog ();
+          status = (save_dialog () ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL);
 
           if (undo_touched)
             {
@@ -471,18 +477,13 @@ run (const gchar      *name,
               gimp_image_undo_thaw (image_ID);
               gimp_displays_flush ();
             }
-
-          if (!err)
-            status = GIMP_PDB_CANCEL;
         }
 
       if (status == GIMP_PDB_SUCCESS)
         {
           if (! save_image (param[3].data.d_string,
-                            image_ID,
-                            drawable_ID,
-                            orig_image_ID,
-                            FALSE))
+                            image_ID, drawable_ID, orig_image_ID, FALSE,
+                            &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -523,6 +524,13 @@ run (const gchar      *name,
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
     }
 
   values[0].data.d_status = status;

@@ -35,26 +35,26 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_pattern_tagged_init     (GimpTaggedInterface    *iface);
-static void       gimp_pattern_finalize        (GObject       *object);
+static void          gimp_pattern_tagged_init     (GimpTaggedInterface    *iface);
+static void          gimp_pattern_finalize        (GObject       *object);
 
-static gint64     gimp_pattern_get_memsize     (GimpObject    *object,
-                                                gint64        *gui_size);
+static gint64        gimp_pattern_get_memsize     (GimpObject    *object,
+                                                   gint64        *gui_size);
 
-static gboolean   gimp_pattern_get_size        (GimpViewable  *viewable,
-                                                gint          *width,
-                                                gint          *height);
-static TempBuf  * gimp_pattern_get_new_preview (GimpViewable  *viewable,
-                                                GimpContext   *context,
-                                                gint           width,
-                                                gint           height);
-static gchar    * gimp_pattern_get_description (GimpViewable  *viewable,
-                                                gchar        **tooltip);
-static gchar    * gimp_pattern_get_extension   (GimpData      *data);
-static GimpData * gimp_pattern_duplicate       (GimpData      *data);
+static gboolean      gimp_pattern_get_size        (GimpViewable  *viewable,
+                                                   gint          *width,
+                                                   gint          *height);
+static TempBuf     * gimp_pattern_get_new_preview (GimpViewable  *viewable,
+                                                   GimpContext   *context,
+                                                   gint           width,
+                                                   gint           height);
+static gchar       * gimp_pattern_get_description (GimpViewable  *viewable,
+                                                   gchar        **tooltip);
 
-static gchar    * gimp_pattern_get_checksum    (GimpTagged    *tagged);
+static const gchar * gimp_pattern_get_extension   (GimpData      *data);
+static GimpData    * gimp_pattern_duplicate       (GimpData      *data);
 
+static gchar       * gimp_pattern_get_checksum    (GimpTagged    *tagged);
 
 G_DEFINE_TYPE_WITH_CODE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
@@ -172,7 +172,7 @@ gimp_pattern_get_description (GimpViewable  *viewable,
                           pattern->mask->height);
 }
 
-static gchar *
+static const gchar *
 gimp_pattern_get_extension (GimpData *data)
 {
   return GIMP_PATTERN_FILE_EXTENSION;

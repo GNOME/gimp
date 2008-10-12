@@ -1,3 +1,51 @@
+2008-09-29  Sven Neumann  <sven@gimp.org>
+
+	* release-howto.txt: there's no need to fiddle with
+	po/Makefile.in.in these days.
+
+2008-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app.types: some updates; still a lot to do here...
+
+2008-09-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new scale procedures.
+
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimplayer.sgml: regenerated.
+
+2008-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: remove references to $(REGEXREPL).
+
+2008-09-04  Sven Neumann  <sven@gimp.org>
+
+	* tools/shadow.c: removed trailing whitespace.
+
+2008-08-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets-docs.sgml: follow GimpRuler changes.
+
+	* libgimpwidgets/tmpl/gimpruler.sgml: regenerated.
+
+	* libgimpwidgets/tmpl/gimphruler.sgml
+	* libgimpwidgets/tmpl/gimpvruler.sgml: removed.
+
+2008-08-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added gimp_get_pdb_error() and
+	gimp_plugin_{get,set}_pdb_error_handler().
+
+	* libgimp/tmpl/gimpplugin.sgml
+	* libgimp/tmpl/gimp.sgml: regenerated.
+
+	* libgimpbase/libgimpbase-sections.txt: added GimpPDBErrorHandler.
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2008-08-14  Aurimas Juška  <auris@auris-laptop>
 
 	* tagging.txt: tag cache loading sequence was documented wrongly.

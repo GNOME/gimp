@@ -52,6 +52,7 @@ GimpPaintInfo * gimp_pdb_get_paint_info         (Gimp               *gimp,
 gboolean        gimp_pdb_item_is_attached       (GimpItem           *item,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
+                                                 GimpImage          *dest_image,
                                                  GError            **error);
 gboolean        gimp_pdb_layer_is_text_layer    (GimpLayer          *layer,
                                                  GError            **error);

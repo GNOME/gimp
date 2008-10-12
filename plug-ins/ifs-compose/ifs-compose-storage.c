@@ -60,33 +60,33 @@ enum {
 
 static struct
 {
-  gchar *name;
-  gint token;
+  const gchar *name;
+  gint        token;
 } symbols[] = {
-  { "iterations", TOKEN_ITERATIONS },
-  { "max_memory", TOKEN_MAX_MEMORY },
-  { "subdivide", TOKEN_SUBDIVIDE },
-  { "radius", TOKEN_RADIUS },
+  { "iterations",   TOKEN_ITERATIONS },
+  { "max_memory",   TOKEN_MAX_MEMORY },
+  { "subdivide",    TOKEN_SUBDIVIDE },
+  { "radius",       TOKEN_RADIUS },
   { "aspect_ratio", TOKEN_ASPECT_RATIO },
-  { "center_x", TOKEN_CENTER_X },
-  { "center_y", TOKEN_CENTER_Y },
-  { "element", TOKEN_ELEMENT },
-  { "x", TOKEN_X },
-  { "y", TOKEN_Y },
-  { "theta", TOKEN_THETA },
-  { "scale", TOKEN_SCALE },
-  { "asym", TOKEN_ASYM },
-  { "shear", TOKEN_SHEAR },
-  { "flip", TOKEN_FLIP },
-  { "red_color", TOKEN_RED_COLOR },
-  { "green_color", TOKEN_GREEN_COLOR },
-  { "blue_color", TOKEN_BLUE_COLOR },
-  { "black_color", TOKEN_BLACK_COLOR },
+  { "center_x",     TOKEN_CENTER_X },
+  { "center_y",     TOKEN_CENTER_Y },
+  { "element",      TOKEN_ELEMENT },
+  { "x",            TOKEN_X },
+  { "y",            TOKEN_Y },
+  { "theta",        TOKEN_THETA },
+  { "scale",        TOKEN_SCALE },
+  { "asym",         TOKEN_ASYM },
+  { "shear",        TOKEN_SHEAR },
+  { "flip",         TOKEN_FLIP },
+  { "red_color",    TOKEN_RED_COLOR },
+  { "green_color",  TOKEN_GREEN_COLOR },
+  { "blue_color",   TOKEN_BLUE_COLOR },
+  { "black_color",  TOKEN_BLACK_COLOR },
   { "target_color", TOKEN_TARGET_COLOR },
-  { "hue_scale", TOKEN_HUE_SCALE },
-  { "value_scale", TOKEN_VALUE_SCALE },
+  { "hue_scale",    TOKEN_HUE_SCALE },
+  { "value_scale",  TOKEN_VALUE_SCALE },
   { "simple_color", TOKEN_SIMPLE_COLOR },
-  { "prob", TOKEN_PROB }
+  { "prob",         TOKEN_PROB }
 };
 
 static GTokenType

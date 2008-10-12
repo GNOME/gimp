@@ -721,7 +721,7 @@ GPL
 	    if ($sys == 0 && !/^</) {
 		$sys = 1;
 		$headers .= "\n" if $seen;
-		$headers .= "#include <glib-object.h>\n\n";
+		$headers .= "#include <gegl.h>\n\n";
 	    }
 
 	    $seen = 0 if !/^</;

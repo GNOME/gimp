@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -90,7 +90,12 @@ gimp_image_scale (GimpImage             *image,
   offset_y = (old_height - new_height) / 2;
 
   /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (image, NULL, offset_x, offset_y);
+  gimp_image_undo_push_image_size (image,
+                                   NULL,
+                                   offset_x,
+                                   offset_y,
+                                   new_width,
+                                   new_height);
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -168,7 +173,7 @@ gimp_image_scale (GimpImage             *image,
     {
       GimpLayer *layer = list->data;
 
-      gimp_image_remove_layer (image, layer);
+      gimp_image_remove_layer (image, layer, TRUE, NULL);
     }
 
   g_list_free (remove);
@@ -212,7 +217,11 @@ gimp_image_scale (GimpImage             *image,
 
   g_object_unref (sub_progress);
 
-  gimp_image_size_changed_detailed (image, -offset_x, -offset_y);
+  gimp_image_size_changed_detailed (image,
+                                    -offset_x,
+                                    -offset_y,
+                                    old_width,
+                                    old_height);
 
   g_object_thaw_notify (G_OBJECT (image));
 

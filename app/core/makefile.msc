@@ -33,7 +33,7 @@ PKG_LINK = \
 OBJECTS = \
 	core-enums.obj \
 	gimp-contexts.obj \
-	gimp-documents.obj \
+#	gimp-documents.obj \
 	gimp-edit.obj \
 	gimp-gradients.obj \
 	gimp-gui.obj \
@@ -174,6 +174,18 @@ OBJECTS = \
 	gimpundostack.obj \
 	gimpunit.obj \
 	gimpviewable.obj \
+	gimpcurve-map.obj \
+	gimpdrawable-brightness-contrast.obj \
+	gimpdrawable-color-balance.obj \
+	gimpdrawable-colorize.obj \
+	gimpdrawable-curves.obj \
+	gimpdrawable-hue-saturation.obj \
+	gimpdrawable-posterize.obj \
+	gimpdrawable-process.obj \
+	gimpdrawable-shadow.obj \
+	gimpdrawable-threshold.obj \
+	gimpimagemapconfig.obj \
+	gimptagged.obj \
 
 OTHER_FILES = \
 	\
@@ -197,8 +209,8 @@ INCLUDES = \
 
 DEFINES = \
 	-DGIMP_COMPILATION \
-	-DGIMP_APP_VERSION=\"2.4\" \
-	-DG_LOG_DOMAIN=\"Gimp-Core\"
+	-DG_LOG_DOMAIN=\"Gimp-Core\" \
+	$(GIMP_VERSION_DEFINES)
 
 all : \
 	$(PRJ_TOP)\config.h \

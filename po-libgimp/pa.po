@@ -2,29 +2,50 @@
 # Copyright (C) 2004 THE gimp-libgimp'S COPYRIGHT HOLDER
 #
 #
-# This file is distributed under the same license as the gimp-libgimp packageJaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
-# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
-# ASB <aalam@users.sf.net>, 2007.
+# This file is distributed under the same license as the gimp-libgimp package
+#Jaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
+# ASB <aalam@users.sf.net>,2004,2005,2006, 2007.
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-17 14:38+0100\n"
-"PO-Revision-Date: 2007-09-28 07:13+0530\n"
-"Last-Translator: ASB <aalam@users.sf.net>\n"
-"Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
+"POT-Creation-Date: 2008-09-05 07:32+0000\n"
+"PO-Revision-Date: 2008-10-07 06:41+0000\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-l10n@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: LoKalize 0.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1044
+msgid "success"
+msgstr "ਸਫ਼ਲ"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1048
+msgid "execution error"
+msgstr "ਚਲਾਉਣ ਗਲਤੀ"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1052
+msgid "calling error"
+msgstr "ਕਾਲ ਗਲਤੀ"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1056
+msgid "cancelled"
+msgstr "ਰੱਦ ਕੀਤਾ"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "ਬੁਰਸ਼ ਚੋਣ"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "ਬਰਾਊਜ਼(_B)..."
 
@@ -211,7 +232,7 @@ msgstr "(ਖਾਲੀ)"
 
 #: ../libgimp/gimppaletteselectbutton.c:130
 msgid "Palette Selection"
-msgstr ""
+msgstr "ਪਲੈਅਟ ਚੋਣ"
 
 #: ../libgimp/gimppatternselectbutton.c:156
 msgid "Pattern Selection"
@@ -312,15 +333,15 @@ msgstr "ਜਵਾਬੀ ਮੁੱਲ"
 msgid "Additional Information"
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "ਲੇਖਕ:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "ਮਿਤੀ:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "ਕਾਪੀਰਾਈਟ:"
 
@@ -328,472 +349,456 @@ msgstr "ਕਾਪੀਰਾਈਟ:"
 msgid "percent"
 msgstr "ਫੀਸਦੀ"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_White (full opacity)"
 msgstr "ਚਿੱਟਾ (ਪੂਰਾ ਧੁੰਦਲਾਪਨ)(_W)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "_Black (full transparency)"
 msgstr "ਕਾਲਾ (ਪੂਰਾ ਪਾਰਦਰਸ਼ੀ)(_B)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:30
 msgid "Layer's _alpha channel"
 msgstr "ਲੇਅਰ ਦਾ ਐਲਫ਼ਾ ਚੈਨਲ(_a)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Transfer layer's alpha channel"
 msgstr "ਲੇਅਰ ਦਾ ਐਲਫ਼ਾ ਚੈਨਲ ਟਰਾਂਸਫਰ ਕਰੋ(_T)"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
 msgstr "ਚੋਣ(_S)"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libgimpbase/gimpbaseenums.c:33
 msgid "_Grayscale copy of layer"
 msgstr "ਲੇਅਰ ਦੀ ਗਰੇ-ਸਕੇਲ ਕਾਪੀ(_G)"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libgimpbase/gimpbaseenums.c:34
 msgid "C_hannel"
 msgstr "ਚੈਨਲ(_h)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (RGB)"
 msgstr "FG ਤੋਂ BG (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to BG (HSV)"
 msgstr "FG ਤੋਂ BG (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "FG to transparent"
 msgstr "FG ਤੋਂ ਟਰਾਂਸਪੇਰੈਂਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libgimpbase/gimpbaseenums.c:67
 msgid "Custom gradient"
 msgstr "ਕਸਟਮ ਗਰੇਂਡੀਐਂਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
 msgstr "FG ਰੰਗ ਭਰੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "BG color fill"
 msgstr "BG ਰੰਗ ਭਰੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:98
 msgid "Pattern fill"
 msgstr "ਪੈਟਰਨ ਭਰੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Add to the current selection"
 msgstr "ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚ ਜੋੜ੍ਹੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Subtract from the current selection"
 msgstr "ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚੋਂ ਘਟਾਓ"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Replace the current selection"
 msgstr "ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚ ਤਬਦੀਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libgimpbase/gimpbaseenums.c:131
 msgid "Intersect with the current selection"
 msgstr "ਮੌਜੂਦਾ ਚੋਣ ਨਾਲ ਇੰਟਰਸੈਕਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "ਲਾਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "ਹਰਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "ਨੀਲਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:166
 msgid "Gray"
 msgstr "ਗਰੇ"
 
-#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed"
 msgstr "ਇੰਡੈਕਸ"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:168 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "ਐਲਫਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Small"
 msgstr "ਛੋਟਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Medium"
 msgstr "ਮੱਧਮ"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libgimpbase/gimpbaseenums.c:199
 msgid "Large"
 msgstr "ਵੱਡਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Light checks"
 msgstr "ਲਾਈਟ ਚੈੱਕ"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Mid-tone checks"
 msgstr "ਮਿਡ-ਟੋਨ ਚੈੱਕ"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "Dark checks"
 msgstr "ਗੂੜਾ ਚੈੱਕ"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "White only"
 msgstr "ਕੇਵਲ ਚਿੱਟਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Gray only"
 msgstr "ਕੇਵਲ ਗਰੇ"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:236
 msgid "Black only"
 msgstr "ਕੇਵਲ ਕਾਲਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:263
+#: ../libgimpbase/gimpbaseenums.c:264
 msgid "Image"
 msgstr "ਚਿੱਤਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:264
+#: ../libgimpbase/gimpbaseenums.c:265
 msgid "Pattern"
 msgstr "ਪੈਟਰਨ"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Lightness"
 msgstr "ਲਾਈਟਨੈਂਸ"
 
-#: ../libgimpbase/gimpbaseenums.c:294
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Luminosity"
 msgstr "ਲੁਮਿਨੋਸਟੀ"
 
-#: ../libgimpbase/gimpbaseenums.c:295
+#: ../libgimpbase/gimpbaseenums.c:296
 msgid "Average"
 msgstr "ਔਸਤ"
 
-#: ../libgimpbase/gimpbaseenums.c:323
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Dodge"
 msgstr "ਡੋਡਜੀ"
 
-#: ../libgimpbase/gimpbaseenums.c:324
+#: ../libgimpbase/gimpbaseenums.c:325
 msgid "Burn"
 msgstr "ਬਰਨ"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "gradient|Linear"
 msgstr "ਲੀਨੀਅਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Bi-linear"
 msgstr "ਬਾਈ-ਲੀਨੀਅਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Radial"
 msgstr "ਰੇਡੀਕਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libgimpbase/gimpbaseenums.c:392 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "ਵਰਗ"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (sym)"
 msgstr "ਸ਼ੰਕੂਕਾਰ (sym)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Conical (asym)"
 msgstr "ਸ਼ੰਕੂਕਾਰ (asym)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (angular)"
 msgstr "ਸ਼ੇਪ (ਕੋਣੀ)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (spherical)"
 msgstr "ਸ਼ੇਪ (ਗੋਲਾਕਾਰ)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Shaped (dimpled)"
 msgstr "ਸ਼ੇਪ (ਲਹਿਰਦਾਰ)"
 
-#: ../libgimpbase/gimpbaseenums.c:397
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (cw)"
 msgstr "ਗੋਲ (cw)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:399
 msgid "Spiral (ccw)"
 msgstr "ਗੋਲ (ccw)"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (dots)"
 msgstr "ਇੰਟਰਸ਼ੈਕਸ਼ਨ (ਡਾਟ)"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Intersections (crosshairs)"
 msgstr "ਇੰਟਰਸ਼ੈਕਸ਼ਨ (ਕਰਾਂਸ-ਹੇਅਰ)"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Dashed"
 msgstr "ਡੈਸ਼"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Double dashed"
 msgstr "ਡਬਲ ਡੈਸ਼"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:434
 msgid "Solid"
 msgstr "ਗੂੜ੍ਹਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Stock ID"
 msgstr "ਸਟਾਕ ID"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Inline pixbuf"
 msgstr "ਇੰ-ਲਾਈਨ pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:465
 msgid "Image file"
 msgstr "ਚਿੱਤਰ ਫਾਇਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:494
 msgid "RGB color"
 msgstr "RGB ਰੰਗ"
 
-#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:495 ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale"
 msgstr "ਗਰੇ-ਸਕੇਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:496
 msgid "Indexed color"
 msgstr "ਇੰਡੈਕਸ ਰੰਗ"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "RGB-alpha"
 msgstr "RGB-ਐਲਫ਼ਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:531
 msgid "Grayscale-alpha"
 msgstr "ਗਰੇ-ਸਕੇਲ - ਐਲਫ਼ਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:532
+#: ../libgimpbase/gimpbaseenums.c:533
 msgid "Indexed-alpha"
 msgstr "ਇੰਡੈਕਸ-ਐਲਫ਼ਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:562
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
-#: ../libgimpbase/gimpbaseenums.c:563
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "interpolation|Linear"
 msgstr "ਲੀਨੀਅਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:564
+#: ../libgimpbase/gimpbaseenums.c:565
 msgid "Cubic"
 msgstr "ਕਿਊਬਕ"
 
-#: ../libgimpbase/gimpbaseenums.c:565
+#: ../libgimpbase/gimpbaseenums.c:566
 msgid "Sinc (Lanczos3)"
 msgstr "ਸਾਇਨ (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:593
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Constant"
 msgstr "ਸਥਿਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:594
+#: ../libgimpbase/gimpbaseenums.c:595
 msgid "Incremental"
 msgstr "ਵਾਧਾ"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
-#: ../libgimpbase/gimpbaseenums.c:624
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Sawtooth wave"
 msgstr "ਧਾਰੀਦਾਰ ਲਹਿਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:625
+#: ../libgimpbase/gimpbaseenums.c:626
 msgid "Triangular wave"
 msgstr "ਤਿਕੋਨੀ ਲਹਿਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run interactively"
 msgstr "ਇੰਟਰ-ਐਕਟਿਵਲੀ ਚਲਾਓ"
 
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run non-interactively"
 msgstr "ਗ਼ੈਰ-ਇੰਟਰ-ਐਕਟਿਵਲੀ ਚਲਾਓ"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libgimpbase/gimpbaseenums.c:657
 msgid "Run with last used values"
 msgstr "ਆਖਰੀ ਵਰਤੇ ਮੁੱਲਾਂ ਨਾਲ ਚਲਾਓ"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Pixels"
 msgstr "ਪਿਕਸਲ"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libgimpbase/gimpbaseenums.c:686
 msgid "Points"
 msgstr "ਪੁਆਇੰਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Shadows"
 msgstr "ਛਾਂ"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Midtones"
 msgstr "ਮਿਡ-ਟੋਨ"
 
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libgimpbase/gimpbaseenums.c:717
 msgid "Highlights"
 msgstr "ਹਾਈਲਾਈਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:744
+#: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
 msgstr "ਨਾਰਮਲ (ਅੱਗੇ)"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
 msgstr "ਕੱਰੀਇਕਟਿਵ (ਪਿੱਛੇ)"
 
-#: ../libgimpbase/gimpbaseenums.c:775
+#: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
 msgstr "ਅਡਜੱਸਟ"
 
-#: ../libgimpbase/gimpbaseenums.c:776
+#: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
 msgstr "ਕਲਿੱਪ"
 
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop to result"
 msgstr "ਨਤੀਜੇ ਤੋਂ ਕਰੋਪ ਕਰੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:779
 msgid "Crop with aspect"
 msgstr "ਆਕਾਰ ਨਾਲ ਕਰੋਪ ਕਰੋ"
 
-#: ../libgimpbase/gimpbaseenums.c:881
+#: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
 msgstr "ਅੰਦਰੂਨੀ ਜੈਮਪ ਪਰੋਸੀਜ਼ਰ"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
 msgstr "ਜੈਮਪ ਪਲੱਗਇਨ"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
 msgstr "ਜੈਮਪ ਐਕਸ਼ਟੈਂਸ਼ਨ"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:912
 msgid "Temporary Procedure"
 msgstr "ਆਰਜ਼ੀ ਪਰੋਸ਼ੀਜ਼ਰ"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d ਬਾਈਟ"
-msgstr[1] "%d ਬਾਈਟ"
+#: ../libgimpbase/gimpbaseenums.c:1074
+msgid "From left to right"
+msgstr "ਖੱਬੇ ਤੋਂ ਸੱਜੇ"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f KB"
+#: ../libgimpbase/gimpbaseenums.c:1075
+msgid "From right to left"
+msgstr "ਸੱਜੇ ਤੋਂ ਖੱਬੇ"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f KB"
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgid "Left justified"
+msgstr "ਖੱਬੇ ਇਕਸਾਰ"
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d KB"
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgid "Right justified"
+msgstr "ਸੱਜੇ ਇਕਸਾਰ"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+#: ../libgimpbase/gimpbaseenums.c:1107
+msgid "Centered"
+msgstr "ਸੈਂਟਰ"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d MB"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d GB"
+#: ../libgimpbase/gimpbaseenums.c:1108
+msgid "Filled"
+msgstr "ਭਰਿਆ"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/display-filter-lcms.c:183
+#: ../modules/color-selector-cmyk-lcms.c:407
+#: ../modules/color-selector-cmyk-lcms.c:413
 msgid "(invalid UTF-8 string)"
 msgstr "(ਗਲਤ UTF-8 ਲਾਈਨ)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "ਰੰਗ ਪਰਬੰਧ ਲਈ ਓਪਰੇਸ਼ਨ ਦਾ ਮੋਡ"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "ਤੁਹਾਡੇ (ਪ੍ਰਾਇਮਰੀ) ਮਾਨੀਟਰ ਲਈ ਰੰਗ ਪਰੋਫਾਇਲ ਹੈ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ ਜੈਮਪ ਵਿੰਡੋਜ਼ ਸਿਸਟਮ ਤੋਂ ਕਲਰ ਪਰੋਫਾਇਲ ਵੇਖਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੇਗਾ। "
-"  ਸੰਰਚਿਤ ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ ਨੂੰ ਤਦ ਫਾਲ-ਬੈਕ ਦੇ ਤੌਰ ਉੱਤੇ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
+"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ ਜੈਮਪ ਵਿੰਡੋਜ਼ ਸਿਸਟਮ ਤੋਂ ਕਲਰ ਪਰੋਫਾਇਲ ਵੇਖਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੇਗਾ।   ਸੰਰਚਿਤ ਮਾਨੀਟਰ "
+"ਪਰੋਫਾਇਲ ਨੂੰ ਤਦ ਫਾਲ-ਬੈਕ ਦੇ ਤੌਰ ਉੱਤੇ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "ਡਿਫਾਲਟ RGB ਵਰਕਿੰਗ ਸਪੇਸ ਰੰਗ ਪਰੋਫਾਇਲ ਹੈ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "RGB ਅਤੇ CMYK ਵਿੱਚ ਬਦਲਣ ਵਾਸਤੇ ਵਰਤਿਆ ਜਾਂਦਾ CMYK ਰੰਗ ਪਰੋਫਾਇਲ"
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "ਤੁਹਾਡੇ ਡਿਸਪਲੇਅ ਉੱਤੇ ਕਿੰਨੇ ਰੰਗ ਮੈਪ ਕੀਤੇ ਜਾਣੇ ਹਨ।"
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -850,10 +855,10 @@ msgstr "ਗਲਤ ਮੁੱਲ '%ld'  ਟੋਕਨ %s ਲਈ"
 msgid "while parsing token '%s': %s"
 msgstr "ਜਦੋ ਟੋਕਨ '%s' ਨੂੰ ਪਾਰਸ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:474
+#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ"
 
@@ -902,6 +907,7 @@ msgid "Could not create '%s': %s"
 msgstr "'%s' ਨੂੰ ਬਣਾਇਆ ਨਹੀ ਜਾ ਸਕਿਆ ਹੈ: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "ਗਲਤ UTF-8 ਲਾਈਨ"
 
@@ -933,7 +939,7 @@ msgstr "ਲੋਡ ਫੇਲ੍ਹ"
 msgid "Not loaded"
 msgstr "ਲੋਡ ਨਹੀਂ ਹੋਇਆ"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -942,12 +948,13 @@ msgstr ""
 "ਇੱਕ ਠੀਕ ਘਰ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਜਾਣੀ ਨਹੀਂ ਜਾ ਸਕੀ।\n"
 "ਥੰਮਨੇਲਾਂ ਨੂੰ ਆਰਜ਼ੀ ਫਾਇਲਾਂ (%s) ਦੀ ਬਜਾਏ ਫੋਲਡਰ ਵਿੱਚ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ।"
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ ਹੈ।"
 
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "ਥੰਮਨੇਲ ਵਿੱਚ ਕੋਈ ਥੰਮ ਨਹੀਂ ਹੈ::URI ਟੈਗ"
 
@@ -981,7 +988,8 @@ msgid "Select color profile from disk..."
 msgstr "ਡਿਸਕ ਤੋਂ ਕਲਰ ਪਰੋਫਾਇਲ ਚੁਣੋ..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-msgid "profile|None"
+msgctxt "profile"
+msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
@@ -1001,12 +1009,16 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"HTML ਅਤੇ CSS ਵਿੱਚ ਵਰਤੇ ਜਾਂਦੇ ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ ਹਦਾਇਤਾਂ।  ਇਹ ਐਂਟਰੀ CSS ਰੰਗ ਨਾਂ "
-"ਵੀ ਮਨਜ਼ੂਰ ਕਰਦੀ ਹੈ।"
+"HTML ਅਤੇ CSS ਵਿੱਚ ਵਰਤੇ ਜਾਂਦੇ ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ ਹਦਾਇਤਾਂ।  ਇਹ ਐਂਟਰੀ CSS ਰੰਗ ਨਾਂ ਵੀ ਮਨਜ਼ੂਰ ਕਰਦੀ "
+"ਹੈ।"
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML ਹਦਾਇਤਾਂ(_n):"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "ਹੋਰ ਮੱਦਦ ਲਈ F1 ਦੱਬੋ"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
@@ -1038,7 +1050,7 @@ msgstr "ਗੀਗਾ ਬਾਈਟ"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libgimpwidgets/gimppageselector.c:1166
 msgid "Nothing selected"
 msgstr "ਕੁਝ ਵੀ ਚੁਣਿਆ ਨਹੀਂ"
 
@@ -1058,18 +1070,18 @@ msgstr "ਪੇਜ਼ ਇੰਝ ਖੋਲ੍ਹੋ(_p)"
 msgid "Page 000"
 msgstr "ਪੇਜ਼ 000"
 
-#: ../libgimpwidgets/gimppageselector.c:512
-#: ../libgimpwidgets/gimppageselector.c:749
+#: ../libgimpwidgets/gimppageselector.c:508
+#: ../libgimpwidgets/gimppageselector.c:744
 #, c-format
 msgid "Page %d"
 msgstr "ਪੇਜ਼ %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1176
+#: ../libgimpwidgets/gimppageselector.c:1171
 msgid "One page selected"
 msgstr "ਇੱਕ ਪੇਜ਼ ਚੁਣਿਆ"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
-#: ../libgimpwidgets/gimppageselector.c:1187
+#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:1182
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1098,87 +1110,87 @@ msgstr "ਚੈੱਕ ਆਕਾਰ"
 msgid "Check Style"
 msgstr "ਚੈੱਕ ਸਟਾਇਲ"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "ਝਲਕ(_P)"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1901
+#: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ਇਹ ਟੈਕਸਟ ਇੰਪੁੱਟ ਖੇਤਰ ਕੇਵਲ %d ਅੱਖਰ ਲਈ ਹੀ ਸੀਮਿਤ ਹੈ।"
+msgstr[1] "ਇਹ ਟੈਕਸਟ ਇੰਪੁੱਟ ਖੇਤਰ ਕੇਵਲ %d ਅੱਖਰਾਂ ਲਈ ਹੀ ਸੀਮਿਤ ਹੈ।"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
 msgstr "ਐਂਕਰ"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
 msgstr "ਸੈਂਟਰ(_e)"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "ਡੁਪਲੀਕੇਟ(_D)"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "ਸੋਧ(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "ਲਿੰਕ"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "ਨਵੇਂ ਵਾਂਗ ਚੇਪੋ"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "ਵਿੱਚ ਚੇਪੋ"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "ਮੁੜ-ਸੈੱਟ(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "ਦਿੱਖ"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
 msgstr "ਸਟਰੋਕ(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
 msgstr "ਅੱਖਰ ਸਪੇਸਿੰਗ(_e)"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_ine Spacing"
 msgstr "ਲਾਈਨ ਸਪੇਸਿੰਗ(_i)"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:189
 msgid "_Resize"
 msgstr "ਮੁੜ-ਆਕਾਰ(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "ਸਕੇਲ(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "Cr_op"
 msgstr "ਕਰੋਪ ਕਰੋ(_o)"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "_Transform"
 msgstr "ਟਰਾਂਸਫਰਮ(_T)"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr "ਘੁੰਮਾਓ(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr "ਸ਼ੀਅਰ(_S)"
 
@@ -1198,23 +1210,22 @@ msgstr "ਯੂਨਿਟ"
 msgid "Factor"
 msgstr "ਫੈਕਟਰ"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:511
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"ਰੈਂਡਮ ਨੰਬਰ ਜਰਨੇਟਰ ਸੀਡ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀਂ ਦਰਸਾਏ \"ਰੈਂਡਮ\" ਓਪਰੇਸ਼ਨ ਦੁਹਰਾ "
-"ਸਕਦੇ ਹੋ"
+"ਰੈਂਡਮ ਨੰਬਰ ਜਰਨੇਟਰ ਸੀਡ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀਂ ਦਰਸਾਏ \"ਰੈਂਡਮ\" ਓਪਰੇਸ਼ਨ ਦੁਹਰਾ ਸਕਦੇ ਹੋ"
 
-#: ../libgimpwidgets/gimpwidgets.c:1009
+#: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
 msgstr "ਨਵੀਂ ਸੀਡ(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:528
 msgid "Seed random number generator with a generated random number"
 msgstr "ਉਪਜੇ ਰੈਂਡਮ ਨੰਬਰ ਸਮੇਤ ਡਿਫਾਲਟ ਨੰਬਰ ਜਰਨੇਟਰ ਸੀਡ"
 
-#: ../libgimpwidgets/gimpwidgets.c:1026
+#: ../libgimpwidgets/gimpwidgets.c:532
 msgid "_Randomize"
 msgstr "ਰੈਂਡਮਾਈਜ਼(_R)"
 
@@ -1276,545 +1287,595 @@ msgstr "ਚਿੱਤਰ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
-msgstr ""
+msgstr "ਜ਼ੂਮ ਇਨ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
-msgstr ""
+msgstr "ਜ਼ੂਮ ਆਉਟ"
 
-#: ../modules/cdisplay_colorblind.c:67
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "ਪਰੋਤਾਂਨੋਪੀਆ (ਲਾਲ ਨੂੰ ਇੰ-ਸੈਂਸਟਵਟੀ)"
 
-#: ../modules/cdisplay_colorblind.c:69
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "ਡਯੂਟਰਾਂਨੋਪੀਆ (ਹਰੇ ਨੂੰ ਇੰ-ਸੈਂਸਟਵਟੀ)"
 
-#: ../modules/cdisplay_colorblind.c:71
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "ਟਰੀਟਾਂਨੋਪੀਆ (ਨੀਲੇ ਨੂੰ ਇੰ-ਸੈਂਸਟਵਟੀ)"
 
-#: ../modules/cdisplay_colorblind.c:200
+#: ../modules/display-filter-color-blind.c:198
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "ਰੰਗ ਕਮੀ ਕਪਟ ਫਿਟਰ (Brettel-Vienot-Mollon algorithm)"
 
-#: ../modules/cdisplay_colorblind.c:292
+#: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
 msgstr "ਰੰਗ ਕਮੀ ਵਾਲੀ ਦਿੱਖ"
 
-#: ../modules/cdisplay_colorblind.c:507
+#: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
 msgstr "ਰੰਗ ਕਮੀ ਟਾਈਪ(_d):"
 
-#: ../modules/cdisplay_gamma.c:91
+#: ../modules/display-filter-gamma.c:90
 msgid "Gamma color display filter"
 msgstr "ਗਾਮਾ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
-#: ../modules/cdisplay_gamma.c:160
+#: ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "ਗਾਮਾ"
 
-#: ../modules/cdisplay_gamma.c:253
+#: ../modules/display-filter-gamma.c:232
 msgid "_Gamma:"
 msgstr "ਗਾਮਾ:"
 
-#: ../modules/cdisplay_highcontrast.c:91
+#: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
 msgstr "ਵਧੇਰੇ ਵਖਰੇਂਵਾਂ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
-#: ../modules/cdisplay_highcontrast.c:160
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "ਵਖਰੇਂਵਾਂ"
 
-#: ../modules/cdisplay_highcontrast.c:253
+#: ../modules/display-filter-high-contrast.c:232
 msgid "Contrast c_ycles:"
 msgstr "ਵਖਰੇਂਵਾਂ ਸਾਈਕਲ(_y):"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC ਰੰਗ ਪਰੋਫਾਇਲ ਦੀ ਵਰਤੋਂ ਨਾਲ ਰੰਗ ਪਰਬੰਧ ਡਿਸਪਲੇਅ ਫਿਲਟਰ"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "ਰੰਗ ਪਰਬੰਧ"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/display-filter-lcms.c:212
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
+msgstr "ਇਹ ਫਿਲਟਰ ਆਪਣੀ ਸੰਰਚਨਾ ਪਸੰਦੀਦਾ ਡਾਈਲਾਗ ਵਿੱਚੋਂ ਕਲਰ ਪਰਬੰਧ ਚੋਣ ਰਾਹੀਂ ਲੈਂਦਾ ਹੈ।"
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
 msgstr "ਓਪਰੇਸ਼ਨ ਦਾ ਮੋਡ:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
 msgstr "ਚਿੱਤਰ ਪਰੋਫਾਇਲ:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
 msgstr "ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/display-filter-lcms.c:249
 msgid "Print simulation profile:"
 msgstr "ਪਰਿੰਟ ਸਿਮੂਲੇਸ਼ਨ ਪਰੋਫਾਇਲ:"
 
-#: ../modules/cdisplay_proof.c:103
+#: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
 msgstr "ICC ਰੰਗ ਪਰੋਫਾਇਲ ਦੀ ਵਰਤੋਂ ਨਾਲ ਕਲਰ ਪਰੂਫ਼ ਫਿਲਟਰ"
 
-#: ../modules/cdisplay_proof.c:180
+#: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
 msgstr "ਕਲਰ ਪਰੂਫ਼"
 
-#: ../modules/cdisplay_proof.c:340
+#: ../modules/display-filter-proof.c:311
 msgid "Choose an ICC Color Profile"
 msgstr "ਇੱਕ ICC ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../modules/cdisplay_proof.c:367
+#: ../modules/display-filter-proof.c:338
 msgid "All files (*.*)"
 msgstr "ਸਭ ਫਾਇਲਾਂ (*.*)"
 
-#: ../modules/cdisplay_proof.c:372
+#: ../modules/display-filter-proof.c:343
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC ਕਲਰ ਪਰੋਫਾਇਲ (*.icc, *.icm)"
 
-#: ../modules/cdisplay_proof.c:430
+#: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
 msgstr "ਪਰੋਫਾਇਲ(_P):"
 
-#: ../modules/cdisplay_proof.c:436
+#: ../modules/display-filter-proof.c:407
 msgid "_Intent:"
-msgstr ""
+msgstr "ਇੰਟੈਂਟ(_I):"
 
-#: ../modules/cdisplay_proof.c:441
+#: ../modules/display-filter-proof.c:412
 msgid "_Black Point Compensation"
 msgstr "ਬਲੈਕ ਪੁਆਇੰਟ ਪੂਰਤੀ(_B)"
 
-#: ../modules/colorsel_cmyk.c:73
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "CMYK ਰੰਗ ਚੋਣਕਾਰ"
 
-#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
+#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:150
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:169
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:171
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:173
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:175
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:179
 msgid "Cyan"
 msgstr "ਕਿਰਮਚੀ(cyan)"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:180
 msgid "Magenta"
 msgstr "ਮਜੈਨਟਾ"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:181
 msgid "Yellow"
 msgstr "ਪੀਲਾ"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:182
 msgid "Black"
 msgstr "ਕਾਲਾ"
 
-#: ../modules/colorsel_cmyk.c:195
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "ਕਾਲਾ ਪੁਲਆਉਟ (%):"
 
-#: ../modules/colorsel_cmyk.c:212
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
 
-#: ../modules/colorsel_cmyk_lcms.c:91
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK ਰੰਗ ਚੋਣਕਾਰ (ਰੰਗ ਪਰੋਫਾਇਲ ਵਰਤੋਂ)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/color-selector-cmyk-lcms.c:395
 msgid "Profile: (none)"
 msgstr "ਪਰੋਫਾਇਲ: (ਕੋਈ ਨਹੀਂ)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/color-selector-cmyk-lcms.c:416
 #, c-format
 msgid "Profile: %s"
 msgstr "ਪਰੋਫਾਇਲ: %s"
 
-#: ../modules/colorsel_triangle.c:104
-msgid "Painter-style triangle color selector"
-msgstr "ਪੇਂਟਰ-ਸਟਾਇਲ ਤਿਕੋਣੀ ਰੰਗ ਚੋਣਕਾਰ"
-
-#: ../modules/colorsel_triangle.c:170
-msgid "Triangle"
-msgstr "ਤਿਕੋਣ"
-
-#: ../modules/colorsel_water.c:84
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "ਵਾਟਰ-ਕਲਰ ਸਟਾਇਲ ਰੰਗ ਚੋਣਕਾਰ"
 
-#: ../modules/colorsel_water.c:150
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "ਵਾਟਰ-ਕਲਰ"
 
-#: ../modules/colorsel_water.c:213
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "ਦਬਾਅ"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/color-selector-wheel.c:98
+msgid "HSV color wheel"
+msgstr "HSV ਕਲਰ ਵੀਲ"
+
+#: ../modules/color-selector-wheel.c:129
+msgid "Wheel"
+msgstr "ਵੀਲ"
+
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "ਬਟਨ 0"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "ਬਟਨ 1"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "ਬਟਨ 2"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "ਬਟਨ 3"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "ਬਟਨ 4"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "ਬਟਨ 5"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "ਬਟਨ 6"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "ਬਟਨ 7"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "ਬਟਨ 8"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "ਬਟਨ 9"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "ਬਟਨ ਮਾਊਂਸ"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "ਬਟਨ ਖੱਬਾ"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "ਬਟਨ ਸੱਜੇ"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "ਬਟਨ ਮਿਡਲ"
 
-#: ../modules/controller_linux_input.c:72
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "ਬਟਨ ਸਾਇਡ"
 
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "ਬਟਨ ਐਕਸਟਰਾ"
 
-#: ../modules/controller_linux_input.c:74
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "ਬਟਨ ਅੱਗੇ"
 
-#: ../modules/controller_linux_input.c:75
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "ਬਟਨ ਪਿੱਛੇ"
 
-#: ../modules/controller_linux_input.c:76
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "ਬਟਨ ਟਾਸਕ"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "ਬਟਨ ਵੀਲ"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "ਬਟਨ ਗੀਅਰ ਡਾਊਨ"
 
-#: ../modules/controller_linux_input.c:84
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "ਬਟਨ ਗੀਅਰ ਅੱਪ"
 
-#: ../modules/controller_linux_input.c:90
-#: ../modules/controller_dx_dinput.c:469
+#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:443
 msgid "X Move Left"
 msgstr "X ਮੂਵ ਖੱਬੇ"
 
-#: ../modules/controller_linux_input.c:91
-#: ../modules/controller_dx_dinput.c:472
+#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:446
 msgid "X Move Right"
 msgstr "X ਮੂਵ ਸੱਜੇ"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y ਮੂਵ ਅੱਗੇ"
 
-#: ../modules/controller_linux_input.c:93
+#: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y ਮੂਵ ਪਿੱਛੇ"
 
-#: ../modules/controller_linux_input.c:94
-#: ../modules/controller_dx_dinput.c:487
+#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:461
 msgid "Z Move Up"
 msgstr "Z ਮੂਵ ਉੱਤੇ"
 
-#: ../modules/controller_linux_input.c:95
-#: ../modules/controller_dx_dinput.c:490
+#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:464
 msgid "Z Move Down"
 msgstr "Z ਮੂਵ ਹੇਠਾਂ"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
-msgstr ""
+msgstr "X ਧੁਰਾ ਅੱਗੇ ਟਲਿੱਟ"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
-msgstr ""
+msgstr "X ਧੁਰਾ ਪਿੱਛੇ ਟਲਿਟ"
 
-#: ../modules/controller_linux_input.c:99
-#: ../modules/controller_dx_dinput.c:505
+#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:479
 msgid "Y Axis Tilt Right"
-msgstr ""
+msgstr "Y ਧੁਰਾ ਸੱਜੇ ਟਲਿੱਟ"
 
-#: ../modules/controller_linux_input.c:100
-#: ../modules/controller_dx_dinput.c:508
+#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:482
 msgid "Y Axis Tilt Left"
-msgstr ""
+msgstr "Y ਧੁਰਾ ਖੱਬੇ ਟਲਿੱਟ"
 
-#: ../modules/controller_linux_input.c:101
-#: ../modules/controller_dx_dinput.c:514
+#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:488
 msgid "Z Axis Turn Left"
-msgstr ""
+msgstr "Z ਧੁਰਾ ਖੱਬੇ ਟਲਿੱਟ"
 
-#: ../modules/controller_linux_input.c:102
-#: ../modules/controller_dx_dinput.c:517
+#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:491
 msgid "Z Axis Turn Right"
-msgstr ""
+msgstr "Z ਧੁਰਾ ਸੱਜੇ ਟਲਿੱਟ"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr ""
+msgstr "ਹਰੀਜੱਟਲ ਵੀਲ ਪਿੱਛੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr ""
+msgstr "ਹਰੀਜੱਟਲ ਵੀਲ ਅੱਗੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
-msgstr ""
+msgstr "ਡਾਇਲ ਖੱਬੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:107
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
-msgstr ""
+msgstr "ਡਾਇਲ ਸੱਜੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:108
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
-msgstr ""
+msgstr "ਵੀਲ ਖੱਬੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:109
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
-msgstr ""
+msgstr "ਵੀਲ ਸੱਜੇ ਘੁੰਮਾਓ"
 
-#: ../modules/controller_linux_input.c:179
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "ਲਿਨਕਸ ਇੰਪੁੱਟ ਈਵੈਂਟ ਕੰਟਰਲੋਰ"
 
-#: ../modules/controller_linux_input.c:249
-#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
+#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-dx-dinput.c:196 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "ਜੰਤਰ:"
 
-#: ../modules/controller_linux_input.c:250
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
+msgstr "ਲੀਨਕਸ ਇੰਪੁੱਟ ਈਵੈਂਟ ਤੋਂ ਪੜ੍ਹਨ ਵਾਲੇ ਜੰਤਰ ਦਾ ਨਾਂ।"
 
-#: ../modules/controller_linux_input.c:261
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
-msgstr ""
+msgstr "ਲੀਨਕਸ ਇੰਪੁੱਟ"
 
-#: ../modules/controller_linux_input.c:539
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "ਲਿਨਕਸ ਇੰਪੁੱਟ ਈਵੈਂਟ"
 
-#: ../modules/controller_linux_input.c:551
-#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+#: ../modules/controller-linux-input.c:525
+#: ../modules/controller-dx-dinput.c:1095 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "ਕੋਈ ਜੰਤਰ ਸੰਰਚਿਤ ਨਹੀਂ"
 
-#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "%s ਤੋਂ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../modules/controller_linux_input.c:595
-#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "ਜੰਤਰ ਉਪਲੱਬਧ ਨਹੀਂ: %s"
 
-#: ../modules/controller_linux_input.c:614
-#: ../modules/controller_dx_dinput.c:1147
+#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1120
 msgid "Device not available"
 msgstr "ਜੰਤਰ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ"
 
-#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
 msgstr "ਫਾਇਲ ਦਾ ਐਂਡ"
 
-#: ../modules/controller_dx_dinput.c:157
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
-msgstr ""
+msgstr "DirectX DirectInput ਈਵੈਂਟ ਕੰਟਰੋਲਰ"
 
-#: ../modules/controller_dx_dinput.c:228
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
-msgstr ""
+msgstr "DirectInput ਈਵੈਂਟ ਤੋਂ ਪੜ੍ਹਨ ਵਾਲਾ ਜੰਤਰ ਹੈ।"
 
-#: ../modules/controller_dx_dinput.c:237
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller_dx_dinput.c:446
+#: ../modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "ਬਟਨ %d"
 
-#: ../modules/controller_dx_dinput.c:449
+#: ../modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "ਬਟਨ %d ਪਰੈੱਸ"
 
-#: ../modules/controller_dx_dinput.c:452
+#: ../modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "ਬਟਨ %d ਰੀਲਿਜ਼"
 
-#: ../modules/controller_dx_dinput.c:478
+#: ../modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
-msgstr ""
+msgstr "Y ਦੂਰ ਹੋਇਆ"
 
-#: ../modules/controller_dx_dinput.c:481
+#: ../modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
-msgstr ""
+msgstr "Y ਨੇੜੇ ਹੋਇਆ"
 
-#: ../modules/controller_dx_dinput.c:496
+#: ../modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
-msgstr ""
+msgstr "X ਧੁਰਾ ਦੂਰ ਹਿਲਾਓ"
 
-#: ../modules/controller_dx_dinput.c:499
+#: ../modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
-msgstr ""
+msgstr "X ਧੁਰਾ ਨੇੜੇ ਕਰੋ"
 
-#: ../modules/controller_dx_dinput.c:528
+#: ../modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
-msgstr ""
+msgstr "ਸਲਾਇਡਰ %d ਵਧਾਓ"
 
-#: ../modules/controller_dx_dinput.c:531
+#: ../modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
-msgstr ""
+msgstr "ਸਲਾਇਡਰ %d ਘਟਾਓ"
 
-#: ../modules/controller_dx_dinput.c:541
+#: ../modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X ਝਲਕ"
 
-#: ../modules/controller_dx_dinput.c:544
+#: ../modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y ਝਲਕ"
 
-#: ../modules/controller_dx_dinput.c:547
+#: ../modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
-msgstr ""
+msgstr "POV %d ਵਾਪਸ"
 
-#: ../modules/controller_dx_dinput.c:1111
+#: ../modules/controller-dx-dinput.c:1084
 msgid "DirectInput Events"
 msgstr "DirectInput ਈਵੈਂਟ"
 
-#: ../modules/controller_midi.c:167
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI ਈਵੈਂਟ ਕੰਟਰੋਲਰ"
 
-#: ../modules/controller_midi.c:236
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
-msgstr ""
+msgstr "MIDI ਈਵੈਂਟ ਤੋਂ ਪੜ੍ਹਨ ਵਾਲੇ ਜੰਤਰ ਦਾ ਨਾਂ ਹੈ।"
 
-#: ../modules/controller_midi.c:239
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr ""
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "ਚੈਨਲ:"
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
 
-#: ../modules/controller_midi.c:259
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "ਨੋਟ %02x ਆਨ"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "ਨੋਟ %02x ਆਫ"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "ਕੰਟਰੋਲਰ %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI ਈਵੈਂਟ"
 
-#: ../modules/controller_midi.c:454
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "ਜੈਮਪ"
 
-#: ../modules/controller_midi.c:456
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "ਜੈਮਪ MIDI ਇੰਪੁੱਟ ਕੰਟਰੋਲਰ"
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d ਬਾਈਟ"
+#~ msgstr[1] "%d ਬਾਈਟ"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f KB"
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f KB"
+
+#~ msgid "%d KB"
+#~ msgstr "%d KB"
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f MB"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f MB"
+
+#~ msgid "%d MB"
+#~ msgstr "%d MB"
+
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f GB"
+
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f GB"
+
+#~ msgid "%d GB"
+#~ msgstr "%d GB"
+
+#~ msgid "profile|None"
+#~ msgstr "ਕੋਈ ਨਹੀਂ"
+
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "ਪੇਂਟਰ-ਸਟਾਇਲ ਤਿਕੋਣੀ ਰੰਗ ਚੋਣਕਾਰ"
+
+#~ msgid "Triangle"
+#~ msgstr "ਤਿਕੋਣ"
 

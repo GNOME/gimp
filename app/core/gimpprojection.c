@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -44,6 +44,13 @@ enum
   UPDATE,
   LAST_SIGNAL
 };
+
+
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+GeglNode * gegl_node_add_child (GeglNode *self,
+                                GeglNode *child);
 
 
 /*  local function prototypes  */
@@ -185,6 +192,13 @@ gimp_projection_finalize (GObject *object)
       proj->pyramid = NULL;
     }
 
+  if (proj->graph)
+    {
+      g_object_unref (proj->graph);
+      proj->graph     = NULL;
+      proj->sink_node = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -317,6 +331,38 @@ gimp_projection_get_tiles (GimpProjection *proj)
 
 }
 
+GeglNode *
+gimp_projection_get_sink_node (GimpProjection *proj)
+{
+  GeglNode *image_graph;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
+
+  if (proj->sink_node)
+    return proj->sink_node;
+
+  proj->graph = gegl_node_new ();
+
+  g_object_set (proj->graph,
+                "dont-cache", TRUE,
+                NULL);
+
+  image_graph = gimp_image_get_graph (proj->image);
+  gegl_node_add_child (proj->graph, image_graph);
+
+  proj->sink_node =
+    gegl_node_new_child (proj->graph,
+                         "operation",    "gimp-tilemanager-sink",
+                         "tile-manager", gimp_projection_get_tiles (proj),
+                         "linear",       TRUE,
+                         NULL);
+
+  gegl_node_connect_to (image_graph,     "output",
+                        proj->sink_node, "input");
+
+  return proj->sink_node;
+}
+
 TileManager *
 gimp_projection_get_tiles_at_level (GimpProjection *proj,
                                     gint            level,
@@ -333,6 +379,15 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
       tile_pyramid_set_validate_proc (proj->pyramid,
                                       (TileValidateProc) gimp_projection_validate_tile,
                                       proj);
+
+      if (proj->sink_node)
+        {
+          TileManager *tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
+
+          gegl_node_set (proj->sink_node,
+                         "tile-manager", tiles,
+                         NULL);
+        }
     }
 
   return tile_pyramid_get_tiles (proj->pyramid, level, is_premult);

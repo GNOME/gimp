@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -173,9 +174,9 @@ static const gchar display_rc_style[] =
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
-  GObjectClass   *object_class      = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class  = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class      = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   display_shell_signals[SCALED] =
     g_signal_new ("scaled",
@@ -343,7 +344,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_x         = 0;
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
-  
+
   shell->highlight              = NULL;
   shell->mask                   = NULL;
 
@@ -827,8 +828,13 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       options = shell->no_image_options;
 
+      /*
+       * These values are arbitrary. The width is determined by the
+       * menubar and the height is chosen to give a window aspect
+       * ratio of roughly 3:1 (as requested by the UI team).
+       */
       image_width  = GIMP_DEFAULT_IMAGE_WIDTH;
-      image_height = GIMP_DEFAULT_IMAGE_HEIGHT;
+      image_height = GIMP_DEFAULT_IMAGE_HEIGHT / 3;
     }
 
   shell->dot_for_dot = display->config->default_dot_for_dot;
@@ -1020,12 +1026,13 @@ gimp_display_shell_new (GimpDisplay       *display,
                            GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
   shell->canvas = gimp_canvas_new (display->config);
+  gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
 
   gimp_display_shell_dnd_init (shell);
   gimp_display_shell_selection_init (shell);
 
   /*  the horizontal ruler  */
-  shell->hrule = gimp_hruler_new ();
+  shell->hrule = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
@@ -1039,7 +1046,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gimp_help_set_help_data (shell->hrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
   /*  the vertical ruler  */
-  shell->vrule = gimp_vruler_new ();
+  shell->vrule = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_events (GTK_WIDGET (shell->vrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
@@ -1057,12 +1064,6 @@ gimp_display_shell_new (GimpDisplay       *display,
    */
   gtk_widget_set_extension_events (shell->hrule, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_set_extension_events (shell->vrule, GDK_EXTENSION_EVENTS_ALL);
-
-  /*  the canvas  */
-  gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
-  gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
-  gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
-  GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
 
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),

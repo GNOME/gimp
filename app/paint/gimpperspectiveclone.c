@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -75,6 +75,9 @@ static gboolean gimp_perspective_clone_get_source (GimpSourceCore   *source_core
                                                    gint             *paint_area_width,
                                                    gint             *paint_area_height,
                                                    PixelRegion      *srcPR);
+
+static void     gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
+                                                   GimpMatrix3          *matrix);
 
 
 G_DEFINE_TYPE (GimpPerspectiveClone, gimp_perspective_clone,
@@ -408,6 +411,35 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   return TRUE;
 }
 
+
+/*  public functions  */
+
+void
+gimp_perspective_clone_set_transform (GimpPerspectiveClone *clone,
+                                      GimpMatrix3          *transform)
+{
+  g_return_if_fail (GIMP_IS_PERSPECTIVE_CLONE (clone));
+  g_return_if_fail (transform != NULL);
+
+  clone->transform = *transform;
+
+  clone->transform_inv = clone->transform;
+  gimp_matrix3_invert (&clone->transform_inv);
+
+#if 0
+  g_printerr ("%f\t%f\t%f\n%f\t%f\t%f\n%f\t%f\t%f\n\n",
+              clone->transform.coeff[0][0],
+              clone->transform.coeff[0][1],
+              clone->transform.coeff[0][2],
+              clone->transform.coeff[1][0],
+              clone->transform.coeff[1][1],
+              clone->transform.coeff[1][2],
+              clone->transform.coeff[2][0],
+              clone->transform.coeff[2][1],
+              clone->transform.coeff[2][2]);
+#endif
+}
+
 void
 gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
                                          gdouble               x,
@@ -416,6 +448,10 @@ gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
                                          gdouble              *newy)
 {
   gdouble temp_x, temp_y;
+
+  g_return_if_fail (GIMP_IS_PERSPECTIVE_CLONE (clone));
+  g_return_if_fail (newx != NULL);
+  g_return_if_fail (newy != NULL);
 
   gimp_matrix3_transform_point (&clone->transform_inv,
                                 x, y, &temp_x, &temp_y);
@@ -440,7 +476,10 @@ gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
                                 temp_x, temp_y, newx, newy);
 }
 
-void
+
+/*  private functions  */
+
+static void
 gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
                                    GimpMatrix3          *matrix)
 {

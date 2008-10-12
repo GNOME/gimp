@@ -68,13 +68,13 @@ struct _GimpDataClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* dirty)         (GimpData  *data);
+  void          (* dirty)         (GimpData  *data);
 
   /*  virtual functions  */
-  gboolean   (* save)          (GimpData  *data,
-                                GError   **error);
-  gchar    * (* get_extension) (GimpData  *data);
-  GimpData * (* duplicate)     (GimpData  *data);
+  gboolean      (* save)          (GimpData  *data,
+                                   GError   **error);
+  const gchar * (* get_extension) (GimpData  *data);
+  GimpData    * (* duplicate)     (GimpData  *data);
 };
 
 

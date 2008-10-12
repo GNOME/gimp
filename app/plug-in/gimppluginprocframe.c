@@ -75,12 +75,13 @@ gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
 
   proc_frame->main_context       = g_object_ref (context);
   proc_frame->context_stack      = NULL;
-  proc_frame->procedure          = GIMP_PROCEDURE (procedure);
+  proc_frame->procedure          = procedure ? g_object_ref (procedure) : NULL;
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
   proc_frame->progress_created   = FALSE;
   proc_frame->progress_cancel_id = 0;
+  proc_frame->error_handler      = GIMP_PDB_ERROR_HANDLER_INTERNAL;
 
   if (progress)
     gimp_plug_in_progress_attach (progress);
@@ -115,6 +116,12 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
     {
       g_object_unref (proc_frame->main_context);
       proc_frame->main_context = NULL;
+    }
+
+  if (proc_frame->procedure)
+    {
+      g_object_unref (proc_frame->procedure);
+      proc_frame->procedure = NULL;
     }
 
   if (proc_frame->return_vals)

@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -171,7 +172,7 @@ image_scale_callback (GtkWidget             *widget,
       break;
 
     case GIMP_IMAGE_SCALE_OK:
-      /* If all is well, return directly after scaling image. */
+      gtk_widget_hide (widget);
       dialog->callback (dialog->dialog,
                         GIMP_VIEWABLE (dialog->image),
                         dialog->width,
@@ -275,6 +276,7 @@ image_scale_confirm_response (GtkWidget        *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
+      gtk_widget_hide (dialog->dialog);
       dialog->callback (dialog->dialog,
                         GIMP_VIEWABLE (dialog->image),
                         dialog->width,

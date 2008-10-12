@@ -482,6 +482,9 @@ run (const gchar      *name,
     }
 
  done:
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
+
   if (config)
     g_object_unref (config);
 
@@ -867,6 +870,8 @@ lcms_image_apply_profile (gint32                    image,
 
   if (! lcms_image_set_profile (image, dest_profile, filename, FALSE))
     {
+      gimp_image_undo_group_end (image);
+
       return FALSE;
     }
 
@@ -914,7 +919,6 @@ lcms_image_apply_profile (gint32                    image,
     }
 
   gimp_progress_update (1.0);
-  gimp_displays_flush ();
 
   gimp_image_undo_group_end (image);
 

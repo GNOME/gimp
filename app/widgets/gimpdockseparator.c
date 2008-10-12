@@ -196,22 +196,14 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
       if (dockable)
         {
           GtkWidget *dockbook;
-          GtkWidget *parent;
-          GList     *children;
-          gint       index;
+          gint       index = -1;
 
           g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
 
-          parent = gtk_widget_get_parent (widget);
-
-          children = gtk_container_get_children (GTK_CONTAINER (parent));
-          index = g_list_index (children, widget);
-          g_list_free (children);
-
-          if (index == 0)
+          if (separator->anchor == GTK_ANCHOR_NORTH)
             index = 0;
-          else if (index == 2)
+          else if (separator->anchor == GTK_ANCHOR_SOUTH)
             index = -1;
 
           /*  if dropping to the same dock, take care that we don't try
@@ -219,8 +211,9 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
            */
           if (dockable->dockbook->dock == dock)
             {
-              gint n_books;
-              gint n_dockables;
+              GList *children;
+              gint   n_books;
+              gint   n_dockables;
 
               n_books = g_list_length (dock->dockbooks);
 
@@ -255,7 +248,8 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_dock_separator_new (GimpDock *dock)
+gimp_dock_separator_new (GimpDock      *dock,
+                         GtkAnchorType  anchor)
 {
   GimpDockSeparator *separator;
 
@@ -263,7 +257,8 @@ gimp_dock_separator_new (GimpDock *dock)
 
   separator = g_object_new (GIMP_TYPE_DOCK_SEPARATOR, NULL);
 
-  separator->dock = dock;
+  separator->dock   = dock;
+  separator->anchor = anchor;
 
   return GTK_WIDGET (separator);
 }

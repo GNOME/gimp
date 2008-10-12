@@ -10,14 +10,34 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-14 22:37+0900\n"
-"PO-Revision-Date: 2008-08-12 18:28+0900\n"
+"POT-Creation-Date: 2008-10-04 18:18+0900\n"
+"PO-Revision-Date: 2008-10-04 14:02+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1045
+msgid "success"
+msgstr "成功"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1049
+msgid "execution error"
+msgstr "実行時エラー"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1053
+msgid "calling error"
+msgstr "呼出時エラー"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1057
+msgid "cancelled"
+msgstr "取消"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -169,7 +189,8 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"次の理由のため %s として保存する前に画像のエクスポートを行う必要があります:"
+"%s として保存するために画像のエクスポートを行います\n"
+"（理由は次のとおりです）"
 
 #. the footline
 #: ../libgimp/gimpexport.c:573
@@ -220,31 +241,31 @@ msgstr "パターン選択"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
-msgstr "名前から"
+msgstr "名前で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
-msgstr "説明から"
+msgstr "説明で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
-msgstr "ヘルプから"
+msgstr "ヘルプで"
 
 #: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
-msgstr "著者から"
+msgstr "著者で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
-msgstr "著作権表示から"
+msgstr "著作権者で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
-msgstr "日付から"
+msgstr "日付で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
-msgstr "型から"
+msgstr "型で"
 
 #: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
@@ -252,31 +273,31 @@ msgstr "検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
-msgstr "名前から検索中"
+msgstr "名前で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
-msgstr "説明から検索中"
+msgstr "説明で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
-msgstr "ヘルプから検索中"
+msgstr "ヘルプで検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
-msgstr "著者から検索中"
+msgstr "作者で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
-msgstr "著作権表示から検索中"
+msgstr "著作権者で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
-msgstr "日付から検索中"
+msgstr "日付で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
-msgstr "型から検索中"
+msgstr "型で検索中"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
@@ -293,8 +314,8 @@ msgstr "条件に合致するものがありません"
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] "%d個のプロシージャが合致しました"
-msgstr[1] "%d個のプロシージャが合致しました"
+msgstr[0] "%d 個のプロシージャが合致しました"
+msgstr[1] "%d 個のプロシージャが合致しました"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
@@ -315,15 +336,15 @@ msgstr "追加情報"
 
 #: ../libgimp/gimpprocview.c:209
 msgid "Author:"
-msgstr "作者:"
+msgstr "作者："
 
 #: ../libgimp/gimpprocview.c:221
 msgid "Date:"
-msgstr "日付:"
+msgstr "日付："
 
 #: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
-msgstr "著作権表示:"
+msgstr "著作権者："
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -595,15 +616,15 @@ msgstr "インデックス-アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|None"
-msgstr "なし"
+msgstr "補間しない"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "interpolation|Linear"
-msgstr "線形"
+msgstr "バイリニア"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Cubic"
-msgstr "キュービック"
+msgstr "バイキュービック"
 
 #: ../libgimpbase/gimpbaseenums.c:566
 msgid "Sinc (Lanczos3)"
@@ -685,43 +706,43 @@ msgstr "結果で切り抜き"
 msgid "Crop with aspect"
 msgstr "縦横比で切り抜き"
 
-#: ../libgimpbase/gimpbaseenums.c:880
+#: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
 msgstr "内部GIMPプロシージャ"
 
-#: ../libgimpbase/gimpbaseenums.c:881
+#: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
 msgstr "GIMPプラグイン"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
 msgstr "GIMP拡張"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:912
 msgid "Temporary Procedure"
 msgstr "一時プロシージャ"
 
-#: ../libgimpbase/gimpbaseenums.c:1045
+#: ../libgimpbase/gimpbaseenums.c:1074
 msgid "From left to right"
 msgstr "左から右"
 
-#: ../libgimpbase/gimpbaseenums.c:1046
+#: ../libgimpbase/gimpbaseenums.c:1075
 msgid "From right to left"
 msgstr "右から左"
 
-#: ../libgimpbase/gimpbaseenums.c:1076
+#: ../libgimpbase/gimpbaseenums.c:1105
 msgid "Left justified"
 msgstr "左揃え"
 
-#: ../libgimpbase/gimpbaseenums.c:1077
+#: ../libgimpbase/gimpbaseenums.c:1106
 msgid "Right justified"
 msgstr "右揃え"
 
-#: ../libgimpbase/gimpbaseenums.c:1078
+#: ../libgimpbase/gimpbaseenums.c:1107
 msgid "Centered"
 msgstr "中央揃え"
 
-#: ../libgimpbase/gimpbaseenums.c:1079
+#: ../libgimpbase/gimpbaseenums.c:1108
 msgid "Filled"
 msgstr "均等割付"
 
@@ -840,7 +861,7 @@ msgstr "トークン %2$s の値 '%1$ld' が不正です"
 #: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "トークン '%s' の解析中: %s"
+msgstr "トークン '%s' の解析中： %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:474
 #: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
@@ -858,17 +879,26 @@ msgstr "${%s} を展開できません"
 #: ../libgimpconfig/gimpconfigwriter.c:693
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "'%s' に書き込み中にエラー: %s"
+msgstr ""
+"'%s' に書き込み中にエラーが発生しました\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "'%s' 用の一時ファイル作成に失敗しました: %s"
+msgstr ""
+"'%s' 用の一時ファイル作成に失敗しました\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s' を書き込み用にオープンできません: %s"
+msgstr ""
+"'%s' を開いて書き込むことができません\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
@@ -876,8 +906,11 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"'%s' 用一時ファイルに書き込み中にエラー: %s\n"
-"(元のファイルは変更されていません)"
+"'%s' 用一時ファイルへの書き込み中にエラーが発生しました\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s\n"
+"\n"
+"元ファイルは変更されていません"
 
 #: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
@@ -885,13 +918,19 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"'%s' 用一時ファイルに書き込み中にエラー: %s\n"
-"(ファイルは作成されません)"
+"'%s' 用一時ファイルへの書き込み中にエラーが発生しました\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s\n"
+"\n"
+"ファイルは作成されませんでした"
 
 #: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "%s を作成できませんでした: %s"
+msgstr ""
+"%s を作成できませんでした\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
 #, c-format
@@ -901,14 +940,20 @@ msgstr "不正な UTF-8 文字列"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "'%s' を解析中に %d 行目でエラー: %s"
+msgstr ""
+"'%s'（%d 行目のデータ）を解析中にエラーが発生しました\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
 #: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
 #: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "モジュール '%s' 読み込みエラー: %s"
+msgstr ""
+"モジュール '%s' 読み込み中にエラーが発生しました\n"
+"（詳細または原因はつぎのとおりです）\n"
+"  %s"
 
 #: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
@@ -943,16 +988,19 @@ msgstr "サムネイルフォルダ '%s' 作成失敗。"
 #: ../libgimpthumb/gimpthumbnail.c:498
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "サムネイルに URI が含まれていません"
+msgstr "サムネイルにタグ (Thumb::URI URI) が含まれていません"
 
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "%s のサムネイルを作成失敗: %s"
+msgstr ""
+"%s のサムネイル生成に失敗しました\n"
+"（詳細または原因はつぎのとおりです）\n"
+"  %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
-msgstr "検索(_S):"
+msgstr "検索(_S): "
 
 #: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
@@ -985,11 +1033,11 @@ msgstr "スケール"
 
 #: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
-msgstr "現在:"
+msgstr "現在: "
 
 #: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
-msgstr "以前:"
+msgstr "以前: "
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""
@@ -1047,11 +1095,13 @@ msgstr "すべて選択(_A)"
 
 #: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
-msgstr "範囲の選択(_R):"
+msgstr "範囲の選択(_R): "
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
-msgstr "ページとして開く(_P)"
+msgstr ""
+"ページを次の\n"
+"ように展開する(_P)"
 
 #: ../libgimpwidgets/gimppageselector.c:420
 msgid "Page 000"
@@ -1073,7 +1123,7 @@ msgstr "1ページを選択"
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d ページを選択"
-msgstr[1] "すべてのページ(%dページ)を選択"
+msgstr[1] "複数ページ(%dページ)を選択"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1104,7 +1154,7 @@ msgstr "市松模様のスタイル"
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1861
+#: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1305,7 +1355,7 @@ msgstr "色覚障害の視覚"
 
 #: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
-msgstr "色覚障害のタイプ(_D):"
+msgstr "色覚障害のタイプ(_D): "
 
 #: ../modules/display-filter-gamma.c:90
 msgid "Gamma color display filter"
@@ -1317,7 +1367,7 @@ msgstr "ガンマ値"
 
 #: ../modules/display-filter-gamma.c:232
 msgid "_Gamma:"
-msgstr "ガンマ値(_G):"
+msgstr "ガンマ値(_G): "
 
 #: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
@@ -1329,7 +1379,7 @@ msgstr "コントラスト"
 
 #: ../modules/display-filter-high-contrast.c:232
 msgid "Contrast c_ycles:"
-msgstr "コントラストサイクル(_Y):"
+msgstr "コントラストサイクル(_Y): "
 
 #: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
@@ -1348,7 +1398,7 @@ msgstr ""
 
 #: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
-msgstr "操作モード:"
+msgstr "操作モード: "
 
 #: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
@@ -1356,11 +1406,11 @@ msgstr "画像プロファイル: "
 
 #: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
-msgstr "モニタプロファイル:"
+msgstr "モニタプロファイル: "
 
 #: ../modules/display-filter-lcms.c:249
 msgid "Print simulation profile:"
-msgstr "印刷シミュレーションプロファイル:"
+msgstr "印刷シミュレーションプロファイル: "
 
 #: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
@@ -1384,11 +1434,11 @@ msgstr "ICC カラープロファイル (*.icc, *.icm)"
 
 #: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
-msgstr "プロファイル(_P):"
+msgstr "プロファイル(_P): "
 
 #: ../modules/display-filter-proof.c:407
 msgid "_Intent:"
-msgstr "方法(_I):"
+msgstr "方法(_I): "
 
 #: ../modules/display-filter-proof.c:412
 msgid "_Black Point Compensation"
@@ -1449,7 +1499,7 @@ msgstr "黒"
 
 #: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
-msgstr "黒の折込(_P):"
+msgstr "黒の折込(_P): "
 
 #: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
@@ -1461,12 +1511,12 @@ msgstr "CMYKカラーセレクター(カラープロファイル使用)"
 
 #: ../modules/color-selector-cmyk-lcms.c:395
 msgid "Profile: (none)"
-msgstr "プロファイル: (なし)"
+msgstr "プロファイルを使用しない"
 
 #: ../modules/color-selector-cmyk-lcms.c:416
 #, c-format
 msgid "Profile: %s"
-msgstr "プロファイル: %s"
+msgstr "%s"
 
 #: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
@@ -1480,11 +1530,11 @@ msgstr "水彩色"
 msgid "Pressure"
 msgstr "圧力"
 
-#: ../modules/color-selector-wheel.c:98
+#: ../modules/color-selector-wheel.c:103
 msgid "HSV color wheel"
-msgstr "HSV 三角形"
+msgstr "HSV 色相環"
 
-#: ../modules/color-selector-wheel.c:129
+#: ../modules/color-selector-wheel.c:134
 msgid "Wheel"
 msgstr "三角形"
 
@@ -1693,12 +1743,15 @@ msgstr "%s から読み込み"
 #: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
-msgstr "デバイスは無効です: %s"
+msgstr ""
+"このデバイスは利用できません\n"
+"（詳細または原因は次のとおりです）\n"
+"  %s"
 
 #: ../modules/controller-linux-input.c:588
 #: ../modules/controller-dx-dinput.c:1120
 msgid "Device not available"
-msgstr "デバイスは無効です"
+msgstr "このデバイスは利用できません"
 
 #: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
@@ -1790,7 +1843,7 @@ msgstr "ALSA シーケンスを使うときは 'alsa' と入力してくださ�
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
-msgstr "チャンネル:"
+msgstr "チャンネル: "
 
 #: ../modules/controller-midi.c:222
 msgid ""

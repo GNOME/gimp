@@ -473,7 +473,7 @@ make_preview (GimpDrawable *drawable)
    gtk_widget_show(arrow);
 
    /* Create horizontal ruler */
-   data->hruler = ruler = gimp_hruler_new();
+   data->hruler = ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
    g_signal_connect_swapped(preview, "motion-notify-event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
 			    ruler);
@@ -483,7 +483,7 @@ make_preview (GimpDrawable *drawable)
    gtk_widget_show(ruler);
 
    /* Create vertical ruler */
-   data->vruler = ruler = gimp_vruler_new();
+   data->vruler = ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
    g_signal_connect_swapped(preview, "motion-notify-event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
 			    ruler);

@@ -20,7 +20,7 @@
 
 #include <string.h> /* strlen */
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -186,6 +186,8 @@ gimp_init (Gimp *gimp)
   gimp->message_handler  = GIMP_CONSOLE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
+
+  gimp->restored         = FALSE;
 
   gimp_gui_init (gimp);
 
@@ -637,6 +639,8 @@ gimp_real_restore (Gimp               *gimp,
 
   gimp_plug_in_manager_restore (gimp->plug_in_manager,
                                 gimp_get_user_context (gimp), status_callback);
+
+  gimp->restored = TRUE;
 }
 
 static gboolean
@@ -881,6 +885,21 @@ gimp_restore (Gimp               *gimp,
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }
+
+/**
+ * gimp_is_restored:
+ * @gimp: a #Gimp object
+ *
+ * Return value: %TRUE if GIMP is completely started, %FALSE otherwise.
+ **/
+gboolean
+gimp_is_restored (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  return gimp->restored;
+}
+
 
 /**
  * gimp_exit:

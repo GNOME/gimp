@@ -47,7 +47,7 @@ class Path:
       self.svgpath = ""
       self.gimppoints = [[]]
       self.bounds = None
-   
+
    def readgimpfile (self, filedesc):
       text = filedesc.readlines()
       for line in text:
@@ -67,7 +67,7 @@ class Path:
 	       if self.bounds[3] < y: self.bounds[3] = y
 	    else:
 	       self.bounds = [x,y,x,y]
-   
+
    def makesvg (self):
       for path in self.gimppoints:
          if path:
@@ -79,13 +79,13 @@ class Path:
 	       path = path[3:]
 	       if len (curve) == 2:
 		  svg = svg + "C %d %d %d %d %d %d z " % tuple (
-			   tuple (curve [0][1:]) + 
-			   tuple (curve [1][1:]) + 
+			   tuple (curve [0][1:]) +
+			   tuple (curve [1][1:]) +
 			   tuple (start [1:]))
 	       if len (curve) == 3:
 		  svg = svg + "C %d %d %d %d %d %d " % tuple (
-			   tuple (curve [0][1:]) + 
-			   tuple (curve [1][1:]) + 
+			   tuple (curve [0][1:]) +
+			   tuple (curve [1][1:]) +
 			   tuple (curve [2][1:]))
 	    self.svgpath = self.svgpath + svg
 

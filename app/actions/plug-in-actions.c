@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -488,6 +489,8 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
       gchar       *reshow;
       gboolean     sensitive = FALSE;
 
+      label = gimp_plug_in_procedure_get_label (proc);
+
       /*  copy the sensitivity of the plug-in procedure's actual action
        *  instead of calling plug_in_actions_update() because doing the
        *  latter would set the sensitivity of this image's action on
@@ -497,8 +500,6 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                                                    GIMP_OBJECT (proc)->name);
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
-
-      label = gimp_plug_in_procedure_get_label (proc);
 
       repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
       reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
@@ -527,15 +528,27 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
   for (i = 0; i < gimp_plug_in_manager_history_length (manager); i++)
     {
-      GtkAction *action;
-      GtkAction *actual_action;
-      gchar     *name      = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      gboolean   sensitive = FALSE;
+      GtkAction   *action;
+      GtkAction   *actual_action;
+      const gchar *label;
+      gchar       *name;
+      gboolean     sensitive = FALSE;
 
+      name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
       proc = gimp_plug_in_manager_history_nth (manager, i);
+
+      if (proc->menu_label)
+        {
+          label = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                            proc->menu_label);
+        }
+      else
+        {
+          label = gimp_plug_in_procedure_get_label (proc);
+        }
 
       /*  see comment above  */
       actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
@@ -547,7 +560,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                     "visible",   TRUE,
                     "sensitive", sensitive,
                     "procedure", proc,
-                    "label",     gimp_plug_in_procedure_get_label (proc),
+                    "label",     label,
                     "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
                     "tooltip",   gimp_plug_in_procedure_get_blurb (proc),
                     NULL);

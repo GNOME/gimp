@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -864,13 +865,14 @@ gimp_tool_push_status (GimpTool    *tool,
 }
 
 void
-gimp_tool_push_status_coords (GimpTool    *tool,
-                              GimpDisplay *display,
-                              const gchar *title,
-                              gdouble      x,
-                              const gchar *separator,
-                              gdouble      y,
-                              const gchar *help)
+gimp_tool_push_status_coords (GimpTool            *tool,
+                              GimpDisplay         *display,
+                              GimpCursorPrecision  precision,
+                              const gchar         *title,
+                              gdouble              x,
+                              const gchar         *separator,
+                              gdouble              y,
+                              const gchar         *help)
 {
   GimpDisplayShell *shell;
   const gchar      *stock_id;
@@ -884,7 +886,8 @@ gimp_tool_push_status_coords (GimpTool    *tool,
 
   gimp_statusbar_push_coords (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool), stock_id,
-                              title, x, separator, y, help);
+                              precision, title, x, separator, y,
+                              help);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
   tool->status_displays = g_list_prepend (tool->status_displays, display);

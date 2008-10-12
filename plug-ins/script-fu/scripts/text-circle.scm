@@ -217,4 +217,4 @@
 )
 
 (script-fu-menu-register "script-fu-text-circle"
-                         "<Image>/File/New/Logos")
+                         "<Image>/File/Create/Logos")

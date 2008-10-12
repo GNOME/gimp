@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -390,7 +391,8 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
                              GdkModifierType  state,
                              GimpDisplay     *display)
 {
-  gchar *status_help;
+  GimpTool *tool = GIMP_TOOL (blend_tool);
+  gchar    *status_help;
 
   status_help = gimp_suggest_modifiers ("",
                                         ((GDK_CONTROL_MASK | GDK_MOD1_MASK)
@@ -398,11 +400,14 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
                                         NULL,
                                         _("%s for constrained angles"),
                                         _("%s to move the whole line"));
-  gimp_tool_push_status_coords (GIMP_TOOL (blend_tool), display,
+
+  gimp_tool_push_status_coords (tool, display,
+                                gimp_tool_control_get_precision (tool->control),
                                 _("Blend: "),
                                 blend_tool->end_x - blend_tool->start_x,
                                 ", ",
                                 blend_tool->end_y - blend_tool->start_y,
                                 status_help);
+
   g_free (status_help);
 }

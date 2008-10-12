@@ -249,6 +249,14 @@ all other GIMP Library headers.
 @n_params: 
 
 
+<!-- ##### FUNCTION gimp_get_pdb_error ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_tile_width ##### -->
 <para>
 

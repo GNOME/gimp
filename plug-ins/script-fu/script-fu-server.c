@@ -199,7 +199,8 @@ script_fu_server_run (const gchar      *name,
   GimpRunMode        run_mode;
 
   run_mode = params[0].data.d_int32;
-  set_run_mode_constant (run_mode);
+
+  ts_set_run_mode (run_mode);
 
   switch (run_mode)
     {
@@ -450,17 +451,17 @@ server_start (gint         port,
 static gboolean
 execute_command (SFCommand *cmd)
 {
-  guchar       buffer[RESPONSE_HEADER];
-  GString     *response;
-  time_t       clock1;
-  time_t       clock2;
-  gboolean     error;
-  gint         i;
+  guchar    buffer[RESPONSE_HEADER];
+  GString  *response;
+  time_t    clock1;
+  time_t    clock2;
+  gboolean  error;
+  gint      i;
 
   server_log ("Processing request #%d\n", cmd->request_no);
   time (&clock1);
 
-  response = g_string_new ("");
+  response = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, response);
 
   /*  run the command  */

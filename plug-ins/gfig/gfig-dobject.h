@@ -41,7 +41,7 @@ typedef struct DobjPoints
 typedef struct
 {
   DobjType      type;       /* the object type for this class */
-  gchar        *name;
+  const gchar  *name;
 
   /* virtuals */
   DobjFunc      drawfunc;   /* How do I draw myself */

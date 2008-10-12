@@ -1133,7 +1133,8 @@ level_in_events (GtkWidget *widget,
       if (g_Sdebug)
         printf ("EVENT: GDK_MOTION_NOTIFY\n");
       mevent = (GdkEventMotion *) event;
-      gdk_window_get_pointer (widget->window, &x, NULL, NULL);
+      x = mevent->x;
+      gdk_event_request_motions (mevent);
       update = TRUE;
       break;
 
@@ -1240,7 +1241,8 @@ level_out_events (GtkWidget *widget,
       if (g_Sdebug)
         printf ("OUT_EVENT: GDK_MOTION_NOTIFY\n");
       mevent = (GdkEventMotion *) event;
-      gdk_window_get_pointer (widget->window, &x, NULL, NULL);
+      x = mevent->x;
+      gdk_event_request_motions (mevent);
       update = TRUE;
       break;
 

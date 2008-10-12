@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -383,7 +383,9 @@ gimp_image_undo_pop_stack (GimpImage     *image,
       if (accum.size_changed)
         gimp_image_size_changed_detailed (image,
                                           accum.previous_origin_x,
-                                          accum.previous_origin_y);
+                                          accum.previous_origin_y,
+                                          accum.previous_width,
+                                          accum.previous_height);
 
       if (accum.resolution_changed)
         gimp_image_resolution_changed (image);

@@ -32,10 +32,14 @@
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
-gint32             ReadBMP   (const gchar *filename);
-GimpPDBStatusType  WriteBMP  (const gchar *filename,
-                              gint32       image,
-                              gint32       drawable_ID);
+
+gint32             ReadBMP   (const gchar  *filename,
+                              GError      **error);
+GimpPDBStatusType  WriteBMP  (const gchar  *filename,
+                              gint32        image,
+                              gint32        drawable_ID,
+                              GError      **error);
+
 
 extern       gboolean  interactive;
 extern       gboolean  lastvals;

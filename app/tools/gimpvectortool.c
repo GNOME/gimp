@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -192,6 +193,8 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_precision          (tool->control,
+                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_cursor             (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PATHS);
@@ -301,7 +304,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       vector_tool->undo_motion = TRUE;
 
-      gimp_image_add_vectors (display->image, vectors, -1);
+      gimp_image_add_vectors (display->image, vectors, -1, TRUE);
       gimp_image_flush (display->image);
 
       gimp_vector_tool_set_vectors (vector_tool, vectors);

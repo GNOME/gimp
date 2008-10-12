@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -64,7 +65,7 @@ static void   file_actions_close_all_update    (GimpContainer   *images,
 static const GimpActionEntry file_actions[] =
 {
   { "file-menu",             NULL, N_("_File")        },
-  { "file-new-menu",         NULL, N_("Ne_w")         },
+  { "file-create-menu",      NULL, N_("Create")       },
   { "file-open-recent-menu", NULL, N_("Open _Recent") },
 
   { "file-open", GTK_STOCK_OPEN,
@@ -235,7 +236,6 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-open-as-layers",   image);
   SET_SENSITIVE ("file-save",             image && drawable);
   SET_SENSITIVE ("file-save-as",          image && drawable);
   SET_SENSITIVE ("file-save-a-copy",      image && drawable);

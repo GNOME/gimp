@@ -32,6 +32,18 @@ typedef enum
 } GimpCursorMode;
 
 
+#define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
+
+GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CURSOR_PRECISION_PIXEL_CENTER,
+  GIMP_CURSOR_PRECISION_PIXEL_BORDER,
+  GIMP_CURSOR_PRECISION_SUBPIXEL
+} GimpCursorPrecision;
+
+
 #define GIMP_TYPE_CANVAS_PADDING_MODE (gimp_canvas_padding_mode_get_type ())
 
 GType gimp_canvas_padding_mode_get_type (void) G_GNUC_CONST;
@@ -67,6 +79,18 @@ typedef enum
   GIMP_ZOOM_QUALITY_LOW,   /*< desc="quality|Low"  >*/
   GIMP_ZOOM_QUALITY_HIGH   /*< desc="quality|High" >*/
 } GimpZoomQuality;
+
+
+#define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
+
+GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ZOOM_FOCUS_BEST_GUESS,    /* Make a best guess                       */
+  GIMP_ZOOM_FOCUS_POINTER,       /* Use the mouse cursor (if within canvas) */
+  GIMP_ZOOM_FOCUS_IMAGE_CENTER   /* Use the image center                    */
+} GimpZoomFocus;
 
 
 #endif /* __DISPLAY_ENUMS_H__ */

@@ -1,5 +1,17 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Tools\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GEGL_CFLAGS)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libapptools.a
 
 libapptools_a_sources = \
@@ -182,19 +194,6 @@ libapptools_a_sources = \
 libapptools_a_built_sources = tools-enums.c
 
 libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
-
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Tools\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	$(GEGL_CFLAGS)		\
-	-I$(includedir)
 
 EXTRA_DIST = makefile.msc
 

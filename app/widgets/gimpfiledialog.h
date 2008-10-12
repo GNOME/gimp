@@ -42,6 +42,7 @@ struct _GimpFileDialog
   GimpPlugInProcedure  *file_proc;
 
   GimpImage            *image;
+  gboolean              open_as_layers;
   gboolean              save_a_copy;
   gboolean              close_after_saving;
 
@@ -63,25 +64,28 @@ struct _GimpFileDialogClass
 typedef struct _GimpFileDialogState GimpFileDialogState;
 
 
-GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
+GType       gimp_file_dialog_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
-                                            GtkFileChooserAction  action,
-                                            const gchar          *title,
-                                            const gchar          *role,
-                                            const gchar          *stock_id,
-                                            const gchar          *help_id);
+GtkWidget * gimp_file_dialog_new            (Gimp                 *gimp,
+                                             GtkFileChooserAction  action,
+                                             const gchar          *title,
+                                             const gchar          *role,
+                                             const gchar          *stock_id,
+                                             const gchar          *help_id);
 
-void        gimp_file_dialog_set_sensitive (GimpFileDialog       *dialog,
-                                            gboolean              sensitive);
+void        gimp_file_dialog_set_sensitive  (GimpFileDialog       *dialog,
+                                             gboolean              sensitive);
 
-void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
-                                            GimpPlugInProcedure  *file_proc);
+void        gimp_file_dialog_set_file_proc  (GimpFileDialog       *dialog,
+                                             GimpPlugInProcedure  *file_proc);
 
-void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
-                                            GimpImage            *image,
-                                            gboolean              save_a_copy,
-                                            gboolean              close_after_saving);
+void        gimp_file_dialog_set_open_image (GimpFileDialog       *dialog,
+                                             GimpImage            *image,
+                                             gboolean              open_as_layers);
+void        gimp_file_dialog_set_save_image (GimpFileDialog       *dialog,
+                                             GimpImage            *image,
+                                             gboolean              save_a_copy,
+                                             gboolean              close_after_saving);
 
 GimpFileDialogState * gimp_file_dialog_get_state     (GimpFileDialog      *dialog);
 void                  gimp_file_dialog_set_state     (GimpFileDialog      *dialog,

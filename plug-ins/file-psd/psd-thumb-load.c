@@ -35,37 +35,38 @@
 #include "libgimp/stdplugins-intl.h"
 
 /*  Local function prototypes  */
-static gint             read_header_block          (PSDimage     *img_a,
-                                                    FILE         *f,
-                                                    GError      **error);
+static gint    read_header_block          (PSDimage     *img_a,
+                                           FILE         *f,
+                                           GError      **error);
 
-static gint             read_color_mode_block      (PSDimage     *img_a,
-                                                    FILE         *f,
-                                                    GError      **error);
+static gint    read_color_mode_block      (PSDimage     *img_a,
+                                           FILE         *f,
+                                           GError      **error);
 
-static gint             read_image_resource_block  (PSDimage     *img_a,
-                                                    FILE         *f,
-                                                    GError      **error);
+static gint    read_image_resource_block  (PSDimage     *img_a,
+                                           FILE         *f,
+                                           GError      **error);
 
-static gint32           create_gimp_image          (PSDimage     *img_a,
-                                                    const gchar  *filename);
+static gint32  create_gimp_image          (PSDimage     *img_a,
+                                           const gchar  *filename);
 
-static gint             add_image_resources        (const gint32  image_id,
-                                                    PSDimage     *img_a,
-                                                    FILE         *f,
-                                                    GError      **error);
+static gint    add_image_resources        (const gint32  image_id,
+                                           PSDimage     *img_a,
+                                           FILE         *f,
+                                           GError      **error);
 
 /* Main file load function */
 gint32
-load_thumbnail_image (const gchar *filename,
-                      gint        *width,
-                      gint        *height)
+load_thumbnail_image (const gchar  *filename,
+                      gint         *width,
+                      gint         *height,
+                      GError      **load_error)
 {
-  FILE                 *f;
-  struct stat           st;
-  PSDimage              img_a;
-  gint32                image_id = -1;
-  GError               *error = NULL;
+  FILE        *f;
+  struct stat  st;
+  PSDimage     img_a;
+  gint32       image_id = -1;
+  GError      *error    = NULL;
 
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
@@ -75,8 +76,9 @@ load_thumbnail_image (const gchar *filename,
   f = g_fopen (filename, "rb");
   if (f == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -123,6 +125,13 @@ load_thumbnail_image (const gchar *filename,
 
   /* ----- Process load errors ----- */
  load_error:
+  if (error)
+    {
+      g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error loading PSD file: %s"), error->message);
+      g_error_free (error);
+    }
+
   /* Delete partially loaded image */
   if (image_id > 0)
     gimp_image_delete (image_id);

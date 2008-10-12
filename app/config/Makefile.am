@@ -7,6 +7,18 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
+	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GDK_PIXBUF_CFLAGS)	\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappconfig.a
 
 libappconfig_a_SOURCES = \
@@ -38,20 +50,6 @@ libappconfig_a_SOURCES = \
 	gimprc-unknown.h		\
 	gimpxmlparser.c			\
 	gimpxmlparser.h
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
-	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GDK_PIXBUF_CFLAGS)	\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)
-
 
 EXTRA_PROGRAMS = test-config
 
@@ -103,6 +101,5 @@ test_config_LDADD = \
 	$(LIBART_LIBS)				\
 	$(GEGL_LIBS)				\
 	$(GLIB_LIBS)
-
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc

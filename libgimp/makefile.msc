@@ -77,6 +77,7 @@ PDB_WRAPPERS_O = \
 	gimpprogress_pdb.obj \
 	gimpselection_pdb.obj \
 	gimpselectiontools_pdb.obj \
+	gimptextlayer_pdb.obj \
 	gimptexttool_pdb.obj \
 	gimptransformtools_pdb.obj \
 	gimpundo_pdb.obj \

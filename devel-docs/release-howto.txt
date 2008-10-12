@@ -14,7 +14,6 @@
      bugzilla.gimp.org and to the news section on www.gimp.org, or that
      someone can do the changes for you.
 
-
  ( ) Make sure the checkout is up to date, clean from uncommitted changes.
 
  ( ) Check that the version number is correct in configure.in
@@ -22,8 +21,6 @@
  ( ) Run 'make maintainer-clean -k'
 
  ( ) Run ./autogen.sh --enable-gtk-doc
-
- ( ) Revert po/Makefile.in.in to the state in SVN.
 
  ( ) Do a complete build of the source tree.
 

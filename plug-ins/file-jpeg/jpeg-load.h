@@ -16,15 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-gint32 load_image           (const gchar *filename,
-                             GimpRunMode  runmode,
-                             gboolean     preview);
+gint32 load_image           (const gchar  *filename,
+                             GimpRunMode   runmode,
+                             gboolean      preview,
+                             GError      **error);
 
 
 #ifdef HAVE_EXIF
 
-gint32 load_thumbnail_image (const gchar *filename,
-                             gint        *width,
-                             gint        *height);
+gint32 load_thumbnail_image (const gchar  *filename,
+                             gint         *width,
+                             gint         *height,
+                             GError      **error);
 
 #endif /* HAVE_EXIF */

@@ -31,6 +31,11 @@ void   gimp_display_shell_scroll_set_offset                 (GimpDisplayShell   
                                                              gint                    offset_y);
 void   gimp_display_shell_scroll_clamp_offsets              (GimpDisplayShell       *shell);
 void   gimp_display_shell_scroll_clamp_and_update           (GimpDisplayShell       *shell);
+void   gimp_display_shell_scroll_unoverscrollify            (GimpDisplayShell       *shell,
+                                                             gint                    in_offset_x,
+                                                             gint                    in_offset_y,
+                                                             gint                   *out_offset_x,
+                                                             gint                   *out_offset_y);
 void   gimp_display_shell_scroll_center_image               (GimpDisplayShell       *shell,
                                                              gboolean                horizontally,
                                                              gboolean                vertically);

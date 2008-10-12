@@ -92,9 +92,13 @@ gimp_text_layout_render (GimpTextLayout     *layout,
   if (pango_layout_get_width (layout->layout) > 0)
     switch (pango_layout_get_alignment (layout->layout))
       {
+      case PANGO_ALIGN_LEFT:
+        break;
+
       case PANGO_ALIGN_RIGHT:
         x += pango_layout_get_width (layout->layout) - rect.width;
         break;
+
       case PANGO_ALIGN_CENTER:
         x += (pango_layout_get_width (layout->layout) - rect.width) / 2;
         break;

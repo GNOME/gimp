@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -70,7 +71,8 @@ static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shel
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
                                                           gint             *x,
-                                                          gint             *y);
+                                                          gint             *y,
+                                                          GimpZoomFocus     zoom_focus);
 
 static gdouble   img2real                                (GimpDisplayShell *shell,
                                                           gboolean          xdir,
@@ -89,9 +91,6 @@ gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display)
-    return;
-
   gimp_display_shell_scale_update_scrollbars (shell);
   gimp_display_shell_scale_update_rulers (shell);
 }
@@ -107,6 +106,9 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+
+  if (! shell->display)
+    return;
 
   image = shell->display->image;
 
@@ -163,6 +165,9 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
   gdouble    vertical_max_size;
   gint       scaled_viewport_offset_x;
   gint       scaled_viewport_offset_y;
+
+  if (! shell->display)
+    return;
 
   image = shell->display->image;
 
@@ -334,7 +339,8 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type,
-                          gdouble           new_scale)
+                          gdouble           new_scale,
+                          GimpZoomFocus     zoom_focus)
 {
   gint    x, y;
   gdouble current_scale;
@@ -375,7 +381,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                                    real_new_scale,
                                                    current_scale,
                                                    &x,
-                                                   &y);
+                                                   &y,
+                                                   zoom_focus);
 
           gimp_display_shell_scale_to (shell, real_new_scale, x, y);
 
@@ -438,7 +445,11 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
-  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_scale (shell,
+                            GIMP_ZOOM_TO,
+                            zoom_factor,
+                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+  
   gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
@@ -510,7 +521,11 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
   zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
-  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+  gimp_display_shell_scale (shell,
+                            GIMP_ZOOM_TO,
+                            zoom_factor,
+                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+
   gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
@@ -672,7 +687,6 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
   gint       shell_height;
   gint       screen_width;
   gint       screen_height;
-  gdouble    new_scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -684,16 +698,18 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
   screen_width  = gdk_screen_get_width (screen)  * 0.75;
   screen_height = gdk_screen_get_height (screen) * 0.75;
 
+  /* We need to zoom before we use SCALE[XY] */
+  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+
   shell_width  = SCALEX (shell, image_width);
   shell_height = SCALEY (shell, image_height);
-
-  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
 
   if (shell->display->config->initial_zoom_to_fit)
     {
       /*  Limit to the size of the screen...  */
       if (shell_width > screen_width || shell_height > screen_height)
         {
+          gdouble new_scale;
           gdouble current = gimp_zoom_model_get_factor (shell->zoom);
 
           new_scale = current * MIN (((gdouble) screen_height) / shell_height,
@@ -751,6 +767,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gint              viewport_x,
                              gint              viewport_y)
 {
+  gdouble scale_x, scale_y;
   gdouble image_focus_x, image_focus_y;
   gint    target_offset_x, target_offset_y;
 
@@ -766,8 +783,10 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                                        &image_focus_y,
                                        FALSE);
 
-  target_offset_x = scale * image_focus_x - viewport_x;
-  target_offset_y = scale * image_focus_y - viewport_y;
+  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+
+  target_offset_x = scale_x * image_focus_x - viewport_x;
+  target_offset_y = scale_y * image_focus_y - viewport_y;
 
   /* Note that we never come here if we need to
    * resize_windows_on_zoom
@@ -879,7 +898,8 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gdouble           new_scale,
                                          gdouble           current_scale,
                                          gint             *x,
-                                         gint             *y)
+                                         gint             *y,
+                                         GimpZoomFocus     zoom_focus)
 {
   gint image_center_x, image_center_y;
   gint other_x, other_y;
@@ -945,23 +965,39 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
   }
 
   /* Decide which one to use for each axis */
-  {
-    gboolean within_horizontally, within_vertically;
-    gboolean stops_horizontally, stops_vertically;
+  switch (zoom_focus)
+    {
+    case GIMP_ZOOM_FOCUS_POINTER:
+      *x = other_x;
+      *y = other_y;
+      break;
 
-    gimp_display_shell_scale_image_is_within_viewport (shell,
-                                                       &within_horizontally,
-                                                       &within_vertically);
+    case GIMP_ZOOM_FOCUS_IMAGE_CENTER:
+      *x = image_center_x;
+      *y = image_center_y;
+      break;
 
-    gimp_display_shell_scale_image_stops_to_fit (shell,
-                                                 new_scale,
-                                                 current_scale,
-                                                 &stops_horizontally,
-                                                 &stops_vertically);
+    case GIMP_ZOOM_FOCUS_BEST_GUESS:
+    default:
+      {
+        gboolean within_horizontally, within_vertically;
+        gboolean stops_horizontally, stops_vertically;
 
-    *x = within_horizontally && ! stops_horizontally ? image_center_x : other_x;
-    *y = within_vertically   && ! stops_vertically   ? image_center_y : other_y;
-  }
+        gimp_display_shell_scale_image_is_within_viewport (shell,
+                                                           &within_horizontally,
+                                                           &within_vertically);
+
+        gimp_display_shell_scale_image_stops_to_fit (shell,
+                                                     new_scale,
+                                                     current_scale,
+                                                     &stops_horizontally,
+                                                     &stops_vertically);
+
+        *x = within_horizontally && ! stops_horizontally ? image_center_x : other_x;
+        *y = within_vertically   && ! stops_vertically   ? image_center_y : other_y;
+      }
+      break;
+    }
 }
 
 /* scale image coord to realworld units (cm, inches, pixels)

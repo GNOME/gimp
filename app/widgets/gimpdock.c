@@ -40,15 +40,15 @@
 #include "gimpdockseparator.h"
 #include "gimpwidgets-utils.h"
 
-#include "gimpsessioninfo.h" /* FIXME */
+#include "gimpsessioninfo.h"    /* FIXME */
 #include "core/gimpcontainer.h" /* FIXME */
-#include "dialogs/dialogs.h" /* FIXME */
+#include "dialogs/dialogs.h"    /* FIXME */
 
 #include "gimp-intl.h"
 
 
-#define DEFAULT_DOCK_HEIGHT 300
-
+#define DEFAULT_DOCK_HEIGHT     300
+#define DEFAULT_DOCK_FONT_SCALE PANGO_SCALE_SMALL
 
 enum
 {
@@ -156,6 +156,13 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                              -1, G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
                                                              GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_double ("font-scale",
+                                                                NULL, NULL,
+                                                                0.0,
+                                                                G_MAXDOUBLE,
+                                                                DEFAULT_DOCK_FONT_SCALE,
+                                                                GIMP_PARAM_READABLE));
 }
 
 static void
@@ -186,7 +193,7 @@ gimp_dock_init (GimpDock *dock)
   gtk_container_add (GTK_CONTAINER (dock->main_vbox), dock->vbox);
   gtk_widget_show (dock->vbox);
 
-  separator = gimp_dock_separator_new (dock);
+  separator = gimp_dock_separator_new (dock, GTK_ANCHOR_NORTH);
   gtk_box_pack_start (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
 }
@@ -312,42 +319,53 @@ static void
 gimp_dock_style_set (GtkWidget *widget,
                      GtkStyle  *prev_style)
 {
-  PangoContext         *context;
-  PangoFontDescription *font_desc;
-  gint                  font_size;
-  gint                  default_height;
-  gchar                *font_str;
-  gchar                *rc_string;
+  gint    default_height;
+  gdouble font_scale;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_style_get (widget, "default-height", &default_height, NULL);
+  gtk_widget_style_get (widget,
+                        "default-height", &default_height,
+                        "font-scale",     &font_scale,
+                        NULL);
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
 
-  context = gtk_widget_get_pango_context (widget);
-  font_desc = pango_context_get_font_description (context);
-  font_desc = pango_font_description_copy (font_desc);
+  if (font_scale != 1.0)
+    {
+      PangoContext         *context;
+      PangoFontDescription *font_desc;
+      gint                  font_size;
+      gchar                *font_str;
+      gchar                *rc_string;
 
-  font_size = pango_font_description_get_size (font_desc);
-  font_size = PANGO_SCALE_SMALL * font_size;
-  pango_font_description_set_size (font_desc, font_size);
+      context = gtk_widget_get_pango_context (widget);
+      font_desc = pango_context_get_font_description (context);
+      font_desc = pango_font_description_copy (font_desc);
 
-  font_str = pango_font_description_to_string (font_desc);
-  pango_font_description_free (font_desc);
+      font_size = pango_font_description_get_size (font_desc);
+      font_size = font_scale * font_size;
+      pango_font_description_set_size (font_desc, font_size);
 
-  rc_string =
-    g_strdup_printf ("style \"gimp-dock-style\""
-                     "{"
-                     "  font_name = \"%s\""
-                     "}"
-                     "widget \"gimp-dock-%d.*\" style \"gimp-dock-style\"",
-                     font_str,
-                     GIMP_DOCK (widget)->ID);
-  g_free (font_str);
+      font_str = pango_font_description_to_string (font_desc);
+      pango_font_description_free (font_desc);
 
-  gtk_rc_parse_string (rc_string);
-  g_free (rc_string);
+      rc_string =
+        g_strdup_printf ("style \"gimp-dock-style\""
+                         "{"
+                         "  font_name = \"%s\""
+                         "}"
+                         "widget \"gimp-dock-%d.*\" style \"gimp-dock-style\"",
+                         font_str,
+                         GIMP_DOCK (widget)->ID);
+      g_free (font_str);
+
+      gtk_rc_parse_string (rc_string);
+      g_free (rc_string);
+
+      if (gtk_bin_get_child (GTK_BIN (widget)))
+        gtk_widget_reset_rc_styles (gtk_bin_get_child (GTK_BIN (widget)));
+    }
 }
 
 static void
@@ -454,7 +472,7 @@ gimp_dock_add_book (GimpDock     *dock,
       gtk_box_pack_start (GTK_BOX (dock->vbox), GTK_WIDGET (dockbook),
                           TRUE, TRUE, 0);
 
-      separator = gimp_dock_separator_new (dock);
+      separator = gimp_dock_separator_new (dock, GTK_ANCHOR_SOUTH);
       gtk_box_pack_end (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
     }

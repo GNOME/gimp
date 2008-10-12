@@ -142,7 +142,7 @@ gimp_plug_in_shm_new (void)
     g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
     /* Create the file mapping into paging space */
-    shm->shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
+    shm->shm_handle = CreateFileMapping (INVALID_HANDLE_VALUE, NULL,
                                          PAGE_READWRITE, 0,
                                          TILE_MAP_SIZE,
                                          fileMapName);

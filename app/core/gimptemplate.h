@@ -26,6 +26,8 @@
 #include "gimpviewable.h"
 
 
+#define GIMP_TEMPLATE_PARAM_COPY_FIRST (1 << (8 + G_PARAM_USER_SHIFT))
+
 /*  The default image aspect ratio is the golden mean. We use
  *  two adjacent fibonacci numbers for the unstable series and
  *  some less odd values for the stable version.

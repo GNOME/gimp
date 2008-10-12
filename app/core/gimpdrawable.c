@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -220,6 +220,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->replace_region              = gimp_drawable_real_replace_region;
   klass->get_tiles                   = gimp_drawable_real_get_tiles;
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
+  klass->get_node                    = NULL;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
 }
@@ -260,6 +261,12 @@ gimp_drawable_finalize (GObject *object)
     }
 
   gimp_drawable_free_shadow_tiles (drawable);
+
+  if (drawable->source_node)
+    {
+      g_object_unref (drawable->source_node);
+      drawable->source_node = NULL;
+    }
 
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
@@ -636,6 +643,25 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
+  if (drawable->source_node)
+    {
+      GObject       *operation;
+      GeglRectangle  rect;
+
+      g_object_get (drawable->source_node,
+                    "gegl-operation", &operation,
+                    NULL);
+
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      gegl_operation_invalidate (operation, &rect);
+
+      g_object_unref (operation);
+    }
+
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
@@ -702,6 +728,11 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
+
+  if (drawable->source_node)
+    gegl_node_set (drawable->source_node,
+                   "tile-manager", drawable->tiles,
+                   NULL);
 }
 
 static void
@@ -839,6 +870,11 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
+
+  if (drawable->source_node)
+    gegl_node_set (drawable->source_node,
+                   "tile-manager", drawable->tiles,
+                   NULL);
 }
 
 void
@@ -1010,6 +1046,36 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                         0, 0,
                         gimp_item_width  (item),
                         gimp_item_height (item));
+}
+
+GeglNode *
+gimp_drawable_get_source_node (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (drawable->source_node)
+    return drawable->source_node;
+
+  drawable->source_node = g_object_new (GEGL_TYPE_NODE,
+                                        "operation", "gimp-tilemanager-source",
+                                        NULL);
+  gegl_node_set (drawable->source_node,
+                 "tile-manager", drawable->tiles,
+                 "linear",       TRUE,
+                 NULL);
+
+  return drawable->source_node;
+}
+
+GeglNode *
+gimp_drawable_get_node (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (GIMP_DRAWABLE_GET_CLASS (drawable)->get_node)
+    return GIMP_DRAWABLE_GET_CLASS (drawable)->get_node (drawable);
+
+  return NULL;
 }
 
 void

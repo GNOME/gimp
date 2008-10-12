@@ -92,6 +92,8 @@ static void       find_again_callback     (GtkAction         *action,
                                            gpointer           data);
 static void       copy_location_callback  (GtkAction         *action,
                                            gpointer           data);
+static void       copy_selection_callback (GtkAction         *action,
+                                           gpointer           data);
 static void       show_index_callback     (GtkAction         *action,
                                            gpointer           data);
 static void       zoom_in_callback        (GtkAction         *action,
@@ -591,6 +593,11 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (copy_location_callback)
     },
     {
+      "copy-selection", GTK_STOCK_COPY,
+      NULL, "<control>C", NULL,
+      G_CALLBACK (copy_selection_callback)
+    },
+    {
       "zoom-in", GTK_STOCK_ZOOM_IN,
       NULL, "<control>plus", NULL,
       G_CALLBACK (zoom_in_callback)
@@ -715,6 +722,20 @@ ui_manager_new (GtkWidget *window)
       g_clear_error (&error);
     }
 
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <popup name=\"help-browser-copy-popup\">"
+                                     "    <menuitem action=\"copy-selection\" />"
+                                     "  </popup>"
+                                     "</ui>",
+                                     -1, &error);
+
+  if (error)
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
+
   return ui_manager;
 }
 
@@ -805,6 +826,16 @@ copy_location_callback (GtkAction *action,
       clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (view),
                                                  GDK_SELECTION_CLIPBOARD);
       gtk_clipboard_set_text (clipboard, uri, -1);
+    }
+}
+
+static void
+copy_selection_callback (GtkAction *action,
+                         gpointer   data)
+{
+  if (webkit_web_view_can_copy_clipboard (WEBKIT_WEB_VIEW (view)))
+    {
+      webkit_web_view_copy_clipboard (WEBKIT_WEB_VIEW (view));
     }
 }
 
@@ -1043,8 +1074,15 @@ static gboolean
 view_popup_menu (GtkWidget      *widget,
                  GdkEventButton *event)
 {
-  GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
-                                               "/help-browser-popup");
+  GtkWidget   *menu;
+  const gchar *path;
+
+  if (webkit_web_view_can_copy_clipboard (WEBKIT_WEB_VIEW (view)))
+    path = "/help-browser-copy-popup";
+  else
+    path = "/help-browser-popup";
+
+  menu = gtk_ui_manager_get_widget (ui_manager, path);
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
   gtk_menu_popup (GTK_MENU (menu),

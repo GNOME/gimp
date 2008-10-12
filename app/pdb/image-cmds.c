@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -48,6 +48,7 @@
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
 #include "vectors/gimpvectors.h"
@@ -400,9 +401,49 @@ image_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
       gimp_image_scale (image, new_width, new_height,
                         gimp->config->interpolation_type,
-                        NULL);
+                        progress);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_scale_full_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 new_width;
+  gint32 new_height;
+  gint32 interpolation;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  new_width = g_value_get_int (&args->values[1]);
+  new_height = g_value_get_int (&args->values[2]);
+  interpolation = g_value_get_enum (&args->values[3]);
+
+  if (success)
+    {
+      if (progress)
+        gimp_progress_start (progress, _("Scaling"), FALSE);
+
+      gimp_image_scale (image, new_width, new_height, interpolation, progress);
+
+      if (progress)
+        gimp_progress_end (progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -488,7 +529,13 @@ image_rotate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_rotate (image, context, rotate_type, NULL);
+      if (progress)
+        gimp_progress_start (progress, _("Rotating"), FALSE);
+
+      gimp_image_rotate (image, context, rotate_type, progress);
+
+      if (progress)
+        gimp_progress_end (progress);  
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -863,12 +910,12 @@ image_add_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), error) &&
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
           gimp_pdb_image_is_base_type (image,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1));
+          success = gimp_image_add_layer (image, layer, MAX (position, -1), TRUE);
         }
       else
         {
@@ -897,7 +944,10 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_layer (image, layer);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+        gimp_image_remove_layer (image, layer, TRUE, NULL);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -955,7 +1005,7 @@ image_raise_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer (image, layer);
+      success = gimp_image_raise_layer (image, layer, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -979,7 +1029,7 @@ image_lower_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer (image, layer);
+      success = gimp_image_lower_layer (image, layer, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1053,9 +1103,9 @@ image_add_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          success = gimp_image_add_channel (image, channel, MAX (position, -1));
+          success = gimp_image_add_channel (image, channel, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1084,7 +1134,10 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_channel (image, channel);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), error))
+        gimp_image_remove_channel (image, channel, TRUE, NULL);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1142,7 +1195,7 @@ image_raise_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_channel (image, channel);
+      success = gimp_image_raise_channel (image, channel, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1166,7 +1219,7 @@ image_lower_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_channel (image, channel);
+      success = gimp_image_lower_channel (image, channel, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1192,9 +1245,9 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+          success = gimp_image_add_vectors (image, vectors, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1223,7 +1276,10 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_remove_vectors (image, vectors);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
+        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1281,7 +1337,7 @@ image_raise_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors (image, vectors);
+      success = gimp_image_raise_vectors (image, vectors, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1305,7 +1361,7 @@ image_lower_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors (image, vectors);
+      success = gimp_image_lower_vectors (image, vectors, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1481,7 +1537,9 @@ image_add_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_layer_add_mask (layer, mask, TRUE))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error))
+        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
+      else
         success = FALSE;
     }
 
@@ -1508,7 +1566,11 @@ image_remove_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_apply_mask (layer, mode, TRUE);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+          gimp_layer_get_mask (layer))
+        gimp_layer_apply_mask (layer, mode, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2692,7 +2754,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-resize",
                                      "Resize the image to the specified extents.",
-                                     "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. No bounds checking is currently provided, so don't supply parameters that are out of bounds. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
+                                     "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -2761,8 +2823,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale",
-                                     "Scale the image to the specified extents.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. No bounds checking is currently provided, so don't supply parameters that are out of bounds. All channels within the image are scaled according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
+                                     "Scale the image using the default interpolation method.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The default interpolation method is used.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -2785,6 +2847,48 @@ register_image_procs (GimpPDB *pdb)
                                                       "New image height",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-scale-full
+   */
+  procedure = gimp_procedure_new (image_scale_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-scale-full");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-scale-full",
+                                     "Scale the image using a specific interpolation method.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-width",
+                                                      "new width",
+                                                      "New image width",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("new-height",
+                                                      "new height",
+                                                      "New image height",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("interpolation",
+                                                  "interpolation",
+                                                  "Type of interpolation",
+                                                  GIMP_TYPE_INTERPOLATION_TYPE,
+                                                  GIMP_INTERPOLATION_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2823,13 +2927,13 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",
                                                       "offx",
-                                                      "x offset: (0 <= offx <= (width - new_width))",
+                                                      "X offset: (0 <= offx <= (width - new_width))",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offy",
                                                       "offy",
-                                                      "y offset: (0 <= offy <= (height - new_height))",
+                                                      "Y offset: (0 <= offy <= (height - new_height))",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3289,7 +3393,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-layer-position",
                                      "Returns the position of the layer in the layer stack.",
-                                     "This procedure determines the positioin of the specified layer in the images layer stack. If the layer doesn't exist in the image, an error is returned.",
+                                     "This procedure determines the position of the specified layer in the images layer stack. If the layer doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
@@ -3324,7 +3428,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-layer",
                                      "Raise the specified layer in the image's layer stack",
-                                     "This procedure raises the specified layer one step in the existing layer stack. It will not move the layer if there is no layer above it.",
+                                     "This procedure raises the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer above it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3353,7 +3457,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-layer",
                                      "Lower the specified layer in the image's layer stack",
-                                     "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it.",
+                                     "This procedure lowers the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer below it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3504,7 +3608,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-channel-position",
                                      "Returns the position of the channel in the channel stack.",
-                                     "This procedure determines the positioin of the specified channel in the images channel stack. If the channel doesn't exist in the image, an error is returned.",
+                                     "This procedure determines the position of the specified channel in the images channel stack. If the channel doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
@@ -3539,7 +3643,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-channel",
                                      "Raise the specified channel in the image's channel stack",
-                                     "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
+                                     "This procedure raises the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel above it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3568,7 +3672,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-channel",
                                      "Lower the specified channel in the image's channel stack",
-                                     "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
+                                     "This procedure lowers the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel below it.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3661,7 +3765,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-vectors-position",
                                      "Returns the position of the vectors object in the vectors objects stack.",
-                                     "This procedure determines the positioin of the specified vectors object in the images vectors object stack. If the vectors object doesn't exist in the image, an error is returned.",
+                                     "This procedure determines the position of the specified vectors object in the images vectors object stack. If the vectors object doesn't exist in the image, an error is returned.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
@@ -3696,7 +3800,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-vectors",
                                      "Raise the specified vectors in the image's vectors stack",
-                                     "This procedure raises the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors above it.",
+                                     "This procedure raises the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors above it.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
@@ -3725,7 +3829,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-vectors",
                                      "Lower the specified vectors in the image's vectors stack",
-                                     "This procedure lowers the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors below it.",
+                                     "This procedure lowers the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors below it.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",

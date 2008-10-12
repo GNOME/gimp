@@ -230,6 +230,8 @@ gimp_list_add (GimpContainer *container,
     list->list = g_list_append (list->list, object);
   else
     list->list = g_list_prepend (list->list, object);
+
+  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 }
 
 static void
@@ -244,6 +246,8 @@ gimp_list_remove (GimpContainer *container,
                                           list);
 
   list->list = g_list_remove (list->list, object);
+
+  GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
 }
 
 static void

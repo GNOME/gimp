@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -162,7 +163,7 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_widget_show (vbox);
 
   spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 1,
+                                     1, 1, 1, 1, 10, 0,
                                      1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 

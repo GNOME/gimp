@@ -56,12 +56,16 @@ struct _GimpProjection
   GimpImage                *image;
 
   TilePyramid              *pyramid;
+  GeglNode                 *graph;
+  GeglNode                 *sink_node;
 
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;
 
   gboolean                  construct_flag;
   gboolean                  invalidate_preview;
+
+  gboolean                  use_gegl;
 };
 
 struct _GimpProjectionClass
@@ -82,6 +86,7 @@ GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 GimpProjection * gimp_projection_new              (GimpImage            *image);
 
 TileManager    * gimp_projection_get_tiles        (GimpProjection       *proj);
+GeglNode       * gimp_projection_get_sink_node    (GimpProjection       *proj);
 
 TileManager    * gimp_projection_get_tiles_at_level
                                                   (GimpProjection       *proj,

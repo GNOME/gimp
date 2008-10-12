@@ -58,6 +58,7 @@ struct _GimpGuiConfig
   gboolean             toolbox_color_area;
   gboolean             toolbox_foo_area;
   gboolean             toolbox_image_area;
+  gboolean             toolbox_wilber;
   gchar               *theme_path;
   gchar               *theme;
   gboolean             use_help;

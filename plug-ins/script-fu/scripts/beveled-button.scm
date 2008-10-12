@@ -158,4 +158,4 @@
 )
 
 (script-fu-menu-register "script-fu-button00"
-                         "<Image>/File/New/Buttons")
+                         "<Image>/File/Create/Buttons")

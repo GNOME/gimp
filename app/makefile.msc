@@ -16,7 +16,7 @@ LT_RELEASE = $(PKG_VER)
 
 SUBDIRS = composite paint-funcs base config xcf core file text \
 	dialogs display paint vectors pdb plug-in tools widgets gui \
-	actions menus
+	actions menus gegl
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -101,7 +101,9 @@ OBJECTS = \
 	batch.obj \
 	errors.obj \
 	sanity.obj \
+	unique.obj \
 	units.obj \
+	version.obj \
 	\
 	actions/appactions.lib \
 	menus/appmenus.lib \

@@ -28,8 +28,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "tinyscheme/scheme.h"
-
 #include "scheme-wrapper.h"
 #include "script-fu-console.h"
 
@@ -514,10 +512,13 @@ script_fu_output_to_console (TsOutputType  type,
 
   if (console && console->text_view)
     {
-      GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (console->text_view));
+      GtkTextBuffer *buffer;
       GtkTextIter    cursor;
 
+      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (console->text_view));
+
       gtk_text_buffer_get_end_iter (buffer, &cursor);
+
       if (type == TS_OUTPUT_NORMAL)
         {
           gtk_text_buffer_insert (buffer, &cursor, text, len);
@@ -528,6 +529,7 @@ script_fu_output_to_console (TsOutputType  type,
                                                     text, len, "emphasis",
                                                     NULL);
         }
+
       script_fu_console_scroll_end (console->text_view);
     }
 }
@@ -593,8 +595,11 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
-      output = g_string_new ("");
+      output = g_string_new (NULL);
       ts_register_output_func (ts_gstring_output_func, output);
+
+      gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+
       if (ts_interpret_string (list->data) != 0)
         {
           script_fu_output_to_console (TS_OUTPUT_ERROR,
@@ -609,6 +614,8 @@ script_fu_cc_key_function (GtkWidget        *widget,
                                        output->len,
                                        console);
         }
+
+      gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
       g_string_free (output, TRUE);
 
@@ -688,45 +695,4 @@ script_fu_cc_key_function (GtkWidget        *widget,
     }
 
   return FALSE;
-}
-
-void
-script_fu_eval_run (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *params,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals)
-{
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
-
-  run_mode = params[0].data.d_int32;
-  set_run_mode_constant (run_mode);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_NONINTERACTIVE:
-      /*  Disable Script-Fu output  */
-      ts_register_output_func (NULL, NULL);
-      if (ts_interpret_string (params[1].data.d_string) != 0)
-          status = GIMP_PDB_EXECUTION_ERROR;
-      break;
-
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      status = GIMP_PDB_CALLING_ERROR;
-      g_message (_("Script-Fu evaluation mode only allows "
-                   "non-interactive invocation"));
-      break;
-
-    default:
-      break;
-    }
-
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
 }

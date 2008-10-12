@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <pango/pangoft2.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -118,12 +118,16 @@ text_render (GimpImage    *image,
   if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
-  /*  If the drawable is NULL, create a new layer  */
   if (drawable == NULL)
-    gimp_image_add_layer (image, layer, -1);
-  /*  Otherwise, instantiate the text as the new floating selection */
+    {
+      /*  If the drawable is NULL, create a new layer  */
+      gimp_image_add_layer (image, layer, -1, TRUE);
+    }
   else
-    floating_sel_attach (layer, drawable);
+    {
+      /*  Otherwise, instantiate the text as the new floating selection */
+      floating_sel_attach (layer, drawable);
+    }
 
   /*  end the group undo  */
   gimp_image_undo_group_end (image);

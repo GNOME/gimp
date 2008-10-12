@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -192,14 +193,16 @@ gui_init (Gimp     *gimp,
   if (abort_message)
     gui_abort (abort_message);
 
+  the_gui_gimp = gimp;
+
+  gui_unique_init (gimp);
+
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
                      gui_get_background_func,
                      NULL);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
-
-  the_gui_gimp = gimp;
 
   /*  disable automatic startup notification  */
   gtk_window_set_auto_startup_notification (FALSE);
@@ -511,8 +514,6 @@ gui_restore_after_callback (Gimp               *gimp,
   /*  create the empty display  */
   display = GIMP_DISPLAY (gimp_create_display (gimp,
                                                NULL, GIMP_UNIT_PIXEL, 1.0));
-
-  gui_unique_init (gimp);
 
   if (gui_config->restore_session)
     session_restore (gimp);

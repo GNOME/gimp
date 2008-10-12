@@ -35,6 +35,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define COMP_MODE_SIZE sizeof(guint16)
+
+
 /*  Local function prototypes  */
 static gint             read_header_block          (PSDimage     *img_a,
                                                     FILE         *f,
@@ -105,7 +109,8 @@ static void             convert_1_bit              (const gchar *src,
 
 /* Main file load function */
 gint32
-load_image (const gchar *filename)
+load_image (const gchar  *filename,
+            GError      **load_error)
 {
   FILE                 *f;
   struct stat           st;
@@ -122,8 +127,9 @@ load_image (const gchar *filename)
   f = g_fopen (filename, "rb");
   if (f == NULL)
     {
-      g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
@@ -205,7 +211,8 @@ load_image (const gchar *filename)
  load_error:
   if (error)
     {
-      g_message (_("Error loading PSD file:\n\n%s"), error->message);
+      g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error loading PSD file: %s"), error->message);
       g_error_free (error);
     }
 
@@ -955,7 +962,6 @@ add_layers (const gint32  image_id,
 {
   PSDchannel          **lyr_chn;
   guchar               *pixels;
-  guint16               comp_mode;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels;
@@ -1049,6 +1055,8 @@ add_layers (const gint32  image_id,
           lyr_chn = g_new (PSDchannel *, lyr_a[lidx]->num_channels);
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
+              guint16 comp_mode = PSD_COMP_RAW;
+
               /* Allocate channel record */
               lyr_chn[cidx] = g_malloc (sizeof (PSDchannel) );
 
@@ -1086,15 +1094,21 @@ add_layers (const gint32  image_id,
                                 lyr_chn[cidx]->columns,
                                 lyr_chn[cidx]->rows);
 
-              if (fread (&comp_mode, 2, 1, f) < 1)
+              /* Only read channel data if there is any channel
+               * data. Note that the channel data can contain a
+               * compression method but no actual data.
+               */
+              if (lyr_a[lidx]->chn_info[cidx].data_len >= COMP_MODE_SIZE)
                 {
-                  psd_set_error (feof (f), errno, error);
-                  return -1;
+                  if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+                  comp_mode = GUINT16_FROM_BE (comp_mode);
+                  IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
                 }
-              comp_mode = GUINT16_FROM_BE (comp_mode);
-              IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
-
-              if (lyr_a[lidx]->chn_info[cidx].data_len - 2 > 0)
+              if (lyr_a[lidx]->chn_info[cidx].data_len > COMP_MODE_SIZE)
                 {
                   switch (comp_mode)
                     {
@@ -1134,6 +1148,7 @@ add_layers (const gint32  image_id,
 
                       case PSD_COMP_ZIP:                 /* ? */
                       case PSD_COMP_ZIP_PRED:
+                      default:
                         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                     _("Unsupported compression mode: %d"), comp_mode);
                         return -1;
@@ -1428,7 +1443,7 @@ add_merged_image (const gint32  image_id,
       block_end = block_start + block_len;
       fseek (f, block_start, SEEK_SET);
 
-      if (fread (&comp_mode, 2, 1, f) < 1)
+      if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
         {
           psd_set_error (feof (f), errno, error);
           return -1;
@@ -1542,10 +1557,14 @@ add_merged_image (const gint32  image_id,
       if (img_a->transparency)
         {
           offset = 1;
+
           /* Free "Transparency" channel name */
-          alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
-          if (alpha_name)
-            g_free (alpha_name);
+          if (img_a->alpha_names)
+            {
+              alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
+              if (alpha_name)
+                g_free (alpha_name);
+            }
         }
       else
         offset = 0;

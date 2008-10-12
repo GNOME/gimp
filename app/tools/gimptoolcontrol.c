@@ -60,6 +60,8 @@ gimp_tool_control_init (GimpToolControl *control)
   control->snap_width             = 0;
   control->snap_height            = 0;
 
+  control->precision              = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
+
   control->toggled                = FALSE;
 
   control->cursor                 = GIMP_CURSOR_MOUSE;
@@ -298,6 +300,24 @@ gimp_tool_control_get_snap_offsets (GimpToolControl *control,
   if (offset_y) *offset_y = control->snap_offset_y;
   if (width)    *width    = control->snap_width;
   if (height)   *height   = control->snap_height;
+}
+
+void
+gimp_tool_control_set_precision (GimpToolControl     *control,
+                                 GimpCursorPrecision  precision)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->precision = precision;
+}
+
+GimpCursorPrecision
+gimp_tool_control_get_precision (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control),
+                        GIMP_CURSOR_PRECISION_PIXEL_CENTER);
+
+  return control->precision;
 }
 
 void

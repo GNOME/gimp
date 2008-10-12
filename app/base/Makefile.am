@@ -1,5 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Base\"
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GLIB_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappbase.a
 
 libappbase_a_SOURCES = \
@@ -63,20 +74,7 @@ libappbase_a_SOURCES = \
 	tile-swap.c		\
 	tile-swap.h
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Base\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)
-
-
 EXTRA_DIST = makefile.msc
-
 
 #
 # rules to generate built sources
