@@ -243,7 +243,7 @@ gimp_tag_compare_with_string (GimpTag          *tag,
 }
 
 gboolean
-g_unichar_is_sentence_terminal (gunichar c)
+gimp_unichar_is_sentence_terminal (gunichar c)
 {
   switch (c)
     {
@@ -289,7 +289,7 @@ g_unichar_is_sentence_terminal (gunichar c)
 }
 
 gboolean
-g_unichar_is_terminal_punctuation (gunichar    c)
+gimp_unichar_is_terminal_punctuation (gunichar    c)
 {
   switch (c)
     {
@@ -431,7 +431,7 @@ gimp_tag_string_make_valid (const gchar      *tag_string)
       c = g_utf8_get_char (tag_cursor);
       tag_cursor = g_utf8_next_char (tag_cursor);
       if (g_unichar_isprint (c)
-          && ! g_unichar_is_terminal_punctuation (c))
+          && ! gimp_unichar_is_terminal_punctuation (c))
         {
           g_string_append_unichar (buffer, c);
         }

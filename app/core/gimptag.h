@@ -66,9 +66,10 @@ gint            gimp_tag_compare_with_string   (GimpTag        *tag,
 
 gchar         * gimp_tag_string_make_valid     (const gchar    *tag_string);
 
-/* one day they should find a better home */
-gboolean        g_unichar_is_sentence_terminal    (gunichar    c);
-gboolean        g_unichar_is_terminal_punctuation (gunichar    c);
+/* one day they should find a better home.
+ * see http://bugzilla.gnome.org/show_bug.cgi?id=546680 */
+gboolean        gimp_unichar_is_sentence_terminal    (gunichar    c);
+gboolean        gimp_unichar_is_terminal_punctuation (gunichar    c);
 
 #endif // __GIMP_TAG_H__
 

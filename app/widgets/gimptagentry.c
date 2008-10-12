@@ -267,7 +267,8 @@ gimp_tag_entry_dispose (GObject        *object)
   if (tag_entry->filtered_container)
     {
       g_signal_handlers_disconnect_by_func (tag_entry->filtered_container,
-                                            gimp_tag_entry_container_changed, tag_entry);
+                                            gimp_tag_entry_container_changed,
+                                            tag_entry);
       g_object_unref (tag_entry->filtered_container);
       tag_entry->filtered_container = NULL;
     }
@@ -296,9 +297,11 @@ gimp_tag_entry_set_property    (GObject              *object,
           g_assert (GIMP_IS_FILTERED_CONTAINER (tag_entry->filtered_container));
           g_object_ref (tag_entry->filtered_container);
           g_signal_connect (tag_entry->filtered_container, "add",
-                            G_CALLBACK (gimp_tag_entry_container_changed), tag_entry);
+                            G_CALLBACK (gimp_tag_entry_container_changed),
+                            tag_entry);
           g_signal_connect (tag_entry->filtered_container, "remove",
-                            G_CALLBACK (gimp_tag_entry_container_changed), tag_entry);
+                            G_CALLBACK (gimp_tag_entry_container_changed),
+                            tag_entry);
           break;
 
       case PROP_TAG_ENTRY_MODE:
@@ -563,7 +566,8 @@ gimp_tag_entry_delete_text     (GtkEditable          *editable,
   if (! tag_entry->internal_operation)
     {
       g_signal_handlers_block_by_func (editable,
-                                       gimp_tag_entry_delete_text, NULL);
+                                       gimp_tag_entry_delete_text,
+                                       NULL);
 
       if (end_pos > start_pos
           && (tag_entry->mask->str[end_pos - 1] == 't'
@@ -583,7 +587,8 @@ gimp_tag_entry_delete_text     (GtkEditable          *editable,
         }
 
       g_signal_handlers_unblock_by_func (editable,
-                                         gimp_tag_entry_delete_text, NULL);
+                                         gimp_tag_entry_delete_text,
+                                         NULL);
 
       g_signal_stop_emission_by_name (editable, "delete_text");
     }
@@ -807,7 +812,7 @@ gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
       c = g_utf8_get_char (cursor);
       cursor = g_utf8_next_char (cursor);
 
-      if (! c || g_unichar_is_terminal_punctuation (c))
+      if (! c || gimp_unichar_is_terminal_punctuation (c))
         {
           if (parsed_tag->len > 0)
             {
@@ -963,7 +968,7 @@ gimp_tag_entry_get_completion_prefix (GimpTagEntry             *entry)
     {
       c = g_utf8_get_char (cursor);
       cursor = g_utf8_next_char (cursor);
-      if (g_unichar_is_terminal_punctuation (c))
+      if (gimp_unichar_is_terminal_punctuation (c))
         {
           prefix_start = cursor;
         }
@@ -1291,7 +1296,7 @@ gimp_tag_entry_key_press       (GtkWidget            *widget,
   guchar                c;
 
   c = gdk_keyval_to_unicode (event->keyval);
-  if (g_unichar_is_terminal_punctuation (c))
+  if (gimp_unichar_is_terminal_punctuation (c))
     {
       g_idle_add ((GSourceFunc) gimp_tag_entry_commit_source_func, tag_entry);
       return FALSE;
@@ -1710,7 +1715,7 @@ gimp_tag_entry_commit_region   (GString              *tags,
       if (stage == 1)
         {
           /* tag */
-          if (c && ! g_unichar_is_terminal_punctuation (c))
+          if (c && ! gimp_unichar_is_terminal_punctuation (c))
             {
               g_string_append_unichar (tag_buffer, c);
             }
@@ -1749,7 +1754,7 @@ gimp_tag_entry_commit_region   (GString              *tags,
 
       if (stage == 2)
         {
-          if (g_unichar_is_terminal_punctuation (c))
+          if (gimp_unichar_is_terminal_punctuation (c))
             {
               g_string_append_unichar (out_tags, c);
               g_string_append_c (out_mask, 's');

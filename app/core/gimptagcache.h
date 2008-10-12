@@ -24,7 +24,6 @@
 
 
 #include "gimpobject.h"
-#include "gimptagged.h"
 
 #define GIMP_TYPE_TAG_CACHE            (gimp_tag_cache_get_type ())
 #define GIMP_TAG_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCache))

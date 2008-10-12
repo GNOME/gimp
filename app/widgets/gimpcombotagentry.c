@@ -46,8 +46,7 @@ static gboolean gimp_combo_tag_entry_event             (GtkWidget              *
                                                         GdkEvent               *event,
                                                         gpointer                user_data);
 static void     gimp_combo_tag_entry_style_set         (GtkWidget              *widget,
-                                                        GtkStyle               *previous_style,
-                                                        gpointer                user_data);
+                                                        GtkStyle               *previous_style);
 
 static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry      *combo_entry);
 static void     gimp_combo_tag_entry_popup_destroy     (GtkObject              *object,
@@ -70,7 +69,11 @@ static void
 gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass       *widget_class = GTK_WIDGET_CLASS (klass);
+
   object_class->dispose         = gimp_combo_tag_entry_dispose;
+
+  widget_class->style_set       = gimp_combo_tag_entry_style_set;
 }
 
 static void
@@ -306,8 +309,7 @@ gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
 
 static void
 gimp_combo_tag_entry_style_set (GtkWidget              *widget,
-                                GtkStyle               *previous_style,
-                                gpointer                user_data)
+                                GtkStyle               *previous_style)
 {
   GimpComboTagEntry            *combo_entry = GIMP_COMBO_TAG_ENTRY (widget);
   GtkStyle                     *style;
@@ -353,8 +355,12 @@ gimp_combo_tag_entry_style_set (GtkWidget              *widget,
   attribute = pango_attr_background_new (color.red, color.green, color.blue);
   pango_attr_list_insert (combo_entry->insensitive_item_attr, attribute);
 
-
   combo_entry->selected_item_color = style->base[GTK_STATE_SELECTED];
+
+  if (GTK_WIDGET_CLASS (parent_class))
+    {
+      GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+    }
 }
 
 static void

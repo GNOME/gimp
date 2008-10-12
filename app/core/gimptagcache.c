@@ -37,6 +37,7 @@
 #include "gimpdata.h"
 #include "gimptag.h"
 #include "gimptagcache.h"
+#include "gimptagged.h"
 #include "gimplist.h"
 #include "gimp-utils.h"
 #include "config/gimpxmlparser.h"
@@ -199,7 +200,8 @@ gimp_tag_cache_add_container (GimpTagCache     *cache,
   gimp_container_foreach (container, (GFunc) gimp_tag_cache_object_initialize, cache);
 
   g_signal_connect (container, "add",
-                    G_CALLBACK (gimp_tag_cache_object_add), cache);
+                    G_CALLBACK (gimp_tag_cache_object_add),
+                    cache);
 }
 
 static void

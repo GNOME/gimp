@@ -120,13 +120,17 @@ gimp_filtered_container_dispose (GObject     *object)
   GimpFilteredContainer        *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
   g_signal_handlers_disconnect_by_func (filtered_container->src_container,
-                                        gimp_filtered_container_src_add, filtered_container);
+                                        gimp_filtered_container_src_add,
+                                        filtered_container);
   g_signal_handlers_disconnect_by_func (filtered_container->src_container,
-                                        gimp_filtered_container_src_remove, filtered_container);
+                                        gimp_filtered_container_src_remove,
+                                        filtered_container);
   g_signal_handlers_disconnect_by_func (filtered_container->src_container,
-                                        gimp_filtered_container_src_freeze, filtered_container);
+                                        gimp_filtered_container_src_freeze,
+                                        filtered_container);
   g_signal_handlers_disconnect_by_func (filtered_container->src_container,
-                                        gimp_filtered_container_src_thaw, filtered_container);
+                                        gimp_filtered_container_src_thaw,
+                                        filtered_container);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -181,13 +185,17 @@ gimp_filtered_container_new (GimpContainer     *src_container)
   gimp_filtered_container_filter (filtered_container);
 
   g_signal_connect (src_container, "add",
-                    G_CALLBACK (gimp_filtered_container_src_add), filtered_container);
+                    G_CALLBACK (gimp_filtered_container_src_add),
+                    filtered_container);
   g_signal_connect (src_container, "remove",
-                    G_CALLBACK (gimp_filtered_container_src_remove), filtered_container);
+                    G_CALLBACK (gimp_filtered_container_src_remove),
+                    filtered_container);
   g_signal_connect (src_container, "freeze",
-                    G_CALLBACK (gimp_filtered_container_src_freeze), filtered_container);
+                    G_CALLBACK (gimp_filtered_container_src_freeze),
+                    filtered_container);
   g_signal_connect (src_container, "thaw",
-                    G_CALLBACK (gimp_filtered_container_src_thaw), filtered_container);
+                    G_CALLBACK (gimp_filtered_container_src_thaw),
+                    filtered_container);
 
   return GIMP_CONTAINER (filtered_container);
 }

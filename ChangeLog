@@ -1,5 +1,14 @@
 2008-10-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimpbrush.c
+	* app/core/gimpfilteredcontainer.c
+	* app/core/gimptag.[ch]
+	* app/core/gimptagcache.[ch]
+	* app/widgets/gimpcombotagentry.c
+	* app/widgets/gimptagentry.c: fixed some minor issues.
+
+2008-10-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimptagcache.c (gimp_tag_cache_load): use GimpXmlParser
 	instead of GMarkupParser.
 
