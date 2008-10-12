@@ -385,16 +385,14 @@ gimp_tag_entry_activate (GtkEntry              *entry,
                                   selection_end, selection_end);
     }
 
-  iterator = tag_entry->selected_items;
-  while (iterator)
+  for (iterator = tag_entry->selected_items; iterator;
+       iterator = g_list_next (iterator))
     {
       if (gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
                                GIMP_OBJECT(iterator->data)))
         {
           break;
         }
-
-      iterator = g_list_next (iterator);
     }
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN
@@ -747,12 +745,11 @@ gimp_tag_entry_assign_tags (GimpTagEntry       *tag_entry)
     }
   g_strfreev (parsed_tags);
 
-  selected_iterator = tag_entry->selected_items;
-  while (selected_iterator)
+  for (selected_iterator = tag_entry->selected_items; selected_iterator;
+       selected_iterator = g_list_next (selected_iterator))
     {
       selected_item = GIMP_TAGGED (selected_iterator->data);
       gimp_tag_entry_item_set_tags (selected_item, tag_list);
-      selected_iterator = g_list_next (selected_iterator);
     }
   g_list_free (tag_list);
 }
@@ -765,20 +762,17 @@ gimp_tag_entry_item_set_tags (GimpTagged       *tagged,
   GList        *tags_iterator;
 
   old_tags = g_list_copy (gimp_tagged_get_tags (tagged));
-  tags_iterator = old_tags;
-  while (tags_iterator)
+  for (tags_iterator = old_tags; tags_iterator;
+       tags_iterator = g_list_next (tags_iterator))
     {
       gimp_tagged_remove_tag (tagged, GIMP_TAG (tags_iterator->data));
-      tags_iterator = g_list_next (tags_iterator);
     }
   g_list_free (old_tags);
 
-  tags_iterator = tags;
-  while (tags_iterator)
+  for (tags_iterator = tags; tags_iterator;
+       tags_iterator = g_list_next (tags_iterator))
     {
-      printf ("tagged: %s\n", gimp_tag_get_name (GIMP_TAG (tags_iterator->data)));
       gimp_tagged_add_tag (tagged, GIMP_TAG (tags_iterator->data));
-      tags_iterator = g_list_next (tags_iterator);
     }
 }
 
@@ -872,8 +866,8 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *tag_entry,
 
   tag_entry->selected_items = g_list_copy (items);
 
-  iterator = tag_entry->selected_items;
-  while (iterator)
+  for (iterator = tag_entry->selected_items; iterator;
+       iterator = g_list_next (iterator))
     {
       if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
           && gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
@@ -881,8 +875,6 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *tag_entry,
         {
           break;
         }
-
-      iterator = g_list_next (iterator);
     }
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
@@ -930,8 +922,8 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry,
     {
       tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
     }
-  tag_iterator = tag_list;
-  while (tag_iterator)
+  for (tag_iterator = tag_list; tag_iterator;
+       tag_iterator = g_list_next (tag_iterator))
     {
       tag = GIMP_TAG (tag_iterator->data);
       text = g_strdup_printf ("%s%s ", gimp_tag_get_name (tag), gimp_tag_entry_get_separator ());
@@ -940,8 +932,6 @@ gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry,
                                 &insert_pos);
       tag_entry->internal_operation--;
       g_free (text);
-
-      tag_iterator = g_list_next (tag_iterator);
     }
   g_list_free (tag_list);
 
@@ -1013,9 +1003,9 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
     }
 
   all_tags = g_hash_table_get_keys (tag_entry->filtered_container->tag_ref_counts);
-  tag_iterator = all_tags;
   length = g_strv_length (used_tags);
-  while (tag_iterator)
+  for (tag_iterator = all_tags; tag_iterator;
+       tag_iterator = g_list_next (tag_iterator))
     {
       tag = GIMP_TAG (tag_iterator->data);
       tag_name = gimp_tag_get_name (tag);
@@ -1035,7 +1025,6 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry         *tag_entry,
               candidates = g_list_append (candidates, tag_iterator->data);
             }
         }
-      tag_iterator = g_list_next (tag_iterator);
     }
   g_list_free (all_tags);
   g_free (prefix);
@@ -1156,7 +1145,8 @@ gimp_tag_entry_container_changed       (GimpContainer        *container,
     {
       GList        *selected_iterator = tag_entry->selected_items;
 
-      while (selected_iterator)
+      for (selected_iterator = tag_entry->selected_items; selected_iterator;
+           selected_iterator = g_list_next (selected_iterator))
         {
           if (gimp_tagged_get_tags (GIMP_TAGGED (selected_iterator->data))
               && gimp_container_have (GIMP_CONTAINER (tag_entry->filtered_container),
@@ -1164,7 +1154,6 @@ gimp_tag_entry_container_changed       (GimpContainer        *container,
             {
               break;
             }
-          selected_iterator = g_list_next (selected_iterator);
         }
       if (! selected_iterator)
         {
@@ -1634,8 +1623,8 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
       g_free (last_item);
     }
 
-  tags_iterator = tag_entry->recent_list;
-  while (tags_iterator)
+  for (tags_iterator = tag_entry->recent_list; tags_iterator;
+       tags_iterator = g_list_next (tags_iterator))
     {
       if (! strcmp (tags_string, tags_iterator->data))
         {
@@ -1644,7 +1633,6 @@ gimp_tag_entry_add_to_recent   (GimpTagEntry         *tag_entry,
                                                   recent_item);
           break;
         }
-      tags_iterator = g_list_next (tags_iterator);
     }
 
   if (! recent_item)

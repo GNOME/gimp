@@ -1,5 +1,14 @@
 2008-10-12  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimpfilteredcontainer.c
+	* app/core/gimppalette.c
+	* app/core/gimptagcache.c
+	* app/widgets/gimptagentry.c
+	* app/widgets/gimptagpopup.c: rewrote GList iterations using
+	for instead of while.
+
+2008-10-12  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimpbrush.c
 	* app/core/gimpgradient.c
 	* app/core/gimppalette.c

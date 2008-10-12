@@ -435,12 +435,11 @@ gimp_tag_popup_layout_tags (GimpTagPopup       *tag_popup,
           tag_data->bounds.x = width - tag_data->bounds.x - tag_data->bounds.width;
         }
 
-      iterator = tag_popup->close_rectangles;
-      while (iterator)
+      for (iterator = tag_popup->close_rectangles; iterator;
+           iterator = g_list_next (iterator))
         {
           GdkRectangle *rect = (GdkRectangle *) iterator->data;
           rect->x = width - rect->x - rect->width;
-          iterator = g_list_next (iterator);
         }
     }
   height = y + line_height + GIMP_TAG_POPUP_MARGIN;
@@ -745,9 +744,10 @@ gimp_tag_popup_list_event (GtkWidget          *widget,
 
       if (i == tag_popup->tag_count)
         {
-          GList            *iterator = tag_popup->close_rectangles;
+          GList            *iterator;
 
-          while (iterator)
+          for (iterator = tag_popup->close_rectangles; iterator;
+               iterator = g_list_next (iterator))
             {
               bounds = (GdkRectangle *) iterator->data;
               if (x >= bounds->x
@@ -758,8 +758,6 @@ gimp_tag_popup_list_event (GtkWidget          *widget,
                   gtk_widget_destroy (GTK_WIDGET (tag_popup));
                   break;
                 }
-
-              iterator = g_list_next (iterator);
             }
         }
     }
@@ -926,8 +924,8 @@ gimp_tag_popup_check_can_toggle (GimpTagged    *tagged,
   PopupTagData  search_key;
   PopupTagData *search_result;
 
-  tag_iterator = gimp_tagged_get_tags (tagged);
-  while (tag_iterator)
+  for (tag_iterator = gimp_tagged_get_tags (tagged); tag_iterator;
+       tag_iterator = g_list_next (tag_iterator))
     {
       search_key.tag = GIMP_TAG (tag_iterator->data);
       search_result =
@@ -940,8 +938,6 @@ gimp_tag_popup_check_can_toggle (GimpTagged    *tagged,
               search_result->state = GTK_STATE_NORMAL;
             }
         }
-
-      tag_iterator = g_list_next (tag_iterator);
     }
 }
 

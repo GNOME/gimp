@@ -343,13 +343,12 @@ gimp_filtered_container_tagged_item_added (GimpTagged                  *tagged,
 {
   GList        *tag_iterator;
 
-  tag_iterator = gimp_tagged_get_tags (tagged);
-  while (tag_iterator)
+  for (tag_iterator = gimp_tagged_get_tags (tagged); tag_iterator;
+       tag_iterator = g_list_next (tag_iterator))
     {
       gimp_filtered_container_tag_added (tagged,
                                          GIMP_TAG (tag_iterator->data),
                                          filtered_container);
-      tag_iterator = g_list_next (tag_iterator);
     }
 
   g_signal_connect (tagged, "tag-added",
@@ -373,13 +372,12 @@ gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
                                         G_CALLBACK (gimp_filtered_container_tag_removed),
                                         filtered_container);
 
-  tag_iterator = gimp_tagged_get_tags (tagged);
-  while (tag_iterator)
+  for (tag_iterator = gimp_tagged_get_tags (tagged); tag_iterator;
+       tag_iterator = g_list_next (tag_iterator))
     {
       gimp_filtered_container_tag_removed (tagged,
                                            GIMP_TAG (tag_iterator->data),
                                            filtered_container);
-      tag_iterator = g_list_next (tag_iterator);
     }
 
 }

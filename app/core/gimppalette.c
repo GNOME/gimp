@@ -345,13 +345,12 @@ gimp_palette_get_checksum (GimpTagged *tagged)
   checksum = g_checksum_new (G_CHECKSUM_MD5);
   g_checksum_update (checksum, (const guchar *) &palette->n_colors,
                      sizeof (palette->n_colors));
-  color_iterator = palette->colors;
-  while (color_iterator)
+  for (color_iterator = palette->colors; color_iterator;
+       color_iterator = g_list_next (color_iterator))
     {
       entry = (GimpPaletteEntry *) color_iterator->data;
       g_checksum_update (checksum, (const guchar *) &entry->color,
                          sizeof (entry->color));
-      color_iterator = g_list_next (color_iterator);
     }
   checksum_string = g_strdup (g_checksum_get_string (checksum));
   g_checksum_free (checksum);

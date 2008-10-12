@@ -228,12 +228,10 @@ gimp_tag_cache_object_add (GimpContainer       *container,
 
               if (rec->identifier == identifier_quark)
                 {
-                  tag_iterator = rec->tags;
-                  while (tag_iterator)
+                  for (tag_iterator = rec->tags; tag_iterator;
+                       tag_iterator = g_list_next (tag_iterator))
                     {
                       gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iterator->data));
-
-                      tag_iterator = g_list_next (tag_iterator);
                     }
                   rec->referenced = TRUE;
                   return;
@@ -259,12 +257,10 @@ gimp_tag_cache_object_add (GimpContainer       *container,
                           g_quark_to_string (identifier_quark));
                   rec->identifier = identifier_quark;
 
-                  tag_iterator = rec->tags;
-                  while (tag_iterator)
+                  for (tag_iterator = rec->tags; tag_iterator;
+                      tag_iterator = g_list_next (tag_iterator))
                     {
                       gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iterator->data));
-
-                      tag_iterator = g_list_next (tag_iterator);
                     }
                   rec->referenced = TRUE;
                   return;
@@ -338,19 +334,18 @@ gimp_tag_cache_save (GimpTagCache      *cache)
         }
     }
 
-  iterator = cache->containers;
-  while (iterator)
+  for (iterator = cache->containers; iterator;
+       iterator = g_list_next (iterator))
     {
       gimp_container_foreach (GIMP_CONTAINER (iterator->data),
                               (GFunc) tagged_to_cache_record_foreach, &saved_records);
-      iterator = g_list_next (iterator);
     }
 
   buf = g_string_new ("");
   g_string_append (buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (buf, "<tag_cache>\n");
-  iterator = saved_records;
-  while (iterator)
+  for (iterator = saved_records; iterator;
+      iterator = g_list_next (iterator))
     {
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
       GList              *tag_iterator;
@@ -363,18 +358,14 @@ gimp_tag_cache_save (GimpTagCache      *cache)
                               g_quark_to_string (cache_rec->checksum));
       g_free (identifier_string);
 
-      tag_iterator = cache_rec->tags;
-      while (tag_iterator)
+      for (tag_iterator = cache_rec->tags; tag_iterator;
+          tag_iterator = g_list_next (tag_iterator))
         {
           tag_string = g_markup_escape_text (gimp_tag_get_name (GIMP_TAG (tag_iterator->data)), -1);
           g_string_append_printf (buf, "\t\t<tag>%s</tag>\n", tag_string);
           g_free (tag_string);
-          tag_iterator = g_list_next (tag_iterator);
         }
       g_string_append (buf, "\t</resource>\n");
-
-
-      iterator = g_list_next (iterator);
     }
   g_string_append (buf, "</tag_cache>\n");
 
@@ -389,13 +380,12 @@ gimp_tag_cache_save (GimpTagCache      *cache)
   g_free (filename);
   g_string_free (buf, TRUE);
 
-  iterator = saved_records;
-  while (iterator)
+  for (iterator = saved_records; iterator;
+      iterator = g_list_next (iterator))
     {
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
       g_list_free (cache_rec->tags);
       g_free (cache_rec);
-      iterator = g_list_next (iterator);
     }
   g_list_free (saved_records);
 }
