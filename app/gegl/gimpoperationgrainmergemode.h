@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_GRAIN_MERGE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_GRAIN_MERGE_MODE            (gimp_operation_grain_merge_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationGrainMergeModeClass GimpOperationGrainMergeModeClas
 
 struct _GimpOperationGrainMergeMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationGrainMergeModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

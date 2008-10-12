@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_OVERLAY_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_OVERLAY_MODE            (gimp_operation_overlay_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationOverlayModeClass GimpOperationOverlayModeClass;
 
 struct _GimpOperationOverlayMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationOverlayModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

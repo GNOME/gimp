@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_ADDITION_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_ADDITION_MODE            (gimp_operation_addition_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationAdditionModeClass GimpOperationAdditionModeClass;
 
 struct _GimpOperationAdditionMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationAdditionModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

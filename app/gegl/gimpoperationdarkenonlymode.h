@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DARKEN_ONLY_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE            (gimp_operation_darken_only_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationDarkenOnlyModeClass GimpOperationDarkenOnlyModeClas
 
 struct _GimpOperationDarkenOnlyMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDarkenOnlyModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

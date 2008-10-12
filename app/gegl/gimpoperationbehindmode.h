@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_BEHIND_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_BEHIND_MODE            (gimp_operation_behind_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationBehindModeClass GimpOperationBehindModeClass;
 
 struct _GimpOperationBehindMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationBehindModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

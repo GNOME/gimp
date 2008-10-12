@@ -37,19 +37,19 @@ static gboolean gimp_operation_hue_mode_process (GeglOperation       *operation,
 
 
 G_DEFINE_TYPE (GimpOperationHueMode, gimp_operation_hue_mode,
-               GIMP_TYPE_OPERATION_POINT_COMPOSER)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
 gimp_operation_hue_mode_class_init (GimpOperationHueModeClass *klass)
 {
-  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  GeglOperationClass          *operation_class = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *mode_class      = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   operation_class->name        = "gimp-hue-mode";
   operation_class->description = "GIMP hue mode operation";
 
-  point_class->process         = gimp_operation_hue_mode_process;
+  mode_class->process          = gimp_operation_hue_mode_process;
 }
 
 static void

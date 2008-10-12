@@ -40,7 +40,7 @@ typedef struct _GimpOperationLevels           GimpOperationLevels;
 typedef struct _GimpOperationPosterize        GimpOperationPosterize;
 typedef struct _GimpOperationThreshold        GimpOperationThreshold;
 
-typedef struct _GimpOperationPointComposer    GimpOperationPointComposer;
+typedef struct _GimpOperationLayerMode        GimpOperationLayerMode;
 typedef struct _GimpOperationDissolveMode     GimpOperationDissolveMode;
 typedef struct _GimpOperationBehindMode       GimpOperationBehindMode;
 typedef struct _GimpOperationMultiplyMode     GimpOperationMultiplyMode;

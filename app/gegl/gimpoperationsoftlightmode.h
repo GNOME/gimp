@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_SOFTLIGHT_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_SOFTLIGHT_MODE            (gimp_operation_softlight_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationSoftlightModeClass GimpOperationSoftlightModeClass;
 
 struct _GimpOperationSoftlightMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationSoftlightModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

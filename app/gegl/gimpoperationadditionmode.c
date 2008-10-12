@@ -37,19 +37,19 @@ static gboolean gimp_operation_addition_mode_process (GeglOperation       *opera
 
 
 G_DEFINE_TYPE (GimpOperationAdditionMode, gimp_operation_addition_mode,
-               GIMP_TYPE_OPERATION_POINT_COMPOSER)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
 gimp_operation_addition_mode_class_init (GimpOperationAdditionModeClass *klass)
 {
-  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  GeglOperationClass          *operation_class = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *mode_class      = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   operation_class->name        = "gimp-addition-mode";
   operation_class->description = "GIMP addition mode operation";
 
-  point_class->process         = gimp_operation_addition_mode_process;
+  mode_class->process          = gimp_operation_addition_mode_process;
 }
 
 static void
@@ -71,7 +71,7 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-if 1
+#if 1
       dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX];
       dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX];
       dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX];

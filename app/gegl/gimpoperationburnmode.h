@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_BURN_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_BURN_MODE            (gimp_operation_burn_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationBurnModeClass GimpOperationBurnModeClass;
 
 struct _GimpOperationBurnMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationBurnModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

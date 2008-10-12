@@ -1,5 +1,22 @@
 2008-10-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationpointcomposer.[ch]: renamed this class...
+
+	* app/gegl/gimpoperationlayermode.[ch]: ...to this and add
+	an own process() virtual function so we are free to hack even
+	more badly in order to support legacy layer modes and proper
+	ones which do meningfiul things to alpha. Simply redirect
+	GeglOperationPointComposer's compose() calls to our own vfunc
+	for now.
+
+	* app/gegl/gegl-types.h
+	* app/gegl/Makefile.am: changed accordingly.
+
+	* app/gegl/gimpoperation*mode.[ch]: changed parent class and
+	implemented process() method accordingly.
+
+2008-10-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationadditionmode.c: commit some #if 0'ed
 	experimental code.
 

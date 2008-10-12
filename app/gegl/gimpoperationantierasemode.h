@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_ANTI_ERASE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_ANTI_ERASE_MODE            (gimp_operation_anti_erase_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationAntiEraseModeClass GimpOperationAntiEraseModeClass;
 
 struct _GimpOperationAntiEraseMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationAntiEraseModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

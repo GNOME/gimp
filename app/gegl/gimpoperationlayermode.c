@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationvaluemode.c
+ * gimpoperationpointcomposer.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 #include "gegl-types.h"
 
-#include "gimpoperationvaluemode.h"
+#include "gimpoperationlayermode.h"
 
 
-static gboolean gimp_operation_value_mode_process (GeglOperation       *operation,
+static gboolean gimp_operation_layer_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
                                                    void                *out_buf,
@@ -36,50 +36,38 @@ static gboolean gimp_operation_value_mode_process (GeglOperation       *operatio
                                                    const GeglRectangle *roi);
 
 
-G_DEFINE_TYPE (GimpOperationValueMode, gimp_operation_value_mode,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_ABSTRACT_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
+                        GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
 
 static void
-gimp_operation_value_mode_class_init (GimpOperationValueModeClass *klass)
+gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 {
-  GeglOperationClass          *operation_class = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *mode_class      = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
+  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp-value-mode";
-  operation_class->description = "GIMP value mode operation";
+  operation_class->categories = "compositors";
 
-  mode_class->process          = gimp_operation_value_mode_process;
+  point_class->process        = gimp_operation_layer_mode_process;
 }
 
 static void
-gimp_operation_value_mode_init (GimpOperationValueMode *self)
+gimp_operation_layer_mode_init (GimpOperationLayerMode *self)
 {
 }
 
 static gboolean
-gimp_operation_value_mode_process (GeglOperation       *operation,
+gimp_operation_layer_mode_process (GeglOperation       *operation,
                                    void                *in_buf,
                                    void                *aux_buf,
                                    void                *out_buf,
                                    glong                samples,
                                    const GeglRectangle *roi)
 {
-  gfloat *src  = in_buf;
-  gfloat *aux  = aux_buf;
-  gfloat *dest = out_buf;
-
-  while (samples--)
-    {
-      dest[RED_PIX]   = src[RED_PIX];
-      dest[GREEN_PIX] = src[GREEN_PIX];
-      dest[BLUE_PIX]  = src[BLUE_PIX];
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
-
-      src  += 4;
-      aux  += 4;
-      dest += 4;
-    }
-
-  return TRUE;
+  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (operation)->process (operation,
+                                                                   in_buf,
+                                                                   aux_buf,
+                                                                   out_buf,
+                                                                   samples,
+                                                                   roi);
 }

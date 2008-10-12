@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_COLOR_ERASE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_COLOR_ERASE_MODE            (gimp_operation_color_erase_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationColorEraseModeClass GimpOperationColorEraseModeClas
 
 struct _GimpOperationColorEraseMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationColorEraseModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

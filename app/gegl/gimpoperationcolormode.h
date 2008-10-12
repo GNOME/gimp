@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_COLOR_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_COLOR_MODE            (gimp_operation_color_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationColorModeClass GimpOperationColorModeClass;
 
 struct _GimpOperationColorMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationColorModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

@@ -37,19 +37,19 @@ static gboolean gimp_operation_multiply_mode_process (GeglOperation       *opera
 
 
 G_DEFINE_TYPE (GimpOperationMultiplyMode, gimp_operation_multiply_mode,
-               GIMP_TYPE_OPERATION_POINT_COMPOSER)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
 gimp_operation_multiply_mode_class_init (GimpOperationMultiplyModeClass *klass)
 {
-  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  GeglOperationClass          *operation_class = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *mode_class      = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   operation_class->name        = "gimp-multiply-mode";
   operation_class->description = "GIMP multiply mode operation";
 
-  point_class->process         = gimp_operation_multiply_mode_process;
+  mode_class->process          = gimp_operation_multiply_mode_process;
 }
 
 static void

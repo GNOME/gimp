@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DIVIDE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DIVIDE_MODE            (gimp_operation_divide_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationDivideModeClass GimpOperationDivideModeClass;
 
 struct _GimpOperationDivideMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDivideModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_REPLACE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_REPLACE_MODE            (gimp_operation_replace_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationReplaceModeClass GimpOperationReplaceModeClass;
 
 struct _GimpOperationReplaceMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationReplaceModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

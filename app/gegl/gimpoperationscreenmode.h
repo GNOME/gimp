@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_SCREEN_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_SCREEN_MODE            (gimp_operation_screen_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationScreenModeClass GimpOperationScreenModeClass;
 
 struct _GimpOperationScreenMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationScreenModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

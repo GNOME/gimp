@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_GRAIN_EXTRACT_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE            (gimp_operation_grain_extract_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationGrainExtractModeClass GimpOperationGrainExtractMode
 
 struct _GimpOperationGrainExtractMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationGrainExtractModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

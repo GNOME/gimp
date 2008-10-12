@@ -37,19 +37,19 @@ static gboolean gimp_operation_color_erase_mode_process (GeglOperation       *op
 
 
 G_DEFINE_TYPE (GimpOperationColorEraseMode, gimp_operation_color_erase_mode,
-               GIMP_TYPE_OPERATION_POINT_COMPOSER)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
 gimp_operation_color_erase_mode_class_init (GimpOperationColorEraseModeClass *klass)
 {
-  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  GeglOperationClass          *operation_class = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *mode_class      = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   operation_class->name        = "gimp-color-erase-mode";
   operation_class->description = "GIMP color erase mode operation";
 
-  point_class->process         = gimp_operation_color_erase_mode_process;
+  mode_class->process          = gimp_operation_color_erase_mode_process;
 }
 
 static void

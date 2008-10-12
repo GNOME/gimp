@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_LIGHTEN_ONLY_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LIGHTEN_ONLY_MODE            (gimp_operation_lighten_only_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationLightenOnlyModeClass GimpOperationLightenOnlyModeCl
 
 struct _GimpOperationLightenOnlyMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationLightenOnlyModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

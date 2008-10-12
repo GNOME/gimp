@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DODGE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DODGE_MODE            (gimp_operation_dodge_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationDodgeModeClass GimpOperationDodgeModeClass;
 
 struct _GimpOperationDodgeMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDodgeModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

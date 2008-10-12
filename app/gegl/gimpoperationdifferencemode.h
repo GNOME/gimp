@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DIFFERENCE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DIFFERENCE_MODE            (gimp_operation_difference_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationDifferenceModeClass GimpOperationDifferenceModeClas
 
 struct _GimpOperationDifferenceMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDifferenceModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

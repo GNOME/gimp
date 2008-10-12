@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DISSOLVE_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DISSOLVE_MODE            (gimp_operation_dissolve_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationDissolveModeClass GimpOperationDissolveModeClass;
 
 struct _GimpOperationDissolveMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDissolveModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 

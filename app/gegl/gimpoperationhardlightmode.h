@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_HARDLIGHT_MODE_H__
 
 
-#include "gimpoperationpointcomposer.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_HARDLIGHT_MODE            (gimp_operation_hardlight_mode_get_type ())
@@ -38,12 +38,12 @@ typedef struct _GimpOperationHardlightModeClass GimpOperationHardlightModeClass;
 
 struct _GimpOperationHardlightMode
 {
-  GimpOperationPointComposer  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationHardlightModeClass
 {
-  GimpOperationPointComposerClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
