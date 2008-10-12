@@ -89,10 +89,6 @@ gimp_bpp_to_babl_format_linear (guint bpp)
 const gchar *
 gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
 {
-#ifdef __GNUC__
-#warning FIXME: add all layer modes as GEGL operations
-#endif
-
   switch (mode)
     {
     case GIMP_NORMAL_MODE:        return "normal";
@@ -118,6 +114,9 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
     case GIMP_GRAIN_EXTRACT_MODE: return "gimp-grain-extract-mode";
     case GIMP_GRAIN_MERGE_MODE:   return "gimp-grain-merge-mode";
     case GIMP_COLOR_ERASE_MODE:   return "gimp-color-erase-mode";
+    case GIMP_ERASE_MODE:         return "gimp-erase-mode";
+    case GIMP_REPLACE_MODE:       return "gimp-replace-mode";
+    case GIMP_ANTI_ERASE_MODE:    return "gimp-anti-erase-mode";
     default:
       break;
     }

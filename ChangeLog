@@ -1,3 +1,9 @@
+2008-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):
+	remove warning because the missing layer modes are now
+	"implemented", ha ha.
+
 2008-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationpointcomposer.[ch]: renamed this class...
