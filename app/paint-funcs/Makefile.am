@@ -19,10 +19,13 @@ INCLUDES = \
 noinst_LIBRARIES = libapppaint-funcs.a
 
 libapppaint_funcs_a_SOURCES = \
-	paint-funcs-types.h	\
+	layer-modes.c		\
+	layer-modes.h		\
 	paint-funcs.c		\
 	paint-funcs.h		\
 	paint-funcs-generic.h	\
+	paint-funcs-types.h	\
+	paint-funcs-utils.h	\
 	reduce-region.c		\
 	reduce-region.h		\
 	scale-region.c		\

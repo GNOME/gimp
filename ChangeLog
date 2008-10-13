@@ -1,3 +1,18 @@
+2008-10-13  Sven Neumann  <sven@gimp.org>
+
+	Bug 547967 – Improve app/paint-funcs/ maintainability
+
+	Applied patch from Luidnel Maignan that splits the legacy code for
+	layer modes into new files.
+	
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/layer-modes.[ch]
+	* app/paint-funcs/paint-funcs-utils.h: new files with code taken
+	from ...
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: ... these two files.
+
 2008-10-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimp-gegl-utils.c (gimp_layer_mode_to_gegl_operation):

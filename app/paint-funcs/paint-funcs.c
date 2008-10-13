@@ -37,10 +37,11 @@
 #include "composite/gimp-composite.h"
 
 #include "paint-funcs.h"
+#include "layer-modes.h"
+#include "paint-funcs-utils.h"
 #include "paint-funcs-generic.h"
 
 
-#define RANDOM_SEED   314159265
 #define EPSILON       0.0001
 
 #define LOG_1_255     -5.541263545    /*  log (1.0 / 255.0)  */
@@ -248,22 +249,7 @@ cubic (gdouble dx,
 void
 paint_funcs_setup (void)
 {
-  GRand *gr;
-  gint   i;
-
-  /*  generate a table of random seeds  */
-  gr = g_rand_new_with_seed (RANDOM_SEED);
-
-  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
-    random_table[i] = g_rand_int (gr);
-
-  for (i = 0; i < 256; i++)
-    add_lut[i] = i;
-
-  for (i = 256; i <= 510; i++)
-    add_lut[i] = 255;
-
-  g_rand_free (gr);
+  layer_modes_setup ();
 }
 
 void
@@ -668,40 +654,6 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
     }
 }
 
-/*orig #define alphify(src2_alpha,new_alpha) \
-        if (new_alpha == 0 || src2_alpha == 0)                                                        \
-          {                                                                                        \
-            for (b = 0; b < alpha; b++)                                                                \
-              dest[b] = src1 [b];                                                                \
-          }                                                                                        \
-        else if (src2_alpha == new_alpha){                                                        \
-          for (b = 0; b < alpha; b++)                                                                \
-            dest [b] = affect [b] ? src2 [b] : src1 [b];                                        \
-        } else {                                                                                \
-          ratio = (float) src2_alpha / new_alpha;                                                \
-          compl_ratio = 1.0 - ratio;                                                                \
-                                                                                                  \
-          for (b = 0; b < alpha; b++)                                                                \
-            dest[b] = affect[b] ?                                                                \
-              (guchar) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];        \
-        }*/
-
-/*shortened #define alphify(src2_alpha,new_alpha) \
-        if (src2_alpha != 0 && new_alpha != 0)                                                        \
-          {                                                                                        \
-            if (src2_alpha == new_alpha){                                                        \
-              for (b = 0; b < alpha; b++)                                                        \
-              dest [b] = affect [b] ? src2 [b] : src1 [b];                                        \
-            } else {                                                                                \
-              ratio = (float) src2_alpha / new_alpha;                                                \
-              compl_ratio = 1.0 - ratio;                                                        \
-                                                                                                  \
-              for (b = 0; b < alpha; b++)                                                        \
-                dest[b] = affect[b] ?                                                                \
-                  (guchar) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
-            }                                                                                   \
-          }*/
-
 #define alphify(src2_alpha,new_alpha) \
         if (src2_alpha != 0 && new_alpha != 0)                                                        \
           {                                                                                        \
@@ -719,26 +671,6 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
                    } while (b); \
             }    \
           }
-
-/*special #define alphify4(src2_alpha,new_alpha) \
-        if (src2_alpha != 0 && new_alpha != 0)                                                        \
-          {                                                                                        \
-            if (src2_alpha == new_alpha){                                                        \
-              dest [0] = affect [0] ? src2 [0] : src1 [0];                                        \
-              dest [1] = affect [1] ? src2 [1] : src1 [1];                                        \
-              dest [2] = affect [2] ? src2 [2] : src1 [2];                                        \
-            } else {                                                                                \
-              ratio = (float) src2_alpha / new_alpha;                                                \
-              compl_ratio = 1.0 - ratio;                                                        \
-                                                                                                  \
-              dest[0] = affect[0] ?                                                                \
-                (guchar) (src2[0] * ratio + src1[0] * compl_ratio + EPSILON) : src1[0];  \
-              dest[1] = affect[1] ?                                                                \
-                (guchar) (src2[1] * ratio + src1[1] * compl_ratio + EPSILON) : src1[1];  \
-              dest[2] = affect[2] ?                                                                \
-                (guchar) (src2[2] * ratio + src1[2] * compl_ratio + EPSILON) : src1[2];  \
-            }                                                                                   \
-          }*/
 
 void
 combine_inten_a_and_inten_pixels (const guchar   *src1,
