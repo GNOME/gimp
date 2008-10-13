@@ -1,3 +1,9 @@
+2008-10-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationadditionmode.c
+	(gimp_operation_addition_mode_process): Update with a new version
+	that is the best known so far (maybe it's even correct?).
+
 2008-10-13  Sven Neumann  <sven@gimp.org>
 
 	Bug 547967 – Improve app/paint-funcs/ maintainability

@@ -72,11 +72,21 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
   while (samples--)
     {
 #if 1
+      // Best so far (maybe even correct?)
+      dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX]   * aux[ALPHA_PIX];
+      dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX] * aux[ALPHA_PIX];
+      dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX]  * aux[ALPHA_PIX];
+      dest[ALPHA_PIX] = src[ALPHA_PIX];
+#else
+      // Wrong, doesn't take layer opacity of Addition-mode layer into
+      // account
       dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX];
       dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX];
       dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX];
       dest[ALPHA_PIX] = src[ALPHA_PIX];
-#else
+
+      // Wrong, toggling visibility of completely transparent
+      // Addition-mode layer changes projection
       dest[RED_PIX]   = src[RED_PIX]   * src[ALPHA_PIX] + aux[RED_PIX]   * aux[ALPHA_PIX];
       dest[GREEN_PIX] = src[GREEN_PIX] * src[ALPHA_PIX] + aux[GREEN_PIX] * aux[ALPHA_PIX];
       dest[BLUE_PIX]  = src[BLUE_PIX]  * src[ALPHA_PIX] + aux[BLUE_PIX]  * aux[ALPHA_PIX];
