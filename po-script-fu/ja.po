@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-03 00:25+0900\n"
-"PO-Revision-Date: 2008-09-23 22:21+0900\n"
+"POT-Creation-Date: 2008-10-13 19:44+0900\n"
+"PO-Revision-Date: 2008-10-12 19:41+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -221,8 +221,8 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "すべての Script-Fu ダイアログボックスを閉じてから \"スクリプトの再読み込み\" "
-"を再試行してください。(Script-Fu のダイアログボックスが開いているときは、「ス"
-"クリプトの再読み込み」は実行出来ません。)"
+"を再試行してください。 (Script-Fu のダイアログボックスが開いているときは、"
+"「スクリプトの再読み込み」は実行出来ません。)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -230,7 +230,7 @@ msgstr "3D アウトライン(_O)..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "バンプマップ (アルファレイヤーの) ぼかし半径"
+msgstr "バンプマップ（アルファレイヤーの）ぼかし半径"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -328,8 +328,8 @@ msgstr "輪郭ぼかし半径"
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
-"3D アウトラインロゴ（【ファイル】 →  【画像の生成】 → 【ロゴ】 → 【3D アウト"
-"ライン】）と同じ効果を選択範囲（または不透明部分）に適用します。"
+"3D アウトラインロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【3D アウトラ"
+"イン】）と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -810,7 +810,7 @@ msgstr "幅"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr "アニメーションには、少なくとも3枚のレイヤーが必要です"
+msgstr "アニメーションには、少なくとも 3 枚のレイヤーが必要です"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
@@ -839,7 +839,7 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"ブレンドロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ブレンド】）と同じ"
+"ブレンドロゴ (【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ブレンド】) と同じ"
 "効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -891,7 +891,7 @@ msgstr "グラデーションの反転"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
-msgstr "オフセット (ピクセル)"
+msgstr "オフセット（ピクセル）"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
@@ -956,14 +956,14 @@ msgstr "GIF向けに下準備する"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
-msgstr "速さ(ピクセル/フレーム)"
+msgstr "速さ (ピクセル/フレーム)"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"「焼き付け」スクリプトの実行には、2枚のレイヤーが必要です。\n"
+"「焼き付け」スクリプトの実行には、 2 枚のレイヤーが必要です。\n"
 "（前面のレイヤーには透明部分がなければいけません。）"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
@@ -1176,7 +1176,7 @@ msgstr "選択範囲を残す"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
-msgstr "背景なし (レイヤーを分けるだけ)"
+msgstr "背景なし（レイヤーを分けるだけ）"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
@@ -1289,7 +1289,7 @@ msgstr "反射と遠近感のあるシャドウが付加された、メタリッ
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
-msgstr "効果サイズ (ピクセル)"
+msgstr "効果サイズ（ピクセル）"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -1298,8 +1298,8 @@ msgstr "背景画像"
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
 msgstr ""
-"オブジェクト背景を歪ませて、クリスタル(またはジェル)のように見えるロゴを生成"
-"します。"
+"オブジェクト背景を歪ませて、クリスタル（またはジェル）のように見えるロゴを生"
+"成します。"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1397,7 +1397,8 @@ msgstr "消す"
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
 msgstr ""
-"画像中のピクセルを1行おき(または1列おき）に消去して縞模様の効果を施します。"
+"画像中のピクセルを 1 行おき(または 1 列おき）に消去して縞模様の効果を施しま"
+"す。"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1632,16 +1633,16 @@ msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"gimp.org ウェブページテーマに沿った、(第2レベル)チューブボタンラベル用画像を"
-"生成します"
+"gimp.org ウェブページテーマに沿った、(第 2 レベル)チューブボタンラベル用画像"
+"を生成します"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"gimp.org ウェブページテーマに沿った、(第3レベル)チューブボタンラベル用画像を"
-"生成します"
+"gimp.org ウェブページテーマに沿った、(第 3 レベル)チューブボタンラベル用画像"
+"を生成します"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1792,7 +1793,7 @@ msgstr "選択範囲から新規ガイド(_S)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "位置を比率(パーセント)で指定してガイドを挿入します"
+msgstr "位置を比率 (パーセント) で指定してガイドを挿入します"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1841,8 +1842,8 @@ msgstr "すべてのガイドを削除(_R)"
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
 msgstr ""
-"2種類のサインペンで手書きしたようなロゴを生成します。(以前の GIMP では「ぐ"
-"にゃぐにゃ」)"
+"2 種類のサインペンで手書きしたようなロゴを生成します。\n"
+"(以前の GIMP では「ぐにゃぐにゃ」)"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -2038,7 +2039,7 @@ msgstr "新しいブラシ(_B)..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr "クリップボードの内容を新しいブラシ(ファイル)に変換します。"
+msgstr "クリップボードの内容を新しいブラシファイルに変換します"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
@@ -2051,7 +2052,7 @@ msgstr "新しいパターン(_P)..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr "クリップボードの内容を新しいパターン(ファイル)に変換します。"
+msgstr "クリップボードの内容を新しいパターンファイルに変換します"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
@@ -2060,7 +2061,7 @@ msgstr "パターン名"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "選択範囲(または不透明部分)に遠近法変換されたシャドウを付加します。"
+msgstr "選択範囲 (または不透明部分) に遠近法変換されたシャドウを付加します。"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2085,8 +2086,8 @@ msgstr "遠近法(_P)..."
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr ""
-"「プレデター」の赤外線スコープを透して見たような効果を選択範囲(または不透明部"
-"分)に施します。"
+"「プレデター」の赤外線スコープを透して見たような効果を選択範囲 (または不透明"
+"部分) に施します。"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2188,8 +2189,8 @@ msgstr "黒くする"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
-"波打つ水面を透して見た画像を表現したアニメーション(アニメーションフレーム用の"
-"複数のレイヤーを持つ画像）を生成します。"
+"波打つ水面を透して見た画像を表現したアニメーション (アニメーションフレーム用"
+"の複数のレイヤーを持つ画像) を生成します"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2312,7 +2313,7 @@ msgstr "スライド(_S)..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr "最新式(\"State-Of-The-Art\")のクロームのロゴを生成します"
+msgstr "最新式 (\"State-Of-The-Art\") のクロームのロゴを生成します"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
@@ -2506,7 +2507,7 @@ msgstr "回転数"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
-msgstr "4 分の 1 サイズ"
+msgstr "1/4 サイズ"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
@@ -2740,55 +2741,55 @@ msgstr "ユーザーマニュアルへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用（英語）(_S)"
+msgstr "選択範囲の作成と使用 (英語) (_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr "ファイルを開く・作成・保存（英語）(_F)"
+msgstr "ファイルを開く・作成・保存 (英語) (_F)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く（英語）(_S)"
+msgstr "シンプルなオブジェクトを描く (英語) (_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方（英語）(_D)"
+msgstr "ダイアログの使い方 (英語) (_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
-msgstr "プラグインレジストリ（英語）(_R)"
+msgstr "プラグインレジストリ (英語) (_R)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
-msgstr "パスを使う（英語）(_P)"
+msgstr "パスを使う (英語) (_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr "基本コンセプト（英語）(_B)"
+msgstr "基本コンセプト (英語) (_B)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト（英語）(_D)"
+msgstr "開発者用ウェブサイト (英語) (_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
-msgstr "メインのウェブサイト（英語）(_M)"
+msgstr "メインのウェブサイト (英語) (_M)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには（英語）(_P)"
+msgstr "ウェブ用画像を作成するには (英語) (_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル（英語）(_U)"
+msgstr "ユーザーマニュアル (英語) (_U)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ画像を修正する（英語）(_W)"
+msgstr "デジカメ画像を修正する (英語) (_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "選択範囲（または不透明部分）に半透明でやや立体的な効果を与えます。"
+msgstr "選択範囲 (または不透明部分) に半透明でやや立体的な効果を与えます"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
