@@ -11,7 +11,7 @@
 	* app/gegl/gimpoperationlayermode.[ch]: ...to this and add
 	an own process() virtual function so we are free to hack even
 	more badly in order to support legacy layer modes and proper
-	ones which do meningfiul things to alpha. Simply redirect
+	ones which do meaningful things to alpha. Simply redirect
 	GeglOperationPointComposer's compose() calls to our own vfunc
 	for now.
 
