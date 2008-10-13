@@ -49,6 +49,8 @@ app_sources = \
 	main.c		\
 	sanity.c	\
 	sanity.h	\
+	signals.c	\
+	signals.h	\
 	unique.c	\
 	unique.h	\
 	units.c		\

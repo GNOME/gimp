@@ -18,12 +18,9 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE  /* for the sigaction stuff */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -57,8 +54,8 @@
 
 #include "about.h"
 #include "app.h"
-#include "errors.h"
 #include "sanity.h"
+#include "signals.h"
 #include "unique.h"
 #include "units.h"
 #include "version.h"
@@ -94,7 +91,6 @@ static void      gimp_show_license_and_exit   (void) G_GNUC_NORETURN;
 
 static void      gimp_init_i18n               (void);
 static void      gimp_init_malloc             (void);
-static void      gimp_init_signal_handlers    (void);
 
 #ifndef G_OS_WIN32
 static void      gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
@@ -401,7 +397,7 @@ main (int    argc,
   if (abort_message)
     app_abort (no_interface, abort_message);
 
-  gimp_init_signal_handlers ();
+  gimp_init_signal_handlers (stack_trace_mode);
 
   app_run (argv[0],
            filenames,
@@ -638,69 +634,3 @@ gimp_init_i18n (void)
 
   textdomain (GETTEXT_PACKAGE);
 }
-
-static void
-gimp_init_signal_handlers (void)
-{
-#ifndef G_OS_WIN32
-  /* No use catching these on Win32, the user won't get any
-   * stack trace from glib anyhow. It's better to let Windows inform
-   * about the program error, and offer debugging (if the user
-   * has installed MSVC or some other compiler that knows how to
-   * install itself as a handler for program errors).
-   */
-
-  /* Handle fatal signals */
-
-  /* these are handled by gimp_terminate() */
-  gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
-
-  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER)
-    {
-      /* these are handled by gimp_fatal_error() */
-      gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
-    }
-
-  /* Ignore SIGPIPE because plug_in.c handles broken pipes */
-  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
-
-  /* Restart syscalls on SIGCHLD */
-  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
-
-#endif /* G_OS_WIN32 */
-}
-
-
-#ifndef G_OS_WIN32
-
-/* gimp core signal handler for fatal signals */
-
-static void
-gimp_sigfatal_handler (gint sig_num)
-{
-  switch (sig_num)
-    {
-    case SIGHUP:
-    case SIGINT:
-    case SIGQUIT:
-    case SIGABRT:
-    case SIGTERM:
-      gimp_terminate (g_strsignal (sig_num));
-      break;
-
-    case SIGBUS:
-    case SIGSEGV:
-    case SIGFPE:
-    default:
-      gimp_fatal_error (g_strsignal (sig_num));
-      break;
-    }
-}
-
-#endif /* ! G_OS_WIN32 */

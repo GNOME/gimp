@@ -1,3 +1,10 @@
+2008-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/signals.[ch]: new files with code split out of main.c.
+
+	* app/main.c: changed accordingly.
+
 2008-10-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationadditionmode.c
