@@ -1,5 +1,11 @@
 2008-10-13  Sven Neumann  <sven@gimp.org>
 
+	Bug 556182 – Could you please explain a few strings [I18N]
+	
+	* plug-ins/pygimp/plug-ins/py-slice.py: added translator comments.
+
+2008-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am
 	* app/signals.[ch]: new files with code split out of main.c.
 
