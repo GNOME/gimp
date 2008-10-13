@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-04 18:18+0900\n"
-"PO-Revision-Date: 2008-10-04 14:02+0900\n"
+"POT-Creation-Date: 2008-10-13 19:41+0900\n"
+"PO-Revision-Date: 2008-10-12 19:11+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -759,7 +759,7 @@ msgstr "色管理用の操作モード"
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
-msgstr "(1台目の)モニタのカラープロファイルを指定します"
+msgstr "( 1 台目の) モニタのカラープロファイルを指定します"
 
 #: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
@@ -1044,8 +1044,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"HTMLとCSSで使われる色の16進表記を入力します。CSSで使われる色名の入力も可能で"
-"す"
+"HTMLとCSSで使われる色の 16 進表記を入力します。CSSで使われる色名の入力も可能"
+"です"
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
@@ -1115,7 +1115,7 @@ msgstr "ページ %d"
 
 #: ../libgimpwidgets/gimppageselector.c:1171
 msgid "One page selected"
-msgstr "1ページを選択"
+msgstr "1 ページを選択"
 
 #: ../libgimpwidgets/gimppageselector.c:1178
 #: ../libgimpwidgets/gimppageselector.c:1182
