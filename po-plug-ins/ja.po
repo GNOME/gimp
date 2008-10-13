@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-08 21:54+0900\n"
-"PO-Revision-Date: 2008-10-08 00:00+0900\n"
+"POT-Creation-Date: 2008-10-13 19:43+0900\n"
+"PO-Revision-Date: 2008-10-12 21:11+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -384,7 +384,7 @@ msgstr "GIFアニメーションファイル用に、画像に最適化を施し
 
 #: ../plug-ins/common/animation-optimize.c:145
 msgid "Optimize (for _GIF)"
-msgstr "GIF 用最適化 (_G)"
+msgstr "GIF 用最適化(_G)"
 
 #: ../plug-ins/common/animation-optimize.c:153
 msgid "Reduce file size where combining layers is possible"
@@ -506,7 +506,7 @@ msgstr "停止"
 
 #: ../plug-ins/common/antialias.c:84
 msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-msgstr "Scale3Xエッジ推定アルゴリズムを用いて境界を滑らかにします"
+msgstr "Scale3X エッジ推定アルゴリズムを用いて境界を滑らかにします"
 
 #: ../plug-ins/common/antialias.c:90
 msgid "_Antialias"
@@ -610,7 +610,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-fits/fits.c:530 ../plug-ins/file-jpeg/jpeg-load.c:249
 #: ../plug-ins/file-jpeg/jpeg-load.c:758
 #: ../plug-ins/file-psd/psd-image-res-load.c:995
-#: ../plug-ins/file-psd/psd-load.c:1523 ../plug-ins/file-sgi/sgi.c:384
+#: ../plug-ins/file-psd/psd-load.c:1526 ../plug-ins/file-sgi/sgi.c:384
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/twain/twain.c:568
 #: ../plug-ins/win-snap/winsnap.c:1155
@@ -632,9 +632,7 @@ msgstr "区切りの数(_N): "
 
 #: ../plug-ins/common/blur-gauss-selective.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
-msgstr ""
-"隣接するピクセルでコントラストが低いもののみを選んでぼかします\n"
-"(PhotoShop の「ぼかし(表面)」に相当)"
+msgstr "隣接するピクセルでコントラストが低いもののみを選んでぼかします"
 
 #: ../plug-ins/common/blur-gauss-selective.c:115
 msgid "_Selective Gaussian Blur..."
@@ -665,9 +663,7 @@ msgstr "最大 Δ(_M): "
 
 #: ../plug-ins/common/blur-gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
-msgstr ""
-"最もシンプルで良く使われるぼかしです\n"
-"(PhotoShop の「ぼかし(ガウス)」に相当)"
+msgstr "最もシンプルで良く使われるぼかしです"
 
 #: ../plug-ins/common/blur-gauss.c:172
 msgid "_Gaussian Blur..."
@@ -711,9 +707,7 @@ msgstr "_RLE"
 
 #: ../plug-ins/common/blur-motion.c:157 ../plug-ins/common/blur-motion.c:171
 msgid "Simulate movement using directional blur"
-msgstr ""
-"指向性のあるぼかし方で「動き」を表現します\n"
-"(PhotoShop の「ぼかし(移動)」と「ぼかし(放射状)」に相当)"
+msgstr "指向性のあるぼかし方で「動き」を表現します"
 
 #: ../plug-ins/common/blur-motion.c:164 ../plug-ins/common/blur-motion.c:177
 msgid "_Motion Blur..."
@@ -1596,9 +1590,7 @@ msgstr "色を強調しています"
 
 #: ../plug-ins/common/color-exchange.c:122
 msgid "Swap one color with another"
-msgstr ""
-"特定の色を他の色に置き換えます\n"
-"(PhotoShopの「色の置き換え」に相当します)"
+msgstr "特定の色を他の色に置き換えます"
 
 #: ../plug-ins/common/color-exchange.c:128
 msgid "_Color Exchange..."
@@ -2087,9 +2079,7 @@ msgstr "切抜き(_P)"
 
 #: ../plug-ins/common/convolution-matrix.c:201
 msgid "Apply a generic 5x5 convolution matrix"
-msgstr ""
-"5 X 5 のコンボリューション行列を適用します\n"
-"(PhotoShopの「カスタムフィルタ」に相当します)"
+msgstr "5 x 5 のコンボリューション行列を適用します"
 
 #: ../plug-ins/common/convolution-matrix.c:206
 msgid "_Convolution Matrix..."
@@ -2098,7 +2088,7 @@ msgstr "コンボリューション行列(_C)..."
 #: ../plug-ins/common/convolution-matrix.c:241
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr ""
-"コンボリューション行列は3 X 3 ピクセルより小さなレイヤーには適用できません"
+"コンボリューション行列は 3 x 3 ピクセルより小さなレイヤーには適用できません"
 
 #: ../plug-ins/common/convolution-matrix.c:314
 msgid "Applying convolution"
@@ -2205,7 +2195,7 @@ msgstr "キュービズム変換しています"
 
 #: ../plug-ins/common/curve-bend.c:520
 msgid "Bend the image using two control curves"
-msgstr "画像を上下2つのカーブに沿って曲げます"
+msgstr "画像を上下 2 つのカーブに沿って曲げます"
 
 #: ../plug-ins/common/curve-bend.c:541
 msgid "_Curve Bend..."
@@ -2574,7 +2564,7 @@ msgstr "偶数ラインを残す(_E)"
 
 #: ../plug-ins/common/depth-merge.c:184
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr "深度を制御するマップ画像を使って、2つの画像を統合します"
+msgstr "深度を制御するマップ画像を使って 2 つの画像を統合します"
 
 #: ../plug-ins/common/depth-merge.c:193
 msgid "_Depth Merge..."
@@ -2616,7 +2606,7 @@ msgstr "スケール 2(_L): "
 msgid "Remove speckle noise from the image"
 msgstr ""
 "画像中のノイズやモアレを除去します\n"
-"(GIMP2.2 の「非斑化」)"
+"(GIMP 2.2 の「非斑化」)"
 
 #: ../plug-ins/common/despeckle.c:148
 msgid "Des_peckle..."
@@ -2752,9 +2742,7 @@ msgstr "回転(_W)"
 
 #: ../plug-ins/common/displace.c:169
 msgid "Displace pixels as indicated by displacement maps"
-msgstr ""
-"画像中のピクセルがマップ画像に従ってずらされます\n"
-"(PhotoShop の「置き換え」に相当します)"
+msgstr "画像中のピクセルがマップ画像に従ってずらされます"
 
 #: ../plug-ins/common/displace.c:179
 msgid "_Displace..."
@@ -3275,8 +3263,8 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"GIF フォーマットではコメントにはASCII文字しか利用できません。コメントは保存さ"
-"れませんでした。"
+"GIF フォーマットは 7bit ASCII エンコードのコメントしかサポートされません。コ"
+"メントは保存されませんでした。"
 
 #: ../plug-ins/common/file-gif-save.c:732
 msgid ""
@@ -3355,7 +3343,7 @@ msgstr "累積レイヤー (結合)"
 
 #: ../plug-ins/common/file-gif-save.c:1162
 msgid "One frame per layer (replace)"
-msgstr "レイヤー毎に1フレーム (置換)"
+msgstr "レイヤー毎に 1 フレーム (置換)"
 
 #. The "Always use default values" toggles
 #: ../plug-ins/common/file-gif-save.c:1178
@@ -3721,7 +3709,7 @@ msgstr "画像の高さ： '%d' は、サポートされていないか無効な
 
 #: ../plug-ins/common/file-pcx.c:405
 msgid "Invalid number of bytes per line in PCX header"
-msgstr "PCX ヘッダの1ラインあたりのバイト数が不適切です"
+msgstr "PCX ヘッダの 1 ラインあたりのバイト数が不適切です"
 
 #: ../plug-ins/common/file-pcx.c:453
 msgid "Unusual PCX flavour, giving up"
@@ -4059,7 +4047,7 @@ msgstr "色の設定"
 
 #: ../plug-ins/common/file-ps.c:3230
 msgid "B/W"
-msgstr "モノクロ 2階調"
+msgstr "モノクロ 2 階調"
 
 #: ../plug-ins/common/file-ps.c:3232 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:66
@@ -4508,8 +4496,8 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"TIFF フォーマットではコメントにはASCII文字しか\n"
-"利用できません。コメントは保存されませんでした。"
+"TIFF フォーマットでは 7bit ASCII エンコードのコメントしか\n"
+"サポートされません。コメントは保存されませんでした。"
 
 #: ../plug-ins/common/file-tiff-save.c:1061
 msgid "Save as TIFF"
@@ -4526,27 +4514,27 @@ msgstr "圧縮しない(_N)"
 
 #: ../plug-ins/common/file-tiff-save.c:1088
 msgid "_LZW"
-msgstr "LZW (_L)"
+msgstr "LZW(_L)"
 
 #: ../plug-ins/common/file-tiff-save.c:1089
 msgid "_Pack Bits"
-msgstr "Pack Bits (_P)"
+msgstr "Pack Bits(_P)"
 
 #: ../plug-ins/common/file-tiff-save.c:1090
 msgid "_Deflate"
-msgstr "Deflate (_D)"
+msgstr "Deflate(_D)"
 
 #: ../plug-ins/common/file-tiff-save.c:1091
 msgid "_JPEG"
-msgstr "JPEG (_J)"
+msgstr "JPEG(_J)"
 
 #: ../plug-ins/common/file-tiff-save.c:1092
 msgid "CCITT Group _3 fax"
-msgstr "CCITT Group 3 fax (_3)"
+msgstr "CCITT Group 3 fax(_3)"
 
 #: ../plug-ins/common/file-tiff-save.c:1093
 msgid "CCITT Group _4 fax"
-msgstr "CCITT Group 4 fax (_4)"
+msgstr "CCITT Group 4 fax(_4)"
 
 #: ../plug-ins/common/file-tiff-save.c:1115
 msgid "Save _color values from transparent pixels"
@@ -4611,7 +4599,7 @@ msgid ""
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"XBM 形式で保存しようとしている画像は2色を超える画像です。\n"
+"XBM 形式で保存しようとしている画像は 2 色を超える画像です。\n"
 "\n"
 "保存する前に白黒 (1-bit) インデックス画像に変換してください。"
 
@@ -4886,9 +4874,7 @@ msgstr "現在"
 
 #: ../plug-ins/common/filter-pack.c:317
 msgid "Interactively modify the image colors"
-msgstr ""
-"対話的に画像の色を変更します\n"
-"(PhotoShop の「バリエーション」に相当します）"
+msgstr "対話的に画像の色を変更します"
 
 #: ../plug-ins/common/filter-pack.c:322
 msgid "_Filter Pack..."
@@ -5214,18 +5200,17 @@ msgstr "分割(_D):"
 
 #: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
-msgstr "モード_1"
+msgstr "モード _1"
 
 #: ../plug-ins/common/illusion.c:413
 msgid "Mode _2"
-msgstr "モード_2"
+msgstr "モード _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
 msgstr ""
 "マウスで変化させたい箇所をクリック - ドラッグしながら対話的に画像を歪めていき"
-"ます\n"
-"(PhotoShop の「ゆがみ」フィルタに相当します)"
+"ます"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
@@ -5918,7 +5903,7 @@ msgstr "オーバーサンプル(_V):"
 
 #: ../plug-ins/common/nl-filter.c:118
 msgid "Nonlinear swiss army knife filter"
-msgstr "非線形アルゴリズムを用いた3種類のフィルタ効果を提供します"
+msgstr "非線形アルゴリズムを用いた 3 種類のフィルタ効果を提供します"
 
 #: ../plug-ins/common/nl-filter.c:124
 msgid "_NL Filter..."
@@ -6217,9 +6202,7 @@ msgstr "白パーセント(_W):"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr ""
-"画像にモザイク処理を施します。\n"
-"(PhotoShop の「モザイク」フィルタに相当します。)"
+msgstr "画像にモザイク処理を施します"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -6346,9 +6329,7 @@ msgstr "極座標"
 
 #: ../plug-ins/common/polar-coords.c:631
 msgid "Circle _depth in percent:"
-msgstr ""
-"パーセントで表し\n"
-"た円の丸さ(_D):"
+msgstr "パーセントで表した円の丸さ(_D):"
 
 #: ../plug-ins/common/polar-coords.c:643
 msgid "Offset _angle:"
@@ -6530,9 +6511,7 @@ msgstr "回転しています"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr ""
-"ソース画像の色を基準にしてターゲット画像に着色します\n"
-"(PhotoShop の「カラーの適用」に相当します)"
+msgstr "ソース画像の色を基準にしてターゲット画像に着色します"
 
 #: ../plug-ins/common/sample-colorize.c:303
 msgid "_Sample Colorize..."
@@ -7236,7 +7215,7 @@ msgstr "プラグイン処理用の選択領域が空です"
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
 msgstr ""
-"アルファチャンネルをしきい値で2階調化して、透明または不透明のいずれかにします"
+"アルファチャンネルをしきい値で 2 階調化して透明または不透明のいずれかにします"
 
 #: ../plug-ins/common/threshold-alpha.c:90
 msgid "_Threshold Alpha..."
@@ -7252,11 +7231,11 @@ msgstr "RGBA/GRAYA の描画対象ではありません。"
 
 #: ../plug-ins/common/threshold-alpha.c:165
 msgid "Coloring transparency"
-msgstr "アルファチャンネルを2階調化しています..."
+msgstr "アルファチャンネルを 2 階調化しています..."
 
 #: ../plug-ins/common/threshold-alpha.c:248
 msgid "Threshold Alpha"
-msgstr "アルファチャンネルを2階調化"
+msgstr "アルファチャンネルを 2 階調化"
 
 #: ../plug-ins/common/threshold-alpha.c:283
 msgid "Threshold:"
@@ -7352,7 +7331,7 @@ msgstr "画像を細かな紙片の集まりのように切り分けて、それ
 
 #: ../plug-ins/common/tile-paper.c:851
 msgid "September 31, 1999"
-msgstr "1999年 9月 31日"
+msgstr "1999 年 9 月 31 日"
 
 #: ../plug-ins/common/tile-paper.c:852
 msgid "_Paper Tile..."
@@ -7362,7 +7341,7 @@ msgstr "紙タイル(_P)..."
 msgid "Alters edges to make the image seamlessly tileable"
 msgstr ""
 "画像の境界部分を変更して、繋ぎ目なしに並べられるようにします\n"
-"(GIMP2.2 の「繋ぎ目無しタイル」)"
+"(GIMP 2.2 の「繋ぎ目無しタイル」)"
 
 #: ../plug-ins/common/tile-seamless.c:73
 msgid "_Make Seamless"
@@ -7491,9 +7470,9 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"ここでの値は数値入力欄のヒントに用いられます。「インチ」 で用意される入力欄が"
-"（10進数で） ２桁のとき、他の単位で同じ長さを表すために必要な（10進数での）桁"
-"数を設定します。"
+"ここでの値は数値入力欄のヒントに用いられます。「インチ」 で用意される入力欄"
+"が (10 進数で) 2 桁のとき、他の単位で同じ長さを表すために必要な (10進数での) "
+"桁数を設定します。"
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -7789,7 +7768,7 @@ msgstr "ヴァン・ゴッホが描いた絵画のような効果を施します
 
 #: ../plug-ins/common/van-gogh-lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr "ヴァン ゴッホ風(LIC) (_V)..."
+msgstr "ヴァン ゴッホ風(LIC)(_V)..."
 
 #: ../plug-ins/common/video.c:42
 msgid "_Staggered"
@@ -8046,9 +8025,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr ""
-"画像を渦巻き状に変形します\n"
-"（PhotoShop の「渦巻き」フィルタに相当します)"
+msgstr "画像を渦巻き状に変形します"
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
@@ -8302,15 +8279,15 @@ msgstr ""
 
 #: ../plug-ins/file-ico/ico-dialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp、 1 bit アルファ、 2色パレット"
+msgstr "1 bpp、 1 bit アルファ、 2 色パレット"
 
 #: ../plug-ins/file-ico/ico-dialog.c:179
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp、 1 bit アルファ、 16色パレット"
+msgstr "4 bpp、 1 bit アルファ、 16 色パレット"
 
 #: ../plug-ins/file-ico/ico-dialog.c:180
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp、 1 bit アルファ、 256色パレット"
+msgstr "8 bpp、 1 bit アルファ、 256 色パレット"
 
 #: ../plug-ins/file-ico/ico-dialog.c:181
 msgid "24 bpp, 1-bit alpha, no palette"
@@ -8508,7 +8485,7 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-load.c:270
 #, c-format
 msgid "Not a valid photoshop document file"
-msgstr "有効な PhotoShopドキュメントではありません"
+msgstr "有効な Photoshopドキュメントではありません"
 
 #: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
@@ -8551,12 +8528,12 @@ msgstr "レイヤー高の値（%d）はサポートされないか無効です"
 msgid "Unsupported or invalid layer width: %d"
 msgstr "レイヤー幅の値（%d）はサポートされないか無効です"
 
-#: ../plug-ins/file-psd/psd-load.c:1150 ../plug-ins/file-psd/psd-load.c:1499
+#: ../plug-ins/file-psd/psd-load.c:1153 ../plug-ins/file-psd/psd-load.c:1502
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "圧縮モード（%d）は、サポートされていません"
 
-#: ../plug-ins/file-psd/psd-load.c:1588
+#: ../plug-ins/file-psd/psd-load.c:1595
 msgid "Extra"
 msgstr "拡張"
 
@@ -9464,7 +9441,7 @@ msgstr "First Gfig"
 
 #: ../plug-ins/gfig/gfig-dialog.c:870
 msgid "_Undo"
-msgstr "1段階戻る(_U)"
+msgstr "1 段階戻る(_U)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:874
 msgid "_Clear"
@@ -9717,7 +9694,7 @@ msgstr "幾何学的なオブジェクトを作成します"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
-msgstr "シェイプ (Gfig)... (_G)"
+msgstr "シェイプ (Gfig)(_G)..."
 
 #: ../plug-ins/gfig/gfig.c:731
 msgid ""
@@ -10065,11 +10042,11 @@ msgstr "渦(_X)"
 
 #: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_2"
-msgstr "渦_2"
+msgstr "渦 _2"
 
 #: ../plug-ins/gimpressionist/orientmap.c:648
 msgid "Vortex_3"
-msgstr "渦_3"
+msgstr "渦 _3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:654
 #: ../plug-ins/gimpressionist/sizemap.c:542
@@ -10719,9 +10696,9 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"GIMP2 ユーザーマニュアル・パッケージをインストールするか、オンライン・ユー"
+"GIMP 2 ユーザーマニュアル・パッケージをインストールするか、オンライン・ユー"
 "ザーマニュアル ( http://docs.gimp.org/) を利用してください。　(ただし、どちら"
-"の場合も日本語に翻訳された GIMP2 ユーザーマニュアルは用意されていません。）"
+"の場合も日本語に翻訳された GIMP 2 ユーザーマニュアルは用意されていません。）"
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -10932,7 +10909,7 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_about.c:47
 msgid "Copyright © 1999-2005 by Maurits Rijk"
-msgstr "Copyright(c) 1999-2005 by Maurits Rijk"
+msgstr "Copyright (c) 1999-2005 by Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:49
 msgid "Released under the GNU General Public License"
@@ -11382,11 +11359,11 @@ msgstr "編集(_E)"
 
 #: ../plug-ins/imagemap/imap_menu.c:157
 msgid "Undo"
-msgstr "1段階戻る"
+msgstr "1 段階戻る"
 
 #: ../plug-ins/imagemap/imap_menu.c:158
 msgid "Redo"
-msgstr "1段階進む"
+msgstr "1 階進む"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
 msgid "D_eselect All"
@@ -11671,9 +11648,7 @@ msgstr "ライト効果"
 
 #: ../plug-ins/lighting/lighting-main.c:192
 msgid "Apply various lighting effects to an image"
-msgstr ""
-"ライトを当てたような効果を施します\n"
-"(PhotoShop の「照明効果」に相当)"
+msgstr "ライトを当てたような効果を施します"
 
 #: ../plug-ins/lighting/lighting-main.c:197
 msgid "_Lighting Effects..."
@@ -13590,7 +13565,7 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "画面全体を取り込む(_W)"
 
 #~ msgid "Grab _After"
-#~ msgstr "後で取り込み (_A)"
+#~ msgstr "後で取り込み(_A)"
 
 #~ msgid "Selective Gaussian Blur..."
 #~ msgstr "選択的ガウシアンぼかし..."
@@ -15337,7 +15312,7 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "ぼかし半径:"
 
 #, fuzzy
-#~ msgid "Gaussian Blur (_RLE)..."
+#~ msgid "Gaussian Blur(_RLE)..."
 #~ msgstr "<Image>/フィルタ/ぼかし/ガウシアンぼかし (RLE)..."
 
 #~ msgid "RLE Gaussian Blur"
