@@ -92,10 +92,6 @@ static void      gimp_show_license_and_exit   (void) G_GNUC_NORETURN;
 static void      gimp_init_i18n               (void);
 static void      gimp_init_malloc             (void);
 
-#ifndef G_OS_WIN32
-static void      gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
-#endif
-
 #if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
 static void      gimp_open_console_window     (void);
 #else
