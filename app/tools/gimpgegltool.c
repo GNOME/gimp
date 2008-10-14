@@ -697,6 +697,8 @@ gimp_gegl_tool_get_config (GimpGeglTool *tool)
       gchar *type_name = g_strdup_printf ("GimpGeglTool-%s-config",
                                           tool->operation);
 
+      g_strcanon (type_name, G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
+
       config_type = g_type_register_static (GIMP_TYPE_OBJECT, type_name,
                                             &info, 0);
 

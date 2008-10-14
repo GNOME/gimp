@@ -3,6 +3,9 @@
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
 	add the gegl: prefix here too.
 
+	(gimp_gegl_tool_get_config): canonicalize the type name of the
+	created config class or we crash.
+
 2008-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in
