@@ -1,3 +1,13 @@
+2008-10-14  Bill Skaggs <weskaggs@gmail.com>
+
+	* app/text/gimptext-vectors.c
+	* app/tools/gimptoolcontrol.h
+	* app/tools/gimptexttool.c
+	* app/tools/gimptexttool.h
+	* app/tools/gimptoolcontrol.c
+	* app/text/gimptextlayout.c: fixes requested by Sven and Mitch
+	in bug #554736.
+
 2008-10-05  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/tools/gimptexttool.c: Fixed clipping rectangle to

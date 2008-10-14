@@ -278,7 +278,7 @@ gimp_tool_control_get_snap_to (GimpToolControl *control)
 
 void
 gimp_tool_control_set_wants_all_key_events (GimpToolControl *control,
-                                   gboolean         wants_keyboard)
+                                            gboolean         wants_keyboard)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
@@ -295,9 +295,9 @@ gimp_tool_control_get_wants_all_key_events (GimpToolControl *control)
 
 void
 gimp_tool_control_set_show_context_menu  (GimpToolControl *control,
-                                          gboolean show_context_menu)
+                                          gboolean         show_context_menu)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
   control->show_context_menu = show_context_menu;
 }
 
@@ -305,7 +305,7 @@ gboolean
 gimp_tool_control_get_show_context_menu  (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
-  return control->show_context_menu; 
+  return control->show_context_menu;
 }
 
 void

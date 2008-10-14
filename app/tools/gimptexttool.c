@@ -46,6 +46,8 @@
 #include "core/gimpundostack.h"
 
 #include "display/gimpcanvas.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
@@ -61,9 +63,6 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewabledialog.h"
-
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectangletool.h"
@@ -276,18 +275,22 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
 
   g_signal_connect (text_tool->text_buffer, "changed",
-                    G_CALLBACK (gimp_text_tool_text_buffer_changed), text_tool);
+                    G_CALLBACK (gimp_text_tool_text_buffer_changed),
+                    text_tool);
   g_signal_connect (text_tool->text_buffer, "mark-set",
-                    G_CALLBACK (gimp_text_tool_text_buffer_mark_set), text_tool);
+                    G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
+                    text_tool);
 
   text_tool->im_context = gtk_im_multicontext_new ();
 
   text_tool->preedit_string = NULL;
 
   g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_commit_cb), text_tool);
+                    G_CALLBACK (gimp_text_tool_commit_cb),
+                    text_tool);
   g_signal_connect (text_tool->im_context, "preedit_changed",
-                    G_CALLBACK (gimp_text_tool_preedit_changed_cb), text_tool);
+                    G_CALLBACK (gimp_text_tool_preedit_changed_cb),
+                    text_tool);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
@@ -343,9 +346,6 @@ gimp_text_tool_dispose (GObject *object)
 
   if (text_tool->editor)
     gtk_widget_destroy (text_tool->editor);
-
-  gimp_tool_control_set_wants_all_key_events (tool->control, FALSE);
-  gimp_tool_control_set_show_context_menu (tool->control, FALSE);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -441,16 +441,16 @@ gimp_text_tool_button_press (GimpTool        *tool,
   cy = coords->y;
 
   if (x1 <= cx && x2 >= cx && y1 <= cy && y2 >= cy)
-  {
-    text_tool->text_cursor_changing = TRUE;
-    gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
-    gimp_tool_control_activate (tool->control);
-  }
+    {
+      text_tool->text_cursor_changing = TRUE;
+      gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
+      gimp_tool_control_activate (tool->control);
+    }
   else
-  {
-    text_tool->text_cursor_changing = FALSE;
-    gimp_rectangle_tool_button_press (tool, coords, time, state, display);
-  }
+    {
+      text_tool->text_cursor_changing = FALSE;
+      gimp_rectangle_tool_button_press (tool, coords, time, state, display);
+    }
 
 
   /* bail out now if the rectangle is narrow and the button
@@ -463,10 +463,10 @@ gimp_text_tool_button_press (GimpTool        *tool,
       gdouble   y    = coords->y - item->offset_y;
 
       if (x < 0 || x > item->width || y < 0 || y > item->height)
-      {
-        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-        return;
-      }
+        {
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+          return;
+        }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -494,13 +494,13 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
               gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
               if (text && text_tool->text == text)
-              {
-                gimp_text_tool_canvas_editor (text_tool);
-                gtk_text_buffer_set_text (text_tool->text_buffer,
-                                          text_tool->text->text, -1);
+                {
+                  gimp_text_tool_canvas_editor (text_tool);
+                  gtk_text_buffer_set_text (text_tool->text_buffer,
+                                            text_tool->text->text, -1);
 
-                gimp_text_tool_update_layout (text_tool);
-              }
+                  gimp_text_tool_update_layout (text_tool);
+                }
 
               if (text_tool->layout)
                 {
@@ -612,6 +612,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
         {
           /* user has modified shape of an existing text layer */
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
           if (text_tool->layout && text_tool->text_cursor_changing)
             {
               GimpItem   *item = GIMP_ITEM (text_tool->layer);
@@ -674,9 +675,9 @@ gimp_text_tool_motion (GimpTool        *tool,
                        GdkModifierType  state,
                        GimpDisplay     *display)
 {
-  gdouble                      snapped_x;
-  gdouble                      snapped_y;
-  gint                         snap_x, snap_y;
+  gdouble snapped_x;
+  gdouble snapped_y;
+  gint    snap_x, snap_y;
 
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   if (text_tool->text_cursor_changing)
@@ -2165,7 +2166,9 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
       gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
     }
   else
-    gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+    {
+      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+    }
 }
 
 static void
@@ -2276,12 +2279,13 @@ gimp_text_tool_clipboard_cut (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_clipboard_copy (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
+gimp_text_tool_clipboard_copy (GimpTextTool *text_tool,
+                               gboolean      use_clipboard)
 {
-  GimpTool *tool = GIMP_TOOL (text_tool);
+  GimpTool     *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  if (use_CLIPBOARD)
+  if (use_clipboard)
     clipboard = gtk_widget_get_clipboard (tool->display->shell,
                                           GDK_SELECTION_CLIPBOARD);
   else
@@ -2292,12 +2296,13 @@ gimp_text_tool_clipboard_copy (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
 }
 
 void
-gimp_text_tool_clipboard_paste (GimpTextTool *text_tool, gboolean use_CLIPBOARD)
+gimp_text_tool_clipboard_paste (GimpTextTool *text_tool,
+                                gboolean      use_clipboard)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  if (use_CLIPBOARD)
+  if (use_clipboard)
     clipboard = gtk_widget_get_clipboard (tool->display->shell,
                                           GDK_SELECTION_CLIPBOARD);
   else

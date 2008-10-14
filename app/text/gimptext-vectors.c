@@ -105,10 +105,10 @@ gimp_text_vectors_new (GimpImage *image,
 
 
 static inline void
-gimp_text_vector_coords (RenderContext   *context,
-                         const double x,
-                         const double y,
-                         GimpCoords      *coords)
+gimp_text_vector_coords (RenderContext *context,
+                         gdouble        x,
+                         gdouble        y,
+                         GimpCoords    *coords)
 {
   coords->x        = context->offset_x + (gdouble) x;
   coords->y        = context->offset_y + (gdouble) y;
@@ -120,8 +120,8 @@ gimp_text_vector_coords (RenderContext   *context,
 
 static gint
 moveto (RenderContext *context,
-        const double x,
-        const double y)
+        gdouble        x,
+        gdouble        y)
 {
   GimpCoords     start;
 
@@ -144,8 +144,8 @@ moveto (RenderContext *context,
 
 static gint
 lineto (RenderContext *context,
-        const double x,
-        const double y)
+        gdouble        x,
+        gdouble        y)
 {
   GimpCoords     end;
 
@@ -164,13 +164,13 @@ lineto (RenderContext *context,
 }
 
 static gint
-cubicto (RenderContext* context,
-         const double x1,
-         const double y1,
-         const double x2,
-         const double y2,
-         const double x3,
-         const double y3)
+cubicto (RenderContext *context,
+         gdouble        x1,
+         gdouble        y1,
+         gdouble        x2,
+         gdouble        y2,
+         gdouble        x3,
+         gdouble        y3)
 {
   GimpCoords     control1;
   GimpCoords     control2;
@@ -234,10 +234,10 @@ gimp_text_render_vectors (PangoFont            *font,
   cglyph.x =     0;
   cglyph.y =     0;
   cglyph.index = pango_glyph;
-    
+
   /* A cairo_t needs an image surface to function, so "surface" is created
    * temporarily for this purpose. Nothing is drawn to "surface", but it is
-   * still needed to be connected to "cr" for "cr" to execute 
+   * still needed to be connected to "cr" for "cr" to execute
    * cr_glyph_path(). The size of surface is therefore irrelevant.
    */
   surface = cairo_image_surface_create ( CAIRO_FORMAT_A8, 2, 2);
@@ -246,7 +246,7 @@ gimp_text_render_vectors (PangoFont            *font,
   cfont = pango_cairo_font_get_scaled_font ( (PangoCairoFont*) font);
 
   cairo_set_scaled_font (cr, cfont);
-  
+
   cairo_set_font_options (cr, options);
 
   cairo_transform (cr, matrix);
