@@ -1,3 +1,14 @@
+2008-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimp-gegl-utils.[ch]: remove function
+	gimp_bpp_to_babl_format_linear() and add "gboolean linear"
+	parameter to gimp_bpp_to_babl_format().
+
+	* app/gegl/gimpoperationtilesink.c (process)
+	* app/gegl/gimpoperationtilesource.c (prepare): simply pass
+	self->linear to above changed function instead of selecting
+	between the two old functions.
+
 2008-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/signals.c (gimp_init_signal_handlers): comments.

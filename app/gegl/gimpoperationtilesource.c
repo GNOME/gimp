@@ -186,12 +186,9 @@ gimp_operation_tile_source_prepare (GeglOperation *operation)
   if (self->tile_manager)
     {
       const Babl *format;
-      guint       bpp = tile_manager_bpp (self->tile_manager);
 
-      if (self->linear)
-        format = gimp_bpp_to_babl_format_linear (bpp);
-      else
-        format = gimp_bpp_to_babl_format (bpp);
+      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager),
+                                        self->linear);
 
       gegl_operation_set_format (operation, "output", format);
     }

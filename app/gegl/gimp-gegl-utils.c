@@ -31,56 +31,46 @@
 /**
  * gimp_bpp_to_babl_format:
  * @bpp: bytes per pixel
+ * @linear: whether the pixels are linear or gamma-corrected.
  *
  * Return the Babl format to use for a given number of bytes per pixel.
- * This function assumes that the data is 8bit gamma-corrected data.
+ * This function assumes that the data is 8bit.
  *
  * Return value: the Babl format to use
  **/
 const Babl *
-gimp_bpp_to_babl_format (guint bpp)
+gimp_bpp_to_babl_format (guint    bpp,
+                         gboolean linear)
 {
   g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
 
-  switch (bpp)
+  if (linear)
     {
-    case 1:
-      return babl_format ("Y' u8");
-    case 2:
-      return babl_format ("Y'A u8");
-    case 3:
-      return babl_format ("R'G'B' u8");
-    case 4:
-      return babl_format ("R'G'B'A u8");
+      switch (bpp)
+        {
+        case 1:
+          return babl_format ("Y u8");
+        case 2:
+          return babl_format ("YA u8");
+        case 3:
+          return babl_format ("RGB u8");
+        case 4:
+          return babl_format ("RGBA u8");
+        }
     }
-
-  return NULL;
-}
-
-/**
- * gimp_bpp_to_babl_format_linear:
- * @bpp: bytes per pixel
- *
- * Return the Babl format to use for a given number of bytes per pixel.
- * This function assumes that the data is 8bit linear.
- *
- * Return value: the Babl format to use
- **/
-const Babl *
-gimp_bpp_to_babl_format_linear (guint bpp)
-{
-  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
-
-  switch (bpp)
+  else
     {
-    case 1:
-      return babl_format ("Y u8");
-    case 2:
-      return babl_format ("YA u8");
-    case 3:
-      return babl_format ("RGB u8");
-    case 4:
-      return babl_format ("RGBA u8");
+      switch (bpp)
+        {
+        case 1:
+          return babl_format ("Y' u8");
+        case 2:
+          return babl_format ("Y'A u8");
+        case 3:
+          return babl_format ("R'G'B' u8");
+        case 4:
+          return babl_format ("R'G'B'A u8");
+        }
     }
 
   return NULL;

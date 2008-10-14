@@ -23,8 +23,8 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-const Babl  * gimp_bpp_to_babl_format           (guint                bpp) G_GNUC_CONST;
-const Babl  * gimp_bpp_to_babl_format_linear    (guint                bpp) G_GNUC_CONST;
+const Babl  * gimp_bpp_to_babl_format           (guint                bpp,
+                                                 gboolean             linear) G_GNUC_CONST;
 
 const gchar * gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode) G_GNUC_CONST;
 

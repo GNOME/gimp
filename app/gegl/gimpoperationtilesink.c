@@ -196,18 +196,13 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
   const Babl            *format;
   PixelRegion            destPR;
-  guint                  bpp;
   gpointer               pr;
 
   if (! self->tile_manager)
     return FALSE;
 
-  bpp = tile_manager_bpp (self->tile_manager);
-
-  if (self->linear)
-    format = gimp_bpp_to_babl_format_linear (bpp);
-  else
-    format = gimp_bpp_to_babl_format (bpp);
+  format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager),
+                                    self->linear);
 
   pixel_region_init (&destPR, self->tile_manager,
                      result->x,     result->y,
