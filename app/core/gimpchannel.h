@@ -40,11 +40,9 @@ struct _GimpChannel
   gboolean      show_masked;       /*  Show masked areas--as          */
                                    /*  opposed to selected areas      */
 
-  GeglNode     *node;
   GeglNode     *color_node;
   GeglNode     *invert_node;
   GeglNode     *mask_node;
-  GeglNode     *mode_node;
 
   /*  Selection mask variables  */
   gboolean      boundary_known;    /*  is the current boundary valid  */

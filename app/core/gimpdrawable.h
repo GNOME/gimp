@@ -42,6 +42,9 @@ struct _GimpDrawable
 
   GeglNode      *source_node;
 
+  GeglNode      *node;
+  GeglNode      *mode_node;
+
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
   gboolean       has_alpha;          /* drawable has alpha             */
@@ -174,6 +177,7 @@ void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
 
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_node           (GimpDrawable       *drawable);
+GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   TileManager        *tiles,

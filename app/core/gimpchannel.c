@@ -82,7 +82,6 @@ static gint64     gimp_channel_get_memsize   (GimpObject       *object,
 static gchar  * gimp_channel_get_description (GimpViewable     *viewable,
                                               gchar           **tooltip);
 
-static void       gimp_channel_visibility_changed (GimpItem    *item);
 static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
                                               GType             new_type);
@@ -253,7 +252,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   viewable_class->get_description  = gimp_channel_get_description;
   viewable_class->default_stock_id = "gimp-channel";
 
-  item_class->visibility_changed   = gimp_channel_visibility_changed;
   item_class->is_attached          = gimp_channel_is_attached;
   item_class->duplicate            = gimp_channel_duplicate;
   item_class->convert              = gimp_channel_convert;
@@ -336,12 +334,6 @@ gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel = GIMP_CHANNEL (object);
 
-  if (channel->node)
-    {
-      g_object_unref (channel->node);
-      channel->node = NULL;
-    }
-
   if (channel->segs_in)
     {
       g_free (channel->segs_in);
@@ -381,39 +373,6 @@ gimp_channel_get_description (GimpViewable  *viewable,
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
                                                               tooltip);
-}
-
-static void
-gimp_channel_visibility_changed (GimpItem *item)
-{
-  GimpChannel *channel = GIMP_CHANNEL (item);
-
-  if (channel->node)
-    {
-      GeglNode *input;
-      GeglNode *output;
-
-      input  = gegl_node_get_input_proxy (channel->node, "input");
-      output = gegl_node_get_output_proxy (channel->node, "output");
-
-      if (gimp_item_get_visible (item))
-        {
-          gegl_node_connect_to (input,              "output",
-                                channel->mode_node, "input");
-          gegl_node_connect_to (channel->mode_node, "output",
-                                output,             "input");
-        }
-      else
-        {
-          gegl_node_disconnect (channel->mode_node, "input");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
-        }
-    }
-
-  if (GIMP_ITEM_CLASS (parent_class)->visibility_changed)
-    GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static gboolean
@@ -876,22 +835,15 @@ static GeglNode *
 gimp_channel_get_node (GimpDrawable *drawable)
 {
   GimpChannel *channel = GIMP_CHANNEL (drawable);
+  GeglNode    *node;
   GeglNode    *source;
-  GeglNode    *input;
-  GeglNode    *output;
+  GeglNode    *mode_node;
   GeglColor   *color;
 
-  g_printerr ("%s 1\n", G_STRFUNC);
-
-  if (channel->node)
-    return channel->node;
-
-  g_printerr ("%s 2\n", G_STRFUNC);
-
-  channel->node = gegl_node_new ();
+  node = GIMP_DRAWABLE_CLASS (parent_class)->get_node (drawable);
 
   source = gimp_drawable_get_source_node (drawable);
-  gegl_node_add_child (channel->node, source);
+  gegl_node_add_child (node, source);
 
   color = gegl_color_new (NULL);
   gegl_color_set_rgba (color,
@@ -900,20 +852,20 @@ gimp_channel_get_node (GimpDrawable *drawable)
                        channel->color.b,
                        channel->color.a);
 
-  channel->color_node = gegl_node_new_child (channel->node,
+  channel->color_node = gegl_node_new_child (node,
                                              "operation", "color",
                                              "value",     color,
                                              NULL);
 
   g_object_unref (color);
 
-  channel->mask_node = gegl_node_new_child (channel->node,
+  channel->mask_node = gegl_node_new_child (node,
                                             "operation", "opacity",
                                             NULL);
   gegl_node_connect_to (channel->color_node, "output",
                         channel->mask_node,  "input");
 
-  channel->invert_node = gegl_node_new_child (channel->node,
+  channel->invert_node = gegl_node_new_child (node,
                                               "operation", "invert",
                                               NULL);
 
@@ -930,29 +882,12 @@ gimp_channel_get_node (GimpDrawable *drawable)
                             channel->mask_node, "aux");
     }
 
-  channel->mode_node = gegl_node_new_child (channel->node,
-                                            "operation", "normal",
-                                            NULL);
+  mode_node = gimp_drawable_get_mode_node (drawable);
+
   gegl_node_connect_to (channel->mask_node, "output",
-                        channel->mode_node, "aux");
+                        mode_node,          "aux");
 
-  input  = gegl_node_get_input_proxy (channel->node, "input");
-  output = gegl_node_get_output_proxy (channel->node, "output");
-
-  if (gimp_item_get_visible (GIMP_ITEM (channel)))
-    {
-      gegl_node_connect_to (input,              "output",
-                            channel->mode_node, "input");
-      gegl_node_connect_to (channel->mode_node, "output",
-                            output,             "input");
-    }
-  else
-    {
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
-    }
-
-  return channel->node;
+  return node;
 }
 
 static void

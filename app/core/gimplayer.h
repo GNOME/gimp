@@ -43,11 +43,9 @@ struct _GimpLayer
 
   GimpLayerMask        *mask;             /*  possible layer mask        */
 
-  GeglNode             *node;
   GeglNode             *mask_node;
   GeglNode             *shift_node;
   GeglNode             *opacity_node;
-  GeglNode             *mode_node;
 
   /*  Floating selections  */
   struct
