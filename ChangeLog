@@ -1,5 +1,18 @@
 2008-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: add a default implementation of
+	GimpDrawable::get_node() which contains a layer mode node.
+	Implement GimpItem::visibility_changed() and turn the node into a
+	nop when the drawable is invisible. Added public function
+	gimp_drawable_get_mode_node() so subclasses can plug stuff
+	into its "aux" pad.
+
+	* app/core/gimplayer.[ch]
+	* app/core/gimpchannel.[ch]: changed accordingly (remove
+	duplicated member and code that is now in GimpDrawable).
+
+2008-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimp-gegl-utils.[ch]: remove function
 	gimp_bpp_to_babl_format_linear() and add "gboolean linear"
 	parameter to gimp_bpp_to_babl_format().
