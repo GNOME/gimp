@@ -1,3 +1,7 @@
+2008-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/signals.c (gimp_init_signal_handlers): comments.
+
 2008-10-13  Sven Neumann  <sven@gimp.org>
 
 	Bug 556182 – Could you please explain a few strings [I18N]

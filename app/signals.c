@@ -39,11 +39,11 @@ void
 gimp_init_signal_handlers (GimpStackTraceMode stack_trace_mode)
 {
 #ifndef G_OS_WIN32
-  /* No use catching these on Win32, the user won't get any
-   * stack trace from glib anyhow. It's better to let Windows inform
-   * about the program error, and offer debugging (if the user
-   * has installed MSVC or some other compiler that knows how to
-   * install itself as a handler for program errors).
+  /* No use catching these on Win32, the user won't get any stack
+   * trace from glib anyhow. It's better to let Windows inform about
+   * the program error, and offer debugging (if the user has installed
+   * MSVC or some other compiler that knows how to install itself as a
+   * handler for program errors).
    */
 
   /* Handle fatal signals */
@@ -69,7 +69,7 @@ gimp_init_signal_handlers (GimpStackTraceMode stack_trace_mode)
   /* Restart syscalls on SIGCHLD */
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
-#endif /* G_OS_WIN32 */
+#endif /* ! G_OS_WIN32 */
 }
 
 
