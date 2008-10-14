@@ -1,3 +1,8 @@
+2008-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
+	add the gegl: prefix here too.
+
 2008-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

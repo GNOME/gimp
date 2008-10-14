@@ -226,7 +226,8 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name)
 {
   static const gchar * const blacklist[] =
   {
-    "convert-format", "gimp-", "introspect", "stress", "text"
+    "gegl:convert-format", "gegl:text", "gegl:introspect", "gegl:stress",
+    "gimp-"
   };
   gint i;
 
