@@ -1,3 +1,21 @@
+2008-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/sanity.c: require GEGL >= 0.0.21.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-brightness-contrast.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer.c
+	* app/gegl/gimp-gegl-utils.c
+	* app/tools/gimpbrightnesscontrasttool.c: GEGL operation names
+	are now "gegl:"-prefixed.
+
+	* app/core/gimpimagemap.c: set the node's "dont-cache" property
+	unconditionally.
+
 2008-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):

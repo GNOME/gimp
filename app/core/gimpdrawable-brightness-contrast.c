@@ -63,7 +63,7 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "brightness-contrast",
+                           "operation", "gegl:brightness-contrast",
                            NULL);
       gimp_brightness_contrast_config_set_node (config, node);
 

@@ -2571,7 +2571,7 @@ gimp_image_get_graph (GimpImage *image)
   gegl_node_add_child (image->graph, channels_node);
 
   blend_node = gegl_node_new_child (image->graph,
-                                    "operation", "normal",
+                                    "operation", "gegl:normal",
                                     NULL);
 
   gegl_node_connect_to (layers_node,   "output",

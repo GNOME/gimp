@@ -786,7 +786,7 @@ gimp_drawable_real_get_node (GimpDrawable *drawable)
   drawable->node = gegl_node_new ();
 
   drawable->mode_node = gegl_node_new_child (drawable->node,
-                                             "operation", "normal",
+                                             "operation", "gegl:normal",
                                              NULL);
 
   input  = gegl_node_get_input_proxy  (drawable->node, "input");

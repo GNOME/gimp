@@ -81,7 +81,7 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
 {
   switch (mode)
     {
-    case GIMP_NORMAL_MODE:        return "normal";
+    case GIMP_NORMAL_MODE:        return "gegl:normal";
     case GIMP_DISSOLVE_MODE:      return "gimp-dissolve-mode";
     case GIMP_BEHIND_MODE:        return "gimp-behind-mode";
     case GIMP_MULTIPLY_MODE:      return "gimp-multiply-mode";
@@ -111,5 +111,5 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
       break;
     }
 
-  return "normal";
+  return "gegl:normal";
 }

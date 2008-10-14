@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <fontconfig/fontconfig.h>
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
@@ -298,7 +297,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 0
-#define GEGL_REQUIRED_MICRO 18
+#define GEGL_REQUIRED_MICRO 21
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,

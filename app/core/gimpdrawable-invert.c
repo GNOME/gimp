@@ -50,7 +50,7 @@ gimp_drawable_invert (GimpDrawable *drawable,
     {
       GeglNode *invert;
 
-      invert = g_object_new (GEGL_TYPE_NODE, "operation", "invert", NULL);
+      invert = g_object_new (GEGL_TYPE_NODE, "operation", "gegl:invert", NULL);
 
       gimp_drawable_apply_operation (drawable, progress, _("Invert"),
                                      invert, TRUE);

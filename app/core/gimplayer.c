@@ -529,7 +529,7 @@ gimp_layer_get_node (GimpDrawable *drawable)
       mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
 
       layer->mask_node = gegl_node_new_child (node,
-                                              "operation", "opacity",
+                                              "operation", "gegl:opacity",
                                               NULL);
       gegl_node_connect_to (mask,             "output",
                             layer->mask_node, "aux");
@@ -539,7 +539,7 @@ gimp_layer_get_node (GimpDrawable *drawable)
 
   gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
   layer->shift_node = gegl_node_new_child (node,
-                                           "operation", "shift",
+                                           "operation", "gegl:shift",
                                            "x",         (gdouble) off_x,
                                            "y",         (gdouble) off_y,
                                            NULL);
@@ -552,7 +552,7 @@ gimp_layer_get_node (GimpDrawable *drawable)
                           layer->shift_node, "input");
 
   layer->opacity_node = gegl_node_new_child (node,
-                                             "operation", "opacity",
+                                             "operation", "gegl:opacity",
                                              "value",     layer->opacity,
                                              NULL);
   gegl_node_connect_to (layer->shift_node,   "output",
@@ -1381,7 +1381,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
       node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
 
       layer->mask_node = gegl_node_new_child (node,
-                                              "operation", "opacity",
+                                              "operation", "gegl:opacity",
                                               NULL);
 
       source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));

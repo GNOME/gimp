@@ -206,7 +206,7 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                            G_OBJECT (bc_tool), 0);
 
   return g_object_new (GEGL_TYPE_NODE,
-                       "operation", "brightness-contrast",
+                       "operation", "gegl:brightness-contrast",
                        NULL);
 }
 
@@ -375,7 +375,7 @@ brightness_contrast_config_notify (GObject                    *object,
   else if (! strcmp (pspec->name, "contrast"))
     {
       gtk_adjustment_set_value (bc_tool->contrast_data,
-                                config->contrast   * 127.0);
+                                config->contrast * 127.0);
     }
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (bc_tool));

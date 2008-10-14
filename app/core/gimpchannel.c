@@ -853,20 +853,20 @@ gimp_channel_get_node (GimpDrawable *drawable)
                        channel->color.a);
 
   channel->color_node = gegl_node_new_child (node,
-                                             "operation", "color",
+                                             "operation", "gegl:color",
                                              "value",     color,
                                              NULL);
 
   g_object_unref (color);
 
   channel->mask_node = gegl_node_new_child (node,
-                                            "operation", "opacity",
+                                            "operation", "gegl:opacity",
                                             NULL);
   gegl_node_connect_to (channel->color_node, "output",
                         channel->mask_node,  "input");
 
   channel->invert_node = gegl_node_new_child (node,
-                                              "operation", "invert",
+                                              "operation", "gegl:invert",
                                               NULL);
 
   if (channel->show_masked)
