@@ -1,3 +1,8 @@
+2008-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):
+	let new docks appear at the pointer position.
+
 2008-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.[ch]: add a default implementation of

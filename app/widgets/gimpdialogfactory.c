@@ -895,6 +895,9 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                     "creating session info %p (widget %p) for dock",
                     info, info->widget);
 
+          /*  let new docks appear at the pointer position  */
+          gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+
           /*  if we create a new session info, we never call
            *  gimp_session_info_set_geometry(), but still the
            *  dialog needs GDK_HINT_USER_POS so it keeps its
