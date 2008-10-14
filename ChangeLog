@@ -1,9 +1,16 @@
+2008-10-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):
+	let new docks appear at the pointer position.
+
 2008-10-13  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
 
 	Bug 556182 – Could you please explain a few strings [I18N]
-	
+
 	* plug-ins/pygimp/plug-ins/py-slice.py: added translator comments.
 
 2008-10-10  Michael Natterer  <mitch@gimp.org>
@@ -19,7 +26,7 @@
 	Merged from trunk:
 
 	Bug 555697 – build fails if configured with --without-libjpeg
-	
+
 	* plug-ins/Makefile.am: applied patch from Simon Zilliken that
 	disables the build of the PSD plug-in if JPEG support is disabled.
 
@@ -284,7 +291,7 @@
 2008-10-03  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/web-browser.c : when ShellExecute() is failing give
-	the detailed (currently intentionally untranslated) error message via 
+	the detailed (currently intentionally untranslated) error message via
 	g_message()
 
 	* **/makefie.msc gimpdefs.msc app/gimpcore.def : updated
