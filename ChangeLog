@@ -1,5 +1,12 @@
 2008-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb.pl: reindent the list of PDB types and remove
+	the unused and deprecated types "boundary" and "region". Also
+	remove "status" because it is unused (and unneeded and
+	unimplemented).
+
+2008-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
 	add the gegl: prefix here too.
 
