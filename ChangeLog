@@ -1,3 +1,9 @@
+2008-10-15  Jakub Steiner <jimmac@gimp.org>
+	* themes/Default/images/stock-gegl.svg:
+	* themes/Default/images/stock-gegl-22.svg:
+	* themes/Default/images/stock-gegl-22.png: remove white from the
+	  shadow to render correctly on dark backgrounds.
+
 2008-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb.pl: reindent the list of PDB types and remove
