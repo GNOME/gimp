@@ -73,8 +73,6 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   GtkStyle       *style   = gtk_widget_get_style (widget);
   GimpVectors    *vectors = GIMP_VECTORS (renderer->viewable);
   GimpBezierDesc *bezdesc;
-  gdouble         xscale;
-  gdouble         yscale;
   gint            x, y;
 
   gdk_cairo_set_source_color (cr, &style->white);
@@ -87,23 +85,30 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  xscale = (gdouble) renderer->width / (gdouble) gimp_item_width  (GIMP_ITEM (vectors));
-  yscale = (gdouble) renderer->height / (gdouble) gimp_item_height (GIMP_ITEM (vectors));
-  cairo_scale (cr, xscale, yscale);
-
-  /* determine line width */
-  xscale = yscale = 0.5;
-  cairo_device_to_user_distance (cr, &xscale, &yscale);
-
-  cairo_set_line_width (cr, MAX (xscale, yscale));
-  gdk_cairo_set_source_color (cr, &style->black);
-
   bezdesc = gimp_vectors_make_bezier (vectors);
 
   if (bezdesc)
     {
+      gdouble xscale;
+      gdouble yscale;
+
+      xscale = ((gdouble) renderer->width /
+                (gdouble) gimp_item_width  (GIMP_ITEM (vectors)));
+      yscale = ((gdouble) renderer->height /
+                (gdouble) gimp_item_height (GIMP_ITEM (vectors)));
+
+      cairo_scale (cr, xscale, yscale);
+
+      /* determine line width */
+      xscale = yscale = 0.5;
+      cairo_device_to_user_distance (cr, &xscale, &yscale);
+
+      cairo_set_line_width (cr, MAX (xscale, yscale));
+      gdk_cairo_set_source_color (cr, &style->black);
+
       cairo_append_path (cr, (cairo_path_t *) bezdesc);
       cairo_stroke (cr);
+
       g_free (bezdesc->data);
       g_free (bezdesc);
     }

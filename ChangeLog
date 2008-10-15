@@ -1,7 +1,14 @@
 2008-10-16  Sven Neumann  <sven@gimp.org>
 
-	* app/paint-funcs/scale-region.c (scale): calculate fractional
-	parts based on pixel centers, not pixel origins.
+	* app/widgets/gimpviewrenderervectors.c
+	(gimp_view_renderer_vectors_draw): just some cleanup.
+
+2008-10-16  Sven Neumann  <sven@gimp.org>
+
+	Bug 556248 – Scaling gives 'jagged' edges
+
+	* app/paint-funcs/scale-region.c (scale): calculate pixel
+	contributions based on pixel centers, not on pixel origins.
 
 2008-10-15  Jakub Steiner <jimmac@gimp.org>
 
