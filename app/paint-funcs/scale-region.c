@@ -522,7 +522,7 @@ scale (TileManager           *srcTM,
       for (y = region.y; y < y1; y++)
         {
           guchar  *pixel = row;
-          gdouble  yfrac = y / scaley;
+          gdouble  yfrac = y / scaley + 0.5;
           gint     sy0   = (gint) yfrac;
           gint     x;
 
@@ -530,7 +530,7 @@ scale (TileManager           *srcTM,
 
           for (x = region.x; x < x1; x++)
             {
-              gdouble xfrac = x / scalex;
+              gdouble xfrac = x / scalex + 0.5;
               gint    sx0   = (gint) xfrac;
 
               xfrac = xfrac - sx0;

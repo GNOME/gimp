@@ -1,7 +1,13 @@
+2008-10-16  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-region.c (scale): calculate fractional
+	parts based on pixel centers, not pixel origins.
+
 2008-10-15  Jakub Steiner <jimmac@gimp.org>
+
 	* themes/Default/images/stock-gegl.svg:
 	* themes/Default/images/stock-gegl-22.svg:
-	* themes/Default/images/stock-gegl-22.png: remove white from the
+	* themes/Default/images/stock-gegl-22.png: remove w + 0.5hite from the
 	  shadow to render correctly on dark backgrounds.
 
 2008-10-15  Michael Natterer  <mitch@gimp.org>
