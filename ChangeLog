@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* themes/Default/images/stock-gegl.svg
+	* themes/Default/images/stock-gegl-22.svg
+	* themes/Default/images/stock-gegl-22.png: remove white from the
+	shadow to render correctly on dark backgrounds.
+
+2008-10-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):
 	let new docks appear at the pointer position.
 
