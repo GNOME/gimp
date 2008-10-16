@@ -14,8 +14,8 @@
 
 	* themes/Default/images/stock-gegl.svg:
 	* themes/Default/images/stock-gegl-22.svg:
-	* themes/Default/images/stock-gegl-22.png: remove w + 0.5hite from the
-	  shadow to render correctly on dark backgrounds.
+	* themes/Default/images/stock-gegl-22.png: remove white from the
+	shadow to render correctly on dark backgrounds.
 
 2008-10-15  Michael Natterer  <mitch@gimp.org>
 
