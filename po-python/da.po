@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-14 22:32+0200\n"
-"PO-Revision-Date: 2008-10-14 21:40+0100\n"
+"POT-Creation-Date: 2008-10-17 00:12+0200\n"
+"PO-Revision-Date: 2008-10-17 00:12+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -267,7 +267,7 @@ msgstr "Javaskript for onmouseover og trykket på"
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Skip animation for table caps"
-msgstr "Undlad animation for table caps"
+msgstr "Undlad animation for kantceller"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
