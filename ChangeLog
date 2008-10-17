@@ -2,6 +2,14 @@
 
 	Merged from trunk:
 
+	* plug-ins/file-psd/psd-save.c (xfwrite): fixed handling of empty
+	strings. Don't quit silently, write an error message to stderr at
+	least.
+
+2008-10-17  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/core/gimp.[ch]: added signal Gimp::image-opened to announce
 	that an image has been loaded and a display was created for it.
 
