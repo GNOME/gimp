@@ -436,9 +436,12 @@ xfwrite (FILE          *fd,
          glong          len,
          const gchar   *why)
 {
+  if (len == 0)
+    return;
+
   if (fwrite (buf, len, 1, fd) == 0)
     {
-      IFDBG printf (" Function: xfwrite: Error while writing '%s'\n", why);
+      g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
       gimp_quit ();
     }
 }
@@ -458,7 +461,7 @@ write_gchar (FILE        *fd,
   pos = ftell (fd);
   if (fwrite (&b, 1, 2, fd) == 0)
     {
-      IFDBG printf (" Function: write_gchar: Error while writing '%s'\n", why);
+      g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
       gimp_quit ();
     }
   fseek (fd, pos + 1, SEEK_SET);
@@ -479,7 +482,7 @@ write_gint16 (FILE        *fd,
 
   if (fwrite (&b, 1, 2, fd) == 0)
     {
-      IFDBG printf (" Function: write_gint16: Error while writing '%s'\n", why);
+      g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
       gimp_quit ();
     }
 }
@@ -501,7 +504,7 @@ write_gint32 (FILE        *fd,
 
   if (fwrite (&b, 1, 4, fd) == 0)
     {
-      IFDBG printf (" Function: write_gint32: Error while writing '%s'\n", why);
+      g_printerr ("%s: Error while writing '%s'\n", G_STRFUNC, why);
       gimp_quit ();
     }
 }
@@ -626,7 +629,8 @@ gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
       return 2;                                         /* Indexed */
     default:
       g_message (_("Error: Can't convert GIMP base imagetype to PSD mode"));
-      IFDBG printf ("PSD Save: gimpBaseType value is %d, can't convert to PSD mode", gimpBaseType);
+      IFDBG printf ("PSD Save: gimpBaseType value is %d, "
+                    "can't convert to PSD mode", gimpBaseType);
       gimp_quit ();
       return 3;                            /* Return RGB by default */
     }
