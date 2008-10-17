@@ -1,3 +1,17 @@
+2008-10-17  Sven Neumann  <sven@sven>
+
+	* app/core/gimp.[ch]: added signal Gimp::image-opened to announce
+	that an image has been loaded and a display was created for it.
+
+	* app/file/file-open.c (file_open_with_proc_and_display): call
+	gimp_opened() to emit the new signal.
+
+	* app/gui/dbus-service.xml
+	* app/gui/gimpdbusservice.[ch]: propagate the 'opened' signal to
+	listeners of the "org.gimp.GIMP.UI" DBus service.
+
+	* app/gui/gui-unique.c: formatting.
+
 2008-10-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrenderervectors.c

@@ -84,6 +84,7 @@ enum
   RESTORE,
   EXIT,
   BUFFER_CHANGED,
+  IMAGE_OPENED,
   LAST_SIGNAL
 };
 
@@ -160,6 +161,15 @@ gimp_class_init (GimpClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  gimp_signals[IMAGE_OPENED] =
+    g_signal_new ("image-opened",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, image_opened),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1, G_TYPE_STRING);
 
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
@@ -1070,6 +1080,16 @@ gimp_message_valist (Gimp                *gimp,
   gimp_show_message (gimp, handler, severity, NULL, message);
 
   g_free (message);
+}
+
+void
+gimp_image_opened (Gimp        *gimp,
+		   const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (uri != NULL);
+
+  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, uri);
 }
 
 gboolean

@@ -51,8 +51,8 @@ static DBusGConnection *dbus_connection  = NULL;
 #ifdef G_OS_WIN32
 #include "file/file-open.h"
 
-static void gui_unique_win32_init  (Gimp *gimp);
-static void gui_unique_win32_exit  (void);
+static void  gui_unique_win32_init (Gimp *gimp);
+static void  gui_unique_win32_exit (void);
 
 static Gimp            *unique_gimp      = NULL;
 static HWND             proxy_window     = NULL;
