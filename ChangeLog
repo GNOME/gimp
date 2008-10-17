@@ -6,7 +6,7 @@
 	that an image has been loaded and a display was created for it.
 
 	* app/file/file-open.c (file_open_with_proc_and_display): call
-	gimp_opened() to emit the new signal.
+	gimp_image_opened() to emit the new signal.
 
 	* app/gui/dbus-service.xml
 	* app/gui/gimpdbusservice.[ch]: propagate the 'opened' signal to
