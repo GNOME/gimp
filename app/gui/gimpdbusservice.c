@@ -39,6 +39,12 @@
 #include "gimpdbusservice-glue.h"
 
 
+enum
+{
+  OPENED,
+  LAST_SIGNAL
+};
+
 typedef struct
 {
   gchar    *uri;
@@ -51,6 +57,10 @@ static void       gimp_dbus_service_class_init (GimpDBusServiceClass *klass);
 static void       gimp_dbus_service_init           (GimpDBusService  *service);
 static void       gimp_dbus_service_dispose        (GObject          *object);
 static void       gimp_dbus_service_finalize       (GObject          *object);
+
+static void       gimp_dbus_service_gimp_opened    (Gimp             *gimp,
+						    const gchar      *uri,
+						    GimpDBusService  *service);
 
 static gboolean   gimp_dbus_service_queue_open     (GimpDBusService  *service,
                                                     const gchar      *uri,
@@ -67,11 +77,22 @@ G_DEFINE_TYPE (GimpDBusService, gimp_dbus_service, G_TYPE_OBJECT)
 
 #define parent_class gimp_dbus_service_parent_class
 
+static guint gimp_dbus_service_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_dbus_service_class_init (GimpDBusServiceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  gimp_dbus_service_signals[OPENED] =
+    g_signal_new ("opened",
+		  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDBusServiceClass, opened),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1, G_TYPE_STRING);
 
   object_class->dispose  = gimp_dbus_service_dispose;
   object_class->finalize = gimp_dbus_service_finalize;
@@ -96,6 +117,10 @@ gimp_dbus_service_new (Gimp *gimp)
   service = g_object_new (GIMP_TYPE_DBUS_SERVICE, NULL);
 
   service->gimp = gimp;
+
+  g_signal_connect_object (gimp, "image-opened",
+			   G_CALLBACK (gimp_dbus_service_gimp_opened),
+			   service, 0);
 
   return G_OBJECT (service);
 }
@@ -183,6 +208,14 @@ gimp_dbus_service_activate (GimpDBusService  *service,
     gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
 
   return TRUE;
+}
+
+static void
+gimp_dbus_service_gimp_opened (Gimp            *gimp,
+			       const gchar     *uri,
+			       GimpDBusService *service)
+{
+  g_signal_emit (service, gimp_dbus_service_signals[OPENED], 0, uri);
 }
 
 /*

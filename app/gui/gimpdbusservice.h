@@ -53,6 +53,10 @@ struct _GimpDBusService
 struct _GimpDBusServiceClass
 {
   GObjectClass  parent_class;
+
+  /*  signals  */
+  void (* opened) (GimpDBusService *service,
+		   const gchar     *uri);
 };
 
 

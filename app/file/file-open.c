@@ -366,6 +366,9 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
       /*  the display owns the image now  */
       g_object_unref (image);
+
+      /*  announce that we opened this image  */
+      gimp_image_opened (image->gimp, uri);
     }
 
   return image;
