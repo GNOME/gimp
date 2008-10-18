@@ -1,246 +1,247 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# zh_CN translation of gimp-python.
+# Copyright (C) 2008 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
-#
+# 神州散人 <kappa8086@gmail.com>, 2008.
+#    Q.A by Aron Xu <aronmalache@163.com>, 2008.
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 15:00+0000\n"
-"PO-Revision-Date: 2006-05-03 15:57+0800\n"
-"Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"POT-Creation-Date: 2008-10-11 16:28+0000\n"
+"PO-Revision-Date: 2008-10-18 18:55+0800\n"
+"Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../plug-ins/pygimp/gimpfu.py:385
 msgid "Missing exception information"
-msgstr ""
+msgstr "丢失异常信息"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 #, python-format
 msgid "An error occured running %s"
-msgstr ""
+msgstr "运行 %s 出现一个错误"
 
 #: ../plug-ins/pygimp/gimpfu.py:405
 msgid "_More Information"
-msgstr ""
+msgstr "更多信息(_M)"
 
 #: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
 #: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
-msgstr ""
+msgstr "Python-Fu 文件选择"
 
 #: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
-msgstr ""
+msgstr "Python-Fu 文件夹选择"
 
 #: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr ""
+msgstr "“%s” 的输入非法"
 
 #: ../plug-ins/pygimp/gimpui.py:177
-#, fuzzy
 msgid "Python-Fu Color Selection"
-msgstr "Python 控制台"
+msgstr "Python-Fu 颜色选择"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "正在保存为着色的 XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
-msgstr ""
+msgstr "保存为着色的 XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
-msgstr ""
+msgstr "着色的 XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
-msgstr ""
+msgstr "字符源(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
-msgstr ""
+msgstr "源代码"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
-msgstr ""
+msgstr "文本文件"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
-msgstr ""
+msgstr "输入框"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr ""
+msgstr "要读取的文件或要使用的字符(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
-msgstr ""
+msgstr "字体的像素大小(_N)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr ""
+msgstr "写入单独的 CSS 文件(_W)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "添加一个雾图层"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
-msgstr ""
+msgstr "雾(_F)..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
-msgstr ""
+msgstr "图层名(_L)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
-msgstr ""
+msgstr "云"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
-msgstr ""
+msgstr "雾的颜色(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
-msgstr ""
+msgstr "湍流(_T)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
-msgstr ""
+msgstr "不透明度(_A)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "偏移调色板中的颜色"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "偏移调色板(_O)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
-msgstr ""
+msgstr "调色板"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
-msgstr ""
+msgstr "偏移(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr ""
+msgstr "排列调色板中颜色的顺序"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr ""
+msgstr "排序调色板(_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
-msgstr ""
+msgstr "颜色模型(_M)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to _sort"
-msgstr ""
+msgstr "要排序的通道(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr ""
+msgstr "红色或色调"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
-msgstr ""
+msgstr "绿色或饱合度"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
-msgstr ""
+msgstr "蓝色或明度"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
-msgstr ""
+msgstr "升序(_A)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "使用调色板中的颜色创建重复渐变"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "重复渐变的调色板(_R)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
-msgstr ""
+msgstr "使用调色板中的颜色创建渐变"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
-msgstr ""
+msgstr "渐变的调色板(_G)"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
-msgstr ""
+msgstr "切片"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
+msgstr "沿参考线切割图像，创建多幅图像及 HTML 表格片段"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
-msgstr ""
+msgstr "切片(_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
-msgstr ""
+msgstr "HTML 导出路径"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
-msgstr ""
+msgstr "导出的文件名"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
-msgstr ""
+msgstr "图像名前缀"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Image format"
-msgstr ""
+msgstr "图像格式"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
-msgstr ""
+msgstr "单独的图像文件夹"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
-msgstr ""
+msgstr "图像导出的文件夹"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
-msgstr ""
+msgstr "表格元素间的空间"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "用于鼠标悬停及点击的 Javascript"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
@@ -256,60 +257,55 @@ msgstr "浏览(_B)..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:139
 msgid "Python Procedure Browser"
-msgstr ""
+msgstr "Python 过程浏览器"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:168
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "无法打开 “%s” 以写入：%s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr ""
+msgstr "无法写入到 “%s”：%s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:191
-#, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Python 控制台"
+msgstr "保存 Python 控制台输出"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:217
 msgid "Interactive GIMP Python interpreter"
-msgstr ""
+msgstr "交互性 GIMP Python 解释器"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:222
-#, fuzzy
 msgid "_Console"
-msgstr "Python 控制台"
+msgstr "控制台(_C)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "给图层添加投影，并可选择地倒角。"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "投影并倒角(_D)..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
-msgstr ""
+msgstr "阴影模糊(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
-msgstr ""
+msgstr "倒角(_B)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
-msgstr ""
+msgstr "投影(_D)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
-msgstr ""
+msgstr "投影 _X 位移"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
-msgstr ""
+msgstr "投影 _Y 位移"
 
-#, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Python 控制台"
