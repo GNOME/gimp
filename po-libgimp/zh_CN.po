@@ -2,13 +2,13 @@
 # Copyright (C) 2008 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 16:26+0000\n"
+"POT-Creation-Date: 2008-10-18 14:05+0000\n"
 "PO-Revision-Date: 2008-10-18 19:31+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -141,9 +141,7 @@ msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s 插件只能处理 RGB 或灰度图像"
 
 #: ../libgimp/gimpexport.c:327
-#, c-format
-#, fuzzy
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s 插件只能处理 RGB 或索引图像"
 
@@ -297,16 +295,17 @@ msgid "Searching by type"
 msgstr "按类型搜索"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
-#, c-format
+#, fuzzy, c-format
 msgid "%d procedure"
 msgstr "%d 个过程"
+
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
-#, c-format
+#, fuzzy, c-format
 msgid "%d procedure matches your query"
 msgstr "您的查询有 %d 个过程匹配"
 
@@ -605,7 +604,6 @@ msgid "Grayscale-alpha"
 msgstr "灰度 -alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:533
-#, fuzzy
 #, fuzzy
 msgid "Indexed-alpha"
 msgstr "索引 -alpha"
@@ -1072,9 +1070,11 @@ msgstr "已选中一页"
 
 #: ../libgimpwidgets/gimppageselector.c:1178
 #: ../libgimpwidgets/gimppageselector.c:1182
-#, c-format
+#, fuzzy, c-format
 msgid "%d page selected"
-msgstr "已选中 %d 页"
+msgid_plural "All %d pages selected"
+msgstr[0] "已选中 %d 页"
+msgstr[1] "已选中 %d 页"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1104,9 +1104,11 @@ msgid "_Preview"
 msgstr "预览(_P)"
 
 #: ../libgimpwidgets/gimppropwidgets.c:1860
-#, c-format
+#, fuzzy, c-format
 msgid "This text input field is limited to %d character."
-msgstr "此文本输入框限制为 %d 个字符。"
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "此文本输入框限制为 %d 个字符。"
+msgstr[1] "此文本输入框限制为 %d 个字符。"
 
 #: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
@@ -1342,8 +1344,7 @@ msgstr "颜色管理"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"此滤镜从首选项对话项中的色彩管理部分获得其配置。"
+msgstr "此滤镜从首选项对话项中的色彩管理部分获得其配置。"
 
 #: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
@@ -1828,4 +1829,3 @@ msgstr "GIMP"
 #: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 输入控制器"
-
