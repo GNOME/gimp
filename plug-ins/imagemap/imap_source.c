@@ -34,6 +34,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+static void   save_to_view (GtkTextBuffer *buffer,
+                            const char    *format,
+                            ...) G_GNUC_PRINTF(2,3);
+
 static void
 save_to_view(GtkTextBuffer *buffer, const char* format, ...)
 {

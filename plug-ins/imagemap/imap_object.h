@@ -47,7 +47,7 @@ struct Object_t {
 };
 
 typedef void (*MoveSashFunc_t)(Object_t*, gint, gint);
-typedef void (*OutputFunc_t)(gpointer, const char*, ...);
+typedef void (*OutputFunc_t)(gpointer, const char*, ...) G_GNUC_PRINTF(2,3);
 
 struct AreaInfoDialog_t;
 

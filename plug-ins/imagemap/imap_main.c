@@ -841,6 +841,10 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    object_list_write_ncsa(_shapes, param, output);
 }
 
+static void   save_to_file (gpointer    param,
+                            const char *format,
+                            ...) G_GNUC_PRINTF(2,3);
+
 static void
 save_to_file(gpointer param, const char* format, ...)
 {

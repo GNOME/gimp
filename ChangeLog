@@ -1,3 +1,12 @@
+2008-10-19  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: add -Wmissing-format-attribute to CFLAGS.
+
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_object.h
+	* plug-ins/imagemap/imap_source.c
+	* plug-ins/imagemap/imap_statusbar.h: add G_GNUC_PRINTF().
+
 2008-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: add -Wstrict-prototypes to CFLAGS.
