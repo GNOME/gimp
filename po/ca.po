@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 11:31+0200\n"
-"PO-Revision-Date: 2008-10-01 23:08+0200\n"
+"POT-Creation-Date: 2008-10-18 19:06+0200\n"
+"PO-Revision-Date: 2008-10-18 19:07+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -264,7 +264,7 @@ msgstr "Editor del pinzell"
 
 #  initialize the list of gimp brushes
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:104 ../app/core/gimp.c:828
+#: ../app/actions/actions.c:104 ../app/core/gimp.c:838
 #: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2738
 msgid "Brushes"
 msgstr "Pinzells"
@@ -345,7 +345,7 @@ msgstr "Editor de degradats"
 
 #  initialize the list of gimp gradients
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:158 ../app/core/gimp.c:840
+#: ../app/actions/actions.c:158 ../app/core/gimp.c:850
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradients"
 msgstr "Degradats"
@@ -377,14 +377,14 @@ msgstr "Editor de la paleta"
 
 #  initialize the list of gimp palettes
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:176 ../app/core/gimp.c:836
+#: ../app/actions/actions.c:176 ../app/core/gimp.c:846
 #: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2746
 msgid "Palettes"
 msgstr "Paletes"
 
 #  initialize the list of gimp patterns
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:179 ../app/core/gimp.c:832
+#: ../app/actions/actions.c:179 ../app/core/gimp.c:842
 #: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2742
 msgid "Patterns"
 msgstr "Patrons"
@@ -408,7 +408,7 @@ msgstr "Selecciona"
 
 #  initialize the template list
 #. initialize the template list
-#: ../app/actions/actions.c:194 ../app/core/gimp.c:849
+#: ../app/actions/actions.c:194 ../app/core/gimp.c:859
 #: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "Plantilles"
@@ -696,7 +696,7 @@ msgstr "Color del nou canal"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
-#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Còpia del canal %s"
@@ -858,7 +858,7 @@ msgstr "Mostra fusionada"
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:520
-#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -2426,7 +2426,7 @@ msgstr "_Guies"
 msgid "I_nfo"
 msgstr "I_nformació"
 
-#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:645
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Automàtic"
@@ -3701,7 +3701,7 @@ msgstr "Obre fitxer de text (UTF-8)"
 #: ../app/core/gimppalette-load.c:270 ../app/core/gimppalette-load.c:314
 #: ../app/core/gimppalette-load.c:368 ../app/core/gimppalette-load.c:456
 #: ../app/core/gimppalette-load.c:599 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:616 ../app/tools/gimplevelstool.c:735
+#: ../app/tools/gimpcurvestool.c:623 ../app/tools/gimplevelstool.c:743
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4577,8 +4577,8 @@ msgstr "No s'ha pogut canviar la mida del fitxer d'intercanvi: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:664
-#: ../app/tools/gimplevelstool.c:762 ../app/vectors/gimpvectors-export.c:83
+#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:676
+#: ../app/tools/gimplevelstool.c:796 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -5801,31 +5801,31 @@ msgstr "S'està creant la carpeta «%s»..."
 msgid "Cannot create folder '%s': %s"
 msgstr "No s'ha pogut crear la carpeta «%s»: %s"
 
-#: ../app/core/gimp.c:533
+#: ../app/core/gimp.c:543
 msgid "Initialization"
 msgstr "Inicialització"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:608
+#: ../app/core/gimp.c:618
 msgid "Internal Procedures"
 msgstr "Procediments interns"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Looking for data files"
 msgstr "S'estan cercant els fitxers de dades"
 
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Parasites"
 msgstr "Paràsits"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:844
+#: ../app/core/gimp.c:854
 msgid "Fonts (this may take a while)"
 msgstr "Tipus de lletra (pot tardar una mica)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2766
+#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2766
 msgid "Modules"
 msgstr "Mòduls"
 
@@ -6143,7 +6143,7 @@ msgid "Colorize"
 msgstr "To-Saturació bàsic"
 
 #: ../app/core/gimpdrawable-curves.c:165 ../app/core/gimpdrawable-curves.c:182
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Corbes de color"
 
@@ -6175,7 +6175,7 @@ msgid "Invert"
 msgstr "Inverteix"
 
 #: ../app/core/gimpdrawable-levels.c:154 ../app/core/gimpdrawable-levels.c:170
-#: ../app/tools/gimplevelstool.c:146
+#: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Nivells de color"
 
@@ -6356,7 +6356,7 @@ msgstr "Afegeix guia horitzontal"
 msgid "Add Vertical Guide"
 msgstr "Afegeix guia vertical"
 
-#: ../app/core/gimpimage-guides.c:115 ../app/tools/gimpmovetool.c:554
+#: ../app/core/gimpimage-guides.c:115 ../app/tools/gimpmovetool.c:564
 msgid "Remove Guide"
 msgstr "Esborra la guia"
 
@@ -8601,7 +8601,7 @@ msgid "Drop layers"
 msgstr "Elimina les capes"
 
 #: ../app/display/gimpdisplayshell-dnd.c:631
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Objecte eliminat del porta-retalls del GIMP"
 
@@ -8688,17 +8688,17 @@ msgstr ""
 msgid "%s plug-In could not open image"
 msgstr "El connector %s no ha pogut obrir la imatge"
 
-#: ../app/file/file-open.c:452
+#: ../app/file/file-open.c:455
 #, c-format
 msgid "Image doesn't contain any layers"
 msgstr "La imatge no conté cap capa"
 
-#: ../app/file/file-open.c:502
+#: ../app/file/file-open.c:505
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "No s'ha pogut obrir «%s»: %s"
 
-#: ../app/file/file-open.c:610
+#: ../app/file/file-open.c:613
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -9736,7 +9736,7 @@ msgstr "El balanç de color només funciona en imatges en capes en mode RGB."
 msgid "Select Range to Adjust"
 msgstr "Selecciona el tram a modificar"
 
-#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
 msgstr ""
 "Ajusta els colors definint uns nivells d'entrada i de sortida per a cada "
@@ -9948,55 +9948,59 @@ msgstr "Es_capça"
 msgid "Click or press Enter to crop"
 msgstr "Cliqueu o premeu la tecla de retorn per a escapçar"
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "L'eina Corbes de color: ajusta les corbes de color"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "_Corbes de color..."
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
 msgstr "Ajusta els colors definint una corba de transformació per a cada canal"
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
 msgstr "Importa les corbes"
 
-#: ../app/tools/gimpcurvestool.c:167
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Export Curves"
 msgstr "Exporta les corbes"
 
-#: ../app/tools/gimpcurvestool.c:217
+#: ../app/tools/gimpcurvestool.c:221
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "L'eina Corbes de color no funciona en capes indexades."
 
-#: ../app/tools/gimpcurvestool.c:319
+#: ../app/tools/gimpcurvestool.c:323
 msgid "Click to add a control point"
 msgstr "Cliqueu per a afegir un punt de control"
 
-#: ../app/tools/gimpcurvestool.c:324
+#: ../app/tools/gimpcurvestool.c:328
 msgid "Click to add control points to all channels"
 msgstr "Cliqueu per a afegir un punt de control a tots els canals"
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:372
+#: ../app/tools/gimpcurvestool.c:441 ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:459 ../app/tools/gimplevelstool.c:396
+#: ../app/tools/gimpcurvestool.c:467 ../app/tools/gimplevelstool.c:404
 msgid "R_eset Channel"
 msgstr "_Inicialitza el canal"
 
-#: ../app/tools/gimpcurvestool.c:549
+#: ../app/tools/gimpcurvestool.c:557
 msgid "Curve _type:"
 msgstr "_Tipus de corba:"
 
-#: ../app/tools/gimpcurvestool.c:625
+#: ../app/tools/gimpcurvestool.c:632 ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "No s'han pogut llegir la capçalera de «%s»: %s"
+
+#: ../app/tools/gimpcurvestool.c:705
+msgid "Use _old curves file format"
+msgstr "Utilitza el format de corba _antic"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -10534,65 +10538,69 @@ msgstr "Premeu la tecla de retorn per a convertir-ho en una selecció"
 msgid "Click or Click-Drag to add a point"
 msgstr "Cliqueu o cliqueu i arrossegueu per a afegir un punt de control"
 
-#: ../app/tools/gimplevelstool.c:147
+#: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
 msgstr "Eina Nivells de color: ajusta els nivells de color"
 
-#: ../app/tools/gimplevelstool.c:148
+#: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
 msgstr "Nive_lls de color..."
 
-#: ../app/tools/gimplevelstool.c:170
+#: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
 msgstr "Importa els nivells"
 
-#: ../app/tools/gimplevelstool.c:171
+#: ../app/tools/gimplevelstool.c:175
 msgid "Export Levels"
 msgstr "Exporta els nivells"
 
-#: ../app/tools/gimplevelstool.c:224
+#: ../app/tools/gimplevelstool.c:228
 #, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Eina Nivells de color no funciona en capes indexades."
 
-#: ../app/tools/gimplevelstool.c:306
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
 msgstr "Captura un punt negre"
 
-#: ../app/tools/gimplevelstool.c:310
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
 msgstr "Captura un punt gris"
 
-#: ../app/tools/gimplevelstool.c:314
+#: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
 msgstr "Captura un punt blanc"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:411
+#: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
 msgstr "Nivells d'entrada"
 
-#: ../app/tools/gimplevelstool.c:514
+#: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:556
+#: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
 msgstr "Nivells de sortida"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:633
+#: ../app/tools/gimplevelstool.c:641
 msgid "All Channels"
 msgstr "Tots els canals"
 
-#: ../app/tools/gimplevelstool.c:647
+#: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
 msgstr "Ajust automàtic dels nivells"
 
-#: ../app/tools/gimplevelstool.c:674
+#: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
 msgstr "Edita aquestes opcions com a corbes"
+
+#: ../app/tools/gimplevelstool.c:825
+msgid "Use _old levels file format"
+msgstr "Utilitza el format de nivells _antic"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -10702,15 +10710,15 @@ msgstr "Eina Mou: mou capes, seleccions i altres objectes"
 msgid "_Move"
 msgstr "_Mou"
 
-#: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:560
+#: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:570
 msgid "Move Guide: "
 msgstr "Mou guia: "
 
-#: ../app/tools/gimpmovetool.c:554
+#: ../app/tools/gimpmovetool.c:564
 msgid "Cancel Guide"
 msgstr "Cancel·la guia"
 
-#: ../app/tools/gimpmovetool.c:560
+#: ../app/tools/gimpmovetool.c:570
 msgid "Add Guide: "
 msgstr "Afegeix guies: "
 
@@ -12469,39 +12477,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Cadena de text UTF-8 invàlida"
 
-#: ../app/widgets/gimpsettingsbox.c:226
+#: ../app/widgets/gimpsettingsbox.c:239
 msgid "Pick a setting from the list"
 msgstr "Agafa una opció de la llista"
 
-#: ../app/widgets/gimpsettingsbox.c:247
+#: ../app/widgets/gimpsettingsbox.c:260
 msgid "Add settings to favorites"
 msgstr "Afegeix les opcions a preferits"
 
-#: ../app/widgets/gimpsettingsbox.c:275
+#: ../app/widgets/gimpsettingsbox.c:288
 msgid "_Import Settings from File..."
 msgstr "_Importa les opcions des d'un fitxer..."
 
-#: ../app/widgets/gimpsettingsbox.c:281
+#: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "_Exporta les opcions a un fitxer..."
 
-#: ../app/widgets/gimpsettingsbox.c:288
+#: ../app/widgets/gimpsettingsbox.c:301
 msgid "_Manage Settings..."
 msgstr "Gestiona les opcions..."
 
-#: ../app/widgets/gimpsettingsbox.c:575
+#: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "Afegeix les opcions a preferits"
 
-#: ../app/widgets/gimpsettingsbox.c:578
+#: ../app/widgets/gimpsettingsbox.c:591
 msgid "Enter a name for the settings"
 msgstr "Poseu un nom a les opcions"
 
-#: ../app/widgets/gimpsettingsbox.c:579
+#: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "Opcions desades"
 
-#: ../app/widgets/gimpsettingsbox.c:614
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Manage Saved Settings"
 msgstr "Gestiona les opcions desades"
 
