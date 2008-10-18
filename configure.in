@@ -327,6 +327,9 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wstrict-prototypes')
+CFLAGS="$CFLAGS $extra_warnings"
+
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
 CFLAGS="$CFLAGS $extra_warnings"
 

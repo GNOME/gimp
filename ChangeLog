@@ -1,3 +1,7 @@
+2008-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: add -Wstrict-prototypes to CFLAGS.
+
 2008-10-18  Sven Neumann  <sven@gimp.org>
 
 	Applied patch from Alexia Death as attached to bug #471344:
