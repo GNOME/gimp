@@ -88,6 +88,8 @@ libappcore_a_sources = \
 	gimpcontext.h				\
 	gimpcoords.c				\
 	gimpcoords.h				\
+	gimpcoords-interpolate.c		\
+	gimpcoords-interpolate.h		\
 	gimpcurve.c				\
 	gimpcurve.h				\
 	gimpcurve-load.c			\
