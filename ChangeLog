@@ -1,5 +1,10 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/base/base-types.h: There is nothing magic or ugly about the
+	convenient defines, remove comments saying so.
+
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationadditionmode.c: Refer to the input as 'in'
 	instead of 'src', the layer as 'layer' instead of 'aux', and the
 	result as 'out' instead of 'dest'. The old terminology clashes

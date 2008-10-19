@@ -31,8 +31,7 @@
 #include "config/config-types.h"
 
 
-/*  magic constants  */
-/* FIXME: Remove magic constants! */
+/* convenient defines */
 #define MAX_CHANNELS     4
 
 #define GRAY_PIX         0
