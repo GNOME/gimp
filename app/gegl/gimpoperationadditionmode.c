@@ -71,37 +71,37 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
                                       glong                samples,
                                       const GeglRectangle *roi)
 {
-  gfloat *src  = in_buf;
-  gfloat *aux  = aux_buf;
-  gfloat *dest = out_buf;
+  gfloat *in    = in_buf;
+  gfloat *layer = aux_buf;
+  gfloat *out   = out_buf;
 
   while (samples--)
     {
 #if 1
       // Best so far (maybe even correct?)
-      dest[RED]   = src[RED]   + aux[RED]   * aux[ALPHA];
-      dest[GREEN] = src[GREEN] + aux[GREEN] * aux[ALPHA];
-      dest[BLUE]  = src[BLUE]  + aux[BLUE]  * aux[ALPHA];
-      dest[ALPHA] = src[ALPHA];
+      out[RED]   = in[RED]   + layer[RED]   * layer[ALPHA];
+      out[GREEN] = in[GREEN] + layer[GREEN] * layer[ALPHA];
+      out[BLUE]  = in[BLUE]  + layer[BLUE]  * layer[ALPHA];
+      out[ALPHA] = in[ALPHA];
 #else
       // Wrong, doesn't take layer opacity of Addition-mode layer into
       // account
-      dest[RED]   = src[RED]   + aux[RED];
-      dest[GREEN] = src[GREEN] + aux[GREEN];
-      dest[BLUE]  = src[BLUE]  + aux[BLUE];
-      dest[ALPHA] = src[ALPHA];
+      out[RED]   = in[RED]   + layer[RED];
+      out[GREEN] = in[GREEN] + layer[GREEN];
+      out[BLUE]  = in[BLUE]  + layer[BLUE];
+      out[ALPHA] = in[ALPHA];
 
       // Wrong, toggling visibility of completely transparent
       // Addition-mode layer changes projection
-      dest[RED]   = src[RED]   * src[ALPHA] + aux[RED]   * aux[ALPHA];
-      dest[GREEN] = src[GREEN] * src[ALPHA] + aux[GREEN] * aux[ALPHA];
-      dest[BLUE]  = src[BLUE]  * src[ALPHA] + aux[BLUE]  * aux[ALPHA];
-      dest[ALPHA] = src[ALPHA] + aux[ALPHA] - src[ALPHA] * aux[ALPHA];
+      out[RED]   = in[RED]   * in[ALPHA] + layer[RED]   * layer[ALPHA];
+      out[GREEN] = in[GREEN] * in[ALPHA] + layer[GREEN] * layer[ALPHA];
+      out[BLUE]  = in[BLUE]  * in[ALPHA] + layer[BLUE]  * layer[ALPHA];
+      out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
 #endif
 
-      src  += 4;
-      aux  += 4;
-      dest += 4;
+      in    += 4;
+      layer += 4;
+      out   += 4;
     }
 
   return TRUE;

@@ -1,5 +1,15 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationadditionmode.c: Refer to the input as 'in'
+	instead of 'src', the layer as 'layer' instead of 'aux', and the
+	result as 'out' instead of 'dest'. The old terminology clashes
+	with at least the SVG 1.2 compositing terminology [1] and there is
+	no reason for creating confusion.
+
+	[1] http://www.w3.org/TR/2004/WD-SVG12-20041027/rendering.html
+
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationadditionmode.c: Use local variants of
 	channel offset defines, namely RED instead of RED_PIX etc, to
 	increase readability.
