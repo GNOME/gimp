@@ -1,9 +1,11 @@
 /* simple program to test the XMP parser on files given on the command line */
 
-#include <stdio.h>
 #include <string.h>
-#include <glib/gprintf.h>
+
+#include <glib.h>
+
 #include "xmp-parse.h"
+
 
 static gpointer
 start_schema (XMPParseContext     *context,

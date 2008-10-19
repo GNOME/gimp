@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 

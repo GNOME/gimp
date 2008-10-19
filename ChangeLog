@@ -1,3 +1,11 @@
+2008-10-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/metadata/xmp-encode.c
+	* plug-ins/metadata/xmp-parse.c
+	* plug-ins/metadata/metadata.c
+	* plug-ins/metadata/xmpdump.c: removal of unused includes and
+	other minor cleanups.
+
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationadditionmode.c: Remove local channel

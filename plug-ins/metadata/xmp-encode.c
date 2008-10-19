@@ -20,10 +20,9 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include <libgimp/gimp.h>
 
@@ -116,7 +115,8 @@ gen_property (GString            *buffer,
     case XMP_TYPE_TEXT:
     case XMP_TYPE_RATIONAL:
       gen_element (buffer, 2,
-                   schema->prefix, property->name, value_array[0], NULL);
+                   schema->prefix, property->name, value_array[0],
+                   NULL);
       break;
 
     case XMP_TYPE_LOCALE_BAG:
@@ -128,7 +128,8 @@ gen_property (GString            *buffer,
       for (i = 0; value_array[i] != NULL; i++)
         {
           gen_element (buffer, 4,
-                       "rdf", "li", value_array[i], NULL);
+                       "rdf", "li", value_array[i],
+                       NULL);
         }
       g_string_append_printf (buffer, "   </rdf:Bag>\n  </%s:%s>\n",
                               schema->prefix, property->name);
@@ -143,7 +144,8 @@ gen_property (GString            *buffer,
       for (i = 0; value_array[i] != NULL; i++)
         {
           gen_element (buffer, 4,
-                       "rdf", "li", value_array[i], NULL);
+                       "rdf", "li", value_array[i],
+                       NULL);
         }
       g_string_append_printf (buffer, "   </rdf:Seq>\n  </%s:%s>\n",
                               schema->prefix, property->name);
@@ -200,7 +202,8 @@ gen_property (GString            *buffer,
         for (i = 2; value_array[i] != NULL; i += 2)
           {
             gen_element (buffer, 3,
-                         ns_prefix, value_array[i], value_array[i + 1], NULL);
+                         ns_prefix, value_array[i], value_array[i + 1],
+                         NULL);
           }
       g_string_append_printf (buffer, "  </%s:%s>\n",
                               schema->prefix, property->name);

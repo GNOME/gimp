@@ -1,4 +1,3 @@
-#include <stdio.h>
 /* xmp-parse.c - simple parser for XMP metadata
  *
  * Copyright (C) 2004-2007, Raphaël Quinet <raphael@gimp.org>
@@ -192,7 +191,7 @@ struct _XMPParseContext
 };
 
 #ifdef DEBUG_XMP_PARSER
-static const char *state_names[] =
+static const gchar * const state_names[] =
 {
   "START",
   "INSIDE_XPACKET",
