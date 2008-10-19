@@ -28,6 +28,12 @@
 #include "gimpoperationadditionmode.h"
 
 
+#define RED   0
+#define GREEN 1
+#define BLUE  2
+#define ALPHA 3
+
+
 static gboolean gimp_operation_addition_mode_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *aux_buf,
@@ -73,24 +79,24 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
     {
 #if 1
       // Best so far (maybe even correct?)
-      dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX]   * aux[ALPHA_PIX];
-      dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX] * aux[ALPHA_PIX];
-      dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX]  * aux[ALPHA_PIX];
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = src[RED]   + aux[RED]   * aux[ALPHA];
+      dest[GREEN] = src[GREEN] + aux[GREEN] * aux[ALPHA];
+      dest[BLUE]  = src[BLUE]  + aux[BLUE]  * aux[ALPHA];
+      dest[ALPHA] = src[ALPHA];
 #else
       // Wrong, doesn't take layer opacity of Addition-mode layer into
       // account
-      dest[RED_PIX]   = src[RED_PIX]   + aux[RED_PIX];
-      dest[GREEN_PIX] = src[GREEN_PIX] + aux[GREEN_PIX];
-      dest[BLUE_PIX]  = src[BLUE_PIX]  + aux[BLUE_PIX];
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = src[RED]   + aux[RED];
+      dest[GREEN] = src[GREEN] + aux[GREEN];
+      dest[BLUE]  = src[BLUE]  + aux[BLUE];
+      dest[ALPHA] = src[ALPHA];
 
       // Wrong, toggling visibility of completely transparent
       // Addition-mode layer changes projection
-      dest[RED_PIX]   = src[RED_PIX]   * src[ALPHA_PIX] + aux[RED_PIX]   * aux[ALPHA_PIX];
-      dest[GREEN_PIX] = src[GREEN_PIX] * src[ALPHA_PIX] + aux[GREEN_PIX] * aux[ALPHA_PIX];
-      dest[BLUE_PIX]  = src[BLUE_PIX]  * src[ALPHA_PIX] + aux[BLUE_PIX]  * aux[ALPHA_PIX];
-      dest[ALPHA_PIX] = src[ALPHA_PIX] + aux[ALPHA_PIX] - src[ALPHA_PIX] * aux[ALPHA_PIX];
+      dest[RED]   = src[RED]   * src[ALPHA] + aux[RED]   * aux[ALPHA];
+      dest[GREEN] = src[GREEN] * src[ALPHA] + aux[GREEN] * aux[ALPHA];
+      dest[BLUE]  = src[BLUE]  * src[ALPHA] + aux[BLUE]  * aux[ALPHA];
+      dest[ALPHA] = src[ALPHA] + aux[ALPHA] - src[ALPHA] * aux[ALPHA];
 #endif
 
       src  += 4;

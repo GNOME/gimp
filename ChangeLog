@@ -1,5 +1,11 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationadditionmode.c: Use local variants of
+	channel offset defines, namely RED instead of RED_PIX etc, to
+	increase readability.
+
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/actions/debug-commands.c
 	(debug_dump_projection_benchmarking_cmd_callback): In addition to
 	priting how long it takes to validate the projection, also print
