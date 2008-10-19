@@ -102,9 +102,9 @@ colorize (Colorize    *colorize,
 
       while (w--)
         {
-          lum = (colorize->lum_red_lookup[s[RED_PIX]] +
-                 colorize->lum_green_lookup[s[GREEN_PIX]] +
-                 colorize->lum_blue_lookup[s[BLUE_PIX]]); /* luminosity */
+          lum = (colorize->lum_red_lookup[s[RED]] +
+                 colorize->lum_green_lookup[s[GREEN]] +
+                 colorize->lum_blue_lookup[s[BLUE]]); /* luminosity */
 
           if (colorize->lightness > 0)
             {
@@ -117,12 +117,12 @@ colorize (Colorize    *colorize,
               lum = (gdouble) lum * (colorize->lightness + 100.0) / 100.0;
             }
 
-          d[RED_PIX]   = colorize->final_red_lookup[lum];
-          d[GREEN_PIX] = colorize->final_green_lookup[lum];
-          d[BLUE_PIX]  = colorize->final_blue_lookup[lum];
+          d[RED]   = colorize->final_red_lookup[lum];
+          d[GREEN] = colorize->final_green_lookup[lum];
+          d[BLUE]  = colorize->final_blue_lookup[lum];
 
           if (alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           s += srcPR->bytes;
           d += destPR->bytes;

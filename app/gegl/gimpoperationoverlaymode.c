@@ -71,10 +71,10 @@ gimp_operation_overlay_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      dest[RED_PIX]   = src[RED_PIX];
-      dest[GREEN_PIX] = src[GREEN_PIX];
-      dest[BLUE_PIX]  = src[BLUE_PIX];
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = src[RED];
+      dest[GREEN] = src[GREEN];
+      dest[BLUE]  = src[BLUE];
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       aux  += 4;

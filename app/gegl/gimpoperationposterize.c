@@ -96,10 +96,10 @@ gimp_operation_posterize_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      dest[RED_PIX]   = RINT (src[RED_PIX]   * levels) / levels;
-      dest[GREEN_PIX] = RINT (src[GREEN_PIX] * levels) / levels;
-      dest[BLUE_PIX]  = RINT (src[BLUE_PIX]  * levels) / levels;
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = RINT (src[RED]   * levels) / levels;
+      dest[GREEN] = RINT (src[GREEN] * levels) / levels;
+      dest[BLUE]  = RINT (src[BLUE]  * levels) / levels;
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       dest += 4;

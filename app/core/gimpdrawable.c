@@ -1253,15 +1253,15 @@ gimp_drawable_fill (GimpDrawable      *drawable,
       guchar c[MAX_CHANNELS];
 
       gimp_rgba_get_uchar (color,
-                           &tmp[RED_PIX],
-                           &tmp[GREEN_PIX],
-                           &tmp[BLUE_PIX],
-                           &tmp[ALPHA_PIX]);
+                           &tmp[RED],
+                           &tmp[GREEN],
+                           &tmp[BLUE],
+                           &tmp[ALPHA]);
 
       gimp_image_transform_color (image, drawable_type, c, GIMP_RGB, tmp);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
-        c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA_PIX];
+        c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA];
       else
         c[GIMP_IMAGE_TYPE_BYTES (drawable_type)] = OPAQUE_OPACITY;
 

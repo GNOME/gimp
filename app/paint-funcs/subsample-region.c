@@ -343,21 +343,21 @@ subsample_indexed_region (PixelRegion  *srcPR,
           /*  transform the color to RGB  */
           if (has_alpha)
             {
-              if (s[ALPHA_I_PIX] & 0x80)
+              if (s[ALPHA_I] & 0x80)
                 {
-                  r[RED_PIX]   += cmap[index++] * tot_frac;
-                  r[GREEN_PIX] += cmap[index++] * tot_frac;
-                  r[BLUE_PIX]  += cmap[index++] * tot_frac;
-                  r[ALPHA_PIX] += tot_frac;
+                  r[RED]   += cmap[index++] * tot_frac;
+                  r[GREEN] += cmap[index++] * tot_frac;
+                  r[BLUE]  += cmap[index++] * tot_frac;
+                  r[ALPHA] += tot_frac;
                 }
               /* else the pixel contributes nothing and needs not to be added
                */
             }
           else
             {
-              r[RED_PIX]   += cmap[index++] * tot_frac;
-              r[GREEN_PIX] += cmap[index++] * tot_frac;
-              r[BLUE_PIX]  += cmap[index++] * tot_frac;
+              r[RED]   += cmap[index++] * tot_frac;
+              r[GREEN] += cmap[index++] * tot_frac;
+              r[BLUE]  += cmap[index++] * tot_frac;
             }
 
           /*  increment the destination  */

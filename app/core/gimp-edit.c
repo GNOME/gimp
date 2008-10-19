@@ -612,9 +612,9 @@ gimp_edit_fill_internal (GimpImage            *image,
       {
         guchar tmp_col[MAX_CHANNELS];
 
-        tmp_col[RED_PIX]   = 255;
-        tmp_col[GREEN_PIX] = 255;
-        tmp_col[BLUE_PIX]  = 255;
+        tmp_col[RED]   = 255;
+        tmp_col[GREEN] = 255;
+        tmp_col[BLUE]  = 255;
         gimp_image_transform_color (image, drawable_type, col,
                                     GIMP_RGB, tmp_col);
       }

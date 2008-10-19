@@ -227,16 +227,16 @@ gimp_pickable_pick_color (GimpPickable *pickable,
 
               gimp_image_get_color (image, type, pixel, col);
 
-              color_avg[RED_PIX]   += col[RED_PIX];
-              color_avg[GREEN_PIX] += col[GREEN_PIX];
-              color_avg[BLUE_PIX]  += col[BLUE_PIX];
-              color_avg[ALPHA_PIX] += col[ALPHA_PIX];
+              color_avg[RED]   += col[RED];
+              color_avg[GREEN] += col[GREEN];
+              color_avg[BLUE]  += col[BLUE];
+              color_avg[ALPHA] += col[ALPHA];
             }
 
-      col[RED_PIX]   = (guchar) ((color_avg[RED_PIX]   + count / 2) / count);
-      col[GREEN_PIX] = (guchar) ((color_avg[GREEN_PIX] + count / 2) / count);
-      col[BLUE_PIX]  = (guchar) ((color_avg[BLUE_PIX]  + count / 2) / count);
-      col[ALPHA_PIX] = (guchar) ((color_avg[ALPHA_PIX] + count / 2) / count);
+      col[RED]   = (guchar) ((color_avg[RED]   + count / 2) / count);
+      col[GREEN] = (guchar) ((color_avg[GREEN] + count / 2) / count);
+      col[BLUE]  = (guchar) ((color_avg[BLUE]  + count / 2) / count);
+      col[ALPHA] = (guchar) ((color_avg[ALPHA] + count / 2) / count);
     }
   else
     {
@@ -245,10 +245,10 @@ gimp_pickable_pick_color (GimpPickable *pickable,
 
 
   gimp_rgba_set_uchar (color,
-                       col[RED_PIX],
-                       col[GREEN_PIX],
-                       col[BLUE_PIX],
-                       col[ALPHA_PIX]);
+                       col[RED],
+                       col[GREEN],
+                       col[BLUE],
+                       col[ALPHA]);
 
   if (color_index)
     {

@@ -1,3 +1,42 @@
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/base/base-types.h: Rename the convenient channel offset
+	defines from FOO_PIX to FOO as this increases readability.
+
+	* app/base/color-balance.c
+	* app/base/colorize.c
+	* app/base/desaturate.c
+	* app/base/hue-saturation.c
+	* app/base/siox.c
+	* app/base/threshold.c
+
+	* app/core/gimp-edit.c
+	* app/core/gimp-transform-region.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-convert.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette-import.c
+	* app/core/gimppickable.c
+
+	* app/gegl/gimpoperation*mode.c
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+
+	* app/paint-funcs/subsample-region.c
+
+	* app/paint/gimpclone.c
+	* app/paint/gimppaintbrush.c
+
+	* app/widgets/gimpviewrenderer.c: Adapt.
+
 2008-10-19  Sven Neumann  <sven@gimp.org>
 
 	Bug 493778 – metadata plug-in crashes on some images

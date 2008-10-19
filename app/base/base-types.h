@@ -32,16 +32,18 @@
 
 
 /* convenient defines */
-#define MAX_CHANNELS     4
+#define MAX_CHANNELS  4
 
-#define GRAY_PIX         0
-#define ALPHA_G_PIX      1
-#define RED_PIX          0
-#define GREEN_PIX        1
-#define BLUE_PIX         2
-#define ALPHA_PIX        3
-#define INDEXED_PIX      0
-#define ALPHA_I_PIX      1
+#define RED           0
+#define GREEN         1
+#define BLUE          2
+#define ALPHA         3
+
+#define GRAY          0
+#define ALPHA_G       1
+
+#define INDEXED       0
+#define ALPHA_I       1
 
 
 /* types */

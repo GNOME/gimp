@@ -190,9 +190,9 @@ color_balance (ColorBalance *cb,
 
       while (w--)
         {
-          r = s[RED_PIX];
-          g = s[GREEN_PIX];
-          b = s[BLUE_PIX];
+          r = s[RED];
+          g = s[GREEN];
+          b = s[BLUE];
 
           r_n = cb->r_lookup[r];
           g_n = cb->g_lookup[g];
@@ -205,12 +205,12 @@ color_balance (ColorBalance *cb,
               gimp_hsl_to_rgb_int (&r_n, &g_n, &b_n);
             }
 
-          d[RED_PIX]   = r_n;
-          d[GREEN_PIX] = g_n;
-          d[BLUE_PIX]  = b_n;
+          d[RED]   = r_n;
+          d[GREEN] = g_n;
+          d[BLUE]  = b_n;
 
           if (alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           s += srcPR->bytes;
           d += destPR->bytes;

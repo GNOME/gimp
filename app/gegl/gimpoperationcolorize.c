@@ -97,9 +97,9 @@ gimp_operation_colorize_process (GeglOperation       *operation,
   while (samples--)
     {
       GimpRGB rgb;
-      gfloat  lum = GIMP_RGB_LUMINANCE (src[RED_PIX],
-                                        src[GREEN_PIX],
-                                        src[BLUE_PIX]);
+      gfloat  lum = GIMP_RGB_LUMINANCE (src[RED],
+                                        src[GREEN],
+                                        src[BLUE]);
 
       if (config->lightness > 0)
         {
@@ -121,10 +121,10 @@ gimp_operation_colorize_process (GeglOperation       *operation,
        *  don't repeat this bug here (this is the reason why the gegl
        *  colorize is brighter than the legacy one).
        */
-      dest[RED_PIX]   = rgb.r; /* * lum; */
-      dest[GREEN_PIX] = rgb.g; /* * lum; */
-      dest[BLUE_PIX]  = rgb.b; /* * lum */;
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = rgb.r; /* * lum; */
+      dest[GREEN] = rgb.g; /* * lum; */
+      dest[BLUE]  = rgb.b; /* * lum */;
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       dest += 4;

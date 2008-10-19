@@ -960,17 +960,17 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
     {
       if (color)
         {
-          red_component   = RED_PIX;
-          green_component = GREEN_PIX;
-          blue_component  = BLUE_PIX;
-          alpha_component = ALPHA_PIX;
+          red_component   = RED;
+          green_component = GREEN;
+          blue_component  = BLUE;
+          alpha_component = ALPHA;
         }
       else
         {
-          red_component   = GRAY_PIX;
-          green_component = GRAY_PIX;
-          blue_component  = GRAY_PIX;
-          alpha_component = ALPHA_G_PIX;
+          red_component   = GRAY;
+          green_component = GRAY;
+          blue_component  = GRAY;
+          alpha_component = ALPHA_G;
         }
     }
   else

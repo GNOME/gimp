@@ -1661,17 +1661,17 @@ gimp_image_get_component_index (const GimpImage *image,
 
   switch (channel)
     {
-    case GIMP_RED_CHANNEL:     return RED_PIX;
-    case GIMP_GREEN_CHANNEL:   return GREEN_PIX;
-    case GIMP_BLUE_CHANNEL:    return BLUE_PIX;
-    case GIMP_GRAY_CHANNEL:    return GRAY_PIX;
-    case GIMP_INDEXED_CHANNEL: return INDEXED_PIX;
+    case GIMP_RED_CHANNEL:     return RED;
+    case GIMP_GREEN_CHANNEL:   return GREEN;
+    case GIMP_BLUE_CHANNEL:    return BLUE;
+    case GIMP_GRAY_CHANNEL:    return GRAY;
+    case GIMP_INDEXED_CHANNEL: return INDEXED;
     case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (image))
         {
-        case GIMP_RGB:     return ALPHA_PIX;
-        case GIMP_GRAY:    return ALPHA_G_PIX;
-        case GIMP_INDEXED: return ALPHA_I_PIX;
+        case GIMP_RGB:     return ALPHA;
+        case GIMP_GRAY:    return ALPHA_G;
+        case GIMP_INDEXED: return ALPHA_I;
         }
     }
 
@@ -2220,18 +2220,18 @@ gimp_image_transform_color (const GimpImage    *dest_image,
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
           /*  NTSC conversion  */
-          *dest = GIMP_RGB_LUMINANCE (src[RED_PIX],
-                                      src[GREEN_PIX],
-                                      src[BLUE_PIX]) + 0.5;
+          *dest = GIMP_RGB_LUMINANCE (src[RED],
+                                      src[GREEN],
+                                      src[BLUE]) + 0.5;
           break;
 
         case GIMP_INDEXED_IMAGE:
         case GIMP_INDEXEDA_IMAGE:
           /*  Least squares method  */
           *dest = gimp_image_color_hash_rgb_to_indexed (dest_image,
-                                                        src[RED_PIX],
-                                                        src[GREEN_PIX],
-                                                        src[BLUE_PIX]);
+                                                        src[RED],
+                                                        src[GREEN],
+                                                        src[BLUE]);
           break;
         }
       break;
@@ -2257,9 +2257,9 @@ gimp_image_transform_color (const GimpImage    *dest_image,
         case GIMP_INDEXEDA_IMAGE:
           /*  Least squares method  */
           *dest = gimp_image_color_hash_rgb_to_indexed (dest_image,
-                                                        src[GRAY_PIX],
-                                                        src[GRAY_PIX],
-                                                        src[GRAY_PIX]);
+                                                        src[GRAY],
+                                                        src[GRAY],
+                                                        src[GRAY]);
           break;
         }
       break;

@@ -129,9 +129,9 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      gfloat r = src[RED_PIX];
-      gfloat g = src[GREEN_PIX];
-      gfloat b = src[BLUE_PIX];
+      gfloat r = src[RED];
+      gfloat g = src[GREEN];
+      gfloat b = src[BLUE];
       gfloat r_n;
       gfloat g_n;
       gfloat b_n;
@@ -176,10 +176,10 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
           b_n = rgb.b;
         }
 
-      dest[RED_PIX]   = r_n;
-      dest[GREEN_PIX] = g_n;
-      dest[BLUE_PIX]  = b_n;
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = r_n;
+      dest[GREEN] = g_n;
+      dest[BLUE]  = b_n;
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       dest += 4;

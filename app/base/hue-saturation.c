@@ -126,9 +126,9 @@ hue_saturation (HueSaturation *hs,
 
       while (w--)
         {
-          r = s[RED_PIX];
-          g = s[GREEN_PIX];
-          b = s[BLUE_PIX];
+          r = s[RED];
+          g = s[GREEN];
+          b = s[BLUE];
 
           gimp_rgb_to_hsl_int (&r, &g, &b);
 
@@ -194,12 +194,12 @@ hue_saturation (HueSaturation *hs,
 
           gimp_hsl_to_rgb_int (&r, &g, &b);
 
-          d[RED_PIX]   = r;
-          d[GREEN_PIX] = g;
-          d[BLUE_PIX]  = b;
+          d[RED]   = r;
+          d[GREEN] = g;
+          d[BLUE]  = b;
 
           if (alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           s += srcPR->bytes;
           d += destPR->bytes;

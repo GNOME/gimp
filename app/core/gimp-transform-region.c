@@ -210,18 +210,18 @@ gimp_transform_region (GimpPickable          *pickable,
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (pickable_type))
     {
     case GIMP_RGB:
-      bg_color[ALPHA_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_PIX;
+      bg_color[ALPHA] = TRANSPARENT_OPACITY;
+      alpha = ALPHA;
       break;
 
     case GIMP_GRAY:
-      bg_color[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_G_PIX;
+      bg_color[ALPHA_G] = TRANSPARENT_OPACITY;
+      alpha = ALPHA_G;
       break;
 
     case GIMP_INDEXED:
-      bg_color[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
-      alpha = ALPHA_I_PIX;
+      bg_color[ALPHA_I] = TRANSPARENT_OPACITY;
+      alpha = ALPHA_I;
       /*  If the image is indexed color, ignore interpolation value  */
       interpolation_type = GIMP_INTERPOLATION_NONE;
       break;

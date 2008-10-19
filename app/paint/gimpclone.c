@@ -282,7 +282,7 @@ gimp_clone_line_image (GimpImage     *dest_image,
       gimp_image_transform_color (dest_image, dest_type, d,
                                   GIMP_RGB, rgba);
 
-      d[alpha] = rgba[ALPHA_PIX];
+      d[alpha] = rgba[ALPHA];
 
       s += src_bytes;
       d += dest_bytes;

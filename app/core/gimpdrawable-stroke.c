@@ -287,9 +287,9 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
         guchar col[MAX_CHANNELS]     = { 0, };
 
         gimp_rgb_get_uchar (&context->foreground,
-                            &tmp_col[RED_PIX],
-                            &tmp_col[GREEN_PIX],
-                            &tmp_col[BLUE_PIX]);
+                            &tmp_col[RED],
+                            &tmp_col[GREEN],
+                            &tmp_col[BLUE]);
 
         gimp_image_transform_color (image, gimp_drawable_type (drawable), col,
                                     GIMP_RGB, tmp_col);

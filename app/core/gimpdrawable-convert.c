@@ -84,9 +84,9 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 
               for (col = 0; col < srcPR.w; col++)
                 {
-                  d[RED_PIX] = *s;
-                  d[GREEN_PIX] = *s;
-                  d[BLUE_PIX] = *s;
+                  d[RED] = *s;
+                  d[GREEN] = *s;
+                  d[BLUE] = *s;
 
                   d += 3;
                   s++;
@@ -116,9 +116,9 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
               for (col = 0; col < srcPR.w; col++)
                 {
                   offset = *s++ * 3;
-                  d[RED_PIX] = cmap[offset + 0];
-                  d[GREEN_PIX] = cmap[offset + 1];
-                  d[BLUE_PIX] = cmap[offset + 2];
+                  d[RED] = cmap[offset + 0];
+                  d[GREEN] = cmap[offset + 1];
+                  d[BLUE] = cmap[offset + 2];
 
                   d += 3;
                   if (has_alpha)
@@ -186,9 +186,9 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
               d = dest;
               for (col = 0; col < srcPR.w; col++)
                 {
-                  val = GIMP_RGB_LUMINANCE (s[RED_PIX],
-                                            s[GREEN_PIX],
-                                            s[BLUE_PIX]) + 0.5;
+                  val = GIMP_RGB_LUMINANCE (s[RED],
+                                            s[GREEN],
+                                            s[BLUE]) + 0.5;
                   *d++ = (guchar) val;
                   s += 3;
                   if (has_alpha)

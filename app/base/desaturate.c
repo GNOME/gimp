@@ -84,19 +84,19 @@ desaturate_region_lightness (PixelRegion    *srcPR,
           gint min, max;
           gint lightness;
 
-          max = MAX (s[RED_PIX], s[GREEN_PIX]);
-          max = MAX (max, s[BLUE_PIX]);
-          min = MIN (s[RED_PIX], s[GREEN_PIX]);
-          min = MIN (min, s[BLUE_PIX]);
+          max = MAX (s[RED], s[GREEN]);
+          max = MAX (max, s[BLUE]);
+          min = MIN (s[RED], s[GREEN]);
+          min = MIN (min, s[BLUE]);
 
           lightness = (max + min) / 2;
 
-          d[RED_PIX]   = lightness;
-          d[GREEN_PIX] = lightness;
-          d[BLUE_PIX]  = lightness;
+          d[RED]   = lightness;
+          d[GREEN] = lightness;
+          d[BLUE]  = lightness;
 
           if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           d += destPR->bytes;
           s += srcPR->bytes;
@@ -124,16 +124,16 @@ desaturate_region_luminosity (PixelRegion    *srcPR,
 
       for (j = 0; j < srcPR->w; j++)
         {
-          gint luminosity = GIMP_RGB_LUMINANCE (s[RED_PIX],
-                                                s[GREEN_PIX],
-                                                s[BLUE_PIX]) + 0.5;
+          gint luminosity = GIMP_RGB_LUMINANCE (s[RED],
+                                                s[GREEN],
+                                                s[BLUE]) + 0.5;
 
-          d[RED_PIX]   = luminosity;
-          d[GREEN_PIX] = luminosity;
-          d[BLUE_PIX]  = luminosity;
+          d[RED]   = luminosity;
+          d[GREEN] = luminosity;
+          d[BLUE]  = luminosity;
 
           if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           d += destPR->bytes;
           s += srcPR->bytes;
@@ -161,14 +161,14 @@ desaturate_region_average (PixelRegion    *srcPR,
 
       for (j = 0; j < srcPR->w; j++)
         {
-          gint average = (s[RED_PIX] + s[GREEN_PIX] + s[BLUE_PIX] + 1) / 3;
+          gint average = (s[RED] + s[GREEN] + s[BLUE] + 1) / 3;
 
-          d[RED_PIX]   = average;
-          d[GREEN_PIX] = average;
-          d[BLUE_PIX]  = average;
+          d[RED]   = average;
+          d[GREEN] = average;
+          d[BLUE]  = average;
 
           if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
+            d[ALPHA] = s[ALPHA];
 
           d += destPR->bytes;
           s += srcPR->bytes;

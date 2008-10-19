@@ -143,9 +143,9 @@ calc_lab (const guchar *src,
     {
     case 3:  /* RGB  */
     case 4:  /* RGBA */
-      cpercep_rgb_to_space (src[RED_PIX],
-                            src[GREEN_PIX],
-                            src[BLUE_PIX], &l, &a, &b);
+      cpercep_rgb_to_space (src[RED],
+                            src[GREEN],
+                            src[BLUE], &l, &a, &b);
       break;
 
     case 2:
@@ -154,9 +154,9 @@ calc_lab (const guchar *src,
         {
           gint i = *src * 3;
 
-          cpercep_rgb_to_space (colormap[i + RED_PIX],
-                                colormap[i + GREEN_PIX],
-                                colormap[i + BLUE_PIX], &l, &a, &b);
+          cpercep_rgb_to_space (colormap[i + RED],
+                                colormap[i + GREEN],
+                                colormap[i + BLUE], &l, &a, &b);
         }
       else /* GRAY(A) */
         {
@@ -691,16 +691,16 @@ create_key (const guchar *src,
     {
     case 3:                     /* RGB  */
     case 4:                     /* RGBA */
-      return (src[RED_PIX] << 16 | src[GREEN_PIX] << 8 | src[BLUE_PIX]);
+      return (src[RED] << 16 | src[GREEN] << 8 | src[BLUE]);
     case 2:
     case 1:
       if (colormap)             /* INDEXED(A) */
         {
           gint i = *src * 3;
 
-          return (colormap[i + RED_PIX]   << 16 |
-                  colormap[i + GREEN_PIX] << 8  |
-                  colormap[i + BLUE_PIX]);
+          return (colormap[i + RED]   << 16 |
+                  colormap[i + GREEN] << 8  |
+                  colormap[i + BLUE]);
         }
       else                      /* GRAY(A) */
         {

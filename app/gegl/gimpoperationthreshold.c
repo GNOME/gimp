@@ -94,15 +94,15 @@ gimp_operation_threshold_process (GeglOperation       *operation,
     {
       gfloat value;
 
-      value = MAX (src[RED_PIX], src[GREEN_PIX]);
-      value = MAX (value, src[BLUE_PIX]);
+      value = MAX (src[RED], src[GREEN]);
+      value = MAX (value, src[BLUE]);
 
       value = (value >= config->low && value <= config->high) ? 1.0 : 0.0;
 
-      dest[RED_PIX]   = value;
-      dest[GREEN_PIX] = value;
-      dest[BLUE_PIX]  = value;
-      dest[ALPHA_PIX] = src[ALPHA_PIX];
+      dest[RED]   = value;
+      dest[GREEN] = value;
+      dest[BLUE]  = value;
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       dest += 4;

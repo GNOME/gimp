@@ -145,7 +145,7 @@ gimp_operation_levels_process (GeglOperation       *operation,
                                              config->high_output[channel + 1]);
 
           /* don't apply the overall curve to the alpha channel */
-          if (channel != ALPHA_PIX)
+          if (channel != ALPHA)
             value = gimp_operation_levels_map (value,
                                                inv_gamma[0],
                                                config->low_input[0],

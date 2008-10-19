@@ -323,7 +323,7 @@ gimp_palette_import_extract (GimpImage     *image,
                   gimp_image_get_color (image, type, idata, rgba);
 
                   /*  ignore completely transparent pixels  */
-                  if (rgba[ALPHA_PIX])
+                  if (rgba[ALPHA])
                     {
                       guchar rgb_real[MAX_CHANNELS];
 

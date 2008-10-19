@@ -54,16 +54,16 @@ threshold (Threshold   *tr,
         {
           if (tr->color)
             {
-              value = MAX (s[RED_PIX], s[GREEN_PIX]);
-              value = MAX (value, s[BLUE_PIX]);
+              value = MAX (s[RED], s[GREEN]);
+              value = MAX (value, s[BLUE]);
 
               value = (value >= tr->low_threshold &&
                        value <= tr->high_threshold ) ? 255 : 0;
             }
           else
             {
-              value = (s[GRAY_PIX] >= tr->low_threshold &&
-                       s[GRAY_PIX] <= tr->high_threshold) ? 255 : 0;
+              value = (s[GRAY] >= tr->low_threshold &&
+                       s[GRAY] <= tr->high_threshold) ? 255 : 0;
             }
 
           for (b = 0; b < alpha; b++)

@@ -140,10 +140,10 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       opacity *= gradient_color.a;
 
       gimp_rgb_get_uchar (&gradient_color,
-                          &col[RED_PIX],
-                          &col[GREEN_PIX],
-                          &col[BLUE_PIX]);
-      col[ALPHA_PIX] = OPAQUE_OPACITY;
+                          &col[RED],
+                          &col[GREEN],
+                          &col[BLUE]);
+      col[ALPHA] = OPAQUE_OPACITY;
 
       color_pixels (temp_buf_data (area), col,
                     area->width * area->height,

@@ -767,8 +767,8 @@ gimp_channel_get_active_components (const GimpDrawable *drawable,
                                     gboolean           *active)
 {
   /*  Make sure that the alpha channel is not valid.  */
-  active[GRAY_PIX]    = TRUE;
-  active[ALPHA_G_PIX] = FALSE;
+  active[GRAY]    = TRUE;
+  active[ALPHA_G] = FALSE;
 }
 
 static void
