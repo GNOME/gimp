@@ -1,5 +1,12 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/actions/debug-commands.c
+	(debug_dump_projection_benchmarking_cmd_callback): In addition to
+	priting how long it takes to validate the projection, also print
+	the number of layers in the image.
+
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* menus/image-menu.xml.in
 	* app/actions/debug-actions.c
 	* app/actions/debug-commands.[ch]: Added a 'Dump Projection

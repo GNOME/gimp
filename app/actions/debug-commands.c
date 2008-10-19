@@ -31,6 +31,7 @@
 #include "base/tile.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
@@ -166,7 +167,7 @@ debug_dump_projection_benchmarking_cmd_callback (GtkAction *action,
   tiles      = gimp_projection_get_tiles (projection);
   timer      = g_timer_new ();
 
-  if (projection &&tiles && timer)
+  if (projection && tiles && timer)
     {
       int x = 0;
       int y = 0;
@@ -189,7 +190,8 @@ debug_dump_projection_benchmarking_cmd_callback (GtkAction *action,
         }
       g_timer_stop (timer);
 
-      g_print ("Validation of entire projection took %.0f ms\n",
+      g_print ("Validation of the entire %d-layered projection took %.0f ms\n",
+               gimp_container_num_children (gimp_image_get_layers (image)),
                1000 * g_timer_elapsed (timer, NULL));
 
       g_timer_destroy (timer);
