@@ -154,8 +154,8 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_projection_benchmarking_cmd_callback (GtkAction *action,
-                                                 gpointer   data)
+debug_benchmark_projection_cmd_callback (GtkAction *action,
+                                         gpointer   data)
 {
   GimpImage      *image      = NULL;
   GimpProjection *projection = NULL;

@@ -58,9 +58,9 @@ static const GimpActionEntry debug_actions[] =
     G_CALLBACK (debug_dump_attached_data_cmd_callback),
     NULL },
 
-  { "debug-dump-projection-benchmarking", NULL,
+  { "debug-benchmark-projection", NULL,
     "Dump Projection Benchmarking", NULL, NULL,
-    G_CALLBACK (debug_dump_projection_benchmarking_cmd_callback),
+    G_CALLBACK (debug_benchmark_projection_cmd_callback),
     NULL }
 };
 
