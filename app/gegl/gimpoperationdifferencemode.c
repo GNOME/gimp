@@ -65,20 +65,20 @@ gimp_operation_difference_mode_process (GeglOperation       *operation,
                                         glong                samples,
                                         const GeglRectangle *roi)
 {
-  gfloat *src  = in_buf;
-  gfloat *aux  = aux_buf;
-  gfloat *dest = out_buf;
+  gfloat *in    = in_buf;
+  gfloat *layer = aux_buf;
+  gfloat *out   = out_buf;
 
   while (samples--)
     {
-      dest[RED]   = src[RED];
-      dest[GREEN] = src[GREEN];
-      dest[BLUE]  = src[BLUE];
-      dest[ALPHA] = src[ALPHA];
+      out[RED]   = in[RED];
+      out[GREEN] = in[GREEN];
+      out[BLUE]  = in[BLUE];
+      out[ALPHA] = in[ALPHA];
 
-      src  += 4;
-      aux  += 4;
-      dest += 4;
+      in    += 4;
+      layer += 4;
+      out   += 4;
     }
 
   return TRUE;
