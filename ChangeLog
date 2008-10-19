@@ -2,8 +2,7 @@
 
 	* menus/image-menu.xml.in
 	* app/actions/debug-actions.c
-	* app/actions/debug-commands.h
-	* app/actions/debug-commands.c: Added a 'Dump Projection
+	* app/actions/debug-commands.[ch]: Added a 'Dump Projection
 	Benchmarking' item to the Debug Menu so that we can test how
 	different GEGL graph setups affect performance.
 
