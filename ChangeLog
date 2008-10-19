@@ -7,7 +7,7 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/base/base-types.h: Rename the convenient channel offset
-	defines from FOO_PIX to FOO as this increases readability.
+	defines from CHANNEL_PIX to CHANNEL as this increases readability.
 
 	* app/base/color-balance.c
 	* app/base/colorize.c
@@ -104,7 +104,7 @@
 2008-10-18  Sven Neumann  <sven@gimp.org>
 
 	Applied patch from Alexia Death as attached to bug #471344:
-	
+
 	* app/core/Makefile.am
 	* app/core/gimpcoords-interpolate.[ch]: new files with
 	interpolation code taken from ...
@@ -221,7 +221,7 @@
 2008-10-13  Sven Neumann  <sven@gimp.org>
 
 	Bug 556182 – Could you please explain a few strings [I18N]
-	
+
 	* plug-ins/pygimp/plug-ins/py-slice.py: added translator comments.
 
 2008-10-13  Sven Neumann  <sven@gimp.org>
@@ -243,7 +243,7 @@
 
 	Applied patch from Luidnel Maignan that splits the legacy code for
 	layer modes into new files.
-	
+
 	* app/paint-funcs/Makefile.am
 	* app/paint-funcs/layer-modes.[ch]
 	* app/paint-funcs/paint-funcs-utils.h: new files with code taken
@@ -656,7 +656,7 @@
 2008-10-09  Sven Neumann  <sven@gimp.org>
 
 	Bug 555697 – build fails if configured with --without-libjpeg
-	
+
 	* plug-ins/Makefile.am: applied patch from Simon Zilliken that
 	disables the build of the PSD plug-in if JPEG support is disabled.
 
