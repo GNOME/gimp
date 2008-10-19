@@ -1,3 +1,12 @@
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* menus/image-menu.xml.in
+	* app/actions/debug-actions.c
+	* app/actions/debug-commands.h
+	* app/actions/debug-commands.c: Added a 'Dump Projection
+	Benchmarking' item to the Debug Menu so that we can test how
+	different GEGL graph setups affect performance.
+
 2008-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: add -Wmissing-format-attribute to CFLAGS.

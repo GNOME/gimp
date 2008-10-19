@@ -20,14 +20,20 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "actions-types.h"
 
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpprojection.h"
 
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -144,6 +150,50 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 
   debug_print_qdata (GIMP_OBJECT (gimp));
   debug_print_qdata (GIMP_OBJECT (user_context));
+}
+
+void
+debug_dump_projection_benchmarking_cmd_callback (GtkAction *action,
+                                                 gpointer   data)
+{
+  GimpImage      *image      = NULL;
+  GimpProjection *projection = NULL;
+  TileManager    *tiles      = NULL;
+  GTimer         *timer      = NULL;
+  return_if_no_image (image, data);
+
+  projection = gimp_image_get_projection (image);
+  tiles      = gimp_projection_get_tiles (projection);
+  timer      = g_timer_new ();
+
+  if (projection &&tiles && timer)
+    {
+      int x = 0;
+      int y = 0;
+
+      gimp_image_update (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
+      gimp_projection_flush_now (projection);
+
+      g_timer_start (timer);
+      for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
+        {
+          for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
+            {
+              Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
+
+              tile_release (tile, FALSE);
+            }
+        }
+      g_timer_stop (timer);
+
+      g_print ("Validation of entire projection took %.0f ms\n",
+               1000 * g_timer_elapsed (timer, NULL));
+
+      g_timer_destroy (timer);
+    }
 }
 
 
