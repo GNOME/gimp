@@ -28,12 +28,6 @@
 #include "gimpoperationadditionmode.h"
 
 
-#define RED   0
-#define GREEN 1
-#define BLUE  2
-#define ALPHA 3
-
-
 static gboolean gimp_operation_addition_mode_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *aux_buf,

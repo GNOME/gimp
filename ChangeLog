@@ -1,5 +1,10 @@
 2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationadditionmode.c: Remove local channel
+	offset defines.
+
+2008-10-19  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperation*mode.c: Refer to the input as 'in'
 	instead of 'src', the layer as 'layer' instead of 'aux', and the
 	result as 'out' instead of 'dest'.
