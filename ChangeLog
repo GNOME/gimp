@@ -1,7 +1,12 @@
 2008-10-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/metadata/xmp-parse.c: use GSlice to allocate structs.
+
+2008-10-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/metadata/xmp-encode.c
 	* plug-ins/metadata/xmp-parse.c
+
 	* plug-ins/metadata/metadata.c
 	* plug-ins/metadata/xmpdump.c: removal of unused includes and
 	other minor cleanups.

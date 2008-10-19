@@ -247,6 +247,7 @@ parse_error (XMPParseContext  *context,
       va_start (args, format);
       s = g_strdup_vprintf (format, args);
       va_end (args);
+
       g_markup_parse_context_get_position (context->markup_context,
                                            &line_number,
                                            &char_number);
@@ -336,10 +337,12 @@ is_whitespace_string (const gchar *string)
 
   if (string == NULL)
     return TRUE;
+
   /* XML accepts only 4 ASCII chars as whitespace and no other UNICODE chars */
   for (p = string; *p; ++p)
     if (*p != ' ' && *p != '\t' && *p != '\r' && *p != '\n')
       return FALSE;
+
   return TRUE;
 }
 
@@ -359,6 +362,7 @@ push_namespace (XMPParseContext  *context,
       context->xmp_prefix_len = strlen (prefix);
       return;
     }
+
   if (! strcmp (uri, "http://www.w3.org/1999/02/22-rdf-syntax-ns#"))
     {
       g_free (context->rdf_prefix);
@@ -366,12 +370,14 @@ push_namespace (XMPParseContext  *context,
       context->rdf_prefix_len = strlen (prefix);
       return;
     }
-  ns = g_new (XMLNameSpace, 1);
+
+  ns = g_slice_new0 (XMLNameSpace);
   ns->depth = context->depth;
   ns->uri = g_strdup (uri);
   ns->prefix = g_strdup (prefix);
   ns->prefix_len = strlen (prefix);
   context->namespaces = g_slist_prepend (context->namespaces, ns);
+
   if (context->parser->start_schema)
     ns->ns_user_data = (*context->parser->start_schema) (context,
                                                          ns->uri,
@@ -391,7 +397,9 @@ pop_namespaces (XMPParseContext  *context,
 
   if (context->namespaces == NULL)
     return;
+
   ns = context->namespaces->data;
+
   while (ns->depth >= context->depth)
     {
       if (context->parser->end_schema)
@@ -401,10 +409,13 @@ pop_namespaces (XMPParseContext  *context,
                                         error);
       g_free (ns->uri);
       g_free (ns->prefix);
+      g_slice_free (XMLNameSpace, ns);
+
       context->namespaces = g_slist_delete_link (context->namespaces,
                                                  context->namespaces);
       if (context->namespaces == NULL)
         break;
+
       ns = context->namespaces->data;
     }
 }
@@ -416,6 +427,7 @@ has_ns_prefix (const gchar  *name,
 {
   if (ns == NULL)
     return FALSE;
+
   return ((strncmp (name, ns->prefix, ns->prefix_len) == 0)
           && (name[ns->prefix_len] == ':'));
 }
@@ -429,6 +441,7 @@ matches_with_prefix (const gchar *name,
 {
   if (prefix == NULL)
     return FALSE;
+
   return ((strncmp (name, prefix, prefix_len) == 0)
           && (strlen (name) > prefix_len + 1)
           && (name[prefix_len] == ':')
@@ -461,12 +474,14 @@ new_property_in_ns (XMPParseContext  *context,
 
   g_return_val_if_fail (context->property == NULL, NULL);
   g_return_val_if_fail (context->prop_cur_value == -1, NULL);
+
   /* element_name is a new property if it starts with a known prefix */
   for (list = context->namespaces;
        list != NULL;
        list = g_slist_next (list))
     {
       ns = list->data;
+
       if (has_ns_prefix (element_name, ns))
         {
           context->property = g_strdup (element_name + ns->prefix_len + 1);
@@ -476,6 +491,7 @@ new_property_in_ns (XMPParseContext  *context,
           return ns;
         }
     }
+
   return NULL;
 }
 
@@ -490,8 +506,10 @@ add_property_value (XMPParseContext *context,
                     gchar           *value)
 {
   g_return_if_fail (context->property != NULL);
+
   if (type == XMP_PTYPE_TEXT || type == XMP_PTYPE_RESOURCE)
     g_return_if_fail (context->prop_cur_value < 0);
+
   if (context->property_type != type)
     {
       /* make sure that we are not mixing different types in this property */
@@ -515,6 +533,7 @@ add_property_value (XMPParseContext *context,
     }
   else
     g_assert (name == NULL);
+
   context->prop_cur_value++;
   context->prop_value[context->prop_cur_value] = value;
   context->prop_value[context->prop_cur_value + 1] = NULL;
@@ -530,6 +549,7 @@ update_property_value (XMPParseContext *context,
   g_return_if_fail (context->property != NULL);
   g_return_if_fail (context->prop_cur_value >= 0);
   g_return_if_fail (context->prop_missing_value == TRUE);
+
   context->prop_value[context->prop_cur_value] = value;
   context->prop_missing_value = FALSE;
 }
@@ -541,6 +561,7 @@ propagate_property (XMPParseContext  *context,
 {
   g_return_if_fail (context->property != NULL);
   g_return_if_fail (context->prop_cur_value >= 0);
+
   if (context->parser->set_property)
     (*context->parser->set_property) (context,
                                       context->property,
@@ -549,6 +570,7 @@ propagate_property (XMPParseContext  *context,
                                       context->property_ns->ns_user_data,
                                       context->user_data,
                                       error);
+
   if (! (context->flags & XMP_FLAG_DEFER_VALUE_FREE))
     {
       while (context->prop_cur_value >= 0)
@@ -556,8 +578,10 @@ propagate_property (XMPParseContext  *context,
           g_free (context->prop_value[context->prop_cur_value]);
           context->prop_cur_value--;
         }
+
       g_free (context->prop_value);
     }
+
   context->prop_value = NULL;
   context->prop_cur_value = -1;
   context->prop_max_value = 0;
@@ -1188,7 +1212,8 @@ static GMarkupParser markup_xmp_parser = {
  * @parser: a #XMPParser
  * @flags: one or more #XMPParseFlags
  * @user_data: user data to pass to #GMarkupParser functions
- * @user_data_dnotify: user data destroy notifier called when the parse context is freed
+ * @user_data_dnotify: user data destroy notifier called when the
+ * parse context is freed
  *
  * Creates a new XMP parse context.  A parse context is used to parse
  * documents.  You can feed any number of documents containing XMP
@@ -1204,11 +1229,11 @@ xmp_parse_context_new (const XMPParser *parser,
                        gpointer         user_data,
                        GDestroyNotify   user_data_dnotify)
 {
-  XMPParseContext     *context;
+  XMPParseContext *context;
 
   g_return_val_if_fail (parser != NULL, NULL);
 
-  context = g_new (XMPParseContext, 1);
+  context = g_slice_new0 (XMPParseContext);
 
   context->parser = parser;
   context->flags = flags;
@@ -1251,12 +1276,14 @@ void
 xmp_parse_context_free (XMPParseContext *context)
 {
   g_return_if_fail (context != NULL);
+
   if (context->user_data_dnotify)
     (* context->user_data_dnotify) (context->user_data);
 
   g_slist_free (context->namespaces);
   g_free (context->xmp_prefix);
   g_free (context->rdf_prefix);
+
   if (! (context->flags & XMP_FLAG_DEFER_VALUE_FREE))
     {
       while (context->prop_cur_value >= 0)
@@ -1266,8 +1293,9 @@ xmp_parse_context_free (XMPParseContext *context)
         }
       g_free (context->prop_value);
     }
+
   g_free (context->property);
-  g_free (context);
+  g_slice_free (XMPParseContext, context);
 }
 
 /**
@@ -1310,20 +1338,26 @@ xmp_parse_context_parse (XMPParseContext  *context,
        */
       /* FIXME: wrong, wrong, wrong!  but useful for simple tests... */
       gint i, e;
+
       for (i = 0; i < text_len - 20; i++)
         if (! strncmp (text + i, "<?xpacket begin=", 16))
           {
             for (e = i; e < text_len - 10; e++)
               if (! strncmp (text + e, "<?xpacket end=", 14))
                 break;
+
             while ((e < text_len) && *(text + e) != '>')
               e++;
+
             return g_markup_parse_context_parse (context->markup_context,
                                                  text + i, e - i + 1, error);
           }
+
       parse_error (context, error, XMP_ERROR_NO_XPACKET, NULL);
+
       return FALSE;
     }
+
   return g_markup_parse_context_parse (context->markup_context,
                                        text, text_len, error);
 }
@@ -1350,5 +1384,6 @@ xmp_parse_context_end_parse (XMPParseContext  *context,
 
   if (context->state == STATE_START)
     parse_error (context, error, XMP_ERROR_NO_XPACKET, NULL);
+
   return g_markup_parse_context_end_parse (context->markup_context, error);
 }
