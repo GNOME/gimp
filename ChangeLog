@@ -1,5 +1,11 @@
 2008-10-20  Sven Neumann  <sven@sven>
 
+	* plug-ins/common/bump-map.c (dialog_preview_events): use pointer
+	coordinates from the passed event instead of calling
+	gtk_widget_get_pointer().
+
+2008-10-20  Sven Neumann  <sven@sven>
+
 	* plug-ins/common/iwarp.c: set the OK and Reset button insensitive
 	until the user has defined a deformation to apply. Cleaned up
 	event handling.

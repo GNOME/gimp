@@ -144,7 +144,7 @@ static void bumpmap_convert_row (guchar           *row,
 static gboolean bumpmap_dialog             (void);
 static void     dialog_new_bumpmap         (gboolean       init_offsets);
 static void     dialog_update_preview      (GimpPreview   *preview);
-static gint     dialog_preview_events      (GtkWidget     *area,
+static gboolean dialog_preview_events      (GtkWidget     *area,
                                             GdkEvent      *event,
                                             GimpPreview   *preview);
 static void     dialog_get_rows            (GimpPixelRgn  *pr,
@@ -1001,38 +1001,34 @@ bumpmap_dialog (void)
   return run;
 }
 
-static gint
+static gboolean
 dialog_preview_events (GtkWidget   *area,
                        GdkEvent    *event,
                        GimpPreview *preview)
 {
-  gint            x, y;
-  gint            dx, dy;
-  GdkEventButton *bevent;
-
-  gtk_widget_get_pointer (area, &x, &y);
-
-  bevent = (GdkEventButton *) event;
-
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      switch (bevent->button)
-        {
-        case 2:
-          bmint.drag_mode = DRAG_BUMPMAP;
-          break;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-        default:
-          return FALSE;
-        }
+        switch (bevent->button)
+          {
+          case 2:
+            bmint.drag_mode = DRAG_BUMPMAP;
+            break;
 
-      bmint.mouse_x = x;
-      bmint.mouse_y = y;
+          default:
+            return FALSE;
+          }
 
-      gtk_grab_add (area);
+        bmint.mouse_x = bevent->x;
+        bmint.mouse_y = bevent->y;
 
-      return TRUE;
+        gtk_grab_add (area);
+
+        return TRUE;
+      }
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -1044,50 +1040,53 @@ dialog_preview_events (GtkWidget   *area,
 
           return TRUE;
         }
-
       break;
 
     case GDK_MOTION_NOTIFY:
-      dx = x - bmint.mouse_x;
-      dy = y - bmint.mouse_y;
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
+        gint            dx     = mevent->x - bmint.mouse_x;
+        gint            dy     = mevent->y - bmint.mouse_y;
 
-      bmint.mouse_x = x;
-      bmint.mouse_y = y;
+        bmint.mouse_x = mevent->x;
+        bmint.mouse_y = mevent->y;
 
-      if ((dx == 0) && (dy == 0))
-        break;
+        gdk_event_request_motions (mevent);
 
-      switch (bmint.drag_mode)
-        {
-        case DRAG_BUMPMAP:
-          bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
-          g_signal_handlers_block_by_func (bmint.offset_adj_x,
-                                           gimp_int_adjustment_update,
-                                           &bmvals.xofs);
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_x),
-                                    bmvals.xofs);
-          g_signal_handlers_unblock_by_func (bmint.offset_adj_x,
-                                             gimp_int_adjustment_update,
-                                             &bmvals.xofs);
-
-          bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
-          g_signal_handlers_block_by_func (bmint.offset_adj_y,
-                                           gimp_int_adjustment_update,
-                                           &bmvals.yofs);
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_y),
-                                    bmvals.yofs);
-          g_signal_handlers_unblock_by_func (bmint.offset_adj_y,
-                                             gimp_int_adjustment_update,
-                                             &bmvals.yofs);
+        if ((dx == 0) && (dy == 0))
           break;
 
-        default:
-          return FALSE;
-        }
+        switch (bmint.drag_mode)
+          {
+          case DRAG_BUMPMAP:
+            bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
+            g_signal_handlers_block_by_func (bmint.offset_adj_x,
+                                             gimp_int_adjustment_update,
+                                             &bmvals.xofs);
+            gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_x),
+                                      bmvals.xofs);
+            g_signal_handlers_unblock_by_func (bmint.offset_adj_x,
+                                               gimp_int_adjustment_update,
+                                               &bmvals.xofs);
 
-      gimp_preview_invalidate (preview);
+            bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
+            g_signal_handlers_block_by_func (bmint.offset_adj_y,
+                                             gimp_int_adjustment_update,
+                                             &bmvals.yofs);
+            gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_y),
+                                      bmvals.yofs);
+            g_signal_handlers_unblock_by_func (bmint.offset_adj_y,
+                                               gimp_int_adjustment_update,
+                                               &bmvals.yofs);
+            break;
 
-      return TRUE;
+          default:
+            return FALSE;
+          }
+
+        gimp_preview_invalidate (preview);
+        return TRUE;
+      }
       break;
 
     default:
