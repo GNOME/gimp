@@ -34,10 +34,10 @@
  */
 static void   query       (void);
 static void   run         (const gchar      *name,
-			   gint              nparams,
-			   const GimpParam  *param,
-			   gint             *nreturn_vals,
-			   GimpParam       **return_vals);
+                           gint              nparams,
+                           const GimpParam  *param,
+                           gint             *nreturn_vals,
+                           GimpParam       **return_vals);
 
 static void   semiflatten (GimpDrawable     *drawable);
 
@@ -65,18 +65,18 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Replace partial transparency with the current background color"),
-			  "This plugin flattens pixels in an RGBA image that "
-			  "aren't completely transparent against the current "
-			  "GIMP background color",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "Adam D. Moss (adam@foxbox.org)",
-			  "27th January 1998",
-			  N_("_Semi-Flatten"),
-			  "RGBA",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Replace partial transparency with the current background color"),
+                          "This plugin flattens pixels in an RGBA image that "
+                          "aren't completely transparent against the current "
+                          "GIMP background color",
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "Adam D. Moss (adam@foxbox.org)",
+                          "27th January 1998",
+                          N_("_Semi-Flatten"),
+                          "RGBA",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Web");
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Layer/Transparency/Modify");
@@ -114,17 +114,17 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Semi-Flattening"));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
-				       + 1));
-	  semiflatten (drawable);
-	  gimp_displays_flush ();
-	}
+        {
+          gimp_progress_init (_("Semi-Flattening"));
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
+                                       + 1));
+          semiflatten (drawable);
+          gimp_displays_flush ();
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -134,9 +134,9 @@ run (const gchar      *name,
 
 static void
 semiflatten_func (const guchar *src,
-		  guchar       *dest,
-		  gint          bpp,
-		  gpointer      data)
+                  guchar       *dest,
+                  gint          bpp,
+                  gpointer      data)
 {
   dest[0] = (src[0] * src[3]) / 255 + (bgred * (255 - src[3])) / 255;
   dest[1] = (src[1] * src[3]) / 255 + (bggreen * (255 - src[3])) / 255;

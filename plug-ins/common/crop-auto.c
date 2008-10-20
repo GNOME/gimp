@@ -414,9 +414,9 @@ guess_bgcolor (GimpPixelRgn *pr,
 }
 
 static gboolean
-colors_equal (const guchar 	*col1,
-              const guchar	*col2,
-              gint  		 bytes)
+colors_equal (const guchar      *col1,
+              const guchar      *col2,
+              gint               bytes)
 {
   gboolean equal = TRUE;
   gint b;

@@ -1877,7 +1877,7 @@ do {                                                            \
           rot[3] = DEG2RAD (pvals.gry_ang);
           gf = pvals.gry_spotfn;
           ASRT (gf);
-	  spotfn_list[gf].thresh = spot2thresh (gf, width);
+          spotfn_list[gf].thresh = spot2thresh (gf, width);
           thresh[3] = spotfn_list[gf].thresh;
         }
     }

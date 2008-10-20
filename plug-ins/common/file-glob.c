@@ -82,12 +82,12 @@ query (void)
                           "Sven Neumann",
                           "2004",
                           NULL,
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
-			  G_N_ELEMENTS (glob_args),
-			  G_N_ELEMENTS (glob_return_vals),
-			  glob_args,
-			  glob_return_vals);
+                          G_N_ELEMENTS (glob_args),
+                          G_N_ELEMENTS (glob_return_vals),
+                          glob_args,
+                          glob_return_vals);
 }
 
 static void
@@ -119,7 +119,7 @@ run (const gchar      *name,
         {
           values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
           return;
-	}
+        }
 
       *nreturn_vals = 3;
 
@@ -269,7 +269,7 @@ get_char (const char **str)
 
 static gunichar
 get_unescaped_char (const char **str,
-		    gboolean    *was_escaped)
+                    gboolean    *was_escaped)
 {
   gunichar c = get_char (str);
 
@@ -299,140 +299,140 @@ fnmatch_intern (const gchar *pattern,
       gunichar nc = get_char (&n);
 
       switch (c)
-	{
-   	case '?':
-	  if (nc == '\0')
-	    return FALSE;
-	  else if (nc == G_DIR_SEPARATOR)
-	    return FALSE;
-	  else if (nc == '.' && component_start && no_leading_period)
-	    return FALSE;
-	  break;
-	case '\\':
-	  if (DO_ESCAPE)
-	    c = get_char (&p);
-	  if (nc != c)
-	    return FALSE;
-	  break;
-	case '*':
-	  if (nc == '.' && component_start && no_leading_period)
-	    return FALSE;
+        {
+        case '?':
+          if (nc == '\0')
+            return FALSE;
+          else if (nc == G_DIR_SEPARATOR)
+            return FALSE;
+          else if (nc == '.' && component_start && no_leading_period)
+            return FALSE;
+          break;
+        case '\\':
+          if (DO_ESCAPE)
+            c = get_char (&p);
+          if (nc != c)
+            return FALSE;
+          break;
+        case '*':
+          if (nc == '.' && component_start && no_leading_period)
+            return FALSE;
 
-	  {
-	    const char *last_p = p;
+          {
+            const char *last_p = p;
 
-	    for (last_p = p, c = get_char (&p);
-		 c == '?' || c == '*';
-		 last_p = p, c = get_char (&p))
-	      {
-		if (c == '?')
-		  {
-		    if (nc == '\0')
-		      return FALSE;
-		    else if (nc == G_DIR_SEPARATOR)
-		      return FALSE;
-		    else
-		      {
-			last_n = n; nc = get_char (&n);
-		      }
-		  }
-	      }
+            for (last_p = p, c = get_char (&p);
+                 c == '?' || c == '*';
+                 last_p = p, c = get_char (&p))
+              {
+                if (c == '?')
+                  {
+                    if (nc == '\0')
+                      return FALSE;
+                    else if (nc == G_DIR_SEPARATOR)
+                      return FALSE;
+                    else
+                      {
+                        last_n = n; nc = get_char (&n);
+                      }
+                  }
+              }
 
-	    /* If the pattern ends with wildcards, we have a
-	     * guaranteed match unless there is a dir separator
-	     * in the remainder of the string.
-	     */
-	    if (c == '\0')
-	      {
-		if (strchr (last_n, G_DIR_SEPARATOR) != NULL)
-		  return FALSE;
-		else
-		  return TRUE;
-	      }
+            /* If the pattern ends with wildcards, we have a
+             * guaranteed match unless there is a dir separator
+             * in the remainder of the string.
+             */
+            if (c == '\0')
+              {
+                if (strchr (last_n, G_DIR_SEPARATOR) != NULL)
+                  return FALSE;
+                else
+                  return TRUE;
+              }
 
-	    if (DO_ESCAPE && c == '\\')
-	      c = get_char (&p);
+            if (DO_ESCAPE && c == '\\')
+              c = get_char (&p);
 
-	    for (p = last_p; nc != '\0';)
-	      {
-		if ((c == '[' || nc == c) &&
-		    fnmatch_intern (p, last_n,
+            for (p = last_p; nc != '\0';)
+              {
+                if ((c == '[' || nc == c) &&
+                    fnmatch_intern (p, last_n,
                                     component_start, no_leading_period))
-		  return TRUE;
+                  return TRUE;
 
-		component_start = (nc == G_DIR_SEPARATOR);
-		last_n = n;
-		nc = get_char (&n);
-	      }
+                component_start = (nc == G_DIR_SEPARATOR);
+                last_n = n;
+                nc = get_char (&n);
+              }
 
-	    return FALSE;
-	  }
+            return FALSE;
+          }
 
-	case '[':
-	  {
-	    /* Nonzero if the sense of the character class is inverted.  */
-	    gboolean not;
-	    gboolean was_escaped;
+        case '[':
+          {
+            /* Nonzero if the sense of the character class is inverted.  */
+            gboolean not;
+            gboolean was_escaped;
 
-	    if (nc == '\0' || nc == G_DIR_SEPARATOR)
-	      return FALSE;
+            if (nc == '\0' || nc == G_DIR_SEPARATOR)
+              return FALSE;
 
-	    if (nc == '.' && component_start && no_leading_period)
-	      return FALSE;
+            if (nc == '.' && component_start && no_leading_period)
+              return FALSE;
 
-	    not = (*p == '!' || *p == '^');
-	    if (not)
-	      ++p;
+            not = (*p == '!' || *p == '^');
+            if (not)
+              ++p;
 
-	    c = get_unescaped_char (&p, &was_escaped);
-	    for (;;)
-	      {
-		register gunichar cstart = c, cend = c;
-		if (c == '\0')
-		  /* [ (unterminated) loses.  */
-		  return FALSE;
+            c = get_unescaped_char (&p, &was_escaped);
+            for (;;)
+              {
+                register gunichar cstart = c, cend = c;
+                if (c == '\0')
+                  /* [ (unterminated) loses.  */
+                  return FALSE;
 
-		c = get_unescaped_char (&p, &was_escaped);
+                c = get_unescaped_char (&p, &was_escaped);
 
-		if (!was_escaped && c == '-' && *p != ']')
-		  {
-		    cend = get_unescaped_char (&p, &was_escaped);
-		    if (cend == '\0')
-		      return FALSE;
+                if (!was_escaped && c == '-' && *p != ']')
+                  {
+                    cend = get_unescaped_char (&p, &was_escaped);
+                    if (cend == '\0')
+                      return FALSE;
 
-		    c = get_char (&p);
-		  }
+                    c = get_char (&p);
+                  }
 
-		if (nc >= cstart && nc <= cend)
-		  goto matched;
+                if (nc >= cstart && nc <= cend)
+                  goto matched;
 
-		if (!was_escaped && c == ']')
-		  break;
-	      }
-	    if (!not)
-	      return FALSE;
-	    break;
+                if (!was_escaped && c == ']')
+                  break;
+              }
+            if (!not)
+              return FALSE;
+            break;
 
-	  matched:;
-	    /* Skip the rest of the [...] that already matched.  */
-	    /* XXX 1003.2d11 is unclear if was_escaped is right.  */
-	    while (was_escaped || c != ']')
-	      {
-		if (c == '\0')
-		  /* [... (unterminated) loses.  */
-		  return FALSE;
+          matched:;
+            /* Skip the rest of the [...] that already matched.  */
+            /* XXX 1003.2d11 is unclear if was_escaped is right.  */
+            while (was_escaped || c != ']')
+              {
+                if (c == '\0')
+                  /* [... (unterminated) loses.  */
+                  return FALSE;
 
-		c = get_unescaped_char (&p, &was_escaped);
-	      }
-	    if (not)
-	      return FALSE;
-	  }
-	  break;
+                c = get_unescaped_char (&p, &was_escaped);
+              }
+            if (not)
+              return FALSE;
+          }
+          break;
 
-	default:
-	  if (c != nc)
-	    return FALSE;
-	}
+        default:
+          if (c != nc)
+            return FALSE;
+        }
 
       component_start = (nc == G_DIR_SEPARATOR);
     }

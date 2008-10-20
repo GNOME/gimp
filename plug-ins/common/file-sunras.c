@@ -107,10 +107,10 @@ static void   set_color_table  (gint32, L_SUNFILEHEADER *, const guchar *);
 static gint32 create_new_image (const gchar   *filename,
                                 guint          width,
                                 guint          height,
-				GimpImageBaseType type,
+                                GimpImageBaseType type,
                                 gint32        *layer_ID,
                                 GimpDrawable **drawable,
-				GimpPixelRgn  *pixel_rgn);
+                                GimpPixelRgn  *pixel_rgn);
 
 static gint32 load_sun_d1   (const gchar *,
                              FILE *, L_SUNFILEHEADER *, unsigned char *);
@@ -223,14 +223,14 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-sun-raster");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "im1,im8,im24,im32,rs,ras",
-				    "",
-				    "0,long,0x59a66a95");
+                                    "im1,im8,im24,im32,rs,ras",
+                                    "",
+                                    "0,long,0x59a66a95");
 
   gimp_install_procedure (SAVE_PROC,
                           "save file in the SunRaster file format",
                           "SUNRAS saving handles all image types except "
-			  "those with alpha channels.",
+                          "those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -275,15 +275,15 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -292,23 +292,23 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	  }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+          }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
         {
@@ -324,13 +324,13 @@ run (const gchar      *name,
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           if (nparams != 6)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
           else
-	    {
-	      psvals.rle = (param[5].data.d_int32) ? TRUE : FALSE;
-	    }
+            {
+              psvals.rle = (param[5].data.d_int32) ? TRUE : FALSE;
+            }
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -343,21 +343,21 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+        {
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
                           &error))
-	    {
-	      /*  Store psvals data  */
-	      gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+            {
+              /*  Store psvals data  */
+              gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -428,27 +428,27 @@ load_image (const gchar  *filename,
       read_sun_cols (ifp, &sunhdr, suncolmap);
 #ifdef DEBUG
       {
-	int j, ncols;
-	printf ("File %s\n",filename);
-	ncols = sunhdr.l_ras_maplength/3;
-	for (j=0; j < ncols; j++)
-	  printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
-		  j,suncolmap[j],suncolmap[j+ncols],suncolmap[j+2*ncols]);
+        int j, ncols;
+        printf ("File %s\n",filename);
+        ncols = sunhdr.l_ras_maplength/3;
+        for (j=0; j < ncols; j++)
+          printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
+                  j,suncolmap[j],suncolmap[j+ncols],suncolmap[j+2*ncols]);
       }
 #endif
       if (sunhdr.l_ras_magic != RAS_MAGIC)
-	{
-	  g_message (_("Could not read color entries from '%s'"),
+        {
+          g_message (_("Could not read color entries from '%s'"),
                      gimp_filename_to_utf8 (filename));
-	  fclose (ifp);
-	  return (-1);
-	}
+          fclose (ifp);
+          return (-1);
+        }
     }
   else if (sunhdr.l_ras_maplength > 0)
     {
       g_message (_("Type of colormap not supported"));
       fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
-	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
+             *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
 
   if (sunhdr.l_ras_width <= 0)
@@ -585,7 +585,7 @@ save_image (const gchar  *filename,
 
 static L_CARD32
 read_card32 (FILE *ifp,
-	     gint *err)
+             gint *err)
 {
   L_CARD32 c;
 
@@ -611,7 +611,7 @@ read_card32 (FILE *ifp,
 
 static void
 write_card32 (FILE     *ofp,
-	      L_CARD32  c)
+              L_CARD32  c)
 {
   putc ((int)((c >> 24) & 0xff), ofp);
   putc ((int)((c >> 16) & 0xff), ofp);
@@ -623,9 +623,9 @@ write_card32 (FILE     *ofp,
 /* Convert n bytes of 0/1 to a line of bits */
 static void
 byte2bit (guchar   *byteline,
-	  gint      width,
-	  guchar   *bitline,
-	  gboolean  invert)
+          gint      width,
+          guchar   *bitline,
+          gboolean  invert)
 {
   register guchar bitval;
   guchar rest[8];
@@ -673,20 +673,20 @@ rle_startread (FILE *ifp)
 /* Read uncompressed elements from RLE-stream */
 static gint
 rle_fread (gchar *ptr,
-	   gint   sz,
-	   gint   nelem,
-	   FILE  *ifp)
+           gint   sz,
+           gint   nelem,
+           FILE  *ifp)
 {
   int elem_read, cnt, val, err = 0;
 
   for (elem_read = 0; elem_read < nelem; elem_read++)
     {
       for (cnt = 0; cnt < sz; cnt++)
-	{
-	  val = rle_getc (ifp);
-	  if (val < 0) { err = 1; break; }
-	  *(ptr++) = (char)val;
-	}
+        {
+          val = rle_getc (ifp);
+          if (val < 0) { err = 1; break; }
+          *(ptr++) = (char)val;
+        }
       if (err) break;
     }
   return (elem_read);
@@ -731,9 +731,9 @@ rle_startwrite (FILE *ofp)
 /* Write uncompressed elements to RLE-stream */
 static gint
 rle_fwrite (gchar *ptr,
-	    gint   sz,
-	    gint   nelem,
-	    FILE  *ofp)
+            gint   sz,
+            gint   nelem,
+            FILE  *ofp)
 {
   int elem_write, cnt, val, err = 0;
   guchar *pixels = (unsigned char *)ptr;
@@ -741,10 +741,10 @@ rle_fwrite (gchar *ptr,
   for (elem_write = 0; elem_write < nelem; elem_write++)
     {
       for (cnt = 0; cnt < sz; cnt++)
-	{
-	  val = rle_fputc (*(pixels++), ofp);
-	  if (val < 0) { err = 1; break; }
-	}
+        {
+          val = rle_fputc (*(pixels++), ofp);
+          if (val < 0) { err = 1; break; }
+        }
       if (err) break;
     }
   return (elem_write);
@@ -754,7 +754,7 @@ rle_fwrite (gchar *ptr,
 /* Write uncompressed character to RLE-stream */
 static gint
 rle_fputc (gint  val,
-	   FILE *ofp)
+           FILE *ofp)
 {
   int retval;
 
@@ -770,11 +770,11 @@ rle_fputc (gint  val,
     {
       (rlebuf.n)++;
       if (rlebuf.n == 257) /* Can not be encoded in a single run ? */
-	{
-	  retval = rle_putrun (256, rlebuf.val, ofp);
-	  if (retval < 0) return (retval);
-	  rlebuf.n -= 256;
-	}
+        {
+          retval = rle_putrun (256, rlebuf.val, ofp);
+          if (retval < 0) return (retval);
+          rlebuf.n -= 256;
+        }
       return (val);
     }
 
@@ -792,8 +792,8 @@ rle_fputc (gint  val,
 /* Write out a run with 0 < n < 257 */
 static gint
 rle_putrun (gint  n,
-	    gint  val,
-	    FILE *ofp)
+            gint  val,
+            FILE *ofp)
 {
   int retval, flag = 0x80;
 
@@ -812,9 +812,9 @@ rle_putrun (gint  n,
   else  /* Write a single run */
     {
       if (val == flag)
-	retval = putc (flag, ofp), putc (0x00, ofp);
+        retval = putc (flag, ofp), putc (0x00, ofp);
       else
-	retval = putc (val, ofp);
+        retval = putc (val, ofp);
     }
 
   return ((retval < 0) ? retval : val);
@@ -912,8 +912,8 @@ write_sun_cols (FILE            *ofp,
 
 static void
 set_color_table (gint32           image_ID,
-		 L_SUNFILEHEADER *sunhdr,
-		 const guchar    *suncolmap)
+                 L_SUNFILEHEADER *sunhdr,
+                 const guchar    *suncolmap)
 {
   guchar ColorMap[256 * 3];
   gint   ncols, j;
@@ -933,7 +933,7 @@ set_color_table (gint32           image_ID,
   printf ("Set GIMP colortable:\n");
   for (j = 0; j < ncols; j++)
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
-	    ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
+            ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
   gimp_image_set_colormap (image_ID, ColorMap, ncols);
@@ -978,7 +978,7 @@ create_new_image (const gchar        *filename,
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
+                       (*drawable)->height, TRUE, FALSE);
 
   return (image_ID);
 }
@@ -1007,7 +1007,7 @@ load_sun_d1 (const gchar     *filename,
   height = sunhdr->l_ras_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_INDEXED,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1041,39 +1041,39 @@ load_sun_d1 (const gchar     *filename,
     {
       j = width;
       while (j >= 8)
-	{
-	  pix8 = rle ? rle_getc (ifp) : getc (ifp);
-	  if (pix8 < 0) { err = 1; pix8 = 0; }
+        {
+          pix8 = rle ? rle_getc (ifp) : getc (ifp);
+          if (pix8 < 0) { err = 1; pix8 = 0; }
 
-	  memcpy (dest, bit2byte + pix8*8, 8);
-	  dest += 8;
-	  j -= 8;
-	}
+          memcpy (dest, bit2byte + pix8*8, 8);
+          dest += 8;
+          j -= 8;
+        }
 
       if (j > 0)
-	{
-	  pix8 = rle ? rle_getc (ifp) : getc (ifp);
-	  if (pix8 < 0) { err = 1; pix8 = 0; }
+        {
+          pix8 = rle ? rle_getc (ifp) : getc (ifp);
+          if (pix8 < 0) { err = 1; pix8 = 0; }
 
-	  memcpy (dest, bit2byte + pix8*8, j);
-	  dest += j;
-	}
+          memcpy (dest, bit2byte + pix8*8, j);
+          dest += j;
+        }
 
       if (linepad)
-	err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
+        err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
 
   g_free (data);
@@ -1115,20 +1115,20 @@ load_sun_d8 (const gchar     *filename,
   if ((ncols > 0) && (suncolmap != NULL))
     {
       for (j = 0; j < ncols; j++)
-	{
-	  if (   (suncolmap[j] != j)
-		 || (suncolmap[j+ncols] != j)
-		 || (suncolmap[j+2*ncols] != j))
-	    {
-	      greyscale = 0;
-	      break;
-	    }
-	}
+        {
+          if (   (suncolmap[j] != j)
+                 || (suncolmap[j+ncols] != j)
+                 || (suncolmap[j+2*ncols] != j))
+            {
+              greyscale = 0;
+              break;
+            }
+        }
     }
 
   image_ID = create_new_image (filename, width, height,
-			       greyscale ? GIMP_GRAY : GIMP_INDEXED,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               greyscale ? GIMP_GRAY : GIMP_INDEXED,
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1150,21 +1150,21 @@ load_sun_d8 (const gchar     *filename,
                : fread ((char *)dest, 1, width, ifp)) != width);
 
       if (linepad)
-	err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
+        err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
 
       dest += width;
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
 
   g_free (data);
@@ -1198,7 +1198,7 @@ load_sun_d24 (const gchar      *filename,
   height = sunhdr->l_ras_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
@@ -1217,35 +1217,35 @@ load_sun_d24 (const gchar      *filename,
                : fread ((char *)dest, 3, width, ifp)) != width);
 
       if (linepad)
-	err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
+        err |= ((rle ? rle_getc (ifp) : getc (ifp)) < 0);
 
       if (sunhdr->l_ras_type == 3) /* RGB-format ? That is what GIMP wants */
-	{
-	  dest += width*3;
-	}
+        {
+          dest += width*3;
+        }
       else                         /* We have BGR format. Correct it */
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      blue = *dest;
-	      *dest = *(dest+2);
-	      *(dest+2) = blue;
-	      dest += 3;
-	    }
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              blue = *dest;
+              *dest = *(dest+2);
+              *(dest+2) = blue;
+              dest += 3;
+            }
+        }
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
 
   g_free (data);
@@ -1283,7 +1283,7 @@ load_sun_d32 (const gchar     *filename,
   cerr = 0;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
@@ -1296,51 +1296,51 @@ load_sun_d32 (const gchar     *filename,
   for (i = 0; i < height; i++)
     {
       if (rle)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      rle_getc (ifp);   /* Skip unused byte */
-	      *(dest++) = rle_getc (ifp);
-	      *(dest++) = rle_getc (ifp);
-	      *(dest++) = (cerr = (rle_getc (ifp)));
-	    }
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              rle_getc (ifp);   /* Skip unused byte */
+              *(dest++) = rle_getc (ifp);
+              *(dest++) = rle_getc (ifp);
+              *(dest++) = (cerr = (rle_getc (ifp)));
+            }
+        }
       else
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      getc (ifp);   /* Skip unused byte */
-	      *(dest++) = getc (ifp);
-	      *(dest++) = getc (ifp);
-	      *(dest++) = (cerr = (getc (ifp)));
-	    }
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              getc (ifp);   /* Skip unused byte */
+              *(dest++) = getc (ifp);
+              *(dest++) = getc (ifp);
+              *(dest++) = (cerr = (getc (ifp)));
+            }
+        }
       err |= (cerr < 0);
 
       if (sunhdr->l_ras_type != 3) /* BGR format ? Correct it */
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      dest -= 3;
-	      blue = *dest;
-	      *dest = *(dest+2);
-	      *(dest+2) = blue;
-	    }
-	  dest += width*3;
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              dest -= 3;
+              blue = *dest;
+              *dest = *(dest+2);
+              *(dest+2) = blue;
+            }
+          dest += width*3;
+        }
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
 
   g_free (data);
@@ -1393,22 +1393,22 @@ save_index (FILE    *ofp,
       ncols = 256;
 
       for (j = 0; j < ncols; j++)
-	{
-	  suncolmap[j] = j;
-	  suncolmap[j+ncols] = j;
-	  suncolmap[j+ncols*2] = j;
-	}
+        {
+          suncolmap[j] = j;
+          suncolmap[j+ncols] = j;
+          suncolmap[j+ncols*2] = j;
+        }
     }
   else
     {
       cmap = gimp_image_get_colormap (image_ID, &ncols);
 
       for (j = 0; j < ncols; j++)
-	{
-	  suncolmap[j] = *(cmap++);
-	  suncolmap[j+ncols] = *(cmap++);
-	  suncolmap[j+ncols*2] = *(cmap++);
-	}
+        {
+          suncolmap[j] = *(cmap++);
+          suncolmap[j+ncols] = *(cmap++);
+          suncolmap[j+ncols*2] = *(cmap++);
+        }
     }
 
   bw = (ncols == 2);   /* Maybe this is a two-colour image */
@@ -1464,29 +1464,29 @@ save_index (FILE    *ofp,
   if (bw)  /* Two colour image */
     {
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
-	  byte2bit (src, width, bwline, is_bw);
-	  (*write_fun) (bwline, bpl, 1, ofp);
-	  if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
-	  src += width;
+        {
+          if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
+          byte2bit (src, width, bwline, is_bw);
+          (*write_fun) (bwline, bpl, 1, ofp);
+          if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
+          src += width;
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double) i / (double) height);
-	}
+          if ((i % 20) == 0)
+            gimp_progress_update ((double) i / (double) height);
+        }
     }
   else   /* Colour or grey-image */
     {
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
-	  (*write_fun) ((char *)src, width, 1, ofp);
-	  if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
-	  src += width;
+        {
+          if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
+          (*write_fun) ((char *)src, width, 1, ofp);
+          if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
+          src += width;
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double) i / (double) height);
-	}
+          if ((i % 20) == 0)
+            gimp_progress_update ((double) i / (double) height);
+        }
     }
 
   if (rle)
@@ -1562,44 +1562,44 @@ save_rgb (FILE   *ofp,
   if (!rle)
     {
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
-	  for (j = 0; j < width; j++)
-	    {
-	      if (bpp == 4) putc (0, ofp);   /* Dummy */
-	      putc (*(src+2), ofp);          /* Blue */
-	      putc (*(src+1), ofp);          /* Green */
-	      putc (*src, ofp);              /* Red */
-	      src += 3;
-	    }
-	  for (j = 0; j < linepad; j++)
-	    putc (0, ofp);
+        {
+          if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
+          for (j = 0; j < width; j++)
+            {
+              if (bpp == 4) putc (0, ofp);   /* Dummy */
+              putc (*(src+2), ofp);          /* Blue */
+              putc (*(src+1), ofp);          /* Green */
+              putc (*src, ofp);              /* Red */
+              src += 3;
+            }
+          for (j = 0; j < linepad; j++)
+            putc (0, ofp);
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double) i / (double) height);
-	}
+          if ((i % 20) == 0)
+            gimp_progress_update ((double) i / (double) height);
+        }
     }
   else  /* Write runlength encoded */
     {
       rle_startwrite (ofp);
 
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
-	  for (j = 0; j < width; j++)
-	    {
-	      if (bpp == 4) rle_putc (0, ofp);   /* Dummy */
-	      rle_putc (*(src+2), ofp);          /* Blue */
-	      rle_putc (*(src+1), ofp);          /* Green */
-	      rle_putc (*src, ofp);              /* Red */
-	      src += 3;
-	    }
-	  for (j = 0; j < linepad; j++)
-	    rle_putc (0, ofp);
+        {
+          if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
+          for (j = 0; j < width; j++)
+            {
+              if (bpp == 4) rle_putc (0, ofp);   /* Dummy */
+              rle_putc (*(src+2), ofp);          /* Blue */
+              rle_putc (*(src+1), ofp);          /* Green */
+              rle_putc (*src, ofp);              /* Red */
+              src += 3;
+            }
+          for (j = 0; j < linepad; j++)
+            rle_putc (0, ofp);
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double) i / (double) height);
-	}
+          if ((i % 20) == 0)
+            gimp_progress_update ((double) i / (double) height);
+        }
 
       rle_endwrite (ofp);
     }
@@ -1645,12 +1645,12 @@ save_dialog (void)
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),
                                     G_CALLBACK (gimp_radio_button_update),
-				    &psvals.rle, psvals.rle,
+                                    &psvals.rle, psvals.rle,
 
-				    _("RunLength Encoded"), TRUE,  NULL,
-				    _("Standard"),          FALSE, NULL,
+                                    _("RunLength Encoded"), TRUE,  NULL,
+                                    _("Standard"),          FALSE, NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
@@ -1668,9 +1668,9 @@ save_dialog (void)
 
 static int
 my_fwrite (void *ptr,
-	   int   size,
-	   int   nmemb,
-	   FILE *stream)
+           int   size,
+           int   nmemb,
+           FILE *stream)
 {
   return fwrite (ptr, size, nmemb, stream);
 }

@@ -642,7 +642,7 @@ initialize_white (GimpImageBaseType   dtype,
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
       if (*tmp == NULL)
-	*tmp = (void *) g_new (gfloat, 1);
+        *tmp = (void *) g_new (gfloat, 1);
       **(float **)tmp = channel_mask[0] * here[0] * here[0]
                      + channel_mask[1] * here[1] * here[1]
                      + channel_mask[2] * here[2] * here[2];
@@ -700,7 +700,7 @@ initialize_black (GimpImageBaseType   dtype,
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
       if (*tmp == NULL)
-	*tmp = (void *) g_new (gfloat, 1);
+        *tmp = (void *) g_new (gfloat, 1);
       **(float **)tmp = (channel_mask[0] * here[0] * here[0]
                      + channel_mask[1] * here[1] * here[1]
                      + channel_mask[2] * here[2] * here[2]);

@@ -309,36 +309,36 @@ query (void)
   args[3].description = type_desc->str;
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Decompose an image into separate colorspace components"),
-			  "This function creates new gray images with "
-			  "different channel information in each of them",
-			  "Peter Kirchgessner",
-			  "Peter Kirchgessner",
-			  "1997",
-			  N_("_Decompose..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args),
+                          N_("Decompose an image into separate colorspace components"),
+                          "This function creates new gray images with "
+                          "different channel information in each of them",
+                          "Peter Kirchgessner",
+                          "Peter Kirchgessner",
+                          "1997",
+                          N_("_Decompose..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
-			  args, return_vals);
+                          args, return_vals);
 
   gimp_install_procedure (PLUG_IN_PROC_REG,
-			  N_("Decompose an image into separate colorspace components"),
-			  "This function creates new gray images with "
-			  "different channel information in each of them. "
-			  "Pixels in the foreground color will appear black "
+                          N_("Decompose an image into separate colorspace components"),
+                          "This function creates new gray images with "
+                          "different channel information in each of them. "
+                          "Pixels in the foreground color will appear black "
                           "in all output images.  This can be used for "
                           "things like crop marks that have to show up on "
                           "all channels.",
-			  "Peter Kirchgessner",
-			  "Peter Kirchgessner, Clarence Risher",
-			  "1997",
-			  N_("_Decompose..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args),
+                          "Peter Kirchgessner",
+                          "Peter Kirchgessner, Clarence Risher",
+                          "1997",
+                          N_("_Decompose..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
-			  args, return_vals);
+                          args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC_REG, "<Image>/Colors/Components");
 
@@ -388,24 +388,24 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! decompose_dialog ())
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 4 && nparams != 5 && nparams != 6)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
+        {
           strncpy (decovals.extract_type, param[3].data.d_string,
                    sizeof (decovals.extract_type));
           decovals.extract_type[sizeof (decovals.extract_type)-1] = '\0';
 
           decovals.as_layers = nparams > 4 ? param[4].data.d_int32 : FALSE;
           decovals.use_registration = (strcmp (name, PLUG_IN_PROC_REG) == 0);
-	}
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -435,11 +435,11 @@ run (const gchar      *name,
                               layer_ID_extract);
 
       if (num_images <= 0)
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
+        {
           /* create decompose-data parasite */
           GString *data = g_string_new ("");
 
@@ -449,25 +449,25 @@ run (const gchar      *name,
           for (j = 0; j < num_layers; j++)
             g_string_append_printf (data, "%d ", layer_ID_extract[j]);
 
-	  for (j = 0; j < num_images; j++)
-	    {
-	      values[j+1].data.d_int32 = image_ID_extract[j];
+          for (j = 0; j < num_images; j++)
+            {
+              values[j+1].data.d_int32 = image_ID_extract[j];
 
-	      gimp_image_undo_enable (image_ID_extract[j]);
-	      gimp_image_clean_all (image_ID_extract[j]);
+              gimp_image_undo_enable (image_ID_extract[j]);
+              gimp_image_clean_all (image_ID_extract[j]);
 
               gimp_image_attach_new_parasite (image_ID_extract[j],
                                               "decompose-data",
                                               0, data->len + 1, data->str);
 
-	      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-		gimp_display_new (image_ID_extract[j]);
-	    }
+              if (run_mode != GIMP_RUN_NONINTERACTIVE)
+                gimp_display_new (image_ID_extract[j]);
+            }
 
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
-	}
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
+        }
     }
 
   values[0].data.d_status = status;
@@ -501,10 +501,10 @@ decompose (gint32       image_ID,
   for (j = 0; j < G_N_ELEMENTS (extract); j++)
     {
       if (g_ascii_strcasecmp (extract_type, extract[j].type) == 0)
-	{
-	  extract_idx = j;
-	  break;
-	}
+        {
+          extract_idx = j;
+          break;
+        }
     }
   if (extract_idx < 0)
     return -1;
@@ -628,7 +628,7 @@ decompose (gint32       image_ID,
 
       /* Extract the channel information */
       extract[extract_idx].extract_fun (src, drawable_src->bpp, scan_lines*width,
-					dst);
+                                        dst);
 
       /* Transfer the registration color */
       if (decovals.use_registration)
@@ -637,8 +637,8 @@ decompose (gint32       image_ID,
 
       /* Set destination pixel regions */
       for (j = 0; j < num_layers; j++)
-	gimp_pixel_rgn_set_rect (&(pixel_rgn_dst[j]), dst[j], 0, i, width,
-				 scan_lines);
+        gimp_pixel_rgn_set_rect (&(pixel_rgn_dst[j]), dst[j], 0, i, width,
+                                 scan_lines);
       i += scan_lines;
 
       gimp_progress_update ((gdouble) i / (gdouble) height);
@@ -728,7 +728,7 @@ create_new_layer (gint32              image_ID,
 
   *drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
+                       (*drawable)->height, TRUE, FALSE);
 
   return layer_ID;
 }
@@ -773,9 +773,9 @@ transfer_registration_color (const guchar  *src,
 
 static void
 extract_rgb (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *red_dst = dst[0];
@@ -794,9 +794,9 @@ extract_rgb (const guchar  *src,
 
 static void
 extract_rgba (const guchar  *src,
-	      gint           bpp,
-	      gint           numpix,
-	      guchar       **dst)
+              gint           bpp,
+              gint           numpix,
+              guchar       **dst)
 {
   register const guchar *rgba_src = src;
   register guchar *red_dst = dst[0];
@@ -817,9 +817,9 @@ extract_rgba (const guchar  *src,
 
 static void
 extract_red (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *red_dst = dst[0];
@@ -835,9 +835,9 @@ extract_red (const guchar  *src,
 
 static void
 extract_green (const guchar  *src,
-	       gint           bpp,
-	       gint           numpix,
-	       guchar       **dst)
+               gint           bpp,
+               gint           numpix,
+               guchar       **dst)
 {
   register const guchar *rgb_src = src+1;
   register guchar *green_dst = dst[0];
@@ -853,9 +853,9 @@ extract_green (const guchar  *src,
 
 static void
 extract_blue (const guchar  *src,
-	      gint           bpp,
-	      gint           numpix,
-	      guchar       **dst)
+              gint           bpp,
+              gint           numpix,
+              guchar       **dst)
 {
   register const guchar *rgb_src = src+2;
   register guchar *blue_dst = dst[0];
@@ -871,9 +871,9 @@ extract_blue (const guchar  *src,
 
 static void
 extract_alpha (const guchar  *src,
-	       gint           bpp,
-	       gint           numpix,
-	       guchar       **dst)
+               gint           bpp,
+               gint           numpix,
+               guchar       **dst)
 {
   register const guchar *rgb_src = src+3;
   register guchar *alpha_dst = dst[0];
@@ -889,9 +889,9 @@ extract_alpha (const guchar  *src,
 
 static void
 extract_cmy (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *cyan_dst = dst[0];
@@ -911,9 +911,9 @@ extract_cmy (const guchar  *src,
 
 static void
 extract_hsv (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *hue_dst = dst[0];
@@ -935,9 +935,9 @@ extract_hsv (const guchar  *src,
 
 static void
 extract_hue (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *hue_dst = dst[0];
@@ -955,9 +955,9 @@ extract_hue (const guchar  *src,
 
 static void
 extract_sat (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *sat_dst = dst[0];
@@ -975,9 +975,9 @@ extract_sat (const guchar  *src,
 
 static void
 extract_val (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *val_dst = dst[0];
@@ -995,9 +995,9 @@ extract_val (const guchar  *src,
 
 static void
 extract_hsl (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *hue_dst = dst[0];
@@ -1024,9 +1024,9 @@ extract_hsl (const guchar  *src,
 
 static void
 extract_huel (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *hue_dst = dst[0];
@@ -1048,9 +1048,9 @@ extract_huel (const guchar  *src,
 
 static void
 extract_satl (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *sat_dst = dst[0];
@@ -1072,9 +1072,9 @@ extract_satl (const guchar  *src,
 
 static void
 extract_lightness (const guchar  *src,
-		   gint           bpp,
-		   gint           numpix,
-		   guchar       **dst)
+                   gint           bpp,
+                   gint           numpix,
+                   guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *lum_dst = dst[0];
@@ -1095,9 +1095,9 @@ extract_lightness (const guchar  *src,
 
 static void
 extract_cyan (const guchar  *src,
-	      gint           bpp,
-	      gint           numpix,
-	      guchar       **dst)
+              gint           bpp,
+              gint           numpix,
+              guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *cyan_dst = dst[0];
@@ -1113,9 +1113,9 @@ extract_cyan (const guchar  *src,
 
 static void
 extract_magenta (const guchar  *src,
-		 gint           bpp,
-		 gint           numpix,
-		 guchar       **dst)
+                 gint           bpp,
+                 gint           numpix,
+                 guchar       **dst)
 {
   register const guchar *rgb_src = src+1;
   register guchar *magenta_dst = dst[0];
@@ -1131,9 +1131,9 @@ extract_magenta (const guchar  *src,
 
 static void
 extract_yellow (const guchar  *src,
-		gint           bpp,
-		gint           numpix,
-		guchar       **dst)
+                gint           bpp,
+                gint           numpix,
+                guchar       **dst)
 {
   register const guchar *rgb_src = src+2;
   register guchar *yellow_dst = dst[0];
@@ -1149,9 +1149,9 @@ extract_yellow (const guchar  *src,
 
 static void
 extract_cmyk (const guchar  *src,
-	      gint           bpp,
-	      gint           numpix,
-	      guchar       **dst)
+              gint           bpp,
+              gint           numpix,
+              guchar       **dst)
 
 {
   register const guchar *rgb_src = src;
@@ -1167,16 +1167,16 @@ extract_cmyk (const guchar  *src,
       *cyan_dst = k = 255 - *(rgb_src++);
       *magenta_dst = s = 255 - *(rgb_src++);
       if (s < k)
-	k = s;
+        k = s;
       *yellow_dst = s = 255 - *(rgb_src++);
       if (s < k)
-	k = s;                /* Black intensity is minimum of c, m, y */
+        k = s;                /* Black intensity is minimum of c, m, y */
       if (k)
-	{
-	  *cyan_dst -= k;     /* Remove common part of c, m, y */
-	  *magenta_dst -= k;
-	  *yellow_dst -= k;
-	}
+        {
+          *cyan_dst -= k;     /* Remove common part of c, m, y */
+          *magenta_dst -= k;
+          *yellow_dst -= k;
+        }
       cyan_dst++;
       magenta_dst++;
       yellow_dst++;
@@ -1189,9 +1189,9 @@ extract_cmyk (const guchar  *src,
 
 static void
 extract_cyank (const guchar  *src,
-	       gint           bpp,
-	       gint           numpix,
-	       guchar       **dst)
+               gint           bpp,
+               gint           numpix,
+               guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *cyan_dst = dst[0];
@@ -1215,9 +1215,9 @@ extract_cyank (const guchar  *src,
 
 static void
 extract_magentak (const guchar  *src,
-		  gint           bpp,
-		  gint           numpix,
-		  guchar       **dst)
+                  gint           bpp,
+                  gint           numpix,
+                  guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *magenta_dst = dst[0];
@@ -1229,12 +1229,12 @@ extract_magentak (const guchar  *src,
       k = 255 - *(rgb_src++);  /* cyan */
       *magenta_dst = s = 255 - *(rgb_src++);  /* magenta */
       if (s < k)
-	k = s;
+        k = s;
       s = 255 - *(rgb_src++);  /* yellow */
       if (s < k)
-	k = s;
+        k = s;
       if (k)
-	*magenta_dst -= k;
+        *magenta_dst -= k;
       magenta_dst++;
 
       rgb_src += offset;
@@ -1244,9 +1244,9 @@ extract_magentak (const guchar  *src,
 
 static void
 extract_yellowk (const guchar  *src,
-		 gint           bpp,
-		 gint           numpix,
-		 guchar       **dst)
+                 gint           bpp,
+                 gint           numpix,
+                 guchar       **dst)
 
 {
   register const guchar *rgb_src = src;
@@ -1261,9 +1261,9 @@ extract_yellowk (const guchar  *src,
       if (s < k) k = s;
       *yellow_dst = s = 255 - *(rgb_src++);
       if (s < k)
-	k = s;
+        k = s;
       if (k)
-	*yellow_dst -= k;
+        *yellow_dst -= k;
       yellow_dst++;
 
       rgb_src += offset;
@@ -1272,9 +1272,9 @@ extract_yellowk (const guchar  *src,
 
 static void
 extract_lab (const guchar  *src,
-	     gint           bpp,
-	     gint           numpix,
-	     guchar       **dst)
+             gint           bpp,
+             gint           numpix,
+             guchar       **dst)
 {
   register const guchar *rgb_src = src;
   register guchar *l_dst = dst[0];

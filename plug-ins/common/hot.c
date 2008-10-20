@@ -19,30 +19,30 @@
 
 /*
  * hot.c - Scan an image for pixels with RGB values that will give
- *	"unsafe" values of chrominance signal or composite signal
- *	amplitude when encoded into an NTSC or PAL colour signal.
- *	(This happens for certain high-intensity high-saturation colours
- *	that are rare in real scenes, but can easily be present
- *	in synthetic images.)
+ *      "unsafe" values of chrominance signal or composite signal
+ *      amplitude when encoded into an NTSC or PAL colour signal.
+ *      (This happens for certain high-intensity high-saturation colours
+ *      that are rare in real scenes, but can easily be present
+ *      in synthetic images.)
  *
- * 	Such pixels can be flagged so the user may then choose other
- *	colours.  Or, the offending pixels can be made "safe"
- *	in a manner that preserves hue.
+ *      Such pixels can be flagged so the user may then choose other
+ *      colours.  Or, the offending pixels can be made "safe"
+ *      in a manner that preserves hue.
  *
- *	There are two reasonable ways to make a pixel "safe":
- *	We can reduce its intensity (luminance) while leaving
- *	hue and saturation the same.  Or, we can reduce saturation
- *	while leaving hue and luminance the same.  A #define selects
- *	which strategy to use.
+ *      There are two reasonable ways to make a pixel "safe":
+ *      We can reduce its intensity (luminance) while leaving
+ *      hue and saturation the same.  Or, we can reduce saturation
+ *      while leaving hue and luminance the same.  A #define selects
+ *      which strategy to use.
  *
  * Note to the user: You must add your own read_pixel() and write_pixel()
- *	routines.  You may have to modify pix_decode() and pix_encode().
- *	MAXPIX, WID, and HGT are likely to need modification.
+ *      routines.  You may have to modify pix_decode() and pix_encode().
+ *      MAXPIX, WID, and HGT are likely to need modification.
  */
 
 /*
  * Originally written as "ikNTSC.c" by Alan Wm Paeth,
- *	University of Waterloo, August, 1985
+ *      University of Waterloo, August, 1985
  * Updated by Dave Martindale, Imax Systems Corp., December 1990
  */
 
@@ -51,16 +51,16 @@
  *
  *
  * CHROMA_LIM is the limit (in IRE units) of the overall
- *	chrominance amplitude; it should be 50 or perhaps
- *	very slightly higher.
+ *      chrominance amplitude; it should be 50 or perhaps
+ *      very slightly higher.
  *
  * COMPOS_LIM is the maximum amplitude (in IRE units) allowed for
- *	the composite signal.  A value of 100 is the maximum
- *	monochrome white, and is always safe.  120 is the absolute
- *	limit for NTSC broadcasting, since the transmitter's carrier
- *	goes to zero with 120 IRE input signal.  Generally, 110
- *	is a good compromise - it allows somewhat brighter colours
- *	than 100, while staying safely away from the hard limit.
+ *      the composite signal.  A value of 100 is the maximum
+ *      monochrome white, and is always safe.  120 is the absolute
+ *      limit for NTSC broadcasting, since the transmitter's carrier
+ *      goes to zero with 120 IRE input signal.  Generally, 110
+ *      is a good compromise - it allows somewhat brighter colours
+ *      than 100, while staying safely away from the hard limit.
  */
 
 #include "config.h"
@@ -99,8 +99,8 @@ typedef enum
   MODE_PAL
 } hotModes;
 
-#define	CHROMA_LIM      50.0		/* chroma amplitude limit */
-#define	COMPOS_LIM      110.0		/* max IRE amplitude */
+#define CHROMA_LIM      50.0            /* chroma amplitude limit */
+#define COMPOS_LIM      110.0           /* max IRE amplitude */
 
 /*
  * RGB to YIQ encoding matrix.
@@ -133,14 +133,14 @@ struct
 };
 
 
-#define SCALE	8192            /* scale factor: do floats with int math */
-#define MAXPIX	 255            /* white value */
+#define SCALE   8192            /* scale factor: do floats with int math */
+#define MAXPIX   255            /* white value */
 
-static gint	tab[3][3][MAXPIX+1]; /* multiply lookup table */
-static gdouble	chroma_lim;          /* chroma limit */
-static gdouble	compos_lim;          /* composite amplitude limit */
-static glong	ichroma_lim2;        /* chroma limit squared (scaled integer) */
-static gint	icompos_lim;         /* composite amplitude limit (scaled integer) */
+static gint     tab[3][3][MAXPIX+1]; /* multiply lookup table */
+static gdouble  chroma_lim;          /* chroma limit */
+static gdouble  compos_lim;          /* composite amplitude limit */
+static glong    ichroma_lim2;        /* chroma limit squared (scaled integer) */
+static gint     icompos_lim;         /* composite amplitude limit (scaled integer) */
 
 static void       query         (void);
 static void       run           (const gchar      *name,
@@ -169,10 +169,10 @@ static void       build_tab     (gint              m);
 
 /*
  * pix_decode: decode an integer pixel value into a floating-point
- *	intensity in the range [0, 1].
+ *      intensity in the range [0, 1].
  *
  * pix_encode: encode a floating-point intensity into an integer
- *	pixel value.
+ *      pixel value.
  *
  * The code given here assumes simple linear encoding; you must change
  * these routines if you use a different pixel encoding technique.
@@ -204,21 +204,21 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Find and fix pixels that may be unsafely bright"),
-			  "hot scans an image for pixels that will give unsave "
-			  "values of chrominance or composite signale "
-			  "amplitude when encoded into an NTSC or PAL signal.  "
-			  "Three actions can be performed on these ``hot'' "
-			  "pixels. (0) reduce luminance, (1) reduce "
-			  "saturation, or (2) Blacken.",
-			  "Eric L. Hernes, Alan Wm Paeth",
-			  "Eric L. Hernes",
-			  "1997",
-			  N_("_Hot..."),
-			  "RGB",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Find and fix pixels that may be unsafely bright"),
+                          "hot scans an image for pixels that will give unsave "
+                          "values of chrominance or composite signale "
+                          "amplitude when encoded into an NTSC or PAL signal.  "
+                          "Three actions can be performed on these ``hot'' "
+                          "pixels. (0) reduce luminance, (1) reduce "
+                          "saturation, or (2) Blacken.",
+                          "Eric L. Hernes, Alan Wm Paeth",
+                          "Eric L. Hernes",
+                          "1997",
+                          N_("_Hot..."),
+                          "RGB",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Modify");
 }
@@ -254,19 +254,19 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
       if (args.mode == -1)
-	{
-	  args.mode       = MODE_NTSC;
-	  args.action     = ACT_LREDUX;
-	  args.new_layerp = 1;
-	}
+        {
+          args.mode       = MODE_NTSC;
+          args.action     = ACT_LREDUX;
+          args.new_layerp = 1;
+        }
 
       if (plugin_dialog (&args))
-	{
+        {
           if (! pluginCore (&args))
             {
               rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
             }
-	}
+        }
       else
         {
           rvals[0].data.d_status = GIMP_PDB_CANCEL;
@@ -278,27 +278,27 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /* XXX: add code here for non-interactive running */
       if (nparam != 6)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
       args.mode       = param[3].data.d_int32;
       args.action     = param[4].data.d_int32;
       args.new_layerp = param[5].data.d_int32;
 
       if (! pluginCore (&args))
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+        }
     break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* XXX: add code here for last-values running */
       if (! pluginCore (&args))
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
     break;
   }
 }
@@ -334,29 +334,29 @@ pluginCore (piArgs *argp)
       gchar        name[40];
       const gchar *mode_names[] =
       {
-	"ntsc",
-	"pal",
+        "ntsc",
+        "pal",
       };
       const gchar *action_names[] =
       {
-	"lum redux",
-	"sat redux",
-	"flag",
+        "lum redux",
+        "sat redux",
+        "flag",
       };
 
       g_snprintf (name, sizeof (name), "hot mask (%s, %s)",
-		  mode_names[argp->mode],
-		  action_names[argp->action]);
+                  mode_names[argp->mode],
+                  action_names[argp->action]);
 
       nl = gimp_layer_new (argp->image, name, width, height,
-			   GIMP_RGBA_IMAGE, (gdouble)100, GIMP_NORMAL_MODE);
+                           GIMP_RGBA_IMAGE, (gdouble)100, GIMP_NORMAL_MODE);
       ndrw = gimp_drawable_get (nl);
       gimp_drawable_fill (nl, GIMP_TRANSPARENT_FILL);
       gimp_image_add_layer (argp->image, nl, 0);
     }
 
   gimp_drawable_mask_bounds (drw->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   width  = sel_x2 - sel_x1;
   height = sel_y2 - sel_y1;
@@ -392,161 +392,161 @@ pluginCore (piArgs *argp)
       gint x;
 
       if (y % prog_interval == 0)
-	gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
+        gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
 
       for (x = sel_x1; x < sel_x2; x++)
-	{
-	  if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))
-	    {
-	      if (argp->action == ACT_FLAG)
-		{
-		  for (i = 0; i < 3; i++)
-		    *d++ = 0;
-		  s += 3;
-		  if (bpp == 4)
-		    *d++ = *s++;
-		  else if (argp->new_layerp)
-		    *d++ = 255;
-		}
-	      else
-		{
-		  /*
-		   * Optimization: cache the last-computed hot pixel.
-		   */
-		  if (r == prev_r && g == prev_g && b == prev_b)
-		    {
-		      *d++ = new_r;
-		      *d++ = new_g;
-		      *d++ = new_b;
-		      s += 3;
-		      if (bpp == 4)
-			*d++ = *s++;
-		      else if (argp->new_layerp)
-			*d++ = 255;
-		    }
-		  else
-		    {
-		      Y = tab[0][0][r] + tab[0][1][g] + tab[0][2][b];
-		      I = tab[1][0][r] + tab[1][1][g] + tab[1][2][b];
-		      Q = tab[2][0][r] + tab[2][1][g] + tab[2][2][b];
+        {
+          if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))
+            {
+              if (argp->action == ACT_FLAG)
+                {
+                  for (i = 0; i < 3; i++)
+                    *d++ = 0;
+                  s += 3;
+                  if (bpp == 4)
+                    *d++ = *s++;
+                  else if (argp->new_layerp)
+                    *d++ = 255;
+                }
+              else
+                {
+                  /*
+                   * Optimization: cache the last-computed hot pixel.
+                   */
+                  if (r == prev_r && g == prev_g && b == prev_b)
+                    {
+                      *d++ = new_r;
+                      *d++ = new_g;
+                      *d++ = new_b;
+                      s += 3;
+                      if (bpp == 4)
+                        *d++ = *s++;
+                      else if (argp->new_layerp)
+                        *d++ = 255;
+                    }
+                  else
+                    {
+                      Y = tab[0][0][r] + tab[0][1][g] + tab[0][2][b];
+                      I = tab[1][0][r] + tab[1][1][g] + tab[1][2][b];
+                      Q = tab[2][0][r] + tab[2][1][g] + tab[2][2][b];
 
-		      prev_r = r;
-		      prev_g = g;
-		      prev_b = b;
-		      /*
-		       * Get Y and chroma amplitudes in floating point.
-		       *
-		       * If your C library doesn't have hypot(), just use
-		       * hypot(a,b) = sqrt(a*a, b*b);
-		       *
-		       * Then extract linear (un-gamma-corrected)
-		       * floating-point pixel RGB values.
-		       */
-		      fy = (double)Y / (double)SCALE;
-		      fc = hypot ((double) I / (double) SCALE,
-				  (double) Q / (double) SCALE);
+                      prev_r = r;
+                      prev_g = g;
+                      prev_b = b;
+                      /*
+                       * Get Y and chroma amplitudes in floating point.
+                       *
+                       * If your C library doesn't have hypot(), just use
+                       * hypot(a,b) = sqrt(a*a, b*b);
+                       *
+                       * Then extract linear (un-gamma-corrected)
+                       * floating-point pixel RGB values.
+                       */
+                      fy = (double)Y / (double)SCALE;
+                      fc = hypot ((double) I / (double) SCALE,
+                                  (double) Q / (double) SCALE);
 
-		      pr = (double) pix_decode (r);
-		      pg = (double) pix_decode (g);
-		      pb = (double) pix_decode (b);
+                      pr = (double) pix_decode (r);
+                      pg = (double) pix_decode (g);
+                      pb = (double) pix_decode (b);
 
-		      /*
-		       * Reducing overall pixel intensity by scaling R,
-		       * G, and B reduces Y, I, and Q by the same factor.
-		       * This changes luminance but not saturation, since
-		       * saturation is determined by the chroma/luminance
-		       * ratio.
-		       *
-		       * On the other hand, by linearly interpolating
-		       * between the original pixel value and a grey
-		       * pixel with the same luminance (R=G=B=Y), we
-		       * change saturation without affecting luminance.
-		       */
-		      if (argp->action == ACT_LREDUX)
-			{
-			  /*
-			   * Calculate a scale factor that will bring the pixel
-			   * within both chroma and composite limits, if we scale
-			   * luminance and chroma simultaneously.
-			   *
-			   * The calculated chrominance reduction applies
-			   * to the gamma-corrected RGB values that are
-			   * the input to the RGB-to-YIQ operation.
-			   * Multiplying the original un-gamma-corrected
-			   * pixel values by the scaling factor raised to
-			   * the "gamma" power is equivalent, and avoids
-			   * calling gc() and inv_gc() three times each.  */
-			  scale = chroma_lim / fc;
-			  t = compos_lim / (fy + fc);
-			  if (t < scale)
-			    scale = t;
-			  scale = pow (scale, mode[argp->mode].gamma);
+                      /*
+                       * Reducing overall pixel intensity by scaling R,
+                       * G, and B reduces Y, I, and Q by the same factor.
+                       * This changes luminance but not saturation, since
+                       * saturation is determined by the chroma/luminance
+                       * ratio.
+                       *
+                       * On the other hand, by linearly interpolating
+                       * between the original pixel value and a grey
+                       * pixel with the same luminance (R=G=B=Y), we
+                       * change saturation without affecting luminance.
+                       */
+                      if (argp->action == ACT_LREDUX)
+                        {
+                          /*
+                           * Calculate a scale factor that will bring the pixel
+                           * within both chroma and composite limits, if we scale
+                           * luminance and chroma simultaneously.
+                           *
+                           * The calculated chrominance reduction applies
+                           * to the gamma-corrected RGB values that are
+                           * the input to the RGB-to-YIQ operation.
+                           * Multiplying the original un-gamma-corrected
+                           * pixel values by the scaling factor raised to
+                           * the "gamma" power is equivalent, and avoids
+                           * calling gc() and inv_gc() three times each.  */
+                          scale = chroma_lim / fc;
+                          t = compos_lim / (fy + fc);
+                          if (t < scale)
+                            scale = t;
+                          scale = pow (scale, mode[argp->mode].gamma);
 
-			  r = (guint8) pix_encode (scale * pr);
-			  g = (guint8) pix_encode (scale * pg);
-			  b = (guint8) pix_encode (scale * pb);
-			}
-		      else
-			{ /* ACT_SREDUX hopefully */
-			  /*
-			   * Calculate a scale factor that will bring the
-			   * pixel within both chroma and composite
-			   * limits, if we scale chroma while leaving
-			   * luminance unchanged.
-			   *
-			   * We have to interpolate gamma-corrected RGB
-			   * values, so we must convert from linear to
-			   * gamma-corrected before interpolation and then
-			   * back to linear afterwards.
-			   */
-			  scale = chroma_lim / fc;
-			  t = (compos_lim - fy) / fc;
-			  if (t < scale)
-			    scale = t;
+                          r = (guint8) pix_encode (scale * pr);
+                          g = (guint8) pix_encode (scale * pg);
+                          b = (guint8) pix_encode (scale * pb);
+                        }
+                      else
+                        { /* ACT_SREDUX hopefully */
+                          /*
+                           * Calculate a scale factor that will bring the
+                           * pixel within both chroma and composite
+                           * limits, if we scale chroma while leaving
+                           * luminance unchanged.
+                           *
+                           * We have to interpolate gamma-corrected RGB
+                           * values, so we must convert from linear to
+                           * gamma-corrected before interpolation and then
+                           * back to linear afterwards.
+                           */
+                          scale = chroma_lim / fc;
+                          t = (compos_lim - fy) / fc;
+                          if (t < scale)
+                            scale = t;
 
-			  pr = gc (pr, argp->mode);
-			  pg = gc (pg, argp->mode);
-			  pb = gc (pb, argp->mode);
+                          pr = gc (pr, argp->mode);
+                          pg = gc (pg, argp->mode);
+                          pb = gc (pb, argp->mode);
 
-			  py = pr * mode[argp->mode].code[0][0] +
+                          py = pr * mode[argp->mode].code[0][0] +
                                pg * mode[argp->mode].code[0][1] +
                                pb * mode[argp->mode].code[0][2];
 
-			  r = pix_encode (inv_gc (py + scale * (pr - py),
-						  argp->mode));
-			  g = pix_encode (inv_gc (py + scale * (pg - py),
-						  argp->mode));
-			  b = pix_encode (inv_gc (py + scale * (pb - py),
-						  argp->mode));
-			}
+                          r = pix_encode (inv_gc (py + scale * (pr - py),
+                                                  argp->mode));
+                          g = pix_encode (inv_gc (py + scale * (pg - py),
+                                                  argp->mode));
+                          b = pix_encode (inv_gc (py + scale * (pb - py),
+                                                  argp->mode));
+                        }
 
-		      *d++ = new_r = r;
-		      *d++ = new_g = g;
-		      *d++ = new_b = b;
+                      *d++ = new_r = r;
+                      *d++ = new_g = g;
+                      *d++ = new_b = b;
 
-		      s += 3;
+                      s += 3;
 
-		      if (bpp == 4)
-			*d++ = *s++;
-		      else if (argp->new_layerp)
-			*d++ = 255;
-		    }
-		}
-	    }
-	  else
-	    {
-	      if (!argp->new_layerp)
-		{
-		  for (i = 0; i < bpp; i++)
-		    *d++ = *s++;
-		}
-	      else
-		{
-		  s += bpp;
-		  d += 4;
-		}
-	    }
-	}
+                      if (bpp == 4)
+                        *d++ = *s++;
+                      else if (argp->new_layerp)
+                        *d++ = 255;
+                    }
+                }
+            }
+          else
+            {
+              if (!argp->new_layerp)
+                {
+                  for (i = 0; i < bpp; i++)
+                    *d++ = *s++;
+                }
+              else
+                {
+                  s += bpp;
+                  d += 4;
+                }
+            }
+        }
     }
 
   gimp_pixel_rgn_set_rect (&dstPr, dst, sel_x1, sel_y1, width, height);
@@ -585,12 +585,12 @@ plugin_dialog (piArgs *argp)
 
   dlg = gimp_dialog_new (_("Hot"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, PLUG_IN_PROC,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
@@ -609,13 +609,13 @@ plugin_dialog (piArgs *argp)
   gtk_widget_show (vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &argp->mode, argp->mode,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &argp->mode, argp->mode,
 
-				    "N_TSC", MODE_NTSC, NULL,
-				    "_PAL",  MODE_PAL,  NULL,
+                                    "N_TSC", MODE_NTSC, NULL,
+                                    "_PAL",  MODE_PAL,  NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -705,8 +705,8 @@ hotp (guint8 r,
       guint8 g,
       guint8 b)
 {
-  int	y, i, q;
-  long	y2, c2;
+  int   y, i, q;
+  long  y2, c2;
 
   /*
    * Pixel decoding, gamma correction, and matrix multiplication
@@ -728,19 +728,19 @@ hotp (guint8 r,
    *
    * Chrominance is too large if
    *
-   *	sqrt(i^2, q^2)  >  chroma_lim.
+   *    sqrt(i^2, q^2)  >  chroma_lim.
    *
    * The composite signal amplitude is too large if
    *
-   *	y + sqrt(i^2, q^2)  >  compos_lim.
+   *    y + sqrt(i^2, q^2)  >  compos_lim.
    *
    * We avoid doing the sqrt by checking
    *
-   *	i^2 + q^2  >  chroma_lim^2
+   *    i^2 + q^2  >  chroma_lim^2
    * and
-   *	y + sqrt(i^2 + q^2)  >  compos_lim
-   *	sqrt(i^2 + q^2)  >  compos_lim - y
-   *	i^2 + q^2  >  (compos_lim - y)^2
+   *    y + sqrt(i^2 + q^2)  >  compos_lim
+   *    sqrt(i^2 + q^2)  >  compos_lim - y
+   *    i^2 + q^2  >  (compos_lim - y)^2
    *
    */
 
@@ -749,7 +749,7 @@ hotp (guint8 r,
   y2 *= y2;
 
   if (c2 <= ichroma_lim2 && c2 <= y2)
-    {	/* no problems */
+    {   /* no problems */
       return FALSE;
     }
 

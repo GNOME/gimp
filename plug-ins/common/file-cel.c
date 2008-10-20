@@ -127,7 +127,7 @@ query (void)
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "May 1998",
                           N_("KISS CEL"),
-			  "RGB*, INDEXED*",
+                          "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -214,27 +214,27 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "CEL",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED
-				       ));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "CEL",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED
+                                       ));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       if (save_image (param[3].data.d_string, param[4].data.d_string,
-		      image_ID, drawable_ID, &error))
+                      image_ID, drawable_ID, &error))
         {
           gimp_set_data (SAVE_PROC, palette_file, data_length);
         }
@@ -244,7 +244,7 @@ run (const gchar      *name,
         }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {

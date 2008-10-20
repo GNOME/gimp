@@ -186,10 +186,10 @@ static ScreenshotValues shootvals =
 
 static void      query (void);
 static void      run   (const gchar      *name,
-			gint              nparams,
-			const GimpParam  *param,
-			gint             *nreturn_vals,
-			GimpParam       **return_vals);
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
 static GdkNativeWindow   select_window (GdkScreen    *screen);
 static gint32            create_image  (GdkPixbuf    *pixbuf,
@@ -207,7 +207,7 @@ static gboolean   shoot_quit_timeout   (gpointer      data);
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
-  NULL,	 /* quit_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
   run    /* run_proc   */
 };
@@ -237,7 +237,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Create an image from an area of the screen"),
+                          N_("Create an image from an area of the screen"),
                           "The plug-in allows to take screenshots of a an "
                           "interactively selected window or of the desktop, "
                           "either the whole desktop or an interactively "
@@ -246,16 +246,16 @@ query (void)
                           "passed as a parameter.  The last four parameters "
                           "are optional and can be used to specify the corners "
                           "of the region to be grabbed.",
-			  "Sven Neumann <sven@gimp.org>, "
+                          "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
-			  "1998 - 2008",
-			  "v1.1 (2008/04)",
-			  N_("_Screenshot..."),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args),
+                          "1998 - 2008",
+                          "v1.1 (2008/04)",
+                          N_("_Screenshot..."),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
-			  args, return_vals);
+                          args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Create/Acquire");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_INLINE_PIXBUF,
@@ -295,35 +295,35 @@ run (const gchar      *name,
 
      /* Get information from the dialog */
       if (! shoot_dialog (&screen))
-	status = GIMP_PDB_CANCEL;
+        status = GIMP_PDB_CANCEL;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 3)
-	{
+        {
           gboolean do_root = param[1].data.d_int32;
 
           shootvals.shoot_type   = do_root ? SHOOT_ROOT : SHOOT_WINDOW;
-	  shootvals.window_id    = param[2].data.d_int32;
+          shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
-	}
+        }
       else if (nparams == 7)
-	{
-	  shootvals.shoot_type   = SHOOT_REGION;
-	  shootvals.window_id    = param[2].data.d_int32;
+        {
+          shootvals.shoot_type   = SHOOT_REGION;
+          shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
           shootvals.x1           = param[3].data.d_int32;
           shootvals.y1           = param[4].data.d_int32;
           shootvals.x2           = param[5].data.d_int32;
           shootvals.y2           = param[6].data.d_int32;
-	}
+        }
       else
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
 
       if (! gdk_init_check (NULL, NULL))
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -338,7 +338,7 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (shootvals.select_delay > 0)
-	shoot_delay (shootvals.select_delay);
+        shoot_delay (shootvals.select_delay);
 
       if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
         {
@@ -360,12 +360,12 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  /* Store variable states for next run */
-	  gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
+        {
+          /* Store variable states for next run */
+          gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
 
-	  gimp_display_new (image_ID);
-	}
+          gimp_display_new (image_ID);
+        }
 
       /* set return values */
       *nreturn_vals = 2;
@@ -1059,11 +1059,11 @@ shoot_dialog (GdkScreen **screen)
 
   dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, PLUG_IN_PROC,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 
-			    NULL);
+                            NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog),
                                   _("S_nap"), GTK_RESPONSE_OK);
@@ -1118,7 +1118,7 @@ shoot_dialog (GdkScreen **screen)
 
   /*  single window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("Take a screenshot of "
+                                               _("Take a screenshot of "
                                                  "a single _window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1155,7 +1155,7 @@ shoot_dialog (GdkScreen **screen)
 
   /*  whole screen  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("Take a screenshot of "
+                                               _("Take a screenshot of "
                                                  "the entire _screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1194,7 +1194,7 @@ shoot_dialog (GdkScreen **screen)
 
   /*  dragged region  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("Select a _region to grab"));
+                                               _("Select a _region to grab"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_REGION);

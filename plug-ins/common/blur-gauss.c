@@ -1200,8 +1200,8 @@ gauss_rle (GimpDrawable *drawable,
 
   if (direct)
     gimp_pixel_rgn_init (&dest_rgn,
-			 drawable, 0, 0, drawable->width, drawable->height,
-			 TRUE, TRUE);
+                         drawable, 0, 0, drawable->width, drawable->height,
+                         TRUE, TRUE);
 
   progress = 0.0;
   max_progress  = (horz <= 0.0) ? 0 : width * height * horz;
@@ -1244,22 +1244,22 @@ gauss_rle (GimpDrawable *drawable,
           for (b = 0; b < bytes; b++)
             {
               gint same =  run_length_encode (src + b, rle, pix, bytes,
-					      height, length, TRUE);
+                                              height, length, TRUE);
 
               if (same > (3 * height) / 4)
-		{
-		  /* encoded_rle is only fastest if there are a lot of
-		   * repeating pixels
-		   */
+                {
+                  /* encoded_rle is only fastest if there are a lot of
+                   * repeating pixels
+                   */
                   do_encoded_lre (rle, pix, dest + b, height, length, bytes,
                                   curve, total, sum);
-		}
-	      else
-		{
-		  /* else a full but more simple algorithm is better */
-		  do_full_lre (pix, dest + b, height, length, bytes,
-			       curve, total);
-		}
+                }
+              else
+                {
+                  /* else a full but more simple algorithm is better */
+                  do_full_lre (pix, dest + b, height, length, bytes,
+                               curve, total);
+                }
             }
 
           if (has_alpha)
@@ -1356,22 +1356,22 @@ gauss_rle (GimpDrawable *drawable,
           for (b = 0; b < bytes; b++)
             {
               gint same = run_length_encode (src + b, rle, pix, bytes,
-					     width, length, TRUE);
+                                             width, length, TRUE);
 
               if (same > (3 * width) / 4)
-		{
-		  /* encoded_rle is only fastest if there are a lot of
-		   * repeating pixels
-		   */
+                {
+                  /* encoded_rle is only fastest if there are a lot of
+                   * repeating pixels
+                   */
                   do_encoded_lre (rle, pix, dest + b, width, length, bytes,
                                   curve, total, sum);
-		}
-	      else
-		{
-		  /* else a full but more simple algorithm is better */
-		  do_full_lre (pix, dest + b, width, length, bytes,
+                }
+              else
+                {
+                  /* else a full but more simple algorithm is better */
+                  do_full_lre (pix, dest + b, width, length, bytes,
                                curve, total);
-		}
+                }
             }
 
 
@@ -1461,15 +1461,15 @@ gauss (GimpDrawable *drawable,
 
   if (method == BLUR_IIR)
     gauss_iir (drawable,
-	       horz, vert, method, preview_buffer, x1, y1, width, height);
+               horz, vert, method, preview_buffer, x1, y1, width, height);
   else
     gauss_rle (drawable,
-	       horz, vert, method, preview_buffer, x1, y1, width, height);
+               horz, vert, method, preview_buffer, x1, y1, width, height);
 
   if (preview)
     {
       gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
-				preview_buffer, width * drawable->bpp);
+                                preview_buffer, width * drawable->bpp);
       g_free (preview_buffer);
     }
   else
@@ -1497,9 +1497,9 @@ transfer_pixels (const gdouble *src1,
       sum = *src1++ + *src2++;
 
       if (sum > 255)
-	sum = 255;
+        sum = 255;
       else if (sum < 0)
-	sum = 0;
+        sum = 0;
 
       *dest++ = (guchar) sum;
     }
@@ -1531,13 +1531,13 @@ find_iir_constants (gdouble *n_p,
 
   n_p [0] = x4 + x6;
   n_p [1] = (exp(x1)*(x7*sin(x3)-(x6+2*x4)*cos(x3)) +
-	     exp(x0)*(x5*sin(x2) - (2*x6+x4)*cos (x2)));
+             exp(x0)*(x5*sin(x2) - (2*x6+x4)*cos (x2)));
   n_p [2] = (2 * exp(x0+x1) *
-	     ((x4+x6)*cos(x3)*cos(x2) - x5*cos(x3)*sin(x2) -
-	      x7*cos(x2)*sin(x3)) +
-	     x6*exp(2*x0) + x4*exp(2*x1));
+             ((x4+x6)*cos(x3)*cos(x2) - x5*cos(x3)*sin(x2) -
+              x7*cos(x2)*sin(x3)) +
+             x6*exp(2*x0) + x4*exp(2*x1));
   n_p [3] = (exp(x1+2*x0) * (x7*sin(x3) - x6*cos(x3)) +
-	     exp(x0+2*x1) * (x5*sin(x2) - x4*cos(x2)));
+             exp(x0+2*x1) * (x5*sin(x2) - x4*cos(x2)));
   n_p [4] = 0.0;
 
   d_p [0] = 0.0;

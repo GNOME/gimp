@@ -1,3 +1,7 @@
+2008-10-20  David Odin  <dindinx@gimp.org>
+
+	* plug-ins/common/*.c: untabified
+
 2008-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/debug-actions.c

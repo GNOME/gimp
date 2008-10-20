@@ -274,7 +274,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-    	if (gimp_drawable_is_rgb(drawable->drawable_id) ||
+        if (gimp_drawable_is_rgb(drawable->drawable_id) ||
             gimp_drawable_is_gray(drawable->drawable_id))
         {
 

@@ -162,9 +162,9 @@ query (void)
                              (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-gbr");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "gbr, gpb",
-				    "",
-				    "20, string, GIMP");
+                                    "gbr, gpb",
+                                    "",
+                                    "20, string, GIMP");
 
   gimp_install_procedure (SAVE_PROC,
                           "Saves files in the GIMP brush file format",
@@ -214,15 +214,15 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -235,27 +235,27 @@ run (const gchar      *name,
       orig_image_ID = image_ID;
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR",
-				      GIMP_EXPORT_CAN_HANDLE_GRAY  |
-				      GIMP_EXPORT_CAN_HANDLE_RGB   |
-				      GIMP_EXPORT_CAN_HANDLE_ALPHA);
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "GBR",
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                      GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
 
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (SAVE_PROC, &info);
-	  break;
+          /*  Possibly retrieve data  */
+          gimp_get_data (SAVE_PROC, &info);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-brush-name");
       if (parasite)
@@ -269,45 +269,45 @@ run (const gchar      *name,
         }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  if (! save_dialog ())
-	    status = GIMP_PDB_CANCEL;
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+          if (! save_dialog ())
+            status = GIMP_PDB_CANCEL;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  if (nparams != 7)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      info.spacing = (param[5].data.d_int32);
-	      strncpy (info.description, param[6].data.d_string,
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              info.spacing = (param[5].data.d_int32);
+              strncpy (info.description, param[6].data.d_string,
                        sizeof (info.description));
               info.description[sizeof (info.description) - 1] = '\0';
-	    }
-	  break;
+            }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+        {
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
                           &error))
-	    {
-	      gimp_set_data (SAVE_PROC, &info, sizeof (info));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+            {
+              gimp_set_data (SAVE_PROC, &info, sizeof (info));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
 
       if (info.description && strlen (info.description))
         {
@@ -420,14 +420,14 @@ load_image (const gchar  *filename,
       gchar *temp = g_new (gchar, bn_size);
 
       if ((read (fd, temp, bn_size)) < bn_size)
-	{
+        {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error in GIMP brush file '%s'"),
                        gimp_filename_to_utf8 (filename));
-	  close (fd);
-	  g_free (temp);
-	  return -1;
-	}
+          close (fd);
+          g_free (temp);
+          return -1;
+        }
 
       name = gimp_any_to_utf8 (temp, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),
@@ -554,7 +554,7 @@ load_image (const gchar  *filename,
     default:
       g_message ("Unsupported brush depth: %d\n"
                  "GIMP Brushes must be GRAY or RGBA\n",
-		 bh.bytes);
+                 bh.bytes);
       return -1;
     }
 
@@ -566,7 +566,7 @@ load_image (const gchar  *filename,
                                   strlen (name) + 1, name);
 
   layer_ID = gimp_layer_new (image_ID, name, bh.width, bh.height,
-			     image_type, 100, GIMP_NORMAL_MODE);
+                             image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   g_free (name);
@@ -577,7 +577,7 @@ load_image (const gchar  *filename,
                        TRUE, FALSE);
 
   gimp_pixel_rgn_set_rect (&pixel_rgn, brush_buf,
-			   0, 0, bh.width, bh.height);
+                           0, 0, bh.width, bh.height);
   g_free (brush_buf);
 
   if (image_type == GIMP_GRAY_IMAGE)
@@ -593,8 +593,8 @@ load_image (const gchar  *filename,
 
 static gboolean
 save_image (const gchar  *filename,
-	    gint32        image_ID,
-	    gint32        drawable_ID,
+            gint32        image_ID,
+            gint32        drawable_ID,
             GError      **error)
 {
   gint          fd;
@@ -662,8 +662,8 @@ save_image (const gchar  *filename,
     }
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height,
-		       FALSE, FALSE);
+                       0, 0, drawable->width, drawable->height,
+                       FALSE, FALSE);
 
   buffer = g_new (guchar, drawable->width * bpp);
 
@@ -675,8 +675,8 @@ save_image (const gchar  *filename,
         {
         case 1:
           /*  invert  */
-	  for (x = 0; x < drawable->width; x++)
-	    buffer[x] = 255 - buffer[x];
+          for (x = 0; x < drawable->width; x++)
+            buffer[x] = 255 - buffer[x];
           break;
 
         case 3:
@@ -692,11 +692,11 @@ save_image (const gchar  *filename,
         }
 
       if (write (fd, buffer, drawable->width * bpp) != drawable->width * bpp)
-	{
-	  g_free (buffer);
-	  close (fd);
-	  return FALSE;
-	}
+        {
+          g_free (buffer);
+          close (fd);
+          return FALSE;
+        }
 
       gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
     }
@@ -742,10 +742,10 @@ save_dialog (void)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
+                                     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Spacing:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("Spacing:"), 1.0, 0.5,
+                             spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -755,8 +755,8 @@ save_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Description:"), 1.0, 0.5,
-			     entry, 1, FALSE);
+                             _("Description:"), 1.0, 0.5,
+                             entry, 1, FALSE);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
@@ -773,7 +773,7 @@ save_dialog (void)
 
 static void
 entry_callback (GtkWidget *widget,
-		gpointer   data)
+                gpointer   data)
 {
   strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
            sizeof (info.description));

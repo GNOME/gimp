@@ -36,10 +36,10 @@
  */
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static void tile  (GimpDrawable     *drawable);
 
@@ -64,17 +64,17 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Alters edges to make the image seamlessly tileable"),
-			  "This plugin creates a seamless tileable from "
+                          N_("Alters edges to make the image seamlessly tileable"),
+                          "This plugin creates a seamless tileable from "
                           "the input drawable",
-			  "Tim Rowley",
-			  "Tim Rowley",
-			  "1997",
-			  N_("_Make Seamless"),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Tim Rowley",
+                          "Tim Rowley",
+                          "1997",
+                          N_("_Make Seamless"),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
@@ -107,7 +107,7 @@ run (const gchar      *name,
       tile(drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -192,7 +192,7 @@ weld_pixels_alpha (guchar *dest1,
 static void
 tile_region (GimpDrawable *drawable,
              gboolean      left,
-	     gint          x1,
+             gint          x1,
              gint          y1,
              gint          x2,
              gint          y2)
@@ -200,8 +200,8 @@ tile_region (GimpDrawable *drawable,
   glong         width, height;
   gint          bpp;
   gint          wodd, hodd;
-  gint	        w, h, x, y;
-  gint	        rgn1_x, rgn2_x, off_x;
+  gint          w, h, x, y;
+  gint          rgn1_x, rgn2_x, off_x;
   static gint   progress = 0;
   gint          max_progress;
   GimpPixelRgn  src1_rgn, src2_rgn, dest1_rgn, dest2_rgn;
@@ -239,14 +239,14 @@ tile_region (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&src1_rgn, drawable, rgn1_x, y1, w, h, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest1_rgn, drawable, rgn1_x, y1, w, h, TRUE, TRUE);
   gimp_pixel_rgn_init (&src2_rgn, drawable, rgn2_x, y1 + h + hodd,
-		       w, h, FALSE, FALSE);
+                       w, h, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest2_rgn, drawable, rgn2_x, y1 + h + hodd,
-		       w, h, TRUE, TRUE);
+                       w, h, TRUE, TRUE);
 
   max_progress = width * height / 2;
 
   for (pr = gimp_pixel_rgns_register (4, &src1_rgn, &dest1_rgn, &src2_rgn,
-				      &dest2_rgn);
+                                      &dest2_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
@@ -257,12 +257,12 @@ tile_region (GimpDrawable *drawable,
       gint   row    = src1_rgn.y - y1;
 
       for (y = 0; y < src1_rgn.h; y++, row++)
-	{
-	  guchar *s1 = src1;
-	  guchar *s2 = src2;
-	  guchar *d1 = dest1;
-	  guchar *d2 = dest2;
-	  gint col = src1_rgn.x - x1;
+        {
+          guchar *s1 = src1;
+          guchar *s2 = src2;
+          guchar *d1 = dest1;
+          guchar *d2 = dest2;
+          gint col = src1_rgn.x - x1;
 
           if (has_alpha)
             {
@@ -289,11 +289,11 @@ tile_region (GimpDrawable *drawable,
                 }
             }
 
-	  src1 += src1_rgn.rowstride;
-	  src2 += src2_rgn.rowstride;
-	  dest1 += dest1_rgn.rowstride;
-	  dest2 += dest2_rgn.rowstride;
-	}
+          src1 += src1_rgn.rowstride;
+          src2 += src2_rgn.rowstride;
+          dest1 += dest1_rgn.rowstride;
+          dest2 += dest2_rgn.rowstride;
+        }
 
       progress += src1_rgn.w * src1_rgn.h;
       gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
@@ -320,11 +320,11 @@ copy_region (GimpDrawable *drawable,
       gint k;
 
       for (k = 0; k < src_rgn.h; k++)
-	{
-	  memcpy (dest_rgn.data + k * dest_rgn.rowstride,
-		  src_rgn.data + k * src_rgn.rowstride,
-		  src_rgn.w * src_rgn.bpp);
-	}
+        {
+          memcpy (dest_rgn.data + k * dest_rgn.rowstride,
+                  src_rgn.data + k * src_rgn.rowstride,
+                  src_rgn.w * src_rgn.bpp);
+        }
     }
 }
 

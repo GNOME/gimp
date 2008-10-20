@@ -75,7 +75,7 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "1997",
                           N_("C source code header"),
-			  "INDEXED, RGB",
+                          "INDEXED, RGB",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -115,31 +115,31 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "Header",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "Header",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -151,8 +151,8 @@ run (const gchar      *name,
 
 static gboolean
 save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID)
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
@@ -174,10 +174,10 @@ save_image (const gchar *filename,
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   fprintf (fp, "/*  GIMP header image file format (%s): %s  */\n\n",
-	   GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED", filename);
+           GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED", filename);
   fprintf (fp, "static unsigned int width = %d;\n", drawable->width);
   fprintf (fp, "static unsigned int height = %d;\n\n", drawable->height);
   fprintf (fp, "/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */\n\n");
@@ -197,19 +197,19 @@ save_image (const gchar *filename,
 
       c = 0;
       for (y = 0; y < drawable->height; y++)
-	{
-	  gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+        {
+          gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
 
-	  for (x = 0; x < drawable->width; x++)
-	    {
-	      d = data + x * drawable->bpp;
+          for (x = 0; x < drawable->width; x++)
+            {
+              d = data + x * drawable->bpp;
 
-	      buf[0] = ((d[0] >> 2) & 0x3F) + 33;
-	      buf[1] = ((((d[0] & 0x3) << 4) | (d[1] >> 4)) & 0x3F) + 33;
-	      buf[2] = ((((d[1] & 0xF) << 2) | (d[2] >> 6)) & 0x3F) + 33;
-	      buf[3] = (d[2] & 0x3F) + 33;
+              buf[0] = ((d[0] >> 2) & 0x3F) + 33;
+              buf[1] = ((((d[0] & 0x3) << 4) | (d[1] >> 4)) & 0x3F) + 33;
+              buf[2] = ((((d[1] & 0xF) << 2) | (d[2] >> 6)) & 0x3F) + 33;
+              buf[3] = (d[2] & 0x3F) + 33;
 
-	      for (b = 0; b < 4; b++)
+              for (b = 0; b < 4; b++)
                 {
                   if (buf[b] == '"')
                     fwrite (quote, 1, 2, fp);
@@ -219,14 +219,14 @@ save_image (const gchar *filename,
                     fwrite (buf + b, 1, 1, fp);
                 }
 
-	      c++;
-	      if (c >= 16)
-		{
-		  fwrite (newline, 1, 4, fp);
-		  c = 0;
-		}
-	    }
-	}
+              c++;
+              if (c >= 16)
+                {
+                  fwrite (newline, 1, 4, fp);
+                  c = 0;
+                }
+            }
+        }
 
       fprintf (fp, "\";\n");
       break;
@@ -266,18 +266,18 @@ save_image (const gchar *filename,
           gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
 
           for (x = 0; x < drawable->width-1; x++)
-	    {
-	      d = data + x * drawable->bpp;
+            {
+              d = data + x * drawable->bpp;
 
               fprintf (fp, "%d,", (int)d[0]);
 
-	      c++;
-	      if (c >= 16)
-	        {
-	          fprintf (fp, "\n\t");
-	          c = 0;
-	        }
-	    }
+              c++;
+              if (c >= 16)
+                {
+                  fprintf (fp, "\n\t");
+                  c = 0;
+                }
+            }
 
           if (y != drawable->height - 1)
             fprintf (fp, "%d,\n\t", (int)d[1]);

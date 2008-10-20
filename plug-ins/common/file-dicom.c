@@ -49,9 +49,9 @@
 /* Declare local data types */
 typedef struct _DicomInfo
 {
-  guint      width, height;	 /* The size of the image                  */
-  gint       maxval;		 /* For 16 and 24 bit image files, the max
-				    value which we need to normalize to    */
+  guint      width, height;      /* The size of the image                  */
+  gint       maxval;             /* For 16 and 24 bit image files, the max
+                                    value which we need to normalize to    */
   gint       samples_per_pixel;  /* Number of image planes (0 for pbm)     */
   gint       bpp;
   gint       bits_stored;
@@ -136,7 +136,7 @@ query (void)
   gimp_install_procedure (LOAD_PROC,
                           "loads files of the dicom file format",
                           "Load a file in the DICOM standard format."
-			  "The standard is defined at "
+                          "The standard is defined at "
                           "http://medical.nema.org/. The plug-in currently "
                           "only supports reading images with uncompressed "
                           "pixel sections.",
@@ -144,7 +144,7 @@ query (void)
                           "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                           "2003",
                           N_("DICOM image"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -152,10 +152,10 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-dcm");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "dcm,dicom",
-				    "",
-				    "128,string,DICM"
-				    );
+                                    "dcm,dicom",
+                                    "",
+                                    "128,string,DICM"
+                                    );
 
   gimp_install_procedure (SAVE_PROC,
                           "Save file in the DICOM file format",
@@ -208,15 +208,15 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
+        {
+          *nreturn_vals = 2;
 
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
 
           if (error)
             {
@@ -224,7 +224,7 @@ run (const gchar      *name,
               values[1].type          = GIMP_PDB_STRING;
               values[1].data.d_string = error->message;
             }
- 	}
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -232,13 +232,13 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-	  export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
-				      GIMP_EXPORT_CAN_HANDLE_RGB |
+          export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
           if (export == GIMP_EXPORT_CANCEL)
             {
@@ -270,8 +270,8 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+        {
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
                             &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
@@ -286,7 +286,7 @@ run (const gchar      *name,
         }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -368,7 +368,7 @@ load_image (const gchar  *filename,
       gboolean implicit_encoding = FALSE;
 
       if (fread (&group_word, 1, 2, DICOM) == 0)
-	break;
+        break;
       group_word = g_ntohs (GUINT16_SWAP_LE_BE (group_word));
 
       fread (&element_word, 1, 2, DICOM);
@@ -382,28 +382,28 @@ load_image (const gchar  *filename,
          better way of checking this...
        */
       if ((/* Always need lookup for implicit encoding */
-	   tag > 0x0002ffff && implicit_encoding)
-	  /* This heuristics isn't used if we are doing implicit
-	     encoding according to the value representation... */
-	  || ((value_rep[0] < 'A' || value_rep[0] > 'Z'
-	  || value_rep[1] < 'A' || value_rep[1] > 'Z')
+           tag > 0x0002ffff && implicit_encoding)
+          /* This heuristics isn't used if we are doing implicit
+             encoding according to the value representation... */
+          || ((value_rep[0] < 'A' || value_rep[0] > 'Z'
+          || value_rep[1] < 'A' || value_rep[1] > 'Z')
 
-	  /* I found this in one of Ednas images. It seems like a
-	     bug...
-	  */
-	      && !(value_rep[0] == ' ' && value_rep[1]))
+          /* I found this in one of Ednas images. It seems like a
+             bug...
+          */
+              && !(value_rep[0] == ' ' && value_rep[1]))
           )
         {
           /* Look up type from the dictionary. At the time we dont
-	     support this option... */
+             support this option... */
           gchar element_length_chars[4];
 
           /* Store the bytes that were read */
           element_length_chars[0] = value_rep[0];
           element_length_chars[1] = value_rep[1];
 
-	  /* Unknown value rep. It is not used right now anyhow */
-	  strcpy (value_rep, "??");
+          /* Unknown value rep. It is not used right now anyhow */
+          strcpy (value_rep, "??");
 
           /* For implicit value_values the length is always four bytes,
              so we need to read another two. */
@@ -415,30 +415,30 @@ load_image (const gchar  *filename,
       }
       /* Binary value reps are OB, OW, SQ or UN */
       else if (strncmp (value_rep, "OB", 2) == 0
-	  || strncmp (value_rep, "OW", 2) == 0
-	  || strncmp (value_rep, "SQ", 2) == 0
-	  || strncmp (value_rep, "UN", 2) == 0)
-	{
-	  fread (&element_length, 1, 2, DICOM); /* skip two bytes */
-	  fread (&element_length, 1, 4, DICOM);
-	  element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
-	}
+          || strncmp (value_rep, "OW", 2) == 0
+          || strncmp (value_rep, "SQ", 2) == 0
+          || strncmp (value_rep, "UN", 2) == 0)
+        {
+          fread (&element_length, 1, 2, DICOM); /* skip two bytes */
+          fread (&element_length, 1, 4, DICOM);
+          element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
+        }
       /* Short length */
       else
-	{
-	  guint16 el16;
+        {
+          guint16 el16;
 
-	  fread (&el16, 1, 2, DICOM);
-	  element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
-	}
+          fread (&el16, 1, 2, DICOM);
+          element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
+        }
 
       /* Sequence of items - just ignore the delimiters... */
       if (element_length == 0xffffffff)
-	continue;
+        continue;
 
       /* Sequence of items item tag... Ignore as well */
       if (tag == 0xFFFEE000)
-	continue;
+        continue;
 
       /* Even for pixel data, we don't handle very large element
          lengths */
@@ -478,38 +478,38 @@ load_image (const gchar  *filename,
             }
         }
       else if (group_word == 0x0028)
-	{
-	  switch (element_word)
-	    {
-	    case 0x0002:  /* samples per pixel */
-	      samples_per_pixel = ctx_us;
-	      break;
-	    case 0x0010:  /* rows */
-	      height = ctx_us;
-	      break;
-	    case 0x0011:  /* columns */
-	      width = ctx_us;
-	      break;
-	    case 0x0100:  /* bits allocated */
-	      bpp = ctx_us;
-	      break;
-	    case 0x0101:  /* bits stored */
-	      bits_stored = ctx_us;
-	      break;
-	    case 0x0102:  /* high bit */
-	      high_bit = ctx_us;
-	      break;
-	    case 0x0103:  /* is pixel representation signed? */
-	      is_signed = (ctx_us == 0) ? FALSE : TRUE;
-	      break;
-	    }
-	}
+        {
+          switch (element_word)
+            {
+            case 0x0002:  /* samples per pixel */
+              samples_per_pixel = ctx_us;
+              break;
+            case 0x0010:  /* rows */
+              height = ctx_us;
+              break;
+            case 0x0011:  /* columns */
+              width = ctx_us;
+              break;
+            case 0x0100:  /* bits allocated */
+              bpp = ctx_us;
+              break;
+            case 0x0101:  /* bits stored */
+              bits_stored = ctx_us;
+              break;
+            case 0x0102:  /* high bit */
+              high_bit = ctx_us;
+              break;
+            case 0x0103:  /* is pixel representation signed? */
+              is_signed = (ctx_us == 0) ? FALSE : TRUE;
+              break;
+            }
+        }
 
       /* Pixel data */
       if (group_word == 0x7fe0 && element_word == 0x0010)
-	{
-	  pix_buf = value;
-	}
+        {
+          pix_buf = value;
+        }
       else
         {
           g_free (value);
@@ -550,20 +550,20 @@ load_image (const gchar  *filename,
   /* Create a new image of the proper size and associate the filename with it.
    */
   image_ID = gimp_image_new (dicominfo->width, dicominfo->height,
-			     (dicominfo->samples_per_pixel >= 3 ?
+                             (dicominfo->samples_per_pixel >= 3 ?
                               GIMP_RGB : GIMP_GRAY));
   gimp_image_set_filename (image_ID, filename);
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
-			     dicominfo->width, dicominfo->height,
-			     (dicominfo->samples_per_pixel >= 3 ?
+                             dicominfo->width, dicominfo->height,
+                             (dicominfo->samples_per_pixel >= 3 ?
                               GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
-			     100, GIMP_NORMAL_MODE);
+                             100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
 
 #if GUESS_ENDIAN
   if (bpp == 16)
@@ -587,8 +587,8 @@ load_image (const gchar  *filename,
 
 static void
 dicom_loader (guint8       *pix_buffer,
-	      DicomInfo    *info,
-	      GimpPixelRgn *pixel_rgn)
+              DicomInfo    *info,
+              GimpPixelRgn *pixel_rgn)
 {
   guchar  *data;
   gint     row_idx;
@@ -627,15 +627,15 @@ dicom_loader (guint8       *pix_buffer,
       scanlines = end - start;
 
       for (i = 0; i < scanlines; i++)
-	{
-	  if (info->bpp == 16)
-	    {
-	      guint16 *row_start;
-	      gint     col_idx;
+        {
+          if (info->bpp == 16)
+            {
+              guint16 *row_start;
+              gint     col_idx;
 
               row_start = buf16 + (row_idx + i) * width * samples_per_pixel;
 
-	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
+              for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
                 {
                   /* Shift it by 8 bits, or less in case bits_stored
                    * is less than bpp.
@@ -654,16 +654,16 @@ dicom_loader (guint8       *pix_buffer,
                         d[col_idx] <<= 1;
                     }
                 }
-	    }
-	  else if (info->bpp == 8)
-	    {
-	      guint8 *row_start;
-	      gint    col_idx;
+            }
+          else if (info->bpp == 8)
+            {
+              guint8 *row_start;
+              gint    col_idx;
 
               row_start = (pix_buffer +
                            (row_idx + i) * width * samples_per_pixel);
 
-	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
+              for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
                 {
                   /* Shift it by 0 bits, or more in case bits_stored is
                    * less than bpp.
@@ -682,10 +682,10 @@ dicom_loader (guint8       *pix_buffer,
                         d[col_idx] <<= 1;
                     }
                 }
-	    }
+            }
 
-	  d += width * samples_per_pixel;
-	}
+          d += width * samples_per_pixel;
+        }
 
       gimp_progress_update ((gdouble) row_idx / (gdouble) height);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, row_idx, width, scanlines);
@@ -704,7 +704,7 @@ dicom_loader (guint8       *pix_buffer,
  */
 static void
 guess_and_set_endian2 (guint16 *buf16,
-		       int length)
+                       int length)
 {
   guint16 *p          = buf16;
   gint     max_first  = -1;
@@ -727,7 +727,7 @@ guess_and_set_endian2 (guint16 *buf16,
 /* toggle_endian2 toggles the endian for a 16 bit entity.  */
 static void
 toggle_endian2 (guint16 *buf16,
-	        gint     length)
+                gint     length)
 {
   guint16 *p = buf16;
 
@@ -744,8 +744,8 @@ toggle_endian2 (guint16 *buf16,
  */
 static gboolean
 save_image (const gchar  *filename,
-	    gint32        image_ID,
-	    gint32        drawable_ID,
+            gint32        image_ID,
+            gint32        drawable_ID,
             GError      **error)
 {
   FILE          *DICOM;
@@ -915,11 +915,11 @@ save_image (const gchar  *filename,
  */
 static void
 add_tag_pointer (GByteArray   *group_stream,
-		 gint          group,
-		 gint          element,
-		 const gchar  *value_rep,
-		 const guint8 *data,
-		 gint          length)
+                 gint          group,
+                 gint          element,
+                 const gchar  *value_rep,
+                 const guint8 *data,
+                 gint          length)
 {
   gboolean is_long;
   guint16  swapped16;
@@ -954,10 +954,10 @@ add_tag_pointer (GByteArray   *group_stream,
 /* Convenience function for adding a string to the dicom stream */
 static void
 add_tag_string (GByteArray  *group_stream,
-		gint         group,
-		gint         element,
-		const gchar *value_rep,
-		const gchar *s)
+                gint         group,
+                gint         element,
+                const gchar *value_rep,
+                const gchar *s)
 {
   add_tag_pointer (group_stream,
                    group, element, value_rep, (const guint8 *) s, strlen (s));
@@ -988,8 +988,8 @@ add_tag_int (GByteArray  *group_stream,
  */
 static gboolean
 write_group_to_file (FILE       *DICOM,
-		     gint        group,
-		     GByteArray *group_stream)
+                     gint        group,
+                     GByteArray *group_stream)
 {
   gboolean retval = TRUE;
   guint16  swapped16;

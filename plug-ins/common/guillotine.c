@@ -268,7 +268,7 @@ guillotine (gint32   image_ID,
 
               /* insert the coordinates before the extension */
               g_string_insert (new_filename, pos, fileindex);
-	      g_free (fileindex);
+              g_free (fileindex);
 
               gimp_image_set_filename (new_image, new_filename->str);
               g_string_free (new_filename, TRUE);

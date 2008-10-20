@@ -295,29 +295,29 @@ blur (GimpDrawable *drawable)
       d = dest;
       ind = 0;
       for (col = 0; col < (x2 - x1) * bytes; col++)
-	{
-	  ind++;
-	  if (ind == bytes || !has_alpha)
-	    {
-	      /*
-	       *  If no alpha channel,
-	       *   or if there is one and this is it...
-	       */
-	      *d++ = ((gint) pr[col - bytes] + (gint) pr[col] +
-		      (gint) pr[col + bytes] +
-		      (gint) cr[col - bytes] + (gint) cr[col] +
-		      (gint) cr[col + bytes] +
-		      (gint) nr[col - bytes] + (gint) nr[col] +
-		      (gint) nr[col + bytes] + 4) / 9;
-	      ind = 0;
-	    }
-	  else
-	    {
-	      /*
-	       *  otherwise we have an alpha channel,
-	       *   but this is a color channel
-	       */
-	      *d++ = ROUND(
+        {
+          ind++;
+          if (ind == bytes || !has_alpha)
+            {
+              /*
+               *  If no alpha channel,
+               *   or if there is one and this is it...
+               */
+              *d++ = ((gint) pr[col - bytes] + (gint) pr[col] +
+                      (gint) pr[col + bytes] +
+                      (gint) cr[col - bytes] + (gint) cr[col] +
+                      (gint) cr[col + bytes] +
+                      (gint) nr[col - bytes] + (gint) nr[col] +
+                      (gint) nr[col + bytes] + 4) / 9;
+              ind = 0;
+            }
+          else
+            {
+              /*
+               *  otherwise we have an alpha channel,
+               *   but this is a color channel
+               */
+              *d++ = ROUND(
                            ((gdouble) (pr[col - bytes] * pr[col - ind])
                             + (gdouble) (pr[col] * pr[col + bytes - ind])
                             + (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
@@ -336,8 +336,8 @@ blur (GimpDrawable *drawable)
                               + (gdouble) nr[col - ind]
                               + (gdouble) nr[col + bytes - ind]
                               + (gdouble) nr[col + 2*bytes - ind]));
-	    }
-	}
+            }
+        }
 
       /*
        *  Save the modified row, shuffle the row pointers, and every
@@ -351,7 +351,7 @@ blur (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 32) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+        gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
   gimp_progress_update (1.0);

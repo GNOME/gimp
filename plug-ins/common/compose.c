@@ -176,9 +176,9 @@ typedef struct
 
   /*  Compose functon  */
   void  (* compose_fun) (guchar **src,
-			 gint    *incr_src,
-			 gint     numpix,
-			 guchar  *dst,
+                         gint    *incr_src,
+                         gint     numpix,
+                         guchar  *dst,
                          gboolean dst_has_alpha);
 } COMPOSE_DSC;
 
@@ -401,49 +401,49 @@ query (void)
   drw_args[6].description = type_desc->str;
 
   gimp_install_procedure (COMPOSE_PROC,
-			  N_("Create an image using multiple gray images as color channels"),
-			  "This function creates a new image from "
-			  "multiple gray images",
-			  "Peter Kirchgessner",
-			  "Peter Kirchgessner (peter@kirchgessner.net)",
-			  "1997",
-			  N_("C_ompose..."),
-			  "GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args),
+                          N_("Create an image using multiple gray images as color channels"),
+                          "This function creates a new image from "
+                          "multiple gray images",
+                          "Peter Kirchgessner",
+                          "Peter Kirchgessner (peter@kirchgessner.net)",
+                          "1997",
+                          N_("C_ompose..."),
+                          "GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
-			  args, return_vals);
+                          args, return_vals);
 
   gimp_plugin_menu_register (COMPOSE_PROC, "<Image>/Colors/Components");
 
   gimp_install_procedure (DRAWABLE_COMPOSE_PROC,
-			  "Compose an image from multiple drawables of gray images",
-			  "This function creates a new image from "
-			  "multiple drawables of gray images",
-			  "Peter Kirchgessner",
-			  "Peter Kirchgessner (peter@kirchgessner.net)",
-			  "1998",
-			  NULL,   /* It is not available in interactive mode */
-			  "GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (drw_args),
+                          "Compose an image from multiple drawables of gray images",
+                          "This function creates a new image from "
+                          "multiple drawables of gray images",
+                          "Peter Kirchgessner",
+                          "Peter Kirchgessner (peter@kirchgessner.net)",
+                          "1998",
+                          NULL,   /* It is not available in interactive mode */
+                          "GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (drw_args),
                           G_N_ELEMENTS (drw_return_vals),
-			  drw_args, drw_return_vals);
+                          drw_args, drw_return_vals);
 
   gimp_install_procedure (RECOMPOSE_PROC,
-			  N_("Recompose an image that was previously decomposed"),
-			  "This function recombines the grayscale layers produced "
-			  "by Decompose into a single RGB or RGBA layer, and "
+                          N_("Recompose an image that was previously decomposed"),
+                          "This function recombines the grayscale layers produced "
+                          "by Decompose into a single RGB or RGBA layer, and "
                           "replaces the originally decomposed layer with the "
                           "result.",
-			  "Bill Skaggs",
-			  "Bill Skaggs",
-			  "2004",
-			  N_("R_ecompose"),
-			  "GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (recompose_args), 0,
-			  recompose_args, NULL);
+                          "Bill Skaggs",
+                          "Bill Skaggs",
+                          "2004",
+                          N_("R_ecompose"),
+                          "GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (recompose_args), 0,
+                          recompose_args, NULL);
 
   gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Colors/Components");
 
@@ -616,12 +616,12 @@ run (const gchar      *name,
                           compose_by_drawable);
 
       if (image_ID < 0)
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
-	  values[1].data.d_int32 = image_ID;
+        {
+          values[1].data.d_int32 = image_ID;
 
           if (composevals.do_recompose)
             {
@@ -635,7 +635,7 @@ run (const gchar      *name,
               if (run_mode != GIMP_RUN_NONINTERACTIVE)
                 gimp_display_new (image_ID);
             }
-	}
+        }
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -714,7 +714,7 @@ compose (const gchar  *compose_type,
       height = gimp_drawable_height (inputs[first_ID].comp.ID);
 
       for (j = first_ID + 1; j < num_images; j++)
-	{
+        {
           if (inputs[j].is_ID)
             {
               if (! gimp_drawable_is_valid (inputs[j].comp.ID))
@@ -731,7 +731,7 @@ compose (const gchar  *compose_type,
                   return -1;
                 }
             }
-	}
+        }
       for (j = 0; j < num_images; j++)
         {
           if (inputs[j].is_ID)
@@ -746,7 +746,7 @@ compose (const gchar  *compose_type,
       height = gimp_image_height (inputs[first_ID].comp.ID);
 
       for (j = first_ID + 1; j < num_images; j++)
-	{
+        {
           if (inputs[j].is_ID)
             {
               if ((width  != gimp_image_width (inputs[j].comp.ID)) ||
@@ -756,11 +756,11 @@ compose (const gchar  *compose_type,
                   return -1;
                 }
             }
-	}
+        }
 
       /* Get first layer/drawable for all input images */
       for (j = 0; j < num_images; j++)
-	{
+        {
           if (inputs[j].is_ID)
             {
               gint32 *layers;
@@ -778,7 +778,7 @@ compose (const gchar  *compose_type,
               drawable_src[j] = gimp_drawable_get (layers[0]);
               g_free (layers);
             }
-	}
+        }
     }
 
   /* Get pixel region for all input drawables */
@@ -868,14 +868,14 @@ compose (const gchar  *compose_type,
                                    width, scan_lines);
 
       if (composevals.do_recompose)
-	gimp_pixel_rgn_get_rect (&pixel_rgn_dst_read, dst, 0, i,
-				 width, scan_lines);
+        gimp_pixel_rgn_get_rect (&pixel_rgn_dst_read, dst, 0, i,
+                                 width, scan_lines);
 
       /* Do the composition */
       compose_dsc[compose_idx].compose_fun (src,
-					    incr_src,
-					    width * tile_height,
-					    dst,
+                                            incr_src,
+                                            width * tile_height,
+                                            dst,
                                             gimp_drawable_has_alpha (layer_ID_dst));
 
       /* Set destination pixel region */
@@ -933,12 +933,12 @@ create_new_image (const gchar    *filename,
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      gdtype, 100, GIMP_NORMAL_MODE);
+                              gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
+                       (*drawable)->height, TRUE, FALSE);
 
   return image_ID;
 }
@@ -962,24 +962,24 @@ compose_rgb (guchar **src,
   if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = *(red_src++);
-	  *(rgb_dst++) = *(green_src++);
-	  *(rgb_dst++) = *(blue_src++);
+        {
+          *(rgb_dst++) = *(red_src++);
+          *(rgb_dst++) = *(green_src++);
+          *(rgb_dst++) = *(blue_src++);
           if (dst_has_alpha)
             rgb_dst++;
-	}
+        }
     }
   else
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = *red_src;     red_src += red_incr;
-	  *(rgb_dst++) = *green_src;   green_src += green_incr;
-	  *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
+        {
+          *(rgb_dst++) = *red_src;     red_src += red_incr;
+          *(rgb_dst++) = *green_src;   green_src += green_incr;
+          *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
           if (dst_has_alpha)
             rgb_dst++;
-	}
+        }
     }
 }
 
@@ -1006,22 +1006,22 @@ compose_rgba (guchar **src,
       (alpha_incr == 1))
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = *(red_src++);
-	  *(rgb_dst++) = *(green_src++);
-	  *(rgb_dst++) = *(blue_src++);
-	  *(rgb_dst++) = *(alpha_src++);
-	}
+        {
+          *(rgb_dst++) = *(red_src++);
+          *(rgb_dst++) = *(green_src++);
+          *(rgb_dst++) = *(blue_src++);
+          *(rgb_dst++) = *(alpha_src++);
+        }
     }
   else
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = *red_src;    red_src += red_incr;
-	  *(rgb_dst++) = *green_src;  green_src += green_incr;
-	  *(rgb_dst++) = *blue_src;   blue_src += blue_incr;
-	  *(rgb_dst++) = *alpha_src;  alpha_src += alpha_incr;
-	}
+        {
+          *(rgb_dst++) = *red_src;    red_src += red_incr;
+          *(rgb_dst++) = *green_src;  green_src += green_incr;
+          *(rgb_dst++) = *blue_src;   blue_src += blue_incr;
+          *(rgb_dst++) = *alpha_src;  alpha_src += alpha_incr;
+        }
     }
 }
 
@@ -1045,8 +1045,8 @@ compose_hsv (guchar **src,
   while (count-- > 0)
     {
       gimp_hsv_to_rgb4 (rgb_dst, (gdouble) *hue_src / 255.0,
-			         (gdouble) *sat_src / 255.0,
-			         (gdouble) *val_src / 255.0);
+                                 (gdouble) *sat_src / 255.0,
+                                 (gdouble) *val_src / 255.0);
       rgb_dst += 3;
       hue_src += hue_incr;
       sat_src += sat_incr;
@@ -1115,27 +1115,27 @@ compose_cmy (guchar **src,
   if ((cyan_incr == 1) && (magenta_incr == 1) && (yellow_incr == 1))
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = 255 - *(cyan_src++);
-	  *(rgb_dst++) = 255 - *(magenta_src++);
-	  *(rgb_dst++) = 255 - *(yellow_src++);
+        {
+          *(rgb_dst++) = 255 - *(cyan_src++);
+          *(rgb_dst++) = 255 - *(magenta_src++);
+          *(rgb_dst++) = 255 - *(yellow_src++);
           if (dst_has_alpha)
             rgb_dst++;
-	}
+        }
     }
   else
     {
       while (count-- > 0)
-	{
-	  *(rgb_dst++) = 255 - *cyan_src;
-	  *(rgb_dst++) = 255 - *magenta_src;
-	  *(rgb_dst++) = 255 - *yellow_src;
-	  cyan_src += cyan_incr;
-	  magenta_src += magenta_incr;
-	  yellow_src += yellow_incr;
+        {
+          *(rgb_dst++) = 255 - *cyan_src;
+          *(rgb_dst++) = 255 - *magenta_src;
+          *(rgb_dst++) = 255 - *yellow_src;
+          cyan_src += cyan_incr;
+          magenta_src += magenta_incr;
+          yellow_src += yellow_incr;
           if (dst_has_alpha)
             rgb_dst++;
-	}
+        }
     }
 }
 
@@ -1163,25 +1163,25 @@ compose_cmyk (guchar **src,
     {
       black = (gint)*black_src;
       if (black)
-	{
-	  cyan    = (gint) *cyan_src;
-	  magenta = (gint) *magenta_src;
-	  yellow  = (gint) *yellow_src;
+        {
+          cyan    = (gint) *cyan_src;
+          magenta = (gint) *magenta_src;
+          yellow  = (gint) *yellow_src;
 
-	  cyan    += black; if (cyan > 255) cyan = 255;
-	  magenta += black; if (magenta > 255) magenta = 255;
-	  yellow  += black; if (yellow > 255) yellow = 255;
+          cyan    += black; if (cyan > 255) cyan = 255;
+          magenta += black; if (magenta > 255) magenta = 255;
+          yellow  += black; if (yellow > 255) yellow = 255;
 
-	  *(rgb_dst++) = 255 - cyan;
-	  *(rgb_dst++) = 255 - magenta;
-	  *(rgb_dst++) = 255 - yellow;
-	}
+          *(rgb_dst++) = 255 - cyan;
+          *(rgb_dst++) = 255 - magenta;
+          *(rgb_dst++) = 255 - yellow;
+        }
       else
-	{
-	  *(rgb_dst++) = 255 - *cyan_src;
-	  *(rgb_dst++) = 255 - *magenta_src;
-	  *(rgb_dst++) = 255 - *yellow_src;
-	}
+        {
+          *(rgb_dst++) = 255 - *cyan_src;
+          *(rgb_dst++) = 255 - *magenta_src;
+          *(rgb_dst++) = 255 - *yellow_src;
+        }
       cyan_src += cyan_incr;
       magenta_src += magenta_incr;
       yellow_src += yellow_incr;
@@ -1622,7 +1622,7 @@ compose_dialog (const gchar *compose_type,
                           -1);
       g_object_unref (ico);
       gtk_table_attach (GTK_TABLE (table), combo, 1, 2, j, j + 1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (combo);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
@@ -1694,8 +1694,8 @@ check_gray (gint32   image_id,
 
 {
   return ((gimp_image_base_type (image_id) == GIMP_GRAY) &&
-	  (gimp_image_width  (image_id) == composeint.width) &&
-	  (gimp_image_height (image_id) == composeint.height));
+          (gimp_image_width  (image_id) == composeint.width) &&
+          (gimp_image_height (image_id) == composeint.height));
 }
 
 static void

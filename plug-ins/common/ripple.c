@@ -279,10 +279,10 @@ ripple_vertical (gint x,
     {
       needy = fmod(needy, height);
       if (needy < 0.0)
-	needy += height;
+        needy += height;
       yi = (yi % height);
       if (yi < 0)
-	yi += height;
+        yi += height;
       yi_a = (yi+1) % height;
     }
   /* Smear out the edges of the image by repeating pixels. */
@@ -296,22 +296,22 @@ ripple_vertical (gint x,
   if (rvals.antialias)
     {
       if (yi >=0 && yi < height)
-	gimp_pixel_fetcher_get_pixel (pft, x, yi  , pixel[0]);
+        gimp_pixel_fetcher_get_pixel (pft, x, yi  , pixel[0]);
       else
-	memset(pixel[0], 0, 4);
+        memset(pixel[0], 0, 4);
       if (yi_a >=0 && yi_a < height)
-	gimp_pixel_fetcher_get_pixel (pft, x, yi_a, pixel[1]);
+        gimp_pixel_fetcher_get_pixel (pft, x, yi_a, pixel[1]);
       else
-	memset(pixel[1], 0, 4);
+        memset(pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needy - yi, bpp, param->has_alpha);
     } /* antialias */
   else
     {
       if (yi >=0 && yi < height)
-	gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
+        gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
       else
-	memset(dest, 0, bpp);
+        memset(dest, 0, bpp);
     }
 }
 
@@ -339,10 +339,10 @@ ripple_horizontal (gint x,
     {
       needx = fmod((needx), width);
       while (needx < 0.0)
-	needx += width;
+        needx += width;
       xi = (xi % width);
       while (xi < 0)
-	xi += width;
+        xi += width;
       xi_a = (xi+1) % width;
     }
   /* Smear out the edges of the image by repeating pixels. */
@@ -356,13 +356,13 @@ ripple_horizontal (gint x,
   if (rvals.antialias)
     {
       if (xi >= 0 && xi < width)
-	gimp_pixel_fetcher_get_pixel (pft, xi,   y, pixel[0]);
+        gimp_pixel_fetcher_get_pixel (pft, xi,   y, pixel[0]);
       else
-	memset(pixel[0], 0, 4);
+        memset(pixel[0], 0, 4);
       if (xi_a >= 0 && xi_a < width)
-	gimp_pixel_fetcher_get_pixel (pft, xi_a, y, pixel[1]);
+        gimp_pixel_fetcher_get_pixel (pft, xi_a, y, pixel[1]);
       else
-	memset(pixel[1], 0, 4);
+        memset(pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needx - xi, bpp, param->has_alpha);
     } /* antialias */
@@ -370,9 +370,9 @@ ripple_horizontal (gint x,
   else
     {
       if (xi >=0 && xi < width)
-	gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+        gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
       else
-	memset(dest, 0, bpp);
+        memset(dest, 0, bpp);
     }
 }
 

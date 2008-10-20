@@ -1443,8 +1443,8 @@ play_callback (GtkToggleAction *action)
                            advance_frame_callback, NULL);
 
   g_object_set (action,
-		"tooltip", playing ? _("Stop playback") : _("Start playback"),
-		NULL);
+                "tooltip", playing ? _("Stop playback") : _("Start playback"),
+                NULL);
 }
 
 static gdouble

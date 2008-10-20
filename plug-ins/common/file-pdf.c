@@ -367,7 +367,7 @@ run (const gchar      *name,
             status = GIMP_PDB_CANCEL;
           break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
+        case GIMP_RUN_WITH_LAST_VALS:
           /* FIXME: implement last vals mode */
           status = GIMP_PDB_EXECUTION_ERROR;
           break;
@@ -481,14 +481,14 @@ run (const gchar      *name,
 
           if (image != -1)
             {
-	      *nreturn_vals = 4;
+              *nreturn_vals = 4;
 
               values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image;
-	      values[2].type         = GIMP_PDB_INT32;
-	      values[2].data.d_int32 = width;
-	      values[3].type         = GIMP_PDB_INT32;
-	      values[3].data.d_int32 = height;
+              values[1].data.d_image = image;
+              values[2].type         = GIMP_PDB_INT32;
+              values[2].data.d_int32 = width;
+              values[3].type         = GIMP_PDB_INT32;
+              values[3].data.d_int32 = height;
             }
           else
             {

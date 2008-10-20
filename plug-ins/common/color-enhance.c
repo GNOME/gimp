@@ -66,23 +66,23 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Stretch color saturation to cover maximum possible range"),
-			  "This simple plug-in does an automatic saturation "
-			  "stretch.  For each channel in the image, it finds "
-			  "the minimum and maximum values... it uses those "
-			  "values to stretch the individual histograms to the "
-			  "full range.  For some images it may do just what "
-			  "you want; for others it may not work that well.  "
-			  "This version differs from Contrast Autostretch in "
-			  "that it works in HSV space, and preserves hue.",
-			  "Martin Weber",
-		 	  "Martin Weber",
-		  	  "1997",
-			  N_("_Color Enhance"),
-	   	  	  "RGB*, INDEXED*",
- 			  GIMP_PLUGIN,
-	 	  	  G_N_ELEMENTS (args), 0,
- 			  args, NULL);
+                          N_("Stretch color saturation to cover maximum possible range"),
+                          "This simple plug-in does an automatic saturation "
+                          "stretch.  For each channel in the image, it finds "
+                          "the minimum and maximum values... it uses those "
+                          "values to stretch the individual histograms to the "
+                          "full range.  For some images it may do just what "
+                          "you want; for others it may not work that well.  "
+                          "This version differs from Contrast Autostretch in "
+                          "that it works in HSV space, and preserves hue.",
+                          "Martin Weber",
+                          "Martin Weber",
+                          "1997",
+                          N_("_Color Enhance"),
+                          "RGB*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Auto");
 }
@@ -117,14 +117,14 @@ run (const gchar      *name,
       Color_Enhance (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
       indexed_Color_Enhance (image_ID);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {

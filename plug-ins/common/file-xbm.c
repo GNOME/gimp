@@ -80,12 +80,12 @@ typedef struct _XBMSaveVals
 
 static XBMSaveVals xsvals =
 {
-  "###",		/* comment */
-  DEFAULT_X10_FORMAT,	/* x10_format */
+  "###",                /* comment */
+  DEFAULT_X10_FORMAT,   /* x10_format */
   FALSE,
-  0,			/* x_hot */
-  0,			/* y_hot */
-  DEFAULT_PREFIX,	/* prefix */
+  0,                    /* x_hot */
+  0,                    /* y_hot */
+  DEFAULT_PREFIX,       /* prefix */
   FALSE,                /* write_mask */
   "-mask"
 };
@@ -174,7 +174,7 @@ query (void)
                           "Gordon Matzigkeit",
                           "1998",
                           N_("X BitMap image"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -182,17 +182,17 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-xbitmap");
   gimp_register_load_handler (LOAD_PROC,
-			      "xbm,icon,bitmap",
-			      "");
+                              "xbm,icon,bitmap",
+                              "");
 
   gimp_install_procedure (SAVE_PROC,
                           "Save a file in X10 or X11 bitmap (XBM) file format",
                           "Save a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
-			  "Gordon Matzigkeit",
+                          "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",
                           N_("X BitMap image"),
-			  "INDEXED",
+                          "INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -282,171 +282,171 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
-				      GIMP_EXPORT_CAN_HANDLE_BITMAP |
-				      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
+                                      GIMP_EXPORT_CAN_HANDLE_BITMAP |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
             }
-	  break;
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data (SAVE_PROC, &xsvals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data (SAVE_PROC, &xsvals);
 
-	  /* Always override the prefix with the filename. */
-	  mask_filename = g_strdup (init_prefix (param[3].data.d_string));
-	  break;
+          /* Always override the prefix with the filename. */
+          mask_filename = g_strdup (init_prefix (param[3].data.d_string));
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the required arguments are there!  */
-	  if (nparams < 5)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      gint i = 5;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the required arguments are there!  */
+          if (nparams < 5)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              gint i = 5;
 
-	      if (nparams > i)
-		{
-		  memset (xsvals.comment, 0, sizeof (xsvals.comment));
-		  strncpy (xsvals.comment, param[i].data.d_string,
-			   MAX_COMMENT);
-		}
+              if (nparams > i)
+                {
+                  memset (xsvals.comment, 0, sizeof (xsvals.comment));
+                  strncpy (xsvals.comment, param[i].data.d_string,
+                           MAX_COMMENT);
+                }
 
-	      i ++;
-	      if (nparams > i)
-		xsvals.x10_format = (param[i].data.d_int32) ? TRUE : FALSE;
+              i ++;
+              if (nparams > i)
+                xsvals.x10_format = (param[i].data.d_int32) ? TRUE : FALSE;
 
-	      i += 2;
-	      if (nparams > i)
-		{
-		  /* They've asked for a hotspot. */
-		  xsvals.use_hot = TRUE;
-		  xsvals.x_hot = param[i - 1].data.d_int32;
-		  xsvals.y_hot = param[i].data.d_int32;
-		}
+              i += 2;
+              if (nparams > i)
+                {
+                  /* They've asked for a hotspot. */
+                  xsvals.use_hot = TRUE;
+                  xsvals.x_hot = param[i - 1].data.d_int32;
+                  xsvals.y_hot = param[i].data.d_int32;
+                }
 
-	      mask_filename = g_strdup (init_prefix (param[3].data.d_string));
+              mask_filename = g_strdup (init_prefix (param[3].data.d_string));
 
-	      i ++;
-	      if (nparams > i)
-		{
-		  memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
-		  strncpy (xsvals.prefix, param[i].data.d_string,
-			   MAX_PREFIX);
-		}
+              i ++;
+              if (nparams > i)
+                {
+                  memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
+                  strncpy (xsvals.prefix, param[i].data.d_string,
+                           MAX_PREFIX);
+                }
 
-	      i += 2;
-	      if (nparams > i)
-		{
-		  xsvals.write_mask = param[i - 1].data.d_int32;
-		  memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
-		  strncpy (xsvals.mask_ext, param[i].data.d_string,
-			   MAX_MASK_EXT);
-		}
+              i += 2;
+              if (nparams > i)
+                {
+                  xsvals.write_mask = param[i - 1].data.d_int32;
+                  memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
+                  strncpy (xsvals.mask_ext, param[i].data.d_string,
+                           MAX_MASK_EXT);
+                }
 
-	      i ++;
-	      /* Too many arguments. */
-	      if (nparams > i)
-		status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  break;
+              i ++;
+              /* Too many arguments. */
+              if (nparams > i)
+                status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  /* Get the parasites */
+        {
+          /* Get the parasites */
           parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
 
           if (parasite)
-    	    {
-	      gint size = gimp_parasite_data_size (parasite);
+            {
+              gint size = gimp_parasite_data_size (parasite);
 
-	      strncpy (xsvals.comment,
-		       gimp_parasite_data (parasite), MIN (size, MAX_COMMENT));
-	      xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
+              strncpy (xsvals.comment,
+                       gimp_parasite_data (parasite), MIN (size, MAX_COMMENT));
+              xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
 
-	      gimp_parasite_free (parasite);
-	    }
+              gimp_parasite_free (parasite);
+            }
 
           parasite = gimp_image_parasite_find (image_ID, "hot-spot");
 
           if (parasite)
-	    {
-	      gint x, y;
+            {
+              gint x, y;
 
-	      if (sscanf (gimp_parasite_data (parasite), "%i %i", &x, &y) == 2)
-	       {
-	         xsvals.use_hot = TRUE;
-	         xsvals.x_hot = x;
-	         xsvals.y_hot = y;
-	       }
-	     gimp_parasite_free (parasite);
-	   }
+              if (sscanf (gimp_parasite_data (parasite), "%i %i", &x, &y) == 2)
+               {
+                 xsvals.use_hot = TRUE;
+                 xsvals.x_hot = x;
+                 xsvals.y_hot = y;
+               }
+             gimp_parasite_free (parasite);
+           }
 
-	  /*  Acquire information with a dialog  */
-	  if (! save_dialog (drawable_ID))
-	    status = GIMP_PDB_CANCEL;
-	}
+          /*  Acquire information with a dialog  */
+          if (! save_dialog (drawable_ID))
+            status = GIMP_PDB_CANCEL;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  gchar *temp;
-	  gchar *mask_prefix;
-	  gchar *dirname;
+        {
+          gchar *temp;
+          gchar *mask_prefix;
+          gchar *dirname;
 
-	  temp = mask_filename;
+          temp = mask_filename;
 
-	  if ((dirname = g_path_get_dirname (param[3].data.d_string)) != NULL)
-	    {
-	      mask_filename = g_strdup_printf ("%s/%s%s.xbm",
-					       dirname, temp, xsvals.mask_ext);
-	      g_free (dirname);
-	    }
-	  else
-	    {
-	      mask_filename = g_strdup_printf ("%s%s.xbm",
-					       temp, xsvals.mask_ext);
-	    }
+          if ((dirname = g_path_get_dirname (param[3].data.d_string)) != NULL)
+            {
+              mask_filename = g_strdup_printf ("%s/%s%s.xbm",
+                                               dirname, temp, xsvals.mask_ext);
+              g_free (dirname);
+            }
+          else
+            {
+              mask_filename = g_strdup_printf ("%s%s.xbm",
+                                               temp, xsvals.mask_ext);
+            }
 
-	  g_free (temp);
+          g_free (temp);
 
-	  /* Change any non-alphanumeric prefix characters to underscores. */
-	  for (temp = xsvals.prefix; *temp; temp++)
+          /* Change any non-alphanumeric prefix characters to underscores. */
+          for (temp = xsvals.prefix; *temp; temp++)
             if (! g_ascii_isalnum (*temp))
               *temp = '_';
 
-	  mask_prefix = g_strdup_printf ("%s%s",
+          mask_prefix = g_strdup_printf ("%s%s",
                                          xsvals.prefix, xsvals.mask_ext);
 
-	  for (temp = mask_prefix; *temp; temp++)
+          for (temp = mask_prefix; *temp; temp++)
             if (! g_ascii_isalnum (*temp))
               *temp = '_';
 
-	  if (save_image (param[3].data.d_string,
-			  xsvals.prefix,
-			  xsvals.comment,
-			  FALSE,
-			  image_ID, drawable_ID,
+          if (save_image (param[3].data.d_string,
+                          xsvals.prefix,
+                          xsvals.comment,
+                          FALSE,
+                          image_ID, drawable_ID,
                           &error)
               && (! xsvals.write_mask || save_image (mask_filename,
                                                      mask_prefix,
@@ -454,21 +454,21 @@ run (const gchar      *name,
                                                      TRUE,
                                                      image_ID, drawable_ID,
                                                      &error)))
-	    {
-	      /*  Store xsvals data  */
-	      gimp_set_data (SAVE_PROC, &xsvals, sizeof (xsvals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
+            {
+              /*  Store xsvals data  */
+              gimp_set_data (SAVE_PROC, &xsvals, sizeof (xsvals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
 
-	  g_free (mask_prefix);
-	  g_free (mask_filename);
-	}
+          g_free (mask_prefix);
+          g_free (mask_filename);
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -489,7 +489,7 @@ run (const gchar      *name,
 /* Return the value of a digit. */
 static gint
 getval (gint c,
-	gint base)
+        gint base)
 {
   const gchar *digits = "0123456789abcdefABCDEF";
   gint         val;
@@ -518,58 +518,58 @@ fgetcomment (FILE *fp)
     {
       c = fgetc (fp);
       if (comment)
-	{
-	  if (c == '*')
-	    {
-	      /* In a comment, with potential to leave. */
-	      comment = 1;
-	    }
-	  else if (comment == 1 && c == '/')
-	    {
-	      gchar *retval;
+        {
+          if (c == '*')
+            {
+              /* In a comment, with potential to leave. */
+              comment = 1;
+            }
+          else if (comment == 1 && c == '/')
+            {
+              gchar *retval;
 
-	      /* Leaving a comment. */
-	      comment = 0;
+              /* Leaving a comment. */
+              comment = 0;
 
-	      retval = g_strstrip (g_strdup (str->str));
-	      g_string_free (str, TRUE);
-	      return retval;
-	    }
-	  else
-	    {
-	      /* In a comment, with no potential to leave. */
-	      comment = 2;
-	      g_string_append_c (str, c);
-	    }
-	}
+              retval = g_strstrip (g_strdup (str->str));
+              g_string_free (str, TRUE);
+              return retval;
+            }
+          else
+            {
+              /* In a comment, with no potential to leave. */
+              comment = 2;
+              g_string_append_c (str, c);
+            }
+        }
       else
-	{
-	  /* Not in a comment. */
-	  if (c == '/')
-	    {
-	      /* Potential to enter a comment. */
-	      c = fgetc (fp);
-	      if (c == '*')
-		{
-		  /* Entered a comment, with no potential to leave. */
-		  comment = 2;
-		  str = g_string_new (NULL);
-		}
-	      else
-		{
-		  /* put everything back and return */
-		  ungetc (c, fp);
-		  c = '/';
-		  ungetc (c, fp);
-		  return NULL;
-		}
-	    }
-	  else if (c != EOF && g_ascii_isspace (c))
-	    {
-	      /* Skip leading whitespace */
-	      continue;
-	    }
-	}
+        {
+          /* Not in a comment. */
+          if (c == '/')
+            {
+              /* Potential to enter a comment. */
+              c = fgetc (fp);
+              if (c == '*')
+                {
+                  /* Entered a comment, with no potential to leave. */
+                  comment = 2;
+                  str = g_string_new (NULL);
+                }
+              else
+                {
+                  /* put everything back and return */
+                  ungetc (c, fp);
+                  c = '/';
+                  ungetc (c, fp);
+                  return NULL;
+                }
+            }
+          else if (c != EOF && g_ascii_isspace (c))
+            {
+              /* Skip leading whitespace */
+              continue;
+            }
+        }
     }
   while (comment && c != EOF);
 
@@ -592,35 +592,35 @@ cpp_fgetc (FILE *fp)
     {
       c = fgetc (fp);
       if (comment)
-	{
-	  if (c == '*')
-	    /* In a comment, with potential to leave. */
-	    comment = 1;
-	  else if (comment == 1 && c == '/')
-	    /* Leaving a comment. */
-	    comment = 0;
-	  else
-	    /* In a comment, with no potential to leave. */
-	    comment = 2;
-	}
+        {
+          if (c == '*')
+            /* In a comment, with potential to leave. */
+            comment = 1;
+          else if (comment == 1 && c == '/')
+            /* Leaving a comment. */
+            comment = 0;
+          else
+            /* In a comment, with no potential to leave. */
+            comment = 2;
+        }
       else
-	{
-	  /* Not in a comment. */
-	  if (c == '/')
-	    {
-	      /* Potential to enter a comment. */
-	      c = fgetc (fp);
-	      if (c == '*')
-		/* Entered a comment, with no potential to leave. */
-		comment = 2;
-	      else
-		{
-		  /* Just a slash in the open. */
-		  ungetc (c, fp);
-		  c = '/';
-		}
-	    }
-	}
+        {
+          /* Not in a comment. */
+          if (c == '/')
+            {
+              /* Potential to enter a comment. */
+              c = fgetc (fp);
+              if (c == '*')
+                /* Entered a comment, with no potential to leave. */
+                comment = 2;
+              else
+                {
+                  /* Just a slash in the open. */
+                  ungetc (c, fp);
+                  c = '/';
+                }
+            }
+        }
     }
   while (comment && c != EOF);
   return c;
@@ -638,9 +638,9 @@ match (FILE        *fp,
     {
       c = fgetc (fp);
       if (c == *s)
-	s ++;
+        s ++;
       else
-	break;
+        break;
     }
   while (c != EOF && *s);
 
@@ -671,17 +671,17 @@ get_int (FILE *fp)
     {
       c = fgetc (fp);
       if (c == 'x' || c == 'X')
-	{
-	  c = fgetc (fp);
-	  base = 16;
-	}
+        {
+          c = fgetc (fp);
+          base = 16;
+        }
       else if (g_ascii_isdigit (c))
-	base = 8;
+        base = 8;
       else
-	{
-	  ungetc (c, fp);
-	  return 0;
-	}
+        {
+          ungetc (c, fp);
+          return 0;
+        }
     }
   else
     base = 10;
@@ -691,10 +691,10 @@ get_int (FILE *fp)
     {
       digval = getval (c, base);
       if (digval == -1)
-	{
-	  ungetc (c, fp);
-	  break;
-	}
+        {
+          ungetc (c, fp);
+          break;
+        }
       val *= base;
       val += digval;
       c = fgetc (fp);
@@ -725,8 +725,8 @@ load_image (const gchar  *filename,
 
   const guchar cmap[] =
   {
-    0x00, 0x00, 0x00,		/* black */
-    0xff, 0xff, 0xff		/* white */
+    0x00, 0x00, 0x00,           /* black */
+    0xff, 0xff, 0xff            /* white */
   };
 
   fp = g_fopen (filename, "rb");
@@ -749,66 +749,66 @@ load_image (const gchar  *filename,
   do
     {
       if (g_ascii_isspace (c))
-	{
-	  if (match (fp, "char"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  intbits = 8;
-		  continue;
-		}
-	    }
-	  else if (match (fp, "short"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  intbits = 16;
-		  continue;
-		}
-	    }
-	}
+        {
+          if (match (fp, "char"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  intbits = 8;
+                  continue;
+                }
+            }
+          else if (match (fp, "short"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  intbits = 16;
+                  continue;
+                }
+            }
+        }
 
       if (c == '_')
-	{
-	  if (match (fp, "width"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  width = get_int (fp);
-		  continue;
-		}
-	    }
-	  else if (match (fp, "height"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  height = get_int (fp);
-		  continue;
-		}
-	    }
-	  else if (match (fp, "x_hot"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  x_hot = get_int (fp);
-		  continue;
-		}
-	    }
-	  else if (match (fp, "y_hot"))
-	    {
-	      c = fgetc (fp);
-	      if (g_ascii_isspace (c))
-		{
-		  y_hot = get_int (fp);
-		  continue;
-		}
-	    }
-	}
+        {
+          if (match (fp, "width"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  width = get_int (fp);
+                  continue;
+                }
+            }
+          else if (match (fp, "height"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  height = get_int (fp);
+                  continue;
+                }
+            }
+          else if (match (fp, "x_hot"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  x_hot = get_int (fp);
+                  continue;
+                }
+            }
+          else if (match (fp, "y_hot"))
+            {
+              c = fgetc (fp);
+              if (g_ascii_isspace (c))
+                {
+                  y_hot = get_int (fp);
+                  continue;
+                }
+            }
+        }
 
       c = cpp_fgetc (fp);
     }
@@ -864,8 +864,8 @@ load_image (const gchar  *filename,
       GimpParasite *parasite;
 
       parasite = gimp_parasite_new ("gimp-comment",
-				    GIMP_PARASITE_PERSISTENT,
-				    strlen (comment) + 1, (gpointer) comment);
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (comment) + 1, (gpointer) comment);
       gimp_image_parasite_attach (image_ID, parasite);
       gimp_parasite_free (parasite);
 
@@ -882,8 +882,8 @@ load_image (const gchar  *filename,
 
       str = g_strdup_printf ("%d %d", x_hot, y_hot);
       parasite = gimp_parasite_new ("hot-spot",
-				    GIMP_PARASITE_PERSISTENT,
-				    strlen (str) + 1, (gpointer) str);
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (str) + 1, (gpointer) str);
       g_free (str);
       gimp_image_parasite_attach (image_ID, parasite);
       gimp_parasite_free (parasite);
@@ -893,11 +893,11 @@ load_image (const gchar  *filename,
   gimp_image_set_colormap (image_ID, cmap, 2);
 
   layer_ID = gimp_layer_new (image_ID,
-			     _("Background"),
-			     width, height,
-			     GIMP_INDEXED_IMAGE,
-			     100,
-			     GIMP_NORMAL_MODE);
+                             _("Background"),
+                             width, height,
+                             GIMP_INDEXED_IMAGE,
+                             100,
+                             GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
@@ -915,31 +915,31 @@ load_image (const gchar  *filename,
 
 #ifdef VERBOSE
       if (verbose > 1)
-	printf ("XBM: reading %dx(%d+%d) pixel region\n", width, i,
-		tileheight);
+        printf ("XBM: reading %dx(%d+%d) pixel region\n", width, i,
+                tileheight);
 #endif
 
       /* Parse the data from the file */
       for (j = 0; j < tileheight; j ++)
-	{
-	  /* Read each row. */
-	  rowoffset = j * width;
-	  for (k = 0; k < width; k ++)
-	    {
-	      /* Expand each integer into INTBITS pixels. */
-	      if (k % intbits == 0)
-		{
-		  c = get_int (fp);
+        {
+          /* Read each row. */
+          rowoffset = j * width;
+          for (k = 0; k < width; k ++)
+            {
+              /* Expand each integer into INTBITS pixels. */
+              if (k % intbits == 0)
+                {
+                  c = get_int (fp);
 
-		  /* Flip all the bits so that 1's become black and
+                  /* Flip all the bits so that 1's become black and
                      0's become white. */
-		  c ^= 0xffff;
-		}
+                  c ^= 0xffff;
+                }
 
-	      data[rowoffset + k] = c & 1;
-	      c >>= 1;
-	    }
-	}
+              data[rowoffset + k] = c & 1;
+              c >>= 1;
+            }
+        }
 
       /* Put the data into the image. */
       gimp_progress_update ((double) (i + tileheight) / (double) height);
@@ -958,11 +958,11 @@ load_image (const gchar  *filename,
 
 static gboolean
 save_image (const gchar  *filename,
-	    const gchar  *prefix,
-	    const gchar  *comment,
-	    gboolean      save_mask,
-	    gint32        image_ID,
-	    gint32        drawable_ID,
+            const gchar  *prefix,
+            const gchar  *comment,
+            gboolean      save_mask,
+            gint32        image_ID,
+            gint32        drawable_ID,
             GError      **error)
 {
   GimpDrawable *drawable;
@@ -995,9 +995,9 @@ save_image (const gchar  *filename,
     {
       /* The image is not black-and-white. */
       g_message (_("The image which you are trying to save as "
-		   "an XBM contains more than two colors.\n\n"
-		   "Please convert it to a black and white "
-		   "(1-bit) indexed image and try again."));
+                   "an XBM contains more than two colors.\n\n"
+                   "Please convert it to a black and white "
+                   "(1-bit) indexed image and try again."));
       return FALSE;
     }
 
@@ -1006,7 +1006,7 @@ save_image (const gchar  *filename,
   if (! has_alpha && save_mask)
     {
       g_message (_("You cannot save a cursor mask for an image\n"
-		   "which has no alpha channel."));
+                   "which has no alpha channel."));
       return FALSE;
     }
 
@@ -1023,7 +1023,7 @@ save_image (const gchar  *filename,
       second = (cmap[3] * cmap[3]) + (cmap[4] * cmap[4]) + (cmap[5] * cmap[5]);
 
       if (second < first)
-	dark = 1;
+        dark = 1;
     }
 
   /* Now actually save the data. */
@@ -1075,14 +1075,14 @@ save_image (const gchar  *filename,
     }
 
   fprintf (fp, "static %s %s_bits[] = {\n  ",
-	   xsvals.x10_format ? "unsigned short" : "unsigned char", prefix);
+           xsvals.x10_format ? "unsigned short" : "unsigned char", prefix);
 
   /* Allocate a new set of pixels. */
   tileheight = gimp_tile_height ();
   data = (guchar *) g_malloc (width * tileheight * bpp);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height,
-		       FALSE, FALSE);
+                       FALSE, FALSE);
 
   /* Write out the integers. */
   need_comma = 0;
@@ -1095,69 +1095,69 @@ save_image (const gchar  *filename,
 
 #ifdef VERBOSE
       if (verbose > 1)
-	printf ("XBM: writing %dx(%d+%d) pixel region\n",
-		width, i, tileheight);
+        printf ("XBM: writing %dx(%d+%d) pixel region\n",
+                width, i, tileheight);
 #endif
 
       for (j = 0; j < tileheight; j ++)
-	{
-	  /* Write out a row at a time. */
-	  rowoffset = j * width * bpp;
-	  c = 0;
-	  thisbit = 0;
+        {
+          /* Write out a row at a time. */
+          rowoffset = j * width * bpp;
+          c = 0;
+          thisbit = 0;
 
-	  for (k = 0; k < width * bpp; k += bpp)
-	    {
-	      if (k != 0 && thisbit == intbits)
-		{
-		  /* Output a completed integer. */
-		  if (need_comma)
-		    fputc (',', fp);
-		  need_comma = 1;
+          for (k = 0; k < width * bpp; k += bpp)
+            {
+              if (k != 0 && thisbit == intbits)
+                {
+                  /* Output a completed integer. */
+                  if (need_comma)
+                    fputc (',', fp);
+                  need_comma = 1;
 
-		  /* Maybe start a new line. */
-		  if (nints ++ >= lineints)
-		    {
-		      nints = 1;
-		      fputs ("\n  ", fp);
-		    }
-		  fprintf (fp, intfmt, c);
+                  /* Maybe start a new line. */
+                  if (nints ++ >= lineints)
+                    {
+                      nints = 1;
+                      fputs ("\n  ", fp);
+                    }
+                  fprintf (fp, intfmt, c);
 
-		  /* Start a new integer. */
-		  c = 0;
-		  thisbit = 0;
-		}
+                  /* Start a new integer. */
+                  c = 0;
+                  thisbit = 0;
+                }
 
-	      /* Pack INTBITS pixels into an integer. */
-	      if (save_mask)
-		{
-		  c |= ((data[rowoffset + k + 1] < 128) ? 0 : 1) << (thisbit ++);
-		}
-	      else
-		{
-		  if (has_alpha && (data[rowoffset + k + 1] < 128))
-		    c |= 0 << (thisbit ++);
-		  else
-		    c |= ((data[rowoffset + k] == dark) ? 1 : 0) << (thisbit ++);
-		}
-	    }
+              /* Pack INTBITS pixels into an integer. */
+              if (save_mask)
+                {
+                  c |= ((data[rowoffset + k + 1] < 128) ? 0 : 1) << (thisbit ++);
+                }
+              else
+                {
+                  if (has_alpha && (data[rowoffset + k + 1] < 128))
+                    c |= 0 << (thisbit ++);
+                  else
+                    c |= ((data[rowoffset + k] == dark) ? 1 : 0) << (thisbit ++);
+                }
+            }
 
-	  if (thisbit != 0)
-	    {
-	      /* Write out the last oddball int. */
-	      if (need_comma)
-		fputc (',', fp);
-	      need_comma = 1;
+          if (thisbit != 0)
+            {
+              /* Write out the last oddball int. */
+              if (need_comma)
+                fputc (',', fp);
+              need_comma = 1;
 
-	      /* Maybe start a new line. */
-	      if (nints ++ == lineints)
-		{
-		  nints = 1;
-		  fputs ("\n  ", fp);
-		}
-	      fprintf (fp, intfmt, c);
-	    }
-	}
+              /* Maybe start a new line. */
+              if (nints ++ == lineints)
+                {
+                  nints = 1;
+                  fputs ("\n  ", fp);
+                }
+              fprintf (fp, intfmt, c);
+            }
+        }
 
       gimp_progress_update ((double) (i + tileheight) / (double) height);
     }
@@ -1229,8 +1229,8 @@ save_dialog (gint32 drawable_ID)
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_PREFIX);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Identifier prefix:"), 0.0, 0.5,
-			     entry, 1, TRUE);
+                             _("_Identifier prefix:"), 0.0, 0.5,
+                             entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (prefix_entry_callback),
                     NULL);
@@ -1243,8 +1243,8 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_set_size_request (entry, 240, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Comment:"), 0.0, 0.5,
-			     entry, 1, TRUE);
+                             _("Comment:"), 0.0, 0.5,
+                             entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
@@ -1270,21 +1270,21 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_set_sensitive (table, xsvals.use_hot);
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
-				     gimp_drawable_width (drawable_ID) - 1,
-				     1, 10, 0, 0, 0);
+                                     gimp_drawable_width (drawable_ID) - 1,
+                                     1, 10, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Hot spot _X:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("Hot spot _X:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.x_hot);
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
-				     gimp_drawable_height (drawable_ID) - 1,
-				     1, 10, 0, 0, 0);
+                                     gimp_drawable_height (drawable_ID) - 1,
+                                     1, 10, 0, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Hot spot _Y:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("Hot spot _Y:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.y_hot);
@@ -1313,8 +1313,8 @@ save_dialog (gint32 drawable_ID)
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_MASK_EXT);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.mask_ext);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Mask file extension:"), 0.0, 0.5,
-			     entry, 1, TRUE);
+                             _("_Mask file extension:"), 0.0, 0.5,
+                             entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mask_ext_entry_callback),
                     NULL);
@@ -1340,28 +1340,28 @@ save_dialog (gint32 drawable_ID)
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void
 comment_entry_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   memset (xsvals.comment, 0, sizeof (xsvals.comment));
   strncpy (xsvals.comment,
-	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
+           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
 }
 #endif
 
 static void
 prefix_entry_callback (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
   strncpy (xsvals.prefix,
-	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_PREFIX);
+           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_PREFIX);
 }
 
 static void
 mask_ext_entry_callback (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
   strncpy (xsvals.mask_ext,
-	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
+           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
 }

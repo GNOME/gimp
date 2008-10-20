@@ -72,21 +72,21 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("High-resolution edge detection"),
-			  "This plugin creates one-pixel wide edges from the "
-			  "image, with the value proportional to the gradient. "
-			  "It uses the Laplace operator (a 3x3 kernel with -8 "
-			  "in the middle). The image has to be laplacered to "
-			  "get useful results, a gauss_iir with 1.5 - 5.0 "
-			  "depending on the noise in the image is best.",
-			  "Thorsten Schnier",
-			  "Thorsten Schnier",
-			  "1997",
-			  N_("_Laplace"),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("High-resolution edge detection"),
+                          "This plugin creates one-pixel wide edges from the "
+                          "image, with the value proportional to the gradient. "
+                          "It uses the Laplace operator (a 3x3 kernel with -8 "
+                          "in the middle). The image has to be laplacered to "
+                          "get useful results, a gauss_iir with 1.5 - 5.0 "
+                          "depending on the noise in the image is best.",
+                          "Thorsten Schnier",
+                          "Thorsten Schnier",
+                          "1997",
+                          N_("_Laplace"),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Edge-Detect");
 }
@@ -118,7 +118,7 @@ run (const gchar      *name,
       laplace (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -137,10 +137,10 @@ run (const gchar      *name,
 
 static void
 laplace_prepare_row (GimpPixelRgn *pixel_rgn,
-		     guchar       *data,
-		     gint          x,
-		     gint          y,
-		     gint          w)
+                     guchar       *data,
+                     gint          x,
+                     gint          y,
+                     gint          w)
 {
   gint bpp = pixel_rgn->bpp;
   gint b;
@@ -171,12 +171,12 @@ laplace_prepare_row (GimpPixelRgn *pixel_rgn,
 
 static void
 minmax  (gint  x1,
-	 gint  x2,
-	 gint  x3,
-	 gint  x4,
-	 gint  x5,
-	 gint *min_result,
-	 gint *max_result)
+         gint  x2,
+         gint  x3,
+         gint  x4,
+         gint  x5,
+         gint *min_result,
+         gint *max_result)
 {
   gint min1, min2, max1, max2;
 
@@ -275,22 +275,22 @@ laplace (GimpDrawable *drawable)
 
       d = dest;
       for (col = 0; col < (x2 - x1) * bytes; col++)
-	if (alpha && (((col + 1) % bytes) == 0)) /* the alpha channel */
+        if (alpha && (((col + 1) % bytes) == 0)) /* the alpha channel */
           {
             *d++ = cr[col];
           }
-	else
-	  {
-	    minmax (pr[col], cr[col - bytes], cr[col], cr[col + bytes],
-		    nr[col], &minval, &maxval); /* four-neighbourhood */
+        else
+          {
+            minmax (pr[col], cr[col - bytes], cr[col], cr[col + bytes],
+                    nr[col], &minval, &maxval); /* four-neighbourhood */
 
-	    gradient = (0.5 * MAX ((maxval - cr [col]), (cr[col]- minval)));
+            gradient = (0.5 * MAX ((maxval - cr [col]), (cr[col]- minval)));
 
-	    *d++ = (((pr[col - bytes] + pr[col]       + pr[col + bytes] +
+            *d++ = (((pr[col - bytes] + pr[col]       + pr[col + bytes] +
                       cr[col - bytes] - (8 * cr[col]) + cr[col + bytes] +
                       nr[col - bytes] + nr[col]       + nr[col + bytes]) > 0) ?
                     gradient : (128 + gradient));
-	  }
+          }
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
@@ -302,7 +302,7 @@ laplace (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 20) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+        gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
 
@@ -366,7 +366,7 @@ laplace (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 20) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+        gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
   /*  update the laplaced region  */

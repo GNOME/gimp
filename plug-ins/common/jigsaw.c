@@ -448,7 +448,7 @@ jigsaw (GimpDrawable *drawable,
       gimp_preview_get_size (preview, &width, &height);
       bytes  = drawable->bpp;
       buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-						 &width, &height, &bytes);
+                                                 &width, &height, &bytes);
       buffer_size = bytes * width * height;
     }
   else
@@ -462,7 +462,7 @@ jigsaw (GimpDrawable *drawable,
       buffer = g_new (guchar, buffer_size);
 
       gimp_pixel_rgn_init (&src_pr,  drawable, 0, 0, width, height,
-			   FALSE, FALSE);
+                           FALSE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pr, buffer, 0, 0, width, height);
     }
 
@@ -483,7 +483,7 @@ jigsaw (GimpDrawable *drawable,
   else
     {
       gimp_pixel_rgn_init (&dest_pr, drawable, 0, 0, width, height,
-			   TRUE, TRUE);
+                           TRUE, TRUE);
       gimp_pixel_rgn_set_rect (&dest_pr, buffer, 0, 0, width, height);
 
       gimp_drawable_flush (drawable);

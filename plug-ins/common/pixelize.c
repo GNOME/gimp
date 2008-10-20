@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,8 +26,8 @@
  *
  * This plug-in "pixelizes" the image.
  *
- *	Eiichi Takamori <taka@ma1.seikyou.ne.jp>
- *	http://ha1.seikyou.ne.jp/home/taka/gimp/
+ *      Eiichi Takamori <taka@ma1.seikyou.ne.jp>
+ *      http://ha1.seikyou.ne.jp/home/taka/gimp/
  *
  * Changes from version 1.03 to version 1.04:
  * - Added gtk_rc_parse
@@ -607,7 +607,7 @@ pixelize_large (GimpDrawable *drawable,
     }
   else
     {
-      /*  update the blurred region	 */
+      /*  update the blurred region      */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
@@ -686,7 +686,7 @@ pixelize_small (GimpDrawable *drawable,
 }
 
 /*
-  This function acts on one PixelArea.	Since there were so many
+  This function acts on one PixelArea.  Since there were so many
   nested FORs in pixelize_small(), I put a few of them here...
   */
 

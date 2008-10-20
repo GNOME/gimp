@@ -2071,9 +2071,9 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
 
 static gint
 save_index (FILE    *ofp,
-	    gint32   image_ID,
-	    gint32   drawable_ID,
-	    gint     gray)
+            gint32   image_ID,
+            gint32   drawable_ID,
+            gint     gray)
 {
   gint             height, width, linepad, tile_height, i, j;
   gint             ncolors, vclass;
@@ -2110,14 +2110,14 @@ save_index (FILE    *ofp,
       ncolors = 256;
 
       for (j = 0; j < ncolors; j++)
-	{
-	  xwdcolmap[j].l_pixel = j;
-	  xwdcolmap[j].l_red   = (j << 8) | j;
-	  xwdcolmap[j].l_green = (j << 8) | j;
-	  xwdcolmap[j].l_blue  = (j << 8) | j;
-	  xwdcolmap[j].l_flags = 7;
-	  xwdcolmap[j].l_pad = 0;
-	}
+        {
+          xwdcolmap[j].l_pixel = j;
+          xwdcolmap[j].l_red   = (j << 8) | j;
+          xwdcolmap[j].l_green = (j << 8) | j;
+          xwdcolmap[j].l_blue  = (j << 8) | j;
+          xwdcolmap[j].l_flags = 7;
+          xwdcolmap[j].l_pad = 0;
+        }
     }
   else
     {
@@ -2125,14 +2125,14 @@ save_index (FILE    *ofp,
       cmap = gimp_image_get_colormap (image_ID, &ncolors);
 
       for (j = 0; j < ncolors; j++)
-	{
-	  xwdcolmap[j].l_pixel = j;
-	  xwdcolmap[j].l_red   = ((*cmap) << 8) | *cmap; cmap++;
-	  xwdcolmap[j].l_green = ((*cmap) << 8) | *cmap; cmap++;
-	  xwdcolmap[j].l_blue  = ((*cmap) << 8) | *cmap; cmap++;
-	  xwdcolmap[j].l_flags = 7;
-	  xwdcolmap[j].l_pad = 0;
-	}
+        {
+          xwdcolmap[j].l_pixel = j;
+          xwdcolmap[j].l_red   = ((*cmap) << 8) | *cmap; cmap++;
+          xwdcolmap[j].l_green = ((*cmap) << 8) | *cmap; cmap++;
+          xwdcolmap[j].l_blue  = ((*cmap) << 8) | *cmap; cmap++;
+          xwdcolmap[j].l_flags = 7;
+          xwdcolmap[j].l_pad = 0;
+        }
     }
 
   /* Fill in the XWD header (header_size is evaluated by write_xwd_hdr ()) */
@@ -2168,12 +2168,12 @@ save_index (FILE    *ofp,
   for (i = 0; i < height; i++)
     {
       if ((i % tile_height) == 0)   /* Get more data */
-	{
+        {
           gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
           gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
           src = data;
-	}
+        }
 
       fwrite (src, width, 1, ofp);
 
@@ -2183,7 +2183,7 @@ save_index (FILE    *ofp,
       src += width;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((gdouble) i / (gdouble) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
 
   g_free (data);
@@ -2266,12 +2266,12 @@ save_rgb (FILE   *ofp,
   for (i = 0; i < height; i++)
     {
       if ((i % tile_height) == 0)   /* Get more data */
-	{
+        {
           gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
           gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
           src = data;
-	}
+        }
 
       fwrite (src, width * 3, 1, ofp);
 
@@ -2281,7 +2281,7 @@ save_rgb (FILE   *ofp,
       src += width * 3;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((gdouble) i / (gdouble) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
 
   g_free (data);

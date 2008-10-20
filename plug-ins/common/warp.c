@@ -49,7 +49,7 @@
  *
  * Version 0.34  10/30/97   'Fixed' drawable update problem
  *               Added 16-bit resolution to differential map
- *	         Added substep increments for finer control
+ *               Added substep increments for finer control
  *
  * Version 0.33  10/26/97   Added 'angle increment' to user interface
  *
@@ -113,54 +113,54 @@ typedef struct
 
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void      blur16           (GimpDrawable *drawable);
 
 static void      diff             (GimpDrawable *drawable,
-				   gint32       *xl_id,
-				   gint32       *yl_id);
+                                   gint32       *xl_id,
+                                   gint32       *yl_id);
 
 static void      diff_prepare_row (GimpPixelRgn *pixel_rgn,
-				   guchar       *data,
-				   gint          x,
-				   gint          y,
-				   gint          w);
+                                   guchar       *data,
+                                   gint          x,
+                                   gint          y,
+                                   gint          w);
 
 static void      warp_one         (GimpDrawable *draw,
-				   GimpDrawable *new,
-				   GimpDrawable *map_x,
-				   GimpDrawable *map_y,
-				   GimpDrawable *mag_draw,
-				   gboolean      first_time,
-				   gint          step);
+                                   GimpDrawable *new,
+                                   GimpDrawable *map_x,
+                                   GimpDrawable *map_y,
+                                   GimpDrawable *mag_draw,
+                                   gboolean      first_time,
+                                   gint          step);
 
 static void      warp        (GimpDrawable *drawable);
 
 static gboolean  warp_dialog (GimpDrawable *drawable);
 static GimpTile *warp_pixel  (GimpDrawable *drawable,
-			      GimpTile     *tile,
-			      gint          width,
-			      gint          height,
-			      gint          x1,
-			      gint          y1,
-			      gint          x2,
-			      gint          y2,
-			      gint          x,
-			      gint          y,
-			      gint         *row,
-			      gint         *col,
-			      guchar       *pixel);
+                              GimpTile     *tile,
+                              gint          width,
+                              gint          height,
+                              gint          x1,
+                              gint          y1,
+                              gint          x2,
+                              gint          y2,
+                              gint          x,
+                              gint          y,
+                              gint         *row,
+                              gint         *col,
+                              guchar       *pixel);
 
 static gboolean  warp_map_constrain       (gint32     image_id,
-					   gint32     drawable_id,
-					   gpointer   data);
+                                           gint32     drawable_id,
+                                           gpointer   data);
 static gdouble   warp_map_mag_give_value  (guchar    *pt,
-					   gint       alpha,
-					   gint       bytes);
+                                           gint       alpha,
+                                           gint       bytes);
 
 /* -------------------------------------------------------------------------- */
 /*   Variables global over entire plug-in scope                               */
@@ -230,19 +230,19 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Twist or smear image in many different ways"),
-			  "Smears an image along vector paths calculated as "
-			  "the gradient of a separate control matrix. The "
-			  "effect can look like brushstrokes of acrylic or "
-			  "watercolor paint, in some cases.",
-			  "John P. Beale",
-			  "John P. Beale",
-			  "1997",
-			  N_("_Warp..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Twist or smear image in many different ways"),
+                          "Smears an image along vector paths calculated as "
+                          "the gradient of a separate control matrix. The "
+                          "effect can look like brushstrokes of acrylic or "
+                          "watercolor paint, in some cases.",
+                          "John P. Beale",
+                          "John P. Beale",
+                          "1997",
+                          N_("_Warp..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
@@ -269,9 +269,9 @@ run (const gchar      *name,
   /* get currently selected foreground pixel color */
   gimp_context_get_foreground (&color);
   gimp_rgb_get_uchar (&color,
-		      &color_pixel[0],
-		      &color_pixel[1],
-		      &color_pixel[2]);
+                      &color_pixel[0],
+                      &color_pixel[1],
+                      &color_pixel[2]);
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -290,7 +290,7 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! warp_dialog (drawable))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -298,29 +298,29 @@ run (const gchar      *name,
        *  (mode, image, draw, amount, warp_map, iter) are there
        */
       if (nparams < MIN_ARGS)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
+        {
           gint  pcnt = MIN_ARGS;
 
-	  dvals.amount   = param[3].data.d_float;
-	  dvals.warp_map = param[4].data.d_int32;
-	  dvals.iter     = param[5].data.d_int32;
+          dvals.amount   = param[3].data.d_float;
+          dvals.warp_map = param[4].data.d_int32;
+          dvals.iter     = param[5].data.d_int32;
 
-	  if (nparams > pcnt++) dvals.dither       = param[6].data.d_float;
-	  if (nparams > pcnt++) dvals.angle        = param[7].data.d_float;
-	  if (nparams > pcnt++) dvals.wrap_type    = param[8].data.d_int32;
-	  if (nparams > pcnt++) dvals.mag_map      = param[9].data.d_int32;
-	  if (nparams > pcnt++) dvals.mag_use      = param[10].data.d_int32;
-	  if (nparams > pcnt++) dvals.substeps     = param[11].data.d_int32;
-	  if (nparams > pcnt++) dvals.grad_map     = param[12].data.d_int32;
-	  if (nparams > pcnt++) dvals.grad_scale   = param[13].data.d_float;
-	  if (nparams > pcnt++) dvals.vector_map   = param[14].data.d_int32;
-	  if (nparams > pcnt++) dvals.vector_scale = param[15].data.d_float;
-	  if (nparams > pcnt++) dvals.vector_angle = param[16].data.d_float;
-	}
+          if (nparams > pcnt++) dvals.dither       = param[6].data.d_float;
+          if (nparams > pcnt++) dvals.angle        = param[7].data.d_float;
+          if (nparams > pcnt++) dvals.wrap_type    = param[8].data.d_int32;
+          if (nparams > pcnt++) dvals.mag_map      = param[9].data.d_int32;
+          if (nparams > pcnt++) dvals.mag_use      = param[10].data.d_int32;
+          if (nparams > pcnt++) dvals.substeps     = param[11].data.d_int32;
+          if (nparams > pcnt++) dvals.grad_map     = param[12].data.d_int32;
+          if (nparams > pcnt++) dvals.grad_scale   = param[13].data.d_float;
+          if (nparams > pcnt++) dvals.vector_map   = param[14].data.d_int32;
+          if (nparams > pcnt++) dvals.vector_scale = param[15].data.d_float;
+          if (nparams > pcnt++) dvals.vector_angle = param[16].data.d_float;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -342,7 +342,7 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
+        gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
     }
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -375,7 +375,7 @@ warp_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Warp"), PLUG_IN_BINARY,
                          NULL, 0,
-			 gimp_standard_help_func, PLUG_IN_PROC,
+                         gimp_standard_help_func, PLUG_IN_PROC,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -410,8 +410,8 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  amount, iter */
   spinbutton = gimp_spin_button_new (&adj, dvals.amount,
-				     -1000, 1000, /* ??? */
-				     1, 10, 0, 1, 2);
+                                     -1000, 1000, /* ??? */
+                                     1, 10, 0, 1, 2);
   gtk_size_group_add_widget (spin_group, spinbutton);
   g_object_unref (spin_group);
 
@@ -426,7 +426,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.amount);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.iter,
-				     1, 100, 1, 5, 0, 1, 0);
+                                     1, 100, 1, 5, 0, 1, 0);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -442,7 +442,7 @@ warp_dialog (GimpDrawable *drawable)
   label = gtk_label_new (_("Displacement map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
@@ -451,7 +451,7 @@ warp_dialog (GimpDrawable *drawable)
                               &dvals.warp_map);
 
   gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   /* ======================================================================= */
@@ -460,12 +460,12 @@ warp_dialog (GimpDrawable *drawable)
   label = gtk_label_new (_("On edges:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   toggle_hbox = gtk_hbox_new (FALSE, 6);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 1, 3, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle_hbox);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
@@ -481,7 +481,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.wrap_type);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.wrap_type == WRAP);
+                                dvals.wrap_type == WRAP);
 
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -496,7 +496,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.wrap_type);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.wrap_type == SMEAR);
+                                dvals.wrap_type == SMEAR);
 
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -511,7 +511,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.wrap_type);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.wrap_type == BLACK);
+                                dvals.wrap_type == BLACK);
 
   toggle = gtk_radio_button_new_with_label (group, _("Foreground color"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -526,7 +526,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.wrap_type);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.wrap_type == COLOR);
+                                dvals.wrap_type == COLOR);
 
 
 
@@ -545,7 +545,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.dither,
-				     0, 100, 1, 10, 0, 1, 2);
+                                     0, 100, 1, 10, 0, 1, 2);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -558,7 +558,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.dither);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.angle,
-				     0, 360, 1, 15, 0, 1, 1);
+                                     0, 360, 1, 15, 0, 1, 1);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -571,7 +571,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.angle);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
-				     1, 100, 1, 5, 0, 1, 0);
+                                     1, 100, 1, 5, 0, 1, 0);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -587,7 +587,7 @@ warp_dialog (GimpDrawable *drawable)
   label = gtk_label_new (_("Magnitude map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
@@ -596,14 +596,14 @@ warp_dialog (GimpDrawable *drawable)
                               &dvals.mag_map);
 
   gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   /*  Magnitude Usage  */
   toggle_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle_hbox);
 
   toggle = gtk_check_button_new_with_label (_("Use magnitude map"));
@@ -631,8 +631,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.grad_scale,
-				     -1000, 1000, /* ??? */
-				     0.01, 0.1, 0, 1, 3);
+                                     -1000, 1000, /* ??? */
+                                     0.01, 0.1, 0, 1, 3);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -648,7 +648,7 @@ warp_dialog (GimpDrawable *drawable)
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
   gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.grad_map,
@@ -660,8 +660,8 @@ warp_dialog (GimpDrawable *drawable)
   /* ---------------------------------------------- */
 
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_scale,
-				     -1000, 1000, /* ??? */
-				     0.01, 0.1, 0, 1, 3);
+                                     -1000, 1000, /* ??? */
+                                     0.01, 0.1, 0, 1, 3);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -676,7 +676,7 @@ warp_dialog (GimpDrawable *drawable)
   /* -------------------------------------------------------- */
 
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_angle,
-				     0, 360, 1, 15, 0, 1, 1);
+                                     0, 360, 1, 15, 0, 1, 1);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -691,7 +691,7 @@ warp_dialog (GimpDrawable *drawable)
   /* ---------  Vector map menu ----------------  */
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
   gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.vector_map,
@@ -699,8 +699,8 @@ warp_dialog (GimpDrawable *drawable)
                               &dvals.vector_map);
 
   gimp_help_set_help_data (combo,
-			   _("Fixed-direction-vector map selection menu"),
-			   NULL);
+                           _("Fixed-direction-vector map selection menu"),
+                           NULL);
 
   gtk_widget_show (dlg);
 
@@ -776,26 +776,26 @@ blur16 (GimpDrawable *drawable)
 
       d = dest;
       for (col = 0; col < (x2 - x1); col++) /* over columns of pixels */
-	{
-	  offb = col*src_bytes;    /* base of byte pointer offset */
-	  off1 = offb+1;                 /* offset into row arrays */
+        {
+          offb = col*src_bytes;    /* base of byte pointer offset */
+          off1 = offb+1;                 /* offset into row arrays */
 
-	  pval = (256.0 * pr[offb - src_bytes] + pr[off1 - src_bytes] +
-		  256.0 * pr[offb] + pr[off1] +
-		  256.0 * pr[offb + src_bytes] + pr[off1 + src_bytes] +
-		  256.0 * cr[offb - src_bytes] + cr[off1 - src_bytes] +
-		  256.0 * cr[offb]  + cr[off1] +
-		  256.0 * cr[offb + src_bytes] + cr[off1 + src_bytes] +
-		  256.0 * nr[offb - src_bytes] + nr[off1 - src_bytes] +
-		  256.0 * nr[offb] + nr[off1] +
-		  256.0 * nr[offb + src_bytes]) + nr[off1 + src_bytes];
+          pval = (256.0 * pr[offb - src_bytes] + pr[off1 - src_bytes] +
+                  256.0 * pr[offb] + pr[off1] +
+                  256.0 * pr[offb + src_bytes] + pr[off1 + src_bytes] +
+                  256.0 * cr[offb - src_bytes] + cr[off1 - src_bytes] +
+                  256.0 * cr[offb]  + cr[off1] +
+                  256.0 * cr[offb + src_bytes] + cr[off1 + src_bytes] +
+                  256.0 * nr[offb - src_bytes] + nr[off1 - src_bytes] +
+                  256.0 * nr[offb] + nr[off1] +
+                  256.0 * nr[offb + src_bytes]) + nr[off1 + src_bytes];
 
-	  pval /= 9.0;  /* take the average */
-	  *d++ = (guchar) (((gint) pval) >> 8);   /* high-order byte */
-	  *d++ = (guchar) (((gint) pval) % 256);  /* low-order byte  */
-	  d += dest_bytes_inc;       /* move data pointer on to next destination pixel */
+          pval /= 9.0;  /* take the average */
+          *d++ = (guchar) (((gint) pval) >> 8);   /* high-order byte */
+          *d++ = (guchar) (((gint) pval) % 256);  /* low-order byte  */
+          d += dest_bytes_inc;       /* move data pointer on to next destination pixel */
 
-	}
+        }
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 
@@ -806,7 +806,7 @@ blur16 (GimpDrawable *drawable)
       nr = tmp;
 
       if ((row % 8) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+        gimp_progress_update ((double) row / (double) (y2 - y1));
     }
 
   /*  update the region  */
@@ -827,10 +827,10 @@ blur16 (GimpDrawable *drawable)
 
 static void
 diff_prepare_row (GimpPixelRgn *pixel_rgn,
-		  guchar       *data,
-		  gint          x,
-		  gint          y,
-		  gint          w)
+                  guchar       *data,
+                  gint          x,
+                  gint          y,
+                  gint          w)
 {
   gint b;
 
@@ -1088,14 +1088,14 @@ diff (GimpDrawable *drawable,
               offb = col*gbytes;     /* base of byte pointer offset into pixel values (R,G,B,Alpha, etc.) */
               for (bytes=0; bytes < src_bytes; bytes++) /* add all channels together */
                 {
- 		  off = offb+bytes;                 /* offset into row arrays */
-		  tx += ((gint) -prg[off - gbytes]   + (gint) prg[off + gbytes] +
+                  off = offb+bytes;                 /* offset into row arrays */
+                  tx += ((gint) -prg[off - gbytes]   + (gint) prg[off + gbytes] +
                          (gint) -2*crg[off - gbytes] + (gint) 2*crg[off + gbytes] +
                          (gint) -nrg[off - gbytes]   + (gint) nrg[off + gbytes]);
 
- 		  ty += ((gint) -prg[off - gbytes] - (gint)2*prg[off] - (gint) prg[off + gbytes] +
+                  ty += ((gint) -prg[off - gbytes] - (gint)2*prg[off] - (gint) prg[off + gbytes] +
                          (gint) nrg[off - gbytes] + (gint)2*nrg[off] + (gint) nrg[off + gbytes]);
-	        }
+                }
               tx *= gscalefac;
               ty *= gscalefac;
 
@@ -1162,7 +1162,7 @@ diff (GimpDrawable *drawable,
         }
 
       if ((row % 8) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+        gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
 
     } /* for (row..) */
 
@@ -1280,12 +1280,12 @@ warp (GimpDrawable *orig_draw)
 
 static void
 warp_one (GimpDrawable *draw,
-	  GimpDrawable *new,
-	  GimpDrawable *map_x,
-	  GimpDrawable *map_y,
-	  GimpDrawable *mag_draw,
-	  gboolean      first_time,
-	  gint          step)
+          GimpDrawable *new,
+          GimpDrawable *map_x,
+          GimpDrawable *map_y,
+          GimpDrawable *mag_draw,
+          gboolean      first_time,
+          gint          step)
 {
   GimpPixelRgn src_rgn;
   GimpPixelRgn dest_rgn;
@@ -1460,7 +1460,7 @@ warp_one (GimpDrawable *draw,
                    dy += g_rand_double_range (gr, -dvals.dither, dvals.dither);
                  }
 
-	      if (dvals.substeps != 1)
+              if (dvals.substeps != 1)
                 {   /* trace (substeps) iterations of displacement vector */
                   for (substep = 1; substep < dvals.substeps; substep++)
                     {
@@ -1511,59 +1511,59 @@ warp_one (GimpDrawable *draw,
                     } /* for (substep) */
                 } /* if (substeps != 0) */
 
-	      /* --------------------------------------------------------- */
+              /* --------------------------------------------------------- */
 
-	      needx = x + dx;
-	      needy = y + dy;
+              needx = x + dx;
+              needy = y + dy;
 
-	      mx += xm_bytes;         /* pointers into x,y displacement maps */
-	      my += ym_bytes;
+              mx += xm_bytes;         /* pointers into x,y displacement maps */
+              my += ym_bytes;
 
-	      if (dvals.mag_use == TRUE)
-		mmag += mmag_bytes;
+              if (dvals.mag_use == TRUE)
+                mmag += mmag_bytes;
 
-	      /* Calculations complete; now copy the proper pixel */
+              /* Calculations complete; now copy the proper pixel */
 
-	      if (needx >= 0.0)
+              if (needx >= 0.0)
                 xi = (gint) needx;
-	      else
+              else
                 xi = -((gint) -needx + 1);
 
-	      if (needy >= 0.0)
+              if (needy >= 0.0)
                 yi = (gint) needy;
-	      else
+              else
                 yi = -((gint) -needy + 1);
 
-	      /* get 4 neighboring pixel values from source drawable for linear interpolation */
-	      tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi, yi, &row, &col, pixel[0]);
-	      tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi + 1, yi, &row, &col, pixel[1]);
-	      tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi, yi + 1, &row, &col, pixel[2]);
-	      tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &row, &col, pixel[3]);
+              /* get 4 neighboring pixel values from source drawable for linear interpolation */
+              tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi, yi, &row, &col, pixel[0]);
+              tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi + 1, yi, &row, &col, pixel[1]);
+              tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi, yi + 1, &row, &col, pixel[2]);
+              tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &row, &col, pixel[3]);
 
-	      for (k = 0; k < dest_bytes; k++)
-		{
-		  values[0] = pixel[0][k];
-		  values[1] = pixel[1][k];
-		  values[2] = pixel[2][k];
-		  values[3] = pixel[3][k];
+              for (k = 0; k < dest_bytes; k++)
+                {
+                  values[0] = pixel[0][k];
+                  values[1] = pixel[1][k];
+                  values[2] = pixel[2][k];
+                  values[3] = pixel[3][k];
 
                   val = gimp_bilinear_8 (needx, needy, values);
 
-		  *dest++ = val;
-		} /* for k */
+                  *dest++ = val;
+                } /* for k */
 
-	    } /* for x */
+            } /* for x */
 
-	  /*	  srcrow += src_rgn.rowstride; */
-	  srcrow += src_rgn.rowstride;
-	  destrow += dest_rgn.rowstride;
-	  mxrow += map_x_rgn.rowstride;
-	  myrow += map_y_rgn.rowstride;
+          /*      srcrow += src_rgn.rowstride; */
+          srcrow += src_rgn.rowstride;
+          destrow += dest_rgn.rowstride;
+          mxrow += map_x_rgn.rowstride;
+          myrow += map_y_rgn.rowstride;
 
           if (dvals.mag_use == TRUE)
-	    mmagrow += mag_rgn.rowstride;
+            mmagrow += mag_rgn.rowstride;
 
-	} /* for y */
+        } /* for y */
 
       progress += (dest_rgn.w * dest_rgn.h);
       gimp_progress_update ((double) progress / (double) max_progress);
@@ -1592,8 +1592,8 @@ warp_one (GimpDrawable *draw,
 
 static gdouble
 warp_map_mag_give_value (guchar *pt,
-			 gint    alpha,
-			 gint    bytes)
+                         gint    alpha,
+                         gint    bytes)
 {
   gdouble ret, val_alpha;
 
@@ -1614,18 +1614,18 @@ warp_map_mag_give_value (guchar *pt,
 
 static GimpTile *
 warp_pixel (GimpDrawable *drawable,
-	    GimpTile     *tile,
-	    gint       width,
-	    gint       height,
-	    gint       x1,
-	    gint       y1,
-	    gint       x2,
-	    gint       y2,
-	    gint       x,
-	    gint       y,
-	    gint      *row,
-	    gint      *col,
-	    guchar    *pixel)
+            GimpTile     *tile,
+            gint       width,
+            gint       height,
+            gint       x1,
+            gint       y1,
+            gint       x2,
+            gint       y2,
+            gint       x,
+            gint       y,
+            gint      *row,
+            gint      *col,
+            guchar    *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
@@ -1635,43 +1635,43 @@ warp_pixel (GimpDrawable *drawable,
   if (dvals.wrap_type == WRAP)
     {
       if (x < 0)
-	x = width - (-x % width);
+        x = width - (-x % width);
       else
-	x %= width;
+        x %= width;
 
       if (y < 0)
-	y = height - (-y % height);
+        y = height - (-y % height);
       else
-	y %= height;
+        y %= height;
     }
   /* Smear out the edges of the image by repeating pixels. */
   else if (dvals.wrap_type == SMEAR)
     {
       if (x < 0)
-	x = 0;
+        x = 0;
       else if (x > width - 1)
-	x = width - 1;
+        x = width - 1;
 
       if (y < 0)
-	y = 0;
+        y = 0;
       else if (y > height - 1)
-	y = height - 1;
+        y = height - 1;
     }
 
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {
       if ((((guint) (x / tile_width)) != *col) ||
           (((guint) (y / tile_height)) != *row))
-	{
-	  *col = x / tile_width;
-	  *row = y / tile_height;
+        {
+          *col = x / tile_width;
+          *row = y / tile_height;
 
-	  if (tile)
-	    gimp_tile_unref (tile, FALSE);
+          if (tile)
+            gimp_tile_unref (tile, FALSE);
 
-	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
-	  gimp_tile_ref (tile);
-	}
+          tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
+          gimp_tile_ref (tile);
+        }
 
       data = (tile->data +
               tile->bpp * (tile->ewidth * (y % tile_height) + (x % tile_width)));
@@ -1694,11 +1694,11 @@ warp_pixel (GimpDrawable *drawable,
 
 static gboolean
 warp_map_constrain (gint32     image_id,
-		    gint32     drawable_id,
-		    gpointer   data)
+                    gint32     drawable_id,
+                    gpointer   data)
 {
   GimpDrawable *drawable = data;
 
   return (gimp_drawable_width (drawable_id)  == drawable->width &&
-	  gimp_drawable_height (drawable_id) == drawable->height);
+          gimp_drawable_height (drawable_id) == drawable->height);
 }

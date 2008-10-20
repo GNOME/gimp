@@ -737,7 +737,7 @@ iwarp_frame (void)
 
               dest_row += dest_rgn.rowstride;
             }
-	  gimp_progress_update ((gdouble) (progress) / max_progress);
+          gimp_progress_update ((gdouble) (progress) / max_progress);
         }
       else
         {

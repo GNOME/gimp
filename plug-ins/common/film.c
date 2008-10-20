@@ -472,7 +472,7 @@ film (void)
       f = ((gdouble) picture_height) / (gdouble) height;
       picture_width = width * f;
       if (gimp_image_base_type (image_ID_tmp) != GIMP_RGB_IMAGE)
-	gimp_image_convert_rgb (image_ID_tmp);
+        gimp_image_convert_rgb (image_ID_tmp);
       gimp_image_scale (image_ID_tmp, picture_width, picture_height);
 
       layers = gimp_image_get_layers (image_ID_tmp, &num_layers);
@@ -484,11 +484,11 @@ film (void)
           picture_x0 += picture_space / 2;
 
           layer_ID_src = layers[k];
-	  gimp_layer_resize_to_image_size (layer_ID_src);
-	  new_layer = gimp_layer_new_from_drawable (layer_ID_src,
-						    image_ID_dst);
-	  gimp_image_add_layer (image_ID_dst, new_layer, -1);
-	  gimp_layer_set_offsets (new_layer, picture_x0, picture_y0);
+          gimp_layer_resize_to_image_size (layer_ID_src);
+          new_layer = gimp_layer_new_from_drawable (layer_ID_src,
+                                                    image_ID_dst);
+          gimp_image_add_layer (image_ID_dst, new_layer, -1);
+          gimp_layer_set_offsets (new_layer, picture_x0, picture_y0);
 
           /* Draw picture numbers */
           if ((number_height > 0) &&
@@ -496,12 +496,12 @@ film (void)
             {
               if (filmvals.number_pos[0])
                 draw_number (layer_ID_dst,
-			     filmvals.number_start + picture_count,
+                             filmvals.number_start + picture_count,
                              picture_x0 + picture_width/2,
                              (hole_offset-number_height)/2, number_height);
               if (filmvals.number_pos[1])
                 draw_number (layer_ID_dst,
-			     filmvals.number_start + picture_count,
+                             filmvals.number_start + picture_count,
                              picture_x0 + picture_width/2,
                              film_height - (hole_offset + number_height)/2,
                              number_height);
@@ -594,7 +594,7 @@ create_hole_rgb (gint width,
   for (k = radius-1; k > 0; k--)  /* Rounding corners */
     {
       length = (int)(radius - sqrt ((gdouble) (radius * radius - k * k))
-		     - 0.5);
+                     - 0.5);
       if (length > 0)
         {
           set_pixels (length, top, &filmvals.film_color);

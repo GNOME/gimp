@@ -162,9 +162,9 @@ run (const gchar      *name,
       drawable = gimp_drawable_get (param[2].data.d_drawable);
 
       if (drawable)
-	do_fun();
+        do_fun();
       else
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -240,8 +240,8 @@ init_lut (void)
   for (i=0; i<LUTSIZE; i++)
     {
       wigglelut[i] = RINT((double)(wiggleamp<<11))*(sin((double)(i) /
-					    ((double)LUTSIZEMASK /
-					     10 * G_PI)));
+                                            ((double)LUTSIZEMASK /
+                                             10 * G_PI)));
     }
 }
 
@@ -273,7 +273,7 @@ do_fun (void)
 /* Adam's silly algorithm. */
 static void
 domap1 (unsigned char *src, unsigned char *dest,
-	int bx, int by, int cx, int cy)
+        int bx, int by, int cx, int cy)
 {
   unsigned int dy;
   signed int bycxmcybx;
@@ -318,30 +318,30 @@ domap1 (unsigned char *src, unsigned char *dest,
       sx = (basesx-=bx2);
 
       if (wiggly)
-	{
-	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
-	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
-	}
+        {
+          sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
+          sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+        }
 
       dx = 256;
       do
-	{
-	  *dest++ = (*(src +
-		   (
-		    (
-		     ((255&(
-			    (sx>>11)
-			    )))
-		     |
-		     ((((255&(
-			      (sy>>11)
-			      ))<<8)))
-		     )
-		    )));
-	  ;
-	  sx += by2;
-	  sy -= cy2;
-	}
+        {
+          *dest++ = (*(src +
+                   (
+                    (
+                     ((255&(
+                            (sx>>11)
+                            )))
+                     |
+                     ((((255&(
+                              (sy>>11)
+                              ))<<8)))
+                     )
+                    )));
+          ;
+          sx += by2;
+          sy -= cy2;
+        }
       while (--dx);
     }
 }
@@ -394,37 +394,37 @@ domap3(unsigned char *src, unsigned char *dest,
       sx = (basesx-=bx2);
 
       if (wiggly)
-	{
-	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
-	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
-	}
+        {
+          sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
+          sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+        }
 
       dx = 256;
 
       do
-	{
-	  unsigned char* addr;
+        {
+          unsigned char* addr;
 
-	  addr = src + 3*
-	    (
-	     (
-	      ((255&(
-		     (sx>>11)
-		     )))
-	      |
-	      ((((255&(
-		       (sy>>11)
-		       ))<<8)))
-	      )
-	     );
+          addr = src + 3*
+            (
+             (
+              ((255&(
+                     (sx>>11)
+                     )))
+              |
+              ((((255&(
+                       (sy>>11)
+                       ))<<8)))
+              )
+             );
 
-	  *dest++ = *(addr);
-	  *dest++ = *(addr+1);
-	  *dest++ = *(addr+2);
+          *dest++ = *(addr);
+          *dest++ = *(addr+1);
+          *dest++ = *(addr+2);
 
-	  sx += by2;
-	  sy -= cy2;
-	}
+          sx += by2;
+          sy -= cy2;
+        }
       while (--dx);
     }
 }
@@ -456,11 +456,11 @@ render_frame (void)
   if (frame==0)
     {
       for (i=0;i<pixels;i++)
-	{
-	  preview_data2[i] =
-	    preview_data1[i] =
-	    seed_data[i];
-	}
+        {
+          preview_data2[i] =
+            preview_data1[i] =
+            seed_data[i];
+        }
     }
 
   gdk_window_get_pointer (drawing_area->window, &rxp, &ryp, &mask);
@@ -474,109 +474,109 @@ render_frame (void)
   if (rgb_mode)
     {
       domap3(preview_data2, preview_data1,
-	     -(yp-xp)/2, xp+yp
-	     ,
-	     xp+yp, (yp-xp)/2
-	     );
+             -(yp-xp)/2, xp+yp
+             ,
+             xp+yp, (yp-xp)/2
+             );
 
       gdk_draw_rgb_image (drawing_area->window,
                           style->white_gc,
-			  0, 0, width, height,
-			  GDK_RGB_DITHER_NORMAL,
-			  preview_data1, width * 3);
+                          0, 0, width, height,
+                          GDK_RGB_DITHER_NORMAL,
+                          preview_data1, width * 3);
 
       /*      memcpy(preview_data1, seed_data, 256*256*3); */
 
       if (frame != 0)
-	{
-	  if (feedbacktype)
-	    {
-	      for (i=0;i<pixels;i++)
-		{
-		  gint t;
-		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = /*CLAMP(t,0,255);*/
-		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
-		}
-	    }
-	  else/* if (0) */
-	    {
-	      gint pixwords = pixels/sizeof(gint32);
-	      gint32* seedwords = (gint32*) seed_data;
-	      gint32* prevwords = (gint32*) preview_data1;
+        {
+          if (feedbacktype)
+            {
+              for (i=0;i<pixels;i++)
+                {
+                  gint t;
+                  t = preview_data1[i] + seed_data[i] - 128;
+                  preview_data1[i] = /*CLAMP(t,0,255);*/
+                    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
+                }
+            }
+          else/* if (0) */
+            {
+              gint pixwords = pixels/sizeof(gint32);
+              gint32* seedwords = (gint32*) seed_data;
+              gint32* prevwords = (gint32*) preview_data1;
 
-	      for (i=0;i<pixwords;i++)
-		{
-		  /*preview_data1[i] = (preview_data1[i]*2 +
-		    seed_data[i]) /3;*/
+              for (i=0;i<pixwords;i++)
+                {
+                  /*preview_data1[i] = (preview_data1[i]*2 +
+                    seed_data[i]) /3;*/
 
-		  /* mod'd version of the below for a 'deeper' mix */
-		  prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
-		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
-		  /* This is from Raph L... it should be a fast 50%/50%
-		     blend, though I don't know if 50%/50% is as nice as
-		     the old ratio. */
-		  /*
-		    prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		    (prevwords[i] & seedwords[i] & 0x01010101); */
-		}
-	    }
-	}
+                  /* mod'd version of the below for a 'deeper' mix */
+                  prevwords[i] =
+                    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+                    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
+                    ((seedwords[i] >> 2) & 0x3f3f3f3f);
+                  /* This is from Raph L... it should be a fast 50%/50%
+                     blend, though I don't know if 50%/50% is as nice as
+                     the old ratio. */
+                  /*
+                    prevwords[i] =
+                    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+                    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+                    (prevwords[i] & seedwords[i] & 0x01010101); */
+                }
+            }
+        }
     }
   else /* GRAYSCALE */
     {
       domap1(preview_data2, preview_data1,
-	     -(yp-xp)/2, xp+yp
-	     ,
-	     xp+yp, (yp-xp)/2
-	     );
+             -(yp-xp)/2, xp+yp
+             ,
+             xp+yp, (yp-xp)/2
+             );
 
       gdk_draw_gray_image (drawing_area->window,
                            style->white_gc,
-			   0, 0, width, height,
-			   GDK_RGB_DITHER_NORMAL,
-			   preview_data1, width);
+                           0, 0, width, height,
+                           GDK_RGB_DITHER_NORMAL,
+                           preview_data1, width);
       if (frame != 0)
-	{
-	  if (feedbacktype)
-	    {
-	      for (i=0;i<pixels;i++)
-		{
-		  int t;
-		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = /*CLAMP(t,0,255);*/
-		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
-		}
-	    }
-	  else
-	    {
-	      gint pixwords = pixels/sizeof(gint32);
-	      gint32* seedwords = (gint32*) seed_data;
-	      gint32* prevwords = (gint32*) preview_data1;
+        {
+          if (feedbacktype)
+            {
+              for (i=0;i<pixels;i++)
+                {
+                  int t;
+                  t = preview_data1[i] + seed_data[i] - 128;
+                  preview_data1[i] = /*CLAMP(t,0,255);*/
+                    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
+                }
+            }
+          else
+            {
+              gint pixwords = pixels/sizeof(gint32);
+              gint32* seedwords = (gint32*) seed_data;
+              gint32* prevwords = (gint32*) preview_data1;
 
-	      for (i=0;i<pixwords;i++)
-		{
+              for (i=0;i<pixwords;i++)
+                {
 
-		  /* mod'd version of the below for a 'deeper' mix */
-		  prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
-		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
-		  /* This is from Raph L... it should be a fast 50%/50%
-		     blend, though I don't know if 50%/50% is as nice as
-		     the old ratio. */
-		  /*
-		    prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		    (prevwords[i] & seedwords[i] & 0x01010101); */
-		}
-	    }
-	}
+                  /* mod'd version of the below for a 'deeper' mix */
+                  prevwords[i] =
+                    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+                    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
+                    ((seedwords[i] >> 2) & 0x3f3f3f3f);
+                  /* This is from Raph L... it should be a fast 50%/50%
+                     blend, though I don't know if 50%/50% is as nice as
+                     the old ratio. */
+                  /*
+                    prevwords[i] =
+                    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+                    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+                    (prevwords[i] & seedwords[i] & 0x01010101); */
+                }
+            }
+        }
     }
 
   frame++;
@@ -603,62 +603,62 @@ init_preview_misc (void)
   if ((drawable->width<256) || (drawable->height<256))
     {
       for (i=0;i<256;i++)
-	{
-	  if (i < drawable->height)
-	    {
-	      gimp_pixel_rgn_init (&pixel_rgn,
-				   drawable,
-				   drawable->width>256?
-				   (drawable->width/2-128):0,
-				   (drawable->height>256?
-				   (drawable->height/2-128):0)+i,
-				   MIN(256,drawable->width),
-				   1,
-				   FALSE,
-				   FALSE);
-	      gimp_pixel_rgn_get_rect (&pixel_rgn,
-				       &seed_data[(256*i +
-						 (
-						  (
-						   drawable->width<256 ?
-						   (256-drawable->width)/2 :
-						   0
-						   )
-						  +
-						  (
-						   drawable->height<256 ?
-						   (256-drawable->height)/2 :
-						   0
-						   ) * 256
-						  )) *
-						 gimp_drawable_bpp
-						 (drawable->drawable_id)
-				       ],
-				       drawable->width>256?
-				       (drawable->width/2-128):0,
-				       (drawable->height>256?
-				       (drawable->height/2-128):0)+i,
-				       MIN(256,drawable->width),
-				       1);
-	    }
-	}
+        {
+          if (i < drawable->height)
+            {
+              gimp_pixel_rgn_init (&pixel_rgn,
+                                   drawable,
+                                   drawable->width>256?
+                                   (drawable->width/2-128):0,
+                                   (drawable->height>256?
+                                   (drawable->height/2-128):0)+i,
+                                   MIN(256,drawable->width),
+                                   1,
+                                   FALSE,
+                                   FALSE);
+              gimp_pixel_rgn_get_rect (&pixel_rgn,
+                                       &seed_data[(256*i +
+                                                 (
+                                                  (
+                                                   drawable->width<256 ?
+                                                   (256-drawable->width)/2 :
+                                                   0
+                                                   )
+                                                  +
+                                                  (
+                                                   drawable->height<256 ?
+                                                   (256-drawable->height)/2 :
+                                                   0
+                                                   ) * 256
+                                                  )) *
+                                                 gimp_drawable_bpp
+                                                 (drawable->drawable_id)
+                                       ],
+                                       drawable->width>256?
+                                       (drawable->width/2-128):0,
+                                       (drawable->height>256?
+                                       (drawable->height/2-128):0)+i,
+                                       MIN(256,drawable->width),
+                                       1);
+            }
+        }
     }
   else
     {
       gimp_pixel_rgn_init (&pixel_rgn,
-			   drawable,
-			   drawable->width>256?(drawable->width/2-128):0,
-			   drawable->height>256?(drawable->height/2-128):0,
-			   MIN(256,drawable->width),
-			   MIN(256,drawable->height),
-			   FALSE,
-			   FALSE);
+                           drawable,
+                           drawable->width>256?(drawable->width/2-128):0,
+                           drawable->height>256?(drawable->height/2-128):0,
+                           MIN(256,drawable->width),
+                           MIN(256,drawable->height),
+                           FALSE,
+                           FALSE);
       gimp_pixel_rgn_get_rect (&pixel_rgn,
-			       seed_data,
-			       drawable->width>256?(drawable->width/2-128):0,
-			       drawable->height>256?(drawable->height/2-128):0,
-			       MIN(256,drawable->width),
-			       MIN(256,drawable->height));
+                               seed_data,
+                               drawable->width>256?(drawable->width/2-128):0,
+                               drawable->height>256?(drawable->height/2-128):0,
+                               MIN(256,drawable->width),
+                               MIN(256,drawable->height));
     }
 
   gimp_drawable_detach(drawable);
@@ -669,59 +669,59 @@ init_preview_misc (void)
     {
     case GIMP_INDEXED:
       if (has_alpha)
-	{
-	  for (i=width*height;i>0;i--)
-	    {
-	      seed_data[3*(i-1)+2] =
-		((palette[3*(seed_data[(i-1)*2])+2]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
-	      seed_data[3*(i-1)+1] =
-		((palette[3*(seed_data[(i-1)*2])+1]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
-	      seed_data[3*(i-1)+0] =
-		((palette[3*(seed_data[(i-1)*2])+0]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
-	    }
-	}
+        {
+          for (i=width*height;i>0;i--)
+            {
+              seed_data[3*(i-1)+2] =
+                ((palette[3*(seed_data[(i-1)*2])+2]*seed_data[(i-1)*2+1])/255)
+                + ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
+              seed_data[3*(i-1)+1] =
+                ((palette[3*(seed_data[(i-1)*2])+1]*seed_data[(i-1)*2+1])/255)
+                + ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
+              seed_data[3*(i-1)+0] =
+                ((palette[3*(seed_data[(i-1)*2])+0]*seed_data[(i-1)*2+1])/255)
+                + ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
+            }
+        }
       else
-	{
-	  for (i=width*height;i>0;i--)
-	    {
-	      seed_data[3*(i-1)+2] = palette[3*(seed_data[i-1])+2];
-	      seed_data[3*(i-1)+1] = palette[3*(seed_data[i-1])+1];
-	      seed_data[3*(i-1)+0] = palette[3*(seed_data[i-1])+0];
-	    }
-	}
+        {
+          for (i=width*height;i>0;i--)
+            {
+              seed_data[3*(i-1)+2] = palette[3*(seed_data[i-1])+2];
+              seed_data[3*(i-1)+1] = palette[3*(seed_data[i-1])+1];
+              seed_data[3*(i-1)+0] = palette[3*(seed_data[i-1])+0];
+            }
+        }
       break;
 
     case GIMP_GRAY:
       if (has_alpha)
-	{
-	  for (i=0;i<width*height;i++)
-	    {
-	      seed_data[i] =
-		(seed_data[i*2]*seed_data[i*2+1])/255
-		+ ((255-seed_data[i*2+1]) * g_rand_int_range (gr, 0, 256))/255;
-	    }
-	}
+        {
+          for (i=0;i<width*height;i++)
+            {
+              seed_data[i] =
+                (seed_data[i*2]*seed_data[i*2+1])/255
+                + ((255-seed_data[i*2+1]) * g_rand_int_range (gr, 0, 256))/255;
+            }
+        }
       break;
 
     case GIMP_RGB:
       if (has_alpha)
-	{
-	  for (i=0;i<width*height;i++)
-	    {
-	      seed_data[i*3+2] =
-		(seed_data[i*4+2]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
-	      seed_data[i*3+1] =
-		(seed_data[i*4+1]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
-	      seed_data[i*3+0] =
-		(seed_data[i*4+0]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
-	    }
-	}
+        {
+          for (i=0;i<width*height;i++)
+            {
+              seed_data[i*3+2] =
+                (seed_data[i*4+2]*seed_data[i*4+3])/255
+                + ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
+              seed_data[i*3+1] =
+                (seed_data[i*4+1]*seed_data[i*4+3])/255
+                + ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
+              seed_data[i*3+0] =
+                (seed_data[i*4+0]*seed_data[i*4+3])/255
+                + ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
+            }
+        }
       break;
 
     default:
@@ -758,7 +758,7 @@ window_response_callback (GtkWidget *widget,
 
 static gboolean
 toggle_feedbacktype (GtkWidget      *widget,
-		     GdkEventButton *bevent)
+                     GdkEventButton *bevent)
 {
   if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
     {
@@ -779,9 +779,9 @@ toggle_feedbacktype (GtkWidget      *widget,
   if (bevent->state & GDK_BUTTON3_MASK)
     {
       if (wiggleamp == LOWAMP)
-	wiggleamp = HIGHAMP;
+        wiggleamp = HIGHAMP;
       else
-	wiggleamp = LOWAMP;
+        wiggleamp = LOWAMP;
 
       wiggly = TRUE;
       init_lut ();
