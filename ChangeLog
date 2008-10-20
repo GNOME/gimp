@@ -1,3 +1,9 @@
+2008-10-20  Sven Neumann  <sven@sven>
+
+	* plug-ins/common/iwarp.c: set the OK and Reset button insensitive
+	until the user has defined a deformation to apply. Cleaned up
+	event handling.
+
 2008-10-20  David Odin  <dindinx@gimp.org>
 
 	* plug-ins/common/*.c: untabified

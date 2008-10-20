@@ -100,19 +100,20 @@ static void      iwarp                    (void);
 static void      iwarp_frame              (void);
 
 static gboolean  iwarp_dialog             (void);
-static void      iwarp_animate_dialog     (GtkWidget *dlg,
+static void      iwarp_animate_dialog     (GtkWidget *dialog,
                                            GtkWidget *notebook);
 
-static void      iwarp_settings_dialog    (GtkWidget *dlg,
+static void      iwarp_settings_dialog    (GtkWidget *dialog,
                                            GtkWidget *notebook);
 
-static void      iwarp_response           (GtkWidget *widget,
+static void      iwarp_response           (GtkWidget *dialog,
                                            gint       response_id,
                                            gpointer   data);
 
 static void      iwarp_realize_callback   (GtkWidget *widget);
-static gboolean  iwarp_motion_callback    (GtkWidget *widget,
-                                           GdkEvent  *event);
+static gboolean  iwarp_event_callback     (GtkWidget *widget,
+                                           GdkEvent  *event,
+                                           GtkWidget *dialog);
 static void      iwarp_resize_callback    (GtkWidget *widget);
 
 static void      iwarp_update_preview     (gint       x0,
@@ -182,7 +183,8 @@ static void     iwarp_scale_preview       (gint       new_width,
                                            gint       new_height,
                                            gint       old_width,
                                            gint       old_height);
-static void     iwarp_preview_build       (GtkWidget *vbox);
+static void     iwarp_preview_build       (GtkWidget *dialog,
+                                           GtkWidget *vbox);
 
 static void     iwarp_init                (void);
 static void     iwarp_preview_init        (void);
@@ -244,6 +246,7 @@ static gboolean      layer_alpha;
 static gint          max_current_preview_width  = 320;
 static gint          max_current_preview_height = 320;
 static gint          resize_idle = 0;
+static gboolean      iwarp_changed = FALSE;
 
 
 MAIN ()
@@ -1001,7 +1004,7 @@ iwarp_init (void)
 }
 
 static void
-iwarp_animate_dialog (GtkWidget *dlg,
+iwarp_animate_dialog (GtkWidget *dialog,
                       GtkWidget *notebook)
 {
   GtkWidget *frame;
@@ -1071,7 +1074,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 }
 
 static void
-iwarp_settings_dialog (GtkWidget *dlg,
+iwarp_settings_dialog (GtkWidget *dialog,
                        GtkWidget *notebook)
 {
   GtkWidget *vbox;
@@ -1215,7 +1218,8 @@ iwarp_settings_dialog (GtkWidget *dlg,
 }
 
 static void
-iwarp_preview_build (GtkWidget *vbox)
+iwarp_preview_build (GtkWidget *dialog,
+                     GtkWidget *vbox)
 {
   GtkWidget *frame;
 
@@ -1239,18 +1243,26 @@ iwarp_preview_build (GtkWidget *vbox)
                     G_CALLBACK (iwarp_realize_callback),
                     NULL);
   g_signal_connect (preview, "event",
-                    G_CALLBACK (iwarp_motion_callback),
-                    NULL);
+                    G_CALLBACK (iwarp_event_callback),
+                    dialog);
   g_signal_connect (preview, "size-allocate",
                     G_CALLBACK (iwarp_resize_callback),
                     NULL);
 }
 
+static void
+iwarp_dialog_response_update (GtkWidget *dialog)
+{
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     RESPONSE_RESET, iwarp_changed);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_OK, iwarp_changed);
+}
 
 static gboolean
 iwarp_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_hbox;
   GtkWidget *vbox;
   GtkWidget *hint;
@@ -1260,34 +1272,36 @@ iwarp_dialog (void)
 
   iwarp_init ();
 
-  dlg = gimp_dialog_new (_("IWarp"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+  dialog = gimp_dialog_new (_("IWarp"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GIMP_STOCK_RESET, RESPONSE_RESET,
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  g_signal_connect (dlg, "response",
+  iwarp_dialog_response_update (dialog);
+
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (iwarp_response),
                     NULL);
-  g_signal_connect (dlg, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_hbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
@@ -1295,7 +1309,7 @@ iwarp_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  iwarp_preview_build (vbox);
+  iwarp_preview_build (dialog, vbox);
   hint = gimp_hint_box_new (_("Click and drag in the preview to define "
                               "the distortions to apply to the image."));
   gtk_box_pack_end (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
@@ -1306,10 +1320,10 @@ iwarp_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
-  iwarp_settings_dialog (dlg, notebook);
-  iwarp_animate_dialog (dlg, notebook);
+  iwarp_settings_dialog (dialog, notebook);
+  iwarp_animate_dialog (dialog, notebook);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   iwarp_update_preview (0, 0, preview_width, preview_height);
 
@@ -1571,6 +1585,8 @@ iwarp_deform (gint    x,
           }
       }
 
+  iwarp_changed = TRUE;
+
   iwarp_update_preview (x + x0, y + y0, x + x1 + 1, y + y1 + 1);
 }
 
@@ -1595,14 +1611,16 @@ iwarp_move (gint x,
     {
       x0 = (gint) xf;
       y0 = (gint) yf;
+
       iwarp_deform (x0, y0, -dx, -dy);
+
       xf += dx;
       yf += dy;
     }
 }
 
 static void
-iwarp_response (GtkWidget *widget,
+iwarp_response (GtkWidget *dialog,
                 gint       response_id,
                 gpointer   data)
 {
@@ -1617,7 +1635,11 @@ iwarp_response (GtkWidget *widget,
         for (i = 0; i < preview_width * preview_height; i++)
           deform_vectors[i].x = deform_vectors[i].y = 0.0;
 
+        iwarp_changed = FALSE;
+
         iwarp_update_preview (0, 0, preview_width, preview_height);
+
+        iwarp_dialog_response_update (dialog);
       }
       break;
 
@@ -1625,7 +1647,7 @@ iwarp_response (GtkWidget *widget,
       wint.run = TRUE;
 
     default:
-      gtk_widget_destroy (widget);
+      gtk_widget_destroy (dialog);
       break;
     }
 }
@@ -1641,45 +1663,54 @@ iwarp_realize_callback (GtkWidget *widget)
 }
 
 static gboolean
-iwarp_motion_callback (GtkWidget *widget,
-                       GdkEvent  *event)
+iwarp_event_callback (GtkWidget *widget,
+                      GdkEvent  *event,
+                      GtkWidget *dialog)
 {
-  GdkEventButton *mb = (GdkEventButton *) event;
-  gint            x, y;
-
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      lastx = mb->x;
-      lasty = mb->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
+
+        lastx = bevent->x;
+        lasty = bevent->y;
+      }
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (mb->state & GDK_BUTTON1_MASK)
-        {
-          x = mb->x;
-          y = mb->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-          if (iwarp_vals.deform_mode == MOVE)
-            iwarp_move (x, y, lastx, lasty);
-          else
-            iwarp_deform (x, y, 0.0, 0.0);
-        }
+        if (bevent->state & GDK_BUTTON1_MASK)
+          {
+            if (iwarp_vals.deform_mode == MOVE)
+              iwarp_move (bevent->x, bevent->y, lastx, lasty);
+            else
+              iwarp_deform (bevent->x, bevent->y, 0.0, 0.0);
+
+            iwarp_dialog_response_update (dialog);
+          }
+      }
       break;
 
    case GDK_MOTION_NOTIFY:
-     if (mb->state & GDK_BUTTON1_MASK)
-       {
-         gtk_widget_get_pointer (widget, &x, &y);
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
 
-         if (iwarp_vals.deform_mode == MOVE)
-           iwarp_move (x, y, lastx, lasty);
-         else
-           iwarp_deform (x, y, 0.0, 0.0);
+        if (mevent->state & GDK_BUTTON1_MASK)
+          {
+            if (iwarp_vals.deform_mode == MOVE)
+              iwarp_move (mevent->x, mevent->y, lastx, lasty);
+            else
+              iwarp_deform (mevent->x, mevent->y, 0.0, 0.0);
 
-         lastx = x;
-         lasty = y;
-       }
+            lastx = mevent->x;
+            lasty = mevent->y;
+          }
+
+        gdk_event_request_motions (mevent);
+      }
      break;
 
     default:
