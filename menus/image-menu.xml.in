@@ -26,10 +26,11 @@
 <!--  The debug-menu is automatically excluded for stable releases  -->
       <menu action="debug-menu" name="Debug">
         <menuitem action="debug-mem-profile" />
+        <menuitem action="debug-benchmark-projection" />
+        <separator />
         <menuitem action="debug-dump-items" />
         <menuitem action="debug-dump-managers" />
         <menuitem action="debug-dump-attached-data" />
-        <menuitem action="debug-benchmark-projection" />
       </menu>
 
       <separator />

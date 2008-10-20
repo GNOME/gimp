@@ -43,6 +43,13 @@ static const GimpActionEntry debug_actions[] =
     G_CALLBACK (debug_mem_profile_cmd_callback),
     NULL },
 
+  { "debug-benchmark-projection", NULL,
+    "Benchmark Projection", NULL,
+    "Invalidates the entire projection, measures the time it takes to "
+    "validate (render) it again, and print the result to stdout.",
+    G_CALLBACK (debug_benchmark_projection_cmd_callback),
+    NULL },
+
   { "debug-dump-items", NULL,
     "_Dump Items", NULL, NULL,
     G_CALLBACK (debug_dump_menus_cmd_callback),
@@ -56,11 +63,6 @@ static const GimpActionEntry debug_actions[] =
   { "debug-dump-attached-data", NULL,
     "Dump Attached Data", NULL, NULL,
     G_CALLBACK (debug_dump_attached_data_cmd_callback),
-    NULL },
-
-  { "debug-benchmark-projection", NULL,
-    "Dump Projection Benchmarking", NULL, NULL,
-    G_CALLBACK (debug_benchmark_projection_cmd_callback),
     NULL }
 };
 

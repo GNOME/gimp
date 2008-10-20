@@ -31,7 +31,6 @@
 #include "base/tile.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
@@ -73,6 +72,50 @@ debug_mem_profile_cmd_callback (GtkAction *action,
   gimp_object_get_memsize (GIMP_OBJECT (gimp), NULL);
 
   gimp_debug_memsize = FALSE;
+}
+
+void
+debug_benchmark_projection_cmd_callback (GtkAction *action,
+                                         gpointer   data)
+{
+  GimpImage      *image      = NULL;
+  GimpProjection *projection = NULL;
+  TileManager    *tiles      = NULL;
+  GTimer         *timer      = NULL;
+  return_if_no_image (image, data);
+
+  projection = gimp_image_get_projection (image);
+  tiles      = gimp_projection_get_tiles (projection);
+  timer      = g_timer_new ();
+
+  if (projection && tiles && timer)
+    {
+      int x = 0;
+      int y = 0;
+
+      gimp_image_update (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
+      gimp_projection_flush_now (projection);
+
+      g_timer_start (timer);
+      for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
+        {
+          for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
+            {
+              Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
+
+              tile_release (tile, FALSE);
+            }
+        }
+      g_timer_stop (timer);
+
+      g_print ("Validation of the entire projection took %.0f ms\n",
+               1000 * g_timer_elapsed (timer, NULL));
+
+      g_timer_destroy (timer);
+    }
 }
 
 void
@@ -151,51 +194,6 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 
   debug_print_qdata (GIMP_OBJECT (gimp));
   debug_print_qdata (GIMP_OBJECT (user_context));
-}
-
-void
-debug_benchmark_projection_cmd_callback (GtkAction *action,
-                                         gpointer   data)
-{
-  GimpImage      *image      = NULL;
-  GimpProjection *projection = NULL;
-  TileManager    *tiles      = NULL;
-  GTimer         *timer      = NULL;
-  return_if_no_image (image, data);
-
-  projection = gimp_image_get_projection (image);
-  tiles      = gimp_projection_get_tiles (projection);
-  timer      = g_timer_new ();
-
-  if (projection && tiles && timer)
-    {
-      int x = 0;
-      int y = 0;
-
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
-      gimp_projection_flush_now (projection);
-
-      g_timer_start (timer);
-      for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
-        {
-          for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
-            {
-              Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
-
-              tile_release (tile, FALSE);
-            }
-        }
-      g_timer_stop (timer);
-
-      g_print ("Validation of the entire %d-layered projection took %.0f ms\n",
-               gimp_container_num_children (gimp_image_get_layers (image)),
-               1000 * g_timer_elapsed (timer, NULL));
-
-      g_timer_destroy (timer);
-    }
 }
 
 

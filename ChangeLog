@@ -1,3 +1,11 @@
+2008-10-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* menus/image-menu.xml.in
+	* app/actions/debug-actions.c
+	* app/actions/debug-commands.c: Create dump and non-dump
+	groups. Also added a tooltip to the Benchmark Projection action
+	and removed report of number of layers.
+
 2008-10-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimperrorconsole.c (gimp_error_console_init): don't
