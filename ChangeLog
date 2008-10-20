@@ -1,5 +1,11 @@
 2008-10-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimperrorconsole.c (gimp_error_console_init): don't
+	make the font size even smaller. We already use a smaller font in
+	the dock windows.
+
+2008-10-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpgradienteditor.c (view_events) (control_events):
 	use pointer coordinates from the passed event instead of calling
 	gtk_widget_get_pointer().
