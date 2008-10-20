@@ -77,10 +77,10 @@ gimp_error_console_init (GimpErrorConsole *console)
   console->text_buffer = gtk_text_buffer_new (NULL);
 
   gtk_text_buffer_create_tag (console->text_buffer, "title",
+                              "scale",  PANGO_SCALE_LARGE,
                               "weight", PANGO_WEIGHT_BOLD,
                               NULL);
   gtk_text_buffer_create_tag (console->text_buffer, "message",
-                              "scale",  PANGO_SCALE_SMALL,
                               NULL);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -201,7 +201,7 @@ gimp_error_console_add (GimpErrorConsole    *console,
 
   pixbuf = gtk_widget_render_icon (console->text_view,
                                    gimp_get_message_stock_id (severity),
-                                   GTK_ICON_SIZE_MENU, NULL);
+                                   GTK_ICON_SIZE_BUTTON, NULL);
   gtk_text_buffer_insert_pixbuf (console->text_buffer, &end, pixbuf);
   g_object_unref (pixbuf);
 

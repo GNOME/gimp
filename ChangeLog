@@ -1,3 +1,11 @@
+2008-10-20  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/widgets/gimperrorconsole.c (gimp_error_console_init): don't
+	make the font size even smaller. We already use a smaller font in
+	the dock windows.
+
 2008-10-17  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
