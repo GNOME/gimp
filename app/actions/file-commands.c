@@ -165,6 +165,9 @@ file_open_recent_cmd_callback (GtkAction *action,
       GError            *error = NULL;
       return_if_no_display (display, data);
 
+      g_object_ref (display);
+      g_object_ref (imagefile);
+
       progress = display->image ? NULL : GIMP_PROGRESS (display);
 
       image = file_open_with_display (gimp, action_data_get_context (data),
@@ -184,6 +187,9 @@ file_open_recent_cmd_callback (GtkAction *action,
 
           g_free (filename);
         }
+
+      g_object_unref (imagefile);
+      g_object_unref (display);
     }
 }
 
