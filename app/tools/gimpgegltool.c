@@ -442,7 +442,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
 
-      if (GEGL_IS_PARAM_SPEC_PATH (pspec))
+      if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
         {
           return gimp_param_spec_config_path (pspec->name,
                                               g_param_spec_get_nick (pspec),
