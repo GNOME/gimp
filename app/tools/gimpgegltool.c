@@ -45,6 +45,15 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  COLUMN_NAME,
+  COLUMN_LABEL,
+  COLUMN_STOCK_ID,
+  NUM_COLUMNS
+};
+
+
 /*  local function prototypes  */
 
 static void       gimp_gegl_tool_finalize          (GObject           *object);
@@ -326,11 +335,12 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  store = gtk_list_store_new (1, G_TYPE_STRING);
+  store = gtk_list_store_new (NUM_COLUMNS,
+			      G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   opclasses = gimp_get_geglopclasses ();
 
-  for (iter = opclasses; iter; iter=iter->next)
+  for (iter = opclasses; iter; iter = iter->next)
     {
       GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
 
@@ -341,8 +351,29 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
           strstr (opclass->categories, "edge")    ||
           strstr (opclass->categories, "render"))
         {
+	  const gchar *stock_id;
+	  const gchar *label;
+	  
+	  if (g_str_has_prefix (opclass->name, "gegl:"))
+	    {
+	      label    = opclass->name + strlen ("gegl:");
+	      stock_id = GIMP_STOCK_GEGL;
+	    }
+	  else if (g_str_has_prefix (opclass->name, "gimp:"))
+	    {
+	      label    = opclass->name + strlen ("gimp:");
+	      stock_id = GIMP_STOCK_WILBER;
+	    }
+	  else
+	    {
+	      label    = opclass->name;
+	      stock_id = NULL;
+	    }
+
           gtk_list_store_insert_with_values (store, NULL, -1,
-                                             0, opclass->name,
+                                             COLUMN_NAME,     opclass->name,
+					     COLUMN_LABEL,    label,
+					     COLUMN_STOCK_ID, stock_id,
                                              -1);
         }
     }
@@ -350,14 +381,19 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   g_list_free (opclasses);
 
   combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
-  cell = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
-  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
-                                 "text", 0);
+  g_object_unref (store);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  g_object_unref (store);
+  cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, FALSE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
+                                 "stock-id", COLUMN_STOCK_ID);
+
+  cell = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
+                                 "text", COLUMN_LABEL);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_gegl_tool_operation_changed),
@@ -740,7 +776,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
     }
 
   gtk_tree_model_get (model, &iter,
-                      0, &tool->operation,
+                      COLUMN_NAME, &tool->operation,
                       -1);
 
   if (! tool->operation)
