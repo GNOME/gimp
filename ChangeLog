@@ -1,3 +1,8 @@
+2008-10-21  Sven Neumann  <sven@sven>
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
+	make the operations blacklist work with GEGL >= 0.0.21.
+
 2008-10-21  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
