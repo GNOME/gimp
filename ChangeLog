@@ -1,4 +1,16 @@
-2008-10-21  Sven Neumann  <sven@sven>
+2008-10-21  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate):
+	GEGL_IS_PARAM_SPEC_PATH() became GEGL_IS_PARAM_SPEC_FILE_PATH()
+	in GEGL 0.0.21.
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): for the
+	combo-box, strip known prefixes from the GEGL operation names and
+	use icons instead.
+
+2008-10-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
 	make the operations blacklist work with GEGL >= 0.0.21.
