@@ -1,7 +1,8 @@
-2008-10-21  Sven Neumann  <sven@sven>
+2008-10-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate):
-	GEGL_IS_PARAM_SPEC_PATH() became GEGL_IS_PARAM_SPEC_FILE_PATH().
+	GEGL_IS_PARAM_SPEC_PATH() became GEGL_IS_PARAM_SPEC_FILE_PATH()
+	in GEGL 0.0.21.
 
 2008-10-21  Sven Neumann  <sven@gimp.org>
 
