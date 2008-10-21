@@ -1,3 +1,10 @@
+2008-10-21  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c (file_open_recent_cmd_callback): ref
+	the GimpDisplay and GimpImageFile objects while holding a
+	reference to them. Fixes a potential crash if GIMP is closed while
+	the image is being loaded.
+
 2008-10-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* menus/image-menu.xml.in
