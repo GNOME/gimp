@@ -2,6 +2,17 @@
 
 	Merged from trunk:
 
+	Bug 555246 – gimp crashes when a file is opened while a preview is
+	generating
+
+	* app/widgets/gimpthumbbox.c: set box->progress to NULL in
+	destroy() and check for progress being NULL in various places so
+	we don't crash on API calls after the widget is destroyed.
+
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 556741 – Alpha layer automatically added (in psd format) but
 	not desired
 
@@ -11,9 +22,6 @@
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
-
-	Bug 555246 – gimp crashes when a file is opened while a preview is
-	generating
 
         * app/widgets/gimpfiledialog.c: set dialog->progress to NULL in
         destroy() and check for progress being NULL in various places so

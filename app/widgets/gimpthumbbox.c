@@ -57,6 +57,8 @@ static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface
 static void     gimp_thumb_box_dispose            (GObject           *object);
 static void     gimp_thumb_box_finalize           (GObject           *object);
 
+static void     gimp_thumb_box_destroy            (GtkObject         *object);
+
 static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
                                                    GtkStyle          *prev_style);
 
@@ -108,13 +110,16 @@ G_DEFINE_TYPE_WITH_CODE (GimpThumbBox, gimp_thumb_box, GTK_TYPE_FRAME,
 static void
 gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose   = gimp_thumb_box_dispose;
-  object_class->finalize  = gimp_thumb_box_finalize;
+  object_class->dispose     = gimp_thumb_box_dispose;
+  object_class->finalize    = gimp_thumb_box_finalize;
 
-  widget_class->style_set = gimp_thumb_box_style_set;
+  gtk_object_class->destroy = gimp_thumb_box_destroy;
+
+  widget_class->style_set   = gimp_thumb_box_style_set;
 }
 
 static void
@@ -168,6 +173,16 @@ gimp_thumb_box_finalize (GObject *object)
 }
 
 static void
+gimp_thumb_box_destroy (GtkObject *object)
+{
+  GimpThumbBox *box = GIMP_THUMB_BOX (object);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  box->progress = NULL;
+}
+
+static void
 gimp_thumb_box_style_set (GtkWidget *widget,
                           GtkStyle  *prev_style)
 {
@@ -197,6 +212,9 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
+  if (! box->progress)
+    return NULL;
+
   if (! box->progress_active)
     {
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
@@ -221,10 +239,9 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 static void
 gimp_thumb_box_progress_end (GimpProgress *progress)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
-
-  if (box->progress_active)
+  if (gimp_thumb_box_progress_is_active (progress))
     {
+      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, 0.0);
@@ -238,17 +255,16 @@ gimp_thumb_box_progress_is_active (GimpProgress *progress)
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  return box->progress_active;
+  return (box->progress && box->progress_active);
 }
 
 static void
 gimp_thumb_box_progress_set_value (GimpProgress *progress,
                                    gdouble       percentage)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
-
-  if (box->progress_active)
+  if (gimp_thumb_box_progress_is_active (progress))
     {
+      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, percentage);
@@ -258,10 +274,9 @@ gimp_thumb_box_progress_set_value (GimpProgress *progress,
 static gdouble
 gimp_thumb_box_progress_get_value (GimpProgress *progress)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
-
-  if (box->progress_active)
+  if (gimp_thumb_box_progress_is_active (progress))
     {
+      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       return gtk_progress_bar_get_fraction (bar);
@@ -273,10 +288,9 @@ gimp_thumb_box_progress_get_value (GimpProgress *progress)
 static void
 gimp_thumb_box_progress_pulse (GimpProgress *progress)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
-
-  if (box->progress_active)
+  if (gimp_thumb_box_progress_is_active (progress))
     {
+      GimpThumbBox   *box = GIMP_THUMB_BOX (progress);
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_pulse (bar);
