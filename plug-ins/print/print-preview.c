@@ -372,8 +372,7 @@ print_preview_motion_notify_event (GtkWidget      *widget,
       if (preview->image_offset_x != offset_x ||
           preview->image_offset_y != offset_y)
         {
-          print_preview_set_image_offsets (preview,
-                                           offset_x, offset_y);
+          print_preview_set_image_offsets (preview, offset_x, offset_y);
 
           g_signal_emit (preview,
                          print_preview_signals[OFFSETS_CHANGED], 0,
@@ -397,7 +396,8 @@ print_preview_leave_notify_event (GtkWidget        *widget,
 {
   PrintPreview *preview = PRINT_PREVIEW (widget);
 
-  print_preview_set_inside (preview, FALSE);
+  if (event->mode == GDK_CROSSING_NORMAL)
+    print_preview_set_inside (preview, FALSE);
 
   return FALSE;
 }
@@ -794,10 +794,12 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
     case 3:
       format = CAIRO_FORMAT_RGB24;
       break;
+
     case 2:
     case 4:
       format = CAIRO_FORMAT_ARGB32;
       break;
+
     default:
       g_assert_not_reached ();
       break;
