@@ -234,7 +234,7 @@ print_image (gint32     image_ID,
 
   print_settings_load (&data);
 
-  gtk_print_operation_set_unit (operation, GTK_UNIT_POINTS);
+  gtk_print_operation_set_unit (operation, GTK_UNIT_PIXEL);
 
   g_signal_connect (operation, "begin-print",
                     G_CALLBACK (begin_print),
