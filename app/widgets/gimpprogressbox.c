@@ -37,6 +37,8 @@
 
 static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *iface);
 
+static void     gimp_progress_box_destroy            (GtkObject    *object);
+
 static GimpProgress *
                 gimp_progress_box_progress_start     (GimpProgress *progress,
                                                       const gchar  *message,
@@ -55,10 +57,15 @@ G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_progress_box_progress_iface_init))
 
+#define parent_class gimp_progress_box_parent_class
+
 
 static void
 gimp_progress_box_class_init (GimpProgressBoxClass *klass)
 {
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+
+  object_class->destroy = gimp_progress_box_destroy;
 }
 
 static void
@@ -93,12 +100,25 @@ gimp_progress_box_progress_iface_init (GimpProgressInterface *iface)
   iface->pulse     = gimp_progress_box_progress_pulse;
 }
 
+static void
+gimp_progress_box_destroy (GtkObject *object)
+{
+  GimpProgressBox *box = GIMP_PROGRESS_BOX (object);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  box->progress = NULL;
+}
+
 static GimpProgress *
 gimp_progress_box_progress_start (GimpProgress *progress,
                                   const gchar  *message,
                                   gboolean      cancelable)
 {
   GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+
+  if (! box->progress)
+    return NULL;
 
   if (! box->active)
     {
@@ -123,11 +143,10 @@ gimp_progress_box_progress_start (GimpProgress *progress,
 static void
 gimp_progress_box_progress_end (GimpProgress *progress)
 {
-  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
-
-  if (box->active)
+  if (gimp_progress_box_progress_is_active (progress))
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+      GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+      GtkProgressBar  *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_label_set_text (GTK_LABEL (box->label), "");
       gtk_progress_bar_set_fraction (bar, 0.0);
@@ -143,17 +162,17 @@ gimp_progress_box_progress_is_active (GimpProgress *progress)
 {
   GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
 
-  return box->active;
+  return (box->progress && box->active);
 }
 
 static void
 gimp_progress_box_progress_set_text (GimpProgress *progress,
                                      const gchar  *message)
 {
-  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
-
-  if (box->active)
+  if (gimp_progress_box_progress_is_active (progress))
     {
+      GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+
       gtk_label_set_text (GTK_LABEL (box->label), message);
 
       if (GTK_WIDGET_DRAWABLE (box->progress))
@@ -165,11 +184,10 @@ static void
 gimp_progress_box_progress_set_value (GimpProgress *progress,
                                       gdouble       percentage)
 {
-  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
-
-  if (box->active)
+  if (gimp_progress_box_progress_is_active (progress))
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+      GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+      GtkProgressBar  *bar = GTK_PROGRESS_BAR (box->progress);
 
       box->value = percentage;
 
@@ -188,10 +206,10 @@ gimp_progress_box_progress_set_value (GimpProgress *progress,
 static gdouble
 gimp_progress_box_progress_get_value (GimpProgress *progress)
 {
-  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
-
-  if (box->active)
-    return box->value;
+  if (gimp_progress_box_progress_is_active (progress))
+    {
+      return GIMP_PROGRESS_BOX (progress)->value;
+    }
 
   return 0.0;
 }
@@ -199,11 +217,10 @@ gimp_progress_box_progress_get_value (GimpProgress *progress)
 static void
 gimp_progress_box_progress_pulse (GimpProgress *progress)
 {
-  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
-
-  if (box->active)
+  if (gimp_progress_box_progress_is_active (progress))
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+      GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+      GtkProgressBar  *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_pulse (bar);
 
