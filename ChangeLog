@@ -1,3 +1,11 @@
+2008-10-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 556804 – Zoom drop down doesn't update
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-callbacks.c: Fix calls to
+	gimp_display_shell_scaled() when Resize window on zoom is enabled.
+
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
 	Bug 524615 – Print not to scale
