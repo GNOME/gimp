@@ -1712,9 +1712,25 @@ AC_SUBST(MAIL)
 AC_SUBST(SCREENSHOT)
 
 
-############################################################
-# Check for Mac OS X TWAIN framework (can't build on Darwin)
-############################################################
+####################
+# Check for Mac OS X
+####################
+
+AC_MSG_CHECKING([checking if compiling for Mac OS X])
+case "$target_or_host" in
+  *-*-darwin*)
+     AC_MSG_RESULT(yes)
+     AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
+     ;;
+  *)
+     AC_MSG_RESULT(no)
+     ;;
+esac
+
+
+####################################
+# Check for Mac OS X TWAIN framework
+####################################
 
 mac_twain_ok=no
 AC_MSG_CHECKING([checking for Mac OS X TWAIN support])
@@ -1724,25 +1740,6 @@ AC_TRY_CPP([
 ], mac_twain_ok=yes)
 AC_MSG_RESULT($mac_twain_ok)
 AM_CONDITIONAL(HAVE_MAC_TWAIN, test "x$mac_twain_ok" = xyes)
-
-
-#############################################################
-# Check for Mac OS X Carbon framework (can't build on Darwin)
-#############################################################
-
-carbon_ok=no
-AC_MSG_CHECKING([checking for Mac OS X Carbon support])
-AC_TRY_CPP([
-#include <Carbon/Carbon.h>
-#include <CoreServices/CoreServices.h>
-], carbon_ok=yes)
-AC_MSG_RESULT($carbon_ok)
-if test "x$carbon_ok" = "xyes"; then
-  AC_DEFINE(HAVE_CARBON, 1, [define to 1 if Carbon is available])
-  CARBON_LDFLAGS="-framework Carbon"
-  AC_SUBST(CARBON_LDFLAGS)
-fi
-AM_CONDITIONAL(HAVE_CARBON, test "x$carbon_ok" = "xyes")
 
 
 ##########################################################

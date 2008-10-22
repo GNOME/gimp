@@ -1,3 +1,11 @@
+2008-10-23  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed check for Carbon and added a test for the
+	target OS being Darwin instead.
+
+	* app/config/gimpguiconfig.c: use PLATFORM_OSX instead of
+	HAVE_CARBON to determine the default "web-browser" command.
+
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-preview.c (print_preview_leave_notify_event):
