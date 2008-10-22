@@ -330,7 +330,7 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
     return;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-  if (!uri)
+  if (! uri)
     return;
 
   local = gimp_imagefile_new (imagefile->gimp, uri);

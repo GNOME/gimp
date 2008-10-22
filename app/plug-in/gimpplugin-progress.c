@@ -156,7 +156,9 @@ gimp_plug_in_progress_end (GimpPlugIn          *plug_in,
 
       if (gimp_plug_in_progress_detach (proc_frame->progress) < 1 &&
           gimp_progress_is_active (proc_frame->progress))
-        gimp_progress_end (proc_frame->progress);
+        {
+          gimp_progress_end (proc_frame->progress);
+        }
 
       if (proc_frame->progress_created)
         {
