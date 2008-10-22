@@ -1710,7 +1710,7 @@ AC_SUBST(SCREENSHOT)
 # Check for Mac OS X
 ####################
 
-AC_MSG_CHECKING([checking if compiling for Mac OS X])
+AC_MSG_CHECKING([if compiling for Mac OS X])
 case "$target_or_host" in
   *-*-darwin*)
      AC_MSG_RESULT(yes)
@@ -1727,7 +1727,7 @@ esac
 ####################################
 
 mac_twain_ok=no
-AC_MSG_CHECKING([checking for Mac OS X TWAIN support])
+AC_MSG_CHECKING([for Mac OS X TWAIN support])
 AC_TRY_CPP([
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
