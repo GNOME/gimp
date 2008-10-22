@@ -1,5 +1,11 @@
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpprogressbox.c: set box->progress to NULL in
+	destroy() and check for progress being NULL in various places so
+	we don't crash on API calls after the widget is destroyed.
+
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
 	Bug 555246 – gimp crashes when a file is opened while a preview is
 	generating
 
