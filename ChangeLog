@@ -1,5 +1,8 @@
 2008-10-21  Michael Natterer  <mitch@gimp.org>
 
+	Bug 555246 – gimp crashes when a file is opened while a preview is
+	generating
+
 	* app/widgets/gimpfiledialog.c: set dialog->progress to NULL in
 	destroy() and check for progress being NULL in various places so
 	we don't crash on API calls after the widget is destroyed.
