@@ -296,6 +296,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           offset_y = UNSCALEX (shell, shell->offset_y);
 
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+          gimp_display_shell_scaled (shell);
 
           shell->offset_x = SCALEX (shell, offset_x);
           shell->offset_y = SCALEY (shell, offset_y);
@@ -350,8 +351,6 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
         }
 
       gimp_display_shell_scroll_clamp_and_update (shell);
-
-      gimp_display_shell_scaled (shell);
 
       /* Reset */
       shell->size_allocate_from_configure_event = FALSE;

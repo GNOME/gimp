@@ -367,6 +367,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
            * get things rolling
            */
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
+          gimp_display_shell_scaled (shell);
+
           gimp_display_shell_shrink_wrap (shell, FALSE);
         }
       else
