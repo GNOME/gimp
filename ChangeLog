@@ -1,5 +1,13 @@
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
+	Bug 556741 – Alpha layer automatically added (in psd format) but
+	not desired
+
+	* plug-ins/file-psd/psd-save.c: applied patch from Dennis Ranke
+	that flattens the projection for indexed images.
+
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c
 	* app/plug-in/gimpplugin-progress.c: formatting.
 
