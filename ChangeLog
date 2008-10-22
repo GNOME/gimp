@@ -1,3 +1,11 @@
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/print/print-preview.c (print_preview_leave_notify_event):
+	check the crossing mode and don't unset the "inside" flag when the
+	event is caused by a pointer grab/ungrab.
+
 2008-10-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Merged from trunk:
