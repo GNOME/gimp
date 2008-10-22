@@ -1,3 +1,13 @@
+2008-10-23  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* configure.in: removed check for Carbon and added a test for the
+	target OS being Darwin instead.
+
+	* app/config/gimpguiconfig.c: use PLATFORM_OSX instead of
+	HAVE_CARBON to determine the default "web-browser" command.
+
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

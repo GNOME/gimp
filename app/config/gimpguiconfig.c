@@ -42,7 +42,7 @@
 
 #ifdef G_OS_WIN32
 #  define DEFAULT_WEB_BROWSER  "not used on Windows"
-#elif HAVE_CARBON
+#elif PLATFORM_OSX
 #  define DEFAULT_WEB_BROWSER  "open %s"
 #else
 #  define DEFAULT_WEB_BROWSER  "firefox %s"
