@@ -1544,6 +1544,11 @@ create_merged_image (gint32 image_id)
       if (! transparency_found)
         gimp_layer_flatten (projection);
     }
+  else
+    {
+      if (gimp_drawable_has_alpha (projection))
+        gimp_layer_flatten (projection);  /* PSDs don't support transparency information in indexed images*/
+    }
 
   return projection;
 }

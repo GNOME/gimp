@@ -2,6 +2,16 @@
 
 	Merged from trunk:
 
+	Bug 556741 – Alpha layer automatically added (in psd format) but
+	not desired
+
+	* plug-ins/file-psd/psd-save.c: applied patch from Dennis Ranke
+	that flattens the projection for indexed images.
+
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 555246 – gimp crashes when a file is opened while a preview is
 	generating
 
