@@ -1,5 +1,15 @@
 2008-10-22  Sven Neumann  <sven@gimp.org>
 
+	Bug 524615 – Print not to scale
+
+	* plug-ins/print/print.c: set the unit for dimensions on the Cairo
+	context used for printing to GTK_UNIT_PIXELS.
+
+	* plug-ins/print/print-draw-page.c (print_draw_page): changed the
+	Cairo scale factors accordingly. Seems to fix printing on Windows.
+
+2008-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpprogressbox.c: set box->progress to NULL in
 	destroy() and check for progress being NULL in various places so
 	we don't crash on API calls after the widget is destroyed.

@@ -133,25 +133,15 @@ print_draw_page (GtkPrintContext *context,
 {
   cairo_t         *cr;
   cairo_surface_t *surface;
-  gdouble          cr_width;
-  gdouble          cr_height;
-  gdouble          cr_dpi_x;
-  gdouble          cr_dpi_y;
 
   cr = gtk_print_context_get_cairo_context (context);
 
   surface = print_cairo_surface_from_drawable (data->drawable_id);
 
-  cr_width  = gtk_print_context_get_width  (context);
-  cr_height = gtk_print_context_get_height (context);
-  cr_dpi_x  = gtk_print_context_get_dpi_x  (context);
-  cr_dpi_y  = gtk_print_context_get_dpi_y  (context);
-
-  cairo_translate (cr,
-                   data->offset_x / cr_dpi_x * 72.0,
-                   data->offset_y / cr_dpi_y * 72.0);
+  cairo_translate (cr, data->offset_x, data->offset_y);
   cairo_scale (cr,
-               cr_dpi_x / data->xres, cr_dpi_y / data->yres);
+	       gtk_print_context_get_dpi_x (context) / data->xres,
+	       gtk_print_context_get_dpi_y (context) / data->yres);
 
   cairo_rectangle (cr,
                    0, 0,
