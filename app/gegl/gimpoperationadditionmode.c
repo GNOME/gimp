@@ -72,12 +72,21 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
   while (samples--)
     {
 #if 1
-      // Best so far (maybe even correct?)
+      // Wrong, for alpha compositing consistency all layers should
+      // affect alpha in the same way independent of layer mode
       out[RED]   = in[RED]   + layer[RED]   * layer[ALPHA];
       out[GREEN] = in[GREEN] + layer[GREEN] * layer[ALPHA];
       out[BLUE]  = in[BLUE]  + layer[BLUE]  * layer[ALPHA];
       out[ALPHA] = in[ALPHA];
 #else
+      // A very nice combination of correctness and speed for
+      // premultiplied data without any of the issues the previous
+      // versions had
+      out[RED]   = in[RED]   + layer[RED];
+      out[GREEN] = in[GREEN] + layer[GREEN];
+      out[BLUE]  = in[BLUE]  + layer[BLUE];
+      out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
+
       // Wrong, doesn't take layer opacity of Addition-mode layer into
       // account
       out[RED]   = in[RED]   + layer[RED];

@@ -1,3 +1,11 @@
+2008-10-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationadditionmode.c: For alpha compositing
+	consistency, all layers should affect alpha in the same way
+	independent of layer mode. Replace the compositing algorithm with
+	a version without the flaws discovered so far in the previous
+	ones. Don't use it yet though as it requires premultiplied data.
+
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-region.c (scale): use the inverse of the
