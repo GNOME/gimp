@@ -1,3 +1,12 @@
+2008-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.h: don't #include
+	"libgimpwidgets/gimpwidgets.h".
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/tools/gimpeditselectiontool.c: include it here.
+
 2008-10-23  Sven Neumann  <sven@gimp.org>
 
 	Bug 556896 – Dialogs don't get minimized with single image window

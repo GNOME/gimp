@@ -20,8 +20,6 @@
 #define __GIMP_DISPLAY_SHELL_H__
 
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "widgets/gimpwindow.h"
 
 
