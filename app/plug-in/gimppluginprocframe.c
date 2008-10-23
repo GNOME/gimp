@@ -118,12 +118,6 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
       proc_frame->main_context = NULL;
     }
 
-  if (proc_frame->procedure)
-    {
-      g_object_unref (proc_frame->procedure);
-      proc_frame->procedure = NULL;
-    }
-
   if (proc_frame->return_vals)
     {
       g_value_array_free (proc_frame->return_vals);
@@ -138,6 +132,12 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
 
   if (proc_frame->image_cleanups || proc_frame->item_cleanups)
     gimp_plug_in_cleanup (plug_in, proc_frame);
+
+  if (proc_frame->procedure)
+    {
+      g_object_unref (proc_frame->procedure);
+      proc_frame->procedure = NULL;
+    }
 }
 
 GimpPlugInProcFrame *
