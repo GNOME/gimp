@@ -60,6 +60,7 @@
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -616,12 +617,12 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
                                        GdkEventWindowState *event)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+  Gimp             *gimp  = shell->display->gimp;
 
   shell->window_state = event->new_window_state;
 
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
     {
-      Gimp            *gimp = shell->display->gimp;
       GimpActionGroup *group;
       gboolean         fullscreen;
 
@@ -645,6 +646,19 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
     {
+      gboolean iconified = (event->new_window_state &
+                            GDK_WINDOW_STATE_ICONIFIED) != 0;
+
+      if (iconified)
+        {
+          if (gimp_displays_get_num_visible (gimp) == 0)
+            gimp_dialog_factories_hide ();
+        }
+      else
+        {
+          gimp_dialog_factories_show ();
+        }
+
       gimp_display_shell_progress_window_state_changed (shell);
     }
 

@@ -1123,25 +1123,47 @@ gimp_dialog_factories_session_clear (void)
 }
 
 void
-gimp_dialog_factories_toggle (void)
+gimp_dialog_factories_show (void)
 {
-  GimpDialogFactoryClass *factory_class;
+  if (! dialogs_shown)
+    {
+      GimpDialogFactoryClass *factory_class;
 
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
+      factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
+      dialogs_shown = TRUE;
+      g_hash_table_foreach (factory_class->factories,
+                            (GHFunc) gimp_dialog_factories_show_foreach,
+                            NULL);
+    }
+}
+
+void
+gimp_dialog_factories_hide (void)
+{
   if (dialogs_shown)
     {
+      GimpDialogFactoryClass *factory_class;
+
+      factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
+
       dialogs_shown = FALSE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
     }
+}
+
+void
+gimp_dialog_factories_toggle (void)
+{
+  if (dialogs_shown)
+    {
+      gimp_dialog_factories_hide ();
+    }
   else
     {
-      dialogs_shown = TRUE;
-      g_hash_table_foreach (factory_class->factories,
-                            (GHFunc) gimp_dialog_factories_show_foreach,
-                            NULL);
+      gimp_dialog_factories_show ();
     }
 }
 

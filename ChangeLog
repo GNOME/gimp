@@ -1,5 +1,21 @@
 2008-10-23  Sven Neumann  <sven@gimp.org>
 
+	Bug 556896 – Dialogs don't get minimized with single image window
+
+	* app/display/gimpdisplay-foreach.[ch]: added utility function to
+	get the number of visible (not withdrawn or iconified) displays.
+
+	* app/widgets/gimpdialogfactory.[ch]: added functions to hide and
+	show the dock windows. Changed gimp_dialog_factories_toggle() to
+	use the new functions.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_window_state_event): hide the docks if the
+	last display is iconified. Unhide them if a display is
+	uniconified. Probably needs more work ...
+
+2008-10-23  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: removed check for Carbon and added a test for the
 	target OS being Darwin instead.
 

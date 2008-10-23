@@ -168,7 +168,10 @@ void        gimp_dialog_factories_session_save    (GimpConfigWriter  *writer);
 void        gimp_dialog_factories_session_restore (void);
 void        gimp_dialog_factories_session_clear   (void);
 
+void        gimp_dialog_factories_show            (void);
+void        gimp_dialog_factories_hide            (void);
 void        gimp_dialog_factories_toggle          (void);
+
 void        gimp_dialog_factories_set_busy        (void);
 void        gimp_dialog_factories_unset_busy      (void);
 
