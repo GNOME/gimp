@@ -466,8 +466,8 @@ scale (TileManager           *srcTM,
   const guint     bytes      = tile_manager_bpp    (dstTM);
   const guint     dst_width  = tile_manager_width  (dstTM);
   const guint     dst_height = tile_manager_height (dstTM);
-  const gdouble   scaley     = (gdouble) dst_height / (gdouble) src_height;
-  const gdouble   scalex     = (gdouble) dst_width  / (gdouble) src_width;
+  const gdouble   scaley     = (gdouble) src_height / (gdouble) dst_height;
+  const gdouble   scalex     = (gdouble) src_width  / (gdouble) dst_width;
   gpointer        pr;
   gfloat         *kernel_lookup = NULL;
 
@@ -522,38 +522,38 @@ scale (TileManager           *srcTM,
       for (y = region.y; y < y1; y++)
         {
           guchar  *pixel = row;
-          gdouble  yfrac = y / scaley;
-          gint     sy0   = (gint) yfrac;
+          gdouble  yfrac = y * scaley + 0.5;
+          gint     sy    = (gint) yfrac;
           gint     x;
 
-          yfrac = yfrac - sy0;
+          yfrac = yfrac - sy;
 
           for (x = region.x; x < x1; x++)
             {
-              gdouble xfrac = x / scalex;
-              gint    sx0   = (gint) xfrac;
+              gdouble xfrac = x * scalex + 0.5;
+              gint    sx    = (gint) xfrac;
 
-              xfrac = xfrac - sx0;
+              xfrac = xfrac - sx;
 
               switch (interpolation)
                 {
                 case GIMP_INTERPOLATION_NONE:
-                  interpolate_nearest (srcTM, sx0, sy0, xfrac, yfrac, pixel);
+                  interpolate_nearest (srcTM, sx, sy, xfrac, yfrac, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_LINEAR:
                   interpolate_bilinear (surround,
-                                        sx0, sy0, xfrac, yfrac, bytes, pixel);
+                                        sx, sy, xfrac, yfrac, bytes, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_CUBIC:
                   interpolate_cubic (surround,
-                                     sx0, sy0, xfrac, yfrac, bytes, pixel);
+                                     sx, sy, xfrac, yfrac, bytes, pixel);
                   break;
 
                 case GIMP_INTERPOLATION_LANCZOS:
                   interpolate_lanczos3 (surround,
-                                        sx0, sy0, xfrac, yfrac, bytes, pixel,
+                                        sx, sy, xfrac, yfrac, bytes, pixel,
                                         kernel_lookup);
                   break;
                 }

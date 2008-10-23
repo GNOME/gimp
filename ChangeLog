@@ -1,3 +1,12 @@
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+        Bug 556248 – Scaling gives 'jagged' edges
+
+        * app/paint-funcs/scale-region.c (scale): calculate pixel
+        contributions based on pixel centers, not on pixel origins.
+
 2008-10-23  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
