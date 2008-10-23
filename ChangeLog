@@ -1,5 +1,12 @@
 2008-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimppluginprocframe.c
+	(gimp_plug_in_proc_frame_dispose): set proc_frame->procedure to
+	NULL *after* calling gimp_plug_in_cleanup(). Fixes the crash on
+	windows in bug #557061 (but not the bug).
+
+2008-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.h: don't #include
 	"libgimpwidgets/gimpwidgets.h".
 
