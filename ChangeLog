@@ -1,5 +1,13 @@
 2008-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: rename GimpStrokeStyle to GimpFillStyle.
+
+	* app/core/gimpfilloptions.[ch]
+	* app/core/gimpdrawable-stroke.c
+	(gimp_drawable_stroke_scan_convert): changed accordingly.
+
+2008-10-23  Michael Natterer  <mitch@gimp.org>
+
 	Merge a part of SOC 2006's vector layer branch:
 
 	* app/core/Makefile.am

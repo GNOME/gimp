@@ -265,6 +265,34 @@ gimp_fill_type_get_type (void)
 }
 
 GType
+gimp_fill_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_FILL_STYLE_SOLID, "GIMP_FILL_STYLE_SOLID", "solid" },
+    { GIMP_FILL_STYLE_PATTERN, "GIMP_FILL_STYLE_PATTERN", "pattern" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_FILL_STYLE_SOLID, N_("Solid color"), NULL },
+    { GIMP_FILL_STYLE_PATTERN, N_("Pattern"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpFillStyle", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_stroke_method_get_type (void)
 {
   static const GEnumValue values[] =
@@ -286,34 +314,6 @@ gimp_stroke_method_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpStrokeMethod", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_stroke_style_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_STROKE_STYLE_SOLID, "GIMP_STROKE_STYLE_SOLID", "solid" },
-    { GIMP_STROKE_STYLE_PATTERN, "GIMP_STROKE_STYLE_PATTERN", "pattern" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_STROKE_STYLE_SOLID, N_("Solid color"), NULL },
-    { GIMP_STROKE_STYLE_PATTERN, N_("Pattern"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpStrokeStyle", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

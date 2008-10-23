@@ -281,7 +281,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
 
   switch (GIMP_FILL_OPTIONS (options)->style)
     {
-    case GIMP_STROKE_STYLE_SOLID:
+    case GIMP_FILL_STYLE_SOLID:
       {
         guchar tmp_col[MAX_CHANNELS] = { 0, };
         guchar col[MAX_CHANNELS]     = { 0, };
@@ -299,7 +299,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
       }
       break;
 
-    case GIMP_STROKE_STYLE_PATTERN:
+    case GIMP_FILL_STYLE_PATTERN:
       {
         GimpPattern *pattern;
         TempBuf     *pat_buf;

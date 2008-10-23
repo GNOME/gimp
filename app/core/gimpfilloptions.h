@@ -38,11 +38,11 @@ typedef struct _GimpFillOptionsClass GimpFillOptionsClass;
 
 struct _GimpFillOptions
 {
-  GimpContext      parent_instance;
+  GimpContext    parent_instance;
 
-  GimpStrokeStyle  style;
+  GimpFillStyle  style;
 
-  gboolean         antialias;
+  gboolean       antialias;
 };
 
 struct _GimpFillOptionsClass

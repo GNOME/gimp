@@ -62,8 +62,8 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
                                  "style", NULL,
-                                 GIMP_TYPE_STROKE_STYLE,
-                                 GIMP_STROKE_STYLE_SOLID,
+                                 GIMP_TYPE_FILL_STYLE,
+                                 GIMP_FILL_STYLE_SOLID,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
