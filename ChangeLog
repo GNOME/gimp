@@ -1,5 +1,20 @@
 2008-10-23  Michael Natterer  <mitch@gimp.org>
 
+	Merge a part of SOC 2006's vector layer branch:
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpfilloptions.[ch]: new GimpContext subclass factored
+	out of GimpStrokeOptions. Has "style" and "antialias" properties.
+
+	* app/core/gimpstrokeoptions.[ch]: derive from GimpFillOptions
+	and remove said properties.
+
+	* app/core/gimpdrawable-stroke.c
+	(gimp_drawable_stroke_scan_convert): changed accordingly.
+
+2008-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimppluginprocframe.c
 	(gimp_plug_in_proc_frame_dispose): set proc_frame->procedure to
 	NULL *after* calling gimp_plug_in_cleanup(). Fixes the crash on
@@ -1103,7 +1118,7 @@
 2008-10-03  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/web-browser.c : when ShellExecute() is failing give
-	the detailed (currently intentionally untranslated) error message via 
+	the detailed (currently intentionally untranslated) error message via
 	g_message()
 
 	* **/makefie.msc gimpdefs.msc app/gimpcore.def : updated

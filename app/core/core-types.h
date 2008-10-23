@@ -77,6 +77,7 @@ typedef struct _GimpToolPresets     GimpToolPresets;
 /*  context objects  */
 
 typedef struct _GimpContext         GimpContext;
+typedef struct _GimpFillOptions     GimpFillOptions;
 typedef struct _GimpStrokeOptions   GimpStrokeOptions;
 typedef struct _GimpToolOptions     GimpToolOptions;
 

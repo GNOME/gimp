@@ -271,7 +271,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   /* render the stroke into it */
   gimp_scan_convert_render (scan_convert, mask,
                             x + off_x, y + off_y,
-                            options->antialias);
+                            GIMP_FILL_OPTIONS (options)->antialias);
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
@@ -279,7 +279,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
 
-  switch (options->style)
+  switch (GIMP_FILL_OPTIONS (options)->style)
     {
     case GIMP_STROKE_STYLE_SOLID:
       {
