@@ -1,3 +1,10 @@
+2008-10-24  Michael Natterer  <mitch@gimp.org>
+
+	Another merge from the vector layer branch:
+
+	* app/core/gimpstrokedesc.c (gimp_stroke_desc_new): make sure
+	each stroke desc always has GimpPaintInfo.
+
 2008-10-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationadditionmode.c: For alpha compositing
