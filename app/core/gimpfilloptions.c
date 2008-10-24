@@ -29,13 +29,16 @@
 #include "core-types.h"
 
 #include "gimpfilloptions.h"
+#include "gimpviewable.h"
 
 
 enum
 {
   PROP_0,
   PROP_STYLE,
-  PROP_ANTIALIAS
+  PROP_ANTIALIAS,
+  PROP_PATTERN_VIEW_TYPE,
+  PROP_PATTERN_VIEW_SIZE
 };
 
 
@@ -70,6 +73,23 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                     "antialias", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_PATTERN_VIEW_TYPE,
+                                   g_param_spec_enum ("pattern-view-type",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_VIEW_TYPE,
+                                                      GIMP_VIEW_TYPE_GRID,
+                                                      G_PARAM_CONSTRUCT |
+                                                      GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PATTERN_VIEW_SIZE,
+                                   g_param_spec_int ("pattern-view-size",
+                                                     NULL, NULL,
+                                                     GIMP_VIEW_SIZE_TINY,
+                                                     GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                                     GIMP_VIEW_SIZE_SMALL,
+                                                     G_PARAM_CONSTRUCT |
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -94,6 +114,13 @@ gimp_fill_options_set_property (GObject      *object,
       options->antialias = g_value_get_boolean (value);
       break;
 
+    case PROP_PATTERN_VIEW_TYPE:
+      options->pattern_view_type = g_value_get_enum (value);
+      break;
+    case PROP_PATTERN_VIEW_SIZE:
+      options->pattern_view_size = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -115,6 +142,13 @@ gimp_fill_options_get_property (GObject    *object,
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
+      break;
+
+    case PROP_PATTERN_VIEW_TYPE:
+      g_value_set_enum (value, options->pattern_view_type);
+      break;
+    case PROP_PATTERN_VIEW_SIZE:
+      g_value_set_int (value, options->pattern_view_size);
       break;
 
     default:

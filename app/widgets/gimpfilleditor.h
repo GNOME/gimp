@@ -38,6 +38,7 @@ struct _GimpFillEditor
   GtkVBox          parent_instance;
 
   GimpFillOptions *options;
+  gboolean         edit_context;
 };
 
 struct _GimpFillEditorClass
@@ -48,7 +49,8 @@ struct _GimpFillEditorClass
 
 GType       gimp_fill_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_fill_editor_new      (GimpFillOptions *options);
+GtkWidget * gimp_fill_editor_new      (GimpFillOptions *options,
+                                       gboolean         edit_context);
 
 
 #endif /* __GIMP_FILL_EDITOR_H__ */

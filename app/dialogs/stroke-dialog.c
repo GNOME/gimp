@@ -181,7 +181,7 @@ stroke_dialog_new (GimpItem    *item,
 
     gimp_image_get_resolution (image, &xres, &yres);
 
-    stroke_editor = gimp_stroke_editor_new (options, yres);
+    stroke_editor = gimp_stroke_editor_new (options, yres, FALSE);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 

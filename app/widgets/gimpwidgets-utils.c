@@ -244,23 +244,18 @@ gimp_table_attach_stock (GtkTable    *table,
 }
 
 void
-gimp_enum_radio_frame_add (GtkFrame  *frame,
-                           GtkWidget *widget,
-                           gint       enum_value)
+gimp_enum_radio_box_add (GtkBox    *box,
+                         GtkWidget *widget,
+                         gint       enum_value)
 {
-  GtkWidget *vbox;
-  GList     *children;
-  GList     *list;
-  gint       pos;
+  GList *children;
+  GList *list;
+  gint   pos;
 
-  g_return_if_fail (GTK_IS_FRAME (frame));
+  g_return_if_fail (GTK_IS_BOX (box));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  vbox = gtk_bin_get_child (GTK_BIN (frame));
-
-  g_return_if_fail (GTK_IS_VBOX (vbox));
-
-  children = gtk_container_get_children (GTK_CONTAINER (vbox));
+  children = gtk_container_get_children (GTK_CONTAINER (box));
 
   for (list = children, pos = 1;
        list;
@@ -312,8 +307,8 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
           gtk_widget_set_sensitive (hbox,
                                     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (list->data)));
 
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-          gtk_box_reorder_child (GTK_BOX (vbox), hbox, pos);
+          gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+          gtk_box_reorder_child (GTK_BOX (box), hbox, pos);
           gtk_widget_show (hbox);
 
           break;
@@ -321,6 +316,23 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
     }
 
   g_list_free (children);
+}
+
+void
+gimp_enum_radio_frame_add (GtkFrame  *frame,
+                           GtkWidget *widget,
+                           gint       enum_value)
+{
+  GtkWidget *vbox;
+
+  g_return_if_fail (GTK_IS_FRAME (frame));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  vbox = gtk_bin_get_child (GTK_BIN (frame));
+
+  g_return_if_fail (GTK_IS_VBOX (vbox));
+
+  gimp_enum_radio_box_add (GTK_BOX (vbox), widget, enum_value);
 }
 
 GtkIconSize

@@ -38,6 +38,9 @@ void              gimp_table_attach_stock    (GtkTable        *table,
                                               GtkWidget       *widget,
                                               gint             colspan,
                                               gboolean         left_align);
+void              gimp_enum_radio_box_add    (GtkBox          *box,
+                                              GtkWidget       *widget,
+                                              gint             enum_value);
 void              gimp_enum_radio_frame_add  (GtkFrame        *frame,
                                               GtkWidget       *widget,
                                               gint             enum_value);

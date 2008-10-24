@@ -43,6 +43,9 @@ struct _GimpFillOptions
   GimpFillStyle  style;
 
   gboolean       antialias;
+
+  GimpViewType   pattern_view_type;
+  GimpViewSize   pattern_view_size;
 };
 
 struct _GimpFillOptionsClass

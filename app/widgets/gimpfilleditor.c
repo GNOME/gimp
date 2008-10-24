@@ -30,7 +30,11 @@
 
 #include "core/gimpfilloptions.h"
 
+#include "gimpcolorpanel.h"
 #include "gimpfilleditor.h"
+#include "gimppropwidgets.h"
+#include "gimpviewablebox.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -39,7 +43,7 @@ enum
 {
   PROP_0,
   PROP_OPTIONS,
-  PROP_RESOLUTION
+  PROP_EDIT_CONTEXT
 };
 
 
@@ -73,10 +77,18 @@ gimp_fill_editor_class_init (GimpFillEditorClass *klass)
   object_class->get_property = gimp_fill_editor_get_property;
 
   g_object_class_install_property (object_class, PROP_OPTIONS,
-                                   g_param_spec_object ("options", NULL, NULL,
+                                   g_param_spec_object ("options",
+                                                        NULL, NULL,
                                                         GIMP_TYPE_FILL_OPTIONS,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_EDIT_CONTEXT,
+                                   g_param_spec_boolean ("edit-context",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -105,6 +117,29 @@ gimp_fill_editor_constructor (GType                   type,
                                       0, 0);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
+
+  if (editor->edit_context)
+    {
+      GtkWidget *color_button;
+      GtkWidget *pattern_box;
+
+      color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+                                                 "foreground",
+                                                 _("Fill Color"),
+                                                 -1, 24,
+                                                 GIMP_COLOR_AREA_SMALL_CHECKS);
+      gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                    GIMP_CONTEXT (editor->options));
+      gimp_enum_radio_box_add (GTK_BOX (box), color_button,
+                               GIMP_FILL_STYLE_SOLID);
+
+      pattern_box = gimp_prop_pattern_box_new (NULL,
+                                               GIMP_CONTEXT (editor->options), 2,
+                                               "pattern-view-type",
+                                               "pattern-view-size");
+      gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
+                               GIMP_FILL_STYLE_PATTERN);
+    }
 
   return object;
 }
@@ -139,6 +174,10 @@ gimp_fill_editor_set_property (GObject      *object,
       editor->options = g_value_dup_object (value);
       break;
 
+    case PROP_EDIT_CONTEXT:
+      editor->edit_context = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -159,6 +198,10 @@ gimp_fill_editor_get_property (GObject    *object,
       g_value_set_object (value, editor->options);
       break;
 
+    case PROP_EDIT_CONTEXT:
+      g_value_set_boolean (value, editor->edit_context);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -166,11 +209,13 @@ gimp_fill_editor_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_fill_editor_new (GimpFillOptions *options)
+gimp_fill_editor_new (GimpFillOptions *options,
+                      gboolean         edit_context)
 {
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
 
   return g_object_new (GIMP_TYPE_FILL_EDITOR,
-                       "options", options,
+                       "options",      options,
+                       "edit-context", edit_context ? TRUE : FALSE,
                        NULL);
 }

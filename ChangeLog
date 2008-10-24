@@ -1,3 +1,22 @@
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpfilloptions.[ch]: add non-serializable properties
+	pattern-view-type and pattern-view-size which are used only by the
+	new UI below.
+
+	* app/widgets/gimpfilleditor.[ch]: added boolean edit-context
+	property. If TRUE, add widgets to edit the context's foreground and
+	pattern. Add "edit_context" parameter to gimp_fill_editor_new().
+
+	* app/widgets/gimpstrokeeditor.[ch]: add the same parameter here.
+
+	* app/widgets/gimpwidgets-utils.[ch]: add gimp_enum_radio_box_add()
+	which does the same as the existing gimp_enum_radio_frame_add().
+
+	* app/dialogs/stroke-dialog.c: pass FALSE for "edit_context"
+	because this dialog takes its foreground and pattern from the user
+	context and doesn't need it's own GUI for them.
+
 2008-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

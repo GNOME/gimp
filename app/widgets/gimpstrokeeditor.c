@@ -330,13 +330,15 @@ gimp_stroke_editor_constructor (GType                   type,
 
 GtkWidget *
 gimp_stroke_editor_new (GimpStrokeOptions *options,
-                        gdouble            resolution)
+                        gdouble            resolution,
+                        gboolean           edit_context)
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
 
   return g_object_new (GIMP_TYPE_STROKE_EDITOR,
-                       "options",    options,
-                       "resolution", resolution,
+                       "options",      options,
+                       "resolution",   resolution,
+                       "edit-context", edit_context ? TRUE : FALSE,
                        NULL);
 }
 

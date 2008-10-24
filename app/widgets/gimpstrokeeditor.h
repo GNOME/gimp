@@ -52,7 +52,8 @@ struct _GimpStrokeEditorClass
 GType       gimp_stroke_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_stroke_editor_new      (GimpStrokeOptions *options,
-                                         gdouble            resolution);
+                                         gdouble            resolution,
+                                         gboolean           edit_context);
 
 
 #endif /* __GIMP_STROKE_EDITOR_H__ */
