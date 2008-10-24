@@ -25,7 +25,9 @@
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
-/* temp */
+#include "gegl/gimp-gegl-utils.h"
+
+/* temporary */
 #include "gimp.h"
 #include "gimpimage.h"
 
@@ -48,9 +50,12 @@ gimp_drawable_invert (GimpDrawable *drawable,
 
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
-      GeglNode *invert;
+      GeglNode    *invert;
+      const gchar *name;
 
-      invert = g_object_new (GEGL_TYPE_NODE, "operation", "invert", NULL);
+      name = gimp_gegl_check_version (0, 0, 21) ? "gegl:invert" : "invert";
+
+      invert = g_object_new (GEGL_TYPE_NODE, "operation", name, NULL);
 
       gimp_drawable_apply_operation (drawable, progress, _("Invert"),
                                      invert, TRUE);

@@ -25,9 +25,10 @@
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpbrightnesscontrastconfig.h"
 
-/* temp */
+/* temporary */
 #include "gimp.h"
 #include "gimpimage.h"
 
@@ -60,10 +61,14 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
 
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
-      GeglNode *node;
+      GeglNode    *node;
+      const gchar *name;
+
+      name = (gimp_gegl_check_version (0, 0, 21) ?
+              "gegl:brightness-contrast" : "brightness-contrast");
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "brightness-contrast",
+                           "operation", name,
                            NULL);
       gimp_brightness_contrast_config_set_node (config, node);
 

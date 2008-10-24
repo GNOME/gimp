@@ -1,5 +1,16 @@
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
+	Bug 557705 – compatibility with GEGL > 0.0.20
+
+	* app/core/gimpdrawable-brightness-contrast.c
+	* app/core/gimpdrawable-invert.c
+	* app/tools/gimpbrightnesscontrasttool.c: choose GEGL operation
+	names based on the GEGL version we are being used with.
+
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
+	Bug 557705 – compatibility with GEGL > 0.0.20
+
 	* app/gegl/gimp-gegl-utils.[ch]: added gimp_gegl_check_version(),
 	a run-time GEGL version check.
 

@@ -31,6 +31,7 @@
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpbrightnesscontrastconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -196,6 +197,7 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                                              GObject          **config)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+  const gchar                *name;
 
   bc_tool->config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, NULL);
 
@@ -205,8 +207,11 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                            G_CALLBACK (brightness_contrast_config_notify),
                            G_OBJECT (bc_tool), 0);
 
+  name = (gimp_gegl_check_version (0, 0, 21) ?
+          "gegl:brightness-contrast" : "brightness-contrast");
+
   return g_object_new (GEGL_TYPE_NODE,
-                       "operation", "brightness-contrast",
+                       "operation", name,
                        NULL);
 }
 
