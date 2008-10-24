@@ -45,6 +45,13 @@
 #include "gimp-log.h"
 
 
+typedef enum
+{
+  GIMP_DIALOGS_SHOWN,
+  GIMP_DIALOGS_HIDDEN_EXPLICITLY,  /* user used the Tab key to hide dialogs */
+  GIMP_DIALOGS_HIDDEN_WITH_DISPLAY /* dialogs are hidden with the display   */
+} GimpDialogsState;
+
 enum
 {
   DOCK_ADDED,
@@ -103,7 +110,7 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 
 static guint factory_signals[LAST_SIGNAL] = { 0 };
 
-static gboolean dialogs_shown = TRUE;  /* FIXME */
+static GimpDialogsState dialogs_state = GIMP_DIALOGS_SHOWN;
 
 
 static void
@@ -1079,7 +1086,7 @@ gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 
   gtk_widget_hide (dialog);
 
-  if (! dialogs_shown)
+  if (dialogs_state != GIMP_DIALOGS_SHOWN)
     g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
                        GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_INVISIBLE));
 }
@@ -1122,32 +1129,23 @@ gimp_dialog_factories_session_clear (void)
                         NULL);
 }
 
-void
-gimp_dialog_factories_show (void)
+static void
+gimp_dialog_factories_set_state (GimpDialogsState state)
 {
-  if (! dialogs_shown)
+  GimpDialogFactoryClass *factory_class;
+
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
+
+  dialogs_state = state;
+
+  if (state == GIMP_DIALOGS_SHOWN)
     {
-      GimpDialogFactoryClass *factory_class;
-
-      factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-      dialogs_shown = TRUE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_show_foreach,
                             NULL);
     }
-}
-
-void
-gimp_dialog_factories_hide (void)
-{
-  if (dialogs_shown)
+  else
     {
-      GimpDialogFactoryClass *factory_class;
-
-      factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-      dialogs_shown = FALSE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
@@ -1155,15 +1153,38 @@ gimp_dialog_factories_hide (void)
 }
 
 void
+gimp_dialog_factories_show_with_display (void)
+{
+  if (dialogs_state == GIMP_DIALOGS_HIDDEN_WITH_DISPLAY)
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
+    }
+}
+
+void
+gimp_dialog_factories_hide_with_display (void)
+{
+  if (dialogs_state == GIMP_DIALOGS_SHOWN)
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_WITH_DISPLAY);
+    }
+}
+
+void
 gimp_dialog_factories_toggle (void)
 {
-  if (dialogs_shown)
+  switch (dialogs_state)
     {
-      gimp_dialog_factories_hide ();
-    }
-  else
-    {
-      gimp_dialog_factories_show ();
+    case GIMP_DIALOGS_SHOWN:
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_EXPLICITLY);
+      break;
+
+    case GIMP_DIALOGS_HIDDEN_EXPLICITLY:
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
+      break;
+
+    case GIMP_DIALOGS_HIDDEN_WITH_DISPLAY:
+      break;
     }
 }
 

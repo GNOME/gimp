@@ -1,3 +1,19 @@
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
+	Bug 556896 – Dialogs don't get minimized with single image window
+
+	* app/widgets/gimpdialogfactory.[ch]: renamed the new methods to
+	gimp_dialog_factories_{show|hide}_with_display().
+	Remember if the dialogs were hidden using
+	gimp_dialog_factories_hide_with_display() or using
+	gimp_dialog_factories_toggle() and keep this into account when
+	making them visible again. This ensures that dialogs that were
+	hidden using the Tab key won't be shown when the image window is
+	uniconified.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_window_state_event): changed accordingly.
+
 2008-10-24  Michael Natterer  <mitch@gimp.org>
 
 	Another merge from the vector layer branch:

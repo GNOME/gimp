@@ -652,11 +652,11 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
       if (iconified)
         {
           if (gimp_displays_get_num_visible (gimp) == 0)
-            gimp_dialog_factories_hide ();
+            gimp_dialog_factories_hide_with_display ();
         }
       else
         {
-          gimp_dialog_factories_show ();
+          gimp_dialog_factories_show_with_display ();
         }
 
       gimp_display_shell_progress_window_state_changed (shell);
