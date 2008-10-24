@@ -1,5 +1,15 @@
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
+        Bug 556896 – Dialogs don't get minimized with single image window
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplay-foreach.[ch]
+	* app/widgets/gimpdialogfactory.[ch]: merged changes from trunk.
+	Hide the toolbox and docks if the last display is iconified.
+	Unhide them if a display is uniconified.
+
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
         Bug 556248 – Scaling gives 'jagged' edges
