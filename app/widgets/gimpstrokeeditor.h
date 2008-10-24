@@ -23,6 +23,9 @@
 #define __GIMP_STROKE_EDITOR_H__
 
 
+#include "gimpfilleditor.h"
+
+
 #define GIMP_TYPE_STROKE_EDITOR            (gimp_stroke_editor_get_type ())
 #define GIMP_STROKE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditor))
 #define GIMP_STROKE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditorClass))
@@ -35,22 +38,21 @@ typedef struct _GimpStrokeEditorClass GimpStrokeEditorClass;
 
 struct _GimpStrokeEditor
 {
-  GtkVBox            parent_instance;
+  GimpFillEditor  parent_instance;
 
-  GimpStrokeOptions *options;
-  gdouble            resolution;
+  gdouble         resolution;
 };
 
 struct _GimpStrokeEditorClass
 {
-  GtkVBoxClass       parent_class;
+  GimpFillEditorClass  parent_class;
 };
 
 
-GType        gimp_stroke_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_stroke_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_stroke_editor_new      (GimpStrokeOptions *options,
-                                          gdouble            resolution);
+GtkWidget * gimp_stroke_editor_new      (GimpStrokeOptions *options,
+                                         gdouble            resolution);
 
 
-#endif  /*  __GIMP_STROKE_EDITOR_H__  */
+#endif /* __GIMP_STROKE_EDITOR_H__ */

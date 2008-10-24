@@ -163,6 +163,7 @@ typedef struct _GimpDashEditor               GimpDashEditor;
 typedef struct _GimpFgBgEditor               GimpFgBgEditor;
 typedef struct _GimpFgBgView                 GimpFgBgView;
 typedef struct _GimpFileProcView             GimpFileProcView;
+typedef struct _GimpFillEditor               GimpFillEditor;
 typedef struct _GimpGridEditor               GimpGridEditor;
 typedef struct _GimpHandleBar                GimpHandleBar;
 typedef struct _GimpHistogramBox             GimpHistogramBox;

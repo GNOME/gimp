@@ -153,6 +153,8 @@ libappwidgets_a_sources = \
 	gimpfiledialog.h		\
 	gimpfileprocview.c		\
 	gimpfileprocview.h		\
+	gimpfilleditor.c		\
+	gimpfilleditor.h		\
 	gimpfontselect.c		\
 	gimpfontselect.h		\
 	gimpfontview.c			\

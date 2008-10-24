@@ -1,0 +1,176 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ *
+ * gimpfilleditor.c
+ * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "core/gimpfilloptions.h"
+
+#include "gimpfilleditor.h"
+
+#include "gimp-intl.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_OPTIONS,
+  PROP_RESOLUTION
+};
+
+
+static GObject * gimp_fill_editor_constructor  (GType              type,
+                                                guint              n_params,
+                                                GObjectConstructParam *params);
+static void      gimp_fill_editor_finalize     (GObject           *object);
+static void      gimp_fill_editor_set_property (GObject           *object,
+                                                guint              property_id,
+                                                const GValue      *value,
+                                                GParamSpec        *pspec);
+static void      gimp_fill_editor_get_property (GObject           *object,
+                                                guint              property_id,
+                                                GValue            *value,
+                                                GParamSpec        *pspec);
+
+
+G_DEFINE_TYPE (GimpFillEditor, gimp_fill_editor, GTK_TYPE_VBOX)
+
+#define parent_class gimp_fill_editor_parent_class
+
+
+static void
+gimp_fill_editor_class_init (GimpFillEditorClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructor  = gimp_fill_editor_constructor;
+  object_class->finalize     = gimp_fill_editor_finalize;
+  object_class->set_property = gimp_fill_editor_set_property;
+  object_class->get_property = gimp_fill_editor_get_property;
+
+  g_object_class_install_property (object_class, PROP_OPTIONS,
+                                   g_param_spec_object ("options", NULL, NULL,
+                                                        GIMP_TYPE_FILL_OPTIONS,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_fill_editor_init (GimpFillEditor *editor)
+{
+}
+
+static GObject *
+gimp_fill_editor_constructor (GType                   type,
+                              guint                   n_params,
+                              GObjectConstructParam  *params)
+{
+  GObject        *object;
+  GimpFillEditor *editor;
+  GtkWidget      *box;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_FILL_EDITOR (object);
+
+  g_assert (GIMP_IS_FILL_OPTIONS (editor->options));
+
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
+
+  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+                                      0, 0);
+  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
+
+  return object;
+}
+
+static void
+gimp_fill_editor_finalize (GObject *object)
+{
+  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+
+  if (editor->options)
+    {
+      g_object_unref (editor->options);
+      editor->options = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_fill_editor_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_OPTIONS:
+      if (editor->options)
+        g_object_unref (editor->options);
+      editor->options = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_fill_editor_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_OPTIONS:
+      g_value_set_object (value, editor->options);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+GtkWidget *
+gimp_fill_editor_new (GimpFillOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+
+  return g_object_new (GIMP_TYPE_FILL_EDITOR,
+                       "options", options,
+                       NULL);
+}

@@ -54,7 +54,6 @@ static void      gimp_stroke_editor_get_property (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
-static void      gimp_stroke_editor_finalize     (GObject           *object);
 static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
                                                   GdkEventExpose    *event,
                                                   gpointer           data);
@@ -65,7 +64,7 @@ static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
                                                   GtkComboBox       *box);
 
 
-G_DEFINE_TYPE (GimpStrokeEditor, gimp_stroke_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpStrokeEditor, gimp_stroke_editor, GIMP_TYPE_FILL_EDITOR)
 
 #define parent_class gimp_stroke_editor_parent_class
 
@@ -78,7 +77,6 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
   object_class->constructor  = gimp_stroke_editor_constructor;
   object_class->set_property = gimp_stroke_editor_set_property;
   object_class->get_property = gimp_stroke_editor_get_property;
-  object_class->finalize     = gimp_stroke_editor_finalize;
 
   g_object_class_install_property (object_class, PROP_OPTIONS,
                                    g_param_spec_object ("options", NULL, NULL,
@@ -106,14 +104,15 @@ gimp_stroke_editor_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpStrokeEditor *editor = GIMP_STROKE_EDITOR (object);
+  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
+  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
 
   switch (property_id)
     {
     case PROP_OPTIONS:
-      if (editor->options)
-        g_object_unref (editor->options);
-      editor->options = g_value_dup_object (value);
+      if (fill_editor->options)
+        g_object_unref (fill_editor->options);
+      fill_editor->options = g_value_dup_object (value);
       break;
 
     case PROP_RESOLUTION:
@@ -132,12 +131,13 @@ gimp_stroke_editor_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpStrokeEditor *editor = GIMP_STROKE_EDITOR (object);
+  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
+  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
 
   switch (property_id)
     {
     case PROP_OPTIONS:
-      g_value_set_object (value, editor->options);
+      g_value_set_object (value, fill_editor->options);
       break;
 
     case PROP_RESOLUTION:
@@ -155,28 +155,31 @@ gimp_stroke_editor_constructor (GType                   type,
                                 guint                   n_params,
                                 GObjectConstructParam  *params)
 {
-  GimpStrokeEditor *editor;
-  GimpEnumStore    *store;
-  GEnumValue       *value;
-  GtkWidget        *box;
-  GtkWidget        *size;
-  GtkWidget        *label;
-  GtkWidget        *frame;
-  GtkWidget        *table;
-  GtkWidget        *expander;
-  GtkWidget        *dash_editor;
-  GtkWidget        *button;
-  GtkCellRenderer  *cell;
-  GObject          *object;
-  gint              row = 0;
+  GObject           *object;
+  GimpFillEditor    *fill_editor;
+  GimpStrokeEditor  *editor;
+  GimpStrokeOptions *options;
+  GimpEnumStore     *store;
+  GEnumValue        *value;
+  GtkWidget         *box;
+  GtkWidget         *size;
+  GtkWidget         *label;
+  GtkWidget         *frame;
+  GtkWidget         *table;
+  GtkWidget         *expander;
+  GtkWidget         *dash_editor;
+  GtkWidget         *button;
+  GtkCellRenderer   *cell;
+  gint               row = 0;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  editor = GIMP_STROKE_EDITOR (object);
+  fill_editor = GIMP_FILL_EDITOR (object);
+  editor      = GIMP_STROKE_EDITOR (object);
 
-  g_assert (editor->options != NULL);
+  g_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
 
-  gtk_box_set_spacing (GTK_BOX (editor), 12);
+  options = GIMP_STROKE_OPTIONS (fill_editor->options);
 
   box = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
@@ -186,18 +189,13 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  size = gimp_prop_size_entry_new (G_OBJECT (editor->options),
+  size = gimp_prop_size_entry_new (G_OBJECT (options),
                                    "width", FALSE, "unit",
                                    "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                    editor->resolution);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
   gtk_widget_show (size);
-
-  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
-                                      0, 0);
-  gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
   gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
@@ -215,19 +213,19 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "cap-style",
+  box = gimp_prop_enum_stock_box_new (G_OBJECT (options), "cap-style",
                                       "gimp-cap", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Cap style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "join-style",
+  box = gimp_prop_enum_stock_box_new (G_OBJECT (options), "join-style",
                                       "gimp-join", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Join style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
-  gimp_prop_scale_entry_new (G_OBJECT (editor->options), "miter-limit",
+  gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
                              GTK_TABLE (table), 0, row++,
                              _("_Miter limit:"),
                              1.0, 1.0, 1,
@@ -243,7 +241,7 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
-  dash_editor = gimp_dash_editor_new (editor->options);
+  dash_editor = gimp_dash_editor_new (options);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
@@ -309,17 +307,18 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
                                  "pattern", GIMP_INT_STORE_USER_DATA);
 
-  gimp_stroke_editor_combo_fill (editor->options, GTK_COMBO_BOX (box));
+  gimp_stroke_editor_combo_fill (options, GTK_COMBO_BOX (box));
 
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
-                    editor->options);
-  g_signal_connect_object (editor->options, "dash-info-changed",
+                    options);
+  g_signal_connect_object (options, "dash-info-changed",
                            G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 
 
-  button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
+  button = gimp_prop_check_button_new (G_OBJECT (options),
+                                       "antialias",
                                        _("_Antialiasing"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -327,20 +326,6 @@ gimp_stroke_editor_constructor (GType                   type,
   row++;
 
   return object;
-}
-
-static void
-gimp_stroke_editor_finalize (GObject *object)
-{
-  GimpStrokeEditor *editor = GIMP_STROKE_EDITOR (object);
-
-  if (editor->options)
-    {
-      g_object_unref (editor->options);
-      editor->options = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *
