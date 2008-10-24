@@ -1,5 +1,12 @@
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factories_toggle):
+	to be on the safe side, always show hidden dialogs when the Tab
+	key is used. It should not be possible to get a Tab key-press
+	while all displays are iconified, but you never know ...
+
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
 	Bug 556896 – Dialogs don't get minimized with single image window
 
 	* app/widgets/gimpdialogfactory.[ch]: renamed the new methods to
