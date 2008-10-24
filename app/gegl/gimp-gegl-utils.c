@@ -85,3 +85,27 @@ gimp_bpp_to_babl_format_linear (guint bpp)
 
   return NULL;
 }
+
+/**
+ * gimp_gegl_check_version:
+ * @required_major: the required major version.
+ * @required_minor: the required minor version.
+ * @required_micro: the required micro version.
+ * 
+ * Return value: %TRUE if the GEGL library in use is the given
+ *               version or newer, %FALSE otherwise
+ */
+gboolean
+gimp_gegl_check_version (guint required_major,
+			 guint required_minor,
+			 guint required_micro)
+{
+  gint major, minor, micro;
+
+  if (required_major != GEGL_MAJOR_VERSION)
+    return FALSE; /* major mismatch */
+
+  gegl_get_version (&major, &minor, &micro);
+
+  return (100 * minor + micro >= 100 * required_minor + required_micro);
+}

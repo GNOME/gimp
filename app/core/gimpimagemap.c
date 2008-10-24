@@ -29,6 +29,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpimage.h"
@@ -455,6 +457,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     {
       if (! image_map->gegl)
         {
+	  const gchar *shift_name;
+
           image_map->gegl = gegl_node_new ();
 
           if (g_object_class_find_property (
@@ -466,9 +470,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                  "operation", "gimp-tilemanager-source",
                                  NULL);
 
+	  shift_name =
+	    gimp_gegl_check_version (0, 0, 21) ? "gegl:shift" : "shift";
+
           image_map->shift =
             gegl_node_new_child (image_map->gegl,
-                                 "operation", "shift",
+                                 "operation", shift_name,
                                  NULL);
 
           gegl_node_add_child (image_map->gegl, image_map->operation);
@@ -510,9 +517,15 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                *  source OP, blend its result on top of the original
                *  pixels.
                */
-              GeglNode *over = gegl_node_new_child (image_map->gegl,
-                                                    "operation", "over",
-                                                    NULL);
+	      const gchar *over_name;
+              GeglNode    *over;
+
+	      over_name =
+		gimp_gegl_check_version (0, 0, 21) ? "gegl:over" : "over";
+
+	      over = gegl_node_new_child (image_map->gegl,
+					  "operation", over_name,
+					  NULL);
 
               gegl_node_link_many (image_map->input,
                                    image_map->shift,

@@ -1,5 +1,13 @@
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
+	* app/gegl/gimp-gegl-utils.[ch]: added gimp_gegl_check_version(),
+	a run-time GEGL version check.
+
+	* app/core/gimpimagemap.c (gimp_image_map_apply): use the new
+	function to determine the names of the GEGL ops to use.
+
+2008-10-24  Sven Neumann  <sven@gimp.org>
+
         Bug 556896 – Dialogs don't get minimized with single image window
 
 	* app/display/gimpdisplayshell.c

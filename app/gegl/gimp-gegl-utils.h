@@ -26,6 +26,9 @@
 const Babl * gimp_bpp_to_babl_format        (guint bpp) G_GNUC_CONST;
 const Babl * gimp_bpp_to_babl_format_linear (guint bpp) G_GNUC_CONST;
 
+gboolean     gimp_gegl_check_version        (guint required_major,
+					     guint required_minor,
+					     guint required_micro);
 
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
