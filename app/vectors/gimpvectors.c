@@ -38,7 +38,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
-#include "core/gimpstrokedesc.h"
+#include "core/gimpstrokeoptions.h"
 
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
@@ -59,57 +59,57 @@ enum
 };
 
 
-static void       gimp_vectors_finalize     (GObject          *object);
+static void       gimp_vectors_finalize     (GObject           *object);
 
-static gint64     gimp_vectors_get_memsize  (GimpObject       *object,
-                                             gint64           *gui_size);
+static gint64     gimp_vectors_get_memsize  (GimpObject        *object,
+                                             gint64            *gui_size);
 
-static gboolean   gimp_vectors_is_attached  (GimpItem         *item);
-static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
-                                             GType             new_type);
-static void       gimp_vectors_convert      (GimpItem         *item,
-                                             GimpImage        *dest_image);
-static void       gimp_vectors_translate    (GimpItem         *item,
-                                             gint              offset_x,
-                                             gint              offset_y,
-                                             gboolean          push_undo);
-static void       gimp_vectors_scale        (GimpItem         *item,
-                                             gint              new_width,
-                                             gint              new_height,
-                                             gint              new_offset_x,
-                                             gint              new_offset_y,
+static gboolean   gimp_vectors_is_attached  (GimpItem          *item);
+static GimpItem * gimp_vectors_duplicate    (GimpItem          *item,
+                                             GType              new_type);
+static void       gimp_vectors_convert      (GimpItem          *item,
+                                             GimpImage         *dest_image);
+static void       gimp_vectors_translate    (GimpItem          *item,
+                                             gint               offset_x,
+                                             gint               offset_y,
+                                             gboolean           push_undo);
+static void       gimp_vectors_scale        (GimpItem          *item,
+                                             gint               new_width,
+                                             gint               new_height,
+                                             gint               new_offset_x,
+                                             gint               new_offset_y,
                                              GimpInterpolationType  interp_type,
-                                             GimpProgress     *progress);
-static void       gimp_vectors_resize       (GimpItem         *item,
-                                             GimpContext      *context,
-                                             gint              new_width,
-                                             gint              new_height,
-                                             gint              offset_x,
-                                             gint              offset_y);
-static void       gimp_vectors_flip         (GimpItem         *item,
-                                             GimpContext      *context,
+                                             GimpProgress      *progress);
+static void       gimp_vectors_resize       (GimpItem          *item,
+                                             GimpContext       *context,
+                                             gint               new_width,
+                                             gint               new_height,
+                                             gint               offset_x,
+                                             gint               offset_y);
+static void       gimp_vectors_flip         (GimpItem          *item,
+                                             GimpContext       *context,
                                              GimpOrientationType  flip_type,
-                                             gdouble           axis,
-                                             gboolean          clip_result);
-static void       gimp_vectors_rotate       (GimpItem         *item,
-                                             GimpContext      *context,
-                                             GimpRotationType  rotate_type,
-                                             gdouble           center_x,
-                                             gdouble           center_y,
-                                             gboolean          clip_result);
-static void       gimp_vectors_transform    (GimpItem         *item,
-                                             GimpContext      *context,
+                                             gdouble            axis,
+                                             gboolean           clip_result);
+static void       gimp_vectors_rotate       (GimpItem          *item,
+                                             GimpContext       *context,
+                                             GimpRotationType   rotate_type,
+                                             gdouble            center_x,
+                                             gdouble            center_y,
+                                             gboolean           clip_result);
+static void       gimp_vectors_transform    (GimpItem          *item,
+                                             GimpContext       *context,
                                              const GimpMatrix3 *matrix,
                                              GimpTransformDirection direction,
                                              GimpInterpolationType interp_type,
-                                             gint              recursion_level,
+                                             gint               recursion_level,
                                              GimpTransformResize   clip_result,
-                                             GimpProgress     *progress);
-static gboolean   gimp_vectors_stroke       (GimpItem         *item,
-                                             GimpDrawable     *drawable,
-                                             GimpStrokeDesc   *stroke_desc,
-                                             GimpProgress     *progress,
-                                             GError          **error);
+                                             GimpProgress      *progress);
+static gboolean   gimp_vectors_stroke       (GimpItem          *item,
+                                             GimpDrawable      *drawable,
+                                             GimpStrokeOptions *stroke_options,
+                                             GimpProgress      *progress,
+                                             GError           **error);
 
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
@@ -492,11 +492,11 @@ gimp_vectors_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_vectors_stroke (GimpItem        *item,
-                     GimpDrawable    *drawable,
-                     GimpStrokeDesc  *stroke_desc,
-                     GimpProgress    *progress,
-                     GError         **error)
+gimp_vectors_stroke (GimpItem           *item,
+                     GimpDrawable       *drawable,
+                     GimpStrokeOptions  *stroke_options,
+                     GimpProgress       *progress,
+                     GError            **error)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   gboolean     retval  = FALSE;
@@ -505,24 +505,27 @@ gimp_vectors_stroke (GimpItem        *item,
   if (! vectors->strokes)
     return TRUE;
 
-  switch (stroke_desc->method)
+  switch (stroke_options->method)
     {
     case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_vectors (drawable,
-                                    stroke_desc->stroke_options,
+                                    stroke_options,
                                     vectors);
       retval = TRUE;
       break;
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
       {
+        GimpPaintInfo *paint_info;
         GimpPaintCore *core;
 
-        core = g_object_new (stroke_desc->paint_info->paint_type, NULL);
+        paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
+
+        core = g_object_new (paint_info->paint_type, NULL);
 
         retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                                 stroke_desc->paint_options,
-                                                 stroke_desc->emulate_dynamics,
+                                                 stroke_options->paint_options,
+                                                 stroke_options->emulate_dynamics,
                                                  vectors, error);
 
         g_object_unref (core);

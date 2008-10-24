@@ -53,7 +53,7 @@
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimppickable.h"
-#include "gimpstrokedesc.h"
+#include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
 
@@ -74,148 +74,148 @@ GeglNode * gegl_node_add_child (GeglNode *self,
 
 static void gimp_channel_pickable_iface_init (GimpPickableInterface *iface);
 
-static void       gimp_channel_finalize      (GObject          *object);
+static void       gimp_channel_finalize      (GObject           *object);
 
-static gint64     gimp_channel_get_memsize   (GimpObject       *object,
-                                              gint64           *gui_size);
+static gint64     gimp_channel_get_memsize   (GimpObject        *object,
+                                              gint64            *gui_size);
 
-static gchar  * gimp_channel_get_description (GimpViewable     *viewable,
-                                              gchar           **tooltip);
+static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
+                                              gchar            **tooltip);
 
-static gboolean   gimp_channel_is_attached   (GimpItem         *item);
-static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
-                                              GType             new_type);
-static void       gimp_channel_convert       (GimpItem         *item,
-                                              GimpImage        *dest_image);
-static void       gimp_channel_translate     (GimpItem         *item,
-                                              gint              off_x,
-                                              gint              off_y,
-                                              gboolean          push_undo);
-static void       gimp_channel_scale         (GimpItem         *item,
-                                              gint              new_width,
-                                              gint              new_height,
-                                              gint              new_offset_x,
-                                              gint              new_offset_y,
+static gboolean   gimp_channel_is_attached   (GimpItem          *item);
+static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
+                                              GType              new_type);
+static void       gimp_channel_convert       (GimpItem          *item,
+                                              GimpImage         *dest_image);
+static void       gimp_channel_translate     (GimpItem          *item,
+                                              gint               off_x,
+                                              gint               off_y,
+                                              gboolean           push_undo);
+static void       gimp_channel_scale         (GimpItem          *item,
+                                              gint               new_width,
+                                              gint               new_height,
+                                              gint               new_offset_x,
+                                              gint               new_offset_y,
                                               GimpInterpolationType interp_type,
-                                              GimpProgress     *progress);
-static void       gimp_channel_resize        (GimpItem         *item,
-                                              GimpContext      *context,
-                                              gint              new_width,
-                                              gint              new_height,
-                                              gint              offx,
-                                              gint              offy);
-static void       gimp_channel_flip          (GimpItem         *item,
-                                              GimpContext      *context,
+                                              GimpProgress      *progress);
+static void       gimp_channel_resize        (GimpItem          *item,
+                                              GimpContext       *context,
+                                              gint               new_width,
+                                              gint               new_height,
+                                              gint               offx,
+                                              gint               offy);
+static void       gimp_channel_flip          (GimpItem          *item,
+                                              GimpContext       *context,
                                               GimpOrientationType flip_type,
-                                              gdouble           axis,
-                                              gboolean          flip_result);
-static void       gimp_channel_rotate        (GimpItem         *item,
-                                              GimpContext      *context,
-                                              GimpRotationType  flip_type,
-                                              gdouble           center_x,
-                                              gdouble           center_y,
-                                              gboolean          flip_result);
-static void       gimp_channel_transform     (GimpItem         *item,
-                                              GimpContext      *context,
+                                              gdouble            axis,
+                                              gboolean           flip_result);
+static void       gimp_channel_rotate        (GimpItem          *item,
+                                              GimpContext       *context,
+                                              GimpRotationType   flip_type,
+                                              gdouble            center_x,
+                                              gdouble            center_y,
+                                              gboolean           flip_result);
+static void       gimp_channel_transform     (GimpItem          *item,
+                                              GimpContext       *context,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
-                                              gint              recursion_level,
+                                              gint               recursion_level,
                                               GimpTransformResize clip_result,
-                                              GimpProgress     *progress);
-static gboolean   gimp_channel_stroke        (GimpItem         *item,
-                                              GimpDrawable     *drawable,
-                                              GimpStrokeDesc   *stroke_desc,
-                                              GimpProgress     *progress,
-                                              GError          **error);
+                                              GimpProgress      *progress);
+static gboolean   gimp_channel_stroke        (GimpItem          *item,
+                                              GimpDrawable      *drawable,
+                                              GimpStrokeOptions *stroke_options,
+                                              GimpProgress      *progress,
+                                              GError           **error);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
 
-static void      gimp_channel_apply_region   (GimpDrawable     *drawable,
-                                              PixelRegion      *src2PR,
-                                              gboolean          push_undo,
-                                              const gchar      *undo_desc,
-                                              gdouble           opacity,
+static void      gimp_channel_apply_region   (GimpDrawable      *drawable,
+                                              PixelRegion       *src2PR,
+                                              gboolean           push_undo,
+                                              const gchar       *undo_desc,
+                                              gdouble            opacity,
                                               GimpLayerModeEffects  mode,
-                                              TileManager      *src1_tiles,
-                                              gint              x,
-                                              gint              y);
-static void      gimp_channel_replace_region (GimpDrawable     *drawable,
-                                              PixelRegion      *src2PR,
-                                              gboolean          push_undo,
-                                              const gchar      *undo_desc,
-                                              gdouble           opacity,
-                                              PixelRegion      *maskPR,
-                                              gint              x,
-                                              gint              y);
-static void      gimp_channel_set_tiles      (GimpDrawable     *drawable,
-                                              gboolean          push_undo,
-                                              const gchar      *undo_desc,
-                                              TileManager      *tiles,
-                                              GimpImageType     type,
-                                              gint              offset_x,
-                                              gint              offset_y);
-static GeglNode * gimp_channel_get_node      (GimpDrawable     *drawable);
-static void      gimp_channel_swap_pixels    (GimpDrawable     *drawable,
-                                              TileManager      *tiles,
-                                              gboolean          sparse,
-                                              gint              x,
-                                              gint              y,
-                                              gint              width,
-                                              gint              height);
+                                              TileManager       *src1_tiles,
+                                              gint               x,
+                                              gint               y);
+static void      gimp_channel_replace_region (GimpDrawable      *drawable,
+                                              PixelRegion       *src2PR,
+                                              gboolean           push_undo,
+                                              const gchar       *undo_desc,
+                                              gdouble            opacity,
+                                              PixelRegion        *maskPR,
+                                              gint               x,
+                                              gint               y);
+static void      gimp_channel_set_tiles      (GimpDrawable      *drawable,
+                                              gboolean           push_undo,
+                                              const gchar       *undo_desc,
+                                              TileManager       *tiles,
+                                              GimpImageType      type,
+                                              gint               offset_x,
+                                              gint               offset_y);
+static GeglNode * gimp_channel_get_node      (GimpDrawable      *drawable);
+static void      gimp_channel_swap_pixels    (GimpDrawable      *drawable,
+                                              TileManager       *tiles,
+                                              gboolean           sparse,
+                                              gint               x,
+                                              gint               y,
+                                              gint               width,
+                                              gint               height);
 
-static gint      gimp_channel_get_opacity_at (GimpPickable     *pickable,
-                                              gint              x,
-                                              gint              y);
+static gint      gimp_channel_get_opacity_at (GimpPickable      *pickable,
+                                              gint               x,
+                                              gint               y);
 
-static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
-                                              const BoundSeg  **segs_in,
-                                              const BoundSeg  **segs_out,
-                                              gint             *num_segs_in,
-                                              gint             *num_segs_out,
-                                              gint              x1,
-                                              gint              y1,
-                                              gint              x2,
-                                              gint              y2);
-static gboolean   gimp_channel_real_bounds   (GimpChannel      *channel,
-                                              gint             *x1,
-                                              gint             *y1,
-                                              gint             *x2,
-                                              gint             *y2);
-static gboolean   gimp_channel_real_is_empty (GimpChannel      *channel);
-static void       gimp_channel_real_feather  (GimpChannel      *channel,
-                                              gdouble           radius_x,
-                                              gdouble           radius_y,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_sharpen  (GimpChannel      *channel,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_clear    (GimpChannel      *channel,
-                                              const gchar      *undo_desc,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_all      (GimpChannel      *channel,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_invert   (GimpChannel      *channel,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_border   (GimpChannel      *channel,
-                                              gint              radius_x,
-                                              gint              radius_y,
-                                              gboolean          feather,
-                                              gboolean          edge_lock,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_grow     (GimpChannel      *channel,
-                                              gint              radius_x,
-                                              gint              radius_y,
-                                              gboolean          push_undo);
-static void       gimp_channel_real_shrink   (GimpChannel      *channel,
-                                              gint              radius_x,
-                                              gint              radius_y,
-                                              gboolean          edge_lock,
-                                              gboolean          push_undo);
+static gboolean   gimp_channel_real_boundary (GimpChannel       *channel,
+                                              const BoundSeg   **segs_in,
+                                              const BoundSeg   **segs_out,
+                                              gint              *num_segs_in,
+                                              gint              *num_segs_out,
+                                              gint               x1,
+                                              gint               y1,
+                                              gint               x2,
+                                              gint               y2);
+static gboolean   gimp_channel_real_bounds   (GimpChannel       *channel,
+                                              gint              *x1,
+                                              gint              *y1,
+                                              gint              *x2,
+                                              gint              *y2);
+static gboolean   gimp_channel_real_is_empty (GimpChannel       *channel);
+static void       gimp_channel_real_feather  (GimpChannel       *channel,
+                                              gdouble            radius_x,
+                                              gdouble            radius_y,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_sharpen  (GimpChannel       *channel,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_clear    (GimpChannel       *channel,
+                                              const gchar       *undo_desc,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_all      (GimpChannel       *channel,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_invert   (GimpChannel       *channel,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_border   (GimpChannel       *channel,
+                                              gint               radius_x,
+                                              gint               radius_y,
+                                              gboolean           feather,
+                                              gboolean           edge_lock,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_grow     (GimpChannel       *channel,
+                                              gint               radius_x,
+                                              gint               radius_y,
+                                              gboolean           push_undo);
+static void       gimp_channel_real_shrink   (GimpChannel       *channel,
+                                              gint               radius_x,
+                                              gint               radius_y,
+                                              gboolean           edge_lock,
+                                              gboolean           push_undo);
 
-static void       gimp_channel_validate_tile (TileManager      *tm,
-                                              Tile             *tile);
+static void       gimp_channel_validate_tile (TileManager       *tm,
+                                              Tile              *tile);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
@@ -696,11 +696,11 @@ gimp_channel_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_channel_stroke (GimpItem        *item,
-                     GimpDrawable    *drawable,
-                     GimpStrokeDesc  *stroke_desc,
-                     GimpProgress    *progress,
-                     GError         **error)
+gimp_channel_stroke (GimpItem           *item,
+                     GimpDrawable       *drawable,
+                     GimpStrokeOptions  *stroke_options,
+                     GimpProgress       *progress,
+                     GError            **error)
 
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
@@ -722,11 +722,11 @@ gimp_channel_stroke (GimpItem        *item,
 
   gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
 
-  switch (stroke_desc->method)
+  switch (stroke_options->method)
     {
     case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_boundary (drawable,
-                                     stroke_desc->stroke_options,
+                                     stroke_options,
                                      segs_in, n_segs_in,
                                      offset_x, offset_y);
       retval = TRUE;
@@ -734,13 +734,16 @@ gimp_channel_stroke (GimpItem        *item,
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
       {
+        GimpPaintInfo *paint_info;
         GimpPaintCore *core;
 
-        core = g_object_new (stroke_desc->paint_info->paint_type, NULL);
+        paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
+
+        core = g_object_new (paint_info->paint_type, NULL);
 
         retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                                  stroke_desc->paint_options,
-                                                  stroke_desc->emulate_dynamics,
+                                                  stroke_options->paint_options,
+                                                  stroke_options->emulate_dynamics,
                                                   segs_in, n_segs_in,
                                                   offset_x, offset_y,
                                                   error);

@@ -110,7 +110,7 @@ struct _GimpItemClass
                                GimpProgress           *progress);
   gboolean   (* stroke)       (GimpItem               *item,
                                GimpDrawable           *drawable,
-                               GimpStrokeDesc         *stroke_desc,
+                               GimpStrokeOptions      *stroke_options,
                                GimpProgress           *progress,
                                GError                **error);
 
@@ -213,7 +213,7 @@ void            gimp_item_transform        (GimpItem           *item,
 gboolean        gimp_item_stroke           (GimpItem           *item,
                                             GimpDrawable       *drawable,
                                             GimpContext        *context,
-                                            GimpStrokeDesc     *stroke_desc,
+                                            GimpStrokeOptions  *stroke_options,
                                             gboolean            use_default_values,
                                             GimpProgress       *progress,
                                             GError            **error);

@@ -40,7 +40,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
-#include "gimpstrokedesc.h"
+#include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
 
@@ -1004,13 +1004,13 @@ gimp_item_transform (GimpItem               *item,
 }
 
 gboolean
-gimp_item_stroke (GimpItem        *item,
-                  GimpDrawable    *drawable,
-                  GimpContext     *context,
-                  GimpStrokeDesc  *stroke_desc,
-                  gboolean         use_default_values,
-                  GimpProgress    *progress,
-                  GError         **error)
+gimp_item_stroke (GimpItem          *item,
+                  GimpDrawable      *drawable,
+                  GimpContext       *context,
+                  GimpStrokeOptions *stroke_options,
+                  gboolean           use_default_values,
+                  GimpProgress      *progress,
+                  GError           **error)
 {
   GimpItemClass *item_class;
   gboolean       retval = FALSE;
@@ -1020,7 +1020,7 @@ gimp_item_stroke (GimpItem        *item,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (GIMP_IS_STROKE_DESC (stroke_desc), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (stroke_options), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -1030,16 +1030,17 @@ gimp_item_stroke (GimpItem        *item,
     {
       GimpImage *image = gimp_item_get_image (item);
 
-      gimp_stroke_desc_prepare (stroke_desc, context, use_default_values);
+      gimp_stroke_options_prepare (stroke_options, context, use_default_values);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    item_class->stroke_desc);
 
-      retval = item_class->stroke (item, drawable, stroke_desc, progress, error);
+      retval = item_class->stroke (item, drawable, stroke_options, progress,
+                                   error);
 
       gimp_image_undo_group_end (image);
 
-      gimp_stroke_desc_finish (stroke_desc);
+      gimp_stroke_options_finish (stroke_options);
     }
 
   return retval;

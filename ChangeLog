@@ -1,3 +1,28 @@
+2008-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpstrokedesc.[ch]: remove this mis-engineered
+	abstraction...
+
+	* app/core/gimpstrokeoptions.[ch]: ...and add its properties and
+	API here.
+
+	* app/core/gimpitem.[ch]: GimpItem::stroke() take a
+	GimpStrokeOptions instead of a GimpStrokeDesc.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpselection.c
+	* app/vectors/gimpvectors.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/dialogs/stroke-dialog.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly.
+
+	* app/pdb/edit-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c (gimp_dialog_factories_toggle):

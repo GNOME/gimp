@@ -38,34 +38,48 @@ typedef struct _GimpStrokeOptionsClass GimpStrokeOptionsClass;
 
 struct _GimpStrokeOptions
 {
-  GimpFillOptions  parent_instance;
+  GimpFillOptions   parent_instance;
 
-  gdouble          width;
-  GimpUnit         unit;
+  GimpStrokeMethod  method;
 
-  GimpCapStyle     cap_style;
-  GimpJoinStyle    join_style;
+  /*  options for medhod == LIBART  */
+  gdouble           width;
+  GimpUnit          unit;
 
-  gdouble          miter_limit;
+  GimpCapStyle      cap_style;
+  GimpJoinStyle     join_style;
 
-  gdouble          dash_offset;
-  GArray          *dash_info;
+  gdouble           miter_limit;
+
+  gdouble           dash_offset;
+  GArray           *dash_info;
+
+  /*  options for method == PAINT_TOOL  */
+  GimpPaintOptions *paint_options;
+  gboolean          emulate_dynamics;
 };
 
 struct _GimpStrokeOptionsClass
 {
-  GimpFillOptionsClass parent_class;
+  GimpFillOptionsClass  parent_class;
 
   void (* dash_info_changed) (GimpStrokeOptions *stroke_options,
                               GimpDashPreset     preset);
 };
 
 
-GType  gimp_stroke_options_get_type          (void) G_GNUC_CONST;
+GType               gimp_stroke_options_get_type          (void) G_GNUC_CONST;
 
-void   gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
-                                              GimpDashPreset     preset,
-                                              GArray            *pattern);
+GimpStrokeOptions * gimp_stroke_options_new               (Gimp              *gimp,
+                                                           GimpContext       *context);
+void                gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
+                                                           GimpDashPreset     preset,
+                                                           GArray            *pattern);
+
+void                gimp_stroke_options_prepare           (GimpStrokeOptions *options,
+                                                           GimpContext       *context,
+                                                           gboolean           use_default_values);
+void                gimp_stroke_options_finish            (GimpStrokeOptions *options);
 
 
 #endif /* __GIMP_STROKE_OPTIONS_H__ */

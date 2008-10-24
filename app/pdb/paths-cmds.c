@@ -32,7 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
-#include "core/gimpstrokedesc.h"
+#include "core/gimpstrokeoptions.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors-compat.h"
@@ -333,15 +333,17 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
 
       if (vectors && drawable)
         {
-          GimpStrokeDesc *desc = gimp_stroke_desc_new (gimp, context);
+          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context);
 
-          g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+          g_object_set (options,
+                        "method", GIMP_STROKE_METHOD_PAINT_CORE,
+                        NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, desc, TRUE, progress,
+                                      drawable, context, options, TRUE, progress,
                                       error);
 
-          g_object_unref (desc);
+          g_object_unref (options);
         }
       else
         success = FALSE;

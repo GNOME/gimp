@@ -260,7 +260,7 @@ sub path_stroke_current {
     );
 
     %invoke = (
-	headers => [ qw("core/gimpstrokedesc.h") ],
+	headers => [ qw("core/gimpstrokeoptions.h") ],
 	code    => <<'CODE'
 {
   GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
@@ -268,15 +268,17 @@ sub path_stroke_current {
 
   if (vectors && drawable)
     {
-      GimpStrokeDesc *desc = gimp_stroke_desc_new (gimp, context);
+      GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context);
 
-      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+      g_object_set (options,
+                    "method", GIMP_STROKE_METHOD_PAINT_CORE,
+                    NULL);
 
       success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                  drawable, context, desc, TRUE, progress,
+                                  drawable, context, options, TRUE, progress,
                                   error);
 
-      g_object_unref (desc);
+      g_object_unref (options);
     }
   else
     success = FALSE;

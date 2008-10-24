@@ -32,7 +32,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
-#include "core/gimpstrokedesc.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
@@ -57,7 +56,7 @@ static void  stroke_dialog_response            (GtkWidget         *widget,
 static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
                                                 GimpViewable      *viewable,
                                                 gpointer           insert_data,
-                                                GimpStrokeDesc    *desc);
+                                                GimpStrokeOptions *options);
 
 
 /*  public function  */
@@ -70,16 +69,16 @@ stroke_dialog_new (GimpItem    *item,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
-  GimpStrokeDesc *desc;
-  GimpStrokeDesc *saved_desc;
-  GimpImage      *image;
-  GtkWidget      *dialog;
-  GtkWidget      *main_vbox;
-  GtkWidget      *radio_box;
-  GtkWidget      *libart_radio;
-  GtkWidget      *paint_radio;
-  GSList         *group;
-  GtkWidget      *frame;
+  GimpStrokeOptions *options;
+  GimpStrokeOptions *saved_options;
+  GimpImage         *image;
+  GtkWidget         *dialog;
+  GtkWidget         *main_vbox;
+  GtkWidget         *radio_box;
+  GtkWidget         *libart_radio;
+  GtkWidget         *paint_radio;
+  GSList            *group;
+  GtkWidget         *frame;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -89,13 +88,13 @@ stroke_dialog_new (GimpItem    *item,
 
   image = gimp_item_get_image (item);
 
-  desc = gimp_stroke_desc_new (context->gimp, context);
+  options = gimp_stroke_options_new (context->gimp, context);
 
-  saved_desc = g_object_get_data (G_OBJECT (context->gimp),
-                                  "saved-stroke-desc");
+  saved_options = g_object_get_data (G_OBJECT (context->gimp),
+                                     "saved-stroke-options");
 
-  if (saved_desc)
-    gimp_config_sync (G_OBJECT (saved_desc), G_OBJECT (desc), 0);
+  if (saved_options)
+    gimp_config_sync (G_OBJECT (saved_options), G_OBJECT (options), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
@@ -124,7 +123,7 @@ stroke_dialog_new (GimpItem    *item,
                     dialog);
 
   g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
-  g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-desc", desc,
+  g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-options", options,
                           (GDestroyNotify) g_object_unref);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
@@ -132,7 +131,8 @@ stroke_dialog_new (GimpItem    *item,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (desc), "method", -1, -1);
+  radio_box = gimp_prop_enum_radio_box_new (G_OBJECT (options), "method",
+                                            -1, -1);
 
   group = gtk_radio_button_get_group (g_object_get_data (G_OBJECT (radio_box),
                                                          "radio-button"));
@@ -181,12 +181,12 @@ stroke_dialog_new (GimpItem    *item,
 
     gimp_image_get_resolution (image, &xres, &yres);
 
-    stroke_editor = gimp_stroke_editor_new (desc->stroke_options, yres);
+    stroke_editor = gimp_stroke_editor_new (options, yres);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
     gtk_widget_set_sensitive (stroke_editor,
-                              desc->method == GIMP_STROKE_METHOD_LIBART);
+                              options->method == GIMP_STROKE_METHOD_LIBART);
     g_object_set_data (G_OBJECT (libart_radio), "set_sensitive", stroke_editor);
   }
 
@@ -216,7 +216,7 @@ stroke_dialog_new (GimpItem    *item,
     gtk_widget_show (vbox);
 
     gtk_widget_set_sensitive (vbox,
-                              desc->method == GIMP_STROKE_METHOD_PAINT_CORE);
+                              options->method == GIMP_STROKE_METHOD_PAINT_CORE);
     g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", vbox);
 
     hbox = gtk_hbox_new (FALSE, 6);
@@ -231,18 +231,17 @@ stroke_dialog_new (GimpItem    *item,
                                           context,
                                           16, 0);
     gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
-                                     GIMP_VIEWABLE (desc->paint_info));
+                                     GIMP_VIEWABLE (GIMP_CONTEXT (options)->paint_info));
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
     g_signal_connect (combo, "select-item",
                       G_CALLBACK (stroke_dialog_paint_info_selected),
-                      desc);
-
+                      options);
 
     g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", combo);
 
-    button = gimp_prop_check_button_new (G_OBJECT (desc),
+    button = gimp_prop_check_button_new (G_OBJECT (options),
                                          "emulate-brush-dynamics",
                                          _("_Emulate brush dynamics"));
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -260,13 +259,13 @@ stroke_dialog_response (GtkWidget  *widget,
                         gint        response_id,
                         GtkWidget  *dialog)
 {
-  GimpStrokeDesc *desc;
-  GimpItem       *item;
-  GimpImage      *image;
-  GimpContext    *context;
+  GimpStrokeOptions *options;
+  GimpItem          *item;
+  GimpImage         *image;
+  GimpContext       *context;
 
   item = g_object_get_data (G_OBJECT (dialog), "gimp-item");
-  desc = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-desc");
+  options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
 
   image   = gimp_item_get_image (item);
   context = GIMP_VIEWABLE_DIALOG (dialog)->context;
@@ -279,7 +278,7 @@ stroke_dialog_response (GtkWidget  *widget,
         GtkWidget    *combo     = g_object_get_data (G_OBJECT (dialog),
                                                      "gimp-tool-menu");;
 
-        gimp_config_reset (GIMP_CONFIG (desc));
+        gimp_config_reset (GIMP_CONFIG (options));
 
         gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                          GIMP_VIEWABLE (tool_info->paint_info));
@@ -289,9 +288,9 @@ stroke_dialog_response (GtkWidget  *widget,
 
     case GTK_RESPONSE_OK:
       {
-        GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
-        GimpStrokeDesc *saved_desc;
-        GError         *error    = NULL;
+        GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
+        GimpStrokeOptions *saved_options;
+        GError            *error    = NULL;
 
         if (! drawable)
           {
@@ -302,21 +301,21 @@ stroke_dialog_response (GtkWidget  *widget,
             return;
           }
 
-        saved_desc = g_object_get_data (G_OBJECT (context->gimp),
-                                        "saved-stroke-desc");
+        saved_options = g_object_get_data (G_OBJECT (context->gimp),
+                                           "saved-stroke-options");
 
-        if (saved_desc)
-          g_object_ref (saved_desc);
+        if (saved_options)
+          g_object_ref (saved_options);
         else
-          saved_desc = gimp_stroke_desc_new (context->gimp, context);
+          saved_options = gimp_stroke_options_new (context->gimp, context);
 
-        gimp_config_sync (G_OBJECT (desc), G_OBJECT (saved_desc), 0);
+        gimp_config_sync (G_OBJECT (options), G_OBJECT (saved_options), 0);
 
-        g_object_set_data_full (G_OBJECT (context->gimp), "saved-stroke-desc",
-                                saved_desc,
+        g_object_set_data_full (G_OBJECT (context->gimp), "saved-stroke-options",
+                                saved_options,
                                 (GDestroyNotify) g_object_unref);
 
-        if (! gimp_item_stroke (item, drawable, context, desc, FALSE, NULL,
+        if (! gimp_item_stroke (item, drawable, context, options, FALSE, NULL,
                                 &error))
           {
             gimp_message (context->gimp, G_OBJECT (widget),
@@ -340,7 +339,7 @@ static void
 stroke_dialog_paint_info_selected (GimpContainerView *view,
                                    GimpViewable      *viewable,
                                    gpointer           insert_data,
-                                   GimpStrokeDesc    *desc)
+                                   GimpStrokeOptions *options)
 {
-  g_object_set (desc, "paint-info", viewable, NULL);
+  g_object_set (options, "paint-info", viewable, NULL);
 }

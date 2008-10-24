@@ -3,6 +3,7 @@
  *
  * gimpstrokeoptions.c
  * Copyright (C) 2003 Simon Budig
+ * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +29,16 @@
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpdashpattern.h"
 #include "gimpmarshal.h"
+#include "gimppaintinfo.h"
 #include "gimpstrokeoptions.h"
+
+#include "paint/gimppaintoptions.h"
 
 #include "gimp-intl.h"
 
@@ -38,6 +46,9 @@
 enum
 {
   PROP_0,
+
+  PROP_METHOD,
+
   PROP_STYLE,
   PROP_WIDTH,
   PROP_UNIT,
@@ -47,7 +58,10 @@ enum
   PROP_ANTIALIAS,
   PROP_DASH_UNIT,
   PROP_DASH_OFFSET,
-  PROP_DASH_INFO
+  PROP_DASH_INFO,
+
+  PROP_PAINT_OPTIONS,
+  PROP_EMULATE_DYNAMICS
 };
 
 enum
@@ -57,17 +71,28 @@ enum
 };
 
 
-static void   gimp_stroke_options_set_property  (GObject      *object,
-                                                 guint         property_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
-static void   gimp_stroke_options_get_property  (GObject      *object,
-                                                 guint         property_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
+static void   gimp_stroke_options_config_iface_init (gpointer      iface,
+                                                     gpointer      iface_data);
+
+static void   gimp_stroke_options_finalize          (GObject      *object);
+static void   gimp_stroke_options_set_property      (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void   gimp_stroke_options_get_property      (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
+
+static GimpConfig * gimp_stroke_options_duplicate   (GimpConfig   *config);
 
 
-G_DEFINE_TYPE (GimpStrokeOptions, gimp_stroke_options, GIMP_TYPE_FILL_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpStrokeOptions, gimp_stroke_options,
+                         GIMP_TYPE_FILL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_stroke_options_config_iface_init))
+
+#define parent_class gimp_stroke_options_parent_class
 
 static guint stroke_options_signals[LAST_SIGNAL] = { 0 };
 
@@ -78,6 +103,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec   *array_spec;
 
+  object_class->finalize     = gimp_stroke_options_finalize;
   object_class->set_property = gimp_stroke_options_set_property;
   object_class->get_property = gimp_stroke_options_get_property;
 
@@ -93,22 +119,32 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DASH_PRESET);
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_METHOD,
+                                 "method", NULL,
+                                 GIMP_TYPE_STROKE_METHOD,
+                                 GIMP_STROKE_METHOD_LIBART,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
                                    "width", NULL,
                                    0.0, 2000.0, 6.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
                                  "unit", NULL,
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
                                  "cap-style", NULL,
                                  GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JOIN_STYLE,
                                  "join-style", NULL,
                                  GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER_LIMIT,
                                    "miter-limit",
                                    _("Convert a mitered join to a bevelled "
@@ -117,6 +153,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                      "line-width from the actual join point."),
                                    0.0, 100.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
                                    "dash-offset", NULL,
                                    0.0, 2000.0, 0.0,
@@ -130,11 +167,44 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                                              array_spec,
                                                              GIMP_PARAM_STATIC_STRINGS |
                                                              GIMP_CONFIG_PARAM_FLAGS));
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
+                                   "paint-options", NULL,
+                                   GIMP_TYPE_PAINT_OPTIONS,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EMULATE_DYNAMICS,
+                                    "emulate-brush-dynamics", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
+gimp_stroke_options_config_iface_init (gpointer  iface,
+                                       gpointer  iface_data)
+{
+  GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
+
+  config_iface->duplicate = gimp_stroke_options_duplicate;
 }
 
 static void
 gimp_stroke_options_init (GimpStrokeOptions *options)
 {
+}
+
+static void
+gimp_stroke_options_finalize (GObject *object)
+{
+  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
+
+  if (options->paint_options)
+    {
+      g_object_unref (options->paint_options);
+      options->paint_options = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -147,6 +217,10 @@ gimp_stroke_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_METHOD:
+      options->method = g_value_get_enum (value);
+      break;
+
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
       break;
@@ -176,6 +250,15 @@ gimp_stroke_options_set_property (GObject      *object,
       }
       break;
 
+    case PROP_PAINT_OPTIONS:
+      if (options->paint_options)
+        g_object_unref (options->paint_options);
+      options->paint_options = g_value_dup_object (value);
+      break;
+    case PROP_EMULATE_DYNAMICS:
+      options->emulate_dynamics = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -192,6 +275,10 @@ gimp_stroke_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_METHOD:
+      g_value_set_enum (value, options->method);
+      break;
+
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
       break;
@@ -219,10 +306,73 @@ gimp_stroke_options_get_property (GObject    *object,
       }
       break;
 
+    case PROP_PAINT_OPTIONS:
+      g_value_set_object (value, options->paint_options);
+      break;
+    case PROP_EMULATE_DYNAMICS:
+      g_value_set_boolean (value, options->emulate_dynamics);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GimpConfig *
+gimp_stroke_options_duplicate (GimpConfig *config)
+{
+  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (config);
+  GimpStrokeOptions *new_options;
+
+  new_options = gimp_stroke_options_new (GIMP_CONTEXT (options)->gimp,
+                                         GIMP_CONTEXT (options));
+
+  if (options->paint_options)
+    {
+      GObject *paint_options;
+
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (options->paint_options));
+      g_object_set (new_options, "paint-options", paint_options, NULL);
+      g_object_unref (paint_options);
+    }
+
+  return GIMP_CONFIG (new_options);
+}
+
+
+/*  public functions  */
+
+GimpStrokeOptions *
+gimp_stroke_options_new (Gimp        *gimp,
+                         GimpContext *context)
+{
+  GimpPaintInfo     *paint_info = NULL;
+  GimpStrokeOptions *options;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+
+  if (context)
+    paint_info = gimp_context_get_paint_info (context);
+
+  if (! paint_info)
+    paint_info = gimp_paint_info_get_standard (gimp);
+
+  options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
+                          "gimp",       gimp,
+                          "paint-info", paint_info,
+                          NULL);
+
+  gimp_context_define_properties (GIMP_CONTEXT (options),
+                                  GIMP_CONTEXT_FOREGROUND_MASK |
+                                  GIMP_CONTEXT_PATTERN_MASK,
+                                  FALSE);
+
+  if (context)
+    gimp_context_set_parent (GIMP_CONTEXT (options), context);
+
+  return options;
 }
 
 /**
@@ -256,4 +406,80 @@ gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
 
   g_signal_emit (options, stroke_options_signals [DASH_INFO_CHANGED], 0,
                  preset);
+}
+
+void
+gimp_stroke_options_prepare (GimpStrokeOptions *options,
+                             GimpContext       *context,
+                             gboolean           use_default_values)
+{
+  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  switch (options->method)
+    {
+    case GIMP_STROKE_METHOD_LIBART:
+      break;
+
+    case GIMP_STROKE_METHOD_PAINT_CORE:
+      {
+        GimpPaintInfo    *paint_info = GIMP_CONTEXT (options)->paint_info;
+        GimpPaintOptions *paint_options;
+
+        if (use_default_values)
+          {
+            paint_options = gimp_paint_options_new (paint_info);
+
+            /*  undefine the paint-relevant context properties and get them
+             *  from the passed context
+             */
+            gimp_context_define_properties (GIMP_CONTEXT (paint_options),
+                                            GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                            FALSE);
+            gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
+          }
+        else
+          {
+            GimpCoreConfig      *config       = context->gimp->config;
+            GimpContextPropMask  global_props = 0;
+
+            paint_options =
+              gimp_config_duplicate (GIMP_CONFIG (paint_info->paint_options));
+
+            /*  FG and BG are always shared between all tools  */
+            global_props |= GIMP_CONTEXT_FOREGROUND_MASK;
+            global_props |= GIMP_CONTEXT_BACKGROUND_MASK;
+
+            if (config->global_brush)
+              global_props |= GIMP_CONTEXT_BRUSH_MASK;
+            if (config->global_pattern)
+              global_props |= GIMP_CONTEXT_PATTERN_MASK;
+            if (config->global_palette)
+              global_props |= GIMP_CONTEXT_PALETTE_MASK;
+            if (config->global_gradient)
+              global_props |= GIMP_CONTEXT_GRADIENT_MASK;
+            if (config->global_font)
+              global_props |= GIMP_CONTEXT_FONT_MASK;
+
+            gimp_context_copy_properties (context,
+                                          GIMP_CONTEXT (paint_options),
+                                          global_props);
+          }
+
+        g_object_set (options, "paint-options", paint_options, NULL);
+        g_object_unref (paint_options);
+      }
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
+}
+
+void
+gimp_stroke_options_finish (GimpStrokeOptions *options)
+{
+  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+
+  g_object_set (options, "paint-options", NULL, NULL);
 }

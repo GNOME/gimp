@@ -44,85 +44,85 @@
 #include "gimp-intl.h"
 
 
-static gboolean   gimp_selection_is_attached   (GimpItem        *item);
-static void       gimp_selection_translate     (GimpItem        *item,
-                                                gint             offset_x,
-                                                gint             offset_y,
-                                                gboolean         push_undo);
-static void       gimp_selection_scale         (GimpItem        *item,
-                                                gint             new_width,
-                                                gint             new_height,
-                                                gint             new_offset_x,
-                                                gint             new_offset_y,
+static gboolean   gimp_selection_is_attached   (GimpItem          *item);
+static void       gimp_selection_translate     (GimpItem          *item,
+                                                gint               offset_x,
+                                                gint               offset_y,
+                                                gboolean           push_undo);
+static void       gimp_selection_scale         (GimpItem          *item,
+                                                gint               new_width,
+                                                gint               new_height,
+                                                gint               new_offset_x,
+                                                gint               new_offset_y,
                                                 GimpInterpolationType interp_type,
-                                                GimpProgress    *progress);
-static void       gimp_selection_resize        (GimpItem        *item,
-                                                GimpContext     *context,
-                                                gint             new_width,
-                                                gint             new_height,
-                                                gint             off_x,
-                                                gint             off_y);
-static void       gimp_selection_flip          (GimpItem        *item,
-                                                GimpContext     *context,
+                                                GimpProgress      *progress);
+static void       gimp_selection_resize        (GimpItem          *item,
+                                                GimpContext       *context,
+                                                gint               new_width,
+                                                gint               new_height,
+                                                gint               off_x,
+                                                gint               off_y);
+static void       gimp_selection_flip          (GimpItem          *item,
+                                                GimpContext       *context,
                                                 GimpOrientationType flip_type,
-                                                gdouble          axis,
-                                                gboolean         clip_result);
-static void       gimp_selection_rotate        (GimpItem        *item,
-                                                GimpContext     *context,
-                                                GimpRotationType rotation_type,
-                                                gdouble          center_x,
-                                                gdouble          center_y,
-                                                gboolean         clip_result);
-static gboolean   gimp_selection_stroke        (GimpItem        *item,
-                                                GimpDrawable    *drawable,
-                                                GimpStrokeDesc  *stroke_desc,
-                                                GimpProgress    *progress,
-                                                GError         **error);
-static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
+                                                gdouble            axis,
+                                                gboolean           clip_result);
+static void       gimp_selection_rotate        (GimpItem          *item,
+                                                GimpContext       *context,
+                                                GimpRotationType   rotation_type,
+                                                gdouble            center_x,
+                                                gdouble            center_y,
+                                                gboolean           clip_result);
+static gboolean   gimp_selection_stroke        (GimpItem          *item,
+                                                GimpDrawable      *drawable,
+                                                GimpStrokeOptions *stroke_options,
+                                                GimpProgress      *progress,
+                                                GError           **error);
+static void gimp_selection_invalidate_boundary (GimpDrawable      *drawable);
 
-static gboolean   gimp_selection_boundary      (GimpChannel     *channel,
-                                                const BoundSeg **segs_in,
-                                                const BoundSeg **segs_out,
-                                                gint            *num_segs_in,
-                                                gint            *num_segs_out,
-                                                gint             x1,
-                                                gint             y1,
-                                                gint             x2,
-                                                gint             y2);
-static gboolean   gimp_selection_bounds        (GimpChannel     *channel,
-                                                gint            *x1,
-                                                gint            *y1,
-                                                gint            *x2,
-                                                gint            *y2);
-static gboolean   gimp_selection_is_empty      (GimpChannel     *channel);
-static void       gimp_selection_feather       (GimpChannel     *channel,
-                                                gdouble          radius_x,
-                                                gdouble          radius_y,
-                                                gboolean         push_undo);
-static void       gimp_selection_sharpen       (GimpChannel     *channel,
-                                                gboolean         push_undo);
-static void       gimp_selection_clear         (GimpChannel     *channel,
-                                                const gchar     *undo_desc,
-                                                gboolean         push_undo);
-static void       gimp_selection_all           (GimpChannel     *channel,
-                                                gboolean         push_undo);
-static void       gimp_selection_invert        (GimpChannel     *channel,
-                                                gboolean         push_undo);
-static void       gimp_selection_border        (GimpChannel     *channel,
-                                                gint             radius_x,
-                                                gint             radius_y,
-                                                gboolean         feather,
-                                                gboolean         edge_lock,
-                                                gboolean         push_undo);
-static void       gimp_selection_grow          (GimpChannel     *channel,
-                                                gint             radius_x,
-                                                gint             radius_y,
-                                                gboolean         push_undo);
-static void       gimp_selection_shrink        (GimpChannel     *channel,
-                                                gint             radius_x,
-                                                gint             radius_y,
-                                                gboolean         edge_lock,
-                                                gboolean         push_undo);
+static gboolean   gimp_selection_boundary      (GimpChannel       *channel,
+                                                const BoundSeg   **segs_in,
+                                                const BoundSeg   **segs_out,
+                                                gint              *num_segs_in,
+                                                gint              *num_segs_out,
+                                                gint               x1,
+                                                gint               y1,
+                                                gint               x2,
+                                                gint               y2);
+static gboolean   gimp_selection_bounds        (GimpChannel       *channel,
+                                                gint              *x1,
+                                                gint              *y1,
+                                                gint              *x2,
+                                                gint              *y2);
+static gboolean   gimp_selection_is_empty      (GimpChannel       *channel);
+static void       gimp_selection_feather       (GimpChannel       *channel,
+                                                gdouble            radius_x,
+                                                gdouble            radius_y,
+                                                gboolean           push_undo);
+static void       gimp_selection_sharpen       (GimpChannel       *channel,
+                                                gboolean           push_undo);
+static void       gimp_selection_clear         (GimpChannel       *channel,
+                                                const gchar       *undo_desc,
+                                                gboolean           push_undo);
+static void       gimp_selection_all           (GimpChannel       *channel,
+                                                gboolean           push_undo);
+static void       gimp_selection_invert        (GimpChannel       *channel,
+                                                gboolean           push_undo);
+static void       gimp_selection_border        (GimpChannel       *channel,
+                                                gint               radius_x,
+                                                gint               radius_y,
+                                                gboolean           feather,
+                                                gboolean           edge_lock,
+                                                gboolean           push_undo);
+static void       gimp_selection_grow          (GimpChannel       *channel,
+                                                gint               radius_x,
+                                                gint               radius_y,
+                                                gboolean           push_undo);
+static void       gimp_selection_shrink        (GimpChannel       *channel,
+                                                gint               radius_x,
+                                                gint               radius_y,
+                                                gboolean           edge_lock,
+                                                gboolean           push_undo);
 
 
 G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
@@ -253,11 +253,11 @@ gimp_selection_rotate (GimpItem         *item,
 }
 
 static gboolean
-gimp_selection_stroke (GimpItem        *item,
-                       GimpDrawable    *drawable,
-                       GimpStrokeDesc  *stroke_desc,
-                       GimpProgress    *progress,
-                       GError         **error)
+gimp_selection_stroke (GimpItem           *item,
+                       GimpDrawable       *drawable,
+                       GimpStrokeOptions  *stroke_options,
+                       GimpProgress       *progress,
+                       GError            **error)
 {
   GimpSelection  *selection = GIMP_SELECTION (item);
   const BoundSeg *dummy_in;
@@ -278,7 +278,8 @@ gimp_selection_stroke (GimpItem        *item,
 
   selection->stroking = TRUE;
 
-  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc,
+  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable,
+                                                   stroke_options,
                                                    progress, error);
 
   selection->stroking = FALSE;

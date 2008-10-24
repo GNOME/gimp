@@ -38,7 +38,7 @@
 #include "core/gimpitemundo.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
-#include "core/gimpstrokedesc.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/gimppdb.h"
@@ -394,13 +394,13 @@ void
 vectors_stroke_last_vals_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
-  GimpImage      *image;
-  GimpVectors    *vectors;
-  GimpDrawable   *drawable;
-  GimpContext    *context;
-  GtkWidget      *widget;
-  GimpStrokeDesc *desc;
-  GError         *error = NULL;
+  GimpImage         *image;
+  GimpVectors       *vectors;
+  GimpDrawable      *drawable;
+  GimpContext       *context;
+  GtkWidget         *widget;
+  GimpStrokeOptions *options;
+  GError            *error = NULL;
   return_if_no_vectors (image, vectors, data);
   return_if_no_context (context, data);
   return_if_no_widget (widget, data);
@@ -415,14 +415,14 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
     }
 
 
-  desc = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-desc");
+  options = g_object_get_data (G_OBJECT (image->gimp), "saved-stroke-options");
 
-  if (desc)
-    g_object_ref (desc);
+  if (options)
+    g_object_ref (options);
   else
-    desc = gimp_stroke_desc_new (image->gimp, context);
+    options = gimp_stroke_options_new (image->gimp, context);
 
-  if (! gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE,
+  if (! gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, options, FALSE,
                           NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -434,7 +434,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
       gimp_image_flush (image);
     }
 
-  g_object_unref (desc);
+  g_object_unref (options);
 }
 
 void
