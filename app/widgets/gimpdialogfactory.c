@@ -45,6 +45,13 @@
 #include "gimp-log.h"
 
 
+typedef enum
+{
+  GIMP_DIALOGS_SHOWN,
+  GIMP_DIALOGS_HIDDEN_EXPLICITLY,  /* user used the Tab key to hide dialogs */
+  GIMP_DIALOGS_HIDDEN_WITH_DISPLAY /* dialogs are hidden with the display   */
+} GimpDialogsState;
+
 enum
 {
   DOCK_ADDED,
@@ -103,7 +110,7 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 
 static guint factory_signals[LAST_SIGNAL] = { 0 };
 
-static gboolean dialogs_shown = TRUE;  /* FIXME */
+static GimpDialogsState dialogs_state = GIMP_DIALOGS_SHOWN;
 
 
 static void
@@ -1079,7 +1086,7 @@ gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 
   gtk_widget_hide (dialog);
 
-  if (! dialogs_shown)
+  if (dialogs_state != GIMP_DIALOGS_SHOWN)
     g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
                        GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_INVISIBLE));
 }
@@ -1122,26 +1129,57 @@ gimp_dialog_factories_session_clear (void)
                         NULL);
 }
 
-void
-gimp_dialog_factories_toggle (void)
+static void
+gimp_dialog_factories_set_state (GimpDialogsState state)
 {
   GimpDialogFactoryClass *factory_class;
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
-  if (dialogs_shown)
+  dialogs_state = state;
+
+  if (state == GIMP_DIALOGS_SHOWN)
     {
-      dialogs_shown = FALSE;
       g_hash_table_foreach (factory_class->factories,
-                            (GHFunc) gimp_dialog_factories_hide_foreach,
+                            (GHFunc) gimp_dialog_factories_show_foreach,
                             NULL);
     }
   else
     {
-      dialogs_shown = TRUE;
       g_hash_table_foreach (factory_class->factories,
-                            (GHFunc) gimp_dialog_factories_show_foreach,
+                            (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
+    }
+}
+
+void
+gimp_dialog_factories_show_with_display (void)
+{
+  if (dialogs_state == GIMP_DIALOGS_HIDDEN_WITH_DISPLAY)
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
+    }
+}
+
+void
+gimp_dialog_factories_hide_with_display (void)
+{
+  if (dialogs_state == GIMP_DIALOGS_SHOWN)
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_WITH_DISPLAY);
+    }
+}
+
+void
+gimp_dialog_factories_toggle (void)
+{
+  if (dialogs_state == GIMP_DIALOGS_SHOWN)
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_EXPLICITLY);
+    }
+  else
+    {
+      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
     }
 }
 

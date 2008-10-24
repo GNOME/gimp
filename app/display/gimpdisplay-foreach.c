@@ -227,6 +227,35 @@ gimp_displays_reconnect (Gimp      *gimp,
   g_list_free (contexts);
 }
 
+gint
+gimp_displays_get_num_visible (Gimp *gimp)
+{
+  GList *list;
+  gint   visible = 0;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDisplay *display = list->data;
+
+      if (GTK_WIDGET_DRAWABLE (display->shell))
+        {
+          GdkWindowState state = gdk_window_get_state (display->shell->window);
+
+          if ((state & (GDK_WINDOW_STATE_WITHDRAWN |
+                        GDK_WINDOW_STATE_ICONIFIED)) == 0)
+            {
+              visible++;
+            }
+        }
+    }
+
+  return visible;
+}
+
 void
 gimp_displays_set_busy (Gimp *gimp)
 {
