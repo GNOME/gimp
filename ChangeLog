@@ -1,5 +1,24 @@
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpstrokeoptions.[ch]: add "gboolean use_context_color"
+	parameter to gimp_stroke_options_new() and set the passed context
+	as parent of the new options only if it's TRUE. Also fixed the
+	GimpConfig::duplicate() implementation to really duplicate the
+	object and not just return an object containing default values.
+
+	* app/core/gimpfilloptions.[ch]: add gimp_fill_options_new().
+
+	* app/actions/select-commands.c
+	* app/dialogs/stroke-dialog.c
+	* app/actions/vectors-commands.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: pass TRUE to gimp_stroke_options_new().
+
+	* app/pdb/edit-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpfilloptions.[ch]: add non-serializable properties
 	pattern-view-type and pattern-view-size which are used only by the
 	new UI below.

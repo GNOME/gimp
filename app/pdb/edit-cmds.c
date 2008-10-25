@@ -747,7 +747,7 @@ edit_stroke_invoker (GimpProcedure      *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         {
           GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context);
+          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,
@@ -787,7 +787,7 @@ edit_stroke_vectors_invoker (GimpProcedure      *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) &&
           gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
         {
-          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context);
+          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,

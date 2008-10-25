@@ -94,6 +94,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpStrokeOptions, gimp_stroke_options,
 
 #define parent_class gimp_stroke_options_parent_class
 
+static GimpConfigInterface *parent_config_iface = NULL;
+
 static guint stroke_options_signals[LAST_SIGNAL] = { 0 };
 
 
@@ -184,6 +186,11 @@ gimp_stroke_options_config_iface_init (gpointer  iface,
                                        gpointer  iface_data)
 {
   GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
+
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  if (! parent_config_iface)
+    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
 
   config_iface->duplicate = gimp_stroke_options_duplicate;
 }
@@ -325,8 +332,7 @@ gimp_stroke_options_duplicate (GimpConfig *config)
   GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (config);
   GimpStrokeOptions *new_options;
 
-  new_options = gimp_stroke_options_new (GIMP_CONTEXT (options)->gimp,
-                                         GIMP_CONTEXT (options));
+  new_options = GIMP_STROKE_OPTIONS (parent_config_iface->duplicate (config));
 
   if (options->paint_options)
     {
@@ -345,13 +351,15 @@ gimp_stroke_options_duplicate (GimpConfig *config)
 
 GimpStrokeOptions *
 gimp_stroke_options_new (Gimp        *gimp,
-                         GimpContext *context)
+                         GimpContext *context,
+                         gboolean     use_context_color)
 {
   GimpPaintInfo     *paint_info = NULL;
   GimpStrokeOptions *options;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (use_context_color == FALSE || context != NULL, NULL);
 
   if (context)
     paint_info = gimp_context_get_paint_info (context);
@@ -364,13 +372,15 @@ gimp_stroke_options_new (Gimp        *gimp,
                           "paint-info", paint_info,
                           NULL);
 
-  gimp_context_define_properties (GIMP_CONTEXT (options),
-                                  GIMP_CONTEXT_FOREGROUND_MASK |
-                                  GIMP_CONTEXT_PATTERN_MASK,
-                                  FALSE);
+  if (use_context_color)
+    {
+      gimp_context_define_properties (GIMP_CONTEXT (options),
+                                      GIMP_CONTEXT_FOREGROUND_MASK |
+                                      GIMP_CONTEXT_PATTERN_MASK,
+                                      FALSE);
 
-  if (context)
-    gimp_context_set_parent (GIMP_CONTEXT (options), context);
+      gimp_context_set_parent (GIMP_CONTEXT (options), context);
+    }
 
   return options;
 }

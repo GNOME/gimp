@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimpfilloptions.h"
 #include "gimpviewable.h"
 
@@ -155,4 +156,17 @@ gimp_fill_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+
+/*  public functions  */
+
+GimpFillOptions *
+gimp_fill_options_new (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_new (GIMP_TYPE_FILL_OPTIONS,
+                       "gimp", gimp,
+                       NULL);
 }

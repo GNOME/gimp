@@ -420,7 +420,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   if (options)
     g_object_ref (options);
   else
-    options = gimp_stroke_options_new (image->gimp, context);
+    options = gimp_stroke_options_new (image->gimp, context, TRUE);
 
   if (! gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, options, FALSE,
                           NULL, &error))

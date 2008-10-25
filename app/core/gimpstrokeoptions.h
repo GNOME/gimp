@@ -71,7 +71,8 @@ struct _GimpStrokeOptionsClass
 GType               gimp_stroke_options_get_type          (void) G_GNUC_CONST;
 
 GimpStrokeOptions * gimp_stroke_options_new               (Gimp              *gimp,
-                                                           GimpContext       *context);
+                                                           GimpContext       *context,
+                                                           gboolean           use_context_color);
 void                gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
                                                            GimpDashPreset     preset,
                                                            GArray            *pattern);

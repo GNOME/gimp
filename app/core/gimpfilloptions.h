@@ -54,7 +54,9 @@ struct _GimpFillOptionsClass
 };
 
 
-GType  gimp_fill_options_get_type (void) G_GNUC_CONST;
+GType             gimp_fill_options_get_type (void) G_GNUC_CONST;
+
+GimpFillOptions * gimp_fill_options_new      (Gimp *gimp);
 
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */

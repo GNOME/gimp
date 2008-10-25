@@ -88,7 +88,7 @@ stroke_dialog_new (GimpItem    *item,
 
   image = gimp_item_get_image (item);
 
-  options = gimp_stroke_options_new (context->gimp, context);
+  options = gimp_stroke_options_new (context->gimp, context, TRUE);
 
   saved_options = g_object_get_data (G_OBJECT (context->gimp),
                                      "saved-stroke-options");
@@ -307,7 +307,7 @@ stroke_dialog_response (GtkWidget  *widget,
         if (saved_options)
           g_object_ref (saved_options);
         else
-          saved_options = gimp_stroke_options_new (context->gimp, context);
+          saved_options = gimp_stroke_options_new (context->gimp, context, TRUE);
 
         gimp_config_sync (G_OBJECT (options), G_OBJECT (saved_options), 0);
 
