@@ -35,26 +35,6 @@
 #define GIMP_OPERATION_LAYER_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_LAYER_MODE, GimpOperationLayerModeClass))
 
 
-typedef struct _GimpOperationLayerModeClass GimpOperationLayerModeClass;
-
-struct _GimpOperationLayerMode
-{
-  GeglOperationPointComposer  parent_instance;
-};
-
-struct _GimpOperationLayerModeClass
-{
-  GeglOperationPointComposerClass  parent_class;
-
-  gboolean (* process) (GeglOperation       *operation,
-                        void                *in_buf,
-                        void                *aux_buf,
-                        void                *out_buf,
-                        glong                samples,
-                        const GeglRectangle *roi);
-};
-
-
 GType   gimp_operation_layer_mode_get_type (void) G_GNUC_CONST;
 
 

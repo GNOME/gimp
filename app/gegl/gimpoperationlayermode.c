@@ -29,35 +29,118 @@
 #include "gimpoperationlayermode.h"
 
 
-static void     gimp_operation_layer_mode_prepare (GeglOperation       *operation);
-static gboolean gimp_operation_layer_mode_process (GeglOperation       *operation,
-                                                   void                *in_buf,
-                                                   void                *aux_buf,
-                                                   void                *out_buf,
-                                                   glong                samples,
-                                                   const GeglRectangle *roi);
+enum
+{
+  PROP_0,
+  PROP_BLEND_MODE
+};
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
-                        GEGL_TYPE_OPERATION_POINT_COMPOSER)
+typedef struct _GimpOperationLayerModeClass GimpOperationLayerModeClass;
+
+struct _GimpOperationLayerModeClass
+{
+  GeglOperationPointComposerClass  parent_class;
+};
+
+struct _GimpOperationLayerMode
+{
+  GeglOperationPointComposer  parent_instance;
+
+  GimpLayerModeEffects        blend_mode;
+};
+
+
+static void     gimp_operation_layer_mode_set_property (GObject             *object,
+                                                        guint                property_id,
+                                                        const GValue        *value,
+                                                        GParamSpec          *pspec);
+static void     gimp_operation_layer_mode_get_property (GObject             *object,
+                                                        guint                property_id,
+                                                        GValue              *value,
+                                                        GParamSpec          *pspec);
+
+static void     gimp_operation_layer_mode_prepare      (GeglOperation       *operation);
+static gboolean gimp_operation_layer_mode_process      (GeglOperation       *operation,
+                                                        void                *in_buf,
+                                                        void                *aux_buf,
+                                                        void                *out_buf,
+                                                        glong                samples,
+                                                        const GeglRectangle *roi);
+
+
+G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
+               GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
 
 static void
 gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 {
+  GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->categories = "compositors";
+  object_class->set_property  = gimp_operation_layer_mode_set_property;
+  object_class->get_property  = gimp_operation_layer_mode_get_property;
+
+  operation_class->name        = "gimp:layer-mode";
+  operation_class->description = "GIMP layer mode operation";
+  operation_class->categories  = "compositors";
 
   operation_class->prepare    = gimp_operation_layer_mode_prepare;
 
   point_class->process        = gimp_operation_layer_mode_process;
+
+  g_object_class_install_property (object_class, PROP_BLEND_MODE,
+                                   g_param_spec_enum ("blend-mode", NULL, NULL,
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
 gimp_operation_layer_mode_init (GimpOperationLayerMode *self)
 {
+}
+
+static void
+gimp_operation_layer_mode_set_property (GObject      *object,
+                                        guint         property_id,
+                                        const GValue *value,
+                                        GParamSpec   *pspec)
+{
+  GimpOperationLayerMode *self = GIMP_OPERATION_LAYER_MODE (object);
+
+  switch (property_id)
+    {
+    case PROP_BLEND_MODE:
+      self->blend_mode = g_value_get_enum (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_operation_layer_mode_get_property (GObject    *object,
+                                        guint       property_id,
+                                        GValue     *value,
+                                        GParamSpec *pspec)
+{
+  GimpOperationLayerMode *self = GIMP_OPERATION_LAYER_MODE (object);
+
+  switch (property_id)
+    {
+    case PROP_BLEND_MODE:
+      g_value_set_enum (value, self->blend_mode);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -78,10 +161,82 @@ gimp_operation_layer_mode_process (GeglOperation       *operation,
                                    glong                samples,
                                    const GeglRectangle *roi)
 {
-  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (operation)->process (operation,
-                                                                   in_buf,
-                                                                   aux_buf,
-                                                                   out_buf,
-                                                                   samples,
-                                                                   roi);
+  GimpOperationLayerMode *self = GIMP_OPERATION_LAYER_MODE (operation);
+
+  gfloat *in    = in_buf;
+  gfloat *layer = aux_buf;
+  gfloat *out   = out_buf;
+
+  while (samples--)
+    {
+      out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
+
+      switch (self->blend_mode)
+        {
+        case GIMP_NORMAL_MODE:
+          out[RED]   = layer[RED]   + in[RED]   * (1 - layer[ALPHA]);
+          out[GREEN] = layer[GREEN] + in[GREEN] * (1 - layer[ALPHA]);
+          out[BLUE]  = layer[BLUE]  + in[BLUE]  * (1 - layer[ALPHA]);
+          break;
+
+        case GIMP_DISSOLVE_MODE:
+          g_warning ("Not a point filter and cannot be implemented here.");
+          break;
+          
+        case GIMP_BEHIND_MODE:
+        case GIMP_MULTIPLY_MODE:
+        case GIMP_SCREEN_MODE:
+        case GIMP_OVERLAY_MODE:
+        case GIMP_DIFFERENCE_MODE:
+          /* TODO */
+          break;
+
+        case GIMP_ADDITION_MODE:
+          /* To be more mathematically correct we would have to either
+           * adjust the formula for the resulting opacity or adapt the
+           * other channels to the change in opacity. Compare to the
+           * 'plus' compositing operation in SVG 1.2.
+           *
+           * Since this doesn't matter for completely opaque layers, and
+           * since consistency in how the alpha channel of layers is
+           * interpreted is more important than mathematically correct
+           * results, we don't bother.
+           */
+          out[RED]   = in[RED]   + layer[RED];
+          out[GREEN] = in[GREEN] + layer[GREEN];
+          out[BLUE]  = in[BLUE]  + layer[BLUE];
+          break;
+
+        case GIMP_SUBTRACT_MODE:
+        case GIMP_DARKEN_ONLY_MODE:
+        case GIMP_LIGHTEN_ONLY_MODE:
+        case GIMP_HUE_MODE:
+        case GIMP_SATURATION_MODE:
+        case GIMP_COLOR_MODE:
+        case GIMP_VALUE_MODE:
+        case GIMP_DIVIDE_MODE:
+        case GIMP_DODGE_MODE:
+        case GIMP_BURN_MODE:
+        case GIMP_HARDLIGHT_MODE:
+        case GIMP_SOFTLIGHT_MODE:
+        case GIMP_GRAIN_EXTRACT_MODE:
+        case GIMP_GRAIN_MERGE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+        case GIMP_ERASE_MODE:
+        case GIMP_REPLACE_MODE:
+        case GIMP_ANTI_ERASE_MODE:
+          /* TODO */
+          break;
+
+        default:
+          g_error ("Unknown layer mode");
+          break;
+        }
+
+      in    += 4;
+      layer += 4;
+      out   += 4;
+    }
+
+  return TRUE;
 }

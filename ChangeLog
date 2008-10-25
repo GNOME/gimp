@@ -1,3 +1,26 @@
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Instead of having one GEGL operation per layer mode, make
+	GimpOperationLayerMode instantiable and add a GimpLayerModeEffects
+	property to it that we check in ::process() to blend pixels
+	together.
+
+	* app/gegl/gimpoperationlayermode.[ch]: Do the change described
+	above. Currently only Normal and Addition are implemented. Normal
+	so that we don't need a special case for the gegl:normal op. Also,
+	the Dissolve layer mode is not a point op and needs to be
+	implemented elsewhere.
+
+	* app/gegl/gimpoperation*mode.c: Removed.
+
+	* app/gegl/gimp-gegl-utils.[ch]: Removed
+	gimp_layer_mode_to_gegl_operation().
+
+	* app/core/gimplayer.c
+
+	* app/gegl/Makefile.am
+	* app/gegl/gimp-gegl.c: Adapt.
+
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
 	Merge a modified and enhanced patch from the vector layer branch:
