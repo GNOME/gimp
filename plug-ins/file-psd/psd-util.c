@@ -635,6 +635,8 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
     }
   if (g_ascii_strncasecmp (psd_mode, "mul ", 4) == 0)           /* Multiply (ps3) */
     return GIMP_MULTIPLY_MODE;
+  if (g_ascii_strncasecmp (psd_mode, "lddg", 4) == 0)           /* Linear Dodge (cs2) */
+    return GIMP_ADDITION_MODE;
   if (g_ascii_strncasecmp (psd_mode, "scrn", 4) == 0)           /* Screen (ps3) */
     return GIMP_SCREEN_MODE;
   if (g_ascii_strncasecmp (psd_mode, "diss", 4) == 0)           /* Dissolve (ps3) */

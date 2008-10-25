@@ -1,3 +1,10 @@
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/file-psd/psd-save.c
+	* plug-ins/file-psd/psd-util.c: Add support for reading/writing
+	PSDs with the Linear Dodge layer mode which is the same as GIMPs
+	Addition layer mode.
+
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
 	Bug 557870 – "Qmask" message popping up here and there

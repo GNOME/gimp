@@ -336,6 +336,9 @@ psd_lmode_layer (gint32  idLayer,
     case GIMP_COLOR_MODE:
       strcpy (psdMode, "colr");
       break;
+    case GIMP_ADDITION_MODE:
+      strcpy (psdMode, "lddg");
+      break;
     case GIMP_MULTIPLY_MODE:
       strcpy (psdMode, "mul ");
       break;
