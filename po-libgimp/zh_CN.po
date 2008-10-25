@@ -9,12 +9,12 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-18 14:05+0000\n"
-"PO-Revision-Date: 2008-10-18 19:31+0800\n"
+"PO-Revision-Date: 2008-10-25 22:15+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1045
@@ -298,7 +298,6 @@ msgstr "按类型搜索"
 #, fuzzy, c-format
 msgid "%d procedure"
 msgstr "%d 个过程"
-
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
@@ -790,7 +789,8 @@ msgstr "设定色彩如何从 RGB 工作空间转换到打印仿真设备。"
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
-msgstr "当启用时，打印模拟将标记出不能在目标色彩空间表示的颜色。"
+msgstr ""
+"如果启用，打印模拟将标记出不能在目标色彩空间表示的颜色。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
@@ -1072,9 +1072,7 @@ msgstr "已选中一页"
 #: ../libgimpwidgets/gimppageselector.c:1182
 #, fuzzy, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "已选中 %d 页"
-msgstr[1] "已选中 %d 页"
+msgstr "已选中 %d 页"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1106,9 +1104,7 @@ msgstr "预览(_P)"
 #: ../libgimpwidgets/gimppropwidgets.c:1860
 #, fuzzy, c-format
 msgid "This text input field is limited to %d character."
-msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "此文本输入框限制为 %d 个字符。"
-msgstr[1] "此文本输入框限制为 %d 个字符。"
+msgstr "此文本输入框限制为 %d 个字符。"
 
 #: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
@@ -1248,18 +1244,22 @@ msgid "_V"
 msgstr "亮度(_V)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:125
+#, fuzzy
 msgid "Value"
 msgstr "亮度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
+#, fuzzy
 msgid "_R"
 msgstr "红(_R)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
+#, fuzzy
 msgid "_G"
 msgstr "绿(_G)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
+#, fuzzy
 msgid "_B"
 msgstr "蓝(_B)"
 
@@ -1406,6 +1406,7 @@ msgstr "CMYK"
 #. Cyan
 #: ../modules/color-selector-cmyk.c:125
 #: ../modules/color-selector-cmyk-lcms.c:169
+#, fuzzy
 msgid "_C"
 msgstr "青(_C)"
 
@@ -1419,12 +1420,14 @@ msgstr "品红(_M)"
 #. Yellow
 #: ../modules/color-selector-cmyk.c:129
 #: ../modules/color-selector-cmyk-lcms.c:173
+#, fuzzy
 msgid "_Y"
 msgstr "黄(_Y)"
 
 #. Key (Black)
 #: ../modules/color-selector-cmyk.c:131
 #: ../modules/color-selector-cmyk-lcms.c:175
+#, fuzzy
 msgid "_K"
 msgstr "黑(_K)"
 
@@ -1829,3 +1832,4 @@ msgstr "GIMP"
 #: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 输入控制器"
+
