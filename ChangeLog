@@ -9,12 +9,13 @@
 	Addition mode has two important differences over the legacy
 	Addition mode:
 
-	  o Addition mode now really is commutative as the GIMP
-	    documentation says (this wasn't previously the case).
+	 o Addition mode now really is commutative as the GIMP
+	   documentation says (this isn't the case for the legacy Addition
+	   mode implementation).
 
-	  o Layers in Addition mode are just as opaque as Normal
-	    layers. That is, their effect on the composite alpha channel
-	    is the same. For discussion, refer to bug #387449.
+	 o Layers in Addition mode are just as opaque as Normal
+	   layers. That is, their effect on the composite alpha channel is
+	   the same. For discussion, refer to bug #387449.
 
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
