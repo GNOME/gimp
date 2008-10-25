@@ -1,5 +1,11 @@
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_parent_notify): bail out if
+	the notification is not about one of our own properties
+	(but from a subclass).
+
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpstrokeoptions.[ch]: add "gboolean use_context_color"
 	parameter to gimp_stroke_options_new() and set the passed context
 	as parent of the new options only if it's TRUE. Also fixed the
