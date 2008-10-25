@@ -39,7 +39,7 @@
 #include "gimpoperationtilesink.h"
 #include "gimpoperationtilesource.h"
 
-#include "gimpoperationlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 void
@@ -62,5 +62,5 @@ gimp_gegl_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_POSTERIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
-  g_type_class_ref (GIMP_TYPE_OPERATION_LAYER_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
 }

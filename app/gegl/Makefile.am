@@ -64,5 +64,5 @@ libappgegl_a_SOURCES = \
 	gimpoperationthreshold.c	\
 	gimpoperationthreshold.h	\
 	\
-	gimpoperationlayermode.c	\
-	gimpoperationlayermode.h
+	gimpoperationpointlayermode.c	\
+	gimpoperationpointlayermode.h

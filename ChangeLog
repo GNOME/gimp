@@ -1,5 +1,17 @@
 2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationlayermode.[ch]: Rename to
+
+	* app/gegl/gimpoperationpointlayermode.[ch]: so that we can later
+	create a common GimpOperationLayerMode class/interface for
+	non-point layer modes like GimpOperationDissolveLayerMode.
+
+	* app/gegl/Makefile.am
+	* app/gegl/gimp-gegl.c
+	* app/gegl/gegl-types.h: Adjust accordingly.
+
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Instead of having one GEGL operation per layer mode, make
 	GimpOperationLayerMode instantiable and add a GimpLayerModeEffects
 	property to it that we check in ::process() to blend pixels

@@ -40,32 +40,7 @@ typedef struct _GimpOperationLevels           GimpOperationLevels;
 typedef struct _GimpOperationPosterize        GimpOperationPosterize;
 typedef struct _GimpOperationThreshold        GimpOperationThreshold;
 
-typedef struct _GimpOperationLayerMode        GimpOperationLayerMode;
-typedef struct _GimpOperationDissolveMode     GimpOperationDissolveMode;
-typedef struct _GimpOperationBehindMode       GimpOperationBehindMode;
-typedef struct _GimpOperationMultiplyMode     GimpOperationMultiplyMode;
-typedef struct _GimpOperationScreenMode       GimpOperationScreenMode;
-typedef struct _GimpOperationOverlayMode      GimpOperationOverlayMode;
-typedef struct _GimpOperationDifferenceMode   GimpOperationDifferenceMode;
-typedef struct _GimpOperationAdditionMode     GimpOperationAdditionMode;
-typedef struct _GimpOperationSubtractMode     GimpOperationSubtractMode;
-typedef struct _GimpOperationDarkenOnlyMode   GimpOperationDarkenOnlyMode;
-typedef struct _GimpOperationLightenOnlyMode  GimpOperationLightenOnlyMode;
-typedef struct _GimpOperationHueMode          GimpOperationHueMode;
-typedef struct _GimpOperationSaturationMode   GimpOperationSaturationMode;
-typedef struct _GimpOperationColorMode        GimpOperationColorMode;
-typedef struct _GimpOperationValueMode        GimpOperationValueMode;
-typedef struct _GimpOperationDivideMode       GimpOperationDivideMode;
-typedef struct _GimpOperationDodgeMode        GimpOperationDodgeMode;
-typedef struct _GimpOperationBurnMode         GimpOperationBurnMode;
-typedef struct _GimpOperationHardlightMode    GimpOperationHardlightMode;
-typedef struct _GimpOperationSoftlightMode    GimpOperationSoftlightMode;
-typedef struct _GimpOperationGrainExtractMode GimpOperationGrainExtractMode;
-typedef struct _GimpOperationGrainMergeMode   GimpOperationGrainMergeMode;
-typedef struct _GimpOperationColorEraseMode   GimpOperationColorEraseMode;
-typedef struct _GimpOperationEraseMode        GimpOperationEraseMode;
-typedef struct _GimpOperationReplaceMode      GimpOperationReplaceMode;
-typedef struct _GimpOperationAntiEraseMode    GimpOperationAntiEraseMode;
+typedef struct _GimpOperationPointLayerMode   GimpOperationPointLayerMode;
 
 
 /*  operation config objects  */
