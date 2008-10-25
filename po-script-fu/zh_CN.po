@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 16:28+0000\n"
-"PO-Revision-Date: 2008-10-18 20:44+0800\n"
+"PO-Revision-Date: 2008-10-25 22:28+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -876,7 +876,7 @@ msgstr "背景色"
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 #, fuzzy
 msgid "Bo_vination..."
-msgstr "奶牛(_V)..."
+msgstr "Bo_vination..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
@@ -1126,9 +1126,11 @@ msgid "Circuit seed"
 msgstr "电路种子"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+#, fuzzy
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
+"以如同电路板一样的痕迹线填充选中区域(或 alpha)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1254,8 +1256,9 @@ msgid "Background image"
 msgstr "背景图像"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#, fuzzy
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
+msgstr "创建一个以水晶/凝胶效果置换其下的图像的标志"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1266,8 +1269,9 @@ msgid "Difference Clouds..."
 msgstr "差分云..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+#, fuzzy
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "应用到差值图层模式的纯色噪音"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1385,8 +1389,9 @@ msgid "_Erase Every Other Row..."
 msgstr "隔行擦除(_E)..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
+#, fuzzy
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
+msgstr "创建一幅以凸凹地图填充的图像"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1835,6 +1840,7 @@ msgstr "熔岩(_L)..."
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
+"使用前景色以从中心向外发射的射线填充图层"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2019,8 +2025,9 @@ msgid "_Perspective..."
 msgstr "透视(_P)..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
+#, fuzzy
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "给选中区域(或 alpha)添加“掠夺者”效果"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2040,7 +2047,7 @@ msgstr "掠夺者(_P)..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
-msgstr ""
+msgstr "创建图像，每一幅均包含一个椭圆按钮图形"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
@@ -2136,7 +2143,7 @@ msgstr "帧数"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 #, fuzzy
 msgid "Rippling strength"
-msgstr "荡漾强度"
+msgstr "波纹强度"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
@@ -2174,7 +2181,7 @@ msgstr "圆角(_R)..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
+msgstr "将一幅图像的颜色表更改为指定色板中的颜色。"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2259,7 +2266,7 @@ msgstr "文本加速..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "创建一个将当前图像映射到旋转球体上的动画"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2278,9 +2285,11 @@ msgid "_Spinning Globe..."
 msgstr "旋转球(_S)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
+"给当前图层添加 Spirographs、Epitrochoids 和 Lissajous 曲线"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2299,8 +2308,9 @@ msgid "Color method"
 msgstr "着色方法"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrochoid"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Frame"
@@ -2328,8 +2338,9 @@ msgid "Inner teeth"
 msgstr "内齿"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#, fuzzy
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
@@ -2364,8 +2375,9 @@ msgid "Polygon: 9 sides"
 msgstr "多边形：9 边"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "渲染 Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2376,8 +2388,9 @@ msgid "Solid Color"
 msgstr "纯色"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#, fuzzy
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spyrograph"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2401,24 +2414,28 @@ msgid "Type"
 msgstr "类型"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+#, fuzzy
 msgid "_Spyrogimp..."
-msgstr ""
+msgstr "_Spyrogimp..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+#, fuzzy
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr ""
+msgstr "使用类似岩石的材质、新星炽光和阴影创建标志"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "恒星景色(_R)..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+#, fuzzy
 msgid "Create an image filled with a swirled tile effect"
-msgstr ""
+msgstr "创建一幅以旋转平铺效果填充的图像"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
+#, fuzzy
 msgid "Swirl-_Tile..."
-msgstr ""
+msgstr "旋转平铺(_T)..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
@@ -2749,3 +2766,4 @@ msgstr "突出显示不透明度"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
+
