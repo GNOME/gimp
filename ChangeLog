@@ -1,3 +1,16 @@
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	Bug 557870 – "Qmask" message popping up here and there
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): use
+	gimp_viewable_get_description() instead of gimp_object_get_name()
+	for displaying the active drawable's name so the quick mask and
+	the floating selection have the same names as in the
+	layers/channels dialogs.
+
 2008-10-24  Sven Neumann  <sven@gimp.org>
 
 	Bug 557705 – compatibility with GEGL > 0.0.20
