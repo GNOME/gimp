@@ -46,6 +46,7 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
                         GimpPaintOptions  *paint_options,
                         GimpCoords        *strokes,
                         gint               n_strokes,
+                        gboolean           push_undo,
                         GError           **error)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
@@ -80,7 +81,7 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
       gimp_paint_core_paint (core, drawable, paint_options,
                              GIMP_PAINT_STATE_FINISH, 0);
 
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
 
@@ -99,6 +100,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
                                  gint               n_bound_segs,
                                  gint               offset_x,
                                  gint               offset_y,
+                                 gboolean           push_undo,
                                  GError           **error)
 {
   GimpImage  *image;
@@ -212,7 +214,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
 
   if (initialized)
     {
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
     }
@@ -229,6 +231,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
                                 GimpPaintOptions  *paint_options,
                                 gboolean           emulate_dynamics,
                                 GimpVectors       *vectors,
+                                gboolean           push_undo,
                                 GError           **error)
 {
   GList    *stroke;
@@ -313,7 +316,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 
   if (initialized)
     {
-      gimp_paint_core_finish (core, drawable);
+      gimp_paint_core_finish (core, drawable, push_undo);
 
       gimp_paint_core_cleanup (core);
     }

@@ -754,8 +754,8 @@ edit_stroke_invoker (GimpProcedure      *procedure,
                         NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                      drawable, context, options, TRUE, progress,
-                                      error);
+                                      drawable, context, options, TRUE, TRUE,
+                                      progress, error);
 
           g_object_unref (options);
         }
@@ -794,8 +794,8 @@ edit_stroke_vectors_invoker (GimpProcedure      *procedure,
                         NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, options, TRUE, progress,
-                                      error);
+                                      drawable, context, options, TRUE, TRUE,
+                                      progress, error);
 
           g_object_unref (options);
         }

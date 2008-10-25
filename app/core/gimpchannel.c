@@ -126,6 +126,7 @@ static void       gimp_channel_transform     (GimpItem          *item,
 static gboolean   gimp_channel_stroke        (GimpItem          *item,
                                               GimpDrawable      *drawable,
                                               GimpStrokeOptions *stroke_options,
+                                              gboolean           push_undo,
                                               GimpProgress      *progress,
                                               GError           **error);
 
@@ -699,9 +700,9 @@ static gboolean
 gimp_channel_stroke (GimpItem           *item,
                      GimpDrawable       *drawable,
                      GimpStrokeOptions  *stroke_options,
+                     gboolean            push_undo,
                      GimpProgress       *progress,
                      GError            **error)
-
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
   const BoundSeg *segs_in;
@@ -728,7 +729,8 @@ gimp_channel_stroke (GimpItem           *item,
       gimp_drawable_stroke_boundary (drawable,
                                      stroke_options,
                                      segs_in, n_segs_in,
-                                     offset_x, offset_y);
+                                     offset_x, offset_y,
+                                     push_undo);
       retval = TRUE;
       break;
 
@@ -746,7 +748,7 @@ gimp_channel_stroke (GimpItem           *item,
                                                   stroke_options->emulate_dynamics,
                                                   segs_in, n_segs_in,
                                                   offset_x, offset_y,
-                                                  error);
+                                                  push_undo, error);
 
         g_object_unref (core);
       }

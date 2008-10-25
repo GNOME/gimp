@@ -108,6 +108,7 @@ static void       gimp_vectors_transform    (GimpItem          *item,
 static gboolean   gimp_vectors_stroke       (GimpItem          *item,
                                              GimpDrawable      *drawable,
                                              GimpStrokeOptions *stroke_options,
+                                             gboolean           push_undo,
                                              GimpProgress      *progress,
                                              GError           **error);
 
@@ -495,6 +496,7 @@ static gboolean
 gimp_vectors_stroke (GimpItem           *item,
                      GimpDrawable       *drawable,
                      GimpStrokeOptions  *stroke_options,
+                     gboolean            push_undo,
                      GimpProgress       *progress,
                      GError            **error)
 {
@@ -510,7 +512,7 @@ gimp_vectors_stroke (GimpItem           *item,
     case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_vectors (drawable,
                                     stroke_options,
-                                    vectors);
+                                    vectors, push_undo);
       retval = TRUE;
       break;
 
@@ -526,7 +528,7 @@ gimp_vectors_stroke (GimpItem           *item,
         retval = gimp_paint_core_stroke_vectors (core, drawable,
                                                  stroke_options->paint_options,
                                                  stroke_options->emulate_dynamics,
-                                                 vectors, error);
+                                                 vectors, push_undo, error);
 
         g_object_unref (core);
       }

@@ -111,6 +111,7 @@ struct _GimpItemClass
   gboolean   (* stroke)       (GimpItem               *item,
                                GimpDrawable           *drawable,
                                GimpStrokeOptions      *stroke_options,
+                               gboolean                push_undo,
                                GimpProgress           *progress,
                                GError                **error);
 
@@ -215,6 +216,7 @@ gboolean        gimp_item_stroke           (GimpItem           *item,
                                             GimpContext        *context,
                                             GimpStrokeOptions  *stroke_options,
                                             gboolean            use_default_values,
+                                            gboolean            push_undo,
                                             GimpProgress       *progress,
                                             GError            **error);
 

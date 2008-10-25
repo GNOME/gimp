@@ -372,7 +372,7 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
     options = gimp_stroke_options_new (image->gimp, context, TRUE);
 
   if (! gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                          drawable, context, options, FALSE, NULL, &error))
+                          drawable, context, options, FALSE, TRUE, NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
                     error->message);

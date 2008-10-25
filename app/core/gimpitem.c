@@ -1009,6 +1009,7 @@ gimp_item_stroke (GimpItem          *item,
                   GimpContext       *context,
                   GimpStrokeOptions *stroke_options,
                   gboolean           use_default_values,
+                  gboolean           push_undo,
                   GimpProgress      *progress,
                   GError           **error)
 {
@@ -1032,13 +1033,15 @@ gimp_item_stroke (GimpItem          *item,
 
       gimp_stroke_options_prepare (stroke_options, context, use_default_values);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                                   item_class->stroke_desc);
+      if (push_undo)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+                                     item_class->stroke_desc);
 
-      retval = item_class->stroke (item, drawable, stroke_options, progress,
-                                   error);
+      retval = item_class->stroke (item, drawable, stroke_options, push_undo,
+                                   progress, error);
 
-      gimp_image_undo_group_end (image);
+      if (push_undo)
+        gimp_image_undo_group_end (image);
 
       gimp_stroke_options_finish (stroke_options);
     }

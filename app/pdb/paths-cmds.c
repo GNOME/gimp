@@ -340,8 +340,8 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
                         NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, options, TRUE, progress,
-                                      error);
+                                      drawable, context, options, TRUE, TRUE,
+                                      progress, error);
 
           g_object_unref (options);
         }

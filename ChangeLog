@@ -1,3 +1,30 @@
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
+	More merging from SOC 2006's vector layer branch:
+
+	* app/core/gimpitem.[ch]: add "gboolean push_undo" to
+	GimpItem::stroke().
+
+	* app/core/gimpdrawable-stroke.[ch]
+	* app/paint/gimppaintcore-stroke.[ch]
+	* app/paint/gimppaintcore.[ch] (gimp_paint_core_finish): add
+	"push_undo" parameters here too.
+
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimpchannel.c
+	* app/core/gimpselection.c
+	* app/dialogs/stroke-dialog.c
+	* app/tools/gimppainttool.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/paths.pdb: pass TRUE all over the place.
+
+	* app/pdb/edit-cmds.c
+	* app/pdb/paint-tools-cmds.c
+	* app/pdb/paths-cmds.c: regenerated.
+
 2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationlayermode.c: Make layer modes work on
