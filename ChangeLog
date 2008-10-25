@@ -1,5 +1,9 @@
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.h: formatting.
+
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.c (gimp_context_parent_notify): bail out if
 	the notification is not about one of our own properties
 	(but from a subclass).

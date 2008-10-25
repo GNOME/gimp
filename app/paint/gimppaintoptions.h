@@ -95,9 +95,9 @@ struct _GimpPaintOptions
   gboolean                  hard;
 
   gboolean                  dynamics_expanded;
-  GimpDynamicOptions        *pressure_options;
-  GimpDynamicOptions        *velocity_options;
-  GimpDynamicOptions        *random_options;
+  GimpDynamicOptions       *pressure_options;
+  GimpDynamicOptions       *velocity_options;
+  GimpDynamicOptions       *random_options;
 
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
