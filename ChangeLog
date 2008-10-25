@@ -1,5 +1,17 @@
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
+	Merge a modified and enhanced patch from the vector layer branch:
+
+	* app/core/gimpdrawable-stroke.[ch]: add new public API
+	gimp_drawable_fill_boundary() and gimp_drawable_fill_vectors().
+
+	Split the internal code up so that there are functions which turn
+	the BoundSegs and GimpVectors into a GimpScanConvert and changed
+	gimp_drawable_stroke_scan_convert() so it can either fill the
+	shape or stroke it.
+
+2008-10-25  Michael Natterer  <mitch@gimp.org>
+
 	More merging from SOC 2006's vector layer branch:
 
 	* app/core/gimpitem.[ch]: add "gboolean push_undo" to
