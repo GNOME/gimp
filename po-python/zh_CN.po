@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 16:28+0000\n"
-"PO-Revision-Date: 2008-10-18 18:55+0800\n"
+"PO-Revision-Date: 2008-10-25 22:08+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -271,7 +271,7 @@ msgstr "无法写入到 “%s”：%s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:191
 msgid "Save Python-Fu Console Output"
-msgstr "保存 Python 控制台输出"
+msgstr "保存 Python-Fu 控制台输出"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:217
 msgid "Interactive GIMP Python interpreter"
