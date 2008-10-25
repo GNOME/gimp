@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <babl/babl.h>
 #include <gegl.h>
 
 #include "gegl-types.h"
@@ -28,6 +29,7 @@
 #include "gimpoperationlayermode.h"
 
 
+static void     gimp_operation_layer_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_layer_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
@@ -48,12 +50,24 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 
   operation_class->categories = "compositors";
 
+  operation_class->prepare    = gimp_operation_layer_mode_prepare;
+
   point_class->process        = gimp_operation_layer_mode_process;
 }
 
 static void
 gimp_operation_layer_mode_init (GimpOperationLayerMode *self)
 {
+}
+
+static void
+gimp_operation_layer_mode_prepare (GeglOperation *operation)
+{
+  Babl *format = babl_format ("RaGaBaA float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "output", format);
+  gegl_operation_set_format (operation, "aux",    format);
 }
 
 static gboolean

@@ -1,3 +1,21 @@
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationlayermode.c: Make layer modes work on
+	premultiplied data. This makes compositing 40% faster on my test
+	image with 10 interlaced Normal and Addition mode layers.
+
+	* app/gegl/gimpoperationadditionmode.c: Switch to the
+	premultiplied algorithm and remove the experimental ones. The new
+	Addition mode has two important differences over the legacy
+	Addition mode:
+
+	  o Addition mode now really is commutative as the GIMP
+	    documentation says (this wasn't previously the case).
+
+	  o Layers in Addition mode are just as opaque as Normal
+	    layers. That is, their effect on the composite alpha channel
+	    is the same. For discussion, refer to bug #387449.
+
 2008-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.h: formatting.

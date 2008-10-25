@@ -71,36 +71,20 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-#if 1
-      // Wrong, for alpha compositing consistency all layers should
-      // affect alpha in the same way independent of layer mode
-      out[RED]   = in[RED]   + layer[RED]   * layer[ALPHA];
-      out[GREEN] = in[GREEN] + layer[GREEN] * layer[ALPHA];
-      out[BLUE]  = in[BLUE]  + layer[BLUE]  * layer[ALPHA];
-      out[ALPHA] = in[ALPHA];
-#else
-      // A very nice combination of correctness and speed for
-      // premultiplied data without any of the issues the previous
-      // versions had
+      /* To be more mathematically correct we would have to either
+       * adjust the formula for the resulting opacity or adapt the
+       * other channels to the change in opacity. Compare to the
+       * 'plus' compositiong operation in SVG 1.2.
+       *
+       * Since this doesn't matter for completely opaque layers, and
+       * since consistency in how the alpha channel of layers is
+       * interpreted is more important than mathematically correct
+       * results, we don't bother.
+       */
       out[RED]   = in[RED]   + layer[RED];
       out[GREEN] = in[GREEN] + layer[GREEN];
       out[BLUE]  = in[BLUE]  + layer[BLUE];
       out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
-
-      // Wrong, doesn't take layer opacity of Addition-mode layer into
-      // account
-      out[RED]   = in[RED]   + layer[RED];
-      out[GREEN] = in[GREEN] + layer[GREEN];
-      out[BLUE]  = in[BLUE]  + layer[BLUE];
-      out[ALPHA] = in[ALPHA];
-
-      // Wrong, toggling visibility of completely transparent
-      // Addition-mode layer changes projection
-      out[RED]   = in[RED]   * in[ALPHA] + layer[RED]   * layer[ALPHA];
-      out[GREEN] = in[GREEN] * in[ALPHA] + layer[GREEN] * layer[ALPHA];
-      out[BLUE]  = in[BLUE]  * in[ALPHA] + layer[BLUE]  * layer[ALPHA];
-      out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
-#endif
 
       in    += 4;
       layer += 4;
