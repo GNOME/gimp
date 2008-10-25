@@ -561,7 +561,7 @@ gimp_layer_get_node (GimpDrawable *drawable)
   mode_node = gimp_drawable_get_mode_node (drawable);
 
   gegl_node_set (mode_node,
-                 "operation",  "gimp:layer-mode",
+                 "operation",  "gimp:point-layer-mode",
                  "blend-mode", layer->mode,
                  NULL);
 
@@ -2036,7 +2036,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
           gegl_node_set (mode_node,
-                         "operation",  "gimp:layer-mode",
+                         "operation",  "gimp:point-layer-mode",
                          "blend-mode", layer->mode,
                          NULL);
         }

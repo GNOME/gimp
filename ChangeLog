@@ -1,5 +1,13 @@
 2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Completed the rename
+	with gimp:layer-mode -> gimp:point-layer-mode and also did some
+	formating.
+
+	* app/core/gimplayer.c: Changed accordingly.
+
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/file-psd/psd-save.c
 	* plug-ins/file-psd/psd-util.c: Add support for reading/writing
 	PSDs with the Linear Dodge layer mode which is the same as GIMPs

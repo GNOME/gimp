@@ -78,16 +78,16 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  object_class->set_property  = gimp_operation_point_layer_mode_set_property;
-  object_class->get_property  = gimp_operation_point_layer_mode_get_property;
+  object_class->set_property   = gimp_operation_point_layer_mode_set_property;
+  object_class->get_property   = gimp_operation_point_layer_mode_get_property;
 
-  operation_class->name        = "gimp:layer-mode";
-  operation_class->description = "GIMP layer mode operation";
+  operation_class->name        = "gimp:point-layer-mode";
+  operation_class->description = "GIMP point layer mode operation";
   operation_class->categories  = "compositors";
 
-  operation_class->prepare    = gimp_operation_point_layer_mode_prepare;
+  operation_class->prepare     = gimp_operation_point_layer_mode_prepare;
 
-  point_class->process        = gimp_operation_point_layer_mode_process;
+  point_class->process         = gimp_operation_point_layer_mode_process;
 
   g_object_class_install_property (object_class, PROP_BLEND_MODE,
                                    g_param_spec_enum ("blend-mode", NULL, NULL,
@@ -103,9 +103,9 @@ gimp_operation_point_layer_mode_init (GimpOperationPointLayerMode *self)
 
 static void
 gimp_operation_point_layer_mode_set_property (GObject      *object,
-                                        guint         property_id,
-                                        const GValue *value,
-                                        GParamSpec   *pspec)
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec)
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (object);
 
@@ -123,9 +123,9 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
 
 static void
 gimp_operation_point_layer_mode_get_property (GObject    *object,
-                                        guint       property_id,
-                                        GValue     *value,
-                                        GParamSpec *pspec)
+                                              guint       property_id,
+                                              GValue     *value,
+                                              GParamSpec *pspec)
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (object);
 
@@ -153,11 +153,11 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
 
 static gboolean
 gimp_operation_point_layer_mode_process (GeglOperation       *operation,
-                                   void                *in_buf,
-                                   void                *aux_buf,
-                                   void                *out_buf,
-                                   glong                samples,
-                                   const GeglRectangle *roi)
+                                         void                *in_buf,
+                                         void                *aux_buf,
+                                         void                *out_buf,
+                                         glong                samples,
+                                         const GeglRectangle *roi)
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
 
