@@ -1,5 +1,47 @@
 2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Implement a bunch of
+	layer modes. Use the exact SVG 1.2 formula for layer modes that
+	have a counterpart in SVG 1.2. Don't clamp the result to [0..1]
+	for Dodge and Burn though as we don't need to. Maybe we *should*
+	clamp from a compositing point of view, I'm not sure. Also
+	reformat the code a bit for readability.
+
+	Keep in mind that we now treat the opacity of all layers the same
+	indepentant of the layer mode. That is why most of the new
+	implementations doesn't work the same as the legacy ones when
+	transparency is involved, only when the layers are completely
+	opaque. Another important property for all layer modes implemented
+	below is that compositing onto complete transparency gives the
+	same result as if the layer would have been in Normal blending
+	mode.
+
+	The status of the new layer mode implementations compared to the
+	legacy implementations is as follows:
+
+	Completely works the same:
+	 o Behind
+
+	Works the same for 100% opaque layers:
+	 o Multiply
+	 o Screen
+	 o Difference
+	 o Darken
+	 o Lighten
+	 o Dodge
+	 o Burn
+	 o Hard Light
+	 o Subtract
+	 o Divide
+
+	Works different but similar:
+	 o Overlay
+
+	Work in progress:
+	 o Soft Light
+
+2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Completed the rename
 	with gimp:layer-mode -> gimp:point-layer-mode and also did some
 	formating.

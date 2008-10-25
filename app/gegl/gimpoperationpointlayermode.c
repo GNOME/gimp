@@ -29,6 +29,12 @@
 #include "gimpoperationpointlayermode.h"
 
 
+#define R RED
+#define G GREEN
+#define B BLUE
+#define A ALPHA
+
+
 enum
 {
   PROP_0,
@@ -161,33 +167,154 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
 
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  gfloat *in  = in_buf;  /* composite of layers below */
+  gfloat *lay = aux_buf; /* layer */
+  gfloat *out = out_buf; /* resulting composite */
 
   while (samples--)
     {
-      out[ALPHA] = in[ALPHA] + layer[ALPHA] - in[ALPHA] * layer[ALPHA];
+      /* Alpha is treated the same */
+      out[A] = lay[A] + in[A] - lay[A] * in[A];
 
       switch (self->blend_mode)
         {
         case GIMP_NORMAL_MODE:
-          out[RED]   = layer[RED]   + in[RED]   * (1 - layer[ALPHA]);
-          out[GREEN] = layer[GREEN] + in[GREEN] * (1 - layer[ALPHA]);
-          out[BLUE]  = layer[BLUE]  + in[BLUE]  * (1 - layer[ALPHA]);
+          /* Porter-Duff A over B */
+          out[R] = lay[R] + in[R] * (1 - lay[A]);
+          out[G] = lay[G] + in[G] * (1 - lay[A]);
+          out[B] = lay[B] + in[B] * (1 - lay[A]);
           break;
 
-        case GIMP_DISSOLVE_MODE:
-          g_warning ("Not a point filter and cannot be implemented here.");
-          break;
-          
         case GIMP_BEHIND_MODE:
-        case GIMP_MULTIPLY_MODE:
-        case GIMP_SCREEN_MODE:
-        case GIMP_OVERLAY_MODE:
-        case GIMP_DIFFERENCE_MODE:
-          /* TODO */
+          /* Porter-Duff B over A */
+          out[R] = in[R] + lay[R] * (1 - in[A]);
+          out[G] = in[G] + lay[G] * (1 - in[A]);
+          out[B] = in[B] + lay[B] * (1 - in[A]);
           break;
+
+
+        case GIMP_MULTIPLY_MODE:
+          /* SVG 1.2 multiply */
+          out[R] = lay[R] * in[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+          out[G] = lay[G] * in[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+          out[B] = lay[B] * in[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+          break;
+
+        case GIMP_SCREEN_MODE:
+          /* SVG 1.2 screen */
+          out[R] = lay[R] + in[R] - lay[R] * in[R];
+          out[G] = lay[G] + in[G] - lay[G] * in[G];
+          out[B] = lay[B] + in[B] - lay[B] * in[B];
+          break;
+
+        case GIMP_OVERLAY_MODE:
+          /* SVG 1.2 overlay */
+          if (2 * in[R] < in[A])
+            {
+              out[R] = 2 * lay[R] * in[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = 2 * lay[G] * in[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = 2 * lay[B] * in[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          else
+            {
+              out[R] = lay[A] * in[A] - 2 * (in[A] - in[R]) * (lay[A] - lay[R]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = lay[A] * in[A] - 2 * (in[A] - in[G]) * (lay[A] - lay[G]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = lay[A] * in[A] - 2 * (in[A] - in[B]) * (lay[A] - lay[B]) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          break;
+
+        case GIMP_DIFFERENCE_MODE:
+          /* SVG 1.2 difference */
+          out[R] = in[R] + lay[R] - 2 * MIN (lay[R] * in[A], in[R] * lay[A]);
+          out[G] = in[G] + lay[G] - 2 * MIN (lay[G] * in[A], in[G] * lay[A]);
+          out[B] = in[B] + lay[B] - 2 * MIN (lay[B] * in[A], in[B] * lay[A]);
+          break;
+
+        case GIMP_DARKEN_ONLY_MODE:
+          /* SVG 1.2 darken */
+          out[R] = MIN (lay[R] * in[A], in[R] * lay[A]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+          out[G] = MIN (lay[G] * in[A], in[G] * lay[A]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+          out[B] = MIN (lay[B] * in[A], in[B] * lay[A]) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+          break;
+
+        case GIMP_LIGHTEN_ONLY_MODE:
+          /* SVG 1.2 lighten */
+          out[R] = MAX (lay[R] * in[A], in[R] * lay[A]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+          out[G] = MAX (lay[G] * in[A], in[G] * lay[A]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+          out[B] = MAX (lay[B] * in[A], in[B] * lay[A]) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+          break;
+
+        case GIMP_DODGE_MODE:
+          /* SVG 1.2 color-dodge with disabled [0..1] clamping */
+          /* if (lay[R] * in[A] + in[R] * lay[A] >= lay[A] * in[A])
+            {
+              out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+            }
+          else */
+            {
+              out[R] = in[R] * lay[A] / (1 - lay[R] / lay[A]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = in[G] * lay[A] / (1 - lay[G] / lay[A]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = in[B] * lay[A] / (1 - lay[B] / lay[A]) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          break;
+
+        case GIMP_BURN_MODE:
+          /* SVG 1.2 color-burn with disabled [0..1] clamping */
+          /* if (lay[R] * in[A] + in[R] * lay[A] <= lay[A] * in[A])
+            {
+              out[R] = lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          else */
+            {
+              out[R] = lay[A] * (lay[R] * in[A] + in[R] * lay[A] - lay[A] * in[A])/lay[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = lay[A] * (lay[G] * in[A] + in[G] * lay[A] - lay[A] * in[A])/lay[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = lay[A] * (lay[B] * in[A] + in[B] * lay[A] - lay[A] * in[A])/lay[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          break;
+
+        case GIMP_HARDLIGHT_MODE:
+          /* SVG 1.2 hard-light */
+          if (2 * lay[R] < lay[A])
+            {
+              out[R] = 2 * lay[R] * in[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = 2 * lay[G] * in[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = 2 * lay[B] * in[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          else
+            {
+              out[R] = lay[A] * in[A] - 2 * (in[A] - in[R]) * (lay[A] - lay[R]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = lay[A] * in[A] - 2 * (in[A] - in[G]) * (lay[A] - lay[G]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = lay[A] * in[A] - 2 * (in[A] - in[B]) * (lay[A] - lay[B]) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          break;
+
+        case GIMP_SOFTLIGHT_MODE:
+          /* SVG 1.2 soft-light */
+          /* XXX: Why is the result so different from legacy Soft Light? */
+          if (2 * lay[R] < lay[A])
+            {
+              out[R] = in[R] * (lay[A] - (1 - in[R]/in[A]) * (2 * lay[R] - lay[A])) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = in[G] * (lay[A] - (1 - in[G]/in[A]) * (2 * lay[G] - lay[A])) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = in[B] * (lay[A] - (1 - in[B]/in[A]) * (2 * lay[B] - lay[A])) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          else if (8 * in[R] <= in[A])
+            {
+              out[R] = in[R] * (lay[A] - (1 - in[R]/in[A]) * (2 * lay[R] - lay[A]) * (3 - 8 * in[R]/in[A])) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = in[G] * (lay[A] - (1 - in[G]/in[A]) * (2 * lay[G] - lay[A]) * (3 - 8 * in[G]/in[A])) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = in[B] * (lay[A] - (1 - in[B]/in[A]) * (2 * lay[B] - lay[A]) * (3 - 8 * in[B]/in[A])) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          else
+            {
+              out[R] = (in[R] * lay[A] + (sqrt (in[R] / in[A]) * in[A] - in[R]) * (2 * lay[R] - lay[A])) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = (in[G] * lay[A] + (sqrt (in[G] / in[A]) * in[A] - in[G]) * (2 * lay[G] - lay[A])) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = (in[B] * lay[A] + (sqrt (in[B] / in[A]) * in[A] - in[B]) * (2 * lay[B] - lay[A])) + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+            }
+          break;
+
 
         case GIMP_ADDITION_MODE:
           /* To be more mathematically correct we would have to either
@@ -200,23 +327,29 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            * interpreted is more important than mathematically correct
            * results, we don't bother.
            */
-          out[RED]   = in[RED]   + layer[RED];
-          out[GREEN] = in[GREEN] + layer[GREEN];
-          out[BLUE]  = in[BLUE]  + layer[BLUE];
+          out[R] = in[R] + lay[R];
+          out[G] = in[G] + lay[G];
+          out[B] = in[B] + lay[B];
           break;
 
         case GIMP_SUBTRACT_MODE:
-        case GIMP_DARKEN_ONLY_MODE:
-        case GIMP_LIGHTEN_ONLY_MODE:
+          /* Derieved from SVG 1.2 formulas */
+          out[R] = in[R] + lay[R] - 2 * lay[R] * in[A];
+          out[G] = in[G] + lay[G] - 2 * lay[G] * in[A];
+          out[B] = in[B] + lay[B] - 2 * lay[B] * in[A];
+          break;
+
+        case GIMP_DIVIDE_MODE:
+          /* Derieved from SVG 1.2 formulas */
+          out[R] = in[R] / lay[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+          out[G] = in[G] / lay[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+          out[B] = in[B] / lay[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+          break;
+
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
         case GIMP_COLOR_MODE:
         case GIMP_VALUE_MODE:
-        case GIMP_DIVIDE_MODE:
-        case GIMP_DODGE_MODE:
-        case GIMP_BURN_MODE:
-        case GIMP_HARDLIGHT_MODE:
-        case GIMP_SOFTLIGHT_MODE:
         case GIMP_GRAIN_EXTRACT_MODE:
         case GIMP_GRAIN_MERGE_MODE:
         case GIMP_COLOR_ERASE_MODE:
@@ -226,14 +359,20 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           /* TODO */
           break;
 
+
+        case GIMP_DISSOLVE_MODE:
+          /* Not a point filter and cannot be implemented here */
+          /* g_assert_not_reached (); */
+          break;
+
         default:
           g_error ("Unknown layer mode");
           break;
         }
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+      in  += 4;
+      lay += 4;
+      out += 4;
     }
 
   return TRUE;
