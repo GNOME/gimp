@@ -199,22 +199,26 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
 static cairo_font_options_t *
 gimp_text_layout_render_flags (GimpTextLayout *layout)
 {
-  GimpText             *text  = layout->text;
+  GimpText             *text = layout->text;
   cairo_font_options_t *flags;
 
   flags = cairo_font_options_create ();
 
-  if (text->antialias)
-    cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_DEFAULT);
-  else
-    cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_NONE);
-/*
- * commented because there's no real autohint support in cairo like there is in ft2
-  if (text->autohint)
-    cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_DEFAULT);
-*/
-  if (!text->hinting)
-    cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_NONE);
+  cairo_font_options_set_antialias (flags, (text->antialias ?
+                                            CAIRO_ANTIALIAS_DEFAULT :
+                                            CAIRO_ANTIALIAS_NONE));
+
+  /*
+   * commented because there's no real autohint support in cairo like
+   * there is in ft2
+   *
+   * if (text->autohint)
+   *   cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_DEFAULT);
+   */
+
+  cairo_font_options_set_hint_style (flags, (text->hinting ?
+                                             CAIRO_HINT_STYLE_DEFAULT :
+                                             CAIRO_HINT_STYLE_NONE));
 
   return flags;
 }
