@@ -152,7 +152,7 @@ text_tool_actions_update (GimpActionGroup *group,
    * see whether there is text available for pasting
    */
   clipboard = gtk_widget_get_clipboard (GIMP_TOOL (text_tool)->display->shell,
-                                        GDK_SELECTION_PRIMARY);
+                                        GDK_SELECTION_CLIPBOARD);
   clip = gtk_clipboard_wait_is_text_available (clipboard);
 
 #define SET_VISIBLE(action,condition) \

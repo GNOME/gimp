@@ -579,9 +579,9 @@ gimp_text_tool_button_release (GimpTool              *tool,
                                GimpButtonReleaseType  release_type,
                                GimpDisplay           *display)
 {
-  GimpRectangleTool *rect_tool      = GIMP_RECTANGLE_TOOL (tool);
-  GimpTextTool      *text_tool      = GIMP_TEXT_TOOL (tool);
-  GimpText          *text           = text_tool->text;
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpText          *text      = text_tool->text;
   gint               x1, y1, x2, y2;
 
   g_object_get (text_tool,
@@ -2310,12 +2310,10 @@ gimp_text_tool_clipboard_copy (GimpTextTool *text_tool,
   GimpTool     *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  if (use_clipboard)
-    clipboard = gtk_widget_get_clipboard (tool->display->shell,
-                                          GDK_SELECTION_CLIPBOARD);
-  else
-    clipboard = gtk_widget_get_clipboard (tool->display->shell,
-                                          GDK_SELECTION_PRIMARY);
+  clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                        use_clipboard ?
+                                        GDK_SELECTION_CLIPBOARD :
+                                        GDK_SELECTION_PRIMARY);
 
   gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
 }
@@ -2327,12 +2325,10 @@ gimp_text_tool_clipboard_paste (GimpTextTool *text_tool,
   GimpTool     *tool = GIMP_TOOL (text_tool);
   GtkClipboard *clipboard;
 
-  if (use_clipboard)
-    clipboard = gtk_widget_get_clipboard (tool->display->shell,
-                                          GDK_SELECTION_CLIPBOARD);
-  else
-    clipboard = gtk_widget_get_clipboard (tool->display->shell,
-                                          GDK_SELECTION_PRIMARY);
+  clipboard = gtk_widget_get_clipboard (tool->display->shell,
+                                        use_clipboard ?
+                                        GDK_SELECTION_CLIPBOARD :
+                                        GDK_SELECTION_PRIMARY);
 
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
 }

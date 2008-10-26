@@ -905,7 +905,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
       gimp_rectangle_tool_update_handle_sizes (rect_tool);
 
-      /* Created rectangles should not be started in narrow-mode*/
+      /* Created rectangles should not be started in narrow-mode */
       private->narrow_mode = FALSE;
 
       /* If the rectangle is being modified we want the center on

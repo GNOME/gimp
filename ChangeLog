@@ -1,5 +1,14 @@
 2008-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c: some formatting cleanup.
+
+	* app/tools/gimprectangletool.c: add one space.
+
+	* app/actions/text-tool-actions.c: look at GDK_SELECTION_CLIPBOARD,
+	not PRIMARY, to set the sensitivity of "Paste".
+
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptexttool.[ch]: some general formatting cleanup.
 
 	(gimp_text_tool_key_press): implement ctrl-moving the cursor by
