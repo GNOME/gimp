@@ -22,7 +22,8 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <pango/pangoft2.h>
+#include <cairo.h>
+#include <pango/pangocairo.h>
 
 #include "text-types.h"
 
@@ -36,19 +37,19 @@
 #include "gimptextlayout.h"
 
 
-static void   gimp_text_layout_finalize           (GObject        *object);
+static void           gimp_text_layout_finalize   (GObject        *object);
 
-static void   gimp_text_layout_position           (GimpTextLayout *layout);
+static void           gimp_text_layout_position   (GimpTextLayout *layout);
 
 static PangoContext * gimp_text_get_pango_context (GimpText       *text,
                                                    gdouble         xres,
                                                    gdouble         yres);
 
-static gint   gimp_text_layout_pixel_size         (Gimp           *gimp,
+static gint           gimp_text_layout_pixel_size (Gimp           *gimp,
                                                    gdouble         value,
                                                    GimpUnit        unit,
                                                    gdouble         res);
-static gint   gimp_text_layout_point_size         (Gimp           *gimp,
+static gint           gimp_text_layout_point_size (Gimp           *gimp,
                                                    gdouble         value,
                                                    GimpUnit        unit,
                                                    gdouble         res);
@@ -302,48 +303,20 @@ gimp_text_layout_position (GimpTextLayout *layout)
 #endif
 }
 
-
-static void
-gimp_text_ft2_subst_func (FcPattern *pattern,
-                          gpointer   data)
-{
-  GimpText *text = GIMP_TEXT (data);
-
-  FcPatternAddBool (pattern, FC_HINTING,   text->hinting);
-  FcPatternAddBool (pattern, FC_AUTOHINT,  text->autohint);
-  FcPatternAddBool (pattern, FC_ANTIALIAS, text->antialias);
-}
-
 static PangoContext *
 gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
-  PangoContext    *context;
-  PangoFT2FontMap *fontmap;
+  PangoContext      *context;
+  PangoCairoFontMap *fontmap;
 
-  fontmap = PANGO_FT2_FONT_MAP (pango_ft2_font_map_new ());
+  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
 
-  pango_ft2_font_map_set_resolution (fontmap, xres, yres);
+  pango_cairo_font_map_set_resolution (fontmap, xres);
 
-  pango_ft2_font_map_set_default_substitute (fontmap,
-                                             gimp_text_ft2_subst_func,
-                                             g_object_ref (text),
-                                             (GDestroyNotify) g_object_unref);
-
-  context = pango_ft2_font_map_create_context (fontmap);
+  context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
-
-  /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
-   *  see also bug #148997 (Text layer rendering leaks font file descriptor):
-   *
-   *  Calling pango_ft2_font_map_substitute_changed() causes the
-   *  font_map cache to be flushed, thereby removing the circular
-   *  reference that causes the leak.
-   */
-  g_object_weak_ref (G_OBJECT (context),
-                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
-                     fontmap);
 
   if (text->language)
     pango_context_set_language (context,

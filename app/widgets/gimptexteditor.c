@@ -129,10 +129,10 @@ gimp_text_editor_finalize (GObject *object)
 GtkWidget *
 gimp_text_editor_new (const gchar     *title,
                       GtkWindow       *parent,
-                      GimpMenuFactory *menu_factory)
+                      GimpMenuFactory *menu_factory,
+                      GtkTextBuffer   *text_buffer)
 {
   GimpTextEditor *editor;
-  GtkTextBuffer  *buffer;
   GtkWidget      *toolbar;
   GtkWidget      *scrolled_window;
 
@@ -154,6 +154,10 @@ gimp_text_editor_new (const gchar     *title,
   g_signal_connect (editor, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
+
+  g_signal_connect_object (text_buffer, "changed",
+                           G_CALLBACK (gimp_text_editor_text_changed),
+                           editor, 0);
 
   editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                       "<TextEditor>",
@@ -206,17 +210,11 @@ gimp_text_editor_new (const gchar     *title,
                       scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  editor->view = gtk_text_view_new ();
+  editor->view = gtk_text_view_new_with_buffer (text_buffer);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (editor->view),
                                GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);
-
-  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
-
-  g_signal_connect (buffer, "changed",
-                    G_CALLBACK (gimp_text_editor_text_changed),
-                    editor);
 
   switch (editor->base_dir)
     {

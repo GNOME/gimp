@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="text-tool-popup">
+    <menuitem action="text-tool-cut" />
+    <menuitem action="text-tool-copy" />
+    <menuitem action="text-tool-paste" />
+    <menuitem action="text-tool-delete" />
+    <separator />
+    <menuitem action="text-tool-load" />
+    <menuitem action="text-tool-clear" />
+    <separator />
+    <menuitem action="text-tool-path-from-text" />
+    <separator />
+    <menuitem action="text-tool-direction-ltr" />
+    <menuitem action="text-tool-direction-rtl" />
+    <separator />
+    <menu action="text-tool-input-methods">
+    </menu>
+  </popup>
+</ui>

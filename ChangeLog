@@ -1,3 +1,37 @@
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
+	Merge on-canvas GSoC project:
+
+	* configure.in: check for pangocairo.
+
+	* app/Makefile.am
+	* app/text/Makefile.am: add its CFLAGS and LIBS.
+
+	* app/text/gimptext-bitmap.[ch]
+	* app/text/gimptext-private.h
+	* app/text/gimptext-vectors.[ch]
+	* app/text/gimptextlayer.c
+	* app/text/gimptextlayout-render.c
+	* app/text/gimptextlayout.c: port to pangocairo.
+
+	* menus/Makefile.am
+	* menus/text-tool-menu.xml
+	* app/menus/menus.c
+	* app/actions/Makefile.am
+	* app/actions/actions.c
+	* app/actions/text-tool-actions.[ch]
+	* app/actions/text-tool-commands.[ch]: add a context menu for the
+	text tool similar to GtkEntry's context menu.
+
+	* app/tools/gimprectangletool.[ch]: add "narrow-mode" property.
+
+	* app/tools/gimptextoptions.[ch]
+	* app/widgets/gimptexteditor.[ch]: take a text buffer for the
+	standalone text editor window instead of creating one internally.
+
+	* app/tools/gimptexttool.[ch]: all the new wonderful on-canvas
+	text editing logic. Wheee!
+
 2008-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_get_popup)

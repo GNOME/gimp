@@ -90,6 +90,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(PANGOFT2_CFLAGS)	\
+	$(PANGOCAIRO_CFLAGS)	\
 	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
@@ -137,6 +138,7 @@ gimp_2_7_LDADD = \
 	$(libgimpbase)			\
 	$(GTK_LIBS)			\
 	$(PANGOFT2_LIBS)		\
+	$(PANGOCAIRO_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(DBUS_GLIB_LIBS)		\
@@ -181,6 +183,7 @@ gimp_console_2_7_LDADD = \
 	$(GDK_PIXBUF_LIBS)		\
 	$(CAIRO_LIBS)			\
 	$(PANGOFT2_LIBS)		\
+	$(PANGOCAIRO_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(GEGL_LIBS)			\

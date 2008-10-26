@@ -340,6 +340,14 @@ menus_init (Gimp              *gimp,
                                       NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<TextTool>",
+                                      "text-tool",
+                                      NULL,
+                                      "/text-tool-popup",
+                                      "text-tool-menu.xml",
+                                      NULL,
+                                      NULL);
+  
   gimp_menu_factory_manager_register (global_menu_factory, "<CursorInfo>",
                                       "cursor-info",
                                       NULL,

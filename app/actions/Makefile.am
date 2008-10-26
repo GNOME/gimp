@@ -149,6 +149,10 @@ libappactions_a_SOURCES = \
 	text-editor-actions.h		\
 	text-editor-commands.c		\
 	text-editor-commands.h		\
+	text-tool-actions.c		\
+	text-tool-actions.h		\
+	text-tool-commands.c		\
+	text-tool-commands.h		\
 	tool-options-actions.c		\
 	tool-options-actions.h		\
 	tool-options-commands.c		\

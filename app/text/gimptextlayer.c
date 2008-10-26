@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <gegl.h>
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 
 #include "libgimpconfig/gimpconfig.h"
 
@@ -60,6 +60,7 @@ enum
   PROP_AUTO_RENAME,
   PROP_MODIFIED
 };
+
 
 static void       gimp_text_layer_finalize       (GObject         *object);
 static void       gimp_text_layer_get_property   (GObject         *object,
@@ -151,6 +152,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
                                     "auto-rename", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MODIFIED,
                                     "modified", NULL,
                                     FALSE,
@@ -194,6 +196,7 @@ gimp_text_layer_get_property (GObject      *object,
     case PROP_MODIFIED:
       g_value_set_boolean (value, text_layer->modified);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -216,6 +219,7 @@ gimp_text_layer_set_property (GObject      *object,
     case PROP_MODIFIED:
       text_layer->modified = g_value_get_boolean (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -579,6 +583,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
                                layer->text->text : _("Empty Text Layer"));
 
   gimp_text_layer_render_layout (layer, layout);
+
   g_object_unref (layout);
 
   g_object_thaw_notify (G_OBJECT (drawable));
@@ -590,42 +595,47 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-  GimpItem     *item     = GIMP_ITEM (layer);
-  TileManager  *mask;
-  FT_Bitmap     bitmap;
-  PixelRegion   textPR;
-  PixelRegion   maskPR;
-  gint          i;
+  GimpDrawable    *drawable = GIMP_DRAWABLE (layer);
+  GimpItem        *item     = GIMP_ITEM (layer);
+  TileManager     *mask;
+  cairo_t         *cr;
+  cairo_surface_t *surface;
+  PixelRegion      textPR;
+  PixelRegion      maskPR;
+  gint             i;
+  gint             width, height;
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 
-  bitmap.width = gimp_item_width  (item);
-  bitmap.rows  = gimp_item_height (item);
-  bitmap.pitch = bitmap.width;
-  if (bitmap.pitch & 3)
-    bitmap.pitch += 4 - (bitmap.pitch & 3);
 
-  bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
+  width = gimp_item_width (item);
+  height = gimp_item_height (item);
+
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_A8,
+                                        width, height);
+
+  cr = cairo_create (surface);
 
   gimp_text_layout_render (layout,
                            (GimpTextRenderFunc) gimp_text_render_bitmap,
-                           &bitmap);
+                           cr);
 
-  mask = tile_manager_new (bitmap.width, bitmap.rows, 1);
-  pixel_region_init (&maskPR, mask, 0, 0, bitmap.width, bitmap.rows, TRUE);
+  mask = tile_manager_new ( width, height, 1);
+  pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
 
-  for (i = 0; i < bitmap.rows; i++)
+  for (i = 0; i < height; i++)
     pixel_region_set_row (&maskPR,
-                          0, i, bitmap.width,
-                          bitmap.buffer + i * bitmap.pitch);
+                          0, i, width,
+                          cairo_image_surface_get_data (surface) + i * cairo_image_surface_get_stride (surface));
 
-  g_free (bitmap.buffer);
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
 
   pixel_region_init (&textPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, bitmap.width, bitmap.rows, TRUE);
+                     0, 0, width, height, TRUE);
   pixel_region_init (&maskPR, mask,
-                     0, 0, bitmap.width, bitmap.rows, FALSE);
+                     0, 0, width, height, FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 

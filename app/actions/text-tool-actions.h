@@ -1,9 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,17 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TEXT_BITMAP_H__
-#define __GIMP_TEXT_BITMAP_H__
+#ifndef __TEXT_TOOL_ACTIONS_H__
+#define __TEXT_TOOL_ACTIONS_H__
 
 
-void  gimp_text_render_bitmap (PangoFont            *font,
-                               PangoGlyph            glyph,
-                               cairo_font_options_t *options,
-                               cairo_matrix_t       *trafo,
-                               gint                  x,
-                               gint                  y,
-                               cairo_t              *cr);
+void   text_tool_actions_setup  (GimpActionGroup *group);
+void   text_tool_actions_update (GimpActionGroup *group,
+                                 gpointer         data);
 
 
-#endif /* __GIMP_TEXT_BITMAP_H__ */
+#endif /* __TEXT_TOOL_ACTIONS_H__ */

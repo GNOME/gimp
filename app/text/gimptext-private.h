@@ -22,8 +22,9 @@
 #ifndef __GIMP_TEXT_LAYOUT_PRIVATE_H__
 #define __GIMP_TEXT_LAYOUT_PRIVATE_H__
 
+
 /*  The purpose of this extra header file is to hide any Pango or
- *  FreeType types from the rest of the gimp core.
+ *  Cairo types from the rest of the gimp core.
  */
 
 
@@ -44,13 +45,13 @@ struct _GimpTextLayoutClass
 };
 
 
-typedef  void (* GimpTextRenderFunc) (PangoFont  *font,
-                                      PangoGlyph  glyph,
-                                      FT_Int32    load_flags,
-                                      FT_Matrix  *tranform,
-                                      gint        x,
-                                      gint        y,
-                                      gpointer    render_data);
+typedef  void (* GimpTextRenderFunc) (PangoFont            *font,
+                                      PangoGlyph            glyph,
+                                      cairo_font_options_t *options,
+                                      cairo_matrix_t       *tranform,
+                                      gint                  x,
+                                      gint                  y,
+                                      gpointer              render_data);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_PRIVATE_H__ */

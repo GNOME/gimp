@@ -37,24 +37,37 @@ typedef struct _GimpTextToolClass  GimpTextToolClass;
 
 struct _GimpTextTool
 {
-  GimpDrawTool   parent_instance;
+  GimpDrawTool    parent_instance;
 
-  GimpText      *proxy;
-  GList         *pending;
-  guint          idle_id;
+  GimpText       *proxy;
+  GList          *pending;
+  guint           idle_id;
 
-  gint           x1, y1;
-  gint           x2, y2;
+  gint            x1, y1;
+  gint            x2, y2;
 
-  GimpText      *text;
-  GimpTextLayer *layer;
-  GimpImage     *image;
+  GtkTextBuffer  *text_buffer;
 
-  GtkWidget     *editor;
-  GtkWidget     *confirm_dialog;
+  GimpText       *text;
+  GimpTextLayer  *layer;
+  GimpImage      *image;
 
-  gboolean       handle_rectangle_change_complete;
-  gboolean       text_box_fixed;
+  GtkWidget      *editor;
+  GtkWidget      *confirm_dialog;
+  GimpUIManager  *ui_manager;
+  GtkIMContext   *im_context;
+
+  gboolean        needs_im_reset;
+
+  gchar          *preedit_string;
+  gint            preedit_len;
+  gint            preedit_cursor;
+
+  gboolean        handle_rectangle_change_complete;
+  gboolean        text_box_fixed;
+  gboolean        text_cursor_changing;
+
+  GimpTextLayout *layout;
 };
 
 struct _GimpTextToolClass
@@ -63,13 +76,23 @@ struct _GimpTextToolClass
 };
 
 
-void    gimp_text_tool_register  (GimpToolRegisterCallback  callback,
-                                  gpointer                  data);
+void       gimp_text_tool_register               (GimpToolRegisterCallback  callback,
+                                                  gpointer                  data);
 
-GType   gimp_text_tool_get_type  (void) G_GNUC_CONST;
+GType      gimp_text_tool_get_type               (void) G_GNUC_CONST;
 
-void    gimp_text_tool_set_layer (GimpTextTool *text_tool,
-                                  GimpLayer    *layer);
+void       gimp_text_tool_set_layer              (GimpTextTool *text_tool,
+                                                  GimpLayer    *layer);
+
+void       gimp_text_tool_delete_text            (GimpTextTool *text_tool);
+void       gimp_text_tool_clipboard_cut          (GimpTextTool *text_tool);
+void       gimp_text_tool_clipboard_copy         (GimpTextTool *text_tool,
+                                                  gboolean      use_clipboard);
+void       gimp_text_tool_clipboard_paste        (GimpTextTool *text_tool,
+                                                  gboolean      use_clipboard);
+
+gboolean   gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool);
+void       gimp_text_tool_create_vectors         (GimpTextTool *text_tool);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */
