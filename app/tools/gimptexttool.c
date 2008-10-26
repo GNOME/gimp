@@ -505,23 +505,22 @@ gimp_text_tool_button_press (GimpTool        *tool,
                   gchar      *string;
 
                   gtk_text_buffer_get_bounds (text_tool->text_buffer,
-                                             &start, &end);
+                                              &start, &end);
                   string = gtk_text_buffer_get_text (text_tool->text_buffer,
                                                      &start, &end, TRUE);
                   pango_layout_xy_to_index (text_tool->layout->layout,
                                             x * PANGO_SCALE,
                                             y * PANGO_SCALE,
                                             &offset, &trailing);
-                  offset = g_utf8_pointer_to_offset (string,
-                                                    (string + offset));
+                  offset = g_utf8_pointer_to_offset (string, string + offset);
                   offset += trailing;
 
                   g_free (string);
 
                   gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                     &cursor, offset);
+                                                      &cursor, offset);
                   gtk_text_buffer_place_cursor (text_tool->text_buffer,
-                                               &cursor);
+                                                &cursor);
                 }
 
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -629,19 +628,20 @@ gimp_text_tool_button_release (GimpTool              *tool,
               gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
 
               string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                                &start, &end, TRUE);
+                                                 &start, &end, TRUE);
 
               pango_layout_xy_to_index (text_tool->layout->layout,
                                         x * PANGO_SCALE,
                                         y * PANGO_SCALE,
                                         &offset, &trailing);
 
-              offset = g_utf8_pointer_to_offset (string, (string + offset));
+              offset = g_utf8_pointer_to_offset (string, string + offset);
               offset += trailing;
 
               g_free (string);
 
-              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer, &cursor, offset);
+              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+                                                  &cursor, offset);
               gtk_text_buffer_move_mark_by_name (text_tool->text_buffer,
                                                  "selection_bound",  &cursor);
             }
@@ -782,6 +782,14 @@ gimp_text_tool_key_press (GimpTool    *tool,
     case GDK_KP_Enter:
     case GDK_ISO_Enter:
       gimp_text_tool_enter_text (text_tool, "\n");
+      gimp_text_tool_reset_im_context (text_tool);
+      gimp_text_tool_update_layout (text_tool);
+      break;
+
+    case GDK_Tab:
+    case GDK_KP_Tab:
+    case GDK_ISO_Left_Tab:
+      gimp_text_tool_enter_text (text_tool, "\t");
       gimp_text_tool_reset_im_context (text_tool);
       gimp_text_tool_update_layout (text_tool);
       break;

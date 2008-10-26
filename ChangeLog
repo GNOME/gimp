@@ -1,3 +1,7 @@
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c: handle Tab, some more cleanup.
+
 2008-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render_flags):
