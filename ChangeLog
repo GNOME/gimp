@@ -1,5 +1,12 @@
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Clamp Addition and
+	Subtract so that we acheieve consistent blending results. Also,
+	our Addition is fine, it is the formula for 'plus' in the SVG 1.2
+	draft that is wrong as far as I can see.
+
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Continue the quest of
 	overviewable and readable blend formulas. The macro now expands to
 	entire case-statements.

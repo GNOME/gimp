@@ -40,13 +40,13 @@
 #define outC out[c]
 #define outA out[A]
 
-#define BLEND(mode, expr)       \
+#define BLEND(mode, expr)               \
         case (mode):                    \
           for (c = RED; c < ALPHA; c++) \
             {                           \
               expr;                     \
             }                           \
-         break;
+          break;
 
 enum
 {
@@ -277,22 +277,39 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
               outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
             });
 
-          /* To be more mathematically correct we would have to either
-           * adjust the formula for the resulting opacity or adapt the
-           * other channels to the change in opacity. Compare to the
-           * 'plus' compositing operation in SVG 1.2.
+          /* Custom SVG 1.2:
            *
-           * Since this doesn't matter for completely opaque layers, and
-           * since consistency in how the alpha channel of layers is
-           * interpreted is more important than mathematically correct
-           * results, we don't bother.
+           * if Dc + Sc >= 1
+           *   f(Sc, Dc) = 1
+           * otherwise
+           *   f(Sc, Dc) = Dc + Sc
            */
           BLEND (GIMP_ADDITION_MODE,
-          outC = inC + layC);
+          if (layC * inA + inC * layA >= layA * inA)
+            {
+              outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = inC + layC;
+            });
 
-          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc */
+          /* Custom SVG 1.2:
+           *
+           * if Dc - Sc <= 0
+           *   f(Sc, Dc) = 0
+           * otherwise
+           *   f(Sc, Dc) = Dc - Sc
+           */
           BLEND (GIMP_SUBTRACT_MODE,
-          outC = inC + layC - 2 * layC * inA);
+          if (inC * layA - layC * inA <= 0)
+            {
+              outC = layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = inC + layC - 2 * layC * inA;
+            });
 
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
           BLEND (GIMP_GRAIN_EXTRACT_MODE,
