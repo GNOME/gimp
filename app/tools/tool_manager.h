@@ -77,5 +77,11 @@ void       tool_manager_cursor_update_active       (Gimp             *gimp,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
 
+GimpUIManager * tool_manager_get_popup_active      (Gimp             *gimp,
+                                                    GimpCoords       *coords,
+                                                    GdkModifierType   state,
+                                                    GimpDisplay      *display,
+                                                    const gchar     **ui_path);
+
 
 #endif  /*  __TOOL_MANAGER_H__  */

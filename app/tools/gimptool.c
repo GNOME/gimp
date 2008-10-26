@@ -106,6 +106,11 @@ static void       gimp_tool_real_cursor_update  (GimpTool              *tool,
                                                  GimpCoords            *coords,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *display);
+static GimpUIManager * gimp_tool_real_get_popup (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display,
+                                                 const gchar          **ui_path);
 
 static void       gimp_tool_clear_status        (GimpTool              *tool);
 
@@ -138,6 +143,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->active_modifier_key = gimp_tool_real_active_modifier_key;
   klass->oper_update         = gimp_tool_real_oper_update;
   klass->cursor_update       = gimp_tool_real_cursor_update;
+  klass->get_popup           = gimp_tool_real_get_popup;
 
   g_object_class_install_property (object_class, PROP_TOOL_INFO,
                                    g_param_spec_object ("tool-info",
@@ -359,6 +365,18 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
                         gimp_tool_control_get_cursor (tool->control),
                         gimp_tool_control_get_tool_cursor (tool->control),
                         gimp_tool_control_get_cursor_modifier (tool->control));
+}
+
+static GimpUIManager *
+gimp_tool_real_get_popup (GimpTool         *tool,
+                          GimpCoords       *coords,
+                          GdkModifierType   state,
+                          GimpDisplay      *display,
+                          const gchar     **ui_path)
+{
+  *ui_path = NULL;
+
+  return NULL;
 }
 
 
@@ -832,6 +850,22 @@ gimp_tool_cursor_update (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   GIMP_TOOL_GET_CLASS (tool)->cursor_update (tool, coords, state, display);
+}
+
+GimpUIManager *
+gimp_tool_get_popup (GimpTool         *tool,
+                     GimpCoords       *coords,
+                     GdkModifierType   state,
+                     GimpDisplay      *display,
+                     const gchar     **ui_path)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (coords != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (ui_path != NULL);
+
+  return GIMP_TOOL_GET_CLASS (tool)->get_popup (tool, coords, state, display,
+                                                ui_path);
 }
 
 void

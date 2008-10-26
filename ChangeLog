@@ -1,3 +1,23 @@
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
+	Add some infrastructure for the on-canvas text editing GSoC
+	project:
+
+	* app/tools/gimptoolcontrol.[ch]: add boolean wants_all_key_events
+	member and API to set and get it.
+
+	* app/tools/gimptool.[ch]: add GimpTool::get_popup() which returns
+	the tool's context menu if it has one, or NULL otherwise.
+
+	* app/tools/tool_manager.[ch]: add tool_manager_get_popup_active()
+	wrapper.
+
+	* app/display/gimpdisplayshell-callbacks.c: check if the tool has
+	a popup menu and show it instead of the usual right-click menu.
+
+	Also call the tool's key_press() unconditionally if it wants all
+	key events, but this code needs more thinking.
+
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c: Increase readability by

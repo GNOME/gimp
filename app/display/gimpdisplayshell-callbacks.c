@@ -934,11 +934,32 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
           case 3:
-            state |= GDK_BUTTON3_MASK;
-            gimp_ui_manager_ui_popup (shell->popup_manager,
-                                      "/dummy-menubar/image-popup",
-                                      GTK_WIDGET (shell),
-                                      NULL, NULL, NULL, NULL);
+            {
+              GimpUIManager *ui_manager;
+              const gchar   *ui_path;
+
+              state |= GDK_BUTTON3_MASK;
+
+              ui_manager = tool_manager_get_popup_active (gimp,
+                                                          &image_coords, state,
+                                                          display,
+                                                          &ui_path);
+
+              if (ui_manager)
+                {
+                  gimp_ui_manager_ui_popup (ui_manager,
+                                            ui_path,
+                                            GTK_WIDGET (shell),
+                                            NULL, NULL, NULL, NULL);
+                }
+              else
+                {
+                  gimp_ui_manager_ui_popup (shell->popup_manager,
+                                            "/dummy-menubar/image-popup",
+                                            GTK_WIDGET (shell),
+                                            NULL, NULL, NULL, NULL);
+                }
+            }
             break;
 
           default:
@@ -1358,6 +1379,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         else
           {
             tool_manager_focus_display_active (gimp, display);
+
+            if (gimp_tool_control_get_wants_all_key_events (active_tool->control))
+              {
+                tool_manager_key_press_active (gimp, kevent, display);
+
+                /* FIXME: need to do some of the stuff below, like
+                 * calling oper_update()
+                 */
+
+                return TRUE;
+              }
 
             switch (kevent->keyval)
               {

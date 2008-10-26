@@ -64,6 +64,8 @@ gimp_tool_control_init (GimpToolControl *control)
 
   control->toggled                = FALSE;
 
+  control->wants_all_key_events   = FALSE;
+
   control->cursor                 = GIMP_CURSOR_MOUSE;
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
   control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
@@ -270,6 +272,23 @@ gimp_tool_control_get_snap_to (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->auto_snap_to;
+}
+
+void
+gimp_tool_control_set_wants_all_key_events (GimpToolControl *control,
+                                            gboolean         wants_key_events)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->wants_all_key_events = wants_key_events ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_control_get_wants_all_key_events (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+
+  return control->wants_all_key_events;
 }
 
 void

@@ -452,6 +452,30 @@ tool_manager_cursor_update_active (Gimp            *gimp,
     }
 }
 
+GimpUIManager *
+tool_manager_get_popup_active (Gimp             *gimp,
+                               GimpCoords       *coords,
+                               GdkModifierType   state,
+                               GimpDisplay      *display,
+                               const gchar     **ui_path)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_get_popup (tool_manager->active_tool,
+                                  coords, state,
+                                  display,
+                                  ui_path);
+    }
+
+  return NULL;
+}
+
 
 /*  private functions  */
 
