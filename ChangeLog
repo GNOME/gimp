@@ -1,3 +1,14 @@
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.h: add integer x_pos member to remember
+	the x cursor position when moving up and down across shorter
+	lines.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_key_press): implement
+	moving the cursor up and down. The x_pos probably needs to be
+	reset in a few more places but it seems to work pretty nicely
+	already.
+
 2008-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c: handle Tab, some more cleanup.

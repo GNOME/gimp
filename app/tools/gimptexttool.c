@@ -291,6 +291,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                               "context/context-font-select-set");
 
   text_tool->handle_rectangle_change_complete = TRUE;
+
+  text_tool->x_pos = -1;
 }
 
 static GObject *
@@ -752,11 +754,13 @@ gimp_text_tool_key_press (GimpTool    *tool,
   GtkTextMark  *selection_bound;
   GtkTextIter   cursor, selection;
   GtkTextIter  *sel_start;
+  gint          x_pos  = -1;
   gboolean      retval = TRUE;
 
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
     {
       text_tool->needs_im_reset = TRUE;
+      text_tool->x_pos          = -1;
 
       return TRUE;
     }
@@ -832,6 +836,73 @@ gimp_text_tool_key_press (GimpTool    *tool,
       gimp_text_tool_reset_im_context (text_tool);
       break;
 
+    case GDK_Up:
+    case GDK_KP_Up:
+    case GDK_Down:
+    case GDK_KP_Down:
+      {
+        gint             offset;
+        gint             line;
+        gint             trailing;
+        PangoLayoutLine *layout_line;
+
+        offset = gtk_text_iter_get_offset (&selection);
+
+        pango_layout_index_to_line_x (text_tool->layout->layout,
+                                      offset,
+                                      FALSE, &line, &x_pos);
+
+        if (text_tool->x_pos != -1)
+          x_pos = text_tool->x_pos;
+
+        if (kevent->keyval == GDK_Up ||
+            kevent->keyval == GDK_KP_Up)
+          {
+            line--;
+            if (line < 0)
+              {
+                gtk_text_iter_set_line_offset (&selection, 0);
+                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
+                                              &selection);
+                break;
+              }
+          }
+        else
+          {
+            line++;
+          }
+
+        layout_line = pango_layout_get_line_readonly (text_tool->layout->layout,
+                                                      line);
+        if (! layout_line)
+          {
+            if (kevent->keyval == GDK_Up ||
+                kevent->keyval == GDK_KP_Up)
+              {
+                gtk_text_iter_set_line_offset (&selection, 0);
+                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
+                                              &selection);
+              }
+            else
+              {
+                gtk_text_iter_forward_to_line_end (&selection);
+                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
+                                              &selection);
+              }
+            break;
+          }
+
+        pango_layout_line_x_to_index (layout_line, x_pos, &offset, &trailing);
+
+        gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+                                            &selection, offset + trailing);
+
+        gtk_text_buffer_place_cursor (text_tool->text_buffer, &selection);
+        gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
+                                      &selection);
+      }
+      break;
+
     case GDK_Home:
     case GDK_KP_Home:
       gtk_text_iter_set_line (&selection, gtk_text_iter_get_line (&selection));
@@ -850,6 +921,8 @@ gimp_text_tool_key_press (GimpTool    *tool,
     default:
       retval = FALSE;
     }
+
+  text_tool->x_pos = x_pos;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 

@@ -67,6 +67,8 @@ struct _GimpTextTool
   gboolean        text_box_fixed;
   gboolean        text_cursor_changing;
 
+  gint            x_pos;
+
   GimpTextLayout *layout;
 };
 
