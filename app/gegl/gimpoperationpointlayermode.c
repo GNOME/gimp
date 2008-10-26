@@ -281,17 +281,52 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           else
             outC = inC + layC - 2 * layC * inA);
 
-          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
+          /* Custom SVG 1.2:
+           *
+           * if Dc - Sc + 0.5 >= 1
+           *   f(Sc, Dc) = 1
+           * otherwise if Dc - Sc + 0.5 <= 0
+           *   f(Sc, Dc) = 0
+           * otherwise
+           *   f(Sc, Dc) = f(Sc, Dc) = Dc - Sc + 0.5
+           */
           BLEND (GIMP_GRAIN_EXTRACT_MODE,
-          outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
+          if (inC * layA - layC * inA + 0.5 * layA * inA >= layA * inA)
+            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+          else if (inC * layA - layC * inA + 0.5 * layA * inA <= 0)
+            outC = layC * (1 - inA) + inC * (1 - layA);
+          else
+            outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
 
-          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc + Sc - 0.5 */
+          /* Custom SVG 1.2:
+           *
+           * if Dc + Sc - 0.5 >= 1
+           *   f(Sc, Dc) = 1
+           * otherwise if Dc + Sc - 0.5 <= 0
+           *   f(Sc, Dc) = 0
+           * otherwise
+           *   f(Sc, Dc) = f(Sc, Dc) = Dc + Sc - 0.5
+           */
           BLEND (GIMP_GRAIN_MERGE_MODE,
-          outC = inC + layC - 0.5 * inA * layA);
+          if (inC * layA + layC * inA - 0.5 * layA * inA >= layA * inA)
+            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+          else if (inC * layA + layC * inA - 0.5 * layA * inA <= 0)
+            outC = layC * (1 - inA) + inC * (1 - layA);
+          else
+            outC = inC + layC - 0.5 * inA * layA);
 
-          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc / Sc */
+          /* Custom SVG 1.2:
+           *
+           * if Dc / Sc > 1
+           *   f(Sc, Dc) = 1
+           * otherwise
+           *   f(Sc, Dc) = Dc / Sc
+           */
           BLEND (GIMP_DIVIDE_MODE,
-                 outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
+          if (in[c] / lay[c] > in[A] / lay[A])
+            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+          else
+            outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
 
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
