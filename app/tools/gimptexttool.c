@@ -769,66 +769,77 @@ gimp_text_tool_key_press (GimpTool    *tool,
   else
     sel_start = &selection;
 
+  gimp_draw_tool_pause (draw_tool);
+
   switch (kevent->keyval)
     {
     case GDK_Return:
     case GDK_KP_Enter:
     case GDK_ISO_Enter:
-      gimp_draw_tool_pause (draw_tool);
       gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
       gimp_text_tool_enter_text (text_tool, "\n");
       gimp_text_tool_reset_im_context (text_tool);
       gimp_text_tool_update_layout (text_tool);
-      gimp_draw_tool_resume (draw_tool);
       break;
 
     case GDK_BackSpace:
-      gimp_draw_tool_pause (draw_tool);
-      gimp_text_tool_delete_text (text_tool);
-      gimp_draw_tool_resume (draw_tool);
+      gimp_text_tool_delete_text (text_tool, TRUE);
       break;
 
-    case GDK_Right:
-    case GDK_KP_Right:
-      gimp_draw_tool_pause (draw_tool);
-      gtk_text_iter_forward_cursor_position (&selection);
-      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                    &selection);
-      gimp_text_tool_reset_im_context (text_tool);
-      gimp_draw_tool_resume (draw_tool);
+    case GDK_Delete:
+      gimp_text_tool_delete_text (text_tool, FALSE);
       break;
 
     case GDK_Left:
     case GDK_KP_Left:
-      gimp_draw_tool_pause (draw_tool);
-      gtk_text_iter_backward_cursor_position (&selection);
+      if (kevent->state & GDK_CONTROL_MASK)
+        {
+          gtk_text_iter_backward_visible_word_starts (&selection, 1);
+        }
+      else
+        {
+          gtk_text_iter_backward_cursor_position (&selection);
+        }
       gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
                                     &selection);
-      gimp_draw_tool_resume (draw_tool);
+      break;
+
+    case GDK_Right:
+    case GDK_KP_Right:
+      if (kevent->state & GDK_CONTROL_MASK)
+        {
+	  if (! gtk_text_iter_forward_visible_word_ends (&selection, 1))
+	    gtk_text_iter_forward_to_line_end (&selection);
+        }
+      else
+        {
+          gtk_text_iter_forward_cursor_position (&selection);
+        }
+      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
+                                    &selection);
+      gimp_text_tool_reset_im_context (text_tool);
       break;
 
     case GDK_Home:
     case GDK_KP_Home:
-      gimp_draw_tool_pause (draw_tool);
       gtk_text_iter_set_line (&selection, gtk_text_iter_get_line (&selection));
       gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
                                     &selection);
-      gimp_draw_tool_resume (draw_tool);
       break;
 
     case GDK_End:
     case GDK_KP_End:
-      gimp_draw_tool_pause (draw_tool);
       gtk_text_iter_set_line (&selection, gtk_text_iter_get_line (&selection));
       gtk_text_iter_forward_to_line_end (&selection);
       gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
                                     &selection);
-      gimp_draw_tool_resume (draw_tool);
       break;
 
     default:
       retval = FALSE;
     }
+
+  gimp_draw_tool_resume (draw_tool);
 
   return retval;
 }
@@ -1335,12 +1346,10 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      gchar *str;
-
-      str = gimp_text_tool_canvas_editor_get_text (text_tool);
+      gchar *str = gimp_text_tool_canvas_editor_get_text (text_tool);
 
       g_object_set (text_tool->proxy,
-                    "text", str,
+                    "text",     str,
                     "box-mode", GIMP_TEXT_BOX_DYNAMIC,
                     NULL);
 
@@ -2053,9 +2062,9 @@ gimp_text_tool_draw_text_selection (GimpDrawTool *draw_tool)
 static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTextTool     *text_tool   = GIMP_TEXT_TOOL (draw_tool);
-  GimpTool         *tool        = GIMP_TOOL (draw_tool);
-  GimpDisplayShell *shell;
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GimpTool         *tool      = GIMP_TOOL (draw_tool);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
   GdkRectangle      cliprect;
   gint              width, height;
   gint              x1, x2, y1, y2;
@@ -2067,8 +2076,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_draw (draw_tool);
 
-  if (!text_tool->layer) return;
-  if (!text_tool->layer->text) return;
+  if (! text_tool->layer ||
+      ! text_tool->layer->text)
+    return;
 
   /* There will be no layout if the function is called from the wrong place */
   if (! text_tool->layout)
@@ -2082,11 +2092,11 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 NULL);
 
   /* Turn on clipping for text-cursor and selections */
-  cliprect.x = x1;
-  cliprect.width = x2 - x1;
-  cliprect.y = y1;
+  cliprect.x      = x1;
+  cliprect.width  = x2 - x1;
+  cliprect.y      = y1;
   cliprect.height = y2 - y1;
-  gimp_canvas_set_clip_rect (GIMP_CANVAS (GIMP_DISPLAY_SHELL (tool->display->shell)->canvas),
+  gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
                              GIMP_CANVAS_STYLE_XOR, &cliprect);
 
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
@@ -2095,9 +2105,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     {
       /* If the text buffer has no selection, draw the text cursor */
 
-      gint           cursorx;
-      GtkTextIter    cursor;
-      PangoRectangle crect;
+      gint            cursorx;
+      GtkTextIter     cursor;
+      PangoRectangle  crect;
       gchar          *string;
 
       gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
@@ -2106,11 +2116,10 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       string = gtk_text_buffer_get_text (text_tool->text_buffer,
                                          &start, &cursor, FALSE);
 
-      /* Using strlen to get the byte index, not the character offset*/
+      /* Using strlen to get the byte index, not the character offset */
       cursorx = strlen (string);
 
-      /* TODO: make cursor position itself
-       * even inside preedits!*/
+      /* TODO: make cursor position itself even inside preedits! */
       if (text_tool->preedit_len > 0)
         cursorx += text_tool->preedit_len;
 
@@ -2118,8 +2127,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       pango_layout_index_to_pos (text_tool->layout->layout, cursorx, &crect);
 
-      crect.x = PANGO_PIXELS (crect.x);
-      crect.y = PANGO_PIXELS (crect.y);
+      crect.x      = PANGO_PIXELS (crect.x);
+      crect.y      = PANGO_PIXELS (crect.y);
       crect.height = PANGO_PIXELS (crect.height);
 
       gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
@@ -2128,7 +2137,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                                      TRUE);
 
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
-          gimp_text_tool_draw_preedit_lines (draw_tool);
+        gimp_text_tool_draw_preedit_lines (draw_tool);
     }
   else
     {
@@ -2139,14 +2148,13 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     }
 
   /* Turn off clipping when done */
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
   gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
                              GIMP_CANVAS_STYLE_XOR, NULL);
 }
 
 static void
 gimp_text_tool_commit_cb (GtkIMContext *context,
-                          const gchar *str,
+                          const gchar  *str,
                           GimpTextTool *text_tool)
 {
   gimp_text_tool_enter_text (text_tool, str);
@@ -2183,12 +2191,11 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
   if (text_tool->text)
     {
-      gchar *string;
+      gchar *string = gimp_text_tool_canvas_editor_get_text (text_tool);
 
-      string = gimp_text_tool_canvas_editor_get_text (text_tool);
-
-      g_object_set (text_tool->proxy, "text",
-                    string, NULL);
+      g_object_set (text_tool->proxy,
+                    "text", string,
+                    NULL);
 
       g_free (string);
     }
@@ -2199,9 +2206,10 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_delete_text (GimpTextTool *text_tool)
+gimp_text_tool_delete_text (GimpTextTool *text_tool,
+                            gboolean      backspace)
 {
-  GtkTextIter cursor, start, end;
+  GtkTextIter cursor;
 
   gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
                                     &cursor,
@@ -2211,9 +2219,17 @@ gimp_text_tool_delete_text (GimpTextTool *text_tool)
     {
       gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
     }
-  else
+  else if (backspace)
     {
       gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+    }
+  else
+    {
+      GtkTextIter end = cursor;
+
+      gtk_text_iter_forward_cursor_positions (&end, 1);
+      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
+                                          &cursor, &end, TRUE);
     }
 }
 

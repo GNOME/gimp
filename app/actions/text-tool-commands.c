@@ -82,7 +82,7 @@ text_tool_delete_cmd_callback (GtkAction *action,
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    gimp_text_tool_delete_text (text_tool);
+    gimp_text_tool_delete_text (text_tool, TRUE /* unused */);
 }
 
 void
@@ -143,7 +143,7 @@ text_tool_clear_cmd_callback (GtkAction *action,
 
   gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
   gtk_text_buffer_select_range (text_tool->text_buffer, &start, &end);
-  gimp_text_tool_delete_text (text_tool);
+  gimp_text_tool_delete_text (text_tool, TRUE /* unused */);
 }
 
 void

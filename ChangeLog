@@ -1,3 +1,17 @@
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.[ch]: some general formatting cleanup.
+
+	(gimp_text_tool_key_press): implement ctrl-moving the cursor by
+	words, handle Delete.
+
+	(gimp_text_tool_delete_text): add boolean "backspace" parameter
+	and delete forward when it's FALSE.
+
+	* app/actions/text-tool-commands.c: pass an arbitrary TRUE to
+	gimp_text_tool_delete_text() (it's not used because when called
+	from here, there is always a selection).
+
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c: Remove braces in
