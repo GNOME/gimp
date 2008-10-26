@@ -1,3 +1,12 @@
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c: Implemented Grain
+	Extract and Grain Merge. Also corrected the formula for Divide.
+
+	Works the same for 100% opaque layers:
+	 o Grain Extract
+	 o Grain Merge
+
 2008-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c: Implement a bunch of

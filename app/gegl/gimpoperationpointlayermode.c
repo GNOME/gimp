@@ -173,9 +173,6 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      /* Alpha is treated the same */
-      out[A] = lay[A] + in[A] - lay[A] * in[A];
-
       switch (self->blend_mode)
         {
         case GIMP_NORMAL_MODE:
@@ -333,30 +330,46 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_SUBTRACT_MODE:
-          /* Derieved from SVG 1.2 formulas */
+          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc */
           out[R] = in[R] + lay[R] - 2 * lay[R] * in[A];
           out[G] = in[G] + lay[G] - 2 * lay[G] * in[A];
           out[B] = in[B] + lay[B] - 2 * lay[B] * in[A];
           break;
 
+        case GIMP_GRAIN_EXTRACT_MODE:
+          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
+          out[R] = in[R] + lay[R] - 2 * lay[R] * in[A] + 0.5 * in[A] * lay[A];
+          out[G] = in[G] + lay[G] - 2 * lay[G] * in[A] + 0.5 * in[A] * lay[A];
+          out[B] = in[B] + lay[B] - 2 * lay[B] * in[A] + 0.5 * in[A] * lay[A];
+          break;
+
+        case GIMP_GRAIN_MERGE_MODE:
+          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc + Sc - 0.5 */
+          out[R] = in[R] + lay[R] - 0.5 * in[A] * lay[A];
+          out[G] = in[G] + lay[G] - 0.5 * in[A] * lay[A];
+          out[B] = in[B] + lay[B] - 0.5 * in[A] * lay[A];
+          break;
+
         case GIMP_DIVIDE_MODE:
-          /* Derieved from SVG 1.2 formulas */
-          out[R] = in[R] / lay[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
-          out[G] = in[G] / lay[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
-          out[B] = in[B] / lay[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
+          /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc / Sc */
+          out[R] = in[R] * lay[A] * lay[A] / lay[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+          out[G] = in[G] * lay[A] * lay[A] / lay[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+          out[B] = in[B] * lay[A] * lay[A] / lay[B] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
           break;
 
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
         case GIMP_COLOR_MODE:
         case GIMP_VALUE_MODE:
-        case GIMP_GRAIN_EXTRACT_MODE:
-        case GIMP_GRAIN_MERGE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
-        case GIMP_ERASE_MODE:
-        case GIMP_REPLACE_MODE:
-        case GIMP_ANTI_ERASE_MODE:
           /* TODO */
+          break;
+
+
+        case GIMP_ERASE_MODE:
+        case GIMP_ANTI_ERASE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+        case GIMP_REPLACE_MODE:
+          /* Icky eraser and paint modes */
           break;
 
 
@@ -369,6 +382,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           g_error ("Unknown layer mode");
           break;
         }
+
+      /* Alpha is treated the same */
+      out[A] = lay[A] + in[A] - lay[A] * in[A];
 
       in  += 4;
       lay += 4;
