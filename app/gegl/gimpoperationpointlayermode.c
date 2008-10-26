@@ -29,16 +29,22 @@
 #include "gimpoperationpointlayermode.h"
 
 
-#define R RED
-#define G GREEN
-#define B BLUE
-#define A ALPHA
+#define R    RED
+#define G    GREEN
+#define B    BLUE
+#define A    ALPHA
+#define inC  in[c]
+#define inA  in[A]
+#define layC lay[c]
+#define layA lay[A]
+#define outC out[c]
+#define outA out[A]
 
-#define EACH_CHANNEL(expr)      \
-  for (c = RED; c < ALPHA; c++) \
-    {                           \
-      expr;                     \
-    }
+#define EXPAND(expr)                  \
+        for (c = RED; c < ALPHA; c++) \
+          {                           \
+            expr;                     \
+          }
 
 
 enum
@@ -184,81 +190,81 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
         {
         case GIMP_NORMAL_MODE:
           /* Porter-Duff A over B */
-          EACH_CHANNEL (out[c] = lay[c] + in[c] * (1 - lay[A]));
+          EXPAND (outC = layC + inC * (1 - layA));
           break;
 
         case GIMP_BEHIND_MODE:
           /* Porter-Duff B over A */
-          EACH_CHANNEL (out[c] = in[c] + lay[c] * (1 - in[A]));
+          EXPAND (outC = inC + layC * (1 - inA));
           break;
 
 
         case GIMP_MULTIPLY_MODE:
           /* SVG 1.2 multiply */
-          EACH_CHANNEL (out[c] = lay[c] * in[c] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (outC = layC * inC + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_SCREEN_MODE:
           /* SVG 1.2 screen */
-          EACH_CHANNEL (out[c] = lay[c] + in[c] - lay[c] * in[c]);
+          EXPAND (outC = layC + inC - layC * inC);
           break;
 
         case GIMP_OVERLAY_MODE:
           /* SVG 1.2 overlay */
-          EACH_CHANNEL (if (2 * in[c] < in[A])
-                          out[c] = 2 * lay[c] * in[c] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else
-                          out[c] = lay[A] * in[A] - 2 * (in[A] - in[c]) * (lay[A] - lay[c]) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (if (2 * inC < inA)
+                    outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+                  else
+                    outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_DIFFERENCE_MODE:
           /* SVG 1.2 difference */
-          EACH_CHANNEL (out[c] = in[c] + lay[c] - 2 * MIN (lay[c] * in[A], in[c] * lay[A]));
+          EXPAND (outC = inC + layC - 2 * MIN (layC * inA, inC * layA));
           break;
 
         case GIMP_DARKEN_ONLY_MODE:
           /* SVG 1.2 darken */
-          EACH_CHANNEL (out[c] = MIN (lay[c] * in[A], in[c] * lay[A]) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (outC = MIN (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_LIGHTEN_ONLY_MODE:
           /* SVG 1.2 lighten */
-          EACH_CHANNEL (out[c] = MAX (lay[c] * in[A], in[c] * lay[A]) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (outC = MAX (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_DODGE_MODE:
           /* SVG 1.2 color-dodge */
-          EACH_CHANNEL (if (lay[c] * in[A] + in[c] * lay[A] >= lay[A] * in[A])
-                          out[c] = lay[A] * in[A] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else
-                          out[c] = in[c] * lay[A] / (1 - lay[c] / lay[A]) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (if (layC * inA + inC * layA >= layA * inA)
+                    outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+                  else
+                    outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_BURN_MODE:
           /* SVG 1.2 color-burn */
-          EACH_CHANNEL (if (lay[c] * in[A] + in[c] * lay[A] <= lay[A] * in[A])
-                          out[c] = lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else
-                          out[c] = lay[A] * (lay[c] * in[A] + in[c] * lay[A] - lay[A] * in[A])/lay[c] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (if (layC * inA + inC * layA <= layA * inA)
+                    outC = layC * (1 - inA) + inC * (1 - layA);
+                  else
+                    outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_HARDLIGHT_MODE:
           /* SVG 1.2 hard-light */
-          EACH_CHANNEL (if (2 * lay[c] < lay[A])
-                          out[c] = 2 * lay[c] * in[c] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else
-                          out[c] = lay[A] * in[A] - 2 * (in[A] - in[c]) * (lay[A] - lay[c]) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (if (2 * layC < layA)
+                    outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+                  else
+                    outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_SOFTLIGHT_MODE:
           /* SVG 1.2 soft-light */
           /* XXX: Why is the result so different from legacy Soft Light? */
-          EACH_CHANNEL (if (2 * lay[c] < lay[A])
-                          out[c] = in[c] * (lay[A] - (1 - in[c]/in[A]) * (2 * lay[c] - lay[A])) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else if (8 * in[c] <= in[A])
-                          out[c] = in[c] * (lay[A] - (1 - in[c]/in[A]) * (2 * lay[c] - lay[A]) * (3 - 8 * in[c]/in[A])) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]);
-                        else
-                          out[c] = (in[c] * lay[A] + (sqrt (in[c] / in[A]) * in[A] - in[c]) * (2 * lay[c] - lay[A])) + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (if (2 * layC < layA)
+                    outC = inC * (layA - (1 - inC/inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
+                  else if (8 * inC <= inA)
+                    outC = inC * (layA - (1 - inC/inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
+                  else
+                    outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA));
           break;
 
 
@@ -273,27 +279,27 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            * interpreted is more important than mathematically correct
            * results, we don't bother.
            */
-          EACH_CHANNEL (out[c] = in[c] + lay[c]);
+          EXPAND (outC = inC + layC);
           break;
 
         case GIMP_SUBTRACT_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc */
-          EACH_CHANNEL (out[c] = in[c] + lay[c] - 2 * lay[c] * in[A]);
+          EXPAND (outC = inC + layC - 2 * layC * inA);
           break;
 
         case GIMP_GRAIN_EXTRACT_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
-          EACH_CHANNEL (out[c] = in[c] + lay[c] - 2 * lay[c] * in[A] + 0.5 * in[A] * lay[A]);
+          EXPAND (outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
           break;
 
         case GIMP_GRAIN_MERGE_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc + Sc - 0.5 */
-          EACH_CHANNEL (out[c] = in[c] + lay[c] - 0.5 * in[A] * lay[A]);
+          EXPAND (outC = inC + layC - 0.5 * inA * layA);
           break;
 
         case GIMP_DIVIDE_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc / Sc */
-          EACH_CHANNEL (out[c] = in[c] * lay[A] * lay[A] / lay[c] + lay[c] * (1 - in[A]) + in[c] * (1 - lay[A]));
+          EXPAND (outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_HUE_MODE:
@@ -323,7 +329,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
         }
 
       /* Alpha is treated the same */
-      out[A] = lay[A] + in[A] - lay[A] * in[A];
+      outA = layA + inA - layA * inA;
 
       in  += 4;
       lay += 4;

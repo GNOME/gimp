@@ -1,5 +1,10 @@
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Increase readability by
+	introducing short aliases.
+
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: For blend modes with
 	conditions, fix so that the conditions are per color
 	channel. Acheived by introducing a nice little preprocessor macro.
