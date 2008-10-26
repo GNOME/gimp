@@ -1,5 +1,10 @@
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Remove braces in
+	formulas, makes everything look cleaner.
+
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Clamp Addition and
 	Subtract so that we acheieve consistent blending results. Also,
 	our Addition is fine, it is the formula for 'plus' in the SVG 1.2

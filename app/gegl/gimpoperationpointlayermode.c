@@ -220,62 +220,40 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           /* SVG 1.2 overlay */
           BLEND (GIMP_OVERLAY_MODE,
           if (2 * inC < inA)
-            {
-              outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA);
-            });
+            outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
 
           /* SVG 1.2 color-dodge */
           BLEND (GIMP_DODGE_MODE,
           if (layC * inA + inC * layA >= layA * inA)
-            {
-              outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA);
-            });
+            outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA));
 
           /* SVG 1.2 color-burn */
           BLEND (GIMP_BURN_MODE,
           if (layC * inA + inC * layA <= layA * inA)
-            {
-              outC = layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA);
-            });
+            outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA));
 
           /* SVG 1.2 hard-light */
           BLEND (GIMP_HARDLIGHT_MODE,
           if (2 * layC < layA)
-            {
-              outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA);
-            });
+            outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
 
           /* SVG 1.2 soft-light */
           /* XXX: Why is the result so different from legacy Soft Light? */
           BLEND (GIMP_SOFTLIGHT_MODE,
           if (2 * layC < layA)
-            {
-              outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
           else if (8 * inC <= inA)
-            {
-              outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
-            });
+            outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA));
 
           /* Custom SVG 1.2:
            *
@@ -286,13 +264,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            */
           BLEND (GIMP_ADDITION_MODE,
           if (layC * inA + inC * layA >= layA * inA)
-            {
-              outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = inC + layC;
-            });
+            outC = inC + layC);
 
           /* Custom SVG 1.2:
            *
@@ -303,13 +277,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            */
           BLEND (GIMP_SUBTRACT_MODE,
           if (inC * layA - layC * inA <= 0)
-            {
-              outC = layC * (1 - inA) + inC * (1 - layA);
-            }
+            outC = layC * (1 - inA) + inC * (1 - layA);
           else
-            {
-              outC = inC + layC - 2 * layC * inA;
-            });
+            outC = inC + layC - 2 * layC * inA);
 
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
           BLEND (GIMP_GRAIN_EXTRACT_MODE,
