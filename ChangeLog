@@ -1,5 +1,14 @@
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Enable the [0..1]
+	clamping of the output for Dodge and Burn. Without the clamping
+	one gets inconsistent results when blending together identical
+	layers but with different opacities. Maybe we should make the
+	clamping configurable and introduce a HDR compositing mode or
+	something?
+
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Implemented Grain
 	Extract and Grain Merge. Also corrected the formula for Divide.
 

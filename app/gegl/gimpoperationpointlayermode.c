@@ -242,14 +242,14 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_DODGE_MODE:
-          /* SVG 1.2 color-dodge with disabled [0..1] clamping */
-          /* if (lay[R] * in[A] + in[R] * lay[A] >= lay[A] * in[A])
+          /* SVG 1.2 color-dodge */
+          if (lay[R] * in[A] + in[R] * lay[A] >= lay[A] * in[A])
             {
               out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
-              out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
-              out[R] = lay[A] * in[A] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
+              out[G] = lay[A] * in[A] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
+              out[B] = lay[A] * in[A] + lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
             }
-          else */
+          else
             {
               out[R] = in[R] * lay[A] / (1 - lay[R] / lay[A]) + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
               out[G] = in[G] * lay[A] / (1 - lay[G] / lay[A]) + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
@@ -258,14 +258,14 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_BURN_MODE:
-          /* SVG 1.2 color-burn with disabled [0..1] clamping */
-          /* if (lay[R] * in[A] + in[R] * lay[A] <= lay[A] * in[A])
+          /* SVG 1.2 color-burn */
+          if (lay[R] * in[A] + in[R] * lay[A] <= lay[A] * in[A])
             {
               out[R] = lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
               out[G] = lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
               out[B] = lay[B] * (1 - in[A]) + in[B] * (1 - lay[A]);
             }
-          else */
+          else
             {
               out[R] = lay[A] * (lay[R] * in[A] + in[R] * lay[A] - lay[A] * in[A])/lay[R] + lay[R] * (1 - in[A]) + in[R] * (1 - lay[A]);
               out[G] = lay[A] * (lay[G] * in[A] + in[G] * lay[A] - lay[A] * in[A])/lay[G] + lay[G] * (1 - in[A]) + in[G] * (1 - lay[A]);
