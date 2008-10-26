@@ -461,7 +461,7 @@ tool_manager_get_popup_active (Gimp             *gimp,
 {
   GimpToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   tool_manager = tool_manager_get (gimp);
 

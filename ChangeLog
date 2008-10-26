@@ -1,3 +1,8 @@
+2008-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/tool_manager.c (tool_manager_get_popup_active): added
+	missing return value.
+
 2008-10-26  Michael Natterer  <mitch@gimp.org>
 
 	Add some infrastructure for the on-canvas text editing GSoC
