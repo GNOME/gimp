@@ -1,3 +1,9 @@
+2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c: Continue the quest of
+	overviewable and readable blend formulas. The macro now expands to
+	entire case-statements.
+
 2008-10-26  Michael Natterer  <mitch@gimp.org>
 
 	Merge on-canvas GSoC project:

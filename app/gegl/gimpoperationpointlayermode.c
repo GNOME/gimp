@@ -40,12 +40,13 @@
 #define outC out[c]
 #define outA out[A]
 
-#define EXPAND(expr)                  \
-        for (c = RED; c < ALPHA; c++) \
-          {                           \
-            expr;                     \
-          }
-
+#define BLEND(mode, expr)       \
+        case (mode):                    \
+          for (c = RED; c < ALPHA; c++) \
+            {                           \
+              expr;                     \
+            }                           \
+         break;
 
 enum
 {
@@ -188,87 +189,94 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
     {
       switch (self->blend_mode)
         {
-        case GIMP_NORMAL_MODE:
           /* Porter-Duff A over B */
-          EXPAND (outC = layC + inC * (1 - layA));
-          break;
+          BLEND (GIMP_NORMAL_MODE,
+          outC = layC + inC * (1 - layA));
 
-        case GIMP_BEHIND_MODE:
           /* Porter-Duff B over A */
-          EXPAND (outC = inC + layC * (1 - inA));
-          break;
+          BLEND (GIMP_BEHIND_MODE,
+          outC = inC + layC * (1 - inA));
 
-
-        case GIMP_MULTIPLY_MODE:
           /* SVG 1.2 multiply */
-          EXPAND (outC = layC * inC + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_MULTIPLY_MODE,
+          outC = layC * inC + layC * (1 - inA) + inC * (1 - layA));
 
-        case GIMP_SCREEN_MODE:
           /* SVG 1.2 screen */
-          EXPAND (outC = layC + inC - layC * inC);
-          break;
+          BLEND (GIMP_SCREEN_MODE,
+          outC = layC + inC - layC * inC);
 
-        case GIMP_OVERLAY_MODE:
-          /* SVG 1.2 overlay */
-          EXPAND (if (2 * inC < inA)
-                    outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
-                  else
-                    outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
-          break;
-
-        case GIMP_DIFFERENCE_MODE:
           /* SVG 1.2 difference */
-          EXPAND (outC = inC + layC - 2 * MIN (layC * inA, inC * layA));
-          break;
+          BLEND (GIMP_DIFFERENCE_MODE,
+          outC = inC + layC - 2 * MIN (layC * inA, inC * layA));
 
-        case GIMP_DARKEN_ONLY_MODE:
           /* SVG 1.2 darken */
-          EXPAND (outC = MIN (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_DARKEN_ONLY_MODE,
+          outC = MIN (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
 
-        case GIMP_LIGHTEN_ONLY_MODE:
           /* SVG 1.2 lighten */
-          EXPAND (outC = MAX (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_LIGHTEN_ONLY_MODE,
+          outC = MAX (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
 
-        case GIMP_DODGE_MODE:
+          /* SVG 1.2 overlay */
+          BLEND (GIMP_OVERLAY_MODE,
+          if (2 * inC < inA)
+            {
+              outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA);
+            });
+
           /* SVG 1.2 color-dodge */
-          EXPAND (if (layC * inA + inC * layA >= layA * inA)
-                    outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
-                  else
-                    outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_DODGE_MODE,
+          if (layC * inA + inC * layA >= layA * inA)
+            {
+              outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA);
+            });
 
-        case GIMP_BURN_MODE:
           /* SVG 1.2 color-burn */
-          EXPAND (if (layC * inA + inC * layA <= layA * inA)
-                    outC = layC * (1 - inA) + inC * (1 - layA);
-                  else
-                    outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_BURN_MODE,
+          if (layC * inA + inC * layA <= layA * inA)
+            {
+              outC = layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA);
+            });
 
-        case GIMP_HARDLIGHT_MODE:
           /* SVG 1.2 hard-light */
-          EXPAND (if (2 * layC < layA)
-                    outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
-                  else
-                    outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_HARDLIGHT_MODE,
+          if (2 * layC < layA)
+            {
+              outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA);
+            });
 
-        case GIMP_SOFTLIGHT_MODE:
           /* SVG 1.2 soft-light */
           /* XXX: Why is the result so different from legacy Soft Light? */
-          EXPAND (if (2 * layC < layA)
-                    outC = inC * (layA - (1 - inC/inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
-                  else if (8 * inC <= inA)
-                    outC = inC * (layA - (1 - inC/inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
-                  else
-                    outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_SOFTLIGHT_MODE,
+          if (2 * layC < layA)
+            {
+              outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else if (8 * inC <= inA)
+            {
+              outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
+            }
+          else
+            {
+              outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
+            });
 
-
-        case GIMP_ADDITION_MODE:
           /* To be more mathematically correct we would have to either
            * adjust the formula for the resulting opacity or adapt the
            * other channels to the change in opacity. Compare to the
@@ -279,28 +287,24 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            * interpreted is more important than mathematically correct
            * results, we don't bother.
            */
-          EXPAND (outC = inC + layC);
-          break;
+          BLEND (GIMP_ADDITION_MODE,
+          outC = inC + layC);
 
-        case GIMP_SUBTRACT_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc */
-          EXPAND (outC = inC + layC - 2 * layC * inA);
-          break;
+          BLEND (GIMP_SUBTRACT_MODE,
+          outC = inC + layC - 2 * layC * inA);
 
-        case GIMP_GRAIN_EXTRACT_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc - Sc + 0.5 */
-          EXPAND (outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
-          break;
+          BLEND (GIMP_GRAIN_EXTRACT_MODE,
+          outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
 
-        case GIMP_GRAIN_MERGE_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc + Sc - 0.5 */
-          EXPAND (outC = inC + layC - 0.5 * inA * layA);
-          break;
+          BLEND (GIMP_GRAIN_MERGE_MODE,
+          outC = inC + layC - 0.5 * inA * layA);
 
-        case GIMP_DIVIDE_MODE:
           /* Derieved from SVG 1.2 formulas, f(Sc, Dc) = Dc / Sc */
-          EXPAND (outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
-          break;
+          BLEND (GIMP_DIVIDE_MODE,
+                 outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
 
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
@@ -309,14 +313,12 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           /* TODO */
           break;
 
-
         case GIMP_ERASE_MODE:
         case GIMP_ANTI_ERASE_MODE:
         case GIMP_COLOR_ERASE_MODE:
         case GIMP_REPLACE_MODE:
           /* Icky eraser and paint modes */
           break;
-
 
         case GIMP_DISSOLVE_MODE:
           /* Not a point filter and cannot be implemented here */
