@@ -859,10 +859,10 @@ gimp_tool_get_popup (GimpTool         *tool,
                      GimpDisplay      *display,
                      const gchar     **ui_path)
 {
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (coords != NULL);
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (ui_path != NULL);
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+  g_return_val_if_fail (coords != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (ui_path != NULL, NULL);
 
   return GIMP_TOOL_GET_CLASS (tool)->get_popup (tool, coords, state, display,
                                                 ui_path);
