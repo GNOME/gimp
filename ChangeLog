@@ -1,3 +1,7 @@
+2008-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c: more cleanup, mostly formatting.
+
 2008-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c: Clamp Grain Extract,
