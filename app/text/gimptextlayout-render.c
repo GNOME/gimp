@@ -19,8 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define PANGO_ENABLE_ENGINE 1
-
 #include "config.h"
 
 #include <glib-object.h>
