@@ -602,18 +602,18 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   cairo_surface_t *surface;
   PixelRegion      textPR;
   PixelRegion      maskPR;
-  gint             i;
-  gint             width, height;
+  const guchar    *data;
+  gint             rowstride;
+  gint             width;
+  gint             height;
+  gpointer         pr;
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
-
 
   width = gimp_item_width (item);
   height = gimp_item_height (item);
 
-
-  surface = cairo_image_surface_create (CAIRO_FORMAT_A8,
-                                        width, height);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_A8, width, height);
 
   cr = cairo_create (surface);
 
@@ -624,10 +624,25 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   mask = tile_manager_new ( width, height, 1);
   pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
 
-  for (i = 0; i < height; i++)
-    pixel_region_set_row (&maskPR,
-                          0, i, width,
-                          cairo_image_surface_get_data (surface) + i * cairo_image_surface_get_stride (surface));
+  data      = cairo_image_surface_get_data (surface);
+  rowstride = cairo_image_surface_get_stride (surface);
+
+  for (pr = pixel_regions_register (1, &maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *src  = data + maskPR.x + maskPR.y * rowstride;
+      guchar       *dest = maskPR.data;
+      gint          rows = maskPR.h;
+
+      while (rows--)
+        {
+          memcpy (dest, src, maskPR.w);
+
+          src += rowstride;
+          dest += maskPR.rowstride;
+        }
+    }
 
   cairo_destroy (cr);
   cairo_surface_destroy (surface);

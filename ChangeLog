@@ -1,5 +1,10 @@
 2008-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c (gimp_text_layer_render_layout):
+	iterate over the tiles instead of rendering row-by-row.
+
+2008-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout.c (gimp_text_get_pango_context): use the
 	Y resolution when creating the fontmap.
 
