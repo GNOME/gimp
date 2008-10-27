@@ -80,10 +80,10 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_clear_cmd_callback),
     NULL },
 
-  { "text-tool-path-from-text", GIMP_STOCK_PATH,
+  { "text-tool-text-to-path", GIMP_STOCK_PATH,
     N_("_Path from Text"), "",
     N_("Create a path from the outlines of the current text"),
-    G_CALLBACK (text_tool_path_from_text_cmd_callback),
+    G_CALLBACK (text_tool_text_to_path_cmd_callback),
     NULL },
 
   { "text-tool-text-along-path", GIMP_STOCK_PATH,
@@ -175,6 +175,6 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-delete",          text_sel);
   SET_SENSITIVE ("text-tool-clear",           text_layer);
   SET_SENSITIVE ("text-tool-load",            image);
-  SET_SENSITIVE ("text-tool-path-from-text",  text_layer);
+  SET_SENSITIVE ("text-tool-text-to-path",    text_layer);
   SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
 }

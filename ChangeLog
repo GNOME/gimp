@@ -1,5 +1,12 @@
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/text-tool-actions.c
+	* app/actions/text-tool-commands.[ch]
+	* menus/text-tool-menu.xml: rename action "path-from-text" to
+	"text-to-path".
+
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* menus/text-tool-menu.xml
 	* app/actions/text-tool-actions.c
 	* app/actions/text-tool-commands.[ch]: add "Text along Path" to the

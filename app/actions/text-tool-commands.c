@@ -158,8 +158,8 @@ text_tool_clear_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_path_from_text_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+text_tool_text_to_path_cmd_callback (GtkAction *action,
+                                     gpointer   data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 

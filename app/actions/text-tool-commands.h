@@ -32,7 +32,7 @@ void   text_tool_load_cmd_callback            (GtkAction *action,
                                                gpointer   data);
 void   text_tool_clear_cmd_callback           (GtkAction *action,
                                                gpointer   data);
-void   text_tool_path_from_text_cmd_callback  (GtkAction *action,
+void   text_tool_text_to_path_cmd_callback    (GtkAction *action,
                                                gpointer   data);
 void   text_tool_text_along_path_cmd_callback (GtkAction *action,
                                                gpointer   data);
