@@ -53,9 +53,8 @@ enum
   PROP_0 = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_FONT_SIZE,
   PROP_UNIT,
-  PROP_HINTING,
-  PROP_AUTOHINT,
   PROP_ANTIALIAS,
+  PROP_HINT_STYLE,
   PROP_LANGUAGE,
   PROP_BASE_DIR,
   PROP_JUSTIFICATION,
@@ -123,24 +122,18 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    "font-size", NULL,
                                    0.0, 8192.0, 18.0,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
-                                    "hinting",
-                                    N_("Hinting alters the font outline to "
-                                       "produce a crisp bitmap at small "
-                                       "sizes"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
-                                    "autohint",
-                                    N_("If available, hints from the font are "
-                                       "used but you may prefer to always use "
-                                       "the automatic hinter"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HINT_STYLE,
+                                 "hint-style",
+                                 N_("Hinting alters the font outline to "
+                                    "produce a crisp bitmap at small "
+                                    "sizes"),
+                                 GIMP_TYPE_TEXT_HINT_STYLE,
+                                 GIMP_TEXT_HINT_STYLE_MEDIUM,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
                                    "language", NULL,
                                    (const gchar *) gtk_get_default_language (),
@@ -220,14 +213,11 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_UNIT:
       g_value_set_int (value, options->unit);
       break;
-    case PROP_HINTING:
-      g_value_set_boolean (value, options->hinting);
-      break;
-    case PROP_AUTOHINT:
-      g_value_set_boolean (value, options->autohint);
-      break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
+      break;
+    case PROP_HINT_STYLE:
+      g_value_set_enum (value, options->hint_style);
       break;
     case PROP_LANGUAGE:
       g_value_set_string (value, options->language);
@@ -281,14 +271,11 @@ gimp_text_options_set_property (GObject      *object,
     case PROP_UNIT:
       options->unit = g_value_get_int (value);
       break;
-    case PROP_HINTING:
-      options->hinting = g_value_get_boolean (value);
-      break;
-    case PROP_AUTOHINT:
-      options->autohint = g_value_get_boolean (value);
-      break;
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
+      break;
+    case PROP_HINT_STYLE:
+      options->hint_style = g_value_get_enum (value);
       break;
     case PROP_BASE_DIR:
       options->base_dir = g_value_get_enum (value);
@@ -442,7 +429,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *vbox;
   GtkWidget       *hbox;
   GtkWidget       *button;
-  GtkWidget       *auto_button;
   GtkWidget       *entry;
   GtkWidget       *box;
   GtkWidget       *spinbutton;
@@ -478,23 +464,11 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (config, "hinting", _("Hinting"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  auto_button = gimp_prop_check_button_new (config, "autohint",
-                                            _("Force auto-hinter"));
-  gtk_box_pack_start (GTK_BOX (vbox), auto_button, FALSE, FALSE, 0);
-  gtk_widget_show (auto_button);
-
-  gtk_widget_set_sensitive (auto_button, options->hinting);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", auto_button);
-
   button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new (5, 3, FALSE);
+  table = gtk_table_new (6, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
@@ -503,6 +477,12 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   row = 0;
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  button = gimp_prop_enum_combo_box_new (config, "hint-style", -1, -1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Hinting:"), 0.0, 0.5,
+                             button, 1, TRUE);
+  gtk_size_group_add_widget (size_group, button);
 
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
                                        40, 24, GIMP_COLOR_AREA_FLAT);

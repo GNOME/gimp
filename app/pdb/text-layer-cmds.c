@@ -327,86 +327,6 @@ text_layer_set_font_size_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-text_layer_get_hinting_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean hinting = FALSE;
-  gboolean autohint = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "hinting",  &hinting,
-                        "autohint", &autohint,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    {
-      g_value_set_boolean (&return_vals->values[1], hinting);
-      g_value_set_boolean (&return_vals->values[2], autohint);
-    }
-
-  return return_vals;
-}
-
-static GValueArray *
-text_layer_set_hinting_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean hinting;
-  gboolean autohint;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  hinting = g_value_get_boolean (&args->values[1]);
-  autohint = g_value_get_boolean (&args->values[2]);
-
-  if (success)
-    {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "hinting",  hinting,
-                               "autohint", autohint,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
 text_layer_get_antialias_invoker (GimpProcedure      *procedure,
                                   Gimp               *gimp,
                                   GimpContext        *context,
@@ -466,6 +386,78 @@ text_layer_set_antialias_invoker (GimpProcedure      *procedure,
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
                                "antialias", antialias,
+                               NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+text_layer_get_hint_style_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 style = 0;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+                        "hint-style", &style,
+                        NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (&return_vals->values[1], style);
+
+  return return_vals;
+}
+
+static GValueArray *
+text_layer_set_hint_style_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 style;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  style = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                               _("Set text layer attribute"),
+                               "hint-style", style,
                                NULL);
         }
       else
@@ -1052,6 +1044,84 @@ text_layer_set_letter_spacing_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
+static GValueArray *
+text_layer_get_hinting_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean hinting = FALSE;
+  gboolean autohint = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+                        "hinting", &hinting,
+                        NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_boolean (&return_vals->values[1], hinting);
+      g_value_set_boolean (&return_vals->values[2], autohint);
+    }
+
+  return return_vals;
+}
+
+static GValueArray *
+text_layer_set_hinting_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean hinting;
+  gboolean autohint;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  hinting = g_value_get_boolean (&args->values[1]);
+  autohint = g_value_get_boolean (&args->values[2]);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                               _("Set text layer attribute"),
+                               "hinting", hinting,
+                               NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_text_layer_procs (GimpPDB *pdb)
 {
@@ -1309,76 +1379,6 @@ register_text_layer_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-text-layer-get-hinting
-   */
-  procedure = gimp_procedure_new (text_layer_get_hinting_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-layer-get-hinting");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text-layer-get-hinting",
-                                     "Get information about hinting in the specified text layer.",
-                                     "This procedure provides information about the hinting that is being used in a text layer.",
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The text layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("hinting",
-                                                         "hinting",
-                                                         "A flag which is true if hinting is used on the font.",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("autohint",
-                                                         "autohint",
-                                                         "A flag which is true if the text layer is forced to use the autohinter from FreeType.",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-text-layer-set-hinting
-   */
-  procedure = gimp_procedure_new (text_layer_set_hinting_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-text-layer-set-hinting");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text-layer-set-hinting",
-                                     "Enable/disable the use of hinting in a text layer.",
-                                     "This procedure enables or disables hinting on the text of a text layer. If you enable 'auto-hint', FreeType\'s automatic hinter will be used and hinting information from the font will be ignored.",
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The text layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("hinting",
-                                                     "hinting",
-                                                     "Enable/disable the use of hinting on the text",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("autohint",
-                                                     "autohint",
-                                                     "Force the use of the autohinter provided through FreeType",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-text-layer-get-antialias
    */
   procedure = gimp_procedure_new (text_layer_get_antialias_invoker);
@@ -1433,6 +1433,66 @@ register_text_layer_procs (GimpPDB *pdb)
                                                      "Enable/disable antialiasing of the text",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-hint-style
+   */
+  procedure = gimp_procedure_new (text_layer_get_hint_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-hint-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-get-hint-style",
+                                     "Get information about hinting in the specified text layer.",
+                                     "This procedure provides information about the hinting that is being used in a text layer. Hinting can be optimized for fidelity or contrast or it can be turned entirely off.",
+                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                     "Marcus Heese",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("style",
+                                                      "style",
+                                                      "The hint style used for font outlines",
+                                                      GIMP_TYPE_TEXT_HINT_STYLE,
+                                                      GIMP_TEXT_HINT_STYLE_NONE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-hint-style
+   */
+  procedure = gimp_procedure_new (text_layer_set_hint_style_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-hint-style");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-set-hint-style",
+                                     "Control how font outlines are hinted in a text layer.",
+                                     "This procedure sets the hint style for font outlines in a text layer. This controls whether to fit font outlines to the pixel grid, and if so, whether to optimize for fidelity or contrast.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("style",
+                                                  "style",
+                                                  "The new hint style",
+                                                  GIMP_TYPE_TEXT_HINT_STYLE,
+                                                  GIMP_TEXT_HINT_STYLE_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1905,6 +1965,76 @@ register_text_layer_procs (GimpPDB *pdb)
                                                     "The additional letter spacing to use.",
                                                     -8192.0, 8192.0, -8192.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-hinting
+   */
+  procedure = gimp_procedure_new (text_layer_get_hinting_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-hinting");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-get-hinting",
+                                     "This procedure is deprecated! Use 'gimp-text-layer-get-hint-style' instead.",
+                                     "This procedure is deprecated! Use 'gimp-text-layer-get-hint-style' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-text-layer-get-hint-style");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("hinting",
+                                                         "hinting",
+                                                         "A flag which is true if hinting is used on the font.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("autohint",
+                                                         "autohint",
+                                                         "A flag which is true if the text layer is forced to use the autohinter from FreeType.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-set-hinting
+   */
+  procedure = gimp_procedure_new (text_layer_set_hinting_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-set-hinting");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-set-hinting",
+                                     "Enable/disable the use of hinting in a text layer.",
+                                     "This procedure enables or disables hinting on the text of a text layer. If you enable 'auto-hint', FreeType\'s automatic hinter will be used and hinting information from the font will be ignored.",
+                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                     "Marcus Heese",
+                                     "2008",
+                                     "gimp-text-layer-set-hint-style");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("hinting",
+                                                     "hinting",
+                                                     "Enable/disable the use of hinting on the text",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("autohint",
+                                                     "autohint",
+                                                     "Force the use of the autohinter provided through FreeType",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -208,16 +208,24 @@ gimp_text_layout_render_flags (GimpTextLayout *layout)
                                             CAIRO_ANTIALIAS_DEFAULT :
                                             CAIRO_ANTIALIAS_NONE));
 
-  /*
-   * FIXME:
-   *
-   * The autohint property can't be supported any longer, but we
-   * should expose the cairo_hint_style_t enum.
-   */
+  switch (text->hint_style)
+    {
+    case GIMP_TEXT_HINT_STYLE_NONE:
+      cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_NONE);
+      break;
 
-  cairo_font_options_set_hint_style (flags, (text->hinting ?
-                                             CAIRO_HINT_STYLE_DEFAULT :
-                                             CAIRO_HINT_STYLE_NONE));
+    case GIMP_TEXT_HINT_STYLE_SLIGHT:
+      cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_SLIGHT);
+      break;
+
+    case GIMP_TEXT_HINT_STYLE_MEDIUM:
+      cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_MEDIUM);
+      break;
+
+    case GIMP_TEXT_HINT_STYLE_FULL:
+      cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_FULL);
+      break;
+    }
 
   return flags;
 }

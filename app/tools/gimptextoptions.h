@@ -40,9 +40,8 @@ struct _GimpTextOptions
 
   GimpUnit               unit;
   gdouble                font_size;
-  gboolean               hinting;
-  gboolean               autohint;
   gboolean               antialias;
+  GimpTextHintStyle      hint_style;
   gchar                 *language;
   GimpTextDirection      base_dir;
   GimpTextJustification  justify;

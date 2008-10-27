@@ -307,14 +307,7 @@ CODE
 }
 
 sub text_layer_get_hinting {
-    $blurb = 'Get information about hinting in the specified text layer.';
-
-    $help = <<'HELP';
-This procedure provides information about the hinting that is being
-used in a text layer.
-HELP
-
-    &marcus_pdb_misc('2008', '2.6');
+    &std_pdb_deprecated ('gimp-text-layer-get-hint-style');
 
     @inargs = (
         { name => 'layer', type => 'layer',
@@ -334,8 +327,7 @@ HELP
   if (gimp_pdb_layer_is_text_layer (layer, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "hinting",  &hinting,
-                    "autohint", &autohint,
+                    "hinting", &hinting,
                     NULL);
     }
   else
@@ -348,6 +340,8 @@ CODE
 }
 
 sub text_layer_set_hinting {
+    &std_pdb_deprecated ('gimp-text-layer-set-hint-style');
+
     $blurb = 'Enable/disable the use of hinting in a text layer.';
 
     $help = <<'HELP';
@@ -374,8 +368,7 @@ HELP
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
-                           "hinting",  hinting,
-                           "autohint", autohint,
+                           "hinting", hinting,
                            NULL);
     }
   else
@@ -448,6 +441,82 @@ HELP
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
                            "antialias", antialias,
+                           NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub text_layer_get_hint_style {
+    $blurb = 'Get information about hinting in the specified text layer.';
+
+    $help = <<'HELP';
+This procedure provides information about the hinting that is being
+used in a text layer. Hinting can be optimized for fidelity or contrast
+or it can be turned entirely off.
+HELP
+
+    &marcus_pdb_misc('2008', '2.8');
+
+    @inargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'style', type => 'enum GimpTextHintStyle',
+          desc => 'The hint style used for font outlines' }
+    );
+    
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, error))
+    {
+      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+                    "hint-style", &style,
+                    NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub text_layer_set_hint_style {
+    $blurb = 'Control how font outlines are hinted in a text layer.';
+
+    $help = <<'HELP';
+This procedure sets the hint style for font outlines in a text
+layer. This controls whether to fit font outlines to the pixel grid,
+and if so, whether to optimize for fidelity or contrast.
+HELP
+
+    &neo_pdb_misc('2008', '2.8');
+
+    @inargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The text layer' },
+        { name => 'style', type => 'enum GimpTextHintStyle',
+          desc => 'The new hint style' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, error))
+    {
+      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                           _("Set text layer attribute"),
+                           "hint-style", style,
                            NULL);
     }
   else
@@ -1057,10 +1126,10 @@ CODE
             text_layer_set_font
             text_layer_get_font_size
             text_layer_set_font_size
-            text_layer_get_hinting
-            text_layer_set_hinting
             text_layer_get_antialias
             text_layer_set_antialias
+            text_layer_get_hint_style
+            text_layer_set_hint_style
             text_layer_get_kerning
             text_layer_set_kerning
             text_layer_get_language
@@ -1076,7 +1145,10 @@ CODE
             text_layer_get_line_spacing
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
-            text_layer_set_letter_spacing);
+            text_layer_set_letter_spacing
+            text_layer_get_hinting
+            text_layer_set_hinting
+);
 
 %exports = (app => [@procs], lib => [@procs]);
 

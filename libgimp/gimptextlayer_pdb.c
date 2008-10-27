@@ -24,6 +24,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_TEXT_LAYER_PDB_H__
+#include "gimptextlayer_pdb.h"
 
 /**
  * gimp_text_layer_new:
@@ -284,83 +287,6 @@ gimp_text_layer_set_font_size (gint32   layer_ID,
 }
 
 /**
- * gimp_text_layer_get_hinting:
- * @layer_ID: The text layer.
- * @autohint: A flag which is true if the text layer is forced to use the autohinter from FreeType.
- *
- * Get information about hinting in the specified text layer.
- *
- * This procedure provides information about the hinting that is being
- * used in a text layer.
- *
- * Returns: A flag which is true if hinting is used on the font.
- *
- * Since: GIMP 2.6
- */
-gboolean
-gimp_text_layer_get_hinting (gint32    layer_ID,
-                             gboolean *autohint)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean hinting = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-text-layer-get-hinting",
-                                    &nreturn_vals,
-                                    GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      hinting = return_vals[1].data.d_int32;
-      *autohint = return_vals[2].data.d_int32;
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return hinting;
-}
-
-/**
- * gimp_text_layer_set_hinting:
- * @layer_ID: The text layer.
- * @hinting: Enable/disable the use of hinting on the text.
- * @autohint: Force the use of the autohinter provided through FreeType.
- *
- * Enable/disable the use of hinting in a text layer.
- *
- * This procedure enables or disables hinting on the text of a text
- * layer. If you enable 'auto-hint', FreeType\'s automatic hinter will
- * be used and hinting information from the font will be ignored.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.6
- */
-gboolean
-gimp_text_layer_set_hinting (gint32   layer_ID,
-                             gboolean hinting,
-                             gboolean autohint)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-text-layer-set-hinting",
-                                    &nreturn_vals,
-                                    GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_INT32, hinting,
-                                    GIMP_PDB_INT32, autohint,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_antialias:
  * @layer_ID: The text layer.
  *
@@ -419,6 +345,76 @@ gimp_text_layer_set_antialias (gint32   layer_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_LAYER, layer_ID,
                                     GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_hint_style:
+ * @layer_ID: The text layer.
+ *
+ * Get information about hinting in the specified text layer.
+ *
+ * This procedure provides information about the hinting that is being
+ * used in a text layer. Hinting can be optimized for fidelity or
+ * contrast or it can be turned entirely off.
+ *
+ * Returns: The hint style used for font outlines.
+ *
+ * Since: GIMP 2.8
+ */
+GimpTextHintStyle
+gimp_text_layer_get_hint_style (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpTextHintStyle style = 0;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-get-hint-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    style = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return style;
+}
+
+/**
+ * gimp_text_layer_set_hint_style:
+ * @layer_ID: The text layer.
+ * @style: The new hint style.
+ *
+ * Control how font outlines are hinted in a text layer.
+ *
+ * This procedure sets the hint style for font outlines in a text
+ * layer. This controls whether to fit font outlines to the pixel grid,
+ * and if so, whether to optimize for fidelity or contrast.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_text_layer_set_hint_style (gint32            layer_ID,
+                                GimpTextHintStyle style)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-set-hint-style",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, style,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -964,6 +960,76 @@ gimp_text_layer_set_letter_spacing (gint32  layer_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_LAYER, layer_ID,
                                     GIMP_PDB_FLOAT, letter_spacing,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_text_layer_get_hinting:
+ * @layer_ID: The text layer.
+ * @autohint: A flag which is true if the text layer is forced to use the autohinter from FreeType.
+ *
+ * This procedure is deprecated! Use gimp_text_layer_get_hint_style()
+ * instead.
+ *
+ * Returns: A flag which is true if hinting is used on the font.
+ */
+gboolean
+gimp_text_layer_get_hinting (gint32    layer_ID,
+                             gboolean *autohint)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean hinting = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-get-hinting",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      hinting = return_vals[1].data.d_int32;
+      *autohint = return_vals[2].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return hinting;
+}
+
+/**
+ * gimp_text_layer_set_hinting:
+ * @layer_ID: The text layer.
+ * @hinting: Enable/disable the use of hinting on the text.
+ * @autohint: Force the use of the autohinter provided through FreeType.
+ *
+ * This procedure is deprecated! Use gimp_text_layer_set_hint_style()
+ * instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_text_layer_set_hinting (gint32   layer_ID,
+                             gboolean hinting,
+                             gboolean autohint)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-set-hinting",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, hinting,
+                                    GIMP_PDB_INT32, autohint,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

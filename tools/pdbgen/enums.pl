@@ -364,6 +364,18 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_TEXT_DIRECTION_LTR => '0',
 		       GIMP_TEXT_DIRECTION_RTL => '1' }
 	},
+    GimpTextHintStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_TEXT_HINT_STYLE_NONE
+			  GIMP_TEXT_HINT_STYLE_SLIGHT
+			  GIMP_TEXT_HINT_STYLE_MEDIUM
+			  GIMP_TEXT_HINT_STYLE_FULL) ],
+	  mapping => { GIMP_TEXT_HINT_STYLE_NONE => '0',
+		       GIMP_TEXT_HINT_STYLE_SLIGHT => '1',
+		       GIMP_TEXT_HINT_STYLE_MEDIUM => '2',
+		       GIMP_TEXT_HINT_STYLE_FULL => '3' }
+	},
     GimpTextJustification =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

@@ -45,9 +45,8 @@ struct _GimpText
   gchar                 *font;
   GimpUnit               unit;
   gdouble                font_size;
-  gboolean               hinting;
-  gboolean               autohint;
   gboolean               antialias;
+  GimpTextHintStyle      hint_style;
   gboolean               kerning;
   gchar                 *language;
   GimpTextDirection      base_dir;

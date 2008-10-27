@@ -45,14 +45,12 @@ gdouble               gimp_text_layer_get_font_size      (gint32                
 gboolean              gimp_text_layer_set_font_size      (gint32                 layer_ID,
                                                           gdouble                font_size,
                                                           GimpUnit               unit);
-gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
-                                                          gboolean              *autohint);
-gboolean              gimp_text_layer_set_hinting        (gint32                 layer_ID,
-                                                          gboolean               hinting,
-                                                          gboolean               autohint);
 gboolean              gimp_text_layer_get_antialias      (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_antialias      (gint32                 layer_ID,
                                                           gboolean               antialias);
+GimpTextHintStyle     gimp_text_layer_get_hint_style     (gint32                 layer_ID);
+gboolean              gimp_text_layer_set_hint_style     (gint32                 layer_ID,
+                                                          GimpTextHintStyle      style);
 gboolean              gimp_text_layer_get_kerning        (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_kerning        (gint32                 layer_ID,
                                                           gboolean               kerning);
@@ -78,6 +76,13 @@ gboolean              gimp_text_layer_set_line_spacing   (gint32                
 gdouble               gimp_text_layer_get_letter_spacing (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_letter_spacing (gint32                 layer_ID,
                                                           gdouble                letter_spacing);
+#ifndef GIMP_DISABLE_DEPRECATED
+gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
+                                                          gboolean              *autohint);
+gboolean              gimp_text_layer_set_hinting        (gint32                 layer_ID,
+                                                          gboolean               hinting,
+                                                          gboolean               autohint);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

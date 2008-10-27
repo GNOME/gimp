@@ -621,7 +621,7 @@ gimp_repeat_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_REPEAT_NONE, N_("None"), NULL },
+    { GIMP_REPEAT_NONE, N_("repeat|None"), NULL },
     { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth wave"), NULL },
     { GIMP_REPEAT_TRIANGULAR, N_("Triangular wave"), NULL },
     { 0, NULL, NULL }
@@ -1081,6 +1081,39 @@ gimp_text_direction_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpTextDirection", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_text_hint_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TEXT_HINT_STYLE_NONE, "GIMP_TEXT_HINT_STYLE_NONE", "none" },
+    { GIMP_TEXT_HINT_STYLE_SLIGHT, "GIMP_TEXT_HINT_STYLE_SLIGHT", "slight" },
+    { GIMP_TEXT_HINT_STYLE_MEDIUM, "GIMP_TEXT_HINT_STYLE_MEDIUM", "medium" },
+    { GIMP_TEXT_HINT_STYLE_FULL, "GIMP_TEXT_HINT_STYLE_FULL", "full" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TEXT_HINT_STYLE_NONE, N_("hinting|None"), NULL },
+    { GIMP_TEXT_HINT_STYLE_SLIGHT, N_("hinting|Slight"), NULL },
+    { GIMP_TEXT_HINT_STYLE_MEDIUM, N_("hinting|Medium"), NULL },
+    { GIMP_TEXT_HINT_STYLE_FULL, N_("hinting|Full"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpTextHintStyle", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_enum_set_value_descriptions (type, descs);
     }

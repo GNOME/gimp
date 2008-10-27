@@ -269,7 +269,7 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
+  GIMP_REPEAT_NONE,       /*< desc="repeat|None"     >*/
   GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
   GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
 } GimpRepeatMode;
@@ -471,6 +471,19 @@ typedef enum
   GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
   GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
 } GimpTextDirection;
+
+
+#define GIMP_TYPE_TEXT_HINT_STYLE (gimp_text_hint_style_get_type ())
+
+GType gimp_text_hint_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_HINT_STYLE_NONE,     /*< desc="hinting|None"   >*/
+  GIMP_TEXT_HINT_STYLE_SLIGHT,   /*< desc="hinting|Slight" >*/
+  GIMP_TEXT_HINT_STYLE_MEDIUM,   /*< desc="hinting|Medium" >*/
+  GIMP_TEXT_HINT_STYLE_FULL,     /*< desc="hinting|Full"   >*/
+} GimpTextHintStyle;
 
 
 #define GIMP_TYPE_TEXT_JUSTIFICATION (gimp_text_justification_get_type ())

@@ -46,9 +46,8 @@ enum
   PROP_FONT,
   PROP_FONT_SIZE,
   PROP_UNIT,
-  PROP_HINTING,
-  PROP_AUTOHINT,
   PROP_ANTIALIAS,
+  PROP_HINT_STYLE,
   PROP_KERNING,
   PROP_LANGUAGE,
   PROP_BASE_DIR,
@@ -65,7 +64,9 @@ enum
   PROP_TRANSFORMATION,
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
-  PROP_BORDER
+  PROP_BORDER,
+  /* for backward compatibility */
+  PROP_HINTING
 };
 
 
@@ -128,19 +129,16 @@ gimp_text_class_init (GimpTextClass *klass)
                                  "font-size-unit", NULL,
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
-                                    "hinting", NULL,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
-                                    "autohint", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HINT_STYLE,
+                                "hint-style", NULL,
+                                 GIMP_TYPE_TEXT_HINT_STYLE,
+                                 GIMP_TEXT_HINT_STYLE_MEDIUM,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KERNING,
                                     "kerning", NULL,
                                     FALSE,
@@ -228,6 +226,12 @@ gimp_text_class_init (GimpTextClass *klass)
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_WRITABLE));
 
+  /*  the old hinting options have been replaced by 'hint-style'  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
+                                    "hinting", NULL,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   g_free (language);
 }
 
@@ -282,14 +286,11 @@ gimp_text_get_property (GObject      *object,
     case PROP_UNIT:
       g_value_set_int (value, text->unit);
       break;
-    case PROP_HINTING:
-      g_value_set_boolean (value, text->hinting);
-      break;
-    case PROP_AUTOHINT:
-      g_value_set_boolean (value, text->autohint);
-      break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, text->antialias);
+      break;
+    case PROP_HINT_STYLE:
+      g_value_set_enum (value, text->hint_style);
       break;
     case PROP_KERNING:
       g_value_set_boolean (value, text->kerning);
@@ -338,6 +339,10 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_OFFSET_Y:
       g_value_set_double (value, text->offset_y);
+      break;
+    case PROP_HINTING:
+      g_value_set_boolean (value,
+                           text->hint_style != GIMP_TEXT_HINT_STYLE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -388,14 +393,11 @@ gimp_text_set_property (GObject      *object,
     case PROP_UNIT:
       text->unit = g_value_get_int (value);
       break;
-    case PROP_HINTING:
-      text->hinting = g_value_get_boolean (value);
-      break;
-    case PROP_AUTOHINT:
-      text->autohint = g_value_get_boolean (value);
-      break;
     case PROP_ANTIALIAS:
       text->antialias = g_value_get_boolean (value);
+      break;
+    case PROP_HINT_STYLE:
+      text->hint_style = g_value_get_enum (value);
       break;
     case PROP_KERNING:
       text->kerning = g_value_get_boolean (value);
@@ -450,6 +452,11 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);
+      break;
+    case PROP_HINTING:
+      text->hint_style = (g_value_get_boolean (value) ?
+                          GIMP_TEXT_HINT_STYLE_MEDIUM :
+                          GIMP_TEXT_HINT_STYLE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
