@@ -56,7 +56,6 @@ struct _GimpTextOptions
 
   /*  options gui  */
   GtkWidget             *size_entry;
-  GtkWidget             *along_vectors_button;
 };
 
 

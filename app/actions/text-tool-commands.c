@@ -158,12 +158,21 @@ text_tool_clear_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_path_from_text_callback (GtkAction *action,
-                                   gpointer   data)
+text_tool_path_from_text_cmd_callback (GtkAction *action,
+                                       gpointer   data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
   gimp_text_tool_create_vectors (text_tool);
+}
+
+void
+text_tool_text_along_path_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+
+  gimp_text_tool_create_vectors_warped (text_tool);
 }
 
 void

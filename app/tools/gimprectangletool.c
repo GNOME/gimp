@@ -695,6 +695,58 @@ gimp_rectangle_tool_point_in_rectangle (GimpRectangleTool *rect_tool,
   return inside;
 }
 
+/**
+ * gimp_rectangle_tool_frame_item:
+ * @rect_tool: a #GimpRectangleTool interface
+ * @item:      a #GimpItem attached to the image on which a
+ *             rectangle is being shown.
+ *
+ * Convenience function to set the corners of the rectangle to
+ * match the bounds of the specified item.  The rectangle interface
+ * must be active (i.e., showing a rectangle), and the item must be
+ * attached to the image on which the rectangle is active.
+ **/
+void
+gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
+                                GimpItem          *item)
+{
+  GimpDisplay *display = GIMP_TOOL (rect_tool)->display;
+  gint         offset_x;
+  gint         offset_y;
+  gint         width;
+  gint         height;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
+  g_return_if_fail (display != NULL);
+  g_return_if_fail (display->image == item->image);
+
+  width  = gimp_item_width (item);
+  height = gimp_item_height (item);
+
+  gimp_item_offsets (item, &offset_x, &offset_y);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
+
+  gimp_rectangle_tool_set_function (rect_tool,
+                                    GIMP_RECTANGLE_TOOL_CREATING);
+
+  g_object_set (rect_tool,
+                "x1", offset_x,
+                "y1", offset_y,
+                "x2", offset_x + width,
+                "y2", offset_y + height,
+                NULL);
+
+  /* kludge to force handle sizes to update.  This call may be
+   * harmful if this function is ever moved out of the text tool code.
+   */
+  gimp_rectangle_tool_set_constraint (rect_tool,
+                                      GIMP_RECTANGLE_CONSTRAIN_NONE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
+}
+
 void
 gimp_rectangle_tool_set_property (GObject      *object,
                                   guint         property_id,

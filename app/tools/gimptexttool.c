@@ -114,6 +114,13 @@ static GimpUIManager * gimp_text_tool_get_popup (GimpTool          *tool,
                                                  GimpDisplay       *display,
                                                  const gchar      **ui_path);
 
+static void      gimp_text_tool_draw            (GimpDrawTool      *draw_tool);
+static void      gimp_text_tool_draw_preedit    (GimpDrawTool      *draw_tool);
+static void      gimp_text_tool_draw_selection  (GimpDrawTool      *draw_tool);
+
+static gboolean  gimp_text_tool_rectangle_change_complete
+                                                (GimpRectangleTool *rect_tool);
+
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
                                                  GimpText          *text);
@@ -129,8 +136,6 @@ static void      gimp_text_tool_text_notify     (GimpText          *text,
 static gboolean  gimp_text_tool_idle_apply      (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply           (GimpTextTool      *text_tool);
 
-static void      gimp_text_tool_create_vectors_warped
-                                                (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
 
@@ -147,19 +152,9 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static gboolean  gimp_text_tool_rectangle_change_complete
-                                                (GimpRectangleTool *rect_tool);
-void             gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
-                                                 GimpItem          *item);
-
-static void gimp_text_tool_draw                 (GimpDrawTool      *draw_tool);
-static void gimp_text_tool_draw_preedit_lines   (GimpDrawTool      *draw_tool);
-static void gimp_text_tool_draw_text_selection  (GimpDrawTool      *draw_tool);
-
 static void gimp_text_tool_update_layout        (GimpTextTool      *text_tool);
 static void gimp_text_tool_update_proxy         (GimpTextTool      *text_tool);
 
-static void gimp_text_tool_reset_im_context     (GimpTextTool      *text_tool);
 static void gimp_text_tool_enter_text           (GimpTextTool      *text_tool,
                                                  const gchar       *str);
 static void gimp_text_tool_text_buffer_changed  (GtkTextBuffer     *text_buffer,
@@ -172,8 +167,12 @@ static void gimp_text_tool_use_editor_notify    (GimpTextOptions   *options,
                                                  GParamSpec        *pspec,
                                                  GimpTextTool      *text_tool);
 
-/* IM Context Callbacks
- */
+static gint gimp_text_tool_xy_to_offset         (GimpTextTool      *text_tool,
+                                                 gdouble            x,
+                                                 gdouble            y);
+
+/*  IM context utilities and callbacks  */
+static void gimp_text_tool_reset_im_context     (GimpTextTool      *text_tool);
 static void gimp_text_tool_commit_cb            (GtkIMContext      *context,
                                                  const gchar       *str,
                                                  GimpTextTool      *text_tool);
@@ -496,23 +495,10 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
               if (text_tool->layout)
                 {
-                  GtkTextIter cursor, start, end;
+                  GtkTextIter cursor;
                   gint        offset;
-                  gint        trailing;
-                  gchar      *string;
 
-                  gtk_text_buffer_get_bounds (text_tool->text_buffer,
-                                              &start, &end);
-                  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                                     &start, &end, TRUE);
-                  pango_layout_xy_to_index (text_tool->layout->layout,
-                                            x * PANGO_SCALE,
-                                            y * PANGO_SCALE,
-                                            &offset, &trailing);
-                  offset = g_utf8_pointer_to_offset (string, string + offset);
-                  offset += trailing;
-
-                  g_free (string);
+                  offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
 
                   gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
                                                       &cursor, offset);
@@ -618,24 +604,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
               GimpItem   *item = GIMP_ITEM (text_tool->layer);
               gdouble     x    = coords->x - item->offset_x;
               gdouble     y    = coords->y - item->offset_y;
-              GtkTextIter cursor, start, end;
-              gint        offset, trailing;
-              gchar      *string;
+              GtkTextIter cursor;
+              gint        offset;
 
-              gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-
-              string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                                 &start, &end, TRUE);
-
-              pango_layout_xy_to_index (text_tool->layout->layout,
-                                        x * PANGO_SCALE,
-                                        y * PANGO_SCALE,
-                                        &offset, &trailing);
-
-              offset = g_utf8_pointer_to_offset (string, string + offset);
-              offset += trailing;
-
-              g_free (string);
+              offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
 
               gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
                                                   &cursor, offset);
@@ -691,26 +663,12 @@ gimp_text_tool_motion (GimpTool        *tool,
           gdouble      x    = coords->x - item->offset_x;
           gdouble      y    = coords->y - item->offset_y;
           GtkTextIter  cursor;
-          GtkTextIter  start, end;
           GtkTextIter  old_selection_bound;
           GtkTextMark *selection_mark;
-          gint         offset, trailing;
+          gint         offset;
           gint         old_cursor_offset;
-          gchar       *string;
 
-          gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-          string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                             &start, &end, TRUE);
-
-          pango_layout_xy_to_index (text_tool->layout->layout,
-                                    x * PANGO_SCALE,
-                                    y * PANGO_SCALE,
-                                    &offset, &trailing);
-
-          offset = g_utf8_pointer_to_offset (string, string + offset);
-          offset += trailing;
-
-          g_free (string);
+          offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
 
           selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
 
@@ -1051,6 +1009,325 @@ gimp_text_tool_get_popup (GimpTool         *tool,
 }
 
 static void
+gimp_text_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GimpTool         *tool      = GIMP_TOOL (draw_tool);
+  GdkRectangle      cliprect;
+  gint              width, height;
+  gint              x1, x2;
+  gint              y1, y2;
+  GtkTextIter       start;
+
+  g_object_set (text_tool,
+                "narrow-mode", TRUE,
+                NULL);
+
+  gimp_rectangle_tool_draw (draw_tool);
+
+  if (! text_tool->layer ||
+      ! text_tool->layer->text)
+    return;
+
+  /* There will be no layout if the function is called from the wrong place */
+  if (! text_tool->layout)
+    gimp_text_tool_update_layout (text_tool);
+
+  g_object_get (text_tool,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
+
+  /* Turn on clipping for text-cursor and selections */
+  cliprect.x      = x1;
+  cliprect.width  = x2 - x1;
+  cliprect.y      = y1;
+  cliprect.height = y2 - y1;
+  gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
+
+  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
+
+  if (! gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+    {
+      /* If the text buffer has no selection, draw the text cursor */
+
+      gint            cursorx;
+      GtkTextIter     cursor;
+      PangoRectangle  crect;
+      gchar          *string;
+
+      gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
+                                        gtk_text_buffer_get_insert (text_tool->text_buffer));
+
+      string = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                         &start, &cursor, FALSE);
+
+      /* Using strlen to get the byte index, not the character offset */
+      cursorx = strlen (string);
+
+      /* TODO: make cursor position itself even inside preedits! */
+      if (text_tool->preedit_len > 0)
+        cursorx += text_tool->preedit_len;
+
+      g_free (string);
+
+      pango_layout_index_to_pos (text_tool->layout->layout, cursorx, &crect);
+
+      crect.x      = PANGO_PIXELS (crect.x);
+      crect.y      = PANGO_PIXELS (crect.y);
+      crect.height = PANGO_PIXELS (crect.height);
+
+      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                     crect.x, crect.y,
+                                     4, crect.height,
+                                     TRUE);
+
+      if (text_tool->preedit_string && text_tool->preedit_len > 0)
+        gimp_text_tool_draw_preedit (draw_tool);
+    }
+  else
+    {
+      /* If the text buffer has a selection, highlight the
+       * selected letters*/
+
+      gimp_text_tool_draw_selection (draw_tool);
+    }
+
+  /* Turn off clipping when done */
+  gimp_draw_tool_set_clip_rect (draw_tool, NULL, FALSE);
+}
+
+static void
+gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
+{
+  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  PangoLayout     *layout;
+  PangoLayoutIter *line_iter;
+  GtkTextIter      cursor, start;
+  gint             i;
+  gint             min, max;
+  gchar           *string;
+
+  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer, &cursor, NULL);
+  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
+
+  string = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                     &start, &cursor, FALSE);
+  min = strlen (string);
+  g_free (string);
+
+  max = min + text_tool->preedit_len;
+
+  layout = text_tool->layout->layout;
+  line_iter = pango_layout_get_iter (layout);
+  i = 0;
+
+  do
+    {
+      gint firstline, lastline;
+      gint first_x,   last_x;
+
+      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
+      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
+
+      if (i >= firstline && i <= lastline)
+        {
+          PangoRectangle crect;
+
+          pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
+          pango_extents_to_pixels (&crect, NULL);
+
+          gimp_draw_tool_draw_line (draw_tool,
+                                    crect.x, crect.y + crect.height,
+                                    crect.x + crect.width,
+                                    crect.y + crect.height,
+                                    TRUE);
+          if (i == firstline)
+            {
+              PangoRectangle crect2 = crect;
+
+              crect2.width = PANGO_PIXELS (first_x) - crect.x;
+              crect2.x     = crect.x;
+
+              gimp_draw_tool_draw_line (draw_tool,
+                                        crect2.x, crect2.y + crect2.height,
+                                        crect2.width,
+                                        crect2.y + crect2.height,
+                                        TRUE);
+            }
+
+          if (i == lastline)
+            {
+              PangoRectangle crect2 = crect;
+
+              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
+              crect2.x     = PANGO_PIXELS (last_x);
+
+              gimp_draw_tool_draw_line (draw_tool,
+                                        crect2.x, crect2.y + crect2.height,
+                                        crect2.x + crect2.width,
+                                        crect2.y + crect2.height,
+                                        TRUE);
+            }
+        }
+
+      i++;
+    }
+  while (pango_layout_iter_next_line (line_iter));
+
+  pango_layout_iter_free (line_iter);
+}
+
+static void
+gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
+{
+  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  PangoLayout     *layout;
+  PangoLayoutIter *line_iter;
+  GtkTextIter      start;
+  GtkTextIter      sel_start, sel_end;
+  gint             i;
+  gint             min, max;
+  gchar           *string;
+
+  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
+                                        &sel_start, &sel_end);
+  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
+
+  string = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                     &start, &sel_start, FALSE);
+  min = strlen (string);
+  g_free (string);
+
+  string = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                     &start, &sel_end, FALSE);
+  max = strlen (string);
+  g_free (string);
+
+  layout = text_tool->layout->layout;
+  line_iter = pango_layout_get_iter (layout);
+  i = 0;
+
+  /* Invert the selected letters by inverting all
+   * lines containing selected letters, then
+   * invert the unselected letters on these lines
+   * a second time to make them look normal
+   */
+  do
+    {
+      gint firstline, lastline;
+      gint first_x,   last_x;
+
+      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
+      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
+
+      if (i >= firstline && i <= lastline)
+        {
+          PangoRectangle crect;
+
+          pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
+          pango_extents_to_pixels (&crect, NULL);
+
+          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                         crect.x, crect.y,
+                                         crect.width, crect.height,
+                                         TRUE);
+          if (i == firstline)
+            {
+              /* Twice invert all letters before the selection,
+               * making them look normal
+               */
+              PangoRectangle crect2 = crect;
+
+              crect2.width = PANGO_PIXELS (first_x) - crect.x;
+              crect2.x     = crect.x;
+
+              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                             crect2.x, crect2.y,
+                                             crect2.width, crect2.height,
+                                             TRUE);
+            }
+          if (i == lastline)
+            {
+              /* Twice invert all letters after the selection,
+               * making them look normal
+               */
+              PangoRectangle crect2 = crect;
+
+              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
+              crect2.x     = PANGO_PIXELS (last_x);
+
+              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                             crect2.x, crect2.y,
+                                             crect2.width, crect2.height,
+                                             TRUE);
+            }
+        }
+      i++;
+    }
+  while (pango_layout_iter_next_line (line_iter));
+  pango_layout_iter_free (line_iter);
+}
+
+static gboolean
+gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (rect_tool);
+
+  if (text_tool->handle_rectangle_change_complete)
+    {
+      GimpText *text = text_tool->text;
+      GimpItem *item;
+      gint      x1, y1, x2, y2;
+
+      g_object_get (rect_tool,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      text_tool->text_box_fixed = TRUE;
+
+      if (! text || ! text->text || (text->text[0] == 0))
+        {
+          /*
+           * we can't set properties for the text layer, because
+           * it isn't created until some text has been inserted,
+           * so we need to make a special note that will remind
+           * us what to do when we actually create the layer
+           */
+          return TRUE;
+        }
+
+      g_object_set (text_tool->proxy,
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
+                    "box-height", (gdouble) (y2 - y1),
+                    NULL);
+
+      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                   _("Reshape Text Layer"));
+
+      item = GIMP_ITEM (text_tool->layer);
+      gimp_item_translate (item,
+                           x1 - item->offset_x,
+                           y1 - item->offset_y,
+                           TRUE);
+      gimp_text_tool_apply (text_tool);
+
+      gimp_image_undo_group_end (text_tool->image);
+    }
+
+  return TRUE;
+}
+
+
+/*  private functions  */
+
+static void
 gimp_text_tool_connect (GimpTextTool  *text_tool,
                         GimpTextLayer *layer,
                         GimpText      *text)
@@ -1072,15 +1349,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           if (text_tool->pending)
             gimp_text_tool_apply (text_tool);
 
-          if (options->along_vectors_button)
-            {
-              gtk_widget_set_sensitive (options->along_vectors_button,
-                                        FALSE);
-              g_signal_handlers_disconnect_by_func (options->along_vectors_button,
-                                                    gimp_text_tool_create_vectors_warped,
-                                                    text_tool);
-            }
-
           g_object_unref (text_tool->text);
           text_tool->text = NULL;
 
@@ -1100,14 +1368,6 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           g_signal_connect (text, "notify",
                             G_CALLBACK (gimp_text_tool_text_notify),
                             text_tool);
-
-          if (options->along_vectors_button)
-            {
-              g_signal_connect_swapped (options->along_vectors_button, "clicked",
-                                        G_CALLBACK (gimp_text_tool_create_vectors_warped),
-                                        text_tool);
-              gtk_widget_set_sensitive (options->along_vectors_button, TRUE);
-            }
         }
     }
 
@@ -1386,57 +1646,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   gimp_image_flush (image);
   gimp_text_tool_update_layout (text_tool);
-}
-
-void
-gimp_text_tool_create_vectors (GimpTextTool *text_tool)
-{
-  GimpVectors *vectors;
-
-  if (! text_tool->text || ! text_tool->image)
-    return;
-
-  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
-
-  if (text_tool->layer)
-    {
-      gint x, y;
-
-      gimp_item_offsets (GIMP_ITEM (text_tool->layer), &x, &y);
-      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
-    }
-
-  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
-
-  gimp_image_flush (text_tool->image);
-}
-
-static void
-gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
-{
-  GimpVectors   *vectors0;
-  GimpVectors   *vectors;
-  GimpText      *text      = text_tool->text;
-  gdouble        box_height;
-
-  if (! text || ! text_tool->image || ! text_tool->layer)
-    return;
-
-  box_height = gimp_item_height (GIMP_ITEM (text_tool->layer));
-
-  vectors0 = gimp_image_get_active_vectors (text_tool->image);
-  if (! vectors0)
-    return;
-
-  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
-
-  gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
-
-  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
-  gimp_image_set_active_vectors (text_tool->image, vectors);
-  gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
-
-  gimp_image_flush (text_tool->image);
 }
 
 static void
@@ -1887,411 +2096,6 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
     }
 }
 
-static gboolean
-gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
-{
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (rect_tool);
-
-  if (text_tool->handle_rectangle_change_complete)
-    {
-      GimpText *text = text_tool->text;
-      GimpItem *item;
-      gint      x1, y1, x2, y2;
-
-      g_object_get (rect_tool,
-                    "x1", &x1,
-                    "y1", &y1,
-                    "x2", &x2,
-                    "y2", &y2,
-                    NULL);
-
-      text_tool->text_box_fixed = TRUE;
-
-      if (! text || ! text->text || (text->text[0] == 0))
-        {
-          /*
-           * we can't set properties for the text layer, because
-           * it isn't created until some text has been inserted,
-           * so we need to make a special note that will remind
-           * us what to do when we actually create the layer
-           */
-          return TRUE;
-        }
-
-      g_object_set (text_tool->proxy,
-                    "box-mode",   GIMP_TEXT_BOX_FIXED,
-                    "box-width",  (gdouble) (x2 - x1),
-                    "box-height", (gdouble) (y2 - y1),
-                    NULL);
-
-      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
-                                   _("Reshape Text Layer"));
-
-      item = GIMP_ITEM (text_tool->layer);
-      gimp_item_translate (item,
-                           x1 - item->offset_x,
-                           y1 - item->offset_y,
-                           TRUE);
-      gimp_text_tool_apply (text_tool);
-
-      gimp_image_undo_group_end (text_tool->image);
-    }
-
-  return TRUE;
-}
-
-/* this doesn't belong here but this is the only place
-   it is used at the moment -- Bill
-*/
-
-/**
- * gimp_rectangle_tool_frame_item:
- * @rect_tool: a #GimpRectangleTool interface
- * @item:      a #GimpItem attached to the image on which a
- *             rectangle is being shown.
- *
- * Convenience function to set the corners of the rectangle to
- * match the bounds of the specified item.  The rectangle interface
- * must be active (i.e., showing a rectangle), and the item must be
- * attached to the image on which the rectangle is active.
- */
-void
-gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
-                                GimpItem          *item)
-{
-  GimpDisplay *display = GIMP_TOOL (rect_tool)->display;
-  gint         offset_x;
-  gint         offset_y;
-  gint         width;
-  gint         height;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
-  g_return_if_fail (display != NULL);
-  g_return_if_fail (display->image == item->image);
-
-  width  = gimp_item_width (item);
-  height = gimp_item_height (item);
-
-  gimp_item_offsets (item, &offset_x, &offset_y);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
-
-  gimp_rectangle_tool_set_function (rect_tool,
-                                    GIMP_RECTANGLE_TOOL_CREATING);
-
-  g_object_set (rect_tool,
-                "x1", offset_x,
-                "y1", offset_y,
-                "x2", offset_x + width,
-                "y2", offset_y + height,
-                NULL);
-
-  /* kludge to force handle sizes to update.  This call may be
-   * harmful if this function is ever moved out of the text tool code.
-   */
-  gimp_rectangle_tool_set_constraint (rect_tool,
-                                      GIMP_RECTANGLE_CONSTRAIN_NONE);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
-}
-
-static void
-gimp_text_tool_draw_preedit_lines (GimpDrawTool *draw_tool)
-{
-  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  PangoLayout     *layout;
-  PangoLayoutIter *line_iter;
-  GtkTextIter      cursor, start;
-  gint             i;
-  gint             min, max;
-  gchar           *string;
-
-  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer, &cursor, NULL);
-  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &cursor, FALSE);
-  min = strlen (string);
-  g_free (string);
-
-  max = min + text_tool->preedit_len;
-
-  layout = text_tool->layout->layout;
-  line_iter = pango_layout_get_iter (layout);
-  i = 0;
-
-  do
-    {
-      gint firstline, lastline;
-      gint first_x,   last_x;
-
-      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
-
-      if (i >= firstline && i <= lastline)
-        {
-          PangoRectangle crect;
-
-          pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
-          pango_extents_to_pixels (&crect, NULL);
-
-          gimp_draw_tool_draw_line (draw_tool,
-                                    crect.x, crect.y + crect.height,
-                                    crect.x + crect.width,
-                                    crect.y + crect.height,
-                                    TRUE);
-          if (i == firstline)
-            {
-              PangoRectangle crect2 = crect;
-
-              crect2.width = PANGO_PIXELS (first_x) - crect.x;
-              crect2.x     = crect.x;
-
-              gimp_draw_tool_draw_line (draw_tool,
-                                        crect2.x, crect2.y + crect2.height,
-                                        crect2.width,
-                                        crect2.y + crect2.height,
-                                        TRUE);
-            }
-          if (i == lastline)
-            {
-              PangoRectangle crect2 = crect;
-
-              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
-              crect2.x     = PANGO_PIXELS (last_x);
-
-              gimp_draw_tool_draw_line (draw_tool,
-                                        crect2.x, crect2.y + crect2.height,
-                                        crect2.x + crect2.width,
-                                        crect2.y + crect2.height,
-                                        TRUE);
-            }
-        }
-
-      i++;
-    }
-  while (pango_layout_iter_next_line (line_iter));
-
-  pango_layout_iter_free (line_iter);
-}
-
-static void
-gimp_text_tool_draw_text_selection (GimpDrawTool *draw_tool)
-{
-  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  PangoLayout     *layout;
-  PangoLayoutIter *line_iter;
-  GtkTextIter      start;
-  GtkTextIter      sel_start, sel_end;
-  gint             i;
-  gint             min, max;
-  gchar           *string;
-
-  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
-                                        &sel_start, &sel_end);
-  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &sel_start, FALSE);
-  min = strlen (string);
-  g_free (string);
-
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &sel_end, FALSE);
-  max = strlen (string);
-  g_free (string);
-
-  layout = text_tool->layout->layout;
-  line_iter = pango_layout_get_iter (layout);
-  i = 0;
-
-  /* Invert the selected letters by inverting all
-   * lines containing selected letters, then
-   * invert the unselected letters on these lines
-   * a second time to make them look normal
-   */
-  do
-    {
-      gint firstline, lastline;
-      gint first_x,   last_x;
-
-      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
-
-      if (i >= firstline && i <= lastline)
-        {
-          PangoRectangle crect;
-
-          pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
-          pango_extents_to_pixels (&crect, NULL);
-
-          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                         crect.x, crect.y,
-                                         crect.width, crect.height,
-                                         TRUE);
-          if (i == firstline)
-            {
-              /* Twice invert all letters before the selection,
-               * making them look normal
-               */
-              PangoRectangle crect2 = crect;
-
-              crect2.width = PANGO_PIXELS (first_x) - crect.x;
-              crect2.x     = crect.x;
-
-              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                             crect2.x, crect2.y,
-                                             crect2.width, crect2.height,
-                                             TRUE);
-            }
-          if (i == lastline)
-            {
-              /* Twice invert all letters after the selection,
-               * making them look normal
-               */
-              PangoRectangle crect2 = crect;
-
-              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
-              crect2.x     = PANGO_PIXELS (last_x);
-
-              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                             crect2.x, crect2.y,
-                                             crect2.width, crect2.height,
-                                             TRUE);
-            }
-        }
-      i++;
-    }
-  while (pango_layout_iter_next_line (line_iter));
-  pango_layout_iter_free (line_iter);
-}
-
-static void
-gimp_text_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GimpTool         *tool      = GIMP_TOOL (draw_tool);
-  GdkRectangle      cliprect;
-  gint              width, height;
-  gint              x1, x2;
-  gint              y1, y2;
-  GtkTextIter       start;
-
-  g_object_set (text_tool,
-                "narrow-mode", TRUE,
-                NULL);
-
-  gimp_rectangle_tool_draw (draw_tool);
-
-  if (! text_tool->layer ||
-      ! text_tool->layer->text)
-    return;
-
-  /* There will be no layout if the function is called from the wrong place */
-  if (! text_tool->layout)
-    gimp_text_tool_update_layout (text_tool);
-
-  g_object_get (text_tool,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
-
-  /* Turn on clipping for text-cursor and selections */
-  cliprect.x      = x1;
-  cliprect.width  = x2 - x1;
-  cliprect.y      = y1;
-  cliprect.height = y2 - y1;
-  gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
-
-  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-
-  if (! gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    {
-      /* If the text buffer has no selection, draw the text cursor */
-
-      gint            cursorx;
-      GtkTextIter     cursor;
-      PangoRectangle  crect;
-      gchar          *string;
-
-      gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
-                                        gtk_text_buffer_get_insert (text_tool->text_buffer));
-
-      string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                         &start, &cursor, FALSE);
-
-      /* Using strlen to get the byte index, not the character offset */
-      cursorx = strlen (string);
-
-      /* TODO: make cursor position itself even inside preedits! */
-      if (text_tool->preedit_len > 0)
-        cursorx += text_tool->preedit_len;
-
-      g_free (string);
-
-      pango_layout_index_to_pos (text_tool->layout->layout, cursorx, &crect);
-
-      crect.x      = PANGO_PIXELS (crect.x);
-      crect.y      = PANGO_PIXELS (crect.y);
-      crect.height = PANGO_PIXELS (crect.height);
-
-      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x, crect.y,
-                                     4, crect.height,
-                                     TRUE);
-
-      if (text_tool->preedit_string && text_tool->preedit_len > 0)
-        gimp_text_tool_draw_preedit_lines (draw_tool);
-    }
-  else
-    {
-      /* If the text buffer has a selection, highlight the
-       * selected letters*/
-
-      gimp_text_tool_draw_text_selection (draw_tool);
-    }
-
-  /* Turn off clipping when done */
-  gimp_draw_tool_set_clip_rect (draw_tool, NULL, FALSE);
-}
-
-static void
-gimp_text_tool_commit_cb (GtkIMContext *context,
-                          const gchar  *str,
-                          GimpTextTool *text_tool)
-{
-  gimp_text_tool_enter_text (text_tool, str);
-}
-
-static void
-gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
-{
-  if (text_tool->needs_im_reset)
-    {
-      text_tool->needs_im_reset = FALSE;
-      gtk_im_context_reset (text_tool->im_context);
-    }
-}
-
-static void
-gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
-                                   GimpTextTool *text_tool)
-{
-  if (text_tool->preedit_string)
-    g_free (text_tool->preedit_string);
-
-  gtk_im_context_get_preedit_string (context,
-                                     &text_tool->preedit_string, NULL,
-                                     &text_tool->preedit_cursor);
-
-  text_tool->preedit_len = strlen (text_tool->preedit_string);
-
-  gimp_text_tool_update_proxy (text_tool);
-}
-
 static void
 gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
@@ -2308,34 +2112,6 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
   else
     {
       gimp_text_tool_create_layer (text_tool, NULL);
-    }
-}
-
-void
-gimp_text_tool_delete_text (GimpTextTool *text_tool,
-                            gboolean      backspace)
-{
-  GtkTextIter cursor;
-
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor,
-                                    gtk_text_buffer_get_insert (text_tool->text_buffer));
-
-  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    {
-      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
-    }
-  else if (backspace)
-    {
-      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
-    }
-  else
-    {
-      GtkTextIter end = cursor;
-
-      gtk_text_iter_forward_cursor_positions (&end, 1);
-      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
-                                          &cursor, &end, TRUE);
     }
 }
 
@@ -2387,6 +2163,73 @@ gimp_text_tool_update_layout (GimpTextTool *text_tool)
   text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
 }
 
+static gint
+gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
+                             gdouble       x,
+                             gdouble       y)
+{
+  GtkTextIter start, end;
+  gchar      *string;
+  gint        offset;
+  gint        trailing;
+
+  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
+  string = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                     &start, &end, TRUE);
+
+  pango_layout_xy_to_index (text_tool->layout->layout,
+                            x * PANGO_SCALE,
+                            y * PANGO_SCALE,
+                            &offset, &trailing);
+
+  offset = g_utf8_pointer_to_offset (string, string + offset);
+  offset += trailing;
+
+  g_free (string);
+
+  return offset;
+}
+
+
+/*  IM context utilities and callbacks  */
+
+static void
+gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
+{
+  if (text_tool->needs_im_reset)
+    {
+      text_tool->needs_im_reset = FALSE;
+      gtk_im_context_reset (text_tool->im_context);
+    }
+}
+
+static void
+gimp_text_tool_commit_cb (GtkIMContext *context,
+                          const gchar  *str,
+                          GimpTextTool *text_tool)
+{
+  gimp_text_tool_enter_text (text_tool, str);
+}
+
+static void
+gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
+                                   GimpTextTool *text_tool)
+{
+  if (text_tool->preedit_string)
+    g_free (text_tool->preedit_string);
+
+  gtk_im_context_get_preedit_string (context,
+                                     &text_tool->preedit_string, NULL,
+                                     &text_tool->preedit_cursor);
+
+  text_tool->preedit_len = strlen (text_tool->preedit_string);
+
+  gimp_text_tool_update_proxy (text_tool);
+}
+
+
+/*  public functions  */
+
 gboolean
 gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
 {
@@ -2394,6 +2237,34 @@ gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
     return gtk_text_buffer_get_has_selection (text_tool->text_buffer);
   else
     return FALSE;
+}
+
+void
+gimp_text_tool_delete_text (GimpTextTool *text_tool,
+                            gboolean      backspace)
+{
+  GtkTextIter cursor;
+
+  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
+                                    &cursor,
+                                    gtk_text_buffer_get_insert (text_tool->text_buffer));
+
+  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+    {
+      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    }
+  else if (backspace)
+    {
+      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+    }
+  else
+    {
+      GtkTextIter end = cursor;
+
+      gtk_text_iter_forward_cursor_positions (&end, 1);
+      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
+                                          &cursor, &end, TRUE);
+    }
 }
 
 void
@@ -2435,4 +2306,58 @@ gimp_text_tool_clipboard_paste (GimpTextTool *text_tool,
                                         GDK_SELECTION_PRIMARY);
 
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
+}
+
+void
+gimp_text_tool_create_vectors (GimpTextTool *text_tool)
+{
+  GimpVectors *vectors;
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+
+  if (! text_tool->text || ! text_tool->image)
+    return;
+
+  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
+
+  if (text_tool->layer)
+    {
+      gint x, y;
+
+      gimp_item_offsets (GIMP_ITEM (text_tool->layer), &x, &y);
+      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+    }
+
+  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
+
+  gimp_image_flush (text_tool->image);
+}
+
+void
+gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
+{
+  GimpVectors   *vectors0;
+  GimpVectors   *vectors;
+  gdouble        box_height;
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+
+  if (! text_tool->text || ! text_tool->image || ! text_tool->layer)
+    return;
+
+  box_height = gimp_item_height (GIMP_ITEM (text_tool->layer));
+
+  vectors0 = gimp_image_get_active_vectors (text_tool->image);
+  if (! vectors0)
+    return;
+
+  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
+
+  gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
+
+  gimp_image_add_vectors (text_tool->image, vectors, -1, TRUE);
+  gimp_image_set_active_vectors (text_tool->image, vectors);
+  gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
+
+  gimp_image_flush (text_tool->image);
 }

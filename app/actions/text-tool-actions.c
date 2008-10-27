@@ -83,7 +83,13 @@ static const GimpActionEntry text_tool_actions[] =
   { "text-tool-path-from-text", GIMP_STOCK_PATH,
     N_("_Path from Text"), "",
     N_("Create a path from the outlines of the current text"),
-    G_CALLBACK (text_tool_path_from_text_callback),
+    G_CALLBACK (text_tool_path_from_text_cmd_callback),
+    NULL },
+
+  { "text-tool-text-along-path", GIMP_STOCK_PATH,
+    N_("Text along Path"), "",
+    N_("Bend the text along the currently active path"),
+    G_CALLBACK (text_tool_text_along_path_cmd_callback),
     NULL },
 
   { "text-tool-input-methods", NULL,
@@ -134,6 +140,7 @@ text_tool_actions_update (GimpActionGroup *group,
   GimpTextTool  *text_tool  = GIMP_TEXT_TOOL (data);
   GimpImage     *image      = GIMP_TOOL (text_tool)->display->image;
   GimpLayer     *layer;
+  GimpVectors   *vectors;
   GtkClipboard  *clipboard;
   gboolean       text_layer = FALSE;
   gboolean       text_sel   = FALSE;   /* some text is selected        */
@@ -143,6 +150,8 @@ text_tool_actions_update (GimpActionGroup *group,
 
   if (layer)
     text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+
+  vectors = gimp_image_get_active_vectors (image);
 
   text_sel = gimp_text_tool_get_has_text_selection (text_tool);
 
@@ -167,4 +176,5 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-clear",           text_layer);
   SET_SENSITIVE ("text-tool-load",            image);
   SET_SENSITIVE ("text-tool-path-from-text",  text_layer);
+  SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
 }

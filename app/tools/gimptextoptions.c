@@ -193,8 +193,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  options->size_entry           = NULL;
-  options->along_vectors_button = NULL;
+  options->size_entry = NULL;
 }
 
 static void
@@ -515,13 +514,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
-
-  button = gtk_button_new_with_label (_("Text along Path"));
-  gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
-
-  options->along_vectors_button = button;
 
   return main_vbox;
 }
