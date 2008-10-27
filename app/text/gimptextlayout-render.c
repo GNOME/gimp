@@ -234,11 +234,12 @@ static void
 gimp_text_layout_render_trafo (GimpTextLayout *layout,
                                cairo_matrix_t *trafo)
 {
-  GimpText *text = layout->text;
+  GimpText      *text = layout->text;
+  const gdouble  norm = 1.0 / layout->yres * layout->xres;
 
-  trafo->xx = text->transformation.coeff[0][0] * 1.0 / layout->yres * layout->xres;
+  trafo->xx = text->transformation.coeff[0][0] * norm;
   trafo->xy = text->transformation.coeff[0][1] * 1.0;
-  trafo->yx = text->transformation.coeff[1][0] * 1.0 / layout->yres * layout->xres;
+  trafo->yx = text->transformation.coeff[1][0] * norm;
   trafo->yy = text->transformation.coeff[1][1] * 1.0;
   trafo->x0 = 0;
   trafo->y0 = 0;
