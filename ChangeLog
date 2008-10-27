@@ -1,5 +1,11 @@
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_key_press): take the
+	layout line's x coordinate into account so the stuff works for
+	right-aligned or centered text.
+
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_key_press): argh, need
 	to speak in byte offsets not character offsets. Do so and avoid
 	getting the buffer's text on each keystroke just to do the

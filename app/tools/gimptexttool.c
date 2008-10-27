@@ -845,21 +845,33 @@ gimp_text_tool_key_press (GimpTool    *tool,
         gint             line_index;
         gint             trailing;
         PangoLayoutLine *layout_line;
+        PangoLayoutIter *layout_iter;
+        PangoRectangle   logical;
+        gint             i;
 
         line       = gtk_text_iter_get_line (&selection);
         line_index = gtk_text_iter_get_line_index (&selection);
 
-        layout_line = pango_layout_get_line_readonly (text_tool->layout->layout,
-                                                      line);
+        layout_iter = pango_layout_get_iter (text_tool->layout->layout);
+        for (i = 0; i < line; i++)
+          pango_layout_iter_next_line (layout_iter);
+
+        layout_line = pango_layout_iter_get_line_readonly (layout_iter);
 
         pango_layout_line_index_to_x (layout_line,
                                       layout_line->start_index + line_index,
                                       FALSE, &x_pos);
 
+        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
+        x_pos += logical.x;
+
+        pango_layout_iter_free (layout_iter);
+
         /*  try to go to the remembered x_pos if it exists *and* we are at
-         *  the end of the current line
+         *  the beginning or at the end of the current line
          */
-        if (text_tool->x_pos != -1 && line_index == layout_line->length)
+        if (text_tool->x_pos != -1 && (line_index == layout_line->length ||
+                                       line_index == 0))
           x_pos = text_tool->x_pos;
 
         if (kevent->keyval == GDK_Up ||
@@ -900,7 +912,15 @@ gimp_text_tool_key_press (GimpTool    *tool,
             break;
           }
 
-        pango_layout_line_x_to_index (layout_line, x_pos,
+        layout_iter = pango_layout_get_iter (text_tool->layout->layout);
+        for (i = 0; i < line; i++)
+          pango_layout_iter_next_line (layout_iter);
+
+        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
+
+        pango_layout_iter_free (layout_iter);
+
+        pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
                                       &line_index, &trailing);
 
         line_index -= layout_line->start_index;
