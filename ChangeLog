@@ -1,3 +1,10 @@
+2008-10-27  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c: removed unused includes.
+
+	* app/actions/text-tool-commands.c (text_tool_load_cmd_callback):
+	fixed file dialog for opening text files.
+
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_key_press): take the
