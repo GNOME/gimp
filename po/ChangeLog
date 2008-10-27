@@ -1,3 +1,7 @@
+2008-10-28  Petr Kovar  <pknbe@volny.cz>
+
+	* cs.po: Fixed Czech translation (bug #517967).
+
 2008-10-26  Leonardo Ferreira Fontenelle  <leonardof@gnome.org>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation.

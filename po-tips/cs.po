@@ -1,31 +1,25 @@
-# translation of cs.po to Czech
-# translation of cs.po to
-# Czech translation of gimp-tips
-# Copyright (C) 2003, 2004 gimp'S COPYRIGHT HOLDER
-# Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
-# This file is distributed under the same license as the gimp package.
-#
+# Czech translation of gimp-tips.
+# Copyright (C) 2003, 2004, 2008 the author(s) of the GIMP.
+# Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>.
+# This file is distributed under the same license as the gimp-tips package.
 # Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: cs\n"
+"Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-10 12:03+0200\n"
-"PO-Revision-Date: 2007-09-10 12:07+0200\n"
-"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"POT-Creation-Date: 2008-10-28 00:07+0100\n"
+"PO-Revision-Date: 2008-10-28 00:10+0100\n"
+"Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Vítá vás GIMP a celá Wilberova rodina!</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -36,7 +30,7 @@ msgstr ""
 "místo barvy popředí. Stejně tak nástroj Pipeta při kliknutí s <tt>Ctrl</tt> "
 "nastaví barvu pozadí místo barvy popředí."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -46,13 +40,13 @@ msgstr ""
 "efekt masky vrstvy. Kliknutí s <tt>Alt</tt> na náhled masky vrstvy v dialogu "
 "Vrstvy přepíná přímý pohled na vrstvu."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr "Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -61,7 +55,7 @@ msgstr ""
 "vrstvy kromě této. Opětovným kliknutím se <tt>Shift</tt> zobrazíte všechny "
 "vrstvy."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -73,7 +67,7 @@ msgstr ""
 "vrstva&quot; nebo &quot;Ukotvit vrstvu&quot; v dialogu Vrstvy, nebo to "
 "proveďte pomocí menu."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -90,7 +84,7 @@ msgstr ""
 "ukončení GIMPu. Chcete-li se vyvarovat náhodné změny zkratek, zakažte volbu "
 "&quot;Dynamické klávesové zkratky&quot;."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -100,15 +94,7 @@ msgstr ""
 "výběry se budou chytat na vodítka. Vodítka můžete odstranit jejich "
 "přetažením mimo obrázek nástrojem Přesun."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"GIMP vám umožňuje vrátit zpět většinu změn obrázku, takže se nebojte "
-"experimentovat."
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -118,7 +104,7 @@ msgstr ""
 "gz</tt> (nebo <tt>.bz2</tt>, máte-li nainstalován bzip2) a váš obrázek bude "
 "uložen komprimovaný. Načítání komprimovaných obrázků samozřejmě funguje také."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -128,16 +114,16 @@ msgstr ""
 "jako sadu fólií nebo filtrů, takže když se na ně díváte, vidíte kombinaci "
 "jejich obsahů."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
-"Je-li název vrstvy v dialogu Vrstvy zobrazen <b>tučně</b>, nemá vrstvaalfa "
+"Je-li název vrstvy v dialogu Vrstvy zobrazen <b>tučně</b>, nemá vrstva alfa "
 "kanál. Alfa kanál můžete přidat pomocí Vrstva→Průhlednost→Přidat alfa kanál."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -149,7 +135,7 @@ msgstr ""
 "nástroji Úrovně (Barvy→Úrovně). Případný barevný závoj můžete opravit "
 "nástrojem Křivky (Barvy→Křivky)."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -159,7 +145,7 @@ msgstr ""
 "nástroje s jejich aktuálním nastavením. Můžete použít Štětec v režimu "
 "přechodu nebo dokonce nástroje Guma nebo Šmouha."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -167,7 +153,7 @@ msgstr ""
 "Je-li vaše obrazovka přeplněná, můžete stisknutím klávesy <tt>Tab</tt> v "
 "okně obrázku přepnout viditelnost panelu nástrojů a dalších dialogů."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -177,7 +163,7 @@ msgstr ""
 "Chcete-li, aby zásuvný modul pracoval s celým obrázkem, je často nutné "
 "sloučit obrázek do jedné vrstvy (Obrázek→Zploštit obrázek)."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -189,7 +175,7 @@ msgstr ""
 "na RGB (Obrázek→Režim→RGB), přidat alfa kanál (Vrstva→Průhlednost→Přidat "
 "alfa kanál) nebo obrázek zploštit (Obrázek→Zploštit obrázek)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -199,20 +185,7 @@ msgstr ""
 "umožňuje přidávat k aktuálnímu výběru místo jeho nahrazení. Použití "
 "<tt>Ctrl</tt> před provedením výběru odebírá od aktuálního."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"Dokonalou kružnici vytvoříte držením <tt>Shift</tt> při provádění výběru "
-"elipsy. Pro přesné umístění kružnice táhněte vodorovné a svislé vodítko jako "
-"tečny ke kružnici, kterou chcete vybrat, umístěte kurzor na průsečík vodítek "
-"a výsledný výběr se bude vodítek přesně dotýkat."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -224,7 +197,7 @@ msgstr ""
 "a každé aspekt své probíhající práce. Až je projekt hotov, můžete jej uložit "
 "jako JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -236,7 +209,7 @@ msgstr ""
 "Většinu správců oken lze nastavit tak, aby místo klávesy <tt>Alt</tt> "
 "používaly klávesu <tt>Super</tt> (\"Tux\" či \"Windows logo\")."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -245,7 +218,7 @@ msgstr ""
 "Pomocí nástroje Cesty můžete vytvářet a upravovat složité výběry. Dialog "
 "Cesty vám umožňuje pracovat na více cestách a konvertovat je na výběry."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -253,7 +226,7 @@ msgstr ""
 "Vrstvu můžete táhnout z dialogu Vrstvy a pustit ji na panel nástrojů. Tím "
 "vytvoříte nový obrázek obsahující jen tuto vrstvu."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -263,7 +236,7 @@ msgstr ""
 "panelu nástrojů či palety barev na obrázek vyplní aktuální výběr touto "
 "barvou."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -273,7 +246,7 @@ msgstr ""
 "kružnice. Příkaz vykresluje obrys aktuálního výběru. Složitější tvary můžete "
 "kreslit pomocí nástroje Cesty nebo pomocí Filtry→Vyobrazení→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -281,7 +254,7 @@ msgstr ""
 "Kontextovou nápovědu o většině vlastností programu GIMP můžete kdykoli "
 "získat stisknutím klávesy F1. Funguje to i v menu."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -289,7 +262,7 @@ msgstr ""
 "Mnoho operací s vrstvami můžete provést kliknutím pravým tlačítkem na "
 "textovou jmenovku vrstvy v dialogu Vrstvy."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -300,7 +273,7 @@ msgstr ""
 "upravit libovolnými kreslícími nástroji. Pomocí tlačítek v dialogu Kanály "
 "můžete přepínat viditelnost tohoto nového kanálu nebo jej převést na výběr."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -308,15 +281,15 @@ msgstr ""
 "Pomocí <tt>Ctrl</tt>-<tt>Tab</tt> můžete procházet všemi vrstvami obrázku "
 "(pokud tyto klávesy neodchytí váš správce oken...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Pomocí prostředního tlačítka myši můžete posunovat obrázek v okně (můžete "
-"též stisknout mezerník)."
+"též stisknout <tt>mezerník</tt>)."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -327,4 +300,26 @@ msgstr ""
 "Rychlá maska&quot; ve spodním levém rohu okna obrázku. Změňte svůj výběr "
 "kreslením v obrázku a dalším kliknutím na toto tlačítko jej převeďte zpět na "
 "normální výběr."
+
+#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+#~ msgstr "<big>Vítá vás GIMP a celá Wilberova rodina!</big>"
+
+#~ msgid ""
+#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "experiment."
+#~ msgstr ""
+#~ "GIMP vám umožňuje vrátit zpět většinu změn obrázku, takže se nebojte "
+#~ "experimentovat."
+
+#~ msgid ""
+#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
+#~ "guides tangent to the circle you want to select, place your cursor at the "
+#~ "intersection of the guides, and the resulting selection will just touch "
+#~ "the guides."
+#~ msgstr ""
+#~ "Dokonalou kružnici vytvoříte držením <tt>Shift</tt> při provádění výběru "
+#~ "elipsy. Pro přesné umístění kružnice táhněte vodorovné a svislé vodítko "
+#~ "jako tečny ke kružnici, kterou chcete vybrat, umístěte kurzor na průsečík "
+#~ "vodítek a výsledný výběr se bude vodítek přesně dotýkat."
 
