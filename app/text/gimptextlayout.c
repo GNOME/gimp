@@ -22,7 +22,6 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <cairo.h>
 #include <pango/pangocairo.h>
 
 #include "text-types.h"
@@ -313,7 +312,7 @@ gimp_text_get_pango_context (GimpText *text,
 
   fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
 
-  pango_cairo_font_map_set_resolution (fontmap, xres);
+  pango_cairo_font_map_set_resolution (fontmap, yres);
 
   context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
@@ -327,6 +326,7 @@ gimp_text_get_pango_context (GimpText *text,
     case GIMP_TEXT_DIRECTION_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       break;
+
     case GIMP_TEXT_DIRECTION_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
       break;
