@@ -1,5 +1,14 @@
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]: add gimp_draw_tool_set_clip_rect()
+	which transforms the passed in GdkRectangle before setting it
+	on the canvas.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_draw): use it instead
+	of gimp_canvas_set_clip_rect().
+
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptexttool.h: add integer x_pos member to remember
 	the x cursor position when moving up and down across shorter
 	lines.

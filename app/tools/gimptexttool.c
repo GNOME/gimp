@@ -2145,10 +2145,10 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GimpTool         *tool      = GIMP_TOOL (draw_tool);
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
   GdkRectangle      cliprect;
   gint              width, height;
-  gint              x1, x2, y1, y2;
+  gint              x1, x2;
+  gint              y1, y2;
   GtkTextIter       start;
 
   g_object_set (text_tool,
@@ -2177,8 +2177,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   cliprect.width  = x2 - x1;
   cliprect.y      = y1;
   cliprect.height = y2 - y1;
-  gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR, &cliprect);
+  gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
 
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
 
@@ -2229,8 +2228,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     }
 
   /* Turn off clipping when done */
-  gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR, NULL);
+  gimp_draw_tool_set_clip_rect (draw_tool, NULL, FALSE);
 }
 
 static void
