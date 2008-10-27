@@ -23,19 +23,11 @@
 
 #include <glib-object.h>
 
-#define PANGO_ENABLE_ENGINE
-#include <cairo.h>
 #include <pango/pangocairo.h>
 
 #include "text-types.h"
 
 #include "gimptext-bitmap.h"
-
-
-/* for compatibility with older freetype versions */
-#ifndef FT_LOAD_TARGET_MONO
-#define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
-#endif
 
 
 void
@@ -53,11 +45,8 @@ gimp_text_render_bitmap (PangoFont            *font,
 
   cfont = pango_cairo_font_get_scaled_font ((PangoCairoFont *) font);
 
-  x = PANGO_PIXELS (x);
-  y = PANGO_PIXELS (y);
-
-  cglyph.x     = x;
-  cglyph.y     = y;
+  cglyph.x     = PANGO_PIXELS (x);
+  cglyph.y     = PANGO_PIXELS (y);
   cglyph.index = glyph;
 
   cairo_set_scaled_font (cr, cfont);

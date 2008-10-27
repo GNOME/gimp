@@ -1,5 +1,9 @@
 2008-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext-bitmap.c: cleanup, removed unused includes.
+
+2008-10-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbaseenums.[ch]: added new enum GimpTextHintStyle.
 
 	* libgimp/gimpenums.c.tail
