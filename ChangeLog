@@ -1,5 +1,9 @@
 2008-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/text-tool-actions.c: changed menu labels.
+
+2008-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/text-editor-commands.c (text_editor_load_response):
 	hide the file dialog instead of destroying it.
 

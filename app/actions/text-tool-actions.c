@@ -46,63 +46,60 @@
 static const GimpActionEntry text_tool_actions[] =
 {
   { "text-tool-popup", NULL,
-    N_("Text Tool Popup"), NULL, NULL, NULL,
+    N_("Text Tool Menu"), NULL, NULL, NULL,
     NULL },
 
   { "text-tool-cut", GTK_STOCK_CUT,
-    N_("Cut"), NULL, NULL,
+    N_("Cu_t"), NULL, NULL,
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
 
   { "text-tool-copy", GTK_STOCK_COPY,
-    N_("Copy"), NULL, NULL,
+    N_("_Copy"), NULL, NULL,
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },
 
   { "text-tool-paste", GTK_STOCK_PASTE,
-    N_("Paste"), NULL, NULL,
+    N_("_Paste"), NULL, NULL,
     G_CALLBACK (text_tool_paste_cmd_callback),
     NULL },
 
   { "text-tool-delete", GTK_STOCK_DELETE,
-    N_("Delete selected"), NULL, NULL,
+    N_("_Delete"), NULL, NULL,
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },
 
   { "text-tool-load", GTK_STOCK_OPEN,
-    N_("Open"), NULL,
-    N_("Load text from file"),
+    N_("_Open text file..."), NULL, NULL,
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
   { "text-tool-clear", GTK_STOCK_CLEAR,
-    N_("Clear"), "",
+    N_("Cl_ear"), "",
     N_("Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),
     NULL },
 
   { "text-tool-path-from-text", GIMP_STOCK_PATH,
-    N_("Path from Text"), "",
+    N_("_Path from Text"), "",
     N_("Create a path from the outlines of the current text"),
     G_CALLBACK (text_tool_path_from_text_callback),
     NULL },
 
   { "text-tool-input-methods", NULL,
-    N_("Input Methods"), NULL, NULL, NULL,
+    N_("Input _Methods"), NULL, NULL, NULL,
     NULL }
 };
 
 static const GimpRadioActionEntry text_tool_direction_actions[] =
 {
   { "text-tool-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
-    N_("LTR"), "",
-    N_("From left to right"),
+    N_("From left to right"), NULL, NULL,
     GIMP_TEXT_DIRECTION_LTR,
     NULL },
 
   { "text-tool-direction-rtl", GIMP_STOCK_TEXT_DIR_RTL,
-    N_("RTL"), "",
-    N_("From right to left"),
+    N_("From right to left"), NULL, NULL,
     GIMP_TEXT_DIRECTION_RTL,
     NULL }
 };
@@ -124,10 +121,11 @@ text_tool_actions_setup (GimpActionGroup *group)
 }
 
 /*
- * The following code is written on the assumption that this is for a context
- * menu, activated by right-clicking in a text layer.  Therefore, the tool
- * must have a display.  If for any reason the code is adapted to a different
- * situation, some existence testing will need to be added.
+ * The following code is written on the assumption that this is for a
+ * context menu, activated by right-clicking in a text layer.
+ * Therefore, the tool must have a display.  If for any reason the
+ * code is adapted to a different situation, some existence testing
+ * will need to be added.
  */
 void
 text_tool_actions_update (GimpActionGroup *group,
