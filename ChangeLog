@@ -1,5 +1,14 @@
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c: some minor cleanups.
+
+	(gimp_text_tool_draw): draw a cursor of two pixels width which is
+	between glyphs so it is visible both at the left and the right
+	border or the rectangle. Also make it look a little more
+	cursor-like.
+
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/text-tool-actions.c
 	* app/actions/text-tool-commands.[ch]
 	* menus/text-tool-menu.xml: rename action "path-from-text" to

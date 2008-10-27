@@ -1011,13 +1011,13 @@ gimp_text_tool_get_popup (GimpTool         *tool,
 static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GimpTool         *tool      = GIMP_TOOL (draw_tool);
-  GdkRectangle      cliprect;
-  gint              width, height;
-  gint              x1, x2;
-  gint              y1, y2;
-  GtkTextIter       start;
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GimpTool     *tool      = GIMP_TOOL (draw_tool);
+  GdkRectangle  cliprect;
+  gint          width, height;
+  gint          x1, x2;
+  gint          y1, y2;
+  GtkTextIter   start;
 
   g_object_set (text_tool,
                 "narrow-mode", TRUE,
@@ -1080,8 +1080,16 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       crect.height = PANGO_PIXELS (crect.height);
 
       gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x, crect.y,
-                                     4, crect.height,
+                                     crect.x - 1, crect.y + 2,
+                                     3, crect.height - 4,
+                                     TRUE);
+      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                     crect.x - 3, crect.y,
+                                     7, 3,
+                                     TRUE);
+      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                     crect.x - 3, crect.y + crect.height - 3,
+                                     7, 3,
                                      TRUE);
 
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
@@ -1464,7 +1472,8 @@ gimp_text_tool_text_notify (GimpText     *text,
     }
 
   /* we need to redraw the rectangle if it is visible and the shape of
-     the layer has changed, because of an undo for example. */
+   * the layer has changed, because of an undo for example.
+   */
   if (strcmp (pspec->name, "box-width") == 0  ||
       strcmp (pspec->name, "box-height") == 0 ||
       text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
@@ -1494,7 +1503,7 @@ gimp_text_tool_text_notify (GimpText     *text,
 
       /* force change of cursor and selection display */
       gimp_text_tool_update_layout (text_tool);
-/*       gimp_text_tool_update_proxy (text_tool); */
+      /* gimp_text_tool_update_proxy (text_tool); */
       return;
     }
 }
@@ -1566,12 +1575,14 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
             {
               if (gimp_undo_get_age (undo) < TEXT_UNDO_TIMEOUT)
                 {
-                  GimpTool *tool = GIMP_TOOL (text_tool);
+                  GimpTool    *tool = GIMP_TOOL (text_tool);
+                  GimpContext *context;
+
+                  context = GIMP_CONTEXT (gimp_tool_get_options (tool));
 
                   push_undo = FALSE;
                   gimp_undo_reset_age (undo);
-                  gimp_undo_refresh_preview (undo,
-                                             GIMP_CONTEXT (gimp_tool_get_options (tool)));
+                  gimp_undo_refresh_preview (undo, context);
                 }
             }
         }
@@ -1602,7 +1613,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   for (; list; list = list->next)
     {
-      GValue  value = { 0, };
+      GValue value = { 0, };
 
       /*  look ahead and compress changes  */
       if (list->next && list->next->data == list->data)
