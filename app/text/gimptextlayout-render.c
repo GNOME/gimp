@@ -24,7 +24,6 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <cairo.h>
 #include <pango/pangocairo.h>
 #include <pango/pango-font.h>
 
@@ -37,12 +36,6 @@
 #include "gimptext-private.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
-
-
-/* for compatibility with older freetype versions */
-#ifndef FT_LOAD_TARGET_MONO
-#define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
-#endif
 
 
 /*  This file duplicates quite a lot of code from pangoft2.c.
