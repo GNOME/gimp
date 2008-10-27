@@ -1,5 +1,10 @@
 2008-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/text-editor-commands.c (text_editor_load_response):
+	hide the file dialog instead of destroying it.
+
+2008-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c: removed unused includes.
 
 	* app/actions/text-tool-commands.c (text_tool_load_cmd_callback):

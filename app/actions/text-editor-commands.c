@@ -152,5 +152,5 @@ text_editor_load_response (GtkWidget      *dialog,
       g_free (filename);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_widget_hide (dialog);
 }
