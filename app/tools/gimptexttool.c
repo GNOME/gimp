@@ -841,18 +841,25 @@ gimp_text_tool_key_press (GimpTool    *tool,
     case GDK_Down:
     case GDK_KP_Down:
       {
-        gint             offset;
         gint             line;
+        gint             line_index;
         gint             trailing;
         PangoLayoutLine *layout_line;
 
-        offset = gtk_text_iter_get_offset (&selection);
+        line       = gtk_text_iter_get_line (&selection);
+        line_index = gtk_text_iter_get_line_index (&selection);
 
-        pango_layout_index_to_line_x (text_tool->layout->layout,
-                                      offset,
-                                      FALSE, &line, &x_pos);
+        layout_line = pango_layout_get_line_readonly (text_tool->layout->layout,
+                                                      line);
 
-        if (text_tool->x_pos != -1)
+        pango_layout_line_index_to_x (layout_line,
+                                      layout_line->start_index + line_index,
+                                      FALSE, &x_pos);
+
+        /*  try to go to the remembered x_pos if it exists *and* we are at
+         *  the end of the current line
+         */
+        if (text_tool->x_pos != -1 && line_index == layout_line->length)
           x_pos = text_tool->x_pos;
 
         if (kevent->keyval == GDK_Up ||
@@ -874,6 +881,7 @@ gimp_text_tool_key_press (GimpTool    *tool,
 
         layout_line = pango_layout_get_line_readonly (text_tool->layout->layout,
                                                       line);
+
         if (! layout_line)
           {
             if (kevent->keyval == GDK_Up ||
@@ -892,10 +900,17 @@ gimp_text_tool_key_press (GimpTool    *tool,
             break;
           }
 
-        pango_layout_line_x_to_index (layout_line, x_pos, &offset, &trailing);
+        pango_layout_line_x_to_index (layout_line, x_pos,
+                                      &line_index, &trailing);
 
-        gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                            &selection, offset + trailing);
+        line_index -= layout_line->start_index;
+
+        gtk_text_buffer_get_iter_at_line_index (text_tool->text_buffer,
+                                                &selection,
+                                                line, line_index);
+
+        while (trailing--)
+          gtk_text_iter_forward_char (&selection);
 
         gtk_text_buffer_place_cursor (text_tool->text_buffer, &selection);
         gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
@@ -1084,12 +1099,9 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
   if (text_tool->layer != layer)
     {
       if (text_tool->layer)
-        {
-          g_signal_handlers_disconnect_by_func (text_tool->layer,
-                                                gimp_text_tool_layer_notify,
-                                                text_tool);
-          text_tool->layer = NULL;
-        }
+        g_signal_handlers_disconnect_by_func (text_tool->layer,
+                                              gimp_text_tool_layer_notify,
+                                              text_tool);
 
       text_tool->layer = layer;
 

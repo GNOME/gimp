@@ -1,3 +1,13 @@
+2008-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_key_press): argh, need
+	to speak in byte offsets not character offsets. Do so and avoid
+	getting the buffer's text on each keystroke just to do the
+	char/byte conversion. Will use the same method for all the other
+	places which do similar things.
+
+	(gimp_text_tool_connect): minor cleanup.
+
 2008-10-27  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayer.c (gimp_text_layer_render_layout):
