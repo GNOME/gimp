@@ -1,3 +1,11 @@
+2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): Put the existing blend
+	formulas in expanded switch cases again. We need to keep the more
+	complicated layer modes like Hue, Value and Saturation in expanded
+	switch cases anyway.
+
 2008-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c: some minor cleanups.
