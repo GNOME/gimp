@@ -189,8 +189,10 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
       if (release_type == GIMP_BUTTON_RELEASE_CLICK ||
           release_type == GIMP_BUTTON_RELEASE_NO_MOTION)
         {
-          new_scale = gimp_zoom_model_zoom_step (options->zoom_type,
-                                                 current_scale);
+          gimp_display_shell_scale (shell,
+                                    options->zoom_type,
+                                    0.0,
+                                    GIMP_ZOOM_FOCUS_BEST_GUESS);
         }
       else
         {
@@ -218,71 +220,71 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
             }
 
           new_scale = current_scale * factor;
-        }
 
-      if (new_scale != current_scale)
-        {
-          gdouble xres;
-          gdouble yres;
-          gint    offset_x = 0;
-          gint    offset_y = 0;
-
-          gimp_image_get_resolution (display->image, &xres, &yres);
-
-          switch (options->zoom_type)
+          if (new_scale != current_scale)
             {
-            case GIMP_ZOOM_IN:
-              /*  move the center of the rectangle to the center of the
-               *  viewport:
-               *
-               *  new_offset = center of rectangle in new scale screen coords
-               *               including offset
-               *               -
-               *               center of viewport in screen coords without
-               *               offset
-               */
-              offset_x = RINT (new_scale * ((x1 + x2) / 2.0) *
-                               SCREEN_XRES (shell) / xres -
-                               (shell->disp_width / 2.0));
+              gdouble xres;
+              gdouble yres;
+              gint    offset_x = 0;
+              gint    offset_y = 0;
 
-              offset_y = RINT (new_scale * ((y1 + y2) / 2.0) *
-                               SCREEN_YRES (shell) / yres -
-                               (shell->disp_height / 2.0));
-              break;
+              gimp_image_get_resolution (display->image, &xres, &yres);
 
-            case GIMP_ZOOM_OUT:
-              /*  move the center of the viewport to the center of the
-               *  rectangle:
-               *
-               *  new_offset = center of viewport in new scale screen coords
-               *               including offset
-               *               -
-               *               center of rectangle in screen coords without
-               *               offset
-               */
-              offset_x = RINT (new_scale * UNSCALEX (shell,
-                                                     shell->offset_x +
-                                                     shell->disp_width / 2.0) *
-                               SCREEN_XRES (shell) / xres -
-                               (SCALEX (shell, (x1 + x2) / 2.0) -
-                                shell->offset_x));
+              switch (options->zoom_type)
+                {
+                case GIMP_ZOOM_IN:
+                  /*  move the center of the rectangle to the center of the
+                   *  viewport:
+                   *
+                   *  new_offset = center of rectangle in new scale screen coords
+                   *               including offset
+                   *               -
+                   *               center of viewport in screen coords without
+                   *               offset
+                   */
+                  offset_x = RINT (new_scale * ((x1 + x2) / 2.0) *
+                                   SCREEN_XRES (shell) / xres -
+                                   (shell->disp_width / 2.0));
 
-              offset_y = RINT (new_scale * UNSCALEY (shell,
-                                                     shell->offset_y +
-                                                     shell->disp_height / 2.0) *
-                               SCREEN_YRES (shell) / yres -
-                               (SCALEY (shell, (y1 + y2) / 2.0) -
-                                shell->offset_y));
-              break;
+                  offset_y = RINT (new_scale * ((y1 + y2) / 2.0) *
+                                   SCREEN_YRES (shell) / yres -
+                                   (shell->disp_height / 2.0));
+                  break;
 
-            default:
-              break;
+                case GIMP_ZOOM_OUT:
+                  /*  move the center of the viewport to the center of the
+                   *  rectangle:
+                   *
+                   *  new_offset = center of viewport in new scale screen coords
+                   *               including offset
+                   *               -
+                   *               center of rectangle in screen coords without
+                   *               offset
+                   */
+                  offset_x = RINT (new_scale * UNSCALEX (shell,
+                                                         shell->offset_x +
+                                                         shell->disp_width / 2.0) *
+                                   SCREEN_XRES (shell) / xres -
+                                   (SCALEX (shell, (x1 + x2) / 2.0) -
+                                    shell->offset_x));
+
+                  offset_y = RINT (new_scale * UNSCALEY (shell,
+                                                         shell->offset_y +
+                                                         shell->disp_height / 2.0) *
+                                   SCREEN_YRES (shell) / yres -
+                                   (SCALEY (shell, (y1 + y2) / 2.0) -
+                                    shell->offset_y));
+                  break;
+
+                default:
+                  break;
+                }
+
+              gimp_display_shell_scale_by_values (shell,
+                                                  new_scale,
+                                                  offset_x, offset_y,
+                                                  options->auto_resize);
             }
-
-          gimp_display_shell_scale_by_values (shell,
-                                              new_scale,
-                                              offset_x, offset_y,
-                                              options->auto_resize);
         }
     }
 }
