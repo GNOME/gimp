@@ -940,11 +940,13 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "sample-merged",
                                        _("Sample merged"));
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), button, GIMP_IMAGE_CLONE);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), button,
+                             GIMP_IMAGE_CLONE, TRUE);
 
   hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                     "pattern-view-type", "pattern-view-size");
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_CLONE);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
+                             GIMP_PATTERN_CLONE, TRUE);
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);

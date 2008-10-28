@@ -184,7 +184,8 @@ convert_dialog_new (GimpImage    *image,
 
   /*  max n_colors  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_MAKE_PALETTE);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
+                             GIMP_MAKE_PALETTE, TRUE);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Maximum number of colors:"));
@@ -207,8 +208,8 @@ convert_dialog_new (GimpImage    *image,
   /*  custom palette  */
   if (palette_box)
     {
-      gimp_enum_radio_frame_add (GTK_FRAME (frame),
-                                 palette_box, GIMP_CUSTOM_PALETTE);
+      gimp_enum_radio_frame_add (GTK_FRAME (frame), palette_box,
+                                 GIMP_CUSTOM_PALETTE, TRUE);
       gtk_widget_show (palette_box);
     }
 

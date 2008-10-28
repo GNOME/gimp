@@ -233,7 +233,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                     "pattern-view-type", "pattern-view-size");
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_BUCKET_FILL);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
+                             GIMP_PATTERN_BUCKET_FILL, TRUE);
 
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  (%s)"),

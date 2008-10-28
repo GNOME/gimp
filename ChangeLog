@@ -1,3 +1,16 @@
+2008-10-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch]: added "gboolean below" to
+	gimp_enum_radio_frame_add() and gimp_enum_radio_box_add() and
+	place the widget right of the radio button unless "below" is TRUE.
+
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/layer-add-mask-dialog.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/widgets/gimpfilleditor.c: pass TRUE so everything stays as-is.
+
 2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c

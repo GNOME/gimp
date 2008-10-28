@@ -40,10 +40,12 @@ void              gimp_table_attach_stock    (GtkTable        *table,
                                               gboolean         left_align);
 void              gimp_enum_radio_box_add    (GtkBox          *box,
                                               GtkWidget       *widget,
-                                              gint             enum_value);
+                                              gint             enum_value,
+                                              gboolean         below);
 void              gimp_enum_radio_frame_add  (GtkFrame        *frame,
                                               GtkWidget       *widget,
-                                              gint             enum_value);
+                                              gint             enum_value,
+                                              gboolean         below);
 
 GtkIconSize       gimp_get_icon_size         (GtkWidget       *widget,
                                               const gchar     *stock_id,

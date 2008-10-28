@@ -131,14 +131,14 @@ gimp_fill_editor_constructor (GType                   type,
       gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                     GIMP_CONTEXT (editor->options));
       gimp_enum_radio_box_add (GTK_BOX (box), color_button,
-                               GIMP_FILL_STYLE_SOLID);
+                               GIMP_FILL_STYLE_SOLID, FALSE);
 
       pattern_box = gimp_prop_pattern_box_new (NULL,
                                                GIMP_CONTEXT (editor->options), 2,
                                                "pattern-view-type",
                                                "pattern-view-size");
       gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
-                               GIMP_FILL_STYLE_PATTERN);
+                               GIMP_FILL_STYLE_PATTERN, FALSE);
     }
 
   return object;

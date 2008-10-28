@@ -246,7 +246,8 @@ gimp_table_attach_stock (GtkTable    *table,
 void
 gimp_enum_radio_box_add (GtkBox    *box,
                          GtkWidget *widget,
-                         gint       enum_value)
+                         gint       enum_value,
+                         gboolean   below)
 {
   GList *children;
   GList *list;
@@ -267,48 +268,78 @@ gimp_enum_radio_box_add (GtkBox    *box,
         {
           GtkWidget *radio = list->data;
           GtkWidget *hbox;
-          GtkWidget *spacer;
-          gint       indicator_size;
-          gint       indicator_spacing;
-          gint       focus_width;
-          gint       focus_padding;
-          gint       border_width;
-
-          gtk_widget_style_get (radio,
-                                "indicator-size",    &indicator_size,
-                                "indicator-spacing", &indicator_spacing,
-                                "focus-line-width",  &focus_width,
-                                "focus-padding",     &focus_padding,
-                                NULL);
-
-          border_width = gtk_container_get_border_width (GTK_CONTAINER (radio));
 
           hbox = gtk_hbox_new (FALSE, 0);
+          gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+          gtk_box_reorder_child (GTK_BOX (box), hbox, pos);
 
-          spacer = gtk_vbox_new (FALSE, 0);
-          gtk_widget_set_size_request (spacer,
-                                       indicator_size +
-                                       3 * indicator_spacing +
-                                       focus_width +
-                                       focus_padding +
-                                       border_width,
-                                       -1);
-          gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
-          gtk_widget_show (spacer);
+          if (below)
+            {
+              GtkWidget *spacer;
+              gint       indicator_size;
+              gint       indicator_spacing;
+              gint       focus_width;
+              gint       focus_padding;
+              gint       border_width;
+
+              gtk_widget_style_get (radio,
+                                    "indicator-size",    &indicator_size,
+                                    "indicator-spacing", &indicator_spacing,
+                                    "focus-line-width",  &focus_width,
+                                    "focus-padding",     &focus_padding,
+                                    NULL);
+
+              border_width = gtk_container_get_border_width (GTK_CONTAINER (radio));
+
+              spacer = gtk_vbox_new (FALSE, 0);
+              gtk_widget_set_size_request (spacer,
+                                           indicator_size +
+                                           3 * indicator_spacing +
+                                           focus_width +
+                                           focus_padding +
+                                           border_width,
+                                           -1);
+              gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
+              gtk_widget_show (spacer);
+            }
+          else
+            {
+              GtkSizeGroup *size_group;
+
+              size_group = g_object_get_data (G_OBJECT (box), "size-group");
+
+              if (! size_group)
+                {
+                  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+                  g_object_set_data (G_OBJECT (box), "size-group", size_group);
+
+                  gtk_size_group_add_widget (size_group, radio);
+                  g_object_unref (size_group);
+                }
+              else
+                {
+                  gtk_size_group_add_widget (size_group, radio);
+                }
+
+              gtk_box_set_spacing (GTK_BOX (hbox), 4);
+
+              g_object_ref (radio);
+              gtk_container_remove (GTK_CONTAINER (box), radio);
+              gtk_box_pack_start (GTK_BOX (hbox), radio, FALSE, FALSE, 0);
+              g_object_unref (radio);
+            }
 
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
           gtk_widget_show (widget);
 
-          g_object_set_data (G_OBJECT (radio), "set_sensitive", hbox);
+          g_object_set_data (G_OBJECT (radio), "set_sensitive", widget);
           g_signal_connect (radio, "toggled",
                             G_CALLBACK (gimp_toggle_button_sensitive_update),
                             NULL);
 
-          gtk_widget_set_sensitive (hbox,
+          gtk_widget_set_sensitive (widget,
                                     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (list->data)));
 
-          gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-          gtk_box_reorder_child (GTK_BOX (box), hbox, pos);
           gtk_widget_show (hbox);
 
           break;
@@ -321,7 +352,8 @@ gimp_enum_radio_box_add (GtkBox    *box,
 void
 gimp_enum_radio_frame_add (GtkFrame  *frame,
                            GtkWidget *widget,
-                           gint       enum_value)
+                           gint       enum_value,
+                           gboolean   below)
 {
   GtkWidget *vbox;
 
@@ -332,7 +364,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
 
   g_return_if_fail (GTK_IS_VBOX (vbox));
 
-  gimp_enum_radio_box_add (GTK_BOX (vbox), widget, enum_value);
+  gimp_enum_radio_box_add (GTK_BOX (vbox), widget, enum_value, below);
 }
 
 GtkIconSize
