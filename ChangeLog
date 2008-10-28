@@ -1,3 +1,11 @@
+2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 556603 – Zoom region always zooms in center of image
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	When zooming with a click, use gimp_display_shell_scale() instead
+	of local zoom logic.
+
 2008-10-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: added "gboolean below" to
@@ -13,14 +21,6 @@
 
 	* app/widgets/gimpfilleditor.c: pass FALSE if we are editing the
 	context's "foreground" and "pattern" properties.
-
-2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
-
-	Bug 556603 – Zoom region always zooms in center of image
-
-	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
-	When zooming with a click, use gimp_display_shell_scale() instead
-	of local zoom logic.
 
 2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
 
