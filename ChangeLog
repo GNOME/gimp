@@ -8,8 +8,11 @@
 	* app/dialogs/layer-add-mask-dialog.c
 	* app/tools/gimpbucketfilloptions.c
 	* app/tools/gimpclonetool.c
-	* app/tools/gimpperspectiveclonetool.c
-	* app/widgets/gimpfilleditor.c: pass TRUE so everything stays as-is.
+	* app/tools/gimpperspectiveclonetool.c: pass TRUE so everything
+	stays as-is.
+
+	* app/widgets/gimpfilleditor.c: pass FALSE if we are editing the
+	context's "foreground" and "pattern" properties.
 
 2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
 
