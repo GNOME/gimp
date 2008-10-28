@@ -1,3 +1,8 @@
+2008-10-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	turn nested if()s into a switch(release_type).
+
 2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 556603 – Zoom region always zooms in center of image
