@@ -16,6 +16,14 @@
 
 2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 556603 – Zoom region always zooms in center of image
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	When zooming with a click, use gimp_display_shell_scale() instead
+	of local zoom logic.
+
+2008-10-28  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c
 	(gimp_operation_point_layer_mode_process): Put the existing blend
 	formulas in expanded switch cases again. We need to keep the more
