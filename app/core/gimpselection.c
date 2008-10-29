@@ -178,7 +178,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 static void
 gimp_selection_init (GimpSelection *selection)
 {
-  selection->stroking = FALSE;
+  selection->stroking_count = 0;
 }
 
 static gboolean
@@ -278,13 +278,13 @@ gimp_selection_stroke (GimpItem           *item,
       return FALSE;
     }
 
-  selection->stroking = TRUE;
+  gimp_selection_push_stroking (selection);
 
   retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable,
                                                    stroke_options,
                                                    push_undo, progress, error);
 
-  selection->stroking = FALSE;
+  gimp_selection_pop_stroking (selection);
 
   return retval;
 }
@@ -419,7 +419,7 @@ gimp_selection_is_empty (GimpChannel *channel)
    *  that the selection mask is empty so that it doesn't mask the paint
    *  during the stroke operation.
    */
-  if (selection->stroking)
+  if (selection->stroking_count > 0)
     return TRUE;
 
   return GIMP_CHANNEL_CLASS (parent_class)->is_empty (channel);
@@ -529,6 +529,27 @@ gimp_selection_new (GimpImage *image,
   channel->y2 = height;
 
   return channel;
+}
+
+gint
+gimp_selection_push_stroking (GimpSelection *selection)
+{
+  g_return_val_if_fail (GIMP_IS_SELECTION (selection), 0);
+
+  selection->stroking_count++;
+
+  return selection->stroking_count;
+}
+
+gint
+gimp_selection_pop_stroking (GimpSelection *selection)
+{
+  g_return_val_if_fail (GIMP_IS_SELECTION (selection), 0);
+  g_return_val_if_fail (selection->stroking_count > 0, 0);
+
+  selection->stroking_count--;
+
+  return selection->stroking_count;
 }
 
 void

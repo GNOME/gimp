@@ -1,3 +1,11 @@
+2008-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpselection.[ch]: change member "gboolean stroking"
+	into "gint stroking_count". Add push/pop API to increase/decrease
+	the counter. Pretend the selection is empty if the counter is > 0.
+	Enables correctly rendering vector layers even if there is a
+	selection.
+
 2008-10-29  Sven Neumann  <sven@gimp.org>
 
 	Bug 558420 – projection incorrect with alpha-less layers
