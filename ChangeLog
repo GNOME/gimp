@@ -14,7 +14,7 @@
 
 2008-10-29  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* configure.in: Properly save CFLAGS.
+	* configure.in: Properly save CFLAGS temporarily.
 
 2008-10-28  Michael Natterer  <mitch@gimp.org>
 
