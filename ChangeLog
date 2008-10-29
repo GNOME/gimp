@@ -1,3 +1,13 @@
+2008-10-29  Sven Neumann  <sven@gimp.org>
+
+	Bug 558451 – Cannot build GIMP using Sun CC on Solaris 2.8
+
+	* app/pdb/gimp-pdb-compat.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c
+	* app/tools/gimpgegltool.c: applied patches from Eric Lamarque
+	fixing the build using Sun CC on Solaris.
+
 2008-10-29  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c
