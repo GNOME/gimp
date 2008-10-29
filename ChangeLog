@@ -1,3 +1,11 @@
+2008-10-29  Sven Neumann  <sven@gimp.org>
+
+	Bug 558420 – projection incorrect with alpha-less layers
+
+	* app/core/gimpprojection-construct.c (gimp_projection_initialize):
+	need to initialize the projection if the covering layer is not
+	opaque.
+
 2008-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpstrokeeditor.c: move the "Antialias" toggle from
