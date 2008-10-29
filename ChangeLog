@@ -2,6 +2,18 @@
 
 	Merged from trunk:
 
+	Bug 558451 – Cannot build GIMP using Sun CC on Solaris 2.8
+
+	* app/pdb/gimp-pdb-compat.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c
+	* app/tools/gimpgegltool.c: applied patches from Eric Lamarque
+	fixing the build using Sun CC on Solaris.
+
+2008-10-29  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 558420 – projection incorrect with alpha-less layers
 
 	* app/core/gimpprojection-construct.c (gimp_projection_initialize):

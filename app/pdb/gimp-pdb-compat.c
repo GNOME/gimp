@@ -272,7 +272,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
   if (! pdb_type_quark)
     {
-      const struct
+      struct
       {
         GType          g_type;
         GimpPDBArgType pdb_type;

@@ -238,7 +238,7 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
        pr;
        pr = pixel_regions_process (pr))
     {
-      const GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
+      GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
       gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
     }

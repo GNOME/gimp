@@ -720,7 +720,7 @@ gimp_gegl_tool_get_config (GimpGeglTool *tool)
 
   if (! config_type)
     {
-      const GTypeInfo info =
+      GTypeInfo info =
       {
         sizeof (GimpObjectClass),
         (GBaseInitFunc) NULL,
