@@ -51,3 +51,19 @@ gimp_hsl_copy (const GimpHSL *hsl)
 {
   return g_memdup (hsl, sizeof (GimpHSL));
 }
+
+
+/*  HSL functions  */
+
+void
+gimp_hsl_set (GimpHSL *hsl,
+              gdouble  h,
+              gdouble  s,
+              gdouble  l)
+{
+  g_return_if_fail (hsl != NULL);
+
+  hsl->h = h;
+  hsl->s = s;
+  hsl->l = l;
+}

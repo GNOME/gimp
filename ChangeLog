@@ -1,3 +1,17 @@
+2008-10-29  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): Implemented the layer
+	modes Hue, Saturation, Color and Value.
+
+	Works the same for 100% opaque layers:
+	 o Hue
+	 o Saturation
+	 o Color
+	 o Value
+
+	* libgimpcolor/gimphsl.[ch]: Added gimp_hsl_set().
+
 2008-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/file-pdf.c: a comment was still saying

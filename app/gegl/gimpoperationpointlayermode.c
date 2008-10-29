@@ -24,6 +24,8 @@
 
 #include <gegl-plugin.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gegl-types.h"
 
 #include "gimpoperationpointlayermode.h"
@@ -39,6 +41,7 @@
 #define layA lay[A]
 #define outC out[c]
 #define outA out[A]
+#define newC new[c]
 
 #define EACH_CHANNEL(expr)            \
         for (c = RED; c < ALPHA; c++) \
@@ -169,6 +172,104 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "aux",    format);
 }
 
+static void
+gimp_operation_point_layer_mode_get_new_color_hsv (GimpLayerModeEffects  blend_mode,
+                                                   const gfloat         *in,
+                                                   const gfloat         *lay,
+                                                   gfloat               *new)
+{
+  GimpRGB inRGB;
+  GimpHSV inHSV;
+  GimpRGB layRGB;
+  GimpHSV layHSV;
+  GimpRGB newRGB;
+  GimpHSV newHSV;
+
+  gimp_rgb_set (&inRGB,  in[R],  in[G],  in[B]);
+  gimp_rgb_set (&layRGB, lay[R], lay[G], lay[B]);
+
+  gimp_rgb_to_hsv (&inRGB,  &inHSV);
+  gimp_rgb_to_hsv (&layRGB, &layHSV);
+
+  switch (blend_mode)
+    {
+    case GIMP_HUE_MODE:
+      gimp_hsv_set (&newHSV, layHSV.h, inHSV.s,  inHSV.v);
+      break;
+
+    case GIMP_SATURATION_MODE:
+      gimp_hsv_set (&newHSV, inHSV.h,  layHSV.s, inHSV.v);
+      break;
+
+    case GIMP_COLOR_MODE:
+      gimp_hsv_set (&newHSV, layHSV.h, layHSV.s, inHSV.v);
+      break;
+
+    case GIMP_VALUE_MODE:
+      gimp_hsv_set (&newHSV, inHSV.h,  inHSV.s,  layHSV.v);
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  gimp_hsv_to_rgb (&newHSV, &newRGB);
+
+  new[R] = newRGB.r;
+  new[G] = newRGB.g;
+  new[B] = newRGB.b;
+}
+
+static void
+gimp_operation_point_layer_mode_get_new_color_hsl (GimpLayerModeEffects  blend_mode,
+                                                   const gfloat         *in,
+                                                   const gfloat         *lay,
+                                                   gfloat               *new)
+{
+  GimpRGB inRGB;
+  GimpHSL inHSL;
+  GimpRGB layRGB;
+  GimpHSL layHSL;
+  GimpRGB newRGB;
+  GimpHSL newHSL;
+
+  gimp_rgb_set (&inRGB,  in[R],  in[G],  in[B]);
+  gimp_rgb_set (&layRGB, lay[R], lay[G], lay[B]);
+
+  gimp_rgb_to_hsl (&inRGB,  &inHSL);
+  gimp_rgb_to_hsl (&layRGB, &layHSL);
+
+  switch (blend_mode)
+    {
+    case GIMP_HUE_MODE:
+      gimp_hsl_set (&newHSL, layHSL.h, inHSL.s,  inHSL.l);
+      break;
+
+    case GIMP_SATURATION_MODE:
+      gimp_hsl_set (&newHSL, inHSL.h,  layHSL.s, inHSL.l);
+      break;
+
+    case GIMP_COLOR_MODE:
+      gimp_hsl_set (&newHSL, layHSL.h, layHSL.s, inHSL.l);
+      break;
+
+    case GIMP_VALUE_MODE:
+      gimp_hsl_set (&newHSL, inHSL.h,  inHSL.s,  layHSL.l);
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  gimp_hsl_to_rgb (&newHSL, &newRGB);
+
+  new[R] = newRGB.r;
+  new[G] = newRGB.g;
+  new[B] = newRGB.b;
+}
+
 static gboolean
 gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                          void                *in_buf,
@@ -179,10 +280,11 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
 
-  gfloat *in  = in_buf;  /* composite of layers below */
-  gfloat *lay = aux_buf; /* layer */
-  gfloat *out = out_buf; /* resulting composite */
-  gint    c   = 0;
+  gfloat *in     = in_buf;  /* composite of layers below */
+  gfloat *lay    = aux_buf; /* layer */
+  gfloat *out    = out_buf; /* resulting composite */
+  gint    c      = 0;
+  gfloat  new[3] = { 0.0, 0.0, 0.0 };
 
   while (samples--)
     {
@@ -363,9 +465,30 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
-        case GIMP_COLOR_MODE:
         case GIMP_VALUE_MODE:
-          /* TODO */
+          /* Custom SVG 1.2:
+           *
+           * f(Sc, Dc) = New color depending on mode
+           */
+          gimp_operation_point_layer_mode_get_new_color_hsv (self->blend_mode,
+                                                             in,
+                                                             lay,
+                                                             new);
+          EACH_CHANNEL (
+          outC = newC * layA * inA + layC * (1 - inA) + inC * (1 - layA));
+          break;
+
+        case GIMP_COLOR_MODE:
+          /* Custom SVG 1.2:
+           *
+           * f(Sc, Dc) = New color
+           */
+          gimp_operation_point_layer_mode_get_new_color_hsl (self->blend_mode,
+                                                             in,
+                                                             lay,
+                                                             new);
+          EACH_CHANNEL (
+          outC = newC * layA * inA + layC * (1 - inA) + inC * (1 - layA));
           break;
 
         case GIMP_ERASE_MODE:

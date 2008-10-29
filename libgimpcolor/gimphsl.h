@@ -33,6 +33,11 @@ G_BEGIN_DECLS
 
 GType   gimp_hsl_get_type   (void) G_GNUC_CONST;
 
+void    gimp_hsl_set        (GimpHSL *hsl,
+                             gdouble  h,
+                             gdouble  s,
+                             gdouble  l);
+
 
 G_END_DECLS
 
