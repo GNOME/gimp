@@ -12,6 +12,9 @@ Overview of Changes from GIMP 2.6.1 to GIMP 2.6.2
 
 * Bugs fixed:
 
+ 557950 – Scaling in Gimp 2.6 is much slower than in Gimp 2.4
+ 558215 – unit and zoom entries in Statusbar not visible
+ 558451 – Cannot build GIMP using Sun CC on Solaris 2.8
  558420 – projection incorrect with alpha-less layers
  556603 – Zoom region always zooms in center of image
  557870 – "Qmask" message popping up here and there
@@ -24,6 +27,18 @@ Overview of Changes from GIMP 2.6.1 to GIMP 2.6.2
  556182 – Could you please explain a few strings [I18N]
  555697 – build fails if configured with --without-libjpeg
  134956 – Curves tool doesn't save free curves
+
+* Updated translations:
+
+ Czech (cs)
+ Danish (da)
+ Finnish (fi)
+ French (fr)
+ Japanese (ja)
+ Polish (pl)
+ Brazilian Portuguese (pt_BR)
+ Swedish (sv)
+ Simplified Chinese (zh_CN)
 
 
 
