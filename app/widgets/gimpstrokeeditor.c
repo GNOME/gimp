@@ -316,15 +316,6 @@ gimp_stroke_editor_constructor (GType                   type,
                            G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 
-
-  button = gimp_prop_check_button_new (G_OBJECT (options),
-                                       "antialias",
-                                       _("_Antialiasing"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (button);
-  row++;
-
   return object;
 }
 

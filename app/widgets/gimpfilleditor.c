@@ -94,6 +94,7 @@ gimp_fill_editor_class_init (GimpFillEditorClass *klass)
 static void
 gimp_fill_editor_init (GimpFillEditor *editor)
 {
+  gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
 static GObject *
@@ -104,14 +105,13 @@ gimp_fill_editor_constructor (GType                   type,
   GObject        *object;
   GimpFillEditor *editor;
   GtkWidget      *box;
+  GtkWidget      *button;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   editor = GIMP_FILL_EDITOR (object);
 
   g_assert (GIMP_IS_FILL_OPTIONS (editor->options));
-
-  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
   box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
                                       0, 0);
@@ -140,6 +140,12 @@ gimp_fill_editor_constructor (GType                   type,
       gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,
                                GIMP_FILL_STYLE_PATTERN, FALSE);
     }
+
+  button = gimp_prop_check_button_new (G_OBJECT (editor->options),
+                                       "antialias",
+                                       _("_Antialiasing"));
+  gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return object;
 }

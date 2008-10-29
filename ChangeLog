@@ -1,3 +1,11 @@
+2008-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpstrokeeditor.c: move the "Antialias" toggle from
+	here...
+
+	* app/widgets/gimpfilleditor.c: ...to here because it makes sense
+	for both filling and stroking.
+
 2008-10-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/Makefile.am
