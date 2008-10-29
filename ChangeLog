@@ -58,6 +58,13 @@
 	need to initialize the projection if the covering layer is not
 	opaque.
 
+2008-10-29  Sven Neumann  <sven@gimp.org>
+
+        Bug 557950 – Scaling in Gimp 2.6 is much slower than in Gimp 2.4
+
+        * app/paint-funcs/scale-region.c: don't do multi-pass scaling
+	when we are scaling up.
+
 2008-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpstrokeeditor.c: move the "Antialias" toggle from
