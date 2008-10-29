@@ -1,3 +1,9 @@
+2008-10-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.def
+	* libgimpbase/gimpbase.def
+	* libgimpcolor/gimpcolor.def: updated with new symbols.
+
 2008-10-29  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 558215 – unit and zoom entries in Statusbar not visible

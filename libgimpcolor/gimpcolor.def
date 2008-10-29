@@ -20,6 +20,7 @@ EXPORTS
 	gimp_color_managed_interface_get_type
 	gimp_color_managed_profile_changed
 	gimp_hsl_get_type
+	gimp_hsl_set
 	gimp_hsl_to_rgb
 	gimp_hsl_to_rgb_int
 	gimp_hsv_clamp

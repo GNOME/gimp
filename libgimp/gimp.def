@@ -624,6 +624,7 @@ EXPORTS
  	gimp_text_layer_get_color
  	gimp_text_layer_get_font
  	gimp_text_layer_get_font_size
+	gimp_text_layer_get_hint_style
  	gimp_text_layer_get_hinting
  	gimp_text_layer_get_indent
  	gimp_text_layer_get_justification
@@ -638,6 +639,7 @@ EXPORTS
  	gimp_text_layer_set_color
  	gimp_text_layer_set_font
  	gimp_text_layer_set_font_size
+	gimp_text_layer_set_hint_style
  	gimp_text_layer_set_hinting
  	gimp_text_layer_set_indent
  	gimp_text_layer_set_justification
