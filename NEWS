@@ -7,6 +7,26 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.1 to GIMP 2.6.2
+=================================================
+
+* Bugs fixed:
+
+ 558420 – projection incorrect with alpha-less layers
+ 556603 – Zoom region always zooms in center of image
+ 557870 – "Qmask" message popping up here and there
+ 557705 – compatibility with GEGL > 0.0.20
+ 556248 – Scaling gives 'jagged' edges
+ 556804 – Zoom drop down doesn't update
+ 524615 – Print not to scale
+ 555246 – gimp crashes when a file is opened while a preview is generating
+ 556741 – Alpha layer automatically added (in psd format)
+ 556182 – Could you please explain a few strings [I18N]
+ 555697 – build fails if configured with --without-libjpeg
+ 134956 – Curves tool doesn't save free curves
+
+
+
 Overview of Changes from GIMP 2.6.0 to GIMP 2.6.1
 =================================================
 
