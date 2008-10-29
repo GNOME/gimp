@@ -28,8 +28,6 @@ void            gimp_displays_reconnect        (Gimp      *gimp,
                                                 GimpImage *old,
                                                 GimpImage *new);
 
-gint            gimp_displays_get_num_visible  (Gimp      *gimp);
-
 void            gimp_displays_set_busy         (Gimp      *gimp);
 void            gimp_displays_unset_busy       (Gimp      *gimp);
 

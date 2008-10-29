@@ -1,3 +1,16 @@
+2008-10-30  Sven Neumann  <sven@gimp.org>
+
+	Backed out this change for now as it causes problem with some
+	window managers:
+
+        Bug 556896 – Dialogs don't get minimized with single image window
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplay-foreach.[ch]
+	* app/widgets/gimpdialogfactory.[ch]: merged changes from trunk.
+	Hide the toolbox and docks if the last display is iconified.
+	Unhide them if a display is uniconified.
+
 2008-10-29  Sven Neumann  <sven@gimp.org>
 
  	Merged from trunk:
