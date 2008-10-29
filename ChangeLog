@@ -1,5 +1,10 @@
 2008-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/file-pdf.c: a comment was still saying
+	"poppler.c".
+
+2008-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpselection.[ch]: change member "gboolean stroking"
 	into "gint stroking_count". Add push/pop API to increase/decrease
 	the counter. Pretend the selection is empty if the counter is > 0.

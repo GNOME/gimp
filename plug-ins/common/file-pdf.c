@@ -1,6 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  *
- * poppler.c - PDF file loader
+ * file-pdf.c - PDF file loader
  *
  * Copyright (C) 2005 Nathan Summers
  *
