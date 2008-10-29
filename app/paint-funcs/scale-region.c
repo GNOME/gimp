@@ -208,20 +208,7 @@ scale_determine_levels (PixelRegion *srcPR,
   gint    width  = srcPR->w;
   gint    height = srcPR->h;
 
-  /* determine scaling levels */
-  while (scalex > 2)
-    {
-      scalex  /= 2;
-      width   *= 2;
-      *levelx -= 1;
-    }
-
-  while (scaley > 2)
-    {
-      scaley  /= 2;
-      height  *= 2;
-      *levely -= 1;
-    }
+  /* downscaling is done in multiple steps */
 
   while (scalex < 0.5 && width > 1)
     {
