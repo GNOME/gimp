@@ -19,44 +19,44 @@
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 (define (gimp-online-docs-web-site)
-  (plug-in-web-browser "http://docs.gimp.org")
+  (plug-in-web-browser "http://docs.gimp.org/")
 )
 
-(define (gimp-help-2-concepts-usage)
+(define (gimp-help-concepts-usage)
   (gimp-help "" "gimp-concepts-usage")
 )
 
-(define (gimp-help-2-using-docks)
+(define (gimp-help-using-docks)
   (gimp-help "" "gimp-using-docks")
 )
 
-(define (gimp-help-2-using-simpleobjects)
+(define (gimp-help-using-simpleobjects)
   (gimp-help "" "gimp-using-simpleobjects")
 )
 
-(define (gimp-help-2-using-selections)
+(define (gimp-help-using-selections)
   (gimp-help "" "gimp-using-selections")
 )
 
-(define (gimp-help-2-using-fileformats)
+(define (gimp-help-using-fileformats)
   (gimp-help "" "gimp-using-fileformats")
 )
 
-(define (gimp-help-2-using-photography)
+(define (gimp-help-using-photography)
   (gimp-help "" "gimp-using-photography")
 )
 
-(define (gimp-help-2-using-web)
+(define (gimp-help-using-web)
   (gimp-help "" "gimp-using-web")
 )
 
-(define (gimp-help-2-concepts-paths)
+(define (gimp-help-concepts-paths)
   (gimp-help "" "gimp-concepts-paths")
 )
 
 
 ; shortcuts to help topics
-(script-fu-register "gimp-help-2-concepts-paths"
+(script-fu-register "gimp-help-concepts-paths"
    _"Using _Paths"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -65,11 +65,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-concepts-paths"
+(script-fu-menu-register "gimp-help-concepts-paths"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-web"
+(script-fu-register "gimp-help-using-web"
    _"_Preparing your Images for the Web"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -78,11 +78,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-web"
+(script-fu-menu-register "gimp-help-using-web"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-photography"
+(script-fu-register "gimp-help-using-photography"
    _"_Working with Digital Camera Photos"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -91,11 +91,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-photography"
+(script-fu-menu-register "gimp-help-using-photography"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-fileformats"
+(script-fu-register "gimp-help-using-fileformats"
    _"Create, Open and Save _Files"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -104,11 +104,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-fileformats"
+(script-fu-menu-register "gimp-help-using-fileformats"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-concepts-usage"
+(script-fu-register "gimp-help-concepts-usage"
    _"_Basic Concepts"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -117,11 +117,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-concepts-usage"
+(script-fu-menu-register "gimp-help-concepts-usage"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-docks"
+(script-fu-register "gimp-help-using-docks"
    _"How to Use _Dialogs"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -130,11 +130,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-docks"
+(script-fu-menu-register "gimp-help-using-docks"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-simpleobjects"
+(script-fu-register "gimp-help-using-simpleobjects"
    _"Drawing _Simple Objects"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -143,11 +143,11 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-simpleobjects"
+(script-fu-menu-register "gimp-help-using-simpleobjects"
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register "gimp-help-2-using-selections"
+(script-fu-register "gimp-help-using-selections"
    _"Create and Use _Selections"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -156,7 +156,7 @@
     ""
 )
 
-(script-fu-menu-register "gimp-help-2-using-simpleobjects"
+(script-fu-menu-register "gimp-help-using-simpleobjects"
 			 "<Image>/Help/User Manual")
 
 
