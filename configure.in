@@ -502,7 +502,7 @@ PKG_CHECK_MODULES(PANGOCAIRO, pangocairo >= pangocairo_required_version, :,
 *** We require Pango with the optional support for Cairo compiled in.
 *** See the file 'INSTALL' for more help.]))
 
-CFLAGS=$gimp_save_CFLAGS
+gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
@@ -520,7 +520,6 @@ else
 fi
 AC_MSG_RESULT($have_pango_1_21)
 
-gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOFT2_CFLAGS $CFLAGS"
 
 AC_MSG_CHECKING([if Pango is built with a recent fontconfig])
