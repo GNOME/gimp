@@ -361,13 +361,14 @@ gimp_projection_initialize (GimpProjection *proj,
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      if (gimp_item_get_visible (item)                                  &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))              &&
-          ! gimp_layer_get_mask (GIMP_LAYER (item))                     &&
-          gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE   &&
-          (off_x <= x)                                                  &&
-          (off_y <= y)                                                  &&
-          (off_x + gimp_item_width  (item) >= x + w)                    &&
+      if (gimp_item_get_visible (item)                                      &&
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))                  &&
+          ! gimp_layer_get_mask (GIMP_LAYER (item))                         &&
+          gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE       &&
+          gimp_layer_get_opacity (GIMP_LAYER (item)) == GIMP_OPACITY_OPAQUE &&
+          (off_x <= x)                                                      &&
+          (off_y <= y)                                                      &&
+          (off_x + gimp_item_width  (item) >= x + w)                        &&
           (off_y + gimp_item_height (item) >= y + h))
         {
           coverage = TRUE;
