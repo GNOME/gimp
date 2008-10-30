@@ -1,6 +1,12 @@
 2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): Formating and
+	simplification.
+
+2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c
 	(gimp_operation_point_layer_mode_process): The GEGL API actually
 	allows us to handle the Dissolve layer mode as a point op. The
 	GEGL implementation of Dissolve uses a faster implementation for

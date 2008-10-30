@@ -278,22 +278,23 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                          glong                samples,
                                          const GeglRectangle *roi)
 {
-  GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  GimpOperationPointLayerMode *self       = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  GimpLayerModeEffects         blend_mode = self->blend_mode;
 
-  gfloat   *in     = in_buf;     /* composite of layers below */
-  gfloat   *lay    = aux_buf;    /* layer */
-  gfloat   *out    = out_buf;    /* resulting composite */
-  GRand    *rand   = NULL;
-  glong     sample = samples;
-  gint      c      = 0;
-  gfloat    new[3] = { 0.0, 0.0, 0.0 };
+  gfloat *in     = in_buf;     /* composite of layers below */
+  gfloat *lay    = aux_buf;    /* layer */
+  gfloat *out    = out_buf;    /* resulting composite */
+  GRand  *rand   = NULL;
+  glong   sample = samples;
+  gint    c      = 0;
+  gfloat  new[3] = { 0.0, 0.0, 0.0 };
 
-  if (self->blend_mode == GIMP_DISSOLVE_MODE)
+  if (blend_mode == GIMP_DISSOLVE_MODE)
     rand = g_rand_new ();
 
   while (sample--)
     {
-      switch (self->blend_mode)
+      switch (blend_mode)
         {
         case GIMP_NORMAL_MODE:
           /* Porter-Duff A over B */
@@ -475,7 +476,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *
            * f(Sc, Dc) = New color depending on mode
            */
-          gimp_operation_point_layer_mode_get_new_color_hsv (self->blend_mode,
+          gimp_operation_point_layer_mode_get_new_color_hsv (blend_mode,
                                                              in,
                                                              lay,
                                                              new);
@@ -488,7 +489,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *
            * f(Sc, Dc) = New color
            */
-          gimp_operation_point_layer_mode_get_new_color_hsl (self->blend_mode,
+          gimp_operation_point_layer_mode_get_new_color_hsl (blend_mode,
                                                              in,
                                                              lay,
                                                              new);
