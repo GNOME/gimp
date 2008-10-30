@@ -1382,13 +1382,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (gimp_tool_control_get_wants_all_key_events (active_tool->control))
               {
-                tool_manager_key_press_active (gimp, kevent, display);
+                if (tool_manager_key_press_active (gimp, kevent, display))
+                  {
+                    /* FIXME: need to do some of the stuff below, like
+                     * calling oper_update()
+                     */
 
-                /* FIXME: need to do some of the stuff below, like
-                 * calling oper_update()
-                 */
-
-                return TRUE;
+                    return TRUE;
+                  }
               }
 
             switch (kevent->keyval)

@@ -1,3 +1,20 @@
+2008-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_key_press): bail out
+	instead of crashing if the tool has no display.
+
+	(gimp_text_tool_draw)
+	(gimp_text_tool_draw_preedit)
+	(gimp_text_tool_draw_selection)
+	(gimp_text_tool_xy_to_offset): need to adjust all drawing and
+	event coordinates by a possible negative offset between logical
+	rectangle and ink rectangle (if the ink rectangle is larger than
+	the logical one).
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): continue normally if
+	tool_manager_key_press_active() returns FALSE.
+
 2008-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimp-fonts.c

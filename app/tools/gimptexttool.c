@@ -116,8 +116,12 @@ static GimpUIManager * gimp_text_tool_get_popup (GimpTool          *tool,
                                                  const gchar      **ui_path);
 
 static void      gimp_text_tool_draw            (GimpDrawTool      *draw_tool);
-static void      gimp_text_tool_draw_preedit    (GimpDrawTool      *draw_tool);
-static void      gimp_text_tool_draw_selection  (GimpDrawTool      *draw_tool);
+static void      gimp_text_tool_draw_preedit    (GimpDrawTool      *draw_tool,
+                                                 gint               logical_off_x,
+                                                 gint               logical_off_y);
+static void      gimp_text_tool_draw_selection  (GimpDrawTool      *draw_tool,
+                                                 gint               logical_off_x,
+                                                 gint               logical_off_y);
 
 static gboolean  gimp_text_tool_rectangle_change_complete
                                                 (GimpRectangleTool *rect_tool);
@@ -706,6 +710,9 @@ gimp_text_tool_key_press (GimpTool    *tool,
   gint          x_pos  = -1;
   gboolean      retval = TRUE;
 
+  if (! tool->display)
+    return FALSE;
+
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
     {
       text_tool->needs_im_reset = TRUE;
@@ -1003,11 +1010,15 @@ gimp_text_tool_get_popup (GimpTool         *tool,
 static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GdkRectangle  cliprect;
-  gint          x1, x2;
-  gint          y1, y2;
-  GtkTextIter   start;
+  GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GdkRectangle    cliprect;
+  gint            x1, x2;
+  gint            y1, y2;
+  gint            logical_off_x = 0;
+  gint            logical_off_y = 0;
+  PangoRectangle  ink_extents;
+  PangoRectangle  logical_extents;
+  GtkTextIter     start;
 
   g_object_set (text_tool,
                 "narrow-mode", TRUE,
@@ -1037,6 +1048,15 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   cliprect.height = y2 - y1;
   gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
 
+  pango_layout_get_pixel_extents (text_tool->layout->layout,
+                                  &ink_extents, &logical_extents);
+
+  if (ink_extents.x < 0)
+    logical_off_x = -ink_extents.x;
+
+  if (ink_extents.y < 0)
+    logical_off_y = -ink_extents.y;
+
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
 
   if (! gtk_text_buffer_get_has_selection (text_tool->text_buffer))
@@ -1065,8 +1085,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       pango_layout_index_to_pos (text_tool->layout->layout, cursorx, &crect);
 
-      crect.x      = PANGO_PIXELS (crect.x);
-      crect.y      = PANGO_PIXELS (crect.y);
+      crect.x      = PANGO_PIXELS (crect.x) + logical_off_x;
+      crect.y      = PANGO_PIXELS (crect.y) + logical_off_y;
       crect.height = PANGO_PIXELS (crect.height);
 
       gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
@@ -1083,14 +1103,14 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                                      TRUE);
 
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
-        gimp_text_tool_draw_preedit (draw_tool);
+        gimp_text_tool_draw_preedit (draw_tool, logical_off_x, logical_off_y);
     }
   else
     {
       /* If the text buffer has a selection, highlight the selected
        * letters
        */
-      gimp_text_tool_draw_selection (draw_tool);
+      gimp_text_tool_draw_selection (draw_tool, logical_off_x, logical_off_y);
     }
 
   /* Turn off clipping when done */
@@ -1098,7 +1118,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
+gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
+                             gint          logical_off_x,
+                             gint          logical_off_y)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   PangoLayout     *layout;
@@ -1130,12 +1152,18 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
       pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
       pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
 
+      first_x = PANGO_PIXELS (first_x) + logical_off_x;
+      last_x  = PANGO_PIXELS (last_x)  + logical_off_x;
+
       if (i >= firstline && i <= lastline)
         {
           PangoRectangle crect;
 
           pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
           pango_extents_to_pixels (&crect, NULL);
+
+          crect.x += logical_off_x;
+          crect.y += logical_off_y;
 
           gimp_draw_tool_draw_line (draw_tool,
                                     crect.x, crect.y + crect.height,
@@ -1147,7 +1175,7 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
             {
               PangoRectangle crect2 = crect;
 
-              crect2.width = PANGO_PIXELS (first_x) - crect.x;
+              crect2.width = first_x - crect.x;
               crect2.x     = crect.x;
 
               gimp_draw_tool_draw_line (draw_tool,
@@ -1161,8 +1189,8 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
             {
               PangoRectangle crect2 = crect;
 
-              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
-              crect2.x     = PANGO_PIXELS (last_x);
+              crect2.width = crect.x + crect.width - last_x;
+              crect2.x     = last_x;
 
               gimp_draw_tool_draw_line (draw_tool,
                                         crect2.x, crect2.y + crect2.height,
@@ -1180,7 +1208,9 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
+gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
+                               gint          logical_off_x,
+                               gint          logical_off_y)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   PangoLayout     *layout;
@@ -1219,7 +1249,10 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
       gint first_x,   last_x;
 
       pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
+      pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
+
+      first_x = PANGO_PIXELS (first_x) + logical_off_x;
+      last_x  = PANGO_PIXELS (last_x)  + logical_off_x;
 
       if (i >= firstline && i <= lastline)
         {
@@ -1227,6 +1260,9 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
           pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
           pango_extents_to_pixels (&crect, NULL);
+
+          crect.x += logical_off_x;
+          crect.y += logical_off_y;
 
           gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
                                          crect.x, crect.y,
@@ -1240,7 +1276,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
                */
               PangoRectangle crect2 = crect;
 
-              crect2.width = PANGO_PIXELS (first_x) - crect.x;
+              crect2.width = first_x - crect.x;
               crect2.x     = crect.x;
 
               gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
@@ -1256,8 +1292,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
                */
               PangoRectangle crect2 = crect;
 
-              crect2.width = crect.x + crect.width - PANGO_PIXELS (last_x);
-              crect2.x     = PANGO_PIXELS (last_x);
+              crect2.width = crect.x + crect.width - last_x;
+              crect2.x     = last_x;
 
               gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
                                              crect2.x, crect2.y,
@@ -2174,10 +2210,21 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
                              gdouble       x,
                              gdouble       y)
 {
-  GtkTextIter start, end;
-  gchar      *string;
-  gint        offset;
-  gint        trailing;
+  PangoRectangle  ink_extents;
+  GtkTextIter     start, end;
+  gchar          *string;
+  gint            offset;
+  gint            trailing;
+
+  /*  adjust to offset of logical rect  */
+  pango_layout_get_pixel_extents (text_tool->layout->layout,
+                                  &ink_extents, NULL);
+
+  if (ink_extents.x < 0)
+    x += ink_extents.x;
+
+  if (ink_extents.y < 0)
+    y += ink_extents.y;
 
   gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
   string = gtk_text_buffer_get_text (text_tool->text_buffer,
