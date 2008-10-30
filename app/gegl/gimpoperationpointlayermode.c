@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationpointcomposer.c
+ * gimpoperationpointlayermode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  * Copyright (C) 2008 Martin Nordholts <martinn@svn.gnome.org>
  *
@@ -280,13 +280,18 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
 
-  gfloat *in     = in_buf;  /* composite of layers below */
-  gfloat *lay    = aux_buf; /* layer */
-  gfloat *out    = out_buf; /* resulting composite */
-  gint    c      = 0;
-  gfloat  new[3] = { 0.0, 0.0, 0.0 };
+  gfloat   *in     = in_buf;     /* composite of layers below */
+  gfloat   *lay    = aux_buf;    /* layer */
+  gfloat   *out    = out_buf;    /* resulting composite */
+  GRand    *rand   = NULL;
+  glong     sample = samples;
+  gint      c      = 0;
+  gfloat    new[3] = { 0.0, 0.0, 0.0 };
 
-  while (samples--)
+  if (self->blend_mode == GIMP_DISSOLVE_MODE)
+    rand = g_rand_new ();
+
+  while (sample--)
     {
       switch (self->blend_mode)
         {
@@ -499,8 +504,29 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_DISSOLVE_MODE:
-          /* Not a point filter and cannot be implemented here */
-          /* g_assert_not_reached (); */
+          /* We need a deterministic result from Dissolve so let the
+           * seed depend on the pixel position (modulo 1024)
+           */
+          g_rand_set_seed (rand,
+                           (roi->x + sample - (sample / roi->width) * roi->width) % 1024 *
+                           (roi->y + sample / roi->width)                         % 1024);
+
+          if (layA * G_MAXUINT32 >= g_rand_int (rand))
+            {
+              EACH_CHANNEL(
+              outC = layC / layA);
+
+              /* Use general outA calculation */
+              layA = 1.0;
+            }
+          else
+            {
+              EACH_CHANNEL(
+              outC = inC);
+
+              /* Use general outA calculation */
+              layA = 0.0;
+            }
           break;
 
         default:
@@ -515,6 +541,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
       lay += 4;
       out += 4;
     }
+
+  if (rand)
+    g_rand_free (rand);
 
   return TRUE;
 }

@@ -1,3 +1,16 @@
+2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): The GEGL API actually
+	allows us to handle the Dissolve layer mode as a point op. The
+	GEGL implementation of Dissolve uses a faster implementation for
+	deterministic behavior than the legacy Dissolve implementation.
+	The end result should be identical (although not on the
+	pixel-level).
+
+	Completely works the same:
+	 o Dissolve
+
 2008-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_key_press): bail out
