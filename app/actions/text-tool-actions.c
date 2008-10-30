@@ -49,6 +49,10 @@ static const GimpActionEntry text_tool_actions[] =
     N_("Text Tool Menu"), NULL, NULL, NULL,
     NULL },
 
+  { "text-tool-input-methods-menu", NULL,
+    N_("Input _Methods"), NULL, NULL, NULL,
+    NULL },
+
   { "text-tool-cut", GTK_STOCK_CUT,
     N_("Cu_t"), NULL, NULL,
     G_CALLBACK (text_tool_cut_cmd_callback),
@@ -90,10 +94,6 @@ static const GimpActionEntry text_tool_actions[] =
     N_("Text along Path"), "",
     N_("Bend the text along the currently active path"),
     G_CALLBACK (text_tool_text_along_path_cmd_callback),
-    NULL },
-
-  { "text-tool-input-methods", NULL,
-    N_("Input _Methods"), NULL, NULL, NULL,
     NULL }
 };
 

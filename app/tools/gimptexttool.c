@@ -53,6 +53,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimptexteditor.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpcanvas.h"
@@ -139,10 +140,10 @@ static void      gimp_text_tool_apply           (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
 
-static void    gimp_text_tool_canvas_editor          (GimpTextTool *text_tool);
-static gchar  *gimp_text_tool_canvas_editor_get_text (GimpTextTool *text_tool);
-
 static void      gimp_text_tool_editor          (GimpTextTool      *text_tool);
+static void      gimp_text_tool_canvas_editor   (GimpTextTool      *text_tool);
+static gchar   * gimp_text_tool_canvas_editor_get_text
+                                                (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_layer_changed   (GimpImage         *image,
                                                  GimpTextTool      *text_tool);
@@ -152,10 +153,10 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void gimp_text_tool_update_layout        (GimpTextTool      *text_tool);
-static void gimp_text_tool_update_proxy         (GimpTextTool      *text_tool);
+static void      gimp_text_tool_update_layout   (GimpTextTool      *text_tool);
+static void      gimp_text_tool_update_proxy    (GimpTextTool      *text_tool);
 
-static void gimp_text_tool_enter_text           (GimpTextTool      *text_tool,
+static void      gimp_text_tool_enter_text      (GimpTextTool      *text_tool,
                                                  const gchar       *str);
 static void gimp_text_tool_text_buffer_changed  (GtkTextBuffer     *text_buffer,
                                                  GimpTextTool      *text_tool);
@@ -220,8 +221,6 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   object_class->set_property = gimp_rectangle_tool_set_property;
   object_class->get_property = gimp_rectangle_tool_get_property;
 
-  gimp_rectangle_tool_install_properties (object_class);
-
   tool_class->control        = gimp_text_tool_control;
   tool_class->button_press   = gimp_text_tool_button_press;
   tool_class->motion         = gimp_text_tool_motion;
@@ -232,6 +231,8 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   tool_class->get_popup      = gimp_text_tool_get_popup;
 
   draw_tool_class->draw      = gimp_text_tool_draw;
+
+  gimp_rectangle_tool_install_properties (object_class);
 }
 
 static void
@@ -328,7 +329,6 @@ static void
 gimp_text_tool_dispose (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
-  GimpTool     *tool      = GIMP_TOOL (object);
 
   gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
 
@@ -401,10 +401,9 @@ gimp_text_tool_button_press (GimpTool        *tool,
                              GimpDisplay     *display)
 {
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
   GimpText          *text      = text_tool->text;
   GimpDrawable      *drawable;
-  GimpTextOptions   *options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
   gint               x1, y1;
   gint               x2, y2;
 
@@ -651,9 +650,6 @@ gimp_text_tool_motion (GimpTool        *tool,
                        GimpDisplay     *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
-  gdouble       snapped_x;
-  gdouble       snapped_y;
-  gint          snap_x, snap_y;
 
   if (text_tool->text_cursor_changing)
     {
@@ -923,8 +919,6 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *display)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
-
   if (tool->display == display)
     {
       gint x1, y1;
@@ -964,30 +958,6 @@ gimp_text_tool_get_popup (GimpTool         *tool,
   gint          x1, y1;
   gint          x2, y2;
 
-  if (! text_tool->ui_manager)
-    {
-      GimpDialogFactory *dialog_factory;
-      GtkWidget         *im_menu;
-      GtkWidget         *im_menuitem;
-
-      dialog_factory = gimp_dialog_factory_from_name ("toplevel");
-
-      text_tool->ui_manager =
-        gimp_menu_factory_manager_new (dialog_factory->menu_factory,
-                                       "<TextTool>",
-                                       text_tool, FALSE);
-
-      im_menuitem = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
-                                               "/text-tool-popup/text-tool-input-methods");
-
-      im_menu = gtk_menu_new ();
-
-      gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context),
-                                            GTK_MENU_SHELL (im_menu));
-      gtk_menu_item_set_submenu (GTK_MENU_ITEM (im_menuitem), im_menu);
-      gtk_widget_show (im_menuitem);
-    }
-
   g_object_get (text_tool,
                 "x1", &x1,
                 "y1", &y1,
@@ -998,6 +968,28 @@ gimp_text_tool_get_popup (GimpTool         *tool,
   if (coords->x > x1 && coords->x <= x2 &&
       coords->y > y1 && coords->y <= y2)
     {
+      if (! text_tool->ui_manager)
+        {
+          GimpDialogFactory *dialog_factory;
+          GtkWidget         *im_menu;
+
+          dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+
+          text_tool->ui_manager =
+            gimp_menu_factory_manager_new (dialog_factory->menu_factory,
+                                           "<TextTool>",
+                                           text_tool, FALSE);
+
+          im_menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
+                                               "/text-tool-popup/text-tool-input-methods-menu");
+
+          if (GTK_IS_MENU_ITEM (im_menu))
+            im_menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (im_menu));
+
+          gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context),
+                                                GTK_MENU_SHELL (im_menu));
+        }
+
       gimp_ui_manager_update (text_tool->ui_manager, text_tool);
 
       *ui_path = "/text-tool-popup";
@@ -1012,9 +1004,7 @@ static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GimpTool     *tool      = GIMP_TOOL (draw_tool);
   GdkRectangle  cliprect;
-  gint          width, height;
   gint          x1, x2;
   gint          y1, y2;
   GtkTextIter   start;
@@ -1097,9 +1087,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     }
   else
     {
-      /* If the text buffer has a selection, highlight the
-       * selected letters*/
-
+      /* If the text buffer has a selection, highlight the selected
+       * letters
+       */
       gimp_text_tool_draw_selection (draw_tool);
     }
 
@@ -1152,6 +1142,7 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool)
                                     crect.x + crect.width,
                                     crect.y + crect.height,
                                     TRUE);
+
           if (i == firstline)
             {
               PangoRectangle crect2 = crect;
@@ -1218,10 +1209,9 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
-  /* Invert the selected letters by inverting all
-   * lines containing selected letters, then
-   * invert the unselected letters on these lines
-   * a second time to make them look normal
+  /* Invert the selected letters by inverting all lines containing
+   * selected letters, then invert the unselected letters on these
+   * lines a second time to make them look normal
    */
   do
     {
@@ -1242,10 +1232,11 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
                                          crect.x, crect.y,
                                          crect.width, crect.height,
                                          TRUE);
+
           if (i == firstline)
             {
-              /* Twice invert all letters before the selection,
-               * making them look normal
+              /* Twice invert all letters before the selection, making
+               * them look normal
                */
               PangoRectangle crect2 = crect;
 
@@ -1257,10 +1248,11 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
                                              crect2.width, crect2.height,
                                              TRUE);
             }
+
           if (i == lastline)
             {
-              /* Twice invert all letters after the selection,
-               * making them look normal
+              /* Twice invert all letters after the selection, making
+               * them look normal
                */
               PangoRectangle crect2 = crect;
 
@@ -1273,9 +1265,11 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
                                              TRUE);
             }
         }
+
       i++;
     }
   while (pango_layout_iter_next_line (line_iter));
+
   pango_layout_iter_free (line_iter);
 }
 
@@ -1301,11 +1295,10 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
       if (! text || ! text->text || (text->text[0] == 0))
         {
-          /*
-           * we can't set properties for the text layer, because
-           * it isn't created until some text has been inserted,
-           * so we need to make a special note that will remind
-           * us what to do when we actually create the layer
+          /* we can't set properties for the text layer, because it
+           * isn't created until some text has been inserted, so we
+           * need to make a special note that will remind us what to
+           * do when we actually create the layer
            */
           return TRUE;
         }
@@ -1645,8 +1638,9 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
         gimp_image_undo_group_end (image);
     }
 
-  /* if we're doing dynamic text, we want to update the
-   * shape of the rectangle */
+  /* if we're doing dynamic text, we want to update the shape of the
+   * rectangle
+   */
   if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
     {
       text_tool->handle_rectangle_change_complete = FALSE;
@@ -1754,25 +1748,9 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
-{
-  GimpTool        *tool    = GIMP_TOOL (text_tool);
-  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
-
-  gtk_im_context_set_client_window (text_tool->im_context,
-                                    GIMP_DISPLAY_SHELL (tool->display->shell)->canvas->window);
-
-  gtk_im_context_focus_in (text_tool->im_context);
-
-  gimp_text_tool_update_layout (text_tool);
-
-  if (options->use_editor)
-    gimp_text_tool_editor (text_tool);
-}
-
-static void
 gimp_text_tool_editor (GimpTextTool *text_tool)
 {
+  GimpTool          *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
@@ -1785,8 +1763,8 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
-  if (GIMP_TOOL (text_tool)->display)
-    parent = GTK_WINDOW (GIMP_TOOL (text_tool)->display->shell);
+  if (tool->display)
+    parent = GTK_WINDOW (tool->display->shell);
 
   text_tool->editor = gimp_text_options_editor_new (parent, options,
                                                     dialog_factory->menu_factory,
@@ -1801,6 +1779,23 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                                    text_tool->editor);
 
   gtk_widget_show (text_tool->editor);
+}
+
+static void
+gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
+{
+  GimpTool        *tool    = GIMP_TOOL (text_tool);
+  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+
+  gtk_im_context_set_client_window (text_tool->im_context,
+                                    GIMP_DISPLAY_SHELL (tool->display->shell)->canvas->window);
+
+  gtk_im_context_focus_in (text_tool->im_context);
+
+  gimp_text_tool_update_layout (text_tool);
+
+  if (options->use_editor)
+    gimp_text_tool_editor (text_tool);
 }
 
 static gchar *

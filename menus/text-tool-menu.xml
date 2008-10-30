@@ -17,7 +17,6 @@
     <menuitem action="text-tool-direction-ltr" />
     <menuitem action="text-tool-direction-rtl" />
     <separator />
-    <menu action="text-tool-input-methods">
-    </menu>
+    <menu action="text-tool-input-methods-menu" />
   </popup>
 </ui>

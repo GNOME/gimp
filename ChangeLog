@@ -1,3 +1,13 @@
+2008-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c: remove lots of unused variables,
+	apparently my builds were without proper warnings for some time.
+	Some formatting cleanup and code reordering.
+
+	* app/actions/text-tool-actions.c
+	* menus/text-tool-menu.xml: rename "text-tool-input-methods"
+	to "text-tool-input-methods-menu".
+
 2008-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayout.c: fixed order of includes.
