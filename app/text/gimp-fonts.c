@@ -22,9 +22,7 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
 
-/* PangoFT2 is assumed, so we should have this in our cflags */
 #include <fontconfig/fontconfig.h>
 
 #include "libgimpbase/gimpbase.h"

@@ -1,3 +1,8 @@
+2008-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimp-fonts.c
+	* app/text/gimpfont-utils.c: removed unused includes.
+
 2008-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c: remove lots of unused variables,

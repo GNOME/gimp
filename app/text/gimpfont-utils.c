@@ -23,10 +23,10 @@
 
 #include <string.h>
 
-#include <glib-object.h>
-#include <pango/pangoft2.h>
+#include <pango/pango.h>
 
 #include "gimpfont-utils.h"
+
 
 /* Workaround pango bug #166540 */
 
