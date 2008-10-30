@@ -1,3 +1,8 @@
+2008-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayout-render.c: removed an obsolete and
+	misleading comment.
+
 2008-10-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def

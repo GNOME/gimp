@@ -36,10 +36,6 @@
 #include "gimptextlayout-render.h"
 
 
-/*  This file duplicates quite a lot of code from pangoft2.c.
- *  At some point all this should be folded back into Pango.
- */
-
 static void  gimp_text_layout_render_line    (GimpTextLayout     *layout,
                                               PangoLayoutLine    *line,
                                               GimpTextRenderFunc  render_func,
