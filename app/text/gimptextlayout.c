@@ -24,9 +24,9 @@
 #include <gegl.h>
 #include <pango/pangocairo.h>
 
-#include "text-types.h"
-
 #include "libgimpmath/gimpmath.h"
+
+#include "text-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"

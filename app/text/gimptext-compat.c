@@ -22,7 +22,7 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -146,28 +146,16 @@ text_get_extents (const gchar *fontname,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
-  PangoFontMap         *fontmap;
+  PangoCairoFontMap    *fontmap;
   PangoRectangle        rect;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
-  /* FIXME: resolution */
-  fontmap = pango_ft2_font_map_new ();
-  pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap), 72.0, 72.0);
-  context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
+  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
+  pango_cairo_font_map_set_resolution (fontmap, 72.0); /* FIXME: resolution */
+  context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
-
-  /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
-   *  see also bug #148997 (Text layer rendering leaks font file descriptor):
-   *
-   *  Calling pango_ft2_font_map_substitute_changed() causes the
-   *  font_map cache to be flushed, thereby removing the circular
-   *  reference that causes the leak.
-   */
-  g_object_weak_ref (G_OBJECT (context),
-                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
-                     fontmap);
 
   layout = pango_layout_new (context);
   g_object_unref (context);

@@ -1,5 +1,12 @@
 2008-10-30  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayout.c: fixed order of includes.
+
+	* app/text/gimptext-compat.c: ported to PangoCairo like the rest
+	of the text rendering code.
+
+2008-10-30  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout-render.c: removed an obsolete and
 	misleading comment.
 
