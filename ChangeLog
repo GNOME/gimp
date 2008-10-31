@@ -1,3 +1,9 @@
+2008-10-31  Sven Neumann  <sven@sven>
+
+	* configure.in: also check for freetype2 when checking for
+	pangocairo. Should fix the build on systems where the FT2 include
+	path is not included otherwise.
+
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: lowered minimum required version of Cairo to 1.6.0.

@@ -496,7 +496,8 @@ fi
 
 PKG_CHECK_MODULES(CAIRO, cairo >= cairo_required_version)
 
-PKG_CHECK_MODULES(PANGOCAIRO, pangocairo >= pangocairo_required_version, :,
+PKG_CHECK_MODULES(PANGOCAIRO,
+	          pangocairo >= pangocairo_required_version freetype2, :,
   AC_MSG_ERROR([Test for PangoCairo failed.
 *** We require Pango with the optional support for Cairo compiled in.
 *** See the file 'INSTALL' for more help.]))
