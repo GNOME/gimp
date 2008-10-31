@@ -251,5 +251,12 @@ void       gimp_draw_tool_draw_boundary            (GimpDrawTool     *draw_tool,
                                                     gdouble           offset_y,
                                                     gboolean          use_offsets);
 
+void       gimp_draw_tool_draw_text_cursor         (GimpDrawTool     *draw_tool,
+                                                    gdouble           x1,
+                                                    gdouble           y1,
+                                                    gdouble           x2,
+                                                    gdouble           y2,
+                                                    gboolean          use_offsets);
+
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

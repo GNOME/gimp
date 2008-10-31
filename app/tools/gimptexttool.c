@@ -1089,18 +1089,10 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       crect.y      = PANGO_PIXELS (crect.y) + logical_off_y;
       crect.height = PANGO_PIXELS (crect.height);
 
-      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x - 1, crect.y + 2,
-                                     3, crect.height - 4,
-                                     TRUE);
-      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x - 3, crect.y,
-                                     7, 3,
-                                     TRUE);
-      gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                     crect.x - 3, crect.y + crect.height - 3,
-                                     7, 3,
-                                     TRUE);
+      gimp_draw_tool_draw_text_cursor (draw_tool,
+                                       crect.x, crect.y,
+                                       crect.x, crect.y + crect.height,
+                                       TRUE);
 
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
         gimp_text_tool_draw_preedit (draw_tool, logical_off_x, logical_off_y);
