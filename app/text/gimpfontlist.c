@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 #include <pango/pangofc-fontmap.h>
 
 #include "text-types.h"
@@ -44,7 +44,6 @@
 #define USE_FONTCONFIG_DIRECTLY
 
 #ifdef USE_FONTCONFIG_DIRECTLY
-/* PangoFT2 is assumed, so we should have this in our cflags */
 #include <fontconfig/fontconfig.h>
 #endif
 
@@ -99,8 +98,8 @@ gimp_font_list_new (gdouble xresolution,
 void
 gimp_font_list_restore (GimpFontList *list)
 {
-  PangoFontMap *fontmap;
-  PangoContext *context;
+  PangoCairoFontMap *fontmap;
+  PangoContext      *context;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
@@ -125,16 +124,14 @@ gimp_font_list_restore (GimpFontList *list)
         font_desc_to_string = &pango_font_description_to_string;
     }
 
-  fontmap = pango_ft2_font_map_new ();
-  pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap),
-                                     list->xresolution, list->yresolution);
-
-  context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
+  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
+  pango_cairo_font_map_set_resolution (fontmap, list->yresolution);
+  context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
 
   gimp_container_freeze (GIMP_CONTAINER (list));
 
-  gimp_font_list_load_names (list, fontmap, context);
+  gimp_font_list_load_names (list, PANGO_FONT_MAP (fontmap), context);
   g_object_unref (context);
 
   gimp_list_sort_by_name (GIMP_LIST (list));

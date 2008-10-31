@@ -1,5 +1,10 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimpfont.c
+	* app/text/gimpfontlist.c: render font previews using PangoCairo.
+
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped minimum required version of Cairo to 1.6.4.
 
 	* app/core/gimpscanconvert.c: use cairo_format_stride_for_width().

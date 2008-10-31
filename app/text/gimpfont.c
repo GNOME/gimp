@@ -24,8 +24,7 @@
 
 #include <glib-object.h>
 
-#define PANGO_ENABLE_BACKEND 1   /* Argh */
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 
 #define PANGO_ENABLE_ENGINE  1   /* Argh */
 #include <pango/pango-ot.h>
@@ -223,6 +222,8 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   *popup_width  = MAX (ink.width,  logical.width)  + 6;
   *popup_height = MAX (ink.height, logical.height) + 6;
 
+  *popup_width = cairo_format_stride_for_width (CAIRO_FORMAT_A8, *popup_width);
+
   font->popup_width  = *popup_width;
   font->popup_height = *popup_height;
 
@@ -235,18 +236,18 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpFont       *font = GIMP_FONT (viewable);
-  PangoLayout    *layout;
-  PangoRectangle  ink;
-  PangoRectangle  logical;
-  gint            layout_width;
-  gint            layout_height;
-  gint            layout_x;
-  gint            layout_y;
-  TempBuf        *temp_buf;
-  FT_Bitmap       bitmap;
-  guchar         *p;
-  guchar          black = 0;
+  GimpFont        *font = GIMP_FONT (viewable);
+  PangoLayout     *layout;
+  PangoRectangle   ink;
+  PangoRectangle   logical;
+  gint             layout_width;
+  gint             layout_height;
+  gint             layout_x;
+  gint             layout_y;
+  TempBuf         *temp_buf;
+  cairo_t         *cr;
+  cairo_surface_t *surface;
+  guchar           white = 255;
 
   if (! font->pango_context)
     return NULL;
@@ -282,20 +283,21 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       layout = g_object_ref (font->popup_layout);
     }
 
-  temp_buf = temp_buf_new (width, height, 1, 0, 0, &black);
+  width = cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
 
-  bitmap.width  = temp_buf->width;
-  bitmap.rows   = temp_buf->height;
-  bitmap.pitch  = temp_buf->width;
-  bitmap.buffer = temp_buf_data (temp_buf);
+  temp_buf = temp_buf_new (width, height, 1, 0, 0, &white);
+
+  surface = cairo_image_surface_create_for_data (temp_buf_data (temp_buf),
+                                                 CAIRO_FORMAT_A8,
+                                                 width, height, width);
 
   pango_layout_get_pixel_extents (layout, &ink, &logical);
 
   layout_width  = MAX (ink.width,  logical.width);
   layout_height = MAX (ink.height, logical.height);
 
-  layout_x = (bitmap.width - layout_width)  / 2;
-  layout_y = (bitmap.rows  - layout_height) / 2;
+  layout_x = (width - layout_width)  / 2;
+  layout_y = (height - layout_height) / 2;
 
   if (ink.x < logical.x)
     layout_x += logical.x - ink.x;
@@ -303,15 +305,16 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   if (ink.y < logical.y)
     layout_y += logical.y - ink.y;
 
-  pango_ft2_render_layout (&bitmap, layout, layout_x, layout_y);
+  cr = cairo_create (surface);
+
+  cairo_translate (cr, layout_x, layout_y);
+  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+  pango_cairo_show_layout (cr, layout);
+
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
 
   g_object_unref (layout);
-
-  p = temp_buf_data (temp_buf);
-
-  for (height = temp_buf->height; height; height--)
-    for (width = temp_buf->width; width; width--, p++)
-      *p = 255 - *p;
 
   return temp_buf;
 }
