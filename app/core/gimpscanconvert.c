@@ -58,9 +58,6 @@ struct _GimpScanConvert
   GArray         *path_data;
 };
 
-/* private functions */
-static gint   gimp_cairo_stride_for_width        (gint             width);
-
 
 /*  public functions  */
 
@@ -301,7 +298,8 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
 
       if (n_dashes >= 2)
         {
-          sc->dash_info = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), n_dashes);
+          sc->dash_info = g_array_sized_new (FALSE, FALSE,
+                                             sizeof (gdouble), n_dashes);
           sc->dash_info = g_array_append_vals (sc->dash_info, dashes, n_dashes);
           sc->dash_offset = dash_offset;
         }
@@ -343,9 +341,10 @@ gimp_scan_convert_render (GimpScanConvert *sc,
  * @off_y:        vertical offset into the @tile_manager
  * @value:        value to use for covered pixels
  *
- * This is a wrapper around gimp_scan_convert_render_full() that doesn't do
- * antialiasing but gives control over the value that should be used for pixels
- * covered by the scan conversion. Uncovered pixels are set to zero.
+ * This is a wrapper around gimp_scan_convert_render_full() that
+ * doesn't do antialiasing but gives control over the value that
+ * should be used for pixels covered by the scan conversion. Uncovered
+ * pixels are set to zero.
  *
  * You cannot add additional polygons after this command.
  */
@@ -413,7 +412,8 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
  * @tile_manager: the #TileManager to render to
  * @off_x:        horizontal offset into the @tile_manager
  * @off_y:        vertical offset into the @tile_manager
- * @replace:      if true the original content of the @tile_manager gets destroyed
+ * @replace:      if true the original content of the @tile_manager gets
+ *                destroyed
  * @antialias:    if true the rendering happens antialiased
  * @value:        value to use for covered pixels
  *
@@ -475,9 +475,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
       guchar *tmp_buf = NULL;
       gint    stride;
 
-      stride = gimp_cairo_stride_for_width (maskPR.w);
-
-      g_assert (stride > 0);
+      stride = cairo_format_stride_for_width (CAIRO_FORMAT_A8, maskPR.w);
 
       if (maskPR.rowstride != stride)
         {
@@ -517,7 +515,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
         }
       cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
       cairo_append_path (cr, &path);
-      cairo_set_antialias (cr, antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
+      cairo_set_antialias (cr, antialias ?
+                           CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       cairo_set_miter_limit (cr, sc->miter);
       if (sc->do_stroke)
         {
@@ -530,7 +529,10 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
           cairo_set_line_width (cr, sc->width);
           if (sc->dash_info)
-            cairo_set_dash (cr, (double *) sc->dash_info->data, sc->dash_info->len, sc->dash_offset);
+            cairo_set_dash (cr,
+                            (double *) sc->dash_info->data,
+                            sc->dash_info->len,
+                            sc->dash_offset);
           cairo_scale (cr, 1.0, sc->ratio_xy);
           cairo_stroke (cr);
         }
@@ -559,21 +561,3 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
         }
     }
 }
-
-static gint
-gimp_cairo_stride_for_width (gint width)
-{
-#ifdef __GNUC__
-#warning use cairo_format_stride_for_width() as soon as we depend on cairo 1.6
-#endif
-#if 0
-  return cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
-#endif
-
-#define CAIRO_STRIDE_ALIGNMENT (sizeof (guint32))
-#define CAIRO_STRIDE_FOR_WIDTH_BPP(w,bpp) \
-   (((bpp)*(w)+7)/8 + CAIRO_STRIDE_ALIGNMENT-1) & ~(CAIRO_STRIDE_ALIGNMENT-1)
-
-  return CAIRO_STRIDE_FOR_WIDTH_BPP (width, 8);
-}
-

@@ -1,3 +1,9 @@
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped minimum required version of Cairo to 1.6.4.
+
+	* app/core/gimpscanconvert.c: use cairo_format_stride_for_width().
+
 2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c
