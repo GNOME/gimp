@@ -89,7 +89,6 @@ AM_CPPFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
-	$(PANGOFT2_CFLAGS)	\
 	$(PANGOCAIRO_CFLAGS)	\
 	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
@@ -137,7 +136,6 @@ gimp_2_7_LDADD = \
 	$(libgimpconfig)		\
 	$(libgimpbase)			\
 	$(GTK_LIBS)			\
-	$(PANGOFT2_LIBS)		\
 	$(PANGOCAIRO_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
@@ -182,7 +180,6 @@ gimp_console_2_7_LDADD = \
 	$(libgimpbase)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(CAIRO_LIBS)			\
-	$(PANGOFT2_LIBS)		\
 	$(PANGOCAIRO_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\

@@ -9,7 +9,6 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GEGL_CFLAGS)		\
-	$(PANGOFT2_CFLAGS)	\
 	$(PANGOCAIRO_CFLAGS)	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)

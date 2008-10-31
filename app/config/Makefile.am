@@ -66,7 +66,7 @@ test_config_DEPENDENCIES = $(gimpconfig_libs)
 test_config_LDFLAGS = \
 	-u $(SYMPREFIX)xcf_init				\
 	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_coords_mix			\
+	-u $(SYMPREFIX)gimp_coords_interpolate_bezier	\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
 	-u $(SYMPREFIX)gimp_image_map_config_get_type
 
@@ -95,10 +95,8 @@ test_config_LDADD = \
 	$(libgimpmath)				\
 	$(libgimpconfig)			\
 	$(libgimpbase)				\
-	$(CAIRO_LIBS)				\
-	$(PANGOFT2_LIBS)			\
+	$(PANGOCAIRO_LIBS)			\
 	$(GDK_PIXBUF_LIBS)			\
-	$(LIBART_LIBS)				\
 	$(GEGL_LIBS)				\
 	$(GLIB_LIBS)
 

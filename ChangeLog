@@ -1,5 +1,14 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: 
+	* configure.in: removed checks for PangoFT2.
+
+	* app/config/Makefile.am
+	* app/text/Makefile.am
+	* app/Makefile.am: removed use of PANGOFT2_CFLAGS and PANGOFT2_LIBS.
+
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimpfont.c
 	* app/text/gimpfontlist.c: render font previews using PangoCairo.
 

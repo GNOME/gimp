@@ -46,7 +46,6 @@ m4_define([glib_required_version], [2.16.1])
 m4_define([gtk_required_version], [2.12.5])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([pangocairo_required_version], [1.20.1])
-m4_define([pangoft2_required_version], [1.18.0])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([cairo_required_version], [1.6.4])
 m4_define([gtkdoc_required_version], [1.0])
@@ -507,11 +506,6 @@ CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
-PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
-  AC_MSG_ERROR([Test for PangoFT2 failed.
-*** We require Pango with the optional support for FreeType2 compiled in.
-*** See the file 'INSTALL' for more help.]))
-
 AC_MSG_CHECKING([if Pango is version 1.21.0 or newer])
 if $PKG_CONFIG --atleast-version=1.21.0 pango; then
   have_pango_1_21=yes
@@ -520,7 +514,7 @@ else
 fi
 AC_MSG_RESULT($have_pango_1_21)
 
-CFLAGS="$PANGOFT2_CFLAGS $CFLAGS"
+CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 AC_MSG_CHECKING([if Pango is built with a recent fontconfig])
 AC_TRY_COMPILE([#include <fontconfig/fontconfig.h>],
@@ -533,9 +527,9 @@ CFLAGS=$gimp_save_CFLAGS
 if test "x$fontconfig_ok" = xno; then
   AC_MSG_ERROR([
 *** You have a fontconfig >= fontconfig_required_version installed on your system, but your
-*** PangoFT2 is using an older version. This old version is probably in
+*** Pango library is using an older version. This old version is probably in
 *** /usr/X11R6. Look at the above output, and note that the result for
-*** FONTCONFIG_CFLAGS is not in the result for PANGOFT2_CFLAGS, and that
+*** FONTCONFIG_CFLAGS is not in the result for PANGOCAIRO_CFLAGS, and that
 *** there is likely an extra -I line, other than the ones for GLIB,
 *** Freetype, and Pango itself. That's where your old fontconfig files are.
 *** Rebuild pango, and make sure that it uses the newer fontconfig. The

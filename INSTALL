@@ -45,16 +45,13 @@ header files installed.
      also need a recent versions of GLib (>= 2.16.1) and Pango (>= 1.18.0).
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
 
-  5. We require PangoFT2, a Pango backend that uses FreeType2. Make
-     sure you have FreeType2 and fontconfig installed before you
-     compile Pango.  FreeType2 can be downloaded from
-     http://www.freetype.org/.  Fontconfig from
-     http://freedesktop.org/fontconfig/.  GIMP depends on freetype2
-     being newer than version 2.1.7 and fontconfig 2.2.0 or newer.
-     Older versions are known to have bugs that seriously affect the
-     stability of GIMP.
+  5. We use cairo, which is hosted at http://www.cairographics.org/.
 
-  6. We use cairo, which is hosted at http://www.cairographics.org/.
+  6. We require PangoCairo, a Pango backend using Cairo. Make sure you
+     have Cairo, FreeType2 and fontconfig installed before you compile
+     Pango. GIMP depends on freetype2 being newer than version 2.1.7
+     and fontconfig 2.2.0 or newer. Older versions are known to have
+     bugs that seriously affect the stability of GIMP.
 
   7. We use dbus-glib if available. Grab it from
      http://dbus.freedesktop.org/releases/dbus-glib/
