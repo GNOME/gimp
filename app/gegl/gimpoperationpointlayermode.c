@@ -509,8 +509,8 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            * seed depend on the pixel position (modulo 1024)
            */
           g_rand_set_seed (rand,
-                           (roi->x + sample - (sample / roi->width) * roi->width) % 1024 *
-                           (roi->y + sample / roi->width)                         % 1024);
+                           ((roi->x + sample - (sample / roi->width) * roi->width) % 1024) *
+                           ((roi->y + sample / roi->width)                         % 1024));
 
           if (layA * G_MAXUINT32 >= g_rand_int (rand))
             {

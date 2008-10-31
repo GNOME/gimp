@@ -1,8 +1,9 @@
 2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c
-	(gimp_operation_point_layer_mode_process): Formating and
-	simplification.
+	(gimp_operation_point_layer_mode_process): Formating,
+	simplification and fixed operator precedence for the seed (not
+	that it matters much).
 
 2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
 
