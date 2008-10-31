@@ -1,3 +1,8 @@
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpprocview.c: added basic gtk-doc comment for
+	gimp_proc_view_new().
+
 2008-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_key_press): bail out
