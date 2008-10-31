@@ -171,6 +171,15 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
         }
 
       g_free (locales);
+
+      if (! found)
+        {
+          gchar *path = g_build_filename (basedir, "en", "gimp-help.xml", NULL);
+
+          found = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+
+          g_free (path);
+        }
     }
 
   g_free (basedir);
