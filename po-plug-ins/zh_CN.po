@@ -4,20 +4,20 @@
 # Cai Qian <caiqian@gnome.org>, 2005.
 # 神州散人 <kappa8086@gmail.com>, 2008.
 # Aron <aronmalache@163.com>, 2008.神州散人 <kappa8086@gmail.com>, 2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-12 23:10+0000\n"
+"POT-Creation-Date: 2008-10-31 10:31+0000\n"
 "PO-Revision-Date: 2008-10-31 18:27+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:119
 msgid "Original"
@@ -728,14 +728,20 @@ msgid "Blur Type"
 msgstr "模糊类型"
 
 #: ../plug-ins/common/blur-motion.c:1049
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Linear"
 msgstr "线性(_L)"
 
 #: ../plug-ins/common/blur-motion.c:1050
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Radial"
 msgstr "转向(_R)"
 
 #: ../plug-ins/common/blur-motion.c:1051
+#, fuzzy
+msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "缩放(_Z)"
 
@@ -1062,7 +1068,7 @@ msgstr "保存通道混合器设置"
 #: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
-#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1626
+#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1638
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
 #: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
@@ -1400,8 +1406,8 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "“固定种子”按钮是我的别名。\n"
-"相同的种子产生相同的图像，只要 (1) 图像宽度相同(这就是可绘图像不同于预览"
-"图像的原因)， 并且 (2) 所有的变化率都等于零。"
+"相同的种子产生相同的图像，只要 (1) 图像宽度相同(这就是可绘图像不同于预览图像"
+"的原因)， 并且 (2) 所有的变化率都等于零。"
 
 #: ../plug-ins/common/cml-explorer.c:1405
 msgid "O_thers"
@@ -1870,8 +1876,7 @@ msgstr "重新组合(_E)"
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
-msgstr ""
-"如果当前图像原是由“分解”生成的，您只能运行“重新组合”。"
+msgstr "如果当前图像原是由“分解”生成的，您只能运行“重新组合”。"
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -3043,7 +3048,7 @@ msgstr "不支持的位深度(%d)！"
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
-#: ../plug-ins/file-psd/psd-save.c:1631 ../plug-ins/file-sgi/sgi.c:554
+#: ../plug-ins/file-psd/psd-save.c:1643 ../plug-ins/file-sgi/sgi.c:554
 #: ../plug-ins/file-xjt/xjt.c:1710
 #, c-format
 msgid "Saving '%s'"
@@ -3215,8 +3220,8 @@ msgstr "背景 (%d%s)"
 msgid "Opening '%s' (frame %d)"
 msgstr "打开“%s”(第%d帧)"
 
-#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:791
-#: ../plug-ins/common/iwarp.c:826
+#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:794
+#: ../plug-ins/common/iwarp.c:829
 #, c-format
 msgid "Frame %d"
 msgstr "帧 %d"
@@ -3791,8 +3796,7 @@ msgstr "PNG 文件“%s”存在未知色彩模式。"
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr ""
-"PNG 文件中指定的位移导致图层定位在图像以外。"
+msgstr "PNG 文件中指定的位移导致图层定位在图像以外。"
 
 #: ../plug-ins/common/file-png.c:1254
 #, c-format
@@ -3953,8 +3957,8 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
-"Ghostscript 启动出错。请确认 Ghostscript 已正确安装，并且 - 如果有必要 - 使用 "
-"GS_PROG 环境变量将其位置信息告知 GIMP。\n"
+"Ghostscript 启动出错。请确认 Ghostscript 已正确安装，并且 - 如果有必要 - 使"
+"用 GS_PROG 环境变量将其位置信息告知 GIMP。\n"
 "(%s)"
 
 #: ../plug-ins/common/file-ps.c:1930 ../plug-ins/common/file-tiff-load.c:999
@@ -4061,8 +4065,7 @@ msgstr "保持宽高比(_K)"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
-"选中时，图像将会缩放到给定的大小并且不会改变原来的宽高比。"
+msgstr "选中时，图像将会缩放到给定的大小并且不会改变原来的宽高比。"
 
 #. Unit
 #: ../plug-ins/common/file-ps.c:3429
@@ -4450,8 +4453,8 @@ msgid ""
 "this conversion."
 msgstr ""
 "警告：\n"
-"您加载的图像含有 16 位的通道。GIMP 只能处理 8 位，因此已帮您进行了自动转"
-"换。转换将造成信息丢失。"
+"您加载的图像含有 16 位的通道。GIMP 只能处理 8 位，因此已帮您进行了自动转换。"
+"转换将造成信息丢失。"
 
 #: ../plug-ins/common/file-tiff-save.c:887
 msgid ""
@@ -5170,111 +5173,111 @@ msgstr "模式 1(_1)"
 msgid "Mode _2"
 msgstr "模式 2(_2)"
 
-#: ../plug-ins/common/iwarp.c:262
+#: ../plug-ins/common/iwarp.c:265
 msgid "Use mouse control to warp image areas"
 msgstr "使用鼠标控制卷起图像区域"
 
-#: ../plug-ins/common/iwarp.c:267
+#: ../plug-ins/common/iwarp.c:270
 #, fuzzy
 msgid "_IWarp..."
 msgstr "交互式翘曲(IWrap)(_I)..."
 
-#: ../plug-ins/common/iwarp.c:697
+#: ../plug-ins/common/iwarp.c:700
 #, fuzzy
 msgid "Warping"
 msgstr "翘曲"
 
-#: ../plug-ins/common/iwarp.c:802
+#: ../plug-ins/common/iwarp.c:805
 #, fuzzy, c-format
 msgid "Warping Frame %d"
 msgstr "翘曲第 %d 帧"
 
-#: ../plug-ins/common/iwarp.c:814
+#: ../plug-ins/common/iwarp.c:817
 msgid "Ping pong"
 msgstr "乒乓"
 
-#: ../plug-ins/common/iwarp.c:1020
+#: ../plug-ins/common/iwarp.c:1023
 msgid "A_nimate"
 msgstr "动画(_N)"
 
-#: ../plug-ins/common/iwarp.c:1039
+#: ../plug-ins/common/iwarp.c:1042
 msgid "Number of _frames:"
 msgstr "帧数(_F)："
 
-#: ../plug-ins/common/iwarp.c:1048
+#: ../plug-ins/common/iwarp.c:1051
 msgid "R_everse"
 msgstr "反向(_E)"
 
-#: ../plug-ins/common/iwarp.c:1057
+#: ../plug-ins/common/iwarp.c:1060
 msgid "_Ping pong"
 msgstr "乒乓(_P)"
 
-#: ../plug-ins/common/iwarp.c:1070
+#: ../plug-ins/common/iwarp.c:1073
 msgid "_Animate"
 msgstr "动画(_A)"
 
-#: ../plug-ins/common/iwarp.c:1091
+#: ../plug-ins/common/iwarp.c:1094
 msgid "Deform Mode"
 msgstr "变形模式"
 
-#: ../plug-ins/common/iwarp.c:1104
+#: ../plug-ins/common/iwarp.c:1107
 msgid "_Move"
 msgstr "移动(_M)"
 
-#: ../plug-ins/common/iwarp.c:1105
+#: ../plug-ins/common/iwarp.c:1108
 msgid "_Grow"
 msgstr "膨胀(_G)"
 
-#: ../plug-ins/common/iwarp.c:1106
+#: ../plug-ins/common/iwarp.c:1109
 msgid "S_wirl CCW"
 msgstr "逆时针涡漩(_W)"
 
-#: ../plug-ins/common/iwarp.c:1107
+#: ../plug-ins/common/iwarp.c:1110
 msgid "Remo_ve"
 msgstr "删除(_V)"
 
-#: ../plug-ins/common/iwarp.c:1108
+#: ../plug-ins/common/iwarp.c:1111
 msgid "S_hrink"
 msgstr "收缩(_H)"
 
-#: ../plug-ins/common/iwarp.c:1109
+#: ../plug-ins/common/iwarp.c:1112
 msgid "Sw_irl CW"
 msgstr "顺时针涡漩(_I)"
 
-#: ../plug-ins/common/iwarp.c:1138
+#: ../plug-ins/common/iwarp.c:1141
 msgid "_Deform radius:"
 msgstr "变形半径(_D)："
 
-#: ../plug-ins/common/iwarp.c:1148
+#: ../plug-ins/common/iwarp.c:1151
 msgid "D_eform amount:"
 msgstr "变形量度(_E)："
 
-#: ../plug-ins/common/iwarp.c:1157
+#: ../plug-ins/common/iwarp.c:1160
 msgid "_Bilinear"
 msgstr "双线性(_B)"
 
-#: ../plug-ins/common/iwarp.c:1171
+#: ../plug-ins/common/iwarp.c:1174
 msgid "Adaptive s_upersample"
 msgstr "自适应超级采样(_U)"
 
-#: ../plug-ins/common/iwarp.c:1191
+#: ../plug-ins/common/iwarp.c:1194
 msgid "Ma_x depth:"
 msgstr "最大深度(_X)："
 
-#: ../plug-ins/common/iwarp.c:1201
+#: ../plug-ins/common/iwarp.c:1204
 msgid "Thresho_ld:"
 msgstr "阈值(_L)："
 
-#: ../plug-ins/common/iwarp.c:1214 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1217 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gradient-flare/gradient-flare.c:2867
 msgid "_Settings"
 msgstr "设置(_S)"
 
-#: ../plug-ins/common/iwarp.c:1263
+#: ../plug-ins/common/iwarp.c:1275
 msgid "IWarp"
 msgstr "交互式翘曲"
 
-#: ../plug-ins/common/iwarp.c:1299
+#: ../plug-ins/common/iwarp.c:1313
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -6593,8 +6596,7 @@ msgstr "在延迟之后，得到屏幕截图。"
 #: ../plug-ins/common/screenshot.c:1101
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"在延迟之后，拖动您的鼠标以选择屏幕截图范围。"
+msgstr "在延迟之后，拖动您的鼠标以选择屏幕截图范围。"
 
 #: ../plug-ins/common/screenshot.c:1104
 msgid "At the end of the delay, click in a window to snap it."
@@ -7398,8 +7400,7 @@ msgstr "保存"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr ""
-"只有此列被选中，GIMP 退出时才会保存这个单位。"
+msgstr "只有此列被选中，GIMP 退出时才会保存这个单位。"
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid "ID"
@@ -7408,8 +7409,7 @@ msgstr "ID"
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
-"这个字符串将在 GIMP 的配置文件中用于唯一识别一个单位。"
+msgstr "这个字符串将在 GIMP 的配置文件中用于唯一识别一个单位。"
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
@@ -8490,7 +8490,7 @@ msgstr ""
 msgid "Photoshop image"
 msgstr "Photoshop 图像"
 
-#: ../plug-ins/file-psd/psd-save.c:371
+#: ../plug-ins/file-psd/psd-save.c:374
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -8499,19 +8499,18 @@ msgstr ""
 "无法以“%s”模式保存图层。PSD 文件格式或保存插件均不支持此模式，请换用普通模"
 "式。"
 
-#: ../plug-ins/file-psd/psd-save.c:628
+#: ../plug-ins/file-psd/psd-save.c:634
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "出错：无法将 GIMP 基础图像类型转换为 PSD 模式"
 
-#: ../plug-ins/file-psd/psd-save.c:1596
+#: ../plug-ins/file-psd/psd-save.c:1608
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
-msgstr ""
-"无法保存“%s”。PSD 文件格式不支持宽度或高度大于 30000 像素的图像。"
+msgstr "无法保存“%s”。PSD 文件格式不支持宽度或高度大于 30000 像素的图像。"
 
-#: ../plug-ins/file-psd/psd-save.c:1611
+#: ../plug-ins/file-psd/psd-save.c:1623
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -9360,6 +9359,13 @@ msgstr "水平渐变"
 msgid "Show image"
 msgstr "显示图像"
 
+#. "snap to grid" checkbutton at bottom of style frame
+#: ../plug-ins/gfig/gfig-dialog.c:493
+#, fuzzy
+msgctxt "checkbutton"
+msgid "Snap to grid"
+msgstr "吸附到网格"
+
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:502
 msgid "Show grid"
@@ -9640,8 +9646,7 @@ msgstr "几何图形(Gfig)(_G)..."
 #: ../plug-ins/gfig/gfig.c:731
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr ""
-"试图将图形另存为寄生物时出错：无法添加寄生物到图像。"
+msgstr "试图将图形另存为寄生物时出错：无法添加寄生物到图像。"
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
@@ -10185,14 +10190,12 @@ msgstr "大小："
 #: ../plug-ins/gimpressionist/size.c:160
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
-"笔划的大小由区域的值(亮度)决定"
+msgstr "笔划的大小由区域的值(亮度)决定"
 
 #: ../plug-ins/gimpressionist/size.c:164
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr ""
-"笔划的大小由到图像中心的距离决定"
+msgstr "笔划的大小由到图像中心的距离决定"
 
 #: ../plug-ins/gimpressionist/size.c:168
 msgid "Selects a random size for each stroke"
@@ -10621,10 +10624,14 @@ msgid "Find:"
 msgstr "查找："
 
 #: ../plug-ins/help-browser/dialog.c:1192
+#, fuzzy
+msgctxt "search"
 msgid "_Previous"
 msgstr "上一步(_P)"
 
 #: ../plug-ins/help-browser/dialog.c:1204
+#, fuzzy
+msgctxt "search"
 msgid "_Next"
 msgstr "下一步(_N)"
 
@@ -11232,28 +11239,28 @@ msgstr "一些数据已改变！"
 msgid "Do you really want to discard your changes?"
 msgstr "您真的要放弃您的修改吗？"
 
-#: ../plug-ins/imagemap/imap_main.c:873
+#: ../plug-ins/imagemap/imap_main.c:877
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "文件“%s”已保存。"
 
-#: ../plug-ins/imagemap/imap_main.c:877
+#: ../plug-ins/imagemap/imap_main.c:881
 msgid "Couldn't save file:"
 msgstr "无法保存文件："
 
-#: ../plug-ins/imagemap/imap_main.c:890
+#: ../plug-ins/imagemap/imap_main.c:894
 msgid "Image size has changed."
 msgstr "图像大小已改变。"
 
-#: ../plug-ins/imagemap/imap_main.c:891
+#: ../plug-ins/imagemap/imap_main.c:895
 msgid "Resize area's?"
 msgstr "重置区域大小吗？"
 
-#: ../plug-ins/imagemap/imap_main.c:925
+#: ../plug-ins/imagemap/imap_main.c:929
 msgid "Couldn't read file:"
 msgstr "无法读取文件："
 
-#: ../plug-ins/imagemap/imap_main.c:972
+#: ../plug-ins/imagemap/imap_main.c:976
 #, c-format
 msgid "URL: %s"
 msgstr "URL：%s"
@@ -11387,6 +11394,10 @@ msgstr "帮助(_H)"
 #: ../plug-ins/imagemap/imap_menu.c:200
 msgid "_Contents"
 msgstr "内容(_C)"
+
+#: ../plug-ins/imagemap/imap_menu.c:203
+msgid "_Zoom"
+msgstr "缩放(_Z)"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Area List"
@@ -11574,7 +11585,7 @@ msgstr "描述(_D)："
 msgid "Map File Format"
 msgstr "映像文件格式"
 
-#: ../plug-ins/imagemap/imap_source.c:63
+#: ../plug-ins/imagemap/imap_source.c:67
 msgid "View Source"
 msgstr "查看源文件"
 
@@ -12182,7 +12193,7 @@ msgstr "迷宫(_M)..."
 msgid "Drawing maze"
 msgstr "绘制迷宫"
 
-#: ../plug-ins/metadata/xmp-parse.c:240
+#: ../plug-ins/metadata/xmp-parse.c:239
 #, c-format
 msgid "Error: No XMP packet found"
 msgstr "错误：未找到 XMP 包"
@@ -12212,35 +12223,35 @@ msgstr "未知元素 <%s>"
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
 msgstr "元素<%3$s>中的未知属性\"%1$s\"=\"%2$s\""
 
-#: ../plug-ins/metadata/xmp-parse.c:655
+#: ../plug-ins/metadata/xmp-parse.c:678
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
 msgstr "<%s>中需要的属性 rdf:about 丢失"
 
-#: ../plug-ins/metadata/xmp-parse.c:881
+#: ../plug-ins/metadata/xmp-parse.c:904
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
 msgstr "嵌套元素(<%s>)在此上下文中不允许"
 
-#: ../plug-ins/metadata/xmp-parse.c:1005
+#: ../plug-ins/metadata/xmp-parse.c:1028
 #, c-format
 msgid "End of element <%s> not expected in this context"
 msgstr "在此上下文中不期待元素<%s>的结尾"
 
-#: ../plug-ins/metadata/xmp-parse.c:1107
+#: ../plug-ins/metadata/xmp-parse.c:1130
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "当前元素(<%s>)不能包含文字"
 
-#: ../plug-ins/metadata/xmp-parse.c:1132
+#: ../plug-ins/metadata/xmp-parse.c:1155
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "XMP 包必须以<?xpacket begin=...?>开始"
 
-#: ../plug-ins/metadata/xmp-parse.c:1146
+#: ../plug-ins/metadata/xmp-parse.c:1169
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "XMP 包必须以<?xpacket end=...?>结束"
 
-#: ../plug-ins/metadata/xmp-parse.c:1159
+#: ../plug-ins/metadata/xmp-parse.c:1182
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP 不能包含 XML 注释或处理指令"
 
@@ -12433,4 +12444,3 @@ msgstr "屏幕截图(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "没有取得数据"
-
