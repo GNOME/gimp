@@ -1,3 +1,26 @@
+2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): Implemented Erase, Anti
+	Erase, Color Erase and Replace. These are not normal layer modes
+	and handle alpha in their own way. In addition to this, the
+	behavior of Replace doesn't map very well to GEGL which uses
+	infinite sized "layers".
+
+	Completely works the same:
+	 o Erase
+	 o Anti Erase
+	 o Color Erase
+
+	Works different but similar:
+	 o Replace
+
+	* app/paint-funcs/paint-funcs.[ch]: Expose
+	paint_funcs_color_erase_helper() so it can be used in the
+	GimpOperationPointLayerMode implementation. Once the migration is
+	complete this function can be moved entirely to the op and be
+	tailored to work on premultiplied data.
+
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	Bug 558660 – help behavior for locales without manual translation

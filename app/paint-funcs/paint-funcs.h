@@ -312,6 +312,10 @@ void  combine_inten_a_and_channel_selection_pixels(const guchar *src,
                                                    guint         length,
                                                    guint         bytes);
 
+void  paint_funcs_color_erase_helper      (GimpRGB       *src,
+                                           const GimpRGB *color);
+
+
 /*  extract information from intensity pixels based on
  *  a mask.
  */

@@ -28,6 +28,8 @@
 
 #include "gegl-types.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "gimpoperationpointlayermode.h"
 
 
@@ -270,6 +272,32 @@ gimp_operation_point_layer_mode_get_new_color_hsl (GimpLayerModeEffects  blend_m
   new[B] = newRGB.b;
 }
 
+static void
+gimp_operation_point_layer_mode_get_color_erase_color (const gfloat *in,
+                                                       const gfloat *lay,
+                                                       gfloat       *out)
+{
+  GimpRGB inRGB;
+  GimpRGB layRGB;
+
+  if (inA <= 0.0)
+    gimp_rgba_set (&inRGB, 0.0, 0.0, 0.0, inA);
+  else
+    gimp_rgba_set (&inRGB, in[R] / inA, in[G] / inA, in[B] / inA, inA);
+
+  if (layA <= 0.0)
+    gimp_rgba_set (&layRGB, 0.0, 0.0, 0.0, layA);
+  else
+    gimp_rgba_set (&layRGB, lay[R] / layA, lay[G] / layA, lay[B] / layA, layA);
+
+  paint_funcs_color_erase_helper (&inRGB, &layRGB);
+
+  out[A] = inRGB.a;
+  out[R] = inRGB.r * out[A];
+  out[G] = inRGB.g * out[A];
+  out[B] = inRGB.b * out[A];
+}
+
 static gboolean
 gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                          void                *in_buf,
@@ -296,6 +324,77 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
     {
       switch (blend_mode)
         {
+        case GIMP_ERASE_MODE:
+        case GIMP_ANTI_ERASE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+        case GIMP_REPLACE_MODE:
+        case GIMP_DISSOLVE_MODE:
+          /* These modes handle alpha themselves */
+          break;
+
+        default:
+          /* Porter-Duff model for the rest */
+          outA = layA + inA - layA * inA;
+        }
+
+      switch (blend_mode)
+        {
+        case GIMP_ERASE_MODE:
+          /* Eraser mode */
+          outA = inA - inA * layA;
+          if (inA <= 0.0)
+            EACH_CHANNEL (
+            outC = 0.0)
+          else
+            EACH_CHANNEL (
+            outC = (inC / inA) * outA);
+          break;
+
+        case GIMP_ANTI_ERASE_MODE:
+          /* Eraser mode */
+          outA = inA + (1 - inA) * layA;
+          if (inA <= 0.0)
+            EACH_CHANNEL (
+            outC = 0.0)
+          else
+            EACH_CHANNEL (
+            outC = inC / inA * outA);
+          break;
+
+        case GIMP_COLOR_ERASE_MODE:
+          /* Paint mode */
+          gimp_operation_point_layer_mode_get_color_erase_color (in, lay, out);
+          break;
+
+        case GIMP_REPLACE_MODE:
+          /* Filter fade mode */
+          outA = layA;
+          EACH_CHANNEL(
+          outC = layC);
+          break;
+
+        case GIMP_DISSOLVE_MODE:
+          /* We need a deterministic result from Dissolve so let the
+           * seed depend on the pixel position (modulo 1024)
+           */
+          g_rand_set_seed (rand,
+                           ((roi->x + sample - (sample / roi->width) * roi->width) % 1024) *
+                           ((roi->y + sample / roi->width)                         % 1024));
+
+          if (layA * G_MAXUINT32 >= g_rand_int (rand))
+            {
+              outA = 1.0;
+              EACH_CHANNEL (
+              outC = layC / layA);
+            }
+          else
+            {
+              outA = inA;
+              EACH_CHANNEL (
+              outC = inC);
+            }
+          break;
+
         case GIMP_NORMAL_MODE:
           /* Porter-Duff A over B */
           EACH_CHANNEL (
@@ -497,46 +596,10 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           outC = newC * layA * inA + layC * (1 - inA) + inC * (1 - layA));
           break;
 
-        case GIMP_ERASE_MODE:
-        case GIMP_ANTI_ERASE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
-        case GIMP_REPLACE_MODE:
-          /* Icky eraser and paint modes */
-          break;
-
-        case GIMP_DISSOLVE_MODE:
-          /* We need a deterministic result from Dissolve so let the
-           * seed depend on the pixel position (modulo 1024)
-           */
-          g_rand_set_seed (rand,
-                           ((roi->x + sample - (sample / roi->width) * roi->width) % 1024) *
-                           ((roi->y + sample / roi->width)                         % 1024));
-
-          if (layA * G_MAXUINT32 >= g_rand_int (rand))
-            {
-              EACH_CHANNEL(
-              outC = layC / layA);
-
-              /* Use general outA calculation */
-              layA = 1.0;
-            }
-          else
-            {
-              EACH_CHANNEL(
-              outC = inC);
-
-              /* Use general outA calculation */
-              layA = 0.0;
-            }
-          break;
-
         default:
           g_error ("Unknown layer mode");
           break;
         }
-
-      /* Alpha is treated the same */
-      outA = layA + inA - layA * inA;
 
       in  += 4;
       lay += 4;

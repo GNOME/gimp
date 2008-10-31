@@ -1599,9 +1599,9 @@ anti_erase_indexed_pixels (const guchar   *src1,
 }
 
 
-static inline void
-color_erase_helper (GimpRGB       *src,
-                    const GimpRGB *color)
+void
+paint_funcs_color_erase_helper (GimpRGB       *src,
+                                const GimpRGB *color)
 {
   GimpRGB alpha;
 
@@ -1692,7 +1692,7 @@ color_erase_inten_pixels (const guchar   *src1,
           gimp_rgba_set_uchar (&bgcolor,
                                src2[0], src2[0], src2[0], src2_alpha);
 
-          color_erase_helper (&color, &bgcolor);
+          paint_funcs_color_erase_helper (&color, &bgcolor);
 
           gimp_rgba_get_uchar (&color, dest, NULL, NULL, dest + 1);
           break;
@@ -1706,7 +1706,7 @@ color_erase_inten_pixels (const guchar   *src1,
           gimp_rgba_set_uchar (&bgcolor,
                                src2[0], src2[1], src2[2], src2_alpha);
 
-          color_erase_helper (&color, &bgcolor);
+          paint_funcs_color_erase_helper (&color, &bgcolor);
 
           gimp_rgba_get_uchar (&color, dest, dest + 1, dest + 2, dest + 3);
           break;
