@@ -1,5 +1,9 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: lowered minimum required version of Cairo to 1.6.0.
+
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: 
 	* configure.in: removed checks for PangoFT2.
 
