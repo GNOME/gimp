@@ -25,6 +25,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -207,9 +208,8 @@ text_tool_load_dialog_response (GtkWidget    *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GtkTextBuffer *buffer;
-      gchar         *filename;
-      GError        *error = NULL;
+      gchar  *filename;
+      GError *error = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 

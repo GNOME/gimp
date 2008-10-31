@@ -1,3 +1,9 @@
+2008-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/text-tool-actions.c
+	* app/actions/text-tool-commands.c: add missing includes and
+	remove unused variable.
+
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: also check for freetype2 when checking for

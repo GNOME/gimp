@@ -25,8 +25,9 @@
 
 #include "actions-types.h"
 
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+
+#include "text/gimptextlayer.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimptexteditor.h"
