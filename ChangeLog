@@ -1,5 +1,12 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
+	Bug 558660 – help behavior for locales without manual translation
+	
+	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
+	as a fallback check for the english user manual.
+
+2008-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprocview.c: added basic gtk-doc comment for
 	gimp_proc_view_new().
 
