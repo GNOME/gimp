@@ -1,5 +1,11 @@
 2008-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_key_press): bail out
+	when the passed display is != tool->display. Makes the keyboard
+	work in other displays while the text tools is active.
+
+2008-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]: add gimp_draw_tool_draw_text_cursor()
 	which draws a properly transformed cursor that always has the same
 	line width.

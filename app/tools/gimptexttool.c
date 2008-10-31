@@ -710,7 +710,7 @@ gimp_text_tool_key_press (GimpTool    *tool,
   gint          x_pos  = -1;
   gboolean      retval = TRUE;
 
-  if (! tool->display)
+  if (display != tool->display)
     return FALSE;
 
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
