@@ -1,8 +1,8 @@
 2008-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangletool.c
-	(gimp_rectangle_tool_cursor_update): set the MOVE cursor when we
-	are in MOVING mode.
+	(gimp_rectangle_tool_cursor_update): set the MOVE cursor modifier
+	when we are in MOVING mode.
 
 	* app/tools/gimptexttool.[ch]: remove members x1,x2,y1,y2 and use
 	the rectangle tool's bounding box for creating the text layer (x2
