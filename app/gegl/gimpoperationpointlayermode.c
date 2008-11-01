@@ -33,6 +33,15 @@
 #include "gimpoperationpointlayermode.h"
 
 
+/* The size of the area of which an evenly transparent Dissolve layer
+ * repeats its dissolve pattern
+ */
+#define DISSOLVE_REPEAT_WIDTH  400
+#define DISSOLVE_REPEAT_HEIGHT 300
+
+#define DISSOLVE_SEED          737893334
+
+
 #define R    RED
 #define G    GREEN
 #define B    BLUE
@@ -94,12 +103,17 @@ G_DEFINE_TYPE (GimpOperationPointLayerMode, gimp_operation_point_layer_mode,
                GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
 
+static guint32 dissolve_lut[DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT];
+
+
 static void
 gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *klass)
 {
   GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  GRand                           *rand            = g_rand_new_with_seed (DISSOLVE_SEED);
+  int                              i;
 
   object_class->set_property   = gimp_operation_point_layer_mode_set_property;
   object_class->get_property   = gimp_operation_point_layer_mode_get_property;
@@ -117,6 +131,9 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
                                                       GIMP_PARAM_READWRITE));
+
+  for (i = 0; i < DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT; i++)
+    dissolve_lut[i] = g_rand_int (rand);
 }
 
 static void
@@ -312,13 +329,11 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
   gfloat *in     = in_buf;     /* composite of layers below */
   gfloat *lay    = aux_buf;    /* layer */
   gfloat *out    = out_buf;    /* resulting composite */
-  GRand  *rand   = NULL;
   glong   sample = samples;
   gint    c      = 0;
+  gint    x      = 0;
+  gint    y      = 0;
   gfloat  new[3] = { 0.0, 0.0, 0.0 };
-
-  if (blend_mode == GIMP_DISSOLVE_MODE)
-    rand = g_rand_new ();
 
   while (sample--)
     {
@@ -374,14 +389,13 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_DISSOLVE_MODE:
-          /* We need a deterministic result from Dissolve so let the
-           * seed depend on the pixel position (modulo 1024)
+          /* The layer pixel has layA probability of being composited
+           * with 100% opacity, else not all
            */
-          g_rand_set_seed (rand,
-                           ((roi->x + sample - (sample / roi->width) * roi->width) % 1024) *
-                           ((roi->y + sample / roi->width)                         % 1024));
+          x = (roi->x + sample - (sample / roi->width) * roi->width) % DISSOLVE_REPEAT_WIDTH;
+          y = (roi->y + sample / roi->width)                         % DISSOLVE_REPEAT_HEIGHT;
 
-          if (layA * G_MAXUINT32 >= g_rand_int (rand))
+          if (layA * G_MAXUINT32 >= dissolve_lut[y * DISSOLVE_REPEAT_WIDTH + x])
             {
               outA = 1.0;
               EACH_CHANNEL (
@@ -605,9 +619,6 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
       lay += 4;
       out += 4;
     }
-
-  if (rand)
-    g_rand_free (rand);
 
   return TRUE;
 }

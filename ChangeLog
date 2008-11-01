@@ -1,3 +1,10 @@
+2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/gegl/gimpoperationpointlayermode.c: Get rid of GRand in
+	process() and use a lut instead. A little benchmark showed a
+	performance improvement of 78%. Also added defines for the the
+	size of the area of which Dissolve repeats it dissolve pattern.
+
 2008-10-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c
