@@ -39,17 +39,17 @@ void       tool_manager_control_active             (Gimp             *gimp,
                                                     GimpToolAction    action,
                                                     GimpDisplay      *display);
 void       tool_manager_button_press_active        (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
 void       tool_manager_button_release_active      (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
 void       tool_manager_motion_active              (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
@@ -68,17 +68,17 @@ void     tool_manager_active_modifier_state_active (Gimp             *gimp,
                                                     GimpDisplay      *display);
 
 void       tool_manager_oper_update_active         (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     GdkModifierType   state,
                                                     gboolean          proximity,
                                                     GimpDisplay      *display);
 void       tool_manager_cursor_update_active       (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
 
 GimpUIManager * tool_manager_get_popup_active      (Gimp             *gimp,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display,
                                                     const gchar     **ui_path);

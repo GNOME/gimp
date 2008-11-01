@@ -89,18 +89,18 @@ struct _GimpToolClass
                                            GimpDisplay           *display);
 
   void            (* button_press)        (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
   void            (* button_release)      (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
                                            GimpButtonReleaseType  release_type,
                                            GimpDisplay           *display);
   void            (* motion)              (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
@@ -120,17 +120,17 @@ struct _GimpToolClass
                                            GimpDisplay           *display);
 
   void            (* oper_update)         (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            GdkModifierType        state,
                                            gboolean               proximity,
                                            GimpDisplay           *display);
   void            (* cursor_update)       (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
 
   GimpUIManager * (* get_popup)           (GimpTool              *tool,
-                                           GimpCoords            *coords,
+                                           const GimpCoords      *coords,
                                            GdkModifierType        state,
                                            GimpDisplay           *display,
                                            const gchar          **ui_path);
@@ -153,17 +153,17 @@ void          gimp_tool_control             (GimpTool            *tool,
                                              GimpDisplay         *display);
 
 void          gimp_tool_button_press        (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              guint32              time,
                                              GdkModifierType      state,
                                              GimpDisplay         *display);
 void          gimp_tool_button_release      (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              guint32              time,
                                              GdkModifierType      state,
                                              GimpDisplay         *display);
 void          gimp_tool_motion              (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              guint32              time,
                                              GdkModifierType      state,
                                              GimpDisplay         *display);
@@ -182,17 +182,17 @@ void    gimp_tool_set_active_modifier_state (GimpTool            *tool,
                                              GimpDisplay         *display);
 
 void          gimp_tool_oper_update         (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              GdkModifierType      state,
                                              gboolean             proximity,
                                              GimpDisplay         *display);
 void          gimp_tool_cursor_update       (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              GdkModifierType      state,
                                              GimpDisplay         *display);
 
 GimpUIManager * gimp_tool_get_popup         (GimpTool            *tool,
-                                             GimpCoords          *coords,
+                                             const GimpCoords    *coords,
                                              GdkModifierType      state,
                                              GimpDisplay         *display,
                                              const gchar        **ui_path);

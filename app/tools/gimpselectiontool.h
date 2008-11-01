@@ -56,7 +56,7 @@ GType      gimp_selection_tool_get_type   (void) G_GNUC_CONST;
 
 /*  protected function  */
 gboolean   gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
-                                           GimpCoords        *coords);
+                                           const GimpCoords  *coords);
 
 
 #endif  /* __GIMP_SELECTION_TOOL_H__ */

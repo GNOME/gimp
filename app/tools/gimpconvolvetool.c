@@ -42,11 +42,11 @@ static void   gimp_convolve_tool_modifier_key  (GimpTool         *tool,
                                                 GdkModifierType   state,
                                                 GimpDisplay      *display);
 static void   gimp_convolve_tool_cursor_update (GimpTool         *tool,
-                                                GimpCoords       *coords,
+                                                const GimpCoords *coords,
                                                 GdkModifierType   state,
                                                 GimpDisplay      *display);
 static void   gimp_convolve_tool_oper_update   (GimpTool         *tool,
-                                                GimpCoords       *coords,
+                                                const GimpCoords *coords,
                                                 GdkModifierType   state,
                                                 gboolean          proximity,
                                                 GimpDisplay      *display);
@@ -130,10 +130,10 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_convolve_tool_cursor_update (GimpTool        *tool,
-                                  GimpCoords      *coords,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_convolve_tool_cursor_update (GimpTool         *tool,
+                                  const GimpCoords *coords,
+                                  GdkModifierType   state,
+                                  GimpDisplay      *display)
 {
   GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 
@@ -144,11 +144,11 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_convolve_tool_oper_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                gboolean         proximity,
-                                GimpDisplay     *display)
+gimp_convolve_tool_oper_update (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                GdkModifierType   state,
+                                gboolean          proximity,
+                                GimpDisplay      *display)
 {
   GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 

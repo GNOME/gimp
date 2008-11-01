@@ -42,20 +42,20 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_selection_tool_modifier_key  (GimpTool        *tool,
-                                                 GdkModifierType  key,
-                                                 gboolean         press,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
-static void   gimp_selection_tool_oper_update   (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 GdkModifierType  state,
-                                                 gboolean         proximity,
-                                                 GimpDisplay     *display);
-static void   gimp_selection_tool_cursor_update (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
+static void   gimp_selection_tool_modifier_key  (GimpTool         *tool,
+                                                 GdkModifierType   key,
+                                                 gboolean          press,
+                                                 GdkModifierType   state,
+                                                 GimpDisplay      *display);
+static void   gimp_selection_tool_oper_update   (GimpTool         *tool,
+                                                 const GimpCoords *coords,
+                                                 GdkModifierType   state,
+                                                 gboolean          proximity,
+                                                 GimpDisplay      *display);
+static void   gimp_selection_tool_cursor_update (GimpTool         *tool,
+                                                 const GimpCoords *coords,
+                                                 GdkModifierType   state,
+                                                 GimpDisplay      *display);
 
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
@@ -152,11 +152,11 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_selection_tool_oper_update (GimpTool        *tool,
-                                 GimpCoords      *coords,
-                                 GdkModifierType  state,
-                                 gboolean         proximity,
-                                 GimpDisplay     *display)
+gimp_selection_tool_oper_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 gboolean          proximity,
+                                 GimpDisplay      *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
@@ -322,10 +322,10 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 }
 
 static void
-gimp_selection_tool_cursor_update (GimpTool        *tool,
-                                   GimpCoords      *coords,
-                                   GdkModifierType  state,
-                                   GimpDisplay     *display)
+gimp_selection_tool_cursor_update (GimpTool         *tool,
+                                   const GimpCoords *coords,
+                                   GdkModifierType   state,
+                                   GimpDisplay      *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
@@ -391,7 +391,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
 
 gboolean
 gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
-                                GimpCoords        *coords)
+                                const GimpCoords  *coords)
 {
   GimpTool *tool;
 

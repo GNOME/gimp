@@ -47,17 +47,17 @@ static GObject * gimp_brush_tool_constructor (GType                type,
                                               GObjectConstructParam *params);
 
 static void   gimp_brush_tool_motion         (GimpTool            *tool,
-                                              GimpCoords          *coords,
+                                              const GimpCoords    *coords,
                                               guint32              time,
                                               GdkModifierType      state,
                                               GimpDisplay         *display);
 static void   gimp_brush_tool_oper_update    (GimpTool            *tool,
-                                              GimpCoords          *coords,
+                                              const GimpCoords    *coords,
                                               GdkModifierType      state,
                                               gboolean             proximity,
                                               GimpDisplay         *display);
 static void   gimp_brush_tool_cursor_update  (GimpTool            *tool,
-                                              GimpCoords          *coords,
+                                              const GimpCoords    *coords,
                                               GdkModifierType      state,
                                               GimpDisplay         *display);
 
@@ -170,11 +170,11 @@ gimp_brush_tool_constructor (GType                  type,
 }
 
 static void
-gimp_brush_tool_motion (GimpTool        *tool,
-                        GimpCoords      *coords,
-                        guint32          time,
-                        GdkModifierType  state,
-                        GimpDisplay     *display)
+gimp_brush_tool_motion (GimpTool         *tool,
+                        const GimpCoords *coords,
+                        guint32           time,
+                        GdkModifierType   state,
+                        GimpDisplay      *display)
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
 
@@ -192,11 +192,11 @@ gimp_brush_tool_motion (GimpTool        *tool,
 }
 
 static void
-gimp_brush_tool_oper_update (GimpTool        *tool,
-                             GimpCoords      *coords,
-                             GdkModifierType  state,
-                             gboolean         proximity,
-                             GimpDisplay     *display)
+gimp_brush_tool_oper_update (GimpTool         *tool,
+                             const GimpCoords *coords,
+                             GdkModifierType   state,
+                             gboolean          proximity,
+                             GimpDisplay      *display)
 {
   GimpBrushTool    *brush_tool    = GIMP_BRUSH_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
@@ -226,10 +226,10 @@ gimp_brush_tool_oper_update (GimpTool        *tool,
 }
 
 static void
-gimp_brush_tool_cursor_update (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_brush_tool_cursor_update (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               GdkModifierType   state,
+                               GimpDisplay      *display)
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
 

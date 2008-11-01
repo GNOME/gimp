@@ -135,27 +135,27 @@ static void     gimp_free_select_tool_control             (GimpTool             
                                                            GimpToolAction         action,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_oper_update         (GimpTool              *tool,
-                                                           GimpCoords            *coords,
+                                                           const GimpCoords      *coords,
                                                            GdkModifierType        state,
                                                            gboolean               proximity,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_cursor_update       (GimpTool              *tool,
-                                                           GimpCoords            *coords,
+                                                           const GimpCoords      *coords,
                                                            GdkModifierType        state,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_button_press        (GimpTool              *tool,
-                                                           GimpCoords            *coords,
+                                                           const GimpCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_button_release      (GimpTool              *tool,
-                                                           GimpCoords            *coords,
+                                                           const GimpCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
                                                            GimpButtonReleaseType  release_type,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_motion              (GimpTool              *tool,
-                                                           GimpCoords            *coords,
+                                                           const GimpCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
                                                            GimpDisplay           *display);
@@ -344,7 +344,7 @@ static gboolean
 gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                                     GimpDisplay        *display,
                                     guint32             time,
-                                    GimpCoords         *coords)
+                                    const GimpCoords   *coords)
 {
   GimpFreeSelectToolPrivate *priv         = GET_PRIVATE (fst);
   gboolean                   double_click = FALSE;
@@ -397,7 +397,7 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
 static void
 gimp_free_select_tool_handle_segment_selection (GimpFreeSelectTool *fst,
                                                 GimpDisplay        *display,
-                                                GimpCoords         *coords)
+                                                const GimpCoords   *coords)
 {
   GimpFreeSelectToolPrivate *priv                  = GET_PRIVATE (fst);
   GimpDrawTool              *draw_tool             = GIMP_DRAW_TOOL (fst);
@@ -550,7 +550,7 @@ gimp_free_select_tool_is_point_grabbed (GimpFreeSelectTool *fst)
 
 static void
 gimp_free_select_tool_start (GimpFreeSelectTool *fst,
-                             GimpCoords         *coords,
+                             const GimpCoords   *coords,
                              GimpDisplay        *display)
 {
   GimpTool                  *tool      = GIMP_TOOL (fst);
@@ -842,7 +842,7 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 
 static void
 gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
-                                    GimpCoords         *coords,
+                                    const GimpCoords   *coords,
                                     guint32             time,
                                     GimpDisplay        *display)
 {
@@ -886,7 +886,7 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
 
 static void
 gimp_free_select_tool_handle_normal_release (GimpFreeSelectTool *fst,
-                                             GimpCoords         *coords,
+                                             const GimpCoords   *coords,
                                              GimpDisplay        *display)
 {
   /* First finish of the free segment if no point was grabbed */
@@ -996,7 +996,7 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
 
 static gboolean
 gimp_free_select_tool_delegate_button_press (GimpFreeSelectTool *fst,
-                                             GimpCoords         *coords,
+                                             const GimpCoords   *coords,
                                              GimpDisplay        *display)
 {
   GimpTool *tool                   = GIMP_TOOL (fst);
@@ -1095,7 +1095,7 @@ gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
 static void
 gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
                                      GimpDisplay        *display,
-                                     GimpCoords         *coords,
+                                     const GimpCoords   *coords,
                                      gboolean            proximity)
 {
   GimpTool                  *tool = GIMP_TOOL (fst);
@@ -1157,11 +1157,11 @@ gimp_free_select_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_free_select_tool_oper_update (GimpTool        *tool,
-                                   GimpCoords      *coords,
-                                   GdkModifierType  state,
-                                   gboolean         proximity,
-                                   GimpDisplay     *display)
+gimp_free_select_tool_oper_update (GimpTool         *tool,
+                                   const GimpCoords *coords,
+                                   GdkModifierType   state,
+                                   gboolean          proximity,
+                                   GimpDisplay      *display)
 {
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
@@ -1234,10 +1234,10 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
 }
 
 static void
-gimp_free_select_tool_cursor_update (GimpTool        *tool,
-                                     GimpCoords      *coords,
-                                     GdkModifierType  state,
-                                     GimpDisplay     *display)
+gimp_free_select_tool_cursor_update (GimpTool         *tool,
+                                     const GimpCoords *coords,
+                                     GdkModifierType   state,
+                                     GimpDisplay      *display)
 {
   GimpFreeSelectTool *fst = GIMP_FREE_SELECT_TOOL (tool);
 
@@ -1273,11 +1273,11 @@ gimp_free_select_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_free_select_tool_button_press (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    guint32          time,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_free_select_tool_button_press (GimpTool         *tool,
+                                    const GimpCoords *coords,
+                                    guint32           time,
+                                    GdkModifierType   state,
+                                    GimpDisplay      *display)
 {
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
   GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);
@@ -1343,7 +1343,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_free_select_tool_button_release (GimpTool              *tool,
-                                      GimpCoords            *coords,
+                                      const GimpCoords      *coords,
                                       guint32                time,
                                       GdkModifierType        state,
                                       GimpButtonReleaseType  release_type,
@@ -1393,11 +1393,11 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_free_select_tool_motion (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              guint32          time,
-                              GdkModifierType  state,
-                              GimpDisplay     *display)
+gimp_free_select_tool_motion (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              guint32           time,
+                              GdkModifierType   state,
+                              GimpDisplay      *display)
 {
   GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);

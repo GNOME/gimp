@@ -75,18 +75,18 @@ static void     gimp_vector_tool_control         (GimpTool              *tool,
                                                   GimpToolAction         action,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_button_press    (GimpTool              *tool,
-                                                  GimpCoords            *coords,
+                                                  const GimpCoords      *coords,
                                                   guint32                time,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_button_release  (GimpTool              *tool,
-                                                  GimpCoords            *coords,
+                                                  const GimpCoords      *coords,
                                                   guint32                time,
                                                   GdkModifierType        state,
                                                   GimpButtonReleaseType  release_type,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_motion          (GimpTool              *tool,
-                                                  GimpCoords            *coords,
+                                                  const GimpCoords      *coords,
                                                   guint32                time,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
@@ -99,7 +99,7 @@ static void     gimp_vector_tool_modifier_key    (GimpTool              *tool,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_oper_update     (GimpTool              *tool,
-                                                  GimpCoords            *coords,
+                                                  const GimpCoords      *coords,
                                                   GdkModifierType        state,
                                                   gboolean               proximity,
                                                   GimpDisplay           *display);
@@ -108,7 +108,7 @@ static void     gimp_vector_tool_status_update   (GimpTool              *tool,
                                                   GdkModifierType        state,
                                                   gboolean               proximity);
 static void     gimp_vector_tool_cursor_update   (GimpTool              *tool,
-                                                  GimpCoords            *coords,
+                                                  const GimpCoords      *coords,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
 
@@ -244,11 +244,11 @@ gimp_vector_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_vector_tool_button_press (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_vector_tool_button_press (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               guint32           time,
+                               GdkModifierType   state,
+                               GimpDisplay      *display)
 {
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
@@ -615,7 +615,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_vector_tool_button_release (GimpTool              *tool,
-                                 GimpCoords            *coords,
+                                 const GimpCoords      *coords,
                                  guint32                time,
                                  GdkModifierType        state,
                                  GimpButtonReleaseType  release_type,
@@ -649,11 +649,11 @@ gimp_vector_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_vector_tool_motion (GimpTool        *tool,
-                         GimpCoords      *coords,
-                         guint32          time,
-                         GdkModifierType  state,
-                         GimpDisplay     *display)
+gimp_vector_tool_motion (GimpTool         *tool,
+                         const GimpCoords *coords,
+                         guint32           time,
+                         GdkModifierType   state,
+                         GimpDisplay      *display)
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
@@ -903,11 +903,11 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_vector_tool_oper_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              gboolean         proximity,
-                              GimpDisplay     *display)
+gimp_vector_tool_oper_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              gboolean          proximity,
+                              GimpDisplay      *display)
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
@@ -1274,10 +1274,10 @@ gimp_vector_tool_status_update (GimpTool        *tool,
 }
 
 static void
-gimp_vector_tool_cursor_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_vector_tool_cursor_update (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                GdkModifierType   state,
+                                GimpDisplay      *display)
 {
   GimpVectorTool     *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_PATHS;

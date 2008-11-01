@@ -58,39 +58,39 @@ static gboolean      gimp_perspective_clone_tool_initialize    (GimpTool    *too
                                                                 GimpDisplay *display,
                                                                 GError     **error);
 
-static gboolean      gimp_perspective_clone_tool_has_display   (GimpTool        *tool,
-                                                                GimpDisplay     *display);
-static GimpDisplay * gimp_perspective_clone_tool_has_image     (GimpTool        *tool,
-                                                                GimpImage       *image);
-static void          gimp_perspective_clone_tool_control       (GimpTool        *tool,
-                                                                GimpToolAction   action,
-                                                                GimpDisplay     *display);
+static gboolean      gimp_perspective_clone_tool_has_display   (GimpTool         *tool,
+                                                                GimpDisplay      *display);
+static GimpDisplay * gimp_perspective_clone_tool_has_image     (GimpTool         *tool,
+                                                                GimpImage        *image);
+static void          gimp_perspective_clone_tool_control       (GimpTool         *tool,
+                                                                GimpToolAction    action,
+                                                                GimpDisplay      *display);
 static void          gimp_perspective_clone_tool_halt          (GimpPerspectiveCloneTool *clone_tool);
-static void          gimp_perspective_clone_tool_button_press  (GimpTool        *tool,
-                                                                GimpCoords      *coords,
-                                                                guint32          time,
-                                                                GdkModifierType  state,
-                                                                GimpDisplay     *display);
-static void          gimp_perspective_clone_tool_button_release(GimpTool        *tool,
-                                                                GimpCoords      *coords,
-                                                                guint32          time,
-                                                                GdkModifierType  state,
+static void          gimp_perspective_clone_tool_button_press  (GimpTool         *tool,
+                                                                const GimpCoords *coords,
+                                                                guint32           time,
+                                                                GdkModifierType   state,
+                                                                GimpDisplay      *display);
+static void          gimp_perspective_clone_tool_button_release(GimpTool         *tool,
+                                                                const GimpCoords *coords,
+                                                                guint32           time,
+                                                                GdkModifierType   state,
                                                                 GimpButtonReleaseType  release_type,
-                                                                GimpDisplay     *display);
-static void          gimp_perspective_clone_tool_motion        (GimpTool        *tool,
-                                                                GimpCoords      *coords,
-                                                                guint32          time,
-                                                                GdkModifierType  state,
-                                                                GimpDisplay     *display);
-static void          gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
-                                                                GimpCoords      *coords,
-                                                                GdkModifierType  state,
-                                                                GimpDisplay     *display);
-static void          gimp_perspective_clone_tool_oper_update   (GimpTool        *tool,
-                                                                GimpCoords      *coords,
-                                                                GdkModifierType  state,
-                                                                gboolean         proximity,
-                                                                GimpDisplay     *display);
+                                                                GimpDisplay      *display);
+static void          gimp_perspective_clone_tool_motion        (GimpTool         *tool,
+                                                                const GimpCoords *coords,
+                                                                guint32           time,
+                                                                GdkModifierType   state,
+                                                                GimpDisplay      *display);
+static void          gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
+                                                                const GimpCoords *coords,
+                                                                GdkModifierType   state,
+                                                                GimpDisplay      *display);
+static void          gimp_perspective_clone_tool_oper_update   (GimpTool         *tool,
+                                                                const GimpCoords *coords,
+                                                                GdkModifierType   state,
+                                                                gboolean          proximity,
+                                                                GimpDisplay      *display);
 
 static void          gimp_perspective_clone_tool_mode_notify   (GimpPerspectiveCloneOptions *options,
                                                                 GParamSpec       *pspec,
@@ -322,11 +322,11 @@ gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
 }
 
 static void
-gimp_perspective_clone_tool_button_press (GimpTool        *tool,
-                                          GimpCoords      *coords,
-                                          guint32          time,
-                                          GdkModifierType  state,
-                                          GimpDisplay     *display)
+gimp_perspective_clone_tool_button_press (GimpTool         *tool,
+                                          const GimpCoords *coords,
+                                          guint32           time,
+                                          GdkModifierType   state,
+                                          GimpDisplay      *display)
 {
   GimpPaintTool               *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpPerspectiveCloneTool    *clone_tool  = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
@@ -385,7 +385,7 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_perspective_clone_tool_button_release (GimpTool              *tool,
-                                            GimpCoords            *coords,
+                                            const GimpCoords      *coords,
                                             guint32                time,
                                             GdkModifierType        state,
                                             GimpButtonReleaseType  release_type,
@@ -447,11 +447,11 @@ gimp_perspective_clone_tool_recalc (GimpPerspectiveCloneTool *clone_tool,
 }
 
 static void
-gimp_perspective_clone_tool_motion (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    guint32          time,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_perspective_clone_tool_motion (GimpTool         *tool,
+                                    const GimpCoords *coords,
+                                    guint32           time,
+                                    GdkModifierType   state,
+                                    GimpDisplay      *display)
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPaintTool               *paint_tool = GIMP_PAINT_TOOL (tool);
@@ -530,10 +530,10 @@ gimp_perspective_clone_tool_motion (GimpTool        *tool,
 }
 
 static void
-gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
-                                           GimpCoords      *coords,
-                                           GdkModifierType  state,
-                                           GimpDisplay     *display)
+gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
+                                           const GimpCoords *coords,
+                                           GdkModifierType   state,
+                                           GimpDisplay      *display)
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPerspectiveCloneOptions *options;
@@ -611,11 +611,11 @@ gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_perspective_clone_tool_oper_update (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         GdkModifierType  state,
-                                         gboolean         proximity,
-                                         GimpDisplay     *display)
+gimp_perspective_clone_tool_oper_update (GimpTool         *tool,
+                                         const GimpCoords *coords,
+                                         GdkModifierType   state,
+                                         gboolean          proximity,
+                                         GimpDisplay      *display)
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPerspectiveCloneOptions *options;

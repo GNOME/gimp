@@ -66,12 +66,12 @@ static void      gimp_crop_tool_control                   (GimpTool             
                                                            GimpToolAction              action,
                                                            GimpDisplay                *display);
 static void      gimp_crop_tool_button_press              (GimpTool                   *tool,
-                                                           GimpCoords                 *coords,
+                                                           const GimpCoords           *coords,
                                                            guint32                     time,
                                                            GdkModifierType             state,
                                                            GimpDisplay                *display);
 static void      gimp_crop_tool_button_release            (GimpTool                   *tool,
-                                                           GimpCoords                 *coords,
+                                                           const GimpCoords           *coords,
                                                            guint32                     time,
                                                            GdkModifierType             state,
                                                            GimpButtonReleaseType       release_type,
@@ -82,7 +82,7 @@ static void      gimp_crop_tool_active_modifier_key       (GimpTool             
                                                            GdkModifierType             state,
                                                            GimpDisplay                *display);
 static void      gimp_crop_tool_cursor_update             (GimpTool                   *tool,
-                                                           GimpCoords                 *coords,
+                                                           const GimpCoords           *coords,
                                                            GdkModifierType             state,
                                                            GimpDisplay                *display);
 static gboolean  gimp_crop_tool_execute                   (GimpRectangleTool          *rectangle,
@@ -247,11 +247,11 @@ gimp_crop_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_crop_tool_button_press (GimpTool        *tool,
-                             GimpCoords      *coords,
-                             guint32          time,
-                             GdkModifierType  state,
-                             GimpDisplay     *display)
+gimp_crop_tool_button_press (GimpTool         *tool,
+                             const GimpCoords *coords,
+                             guint32           time,
+                             GdkModifierType   state,
+                             GimpDisplay      *display)
 {
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
@@ -261,7 +261,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_crop_tool_button_release (GimpTool              *tool,
-                               GimpCoords            *coords,
+                               const GimpCoords      *coords,
                                guint32                time,
                                GdkModifierType        state,
                                GimpButtonReleaseType  release_type,
@@ -291,10 +291,10 @@ gimp_crop_tool_active_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_crop_tool_cursor_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              GimpDisplay     *display)
+gimp_crop_tool_cursor_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              GimpDisplay      *display)
 {
   gimp_rectangle_tool_cursor_update (tool, coords, state, display);
 

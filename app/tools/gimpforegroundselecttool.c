@@ -63,49 +63,49 @@ typedef struct
 } FgSelectStroke;
 
 
-static GObject * gimp_foreground_select_tool_constructor (GType            type,
-                                                          guint            n_params,
+static GObject * gimp_foreground_select_tool_constructor (GType             type,
+                                                          guint             n_params,
                                                           GObjectConstructParam *params);
-static void   gimp_foreground_select_tool_finalize       (GObject         *object);
+static void   gimp_foreground_select_tool_finalize       (GObject          *object);
 
-static void   gimp_foreground_select_tool_control        (GimpTool        *tool,
-                                                          GimpToolAction   action,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_oper_update    (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          GdkModifierType  state,
-                                                          gboolean         proximity,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_modifier_key   (GimpTool        *tool,
-                                                          GdkModifierType  key,
-                                                          gboolean         press,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_cursor_update  (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static gboolean  gimp_foreground_select_tool_key_press   (GimpTool        *tool,
-                                                          GdkEventKey     *kevent,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_button_press   (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          guint32          time,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_button_release (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          guint32          time,
-                                                          GdkModifierType  state,
+static void   gimp_foreground_select_tool_control        (GimpTool         *tool,
+                                                          GimpToolAction    action,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_oper_update    (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          GdkModifierType   state,
+                                                          gboolean          proximity,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_modifier_key   (GimpTool         *tool,
+                                                          GdkModifierType   key,
+                                                          gboolean          press,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_cursor_update  (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static gboolean  gimp_foreground_select_tool_key_press   (GimpTool         *tool,
+                                                          GdkEventKey      *kevent,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_button_press   (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          guint32           time,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_button_release (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          guint32           time,
+                                                          GdkModifierType   state,
                                                           GimpButtonReleaseType release_type,
-                                                          GimpDisplay     *display);
-static void   gimp_foreground_select_tool_motion         (GimpTool        *tool,
-                                                          GimpCoords      *coords,
-                                                          guint32          time,
-                                                          GdkModifierType  state,
-                                                          GimpDisplay     *display);
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_motion         (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          guint32           time,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
 
-static void   gimp_foreground_select_tool_draw           (GimpDrawTool    *draw_tool);
+static void   gimp_foreground_select_tool_draw           (GimpDrawTool     *draw_tool);
 
 static void   gimp_foreground_select_tool_select   (GimpFreeSelectTool *free_sel,
                                                     GimpDisplay        *display);
@@ -284,11 +284,11 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_foreground_select_tool_oper_update (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         GdkModifierType  state,
-                                         gboolean         proximity,
-                                         GimpDisplay     *display)
+gimp_foreground_select_tool_oper_update (GimpTool         *tool,
+                                         const GimpCoords *coords,
+                                         GdkModifierType   state,
+                                         gboolean          proximity,
+                                         GimpDisplay      *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
@@ -361,10 +361,10 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_foreground_select_tool_cursor_update (GimpTool        *tool,
-                                           GimpCoords      *coords,
-                                           GdkModifierType  state,
-                                           GimpDisplay     *display)
+gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
+                                           const GimpCoords *coords,
+                                           GdkModifierType   state,
+                                           GimpDisplay      *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
@@ -428,11 +428,11 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
 }
 
 static void
-gimp_foreground_select_tool_button_press (GimpTool        *tool,
-                                          GimpCoords      *coords,
-                                          guint32          time,
-                                          GdkModifierType  state,
-                                          GimpDisplay     *display)
+gimp_foreground_select_tool_button_press (GimpTool         *tool,
+                                          const GimpCoords *coords,
+                                          guint32           time,
+                                          GdkModifierType   state,
+                                          GimpDisplay      *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
@@ -470,7 +470,7 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_foreground_select_tool_button_release (GimpTool              *tool,
-                                            GimpCoords            *coords,
+                                            const GimpCoords      *coords,
                                             guint32                time,
                                             GdkModifierType        state,
                                             GimpButtonReleaseType  release_type,
@@ -504,11 +504,11 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_foreground_select_tool_motion (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    guint32          time,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_foreground_select_tool_motion (GimpTool         *tool,
+                                    const GimpCoords *coords,
+                                    guint32           time,
+                                    GdkModifierType   state,
+                                    GimpDisplay      *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 

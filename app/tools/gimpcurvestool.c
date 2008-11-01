@@ -70,7 +70,7 @@ static gboolean   gimp_curves_tool_initialize     (GimpTool             *tool,
                                                    GimpDisplay          *display,
                                                    GError              **error);
 static void       gimp_curves_tool_button_release (GimpTool             *tool,
-                                                   GimpCoords           *coords,
+                                                   const GimpCoords     *coords,
                                                    guint32               time,
                                                    GdkModifierType       state,
                                                    GimpButtonReleaseType release_type,
@@ -79,7 +79,7 @@ static gboolean   gimp_curves_tool_key_press      (GimpTool             *tool,
                                                    GdkEventKey          *kevent,
                                                    GimpDisplay          *display);
 static void       gimp_curves_tool_oper_update    (GimpTool             *tool,
-                                                   GimpCoords           *coords,
+                                                   const GimpCoords     *coords,
                                                    GdkModifierType       state,
                                                    gboolean              proximity,
                                                    GimpDisplay          *display);
@@ -244,7 +244,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
 static void
 gimp_curves_tool_button_release (GimpTool              *tool,
-                                 GimpCoords            *coords,
+                                 const GimpCoords      *coords,
                                  guint32                time,
                                  GdkModifierType        state,
                                  GimpButtonReleaseType  release_type,
@@ -303,11 +303,11 @@ gimp_curves_tool_key_press (GimpTool    *tool,
 }
 
 static void
-gimp_curves_tool_oper_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              gboolean         proximity,
-                              GimpDisplay     *display)
+gimp_curves_tool_oper_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              gboolean          proximity,
+                              GimpDisplay      *display)
 {
   GimpColorPickMode  mode   = GIMP_COLOR_PICK_MODE_NONE;
   const gchar       *status = NULL;

@@ -51,23 +51,23 @@
 static void   gimp_region_select_tool_finalize       (GObject               *object);
 
 static void   gimp_region_select_tool_button_press   (GimpTool              *tool,
-                                                      GimpCoords            *coords,
+                                                      const GimpCoords      *coords,
                                                       guint32                time,
                                                       GdkModifierType        state,
                                                       GimpDisplay           *display);
 static void   gimp_region_select_tool_button_release (GimpTool              *tool,
-                                                      GimpCoords            *coords,
+                                                      const GimpCoords      *coords,
                                                       guint32                time,
                                                       GdkModifierType        state,
                                                       GimpButtonReleaseType  release_type,
                                                       GimpDisplay           *display);
 static void   gimp_region_select_tool_motion         (GimpTool              *tool,
-                                                      GimpCoords            *coords,
+                                                      const GimpCoords      *coords,
                                                       guint32                time,
                                                       GdkModifierType        state,
                                                       GimpDisplay           *display);
 static void   gimp_region_select_tool_cursor_update  (GimpTool              *tool,
-                                                      GimpCoords            *coords,
+                                                      const GimpCoords      *coords,
                                                       GdkModifierType        state,
                                                       GimpDisplay           *display);
 
@@ -140,11 +140,11 @@ gimp_region_select_tool_finalize (GObject *object)
 }
 
 static void
-gimp_region_select_tool_button_press (GimpTool        *tool,
-                                      GimpCoords      *coords,
-                                      guint32          time,
-                                      GdkModifierType  state,
-                                      GimpDisplay     *display)
+gimp_region_select_tool_button_press (GimpTool         *tool,
+                                      const GimpCoords *coords,
+                                      guint32           time,
+                                      GdkModifierType   state,
+                                      GimpDisplay      *display)
 {
   GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (tool);
   GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
@@ -171,7 +171,7 @@ gimp_region_select_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_region_select_tool_button_release (GimpTool              *tool,
-                                        GimpCoords            *coords,
+                                        const GimpCoords      *coords,
                                         guint32                time,
                                         GdkModifierType        state,
                                         GimpButtonReleaseType  release_type,
@@ -258,11 +258,11 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_region_select_tool_motion (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_region_select_tool_motion (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                guint32           time,
+                                GdkModifierType   state,
+                                GimpDisplay      *display)
 {
   GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (tool);
   GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
@@ -305,10 +305,10 @@ gimp_region_select_tool_motion (GimpTool        *tool,
 }
 
 static void
-gimp_region_select_tool_cursor_update (GimpTool        *tool,
-                                       GimpCoords      *coords,
-                                       GdkModifierType  state,
-                                       GimpDisplay     *display)
+gimp_region_select_tool_cursor_update (GimpTool         *tool,
+                                       const GimpCoords *coords,
+                                       GdkModifierType   state,
+                                       GimpDisplay      *display)
 {
   GimpRegionSelectOptions *options  = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier       modifier = GIMP_CURSOR_MODIFIER_NONE;

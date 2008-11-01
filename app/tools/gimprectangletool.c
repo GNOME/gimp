@@ -231,10 +231,10 @@ static void          gimp_rectangle_tool_rectangle_change_complete
 static void          gimp_rectangle_tool_auto_shrink          (GimpRectangleTool        *rect_tool);
 
 static gboolean      gimp_rectangle_tool_coord_outside        (GimpRectangleTool        *rect_tool,
-                                                               GimpCoords               *coords);
+                                                               const GimpCoords         *coords);
 
 static gboolean      gimp_rectangle_tool_coord_on_handle      (GimpRectangleTool        *rect_tool,
-                                                               GimpCoords               *coords,
+                                                               const GimpCoords         *coords,
                                                                GtkAnchorType             anchor);
 
 static GtkAnchorType gimp_rectangle_tool_get_anchor           (GimpRectangleToolPrivate *private);
@@ -263,7 +263,7 @@ static void          gimp_rectangle_tool_apply_coord          (GimpRectangleTool
                                                                gdouble                   coord_x,
                                                                gdouble                   coord_y);
 static void          gimp_rectangle_tool_setup_snap_offsets   (GimpRectangleTool        *rect_tool,
-                                                               GimpCoords               *coords);
+                                                               const GimpCoords         *coords);
 
 static void          gimp_rectangle_tool_clamp                (GimpRectangleTool        *rect_tool,
                                                                ClampedSide              *clamped_sides,
@@ -884,11 +884,11 @@ gimp_rectangle_tool_control (GimpTool       *tool,
 }
 
 void
-gimp_rectangle_tool_button_press (GimpTool        *tool,
-                                  GimpCoords      *coords,
-                                  guint32          time,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_rectangle_tool_button_press (GimpTool         *tool,
+                                  const GimpCoords *coords,
+                                  guint32           time,
+                                  GdkModifierType   state,
+                                  GimpDisplay      *display)
 {
   GimpRectangleTool           *rect_tool;
   GimpDrawTool                *draw_tool;
@@ -1003,7 +1003,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
 void
 gimp_rectangle_tool_button_release (GimpTool              *tool,
-                                    GimpCoords            *coords,
+                                    const GimpCoords      *coords,
                                     guint32                time,
                                     GdkModifierType        state,
                                     GimpButtonReleaseType  release_type,
@@ -1078,11 +1078,11 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 }
 
 void
-gimp_rectangle_tool_motion (GimpTool        *tool,
-                            GimpCoords      *coords,
-                            guint32          time,
-                            GdkModifierType  state,
-                            GimpDisplay     *display)
+gimp_rectangle_tool_motion (GimpTool         *tool,
+                            const GimpCoords *coords,
+                            guint32           time,
+                            GdkModifierType   state,
+                            GimpDisplay      *display)
 {
   GimpRectangleTool           *rect_tool;
   GimpRectangleToolPrivate    *private;
@@ -1553,11 +1553,11 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 }
 
 void
-gimp_rectangle_tool_oper_update (GimpTool        *tool,
-                                 GimpCoords      *coords,
-                                 GdkModifierType  state,
-                                 gboolean         proximity,
-                                 GimpDisplay     *display)
+gimp_rectangle_tool_oper_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 gboolean          proximity,
+                                 GimpDisplay      *display)
 {
   GimpRectangleToolPrivate *private;
   GimpRectangleTool        *rect_tool;
@@ -1647,10 +1647,10 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
 }
 
 void
-gimp_rectangle_tool_cursor_update (GimpTool        *tool,
-                                   GimpCoords      *coords,
-                                   GdkModifierType  state,
-                                   GimpDisplay     *display)
+gimp_rectangle_tool_cursor_update (GimpTool         *tool,
+                                   const GimpCoords *coords,
+                                   GdkModifierType   state,
+                                   GimpDisplay      *display)
 {
   GimpRectangleTool        *rect_tool;
   GimpRectangleToolPrivate *private;
@@ -2597,7 +2597,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
  */
 static gboolean
 gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
-                                   GimpCoords        *coord)
+                                   const GimpCoords  *coord)
 {
   GimpRectangleToolPrivate *private;
   GimpDisplayShell         *shell;
@@ -2631,7 +2631,7 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
  */
 static gboolean
 gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
-                                     GimpCoords        *coords,
+                                     const GimpCoords  *coords,
                                      GtkAnchorType      anchor)
 {
   GimpRectangleToolPrivate *private;
@@ -3115,7 +3115,7 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
 
 static void
 gimp_rectangle_tool_setup_snap_offsets (GimpRectangleTool *rect_tool,
-                                        GimpCoords        *coords)
+                                        const GimpCoords  *coords)
 {
   GimpTool                 *tool;
   GimpRectangleToolPrivate *private;

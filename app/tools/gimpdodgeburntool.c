@@ -42,11 +42,11 @@ static void   gimp_dodge_burn_tool_modifier_key  (GimpTool          *tool,
                                                   GdkModifierType    state,
                                                   GimpDisplay       *display);
 static void   gimp_dodge_burn_tool_cursor_update (GimpTool          *tool,
-                                                  GimpCoords        *coords,
+                                                  const GimpCoords  *coords,
                                                   GdkModifierType    state,
                                                   GimpDisplay       *display);
 static void   gimp_dodge_burn_tool_oper_update   (GimpTool          *tool,
-                                                  GimpCoords        *coords,
+                                                  const GimpCoords  *coords,
                                                   GdkModifierType    state,
                                                   gboolean           proximity,
                                                   GimpDisplay       *display);
@@ -133,10 +133,10 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_dodge_burn_tool_cursor_update (GimpTool         *tool,
+                                    const GimpCoords *coords,
+                                    GdkModifierType   state,
+                                    GimpDisplay      *display)
 {
   GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
@@ -147,11 +147,11 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_dodge_burn_tool_oper_update (GimpTool        *tool,
-                                  GimpCoords      *coords,
-                                  GdkModifierType  state,
-                                  gboolean         proximity,
-                                  GimpDisplay     *display)
+gimp_dodge_burn_tool_oper_update (GimpTool         *tool,
+                                  const GimpCoords *coords,
+                                  GdkModifierType   state,
+                                  gboolean          proximity,
+                                  GimpDisplay      *display)
 {
   GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 

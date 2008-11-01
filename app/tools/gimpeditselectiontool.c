@@ -103,13 +103,13 @@ typedef struct _GimpEditSelectionToolClass
 
 
 static void       gimp_edit_selection_tool_button_release      (GimpTool                    *tool,
-                                                                GimpCoords                  *coords,
+                                                                const GimpCoords            *coords,
                                                                 guint32                      time,
                                                                 GdkModifierType              state,
                                                                 GimpButtonReleaseType        release_type,
                                                                 GimpDisplay                 *display);
 static void       gimp_edit_selection_tool_motion              (GimpTool                    *tool,
-                                                                GimpCoords                  *coords,
+                                                                const GimpCoords            *coords,
                                                                 guint32                      time,
                                                                 GdkModifierType              state,
                                                                 GimpDisplay                 *display);
@@ -183,7 +183,7 @@ gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
 void
 gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                 GimpDisplay       *display,
-                                GimpCoords        *coords,
+                                const GimpCoords  *coords,
                                 GimpTranslateMode  edit_mode,
                                 gboolean           propagate_release)
 {
@@ -464,7 +464,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
 static void
 gimp_edit_selection_tool_button_release (GimpTool              *tool,
-                                         GimpCoords            *coords,
+                                         const GimpCoords      *coords,
                                          guint32                time,
                                          GdkModifierType        state,
                                          GimpButtonReleaseType  release_type,
@@ -736,11 +736,11 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
 
 static void
-gimp_edit_selection_tool_motion (GimpTool        *tool,
-                                 GimpCoords      *coords,
-                                 guint32          time,
-                                 GdkModifierType  state,
-                                 GimpDisplay     *display)
+gimp_edit_selection_tool_motion (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 guint32           time,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
 

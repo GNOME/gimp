@@ -36,15 +36,15 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_tool_modifier_key  (GimpTool        *tool,
-                                              GdkModifierType  key,
-                                              gboolean         press,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
-static void   gimp_eraser_tool_cursor_update (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display);
+static void   gimp_eraser_tool_modifier_key  (GimpTool         *tool,
+                                              GdkModifierType   key,
+                                              gboolean          press,
+                                              GdkModifierType   state,
+                                              GimpDisplay      *display);
+static void   gimp_eraser_tool_cursor_update (GimpTool         *tool,
+                                              const GimpCoords *coords,
+                                              GdkModifierType   state,
+                                              GimpDisplay      *display);
 
 static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
 
@@ -119,10 +119,10 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_eraser_tool_cursor_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_eraser_tool_cursor_update (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                GdkModifierType   state,
+                                GimpDisplay      *display)
 {
   GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (tool);
 

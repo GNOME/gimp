@@ -44,39 +44,39 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_color_picker_tool_constructor  (GType            type,
-                                                      guint            n_params,
+static GObject * gimp_color_picker_tool_constructor  (GType             type,
+                                                      guint             n_params,
                                                       GObjectConstructParam *params);
-static void      gimp_color_picker_tool_finalize     (GObject         *object);
+static void      gimp_color_picker_tool_finalize     (GObject          *object);
 
-static void      gimp_color_picker_tool_control      (GimpTool        *tool,
-                                                      GimpToolAction   action,
-                                                      GimpDisplay     *display);
-static void      gimp_color_picker_tool_modifier_key (GimpTool        *tool,
-                                                      GdkModifierType  key,
-                                                      gboolean         press,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *display);
-static void      gimp_color_picker_tool_oper_update  (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      GdkModifierType  state,
-                                                      gboolean         proximity,
-                                                      GimpDisplay     *display);
+static void      gimp_color_picker_tool_control      (GimpTool         *tool,
+                                                      GimpToolAction    action,
+                                                      GimpDisplay      *display);
+static void      gimp_color_picker_tool_modifier_key (GimpTool         *tool,
+                                                      GdkModifierType   key,
+                                                      gboolean          press,
+                                                      GdkModifierType   state,
+                                                      GimpDisplay      *display);
+static void      gimp_color_picker_tool_oper_update  (GimpTool         *tool,
+                                                      const GimpCoords *coords,
+                                                      GdkModifierType   state,
+                                                      gboolean          proximity,
+                                                      GimpDisplay      *display);
 
-static void      gimp_color_picker_tool_picked       (GimpColorTool   *color_tool,
+static void      gimp_color_picker_tool_picked       (GimpColorTool    *color_tool,
                                                       GimpColorPickState  pick_state,
-                                                      GimpImageType    sample_type,
-                                                      GimpRGB         *color,
-                                                      gint             color_index);
+                                                      GimpImageType     sample_type,
+                                                      GimpRGB          *color,
+                                                      gint              color_index);
 
-static void   gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool);
-static void gimp_color_picker_tool_info_response (GtkWidget           *widget,
-                                                  gint                 response_id,
-                                                  GimpColorPickerTool *picker_tool);
-static void   gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
-                                                  GimpImageType        sample_type,
-                                                  GimpRGB             *color,
-                                                  gint                 color_index);
+static void   gimp_color_picker_tool_info_create (GimpColorPickerTool  *picker_tool);
+static void gimp_color_picker_tool_info_response (GtkWidget            *widget,
+                                                  gint                  response_id,
+                                                  GimpColorPickerTool  *picker_tool);
+static void   gimp_color_picker_tool_info_update (GimpColorPickerTool  *picker_tool,
+                                                  GimpImageType         sample_type,
+                                                  GimpRGB              *color,
+                                                  gint                  color_index);
 
 
 G_DEFINE_TYPE (GimpColorPickerTool, gimp_color_picker_tool,
@@ -216,11 +216,11 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_color_picker_tool_oper_update (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    GdkModifierType  state,
-                                    gboolean         proximity,
-                                    GimpDisplay     *display)
+gimp_color_picker_tool_oper_update (GimpTool         *tool,
+                                    const GimpCoords *coords,
+                                    GdkModifierType   state,
+                                    gboolean          proximity,
+                                    GimpDisplay      *display)
 {
   GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (tool);
   GimpColorPickerOptions *options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (tool);

@@ -43,39 +43,39 @@
 #define TARGET_SIZE  15
 
 
-static gboolean      gimp_source_tool_has_display   (GimpTool        *tool,
-                                                     GimpDisplay     *display);
-static GimpDisplay * gimp_source_tool_has_image     (GimpTool        *tool,
-                                                     GimpImage       *image);
-static void          gimp_source_tool_control       (GimpTool        *tool,
-                                                     GimpToolAction   action,
-                                                     GimpDisplay     *display);
-static void          gimp_source_tool_button_press  (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *display);
-static void          gimp_source_tool_motion        (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     guint32          time,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *display);
-static void          gimp_source_tool_cursor_update (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *display);
-static void          gimp_source_tool_modifier_key  (GimpTool        *tool,
-                                                     GdkModifierType  key,
-                                                     gboolean         press,
-                                                     GdkModifierType  state,
-                                                     GimpDisplay     *display);
-static void          gimp_source_tool_oper_update   (GimpTool        *tool,
-                                                     GimpCoords      *coords,
-                                                     GdkModifierType  state,
-                                                     gboolean         proximity,
-                                                     GimpDisplay     *display);
+static gboolean      gimp_source_tool_has_display   (GimpTool         *tool,
+                                                     GimpDisplay      *display);
+static GimpDisplay * gimp_source_tool_has_image     (GimpTool         *tool,
+                                                     GimpImage        *image);
+static void          gimp_source_tool_control       (GimpTool         *tool,
+                                                     GimpToolAction    action,
+                                                     GimpDisplay      *display);
+static void          gimp_source_tool_button_press  (GimpTool         *tool,
+                                                     const GimpCoords *coords,
+                                                     guint32           time,
+                                                     GdkModifierType   state,
+                                                     GimpDisplay      *display);
+static void          gimp_source_tool_motion        (GimpTool         *tool,
+                                                     const GimpCoords *coords,
+                                                     guint32           time,
+                                                     GdkModifierType   state,
+                                                     GimpDisplay      *display);
+static void          gimp_source_tool_cursor_update (GimpTool         *tool,
+                                                     const GimpCoords *coords,
+                                                     GdkModifierType   state,
+                                                     GimpDisplay      *display);
+static void          gimp_source_tool_modifier_key  (GimpTool         *tool,
+                                                     GdkModifierType   key,
+                                                     gboolean          press,
+                                                     GdkModifierType   state,
+                                                     GimpDisplay      *display);
+static void          gimp_source_tool_oper_update   (GimpTool         *tool,
+                                                     const GimpCoords *coords,
+                                                     GdkModifierType   state,
+                                                     gboolean          proximity,
+                                                     GimpDisplay      *display);
 
-static void          gimp_source_tool_draw          (GimpDrawTool    *draw_tool);
+static void          gimp_source_tool_draw          (GimpDrawTool     *draw_tool);
 
 
 G_DEFINE_TYPE (GimpSourceTool, gimp_source_tool, GIMP_TYPE_BRUSH_TOOL)
@@ -167,11 +167,11 @@ gimp_source_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_source_tool_button_press (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_source_tool_button_press (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               guint32           time,
+                               GdkModifierType   state,
+                               GimpDisplay      *display)
 {
   GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
@@ -200,11 +200,11 @@ gimp_source_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_source_tool_motion (GimpTool        *tool,
-                         GimpCoords      *coords,
-                         guint32          time,
-                         GdkModifierType  state,
-                         GimpDisplay     *display)
+gimp_source_tool_motion (GimpTool         *tool,
+                         const GimpCoords *coords,
+                         guint32           time,
+                         GdkModifierType   state,
+                         GimpDisplay      *display)
 {
   GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
@@ -256,10 +256,10 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_source_tool_cursor_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_source_tool_cursor_update (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                GdkModifierType   state,
+                                GimpDisplay      *display)
 {
   GimpSourceOptions  *options  = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
   GimpCursorType      cursor   = GIMP_CURSOR_MOUSE;
@@ -284,11 +284,11 @@ gimp_source_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_source_tool_oper_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              gboolean         proximity,
-                              GimpDisplay     *display)
+gimp_source_tool_oper_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              gboolean          proximity,
+                              GimpDisplay      *display)
 {
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);

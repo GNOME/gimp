@@ -87,18 +87,18 @@ static void      gimp_text_tool_control         (GimpTool          *tool,
                                                  GimpToolAction     action,
                                                  GimpDisplay       *display);
 static void      gimp_text_tool_button_press    (GimpTool          *tool,
-                                                 GimpCoords        *coords,
+                                                 const GimpCoords  *coords,
                                                  guint32            time,
                                                  GdkModifierType    state,
                                                  GimpDisplay       *display);
 static void      gimp_text_tool_button_release  (GimpTool          *tool,
-                                                 GimpCoords        *coords,
+                                                 const GimpCoords  *coords,
                                                  guint32            time,
                                                  GdkModifierType    state,
                                                  GimpButtonReleaseType release_type,
                                                  GimpDisplay       *display);
 static void      gimp_text_tool_motion          (GimpTool          *tool,
-                                                 GimpCoords        *coords,
+                                                 const GimpCoords  *coords,
                                                  guint32            time,
                                                  GdkModifierType    state,
                                                  GimpDisplay       *display);
@@ -106,11 +106,11 @@ static gboolean  gimp_text_tool_key_press       (GimpTool          *tool,
                                                  GdkEventKey       *kevent,
                                                  GimpDisplay       *display);
 static void      gimp_text_tool_cursor_update   (GimpTool          *tool,
-                                                 GimpCoords        *coords,
+                                                 const GimpCoords  *coords,
                                                  GdkModifierType    state,
                                                  GimpDisplay       *display);
 static GimpUIManager * gimp_text_tool_get_popup (GimpTool          *tool,
-                                                 GimpCoords        *coords,
+                                                 const GimpCoords  *coords,
                                                  GdkModifierType    state,
                                                  GimpDisplay       *display,
                                                  const gchar      **ui_path);
@@ -398,11 +398,11 @@ gimp_text_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_text_tool_button_press (GimpTool        *tool,
-                             GimpCoords      *coords,
-                             guint32          time,
-                             GdkModifierType  state,
-                             GimpDisplay     *display)
+gimp_text_tool_button_press (GimpTool         *tool,
+                             const GimpCoords *coords,
+                             guint32           time,
+                             GdkModifierType   state,
+                             GimpDisplay      *display)
 {
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
@@ -473,9 +473,6 @@ gimp_text_tool_button_press (GimpTool        *tool,
       GimpItem *item = GIMP_ITEM (drawable);
       gdouble   x    = coords->x - item->offset_x;
       gdouble   y    = coords->y - item->offset_y;
-
-      coords->x -= item->offset_x;
-      coords->y -= item->offset_y;
 
       if (x > 0 && x < gimp_item_width (item) &&
           y > 0 && y < gimp_item_height (item))
@@ -554,7 +551,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
  */
 static void
 gimp_text_tool_button_release (GimpTool              *tool,
-                               GimpCoords            *coords,
+                               const GimpCoords      *coords,
                                guint32                time,
                                GdkModifierType        state,
                                GimpButtonReleaseType  release_type,
@@ -647,11 +644,11 @@ gimp_text_tool_button_release (GimpTool              *tool,
 }
 
 void
-gimp_text_tool_motion (GimpTool        *tool,
-                       GimpCoords      *coords,
-                       guint32          time,
-                       GdkModifierType  state,
-                       GimpDisplay     *display)
+gimp_text_tool_motion (GimpTool         *tool,
+                       const GimpCoords *coords,
+                       guint32           time,
+                       GdkModifierType   state,
+                       GimpDisplay      *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -921,10 +918,10 @@ gimp_text_tool_key_press (GimpTool    *tool,
 }
 
 static void
-gimp_text_tool_cursor_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              GimpDisplay     *display)
+gimp_text_tool_cursor_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              GimpDisplay      *display)
 {
   if (tool->display == display)
     {
@@ -956,7 +953,7 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
 
 static GimpUIManager *
 gimp_text_tool_get_popup (GimpTool         *tool,
-                          GimpCoords       *coords,
+                          const GimpCoords *coords,
                           GdkModifierType   state,
                           GimpDisplay      *display,
                           const gchar     **ui_path)

@@ -53,7 +53,7 @@ static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
                                                    GdkModifierType    state,
                                                    GimpDisplay       *display);
 static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
-                                                   GimpCoords        *coords,
+                                                   const GimpCoords  *coords,
                                                    GdkModifierType    state,
                                                    GimpDisplay       *display);
 
@@ -149,10 +149,10 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_flip_tool_cursor_update (GimpTool        *tool,
-                              GimpCoords      *coords,
-                              GdkModifierType  state,
-                              GimpDisplay     *display)
+gimp_flip_tool_cursor_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              GimpDisplay      *display)
 {
   GimpFlipOptions    *options  = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_BAD;

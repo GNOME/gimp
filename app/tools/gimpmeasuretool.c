@@ -63,18 +63,18 @@ static void     gimp_measure_tool_control         (GimpTool              *tool,
                                                    GimpToolAction         action,
                                                    GimpDisplay           *display);
 static void     gimp_measure_tool_button_press    (GimpTool              *tool,
-                                                   GimpCoords            *coords,
+                                                   const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 static void     gimp_measure_tool_button_release  (GimpTool              *tool,
-                                                   GimpCoords            *coords,
+                                                   const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpButtonReleaseType  release_type,
                                                    GimpDisplay           *display);
 static void     gimp_measure_tool_motion          (GimpTool              *tool,
-                                                   GimpCoords            *coords,
+                                                   const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
@@ -87,7 +87,7 @@ static void gimp_measure_tool_active_modifier_key (GimpTool              *tool,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
-                                                   GimpCoords            *coords,
+                                                   const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 
@@ -176,11 +176,11 @@ gimp_measure_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_measure_tool_button_press (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_measure_tool_button_press (GimpTool         *tool,
+                                const GimpCoords *coords,
+                                guint32           time,
+                                GdkModifierType   state,
+                                GimpDisplay      *display)
 {
   GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
@@ -342,7 +342,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_measure_tool_button_release (GimpTool              *tool,
-                                  GimpCoords            *coords,
+                                  const GimpCoords      *coords,
                                   guint32                time,
                                   GdkModifierType        state,
                                   GimpButtonReleaseType  release_type,
@@ -354,11 +354,11 @@ gimp_measure_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_measure_tool_motion (GimpTool        *tool,
-                          GimpCoords      *coords,
-                          guint32          time,
-                          GdkModifierType  state,
-                          GimpDisplay     *display)
+gimp_measure_tool_motion (GimpTool         *tool,
+                          const GimpCoords *coords,
+                          guint32           time,
+                          GdkModifierType   state,
+                          GimpDisplay      *display)
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
   gint             dx, dy;
@@ -522,10 +522,10 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_measure_tool_cursor_update (GimpTool        *tool,
-                                 GimpCoords      *coords,
-                                 GdkModifierType  state,
-                                 GimpDisplay     *display)
+gimp_measure_tool_cursor_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
 {
   GimpMeasureTool   *measure   = GIMP_MEASURE_TOOL (tool);
   gboolean           in_handle = FALSE;

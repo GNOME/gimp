@@ -34,7 +34,7 @@ GType      gimp_edit_selection_tool_get_type  (void) G_GNUC_CONST;
 
 void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
                                                GimpDisplay       *display,
-                                               GimpCoords        *coords,
+                                               const GimpCoords  *coords,
                                                GimpTranslateMode  edit_mode,
                                                gboolean           propagate_release);
 

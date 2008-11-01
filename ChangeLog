@@ -1,3 +1,44 @@
+2008-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]
+	* app/tools/tool_manager.[ch]: made all GimpCoords* in the tool
+	API const.
+
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbrushtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpeditselectiontool.[ch]
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimpregionselecttool.c
+	* app/tools/gimpselectiontool.[ch]
+	* app/tools/gimpsourcetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: changed accordingly and added const
+	to all GimpCoords* in utility functions too.
+
+	* app/tools/gimptexttool.c: don't modify the passed coords. In
+	fact, simply removed the code that did because it had no effect.
+
 2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c

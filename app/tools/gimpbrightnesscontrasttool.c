@@ -58,18 +58,18 @@ static gboolean gimp_brightness_contrast_tool_initialize   (GimpTool            
                                                             GError               **error);
 
 static void   gimp_brightness_contrast_tool_button_press   (GimpTool              *tool,
-                                                            GimpCoords            *coords,
+                                                            const GimpCoords      *coords,
                                                             guint32                time,
                                                             GdkModifierType        state,
                                                             GimpDisplay           *display);
 static void   gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
-                                                            GimpCoords            *coords,
+                                                            const GimpCoords      *coords,
                                                             guint32                time,
                                                             GdkModifierType        state,
                                                             GimpButtonReleaseType  release_type,
                                                             GimpDisplay           *display);
 static void   gimp_brightness_contrast_tool_motion         (GimpTool              *tool,
-                                                            GimpCoords            *coords,
+                                                            const GimpCoords      *coords,
                                                             guint32                time,
                                                             GdkModifierType        state,
                                                             GimpDisplay           *display);
@@ -226,11 +226,11 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 
 
 static void
-gimp_brightness_contrast_tool_button_press (GimpTool        *tool,
-                                            GimpCoords      *coords,
-                                            guint32          time,
-                                            GdkModifierType  state,
-                                            GimpDisplay     *display)
+gimp_brightness_contrast_tool_button_press (GimpTool         *tool,
+                                            const GimpCoords *coords,
+                                            guint32           time,
+                                            GdkModifierType   state,
+                                            GimpDisplay      *display)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
@@ -245,7 +245,7 @@ gimp_brightness_contrast_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
-                                              GimpCoords            *coords,
+                                              const GimpCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
                                               GimpButtonReleaseType  release_type,
@@ -266,11 +266,11 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_brightness_contrast_tool_motion (GimpTool        *tool,
-                                      GimpCoords      *coords,
-                                      guint32          time,
-                                      GdkModifierType  state,
-                                      GimpDisplay     *display)
+gimp_brightness_contrast_tool_motion (GimpTool         *tool,
+                                      const GimpCoords *coords,
+                                      guint32           time,
+                                      GdkModifierType   state,
+                                      GimpDisplay      *display)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 

@@ -45,7 +45,7 @@
 /*  local function prototypes  */
 
 static void   gimp_bucket_fill_tool_button_release (GimpTool              *tool,
-                                                    GimpCoords            *coords,
+                                                    const GimpCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state,
                                                     GimpButtonReleaseType  release_type,
@@ -56,7 +56,7 @@ static void   gimp_bucket_fill_tool_modifier_key   (GimpTool              *tool,
                                                     GdkModifierType        state,
                                                     GimpDisplay           *display);
 static void   gimp_bucket_fill_tool_cursor_update  (GimpTool              *tool,
-                                                    GimpCoords            *coords,
+                                                    const GimpCoords      *coords,
                                                     GdkModifierType        state,
                                                     GimpDisplay           *display);
 
@@ -114,7 +114,7 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 
 static void
 gimp_bucket_fill_tool_button_release (GimpTool              *tool,
-                                      GimpCoords            *coords,
+                                      const GimpCoords      *coords,
                                       guint32                time,
                                       GdkModifierType        state,
                                       GimpButtonReleaseType  release_type,
@@ -204,10 +204,10 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
-                                     GimpCoords      *coords,
-                                     GdkModifierType  state,
-                                     GimpDisplay     *display)
+gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
+                                     const GimpCoords *coords,
+                                     GdkModifierType   state,
+                                     GimpDisplay      *display)
 {
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
