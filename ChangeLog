@@ -1,5 +1,10 @@
 2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c: Renamed fooC aliases to
+	fooCa since they represent pre-multiplied color data.
+
+2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Get rid of GRand in
 	process() and use a lut instead. A little benchmark showed a
 	performance improvement of 78%. Also added defines for the the

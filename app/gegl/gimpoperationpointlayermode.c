@@ -42,17 +42,17 @@
 #define DISSOLVE_SEED          737893334
 
 
-#define R    RED
-#define G    GREEN
-#define B    BLUE
-#define A    ALPHA
-#define inC  in[c]
-#define inA  in[A]
-#define layC lay[c]
-#define layA lay[A]
-#define outC out[c]
-#define outA out[A]
-#define newC new[c]
+#define R     RED
+#define G     GREEN
+#define B     BLUE
+#define A     ALPHA
+#define inCa  in[c]
+#define inA   in[A]
+#define layCa lay[c]
+#define layA  lay[A]
+#define outCa out[c]
+#define outA  out[A]
+#define newCa new[c]
 
 #define EACH_CHANNEL(expr)            \
         for (c = RED; c < ALPHA; c++) \
@@ -359,10 +359,10 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           outA = inA - inA * layA;
           if (inA <= 0.0)
             EACH_CHANNEL (
-            outC = 0.0)
+            outCa = 0.0)
           else
             EACH_CHANNEL (
-            outC = (inC / inA) * outA);
+            outCa = (inCa / inA) * outA);
           break;
 
         case GIMP_ANTI_ERASE_MODE:
@@ -370,10 +370,10 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           outA = inA + (1 - inA) * layA;
           if (inA <= 0.0)
             EACH_CHANNEL (
-            outC = 0.0)
+            outCa = 0.0)
           else
             EACH_CHANNEL (
-            outC = inC / inA * outA);
+            outCa = inCa / inA * outA);
           break;
 
         case GIMP_COLOR_ERASE_MODE:
@@ -385,7 +385,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           /* Filter fade mode */
           outA = layA;
           EACH_CHANNEL(
-          outC = layC);
+          outCa = layCa);
           break;
 
         case GIMP_DISSOLVE_MODE:
@@ -399,104 +399,104 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
             {
               outA = 1.0;
               EACH_CHANNEL (
-              outC = layC / layA);
+              outCa = layCa / layA);
             }
           else
             {
               outA = inA;
               EACH_CHANNEL (
-              outC = inC);
+              outCa = inCa);
             }
           break;
 
         case GIMP_NORMAL_MODE:
           /* Porter-Duff A over B */
           EACH_CHANNEL (
-          outC = layC + inC * (1 - layA));
+          outCa = layCa + inCa * (1 - layA));
           break;
 
         case GIMP_BEHIND_MODE:
           /* Porter-Duff B over A */
           EACH_CHANNEL (
-          outC = inC + layC * (1 - inA));
+          outCa = inCa + layCa * (1 - inA));
           break;
 
         case GIMP_MULTIPLY_MODE:
           /* SVG 1.2 multiply */
           EACH_CHANNEL (
-          outC = layC * inC + layC * (1 - inA) + inC * (1 - layA));
+          outCa = layCa * inCa + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_SCREEN_MODE:
           /* SVG 1.2 screen */
           EACH_CHANNEL (
-          outC = layC + inC - layC * inC);
+          outCa = layCa + inCa - layCa * inCa);
           break;
 
         case GIMP_DIFFERENCE_MODE:
           /* SVG 1.2 difference */
           EACH_CHANNEL (
-          outC = inC + layC - 2 * MIN (layC * inA, inC * layA));
+          outCa = inCa + layCa - 2 * MIN (layCa * inA, inCa * layA));
           break;
 
         case GIMP_DARKEN_ONLY_MODE:
           /* SVG 1.2 darken */
           EACH_CHANNEL (
-          outC = MIN (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
+          outCa = MIN (layCa * inA, inCa * layA) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_LIGHTEN_ONLY_MODE:
           /* SVG 1.2 lighten */
           EACH_CHANNEL (
-          outC = MAX (layC * inA, inC * layA) + layC * (1 - inA) + inC * (1 - layA));
+          outCa = MAX (layCa * inA, inCa * layA) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_OVERLAY_MODE:
           /* SVG 1.2 overlay */
           EACH_CHANNEL (
-          if (2 * inC < inA)
-            outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+          if (2 * inCa < inA)
+            outCa = 2 * layCa * inCa + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
+            outCa = layA * inA - 2 * (inA - inCa) * (layA - layCa) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_DODGE_MODE:
           /* SVG 1.2 color-dodge */
           EACH_CHANNEL (
-          if (layC * inA + inC * layA >= layA * inA)
-            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+          if (layCa * inA + inCa * layA >= layA * inA)
+            outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC * layA / (1 - layC / layA) + layC * (1 - inA) + inC * (1 - layA));
+            outCa = inCa * layA / (1 - layCa / layA) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_BURN_MODE:
           /* SVG 1.2 color-burn */
           EACH_CHANNEL (
-          if (layC * inA + inC * layA <= layA * inA)
-            outC = layC * (1 - inA) + inC * (1 - layA);
+          if (layCa * inA + inCa * layA <= layA * inA)
+            outCa = layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = layA * (layC * inA + inC * layA - layA * inA) / layC + layC * (1 - inA) + inC * (1 - layA));
+            outCa = layA * (layCa * inA + inCa * layA - layA * inA) / layCa + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_HARDLIGHT_MODE:
           /* SVG 1.2 hard-light */
           EACH_CHANNEL (
-          if (2 * layC < layA)
-            outC = 2 * layC * inC + layC * (1 - inA) + inC * (1 - layA);
+          if (2 * layCa < layA)
+            outCa = 2 * layCa * inCa + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = layA * inA - 2 * (inA - inC) * (layA - layC) + layC * (1 - inA) + inC * (1 - layA));
+            outCa = layA * inA - 2 * (inA - inCa) * (layA - layCa) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_SOFTLIGHT_MODE:
           /* SVG 1.2 soft-light */
           /* XXX: Why is the result so different from legacy Soft Light? */
           EACH_CHANNEL (
-          if (2 * layC < layA)
-            outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA);
-          else if (8 * inC <= inA)
-            outC = inC * (layA - (1 - inC / inA) * (2 * layC - layA) * (3 - 8 * inC / inA)) + layC * (1 - inA) + inC * (1 - layA);
+          if (2 * layCa < layA)
+            outCa = inCa * (layA - (1 - inCa / inA) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA);
+          else if (8 * inCa <= inA)
+            outCa = inCa * (layA - (1 - inCa / inA) * (2 * layCa - layA) * (3 - 8 * inCa / inA)) + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = (inC * layA + (sqrt (inC / inA) * inA - inC) * (2 * layC - layA)) + layC * (1 - inA) + inC * (1 - layA));
+            outCa = (inCa * layA + (sqrt (inCa / inA) * inA - inCa) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_ADDITION_MODE:
@@ -508,10 +508,10 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *   f(Sc, Dc) = Dc + Sc
            */
           EACH_CHANNEL (
-          if (layC * inA + inC * layA >= layA * inA)
-            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+          if (layCa * inA + inCa * layA >= layA * inA)
+            outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC + layC);
+            outCa = inCa + layCa);
           break;
 
         case GIMP_SUBTRACT_MODE:
@@ -523,10 +523,10 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *   f(Sc, Dc) = Dc - Sc
            */
           EACH_CHANNEL (
-          if (inC * layA - layC * inA <= 0)
-            outC = layC * (1 - inA) + inC * (1 - layA);
+          if (inCa * layA - layCa * inA <= 0)
+            outCa = layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC + layC - 2 * layC * inA);
+            outCa = inCa + layCa - 2 * layCa * inA);
           break;
 
         case GIMP_GRAIN_EXTRACT_MODE:
@@ -540,12 +540,12 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *   f(Sc, Dc) = f(Sc, Dc) = Dc - Sc + 0.5
            */
           EACH_CHANNEL (
-          if (inC * layA - layC * inA + 0.5 * layA * inA >= layA * inA)
-            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
-          else if (inC * layA - layC * inA + 0.5 * layA * inA <= 0)
-            outC = layC * (1 - inA) + inC * (1 - layA);
+          if (inCa * layA - layCa * inA + 0.5 * layA * inA >= layA * inA)
+            outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
+          else if (inCa * layA - layCa * inA + 0.5 * layA * inA <= 0)
+            outCa = layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC + layC - 2 * layC * inA + 0.5 * inA * layA);
+            outCa = inCa + layCa - 2 * layCa * inA + 0.5 * inA * layA);
           break;
 
         case GIMP_GRAIN_MERGE_MODE:
@@ -559,12 +559,12 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *   f(Sc, Dc) = f(Sc, Dc) = Dc + Sc - 0.5
            */
           EACH_CHANNEL (
-          if (inC * layA + layC * inA - 0.5 * layA * inA >= layA * inA)
-            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
-          else if (inC * layA + layC * inA - 0.5 * layA * inA <= 0)
-            outC = layC * (1 - inA) + inC * (1 - layA);
+          if (inCa * layA + layCa * inA - 0.5 * layA * inA >= layA * inA)
+            outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
+          else if (inCa * layA + layCa * inA - 0.5 * layA * inA <= 0)
+            outCa = layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC + layC - 0.5 * inA * layA);
+            outCa = inCa + layCa - 0.5 * inA * layA);
           break;
 
         case GIMP_DIVIDE_MODE:
@@ -577,9 +577,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            */
           EACH_CHANNEL (
           if (in[c] / lay[c] > in[A] / lay[A])
-            outC = layA * inA + layC * (1 - inA) + inC * (1 - layA);
+            outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outC = inC * layA * layA / layC + layC * (1 - inA) + inC * (1 - layA));
+            outCa = inCa * layA * layA / layCa + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_HUE_MODE:
@@ -594,7 +594,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                                              lay,
                                                              new);
           EACH_CHANNEL (
-          outC = newC * layA * inA + layC * (1 - inA) + inC * (1 - layA));
+          outCa = newCa * layA * inA + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_COLOR_MODE:
@@ -607,7 +607,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                                              lay,
                                                              new);
           EACH_CHANNEL (
-          outC = newC * layA * inA + layC * (1 - inA) + inC * (1 - layA));
+          outCa = newCa * layA * inA + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         default:
