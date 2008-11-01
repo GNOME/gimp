@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-13 19:39+0900\n"
-"PO-Revision-Date: 2008-10-13 16:42+0900\n"
+"POT-Creation-Date: 2008-11-01 11:06+0900\n"
+"PO-Revision-Date: 2008-10-30 23:32+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-2008\n"
-"Spencer Kimball, Peter Mattis\n"
-"and\n"
-"The GIMP Development Team"
+"Spencer Kimball, Peter Mattis and The GIMP Development Team"
 
 #: ../app/about.h:34
 msgid ""
@@ -111,7 +109,7 @@ msgstr "詳細な起動メッセージを表示する"
 
 #: ../app/main.c:159
 msgid "Start a new GIMP instance"
-msgstr "新しいインスタンスで起動する"
+msgstr "新しいインスタンスを起動する"
 
 #: ../app/main.c:164
 msgid "Open images as new"
@@ -177,11 +175,11 @@ msgstr "クラッシュ時のデバッグ対応の指定 (never|query|always)"
 
 #: ../app/main.c:241
 msgid "Enable non-fatal debugging signal handlers"
-msgstr "致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする"
+msgstr "致命的でないデバッグシグナルに対するハンドラを有効にする"
 
 #: ../app/main.c:246
 msgid "Make all warnings fatal"
-msgstr "すべての警告を「致命的」に見なす"
+msgstr "すべての警告を致命的として扱う"
 
 #: ../app/main.c:251
 msgid "Output a gimprc file with default settings"
@@ -189,7 +187,7 @@ msgstr "既定の gimprc ファイルを出力する"
 
 #: ../app/main.c:355
 msgid "[FILE|URI...]"
-msgstr "[FILE|URI...]"
+msgstr "[ファイル|URI...]"
 
 #: ../app/main.c:373
 msgid ""
@@ -268,7 +266,7 @@ msgid "Brush Editor"
 msgstr "ブラシエディタ"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:104 ../app/core/gimp.c:828
+#: ../app/actions/actions.c:104 ../app/core/gimp.c:838
 #: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2738
 msgid "Brushes"
 msgstr "ブラシ"
@@ -347,7 +345,7 @@ msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:158 ../app/core/gimp.c:840
+#: ../app/actions/actions.c:158 ../app/core/gimp.c:850
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradients"
 msgstr "グラデーション"
@@ -377,13 +375,13 @@ msgid "Palette Editor"
 msgstr "パレット編集"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:176 ../app/core/gimp.c:836
+#: ../app/actions/actions.c:176 ../app/core/gimp.c:846
 #: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2746
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:179 ../app/core/gimp.c:832
+#: ../app/actions/actions.c:179 ../app/core/gimp.c:842
 #: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2742
 msgid "Patterns"
 msgstr "パターン"
@@ -406,7 +404,7 @@ msgid "Select"
 msgstr "選択"
 
 #. initialize the template list
-#: ../app/actions/actions.c:194 ../app/core/gimp.c:849
+#: ../app/actions/actions.c:194 ../app/core/gimp.c:859
 #: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "テンプレート"
@@ -625,7 +623,7 @@ msgstr "チャンネルを選択範囲に(_C)"
 
 #: ../app/actions/channels-actions.c:106
 msgid "Replace the selection with this channel"
-msgstr "このチャンネルから選択範囲を作成します"
+msgstr "このチャンネルを選択範囲に置き換えます"
 
 #: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:266
 #: ../app/actions/vectors-actions.c:173
@@ -634,7 +632,7 @@ msgstr "選択範囲に加える(_A)"
 
 #: ../app/actions/channels-actions.c:112
 msgid "Add this channel to the current selection"
-msgstr "現在の選択範囲にチャンネルを加える"
+msgstr "選択範囲にチャンネルによる範囲を加えます"
 
 #: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:272
 #: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
@@ -644,7 +642,7 @@ msgstr "選択範囲から引く(_S)"
 
 #: ../app/actions/channels-actions.c:118
 msgid "Subtract this channel from the current selection"
-msgstr "現在の選択範囲からチャンネルを引きます"
+msgstr "選択範囲からチャンネルによる範囲を引きます"
 
 #: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:278
 #: ../app/actions/layers-actions.c:305 ../app/actions/layers-actions.c:332
@@ -654,7 +652,7 @@ msgstr "選択範囲との交わり(_I)"
 
 #: ../app/actions/channels-actions.c:124
 msgid "Intersect this channel with the current selection"
-msgstr "現在の選択範囲とチャンネルの交差部分で新しい選択範囲を作成します"
+msgstr "選択範囲とチャンネルによる範囲との交差部分を新しい選択範囲にします"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:393
@@ -850,7 +848,7 @@ msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
 #: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
@@ -974,8 +972,8 @@ msgstr "選択範囲エディタ(_S)"
 msgid "Open the selection editor"
 msgstr ""
 "選択範囲エディタ(ダイアログ)を開きます。\n"
-"現在の選択範囲をダイアログ上でグレースケール画像として表示し、アイコンのク"
-"リックでコマンドを選択・実行します。"
+"選択範囲をダイアログ上でグレースケール画像として表示し、アイコンのクリックで"
+"コマンドを選択・実行します。"
 
 #: ../app/actions/dialogs-actions.c:87
 msgid "Na_vigation"
@@ -1652,7 +1650,7 @@ msgstr "選択範囲内に貼り付け(_I)"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "クリップボードの内容を現在の選択範囲の中に貼り付けます"
+msgstr "クリップボードの内容を選択範囲の中に貼り付けます"
 
 #: ../app/actions/edit-actions.c:138
 msgid "From _Clipboard"
@@ -1730,7 +1728,7 @@ msgstr "背景色で塗りつぶす(_G)"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the background color"
-msgstr "選択範囲を背景色で塗りつぶします"
+msgstr "背景色で選択範囲を塗りつぶします"
 
 #: ../app/actions/edit-actions.c:201
 msgid "Fill with P_attern"
@@ -1738,7 +1736,7 @@ msgstr "パターンで塗りつぶす(_A)"
 
 #: ../app/actions/edit-actions.c:202
 msgid "Fill the selection using the active pattern"
-msgstr "選択範囲をアクティブなパターンで塗りつぶします"
+msgstr "アクティブなパターンで選択範囲を塗りつぶします"
 
 #: ../app/actions/edit-actions.c:279
 #, c-format
@@ -1854,7 +1852,7 @@ msgstr "選択範囲を保存"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
-msgstr "何も選択されていないので保存できません!"
+msgstr "何も選択されていないので保存できません"
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
@@ -1980,7 +1978,7 @@ msgstr "保存して終了..."
 msgid "Save this image and close its window"
 msgstr "この画像を上書き保存して、画像ウィンドウを閉じます。"
 
-#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
 msgstr "画像を開く"
@@ -1989,11 +1987,11 @@ msgstr "画像を開く"
 msgid "Open Image as Layers"
 msgstr "レイヤーとして画像を開く"
 
-#: ../app/actions/file-commands.c:260
+#: ../app/actions/file-commands.c:266
 msgid "Saving canceled"
 msgstr "保存をキャンセル"
 
-#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:275 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -2005,44 +2003,44 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:294
+#: ../app/actions/file-commands.c:300
 msgid "No changes need to be saved"
 msgstr "保存が必要な変更はありません"
 
-#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:307 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: ../app/actions/file-commands.c:307
+#: ../app/actions/file-commands.c:313
 msgid "Save a Copy of the Image"
 msgstr "画像のコピーを保存"
 
-#: ../app/actions/file-commands.c:327
+#: ../app/actions/file-commands.c:333
 msgid "Create New Template"
 msgstr "新しいテンプレートを作成"
 
-#: ../app/actions/file-commands.c:331
+#: ../app/actions/file-commands.c:337
 msgid "Enter a name for this template"
 msgstr "このテンプレートに対する名前を入力して下さい"
 
-#: ../app/actions/file-commands.c:357
+#: ../app/actions/file-commands.c:363
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "復帰に失敗しました\n"
 "この画像に結びつくドキュメント名が見つかりません"
 
-#: ../app/actions/file-commands.c:370
+#: ../app/actions/file-commands.c:376
 msgid "Revert Image"
 msgstr "復帰（画像を元に戻す）"
 
-#: ../app/actions/file-commands.c:396
+#: ../app/actions/file-commands.c:402
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 "' %2$s ' を再読み込みして\n"
 "画像 %1$s を元に戻しますか？"
 
-#: ../app/actions/file-commands.c:402
+#: ../app/actions/file-commands.c:408
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2051,11 +2049,11 @@ msgstr ""
 "に戻ります。\n"
 "保存されていない変更と操作履歴はすべて破棄されます。"
 
-#: ../app/actions/file-commands.c:557
+#: ../app/actions/file-commands.c:563
 msgid "(Unnamed Template)"
 msgstr "(名称未設定のテンプレート)"
 
-#: ../app/actions/file-commands.c:605
+#: ../app/actions/file-commands.c:611
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2884,7 +2882,7 @@ msgstr "テキストレイヤーを通常のレイヤーに変更します"
 
 #: ../app/actions/layers-actions.c:158
 msgid "Text to _Path"
-msgstr "テキストをパスへ(_P)"
+msgstr "テキストをパスに(_P)"
 
 #: ../app/actions/layers-actions.c:159
 msgid "Create a path from this text layer"
@@ -3010,15 +3008,15 @@ msgstr "レイヤーマスクから選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:267
 msgid "Add the layer mask to the current selection"
-msgstr "現在の選択範囲にレイヤーマスクを加えます"
+msgstr "選択範囲にレイヤーマスクの範囲を加えます"
 
 #: ../app/actions/layers-actions.c:273
 msgid "Subtract the layer mask from the current selection"
-msgstr "現在の選択範囲からレイヤーマスクを差し引きます"
+msgstr "選択範囲からレイヤーマスクの範囲を引きます"
 
 #: ../app/actions/layers-actions.c:279
 msgid "Intersect the layer mask with the current selection"
-msgstr "現在の選択範囲とレイヤーマスクの交差部分で新しい選択範囲を作成します"
+msgstr "選択範囲とレイヤーマスクの範囲との交差部分を新しい選択範囲にします"
 
 #: ../app/actions/layers-actions.c:287
 msgid "Al_pha to Selection"
@@ -3034,16 +3032,15 @@ msgstr "選択範囲に加える(_D)"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "レイヤーの不透明部分を現在の選択範囲に加えます"
+msgstr "選択範囲にレイヤーの不透明部分を加えます"
 
 #: ../app/actions/layers-actions.c:300
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "レイヤーの不透明部分を現在の選択範囲から引きます"
+msgstr "選択範囲からレイヤーの不透明部分を引きます"
 
 #: ../app/actions/layers-actions.c:306
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
-"現在の選択範囲とレイヤーの不透明部分との交差部分で新しい選択範囲を作成します"
+msgstr "選択範囲とレイヤーの不透明部分との交差部分を新しい選択範囲にします"
 
 #: ../app/actions/layers-actions.c:314
 msgid "_Text to Selection"
@@ -3051,19 +3048,19 @@ msgstr "テキストを選択範囲に(_T)"
 
 #: ../app/actions/layers-actions.c:315
 msgid "Replace the selection with the text layer's outline"
-msgstr "テキストの輪郭の選択範囲を作成します"
+msgstr "テキストから選択範囲を作成します"
 
 #: ../app/actions/layers-actions.c:321
 msgid "Add the text layer's outline to the current selection"
-msgstr "現在の選択範囲にテキストの輪郭を加えます"
+msgstr "選択範囲にテキストの範囲を加えます"
 
 #: ../app/actions/layers-actions.c:327
 msgid "Subtract the text layer's outline from the current selection"
-msgstr "現在の選択範囲からテキストの輪郭を引きます"
+msgstr "選択範囲からテキストの範囲を引きます"
 
 #: ../app/actions/layers-actions.c:333
 msgid "Intersect the text layer's outline with the current selection"
-msgstr "現在の選択範囲とテキストの輪郭の交差部分で新しい選択範囲を作成します"
+msgstr "選択範囲とテキストの範囲との交差部分を新しい選択範囲にします"
 
 #: ../app/actions/layers-actions.c:341
 msgid "Select _Top Layer"
@@ -3532,7 +3529,7 @@ msgstr "選択範囲を反転(_I)"
 
 #: ../app/actions/select-actions.c:63
 msgid "Invert the selection"
-msgstr "現在の選択範囲を反転します"
+msgstr "選択範囲を反転します"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
@@ -3588,7 +3585,7 @@ msgstr "チャンネルに保存(_C)"
 
 #: ../app/actions/select-actions.c:105
 msgid "Save the selection to a channel"
-msgstr "現在の選択範囲をチャンネルに保存します"
+msgstr "選択範囲をチャンネルに保存します"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
@@ -5891,31 +5888,31 @@ msgstr ""
 "\n"
 "  %s"
 
-#: ../app/core/gimp.c:533
+#: ../app/core/gimp.c:543
 msgid "Initialization"
 msgstr "初期化中"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:608
+#: ../app/core/gimp.c:618
 msgid "Internal Procedures"
 msgstr "内部プロシージャ"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Looking for data files"
 msgstr "データファイルを検索中"
 
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:844
+#: ../app/core/gimp.c:854
 msgid "Fonts (this may take a while)"
 msgstr "フォント"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2766
+#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2766
 msgid "Modules"
 msgstr "モジュール"
 
@@ -6210,12 +6207,12 @@ msgstr ""
 msgid "Blend"
 msgstr "ブレンド"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:71
+#: ../app/core/gimpdrawable-brightness-contrast.c:76
 msgid "Brightness_Contrast"
 msgstr "明るさ-コントラスト"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:82
-#: ../app/tools/gimpbrightnesscontrasttool.c:110
+#: ../app/core/gimpdrawable-brightness-contrast.c:87
+#: ../app/tools/gimpbrightnesscontrasttool.c:111
 msgid "Brightness-Contrast"
 msgstr "明るさ-コントラスト"
 
@@ -6268,7 +6265,7 @@ msgstr "色相-彩度"
 msgid "Hue_Saturation"
 msgstr "色相-彩度"
 
-#: ../app/core/gimpdrawable-invert.c:55 ../app/core/gimpdrawable-invert.c:63
+#: ../app/core/gimpdrawable-invert.c:60 ../app/core/gimpdrawable-invert.c:68
 msgid "Invert"
 msgstr "反転"
 
@@ -8735,8 +8732,8 @@ msgstr "(修正済)"
 msgid "(clean)"
 msgstr "(消去)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:349
+#: ../app/display/gimpdisplayshell-title.c:346
+#: ../app/display/gimpdisplayshell-title.c:359
 #: ../app/widgets/gimpactiongroup.c:805
 msgid "(none)"
 msgstr "(なし)"
@@ -8761,12 +8758,12 @@ msgstr "%s プラグインは SUCCESS を返しましたが、画像が返って
 msgid "%s plug-In could not open image"
 msgstr "%s プラグインは画像を開けられません"
 
-#: ../app/file/file-open.c:452
+#: ../app/file/file-open.c:455
 #, c-format
 msgid "Image doesn't contain any layers"
 msgstr "画像にレイヤーがありません"
 
-#: ../app/file/file-open.c:502
+#: ../app/file/file-open.c:505
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr ""
@@ -8775,7 +8772,7 @@ msgstr ""
 "\n"
 "  %s"
 
-#: ../app/file/file-open.c:610
+#: ../app/file/file-open.c:613
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -9631,42 +9628,42 @@ msgstr "%s を押しながらドラッグでベクトルを移動"
 msgid "Blend: "
 msgstr "ブレンド: "
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:111
+#: ../app/tools/gimpbrightnesscontrasttool.c:112
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
 msgstr ""
 "【明るさ-コントラスト】\n"
 "明るさとコントラストを調整します"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:112
+#: ../app/tools/gimpbrightnesscontrasttool.c:113
 msgid "B_rightness-Contrast..."
 msgstr "明るさ-コントラスト(_R)..."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:132
+#: ../app/tools/gimpbrightnesscontrasttool.c:133
 msgid "Adjust Brightness and Contrast"
 msgstr "明るさとコントラストの調整"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:134
+#: ../app/tools/gimpbrightnesscontrasttool.c:135
 msgid "Import Brightness-Contrast settings"
 msgstr "明るさ-コントラスト設定のインポート"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:135
+#: ../app/tools/gimpbrightnesscontrasttool.c:136
 msgid "Export Brightness-Contrast settings"
 msgstr "明るさ-コントラスト設定のエクスポート"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:183
+#: ../app/tools/gimpbrightnesscontrasttool.c:184
 #, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "インデックスレイヤーに対しては明るさ-コントラストを操作できません。"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:320
+#: ../app/tools/gimpbrightnesscontrasttool.c:325
 msgid "_Brightness:"
 msgstr "明るさ(_B): "
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:335
+#: ../app/tools/gimpbrightnesscontrasttool.c:340
 msgid "Con_trast:"
 msgstr "コントラスト(_T): "
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:349
+#: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
 msgstr "この設定をレベルで調整"
 
@@ -10399,32 +10396,32 @@ msgstr ""
 msgid "Fu_zzy Select"
 msgstr "ファジー選択(_Z)"
 
-#: ../app/tools/gimpgegltool.c:83 ../app/tools/gimpgegltool.c:102
+#: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
 msgstr "GEGL 操作"
 
-#: ../app/tools/gimpgegltool.c:84
+#: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr ""
 "【GEGL を操作】\n"
 "任意の GEGL 操作を行い画像に変化を与えます。 GEGL 操作はインデックスレイヤー"
 "では利用できません。"
 
-#: ../app/tools/gimpgegltool.c:85
+#: ../app/tools/gimpgegltool.c:94
 msgid "_GEGL Operation..."
 msgstr "GEGL を操作(_G)"
 
-#: ../app/tools/gimpgegltool.c:149
+#: ../app/tools/gimpgegltool.c:158
 #, c-format
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "インデックスレイヤーでは GEGL を操作できません。"
 
-#: ../app/tools/gimpgegltool.c:324
+#: ../app/tools/gimpgegltool.c:338
 msgid "_Operation:"
 msgstr "操作(_O): "
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:370
+#: ../app/tools/gimpgegltool.c:411
 msgid "Operation Settings"
 msgstr "操作設定"
 
@@ -11148,17 +11145,16 @@ msgstr "クリック-ドラッグで選択範囲を作成します"
 
 #: ../app/tools/gimpselectiontool.c:264
 msgid "Click-Drag to add to the current selection"
-msgstr "クリック-ドラッグで作成した範囲を、現在の選択範囲に加えます"
+msgstr "クリック-ドラッグで作成した範囲を選択範囲に加えます"
 
 #: ../app/tools/gimpselectiontool.c:273
 msgid "Click-Drag to subtract from the current selection"
-msgstr "クリック-ドラッグで作成した範囲を、現在の選択範囲から引きます"
+msgstr "クリック-ドラッグで作成した範囲を選択範囲から引きます"
 
 #: ../app/tools/gimpselectiontool.c:282
 msgid "Click-Drag to intersect with the current selection"
 msgstr ""
-"現在の選択範囲とクリック-ドラッグで作成した範囲の交差部分で新しい選択範囲を作"
-"成します"
+"選択範囲とクリック-ドラッグで作成した範囲との交差部分を新しい選択範囲にします"
 
 #: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to move the selection mask"
@@ -11416,14 +11412,14 @@ msgid ""
 "%s  Intersect"
 msgstr ""
 "パスから選択範囲を作成します\n"
-"%s  に加える\n"
-"%s  から引く\n"
-"%s  との交わりをとる"
+"%s  選択範囲に加える\n"
+"%s  選択範囲から引く\n"
+"%s  選択範囲との交わりをとる"
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
 msgid "Selection from Path"
-msgstr "パスを選択範囲に(_O)"
+msgstr "パスを選択範囲に"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -12238,23 +12234,23 @@ msgstr "メッセージは標準エラー出力に出力されます。"
 msgid "%s Message"
 msgstr "%s エラーメッセージ"
 
-#: ../app/widgets/gimpfiledialog.c:279
+#: ../app/widgets/gimpfiledialog.c:310
 msgid "Automatically Detected"
 msgstr "自動判別"
 
-#: ../app/widgets/gimpfiledialog.c:289
+#: ../app/widgets/gimpfiledialog.c:320
 msgid "By Extension"
 msgstr "拡張子で判別"
 
-#: ../app/widgets/gimpfiledialog.c:617
+#: ../app/widgets/gimpfiledialog.c:652
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: ../app/widgets/gimpfiledialog.c:622
+#: ../app/widgets/gimpfiledialog.c:657
 msgid "All images"
 msgstr "すべての画像"
 
-#: ../app/widgets/gimpfiledialog.c:751
+#: ../app/widgets/gimpfiledialog.c:786
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "ファイルタイプを選択(_T)  （現在の設定： %s）"
@@ -12378,15 +12374,15 @@ msgstr "背景色(_B): "
 msgid "Spacing"
 msgstr "間隔: "
 
-#: ../app/widgets/gimphelp.c:267
+#: ../app/widgets/gimphelp.c:276
 msgid "Help browser is missing"
 msgstr "ヘルプブラウザが見つかりません"
 
-#: ../app/widgets/gimphelp.c:268
+#: ../app/widgets/gimphelp.c:277
 msgid "The GIMP help browser is not available."
 msgstr "ヘルプブラウザは現在利用できません。"
 
-#: ../app/widgets/gimphelp.c:269
+#: ../app/widgets/gimphelp.c:278
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -12394,33 +12390,33 @@ msgstr ""
 "このインストールには GIMP ヘルプブラウザ・プラグインが見つかりません。ユー"
 "ザーマニュアルを表示するにはウェブブラウザを使用してください。"
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:319
 msgid "Help browser doesn't start"
 msgstr "ヘルプブラウザが起動しません"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:320
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "GIMP ヘルプブラウザ・プラグインが起動できませんでした"
 
-#: ../app/widgets/gimphelp.c:338
+#: ../app/widgets/gimphelp.c:347
 msgid "Use _Web Browser"
 msgstr "ウェブブラウザを使用"
 
-#: ../app/widgets/gimphelp.c:587
+#: ../app/widgets/gimphelp.c:596
 msgid "GIMP user manual is missing"
 msgstr "GIMP ユーザーマニュアルが見つかりません"
 
-#: ../app/widgets/gimphelp.c:594
+#: ../app/widgets/gimphelp.c:603
 msgid "_Read Online"
 msgstr "オンライン版を参照"
 
-#: ../app/widgets/gimphelp.c:618
+#: ../app/widgets/gimphelp.c:627
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "GIMP ユーザーマニュアルが\n"
 "インストールされていません。"
 
-#: ../app/widgets/gimphelp.c:621
+#: ../app/widgets/gimphelp.c:630
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -12743,7 +12739,7 @@ msgstr "言語(_L): "
 msgid "_Use selected font"
 msgstr "アクティブなフォントで表示(_U)"
 
-#: ../app/widgets/gimpthumbbox.c:330
+#: ../app/widgets/gimpthumbbox.c:344
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -12752,20 +12748,20 @@ msgstr ""
 "クリックでプレビュー更新\n"
 "%s%sクリックでプレビューを強制的に更新"
 
-#: ../app/widgets/gimpthumbbox.c:348
+#: ../app/widgets/gimpthumbbox.c:362
 msgid "Pr_eview"
 msgstr "プレビュー(_E)"
 
-#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
+#: ../app/widgets/gimpthumbbox.c:417 ../app/widgets/gimpthumbbox.c:481
 msgid "No selection"
 msgstr "選択なし"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:609 ../app/widgets/gimpthumbbox.c:630
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "サムネイル %d / %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:743 ../app/widgets/gimpthumbbox.c:753
 msgid "Creating preview..."
 msgstr "プレビューを作成中..."
 
@@ -13035,7 +13031,7 @@ msgid ""
 "from it."
 msgstr ""
 "この XCF ファイルは壊れています。このファイルからは画像データを部分的でさえ読"
-"み込むことはできませんでした。"
+"み込むことができませんでした。"
 
 #: ../app/xcf/xcf-load.c:324
 msgid ""
@@ -13099,7 +13095,7 @@ msgstr ""
 
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
-msgstr "画像の作成と写真の編集"
+msgstr "画像の作成と写真の編集を行います"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
@@ -13115,7 +13111,7 @@ msgstr "GIMP が実行されているか確認して終了"
 
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr "ツールボックスの X window ID を表示して終了"
+msgstr "ツールボックスの X window ID を表示して終了する"
 
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
