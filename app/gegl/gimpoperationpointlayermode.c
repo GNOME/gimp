@@ -42,17 +42,20 @@
 #define DISSOLVE_SEED          737893334
 
 
-#define R     RED
-#define G     GREEN
-#define B     BLUE
-#define A     ALPHA
-#define inCa  in[c]
-#define inA   in[A]
-#define layCa lay[c]
-#define layA  lay[A]
-#define outCa out[c]
-#define outA  out[A]
-#define newCa new[c]
+#define R     (RED)
+#define G     (GREEN)
+#define B     (BLUE)
+#define A     (ALPHA)
+#define inA   (in[A])
+#define inCa  (in[c])
+#define inC   (in[A]  ? in[c]  / in[A]  : 0.0)
+#define layA  (lay[A])
+#define layCa (lay[c])
+#define layC  (lay[A] ? lay[c] / lay[A] : 0.0)
+#define outCa (out[c])
+#define outA  (out[A])
+#define outC  (out[A] ? out[c] / out[A] : 0.0)
+#define newCa (new[c])
 
 #define EACH_CHANNEL(expr)            \
         for (c = RED; c < ALPHA; c++) \
@@ -362,7 +365,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
             outCa = 0.0)
           else
             EACH_CHANNEL (
-            outCa = (inCa / inA) * outA);
+            outCa = inC * outA);
           break;
 
         case GIMP_ANTI_ERASE_MODE:
@@ -373,7 +376,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
             outCa = 0.0)
           else
             EACH_CHANNEL (
-            outCa = inCa / inA * outA);
+            outCa = inC * outA);
           break;
 
         case GIMP_COLOR_ERASE_MODE:
@@ -399,7 +402,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
             {
               outA = 1.0;
               EACH_CHANNEL (
-              outCa = layCa / layA);
+              outCa = layC);
             }
           else
             {
@@ -466,7 +469,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           if (layCa * inA + inCa * layA >= layA * inA)
             outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outCa = inCa * layA / (1 - layCa / layA) + layCa * (1 - inA) + inCa * (1 - layA));
+            outCa = inCa * layA / (1 - layC) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_BURN_MODE:
@@ -492,11 +495,11 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           /* XXX: Why is the result so different from legacy Soft Light? */
           EACH_CHANNEL (
           if (2 * layCa < layA)
-            outCa = inCa * (layA - (1 - inCa / inA) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA);
+            outCa = inCa * (layA - (1 - inC) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA);
           else if (8 * inCa <= inA)
-            outCa = inCa * (layA - (1 - inCa / inA) * (2 * layCa - layA) * (3 - 8 * inCa / inA)) + layCa * (1 - inA) + inCa * (1 - layA);
+            outCa = inCa * (layA - (1 - inC) * (2 * layCa - layA) * (3 - 8 * inC)) + layCa * (1 - inA) + inCa * (1 - layA);
           else
-            outCa = (inCa * layA + (sqrt (inCa / inA) * inA - inCa) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA));
+            outCa = (inCa * layA + (sqrt (inC) * inA - inCa) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_ADDITION_MODE:
@@ -576,7 +579,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *   f(Sc, Dc) = Dc / Sc
            */
           EACH_CHANNEL (
-          if (in[c] / lay[c] > in[A] / lay[A])
+          if (layA == 0.0 || inCa / layCa > inA / layA)
             outCa = layA * inA + layCa * (1 - inA) + inCa * (1 - layA);
           else
             outCa = inCa * layA * layA / layCa + layCa * (1 - inA) + inCa * (1 - layA));
