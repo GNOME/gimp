@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-13 19:43+0900\n"
-"PO-Revision-Date: 2008-10-12 21:11+0900\n"
+"POT-Creation-Date: 2008-11-01 11:09+0900\n"
+"PO-Revision-Date: 2008-10-27 23:10+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,7 @@ msgstr "プレビュー自動更新"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:168
 msgid "Area:"
-msgstr ""
-"適用\n"
-"範囲: "
+msgstr "範囲: "
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
 msgid "Entire Layer"
@@ -51,7 +49,7 @@ msgstr "選択範囲"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:174
 msgid "Context"
-msgstr "コンテキスト"
+msgstr "状況に応じて"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:299
@@ -190,7 +188,7 @@ msgstr "発光チャンネルを変更(_I)"
 
 #: ../plug-ins/common/alien-map.c:147
 msgid "Red _frequency:"
-msgstr "赤 周波数(_F): "
+msgstr "赤周波数(_F): "
 
 #: ../plug-ins/common/alien-map.c:147
 msgid "Hue _frequency:"
@@ -198,7 +196,7 @@ msgstr "色相周波数(_F): "
 
 #: ../plug-ins/common/alien-map.c:148
 msgid "Green fr_equency:"
-msgstr "緑 周波数(_E): "
+msgstr "緑周波数(_E): "
 
 #: ../plug-ins/common/alien-map.c:148
 msgid "Saturation fr_equency:"
@@ -206,7 +204,7 @@ msgstr "彩度周波数(_E): "
 
 #: ../plug-ins/common/alien-map.c:149
 msgid "Blue freq_uency:"
-msgstr "青 周波数(_U): "
+msgstr "青周波数(_U): "
 
 #: ../plug-ins/common/alien-map.c:149
 msgid "Luminosity freq_uency:"
@@ -214,7 +212,7 @@ msgstr "発光周波数(_U): "
 
 #: ../plug-ins/common/alien-map.c:151
 msgid "Red _phaseshift:"
-msgstr "赤 位相変位(_P): "
+msgstr "赤位相変位(_P): "
 
 #: ../plug-ins/common/alien-map.c:151
 msgid "Hue _phaseshift:"
@@ -222,7 +220,7 @@ msgstr "色相位相変位(_P): "
 
 #: ../plug-ins/common/alien-map.c:152
 msgid "Green ph_aseshift:"
-msgstr "緑 位相変位(_A): "
+msgstr "緑位相変位(_A): "
 
 #: ../plug-ins/common/alien-map.c:152
 msgid "Saturation ph_aseshift:"
@@ -230,7 +228,7 @@ msgstr "彩度位相変位(_A): "
 
 #: ../plug-ins/common/alien-map.c:153
 msgid "Blue pha_seshift:"
-msgstr "青 位相変位(_S): "
+msgstr "青位相変位(_S): "
 
 #: ../plug-ins/common/alien-map.c:153
 msgid "Luminosity pha_seshift:"
@@ -659,7 +657,7 @@ msgstr "ぼかし半径(_B): "
 
 #: ../plug-ins/common/blur-gauss-selective.c:281
 msgid "_Max. delta:"
-msgstr "最大 Δ(_M): "
+msgstr "最大Δ(_M): "
 
 #: ../plug-ins/common/blur-gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
@@ -914,15 +912,15 @@ msgstr "飽和度(_M): "
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
-msgstr "輪郭を強調してマンガで描かれたような効果を施します"
+msgstr "輪郭を強調して漫画に描かれたような効果を施します"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
-msgstr "マンガ(_R)..."
+msgstr "漫画(_R)..."
 
 #: ../plug-ins/common/cartoon.c:811
 msgid "Cartoon"
-msgstr "マンガ"
+msgstr "漫画"
 
 #: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:876
 msgid "_Mask radius:"
@@ -1069,7 +1067,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
-#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1626
+#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1635
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
 #: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
@@ -1337,7 +1335,7 @@ msgstr "CML エクスプローラ(_E)..."
 
 #: ../plug-ins/common/cml-explorer.c:756
 msgid "CML Explorer: evoluting"
-msgstr "CML エクスプローラ： 展開しています"
+msgstr "CML エクスプローラ: 展開しています"
 
 #: ../plug-ins/common/cml-explorer.c:1177
 msgid "Coupled-Map-Lattice Explorer"
@@ -1374,7 +1372,7 @@ msgstr "詳細(_A)"
 
 #: ../plug-ins/common/cml-explorer.c:1315
 msgid "Channel Independent Parameters"
-msgstr "チャンネルによらないパラメータ"
+msgstr "チャンネルに依存しないパラメータ"
 
 #: ../plug-ins/common/cml-explorer.c:1337
 msgid "Initial value:"
@@ -1514,34 +1512,34 @@ msgstr "現在の設定のグラフ"
 
 #: ../plug-ins/common/cml-explorer.c:1890
 msgid "Warning: the source and the destination are the same channel."
-msgstr "警告： 元と先のチャンネルが同じです"
+msgstr "警告: 元と先のチャンネルが同じです"
 
 #: ../plug-ins/common/cml-explorer.c:1949
 msgid "Save CML Explorer Parameters"
-msgstr "CML エクスプローラ： パラメータの保存"
+msgstr "CML エクスプローラのパラメータ保存"
 
 #: ../plug-ins/common/cml-explorer.c:2082
 msgid "Load CML Explorer Parameters"
-msgstr "CML エクスプローラ： パラメータの読み込み"
+msgstr "CML エクスプローラのパラメータ読み込み"
 
 #: ../plug-ins/common/cml-explorer.c:2200
 msgid "Error: it's not CML parameter file."
-msgstr "エラー： これは CMLパラメータファイルではありません"
+msgstr "エラー: これは CMLパラメータファイルではありません"
 
 #: ../plug-ins/common/cml-explorer.c:2207
 #, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "警告： '%s' は古い形式のファイルです"
+msgstr "警告: '%s' は古い形式のファイルです"
 
 #: ../plug-ins/common/cml-explorer.c:2211
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
-"警告： パラメータファイル '%s' は、新しいバージョンの CMLエクスプローラ用です"
+"警告: パラメータファイル '%s' は、新しいバージョンの CMLエクスプローラ用です"
 
 #: ../plug-ins/common/cml-explorer.c:2274
 msgid "Error: failed to load parameters"
-msgstr "エラー： パラメータファイル読み込み失敗"
+msgstr "エラー: パラメータファイル読み込み失敗"
 
 #: ../plug-ins/common/color-cube-analyze.c:106
 msgid "Analyze the set of colors in the image"
@@ -1561,7 +1559,7 @@ msgstr "色立体分析"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:231
 #, c-format
 msgid "Image dimensions: %d × %d"
-msgstr "画像サイズ： %d x %d"
+msgstr "画像サイズ: %d x %d"
 
 #: ../plug-ins/common/color-cube-analyze.c:387
 msgid "No colors"
@@ -1574,7 +1572,7 @@ msgstr "色は１色のみ"
 #: ../plug-ins/common/color-cube-analyze.c:391
 #, c-format
 msgid "Number of unique colors: %d"
-msgstr "異なる色の数： %d"
+msgstr "異なる色の数: %d"
 
 #: ../plug-ins/common/color-enhance.c:69
 msgid "Stretch color saturation to cover maximum possible range"
@@ -1683,7 +1681,7 @@ msgstr "カスタムカラー: "
 
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
-msgstr "単色塗り： カスタムカラー"
+msgstr "単色塗り: カスタムカラー"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
@@ -1691,7 +1689,7 @@ msgstr "カラーマップ内のインデックスカラーを並び替えます
 
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "インデックスカラーの並び替え..."
+msgstr "インデックスカラーの並び替え(_E)..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -1756,7 +1754,7 @@ msgstr "RGBA"
 #: ../plug-ins/common/compose.c:204 ../plug-ins/common/noise-rgb.c:525
 #: ../plug-ins/common/noise-rgb.c:540
 msgid "_Alpha:"
-msgstr "アルファ(_A): "
+msgstr "透明度(_A): "
 
 #: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:184
 msgid "HSV"
@@ -1884,8 +1882,7 @@ msgstr "'再合成' は、 'チャンネル分解' で生成した画像に対�
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
-"'チャンネル分解' データ・パラサイトの解析中にエラー： レイヤーの数が足りませ"
-"ん"
+"'チャンネル分解' データ・パラサイトの解析中にエラー: レイヤーの数が足りません"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -1991,7 +1988,7 @@ msgstr "高い"
 
 #: ../plug-ins/common/contrast-retinex.c:334
 msgid "_Level:"
-msgstr "レベル: "
+msgstr "レベル(_L): "
 
 #: ../plug-ins/common/contrast-retinex.c:339
 msgid "_Scale:"
@@ -2007,7 +2004,7 @@ msgstr "動的(_D): "
 
 #: ../plug-ins/common/contrast-retinex.c:642
 msgid "Retinex: filtering"
-msgstr "レティネックス： フィルタをかけています"
+msgstr "レティネックス: フィルタをかけています"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:68
 msgid "Stretch image contrast to cover the maximum possible range"
@@ -2023,7 +2020,7 @@ msgstr "HSV 自動伸長中"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:192
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr "HSV伸長： カラーマップが NULL です。終了します...\n"
+msgstr "HSV伸長: カラーマップが NULL です。終了します...\n"
 
 #: ../plug-ins/common/contrast-stretch.c:68
 msgid "Stretch contrast to cover the maximum possible range"
@@ -2039,7 +2036,7 @@ msgstr "コントラストを伸長しています..."
 
 #: ../plug-ins/common/contrast-stretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr "コントラスト伸長： カラーマップが NULL です。終了します...\n"
+msgstr "コントラスト伸長: カラーマップが NULL です。終了します...\n"
 
 #: ../plug-ins/common/convolution-matrix.c:64
 msgid "Gr_ey"
@@ -2061,7 +2058,7 @@ msgstr "青(_B)"
 
 #: ../plug-ins/common/convolution-matrix.c:68
 msgid "_Alpha"
-msgstr "アルファ(_A)"
+msgstr "透明度(_A)"
 
 #: ../plug-ins/common/convolution-matrix.c:73
 msgid "E_xtend"
@@ -2381,7 +2378,7 @@ msgstr "色相"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
 msgid "saturation_l"
-msgstr "彩度(HSL)"
+msgstr "彩度 (HSL)"
 
 #: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
 msgid "lightness"
@@ -2389,7 +2386,7 @@ msgstr "輝度"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr "色相(HSL)"
+msgstr "色相 (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Saturation (HSL)"
@@ -2606,7 +2603,7 @@ msgstr "スケール 2(_L): "
 msgid "Remove speckle noise from the image"
 msgstr ""
 "画像中のノイズやモアレを除去します\n"
-"(GIMP 2.2 の「非斑化」)"
+"(以前の GIMP の「非斑化」)"
 
 #: ../plug-ins/common/despeckle.c:148
 msgid "Des_peckle..."
@@ -2726,7 +2723,7 @@ msgstr "その他のオプション"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_X displacement"
-msgstr "_X ずらし"
+msgstr "X ずらし(_X)"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
@@ -2734,7 +2731,7 @@ msgstr "ひねり(_P)"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Y displacement"
-msgstr "_Y ずらし"
+msgstr "Y ずらし(_Y)"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Whirl"
@@ -2759,12 +2756,12 @@ msgstr "ずらしマップ"
 #. X options
 #: ../plug-ins/common/displace.c:362
 msgid "_X displacement:"
-msgstr "_X ずらし: "
+msgstr "X ずらし(_X): "
 
 #. Y Options
 #: ../plug-ins/common/displace.c:409
 msgid "_Y displacement:"
-msgstr "_Y ずらし: "
+msgstr "Y ずらし(_Y): "
 
 #: ../plug-ins/common/displace.c:459
 msgid "Displacement Mode"
@@ -2962,7 +2959,7 @@ msgstr "彫金を表現します"
 
 #: ../plug-ins/common/engrave.c:106
 msgid "En_grave..."
-msgstr "彫金風(_G)..."
+msgstr "彫金(_G)..."
 
 #: ../plug-ins/common/engrave.c:180
 msgid "Engraving"
@@ -2970,7 +2967,7 @@ msgstr "彫金しています"
 
 #: ../plug-ins/common/engrave.c:209
 msgid "Engrave"
-msgstr "彫金風"
+msgstr "彫金"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:611
 #: ../plug-ins/common/file-ps.c:3181 ../plug-ins/common/file-ps.c:3389
@@ -3051,7 +3048,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
-#: ../plug-ins/file-psd/psd-save.c:1631 ../plug-ins/file-sgi/sgi.c:554
+#: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:554
 #: ../plug-ins/file-xjt/xjt.c:1710
 #, c-format
 msgid "Saving '%s'"
@@ -3242,7 +3239,7 @@ msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF： 文書化されていない GIF 合成タイプ %d は扱えません。動画が再生されない"
+"GIF: 文書化されていない GIF 合成タイプ %d は扱えません。動画が再生されない"
 "か、完全に保存できない可能性があります。"
 
 #: ../plug-ins/common/file-gif-save.c:447
@@ -3699,13 +3696,13 @@ msgstr "'%s' はPCXファイルではありません"
 #: ../plug-ins/file-psd/psd-load.c:302
 #, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "画像の幅： '%d' は、サポートされていないか無効な値です"
+msgstr "画像の幅: '%d' は、サポートされていないか無効な値です"
 
 #: ../plug-ins/common/file-pcx.c:400 ../plug-ins/file-bmp/bmp-read.c:585
 #: ../plug-ins/file-psd/psd-load.c:294
 #, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "画像の高さ： '%d' は、サポートされていないか無効な値です"
+msgstr "画像の高さ: '%d' は、サポートされていないか無効な値です"
 
 #: ../plug-ins/common/file-pcx.c:405
 msgid "Invalid number of bytes per line in PCX header"
@@ -3718,26 +3715,26 @@ msgstr "異常な PCX につき、お手上げです"
 #: ../plug-ins/common/file-pcx.c:676
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr "Xオフセット値： '%d' は無効な値です"
+msgstr "Xオフセット値: '%d' は無効な値です"
 
 #: ../plug-ins/common/file-pcx.c:682
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr "Yオフセット値： '%d' は無効な値です"
+msgstr "Yオフセット値: '%d' は無効な値です"
 
 #: ../plug-ins/common/file-pcx.c:688
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr ""
-"右の境界がはみ出ています：　設定値は '%2$d' ですが '%1$d' より小さくなければ"
-"いけません"
+"右の境界がはみ出ています:　設定値は '%2$d' ですが '%1$d' より小さくなければい"
+"けません"
 
 #: ../plug-ins/common/file-pcx.c:695
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
-"下の境界がはみ出ています：　設定値は '%2$d' ですが '%1$d' より小さくなければ"
-"いけません"
+"下の境界がはみ出ています:　設定値は '%2$d' ですが '%1$d' より小さくなければい"
+"けません"
 
 #: ../plug-ins/common/file-pcx.c:752
 #, c-format
@@ -4022,7 +4019,7 @@ msgstr "ページ: "
 
 #: ../plug-ins/common/file-ps.c:3200
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "読み込むページ番号 (例： 1-4 あるいは 1,3,5-7)"
+msgstr "読み込むページ番号 (例: 1-4 あるいは 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3204 ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
@@ -4271,7 +4268,7 @@ msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "画像の幅が指定されていません"
 
 #: ../plug-ins/common/file-sunras.c:464 ../plug-ins/common/file-xbm.c:833
@@ -4281,7 +4278,7 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "画像の幅がGIMPで扱える範囲を超えています"
 
 #: ../plug-ins/common/file-sunras.c:472 ../plug-ins/common/file-xbm.c:840
@@ -4291,7 +4288,7 @@ msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "画像の高さが指定されていません"
 
 #: ../plug-ins/common/file-sunras.c:480 ../plug-ins/common/file-xbm.c:847
@@ -4301,7 +4298,7 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "画像の高さがGIMPで扱える範囲を超えています"
 
 #: ../plug-ins/common/file-sunras.c:518
@@ -4486,7 +4483,7 @@ msgid ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
-"警告：\n"
+"警告:\n"
 "16 bit /チャンネルの画像を読み込もうとしていますが、GIMPはこのモードが取り扱"
 "えないので 8 bit /チャンネルに変換します。この変換によりカラー情報の一部が失"
 "われます。"
@@ -4579,7 +4576,7 @@ msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "ヘッダが読み込めません (ftell == %ld)"
 
 #: ../plug-ins/common/file-xbm.c:854
@@ -4588,7 +4585,7 @@ msgid ""
 "'%s':\n"
 "No image data type specified"
 msgstr ""
-"'%s'：\n"
+"'%s':\n"
 "画像の種類が指定されていません"
 
 #. The image is not black-and-white.
@@ -6528,12 +6525,12 @@ msgstr "ソース色を取得(_S)"
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1352
 msgid "Destination:"
-msgstr "ターゲット:"
+msgstr "ターゲット画像:"
 
 #. layer combo_box (Sample)
 #: ../plug-ins/common/sample-colorize.c:1368
 msgid "Sample:"
-msgstr "ソース:"
+msgstr "ソース画像:"
 
 #: ../plug-ins/common/sample-colorize.c:1378
 msgid "From reverse gradient"
@@ -7483,8 +7480,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
-"単位を示す記号 (例： インチならば \"'\")を定義します。単位に記号がない場合は"
-"単位の省略形を定義してください。"
+"単位を示す記号 (例: インチならば \"'\")を定義します。単位に記号がない場合は単"
+"位の省略形を定義してください。"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -7492,7 +7489,7 @@ msgstr "省略形"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "単位の省略形を定義します（例：「ミリメートル」ならば \"mm\"）。"
+msgstr "単位の省略形を定義します（例: 「ミリメートル」ならば \"mm\"）。"
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "Singular"
@@ -8505,7 +8502,7 @@ msgstr "カラーモード %s はサポートされていません"
 #: ../plug-ins/file-psd/psd-load.c:341
 #, c-format
 msgid "Unsupported bit depth: %d"
-msgstr "サポートされないビット深度です： %d bit"
+msgstr "サポートされないビット深度です: %d bit"
 
 #: ../plug-ins/file-psd/psd-load.c:375 ../plug-ins/file-psd/psd-load.c:385
 #: ../plug-ins/file-psd/psd-load.c:604 ../plug-ins/file-psd/psd-load.c:785
@@ -8552,11 +8549,11 @@ msgstr ""
 "トしない）ので保存できません。このレイヤーモードを '標準' モードに換えて保存"
 "します。"
 
-#: ../plug-ins/file-psd/psd-save.c:628
+#: ../plug-ins/file-psd/psd-save.c:631
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "保存中にエラー: GIMP の画像タイプを PSDのモードに変換できません"
 
-#: ../plug-ins/file-psd/psd-save.c:1596
+#: ../plug-ins/file-psd/psd-save.c:1605
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
@@ -8565,7 +8562,7 @@ msgstr ""
 "'%s' を保存できません。 psd 形式での保存では、幅や高さが 30000 ピクセルを超え"
 "る画像をサポートしていません。"
 
-#: ../plug-ins/file-psd/psd-save.c:1611
+#: ../plug-ins/file-psd/psd-save.c:1620
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -8712,7 +8709,7 @@ msgstr "libcurl を初期化できません"
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:202
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr "'%s' の書き込み用オープンに対する HTTP 応答コード： %d"
+msgstr "'%s' の書き込み用オープンに対する HTTP 応答コード: %d"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:162
 #: ../plug-ins/file-uri/uri-backend-wget.c:182
@@ -11287,11 +11284,11 @@ msgstr "<名称未設定>"
 
 #: ../plug-ins/imagemap/imap_main.c:660
 msgid "Some data has been changed!"
-msgstr "いくつかのデータが変更されてます!"
+msgstr "いくつかのデータが変更されてます"
 
 #: ../plug-ins/imagemap/imap_main.c:663
 msgid "Do you really want to discard your changes?"
-msgstr "これまでの変更を破棄してもいいですか?"
+msgstr "これまでの変更を破棄してもよろしいですか?"
 
 #: ../plug-ins/imagemap/imap_main.c:873
 #, c-format
@@ -11599,7 +11596,7 @@ msgstr "代替テキスト"
 
 #: ../plug-ins/imagemap/imap_selection.c:416
 msgid "Target"
-msgstr "target"
+msgstr "対象"
 
 #: ../plug-ins/imagemap/imap_settings.c:90
 msgid "Settings for this Mapfile"
