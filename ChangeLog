@@ -1,3 +1,8 @@
+2008-11-01  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: include pangoft2 in PANGOCAIRO_CFLAGS and
+	PANGOCAIRO_LIBS. We are still using API that is in PangoFT2.
+
 2008-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]
