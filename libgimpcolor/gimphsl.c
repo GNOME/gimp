@@ -55,6 +55,15 @@ gimp_hsl_copy (const GimpHSL *hsl)
 
 /*  HSL functions  */
 
+/**
+ * gimp_hsl_set:
+ * @hsl:
+ * @h:
+ * @s:
+ * @l:
+ *
+ * Since: GIMP 2.8
+ **/
 void
 gimp_hsl_set (GimpHSL *hsl,
               gdouble  h,
