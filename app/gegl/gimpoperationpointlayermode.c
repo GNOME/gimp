@@ -492,7 +492,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
         case GIMP_SOFTLIGHT_MODE:
           /* SVG 1.2 soft-light */
-          /* XXX: Why is the result so different from legacy Soft Light? */
+          /* FIXME: This exactly like in the SVG 1.2 draft but it is
+           * buggy and we need sort this out
+           */
           EACH_CHANNEL (
           if (2 * layCa < layA)
             outCa = inCa * (layA - (1 - inC) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA);
