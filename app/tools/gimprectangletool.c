@@ -1654,7 +1654,8 @@ gimp_rectangle_tool_cursor_update (GimpTool         *tool,
 {
   GimpRectangleTool        *rect_tool;
   GimpRectangleToolPrivate *private;
-  GimpCursorType            cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorType            cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier        modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1669,7 +1670,8 @@ gimp_rectangle_tool_cursor_update (GimpTool         *tool,
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
           break;
         case GIMP_RECTANGLE_TOOL_MOVING:
-          cursor = GIMP_CURSOR_MOVE;
+          cursor   = GIMP_CURSOR_MOVE;
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
           cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
@@ -1701,7 +1703,8 @@ gimp_rectangle_tool_cursor_update (GimpTool         *tool,
         }
     }
 
-  gimp_tool_control_set_cursor (tool->control, cursor);
+  gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 }
 
 void

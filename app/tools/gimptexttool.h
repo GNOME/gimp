@@ -43,8 +43,7 @@ struct _GimpTextTool
   GList          *pending;
   guint           idle_id;
 
-  gint            x1, y1;
-  gint            x2, y2;
+  gboolean        moving;
 
   GtkTextBuffer  *text_buffer;
 
