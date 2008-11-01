@@ -55,7 +55,7 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp-posterize";
+  operation_class->name        = "gimp:posterize";
   operation_class->categories  = "color";
   operation_class->description = "GIMP Posterize operation";
 

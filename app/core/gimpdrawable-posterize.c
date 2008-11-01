@@ -61,7 +61,7 @@ gimp_drawable_posterize (GimpDrawable *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp-posterize",
+                           "operation", "gimp:posterize",
                            NULL);
       gegl_node_set (node,
                      "config", config,

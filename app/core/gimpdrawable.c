@@ -1130,7 +1130,7 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
     return drawable->source_node;
 
   drawable->source_node = g_object_new (GEGL_TYPE_NODE,
-                                        "operation", "gimp-tilemanager-source",
+                                        "operation", "gimp:tilemanager-source",
                                         NULL);
   gegl_node_set (drawable->source_node,
                  "tile-manager", drawable->tiles,

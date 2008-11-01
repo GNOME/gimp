@@ -69,7 +69,7 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp-hue-saturation",
+                           "operation", "gimp:hue-saturation",
                            NULL);
       gegl_node_set (node,
                      "config", config,

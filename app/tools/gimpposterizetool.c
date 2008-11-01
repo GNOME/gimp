@@ -172,7 +172,7 @@ gimp_posterize_tool_get_operation (GimpImageMapTool  *image_map_tool,
   GeglNode          *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-posterize",
+                       "operation", "gimp:posterize",
                        NULL);
 
   posterize_tool->config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG, NULL);

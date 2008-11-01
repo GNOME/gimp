@@ -58,7 +58,7 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp-curves";
+  operation_class->name        = "gimp:curves";
   operation_class->categories  = "color";
   operation_class->description = "GIMP Curves operation";
 

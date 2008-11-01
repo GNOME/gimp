@@ -78,7 +78,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
   object_class->set_property          = gimp_operation_tile_source_set_property;
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
-  operation_class->name               = "gimp-tilemanager-source";
+  operation_class->name               = "gimp:tilemanager-source";
   operation_class->categories         = "input";
   operation_class->description        = "GIMP TileManager source";
   operation_class->prepare            = gimp_operation_tile_source_prepare;

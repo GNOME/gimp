@@ -1,5 +1,18 @@
 2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperation*.c: Prefix the GIMP GEGL operations with
+	"gimp:" instead of "gimp-" so we follow the GEGL prefix style and
+	better serialize to XML.
+
+	* app/tools/gimp*tool.c
+
+	* app/core/gimpdrawable-*.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimagemap.c
+	* app/core/gimpprojection.c: Changed accordingly.
+
+2008-11-01  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gegl/gimpoperationpointlayermode.c: Introduced helper macros
 	fooC to properly un-multiply pre-multiplied data without causing
 	NaNs. This fixes some compositing issues involving complete

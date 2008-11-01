@@ -146,7 +146,7 @@ gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
   GeglNode           *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-desaturate",
+                       "operation", "gimp:desaturate",
                        NULL);
 
   desaturate_tool->config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG, NULL);

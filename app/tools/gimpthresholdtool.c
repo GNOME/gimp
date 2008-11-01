@@ -183,7 +183,7 @@ gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
   GeglNode          *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-threshold",
+                       "operation", "gimp:threshold",
                        NULL);
 
   t_tool->config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG, NULL);

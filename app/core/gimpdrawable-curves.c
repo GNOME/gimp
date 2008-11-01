@@ -156,7 +156,7 @@ gimp_drawable_curves (GimpDrawable     *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp-curves",
+                           "operation", "gimp:curves",
                            NULL);
       gegl_node_set (node,
                      "config", config,

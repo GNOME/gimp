@@ -352,7 +352,7 @@ gimp_projection_get_sink_node (GimpProjection *proj)
 
   proj->sink_node =
     gegl_node_new_child (proj->graph,
-                         "operation",    "gimp-tilemanager-sink",
+                         "operation",    "gimp:tilemanager-sink",
                          "tile-manager", gimp_projection_get_tiles (proj),
                          "linear",       TRUE,
                          NULL);

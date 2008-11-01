@@ -55,7 +55,7 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp-levels";
+  operation_class->name        = "gimp:levels";
   operation_class->categories  = "color";
   operation_class->description = "GIMP Levels operation";
 

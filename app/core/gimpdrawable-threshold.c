@@ -62,7 +62,7 @@ gimp_drawable_threshold (GimpDrawable *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp-threshold",
+                           "operation", "gimp:threshold",
                            NULL);
       gegl_node_set (node,
                      "config", config,

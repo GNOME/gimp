@@ -144,7 +144,7 @@ gimp_drawable_levels_internal (GimpDrawable     *drawable,
       GeglNode *levels;
 
       levels = g_object_new (GEGL_TYPE_NODE,
-                             "operation", "gimp-levels",
+                             "operation", "gimp:levels",
                              NULL);
 
       gegl_node_set (levels,

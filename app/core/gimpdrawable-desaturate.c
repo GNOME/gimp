@@ -55,7 +55,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
       GObject  *config;
 
       desaturate = g_object_new (GEGL_TYPE_NODE,
-                                 "operation", "gimp-desaturate",
+                                 "operation", "gimp:desaturate",
                                  NULL);
 
       config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,

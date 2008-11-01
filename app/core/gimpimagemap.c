@@ -463,7 +463,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
           image_map->input =
             gegl_node_new_child (image_map->gegl,
-                                 "operation", "gimp-tilemanager-source",
+                                 "operation", "gimp:tilemanager-source",
                                  NULL);
 
           image_map->shift =
@@ -475,7 +475,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
           image_map->output =
             gegl_node_new_child (image_map->gegl,
-                                 "operation", "gimp-tilemanager-sink",
+                                 "operation", "gimp:tilemanager-sink",
                                  NULL);
 
           {

@@ -179,7 +179,7 @@ gimp_color_balance_tool_get_operation (GimpImageMapTool  *im_tool,
   GeglNode             *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-color-balance",
+                       "operation", "gimp:color-balance",
                        NULL);
 
   cb_tool->config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG, NULL);

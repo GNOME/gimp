@@ -255,7 +255,7 @@ gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
   GeglNode       *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-levels",
+                       "operation", "gimp:levels",
                        NULL);
 
   tool->config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);

@@ -74,12 +74,12 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                 NULL);
 
   input  = gegl_node_new_child (gegl,
-                                "operation",    "gimp-tilemanager-source",
+                                "operation",    "gimp:tilemanager-source",
                                 "tile-manager", gimp_drawable_get_tiles (drawable),
                                 "linear",       linear,
                                 NULL);
   output = gegl_node_new_child (gegl,
-                                "operation",    "gimp-tilemanager-sink",
+                                "operation",    "gimp:tilemanager-sink",
                                 "tile-manager", gimp_drawable_get_shadow_tiles (drawable),
                                 "linear",       linear,
                                 NULL);

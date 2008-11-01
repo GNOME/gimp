@@ -368,7 +368,7 @@ gimp_curves_tool_get_operation (GimpImageMapTool  *image_map_tool,
   GeglNode       *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp-curves",
+                       "operation", "gimp:curves",
                        NULL);
 
   tool->config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);

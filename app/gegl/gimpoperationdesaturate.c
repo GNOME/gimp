@@ -54,7 +54,7 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp-desaturate";
+  operation_class->name        = "gimp:desaturate";
   operation_class->categories  = "color";
   operation_class->description = "GIMP Desaturate operation";
 
