@@ -35,7 +35,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
-#include "core/gimplist.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -400,7 +399,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
       gint   Y1    = MAX (coords->y, align_tool->y0);
       GList *list;
 
-      for (list = GIMP_LIST (image->layers)->list;
+      for (list = gimp_image_get_layer_iter (image);
            list;
            list = g_list_next (list))
         {
@@ -1121,7 +1120,7 @@ select_layer_by_coords (GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {

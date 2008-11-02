@@ -1067,7 +1067,9 @@ gimp_image_size_changed (GimpViewable *viewable)
                           (GFunc) gimp_viewable_size_changed,
                           NULL);
 
-  for (list = GIMP_LIST (image->layers)->list; list; list = g_list_next (list))
+  for (list = gimp_image_get_layer_iter (image);
+       list;
+       list = g_list_next (list))
     {
       GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
 
@@ -2376,7 +2378,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   /* Check that the layer tattoos don't overlap with channel or vector ones */
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -2394,7 +2396,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
     }
 
   /* Now check that the channel and vectors tattoos don't overlap */
-  for (list = GIMP_LIST (image->channels)->list;
+  for (list = gimp_image_get_channel_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -2409,7 +2411,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
     }
 
   /* Find the max tattoo value in the vectors */
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -2508,6 +2510,30 @@ gimp_image_get_vectors (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return image->vectors;
+}
+
+GList *
+gimp_image_get_layer_iter (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_LIST (image->layers)->list;
+}
+
+GList *
+gimp_image_get_channel_iter (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_LIST (image->channels)->list;
+}
+
+GList *
+gimp_image_get_vectors_iter (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_LIST (image->vectors)->list;
 }
 
 GimpDrawable *
@@ -3654,7 +3680,7 @@ gimp_image_pick_correlate_layer (const GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {

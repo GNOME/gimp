@@ -411,7 +411,7 @@ file_open_layers (Gimp                *gimp,
 
       gimp_image_undo_disable (new_image);
 
-      for (list = GIMP_LIST (gimp_image_get_layers (new_image))->list;
+      for (list = gimp_image_get_layer_iter (new_image);
            list;
            list = g_list_next (list))
         {

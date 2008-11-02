@@ -37,7 +37,6 @@
 #include "gimpimage-sample-points.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
-#include "gimplist.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
 
@@ -105,7 +104,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy the layers  */
-  for (list = GIMP_LIST (image->layers)->list, count = 0;
+  for (list = gimp_image_get_layer_iter (image), count = 0;
        list;
        list = g_list_next (list))
     {
@@ -141,7 +140,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy the channels  */
-  for (list = GIMP_LIST (image->channels)->list, count = 0;
+  for (list = gimp_image_get_channel_iter (image), count = 0;
        list;
        list = g_list_next (list))
     {
@@ -166,7 +165,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy any vectors  */
-  for (list = GIMP_LIST (image->vectors)->list, count = 0;
+  for (list = gimp_image_get_vectors_iter (image), count = 0;
        list;
        list = g_list_next (list))
     {

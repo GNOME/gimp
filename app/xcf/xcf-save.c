@@ -33,6 +33,7 @@
 #include "base/tile-manager-private.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
@@ -45,7 +46,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
-#include "core/gimplist.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
 #include "core/gimpsamplepoint.h"
@@ -186,7 +186,7 @@ xcf_save_choose_format (XcfInfo   *info,
   if (gimp_image_get_colormap (image))
     save_version = 1;  /* need version 1 for colormaps */
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list && save_version < 2;
        list = g_list_next (list))
     {
@@ -286,7 +286,7 @@ xcf_save_image (XcfInfo    *info,
                                  info->cp + (n_layers + n_channels + 2) * 4,
                                  error));
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -328,7 +328,7 @@ xcf_save_image (XcfInfo    *info,
   saved_pos = info->cp;
   xcf_check_error (xcf_seek_end (info, error));
 
-  list = GIMP_LIST (image->channels)->list;
+  list = gimp_image_get_channel_iter (image);
 
   while (list || have_selection)
     {
@@ -1622,7 +1622,7 @@ xcf_save_old_paths (XcfInfo    *info,
   xcf_write_int32_check_error (info, &active_index, 1);
   xcf_write_int32_check_error (info, &num_paths,    1);
 
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -1734,7 +1734,7 @@ xcf_save_vectors (XcfInfo    *info,
   xcf_write_int32_check_error (info, &active_index, 1);
   xcf_write_int32_check_error (info, &num_paths,    1);
 
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {

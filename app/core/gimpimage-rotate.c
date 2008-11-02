@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
@@ -32,7 +33,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
-#include "gimplist.h"
 #include "gimpprogress.h"
 #include "gimpsamplepoint.h"
 
@@ -79,9 +79,9 @@ gimp_image_rotate (GimpImage        *image,
   center_x              = previous_image_width  / 2.0;
   center_y              = previous_image_height / 2.0;
 
-  progress_max = (image->channels->num_children +
-                  image->layers->num_children   +
-                  image->vectors->num_children  +
+  progress_max = (gimp_container_num_children (image->channels) +
+                  gimp_container_num_children (image->layers)   +
+                  gimp_container_num_children (image->vectors)  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -114,7 +114,7 @@ gimp_image_rotate (GimpImage        *image,
     }
 
   /*  Rotate all channels  */
-  for (list = GIMP_LIST (image->channels)->list;
+  for (list = gimp_image_get_channel_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -130,7 +130,7 @@ gimp_image_rotate (GimpImage        *image,
     }
 
   /*  Rotate all vectors  */
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -167,7 +167,7 @@ gimp_image_rotate (GimpImage        *image,
   }
 
   /*  Rotate all layers  */
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {

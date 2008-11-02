@@ -28,7 +28,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimplist.h"
 
 #include "text/gimptextlayer.h"
 
@@ -467,7 +466,7 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image     = action_data_get_image (data);
+  GimpImage     *image      = action_data_get_image (data);
   GimpLayer     *layer      = NULL;
   GimpLayerMask *mask       = NULL;     /*  layer mask             */
   gboolean       fs         = FALSE;    /*  floating sel           */
@@ -497,7 +496,7 @@ layers_actions_update (GimpActionGroup *group,
           lock_alpha = gimp_layer_get_lock_alpha (layer);
           alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-          list = g_list_find (GIMP_LIST (image->layers)->list, layer);
+          list = g_list_find (gimp_image_get_layer_iter (image), layer);
 
           if (list)
             {

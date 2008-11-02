@@ -27,7 +27,6 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -237,7 +236,7 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage   *image     = action_data_get_image (data);
+  GimpImage   *image      = action_data_get_image (data);
   GimpVectors *vectors    = NULL;
   gint         n_vectors  = 0;
   gboolean     mask_empty = TRUE;
@@ -263,7 +262,7 @@ vectors_actions_update (GimpActionGroup *group,
           visible = gimp_item_get_visible (item);
           linked  = gimp_item_get_linked  (item);
 
-          list = g_list_find (GIMP_LIST (image->vectors)->list, vectors);
+          list = g_list_find (gimp_image_get_vectors_iter (image), vectors);
 
           if (list)
             {

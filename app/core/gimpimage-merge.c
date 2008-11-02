@@ -35,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
@@ -43,7 +44,6 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
@@ -81,7 +81,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
       had_floating_sel = TRUE;
     }
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -151,7 +151,7 @@ gimp_image_flatten (GimpImage   *image,
   if (gimp_image_floating_sel (image))
     floating_sel_anchor (image->floating_sel);
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -186,7 +186,7 @@ gimp_image_merge_down (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  for (list = GIMP_LIST (image->layers)->list, layer_list = NULL;
+  for (list = gimp_image_get_layer_iter (image), layer_list = NULL;
        list && !layer_list;
        list = g_list_next (list))
     {
@@ -236,7 +236,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -584,7 +584,7 @@ gimp_image_merge_layers (GimpImage     *image,
   /*  if the type is flatten, remove all the remaining layers  */
   if (merge_type == GIMP_FLATTEN_IMAGE)
     {
-      list = GIMP_LIST (image->layers)->list;
+      list = gimp_image_get_layer_iter (image);
       while (list)
         {
           layer = list->data;

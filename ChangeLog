@@ -1,5 +1,40 @@
 2008-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch]: add new functions
+	gimp_image_get_layer_iter(), channel_iter() and vectors_iter()
+	which return the GList inside the resp. GimpList.
+
+	* app/actions/channels-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/vectors-actions.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-item-list.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/core/gimpimage.h
+	* app/core/gimpprojection-construct.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/file/file-open.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpdrawtool.c
+	* app/vectors/gimpvectors-compat.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimplayertreeview.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/image.pdb: use the new functions instead of
+	peeking both into the image and the list. Remove inclusions of
+	"gimplist.h" or change them into "gimpcontainer.h" if needed.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2008-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawablestack.[ch]: add "update" signal with the
 	same signature as GimpImage::update(). Install handlers for the
 	drawables' "update" and "visibility-changed" signals and emit

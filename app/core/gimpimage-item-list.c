@@ -27,7 +27,6 @@
 #include "gimpimage-item-list.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
-#include "gimplist.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -172,7 +171,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
 
   if (type & GIMP_ITEM_TYPE_LAYERS)
     {
-      for (list = GIMP_LIST (image->layers)->list;
+      for (list = gimp_image_get_layer_iter (image);
            list;
            list = g_list_next (list))
         {
@@ -185,7 +184,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
 
   if (type & GIMP_ITEM_TYPE_CHANNELS)
     {
-      for (list = GIMP_LIST (image->channels)->list;
+      for (list = gimp_image_get_channel_iter (image);
            list;
            list = g_list_next (list))
         {
@@ -198,7 +197,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
 
   if (type & GIMP_ITEM_TYPE_VECTORS)
     {
-      for (list = GIMP_LIST (image->vectors)->list;
+      for (list = gimp_image_get_vectors_iter (image);
            list;
            list = g_list_next (list))
         {

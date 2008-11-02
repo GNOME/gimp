@@ -36,7 +36,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplist.h"
 #include "gimppickable.h"
 #include "gimpsamplepoint.h"
 
@@ -147,7 +146,7 @@ gimp_image_crop (GimpImage   *image,
                     NULL);
 
       /*  Resize all channels  */
-      for (list = GIMP_LIST (image->channels)->list;
+      for (list = gimp_image_get_channel_iter (image);
            list;
            list = g_list_next (list))
         {
@@ -157,7 +156,7 @@ gimp_image_crop (GimpImage   *image,
         }
 
       /*  Resize all vectors  */
-      for (list = GIMP_LIST (image->vectors)->list;
+      for (list = gimp_image_get_vectors_iter (image);
            list;
            list = g_list_next (list))
         {
@@ -171,7 +170,7 @@ gimp_image_crop (GimpImage   *image,
                         width, height, -x1, -y1);
 
       /*  crop all layers  */
-      list = GIMP_LIST (image->layers)->list;
+      list = gimp_image_get_layer_iter (image);
 
       while (list)
         {

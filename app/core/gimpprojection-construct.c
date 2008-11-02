@@ -34,7 +34,6 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimpprojection.h"
 #include "gimpprojection-construct.h"
 
@@ -214,7 +213,7 @@ gimp_projection_construct_layers (GimpProjection *proj,
 
   reverse_list = NULL;
 
-  for (list = GIMP_LIST (proj->image->layers)->list;
+  for (list = gimp_image_get_layer_iter (proj->image);
        list;
        list = g_list_next (list))
     {
@@ -329,7 +328,7 @@ gimp_projection_construct_channels (GimpProjection *proj,
   GList *reverse_list = NULL;
 
   /*  reverse the channel list  */
-  for (list = GIMP_LIST (proj->image->channels)->list;
+  for (list = gimp_image_get_channel_iter (proj->image);
        list;
        list = g_list_next (list))
     {
@@ -387,7 +386,7 @@ gimp_projection_initialize (GimpProjection *proj,
   GList    *list;
   gboolean  coverage = FALSE;
 
-  for (list = GIMP_LIST (proj->image->layers)->list;
+  for (list = gimp_image_get_layer_iter (proj->image);
        list;
        list = g_list_next (list))
     {

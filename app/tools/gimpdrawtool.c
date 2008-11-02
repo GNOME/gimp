@@ -30,7 +30,6 @@
 #include "base/boundary.h"
 
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpstroke.h"
@@ -1645,7 +1644,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  for (list = GIMP_LIST (display->image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (display->image);
        list;
        list = g_list_next (list))
     {

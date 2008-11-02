@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpguide.h"
@@ -34,7 +35,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplist.h"
 #include "gimpprogress.h"
 #include "gimpsamplepoint.h"
 
@@ -79,9 +79,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_set_busy (image->gimp);
 
-  progress_max = (image->channels->num_children +
-                  image->layers->num_children   +
-                  image->vectors->num_children  +
+  progress_max = (gimp_container_num_children (image->channels) +
+                  gimp_container_num_children (image->layers)   +
+                  gimp_container_num_children (image->vectors)  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -111,7 +111,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
                 NULL);
 
   /*  Resize all channels  */
-  for (list = GIMP_LIST (image->channels)->list;
+  for (list = gimp_image_get_channel_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -125,7 +125,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Resize all vectors  */
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -146,7 +146,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Reposition all layers  */
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -241,7 +241,7 @@ gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
                              GimpProgress *progress)
 {
-  GList    *list = GIMP_LIST (image->layers)->list;
+  GList    *list = gimp_image_get_layer_iter (image);
   GimpItem *item;
   gint      min_x, max_x;
   gint      min_y, max_y;

@@ -35,7 +35,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
-#include "core/gimplist.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsamplepoint.h"
 
@@ -538,7 +537,7 @@ gimp_display_shell_draw_vectors (const GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = GIMP_LIST (shell->display->image->vectors)->list;
+      for (list = gimp_image_get_vectors_iter (shell->display->image);
            list;
            list = list->next)
         {

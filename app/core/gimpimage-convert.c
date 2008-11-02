@@ -145,13 +145,13 @@
 #include "base/tile-manager.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-convert.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
-#include "gimplist.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
@@ -798,7 +798,7 @@ gimp_image_convert (GimpImage               *image,
 
   gimp_set_busy (image->gimp);
 
-  n_layers = g_list_length (GIMP_LIST (image->layers)->list);
+  n_layers = gimp_container_num_children (GIMP_CONTAINER (image->layers));
 
   switch (new_type)
     {
@@ -870,7 +870,7 @@ gimp_image_convert (GimpImage               *image,
           num_found_cols = 0;
 
           /*  Build the histogram  */
-          for (list = GIMP_LIST (image->layers)->list, nth_layer = 0;
+          for (list = gimp_image_get_layer_iter (image), nth_layer = 0;
                list;
                list = g_list_next (list), nth_layer++)
             {
@@ -955,7 +955,7 @@ gimp_image_convert (GimpImage               *image,
   if (quantobj)
     quantobj->n_layers = n_layers;
 
-  for (list = GIMP_LIST (image->layers)->list, nth_layer = 0;
+  for (list = gimp_image_get_layer_iter (image), nth_layer = 0;
        list;
        list = g_list_next (list), nth_layer++)
     {
@@ -1031,7 +1031,7 @@ gimp_image_convert (GimpImage               *image,
                             remap_table, &num_entries);
 
           /*  Convert all layers  */
-          for (list = GIMP_LIST (image->layers)->list;
+          for (list = gimp_image_get_layer_iter (image);
                list;
                list = g_list_next (list))
             {

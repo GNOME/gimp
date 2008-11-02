@@ -30,7 +30,6 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
-#include "core/gimplist.h"
 #include "core/gimpunit.h"
 
 #include "gimpanchor.h"
@@ -150,8 +149,12 @@ gimp_vectors_export (const GimpImage   *image,
     {
       GList *list;
 
-      for (list = GIMP_LIST (image->vectors)->list; list; list = list->next)
-        gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
+      for (list = gimp_image_get_vectors_iter (image);
+           list;
+           list = list->next)
+        {
+          gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
+        }
     }
 
   g_string_append (str, "</svg>\n");

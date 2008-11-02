@@ -26,7 +26,6 @@
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
@@ -132,7 +131,7 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {

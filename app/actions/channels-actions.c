@@ -26,7 +26,6 @@
 #include "actions-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcomponenteditor.h"
@@ -145,7 +144,7 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image    = action_data_get_image (data);
+  GimpImage   *image     = action_data_get_image (data);
   GimpChannel *channel   = NULL;
   gboolean     fs        = FALSE;
   gboolean     component = FALSE;
@@ -169,7 +168,7 @@ channels_actions_update (GimpActionGroup *group,
             {
               GList *list;
 
-              list = g_list_find (GIMP_LIST (image->channels)->list, channel);
+              list = g_list_find (gimp_image_get_channel_iter (image), channel);
 
               if (list)
                 {

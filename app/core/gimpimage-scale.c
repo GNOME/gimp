@@ -25,6 +25,7 @@
 #include "base/tile-manager.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
@@ -34,7 +35,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplist.h"
 #include "gimpprogress.h"
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
@@ -71,9 +71,9 @@ gimp_image_scale (GimpImage             *image,
 
   sub_progress = gimp_sub_progress_new (progress);
 
-  progress_steps = (image->channels->num_children +
-                    image->layers->num_children   +
-                    image->vectors->num_children  +
+  progress_steps = (gimp_container_num_children (image->channels) +
+                    gimp_container_num_children (image->layers)   +
+                    gimp_container_num_children (image->vectors)  +
                     1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -104,7 +104,7 @@ gimp_image_scale (GimpImage             *image,
                 NULL);
 
   /*  Scale all channels  */
-  for (list = GIMP_LIST (image->channels)->list;
+  for (list = gimp_image_get_channel_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -119,7 +119,7 @@ gimp_image_scale (GimpImage             *image,
     }
 
   /*  Scale all vectors  */
-  for (list = GIMP_LIST (image->vectors)->list;
+  for (list = gimp_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -142,7 +142,7 @@ gimp_image_scale (GimpImage             *image,
                    interpolation_type, sub_progress);
 
   /*  Scale all layers  */
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -331,7 +331,7 @@ gimp_image_scale_check (const GimpImage *image,
   if (new_size > current_size && new_size > max_memsize)
     return GIMP_IMAGE_SCALE_TOO_BIG;
 
-  for (list = GIMP_LIST (image->layers)->list;
+  for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {

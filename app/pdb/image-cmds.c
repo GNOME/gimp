@@ -560,7 +560,7 @@ image_get_layers_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GList *list = GIMP_LIST (image->layers)->list;
+      GList *list = gimp_image_get_layer_iter (image);
 
       num_layers = g_list_length (list);
 
@@ -605,7 +605,7 @@ image_get_channels_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GList *list = GIMP_LIST (image->channels)->list;
+      GList *list = gimp_image_get_channel_iter (image);
 
       num_channels = g_list_length (list);
 
@@ -650,7 +650,7 @@ image_get_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GList *list = GIMP_LIST (image->vectors)->list;
+      GList *list = gimp_image_get_vectors_iter (image);
 
       num_vectors = g_list_length (list);
 

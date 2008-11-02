@@ -37,7 +37,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
@@ -876,7 +875,7 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
     {
       GList *list;
 
-      for (list = GIMP_LIST (image->layers)->list;
+      for (list = gimp_image_get_layer_iter (image);
            list;
            list = g_list_next (list))
         {
