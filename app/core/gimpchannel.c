@@ -158,7 +158,7 @@ static void      gimp_channel_set_tiles      (GimpDrawable      *drawable,
                                               GimpImageType      type,
                                               gint               offset_x,
                                               gint               offset_y);
-static GeglNode * gimp_channel_get_node      (GimpDrawable      *drawable);
+static GeglNode * gimp_channel_get_node      (GimpItem          *item);
 static void      gimp_channel_swap_pixels    (GimpDrawable      *drawable,
                                               TileManager       *tiles,
                                               gboolean           sparse,
@@ -263,6 +263,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
   item_class->stroke               = gimp_channel_stroke;
+  item_class->get_node             = gimp_channel_get_node;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
   item_class->translate_desc       = _("Move Channel");
@@ -278,7 +279,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->apply_region          = gimp_channel_apply_region;
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
-  drawable_class->get_node              = gimp_channel_get_node;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 
   klass->boundary       = gimp_channel_real_boundary;
@@ -837,15 +837,16 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
 }
 
 static GeglNode *
-gimp_channel_get_node (GimpDrawable *drawable)
+gimp_channel_get_node (GimpItem *item)
 {
-  GimpChannel *channel = GIMP_CHANNEL (drawable);
-  GeglNode    *node;
-  GeglNode    *source;
-  GeglNode    *mode_node;
-  GeglColor   *color;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GimpChannel  *channel  = GIMP_CHANNEL (item);
+  GeglNode     *node;
+  GeglNode     *source;
+  GeglNode     *mode_node;
+  GeglColor    *color;
 
-  node = GIMP_DRAWABLE_CLASS (parent_class)->get_node (drawable);
+  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);

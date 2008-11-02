@@ -120,7 +120,7 @@ gimp_drawable_stack_remove (GimpContainer *container,
       gimp_drawable_stack_remove_node (stack, GIMP_DRAWABLE (object));
 
       gegl_node_remove_child (stack->graph,
-                              gimp_drawable_get_node (GIMP_DRAWABLE (object)));
+                              gimp_item_get_node (GIMP_ITEM (object)));
     }
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
@@ -185,7 +185,7 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
   for (list = reverse_list; list; list = g_list_next (list))
     {
       GimpDrawable *drawable = list->data;
-      GeglNode     *node     = gimp_drawable_get_node (drawable);
+      GeglNode     *node     = gimp_item_get_node (GIMP_ITEM (drawable));
 
       gegl_node_add_child (stack->graph, node);
 
@@ -219,7 +219,7 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
   GeglNode     *node;
   gint          index;
 
-  node = gimp_drawable_get_node (drawable);
+  node = gimp_item_get_node (GIMP_ITEM (drawable));
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                           GIMP_OBJECT (drawable));
@@ -235,7 +235,7 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
-      node_above = gimp_drawable_get_node (drawable_above);
+      node_above = gimp_item_get_node (GIMP_ITEM (drawable_above));
     }
 
   gegl_node_connect_to (node,       "output",
@@ -246,7 +246,7 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
 
   if (drawable_below)
     {
-      GeglNode *node_below = gimp_drawable_get_node (drawable_below);
+      GeglNode *node_below = gimp_item_get_node (GIMP_ITEM (drawable_below));
 
       gegl_node_connect_to (node_below, "output",
                             node,       "input");
@@ -262,7 +262,7 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
   GeglNode     *node;
   gint          index;
 
-  node = gimp_drawable_get_node (drawable);
+  node = gimp_item_get_node (GIMP_ITEM (drawable));
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                           GIMP_OBJECT (drawable));
@@ -278,7 +278,7 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
-      node_above = gimp_drawable_get_node (drawable_above);
+      node_above = gimp_item_get_node (GIMP_ITEM (drawable_above));
     }
 
   drawable_below = (GimpDrawable *)
@@ -286,7 +286,7 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
 
   if (drawable_below)
     {
-      GeglNode *node_below = gimp_drawable_get_node (drawable_below);
+      GeglNode *node_below = gimp_item_get_node (GIMP_ITEM (drawable_below));
 
       gegl_node_disconnect (node,       "input");
       gegl_node_connect_to (node_below, "output",

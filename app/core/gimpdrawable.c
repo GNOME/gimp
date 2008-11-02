@@ -138,7 +138,7 @@ static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
                                                     GimpImageType      type,
                                                     gint               offset_x,
                                                     gint               offset_y);
-static GeglNode * gimp_drawable_real_get_node      (GimpDrawable      *drawable);
+static GeglNode * gimp_drawable_get_node           (GimpItem          *item);
 
 static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
@@ -213,6 +213,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->flip                   = gimp_drawable_flip;
   item_class->rotate                 = gimp_drawable_rotate;
   item_class->transform              = gimp_drawable_transform;
+  item_class->get_node               = gimp_drawable_get_node;
 
   klass->update                      = gimp_drawable_real_update;
   klass->alpha_changed               = NULL;
@@ -223,7 +224,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->replace_region              = gimp_drawable_real_replace_region;
   klass->get_tiles                   = gimp_drawable_real_get_tiles;
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
-  klass->get_node                    = gimp_drawable_real_get_node;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
 }
@@ -269,12 +269,6 @@ gimp_drawable_finalize (GObject *object)
     {
       g_object_unref (drawable->source_node);
       drawable->source_node = NULL;
-    }
-
-  if (drawable->node)
-    {
-      g_object_unref (drawable->node);
-      drawable->node = NULL;
     }
 
   if (drawable->preview_cache)
@@ -342,14 +336,15 @@ static void
 gimp_drawable_visibility_changed (GimpItem *item)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GeglNode     *node     = gimp_item_get_node (item);
 
-  if (drawable->node)
+  if (node)
     {
       GeglNode *input;
       GeglNode *output;
 
-      input  = gegl_node_get_input_proxy  (drawable->node, "input");
-      output = gegl_node_get_output_proxy (drawable->node, "output");
+      input  = gegl_node_get_input_proxy  (node, "input");
+      output = gegl_node_get_output_proxy (node, "output");
 
       if (gimp_item_get_visible (item))
         {
@@ -361,9 +356,6 @@ gimp_drawable_visibility_changed (GimpItem *item)
       else
         {
           gegl_node_disconnect (drawable->mode_node, "input");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
         }
     }
 
@@ -778,19 +770,21 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 }
 
 static GeglNode *
-gimp_drawable_real_get_node (GimpDrawable *drawable)
+gimp_drawable_get_node (GimpItem *item)
 {
-  GeglNode  *input;
-  GeglNode  *output;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GeglNode     *node;
+  GeglNode     *input;
+  GeglNode     *output;
 
-  drawable->node = gegl_node_new ();
+  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
-  drawable->mode_node = gegl_node_new_child (drawable->node,
+  drawable->mode_node = gegl_node_new_child (node,
                                              "operation", "gegl:normal",
                                              NULL);
 
-  input  = gegl_node_get_input_proxy  (drawable->node, "input");
-  output = gegl_node_get_output_proxy (drawable->node, "output");
+  input  = gegl_node_get_input_proxy  (node, "input");
+  output = gegl_node_get_output_proxy (node, "output");
 
   if (gimp_item_get_visible (GIMP_ITEM (drawable)))
     {
@@ -805,7 +799,7 @@ gimp_drawable_real_get_node (GimpDrawable *drawable)
                             output, "input");
     }
 
-  return drawable->node;
+  return node;
 }
 
 static void
@@ -1141,23 +1135,12 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 }
 
 GeglNode *
-gimp_drawable_get_node (GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  if (drawable->node)
-    return drawable->node;
-
-  return GIMP_DRAWABLE_GET_CLASS (drawable)->get_node (drawable);
-}
-
-GeglNode *
 gimp_drawable_get_mode_node (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (! drawable->mode_node)
-    gimp_drawable_get_node (drawable);
+    gimp_drawable_get_node (GIMP_ITEM (drawable));
 
   return drawable->mode_node;
 }

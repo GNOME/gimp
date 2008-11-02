@@ -165,7 +165,7 @@ static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
                                                  GimpImageType       type,
                                                  gint                offset_x,
                                                  gint                offset_y);
-static GeglNode * gimp_layer_get_node           (GimpDrawable       *drawable);
+static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -262,6 +262,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->flip                    = gimp_layer_flip;
   item_class->rotate                  = gimp_layer_rotate;
   item_class->transform               = gimp_layer_transform;
+  item_class->get_node                = gimp_layer_get_node;
   item_class->default_name            = _("Layer");
   item_class->rename_desc             = _("Rename Layer");
   item_class->translate_desc          = _("Move Layer");
@@ -275,7 +276,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
-  drawable_class->get_node              = gimp_layer_get_node;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -509,15 +509,16 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
 }
 
 static GeglNode *
-gimp_layer_get_node (GimpDrawable *drawable)
+gimp_layer_get_node (GimpItem *item)
 {
-  GimpLayer *layer = GIMP_LAYER (drawable);
-  GeglNode  *node;
-  GeglNode  *source;
-  GeglNode  *mode_node;
-  gint       off_x, off_y;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GimpLayer    *layer    = GIMP_LAYER (item);
+  GeglNode     *node;
+  GeglNode     *source;
+  GeglNode     *mode_node;
+  gint          off_x, off_y;
 
-  node = GIMP_DRAWABLE_CLASS (parent_class)->get_node (drawable);
+  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
@@ -1379,7 +1380,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
       GeglNode *source;
       GeglNode *mask;
 
-      node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
+      node = gimp_item_get_node (GIMP_ITEM (layer));
 
       layer->mask_node = gegl_node_new_child (node,
                                               "operation", "gegl:opacity",
@@ -1726,7 +1727,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       GeglNode *node;
       GeglNode *source;
 
-      node = gimp_drawable_get_node (GIMP_DRAWABLE (layer));
+      node = gimp_item_get_node (GIMP_ITEM (layer));
 
       gegl_node_disconnect (layer->mask_node, "input");
       gegl_node_disconnect (layer->mask_node, "aux");

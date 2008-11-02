@@ -77,6 +77,9 @@ static void       gimp_item_finalize          (GObject       *object);
 static gint64     gimp_item_get_memsize       (GimpObject    *object,
                                                gint64        *gui_size);
 
+static void       gimp_item_real_visibility_changed
+                                              (GimpItem      *item);
+
 static GimpItem * gimp_item_real_duplicate    (GimpItem      *item,
                                                GType          new_type);
 static void       gimp_item_real_convert      (GimpItem      *item,
@@ -102,6 +105,7 @@ static void       gimp_item_real_resize       (GimpItem      *item,
                                                gint           new_height,
                                                gint           offset_x,
                                                gint           offset_y);
+static GeglNode * gimp_item_real_get_node     (GimpItem      *item);
 
 
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
@@ -155,7 +159,7 @@ gimp_item_class_init (GimpItemClass *klass)
   viewable_class->get_popup_size   = gimp_item_get_popup_size;
 
   klass->removed                   = NULL;
-  klass->visibility_changed        = NULL;
+  klass->visibility_changed        = gimp_item_real_visibility_changed;
   klass->linked_changed            = NULL;
 
   klass->is_attached               = NULL;
@@ -169,6 +173,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->rotate                    = NULL;
   klass->transform                 = NULL;
   klass->stroke                    = NULL;
+  klass->get_node                  = gimp_item_real_get_node;
 
   klass->default_name              = NULL;
   klass->rename_desc               = NULL;
@@ -211,6 +216,7 @@ gimp_item_init (GimpItem *item)
   item->visible   = TRUE;
   item->linked    = FALSE;
   item->removed   = FALSE;
+  item->node      = NULL;
 }
 
 static void
@@ -257,6 +263,12 @@ gimp_item_finalize (GObject *object)
 {
   GimpItem *item = GIMP_ITEM (object);
 
+  if (item->node)
+    {
+      g_object_unref (item->node);
+      item->node = NULL;
+    }
+
   if (item->image && item->image->gimp)
     {
       g_hash_table_remove (item->image->gimp->item_table,
@@ -284,6 +296,29 @@ gimp_item_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_item_real_visibility_changed (GimpItem *item)
+{
+  if (! item->node)
+    return;
+
+  if (gimp_item_get_visible (item))
+    {
+      /* Leave this up to subclasses */
+    }
+  else
+    {
+      GeglNode *input;
+      GeglNode *output;
+
+      input  = gegl_node_get_input_proxy  (item->node, "input");
+      output = gegl_node_get_output_proxy (item->node, "output");
+
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
 }
 
 static GimpItem *
@@ -408,6 +443,14 @@ gimp_item_real_resize (GimpItem    *item,
 
   g_object_notify (G_OBJECT (item), "width");
   g_object_notify (G_OBJECT (item), "height");
+}
+
+static GeglNode *
+gimp_item_real_get_node (GimpItem *item)
+{
+  item->node = gegl_node_new ();
+
+  return item->node;
 }
 
 /**
@@ -1047,6 +1090,17 @@ gimp_item_stroke (GimpItem          *item,
     }
 
   return retval;
+}
+
+GeglNode *
+gimp_item_get_node (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  if (item->node)
+    return item->node;
+
+  return GIMP_ITEM_GET_CLASS (item)->get_node (item);
 }
 
 gint

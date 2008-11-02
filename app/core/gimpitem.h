@@ -51,6 +51,9 @@ struct _GimpItem
   gboolean          linked;             /*  control linkage          */
 
   gboolean          removed;            /*  removed from the image?  */
+
+  GeglNode         *node;               /*  the GEGL node to plug
+                                            into the graph           */
 };
 
 struct _GimpItemClass
@@ -114,6 +117,8 @@ struct _GimpItemClass
                                gboolean                push_undo,
                                GimpProgress           *progress,
                                GError                **error);
+  GeglNode * (* get_node)     (GimpItem               *item);
+
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -219,6 +224,9 @@ gboolean        gimp_item_stroke           (GimpItem           *item,
                                             gboolean            push_undo,
                                             GimpProgress       *progress,
                                             GError            **error);
+
+GeglNode      * gimp_item_get_node         (GimpItem           *item);
+
 
 gint            gimp_item_get_ID           (GimpItem           *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp               *gimp,
