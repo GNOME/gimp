@@ -514,9 +514,9 @@ gimp_layer_get_node (GimpItem *item)
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GimpLayer    *layer    = GIMP_LAYER (item);
   GeglNode     *node;
+  GeglNode     *offset_node;
   GeglNode     *source;
   GeglNode     *mode_node;
-  gint          off_x, off_y;
 
   node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
@@ -540,15 +540,10 @@ gimp_layer_get_node (GimpItem *item)
                             layer->opacity_node, "aux");
     }
 
-  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
-  layer->shift_node = gegl_node_new_child (node,
-                                           "operation", "gegl:shift",
-                                           "x",         (gdouble) off_x,
-                                           "y",         (gdouble) off_y,
-                                           NULL);
+  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
 
   gegl_node_connect_to (layer->opacity_node, "output",
-                        layer->shift_node,   "input");
+                        offset_node,         "input");
 
   mode_node = gimp_drawable_get_mode_node (drawable);
 
@@ -557,8 +552,8 @@ gimp_layer_get_node (GimpItem *item)
                  "blend-mode", layer->mode,
                  NULL);
 
-  gegl_node_connect_to (layer->shift_node, "output",
-                        mode_node,         "aux");
+  gegl_node_connect_to (offset_node, "output",
+                        mode_node,   "aux");
 
   return node;
 }
@@ -764,12 +759,6 @@ gimp_layer_translate (GimpItem *item,
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, FALSE);
-
-  if (layer->shift_node)
-    gegl_node_set (layer->shift_node,
-                   "x", (gdouble) item->offset_x,
-                   "y", (gdouble) item->offset_y,
-                   NULL);
 
   /*  update the new region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1992,7 +1981,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
 
-      if (layer->shift_node)
+      if (layer->opacity_node)
         {
           GeglNode *mode_node;
 

@@ -205,18 +205,19 @@ gimp_item_init (GimpItem *item)
 {
   g_object_force_floating (G_OBJECT (item));
 
-  item->ID        = 0;
-  item->tattoo    = 0;
-  item->image     = NULL;
-  item->parasites = gimp_parasite_list_new ();
-  item->width     = 0;
-  item->height    = 0;
-  item->offset_x  = 0;
-  item->offset_y  = 0;
-  item->visible   = TRUE;
-  item->linked    = FALSE;
-  item->removed   = FALSE;
-  item->node      = NULL;
+  item->ID          = 0;
+  item->tattoo      = 0;
+  item->image       = NULL;
+  item->parasites   = gimp_parasite_list_new ();
+  item->width       = 0;
+  item->height      = 0;
+  item->offset_x    = 0;
+  item->offset_y    = 0;
+  item->visible     = TRUE;
+  item->linked      = FALSE;
+  item->removed     = FALSE;
+  item->node        = NULL;
+  item->offset_node = NULL;
 }
 
 static void
@@ -408,6 +409,12 @@ gimp_item_real_translate (GimpItem *item,
 {
   item->offset_x += offset_x;
   item->offset_y += offset_y;
+
+  if (item->offset_node)
+    gegl_node_set (item->offset_node,
+                   "x", (gdouble) item->offset_x,
+                   "y", (gdouble) item->offset_y,
+                   NULL);
 }
 
 static void
@@ -450,6 +457,11 @@ gimp_item_real_get_node (GimpItem *item)
 {
   item->node = gegl_node_new ();
 
+  item->offset_node = gegl_node_new_child (item->node,
+                                           "operation", "gegl:shift",
+                                           "x",         (gdouble) item->offset_x,
+                                           "y",         (gdouble) item->offset_y,
+                                           NULL);
   return item->node;
 }
 
@@ -1101,6 +1113,17 @@ gimp_item_get_node (GimpItem *item)
     return item->node;
 
   return GIMP_ITEM_GET_CLASS (item)->get_node (item);
+}
+
+GeglNode *
+gimp_item_get_offset_node (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  if (! item->offset_node)
+    gimp_item_get_node (item);
+
+  return item->offset_node;
 }
 
 gint

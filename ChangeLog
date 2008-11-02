@@ -1,3 +1,15 @@
+2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpitem.[ch]: Moved the shift_node from GimpLayer to
+	GimpItem, and call it offset_node. Also added
+	gimp_item_get_offset_node() meant to be used in the same way as
+	gimp_item_offsets().
+
+	(gimp_item_real_translate): Keep the offset_node up to date.
+
+	* app/core/gimplayer.[ch]: Don't manage the offset_node, get it
+	from GimpItem instead.
+
 2008-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: add new functions gimp_get_image_iter(),

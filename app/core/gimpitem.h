@@ -54,6 +54,7 @@ struct _GimpItem
 
   GeglNode         *node;               /*  the GEGL node to plug
                                             into the graph           */
+  GeglNode         *offset_node;        /*  the offset as a node     */
 };
 
 struct _GimpItemClass
@@ -226,6 +227,7 @@ gboolean        gimp_item_stroke           (GimpItem           *item,
                                             GError            **error);
 
 GeglNode      * gimp_item_get_node         (GimpItem           *item);
+GeglNode      * gimp_item_get_offset_node  (GimpItem           *item);
 
 
 gint            gimp_item_get_ID           (GimpItem           *item);
