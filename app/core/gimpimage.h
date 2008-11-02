@@ -138,11 +138,7 @@ struct _GimpImage
   GimpContainer     *vectors;               /*  the list of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
-  GQuark             layer_update_handler;
-  GQuark             layer_visible_handler;
   GQuark             layer_alpha_handler;
-  GQuark             channel_update_handler;
-  GQuark             channel_visible_handler;
   GQuark             channel_name_changed_handler;
   GQuark             channel_color_changed_handler;
 

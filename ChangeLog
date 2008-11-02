@@ -1,5 +1,18 @@
 2008-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawablestack.[ch]: add "update" signal with the
+	same signature as GimpImage::update(). Install handlers for the
+	drawables' "update" and "visibility-changed" signals and emit
+	"update" accordingly, item offsets taken into account. Also emit
+	"update" when drawables are added, removed and reordered.
+
+	* app/core/gimpimage.[ch]: remove handlers and tons of code that
+	makes sure the image emits "update" on any of the above handled
+	events and simply connect the layer and channel stacks' "update"
+	signal to gimp_image_update().
+
+2008-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.[ch]: remove the mask_node and simply set
 	both opacity and the layer mask's source node on the opacity_node.
 	Needs latest SVN GEGL.

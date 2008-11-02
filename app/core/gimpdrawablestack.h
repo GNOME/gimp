@@ -44,6 +44,12 @@ struct _GimpDrawableStack
 struct _GimpDrawableStackClass
 {
   GimpListClass  parent_class;
+
+  void (* update) (GimpDrawableStack *stack,
+                   gint               x,
+                   gint               y,
+                   gint               width,
+                   gint               height);
 };
 
 

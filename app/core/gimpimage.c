@@ -131,74 +131,60 @@ GeglNode * gegl_node_add_child (GeglNode *self,
 
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 
-static GObject *gimp_image_constructor           (GType           type,
-                                                  guint           n_params,
+static GObject *gimp_image_constructor           (GType              type,
+                                                  guint              n_params,
                                                   GObjectConstructParam *params);
-static void     gimp_image_set_property          (GObject        *object,
-                                                  guint           property_id,
-                                                  const GValue   *value,
-                                                  GParamSpec     *pspec);
-static void     gimp_image_get_property          (GObject        *object,
-                                                  guint           property_id,
-                                                  GValue         *value,
-                                                  GParamSpec     *pspec);
-static void     gimp_image_dispose               (GObject        *object);
-static void     gimp_image_finalize              (GObject        *object);
+static void     gimp_image_set_property          (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
+static void     gimp_image_get_property          (GObject           *object,
+                                                  guint              property_id,
+                                                  GValue            *value,
+                                                  GParamSpec        *pspec);
+static void     gimp_image_dispose               (GObject           *object);
+static void     gimp_image_finalize              (GObject           *object);
 
-static void     gimp_image_name_changed          (GimpObject     *object);
-static gint64   gimp_image_get_memsize           (GimpObject     *object,
-                                                  gint64         *gui_size);
+static void     gimp_image_name_changed          (GimpObject        *object);
+static gint64   gimp_image_get_memsize           (GimpObject        *object,
+                                                  gint64            *gui_size);
 
-static gboolean gimp_image_get_size              (GimpViewable   *viewable,
-                                                  gint           *width,
-                                                  gint           *height);
-static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
-static void     gimp_image_size_changed          (GimpViewable   *viewable);
-static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
-                                                  gchar         **tooltip);
+static gboolean gimp_image_get_size              (GimpViewable      *viewable,
+                                                  gint              *width,
+                                                  gint              *height);
+static void     gimp_image_invalidate_preview    (GimpViewable      *viewable);
+static void     gimp_image_size_changed          (GimpViewable      *viewable);
+static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
+                                                  gchar            **tooltip);
 static void     gimp_image_real_size_changed_detailed
-                                                 (GimpImage      *image,
-                                                  gint            previous_origin_x,
-                                                  gint            previous_origin_y,
-                                                  gint            previous_width,
-                                                  gint            previous_height);
-static void     gimp_image_real_colormap_changed (GimpImage      *image,
-                                                  gint            color_index);
-static void     gimp_image_real_flush            (GimpImage      *image,
-                                                  gboolean        invalidate_preview);
+                                                 (GimpImage         *image,
+                                                  gint               previous_origin_x,
+                                                  gint               previous_origin_y,
+                                                  gint               previous_width,
+                                                  gint               previous_height);
+static void     gimp_image_real_colormap_changed (GimpImage         *image,
+                                                  gint               color_index);
+static void     gimp_image_real_flush            (GimpImage         *image,
+                                                  gboolean           invalidate_preview);
 
-static void     gimp_image_mask_update           (GimpDrawable   *drawable,
-                                                  gint            x,
-                                                  gint            y,
-                                                  gint            width,
-                                                  gint            height,
-                                                  GimpImage      *image);
-static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
-                                                  gint            x,
-                                                  gint            y,
-                                                  gint            width,
-                                                  gint            height,
-                                                  GimpImage      *image);
-static void     gimp_image_drawable_visibility   (GimpItem       *item,
-                                                  GimpImage      *image);
-static void     gimp_image_layer_alpha_changed   (GimpDrawable   *drawable,
-                                                  GimpImage      *image);
-static void     gimp_image_layer_add             (GimpContainer  *container,
-                                                  GimpLayer      *layer,
-                                                  GimpImage      *image);
-static void     gimp_image_layer_remove          (GimpContainer  *container,
-                                                  GimpLayer      *layer,
-                                                  GimpImage      *image);
-static void     gimp_image_channel_add           (GimpContainer  *container,
-                                                  GimpChannel    *channel,
-                                                  GimpImage      *image);
-static void     gimp_image_channel_remove        (GimpContainer  *container,
-                                                  GimpChannel    *channel,
-                                                  GimpImage      *image);
-static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
-                                                  GimpImage      *image);
-static void     gimp_image_channel_color_changed (GimpChannel    *channel,
-                                                  GimpImage      *image);
+static void     gimp_image_mask_update           (GimpDrawable      *drawable,
+                                                  gint               x,
+                                                  gint               y,
+                                                  gint               width,
+                                                  gint               height,
+                                                  GimpImage         *image);
+static void     gimp_image_layer_alpha_changed   (GimpDrawable      *drawable,
+                                                  GimpImage         *image);
+static void     gimp_image_channel_add           (GimpContainer     *container,
+                                                  GimpChannel       *channel,
+                                                  GimpImage         *image);
+static void     gimp_image_channel_remove        (GimpContainer     *container,
+                                                  GimpChannel       *channel,
+                                                  GimpImage         *image);
+static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
+                                                  GimpImage         *image);
+static void     gimp_image_channel_color_changed (GimpChannel       *channel,
+                                                  GimpImage         *image);
 
 static const guint8 * gimp_image_get_icc_profile (GimpColorManaged *managed,
                                                   gsize            *len);
@@ -631,27 +617,19 @@ gimp_image_init (GimpImage *image)
   image->vectors               = gimp_list_new (GIMP_TYPE_VECTORS, TRUE);
   image->layer_stack           = NULL;
 
-  image->layer_update_handler =
-    gimp_container_add_handler (image->layers, "update",
-                                G_CALLBACK (gimp_image_drawable_update),
-                                image);
-  image->layer_visible_handler =
-    gimp_container_add_handler (image->layers, "visibility-changed",
-                                G_CALLBACK (gimp_image_drawable_visibility),
-                                image);
+  g_signal_connect_swapped (image->layers, "update",
+                            G_CALLBACK (gimp_image_update),
+                            image);
+
   image->layer_alpha_handler =
     gimp_container_add_handler (image->layers, "alpha-changed",
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
                                 image);
 
-  image->channel_update_handler =
-    gimp_container_add_handler (image->channels, "update",
-                                G_CALLBACK (gimp_image_drawable_update),
-                                image);
-  image->channel_visible_handler =
-    gimp_container_add_handler (image->channels, "visibility-changed",
-                                G_CALLBACK (gimp_image_drawable_visibility),
-                                image);
+  g_signal_connect_swapped (image->channels, "update",
+                            G_CALLBACK (gimp_image_update),
+                            image);
+
   image->channel_name_changed_handler =
     gimp_container_add_handler (image->channels, "name-changed",
                                 G_CALLBACK (gimp_image_channel_name_changed),
@@ -660,13 +638,6 @@ gimp_image_init (GimpImage *image)
     gimp_container_add_handler (image->channels, "color-changed",
                                 G_CALLBACK (gimp_image_channel_color_changed),
                                 image);
-
-  g_signal_connect (image->layers, "add",
-                    G_CALLBACK (gimp_image_layer_add),
-                    image);
-  g_signal_connect (image->layers, "remove",
-                    G_CALLBACK (gimp_image_layer_remove),
-                    image);
 
   g_signal_connect (image->channels, "add",
                     G_CALLBACK (gimp_image_channel_add),
@@ -851,28 +822,21 @@ gimp_image_dispose (GObject *object)
 
   gimp_image_undo_free (image);
 
-  gimp_container_remove_handler (image->layers,
-                                 image->layer_update_handler);
-  gimp_container_remove_handler (image->layers,
-                                 image->layer_visible_handler);
+  g_signal_handlers_disconnect_by_func (image->layers,
+                                        gimp_image_update,
+                                        image);
+
   gimp_container_remove_handler (image->layers,
                                  image->layer_alpha_handler);
 
-  gimp_container_remove_handler (image->channels,
-                                 image->channel_update_handler);
-  gimp_container_remove_handler (image->channels,
-                                 image->channel_visible_handler);
+  g_signal_handlers_disconnect_by_func (image->channels,
+                                        gimp_image_update,
+                                        image);
+
   gimp_container_remove_handler (image->channels,
                                  image->channel_name_changed_handler);
   gimp_container_remove_handler (image->channels,
                                  image->channel_color_changed_handler);
-
-  g_signal_handlers_disconnect_by_func (image->layers,
-                                        gimp_image_layer_add,
-                                        image);
-  g_signal_handlers_disconnect_by_func (image->layers,
-                                        gimp_image_layer_remove,
-                                        image);
 
   g_signal_handlers_disconnect_by_func (image->channels,
                                         gimp_image_channel_add,
@@ -1206,42 +1170,6 @@ gimp_image_mask_update (GimpDrawable *drawable,
 }
 
 static void
-gimp_image_drawable_update (GimpDrawable *drawable,
-                            gint          x,
-                            gint          y,
-                            gint          width,
-                            gint          height,
-                            GimpImage    *image)
-{
-  GimpItem *item = GIMP_ITEM (drawable);
-
-  if (gimp_item_get_visible (item))
-    {
-      gint offset_x;
-      gint offset_y;
-
-      gimp_item_offsets (item, &offset_x, &offset_y);
-
-      gimp_image_update (image, x + offset_x, y + offset_y, width, height);
-    }
-}
-
-static void
-gimp_image_drawable_visibility (GimpItem  *item,
-                                GimpImage *image)
-{
-  gint offset_x;
-  gint offset_y;
-
-  gimp_item_offsets (item, &offset_x, &offset_y);
-
-  gimp_image_update (image,
-                     offset_x, offset_y,
-                     gimp_item_width (item),
-                     gimp_item_height (item));
-}
-
-static void
 gimp_image_layer_alpha_changed (GimpDrawable *drawable,
                                 GimpImage    *image)
 {
@@ -1250,37 +1178,10 @@ gimp_image_layer_alpha_changed (GimpDrawable *drawable,
 }
 
 static void
-gimp_image_layer_add (GimpContainer *container,
-                      GimpLayer     *layer,
-                      GimpImage     *image)
-{
-  GimpItem *item = GIMP_ITEM (layer);
-
-  if (gimp_item_get_visible (item))
-    gimp_image_drawable_visibility (item, image);
-}
-
-static void
-gimp_image_layer_remove (GimpContainer *container,
-                         GimpLayer     *layer,
-                         GimpImage     *image)
-{
-  GimpItem *item = GIMP_ITEM (layer);
-
-  if (gimp_item_get_visible (item))
-    gimp_image_drawable_visibility (item, image);
-}
-
-static void
 gimp_image_channel_add (GimpContainer *container,
                         GimpChannel   *channel,
                         GimpImage     *image)
 {
-  GimpItem *item = GIMP_ITEM (channel);
-
-  if (gimp_item_get_visible (item))
-    gimp_image_drawable_visibility (item, image);
-
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
@@ -1293,11 +1194,6 @@ gimp_image_channel_remove (GimpContainer *container,
                            GimpChannel   *channel,
                            GimpImage     *image)
 {
-  GimpItem *item = GIMP_ITEM (channel);
-
-  if (gimp_item_get_visible (item))
-    gimp_image_drawable_visibility (item, image);
-
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (GIMP_OBJECT (channel))))
     {
@@ -3278,18 +3174,6 @@ gimp_image_position_layer (GimpImage   *image,
 
   gimp_container_reorder (image->layers, GIMP_OBJECT (layer), new_index);
 
-  if (gimp_item_get_visible (GIMP_ITEM (layer)))
-    {
-      gint off_x, off_y;
-
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
-
-      gimp_image_update (image,
-                         off_x, off_y,
-                         gimp_item_width  (GIMP_ITEM (layer)),
-                         gimp_item_height (GIMP_ITEM (layer)));
-    }
-
   return TRUE;
 }
 
@@ -3520,20 +3404,7 @@ gimp_image_position_channel (GimpImage   *image,
   if (push_undo)
     gimp_image_undo_push_channel_reposition (image, undo_desc, channel);
 
-  gimp_container_reorder (image->channels,
-                          GIMP_OBJECT (channel), new_index);
-
-  if (gimp_item_get_visible (GIMP_ITEM (channel)))
-    {
-      gint off_x, off_y;
-
-      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
-
-      gimp_image_update (image,
-                         off_x, off_y,
-                         gimp_item_width  (GIMP_ITEM (channel)),
-                         gimp_item_height (GIMP_ITEM (channel)));
-    }
+  gimp_container_reorder (image->channels, GIMP_OBJECT (channel), new_index);
 
   return TRUE;
 }
@@ -3740,8 +3611,7 @@ gimp_image_position_vectors (GimpImage   *image,
   if (push_undo)
     gimp_image_undo_push_vectors_reposition (image, undo_desc, vectors);
 
-  gimp_container_reorder (image->vectors,
-                          GIMP_OBJECT (vectors), new_index);
+  gimp_container_reorder (image->vectors, GIMP_OBJECT (vectors), new_index);
 
   return TRUE;
 }
