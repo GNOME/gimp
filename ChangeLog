@@ -17,7 +17,6 @@
 	* app/core/gimpimage-rotate.c
 	* app/core/gimpimage-scale.c
 	* app/core/gimpimage.c
-	* app/core/gimpimage.h
 	* app/core/gimpprojection-construct.c
 	* app/display/gimpdisplayshell-draw.c
 	* app/file/file-open.c
