@@ -1,5 +1,15 @@
 2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimpitem.c (gimp_item_set_offsets): New function that
+	sets the offset of the item and also keeps the offset_node in
+	sync.
+
+	* app/core/gimpdrawable.c (gimp_drawable_real_set_tiles): Use the
+	function instead of setting the offsets directly. Fixes corrupted
+	display when cropping images with GEGL enabled for the projection.
+
+2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpitem.[ch]: Moved the shift_node from GimpLayer to
 	GimpItem, and call it offset_node. Also added
 	gimp_item_get_offset_node() meant to be used in the same way as

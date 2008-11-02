@@ -106,6 +106,7 @@ static void       gimp_item_real_resize       (GimpItem      *item,
                                                gint           offset_x,
                                                gint           offset_y);
 static GeglNode * gimp_item_real_get_node     (GimpItem      *item);
+static void       gimp_item_sync_offset_node  (GimpItem      *item);
 
 
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
@@ -410,11 +411,7 @@ gimp_item_real_translate (GimpItem *item,
   item->offset_x += offset_x;
   item->offset_y += offset_y;
 
-  if (item->offset_node)
-    gegl_node_set (item->offset_node,
-                   "x", (gdouble) item->offset_x,
-                   "y", (gdouble) item->offset_y,
-                   NULL);
+  gimp_item_sync_offset_node (item);
 }
 
 static void
@@ -463,6 +460,16 @@ gimp_item_real_get_node (GimpItem *item)
                                            "y",         (gdouble) item->offset_y,
                                            NULL);
   return item->node;
+}
+
+static void
+gimp_item_sync_offset_node (GimpItem *item)
+{
+  if (item->offset_node)
+    gegl_node_set (item->offset_node,
+                   "x", (gdouble) item->offset_x,
+                   "y", (gdouble) item->offset_y,
+                   NULL);
 }
 
 /**
@@ -702,6 +709,19 @@ gimp_item_offsets (const GimpItem *item,
 
   if (offset_x) *offset_x = item->offset_x;
   if (offset_y) *offset_y = item->offset_y;
+}
+
+void
+gimp_item_set_offsets (GimpItem *item,
+                       gint      offset_x,
+                       gint      offset_y)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item->offset_x = offset_x;
+  item->offset_y = offset_y;
+
+  gimp_item_sync_offset_node (item);
 }
 
 /**

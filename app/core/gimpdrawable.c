@@ -748,8 +748,7 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->bytes     = tile_manager_bpp (tiles);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
-  item->offset_x = offset_x;
-  item->offset_y = offset_y;
+  gimp_item_set_offsets (item, offset_x, offset_y);
 
   if (gimp_item_width  (item) != tile_manager_width (tiles) ||
       gimp_item_height (item) != tile_manager_height (tiles))

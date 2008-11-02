@@ -162,6 +162,9 @@ gint            gimp_item_height           (const GimpItem     *item);
 void            gimp_item_offsets          (const GimpItem     *item,
                                             gint               *offset_x,
                                             gint               *offset_y);
+void            gimp_item_set_offsets      (GimpItem           *item,
+                                            gint                offset_x,
+                                            gint                offset_y);
 
 void            gimp_item_translate        (GimpItem           *item,
                                             gint                offset_x,
