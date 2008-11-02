@@ -1,3 +1,9 @@
+2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpitem.c: Instantiate offset_node on-demand.
+
+	* app/core/gimpdrawable.c: Use gimp_item_set_offset().
+
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: renamed
@@ -31,8 +37,8 @@
 
 2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/core/gimpitem.c (gimp_item_set_offsets): New function that
-	sets the offset of the item and also keeps the offset_node in
+	* app/core/gimpitem.[ch] (gimp_item_set_offsets): New function
+	that sets the offset of the item and also keeps the offset_node in
 	sync.
 
 	* app/core/gimpdrawable.c (gimp_drawable_real_set_tiles): Use the

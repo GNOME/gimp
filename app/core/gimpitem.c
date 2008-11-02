@@ -454,11 +454,6 @@ gimp_item_real_get_node (GimpItem *item)
 {
   item->node = gegl_node_new ();
 
-  item->offset_node = gegl_node_new_child (item->node,
-                                           "operation", "gegl:shift",
-                                           "x",         (gdouble) item->offset_x,
-                                           "y",         (gdouble) item->offset_y,
-                                           NULL);
   return item->node;
 }
 
@@ -693,7 +688,7 @@ gimp_item_height (const GimpItem *item)
 }
 
 /**
- * gimp_item_get_offsets:
+ * gimp_item_get_offset:
  * @item:     The #GimpItem to check.
  * @offset_x: Return location for the item's X offset.
  * @offset_y: Return location for the item's Y offset.
@@ -1141,7 +1136,15 @@ gimp_item_get_offset_node (GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
   if (! item->offset_node)
-    gimp_item_get_node (item);
+    {
+      GeglNode *node = gimp_item_get_node (item);
+
+      item->offset_node = gegl_node_new_child (node,
+                                               "operation", "gegl:shift",
+                                               "x",         (gdouble) item->offset_x,
+                                               "y",         (gdouble) item->offset_y,
+                                               NULL);
+    }
 
   return item->offset_node;
 }
