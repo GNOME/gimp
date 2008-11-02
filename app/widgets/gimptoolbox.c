@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "file/file-open.h"
@@ -362,7 +361,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
       gtk_widget_size_request (tool_button, &button_requisition);
 
-      for (list = GIMP_LIST (gimp->tool_info_list)->list, n_tools = 0;
+      for (list = gimp_get_tool_info_iter (gimp), n_tools = 0;
            list;
            list = list->next)
         {
@@ -453,7 +452,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
                         "button-relief",  &relief,
                         NULL);
 
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -681,7 +680,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
   active_tool = gimp_context_get_tool (context);
 
-  for (list = GIMP_LIST (context->gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (context->gimp);
        list;
        list = g_list_next (list))
     {

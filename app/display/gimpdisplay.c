@@ -30,8 +30,8 @@
 
 #include "core/gimp.h"
 #include "core/gimparea.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 #include "core/gimpprogress.h"
 
 #include "tools/gimptool.h"
@@ -479,7 +479,7 @@ gimp_display_get_by_ID (Gimp *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {

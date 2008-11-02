@@ -107,7 +107,7 @@ windows_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (windows_actions_display_remove),
                            group, 0);
 
-  for (list = GIMP_LIST (group->gimp->displays)->list;
+  for (list = gimp_get_display_iter (group->gimp);
        list;
        list = g_list_next (list))
     {

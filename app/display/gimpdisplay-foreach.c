@@ -24,9 +24,9 @@
 #include "display-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
@@ -41,7 +41,7 @@ gimp_displays_dirty (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -124,7 +124,7 @@ gimp_displays_get_dirty_images (Gimp *gimp)
                                   G_CALLBACK (gimp_displays_image_clean_callback),
                                   container);
 
-      for (list = GIMP_LIST (gimp->images)->list;
+      for (list = gimp_get_image_iter (gimp);
            list;
            list = g_list_next (list))
         {
@@ -156,7 +156,7 @@ gimp_displays_delete (Gimp *gimp)
    */
   while (! gimp_container_is_empty (gimp->displays))
     {
-      GimpDisplay *display = GIMP_LIST (gimp->displays)->list->data;
+      GimpDisplay *display = gimp_get_display_iter (gimp)->data;
 
       gimp_display_delete (display);
     }
@@ -177,7 +177,7 @@ gimp_displays_close (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  list = g_list_copy (GIMP_LIST (gimp->displays)->list);
+  list = g_list_copy (gimp_get_display_iter (gimp));
 
   for (iter = list; iter; iter = g_list_next (iter))
     {
@@ -210,7 +210,7 @@ gimp_displays_reconnect (Gimp      *gimp,
         contexts = g_list_prepend (contexts, list->data);
     }
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -236,7 +236,7 @@ gimp_displays_get_num_visible (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -264,7 +264,7 @@ gimp_displays_set_busy (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -282,7 +282,7 @@ gimp_displays_unset_busy (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {

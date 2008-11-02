@@ -1673,7 +1673,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
               display = NULL;
 
-              for (list = GIMP_LIST (item->image->gimp->displays)->list;
+              for (list = gimp_get_display_iter (item->image->gimp);
                    list;
                    list = g_list_next (list))
                 {

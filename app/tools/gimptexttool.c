@@ -36,7 +36,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
@@ -2131,7 +2130,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
           display = NULL;
 
-          for (list = GIMP_LIST (tool->tool_info->gimp->displays)->list;
+          for (list = gimp_get_display_iter (tool->tool_info->gimp);
                list;
                list = g_list_next (list))
             {

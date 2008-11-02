@@ -35,7 +35,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "plug-in/gimpenvirontable.h"
@@ -714,7 +713,7 @@ gui_display_changed (GimpContext *context,
         {
           GList *list;
 
-          for (list = GIMP_LIST (gimp->displays)->list;
+          for (list = gimp_get_display_iter (gimp);
                list;
                list = g_list_next (list))
             {

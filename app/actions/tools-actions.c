@@ -27,8 +27,8 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -639,7 +639,7 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_object_2_actions),
                                       G_CALLBACK (tools_object_2_cmd_callback));
 
-  for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (group->gimp);
        list;
        list = g_list_next (list))
     {

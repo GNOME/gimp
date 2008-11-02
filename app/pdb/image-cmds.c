@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-crop.h"
@@ -45,7 +46,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -106,7 +106,7 @@ image_list_invoker (GimpProcedure      *procedure,
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
 
-  GList *list = GIMP_LIST (gimp->images)->list;
+  GList *list = gimp_get_image_iter (gimp);
 
   num_images = g_list_length (list);
 

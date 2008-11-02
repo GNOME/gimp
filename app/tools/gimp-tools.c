@@ -195,7 +195,7 @@ gimp_tools_init (Gimp *gimp)
 
   gimp_container_thaw (gimp->tool_info_list);
 
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -280,7 +280,7 @@ gimp_tools_restore (Gimp *gimp)
   g_free (filename);
   g_object_unref (gimp_list);
 
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -297,7 +297,7 @@ gimp_tools_restore (Gimp *gimp)
       g_clear_error (&error);
     }
 
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
     {
@@ -364,7 +364,7 @@ gimp_tools_save (Gimp     *gimp,
 
       gimp_tool_options_create_folder ();
 
-      for (list = GIMP_LIST (gimp->tool_info_list)->list;
+      for (list = gimp_get_tool_info_iter (gimp);
            list;
            list = g_list_next (list))
         {
@@ -396,7 +396,7 @@ gimp_tools_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+  for (list = gimp_get_tool_info_iter (gimp);
        list && success;
        list = g_list_next (list))
     {

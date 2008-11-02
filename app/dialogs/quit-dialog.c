@@ -29,8 +29,8 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -252,7 +252,7 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
 {
   GList *list;
 
-  for (list = GIMP_LIST (gimp->displays)->list;
+  for (list = gimp_get_display_iter (gimp);
        list;
        list = g_list_next (list))
     {

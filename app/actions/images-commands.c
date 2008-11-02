@@ -24,9 +24,9 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplist.h"
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpimageview.h"
@@ -56,7 +56,7 @@ images_raise_views_cmd_callback (GtkAction *action,
     {
       GList *list;
 
-      for (list = GIMP_LIST (image->gimp->displays)->list;
+      for (list = gimp_get_display_iter (image->gimp);
            list;
            list = g_list_next (list))
         {

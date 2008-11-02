@@ -65,7 +65,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GList *list = GIMP_LIST (gimp->images)->list;
+  GList *list = gimp_get_image_iter (gimp);
 
   num_images = g_list_length (list);
 
@@ -2620,7 +2620,7 @@ CODE
               "libgimpbase/gimpbase.h"
               "base/temp-buf.h"
               "core/gimp.h"
-              "core/gimplist.h"
+              "core/gimpcontainer.h"
               "core/gimpprogress.h"
               "core/gimpunit.h"
               "gimppdberror.h"

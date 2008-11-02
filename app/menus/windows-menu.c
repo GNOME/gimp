@@ -95,7 +95,7 @@ windows_menu_setup (GimpUIManager *manager,
                            G_CALLBACK (windows_menu_display_remove),
                            manager, 0);
 
-  for (list = GIMP_LIST (manager->gimp->displays)->list;
+  for (list = gimp_get_display_iter (manager->gimp);
        list;
        list = g_list_next (list))
     {

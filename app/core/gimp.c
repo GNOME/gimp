@@ -905,6 +905,30 @@ gimp_exit (Gimp     *gimp,
                  &handled);
 }
 
+GList *
+gimp_get_image_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->images)->list;
+}
+
+GList *
+gimp_get_display_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->displays)->list;
+}
+
+GList *
+gimp_get_tool_info_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->tool_info_list)->list;
+}
+
 void
 gimp_set_global_buffer (Gimp       *gimp,
                         GimpBuffer *buffer)

@@ -1,5 +1,27 @@
 2008-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.[ch]: add new functions gimp_get_image_iter(),
+	display_iter() and tool_info_iter().
+
+	* app/tools/gimp-tools.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* app/dialogs/quit-dialog.c
+	* app/gui/gui.c
+	* app/menus/windows-menu.c
+	* app/actions/images-commands.c
+	* app/actions/tools-actions.c
+	* app/actions/windows-actions.c
+	* app/actions/tool-options-commands.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplay-foreach.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/image.pdb: use them here.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2008-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch]: add new functions
 	gimp_image_get_layer_iter(), channel_iter() and vectors_iter()
 	which return the GList inside the resp. GimpList.
