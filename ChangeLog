@@ -1,3 +1,9 @@
+2008-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.[ch]: remove the mask_node and simply set
+	both opacity and the layer mask's source node on the opacity_node.
+	Needs latest SVN GEGL.
+
 2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpitem.[ch]: Move the base GeglNode here in
@@ -25,7 +31,7 @@
 	(gimp_rectangle_tool_cursor_update): set the MOVE cursor modifier
 	when we are in MOVING mode.
 
-	* app/tools/gimptexttool.[ch]: remove members x1,x2,y1,y2 and use
+	* app/tools/gimptexttool.[ch]: remove members x1,y1,x2,y2 and use
 	the rectangle tool's bounding box for creating the text layer (x2
 	and y2) were unused anyway. Add boolean member "moving". Implement
 	oper_update() and set the tool to moving mode when ALT is pressed.

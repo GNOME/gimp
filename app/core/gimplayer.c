@@ -523,19 +523,21 @@ gimp_layer_get_node (GimpItem *item)
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
 
+  layer->opacity_node = gegl_node_new_child (node,
+                                             "operation", "gegl:opacity",
+                                             "value",     layer->opacity,
+                                             NULL);
+  gegl_node_connect_to (source,              "output",
+                        layer->opacity_node, "input");
+
   if (layer->mask)
     {
       GeglNode *mask;
 
       mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
 
-      layer->mask_node = gegl_node_new_child (node,
-                                              "operation", "gegl:opacity",
-                                              NULL);
-      gegl_node_connect_to (mask,             "output",
-                            layer->mask_node, "aux");
-      gegl_node_connect_to (source,           "output",
-                            layer->mask_node, "input");
+      gegl_node_connect_to (mask,                "output",
+                            layer->opacity_node, "aux");
     }
 
   gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
@@ -545,19 +547,8 @@ gimp_layer_get_node (GimpItem *item)
                                            "y",         (gdouble) off_y,
                                            NULL);
 
-  if (layer->mask_node)
-    gegl_node_connect_to (layer->mask_node,  "output",
-                          layer->shift_node, "input");
-  else
-    gegl_node_connect_to (source,            "output",
-                          layer->shift_node, "input");
-
-  layer->opacity_node = gegl_node_new_child (node,
-                                             "operation", "gegl:opacity",
-                                             "value",     layer->opacity,
-                                             NULL);
-  gegl_node_connect_to (layer->shift_node,   "output",
-                        layer->opacity_node, "input");
+  gegl_node_connect_to (layer->opacity_node, "output",
+                        layer->shift_node,   "input");
 
   mode_node = gimp_drawable_get_mode_node (drawable);
 
@@ -566,8 +557,8 @@ gimp_layer_get_node (GimpItem *item)
                  "blend-mode", layer->mode,
                  NULL);
 
-  gegl_node_connect_to (layer->opacity_node, "output",
-                        mode_node,           "aux");
+  gegl_node_connect_to (layer->shift_node, "output",
+                        mode_node,         "aux");
 
   return node;
 }
@@ -1374,28 +1365,14 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
-  if (layer->shift_node)
+  if (layer->opacity_node)
     {
-      GeglNode *node;
-      GeglNode *source;
       GeglNode *mask;
 
-      node = gimp_item_get_node (GIMP_ITEM (layer));
-
-      layer->mask_node = gegl_node_new_child (node,
-                                              "operation", "gegl:opacity",
-                                              NULL);
-
-      source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
-      gegl_node_connect_to (source,           "output",
-                            layer->mask_node, "input");
-
       mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
-      gegl_node_connect_to (mask,             "output",
-                            layer->mask_node, "aux");
 
-      gegl_node_connect_to (layer->mask_node,  "output",
-                            layer->shift_node, "input");
+      gegl_node_connect_to (mask,                "output",
+                            layer->opacity_node, "aux");
     }
 
   if (gimp_layer_mask_get_apply (mask) ||
@@ -1722,23 +1699,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (push_undo)
     gimp_image_undo_group_end (image);
 
-  if (layer->mask_node)
-    {
-      GeglNode *node;
-      GeglNode *source;
-
-      node = gimp_item_get_node (GIMP_ITEM (layer));
-
-      gegl_node_disconnect (layer->mask_node, "input");
-      gegl_node_disconnect (layer->mask_node, "aux");
-
-      gegl_node_remove_child (node, layer->mask_node);
-      layer->mask_node = NULL;
-
-      source = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer));
-      gegl_node_connect_to (source,            "output",
-                            layer->shift_node, "input");
-    }
+  if (layer->opacity_node)
+    gegl_node_disconnect (layer->opacity_node, "aux");
 
   /*  If applying actually changed the view  */
   if (view_changed)
