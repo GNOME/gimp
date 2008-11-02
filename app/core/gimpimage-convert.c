@@ -1173,7 +1173,7 @@ generate_histogram_rgb (CFHistogram   histogram,
   gint         count      = 0;
   gboolean     has_alpha  = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   /*  g_printerr ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols); */
 
@@ -2770,7 +2770,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   gint          offsetx, offsety;
   gpointer      pr;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -2867,7 +2867,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   gint          offsetx, offsety;
   gpointer      pr;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -3018,7 +3018,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gint          nth_layer        = quantobj->nth_layer;
   gint          n_layers         = quantobj->n_layers;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
@@ -3143,7 +3143,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gint          nth_layer        = quantobj->nth_layer;
   gint          n_layers         = quantobj->n_layers;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
@@ -3346,7 +3346,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
   gint          lastblue = -1;
   gint          offsetx, offsety;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -3560,7 +3560,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          width, height;
   gulong       *index_used_count = quantobj->index_used_count;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -3820,7 +3820,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          nth_layer = quantobj->nth_layer;
   gint          n_layers  = quantobj->n_layers;
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions

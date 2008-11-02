@@ -473,7 +473,7 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
       height = gimp_item_height (GIMP_ITEM (drawable));
     }
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   colors =
     gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),

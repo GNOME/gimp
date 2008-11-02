@@ -300,7 +300,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
     {
       GimpLayer *template = GIMP_LAYER (GIMP_ACTION (action)->viewable);
 
-      gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (template), &off_x, &off_y);
       width   = gimp_item_width  (GIMP_ITEM (template));
       height  = gimp_item_height (GIMP_ITEM (template));
       opacity = gimp_layer_get_opacity (template);
@@ -515,7 +515,7 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
 
       vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
-      gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
 
       gimp_image_add_vectors (image, vectors, -1, TRUE);
@@ -641,7 +641,7 @@ layers_crop_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
   off_x -= x1;
   off_y -= y1;
@@ -783,7 +783,7 @@ layers_mask_to_selection_cmd_callback (GtkAction *action,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (mask), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (mask), &off_x, &off_y);
 
       gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Layer Mask to Selection"),

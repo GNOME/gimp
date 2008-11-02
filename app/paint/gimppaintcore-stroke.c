@@ -128,7 +128,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
   if (n_stroke_segs == 0)
     return TRUE;
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   off_x -= offset_x;
   off_y -= offset_y;
@@ -246,8 +246,8 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  gimp_item_offsets (GIMP_ITEM (vectors),  &vectors_off_x, &vectors_off_y);
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (vectors),  &vectors_off_x, &vectors_off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   off_x -= vectors_off_x;
   off_y -= vectors_off_y;

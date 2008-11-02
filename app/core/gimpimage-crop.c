@@ -110,7 +110,7 @@ gimp_image_crop (GimpImage   *image,
 
       layer = gimp_image_get_active_layer (image);
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       off_x -= x1;
       off_y -= y1;
@@ -185,7 +185,7 @@ gimp_image_crop (GimpImage   *image,
               gint off_x, off_y;
               gint lx1, ly1, lx2, ly2;
 
-              gimp_item_offsets (item, &off_x, &off_y);
+              gimp_item_get_offset (item, &off_x, &off_y);
 
               lx1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
               ly1 = CLAMP (off_y, 0, gimp_image_get_height (image));

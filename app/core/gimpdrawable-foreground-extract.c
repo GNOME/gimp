@@ -94,7 +94,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   if (gimp_image_base_type (image) == GIMP_INDEXED)
     colormap = gimp_image_get_colormap (image);
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   intersect = gimp_rectangle_intersect (offset_x, offset_y,
                                         gimp_item_width (GIMP_ITEM (drawable)),

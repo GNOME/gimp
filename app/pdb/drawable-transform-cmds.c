@@ -134,7 +134,7 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -206,7 +206,7 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -294,7 +294,7 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -376,7 +376,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -507,7 +507,7 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -583,7 +583,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -667,7 +667,7 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -740,7 +740,7 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -817,7 +817,7 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -886,7 +886,7 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -973,7 +973,7 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -1053,7 +1053,7 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -1145,7 +1145,7 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
           GimpMatrix3 matrix;
           gint        off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;
@@ -1233,7 +1233,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
           gint                  off_x, off_y;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           x += off_x;
           y += off_y;

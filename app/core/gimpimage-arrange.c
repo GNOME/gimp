@@ -259,7 +259,7 @@ compute_offset (GObject *object,
           /* fall back on using the offsets instead */
           GimpItem *item = GIMP_ITEM (object);
 
-          gimp_item_offsets (item, &object_offset_x, &object_offset_y);
+          gimp_item_get_offset (item, &object_offset_x, &object_offset_y);
           object_height   = gimp_item_height (item);
           object_width    = gimp_item_width (item);
         }
@@ -293,7 +293,7 @@ compute_offset (GObject *object,
         }
       else
         {
-          gimp_item_offsets (item, &object_offset_x, &object_offset_y);
+          gimp_item_get_offset (item, &object_offset_x, &object_offset_y);
           object_height = gimp_item_height (item);
           object_width  = gimp_item_width (item);
         }

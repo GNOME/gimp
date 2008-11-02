@@ -267,7 +267,7 @@ gimp_color_tool_button_press (GimpTool         *tool,
       gint off_x, off_y;
 
       /*  Keep the coordinates of the target  */
-      gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
       color_tool->center_x = coords->x - off_x;
       color_tool->center_y = coords->y - off_y;
@@ -449,7 +449,7 @@ gimp_color_tool_motion (GimpTool         *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
       color_tool->center_x = coords->x - off_x;
       color_tool->center_y = coords->y - off_y;

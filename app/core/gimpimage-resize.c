@@ -154,7 +154,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
       gint      old_offset_x;
       gint      old_offset_y;
 
-      gimp_item_offsets (item, &old_offset_x, &old_offset_y);
+      gimp_item_get_offset (item, &old_offset_x, &old_offset_y);
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
 

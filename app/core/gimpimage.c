@@ -3065,7 +3065,7 @@ gimp_image_add_layers (GimpImage   *image,
       GimpItem *item = GIMP_ITEM (list->data);
       gint      off_x, off_y;
 
-      gimp_item_offsets (item, &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
       layers_x = MIN (layers_x, off_x);
       layers_y = MIN (layers_y, off_y);
@@ -3687,7 +3687,7 @@ gimp_image_pick_correlate_layer (const GimpImage *image,
       GimpLayer *layer = list->data;
       gint       off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
                                         x - off_x, y - off_y) > 63)
@@ -3729,7 +3729,7 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
           gint      off_x, off_y;
           gint      d_x, d_y;
 
-          gimp_item_offsets (item, &off_x, &off_y);
+          gimp_item_get_offset (item, &off_x, &off_y);
 
           d_x = x - off_x;
           d_y = y - off_y;

@@ -448,7 +448,7 @@ selection_load_invoker (GimpProcedure      *procedure,
       gint       off_x, off_y;
 
       image = gimp_item_get_image (GIMP_ITEM (channel));
-      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (channel), &off_x, &off_y);
 
       gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Channel to Selection"),
@@ -515,7 +515,7 @@ selection_combine_invoker (GimpProcedure      *procedure,
       gint       off_x, off_y;
 
       image = gimp_item_get_image (GIMP_ITEM (channel));
-      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (channel), &off_x, &off_y);
 
       gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Channel to Selection"),

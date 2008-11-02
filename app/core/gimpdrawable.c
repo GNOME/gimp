@@ -555,7 +555,7 @@ gimp_drawable_flip (GimpItem            *item,
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
                             &old_off_x, &old_off_y);
@@ -590,7 +590,7 @@ gimp_drawable_rotate (GimpItem         *item,
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
                             &old_off_x, &old_off_y);
@@ -627,7 +627,7 @@ gimp_drawable_transform (GimpItem               *item,
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
                             &old_off_x, &old_off_y);
@@ -1057,7 +1057,7 @@ gimp_drawable_set_tiles (GimpDrawable *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   gimp_drawable_set_tiles_full (drawable, push_undo, undo_desc, tiles,
                                 gimp_drawable_type (drawable),
@@ -1340,7 +1340,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (item, &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
       tmp_x1 = CLAMP (tmp_x1 - off_x, 0, gimp_item_width  (item));
       tmp_y1 = CLAMP (tmp_y1 - off_y, 0, gimp_item_height (item));
@@ -1395,7 +1395,7 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (item, &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
       retval = gimp_rectangle_intersect (tmp_x - off_x, tmp_y - off_y,
                                          tmp_width - tmp_x, tmp_height - tmp_y,

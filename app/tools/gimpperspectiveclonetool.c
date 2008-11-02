@@ -788,8 +788,8 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       gint         off_x;
       gint         off_y;
 
-      gimp_item_offsets (GIMP_ITEM (source_core->src_drawable),
-                         &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (source_core->src_drawable),
+                            &off_x, &off_y);
 
       tmp_display = draw_tool->display;
       draw_tool->display = clone_tool->src_display;

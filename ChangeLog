@@ -1,3 +1,34 @@
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: renamed
+	gimp_item_offsets() to gimp_item_get_offset() and
+	gimp_item_set_offsets() to gimp_item_set_offset().
+
+	* app/actions/drawable-commands.c
+	* app/actions/layers-commands.c
+	* app/core/<many>.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-preview.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpdisplayshell.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsourcecore.c
+	* app/text/gimptextlayer-xcf.c
+	* app/tools/<many>.c
+	* app/widgets/gimptoolbox-dnd.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb
+	* tools/pdbgen/pdb/vectors.pdb: changed accordingly.
+
+	* app/pdb/drawable-cmds.c
+	* app/pdb/drawable-transform-cmds.c
+	* app/pdb/selection-cmds.c
+	* app/pdb/vectors-cmds.c
+	* app/pdb/transform-tools-cmds.c: regenerated.
+
 2008-11-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpitem.c (gimp_item_set_offsets): New function that

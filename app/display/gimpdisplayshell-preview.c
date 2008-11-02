@@ -207,7 +207,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
     {
       mask = gimp_image_get_mask (shell->display->image);
 
-      gimp_item_offsets (GIMP_ITEM (tool->drawable),
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable),
                          &mask_offx, &mask_offy);
     }
 

@@ -1631,7 +1631,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       gint off_x;
       gint off_y;
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (! gimp_channel_bounds (gimp_image_get_mask (shell->display->image),
                                  x1, y1, x2, y2))

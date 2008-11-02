@@ -469,7 +469,7 @@ drawable_offsets_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

@@ -278,7 +278,7 @@ floating_sel_store (GimpLayer *layer,
    *  drawable that this floating selection obscures.  We do this so
    *  that it will be possible to subsequently restore the drawable's area
    */
-  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
+  gimp_item_get_offset (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
 
   /*  Find the minimum area we need to uncover -- in image space  */
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
@@ -328,7 +328,7 @@ floating_sel_restore (GimpLayer *layer,
    */
 
   /*  Find the minimum area we need to uncover -- in image space  */
-  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
+  gimp_item_get_offset (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
 
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
   y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
@@ -437,7 +437,7 @@ floating_sel_composite (GimpLayer *layer,
       gint x1, y1, x2, y2;
 
       /*  Find the minimum area we need to composite -- in image space  */
-      gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
+      gimp_item_get_offset (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
 
       x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
       y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
@@ -514,7 +514,7 @@ floating_sel_boundary (GimpLayer *layer,
 
       width  = gimp_item_width  (GIMP_ITEM (layer));
       height = gimp_item_height (GIMP_ITEM (layer));
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (layer->fs.segs)
         g_free (layer->fs.segs);

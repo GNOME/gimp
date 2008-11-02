@@ -79,7 +79,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
     }
 
   /*  get the layer offsets  */
-  gimp_item_offsets (item, &offset_x, &offset_y);
+  gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
   x1 = CLAMP (x,             0, gimp_item_width (item));
@@ -228,7 +228,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
     }
 
   /*  get the layer offsets  */
-  gimp_item_offsets (item, &offset_x, &offset_y);
+  gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
   x1 = CLAMP (x, 0,             gimp_item_width (item));

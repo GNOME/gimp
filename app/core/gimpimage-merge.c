@@ -344,7 +344,7 @@ gimp_image_merge_layers (GimpImage     *image,
     {
       layer = merge_list->data;
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       switch (merge_type)
         {
@@ -525,7 +525,7 @@ gimp_image_merge_layers (GimpImage     *image,
           return NULL;
         }
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       x3 = CLAMP (off_x, x1, x2);
       y3 = CLAMP (off_y, y1, y2);

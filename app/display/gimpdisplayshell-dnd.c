@@ -171,7 +171,7 @@ gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
 
   gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   off_x = x + (width  - gimp_item_width  (item)) / 2 - off_x;
   off_y = y + (height - gimp_item_height (item)) / 2 - off_y;

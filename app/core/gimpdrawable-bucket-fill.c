@@ -200,7 +200,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
           gint off_y = 0;
 
           if (! sample_merged)
-            gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+            gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           gimp_channel_combine_mask (mask, gimp_image_get_mask (image),
                                      GIMP_CHANNEL_OP_INTERSECT,
@@ -218,7 +218,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
           item = GIMP_ITEM (drawable);
 
           /*  Limit the channel bounds to the drawable's extents  */
-          gimp_item_offsets (item, &off_x, &off_y);
+          gimp_item_get_offset (item, &off_x, &off_y);
 
           x1 = CLAMP (x1, off_x, (off_x + gimp_item_width (item)));
           y1 = CLAMP (y1, off_y, (off_y + gimp_item_height (item)));

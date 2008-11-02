@@ -205,7 +205,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   item->width  = gimp_item_width (GIMP_ITEM (layer));
   item->height = gimp_item_height (GIMP_ITEM (layer));
 
-  gimp_item_offsets (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
+  gimp_item_get_offset (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
 
   gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
   gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);

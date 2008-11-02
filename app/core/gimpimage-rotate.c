@@ -175,7 +175,7 @@ gimp_image_rotate (GimpImage        *image,
       gint      off_x;
       gint      off_y;
 
-      gimp_item_offsets (item, &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
@@ -256,7 +256,7 @@ gimp_image_rotate_item_offset (GimpImage        *image,
       return;
     }
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   x -= off_x;
   y -= off_y;

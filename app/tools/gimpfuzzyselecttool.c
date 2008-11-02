@@ -110,7 +110,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       x -= off_x;
       y -= off_y;

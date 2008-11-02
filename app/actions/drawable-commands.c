@@ -210,7 +210,7 @@ drawable_flip_cmd_callback (GtkAction *action,
 
   item = GIMP_ITEM (drawable);
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   switch ((GimpOrientationType) value)
     {
@@ -260,7 +260,7 @@ drawable_rotate_cmd_callback (GtkAction *action,
 
   item = GIMP_ITEM (drawable);
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);

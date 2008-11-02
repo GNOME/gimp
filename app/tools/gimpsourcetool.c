@@ -375,7 +375,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
       draw_tool->display = source_tool->src_display;
 
-      gimp_item_offsets (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
 
       if (source_tool->show_source_outline)
         gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),

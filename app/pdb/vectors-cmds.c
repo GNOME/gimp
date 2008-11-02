@@ -128,7 +128,7 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
           vectors = gimp_text_vectors_new (image,
                                            gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
 
-          gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+          gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
           gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
         }
       else

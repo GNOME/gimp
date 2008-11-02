@@ -117,7 +117,7 @@ gimp_projection_construct (GimpProjection *proj,
           gint xoff;
           gint yoff;
 
-          gimp_item_offsets (GIMP_ITEM (layer), &xoff, &yoff);
+          gimp_item_get_offset (GIMP_ITEM (layer), &xoff, &yoff);
 
           if (xoff == 0 && yoff == 0)
             {
@@ -239,7 +239,7 @@ gimp_projection_construct_layers (GimpProjection *proj,
       layer = list->data;
       mask  = gimp_layer_get_mask (layer);
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
@@ -393,7 +393,7 @@ gimp_projection_initialize (GimpProjection *proj,
       GimpItem *item = list->data;
       gint      off_x, off_y;
 
-      gimp_item_offsets (item, &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
       if (gimp_item_get_visible (item)                                      &&
           ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))                  &&

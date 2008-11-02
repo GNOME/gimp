@@ -44,7 +44,7 @@ sub transform_invoke {
       GimpMatrix3 matrix;
       gint        off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       x += off_x;
       y += off_y;
@@ -91,7 +91,7 @@ sub transform_default_invoke {
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
       gint                  off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       x += off_x;
       y += off_y;

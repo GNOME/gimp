@@ -62,7 +62,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
       image   = gimp_item_get_image (GIMP_ITEM (drawable));
       sel_mask = gimp_image_get_mask (image);
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       pixel_region_init (&mask,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (sel_mask)),
                          x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);

@@ -379,7 +379,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   color_region (&maskPR, bg);
 
   /* render the stroke into it */
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   gimp_scan_convert_render (scan_convert, mask,
                             x + off_x, y + off_y,

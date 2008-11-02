@@ -203,7 +203,7 @@ gimp_edit_paste (GimpImage    *image,
       gint     paste_width, paste_height;
       gboolean have_mask;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
       if (! have_mask         &&

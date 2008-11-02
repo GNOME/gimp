@@ -2396,7 +2396,7 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
     {
       gint x, y;
 
-      gimp_item_offsets (GIMP_ITEM (text_tool->layer), &x, &y);
+      gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &x, &y);
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
     }
 

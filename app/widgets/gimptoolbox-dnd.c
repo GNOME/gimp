@@ -219,7 +219,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gimp_object_set_name (GIMP_OBJECT (new_layer),
                         gimp_object_get_name (GIMP_OBJECT (drawable)));
 
-  gimp_item_offsets (GIMP_ITEM (new_layer), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (new_layer), &off_x, &off_y);
   gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
   gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE, FALSE);
   gimp_item_set_linked (GIMP_ITEM (new_layer), FALSE, FALSE);

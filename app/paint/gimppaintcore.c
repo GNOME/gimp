@@ -805,7 +805,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       gint            off_x;
       gint            off_y;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       gimp_paint_core_validate_saved_proj_tiles (core,
                                                  GIMP_PICKABLE (projection),

@@ -302,7 +302,7 @@ gimp_paint_tool_button_press (GimpTool         *tool,
 
   curr_coords = *coords;
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   curr_coords.x -= off_x;
   curr_coords.y -= off_y;
@@ -454,7 +454,7 @@ gimp_paint_tool_motion (GimpTool         *tool,
 
   core->cur_coords = *coords;
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   core->cur_coords.x -= off_x;
   core->cur_coords.y -= off_y;
@@ -589,7 +589,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
           core->cur_coords = *coords;
 
-          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
           core->cur_coords.x -= off_x;
           core->cur_coords.y -= off_y;

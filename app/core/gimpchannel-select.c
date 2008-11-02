@@ -429,7 +429,7 @@ gimp_channel_select_alpha (GimpChannel    *channel,
       gimp_channel_all (add_on, FALSE);
     }
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   gimp_channel_select_channel (channel, _("Alpha to Selection"), add_on,
                                off_x, off_y,
@@ -515,7 +515,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                                                  x, y);
 
   if (! sample_merged)
-    gimp_item_offsets (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
+    gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
   gimp_channel_select_channel (channel, C_("command", "Fuzzy Select"),
                                add_on, add_on_x, add_on_y,
@@ -562,7 +562,7 @@ gimp_channel_select_by_color (GimpChannel         *channel,
                                                   color);
 
   if (! sample_merged)
-    gimp_item_offsets (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
+    gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
   gimp_channel_select_channel (channel, C_("command", "Select by Color"),
                                add_on, add_on_x, add_on_y,

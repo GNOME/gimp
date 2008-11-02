@@ -128,7 +128,7 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
 
       x += offset_x;
       y += offset_y;
@@ -190,7 +190,7 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
@@ -247,7 +247,7 @@ gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
@@ -294,7 +294,7 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
@@ -335,7 +335,7 @@ gimp_display_shell_transform_points (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   for (i = 0; i < n_points ; i++)
@@ -389,7 +389,7 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   for (i = 0; i < n_coords ; i++)
@@ -443,7 +443,7 @@ gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
       GimpItem *item;
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
   for (i = 0; i < n_segs ; i++)

@@ -220,7 +220,7 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 
               drawable = gimp_image_get_active_drawable (display->image);
 
-              gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
             }
 
           gimp_channel_select_channel (gimp_image_get_mask (display->image),

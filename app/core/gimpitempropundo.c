@@ -115,9 +115,9 @@ gimp_item_prop_undo_constructor (GType                  type,
       break;
 
     case GIMP_UNDO_ITEM_DISPLACE:
-      gimp_item_offsets (item,
-                         &item_prop_undo->offset_x,
-                         &item_prop_undo->offset_y);
+      gimp_item_get_offset (item,
+                            &item_prop_undo->offset_x,
+                            &item_prop_undo->offset_y);
       break;
 
     case GIMP_UNDO_ITEM_VISIBILITY:
@@ -225,7 +225,7 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         gint offset_x;
         gint offset_y;
 
-        gimp_item_offsets (item, &offset_x, &offset_y);
+        gimp_item_get_offset (item, &offset_x, &offset_y);
 
         gimp_item_translate (item,
                              item_prop_undo->offset_x - offset_x,

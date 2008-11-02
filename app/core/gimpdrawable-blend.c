@@ -592,7 +592,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gint        offx, offy;
 
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-      gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &offx, &offy);
 
       pixel_region_init (&maskR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                          x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);

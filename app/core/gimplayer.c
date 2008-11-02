@@ -1825,7 +1825,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Layer to Image Size"));
 
-  gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
   gimp_item_resize (GIMP_ITEM (layer), context,
                     gimp_image_get_width  (image),
                     gimp_image_get_height (image),

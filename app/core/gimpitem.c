@@ -693,7 +693,7 @@ gimp_item_height (const GimpItem *item)
 }
 
 /**
- * gimp_item_offsets:
+ * gimp_item_get_offsets:
  * @item:     The #GimpItem to check.
  * @offset_x: Return location for the item's X offset.
  * @offset_y: Return location for the item's Y offset.
@@ -701,9 +701,9 @@ gimp_item_height (const GimpItem *item)
  * Reveals the X and Y offsets of the item.
  */
 void
-gimp_item_offsets (const GimpItem *item,
-                   gint           *offset_x,
-                   gint           *offset_y)
+gimp_item_get_offset (const GimpItem *item,
+                      gint           *offset_x,
+                      gint           *offset_y)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -712,9 +712,9 @@ gimp_item_offsets (const GimpItem *item,
 }
 
 void
-gimp_item_set_offsets (GimpItem *item,
-                       gint      offset_x,
-                       gint      offset_y)
+gimp_item_set_offset (GimpItem *item,
+                      gint      offset_x,
+                      gint      offset_y)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 

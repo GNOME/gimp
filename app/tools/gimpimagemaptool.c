@@ -415,7 +415,7 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
   GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
   gint              off_x, off_y;
 
-  gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
   *sample_type = gimp_drawable_type (tool->drawable);
 
@@ -441,7 +441,7 @@ gimp_image_map_tool_map (GimpImageMapTool *tool)
 
   gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
 
-  gimp_item_offsets (item, &off_x, &off_y);
+  gimp_item_get_offset (item, &off_x, &off_y);
 
   gimp_rectangle_intersect (x, y, w, h,
                             off_x,

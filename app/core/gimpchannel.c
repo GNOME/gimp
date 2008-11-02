@@ -721,7 +721,7 @@ gimp_channel_stroke (GimpItem           *item,
       return FALSE;
     }
 
-  gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
+  gimp_item_get_offset (GIMP_ITEM (channel), &offset_x, &offset_y);
 
   switch (stroke_options->method)
     {

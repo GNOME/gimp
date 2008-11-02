@@ -254,7 +254,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                undo_desc);
 
-  gimp_item_offsets (active_item, &off_x, &off_y);
+  gimp_item_get_offset (active_item, &off_x, &off_y);
 
   edit_select->x = edit_select->origx = coords->x - off_x;
   edit_select->y = edit_select->origy = coords->y - off_y;
@@ -369,7 +369,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                 gint      x3, y3;
                 gint      x4, y4;
 
-                gimp_item_offsets (item, &x3, &y3);
+                gimp_item_get_offset (item, &x3, &y3);
 
                 x4 = x3 + gimp_item_width  (item);
                 y4 = y3 + gimp_item_height (item);
@@ -599,7 +599,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
   active_item = gimp_edit_selection_tool_get_active_item (edit_select,
                                                           display->image);
 
-  gimp_item_offsets (active_item, &off_x, &off_y);
+  gimp_item_get_offset (active_item, &off_x, &off_y);
 
   if (edit_select->constrain)
     {
@@ -804,7 +804,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
           }
         else
           {
-            gimp_item_offsets (active_item, &off_x, &off_y);
+            gimp_item_get_offset (active_item, &off_x, &off_y);
           }
 
         if (! floating_sel && edit_select->segs_in)
@@ -857,7 +857,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
         active_item = GIMP_ITEM (gimp_image_get_active_layer (display->image));
 
-        gimp_item_offsets (active_item, &x1, &y1);
+        gimp_item_get_offset (active_item, &x1, &y1);
 
         x2 = x1 + gimp_item_width  (active_item);
         y2 = y1 + gimp_item_height (active_item);
@@ -880,7 +880,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                 gint      x3, y3;
                 gint      x4, y4;
 
-                gimp_item_offsets (item, &x3, &y3);
+                gimp_item_get_offset (item, &x3, &y3);
 
                 x4 = x3 + gimp_item_width  (item);
                 y4 = y3 + gimp_item_height (item);

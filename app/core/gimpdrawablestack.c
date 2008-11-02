@@ -396,7 +396,7 @@ gimp_drawable_stack_drawable_update (GimpItem          *item,
       gint offset_x;
       gint offset_y;
 
-      gimp_item_offsets (item, &offset_x, &offset_y);
+      gimp_item_get_offset (item, &offset_x, &offset_y);
 
       gimp_drawable_stack_update (stack,
                                   x + offset_x, y + offset_y,
@@ -411,7 +411,7 @@ gimp_drawable_stack_drawable_visible (GimpItem          *item,
   gint offset_x;
   gint offset_y;
 
-  gimp_item_offsets (item, &offset_x, &offset_y);
+  gimp_item_get_offset (item, &offset_x, &offset_y);
 
   gimp_drawable_stack_update (stack,
                               offset_x, offset_y,
