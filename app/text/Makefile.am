@@ -28,8 +28,6 @@ libapptext_a_sources = \
 	gimpfontlist.h			\
 	gimptext.c			\
 	gimptext.h			\
-	gimptext-bitmap.c		\
-	gimptext-bitmap.h		\
 	gimptext-compat.c		\
 	gimptext-compat.h		\
 	gimptext-parasite.c		\

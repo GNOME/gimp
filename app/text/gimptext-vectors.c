@@ -23,10 +23,7 @@
 
 #include <gegl.h>
 
-#define PANGO_ENABLE_ENGINE
-#include <cairo.h>
 #include <pango/pangocairo.h>
-
 
 #include "text-types.h"
 
@@ -37,45 +34,29 @@
 #include "vectors/gimpanchor.h"
 
 #include "gimptext.h"
-#include "gimptext-private.h"
 #include "gimptext-vectors.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
 
-/* for compatibility with older freetype versions */
-#ifndef FT_GLYPH_FORMAT_OUTLINE
-#define FT_GLYPH_FORMAT_OUTLINE ft_glyph_format_outline
-#endif
-
-typedef struct _RenderContext  RenderContext;
-
-struct _RenderContext
+typedef struct
 {
-  GimpVectors  *vectors;
-  GimpStroke   *stroke;
-  GimpAnchor   *anchor;
-  gdouble       offset_x;
-  gdouble       offset_y;
-};
+  GimpVectors *vectors;
+  GimpStroke  *stroke;
+  GimpAnchor  *anchor;
+} RenderContext;
 
 
-static void  gimp_text_render_vectors (PangoFont            *font,
-                                       PangoGlyph            glyph,
-                                       cairo_font_options_t *options,
-                                       cairo_matrix_t       *cmatrix,
-                                       gint                  x,
-                                       gint                  y,
-                                       RenderContext        *context);
+static void  gimp_text_render_vectors (cairo_t       *cr,
+                                       RenderContext *context);
 
 
 GimpVectors *
 gimp_text_vectors_new (GimpImage *image,
                        GimpText  *text)
 {
-  GimpVectors    *vectors;
-  GimpTextLayout *layout;
-  RenderContext   context = { 0, };
+  GimpVectors   *vectors;
+  RenderContext  context = { NULL, };
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -84,17 +65,31 @@ gimp_text_vectors_new (GimpImage *image,
 
   if (text->text)
     {
-      gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
+      GimpTextLayout  *layout;
+      cairo_surface_t *surface;
+      cairo_t         *cr;
 
-      layout = gimp_text_layout_new (text, image);
+      gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
 
       context.vectors = vectors;
 
-      gimp_text_layout_render (layout,
-                               (GimpTextRenderFunc) gimp_text_render_vectors,
-                               &context);
+      /* A cairo_t needs an image surface to function, so "surface" is
+       * created temporarily for this purpose. Nothing is drawn to
+       * "surface", but it is still needed to be connected to "cr" for
+       * "cr" to execute cr_glyph_path(). The size of surface is
+       * therefore irrelevant.
+       */
+      surface = cairo_image_surface_create (CAIRO_FORMAT_A8, 2, 2);
+      cr = cairo_create (surface);
 
+      layout = gimp_text_layout_new (text, image);
+      gimp_text_layout_render (layout, cr, TRUE);
       g_object_unref (layout);
+
+      gimp_text_render_vectors (cr, &context);
+
+      cairo_destroy (cr);
+      cairo_surface_destroy (surface);
 
       if (context.stroke)
         gimp_stroke_close (context.stroke);
@@ -105,13 +100,12 @@ gimp_text_vectors_new (GimpImage *image,
 
 
 static inline void
-gimp_text_vector_coords (RenderContext   *context,
-                         const double x,
-                         const double y,
-                         GimpCoords      *coords)
+gimp_text_vector_coords (const double  x,
+                         const double  y,
+                         GimpCoords   *coords)
 {
-  coords->x        = context->offset_x + (gdouble) x;
-  coords->y        = context->offset_y + (gdouble) y;
+  coords->x        = x;
+  coords->y        = y;
   coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
   coords->xtilt    = GIMP_COORDS_DEFAULT_TILT;
   coords->ytilt    = GIMP_COORDS_DEFAULT_TILT;
@@ -129,7 +123,7 @@ moveto (RenderContext *context,
   g_printerr ("moveto  %f, %f\n", x, y);
 #endif
 
-  gimp_text_vector_coords (context, x, y, &start);
+  gimp_text_vector_coords (x, y, &start);
 
   if (context->stroke)
     gimp_stroke_close (context->stroke);
@@ -156,7 +150,7 @@ lineto (RenderContext *context,
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, x, y, &end);
+  gimp_text_vector_coords (x, y, &end);
 
   gimp_bezier_stroke_lineto (context->stroke, &end);
 
@@ -183,9 +177,9 @@ cubicto (RenderContext *context,
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, x1, y1, &control1);
-  gimp_text_vector_coords (context, x2, y2, &control2);
-  gimp_text_vector_coords (context, x3, y3, &end);
+  gimp_text_vector_coords (x1, y1, &control1);
+  gimp_text_vector_coords (x2, y2, &control2);
+  gimp_text_vector_coords (x3, y3, &end);
 
   gimp_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
 
@@ -199,7 +193,7 @@ closepath (RenderContext *context)
   g_printerr ("moveto\n");
 #endif
 
-  if (!context->stroke)
+  if (! context->stroke)
     return 0;
 
   gimp_stroke_close (context->stroke);
@@ -209,59 +203,24 @@ closepath (RenderContext *context)
   return 0;
 }
 
-
 static void
-gimp_text_render_vectors (PangoFont            *font,
-                          PangoGlyph            pango_glyph,
-                          cairo_font_options_t *options,
-                          cairo_matrix_t       *matrix,
-                          gint                  x,
-                          gint                  y,
-                          RenderContext        *context)
+gimp_text_render_vectors (cairo_t       *cr,
+                          RenderContext *context)
 {
-  cairo_surface_t     *surface;
-  cairo_t             *cr;
-  cairo_path_t        *cpath;
-  cairo_scaled_font_t *cfont;
-  cairo_glyph_t        cglyph;
-  gint                 i;
+  cairo_path_t *path;
+  gint          i;
 
-  context->offset_x = (gdouble) x / PANGO_SCALE;
-  context->offset_y = (gdouble) y / PANGO_SCALE;
+  path = cairo_copy_path (cr);
 
-  cglyph.x     = 0;
-  cglyph.y     = 0;
-  cglyph.index = pango_glyph;
-
-  /* A cairo_t needs an image surface to function, so "surface" is created
-   * temporarily for this purpose. Nothing is drawn to "surface", but it is
-   * still needed to be connected to "cr" for "cr" to execute
-   * cr_glyph_path(). The size of surface is therefore irrelevant.
-   */
-  surface = cairo_image_surface_create (CAIRO_FORMAT_A8, 2, 2);
-  cr = cairo_create (surface);
-
-  cfont = pango_cairo_font_get_scaled_font ((PangoCairoFont *) font);
-
-  cairo_set_scaled_font (cr, cfont);
-
-  cairo_set_font_options (cr, options);
-
-  cairo_transform (cr, matrix);
-
-  cairo_glyph_path (cr, &cglyph, 1);
-
-  cpath = cairo_copy_path (cr);
-
-  for (i = 0; i < cpath->num_data; i += cpath->data[i].header.length)
+  for (i = 0; i < path->num_data; i += path->data[i].header.length)
     {
-      cairo_path_data_t *data = &cpath->data[i];
+      cairo_path_data_t *data = &path->data[i];
 
       /* if the drawing operation is the final moveto of the glyph,
        * break to avoid creating an empty point. This is because cairo
        * always adds a moveto after each closepath.
        */
-      if (i + data->header.length >= cpath->num_data)
+      if (i + data->header.length >= path->num_data)
         break;
 
       switch (data->header.type)
@@ -287,8 +246,5 @@ gimp_text_render_vectors (PangoFont            *font,
         }
     }
 
-  cairo_path_destroy (cpath);
-
-  cairo_destroy (cr);
-  cairo_surface_destroy (surface);
+  cairo_path_destroy (path);
 }

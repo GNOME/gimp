@@ -1,3 +1,15 @@
+2008-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/text/Makefile.am
+	* app/text/gimptext-bitmap.[ch]: removed.
+
+	* app/text/gimptext-private.h
+	* app/text/gimptext-vectors.c
+	* app/text/gimptextlayer.c
+	* app/text/gimptextlayout-render.[ch]
+	* app/text/gimptextlayout.c: removed text render abstraction as
+	this is now sufficiently provided by PangoCairo.
+
 2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/gegl/gimpoperationpointlayermode.c

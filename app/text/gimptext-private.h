@@ -27,7 +27,6 @@
  *  Cairo types from the rest of the gimp core.
  */
 
-
 struct _GimpTextLayout
 {
   GObject         object;
@@ -43,15 +42,6 @@ struct _GimpTextLayoutClass
 {
   GObjectClass   parent_class;
 };
-
-
-typedef  void (* GimpTextRenderFunc) (PangoFont            *font,
-                                      PangoGlyph            glyph,
-                                      cairo_font_options_t *options,
-                                      cairo_matrix_t       *tranform,
-                                      gint                  x,
-                                      gint                  y,
-                                      gpointer              render_data);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_PRIVATE_H__ */

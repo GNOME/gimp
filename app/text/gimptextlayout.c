@@ -302,13 +302,45 @@ gimp_text_layout_position (GimpTextLayout *layout)
 #endif
 }
 
+static cairo_font_options_t *
+gimp_text_get_font_options (GimpText *text)
+{
+  cairo_font_options_t *options = cairo_font_options_create ();
+
+  cairo_font_options_set_antialias (options, (text->antialias ?
+                                              CAIRO_ANTIALIAS_DEFAULT :
+                                              CAIRO_ANTIALIAS_NONE));
+
+  switch (text->hint_style)
+    {
+    case GIMP_TEXT_HINT_STYLE_NONE:
+      cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_NONE);
+      break;
+
+    case GIMP_TEXT_HINT_STYLE_SLIGHT:
+      cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_SLIGHT);
+      break;
+
+    case GIMP_TEXT_HINT_STYLE_MEDIUM:
+      cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_MEDIUM);
+      break;
+
+    case GIMP_TEXT_HINT_STYLE_FULL:
+      cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_FULL);
+      break;
+    }
+
+  return options;
+}
+
 static PangoContext *
 gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
-  PangoContext      *context;
-  PangoCairoFontMap *fontmap;
+  PangoContext         *context;
+  PangoCairoFontMap    *fontmap;
+  cairo_font_options_t *options;
 
   fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
 
@@ -316,6 +348,10 @@ gimp_text_get_pango_context (GimpText *text,
 
   context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
+
+  options = gimp_text_get_font_options (text);
+  pango_cairo_context_set_font_options (context, options);
+  cairo_font_options_destroy (options);
 
   if (text->language)
     pango_context_set_language (context,
