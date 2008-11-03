@@ -491,17 +491,12 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
           break;
 
         case GIMP_SOFTLIGHT_MODE:
-          /* SVG 1.2 soft-light */
-          /* FIXME: This exactly like in the SVG 1.2 draft but it is
-           * buggy and we need sort this out
+          /* Custom SVG 1.2:
+           *
+           * f(Sc, Dc) = Dc * (Dc + (2 * Sc * (1 - Dc)))
            */
           EACH_CHANNEL (
-          if (2 * layCa < layA)
-            outCa = inCa * (layA - (1 - inC) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA);
-          else if (8 * inCa <= inA)
-            outCa = inCa * (layA - (1 - inC) * (2 * layCa - layA) * (3 - 8 * inC)) + layCa * (1 - inA) + inCa * (1 - layA);
-          else
-            outCa = (inCa * layA + (sqrt (inC) * inA - inCa) * (2 * layCa - layA)) + layCa * (1 - inA) + inCa * (1 - layA));
+          outCa = inCa * (layA * inC + (2 * layCa * (1 - inC))) + layCa * (1 - inA) + inCa * (1 - layA));
           break;
 
         case GIMP_ADDITION_MODE:

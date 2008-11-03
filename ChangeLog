@@ -1,5 +1,32 @@
 2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gegl/gimpoperationpointlayermode.c
+	(gimp_operation_point_layer_mode_process): Reuse the blending
+	formula from the legacy Soft light. (Actually the formula comes
+	from legacy Overlay but legacy Overlay and Soft light blends
+	pixels exactly the same.) I hereby declare the porting of the
+	layer modes to this GEGL operation complete. Summary:
+
+	Completely works the same:
+
+	  Normal, Dissolve, Behind, Color Erase, Erase, Anti Erase
+
+	Works the same for 100% opaque layers:
+
+	  Lighten only, Screen, Dodge, Addition, Darken only, Multiply,
+	  Dodge, Soft light, Hard light, Difference, Subtract, Grain
+	  extract, Grain merge, Divide, Hue, Saturation, Color, Value
+
+	Works different but similar:
+
+	  Overlay now uses the SVG 1.2 overlay formula which is different
+	  but similar to legacy Overlay
+
+	  Replace needs to be externally masked to not replace too much,
+	  but that is outside the scope of the layer mode porting.
+
+2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpwidgets-constructors.c
 	(gimp_paint_mode_menu_new): Arrange layer modes into more logical
 	and useful groups.
