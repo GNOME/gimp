@@ -32,7 +32,6 @@ libapptext_a_sources = \
 	gimptext-compat.h		\
 	gimptext-parasite.c		\
 	gimptext-parasite.h		\
-	gimptext-private.h		\
 	gimptext-vectors.c		\
 	gimptext-vectors.h		\
 	gimptext-xlfd.c			\

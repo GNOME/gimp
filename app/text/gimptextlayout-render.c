@@ -29,7 +29,6 @@
 #include "base/tile-manager.h"
 
 #include "gimptext.h"
-#include "gimptext-private.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
@@ -43,6 +42,7 @@ gimp_text_layout_render (GimpTextLayout *layout,
                          cairo_t        *cr,
                          gboolean        path)
 {
+  PangoLayout    *pango_layout;
   cairo_matrix_t  trafo;
   gint            x, y;
 
@@ -51,26 +51,28 @@ gimp_text_layout_render (GimpTextLayout *layout,
 
   gimp_text_layout_get_offsets (layout, &x, &y);
 
+  pango_layout = gimp_text_layout_get_pango_layout (layout);
+
   /* If the width of the layout is > 0, then the text-box is FIXED
    * and the layout position should be offset if the alignment
    * is centered or right-aligned*/
-  if (pango_layout_get_width (layout->layout) > 0)
+  if (pango_layout_get_width (pango_layout) > 0)
     {
       gint width;
 
-      pango_layout_get_pixel_size (layout->layout, &width, NULL);
+      pango_layout_get_pixel_size (pango_layout, &width, NULL);
 
-      switch (pango_layout_get_alignment (layout->layout))
+      switch (pango_layout_get_alignment (pango_layout))
         {
         case PANGO_ALIGN_LEFT:
           break;
 
         case PANGO_ALIGN_RIGHT:
-          x += PANGO_PIXELS (pango_layout_get_width (layout->layout)) - width;
+          x += PANGO_PIXELS (pango_layout_get_width (pango_layout)) - width;
           break;
 
         case PANGO_ALIGN_CENTER:
-          x += (PANGO_PIXELS (pango_layout_get_width (layout->layout))
+          x += (PANGO_PIXELS (pango_layout_get_width (pango_layout))
                 - width) / 2;
           break;
         }
@@ -82,9 +84,9 @@ gimp_text_layout_render (GimpTextLayout *layout,
   cairo_transform (cr, &trafo);
 
   if (path)
-    pango_cairo_layout_path (cr, layout->layout);
+    pango_cairo_layout_path (cr, pango_layout);
   else
-    pango_cairo_show_layout (cr, layout->layout);
+    pango_cairo_show_layout (cr, pango_layout);
 }
 
 
@@ -92,8 +94,14 @@ static void
 gimp_text_layout_render_trafo (GimpTextLayout *layout,
                                cairo_matrix_t *trafo)
 {
-  GimpText      *text = layout->text;
-  const gdouble  norm = 1.0 / layout->yres * layout->xres;
+  GimpText *text = gimp_text_layout_get_text (layout);
+  gdouble   xres;
+  gdouble   yres;
+  gdouble   norm;
+
+  gimp_text_layout_get_resolution (layout, &xres, &yres);
+
+  norm = 1.0 / yres * xres;
 
   trafo->xx = text->transformation.coeff[0][0] * norm;
   trafo->xy = text->transformation.coeff[0][1] * 1.0;

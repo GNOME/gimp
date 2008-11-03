@@ -30,17 +30,28 @@
 
 typedef struct _GimpTextLayoutClass GimpTextLayoutClass;
 
+struct _GimpTextLayoutClass
+{
+  GObjectClass   parent_class;
+};
 
-GType            gimp_text_layout_get_type    (void) G_GNUC_CONST;
 
-GimpTextLayout * gimp_text_layout_new         (GimpText       *text,
-                                               GimpImage      *image);
-gboolean         gimp_text_layout_get_size    (GimpTextLayout *layout,
-                                               gint           *width,
-                                               gint           *heigth);
-void             gimp_text_layout_get_offsets (GimpTextLayout *layout,
-                                               gint           *x,
-                                               gint           *y);
+GType            gimp_text_layout_get_type         (void) G_GNUC_CONST;
+
+GimpTextLayout * gimp_text_layout_new              (GimpText       *text,
+                                                    GimpImage      *image);
+gboolean         gimp_text_layout_get_size         (GimpTextLayout *layout,
+                                                    gint           *width,
+                                                    gint           *heigth);
+void             gimp_text_layout_get_offsets      (GimpTextLayout *layout,
+                                                    gint           *x,
+                                                    gint           *y);
+void             gimp_text_layout_get_resolution   (GimpTextLayout *layout,
+                                                    gdouble        *xres,
+                                                    gdouble        *yres);
+
+GimpText       * gimp_text_layout_get_text         (GimpTextLayout *layout);
+PangoLayout    * gimp_text_layout_get_pango_layout (GimpTextLayout *layout);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_H__ */

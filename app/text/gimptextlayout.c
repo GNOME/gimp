@@ -32,8 +32,19 @@
 #include "core/gimpunit.h"
 
 #include "gimptext.h"
-#include "gimptext-private.h"
 #include "gimptextlayout.h"
+
+
+struct _GimpTextLayout
+{
+  GObject         object;
+
+  GimpText       *text;
+  gdouble         xres;
+  gdouble         yres;
+  PangoLayout    *layout;
+  PangoRectangle  extents;
+};
 
 
 static void           gimp_text_layout_finalize   (GObject        *object);
@@ -228,6 +239,7 @@ gimp_text_layout_get_size (GimpTextLayout *layout,
 
   if (width)
     *width = layout->extents.width;
+
   if (height)
     *height = layout->extents.height;
 
@@ -243,8 +255,39 @@ gimp_text_layout_get_offsets (GimpTextLayout *layout,
 
   if (x)
     *x = layout->extents.x;
+
   if (y)
     *y = layout->extents.y;
+}
+
+void
+gimp_text_layout_get_resolution (GimpTextLayout *layout,
+                                 gdouble        *xres,
+                                 gdouble        *yres)
+{
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+
+  if (xres)
+    *xres = layout->xres;
+
+  if (yres)
+    *yres = layout->yres;
+}
+
+GimpText *
+gimp_text_layout_get_text (GimpTextLayout *layout)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
+
+  return layout->text;
+}
+
+PangoLayout *
+gimp_text_layout_get_pango_layout (GimpTextLayout *layout)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
+
+  return layout->layout;
 }
 
 static void

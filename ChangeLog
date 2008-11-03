@@ -1,6 +1,18 @@
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/text/Makefile.am
+	* app/text/gimptext-private.h: removed this header file.
+
+	* app/text/gimptextlayout.[ch]: added getters to access the
+	resolution, text and PangoLayout.
+
+	* app/text/gimptextlayout-render.c
+	* app/tools/gimptexttool.c: use the new getters instead of poking
+	into the GimpTextLayout struct.
+
+2008-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/text/Makefile.am
 	* app/text/gimptext-bitmap.[ch]: removed.
 
 	* app/text/gimptext-private.h

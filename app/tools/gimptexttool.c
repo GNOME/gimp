@@ -44,7 +44,6 @@
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayout.h"
 #include "text/gimptextundo.h"
-#include "text/gimptext-private.h"
 
 #include "vectors/gimpvectors-warp.h"
 
@@ -794,18 +793,21 @@ gimp_text_tool_key_press (GimpTool    *tool,
     case GDK_Down:
     case GDK_KP_Down:
       {
-        gint             line;
-        gint             line_index;
-        gint             trailing;
+        PangoLayout     *layout;
         PangoLayoutLine *layout_line;
         PangoLayoutIter *layout_iter;
         PangoRectangle   logical;
+        gint             line;
+        gint             line_index;
+        gint             trailing;
         gint             i;
+
+        layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
         line       = gtk_text_iter_get_line (&selection);
         line_index = gtk_text_iter_get_line_index (&selection);
 
-        layout_iter = pango_layout_get_iter (text_tool->layout->layout);
+        layout_iter = pango_layout_get_iter (layout);
         for (i = 0; i < line; i++)
           pango_layout_iter_next_line (layout_iter);
 
@@ -844,8 +846,7 @@ gimp_text_tool_key_press (GimpTool    *tool,
             line++;
           }
 
-        layout_line = pango_layout_get_line_readonly (text_tool->layout->layout,
-                                                      line);
+        layout_line = pango_layout_get_line_readonly (layout, line);
 
         if (! layout_line)
           {
@@ -865,7 +866,7 @@ gimp_text_tool_key_press (GimpTool    *tool,
             break;
           }
 
-        layout_iter = pango_layout_get_iter (text_tool->layout->layout);
+        layout_iter = pango_layout_get_iter (layout);
         for (i = 0; i < line; i++)
           pango_layout_iter_next_line (layout_iter);
 
@@ -1032,6 +1033,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   gint            y1, y2;
   gint            logical_off_x = 0;
   gint            logical_off_y = 0;
+  PangoLayout    *layout;
   PangoRectangle  ink_extents;
   PangoRectangle  logical_extents;
   GtkTextIter     start;
@@ -1064,8 +1066,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   cliprect.height = y2 - y1;
   gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
 
-  pango_layout_get_pixel_extents (text_tool->layout->layout,
-                                  &ink_extents, &logical_extents);
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+  pango_layout_get_pixel_extents (layout, &ink_extents, &logical_extents);
 
   if (ink_extents.x < 0)
     logical_off_x = -ink_extents.x;
@@ -1099,7 +1102,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       g_free (string);
 
-      pango_layout_index_to_pos (text_tool->layout->layout, cursorx, &crect);
+      pango_layout_index_to_pos (layout, cursorx, &crect);
 
       crect.x      = PANGO_PIXELS (crect.x) + logical_off_x;
       crect.y      = PANGO_PIXELS (crect.y) + logical_off_y;
@@ -1148,7 +1151,7 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
 
   max = min + text_tool->preedit_len;
 
-  layout = text_tool->layout->layout;
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
@@ -1243,7 +1246,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   max = strlen (string);
   g_free (string);
 
-  layout = text_tool->layout->layout;
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
@@ -2229,15 +2232,16 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
                              gdouble       x,
                              gdouble       y)
 {
-  PangoRectangle  ink_extents;
   GtkTextIter     start, end;
+  PangoLayout    *layout;
+  PangoRectangle  ink_extents;
   gchar          *string;
   gint            offset;
   gint            trailing;
 
   /*  adjust to offset of logical rect  */
-  pango_layout_get_pixel_extents (text_tool->layout->layout,
-                                  &ink_extents, NULL);
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+  pango_layout_get_pixel_extents (layout, &ink_extents, NULL);
 
   if (ink_extents.x < 0)
     x += ink_extents.x;
@@ -2249,7 +2253,7 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   string = gtk_text_buffer_get_text (text_tool->text_buffer,
                                      &start, &end, TRUE);
 
-  pango_layout_xy_to_index (text_tool->layout->layout,
+  pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
                             y * PANGO_SCALE,
                             &offset, &trailing);
