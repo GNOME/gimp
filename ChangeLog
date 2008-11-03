@@ -1,3 +1,16 @@
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
+ 	Merged from trunk:
+
+	Bug 559015 – Move tool gives bad information about px moved
+
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_init):
+	set cursor precision to PIXEL_BORDER because that's what the move
+	tool snaps to.
+
+	Unrelated: set CENTER_CROSS_SIZE to an odd number so it's drawn
+	symmetrically.
+
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	Bug 558660 – help behavior for locales without manual translation

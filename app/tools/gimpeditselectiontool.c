@@ -62,7 +62,7 @@
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
-#define CENTER_CROSS_SIZE       6
+#define CENTER_CROSS_SIZE       7
 
 
 typedef struct _GimpEditSelectionTool
@@ -148,6 +148,8 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, EDIT_SELECT_SCROLL_LOCK);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
 
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;
