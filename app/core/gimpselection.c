@@ -60,8 +60,8 @@ static void       gimp_selection_resize        (GimpItem          *item,
                                                 GimpContext       *context,
                                                 gint               new_width,
                                                 gint               new_height,
-                                                gint               off_x,
-                                                gint               off_y);
+                                                gint               offset_x,
+                                                gint               offset_y);
 static void       gimp_selection_flip          (GimpItem          *item,
                                                 GimpContext       *context,
                                                 GimpOrientationType flip_type,
@@ -211,8 +211,7 @@ gimp_selection_scale (GimpItem              *item,
                                          new_offset_x, new_offset_y,
                                          interp_type, progress);
 
-  item->offset_x = 0;
-  item->offset_y = 0;
+  gimp_item_set_offset (item, 0, 0);
 }
 
 static void
@@ -220,14 +219,13 @@ gimp_selection_resize (GimpItem    *item,
                        GimpContext *context,
                        gint         new_width,
                        gint         new_height,
-                       gint         off_x,
-                       gint         off_y)
+                       gint         offset_x,
+                       gint         offset_y)
 {
   GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
-                                          off_x, off_y);
+                                          offset_x, offset_y);
 
-  item->offset_x = 0;
-  item->offset_y = 0;
+  gimp_item_set_offset (item, 0, 0);
 }
 
 static void
@@ -374,15 +372,16 @@ gimp_selection_boundary (GimpChannel     *channel,
 
       gint x1, y1;
       gint x2, y2;
-      gint off_x, off_y;
+      gint offset_x;
+      gint offset_y;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
 
-      x1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
-      y1 = CLAMP (off_y, 0, gimp_image_get_height (image));
-      x2 = CLAMP (off_x + gimp_item_get_width (GIMP_ITEM (layer)),
+      x1 = CLAMP (offset_x, 0, gimp_image_get_width  (image));
+      y1 = CLAMP (offset_y, 0, gimp_image_get_height (image));
+      x2 = CLAMP (offset_x + gimp_item_get_width (GIMP_ITEM (layer)),
                   0, gimp_image_get_width (image));
-      y2 = CLAMP (off_y + gimp_item_get_height (GIMP_ITEM (layer)),
+      y2 = CLAMP (offset_y + gimp_item_get_height (GIMP_ITEM (layer)),
                   0, gimp_image_get_height (image));
 
       return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
@@ -866,8 +865,7 @@ gimp_selection_float (GimpChannel   *selection,
   /*  Set the offsets  */
   tile_manager_get_offsets (tiles, &x1, &y1);
 
-  GIMP_ITEM (layer)->offset_x = x1 + off_x;
-  GIMP_ITEM (layer)->offset_y = y1 + off_y;
+  gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);
 
   /*  Free the temp buffer  */
   tile_manager_unref (tiles);

@@ -68,6 +68,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   GimpDrawable *drawable;
   GimpItem     *item;
   GimpImage    *image;
+  gint          offset_x;
+  gint          offset_y;
   gint          width;
   gint          height;
   gint          view_width;
@@ -79,7 +81,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   drawable = GIMP_DRAWABLE (renderer->viewable);
   item     = GIMP_ITEM (drawable);
-  image   = gimp_item_get_image (item);
+  image    = gimp_item_get_image (item);
+
+  gimp_item_get_offset (item, &offset_x, &offset_y);
 
   width  = renderer->width;
   height = renderer->height;
@@ -135,7 +139,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           if (gimp_rectangle_intersect (0, 0,
                                         gimp_item_get_width  (item),
                                         gimp_item_get_height (item),
-                                        -item->offset_x, -item->offset_y,
+                                        -offset_x, -offset_y,
                                         gimp_image_get_width  (image),
                                         gimp_image_get_height (image),
                                         &src_x, &src_y,
@@ -196,17 +200,17 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     {
       if (image && ! renderer->is_popup)
         {
-          if (item->offset_x != 0)
+          if (offset_x != 0)
             render_buf->x =
               ROUND ((((gdouble) renderer->width /
                        (gdouble) gimp_image_get_width (image)) *
-                      (gdouble) item->offset_x));
+                      (gdouble) offset_x));
 
-          if (item->offset_y != 0)
+          if (offset_y != 0)
             render_buf->y =
               ROUND ((((gdouble) renderer->height /
                        (gdouble) gimp_image_get_height (image)) *
-                      (gdouble) item->offset_y));
+                      (gdouble) offset_y));
 
           if (scaling_up)
             {

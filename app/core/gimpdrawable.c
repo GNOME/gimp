@@ -379,11 +379,15 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
       PixelRegion    srcPR;
       PixelRegion    destPR;
+      gint           offset_x;
+      gint           offset_y;
+
+      gimp_item_get_offset (item, &offset_x, &offset_y);
 
       gimp_drawable_configure (new_drawable,
                                gimp_item_get_image (item),
-                               item->offset_x,
-                               item->offset_y,
+                               offset_x,
+                               offset_y,
                                gimp_item_get_width  (item),
                                gimp_item_get_height (item),
                                gimp_drawable_type (drawable),
@@ -1088,8 +1092,8 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
 
   if (gimp_item_get_width  (item) != tile_manager_width (tiles)  ||
       gimp_item_get_height (item) != tile_manager_height (tiles) ||
-      item->offset_x          != offset_x                    ||
-      item->offset_y          != offset_y)
+      item->offset_x              != offset_x                    ||
+      item->offset_y              != offset_y)
     {
       gimp_drawable_update (drawable,
                             0, 0,

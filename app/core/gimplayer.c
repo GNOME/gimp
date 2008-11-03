@@ -766,8 +766,10 @@ gimp_layer_translate (GimpItem *item,
 
   if (layer->mask)
     {
-      GIMP_ITEM (layer->mask)->offset_x = item->offset_x;
-      GIMP_ITEM (layer->mask)->offset_y = item->offset_y;
+      gint off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+      gimp_item_set_offset (GIMP_ITEM (layer->mask), off_x, off_y);
 
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->mask));
     }
@@ -1496,6 +1498,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_CHANNEL_MASK:
       {
         gboolean channel_empty;
+        gint     offset_x, offset_y;
         gint     copy_x, copy_y;
         gint     copy_width, copy_height;
 
@@ -1504,10 +1507,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         channel_empty = gimp_channel_is_empty (channel);
 
+        gimp_item_get_offset (item, &offset_x, &offset_y);
+
         gimp_rectangle_intersect (0, 0,
                                   gimp_image_get_width  (image),
                                   gimp_image_get_height (image),
-                                  item->offset_x, item->offset_y,
+                                  offset_x, offset_y,
                                   gimp_item_get_width  (item),
                                   gimp_item_get_height (item),
                                   &copy_x, &copy_y,
@@ -1527,7 +1532,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                FALSE);
             pixel_region_init (&destPR,
                                gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                               copy_x - item->offset_x, copy_y - item->offset_y,
+                               copy_x - offset_x, copy_y - offset_y,
                                copy_width, copy_height,
                                TRUE);
 
@@ -1709,6 +1714,7 @@ void
 gimp_layer_add_alpha (GimpLayer *layer)
 {
   GimpItem      *item;
+  GimpDrawable  *drawable;
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  new_type;
@@ -1718,9 +1724,10 @@ gimp_layer_add_alpha (GimpLayer *layer)
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
-  item = GIMP_ITEM (layer);
+  item     = GIMP_ITEM (layer);
+  drawable = GIMP_DRAWABLE (layer);
 
-  new_type = gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer));
+  new_type = gimp_drawable_type_with_alpha (drawable);
 
   /*  Allocate the new tiles  */
   new_tiles = tile_manager_new (gimp_item_get_width  (item),
@@ -1728,7 +1735,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0,
                      gimp_item_get_width  (item),
                      gimp_item_get_height (item),
@@ -1755,6 +1762,7 @@ gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
   GimpItem      *item;
+  GimpDrawable  *drawable;
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  new_type;
@@ -1766,12 +1774,13 @@ gimp_layer_flatten (GimpLayer   *layer,
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
-  item = GIMP_ITEM (layer);
+  item     = GIMP_ITEM (layer);
+  drawable = GIMP_DRAWABLE (layer);
 
-  new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
+  new_type = gimp_drawable_type_without_alpha (drawable);
 
-  gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)), context,
-                             gimp_drawable_type (GIMP_DRAWABLE (layer)),
+  gimp_image_get_background (gimp_item_get_image (item), context,
+                             gimp_drawable_type (drawable),
                              bg);
 
   /*  Allocate the new tiles  */
@@ -1780,7 +1789,7 @@ gimp_layer_flatten (GimpLayer   *layer,
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0,
                      gimp_item_get_width  (item),
                      gimp_item_get_height (item),
@@ -1834,6 +1843,8 @@ gimp_layer_boundary (GimpLayer *layer,
 {
   GimpItem *item;
   BoundSeg *new_segs;
+  gint      offset_x;
+  gint      offset_y;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
@@ -1864,28 +1875,30 @@ gimp_layer_boundary (GimpLayer *layer,
         }
     }
 
-  new_segs[0].x1   = item->offset_x;
-  new_segs[0].y1   = item->offset_y;
-  new_segs[0].x2   = item->offset_x;
-  new_segs[0].y2   = item->offset_y + gimp_item_get_height (item);
+  gimp_item_get_offset (item, &offset_x, &offset_y);
+
+  new_segs[0].x1   = offset_x;
+  new_segs[0].y1   = offset_y;
+  new_segs[0].x2   = offset_x;
+  new_segs[0].y2   = offset_y + gimp_item_get_height (item);
   new_segs[0].open = 1;
 
-  new_segs[1].x1   = item->offset_x;
-  new_segs[1].y1   = item->offset_y;
-  new_segs[1].x2   = item->offset_x + gimp_item_get_width (item);
-  new_segs[1].y2   = item->offset_y;
+  new_segs[1].x1   = offset_x;
+  new_segs[1].y1   = offset_y;
+  new_segs[1].x2   = offset_x + gimp_item_get_width (item);
+  new_segs[1].y2   = offset_y;
   new_segs[1].open = 1;
 
-  new_segs[2].x1   = item->offset_x + gimp_item_get_width (item);
-  new_segs[2].y1   = item->offset_y;
-  new_segs[2].x2   = item->offset_x + gimp_item_get_width  (item);
-  new_segs[2].y2   = item->offset_y + gimp_item_get_height (item);
+  new_segs[2].x1   = offset_x + gimp_item_get_width (item);
+  new_segs[2].y1   = offset_y;
+  new_segs[2].x2   = offset_x + gimp_item_get_width  (item);
+  new_segs[2].y2   = offset_y + gimp_item_get_height (item);
   new_segs[2].open = 0;
 
-  new_segs[3].x1   = item->offset_x;
-  new_segs[3].y1   = item->offset_y + gimp_item_get_height (item);
-  new_segs[3].x2   = item->offset_x + gimp_item_get_width  (item);
-  new_segs[3].y2   = item->offset_y + gimp_item_get_height (item);
+  new_segs[3].x1   = offset_x;
+  new_segs[3].y1   = offset_y + gimp_item_get_height (item);
+  new_segs[3].x2   = offset_x + gimp_item_get_width  (item);
+  new_segs[3].y2   = offset_y + gimp_item_get_height (item);
   new_segs[3].open = 0;
 
   return new_segs;

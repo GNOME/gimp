@@ -177,6 +177,8 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   GimpTextLayer *text_layer;
   GimpItem      *item;
   GimpDrawable  *drawable;
+  gint           offset_x;
+  gint           offset_y;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -205,7 +207,8 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   item->width  = gimp_item_get_width (GIMP_ITEM (layer));
   item->height = gimp_item_get_height (GIMP_ITEM (layer));
 
-  gimp_item_get_offset (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
+  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+  gimp_item_set_offset (item, offset_x, offset_y);
 
   gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
   gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);

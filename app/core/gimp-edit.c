@@ -254,8 +254,7 @@ gimp_edit_paste (GimpImage    *image,
   offset_x = MAX (offset_x, 0);
   offset_y = MAX (offset_y, 0);
 
-  GIMP_ITEM (layer)->offset_x = offset_x;
-  GIMP_ITEM (layer)->offset_y = offset_y;
+  gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
   /*  Start a group undo  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,

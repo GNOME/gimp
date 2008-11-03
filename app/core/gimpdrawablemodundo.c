@@ -85,10 +85,12 @@ gimp_drawable_mod_undo_constructor (GType                  type,
 
   drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (object)->item);
 
-  drawable_mod_undo->tiles    = tile_manager_ref (gimp_drawable_get_tiles (drawable));
-  drawable_mod_undo->type     = drawable->type;
-  drawable_mod_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
-  drawable_mod_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
+  drawable_mod_undo->tiles = tile_manager_ref (gimp_drawable_get_tiles (drawable));
+  drawable_mod_undo->type  = gimp_drawable_type (drawable);
+
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                        &drawable_mod_undo->offset_x,
+                        &drawable_mod_undo->offset_y);
 
   return object;
 }
@@ -115,7 +117,8 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
   GimpDrawable        *drawable          = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
   TileManager         *tiles;
   GimpImageType        type;
-  gint                 offset_x, offset_y;
+  gint                 offset_x;
+  gint                 offset_y;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -124,10 +127,12 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
   offset_x = drawable_mod_undo->offset_x;
   offset_y = drawable_mod_undo->offset_y;
 
-  drawable_mod_undo->tiles    = tile_manager_ref (gimp_drawable_get_tiles (drawable));
-  drawable_mod_undo->type     = drawable->type;
-  drawable_mod_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
-  drawable_mod_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
+  drawable_mod_undo->tiles = tile_manager_ref (gimp_drawable_get_tiles (drawable));
+  drawable_mod_undo->type  = drawable->type;
+
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                        &drawable_mod_undo->offset_x,
+                        &drawable_mod_undo->offset_y);
 
   gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
                                 tiles, type, offset_x, offset_y);

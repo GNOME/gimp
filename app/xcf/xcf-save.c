@@ -468,6 +468,8 @@ xcf_save_layer_props (XcfInfo    *info,
                       GError    **error)
 {
   GimpParasite *parasite = NULL;
+  gint          offset_x;
+  gint          offset_y;
 
   if (layer == gimp_image_get_active_layer (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
@@ -509,9 +511,10 @@ xcf_save_layer_props (XcfInfo    *info,
                                       FALSE));
     }
 
+  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+
   xcf_check_error (xcf_save_prop (info, image, PROP_OFFSETS, error,
-                                  GIMP_ITEM (layer)->offset_x,
-                                  GIMP_ITEM (layer)->offset_y));
+                                  offset_x, offset_y));
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
                                   gimp_layer_get_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,

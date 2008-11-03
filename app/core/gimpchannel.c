@@ -431,7 +431,7 @@ gimp_channel_convert (GimpItem  *item,
       if (gimp_drawable_has_alpha (drawable))
         new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
 
-      new_tiles = tile_manager_new (gimp_item_get_width (item),
+      new_tiles = tile_manager_new (gimp_item_get_width  (item),
                                     gimp_item_get_height (item),
                                     GIMP_IMAGE_TYPE_BYTES (new_type));
 
@@ -455,7 +455,7 @@ gimp_channel_convert (GimpItem  *item,
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
-                         gimp_item_get_width (item),
+                         gimp_item_get_width  (item),
                          gimp_item_get_height (item),
                          FALSE);
       pixel_region_init (&destPR, new_tiles,
@@ -478,8 +478,7 @@ gimp_channel_convert (GimpItem  *item,
       gint width  = gimp_image_get_width  (dest_image);
       gint height = gimp_image_get_height (dest_image);
 
-      item->offset_x = 0;
-      item->offset_y = 0;
+      gimp_item_set_offset (item, 0, 0);
 
       if (gimp_item_get_width  (item) != width ||
           gimp_item_get_height (item) != height)
@@ -640,8 +639,7 @@ gimp_channel_resize (GimpItem    *item,
 
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     {
-      item->offset_x = 0;
-      item->offset_y = 0;
+      gimp_item_set_offset (item, 0, 0);
     }
 }
 

@@ -111,6 +111,8 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
   GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (undo);
   GimpVectors        *vectors          = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
   GimpVectors        *temp;
+  gint                offset_x;
+  gint                offset_y;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -124,10 +126,11 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
 
   gimp_vectors_copy_strokes (temp, vectors);
 
-  GIMP_ITEM (vectors)->width    = gimp_item_get_width  (GIMP_ITEM (temp));
-  GIMP_ITEM (vectors)->height   = gimp_item_get_height (GIMP_ITEM (temp));
-  GIMP_ITEM (vectors)->offset_x = GIMP_ITEM (temp)->offset_x;
-  GIMP_ITEM (vectors)->offset_y = GIMP_ITEM (temp)->offset_y;
+  GIMP_ITEM (vectors)->width  = gimp_item_get_width  (GIMP_ITEM (temp));
+  GIMP_ITEM (vectors)->height = gimp_item_get_height (GIMP_ITEM (temp));
+
+  gimp_item_get_offset (GIMP_ITEM (temp), &offset_x, &offset_y);
+  gimp_item_set_offset (GIMP_ITEM (vectors), offset_x, offset_y);
 
   g_object_unref (temp);
 

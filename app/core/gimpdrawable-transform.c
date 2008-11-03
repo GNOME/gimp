@@ -856,8 +856,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                    _("Transformation"),
                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-      GIMP_ITEM (layer)->offset_x = offset_x;
-      GIMP_ITEM (layer)->offset_y = offset_y;
+      gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
       floating_sel_attach (layer, drawable);
     }

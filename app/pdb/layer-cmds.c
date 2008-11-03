@@ -465,12 +465,15 @@ layer_set_offsets_invoker (GimpProcedure      *procedure,
   if (success)
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+      gint       offset_x;
+      gint       offset_y;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
-      offx -= GIMP_ITEM (layer)->offset_x;
-      offy -= GIMP_ITEM (layer)->offset_y;
+      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+      offx -= offset_x;
+      offy -= offset_y;
 
       gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 

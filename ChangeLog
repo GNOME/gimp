@@ -1,5 +1,26 @@
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpdrawablemodundo.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimpselection.c
+	* app/text/gimptext-compat.c
+	* app/text/gimptextlayer-xcf.c
+	* app/vectors/gimpvectorsmodundo.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/layer.pdb: use accessors for item->offset_x,y.
+	Some minor unrelated cleanups.
+
+	* app/pdb/layer-cmds.c: regenerated.
+
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/vectors-actions.c: include "gimpcontainer.h".
 
 2008-11-03  Michael Natterer  <mitch@gimp.org>

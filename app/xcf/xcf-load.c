@@ -689,12 +689,15 @@ xcf_load_layer_props (XcfInfo   *info,
           break;
 
         case PROP_OFFSETS:
-          info->cp +=
-            xcf_read_int32 (info->fp,
-                            (guint32 *) &GIMP_ITEM (layer)->offset_x, 1);
-          info->cp +=
-            xcf_read_int32 (info->fp,
-                            (guint32 *) &GIMP_ITEM (layer)->offset_y, 1);
+          {
+            guint32 offset_x;
+            guint32 offset_y;
+
+            info->cp += xcf_read_int32 (info->fp, &offset_x, 1);
+            info->cp += xcf_read_int32 (info->fp, &offset_y, 1);
+
+            gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
+          }
           break;
 
         case PROP_MODE:
