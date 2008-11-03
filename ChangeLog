@@ -1,6 +1,5 @@
 2008-11-03  Sven Neumann  <sven@gimp.org>
 
-	
 	* app/base/Makefile.am
 	* app/core/Makefile.am
 	* app/display/Makefile.am
@@ -10,7 +9,7 @@
 	* app/tools/Makefile.am
 	* app/widgets/Makefile.am
 	* libgimp/Makefile.am
-	* libgimpbase/Makefile.am: 
+	* libgimpbase/Makefile.am:
 	* libgimpconfig/Makefile.am
 	* libgimpthumb/Makefile.am
 	* libgimpwidgets/Makefile.am: micro-optimization in the generated
@@ -414,7 +413,7 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	Bug 558660 – help behavior for locales without manual translation
-	
+
 	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
 	as a fallback check for the english user manual.
 
@@ -456,7 +455,7 @@
 
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
-	* INSTALL: 
+	* INSTALL:
 	* configure.in: removed checks for PangoFT2.
 
 	* app/config/Makefile.am
