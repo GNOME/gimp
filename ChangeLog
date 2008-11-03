@@ -1,3 +1,43 @@
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: renamed
+	gimp_item_width() to gimp_item_get_width() and
+	gimp_item_height() to gimp_item_get_height().
+
+	* app/actions/channels-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/layers-commands.c
+	* app/core/<many>.c
+	* app/dialogs/offset-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/scale-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimpink.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsmudge.c
+	* app/text/gimptextlayer-xcf.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimpregionselecttool.c
+	* app/tools/gimptexttool.c
+	* app/vectors/gimpvectors.c
+	* app/vectors/gimpvectorsmodundo.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrenderervectors.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/drawable.pdb: changed accordingly.
+
+	* app/pdb/drawable-cmds.c: regenerated.
+
 2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpitem.c: Instantiate offset_node on-demand.

@@ -93,9 +93,9 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
       gdouble yscale;
 
       xscale = ((gdouble) renderer->width /
-                (gdouble) gimp_item_width  (GIMP_ITEM (vectors)));
+                (gdouble) gimp_item_get_width  (GIMP_ITEM (vectors)));
       yscale = ((gdouble) renderer->height /
-                (gdouble) gimp_item_height (GIMP_ITEM (vectors)));
+                (gdouble) gimp_item_get_height (GIMP_ITEM (vectors)));
 
       cairo_scale (cr, xscale, yscale);
 

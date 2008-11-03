@@ -309,8 +309,8 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
   if (layer && gimp_layer_is_floating_sel (layer))
     gimp_drawable_update (GIMP_DRAWABLE (layer),
                           0, 0,
-                          gimp_item_width  (GIMP_ITEM (layer)),
-                          gimp_item_height (GIMP_ITEM (layer)));
+                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                          gimp_item_get_height (GIMP_ITEM (layer)));
 
   /*  invalidate the preview  */
   drawable->preview_valid = FALSE;
@@ -380,9 +380,9 @@ gimp_selection_boundary (GimpChannel     *channel,
 
       x1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
       y1 = CLAMP (off_y, 0, gimp_image_get_height (image));
-      x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)),
+      x2 = CLAMP (off_x + gimp_item_get_width (GIMP_ITEM (layer)),
                   0, gimp_image_get_width (image));
-      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)),
+      y2 = CLAMP (off_y + gimp_item_get_height (GIMP_ITEM (layer)),
                   0, gimp_image_get_height (image));
 
       return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
@@ -567,8 +567,8 @@ gimp_selection_load (GimpChannel *selection,
   src_item  = GIMP_ITEM (channel);
   dest_item = GIMP_ITEM (selection);
 
-  g_return_if_fail (gimp_item_width  (src_item) == gimp_item_width  (dest_item));
-  g_return_if_fail (gimp_item_height (src_item) == gimp_item_height (dest_item));
+  g_return_if_fail (gimp_item_get_width  (src_item) == gimp_item_get_width  (dest_item));
+  g_return_if_fail (gimp_item_get_height (src_item) == gimp_item_get_height (dest_item));
 
   gimp_channel_push_undo (selection, _("Channel to Selection"));
 
@@ -576,14 +576,14 @@ gimp_selection_load (GimpChannel *selection,
   pixel_region_init (&srcPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                      0, 0,
-                     gimp_item_width  (src_item),
-                     gimp_item_height (src_item),
+                     gimp_item_get_width  (src_item),
+                     gimp_item_get_height (src_item),
                      FALSE);
   pixel_region_init (&destPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
                      0, 0,
-                     gimp_item_width  (dest_item),
-                     gimp_item_height (dest_item),
+                     gimp_item_get_width  (dest_item),
+                     gimp_item_get_height (dest_item),
                      TRUE);
   copy_region (&srcPR, &destPR);
 
@@ -591,8 +591,8 @@ gimp_selection_load (GimpChannel *selection,
 
   gimp_drawable_update (GIMP_DRAWABLE (selection),
                         0, 0,
-                        gimp_item_width  (dest_item),
-                        gimp_item_height (dest_item));
+                        gimp_item_get_width  (dest_item),
+                        gimp_item_get_height (dest_item));
 }
 
 GimpChannel *

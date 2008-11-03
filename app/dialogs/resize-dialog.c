@@ -125,8 +125,8 @@ resize_dialog_new (GimpViewable       *viewable,
 
       image = gimp_item_get_image (item);
 
-      width  = gimp_item_width (item);
-      height = gimp_item_height (item);
+      width  = gimp_item_get_width  (item);
+      height = gimp_item_get_height (item);
 
       text = _("Layer Size");
     }

@@ -199,8 +199,8 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
 
   blob_bounds (ink->cur_blob, &x, &y, &width, &height);
 
-  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
-  dheight = gimp_item_height (GIMP_ITEM (drawable));
+  dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  dheight = gimp_item_get_height (GIMP_ITEM (drawable));
 
   x1 = CLAMP (x / SUBSAMPLE - 1,            0, dwidth);
   y1 = CLAMP (y / SUBSAMPLE - 1,            0, dheight);

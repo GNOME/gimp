@@ -144,8 +144,8 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   item = GIMP_ITEM (drawable);
 
-  g_return_val_if_fail ((src_x + src_width)  <= gimp_item_width  (item), NULL);
-  g_return_val_if_fail ((src_y + src_height) <= gimp_item_height (item), NULL);
+  g_return_val_if_fail ((src_x + src_width)  <= gimp_item_get_width  (item), NULL);
+  g_return_val_if_fail ((src_y + src_height) <= gimp_item_get_height (item), NULL);
 
   image = gimp_item_get_image (item);
 
@@ -181,8 +181,8 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 
       ret_buf = gimp_drawable_get_sub_preview (drawable,
                                                0, 0,
-                                               gimp_item_width (item),
-                                               gimp_item_height (item),
+                                               gimp_item_get_width (item),
+                                               gimp_item_get_height (item),
                                                width,
                                                height);
 

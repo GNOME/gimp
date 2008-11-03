@@ -232,10 +232,10 @@ gimp_image_undo_push_drawable (GimpImage    *image,
 
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
   g_return_val_if_fail (sparse == FALSE ||
-                        tile_manager_width (tiles) == gimp_item_width (item),
+                        tile_manager_width (tiles) == gimp_item_get_width (item),
                         NULL);
   g_return_val_if_fail (sparse == FALSE ||
-                        tile_manager_height (tiles) == gimp_item_height (item),
+                        tile_manager_height (tiles) == gimp_item_get_height (item),
                         NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_UNDO,

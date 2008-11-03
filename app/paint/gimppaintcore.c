@@ -357,8 +357,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   if (core->undo_tiles)
     tile_manager_unref (core->undo_tiles);
 
-  core->undo_tiles = tile_manager_new (gimp_item_width (item),
-                                       gimp_item_height (item),
+  core->undo_tiles = tile_manager_new (gimp_item_get_width  (item),
+                                       gimp_item_get_height (item),
                                        gimp_drawable_bytes (drawable));
 
   /*  Allocate the saved proj structure  */
@@ -382,8 +382,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   if (core->canvas_tiles)
     tile_manager_unref (core->canvas_tiles);
 
-  core->canvas_tiles = tile_manager_new (gimp_item_width (item),
-                                         gimp_item_height (item),
+  core->canvas_tiles = tile_manager_new (gimp_item_get_width  (item),
+                                         gimp_item_get_height (item),
                                          1);
 
   /*  Get the initial undo extents  */
@@ -617,8 +617,8 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                                     x1, y1,
                                     (x2 - x1), (y2 - y1));
 
-  drawable_width  = gimp_item_width  (GIMP_ITEM (drawable));
-  drawable_height = gimp_item_height (GIMP_ITEM (drawable));
+  drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
 
   x1 = CLAMP (x1, 0, drawable_width);
   y1 = CLAMP (y1, 0, drawable_height);

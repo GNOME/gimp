@@ -173,8 +173,8 @@ gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  off_x = x + (width  - gimp_item_width  (item)) / 2 - off_x;
-  off_y = y + (height - gimp_item_height (item)) / 2 - off_y;
+  off_x = x + (width  - gimp_item_get_width  (item)) / 2 - off_x;
+  off_y = y + (height - gimp_item_get_height (item)) / 2 - off_y;
 
   gimp_item_translate (item, off_x, off_y, FALSE);
 }
@@ -220,8 +220,8 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
       image = gimp_create_image (shell->display->gimp,
-                                 gimp_item_width (GIMP_ITEM (viewable)),
-                                 gimp_item_height (GIMP_ITEM (viewable)),
+                                 gimp_item_get_width  (GIMP_ITEM (viewable)),
+                                 gimp_item_get_height (GIMP_ITEM (viewable)),
                                  type, TRUE);
       gimp_image_undo_disable (image);
 

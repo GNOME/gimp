@@ -187,10 +187,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
                                   CLAMP ((gint) paint_core->cur_coords.x,
                                          0,
-                                         gimp_item_width (GIMP_ITEM (drawable)) - 1),
+                                         gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
                                   CLAMP ((gint) paint_core->cur_coords.y,
                                          0,
-                                         gimp_item_height (GIMP_ITEM (drawable)) - 1),
+                                         gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
                                   fill);
 
       pixel_region_init_data (&srcPR, smudge->accum_data,

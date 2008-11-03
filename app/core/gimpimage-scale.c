@@ -282,8 +282,8 @@ gimp_image_scale_check (const GimpImage *image,
   for (list = drawables; list; list = g_list_next (list))
     {
       GimpDrawable *drawable = list->data;
-      gdouble       width    = gimp_item_width (GIMP_ITEM (drawable));
-      gdouble       height   = gimp_item_height (GIMP_ITEM (drawable));
+      gdouble       width    = gimp_item_get_width  (GIMP_ITEM (drawable));
+      gdouble       height   = gimp_item_get_height (GIMP_ITEM (drawable));
 
       scalable_size +=
         gimp_drawable_estimate_memsize (drawable,

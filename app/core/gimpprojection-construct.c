@@ -107,11 +107,11 @@ gimp_projection_construct (GimpProjection *proj,
 
       layer = GIMP_DRAWABLE (gimp_image_get_layer_by_index (image, 0));
 
-      if (gimp_drawable_has_alpha (layer)                         &&
-          (gimp_item_get_visible (GIMP_ITEM (layer)))             &&
-          (gimp_item_width (GIMP_ITEM (layer))  == image->width)  &&
-          (gimp_item_height (GIMP_ITEM (layer)) == image->height) &&
-          (! gimp_drawable_is_indexed (layer))                    &&
+      if (gimp_drawable_has_alpha (layer)                             &&
+          (gimp_item_get_visible (GIMP_ITEM (layer)))                 &&
+          (gimp_item_get_width  (GIMP_ITEM (layer)) == image->width)  &&
+          (gimp_item_get_height (GIMP_ITEM (layer)) == image->height) &&
+          (! gimp_drawable_is_indexed (layer))                        &&
           (gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE))
         {
           gint xoff;
@@ -243,8 +243,8 @@ gimp_projection_construct_layers (GimpProjection *proj,
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
-      x2 = CLAMP (off_x + gimp_item_width  (GIMP_ITEM (layer)), x, x + w);
-      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y, y + h);
+      x2 = CLAMP (off_x + gimp_item_get_width  (GIMP_ITEM (layer)), x, x + w);
+      y2 = CLAMP (off_y + gimp_item_get_height (GIMP_ITEM (layer)), y, y + h);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_projection_get_tiles (proj),
@@ -402,8 +402,8 @@ gimp_projection_initialize (GimpProjection *proj,
           gimp_layer_get_opacity (GIMP_LAYER (item)) == GIMP_OPACITY_OPAQUE &&
           (off_x <= x)                                                      &&
           (off_y <= y)                                                      &&
-          (off_x + gimp_item_width  (item) >= x + w)                        &&
-          (off_y + gimp_item_height (item) >= y + h))
+          (off_x + gimp_item_get_width  (item) >= x + w)                    &&
+          (off_y + gimp_item_get_height (item) >= y + h))
         {
           coverage = TRUE;
           break;

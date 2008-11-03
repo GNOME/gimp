@@ -795,8 +795,8 @@ xcf_load_channel_props (XcfInfo      *info,
 
             mask = image->selection_mask =
               gimp_selection_new (image,
-                                  gimp_item_width (GIMP_ITEM (*channel)),
-                                  gimp_item_height (GIMP_ITEM (*channel)));
+                                  gimp_item_get_width  (GIMP_ITEM (*channel)),
+                                  gimp_item_get_height (GIMP_ITEM (*channel)));
             g_object_ref_sink (mask);
 
             tile_manager_unref (GIMP_DRAWABLE (mask)->tiles);

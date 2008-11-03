@@ -539,7 +539,7 @@ sub drawable_width {
     %invoke = (
 	code => <<'CODE'
 {
-  width = gimp_item_width (GIMP_ITEM (drawable));
+  width = gimp_item_get_width (GIMP_ITEM (drawable));
 }
 CODE
     );
@@ -564,7 +564,7 @@ sub drawable_height {
     %invoke = (
 	code => <<'CODE'
 {
-  height = gimp_item_height (GIMP_ITEM (drawable));
+  height = gimp_item_get_height (GIMP_ITEM (drawable));
 }
 CODE
     );
@@ -951,8 +951,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (x_coord < gimp_item_width  (GIMP_ITEM (drawable)) &&
-      y_coord < gimp_item_height (GIMP_ITEM (drawable)))
+  if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+      y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
     {
       Tile   *tile;
       guint8 *p;
@@ -1010,8 +1010,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (x_coord < gimp_item_width  (GIMP_ITEM (drawable)) &&
-      y_coord < gimp_item_height (GIMP_ITEM (drawable)) &&
+  if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+      y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
       num_channels == gimp_drawable_bytes (drawable))
     {
       Tile   *tile;
@@ -1102,8 +1102,8 @@ HELP
   g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
   /* Adjust the width/height ratio */
-  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
-  dheight = gimp_item_height (GIMP_ITEM (drawable));
+  dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  dheight = gimp_item_get_height (GIMP_ITEM (drawable));
 
   if (dwidth > dheight)
     height = MAX (1, (width * dheight) / dwidth);
@@ -1183,8 +1183,8 @@ HELP
 	headers => [ qw("core/gimpdrawable-preview.h") ],
         code    => <<'CODE'
 {
-  if ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
-      (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)))
+  if ((src_x + src_width)  <= gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+      (src_y + src_height) <= gimp_item_get_height (GIMP_ITEM (drawable)))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       TempBuf   *buf;

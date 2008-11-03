@@ -192,8 +192,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
-      channel->x2    = gimp_item_width  (GIMP_ITEM (channel));
-      channel->y2    = gimp_item_height (GIMP_ITEM (channel));
+      channel->x2    = gimp_item_get_width  (GIMP_ITEM (channel));
+      channel->y2    = gimp_item_get_height (GIMP_ITEM (channel));
     }
 
   /* we know the bounds */
@@ -206,8 +206,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   gimp_drawable_update (GIMP_DRAWABLE (channel),
                         0, 0,
-                        gimp_item_width  (GIMP_ITEM (channel)),
-                        gimp_item_height (GIMP_ITEM (channel)));
+                        gimp_item_get_width  (GIMP_ITEM (channel)),
+                        gimp_item_get_height (GIMP_ITEM (channel)));
 }
 
 static void

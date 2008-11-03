@@ -555,8 +555,8 @@ gimp_foreground_select_tool_get_area (GimpChannel *mask,
 
   *x1 = MAX (*x1 - width  / 2, 0);
   *y1 = MAX (*y1 - height / 2, 0);
-  *x2 = MIN (*x2 + width  / 2, gimp_item_width (GIMP_ITEM (mask)));
-  *y2 = MIN (*y2 + height / 2, gimp_item_height (GIMP_ITEM (mask)));
+  *x2 = MIN (*x2 + width  / 2, gimp_item_get_width  (GIMP_ITEM (mask)));
+  *y2 = MIN (*y2 + height / 2, gimp_item_get_height (GIMP_ITEM (mask)));
 }
 
 static void

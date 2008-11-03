@@ -410,7 +410,7 @@ drawable_width_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      width = gimp_item_width (GIMP_ITEM (drawable));
+      width = gimp_item_get_width (GIMP_ITEM (drawable));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -439,7 +439,7 @@ drawable_height_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      height = gimp_item_height (GIMP_ITEM (drawable));
+      height = gimp_item_get_height (GIMP_ITEM (drawable));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -975,8 +975,8 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (x_coord < gimp_item_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_height (GIMP_ITEM (drawable)))
+      if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
         {
           Tile   *tile;
           guint8 *p;
@@ -1037,8 +1037,8 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (x_coord < gimp_item_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_height (GIMP_ITEM (drawable)) &&
+      if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
           num_channels == gimp_drawable_bytes (drawable))
         {
           Tile   *tile;
@@ -1156,8 +1156,8 @@ drawable_thumbnail_invoker (GimpProcedure      *procedure,
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
       /* Adjust the width/height ratio */
-      dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
-      dheight = gimp_item_height (GIMP_ITEM (drawable));
+      dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      dheight = gimp_item_get_height (GIMP_ITEM (drawable));
 
       if (dwidth > dheight)
         height = MAX (1, (width * dheight) / dwidth);
@@ -1236,8 +1236,8 @@ drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
-          (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)))
+      if ((src_x + src_width)  <= gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+          (src_y + src_height) <= gimp_item_get_height (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           TempBuf   *buf;

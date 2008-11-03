@@ -1100,10 +1100,10 @@ xcf_save_layer (XcfInfo    *info,
     }
 
   /* write out the width, height and image type information for the layer */
-  value = gimp_item_width (GIMP_ITEM (layer));
+  value = gimp_item_get_width (GIMP_ITEM (layer));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_item_height (GIMP_ITEM (layer));
+  value = gimp_item_get_height (GIMP_ITEM (layer));
   xcf_write_int32_check_error (info, &value, 1);
 
   value = gimp_drawable_type (GIMP_DRAWABLE (layer));
@@ -1177,10 +1177,10 @@ xcf_save_channel (XcfInfo      *info,
     }
 
   /* write out the width and height information for the channel */
-  value = gimp_item_width (GIMP_ITEM (channel));
+  value = gimp_item_get_width (GIMP_ITEM (channel));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_item_height (GIMP_ITEM (channel));
+  value = gimp_item_get_height (GIMP_ITEM (channel));
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the channels name */

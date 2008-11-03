@@ -469,8 +469,8 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
     {
       x      = 0;
       y      = 0;
-      width  = gimp_item_width (GIMP_ITEM (drawable));
-      height = gimp_item_height (GIMP_ITEM (drawable));
+      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      height = gimp_item_get_height (GIMP_ITEM (drawable));
     }
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);

@@ -72,8 +72,8 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
       GimpChannel *add_on;
 
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width  (item),
-                                      gimp_item_height (item));
+                                      gimp_item_get_width  (item),
+                                      gimp_item_get_height (item));
       gimp_channel_combine_rect (add_on, GIMP_CHANNEL_OP_ADD, x, y, w, h);
 
       if (feather)
@@ -123,8 +123,8 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
       GimpChannel *add_on;
 
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width  (item),
-                                      gimp_item_height (item));
+                                      gimp_item_get_width  (item),
+                                      gimp_item_get_height (item));
       gimp_channel_combine_ellipse (add_on, GIMP_CHANNEL_OP_ADD,
                                     x, y, w, h, antialias);
 
@@ -177,8 +177,8 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
       GimpChannel *add_on;
 
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width  (item),
-                                      gimp_item_height (item));
+                                      gimp_item_get_width  (item),
+                                      gimp_item_get_height (item));
       gimp_channel_combine_ellipse_rect (add_on, GIMP_CHANNEL_OP_ADD,
                                          x, y, w, h,
                                          corner_radius_x, corner_radius_y,
@@ -234,8 +234,8 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   item = GIMP_ITEM (channel);
 
   add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                  gimp_item_width  (item),
-                                  gimp_item_height (item));
+                                  gimp_item_get_width  (item),
+                                  gimp_item_get_height (item));
   gimp_scan_convert_render (scan_convert,
                             gimp_drawable_get_tiles (GIMP_DRAWABLE (add_on)),
                             offset_x, offset_y, antialias);
@@ -374,8 +374,8 @@ gimp_channel_select_channel (GimpChannel    *channel,
       GimpChannel *add_on2;
 
       add_on2 = gimp_channel_new_mask (gimp_item_get_image (item),
-                                       gimp_item_width  (item),
-                                       gimp_item_height (item));
+                                       gimp_item_get_width  (item),
+                                       gimp_item_get_height (item));
 
       gimp_channel_combine_mask (add_on2, add_on, GIMP_CHANNEL_OP_ADD,
                                  offset_x, offset_y);
@@ -424,8 +424,8 @@ gimp_channel_select_alpha (GimpChannel    *channel,
        *  so simply select the whole layer's extents.  --mitch
        */
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width  (GIMP_ITEM (drawable)),
-                                      gimp_item_height (GIMP_ITEM (drawable)));
+                                      gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                      gimp_item_get_height (GIMP_ITEM (drawable)));
       gimp_channel_all (add_on, FALSE);
     }
 

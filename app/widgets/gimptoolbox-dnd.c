@@ -189,8 +189,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   if (context->gimp->busy)
     return;
 
-  width  = gimp_item_width  (item);
-  height = gimp_item_height (item);
+  width  = gimp_item_get_width  (item);
+  height = gimp_item_get_height (item);
   bytes  = gimp_drawable_bytes (drawable);
 
   type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));

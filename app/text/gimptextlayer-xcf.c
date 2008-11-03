@@ -202,8 +202,8 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   item->parasites = GIMP_ITEM (layer)->parasites;
   GIMP_ITEM (layer)->parasites = NULL;
 
-  item->width  = gimp_item_width (GIMP_ITEM (layer));
-  item->height = gimp_item_height (GIMP_ITEM (layer));
+  item->width  = gimp_item_get_width (GIMP_ITEM (layer));
+  item->height = gimp_item_get_height (GIMP_ITEM (layer));
 
   gimp_item_get_offset (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
 

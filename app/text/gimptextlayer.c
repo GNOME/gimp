@@ -554,8 +554,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
   g_object_freeze_notify (G_OBJECT (drawable));
 
   if (gimp_text_layout_get_size (layout, &width, &height) &&
-      (width  != gimp_item_width (item) ||
-       height != gimp_item_height (item)))
+      (width  != gimp_item_get_width  (item) ||
+       height != gimp_item_get_height (item)))
     {
       TileManager *new_tiles = tile_manager_new (width, height,
                                                  drawable->bytes);
@@ -610,8 +610,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 
-  width = gimp_item_width (item);
-  height = gimp_item_height (item);
+  width  = gimp_item_get_width  (item);
+  height = gimp_item_get_height (item);
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_A8, width, height);
 

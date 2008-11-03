@@ -91,13 +91,13 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     {
       width  = MAX (1, ROUND ((((gdouble) width /
                                 (gdouble) gimp_image_get_width (image)) *
-                               (gdouble) gimp_item_width (item))));
+                               (gdouble) gimp_item_get_width (item))));
       height = MAX (1, ROUND ((((gdouble) height /
                                 (gdouble) gimp_image_get_height (image)) *
-                               (gdouble) gimp_item_height (item))));
+                               (gdouble) gimp_item_get_height (item))));
 
-      gimp_viewable_calc_preview_size (gimp_item_width  (item),
-                                       gimp_item_height (item),
+      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
+                                       gimp_item_get_height (item),
                                        width,
                                        height,
                                        renderer->dot_for_dot,
@@ -109,8 +109,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     }
   else
     {
-      gimp_viewable_calc_preview_size (gimp_item_width  (item),
-                                       gimp_item_height (item),
+      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
+                                       gimp_item_get_height (item),
                                        width,
                                        height,
                                        renderer->dot_for_dot,
@@ -122,7 +122,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
     }
 
   if ((view_width * view_height) <
-      (gimp_item_width (item) * gimp_item_height (item) * 4))
+      (gimp_item_get_width (item) * gimp_item_get_height (item) * 4))
     scaling_up = FALSE;
 
   if (scaling_up)
@@ -133,8 +133,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           gint src_width, src_height;
 
           if (gimp_rectangle_intersect (0, 0,
-                                        gimp_item_width  (item),
-                                        gimp_item_height (item),
+                                        gimp_item_get_width  (item),
+                                        gimp_item_get_height (item),
                                         -item->offset_x, -item->offset_y,
                                         gimp_image_get_width  (image),
                                         gimp_image_get_height (image),
@@ -173,8 +173,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
-                                                    gimp_item_width  (item),
-                                                    gimp_item_height (item));
+                                                    gimp_item_get_width  (item),
+                                                    gimp_item_get_height (item));
 
           if (temp_buf)
             {

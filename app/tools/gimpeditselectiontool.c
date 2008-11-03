@@ -349,8 +349,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       case GIMP_TRANSLATE_MODE_FLOATING_SEL:
         x1 = off_x;
         y1 = off_y;
-        x2 = x1 + gimp_item_width  (active_item);
-        y2 = y1 + gimp_item_height (active_item);
+        x2 = x1 + gimp_item_get_width  (active_item);
+        y2 = y1 + gimp_item_get_height (active_item);
 
         if (gimp_item_get_linked (active_item))
           {
@@ -371,8 +371,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
                 gimp_item_get_offset (item, &x3, &y3);
 
-                x4 = x3 + gimp_item_width  (item);
-                y4 = y3 + gimp_item_height (item);
+                x4 = x3 + gimp_item_get_width  (item);
+                y4 = y3 + gimp_item_get_height (item);
 
                 if (x3 < x1)
                   x1 = x3;
@@ -832,8 +832,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                            FALSE,
                                            edit_select->cumlx + off_x,
                                            edit_select->cumly + off_y,
-                                           gimp_item_width  (active_item),
-                                           gimp_item_height (active_item),
+                                           gimp_item_get_width  (active_item),
+                                           gimp_item_get_height (active_item),
                                            FALSE);
           }
       }
@@ -859,8 +859,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
         gimp_item_get_offset (active_item, &x1, &y1);
 
-        x2 = x1 + gimp_item_width  (active_item);
-        y2 = y1 + gimp_item_height (active_item);
+        x2 = x1 + gimp_item_get_width  (active_item);
+        y2 = y1 + gimp_item_get_height (active_item);
 
         if (gimp_item_get_linked (active_item))
           {
@@ -882,8 +882,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
                 gimp_item_get_offset (item, &x3, &y3);
 
-                x4 = x3 + gimp_item_width  (item);
-                y4 = y3 + gimp_item_height (item);
+                x4 = x3 + gimp_item_get_width  (item);
+                y4 = y3 + gimp_item_get_height (item);
 
                 if (x3 < x1)
                   x1 = x3;

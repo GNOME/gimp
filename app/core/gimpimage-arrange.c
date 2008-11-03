@@ -260,8 +260,8 @@ compute_offset (GObject *object,
           GimpItem *item = GIMP_ITEM (object);
 
           gimp_item_get_offset (item, &object_offset_x, &object_offset_y);
-          object_height   = gimp_item_height (item);
-          object_width    = gimp_item_width (item);
+          object_width  = gimp_item_get_width  (item);
+          object_height = gimp_item_get_height (item);
         }
       else
         {
@@ -270,8 +270,8 @@ compute_offset (GObject *object,
           gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
           object_offset_x = x1;
           object_offset_y = y1;
-          object_height   = y2 - y1;
           object_width    = x2 - x1;
+          object_height   = y2 - y1;
         }
     }
   else if (GIMP_IS_ITEM (object))
@@ -288,14 +288,14 @@ compute_offset (GObject *object,
 
           object_offset_x = ROUND (x1_f);
           object_offset_y = ROUND (y1_f);
-          object_width    = ROUND (x2_f - x1_f);
           object_height   = ROUND (y2_f - y1_f);
+          object_width    = ROUND (x2_f - x1_f);
         }
       else
         {
           gimp_item_get_offset (item, &object_offset_x, &object_offset_y);
-          object_height = gimp_item_height (item);
-          object_width  = gimp_item_width (item);
+          object_width  = gimp_item_get_width  (item);
+          object_height = gimp_item_get_height (item);
         }
     }
   else if (GIMP_IS_GUIDE (object))

@@ -145,8 +145,8 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
     {
       GimpChannel *template = GIMP_CHANNEL (GIMP_ACTION (action)->viewable);
 
-      width  = gimp_item_width  (GIMP_ITEM (template));
-      height = gimp_item_height (GIMP_ITEM (template));
+      width  = gimp_item_get_width  (GIMP_ITEM (template));
+      height = gimp_item_get_height (GIMP_ITEM (template));
       color  = template->color;
     }
   else

@@ -337,8 +337,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
     {
       x = 0;
       y = 0;
-      w = gimp_item_width  (GIMP_ITEM (drawable));
-      h = gimp_item_height (GIMP_ITEM (drawable));
+      w = gimp_item_get_width  (GIMP_ITEM (drawable));
+      h = gimp_item_get_height (GIMP_ITEM (drawable));
     }
   else if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {

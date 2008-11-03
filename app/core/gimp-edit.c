@@ -240,8 +240,8 @@ gimp_edit_paste (GimpImage    *image,
       center_y = gimp_image_get_height (image) / 2;
     }
 
-  width  = gimp_item_width  (GIMP_ITEM (layer));
-  height = gimp_item_height (GIMP_ITEM (layer));
+  width  = gimp_item_get_width  (GIMP_ITEM (layer));
+  height = gimp_item_get_height (GIMP_ITEM (layer));
 
   offset_x = center_x - width  / 2;
   offset_y = center_y - height / 2;

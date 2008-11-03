@@ -215,11 +215,11 @@ drawable_flip_cmd_callback (GtkAction *action,
   switch ((GimpOrientationType) value)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      axis = ((gdouble) off_x + (gdouble) gimp_item_width (item) / 2.0);
+      axis = ((gdouble) off_x + (gdouble) gimp_item_get_width (item) / 2.0);
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      axis = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
+      axis = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
       break;
 
     default:
@@ -262,8 +262,8 @@ drawable_rotate_cmd_callback (GtkAction *action,
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
-  center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
+  center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
+  center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
 
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,

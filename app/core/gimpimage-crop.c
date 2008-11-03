@@ -189,9 +189,9 @@ gimp_image_crop (GimpImage   *image,
 
               lx1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
               ly1 = CLAMP (off_y, 0, gimp_image_get_height (image));
-              lx2 = CLAMP (gimp_item_width  (item) + off_x,
+              lx2 = CLAMP (gimp_item_get_width  (item) + off_x,
                            0, gimp_image_get_width (image));
-              ly2 = CLAMP (gimp_item_height (item) + off_y,
+              ly2 = CLAMP (gimp_item_get_height (item) + off_y,
                            0, gimp_image_get_height (image));
 
               width  = lx2 - lx1;

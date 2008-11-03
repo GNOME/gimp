@@ -74,8 +74,8 @@ floating_sel_attach (GimpLayer    *layer,
   /*  set the drawable and allocate a backing store  */
   gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
   layer->fs.drawable      = drawable;
-  layer->fs.backing_store = tile_manager_new (gimp_item_width  (GIMP_ITEM (layer)),
-                                              gimp_item_height (GIMP_ITEM (layer)),
+  layer->fs.backing_store = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
+                                              gimp_item_get_height (GIMP_ITEM (layer)),
                                               gimp_drawable_bytes (drawable));
 
   /*  add the layer to the image  */
@@ -141,8 +141,8 @@ floating_sel_anchor (GimpLayer *layer)
   floating_sel_composite (layer,
                           GIMP_ITEM (layer)->offset_x,
                           GIMP_ITEM (layer)->offset_y,
-                          gimp_item_width  (GIMP_ITEM (layer)),
-                          gimp_item_height (GIMP_ITEM (layer)),
+                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                          gimp_item_get_height (GIMP_ITEM (layer)),
                           TRUE);
 
   drawable = layer->fs.drawable;
@@ -214,8 +214,8 @@ floating_sel_to_layer (GimpLayer  *layer,
   floating_sel_restore (layer,
                         item->offset_x,
                         item->offset_y,
-                        gimp_item_width  (item),
-                        gimp_item_height (item));
+                        gimp_item_get_width  (item),
+                        gimp_item_get_height (item));
 
   gimp_image_undo_push_fs_to_layer (image, NULL, layer);
 
@@ -235,8 +235,8 @@ floating_sel_to_layer (GimpLayer  *layer,
 
   gimp_drawable_update (GIMP_DRAWABLE (layer),
                         0, 0,
-                        gimp_item_width  (item),
-                        gimp_item_height (item));
+                        gimp_item_get_width  (item),
+                        gimp_item_get_height (item));
 
   gimp_image_floating_selection_changed (image);
 
@@ -259,9 +259,9 @@ floating_sel_store (GimpLayer *layer,
 
   /*  Check the backing store & make sure it has the correct dimensions  */
   if ((tile_manager_width  (layer->fs.backing_store) !=
-       gimp_item_width (GIMP_ITEM(layer)))  ||
+       gimp_item_get_width (GIMP_ITEM(layer)))  ||
       (tile_manager_height (layer->fs.backing_store) !=
-       gimp_item_height (GIMP_ITEM(layer))) ||
+       gimp_item_get_height (GIMP_ITEM(layer))) ||
       (tile_manager_bpp    (layer->fs.backing_store) !=
        gimp_drawable_bytes (layer->fs.drawable)))
     {
@@ -269,8 +269,8 @@ floating_sel_store (GimpLayer *layer,
       tile_manager_unref (layer->fs.backing_store);
 
       layer->fs.backing_store =
-        tile_manager_new (gimp_item_width  (GIMP_ITEM (layer)),
-                          gimp_item_height (GIMP_ITEM (layer)),
+        tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
+                          gimp_item_get_height (GIMP_ITEM (layer)),
                           gimp_drawable_bytes (layer->fs.drawable));
     }
 
@@ -283,10 +283,10 @@ floating_sel_store (GimpLayer *layer,
   /*  Find the minimum area we need to uncover -- in image space  */
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
   y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
-  x2 = MIN (GIMP_ITEM (layer)->offset_x + gimp_item_width (GIMP_ITEM (layer)),
-            offx + gimp_item_width (GIMP_ITEM (layer->fs.drawable)));
-  y2 = MIN (GIMP_ITEM (layer)->offset_y + gimp_item_height (GIMP_ITEM (layer)),
-            offy + gimp_item_height (GIMP_ITEM (layer->fs.drawable)));
+  x2 = MIN (GIMP_ITEM (layer)->offset_x + gimp_item_get_width (GIMP_ITEM (layer)),
+            offx + gimp_item_get_width (GIMP_ITEM (layer->fs.drawable)));
+  y2 = MIN (GIMP_ITEM (layer)->offset_y + gimp_item_get_height (GIMP_ITEM (layer)),
+            offy + gimp_item_get_height (GIMP_ITEM (layer->fs.drawable)));
 
   x1 = CLAMP (x, x1, x2);
   y1 = CLAMP (y, y1, y2);
@@ -332,10 +332,10 @@ floating_sel_restore (GimpLayer *layer,
 
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
   y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
-  x2 = MIN (GIMP_ITEM (layer)->offset_x + gimp_item_width (GIMP_ITEM (layer)),
-            offx + gimp_item_width  (GIMP_ITEM (layer->fs.drawable)));
-  y2 = MIN (GIMP_ITEM(layer)->offset_y + gimp_item_height (GIMP_ITEM (layer)),
-            offy + gimp_item_height (GIMP_ITEM (layer->fs.drawable)));
+  x2 = MIN (GIMP_ITEM (layer)->offset_x + gimp_item_get_width (GIMP_ITEM (layer)),
+            offx + gimp_item_get_width  (GIMP_ITEM (layer->fs.drawable)));
+  y2 = MIN (GIMP_ITEM (layer)->offset_y + gimp_item_get_height (GIMP_ITEM (layer)),
+            offy + gimp_item_get_height (GIMP_ITEM (layer->fs.drawable)));
 
   x1 = CLAMP (x, x1, x2);
   y1 = CLAMP (y, y1, y2);
@@ -367,8 +367,8 @@ floating_sel_rigor (GimpLayer *layer,
   floating_sel_store (layer,
                       GIMP_ITEM (layer)->offset_x,
                       GIMP_ITEM (layer)->offset_y,
-                      gimp_item_width  (GIMP_ITEM (layer)),
-                      gimp_item_height (GIMP_ITEM (layer)));
+                      gimp_item_get_width  (GIMP_ITEM (layer)),
+                      gimp_item_get_height (GIMP_ITEM (layer)));
   layer->fs.initial = TRUE;
 
   if (push_undo)
@@ -389,8 +389,8 @@ floating_sel_relax (GimpLayer *layer,
     floating_sel_restore (layer,
                           GIMP_ITEM (layer)->offset_x,
                           GIMP_ITEM (layer)->offset_y,
-                          gimp_item_width  (GIMP_ITEM (layer)),
-                          gimp_item_height (GIMP_ITEM (layer)));
+                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                          gimp_item_get_height (GIMP_ITEM (layer)));
   layer->fs.initial = TRUE;
 
   if (push_undo)
@@ -442,11 +442,11 @@ floating_sel_composite (GimpLayer *layer,
       x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
       y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
       x2 = MIN (GIMP_ITEM (layer)->offset_x +
-                gimp_item_width (GIMP_ITEM (layer)),
-                offx + gimp_item_width  (GIMP_ITEM (layer->fs.drawable)));
+                gimp_item_get_width (GIMP_ITEM (layer)),
+                offx + gimp_item_get_width  (GIMP_ITEM (layer->fs.drawable)));
       y2 = MIN (GIMP_ITEM (layer)->offset_y +
-                gimp_item_height (GIMP_ITEM (layer)),
-                offy + gimp_item_height (GIMP_ITEM (layer->fs.drawable)));
+                gimp_item_get_height (GIMP_ITEM (layer)),
+                offy + gimp_item_get_height (GIMP_ITEM (layer->fs.drawable)));
 
       x1 = CLAMP (x, x1, x2);
       y1 = CLAMP (y, y1, y2);
@@ -512,8 +512,8 @@ floating_sel_boundary (GimpLayer *layer,
       gint width, height;
       gint off_x, off_y;
 
-      width  = gimp_item_width  (GIMP_ITEM (layer));
-      height = gimp_item_height (GIMP_ITEM (layer));
+      width  = gimp_item_get_width  (GIMP_ITEM (layer));
+      height = gimp_item_get_height (GIMP_ITEM (layer));
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (layer->fs.segs)

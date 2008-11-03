@@ -157,8 +157,8 @@ gboolean        gimp_item_rename           (GimpItem           *item,
                                             const gchar        *new_name,
                                             GError            **error);
 
-gint            gimp_item_width            (const GimpItem     *item);
-gint            gimp_item_height           (const GimpItem     *item);
+gint            gimp_item_get_width        (const GimpItem     *item);
+gint            gimp_item_get_height       (const GimpItem     *item);
 
 void            gimp_item_get_offset       (const GimpItem     *item,
                                             gint               *offset_x,

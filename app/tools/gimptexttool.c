@@ -476,8 +476,8 @@ gimp_text_tool_button_press (GimpTool         *tool,
       gdouble   x    = coords->x - item->offset_x;
       gdouble   y    = coords->y - item->offset_y;
 
-      if (x > 0 && x < gimp_item_width (item) &&
-          y > 0 && y < gimp_item_height (item))
+      if (x > 0 && x < gimp_item_get_width (item) &&
+          y > 0 && y < gimp_item_get_height (item))
         {
           /*  did the user click on a text layer?  */
           if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
@@ -2417,7 +2417,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
   if (! text_tool->text || ! text_tool->image || ! text_tool->layer)
     return;
 
-  box_height = gimp_item_height (GIMP_ITEM (text_tool->layer));
+  box_height = gimp_item_get_height (GIMP_ITEM (text_tool->layer));
 
   vectors0 = gimp_image_get_active_vectors (text_tool->image);
   if (! vectors0)

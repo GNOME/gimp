@@ -626,8 +626,8 @@ gimp_rectangle_tool_constraint_size_set (GimpRectangleTool *rect_tool,
               }
             else
               {
-                width  = gimp_item_width (item);
-                height = gimp_item_height (item);
+                width  = gimp_item_get_width  (item);
+                height = gimp_item_get_height (item);
               }
           }
           break;
@@ -721,8 +721,8 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
   g_return_if_fail (display != NULL);
   g_return_if_fail (display->image == item->image);
 
-  width  = gimp_item_width (item);
-  height = gimp_item_height (item);
+  width  = gimp_item_get_width  (item);
+  height = gimp_item_get_height (item);
 
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
@@ -4103,8 +4103,8 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rect_tool,
         GimpItem *item = GIMP_ITEM (tool->drawable);
 
         gimp_item_get_offset (item, min_x, min_y);
-        *max_x = *min_x + gimp_item_width (item);
-        *max_y = *min_y + gimp_item_height (item);
+        *max_x = *min_x + gimp_item_get_width  (item);
+        *max_y = *min_y + gimp_item_get_height (item);
       }
       break;
 

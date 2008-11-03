@@ -700,8 +700,8 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
   y = (gint) floor (paint_core->cur_coords.y) - (brush_height / 2);
 
-  drawable_width  = gimp_item_width  (GIMP_ITEM (drawable));
-  drawable_height = gimp_item_height (GIMP_ITEM (drawable));
+  drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
 
   x1 = CLAMP (x - 1, 0, drawable_width);
   y1 = CLAMP (y - 1, 0, drawable_height);

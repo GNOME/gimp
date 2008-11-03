@@ -410,8 +410,8 @@ gimp_align_tool_button_release (GimpTool              *tool,
             continue;
 
           gimp_item_get_offset (GIMP_ITEM (layer), &x0, &y0);
-          x1 = x0 + gimp_item_width (GIMP_ITEM (layer));
-          y1 = y0 + gimp_item_height (GIMP_ITEM (layer));
+          x1 = x0 + gimp_item_get_width  (GIMP_ITEM (layer));
+          y1 = y0 + gimp_item_get_height (GIMP_ITEM (layer));
 
           if (x0 < X0 || y0 < Y0 || x1 > X1 || y1 > Y1)
             continue;
@@ -681,8 +681,8 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
             {
               gimp_item_get_offset (item, &x, &y);
 
-              w = gimp_item_width (item);
-              h = gimp_item_height (item);
+              w = gimp_item_get_width  (item);
+              h = gimp_item_get_height (item);
             }
 
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
@@ -1132,8 +1132,8 @@ select_layer_by_coords (GimpImage *image,
         continue;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-      width = gimp_item_width (GIMP_ITEM (layer));
-      height = gimp_item_height (GIMP_ITEM (layer));
+      width  = gimp_item_get_width  (GIMP_ITEM (layer));
+      height = gimp_item_get_height (GIMP_ITEM (layer));
 
       if (off_x <= x &&
           off_y <= y &&

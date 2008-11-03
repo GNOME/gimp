@@ -415,6 +415,6 @@ gimp_drawable_stack_drawable_visible (GimpItem          *item,
 
   gimp_drawable_stack_update (stack,
                               offset_x, offset_y,
-                              gimp_item_width (item),
-                              gimp_item_height (item));
+                              gimp_item_get_width  (item),
+                              gimp_item_get_height (item));
 }

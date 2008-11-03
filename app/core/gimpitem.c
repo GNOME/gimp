@@ -366,8 +366,8 @@ gimp_item_real_duplicate (GimpItem *item,
 
   gimp_item_configure (new_item, gimp_item_get_image (item),
                        item->offset_x, item->offset_y,
-                       gimp_item_width  (item),
-                       gimp_item_height (item),
+                       gimp_item_get_width  (item),
+                       gimp_item_get_height (item),
                        new_name);
 
   g_free (new_name);
@@ -660,13 +660,13 @@ gimp_item_rename (GimpItem     *item,
 }
 
 /**
- * gimp_item_width:
+ * gimp_item_get_width:
  * @item: The #GimpItem to check.
  *
  * Returns: The width of the item.
  */
 gint
-gimp_item_width (const GimpItem *item)
+gimp_item_get_width (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
@@ -674,13 +674,13 @@ gimp_item_width (const GimpItem *item)
 }
 
 /**
- * gimp_item_height:
+ * gimp_item_get_height:
  * @item: The #GimpItem to check.
  *
  * Returns: The height of the item.
  */
 gint
-gimp_item_height (const GimpItem *item)
+gimp_item_get_height (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
@@ -786,8 +786,8 @@ gimp_item_check_scaling (const GimpItem *item,
                      (gdouble) gimp_image_get_width (image));
   img_scale_h     = ((gdouble) new_height /
                      (gdouble) gimp_image_get_height (image));
-  new_item_width  = ROUND (img_scale_w * (gdouble) gimp_item_width  (item));
-  new_item_height = ROUND (img_scale_h * (gdouble) gimp_item_height (item));
+  new_item_width  = ROUND (img_scale_w * (gdouble) gimp_item_get_width  (item));
+  new_item_height = ROUND (img_scale_h * (gdouble) gimp_item_get_height (item));
 
   return (new_item_width > 0 && new_item_height > 0);
 }
@@ -874,8 +874,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
 
   new_offset_x = ROUND (w_factor * (gdouble) item->offset_x);
   new_offset_y = ROUND (h_factor * (gdouble) item->offset_y);
-  new_width    = ROUND (w_factor * (gdouble) gimp_item_width  (item));
-  new_height   = ROUND (h_factor * (gdouble) gimp_item_height (item));
+  new_width    = ROUND (w_factor * (gdouble) gimp_item_get_width  (item));
+  new_height   = ROUND (h_factor * (gdouble) gimp_item_get_height (item));
 
   if (new_width != 0 && new_height != 0)
     {
@@ -939,19 +939,19 @@ gimp_item_scale_by_origin (GimpItem              *item,
   if (local_origin)
     {
       new_offset_x = (item->offset_x +
-                      ((gimp_item_width  (item) - new_width)  / 2.0));
+                      ((gimp_item_get_width  (item) - new_width)  / 2.0));
       new_offset_y = (item->offset_y +
-                      ((gimp_item_height (item) - new_height) / 2.0));
+                      ((gimp_item_get_height (item) - new_height) / 2.0));
     }
   else
     {
       new_offset_x = (gint) (((gdouble) new_width *
                               (gdouble) item->offset_x /
-                              (gdouble) gimp_item_width (item)));
+                              (gdouble) gimp_item_get_width (item)));
 
       new_offset_y = (gint) (((gdouble) new_height *
                               (gdouble) item->offset_y /
-                              (gdouble) gimp_item_height (item)));
+                              (gdouble) gimp_item_get_height (item)));
     }
 
   gimp_item_scale (item,
@@ -1419,8 +1419,8 @@ gimp_item_is_in_set (GimpItem    *item,
       return TRUE;
 
     case GIMP_ITEM_SET_IMAGE_SIZED:
-      return (gimp_item_width  (item) == gimp_image_get_width  (item->image) &&
-              gimp_item_height (item) == gimp_image_get_height (item->image));
+      return (gimp_item_get_width  (item) == gimp_image_get_width  (item->image) &&
+              gimp_item_get_height (item) == gimp_image_get_height (item->image));
 
     case GIMP_ITEM_SET_VISIBLE:
       return gimp_item_get_visible (item);

@@ -692,13 +692,13 @@ remap_indexed_layer (GimpLayer    *layer,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -968,8 +968,8 @@ gimp_image_convert (GimpImage               *image,
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
 
-      new_tiles = tile_manager_new (gimp_item_width  (GIMP_ITEM (layer)),
-                                    gimp_item_height (GIMP_ITEM (layer)),
+      new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
+                                    gimp_item_get_height (GIMP_ITEM (layer)),
                                     GIMP_IMAGE_TYPE_BYTES (new_layer_type));
 
       switch (new_type)
@@ -1120,8 +1120,8 @@ generate_histogram_gray (CFHistogram  histogram,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
 
   for (pr = pixel_regions_register (1, &srcPR);
@@ -1179,12 +1179,12 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
 
-  layer_size = (gimp_item_width  (GIMP_ITEM (layer)) *
-                gimp_item_height (GIMP_ITEM (layer)));
+  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
+                gimp_item_get_height (GIMP_ITEM (layer)));
 
   if (progress)
     gimp_progress_set_value (progress, 0.0);
@@ -2776,13 +2776,13 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -2873,13 +2873,13 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -3033,17 +3033,17 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
-  layer_size = (gimp_item_width  (GIMP_ITEM (layer)) *
-                gimp_item_height (GIMP_ITEM (layer)));
+  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
+                gimp_item_get_height (GIMP_ITEM (layer)));
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -3158,17 +3158,17 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
-  layer_size = (gimp_item_width  (GIMP_ITEM (layer)) *
-                gimp_item_height (GIMP_ITEM (layer)));
+  layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
+                gimp_item_get_height (GIMP_ITEM (layer)));
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -3352,12 +3352,12 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -3566,18 +3566,18 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   src_bytes  = GIMP_DRAWABLE (layer)->bytes;
   dest_bytes = tile_manager_bpp (new_tiles);
-  width      = gimp_item_width  (GIMP_ITEM (layer));
-  height     = gimp_item_height (GIMP_ITEM (layer));
+  width      = gimp_item_get_width  (GIMP_ITEM (layer));
+  height     = gimp_item_get_height (GIMP_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
@@ -3832,18 +3832,18 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_width  (GIMP_ITEM (layer)),
-                     gimp_item_height (GIMP_ITEM (layer)),
+                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                     gimp_item_get_height (GIMP_ITEM (layer)),
                      TRUE);
 
   src_bytes  = GIMP_DRAWABLE(layer)->bytes;
   dest_bytes = tile_manager_bpp (new_tiles);
-  width      = gimp_item_width  (GIMP_ITEM (layer));
-  height     = gimp_item_height (GIMP_ITEM (layer));
+  width      = gimp_item_get_width  (GIMP_ITEM (layer));
+  height     = gimp_item_get_height (GIMP_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;

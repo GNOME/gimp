@@ -377,14 +377,14 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   pixel_region_init (&maskPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (region_sel->region_mask)),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (region_sel->region_mask)),
-                     gimp_item_height (GIMP_ITEM (region_sel->region_mask)),
+                     gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
+                     gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
                      FALSE);
 
   bsegs = boundary_find (&maskPR, BOUNDARY_WITHIN_BOUNDS,
                          0, 0,
-                         gimp_item_width  (GIMP_ITEM (region_sel->region_mask)),
-                         gimp_item_height (GIMP_ITEM (region_sel->region_mask)),
+                         gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
+                         gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
                          BOUNDARY_HALF_WAY,
                          num_segs);
 

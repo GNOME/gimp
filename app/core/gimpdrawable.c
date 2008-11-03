@@ -301,8 +301,8 @@ gimp_drawable_get_size (GimpViewable *viewable,
 {
   GimpItem *item = GIMP_ITEM (viewable);
 
-  *width  = gimp_item_width  (item);
-  *height = gimp_item_height (item);
+  *width  = gimp_item_get_width  (item);
+  *height = gimp_item_get_height (item);
 
   return TRUE;
 }
@@ -384,20 +384,20 @@ gimp_drawable_duplicate (GimpItem *item,
                                gimp_item_get_image (item),
                                item->offset_x,
                                item->offset_y,
-                               gimp_item_width  (item),
-                               gimp_item_height (item),
+                               gimp_item_get_width  (item),
+                               gimp_item_get_height (item),
                                gimp_drawable_type (drawable),
                                GIMP_OBJECT (new_drawable)->name);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
-                         gimp_item_width  (item),
-                         gimp_item_height (item),
+                         gimp_item_get_width  (item),
+                         gimp_item_get_height (item),
                          FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_tiles (new_drawable),
                          0, 0,
-                         gimp_item_width  (new_item),
-                         gimp_item_height (new_item),
+                         gimp_item_get_width  (new_item),
+                         gimp_item_get_height (new_item),
                          TRUE);
 
       copy_region (&srcPR, &destPR);
@@ -442,8 +442,8 @@ gimp_drawable_scale (GimpItem              *item,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0,
-                     gimp_item_width  (item),
-                     gimp_item_height (item),
+                     gimp_item_get_width  (item),
+                     gimp_item_get_height (item),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
@@ -484,8 +484,8 @@ gimp_drawable_resize (GimpItem    *item,
   gint          copy_width, copy_height;
 
   /*  if the size doesn't change, this is a nop  */
-  if (new_width  == gimp_item_width  (item) &&
-      new_height == gimp_item_height (item) &&
+  if (new_width  == gimp_item_get_width  (item) &&
+      new_height == gimp_item_get_height (item) &&
       offset_x   == 0                       &&
       offset_y   == 0)
     return;
@@ -494,8 +494,8 @@ gimp_drawable_resize (GimpItem    *item,
   new_offset_y = item->offset_y - offset_y;
 
   gimp_rectangle_intersect (item->offset_x, item->offset_y,
-                            gimp_item_width  (item),
-                            gimp_item_height (item),
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
                             new_offset_x, new_offset_y,
                             new_width, new_height,
                             &copy_x, &copy_y,
@@ -661,8 +661,8 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
 
   /* do not make this a g_return_if_fail() */
-  if (x < 0 || x >= gimp_item_width  (GIMP_ITEM (drawable)) ||
-      y < 0 || y >= gimp_item_height (GIMP_ITEM (drawable)))
+  if (x < 0 || x >= gimp_item_get_width  (GIMP_ITEM (drawable)) ||
+      y < 0 || y >= gimp_item_get_height (GIMP_ITEM (drawable)))
     return FALSE;
 
   read_pixel_data_1 (gimp_drawable_get_tiles (drawable), x, y, pixel);
@@ -750,8 +750,8 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   gimp_item_set_offset (item, offset_x, offset_y);
 
-  if (gimp_item_width  (item) != tile_manager_width (tiles) ||
-      gimp_item_height (item) != tile_manager_height (tiles))
+  if (gimp_item_get_width  (item) != tile_manager_width (tiles) ||
+      gimp_item_get_height (item) != tile_manager_height (tiles))
     {
       item->width  = tile_manager_width (tiles);
       item->height = tile_manager_height (tiles);
@@ -1086,15 +1086,15 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  if (gimp_item_width  (item) != tile_manager_width (tiles)  ||
-      gimp_item_height (item) != tile_manager_height (tiles) ||
+  if (gimp_item_get_width  (item) != tile_manager_width (tiles)  ||
+      gimp_item_get_height (item) != tile_manager_height (tiles) ||
       item->offset_x          != offset_x                    ||
       item->offset_y          != offset_y)
     {
       gimp_drawable_update (drawable,
                             0, 0,
-                            gimp_item_width  (item),
-                            gimp_item_height (item));
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item));
     }
 
   if (gimp_drawable_has_floating_sel (drawable))
@@ -1110,8 +1110,8 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
 
   gimp_drawable_update (drawable,
                         0, 0,
-                        gimp_item_width  (item),
-                        gimp_item_height (item));
+                        gimp_item_get_width  (item),
+                        gimp_item_get_height (item));
 }
 
 GeglNode *
@@ -1181,9 +1181,9 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (sparse == FALSE ||
-                    tile_manager_width (tiles) == gimp_item_width (item));
+                    tile_manager_width (tiles) == gimp_item_get_width (item));
   g_return_if_fail (sparse == FALSE ||
-                    tile_manager_height (tiles) == gimp_item_height (item));
+                    tile_manager_height (tiles) == gimp_item_get_height (item));
 
 #if 0
   g_printerr ("gimp_drawable_push_undo (%s, %d, %d, %d, %d)\n",
@@ -1193,8 +1193,8 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
   if (! gimp_rectangle_intersect (x1, y1,
                                   x2 - x1, y2 - y1,
                                   0, 0,
-                                  gimp_item_width (item),
-                                  gimp_item_height (item),
+                                  gimp_item_get_width (item),
+                                  gimp_item_get_height (item),
                                   &x, &y, &width, &height))
     {
       g_warning ("%s: tried to push empty region", G_STRFUNC);
@@ -1226,7 +1226,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
   drawable_type = gimp_drawable_type (drawable);
 
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, gimp_item_width  (item), gimp_item_height (item),
+                     0, 0, gimp_item_get_width  (item), gimp_item_get_height (item),
                      TRUE);
 
   if (color)
@@ -1265,8 +1265,8 @@ gimp_drawable_fill (GimpDrawable      *drawable,
 
   gimp_drawable_update (drawable,
                         0, 0,
-                        gimp_item_width  (item),
-                        gimp_item_height (item));
+                        gimp_item_get_width  (item),
+                        gimp_item_get_height (item));
 }
 
 void
@@ -1342,10 +1342,10 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
-      tmp_x1 = CLAMP (tmp_x1 - off_x, 0, gimp_item_width  (item));
-      tmp_y1 = CLAMP (tmp_y1 - off_y, 0, gimp_item_height (item));
-      tmp_x2 = CLAMP (tmp_x2 - off_x, 0, gimp_item_width  (item));
-      tmp_y2 = CLAMP (tmp_y2 - off_y, 0, gimp_item_height (item));
+      tmp_x1 = CLAMP (tmp_x1 - off_x, 0, gimp_item_get_width  (item));
+      tmp_y1 = CLAMP (tmp_y1 - off_y, 0, gimp_item_get_height (item));
+      tmp_x2 = CLAMP (tmp_x2 - off_x, 0, gimp_item_get_width  (item));
+      tmp_y2 = CLAMP (tmp_y2 - off_y, 0, gimp_item_get_height (item));
 
       retval = TRUE;
     }
@@ -1353,8 +1353,8 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
     {
       tmp_x1 = 0;
       tmp_y1 = 0;
-      tmp_x2 = gimp_item_width  (item);
-      tmp_y2 = gimp_item_height (item);
+      tmp_x2 = gimp_item_get_width  (item);
+      tmp_y2 = gimp_item_get_height (item);
 
       retval = FALSE;
     }
@@ -1400,8 +1400,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
       retval = gimp_rectangle_intersect (tmp_x - off_x, tmp_y - off_y,
                                          tmp_width - tmp_x, tmp_height - tmp_y,
                                          0, 0,
-                                         gimp_item_width (item),
-                                         gimp_item_height (item),
+                                         gimp_item_get_width (item),
+                                         gimp_item_get_height (item),
                                          &tmp_x, &tmp_y,
                                          &tmp_width, &tmp_height);
     }
@@ -1409,8 +1409,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
     {
       tmp_x      = 0;
       tmp_y      = 0;
-      tmp_width  = gimp_item_width  (item);
-      tmp_height = gimp_item_height (item);
+      tmp_width  = gimp_item_get_width  (item);
+      tmp_height = gimp_item_get_height (item);
 
       retval = TRUE;
     }

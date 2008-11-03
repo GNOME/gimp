@@ -1638,15 +1638,15 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
         {
           *x1 = off_x;
           *y1 = off_y;
-          *x2 = off_x + gimp_item_width  (GIMP_ITEM (layer));
-          *y2 = off_y + gimp_item_height (GIMP_ITEM (layer));
+          *x2 = off_x + gimp_item_get_width  (GIMP_ITEM (layer));
+          *y2 = off_y + gimp_item_get_height (GIMP_ITEM (layer));
         }
       else
         {
           *x1 = MIN (off_x, *x1);
           *y1 = MIN (off_y, *y1);
-          *x2 = MAX (off_x + gimp_item_width  (GIMP_ITEM (layer)), *x2);
-          *y2 = MAX (off_y + gimp_item_height (GIMP_ITEM (layer)), *y2);
+          *x2 = MAX (off_x + gimp_item_get_width  (GIMP_ITEM (layer)), *x2);
+          *y2 = MAX (off_y + gimp_item_get_height (GIMP_ITEM (layer)), *y2);
         }
     }
   else if (! gimp_channel_bounds (gimp_image_get_mask (shell->display->image),

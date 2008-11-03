@@ -350,8 +350,8 @@ gimp_vectors_scale (GimpItem              *item,
       GimpStroke *stroke = list->data;
 
       gimp_stroke_scale (stroke,
-                         (gdouble) new_width  / (gdouble) gimp_item_width  (item),
-                         (gdouble) new_height / (gdouble) gimp_item_height (item));
+                         (gdouble) new_width  / (gdouble) gimp_item_get_width  (item),
+                         (gdouble) new_height / (gdouble) gimp_item_get_height (item));
       gimp_stroke_translate (stroke, new_offset_x, new_offset_y);
     }
 

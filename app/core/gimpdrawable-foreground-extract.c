@@ -57,8 +57,8 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
   state =
     gimp_drawable_foreground_extract_siox_init (drawable,
                                                 0, 0,
-                                                gimp_item_width (GIMP_ITEM (mask)),
-                                                gimp_item_height (GIMP_ITEM (mask)));
+                                                gimp_item_get_width  (GIMP_ITEM (mask)),
+                                                gimp_item_get_height (GIMP_ITEM (mask)));
 
   if (state)
     {
@@ -97,8 +97,8 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   intersect = gimp_rectangle_intersect (offset_x, offset_y,
-                                        gimp_item_width (GIMP_ITEM (drawable)),
-                                        gimp_item_height (GIMP_ITEM (drawable)),
+                                        gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                        gimp_item_get_height (GIMP_ITEM (drawable)),
                                         x, y, width, height,
                                         &x, &y, &width, &height);
 
@@ -145,8 +145,8 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
     {
       x1 = 0;
       y1 = 0;
-      x2 = gimp_item_width (GIMP_ITEM (mask));
-      y2 = gimp_item_height (GIMP_ITEM (mask));
+      x2 = gimp_item_get_width  (GIMP_ITEM (mask));
+      y2 = gimp_item_get_height (GIMP_ITEM (mask));
     }
 
   siox_foreground_extract (state, refinement,

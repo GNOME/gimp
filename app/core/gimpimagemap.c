@@ -290,8 +290,8 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
   GimpItem     *item      = GIMP_ITEM (image_map->drawable);
 
-  if (x >= 0 && x < gimp_item_width  (item) &&
-      y >= 0 && y < gimp_item_height (item))
+  if (x >= 0 && x < gimp_item_get_width  (item) &&
+      y >= 0 && y < gimp_item_get_height (item))
     {
       /* Check if done damage to original image */
       if (image_map->undo_tiles)

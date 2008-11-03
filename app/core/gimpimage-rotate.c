@@ -243,13 +243,13 @@ gimp_image_rotate_item_offset (GimpImage        *image,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      x = gimp_image_get_height (image) - off_y - gimp_item_width (item);
+      x = gimp_image_get_height (image) - off_y - gimp_item_get_width (item);
       y = off_x;
       break;
 
     case GIMP_ROTATE_270:
       x = off_y;
-      y = gimp_image_get_width (image) - off_x - gimp_item_height (item);
+      y = gimp_image_get_width (image) - off_x - gimp_item_get_height (item);
       break;
 
     case GIMP_ROTATE_180:

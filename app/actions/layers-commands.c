@@ -301,8 +301,8 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       GimpLayer *template = GIMP_LAYER (GIMP_ACTION (action)->viewable);
 
       gimp_item_get_offset (GIMP_ITEM (template), &off_x, &off_y);
-      width   = gimp_item_width  (GIMP_ITEM (template));
-      height  = gimp_item_height (GIMP_ITEM (template));
+      width   = gimp_item_get_width  (GIMP_ITEM (template));
+      height  = gimp_item_get_height (GIMP_ITEM (template));
       opacity = gimp_layer_get_opacity (template);
       mode    = gimp_layer_get_mode (template);
     }
@@ -542,7 +542,7 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
       new_vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
       gimp_vectors_warp_vectors (vectors, new_vectors,
-                                 0.5 * gimp_item_height (GIMP_ITEM (layer)));
+                                 0.5 * gimp_item_get_height (GIMP_ITEM (layer)));
 
       gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
 
@@ -1085,8 +1085,8 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 
       gtk_widget_destroy (dialog);
 
-      if (width  == gimp_item_width (item) &&
-          height == gimp_item_height (item))
+      if (width  == gimp_item_get_width  (item) &&
+          height == gimp_item_get_height (item))
         return;
 
       if (display)
@@ -1141,8 +1141,8 @@ layers_resize_layer_callback (GtkWidget    *dialog,
 
       gtk_widget_destroy (dialog);
 
-      if (width  == gimp_item_width (item) &&
-          height == gimp_item_height (item))
+      if (width  == gimp_item_get_width  (item) &&
+          height == gimp_item_get_height (item))
         return;
 
       gimp_item_resize (item, context,

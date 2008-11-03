@@ -1601,8 +1601,8 @@ gimp_image_set_component_active (GimpImage       *image,
           floating_sel_rigor (floating_sel, FALSE);
           gimp_drawable_update (GIMP_DRAWABLE (floating_sel),
                                 0, 0,
-                                gimp_item_width  (GIMP_ITEM (floating_sel)),
-                                gimp_item_height (GIMP_ITEM (floating_sel)));
+                                gimp_item_get_width  (GIMP_ITEM (floating_sel)),
+                                gimp_item_get_height (GIMP_ITEM (floating_sel)));
         }
 
       /*  If there is an active channel and we mess with the components,
@@ -3071,9 +3071,9 @@ gimp_image_add_layers (GimpImage   *image,
       layers_y = MIN (layers_y, off_y);
 
       layers_width  = MAX (layers_width,
-                           off_x + gimp_item_width (item)  - layers_x);
+                           off_x + gimp_item_get_width (item)  - layers_x);
       layers_height = MAX (layers_height,
-                           off_y + gimp_item_height (item) - layers_y);
+                           off_y + gimp_item_get_height (item) - layers_y);
     }
 
   offset_x = x + (width  - layers_width)  / 2 - layers_x;
@@ -3734,8 +3734,8 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
           d_x = x - off_x;
           d_y = y - off_y;
 
-          if (d_x >= 0 && d_x < gimp_item_width (item) &&
-              d_y >= 0 && d_y < gimp_item_height (item))
+          if (d_x >= 0 && d_x < gimp_item_get_width  (item) &&
+              d_y >= 0 && d_y < gimp_item_get_height (item))
             in_pickable = TRUE;
         }
     }

@@ -57,13 +57,13 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (drawable)),
-                     gimp_item_height (GIMP_ITEM (drawable)),
+                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                     gimp_item_get_height (GIMP_ITEM (drawable)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (drawable)),
-                     gimp_item_height (GIMP_ITEM (drawable)),
+                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                     gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
 
@@ -161,13 +161,13 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (drawable)),
-                     gimp_item_height (GIMP_ITEM (drawable)),
+                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                     gimp_item_get_height (GIMP_ITEM (drawable)),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     gimp_item_width  (GIMP_ITEM (drawable)),
-                     gimp_item_height (GIMP_ITEM (drawable)),
+                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                     gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
   switch (old_base_type)
