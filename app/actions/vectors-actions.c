@@ -26,6 +26,7 @@
 #include "actions-types.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"

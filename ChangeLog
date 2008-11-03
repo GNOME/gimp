@@ -1,5 +1,9 @@
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/vectors-actions.c: include "gimpcontainer.h".
+
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch] (gimp_drawable_set_tiles): add
 	"GimpImageType type" parameter because there are only a few calls
 	to this function which (can easily pass the current type); however
