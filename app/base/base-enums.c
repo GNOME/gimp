@@ -27,7 +27,7 @@ gimp_curve_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCurveType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -63,7 +63,7 @@ gimp_histogram_channel_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHistogramChannel", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -139,7 +139,7 @@ gimp_layer_mode_effects_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpLayerModeEffects", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -177,7 +177,7 @@ gimp_hue_range_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHueRange", values);
       gimp_enum_set_value_descriptions (type, descs);

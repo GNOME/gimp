@@ -27,7 +27,7 @@ gimp_container_policy_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpContainerPolicy", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -59,7 +59,7 @@ gimp_convert_dither_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpConvertDitherType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -91,7 +91,7 @@ gimp_convert_palette_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpConvertPaletteType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -135,7 +135,7 @@ gimp_gravity_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGravityType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -183,7 +183,7 @@ gimp_alignment_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpAlignmentType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -219,7 +219,7 @@ gimp_align_reference_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpAlignReferenceType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -255,7 +255,7 @@ gimp_fill_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpFillType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -283,7 +283,7 @@ gimp_fill_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpFillStyle", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -311,7 +311,7 @@ gimp_stroke_method_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpStrokeMethod", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -341,7 +341,7 @@ gimp_join_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpJoinStyle", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -371,7 +371,7 @@ gimp_cap_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCapStyle", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -417,7 +417,7 @@ gimp_dash_preset_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpDashPreset", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -447,7 +447,7 @@ gimp_brush_generated_shape_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpBrushGeneratedShape", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -477,7 +477,7 @@ gimp_orientation_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpOrientationType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -511,7 +511,7 @@ gimp_item_set_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpItemSet", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -541,7 +541,7 @@ gimp_rotation_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRotationType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -583,7 +583,7 @@ gimp_view_size_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpViewSize", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -611,7 +611,7 @@ gimp_view_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpViewType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -647,7 +647,7 @@ gimp_selection_control_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSelectionControl", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -677,7 +677,7 @@ gimp_thumbnail_size_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpThumbnailSize", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -705,7 +705,7 @@ gimp_undo_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpUndoMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -745,7 +745,7 @@ gimp_undo_event_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpUndoEvent", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -935,7 +935,7 @@ gimp_undo_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpUndoType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -981,7 +981,7 @@ gimp_dirty_mask_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_flags_register_static ("GimpDirtyMask", values);
       gimp_flags_set_value_descriptions (type, descs);
@@ -1009,7 +1009,7 @@ gimp_offset_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpOffsetType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1043,7 +1043,7 @@ gimp_gradient_color_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGradientColor", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1077,7 +1077,7 @@ gimp_gradient_segment_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGradientSegmentType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1107,7 +1107,7 @@ gimp_gradient_segment_color_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGradientSegmentColor", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1135,7 +1135,7 @@ gimp_mask_apply_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpMaskApplyMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1167,7 +1167,7 @@ gimp_merge_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpMergeType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1205,7 +1205,7 @@ gimp_select_criterion_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSelectCriterion", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1235,7 +1235,7 @@ gimp_message_severity_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpMessageSeverity", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -1265,7 +1265,7 @@ gimp_color_profile_policy_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorProfilePolicy", values);
       gimp_enum_set_value_descriptions (type, descs);

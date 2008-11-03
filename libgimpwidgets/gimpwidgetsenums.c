@@ -29,7 +29,7 @@ gimp_aspect_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpAspectType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -62,7 +62,7 @@ gimp_chain_position_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpChainPosition", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -93,7 +93,7 @@ gimp_color_area_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorAreaType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -132,7 +132,7 @@ gimp_color_selector_channel_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorSelectorChannel", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -161,7 +161,7 @@ gimp_page_selector_target_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPageSelectorTarget", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -192,7 +192,7 @@ gimp_size_entry_update_policy_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSizeEntryUpdatePolicy", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -221,7 +221,7 @@ gimp_zoom_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpZoomType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");

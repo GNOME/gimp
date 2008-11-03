@@ -107,7 +107,7 @@ gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS)
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
-		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    type = g_@type@_register_static (\"@EnumName@\", values);\n\n  return type;\n}\n" \
+		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    type = g_@type@_register_static (\"@EnumName@\", values);\n\n  return type;\n}\n" \
 		$(srcdir)/gimpthumb-enums.h > xgen-tec \
 	&& cp xgen-tec $(@F) \
 	&& rm -f xgen-tec

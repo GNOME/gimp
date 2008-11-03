@@ -27,7 +27,7 @@ gimp_text_box_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextBoxMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -57,7 +57,7 @@ gimp_text_outline_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextOutline", values);
       gimp_enum_set_value_descriptions (type, descs);

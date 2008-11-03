@@ -27,7 +27,7 @@ gimp_brush_application_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpBrushApplicationMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -55,7 +55,7 @@ gimp_perspective_clone_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPerspectiveCloneMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -87,7 +87,7 @@ gimp_source_align_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSourceAlignMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -115,7 +115,7 @@ gimp_convolve_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpConvolveType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -145,7 +145,7 @@ gimp_ink_blob_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpInkBlobType", values);
       gimp_enum_set_value_descriptions (type, descs);

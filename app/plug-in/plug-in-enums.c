@@ -35,7 +35,7 @@ gimp_plug_in_image_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_flags_register_static ("GimpPlugInImageType", values);
       gimp_flags_set_value_descriptions (type, descs);
@@ -67,7 +67,7 @@ gimp_plug_in_call_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPlugInCallMode", values);
       gimp_enum_set_value_descriptions (type, descs);

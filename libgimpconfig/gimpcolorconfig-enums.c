@@ -29,7 +29,7 @@ gimp_color_management_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorManagementMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -62,7 +62,7 @@ gimp_color_rendering_intent_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorRenderingIntent", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");

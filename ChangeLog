@@ -1,3 +1,33 @@
+2008-11-03  Sven Neumann  <sven@gimp.org>
+
+	
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/display/Makefile.am
+	* app/paint/Makefile.am
+	* app/plug-in/Makefile.am
+	* app/text/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am: 
+	* libgimpconfig/Makefile.am
+	* libgimpthumb/Makefile.am
+	* libgimpwidgets/Makefile.am: micro-optimization in the generated
+	enum registration code.
+
+	* app/base/base-enums.c
+	* app/core/core-enums.c
+	* app/display/display-enums.c
+	* app/paint/paint-enums.c
+	* app/plug-in/plug-in-enums.c
+	* app/text/text-enums.c
+	* app/tools/tools-enums.c
+	* app/widgets/widgets-enums.c
+	* libgimpbase/gimpbaseenums.c
+	* libgimpconfig/gimpcolorconfig-enums.c
+	* libgimpwidgets/gimpwidgetsenums.c: regenerated.
+
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-edit.c

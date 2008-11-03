@@ -32,7 +32,7 @@ gimp_button_release_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpButtonReleaseType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -64,7 +64,7 @@ gimp_rectangle_guide_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRectangleGuide", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -94,7 +94,7 @@ gimp_rectangle_constraint_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRectangleConstraint", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -122,7 +122,7 @@ gimp_rectangle_precision_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRectanglePrecision", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -154,7 +154,7 @@ gimp_rectangle_tool_fixed_rule_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRectangleToolFixedRule", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -184,7 +184,7 @@ gimp_rect_select_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRectSelectMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -214,7 +214,7 @@ gimp_transform_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransformType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -246,7 +246,7 @@ gimp_transform_preview_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransformPreviewType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -274,7 +274,7 @@ gimp_transform_grid_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransformGridType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -304,7 +304,7 @@ gimp_vector_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpVectorMode", values);
       gimp_enum_set_value_descriptions (type, descs);

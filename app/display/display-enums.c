@@ -29,7 +29,7 @@ gimp_cursor_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCursorMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -59,7 +59,7 @@ gimp_cursor_precision_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCursorPrecision", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -91,7 +91,7 @@ gimp_canvas_padding_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCanvasPaddingMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -121,7 +121,7 @@ gimp_space_bar_action_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSpaceBarAction", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -149,7 +149,7 @@ gimp_zoom_quality_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpZoomQuality", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -179,7 +179,7 @@ gimp_zoom_focus_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpZoomFocus", values);
       gimp_enum_set_value_descriptions (type, descs);

@@ -27,7 +27,7 @@ gimp_active_color_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpActiveColor", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -57,7 +57,7 @@ gimp_color_dialog_state_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorDialogState", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -89,7 +89,7 @@ gimp_color_frame_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorFrameMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -121,7 +121,7 @@ gimp_color_pick_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorPickMode", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -149,7 +149,7 @@ gimp_color_pick_state_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpColorPickState", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -177,7 +177,7 @@ gimp_cursor_format_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCursorFormat", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -205,7 +205,7 @@ gimp_help_browser_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHelpBrowserType", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -233,7 +233,7 @@ gimp_histogram_scale_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHistogramScale", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -273,7 +273,7 @@ gimp_tab_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTabStyle", values);
       gimp_enum_set_value_descriptions (type, descs);
@@ -303,7 +303,7 @@ gimp_window_hint_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpWindowHint", values);
       gimp_enum_set_value_descriptions (type, descs);

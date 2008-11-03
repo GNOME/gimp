@@ -37,7 +37,7 @@ gimp_add_mask_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpAddMaskType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -70,7 +70,7 @@ gimp_blend_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpBlendMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -101,7 +101,7 @@ gimp_bucket_fill_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpBucketFillMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -134,7 +134,7 @@ gimp_channel_ops_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpChannelOps", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -171,7 +171,7 @@ gimp_channel_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpChannelType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -202,7 +202,7 @@ gimp_check_size_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCheckSize", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -239,7 +239,7 @@ gimp_check_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCheckType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -268,7 +268,7 @@ gimp_clone_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCloneType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -299,7 +299,7 @@ gimp_desaturate_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpDesaturateMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -328,7 +328,7 @@ gimp_dodge_burn_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpDodgeBurnType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -355,7 +355,7 @@ gimp_foreground_extract_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpForegroundExtractMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -402,7 +402,7 @@ gimp_gradient_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGradientType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -437,7 +437,7 @@ gimp_grid_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpGridStyle", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -468,7 +468,7 @@ gimp_icon_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpIconType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -499,7 +499,7 @@ gimp_image_base_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpImageBaseType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -536,7 +536,7 @@ gimp_image_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpImageType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -569,7 +569,7 @@ gimp_interpolation_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpInterpolationType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -598,7 +598,7 @@ gimp_paint_application_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPaintApplicationMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -629,7 +629,7 @@ gimp_repeat_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRepeatMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -660,7 +660,7 @@ gimp_run_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpRunMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -689,7 +689,7 @@ gimp_size_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSizeType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -720,7 +720,7 @@ gimp_transfer_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransferMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -749,7 +749,7 @@ gimp_transform_direction_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransformDirection", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -782,7 +782,7 @@ gimp_transform_resize_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTransformResize", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -853,7 +853,7 @@ gimp_pdb_arg_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPDBArgType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -882,7 +882,7 @@ gimp_pdb_error_handler_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPDBErrorHandler", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -915,7 +915,7 @@ gimp_pdb_proc_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPDBProcType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -950,7 +950,7 @@ gimp_pdb_status_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPDBStatusType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -981,7 +981,7 @@ gimp_message_handler_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpMessageHandlerType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1012,7 +1012,7 @@ gimp_stack_trace_mode_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpStackTraceMode", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1049,7 +1049,7 @@ gimp_progress_command_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpProgressCommand", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1078,7 +1078,7 @@ gimp_text_direction_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextDirection", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1111,7 +1111,7 @@ gimp_text_hint_style_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextHintStyle", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1144,7 +1144,7 @@ gimp_text_justification_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextJustification", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1185,7 +1185,7 @@ gimp_user_directory_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpUserDirectory", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
@@ -1212,7 +1212,7 @@ gimp_vectors_stroke_type_get_type (void)
 
   static GType type = 0;
 
-  if (! type)
+  if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpVectorsStrokeType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
