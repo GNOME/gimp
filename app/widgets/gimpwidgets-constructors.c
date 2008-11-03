@@ -107,23 +107,24 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                            GIMP_NORMAL_MODE,
                                            GIMP_DISSOLVE_MODE,
 
-                                           GIMP_MULTIPLY_MODE,
-                                           GIMP_DIVIDE_MODE,
+                                           GIMP_LIGHTEN_ONLY_MODE,
                                            GIMP_SCREEN_MODE,
-                                           GIMP_OVERLAY_MODE,
-
                                            GIMP_DODGE_MODE,
+                                           GIMP_ADDITION_MODE,
+
+                                           GIMP_DARKEN_ONLY_MODE,
+                                           GIMP_MULTIPLY_MODE,
                                            GIMP_BURN_MODE,
-                                           GIMP_HARDLIGHT_MODE,
+
+                                           GIMP_OVERLAY_MODE,
                                            GIMP_SOFTLIGHT_MODE,
-                                           GIMP_GRAIN_EXTRACT_MODE,
-                                           GIMP_GRAIN_MERGE_MODE,
+                                           GIMP_HARDLIGHT_MODE,
 
                                            GIMP_DIFFERENCE_MODE,
-                                           GIMP_ADDITION_MODE,
                                            GIMP_SUBTRACT_MODE,
-                                           GIMP_DARKEN_ONLY_MODE,
-                                           GIMP_LIGHTEN_ONLY_MODE,
+                                           GIMP_GRAIN_EXTRACT_MODE,
+                                           GIMP_GRAIN_MERGE_MODE,
+                                           GIMP_DIVIDE_MODE,
 
                                            GIMP_HUE_MODE,
                                            GIMP_SATURATION_MODE,
@@ -132,12 +133,18 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
                                          GIMP_DISSOLVE_MODE, -1);
+
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_OVERLAY_MODE, -1);
+                                         GIMP_ADDITION_MODE, -1);
+
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_GRAIN_MERGE_MODE, -1);
+                                         GIMP_BURN_MODE, -1);
+
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LIGHTEN_ONLY_MODE, -1);
+                                         GIMP_HARDLIGHT_MODE, -1);
+
+  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                         GIMP_DIVIDE_MODE, -1);
 
   if (with_behind_mode)
     {

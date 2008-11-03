@@ -1,3 +1,9 @@
+2008-11-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpwidgets-constructors.c
+	(gimp_paint_mode_menu_new): Arrange layer modes into more logical
+	and useful groups.
+
 2008-11-03  Sven Neumann  <sven@gimp.org>
 
 	* app/base/Makefile.am
