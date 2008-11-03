@@ -192,14 +192,14 @@ background_jpeg_save (PreviewPersistent *pp)
       /* display the preview stuff */
       if (!pp->abort_me)
         {
-          struct stat buf;
-          gchar       temp[128];
+          struct stat  buf;
+          gchar       *text;
 
           g_stat (pp->file_name, &buf);
-          g_snprintf (temp, sizeof (temp),
-                      _("File size: %02.01f kB"),
-                      (gdouble) (buf.st_size) / 1024.0);
-          gtk_label_set_text (GTK_LABEL (preview_size), temp);
+          text = g_strdup_printf (_("File size: %s"),
+				  g_format_size_for_display (buf.st_size));
+          gtk_label_set_text (GTK_LABEL (preview_size), text);
+	  g_free (text);
 
           /* and load the preview */
           load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL);

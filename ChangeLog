@@ -1,3 +1,10 @@
+2008-11-03  Sven Neumann  <sven@gimp.org>
+
+	Bug 559081 – JPEG Save dialog preview should adjust size units
+
+	* plug-ins/file-jpeg/jpeg-save.c: use g_format_size_for_display()
+	to display the JPEG file size.
+
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: renamed
