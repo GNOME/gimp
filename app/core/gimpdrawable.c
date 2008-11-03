@@ -1044,10 +1044,11 @@ gimp_drawable_get_tiles (GimpDrawable *drawable)
 }
 
 void
-gimp_drawable_set_tiles (GimpDrawable *drawable,
-                         gboolean      push_undo,
-                         const gchar  *undo_desc,
-                         TileManager  *tiles)
+gimp_drawable_set_tiles (GimpDrawable  *drawable,
+                         gboolean       push_undo,
+                         const gchar   *undo_desc,
+                         TileManager   *tiles,
+                         GimpImageType  type)
 {
   gint offset_x, offset_y;
 
@@ -1059,8 +1060,7 @@ gimp_drawable_set_tiles (GimpDrawable *drawable,
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
-  gimp_drawable_set_tiles_full (drawable, push_undo, undo_desc, tiles,
-                                gimp_drawable_type (drawable),
+  gimp_drawable_set_tiles_full (drawable, push_undo, undo_desc, tiles, type,
                                 offset_x, offset_y);
 }
 

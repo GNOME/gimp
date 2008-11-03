@@ -1,5 +1,26 @@
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch] (gimp_drawable_set_tiles): add
+	"GimpImageType type" parameter because there are only a few calls
+	to this function which (can easily pass the current type); however
+	most calls to gimp_drawable_set_tiles_full() were just using the
+	function because of the type argument and passed in the item's
+	current offsets (which means peeking into the item struct or using
+	temp variables).
+
+	* app/core/gimpdrawable-offset.c (gimp_drawable_offset)
+	* app/text/gimptextlayer.c (gimp_text_layer_render)
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): pass
+	the type to set_tiles().
+
+	* app/core/gimpchannel.c (gimp_channel_convert)
+	* app/core/gimpimage-convert.c (gimp_image_convert)
+	* app/core/gimplayer.c (gimp_layer_convert,add_alpha,flatten):
+	change calls to set_tiles_full() into set_tiles() because the
+	offset doesn't change.
+
+2008-11-03  Michael Natterer  <mitch@gimp.org>
+
 	Bug 559015 – Move tool gives bad information about px moved
 
 	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_init):

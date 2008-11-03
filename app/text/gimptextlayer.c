@@ -560,7 +560,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
       TileManager *new_tiles = tile_manager_new (width, height,
                                                  drawable->bytes);
 
-      gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
+      gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles,
+                               gimp_drawable_type (drawable));
 
       tile_manager_unref (new_tiles);
 

@@ -437,10 +437,8 @@ gimp_channel_convert (GimpItem  *item,
 
       gimp_drawable_convert_grayscale (drawable, new_tiles, old_base_type);
 
-      gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
-                                    new_tiles, new_type,
-                                    item->offset_x,
-                                    item->offset_y);
+      gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                               new_tiles, new_type);
       tile_manager_unref (new_tiles);
     }
 

@@ -1261,7 +1261,8 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
           gimp_channel_push_undo (GIMP_CHANNEL (active_item), NULL);
 
           gimp_drawable_set_tiles (GIMP_DRAWABLE (active_item),
-                                   FALSE, NULL, new_tiles);
+                                   FALSE, NULL, new_tiles,
+                                   gimp_drawable_type (GIMP_DRAWABLE (active_item)));
           tile_manager_unref (new_tiles);
         }
 

@@ -313,6 +313,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     }
 
   gimp_drawable_set_tiles (drawable, gimp_item_is_attached (item),
-                           _("Offset Drawable"), new_tiles);
+                           _("Offset Drawable"), new_tiles,
+                           gimp_drawable_type (drawable));
   tile_manager_unref (new_tiles);
 }

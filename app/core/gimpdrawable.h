@@ -163,7 +163,8 @@ TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
-                                                  TileManager        *tiles);
+                                                  TileManager        *tiles,
+                                                  GimpImageType       type);
 void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,

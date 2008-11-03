@@ -676,10 +676,8 @@ gimp_layer_convert (GimpItem  *item,
           break;
         }
 
-      gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
-                                    new_tiles, new_type,
-                                    GIMP_ITEM (layer)->offset_x,
-                                    GIMP_ITEM (layer)->offset_y);
+      gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                               new_tiles, new_type);
       tile_manager_unref (new_tiles);
     }
 
@@ -1745,12 +1743,10 @@ gimp_layer_add_alpha (GimpLayer *layer)
   add_alpha_region (&srcPR, &destPR);
 
   /*  Set the new tiles  */
-  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
-                                gimp_item_is_attached (GIMP_ITEM (layer)),
-                                _("Add Alpha Channel"),
-                                new_tiles, new_type,
-                                item->offset_x,
-                                item->offset_y);
+  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
+                           gimp_item_is_attached (GIMP_ITEM (layer)),
+                           _("Add Alpha Channel"),
+                           new_tiles, new_type);
   tile_manager_unref (new_tiles);
 }
 
@@ -1799,12 +1795,10 @@ gimp_layer_flatten (GimpLayer   *layer,
   flatten_region (&srcPR, &destPR, bg);
 
   /*  Set the new tiles  */
-  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
-                                gimp_item_is_attached (GIMP_ITEM (layer)),
-                                _("Remove Alpha Channel"),
-                                new_tiles, new_type,
-                                item->offset_x,
-                                item->offset_y);
+  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
+                           gimp_item_is_attached (GIMP_ITEM (layer)),
+                           _("Remove Alpha Channel"),
+                           new_tiles, new_type);
   tile_manager_unref (new_tiles);
 }
 
