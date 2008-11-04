@@ -1,3 +1,13 @@
+2008-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-pyramid.[ch] (tile_pyramid_new): changed "type"
+	parameter into "bytes" because tile managers don't care about
+	the pixel format of their tiles. Reordered parameters to match
+	tile_manager_new().
+
+	* app/core/gimpprojection.c (gimp_projection_get_tiles_at_level):
+	pass the bytes instead of the image type.
+
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/text/Makefile.am
