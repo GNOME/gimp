@@ -29,9 +29,9 @@
  *  is "nlevels - 1". That level will be smaller than TILE_WIDTH x
  *  TILE_HEIGHT
  */
-TilePyramid * tile_pyramid_new               (gint               width,
-                                              gint               height,
-                                              gint               bytes);
+TilePyramid * tile_pyramid_new               (GimpImageType      type,
+                                              gint               width,
+                                              gint               height);
 void          tile_pyramid_destroy           (TilePyramid       *pyramid);
 
 gint          tile_pyramid_get_level         (gint               width,
