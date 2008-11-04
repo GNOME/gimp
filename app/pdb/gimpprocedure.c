@@ -347,7 +347,8 @@ gimp_procedure_execute (GimpProcedure  *procedure,
                   G_VALUE_HOLDS_STRING (&return_vals->values[1]))
                 {
                   g_set_error (error, 0, 0,
-                               g_value_get_string (&return_vals->values[1]));
+                               "%s",
+			       g_value_get_string (&return_vals->values[1]));
                 }
             }
         }
