@@ -1,5 +1,13 @@
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
+ 	Merged from trunk:
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_uri_list): when dropping multiple images
+	to the empty image window, open them as seperate images.
+
+2008-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-procedure.c
 	* app/file/file-save.c
 	* app/pdb/gimpprocedure.c: be careful when passing literal strings

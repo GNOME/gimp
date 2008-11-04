@@ -461,8 +461,11 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   GimpImage        *image   = shell->display->image;
   GimpContext      *context = gimp_get_user_context (shell->display->gimp);
   GList            *list;
+  gboolean          open_as_layers;
 
   GIMP_LOG (DND, NULL);
+
+  open_as_layers = (shell->display->image != NULL);
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -471,17 +474,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
       GError            *error = NULL;
       gboolean           warn  = FALSE;
 
-      if (! shell->display->image)
-        {
-          image = file_open_with_display (shell->display->gimp, context,
-                                          GIMP_PROGRESS (shell->display),
-                                          uri, FALSE,
-                                          &status, &error);
-
-          if (! image && status != GIMP_PDB_CANCEL)
-            warn = TRUE;
-        }
-      else
+      if (open_as_layers)
         {
           GList *new_layers;
 
@@ -509,6 +502,30 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
             {
               warn = TRUE;
             }
+        }
+      else if (shell->display->image)
+        {
+          /*  open any subsequent images in a new display  */
+          GimpImage *new_image;
+
+          new_image = file_open_with_display (shell->display->gimp, context,
+                                              NULL,
+                                              uri, FALSE,
+                                              &status, &error);
+
+          if (! new_image && status != GIMP_PDB_CANCEL)
+            warn = TRUE;
+        }
+      else
+        {
+          /*  open the first image in the empty display  */
+          image = file_open_with_display (shell->display->gimp, context,
+                                          GIMP_PROGRESS (shell->display),
+                                          uri, FALSE,
+                                          &status, &error);
+
+          if (! image && status != GIMP_PDB_CANCEL)
+            warn = TRUE;
         }
 
       if (warn)
