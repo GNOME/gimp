@@ -123,10 +123,10 @@ warning_dialog (const gchar *primary,
 
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
-                                   primary);
+                                   "%s", primary);
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                            secondary);
+                                            "%s", secondary);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 

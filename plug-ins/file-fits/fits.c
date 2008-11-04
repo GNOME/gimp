@@ -1061,9 +1061,9 @@ load_dialog (void)
 static void
 show_fits_errors (void)
 {
-  gchar *msg;
+  const gchar *msg;
 
   /* Write out error messages of FITS-Library */
   while ((msg = fits_get_error ()) != NULL)
-    g_message (msg);
+    g_message ("%s", msg);
 }

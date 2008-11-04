@@ -202,7 +202,7 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
               break;
 
             default:
-              g_message (error->message);
+              g_message ("%s", error->message);
               break;
             }
 

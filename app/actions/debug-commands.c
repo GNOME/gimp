@@ -182,7 +182,7 @@ debug_dump_managers_cmd_callback (GtkAction *action,
                    "========================================\n\n",
                    entry->identifier);
 
-          g_print (gtk_ui_manager_get_ui (managers->data));
+          g_print ("%s\n", gtk_ui_manager_get_ui (managers->data));
         }
     }
 }

@@ -1,5 +1,21 @@
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplay-foreach.c: added missing include.
+
+	* app/actions/debug-commands.c
+	* plug-ins/common/lcms.c
+	* plug-ins/common/mail.c
+	* plug-ins/file-bmp/bmp-write.c
+	* plug-ins/file-fits/fits.c
+	* plug-ins/file-jpeg/jpeg.c
+	* plug-ins/file-uri/uri.c
+	* plug-ins/help/gimphelpdomain.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/print/print.c: fixed use of g_message() with literal
+	strings.
+
+2008-11-04  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped minimum required version of GLib to 2.18.0.
 
 	* INSTALL: document the updated dependency.

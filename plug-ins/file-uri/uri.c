@@ -102,7 +102,7 @@ query (void)
 
   if (! uri_backend_init (PLUG_IN_BINARY, FALSE, 0, &error))
     {
-      g_message (error->message);
+      g_message ("%s", error->message);
       g_clear_error (&error);
 
       return;

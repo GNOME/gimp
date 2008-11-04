@@ -2341,7 +2341,8 @@ ifscompose_message_dialog (GtkMessageType  type,
 {
   GtkWidget *dialog;
 
-  dialog = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, message);
+  dialog = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK,
+				   "%s", message);
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dialog), title);

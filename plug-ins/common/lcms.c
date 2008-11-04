@@ -802,7 +802,7 @@ lcms_image_set_profile (gint32       image,
 
       if (! file)
         {
-          g_message (error->message);
+          g_message ("%s", error->message);
           g_error_free (error);
 
           return FALSE;
@@ -1107,7 +1107,7 @@ lcms_load_profile (const gchar *filename,
 
   if (! file)
     {
-      g_message (error->message);
+      g_message ("%s", error->message);
       g_error_free (error);
 
       return NULL;
