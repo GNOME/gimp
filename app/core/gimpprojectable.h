@@ -36,17 +36,18 @@ struct _GimpProjectableInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void        (* update)    (GimpProjectable *projectable,
-                             gint             x,
-                             gint             y,
-                             gint             width,
-                             gint             height);
-  void        (* flush)     (GimpProjectable *projectable,
-                             gboolean         invalidate_preview);
+  void        (* update)             (GimpProjectable *projectable,
+                                      gint             x,
+                                      gint             y,
+                                      gint             width,
+                                      gint             height);
+  void        (* flush)              (GimpProjectable *projectable,
+                                      gboolean         invalidate_preview);
 
   /*  virtual functions  */
-  GimpImage * (* get_image) (GimpProjectable *projectable);
-  GeglNode  * (* get_graph) (GimpProjectable *projectable);
+  GimpImage * (* get_image)          (GimpProjectable *projectable);
+  GeglNode  * (* get_graph)          (GimpProjectable *projectable);
+  void        (* invalidate_preview) (GimpProjectable *projectable);
 };
 
 
@@ -62,6 +63,7 @@ void        gimp_projectable_flush              (GimpProjectable *projectable,
 
 GimpImage * gimp_projectable_get_image          (GimpProjectable *projectable);
 GeglNode  * gimp_projectable_get_graph          (GimpProjectable *projectable);
+void        gimp_projectable_invalidate_preview (GimpProjectable *projectable);
 
 
 #endif  /* __GIMP_PROJECTABLE_H__ */

@@ -560,9 +560,10 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
-  iface->flush     = gimp_image_projectable_flush;
-  iface->get_image = gimp_image_get_image;
-  iface->get_graph = gimp_image_get_graph;
+  iface->flush              = gimp_image_projectable_flush;
+  iface->get_image          = gimp_image_get_image;
+  iface->get_graph          = gimp_image_get_graph;
+  iface->invalidate_preview = (void (*) (GimpProjectable *p)) gimp_viewable_invalidate_preview;
 }
 
 static void

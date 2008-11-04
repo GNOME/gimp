@@ -161,3 +161,16 @@ gimp_projectable_get_graph (GimpProjectable *projectable)
 
   return NULL;
 }
+
+void
+gimp_projectable_invalidate_preview (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->invalidate_preview)
+    iface->invalidate_preview (projectable);
+}

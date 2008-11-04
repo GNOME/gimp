@@ -103,45 +103,42 @@ gimp_projection_construct (GimpProjection *proj,
 #if 0
   GimpImage *image = gimp_projectable_get_image (proj->projectable);
 
-  if ((gimp_container_num_children (image->layers) == 1)) /* a single layer */
+  if (gimp_container_num_children (image->layers) == 1) /* a single layer */
     {
       GimpDrawable *layer;
+      gint          off_x, off_y;
 
       layer = GIMP_DRAWABLE (gimp_image_get_layer_by_index (image, 0));
 
-      if (gimp_drawable_has_alpha (layer)                             &&
-          (gimp_item_get_visible (GIMP_ITEM (layer)))                 &&
-          (gimp_item_get_width  (GIMP_ITEM (layer)) == image->width)  &&
-          (gimp_item_get_height (GIMP_ITEM (layer)) == image->height) &&
-          (! gimp_drawable_is_indexed (layer))                        &&
-          (gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE))
+      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+
+      if (gimp_drawable_has_alpha (layer)                                    &&
+          gimp_item_get_visible (GIMP_ITEM (layer))                          &&
+          gimp_item_get_width  (GIMP_ITEM (layer)) == image->width           &&
+          gimp_item_get_height (GIMP_ITEM (layer)) == image->height          &&
+          ! gimp_drawable_is_indexed (layer)                                 &&
+          gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE &&
+          off_x == 0                                                         &&
+          off_y == 0)
         {
-          gint xoff;
-          gint yoff;
+          PixelRegion srcPR, destPR;
 
-          gimp_item_get_offset (GIMP_ITEM (layer), &xoff, &yoff);
+          g_printerr ("cow-projection!");
 
-          if (xoff == 0 && yoff == 0)
-            {
-              PixelRegion srcPR, destPR;
+          pixel_region_init (&srcPR,
+                             gimp_drawable_get_tiles (layer),
+                             x, y, w,h, FALSE);
+          pixel_region_init (&destPR,
+                             gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
+                             x, y, w,h, TRUE);
 
-              g_printerr ("cow-projection!");
+          copy_region (&srcPR, &destPR);
 
-              pixel_region_init (&srcPR,
-                                 gimp_drawable_get_tiles (layer),
-                                 x, y, w,h, FALSE);
-              pixel_region_init (&destPR,
-                                 gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
-                                 x, y, w,h, TRUE);
+          proj->construct_flag = TRUE;
 
-              copy_region (&srcPR, &destPR);
+          gimp_projection_construct_channels (proj, x, y, w, h);
 
-              proj->construct_flag = TRUE;
-
-              gimp_projection_construct_channels (proj, x, y, w, h);
-
-              return;
-            }
+          return;
         }
     }
 #endif

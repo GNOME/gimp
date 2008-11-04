@@ -270,7 +270,7 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
        */
       proj->invalidate_preview = FALSE;
 
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->projectable));
+      gimp_projectable_invalidate_preview (proj->projectable);
     }
 }
 
@@ -561,7 +561,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
        */
       proj->invalidate_preview = FALSE;
 
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->projectable));
+      gimp_projectable_invalidate_preview (proj->projectable);
     }
 }
 
@@ -678,7 +678,7 @@ gimp_projection_idle_render_callback (gpointer data)
                    */
                   proj->invalidate_preview = FALSE;
 
-                  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->projectable));
+                  gimp_projectable_invalidate_preview (proj->projectable);
                 }
 
               return FALSE;
