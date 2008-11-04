@@ -56,8 +56,9 @@ HELP
 
       if (! non_empty)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }
@@ -107,8 +108,9 @@ HELP
 
       if (! non_empty)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }
@@ -151,8 +153,9 @@ HELP
 
   if (! non_empty)
     {
-      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                    "%s", my_error->message);
+      gimp_message_literal (gimp,
+                            G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            my_error->message);
       g_clear_error (&my_error);
     }
 }
@@ -289,8 +292,9 @@ HELP
         }
       else
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }
@@ -341,8 +345,9 @@ HELP
         }
       else
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }
@@ -392,8 +397,9 @@ HELP
     }
   else
     {
-      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                    "%s", my_error->message);
+      gimp_message_literal (gimp,
+                            G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            my_error->message);
       g_clear_error (&my_error);
     }
 }

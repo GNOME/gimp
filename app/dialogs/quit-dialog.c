@@ -211,13 +211,12 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
   GtkWidget *dialog     = gtk_widget_get_toplevel (button);
   gboolean   do_quit    = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (box),
                                                               "do-quit"));
-  gchar     *text;
-
-  text = g_strdup_printf (ngettext ("There is one image with unsaved changes:",
-                                    "There are %d images with unsaved changes:",
-                                    num_images), num_images);
-  gimp_message_box_set_primary_text (box, text);
-  g_free (text);
+  gimp_message_box_set_primary_text (box,
+				     ngettext ("There is one image with "
+					       "unsaved changes:",
+					       "There are %d images with "
+					       "unsaved changes:",
+					       num_images), num_images);
 
   if (num_images == 0)
     {

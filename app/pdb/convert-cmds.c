@@ -146,9 +146,10 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
                 }
               else if (pal->n_colors > MAXNUMCOLORS)
                 {
-                  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                               _("Cannot convert to a palette "
-                                 "with more than 256 colors."));
+                  g_set_error_literal (error,
+                                       GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                                       _("Cannot convert to a palette "
+                                         "with more than 256 colors."));
                   success = FALSE;
                 }
               break;

@@ -788,8 +788,8 @@ gimp_image_convert (GimpImage               *image,
 
       if (custom_palette->n_colors < 1)
         {
-          g_set_error (error, 0, 0,
-                       _("Cannot convert image: palette is empty."));
+          g_set_error_literal (error, 0, 0,
+			       _("Cannot convert image: palette is empty."));
           return FALSE;
         }
     }

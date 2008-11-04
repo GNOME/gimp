@@ -298,9 +298,8 @@ convert_dialog_response (GtkWidget     *widget,
                                 dialog->custom_palette,
                                 progress, &error))
         {
-          gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
-                        GIMP_MESSAGE_WARNING,
-                        error->message);
+          gimp_message_literal (dialog->image->gimp, G_OBJECT (dialog->dialog),
+				GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
 
           if (progress)

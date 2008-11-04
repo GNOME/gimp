@@ -301,9 +301,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       if (! success)
         {
-          gimp_message (imagefile->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (imagefile->gimp,
+				G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+				error->message);
           g_clear_error (&error);
         }
     }
@@ -401,8 +401,8 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                            &error);
       if (! success)
         {
-          gimp_message (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (imagefile->gimp, NULL, GIMP_MESSAGE_ERROR,
+				error->message);
           g_clear_error (&error);
         }
     }

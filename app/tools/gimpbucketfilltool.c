@@ -157,9 +157,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                        options->sample_merged,
                                        x, y, &error))
         {
-          gimp_message (display->image->gimp, G_OBJECT (display),
-                        GIMP_MESSAGE_WARNING,
-                        error->message);
+          gimp_message_literal (display->image->gimp, G_OBJECT (display),
+                                GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
         }
       else

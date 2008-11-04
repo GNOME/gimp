@@ -303,8 +303,8 @@ gimp_help_browser (Gimp         *gimp,
 
       if (error)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+				error->message);
           g_error_free (error);
         }
      }
@@ -362,8 +362,8 @@ gimp_help_browser_error (Gimp         *gimp,
     }
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     primary);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, text);
+                                     "%s", primary);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, "%s", text);
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
@@ -411,8 +411,7 @@ gimp_help_call (Gimp         *gimp,
 
       if (error)
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
 
@@ -454,8 +453,7 @@ gimp_help_call (Gimp         *gimp,
 
       if (error)
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
     }
@@ -489,8 +487,7 @@ gimp_help_call (Gimp         *gimp,
 
       if (error)
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
     }

@@ -292,8 +292,7 @@ gimp_tools_restore (Gimp *gimp)
 
   if (! gimp_contexts_load (gimp, &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                    "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
     }
 
@@ -357,8 +356,8 @@ gimp_tools_save (Gimp     *gimp,
 
       if (! gimp_contexts_save (gimp, &error))
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                        "%s", error->message);
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+				error->message);
           g_clear_error (&error);
         }
 

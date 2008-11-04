@@ -294,10 +294,10 @@ stroke_dialog_response (GtkWidget  *widget,
 
         if (! drawable)
           {
-            gimp_message (context->gimp, G_OBJECT (widget),
-                          GIMP_MESSAGE_WARNING,
-                          _("There is no active layer or channel "
-                            "to stroke to."));
+            gimp_message_literal (context->gimp, G_OBJECT (widget),
+				  GIMP_MESSAGE_WARNING,
+				  _("There is no active layer or channel "
+				    "to stroke to."));
             return;
           }
 
@@ -318,9 +318,8 @@ stroke_dialog_response (GtkWidget  *widget,
         if (! gimp_item_stroke (item, drawable, context, options, FALSE, TRUE,
                                 NULL, &error))
           {
-            gimp_message (context->gimp, G_OBJECT (widget),
-                          GIMP_MESSAGE_WARNING,
-                          error->message);
+            gimp_message_literal (context->gimp, G_OBJECT (widget),
+                                  GIMP_MESSAGE_WARNING, error->message);
             g_clear_error (&error);
             return;
           }

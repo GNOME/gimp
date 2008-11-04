@@ -107,16 +107,16 @@ file_save (GimpImage           *image,
         {
           if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Not a regular file"));
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+				   _("Not a regular file"));
               status = GIMP_PDB_EXECUTION_ERROR;
               goto out;
             }
 
           if (g_access (filename, W_OK) != 0)
             {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
-                           g_strerror (errno));
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
+                                   g_strerror (errno));
               status = GIMP_PDB_EXECUTION_ERROR;
               goto out;
             }

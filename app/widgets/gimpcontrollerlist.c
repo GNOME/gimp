@@ -510,21 +510,23 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
   if (list->src_gtype == GIMP_TYPE_CONTROLLER_KEYBOARD &&
       gimp_controllers_get_keyboard (list->gimp) != NULL)
     {
-      gimp_message (list->gimp, G_OBJECT (button), GIMP_MESSAGE_WARNING,
-                    _("There can only be one active keyboard "
-                      "controller.\n\n"
-                      "You already have a keyboard controller in "
-                      "your list of active controllers."));
+      gimp_message_literal (list->gimp,
+			    G_OBJECT (button), GIMP_MESSAGE_WARNING,
+			    _("There can only be one active keyboard "
+			      "controller.\n\n"
+			      "You already have a keyboard controller in "
+			      "your list of active controllers."));
       return;
     }
   else if (list->src_gtype == GIMP_TYPE_CONTROLLER_WHEEL &&
            gimp_controllers_get_wheel (list->gimp) != NULL)
     {
-      gimp_message (list->gimp, G_OBJECT (button), GIMP_MESSAGE_WARNING,
-                    _("There can only be one active wheel "
-                      "controller.\n\n"
-                      "You already have a wheel controller in "
-                      "your list of active controllers."));
+      gimp_message_literal (list->gimp,
+			    G_OBJECT (button), GIMP_MESSAGE_WARNING,
+			    _("There can only be one active wheel "
+			      "controller.\n\n"
+			      "You already have a wheel controller in "
+			      "your list of active controllers."));
       return;
     }
 
@@ -542,9 +544,8 @@ static void
 gimp_controller_list_remove_clicked (GtkWidget          *button,
                                      GimpControllerList *list)
 {
-  GtkWidget *dialog;
-  gchar     *primary;
-  gchar     *secondary;
+  GtkWidget   *dialog;
+  const gchar *name;
 
 #define RESPONSE_DISABLE 1
 
@@ -565,24 +566,17 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                            RESPONSE_DISABLE,
                                            -1);
 
-  primary =
-    g_strdup_printf (_("Remove Controller '%s'?"),
-                     gimp_object_get_name (GIMP_OBJECT (list->dest_info)));
-
-  secondary =
-    g_strdup_printf (_("Removing this controller from the list of "
-                       "active controllers will permanently delete "
-                       "all event mappings you have configured.\n\n"
-                       "Selecting \"Disable Controller\" will disable "
-                       "the controller without removing it."));
-
+  name = gimp_object_get_name (GIMP_OBJECT (list->dest_info));
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     primary);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             secondary);
+                                     _("Remove Controller '%s'?"), name);
 
-  g_free (primary);
-  g_free (secondary);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+			     "%s",
+                             _("Removing this controller from the list of "
+			       "active controllers will permanently delete "
+			       "all event mappings you have configured.\n\n"
+			       "Selecting \"Disable Controller\" will disable "
+			       "the controller without removing it."));
 
   switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {

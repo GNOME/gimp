@@ -234,8 +234,9 @@ layers_new_cmd_callback (GtkAction *action,
 
       if (! floating_sel_to_layer (floating_sel, &error))
         {
-          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+          gimp_message_literal (image->gimp,
+				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+				error->message);
           g_clear_error (&error);
           return;
         }
@@ -286,8 +287,8 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
 
       if (! floating_sel_to_layer (floating_sel, &error))
         {
-          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+          gimp_message_literal (image->gimp, G_OBJECT (widget),
+				GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
           return;
         }
@@ -636,8 +637,9 @@ layers_crop_cmd_callback (GtkAction *action,
   if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
-      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    _("Cannot crop because the current selection is empty."));
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+			    _("Cannot crop because the current selection is empty."));
       return;
     }
 
@@ -997,9 +999,9 @@ layers_edit_layer_response (GtkWidget          *widget,
             }
           else
             {
-              gimp_message (dialog->image->gimp, G_OBJECT (widget),
-                            GIMP_MESSAGE_WARNING,
-                            "%s", error->message);
+              gimp_message_literal (dialog->image->gimp,
+				    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+				    error->message);
               g_clear_error (&error);
 
               return;
@@ -1033,8 +1035,9 @@ layers_add_mask_response (GtkWidget          *widget,
       if (dialog->add_mask_type == GIMP_ADD_CHANNEL_MASK &&
           ! dialog->channel)
         {
-          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        _("Please select a channel first"));
+          gimp_message_literal (image->gimp,
+				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+				_("Please select a channel first"));
           return;
         }
 

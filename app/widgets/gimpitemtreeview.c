@@ -871,9 +871,9 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
           if (error)
             {
-              gimp_message (view->image->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_WARNING,
-                            "%s", error->message);
+              gimp_message_literal (view->image->gimp, G_OBJECT (view),
+				    GIMP_MESSAGE_WARNING,
+				    error->message);
               g_clear_error (&error);
             }
         }

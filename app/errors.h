@@ -30,10 +30,8 @@ void   errors_init      (Gimp               *gimp,
                          GimpStackTraceMode  stack_trace_mode);
 void   errors_exit      (void);
 
-void   gimp_fatal_error (const gchar        *format,
-                         ...) G_GNUC_PRINTF (1, 2) G_GNUC_NORETURN;
-void   gimp_terminate   (const gchar        *format,
-                         ...) G_GNUC_PRINTF (1, 2) G_GNUC_NORETURN;
+void   gimp_fatal_error (const gchar        *message) G_GNUC_NORETURN;
+void   gimp_terminate   (const gchar        *message) G_GNUC_NORETURN;
 
 
 #endif /* __ERRORS_H__ */

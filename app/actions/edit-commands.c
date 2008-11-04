@@ -198,15 +198,18 @@ edit_cut_cmd_callback (GtkAction *action,
       GimpDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
-                      _("Cut pixels to the clipboard"));
+        gimp_message_literal (image->gimp,
+			      G_OBJECT (display), GIMP_MESSAGE_INFO,
+			      _("Cut pixels to the clipboard"));
 
       gimp_image_flush (image);
     }
   else
     {
-      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
-                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (action_data_get_display (data)),
+			    GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }
@@ -225,15 +228,18 @@ edit_copy_cmd_callback (GtkAction *action,
       GimpDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
-                      _("Copied pixels to the clipboard"));
+        gimp_message_literal (image->gimp,
+			      G_OBJECT (display), GIMP_MESSAGE_INFO,
+			      _("Copied pixels to the clipboard"));
 
       gimp_image_flush (image);
     }
   else
     {
-      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
-                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (action_data_get_display (data)),
+			    GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }
@@ -251,15 +257,18 @@ edit_copy_visible_cmd_callback (GtkAction *action,
       GimpDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
-                      _("Copied pixels to the clipboard"));
+        gimp_message_literal (image->gimp,
+			      G_OBJECT (display), GIMP_MESSAGE_INFO,
+			      _("Copied pixels to the clipboard"));
 
       gimp_image_flush (image);
     }
   else
     {
-      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
-                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (action_data_get_display (data)),
+			    GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }
@@ -312,8 +321,8 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
     }
   else
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("There is no image data in the clipboard to paste."));
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+			    _("There is no image data in the clipboard to paste."));
     }
 }
 
@@ -346,8 +355,8 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
     }
   else
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("There is no image data in the clipboard to paste."));
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+			    _("There is no image data in the clipboard to paste."));
     }
 }
 
@@ -521,9 +530,9 @@ edit_paste (GimpDisplay *display,
         }
       else
         {
-          gimp_message (display->image->gimp, G_OBJECT (display),
-                        GIMP_MESSAGE_WARNING,
-                        _("There is no image data in the clipboard to paste."));
+          gimp_message_literal (display->image->gimp, G_OBJECT (display),
+				GIMP_MESSAGE_WARNING,
+				_("There is no image data in the clipboard to paste."));
         }
     }
 }
@@ -539,8 +548,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
 
   if (! drawable)
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("There is no active layer or channel to cut from."));
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+			    _("There is no active layer or channel to cut from."));
       return;
     }
 
@@ -554,8 +563,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
     }
   else
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    "%s", error->message);
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }
@@ -571,8 +580,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
 
   if (! drawable)
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("There is no active layer or channel to copy from."));
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+			    _("There is no active layer or channel to copy from."));
       return;
     }
 
@@ -586,8 +595,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
     }
   else
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    "%s", error->message);
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }
@@ -611,8 +620,8 @@ copy_named_visible_buffer_callback (GtkWidget   *widget,
     }
   else
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    "%s", error->message);
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+			    error->message);
       g_clear_error (&error);
     }
 }

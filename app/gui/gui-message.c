@@ -219,7 +219,7 @@ gui_message_error_dialog (Gimp                *gimp,
         gtk_message_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (parent)),
                                 GTK_DIALOG_DESTROY_WITH_PARENT,
                                 type, GTK_BUTTONS_OK,
-                                message);
+                                "%s", message);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (gtk_widget_destroy),

@@ -333,9 +333,9 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                                     (const gchar *) svg_data, svg_data_len,
                                     TRUE, TRUE, -1, NULL, &error))
     {
-      gimp_message (shell->display->gimp, G_OBJECT (shell->display),
-                    GIMP_MESSAGE_ERROR,
-                    "%s", error->message);
+      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+			    GIMP_MESSAGE_ERROR,
+			    error->message);
       g_clear_error (&error);
     }
   else

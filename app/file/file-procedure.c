@@ -135,10 +135,10 @@ file_procedure_find (GSList       *procs,
                     }
                   else
                     {
-                      g_set_error (error,
-                                   G_FILE_ERROR,
-                                   g_file_error_from_errno (errno),
-                                   g_strerror (errno));
+                      g_set_error_literal (error,
+                                           G_FILE_ERROR,
+                                           g_file_error_from_errno (errno),
+                                           g_strerror (errno));
                     }
                 }
 
@@ -170,10 +170,9 @@ file_procedure_find (GSList       *procs,
       if (ifp)
         {
           if (ferror (ifp))
-            g_set_error (error,
-                         G_FILE_ERROR,
-                         g_file_error_from_errno (errno),
-                         g_strerror (errno));
+            g_set_error_literal (error, G_FILE_ERROR,
+                                 g_file_error_from_errno (errno),
+                                 g_strerror (errno));
 
           fclose (ifp);
         }
@@ -196,8 +195,8 @@ file_procedure_find (GSList       *procs,
     {
       /* set an error message unless one was already set */
       if (error && *error == NULL)
-        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                     _("Unknown file type"));
+	g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+			     _("Unknown file type"));
     }
 
   return file_proc;

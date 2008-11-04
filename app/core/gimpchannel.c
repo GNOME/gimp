@@ -712,8 +712,8 @@ gimp_channel_stroke (GimpItem           *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_set_error (error, 0, 0,
-                   _("Cannot stroke empty channel."));
+      g_set_error_literal (error, 0, 0,
+			   _("Cannot stroke empty channel."));
       return FALSE;
     }
 

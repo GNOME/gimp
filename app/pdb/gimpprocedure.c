@@ -197,8 +197,8 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
 
   if (error)
     {
-      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                    "%s", error->message);
+      gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+			    error->message);
       g_error_free (error);
     }
 }
@@ -346,8 +346,8 @@ gimp_procedure_execute (GimpProcedure  *procedure,
               if (return_vals->n_values > 1 &&
                   G_VALUE_HOLDS_STRING (&return_vals->values[1]))
                 {
-                  g_set_error (error, 0, 0,
-                               g_value_get_string (&return_vals->values[1]));
+                  g_set_error_literal (error, 0, 0,
+				       g_value_get_string (&return_vals->values[1]));
                 }
             }
         }

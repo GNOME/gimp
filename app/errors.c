@@ -132,28 +132,14 @@ errors_exit (void)
 }
 
 void
-gimp_fatal_error (const gchar *fmt, ...)
+gimp_fatal_error (const gchar *message)
 {
-  va_list  args;
-  gchar   *message;
-
-  va_start (args, fmt);
-  message = g_strdup_vprintf (fmt, args);
-  va_end (args);
-
   gimp_eek ("fatal error", message, TRUE);
 }
 
 void
-gimp_terminate (const gchar *fmt, ...)
+gimp_terminate (const gchar *message)
 {
-  va_list  args;
-  gchar   *message;
-
-  va_start (args, fmt);
-  message = g_strdup_vprintf (fmt, args);
-  va_end (args);
-
   gimp_eek ("terminated", message, use_debug_handler);
 }
 

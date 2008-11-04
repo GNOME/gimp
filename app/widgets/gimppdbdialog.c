@@ -356,9 +356,9 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
             }
           else if (error)
             {
-              gimp_message (dialog->context->gimp, G_OBJECT (dialog),
-                            GIMP_MESSAGE_ERROR,
-                            "%s", error->message);
+              gimp_message_literal (dialog->context->gimp, G_OBJECT (dialog),
+				    GIMP_MESSAGE_ERROR,
+				    error->message);
               g_error_free (error);
             }
 

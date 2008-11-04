@@ -226,6 +226,9 @@ void          gimp_tool_message             (GimpTool            *tool,
                                              GimpDisplay         *display,
                                              const gchar         *format,
                                              ...) G_GNUC_PRINTF(3,4);
+void          gimp_tool_message_literal     (GimpTool            *tool,
+					     GimpDisplay         *display,
+					     const gchar         *message);
 
 void          gimp_tool_set_cursor          (GimpTool            *tool,
                                              GimpDisplay         *display,

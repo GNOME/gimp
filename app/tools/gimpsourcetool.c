@@ -313,18 +313,16 @@ gimp_source_tool_oper_update (GimpTool         *tool,
       if (source->src_drawable == NULL)
         {
           if (state & GDK_CONTROL_MASK)
-            gimp_tool_replace_status (tool, display,
-                                      source_tool->status_set_source);
+            {
+              gimp_tool_replace_status (tool, display, "%s",
+                                        source_tool->status_set_source);
+            }
           else
             {
-              gchar *status;
-
-              status = g_strconcat (gimp_get_mod_name_control (),
-                                    gimp_get_mod_separator (),
-                                    source_tool->status_set_source,
-                                    NULL);
-              gimp_tool_replace_status (tool, display, status);
-              g_free (status);
+              gimp_tool_replace_status (tool, display, "%s%s%s",
+                                        gimp_get_mod_name_control (),
+                                        gimp_get_mod_separator (),
+                                        source_tool->status_set_source);
             }
         }
       else

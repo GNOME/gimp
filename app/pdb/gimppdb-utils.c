@@ -55,8 +55,8 @@ gimp_pdb_get_brush (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty brush name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty brush name"));
       return NULL;
     }
 
@@ -116,8 +116,8 @@ gimp_pdb_get_pattern (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty pattern name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty pattern name"));
       return NULL;
     }
 
@@ -146,8 +146,8 @@ gimp_pdb_get_gradient (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty gradient name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty gradient name"));
       return NULL;
     }
 
@@ -182,8 +182,8 @@ gimp_pdb_get_palette (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty palette name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty palette name"));
       return NULL;
     }
 
@@ -217,8 +217,8 @@ gimp_pdb_get_font (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty font name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty font name"));
       return NULL;
     }
 
@@ -246,8 +246,8 @@ gimp_pdb_get_buffer (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty buffer name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty buffer name"));
       return NULL;
     }
 
@@ -275,8 +275,8 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Invalid empty paint method name"));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty paint method name"));
       return NULL;
     }
 

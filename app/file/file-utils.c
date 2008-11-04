@@ -83,8 +83,10 @@ file_utils_filename_is_uri (const gchar  *filename,
 
       if (! g_utf8_validate (filename, -1, NULL))
         {
-          g_set_error (error, G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
-                       _("Invalid character sequence in URI"));
+          g_set_error_literal (error,
+			       G_CONVERT_ERROR,
+			       G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+			       _("Invalid character sequence in URI"));
           return FALSE;
         }
 
@@ -117,8 +119,10 @@ file_utils_filename_to_uri (Gimp         *gimp,
         }
       else
         {
-          g_set_error (error, G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
-                       _("Invalid character sequence in URI"));
+          g_set_error_literal (error,
+			       G_CONVERT_ERROR,
+			       G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+			       _("Invalid character sequence in URI"));
           return NULL;
         }
     }

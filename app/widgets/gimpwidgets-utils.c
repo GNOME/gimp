@@ -893,8 +893,9 @@ gimp_text_buffer_load (GtkTextBuffer  *buffer,
 
   if (! file)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   g_strerror (errno));
+      g_set_error_literal (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           g_strerror (errno));
       return FALSE;
     }
 
@@ -950,8 +951,9 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
 
   if (fd == -1)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   g_strerror (errno));
+      g_set_error_literal (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           g_strerror (errno));
       return FALSE;
     }
 
@@ -977,8 +979,9 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
             {
               g_free (text_contents);
               close (fd);
-              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           g_strerror (errno));
+              g_set_error_literal (error, G_FILE_ERROR,
+                                   g_file_error_from_errno (errno),
+                                   g_strerror (errno));
               return FALSE;
             }
         }

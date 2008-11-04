@@ -180,7 +180,7 @@ gimp_devices_restore (Gimp *gimp)
                                       &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
 
       g_error_free (error);
       /* don't bail out here */
@@ -228,7 +228,7 @@ gimp_devices_save (Gimp     *gimp,
                                        NULL,
                                        &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 

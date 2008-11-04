@@ -187,9 +187,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
       gtk_selection_data_set (selection, selection->target, 8,
                               (const guchar *) "E", 1);
 
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    _("The given filename does not have any known "
-                      "file extension."));
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+			    _("The given filename does not have any known "
+			      "file extension."));
     }
 
   g_free (uri);

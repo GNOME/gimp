@@ -130,10 +130,9 @@ gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 
       if (! gimp_gradient_save_pov (gradient, filename, &error))
         {
-          gimp_message (g_object_get_data (G_OBJECT (dialog), "gimp"),
-                        G_OBJECT (dialog),
-                        GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (g_object_get_data (G_OBJECT (dialog), "gimp"),
+				G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+				error->message);
           g_clear_error (&error);
           return;
         }

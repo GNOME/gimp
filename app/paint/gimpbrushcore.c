@@ -349,8 +349,8 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (! core->main_brush)
     {
-      g_set_error (error, 0, 0,
-                   _("No brushes available for use with this tool."));
+      g_set_error_literal (error, 0, 0,
+			   _("No brushes available for use with this tool."));
       return FALSE;
     }
 

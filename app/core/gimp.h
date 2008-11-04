@@ -195,6 +195,10 @@ void           gimp_message_valist       (Gimp                *gimp,
                                           GimpMessageSeverity  severity,
                                           const gchar         *format,
                                           va_list              args);
+void           gimp_message_literal      (Gimp                *gimp,
+                                          GObject             *handler,
+                                          GimpMessageSeverity  severity,
+                                          const gchar         *message);
 
 void           gimp_image_opened         (Gimp                *gimp,
 					  const gchar         *uri);

@@ -1107,6 +1107,19 @@ gimp_message_valist (Gimp                *gimp,
 }
 
 void
+gimp_message_literal (Gimp                *gimp,
+		      GObject             *handler,
+		      GimpMessageSeverity  severity,
+		      const gchar         *message)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
+  g_return_if_fail (message != NULL);
+
+  gimp_show_message (gimp, handler, severity, NULL, message);
+}
+
+void
 gimp_image_opened (Gimp        *gimp,
 		   const gchar *uri)
 {

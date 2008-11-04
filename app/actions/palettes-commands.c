@@ -107,9 +107,10 @@ palettes_merge_callback (GtkWidget   *widget,
 
   if (! sel_list)
     {
-      gimp_message (gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    "Can't merge palettes because "
-                    "there are no palettes selected.");
+      gimp_message_literal (gimp,
+			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+			    "Can't merge palettes because "
+			    "there are no palettes selected.");
       return;
     }
 

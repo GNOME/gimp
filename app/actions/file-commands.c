@@ -262,9 +262,9 @@ file_save_cmd_callback (GtkAction *action,
                   break;
 
                 case GIMP_PDB_CANCEL:
-                  gimp_message (image->gimp, G_OBJECT (display),
-                                GIMP_MESSAGE_INFO,
-                                _("Saving canceled"));
+		  gimp_message_literal (image->gimp,
+					G_OBJECT (display), GIMP_MESSAGE_INFO,
+					_("Saving canceled"));
                   break;
 
                 default:
@@ -297,8 +297,9 @@ file_save_cmd_callback (GtkAction *action,
         }
       else
         {
-          gimp_message (image->gimp, G_OBJECT (display),
-                        GIMP_MESSAGE_INFO, _("No changes need to be saved"));
+          gimp_message_literal (image->gimp,
+				G_OBJECT (display), GIMP_MESSAGE_INFO,
+				_("No changes need to be saved"));
           saved = TRUE;
           break;
         }
@@ -360,9 +361,10 @@ file_revert_cmd_callback (GtkAction *action,
 
   if (! uri)
     {
-      gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
-                    _("Revert failed. "
-                      "No file name associated with this image."));
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
+			    _("Revert failed. "
+			      "No file name associated with this image."));
     }
   else if (dialog)
     {

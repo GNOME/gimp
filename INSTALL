@@ -1,19 +1,19 @@
 --------------------------------------
-Installation instructions for GIMP 2.6
+Installation instructions for GIMP 2.7
 --------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
-GIMP 2.6 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.6. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.6, you have to
+GIMP 2.7 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.7. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.7, you have to
 choose a separate prefix which is not in your default library search
 path.
 
-GIMP 2.6 is fully backward compatible to all earlier GIMP 2.x version.
-Plug-ins and scripts written for GIMP 2.4, or GIMP 2.2 or even 2.0,
+GIMP 2.7 is fully backward compatible to all earlier GIMP 2.x version.
+Plug-ins and scripts written for GIMP 2.6 or earlier GIMP 2.x versions
 will continue to work and don't need to be changed nor recompiled to
-be used with GIMP 2.x.
+be used with GIMP 2.7.
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
@@ -42,7 +42,7 @@ header files installed.
        http://svn.gnome.org/svn/gegl/trunk
 
   4. You need to have installed GTK+ version 2.12.5 or newer.  GIMP
-     also need a recent versions of GLib (>= 2.16.1) and Pango (>= 1.18.0).
+     also need a recent versions of GLib (>= 2.18.0) and Pango (>= 1.20.1).
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
 
   5. We use cairo, which is hosted at http://www.cairographics.org/.
@@ -82,9 +82,9 @@ header files installed.
      of make, we'd appreciate if you'd send us a patch with the changes.
 
  13. Install GIMP by running `make install'. In order to avoid clashes
-     with other versions of GIMP, we install a binary called gimp-2.6.
+     with other versions of GIMP, we install a binary called gimp-2.7.
      By default there's also a link created so that you can type 'gimp'
-     to start gimp-2.6.
+     to start gimp-2.7.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -96,8 +96,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-2.6.x.tar.gz   # unpack the sources
-  % cd gimp-2.6.x                # change to the toplevel directory
+  % tar xvfz gimp-2.7.x.tar.gz   # unpack the sources
+  % cd gimp-2.7.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build GIMP
   % make install                 # install GIMP
@@ -132,8 +132,8 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from ~/.gimp-2.6 
-     (the directory .gimp-2.6 in the users home directory) to DIR.
+     GIMP uses to search for its configuration files from ~/.gimp-2.7 
+     (the directory .gimp-2.7 in the users home directory) to DIR.
 
   --enable-binreloc.  When compiled for Linux with this option enabled,
      GIMP will be binary relocatable.  Plug-ins and data files will
@@ -236,8 +236,8 @@ These are:
      if you call configure with --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.6 the default gimp installation. Otherwise a link called
-     gimp pointing to the gimp-2.6 executable will be installed.
+     gimp-2.7 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.7 executable will be installed.
 
   --disable-gimp-console.  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
@@ -258,7 +258,7 @@ The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-2.6' in `app'.
+ - The main GIMP program 'gimp-2.7' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 

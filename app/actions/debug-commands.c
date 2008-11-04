@@ -176,7 +176,8 @@ debug_dump_managers_cmd_callback (GtkAction *action,
 
       if (managers)
         {
-          g_print ("\n\n========================================\n"
+          g_print ("\n\n"
+		   "========================================\n"
                    "UI Manager: %s\n"
                    "========================================\n\n",
                    entry->identifier);

@@ -63,13 +63,13 @@ gimp_templates_load (Gimp *gimp)
           if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
                                               filename, NULL, &error))
             {
-              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
-                            "%s", error->message);
+              gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+				    error->message);
             }
         }
       else
         {
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
         }
 
       g_clear_error (&error);
@@ -106,7 +106,7 @@ gimp_templates_save (Gimp *gimp)
                                        header, footer, NULL,
                                        &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 

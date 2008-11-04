@@ -645,9 +645,9 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
       if (! gimp_data_factory_data_save_single (editor->data_factory, data,
                                                 &error))
         {
-          gimp_message (editor->data_factory->gimp, G_OBJECT (editor),
-                        GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
+          gimp_message_literal (editor->data_factory->gimp, G_OBJECT (editor),
+				GIMP_MESSAGE_ERROR,
+				error->message);
           g_clear_error (&error);
         }
     }

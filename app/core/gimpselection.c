@@ -271,8 +271,8 @@ gimp_selection_stroke (GimpItem           *item,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      g_set_error (error, 0, 0,
-                   _("There is no selection to stroke."));
+      g_set_error_literal (error, 0, 0,
+			   _("There is no selection to stroke."));
       return FALSE;
     }
 
@@ -659,9 +659,9 @@ gimp_selection_extract (GimpChannel  *selection,
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
-      g_set_error (error, 0, 0,
-                   _("Unable to cut or copy because the "
-                     "selected region is empty."));
+      g_set_error_literal (error, 0, 0,
+			   _("Unable to cut or copy because the "
+			     "selected region is empty."));
       return NULL;
     }
 
@@ -835,9 +835,9 @@ gimp_selection_float (GimpChannel   *selection,
   if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
       (x1 == x2 || y1 == y2))
     {
-      g_set_error (error, 0, 0,
-                   _("Cannot float selection because the selected region "
-                     "is empty."));
+      g_set_error_literal (error, 0, 0,
+			   _("Cannot float selection because the selected "
+			     "region is empty."));
       return NULL;
     }
 

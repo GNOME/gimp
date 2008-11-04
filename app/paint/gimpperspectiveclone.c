@@ -158,8 +158,8 @@ gimp_perspective_clone_start (GimpPaintCore     *paint_core,
 
   if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
     {
-      g_set_error (error, 0, 0,
-                   _("Perspective Clone does not operate on indexed layers."));
+      g_set_error_literal (error, 0, 0,
+			   _("Perspective Clone does not operate on indexed layers."));
       return FALSE;
     }
 

@@ -178,8 +178,9 @@ gimp_image_map_tool_settings_import (GimpSettingsBox  *box,
 
   if (! tool_class->settings_import (tool, filename, &error))
     {
-      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
-                    GIMP_MESSAGE_ERROR, error->message);
+      gimp_message_literal (GIMP_TOOL (tool)->tool_info->gimp,
+			    G_OBJECT (tool->shell),
+			    GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
       return FALSE;
@@ -207,8 +208,9 @@ gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
 
   if (! tool_class->settings_export (tool, filename, &error))
     {
-      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
-                    GIMP_MESSAGE_ERROR, error->message);
+      gimp_message_literal (GIMP_TOOL (tool)->tool_info->gimp,
+			    G_OBJECT (tool->shell),
+			    GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
       return FALSE;

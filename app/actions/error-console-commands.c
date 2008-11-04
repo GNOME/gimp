@@ -80,8 +80,9 @@ error_console_save_cmd_callback (GtkAction *action,
   if (value && ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                                        NULL, NULL))
     {
-      gimp_message (console->gimp, G_OBJECT (console), GIMP_MESSAGE_WARNING,
-                    _("Cannot save. Nothing is selected."));
+      gimp_message_literal (console->gimp,
+			    G_OBJECT (console), GIMP_MESSAGE_WARNING,
+			    _("Cannot save. Nothing is selected."));
       return;
     }
 

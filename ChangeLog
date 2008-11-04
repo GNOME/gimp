@@ -1,3 +1,123 @@
+2008-11-04  Sven Neumann  <sven@sven>
+
+	* configure.in: bumped minimum required version of GLib to 2.18.0.
+
+	* INSTALL: document the updated dependency.
+
+	* app/core/gimp.[ch]: introduced gimp_message_literal(), a variant
+	of gimp_message() that takes a literal string.
+
+	* app/errors.[ch]: removed format arguments from gimp_fatal_error()
+	and gimp_terminate() and let them take a literal string instead.
+
+	* app/tools/gimptool.[ch]: introduced gimp_tool_message_literal(),
+	a variant of gimp_tool_message() that takes a literal string.
+
+	* app/actions/documents-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/error-console-commands.c
+	* app/actions/file-commands.c
+	* app/actions/gradients-commands.c
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/palettes-commands.c
+	* app/actions/plug-in-commands.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/config/gimprc.c
+	* app/core/gimp-modules.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimp-units.c
+	* app/core/gimpchannel.c
+	* app/core/gimpcontainer-filter.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagefile.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/core/gimpselection.c
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/dialogs.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/dialogs/quit-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/file/file-open.c
+	* app/file/file-procedure.c
+	* app/file/file-save.c
+	* app/file/file-utils.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimplevelsconfig.c
+	* app/gui/gui-message.c
+	* app/gui/gui.c
+	* app/gui/session.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpperspectiveclone.c
+	* app/paint/gimpsourcecore.c
+	* app/pdb/gimppdb-utils.c
+	* app/pdb/gimpprocedure.c
+	* app/plug-in/gimpplugin-message.c
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-restore.c
+	* app/plug-in/gimppluginprocedure.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimp-tools.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdesaturatetool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpgegltool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool-settings.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsourcetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpcontrollers.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimperrordialog.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppdbdialog.c
+	* app/widgets/gimpsettingsbox.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/xcf/xcf-load.c
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/image.pdb: use the _literal variants for
+	g_set_error(), gimp_message() and gimp_tool_message().
+
+	* app/pdb/convert-cmds.c
+	* app/pdb/edit-cmds.c
+	* app/pdb/floating-sel-cmds.c
+	* app/pdb/image-cmds.c: regenerated.
+
 2008-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpprojection.[ch]: remove public functions

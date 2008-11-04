@@ -275,18 +275,18 @@ xcf_load_image (Gimp     *gimp,
   if (num_successful_elements == 0)
     goto hard_error;
 
-  gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
-                _("This XCF file is corrupt!  I have loaded as much "
-                  "of it as I can, but it is incomplete."));
+  gimp_message_literal (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
+			_("This XCF file is corrupt!  I have loaded as much "
+			  "of it as I can, but it is incomplete."));
 
   gimp_image_undo_enable (image);
 
   return image;
 
  hard_error:
-  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-               _("This XCF file is corrupt!  I could not even "
-                 "salvage any partial image data from it."));
+  g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+		       _("This XCF file is corrupt!  I could not even "
+			 "salvage any partial image data from it."));
 
   g_object_unref (image);
 
@@ -321,11 +321,11 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 gint i;
 
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_WARNING,
-                              _("XCF warning: version 0 of XCF file format\n"
-                                "did not save indexed colormaps correctly.\n"
-                                "Substituting grayscale map."));
+                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				      GIMP_MESSAGE_WARNING,
+				      _("XCF warning: version 0 of XCF file format\n"
+					"did not save indexed colormaps correctly.\n"
+					"Substituting grayscale map."));
 
                 if (! xcf_seek_pos (info, info->cp + n_colors, NULL))
                   return FALSE;
@@ -365,7 +365,7 @@ xcf_load_image_props (XcfInfo   *info,
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_ERROR,
                               "Unknown compression type: %d",
-                              (int) compression);
+			      (gint) compression);
                 return FALSE;
               }
 
@@ -402,9 +402,9 @@ xcf_load_image_props (XcfInfo   *info,
                     break;
 
                   default:
-                    gimp_message (info->gimp, G_OBJECT (info->progress),
-                                  GIMP_MESSAGE_WARNING,
-                                  "Guide orientation out of range in XCF file");
+                    gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+					  GIMP_MESSAGE_WARNING,
+					  "Guide orientation out of range in XCF file");
                     continue;
                   }
               }
@@ -443,9 +443,9 @@ xcf_load_image_props (XcfInfo   *info,
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
               {
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_WARNING,
-                              "Warning, resolution out of range in XCF file");
+                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				      GIMP_MESSAGE_WARNING,
+				      "Warning, resolution out of range in XCF file");
                 xres = image->gimp->config->default_image->xresolution;
                 yres = image->gimp->config->default_image->yresolution;
               }
@@ -473,9 +473,9 @@ xcf_load_image_props (XcfInfo   *info,
               }
 
             if (info->cp - base != prop_size)
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
-                            "Error while loading an image's parasites");
+              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				    GIMP_MESSAGE_WARNING,
+				    "Error while loading an image's parasites");
           }
           break;
 
@@ -488,10 +488,10 @@ xcf_load_image_props (XcfInfo   *info,
             if ((unit <= GIMP_UNIT_PIXEL) ||
                 (unit >= _gimp_unit_get_number_of_built_in_units (image->gimp)))
               {
-                gimp_message (info->gimp, G_OBJECT (info->progress),
-                              GIMP_MESSAGE_WARNING,
-                              "Warning, unit out of range in XCF file, "
-                              "falling back to inches");
+                gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				      GIMP_MESSAGE_WARNING,
+				      "Warning, unit out of range in XCF file, "
+				      "falling back to inches");
                 unit = GIMP_UNIT_INCH;
               }
 
@@ -731,9 +731,9 @@ xcf_load_layer_props (XcfInfo   *info,
               }
 
             if (info->cp - base != prop_size)
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
-                            "Error while loading a layer's parasites");
+              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				    GIMP_MESSAGE_WARNING,
+				    "Error while loading a layer's parasites");
           }
           break;
 
@@ -882,9 +882,9 @@ xcf_load_channel_props (XcfInfo      *info,
               }
 
             if (info->cp - base != prop_size)
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
-                            "Error while loading a channel's parasites");
+              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				    GIMP_MESSAGE_WARNING,
+				    "Error while loading a channel's parasites");
           }
           break;
 
@@ -1256,9 +1256,9 @@ xcf_load_level (XcfInfo     *info,
 
       if (offset == 0)
         {
-          gimp_message (info->gimp, G_OBJECT (info->progress),
-                        GIMP_MESSAGE_ERROR,
-                        "not enough tiles found in level");
+          gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+				GIMP_MESSAGE_ERROR,
+				"not enough tiles found in level");
           return FALSE;
         }
 

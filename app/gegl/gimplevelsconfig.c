@@ -660,8 +660,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
   if (! fgets (buf, sizeof (buf), file) ||
       strcmp (buf, "# GIMP Levels File\n") != 0)
     {
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                   _("not a GIMP Levels file"));
+      g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+			   _("not a GIMP Levels file"));
       return FALSE;
     }
 
@@ -707,8 +707,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
   return TRUE;
 
  error:
-  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-               _("parse error"));
+  g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+		       _("parse error"));
   return FALSE;
 }
 

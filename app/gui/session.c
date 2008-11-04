@@ -208,7 +208,7 @@ session_init (Gimp *gimp)
 
   if (error)
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
       gimp_config_file_backup_on_error (filename, "sessionrc", NULL);
@@ -281,7 +281,7 @@ session_save (Gimp     *gimp,
 
   if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
 

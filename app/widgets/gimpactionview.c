@@ -636,9 +636,9 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
                                         confirm_data->accel_mask,
                                         TRUE))
         {
-          gimp_message (confirm_data->manager->gimp, G_OBJECT (dialog),
-                        GIMP_MESSAGE_ERROR,
-                        _("Changing shortcut failed."));
+          gimp_message_literal (confirm_data->manager->gimp, G_OBJECT (dialog),
+				GIMP_MESSAGE_ERROR,
+				_("Changing shortcut failed."));
         }
     }
 
@@ -776,9 +776,9 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
 
   if (! accel_key)
     {
-      gimp_message (view->manager->gimp, G_OBJECT (view),
-                    GIMP_MESSAGE_ERROR,
-                    _("Invalid shortcut."));
+      gimp_message_literal (view->manager->gimp,
+			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
+			    _("Invalid shortcut."));
     }
   else if (! gtk_accel_map_change_entry (accel_path,
                                          accel_key, accel_mask, FALSE))
@@ -841,9 +841,9 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
             }
           else
             {
-              gimp_message (view->manager->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_ERROR,
-                            _("Changing shortcut failed."));
+              gimp_message_literal (view->manager->gimp,
+				    G_OBJECT (view), GIMP_MESSAGE_ERROR,
+				    _("Changing shortcut failed."));
             }
         }
     }
@@ -865,8 +865,8 @@ gimp_action_view_accel_cleared (GtkCellRendererAccel *accel,
 
   if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
     {
-      gimp_message (view->manager->gimp, G_OBJECT (view),
-                    GIMP_MESSAGE_ERROR,
-                    _("Removing shortcut failed."));
+      gimp_message_literal (view->manager->gimp,
+			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
+			    _("Removing shortcut failed."));
     }
 }

@@ -803,8 +803,9 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                                                       proc_install->menu_path,
                                                       &error))
             {
-              gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            "%s", error->message);
+              gimp_message_literal (plug_in->manager->gimp,
+				    NULL, GIMP_MESSAGE_WARNING,
+				    error->message);
               g_clear_error (&error);
             }
         }

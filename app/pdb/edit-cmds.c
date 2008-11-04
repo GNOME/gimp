@@ -73,8 +73,9 @@ edit_cut_invoker (GimpProcedure      *procedure,
 
           if (! non_empty)
             {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                            "%s", my_error->message);
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    my_error->message);
               g_clear_error (&my_error);
             }
         }
@@ -117,8 +118,9 @@ edit_copy_invoker (GimpProcedure      *procedure,
 
           if (! non_empty)
             {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                            "%s", my_error->message);
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    my_error->message);
               g_clear_error (&my_error);
             }
         }
@@ -158,8 +160,9 @@ edit_copy_visible_invoker (GimpProcedure      *procedure,
 
       if (! non_empty)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }
@@ -281,8 +284,9 @@ edit_named_cut_invoker (GimpProcedure      *procedure,
             }
           else
             {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                            "%s", my_error->message);
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    my_error->message);
               g_clear_error (&my_error);
             }
         }
@@ -332,8 +336,9 @@ edit_named_copy_invoker (GimpProcedure      *procedure,
             }
           else
             {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                            "%s", my_error->message);
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    my_error->message);
               g_clear_error (&my_error);
             }
         }
@@ -380,8 +385,9 @@ edit_named_copy_visible_invoker (GimpProcedure      *procedure,
         }
       else
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        "%s", my_error->message);
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                my_error->message);
           g_clear_error (&my_error);
         }
     }

@@ -446,7 +446,7 @@ gimp_tool_initialize (GimpTool    *tool,
 
   if (! GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display, &error))
     {
-      gimp_tool_message (tool, display, error->message);
+      gimp_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
       return FALSE;
     }
@@ -1018,6 +1018,19 @@ gimp_tool_message (GimpTool    *tool,
                        GIMP_MESSAGE_WARNING, format, args);
 
   va_end (args);
+}
+
+void
+gimp_tool_message_literal (GimpTool    *tool,
+			   GimpDisplay *display,
+			   const gchar *message)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (message != NULL);
+
+  gimp_message_literal (display->image->gimp, G_OBJECT (display),
+			GIMP_MESSAGE_WARNING, message);
 }
 
 void

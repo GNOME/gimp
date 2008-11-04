@@ -43,9 +43,9 @@ HELP
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Cannot remove this layer because "
-                     "it is not a floating selection."));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Cannot remove this layer because "
+                             "it is not a floating selection."));
       success = FALSE;
     }
 }
@@ -80,9 +80,9 @@ HELP
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Cannot anchor this layer because "
-                     "it is not a floating selection."));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Cannot anchor this layer because "
+                             "it is not a floating selection."));
       success = FALSE;
     }
 }
@@ -119,9 +119,9 @@ HELP
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Cannot convert this layer to a normal layer because "
-                     "it is not a floating selection."));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Cannot convert this layer to a normal layer "
+                             "because it is not a floating selection."));
       success = FALSE;
     }
 }
@@ -180,9 +180,9 @@ sub floating_sel_rigor {
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Cannot rigor this layer because "
-                     "it is not a floating selection."));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Cannot rigor this layer because "
+                             "it is not a floating selection."));
       success = FALSE;
     }
 }
@@ -211,9 +211,9 @@ sub floating_sel_relax {
     }
   else
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Cannot relax this layer because "
-                     "it is not a floating selection."));
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Cannot relax this layer because "
+                             "it is not a floating selection."));
       success = FALSE;
     }
 }

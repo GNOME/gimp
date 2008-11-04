@@ -117,7 +117,7 @@ gimp_parasiterc_load (Gimp *gimp)
                                       filename, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
 
       g_error_free (error);
     }
@@ -151,7 +151,7 @@ gimp_parasiterc_save (Gimp *gimp)
                                        header, footer, NULL,
                                        &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 

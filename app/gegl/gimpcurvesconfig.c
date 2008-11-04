@@ -380,8 +380,9 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
   if (! fgets (buf, sizeof (buf), file) ||
       strcmp (buf, "# GIMP Curves File\n") != 0)
     {
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                   _("not a GIMP Curves file"));
+      g_set_error_literal (error,
+			   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+			   _("not a GIMP Curves file"));
       return FALSE;
     }
 
@@ -394,8 +395,9 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
             {
               /*  FIXME: should have a helpful error message here  */
               g_printerr ("fields != 2");
-              g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                           _("parse error"));
+              g_set_error_literal (error,
+				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+				   _("parse error"));
               return FALSE;
             }
         }

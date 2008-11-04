@@ -127,16 +127,16 @@ file_open_image (Gimp                *gimp,
           if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
               g_free (filename);
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Not a regular file"));
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+				   _("Not a regular file"));
               return NULL;
             }
 
           if (g_access (filename, R_OK) != 0)
             {
               g_free (filename);
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
-                           g_strerror (errno));
+              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
+				   g_strerror (errno));
               return NULL;
             }
         }
@@ -451,8 +451,8 @@ file_open_layers (Gimp                *gimp,
         }
       else
         {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Image doesn't contain any layers"));
+          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+			       _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
 
@@ -616,14 +616,14 @@ file_open_profile_apply_rgb (GimpImage    *image,
 
           g_object_set (config, "mode", GIMP_COLOR_MANAGEMENT_OFF, NULL);
 
-          gimp_message (image->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_WARNING, msg);
+          gimp_message_literal (image->gimp, G_OBJECT (progress),
+				GIMP_MESSAGE_WARNING, msg);
           g_free (msg);
         }
       else
         {
-          gimp_message (image->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_ERROR, error->message);
+          gimp_message_literal (image->gimp, G_OBJECT (progress),
+				GIMP_MESSAGE_ERROR, error->message);
         }
 
       g_error_free (error);

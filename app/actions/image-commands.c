@@ -174,8 +174,9 @@ image_convert_cmd_callback (GtkAction *action,
       if (! gimp_image_convert (image, value, 0, 0, FALSE, FALSE, 0, NULL,
                                 NULL, &error))
         {
-          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+          gimp_message_literal (image->gimp,
+				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+				error->message);
           g_clear_error (&error);
           return;
         }
@@ -405,8 +406,9 @@ image_crop_cmd_callback (GtkAction *action,
   if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
-      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    _("Cannot crop because the current selection is empty."));
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+			    _("Cannot crop because the current selection is empty."));
       return;
     }
 

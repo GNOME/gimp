@@ -163,7 +163,7 @@ gimp_unitrc_load (Gimp *gimp)
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
 
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
       gimp_config_file_backup_on_error (filename, "unitrc", NULL);
@@ -256,7 +256,7 @@ gimp_unitrc_save (Gimp *gimp)
 
   if (! gimp_config_writer_finish (writer, "end of units", &error))
     {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
 }

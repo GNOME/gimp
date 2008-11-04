@@ -235,8 +235,8 @@ documents_clear_cmd_callback (GtkAction *action,
           if (! gtk_recent_manager_purge_items (gtk_recent_manager_get_default (),
                                                 &error))
             {
-              gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
-                            "%s", error->message);
+              gimp_message_literal (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+				    error->message);
               g_clear_error (&error);
             }
         }
