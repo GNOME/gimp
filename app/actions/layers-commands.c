@@ -42,7 +42,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
-#include "core/gimpprojection.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
@@ -340,14 +340,14 @@ void
 layers_new_from_visible_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage      *image;
-  GimpLayer      *layer;
-  GimpProjection *projection;
+  GimpImage    *image;
+  GimpLayer    *layer;
+  GimpPickable *pickable;
   return_if_no_image (image, data);
 
-  projection = gimp_image_get_projection (image);
+  pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
 
-  layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
+  layer = gimp_layer_new_from_tiles (gimp_pickable_get_tiles (pickable),
                                      image,
                                      gimp_image_base_type_with_alpha (image),
                                      _("Visible"),

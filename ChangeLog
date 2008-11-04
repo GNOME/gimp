@@ -1,3 +1,17 @@
+2008-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpprojection.[ch]: remove public functions
+	get_tiles(), get_image(), get_image_type() and get_bytes().
+
+	* app/actions/debug-commands.c
+	* app/actions/layers-commands.c
+	* app/core/gimpprojection-construct.c
+	* app/display/gimpdisplayshell-render.c
+	* app/paint/gimppaintcore.c
+	* tools/pdbgen/pdb/layer.pdb: use the GimpPickable API insatead.
+
+	* app/pdb/layer-cmds.c: regenerated.
+
 2008-11-04  Sven Neumann  <sven@sven>
 
 	* app/base/tile-pyramid.[ch] (tile_pyramid_new):

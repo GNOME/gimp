@@ -38,6 +38,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 
 #include "gimpcanvas.h"
@@ -278,7 +279,7 @@ gimp_display_shell_render (const GimpDisplayShell *shell,
   }
 
   /* Currently, only RGBA and GRAYA projection types are used. */
-  type = gimp_projection_get_image_type (projection);
+  type = gimp_pickable_get_image_type (GIMP_PICKABLE (projection));
 
   switch (type)
     {

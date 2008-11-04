@@ -369,9 +369,9 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (core->use_saved_proj)
     {
-      GimpImage      *image      = gimp_item_get_image (item);
-      GimpProjection *projection = gimp_image_get_projection (image);
-      TileManager    *tiles      = gimp_projection_get_tiles (projection);
+      GimpImage    *image    = gimp_item_get_image (item);
+      GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      TileManager  *tiles    = gimp_pickable_get_tiles (pickable);
 
       core->saved_proj_tiles = tile_manager_new (tile_manager_width (tiles),
                                                  tile_manager_height (tiles),

@@ -85,7 +85,6 @@ GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 
 GimpProjection * gimp_projection_new              (GimpImage            *image);
 
-TileManager    * gimp_projection_get_tiles        (GimpProjection       *proj);
 GeglNode       * gimp_projection_get_sink_node    (GimpProjection       *proj);
 
 TileManager    * gimp_projection_get_tiles_at_level
@@ -95,10 +94,6 @@ TileManager    * gimp_projection_get_tiles_at_level
 gint             gimp_projection_get_level        (GimpProjection       *proj,
                                                    gdouble               scale_x,
                                                    gdouble               scale_y);
-
-GimpImage      * gimp_projection_get_image        (const GimpProjection *proj);
-GimpImageType    gimp_projection_get_image_type   (const GimpProjection *proj);
-gint             gimp_projection_get_bytes        (const GimpProjection *proj);
 
 void             gimp_projection_flush            (GimpProjection       *proj);
 void             gimp_projection_flush_now        (GimpProjection       *proj);

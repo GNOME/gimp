@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 
 #include "widgets/gimpmenufactory.h"
@@ -85,7 +86,7 @@ debug_benchmark_projection_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
 
   projection = gimp_image_get_projection (image);
-  tiles      = gimp_projection_get_tiles (projection);
+  tiles      = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
   timer      = g_timer_new ();
 
   if (projection && tiles && timer)

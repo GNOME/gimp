@@ -34,6 +34,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
+#include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpprojection-construct.h"
 
@@ -125,9 +126,11 @@ gimp_projection_construct (GimpProjection *proj,
 
               g_printerr ("cow-projection!");
 
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (layer),
+              pixel_region_init (&srcPR,
+                                 gimp_drawable_get_tiles (layer),
                                  x, y, w,h, FALSE);
-              pixel_region_init (&destPR, gimp_projection_get_tiles (proj),
+              pixel_region_init (&destPR,
+                                 gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
                                  x, y, w,h, TRUE);
 
               copy_region (&srcPR, &destPR);
@@ -247,7 +250,8 @@ gimp_projection_construct_layers (GimpProjection *proj,
       y2 = CLAMP (off_y + gimp_item_get_height (GIMP_ITEM (layer)), y, y + h);
 
       /* configure the pixel regions  */
-      pixel_region_init (&src1PR, gimp_projection_get_tiles (proj),
+      pixel_region_init (&src1PR,
+                         gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
                          x1, y1, (x2 - x1), (y2 - y1),
                          TRUE);
 
@@ -346,7 +350,7 @@ gimp_projection_construct_channels (GimpProjection *proj,
 
           /* configure the pixel regions  */
           pixel_region_init (&src1PR,
-                             gimp_projection_get_tiles (proj),
+                             gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
                              x, y, w, h,
                              TRUE);
           pixel_region_init (&src2PR,
@@ -415,7 +419,8 @@ gimp_projection_initialize (GimpProjection *proj,
       PixelRegion region;
 
       pixel_region_init (&region,
-                         gimp_projection_get_tiles (proj), x, y, w, h, TRUE);
+                         gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
+                         x, y, w, h, TRUE);
       clear_region (&region);
     }
 }
