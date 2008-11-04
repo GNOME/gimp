@@ -1,3 +1,15 @@
+2008-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpprojectable.[ch]: add signal "structure-changed"
+	and API to emit it.
+
+	* app/core/gimpimage.c: emit it when the image emits
+	"mode-changed" and "size-changed".
+
+	* app/core/gimpprojection.c: connect to the new signal instead of
+	"mode-changed" and "size-changed" to get rid of one more image
+	dependency.
+
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c

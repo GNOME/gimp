@@ -110,7 +110,7 @@ static void        gimp_projection_projectable_update    (GimpProjectable *proje
 static void        gimp_projection_projectable_flush     (GimpProjectable *projectable,
                                                           gboolean         invalidate_preview,
                                                           GimpProjection  *proj);
-static void        gimp_projection_image_changed         (GimpImage       *image,
+static void        gimp_projection_projectable_changed   (GimpProjectable *projectable,
                                                           GimpProjection  *proj);
 
 
@@ -345,7 +345,6 @@ GimpProjection *
 gimp_projection_new (GimpProjectable *projectable)
 {
   GimpProjection *proj;
-  GimpImage      *image;
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
@@ -359,14 +358,8 @@ gimp_projection_new (GimpProjectable *projectable)
   g_signal_connect_object (projectable, "flush",
                            G_CALLBACK (gimp_projection_projectable_flush),
                            proj, 0);
-
-  image = gimp_projectable_get_image (projectable);
-
-  g_signal_connect_object (image, "size-changed",
-                           G_CALLBACK (gimp_projection_image_changed),
-                           proj, 0);
-  g_signal_connect_object (image, "mode-changed",
-                           G_CALLBACK (gimp_projection_image_changed),
+  g_signal_connect_object (projectable, "structure-changed",
+                           G_CALLBACK (gimp_projection_projectable_changed),
                            proj, 0);
 
   return proj;
@@ -789,8 +782,8 @@ gimp_projection_projectable_flush (GimpProjectable *projectable,
 }
 
 static void
-gimp_projection_image_changed (GimpImage      *image,
-                               GimpProjection *proj)
+gimp_projection_projectable_changed (GimpProjectable *projectable,
+                                     GimpProjection  *proj)
 {
   gint width, height;
 
@@ -800,7 +793,7 @@ gimp_projection_image_changed (GimpImage      *image,
       proj->pyramid = NULL;
     }
 
-  gimp_viewable_get_size (GIMP_VIEWABLE (image), &width, &height);
+  gimp_viewable_get_size (GIMP_VIEWABLE (projectable), &width, &height);
 
   gimp_projection_add_update_area (proj, 0, 0, width, height);
 }

@@ -156,6 +156,8 @@ static void     gimp_image_invalidate_preview    (GimpViewable      *viewable);
 static void     gimp_image_size_changed          (GimpViewable      *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
                                                   gchar            **tooltip);
+
+static void     gimp_image_real_mode_changed     (GimpImage         *image);
 static void     gimp_image_real_size_changed_detailed
                                                  (GimpImage         *image,
                                                   gint               previous_origin_x,
@@ -491,7 +493,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
-  klass->mode_changed                 = NULL;
+  klass->mode_changed                 = gimp_image_real_mode_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
@@ -1067,6 +1069,8 @@ gimp_image_size_changed (GimpViewable *viewable)
     }
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
+
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 
 static gchar *
@@ -1090,6 +1094,12 @@ gimp_image_get_description (GimpViewable  *viewable,
   g_free (basename);
 
   return retval;
+}
+
+static void
+gimp_image_real_mode_changed (GimpImage *image)
+{
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 
 static void

@@ -43,6 +43,7 @@ struct _GimpProjectableInterface
                                       gint             height);
   void        (* flush)              (GimpProjectable *projectable,
                                       gboolean         invalidate_preview);
+  void        (* structure_changed)  (GimpProjectable *projectable);
 
   /*  virtual functions  */
   GimpImage * (* get_image)          (GimpProjectable *projectable);
@@ -60,6 +61,7 @@ void        gimp_projectable_update             (GimpProjectable *projectable,
                                                  gint             height);
 void        gimp_projectable_flush              (GimpProjectable *projectable,
                                                  gboolean         preview_invalidated);
+void        gimp_projectable_structure_changed  (GimpProjectable *projectable);
 
 GimpImage * gimp_projectable_get_image          (GimpProjectable *projectable);
 GeglNode  * gimp_projectable_get_graph          (GimpProjectable *projectable);
