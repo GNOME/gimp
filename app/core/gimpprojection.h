@@ -53,7 +53,7 @@ struct _GimpProjection
 {
   GimpObject                parent_instance;
 
-  GimpImage                *image;
+  GimpProjectable          *projectable;
 
   TilePyramid              *pyramid;
   GeglNode                 *graph;
@@ -72,7 +72,7 @@ struct _GimpProjectionClass
 {
   GimpObjectClass  parent_class;
 
-  void (* update) (GimpProjection *image,
+  void (* update) (GimpProjection *proj,
                    gboolean        now,
                    gint            x,
                    gint            y,
@@ -83,7 +83,7 @@ struct _GimpProjectionClass
 
 GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new              (GimpImage            *image);
+GimpProjection * gimp_projection_new              (GimpProjectable      *projectable);
 
 GeglNode       * gimp_projection_get_sink_node    (GimpProjection       *proj);
 

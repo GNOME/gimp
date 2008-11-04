@@ -297,6 +297,8 @@ libappcore_a_sources = \
 	gimppreviewcache.h			\
 	gimpprogress.c				\
 	gimpprogress.h				\
+	gimpprojectable.c			\
+	gimpprojectable.h			\
 	gimpprojection.c			\
 	gimpprojection.h			\
 	gimpprojection-construct.c		\

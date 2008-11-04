@@ -205,11 +205,6 @@ struct _GimpImageClass
   void (* saved)                        (GimpImage            *image,
                                          const gchar          *uri);
 
-  void (* update)                       (GimpImage            *image,
-                                         gint                  x,
-                                         gint                  y,
-                                         gint                  width,
-                                         gint                  height);
   void (* update_guide)                 (GimpImage            *image,
                                          GimpGuide            *guide);
   void (* update_sample_point)          (GimpImage            *image,
@@ -227,9 +222,6 @@ struct _GimpImageClass
   void (* undo_event)                   (GimpImage            *image,
                                          GimpUndoEvent         event,
                                          GimpUndo             *undo);
-
-  void (* flush)                        (GimpImage            *image,
-                                         gboolean              invalidate_preview);
 };
 
 
@@ -407,7 +399,6 @@ GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
 /*  projection  */
 
 GimpProjection * gimp_image_get_projection       (const GimpImage    *image);
-GeglNode       * gimp_image_get_graph            (GimpImage          *image);
 
 
 /*  layers / channels / vectors  */

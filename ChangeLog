@@ -1,3 +1,27 @@
+2008-11-04  Michael Natterer  <mitch@gimp.org>
+
+	Unfinished first step to make the projection independent of
+	GimpImage, also one step closer to layer grouping.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpprojectable.[ch]: add new interface which abstracts
+	something that can have a projection attached to it. Has "update"
+	and "flush" signals and get_graph() and get_image()
+	vfuncs. get_image() is temporary until the hack is finishes.
+
+	* app/core/gimpimage.[ch]: implement GimpProjectableInterface,
+	remove "update" and "flush" signals and made get_graph() a private
+	implementation of the interface method. Moved interface method
+	implementations after virtual function implementations.
+
+	* app/core/gimpprojection.[ch]: change member "image" to
+	"projectable" and use the projectable API as often as
+	possible. Still some implicit dependencies on the projectable
+	being an image left but it's getting close.
+
+	* app/core/gimpprojection-construct.c: same here.
+
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplay-foreach.c: added missing include.

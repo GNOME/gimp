@@ -57,6 +57,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
+#include "gimpprojectable.h"
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpselection.h"
@@ -96,7 +97,6 @@ enum
   CLEAN,
   DIRTY,
   SAVED,
-  UPDATE,
   UPDATE_GUIDE,
   UPDATE_SAMPLE_POINT,
   SAMPLE_POINT_ADDED,
@@ -105,7 +105,6 @@ enum
   PARASITE_DETACHED,
   COLORMAP_CHANGED,
   UNDO_EVENT,
-  FLUSH,
   LAST_SIGNAL
 };
 
@@ -130,6 +129,7 @@ GeglNode * gegl_node_add_child (GeglNode *self,
 /*  local function prototypes  */
 
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
+static void     gimp_projectable_iface_init      (GimpProjectableInterface  *iface);
 
 static GObject *gimp_image_constructor           (GType              type,
                                                   guint              n_params,
@@ -164,8 +164,14 @@ static void     gimp_image_real_size_changed_detailed
                                                   gint               previous_height);
 static void     gimp_image_real_colormap_changed (GimpImage         *image,
                                                   gint               color_index);
-static void     gimp_image_real_flush            (GimpImage         *image,
+
+static const guint8 * gimp_image_get_icc_profile (GimpColorManaged  *managed,
+                                                  gsize             *len);
+
+static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
+static GimpImage * gimp_image_get_image          (GimpProjectable   *projectable);
+static GeglNode  * gimp_image_get_graph          (GimpProjectable   *projectable);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -185,9 +191,6 @@ static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
                                                   GimpImage         *image);
 static void     gimp_image_channel_color_changed (GimpChannel       *channel,
                                                   GimpImage         *image);
-
-static const guint8 * gimp_image_get_icc_profile (GimpColorManaged *managed,
-                                                  gsize            *len);
 
 
 static const gint valid_combinations[][MAX_CHANNELS + 1] =
@@ -209,7 +212,9 @@ static const gint valid_combinations[][MAX_CHANNELS + 1] =
 
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
-                                                gimp_color_managed_iface_init))
+                                                gimp_color_managed_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
+                                                gimp_projectable_iface_init))
 
 #define parent_class gimp_image_parent_class
 
@@ -386,19 +391,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
-  gimp_image_signals[UPDATE] =
-    g_signal_new ("update",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, update),
-                  NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_INT_INT,
-                  G_TYPE_NONE, 4,
-                  G_TYPE_INT,
-                  G_TYPE_INT,
-                  G_TYPE_INT,
-                  G_TYPE_INT);
-
   gimp_image_signals[UPDATE_GUIDE] =
     g_signal_new ("update-guide",
                   G_TYPE_FROM_CLASS (klass),
@@ -480,16 +472,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
-  gimp_image_signals[FLUSH] =
-    g_signal_new ("flush",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, flush),
-                  NULL, NULL,
-                  gimp_marshal_VOID__BOOLEAN,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_BOOLEAN);
-
   object_class->constructor           = gimp_image_constructor;
   object_class->set_property          = gimp_image_set_property;
   object_class->get_property          = gimp_image_get_property;
@@ -527,7 +509,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->saved                        = NULL;
-  klass->update                       = NULL;
   klass->update_guide                 = NULL;
   klass->update_sample_point          = NULL;
   klass->sample_point_added           = NULL;
@@ -536,7 +517,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->parasite_detached            = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
-  klass->flush                        = gimp_image_real_flush;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -578,6 +558,14 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 }
 
 static void
+gimp_projectable_iface_init (GimpProjectableInterface *iface)
+{
+  iface->flush     = gimp_image_projectable_flush;
+  iface->get_image = gimp_image_get_image;
+  iface->get_graph = gimp_image_get_graph;
+}
+
+static void
 gimp_image_init (GimpImage *image)
 {
   gint i;
@@ -606,7 +594,7 @@ gimp_image_init (GimpImage *image)
 
   image->tattoo_state          = 0;
 
-  image->projection            = gimp_projection_new (image);
+  image->projection            = gimp_projection_new (GIMP_PROJECTABLE (image));
 
   image->guides                = NULL;
   image->grid                  = NULL;
@@ -1135,10 +1123,35 @@ gimp_image_real_colormap_changed (GimpImage *image,
     }
 }
 
-static void
-gimp_image_real_flush (GimpImage *image,
-                       gboolean   invalidate_preview)
+static const guint8 *
+gimp_image_get_icc_profile (GimpColorManaged *managed,
+                            gsize            *len)
 {
+  const GimpParasite *parasite;
+
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (managed), "icc-profile");
+
+  if (parasite)
+    {
+      gsize data_size = gimp_parasite_data_size (parasite);
+
+      if (data_size > 0)
+        {
+          *len = data_size;
+
+          return gimp_parasite_data (parasite);
+        }
+    }
+
+  return NULL;
+}
+
+static void
+gimp_image_projectable_flush (GimpProjectable *projectable,
+                              gboolean         invalidate_preview)
+{
+  GimpImage *image = GIMP_IMAGE (projectable);
+
   if (image->flush_accum.alpha_changed)
     {
       gimp_image_alpha_changed (image);
@@ -1158,6 +1171,53 @@ gimp_image_real_flush (GimpImage *image,
        */
       image->flush_accum.preview_invalidated = FALSE;
     }
+}
+
+static GimpImage *
+gimp_image_get_image (GimpProjectable *projectable)
+{
+  return GIMP_IMAGE (projectable);
+}
+
+static GeglNode *
+gimp_image_get_graph (GimpProjectable *projectable)
+{
+  GimpImage *image = GIMP_IMAGE (projectable);
+  GeglNode  *layers_node;
+  GeglNode  *channels_node;
+  GeglNode  *blend_node;
+  GeglNode  *output;
+
+  if (image->graph)
+    return image->graph;
+
+  image->graph = gegl_node_new ();
+
+  layers_node =
+    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->layers));
+
+  gegl_node_add_child (image->graph, layers_node);
+
+  channels_node =
+    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->channels));
+
+  gegl_node_add_child (image->graph, channels_node);
+
+  blend_node = gegl_node_new_child (image->graph,
+                                    "operation", "gegl:normal",
+                                    NULL);
+
+  gegl_node_connect_to (layers_node,   "output",
+                        blend_node,    "input");
+  gegl_node_connect_to (channels_node, "output",
+                        blend_node,    "aux");
+
+  output = gegl_node_get_output_proxy (image->graph, "output");
+
+  gegl_node_connect_to (blend_node, "output",
+                        output,     "input");
+
+  return image->graph;
 }
 
 static void
@@ -1699,8 +1759,8 @@ gimp_image_update (GimpImage *image,
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[UPDATE], 0,
-                 x, y, width, height);
+  gimp_projectable_update (GIMP_PROJECTABLE (image),
+                           x, y, width, height);
 
   image->flush_accum.preview_invalidated = TRUE;
 }
@@ -1975,8 +2035,8 @@ gimp_image_flush (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[FLUSH], 0,
-                 image->flush_accum.preview_invalidated);
+  gimp_projectable_flush (GIMP_PROJECTABLE (image),
+                          image->flush_accum.preview_invalidated);
 }
 
 
@@ -2441,48 +2501,6 @@ gimp_image_get_projection (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return image->projection;
-}
-
-GeglNode *
-gimp_image_get_graph (GimpImage *image)
-{
-  GeglNode *layers_node;
-  GeglNode *channels_node;
-  GeglNode *blend_node;
-  GeglNode *output;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  if (image->graph)
-    return image->graph;
-
-  image->graph = gegl_node_new ();
-
-  layers_node =
-    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->layers));
-
-  gegl_node_add_child (image->graph, layers_node);
-
-  channels_node =
-    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->channels));
-
-  gegl_node_add_child (image->graph, channels_node);
-
-  blend_node = gegl_node_new_child (image->graph,
-                                    "operation", "gegl:normal",
-                                    NULL);
-
-  gegl_node_connect_to (layers_node,   "output",
-                        blend_node,    "input");
-  gegl_node_connect_to (channels_node, "output",
-                        blend_node,    "aux");
-
-  output = gegl_node_get_output_proxy (image->graph, "output");
-
-  gegl_node_connect_to (blend_node, "output",
-                        output,     "input");
-
-  return image->graph;
 }
 
 
@@ -3773,27 +3791,4 @@ gimp_image_invalidate_channel_previews (GimpImage *image)
   gimp_container_foreach (image->channels,
                           (GFunc) gimp_viewable_invalidate_preview,
                           NULL);
-}
-
-static const guint8 *
-gimp_image_get_icc_profile (GimpColorManaged *managed,
-                            gsize            *len)
-{
-  const GimpParasite *parasite;
-
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (managed), "icc-profile");
-
-  if (parasite)
-    {
-      gsize data_size = gimp_parasite_data_size (parasite);
-
-      if (data_size > 0)
-        {
-          *len = data_size;
-
-          return gimp_parasite_data (parasite);
-        }
-    }
-
-  return NULL;
 }
