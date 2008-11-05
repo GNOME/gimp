@@ -1,5 +1,9 @@
 2008-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c: some minor cleanups.
+
+2008-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawablestack.[ch]: add new function
 	gimp_drawable_stack_invalidate_previews() which does just what it
 	says.

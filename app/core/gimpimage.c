@@ -1520,7 +1520,7 @@ gimp_image_get_resolution (const GimpImage *image,
                            gdouble         *yresolution)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (xresolution && yresolution);
+  g_return_if_fail (xresolution != NULL && yresolution != NULL);
 
   *xresolution = image->xresolution;
   *yresolution = image->yresolution;
@@ -1978,7 +1978,6 @@ gimp_image_undo_event (GimpImage     *image,
  *   the image back to the state on disk, since the redo info has been
  *   freed.  See gimpimage-undo.c for the gory details.
  */
-
 
 /*
  * NEVER CALL gimp_image_dirty() directly!
@@ -2848,8 +2847,7 @@ gimp_image_get_layer_by_tattoo (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LAYER (gimp_image_get_item_by_tattoo (image->layers,
-                                                    tattoo));
+  return GIMP_LAYER (gimp_image_get_item_by_tattoo (image->layers, tattoo));
 }
 
 GimpChannel *
@@ -2858,8 +2856,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_CHANNEL (gimp_image_get_item_by_tattoo (image->channels,
-                                                      tattoo));
+  return GIMP_CHANNEL (gimp_image_get_item_by_tattoo (image->channels, tattoo));
 }
 
 GimpVectors *
@@ -2868,8 +2865,7 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_VECTORS (gimp_image_get_item_by_tattoo (image->vectors,
-                                                      tattoo));
+  return GIMP_VECTORS (gimp_image_get_item_by_tattoo (image->vectors, tattoo));
 }
 
 GimpLayer *
@@ -2949,8 +2945,7 @@ gimp_image_add_layer (GimpImage *image,
     position = 1;
 
   /*  Don't add at a non-existing index  */
-  if (position > gimp_container_num_children (image->layers))
-    position = gimp_container_num_children (image->layers);
+  position = MIN (position, gimp_container_num_children (image->layers));
 
   g_object_ref_sink (layer);
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
@@ -3227,7 +3222,8 @@ gimp_image_position_layer (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  index = gimp_container_get_child_index (image->layers, GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (image->layers,
+                                          GIMP_OBJECT (layer));
   if (index < 0)
     return FALSE;
 
@@ -3235,13 +3231,13 @@ gimp_image_position_layer (GimpImage   *image,
 
   new_index = CLAMP (new_index, 0, num_layers - 1);
 
-  if (new_index == index)
-    return TRUE;
+  if (new_index != index)
+    {
+      if (push_undo)
+        gimp_image_undo_push_layer_reposition (image, undo_desc, layer);
 
-  if (push_undo)
-    gimp_image_undo_push_layer_reposition (image, undo_desc, layer);
-
-  gimp_container_reorder (image->layers, GIMP_OBJECT (layer), new_index);
+      gimp_container_reorder (image->layers, GIMP_OBJECT (layer), new_index);
+    }
 
   return TRUE;
 }
@@ -3277,8 +3273,7 @@ gimp_image_add_channel (GimpImage   *image,
     }
 
   /*  Don't add at a non-existing index  */
-  if (position > gimp_container_num_children (image->channels))
-    position = gimp_container_num_children (image->channels);
+  position = MIN (position, gimp_container_num_children (image->channels));
 
   g_object_ref_sink (channel);
   gimp_container_insert (image->channels, GIMP_OBJECT (channel), position);
@@ -3467,13 +3462,14 @@ gimp_image_position_channel (GimpImage   *image,
 
   new_index = CLAMP (new_index, 0, num_channels - 1);
 
-  if (new_index == index)
-    return TRUE;
+  if (new_index != index)
+    {
 
-  if (push_undo)
-    gimp_image_undo_push_channel_reposition (image, undo_desc, channel);
+      if (push_undo)
+        gimp_image_undo_push_channel_reposition (image, undo_desc, channel);
 
-  gimp_container_reorder (image->channels, GIMP_OBJECT (channel), new_index);
+      gimp_container_reorder (image->channels, GIMP_OBJECT (channel), new_index);
+    }
 
   return TRUE;
 }
@@ -3509,8 +3505,7 @@ gimp_image_add_vectors (GimpImage   *image,
     }
 
   /*  Don't add at a non-existing index  */
-  if (position > gimp_container_num_children (image->vectors))
-    position = gimp_container_num_children (image->vectors);
+  position = MIN (position, gimp_container_num_children (image->vectors));
 
   g_object_ref_sink (vectors);
   gimp_container_insert (image->vectors, GIMP_OBJECT (vectors), position);
@@ -3674,13 +3669,13 @@ gimp_image_position_vectors (GimpImage   *image,
 
   new_index = CLAMP (new_index, 0, num_vectors - 1);
 
-  if (new_index == index)
-    return TRUE;
+  if (new_index != index)
+    {
+      if (push_undo)
+        gimp_image_undo_push_vectors_reposition (image, undo_desc, vectors);
 
-  if (push_undo)
-    gimp_image_undo_push_vectors_reposition (image, undo_desc, vectors);
-
-  gimp_container_reorder (image->vectors, GIMP_OBJECT (vectors), new_index);
+      gimp_container_reorder (image->vectors, GIMP_OBJECT (vectors), new_index);
+    }
 
   return TRUE;
 }
