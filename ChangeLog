@@ -1,5 +1,11 @@
 2008-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-convert.c (gimp_image_convert): remove call
+	to gimp_image_invalidate_layer_previews(), they are invalidated by
+	exchanging their tiles and by setting the image's colormap anyway.
+
+2008-11-05  Michael Natterer  <mitch@gimp.org>
+
 	This should remove any image or viewable dependency from the
 	projection (apart from the projectable's get_image() method, but
 	that one is not supposed to return the projection's model but

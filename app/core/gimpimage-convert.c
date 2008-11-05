@@ -1075,7 +1075,6 @@ gimp_image_convert (GimpImage               *image,
 
   gimp_image_undo_group_end (image);
 
-  gimp_image_invalidate_layer_previews (image);
   gimp_image_mode_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
 
