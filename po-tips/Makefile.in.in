@@ -18,7 +18,7 @@
 # INTLTOOL_MAKEFILE
 
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@-tips
-XGETTEXT_KEYWORDS=--keyword=_ --keyword=N_ --keyword=Q_:1g --keyword=C_:1c,2
+XGETTEXT_KEYWORDS=--keyword=_ --keyword=N_ --keyword=Q_:1g --keyword=C_:1c,2 --keyword=NC_:1c,2
 
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@

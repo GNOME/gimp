@@ -1,3 +1,12 @@
+2008-11-05  Sven Neumann  <sven@gimp.org>
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-python/Makefile.in.in
+	* po-script-fu/Makefile.in.in
+	* po-tips/Makefile.in.in
+	* po/Makefile.in.in: prepared for use of the NC_() macro.
+
 2008-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpprojectable.[ch]: add signal "structure-changed"
