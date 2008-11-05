@@ -1,3 +1,22 @@
+2008-11-05  Michael Natterer  <mitch@gimp.org>
+
+	This should remove any image or viewable dependency from the
+	projection (apart from the projectable's get_image() method, but
+	that one is not supposed to return the projection's model but
+	rather the image the projection is part of).
+
+	* app/core/gimpprojectable.[ch]: add vfunc get_size() which
+	completes the API needed for GEGL projection.
+
+	Add vfuncs get_layers(), get_channels(), get_components() and
+	get_colormap() which are needed for the legacy projection code.
+
+	* app/core/gimpimage.c: implement the new methods.
+
+	* app/core/gimpprojection.c
+	* app/core/gimpprojection-construct.c: use them and remove all
+	calls to image and viewable API.
+
 2008-11-05  Sven Neumann  <sven@gimp.org>
 
 	* po-libgimp/Makefile.in.in

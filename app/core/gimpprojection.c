@@ -408,8 +408,7 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
     {
       gint width, height;
 
-      gimp_viewable_get_size (GIMP_VIEWABLE (proj->projectable),
-                              &width, &height);
+      gimp_projectable_get_size (proj->projectable, &width, &height);
 
       proj->pyramid = tile_pyramid_new (gimp_projection_get_image_type (GIMP_PICKABLE (proj)),
                                         width, height);
@@ -448,7 +447,7 @@ gimp_projection_get_level (GimpProjection *proj,
 {
   gint width, height;
 
-  gimp_viewable_get_size (GIMP_VIEWABLE (proj->projectable), &width, &height);
+  gimp_projectable_get_size (proj->projectable, &width, &height);
 
   return tile_pyramid_get_level (width, height, MAX (scale_x, scale_y));
 }
@@ -502,7 +501,7 @@ gimp_projection_add_update_area (GimpProjection *proj,
   GimpArea *area;
   gint      width, height;
 
-  gimp_viewable_get_size (GIMP_VIEWABLE (proj->projectable), &width, &height);
+  gimp_projectable_get_size (proj->projectable, &width, &height);
 
   area = gimp_area_new (CLAMP (x,     0, width),
                         CLAMP (y,     0, height),
@@ -717,7 +716,7 @@ gimp_projection_paint_area (GimpProjection *proj,
   gint width, height;
   gint x1, y1, x2, y2;
 
-  gimp_viewable_get_size (GIMP_VIEWABLE (proj->projectable), &width, &height);
+  gimp_projectable_get_size (proj->projectable, &width, &height);
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, width);
@@ -793,7 +792,7 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
       proj->pyramid = NULL;
     }
 
-  gimp_viewable_get_size (GIMP_VIEWABLE (projectable), &width, &height);
+  gimp_projectable_get_size (projectable, &width, &height);
 
   gimp_projection_add_update_area (proj, 0, 0, width, height);
 }

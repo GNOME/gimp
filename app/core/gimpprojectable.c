@@ -165,6 +165,26 @@ gimp_projectable_get_image (GimpProjectable *projectable)
   return NULL;
 }
 
+void
+gimp_projectable_get_size (GimpProjectable *projectable,
+                           gint            *width,
+                           gint            *height)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (width  != NULL);
+  g_return_if_fail (height != NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  *width  = 0;
+  *height = 0;
+
+  if (iface->get_size)
+    iface->get_size (projectable, width, height);
+}
+
 GeglNode *
 gimp_projectable_get_graph (GimpProjectable *projectable)
 {
@@ -191,4 +211,64 @@ gimp_projectable_invalidate_preview (GimpProjectable *projectable)
 
   if (iface->invalidate_preview)
     iface->invalidate_preview (projectable);
+}
+
+GList *
+gimp_projectable_get_layers (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_layers)
+    return iface->get_layers (projectable);
+
+  return NULL;
+}
+
+GList *
+gimp_projectable_get_channels (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_channels)
+    return iface->get_channels (projectable);
+
+  return NULL;
+}
+
+gboolean *
+gimp_projectable_get_components (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_components)
+    return iface->get_components (projectable);
+
+  return NULL;
+}
+
+const guchar *
+gimp_projectable_get_colormap (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_colormap)
+    return iface->get_colormap (projectable);
+
+  return NULL;
 }

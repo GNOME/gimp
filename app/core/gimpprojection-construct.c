@@ -29,8 +29,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimpimage.h"
-#include "gimpimage-colormap.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -101,24 +99,27 @@ gimp_projection_construct (GimpProjection *proj,
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
 #if 0
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
+  GList *layers = gimp_projectable_get_layers (proj->projectable);
 
-  if (gimp_container_num_children (image->layers) == 1) /* a single layer */
+  if (layers && ! layers->next) /* a single layer */
     {
-      GimpDrawable *layer;
+      GimpLayer    *layer    = layers->data;
+      GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+      GimpItem     *item     = GIMP_ITEM (layer);
+      gint          width, height;
       gint          off_x, off_y;
 
-      layer = GIMP_DRAWABLE (gimp_image_get_layer_by_index (image, 0));
+      gimp_projectable_get_size (proj->projectable, &width, &height);
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (item, &off_x, &off_y);
 
-      if (gimp_drawable_has_alpha (layer)                                    &&
-          gimp_item_get_visible (GIMP_ITEM (layer))                          &&
-          gimp_item_get_width  (GIMP_ITEM (layer)) == image->width           &&
-          gimp_item_get_height (GIMP_ITEM (layer)) == image->height          &&
-          ! gimp_drawable_is_indexed (layer)                                 &&
-          gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE &&
-          off_x == 0                                                         &&
+      if (gimp_drawable_has_alpha (drawable)                    &&
+          gimp_item_get_visible (item)                          &&
+          gimp_item_get_width  (item) == width                  &&
+          gimp_item_get_height (item) == height                 &&
+          ! gimp_drawable_is_indexed (layer)                    &&
+          gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
+          off_x == 0                                            &&
           off_y == 0)
         {
           PixelRegion srcPR, destPR;
@@ -201,32 +202,30 @@ gimp_projection_construct_layers (GimpProjection *proj,
                                   gint            w,
                                   gint            h)
 {
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
   GimpLayer *layer;
   GList     *list;
-  GList     *reverse_list;
+  GList     *reverse_list = NULL;
   gint       x1, y1, x2, y2;
   gint       off_x;
   gint       off_y;
 
-  /*  composite the floating selection if it exists  */
-  if ((layer = gimp_image_floating_sel (image)))
-    floating_sel_composite (layer, x, y, w, h, FALSE);
-
-  reverse_list = NULL;
-
-  for (list = gimp_image_get_layer_iter (image);
+  for (list = gimp_projectable_get_layers (proj->projectable);
        list;
        list = g_list_next (list))
     {
       layer = list->data;
 
-      /*  only add layers that are visible and not floating selections
-       *  to the list
-       */
-      if (! gimp_layer_is_floating_sel (layer) &&
-          gimp_item_get_visible (GIMP_ITEM (layer)))
+      if (gimp_layer_is_floating_sel (layer))
         {
+          /*  composite the floating selection if it exists
+           */
+          floating_sel_composite (layer, x, y, w, h, FALSE);
+        }
+      else if (gimp_item_get_visible (GIMP_ITEM (layer)))
+        {
+          /*  only add layers that are visible and not floating selections
+           *  to the list
+           */
           reverse_list = g_list_prepend (reverse_list, layer);
         }
     }
@@ -327,12 +326,11 @@ gimp_projection_construct_channels (GimpProjection *proj,
                                     gint            w,
                                     gint            h)
 {
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
-  GList     *list;
-  GList     *reverse_list = NULL;
+  GList *list;
+  GList *reverse_list = NULL;
 
   /*  reverse the channel list  */
-  for (list = gimp_image_get_channel_iter (image);
+  for (list = gimp_projectable_get_channels (proj->projectable);
        list;
        list = g_list_next (list))
     {
@@ -386,28 +384,29 @@ gimp_projection_initialize (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
-  GList     *list;
-  gboolean   coverage = FALSE;
+  GList    *list;
+  gboolean  coverage = FALSE;
 
-  for (list = gimp_image_get_layer_iter (image);
+  for (list = gimp_projectable_get_layers (proj->projectable);
        list;
        list = g_list_next (list))
     {
-      GimpItem *item = list->data;
-      gint      off_x, off_y;
+      GimpLayer    *layer    = list->data;
+      GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+      GimpItem     *item     = GIMP_ITEM (layer);
+      gint          off_x, off_y;
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
-      if (gimp_item_get_visible (item)                                      &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))                  &&
-          ! gimp_layer_get_mask (GIMP_LAYER (item))                         &&
-          gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE       &&
-          gimp_layer_get_opacity (GIMP_LAYER (item)) == GIMP_OPACITY_OPAQUE &&
-          (off_x <= x)                                                      &&
-          (off_y <= y)                                                      &&
-          (off_x + gimp_item_get_width  (item) >= x + w)                    &&
-          (off_y + gimp_item_get_height (item) >= y + h))
+      if (gimp_item_get_visible (item)                          &&
+          ! gimp_drawable_has_alpha (drawable)                  &&
+          ! gimp_layer_get_mask (layer)                         &&
+          gimp_layer_get_mode (layer) == GIMP_NORMAL_MODE       &&
+          gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
+          off_x <= x                                            &&
+          off_y <= y                                            &&
+          (off_x + gimp_item_get_width  (item)) >= (x + w)      &&
+          (off_y + gimp_item_get_height (item)) >= (y + h))
         {
           coverage = TRUE;
           break;
@@ -432,14 +431,12 @@ project_intensity (GimpProjection *proj,
                    PixelRegion    *dest,
                    PixelRegion    *mask)
 {
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
-
   if (proj->construct_flag)
     {
       combine_regions (dest, src, dest, mask, NULL,
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
-                       image->visible,
+                       gimp_projectable_get_components (proj->projectable),
                        COMBINE_INTEN_A_INTEN);
     }
   else
@@ -447,7 +444,7 @@ project_intensity (GimpProjection *proj,
       initial_region (src, dest, mask, NULL,
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
-                      image->visible,
+                      gimp_projectable_get_components (proj->projectable),
                       INITIAL_INTENSITY);
     }
 }
@@ -459,14 +456,12 @@ project_intensity_alpha (GimpProjection *proj,
                          PixelRegion    *dest,
                          PixelRegion    *mask)
 {
-  GimpImage *image = gimp_projectable_get_image (proj->projectable);
-
   if (proj->construct_flag)
     {
       combine_regions (dest, src, dest, mask, NULL,
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
-                       image->visible,
+                       gimp_projectable_get_components (proj->projectable),
                        COMBINE_INTEN_A_INTEN_A);
     }
   else
@@ -474,7 +469,7 @@ project_intensity_alpha (GimpProjection *proj,
       initial_region (src, dest, mask, NULL,
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
-                      image->visible,
+                      gimp_projectable_get_components (proj->projectable),
                       INITIAL_INTENSITY_ALPHA);
     }
 }
@@ -486,25 +481,22 @@ project_indexed (GimpProjection *proj,
                  PixelRegion    *dest,
                  PixelRegion    *mask)
 {
-  GimpImage    *image    = gimp_projectable_get_image (proj->projectable);
-  const guchar *colormap = gimp_image_get_colormap (image);
-
-  g_return_if_fail (colormap != NULL);
-
   if (proj->construct_flag)
     {
-      combine_regions (dest, src, dest, mask, colormap,
+      combine_regions (dest, src, dest, mask,
+                       gimp_projectable_get_colormap (proj->projectable),
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
-                       image->visible,
+                       gimp_projectable_get_components (proj->projectable),
                        COMBINE_INTEN_A_INDEXED);
     }
   else
     {
-      initial_region (src, dest, mask, colormap,
+      initial_region (src, dest, mask,
+                      gimp_projectable_get_colormap (proj->projectable),
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
-                      image->visible,
+                      gimp_projectable_get_components (proj->projectable),
                       INITIAL_INDEXED);
     }
 }
@@ -516,25 +508,22 @@ project_indexed_alpha (GimpProjection *proj,
                        PixelRegion    *dest,
                        PixelRegion    *mask)
 {
-  GimpImage    *image    = gimp_projectable_get_image (proj->projectable);
-  const guchar *colormap = gimp_image_get_colormap (image);
-
-  g_return_if_fail (colormap != NULL);
-
   if (proj->construct_flag)
     {
-      combine_regions (dest, src, dest, mask, colormap,
+      combine_regions (dest, src, dest, mask,
+                       gimp_projectable_get_colormap (proj->projectable),
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
-                       image->visible,
+                       gimp_projectable_get_components (proj->projectable),
                        COMBINE_INTEN_A_INDEXED_A);
     }
   else
     {
-      initial_region (src, dest, mask, colormap,
+      initial_region (src, dest, mask,
+                      gimp_projectable_get_colormap (proj->projectable),
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
-                      image->visible,
+                      gimp_projectable_get_components (proj->projectable),
                       INITIAL_INDEXED_ALPHA);
     }
 }
