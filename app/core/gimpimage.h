@@ -551,8 +551,7 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   gboolean            sample_merged,
                                                   gboolean            selected_only);
 
-void        gimp_image_invalidate_layer_previews (GimpImage          *image);
-void      gimp_image_invalidate_channel_previews (GimpImage          *image);
+void            gimp_image_invalidate_previews   (GimpImage          *image);
 
 
 #endif /* __GIMP_IMAGE_H__ */

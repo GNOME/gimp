@@ -53,10 +53,12 @@ struct _GimpDrawableStackClass
 };
 
 
-GType           gimp_drawable_stack_get_type  (void) G_GNUC_CONST;
-GimpContainer * gimp_drawable_stack_new       (GType              drawable_type);
+GType           gimp_drawable_stack_get_type            (void) G_GNUC_CONST;
+GimpContainer * gimp_drawable_stack_new                 (GType              drawable_type);
 
-GeglNode      * gimp_drawable_stack_get_graph (GimpDrawableStack *stack);
+GeglNode      * gimp_drawable_stack_get_graph           (GimpDrawableStack *stack);
+
+void            gimp_drawable_stack_invalidate_previews (GimpDrawableStack *stack);
 
 
 #endif  /*  __GIMP_DRAWABLE_STACK_H__  */

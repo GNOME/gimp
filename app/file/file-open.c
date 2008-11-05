@@ -552,8 +552,7 @@ file_open_sanitize_image (GimpImage *image,
   gimp_image_flush (image);
 
   /* same for drawable previews */
-  gimp_image_invalidate_layer_previews (image);
-  gimp_image_invalidate_channel_previews (image);
+  gimp_image_invalidate_previews (image);
 }
 
 /* Converts items from one image to another */

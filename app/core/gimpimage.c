@@ -736,11 +736,11 @@ gimp_image_constructor (GType                  type,
                     image);
 
   g_signal_connect_object (config, "notify::transparency-type",
-                           G_CALLBACK (gimp_image_invalidate_layer_previews),
-                           image, G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_drawable_stack_invalidate_previews),
+                           image->layers, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::transparency-size",
-                           G_CALLBACK (gimp_image_invalidate_layer_previews),
-                           image, G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_drawable_stack_invalidate_previews),
+                           image->layers, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::layer-previews",
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
@@ -1136,7 +1136,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
                          gimp_image_get_width  (image),
                          gimp_image_get_height (image));
 
-      gimp_image_invalidate_layer_previews (image);
+      gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->layers));
     }
 }
 
@@ -3799,21 +3799,10 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 }
 
 void
-gimp_image_invalidate_layer_previews (GimpImage *image)
+gimp_image_invalidate_previews (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_container_foreach (image->layers,
-                          (GFunc) gimp_viewable_invalidate_preview,
-                          NULL);
-}
-
-void
-gimp_image_invalidate_channel_previews (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  gimp_container_foreach (image->channels,
-                          (GFunc) gimp_viewable_invalidate_preview,
-                          NULL);
+  gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->layers));
+  gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->channels));
 }

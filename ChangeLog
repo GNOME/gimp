@@ -1,5 +1,18 @@
 2008-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawablestack.[ch]: add new function
+	gimp_drawable_stack_invalidate_previews() which does just what it
+	says.
+
+	* app/core/gimpimage.[ch]: merge invalidate_layer_previews() and
+	invalidate_channels_previews() into a single invalidate_previews()
+	and replace all calls to the old functions by calls to
+	gimp_drawable_stack_invalidate_previews().
+
+	* app/file/file-open.c: changed accordingly.
+
+2008-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-convert.c (gimp_image_convert): remove call
 	to gimp_image_invalidate_layer_previews(), they are invalidated by
 	exchanging their tiles and by setting the image's colormap anyway.
