@@ -1,3 +1,8 @@
+2008-11-06  Sven Neumann  <sven@gimp.org>
+
+	* de.po: removed fuzzy markers after introduction of translation
+	context for enum values.
+
 2008-11-01  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	* nl.po: Updated Dutch translation by Filip Vervloesem.

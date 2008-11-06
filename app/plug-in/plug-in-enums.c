@@ -38,6 +38,7 @@ gimp_plug_in_image_type_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_flags_register_static ("GimpPlugInImageType", values);
+      gimp_type_set_translation_context (type, "plug-in-image-type");
       gimp_flags_set_value_descriptions (type, descs);
     }
 
@@ -70,6 +71,7 @@ gimp_plug_in_call_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPlugInCallMode", values);
+      gimp_type_set_translation_context (type, "plug-in-call-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

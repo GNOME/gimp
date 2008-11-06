@@ -62,6 +62,10 @@ void                  gimp_type_set_translation_domain  (GType                ty
                                                          const gchar         *domain);
 const gchar         * gimp_type_get_translation_domain  (GType                type);
 
+void                  gimp_type_set_translation_context (GType                type,
+                                                         const gchar         *context);
+const gchar         * gimp_type_get_translation_context (GType                type);
+
 void                  gimp_enum_set_value_descriptions  (GType                enum_type,
                                                          const GimpEnumDesc  *descriptions);
 const GimpEnumDesc  * gimp_enum_get_value_descriptions  (GType                enum_type);

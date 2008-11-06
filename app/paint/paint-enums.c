@@ -30,6 +30,7 @@ gimp_brush_application_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpBrushApplicationMode", values);
+      gimp_type_set_translation_context (type, "brush-application-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -48,8 +49,8 @@ gimp_perspective_clone_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, N_("Modify Perspective"), NULL },
-    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, N_("Perspective Clone"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, NC_("perspective-clone-mode", "Modify Perspective"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, NC_("perspective-clone-mode", "Perspective Clone"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -58,6 +59,7 @@ gimp_perspective_clone_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpPerspectiveCloneMode", values);
+      gimp_type_set_translation_context (type, "perspective-clone-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -78,10 +80,10 @@ gimp_source_align_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SOURCE_ALIGN_NO, N_("None"), NULL },
-    { GIMP_SOURCE_ALIGN_YES, N_("Aligned"), NULL },
-    { GIMP_SOURCE_ALIGN_REGISTERED, N_("Registered"), NULL },
-    { GIMP_SOURCE_ALIGN_FIXED, N_("Fixed"), NULL },
+    { GIMP_SOURCE_ALIGN_NO, NC_("source-align-mode", "None"), NULL },
+    { GIMP_SOURCE_ALIGN_YES, NC_("source-align-mode", "Aligned"), NULL },
+    { GIMP_SOURCE_ALIGN_REGISTERED, NC_("source-align-mode", "Registered"), NULL },
+    { GIMP_SOURCE_ALIGN_FIXED, NC_("source-align-mode", "Fixed"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -90,6 +92,7 @@ gimp_source_align_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSourceAlignMode", values);
+      gimp_type_set_translation_context (type, "source-align-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -108,8 +111,8 @@ gimp_convolve_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_BLUR_CONVOLVE, N_("Blur"), NULL },
-    { GIMP_SHARPEN_CONVOLVE, N_("Sharpen"), NULL },
+    { GIMP_BLUR_CONVOLVE, NC_("convolve-type", "Blur"), NULL },
+    { GIMP_SHARPEN_CONVOLVE, NC_("convolve-type", "Sharpen"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -118,6 +121,7 @@ gimp_convolve_type_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpConvolveType", values);
+      gimp_type_set_translation_context (type, "convolve-type");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -148,6 +152,7 @@ gimp_ink_blob_type_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpInkBlobType", values);
+      gimp_type_set_translation_context (type, "ink-blob-type");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

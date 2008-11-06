@@ -20,8 +20,8 @@ gimp_curve_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CURVE_SMOOTH, N_("Smooth"), NULL },
-    { GIMP_CURVE_FREE, N_("Freehand"), NULL },
+    { GIMP_CURVE_SMOOTH, NC_("curve-type", "Smooth"), NULL },
+    { GIMP_CURVE_FREE, NC_("curve-type", "Freehand"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -30,6 +30,7 @@ gimp_curve_type_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCurveType", values);
+      gimp_type_set_translation_context (type, "curve-type");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -52,12 +53,12 @@ gimp_histogram_channel_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_HISTOGRAM_VALUE, N_("Value"), NULL },
-    { GIMP_HISTOGRAM_RED, N_("Red"), NULL },
-    { GIMP_HISTOGRAM_GREEN, N_("Green"), NULL },
-    { GIMP_HISTOGRAM_BLUE, N_("Blue"), NULL },
-    { GIMP_HISTOGRAM_ALPHA, N_("Alpha"), NULL },
-    { GIMP_HISTOGRAM_RGB, N_("RGB"), NULL },
+    { GIMP_HISTOGRAM_VALUE, NC_("histogram-channel", "Value"), NULL },
+    { GIMP_HISTOGRAM_RED, NC_("histogram-channel", "Red"), NULL },
+    { GIMP_HISTOGRAM_GREEN, NC_("histogram-channel", "Green"), NULL },
+    { GIMP_HISTOGRAM_BLUE, NC_("histogram-channel", "Blue"), NULL },
+    { GIMP_HISTOGRAM_ALPHA, NC_("histogram-channel", "Alpha"), NULL },
+    { GIMP_HISTOGRAM_RGB, NC_("histogram-channel", "RGB"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -66,6 +67,7 @@ gimp_histogram_channel_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHistogramChannel", values);
+      gimp_type_set_translation_context (type, "histogram-channel");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -108,32 +110,32 @@ gimp_layer_mode_effects_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_NORMAL_MODE, N_("Normal"), NULL },
-    { GIMP_DISSOLVE_MODE, N_("Dissolve"), NULL },
-    { GIMP_BEHIND_MODE, N_("Behind"), NULL },
-    { GIMP_MULTIPLY_MODE, N_("Multiply"), NULL },
-    { GIMP_SCREEN_MODE, N_("Screen"), NULL },
-    { GIMP_OVERLAY_MODE, N_("Overlay"), NULL },
-    { GIMP_DIFFERENCE_MODE, N_("Difference"), NULL },
-    { GIMP_ADDITION_MODE, N_("Addition"), NULL },
-    { GIMP_SUBTRACT_MODE, N_("Subtract"), NULL },
-    { GIMP_DARKEN_ONLY_MODE, N_("Darken only"), NULL },
-    { GIMP_LIGHTEN_ONLY_MODE, N_("Lighten only"), NULL },
-    { GIMP_HUE_MODE, N_("Hue"), NULL },
-    { GIMP_SATURATION_MODE, N_("Saturation"), NULL },
-    { GIMP_COLOR_MODE, N_("Color"), NULL },
-    { GIMP_VALUE_MODE, N_("Value"), NULL },
-    { GIMP_DIVIDE_MODE, N_("Divide"), NULL },
-    { GIMP_DODGE_MODE, N_("Dodge"), NULL },
-    { GIMP_BURN_MODE, N_("Burn"), NULL },
-    { GIMP_HARDLIGHT_MODE, N_("Hard light"), NULL },
-    { GIMP_SOFTLIGHT_MODE, N_("Soft light"), NULL },
-    { GIMP_GRAIN_EXTRACT_MODE, N_("Grain extract"), NULL },
-    { GIMP_GRAIN_MERGE_MODE, N_("Grain merge"), NULL },
-    { GIMP_COLOR_ERASE_MODE, N_("Color erase"), NULL },
-    { GIMP_ERASE_MODE, N_("Erase"), NULL },
-    { GIMP_REPLACE_MODE, N_("Replace"), NULL },
-    { GIMP_ANTI_ERASE_MODE, N_("Anti erase"), NULL },
+    { GIMP_NORMAL_MODE, NC_("layer-mode-effects", "Normal"), NULL },
+    { GIMP_DISSOLVE_MODE, NC_("layer-mode-effects", "Dissolve"), NULL },
+    { GIMP_BEHIND_MODE, NC_("layer-mode-effects", "Behind"), NULL },
+    { GIMP_MULTIPLY_MODE, NC_("layer-mode-effects", "Multiply"), NULL },
+    { GIMP_SCREEN_MODE, NC_("layer-mode-effects", "Screen"), NULL },
+    { GIMP_OVERLAY_MODE, NC_("layer-mode-effects", "Overlay"), NULL },
+    { GIMP_DIFFERENCE_MODE, NC_("layer-mode-effects", "Difference"), NULL },
+    { GIMP_ADDITION_MODE, NC_("layer-mode-effects", "Addition"), NULL },
+    { GIMP_SUBTRACT_MODE, NC_("layer-mode-effects", "Subtract"), NULL },
+    { GIMP_DARKEN_ONLY_MODE, NC_("layer-mode-effects", "Darken only"), NULL },
+    { GIMP_LIGHTEN_ONLY_MODE, NC_("layer-mode-effects", "Lighten only"), NULL },
+    { GIMP_HUE_MODE, NC_("layer-mode-effects", "Hue"), NULL },
+    { GIMP_SATURATION_MODE, NC_("layer-mode-effects", "Saturation"), NULL },
+    { GIMP_COLOR_MODE, NC_("layer-mode-effects", "Color"), NULL },
+    { GIMP_VALUE_MODE, NC_("layer-mode-effects", "Value"), NULL },
+    { GIMP_DIVIDE_MODE, NC_("layer-mode-effects", "Divide"), NULL },
+    { GIMP_DODGE_MODE, NC_("layer-mode-effects", "Dodge"), NULL },
+    { GIMP_BURN_MODE, NC_("layer-mode-effects", "Burn"), NULL },
+    { GIMP_HARDLIGHT_MODE, NC_("layer-mode-effects", "Hard light"), NULL },
+    { GIMP_SOFTLIGHT_MODE, NC_("layer-mode-effects", "Soft light"), NULL },
+    { GIMP_GRAIN_EXTRACT_MODE, NC_("layer-mode-effects", "Grain extract"), NULL },
+    { GIMP_GRAIN_MERGE_MODE, NC_("layer-mode-effects", "Grain merge"), NULL },
+    { GIMP_COLOR_ERASE_MODE, NC_("layer-mode-effects", "Color erase"), NULL },
+    { GIMP_ERASE_MODE, NC_("layer-mode-effects", "Erase"), NULL },
+    { GIMP_REPLACE_MODE, NC_("layer-mode-effects", "Replace"), NULL },
+    { GIMP_ANTI_ERASE_MODE, NC_("layer-mode-effects", "Anti erase"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -142,6 +144,7 @@ gimp_layer_mode_effects_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpLayerModeEffects", values);
+      gimp_type_set_translation_context (type, "layer-mode-effects");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -180,6 +183,7 @@ gimp_hue_range_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpHueRange", values);
+      gimp_type_set_translation_context (type, "hue-range");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

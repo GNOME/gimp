@@ -461,19 +461,36 @@ gimp_enum_get_value (GType         enum_type,
 
           enum_desc = gimp_enum_get_desc (enum_class, value);
 
-          if (value_desc) {
-            *value_desc = ((enum_desc && enum_desc->value_desc) ?
-                           g_strip_context (enum_desc->value_desc,
-                                            dgettext (gimp_type_get_translation_domain (enum_type),
-                                                      enum_desc->value_desc)) :
-                           NULL);
-          }
+          if (value_desc)
+            {
+              if (enum_desc && enum_desc->value_desc)
+                {
+                  const gchar *context;
+
+                  context = gimp_type_get_translation_context (enum_type);
+
+                  if (context)  /*  the new way, using NC_()    */
+                    *value_desc = g_dpgettext2 (gimp_type_get_translation_domain (enum_type),
+                                                context,
+                                                enum_desc->value_desc);
+                  else          /*  for backward compatibility  */
+                    *value_desc = g_strip_context (enum_desc->value_desc,
+                                                   dgettext (gimp_type_get_translation_domain (enum_type),
+                                                             enum_desc->value_desc));
+                }
+              else
+                {
+                  *value_desc = NULL;
+                }
+            }
 
           if (value_help)
-            *value_help = ((enum_desc && enum_desc->value_desc) ?
-                           dgettext (gimp_type_get_translation_domain (enum_type),
-                                     enum_desc->value_help) :
-                           NULL);
+            {
+              *value_help = ((enum_desc && enum_desc->value_help) ?
+                             dgettext (gimp_type_get_translation_domain (enum_type),
+                                       enum_desc->value_help) :
+                             NULL);
+            }
         }
 
       success = TRUE;
@@ -489,9 +506,9 @@ gimp_enum_get_value (GType         enum_type,
  * @enum_class: a #GEnumClass
  * @enum_value: a #GEnumValue from @enum_class
  *
- * Retrieves the translated desc for a given @enum_value.
+ * Retrieves the translated description for a given @enum_value.
  *
- * Return value: the translated desc of the enum value
+ * Return value: the translated description of the enum value
  *
  * Since: GIMP 2.2
  **/
@@ -505,9 +522,20 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
   if (enum_desc && enum_desc->value_desc)
-    return g_strip_context (enum_desc->value_desc,
-                            dgettext (gimp_type_get_translation_domain (type),
-                                      enum_desc->value_desc));
+    {
+      const gchar *context;
+
+      context = gimp_type_get_translation_context (type);
+
+      if (context)  /*  the new way, using NC_()    */
+        return g_dpgettext2 (gimp_type_get_translation_domain (type),
+                             context,
+                             enum_desc->value_desc);
+      else          /*  for backward compatibility  */
+        return g_strip_context (enum_desc->value_desc,
+                                dgettext (gimp_type_get_translation_domain (type),
+                                          enum_desc->value_desc));
+    }
 
   return enum_value->value_name;
 }
@@ -648,9 +676,9 @@ gimp_flags_get_first_value (GType         flags_type,
  * @flags_class: a #GFlagsClass
  * @flags_value: a #GFlagsValue from @flags_class
  *
- * Retrieves the translated desc for a given @flags_value.
+ * Retrieves the translated description for a given @flags_value.
  *
- * Return value: the translated desc of the flags value
+ * Return value: the translated description of the flags value
  *
  * Since: GIMP 2.2
  **/

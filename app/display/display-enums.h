@@ -76,8 +76,8 @@ GType gimp_zoom_quality_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ZOOM_QUALITY_LOW,   /*< desc="quality|Low"  >*/
-  GIMP_ZOOM_QUALITY_HIGH   /*< desc="quality|High" >*/
+  GIMP_ZOOM_QUALITY_LOW,   /*< desc="Low"  >*/
+  GIMP_ZOOM_QUALITY_HIGH   /*< desc="High" >*/
 } GimpZoomQuality;
 
 

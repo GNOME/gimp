@@ -27,8 +27,9 @@
 #include "gimpbasetypes.h"
 
 
-static GQuark        gimp_translation_domain_quark (void) G_GNUC_CONST;
-static GQuark        gimp_value_descriptions_quark (void) G_GNUC_CONST;
+static GQuark  gimp_translation_domain_quark  (void) G_GNUC_CONST;
+static GQuark  gimp_translation_context_quark (void) G_GNUC_CONST;
+static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
 
 
 /**
@@ -70,6 +71,46 @@ gimp_type_get_translation_domain (GType type)
 {
   return (const gchar *) g_type_get_qdata (type,
                                            gimp_translation_domain_quark ());
+}
+
+/**
+ * gimp_type_set_translation_context:
+ * @type:   a #GType
+ * @domain: a constant string that identifies a translation context or %NULL
+ *
+ * This function attaches a constant string as a translation context
+ * to a #GType. The only purpose of this function is to use it when
+ * registering a #GTypeEnum with translatable value names.
+ *
+ * Since: GIMP 2.8
+ **/
+void
+gimp_type_set_translation_context (GType        type,
+                                   const gchar *context)
+{
+  g_type_set_qdata (type,
+                    gimp_translation_context_quark (), (gpointer) context);
+}
+
+/**
+ * gimp_type_get_translation_context:
+ * @type: a #GType
+ *
+ * Retrieves the translation context that has been previously set
+ * using gimp_type_set_translation_context(). You should not need to
+ * use this function directly, use gimp_enum_get_value() or
+ * gimp_enum_value_get_name() instead.
+ *
+ * Return value: the translation context associated with @type
+ *               or %NULL if no context was set
+ *
+ * Since: GIMP 2.8
+ **/
+const gchar *
+gimp_type_get_translation_context (GType type)
+{
+  return (const gchar *) g_type_get_qdata (type,
+                                           gimp_translation_context_quark ());
 }
 
 /**
@@ -166,6 +207,17 @@ gimp_translation_domain_quark (void)
 
   if (! quark)
     quark = g_quark_from_static_string ("gimp-translation-domain-quark");
+
+  return quark;
+}
+
+static GQuark
+gimp_translation_context_quark (void)
+{
+  static GQuark quark = 0;
+
+  if (! quark)
+    quark = g_quark_from_static_string ("gimp-translation-context-quark");
 
   return quark;
 }

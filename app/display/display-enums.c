@@ -21,9 +21,9 @@ gimp_cursor_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CURSOR_MODE_TOOL_ICON, N_("Tool icon"), NULL },
-    { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, N_("Tool icon with crosshair"), NULL },
-    { GIMP_CURSOR_MODE_CROSSHAIR, N_("Crosshair only"), NULL },
+    { GIMP_CURSOR_MODE_TOOL_ICON, NC_("cursor-mode", "Tool icon"), NULL },
+    { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, NC_("cursor-mode", "Tool icon with crosshair"), NULL },
+    { GIMP_CURSOR_MODE_CROSSHAIR, NC_("cursor-mode", "Crosshair only"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -32,6 +32,7 @@ gimp_cursor_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCursorMode", values);
+      gimp_type_set_translation_context (type, "cursor-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -62,6 +63,7 @@ gimp_cursor_precision_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCursorPrecision", values);
+      gimp_type_set_translation_context (type, "cursor-precision");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -82,10 +84,10 @@ gimp_canvas_padding_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CANVAS_PADDING_MODE_DEFAULT, N_("From theme"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, N_("Light check color"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, N_("Dark check color"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_CUSTOM, N_("Custom color"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_DEFAULT, NC_("canvas-padding-mode", "From theme"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NC_("canvas-padding-mode", "Light check color"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NC_("canvas-padding-mode", "Dark check color"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_CUSTOM, NC_("canvas-padding-mode", "Custom color"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -94,6 +96,7 @@ gimp_canvas_padding_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpCanvasPaddingMode", values);
+      gimp_type_set_translation_context (type, "canvas-padding-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -113,9 +116,9 @@ gimp_space_bar_action_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SPACE_BAR_ACTION_NONE, N_("No action"), NULL },
-    { GIMP_SPACE_BAR_ACTION_PAN, N_("Pan view"), NULL },
-    { GIMP_SPACE_BAR_ACTION_MOVE, N_("Switch to Move tool"), NULL },
+    { GIMP_SPACE_BAR_ACTION_NONE, NC_("space-bar-action", "No action"), NULL },
+    { GIMP_SPACE_BAR_ACTION_PAN, NC_("space-bar-action", "Pan view"), NULL },
+    { GIMP_SPACE_BAR_ACTION_MOVE, NC_("space-bar-action", "Switch to Move tool"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -124,6 +127,7 @@ gimp_space_bar_action_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpSpaceBarAction", values);
+      gimp_type_set_translation_context (type, "space-bar-action");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -142,8 +146,8 @@ gimp_zoom_quality_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ZOOM_QUALITY_LOW, N_("quality|Low"), NULL },
-    { GIMP_ZOOM_QUALITY_HIGH, N_("quality|High"), NULL },
+    { GIMP_ZOOM_QUALITY_LOW, NC_("zoom-quality", "Low"), NULL },
+    { GIMP_ZOOM_QUALITY_HIGH, NC_("zoom-quality", "High"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -152,6 +156,7 @@ gimp_zoom_quality_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpZoomQuality", values);
+      gimp_type_set_translation_context (type, "zoom-quality");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -182,6 +187,7 @@ gimp_zoom_focus_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpZoomFocus", values);
+      gimp_type_set_translation_context (type, "zoom-focus");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

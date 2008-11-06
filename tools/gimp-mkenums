@@ -19,6 +19,7 @@ my $seenbitshift;		# Have we seen bitshift operators?
 my $enum_prefix;		# Prefix for this enumeration
 my $enumname;			# Name for this enumeration
 my $enumshort;			# $enumname without prefix
+my $enumnick;	    	        # lower case version of $enumshort
 my $enumindex = 0;		# Global enum counter
 my $firstenum = 1;		# Is this the first enumeration per file?
 my @entries;			# [ $name, $val ] for each entry
@@ -156,6 +157,7 @@ sub usage {
     print STDERR "  \@enum_name\@                prefix_the_xenum\n";
     print STDERR "  \@ENUMNAME\@                 PREFIX_THE_XENUM\n";
     print STDERR "  \@ENUMSHORT\@                THE_XENUM\n";
+    print STDERR "  \@enumnick\@                 the_xenum\n";
     print STDERR "  \@VALUENAME\@                PREFIX_THE_XVALUE\n";
     print STDERR "  \@valuenick\@                the-xvalue\n";
     print STDERR "  \@valuedesc\@                descriptions as defined in the header\n";
@@ -264,6 +266,7 @@ while (<>) {
 	}
 
 	$seenbitshift = 0;
+
 	@entries = ();
 
 	# Now parse the entries
@@ -302,28 +305,6 @@ while (<>) {
 	    $enum_prefix =~ s/(.*)([^_])$/$1$2_/;
 	}
 	
-	for $entry (@entries) {
-	    my ($name,$nick,$desc,$help) = @{$entry};
-            if (!defined $nick) {
- 	        ($nick = $name) =~ s/^$enum_prefix//;
-	        $nick =~ tr/_/-/;
-	        $nick = lc($nick);
-            }
-	    if (!defined $desc) {
-		$desc = "\"$name\"";
-	    } else {
-		$desc = "N_($desc)";
-	    }
-	    if (!defined $help) {
-		$help = "NULL";
-	    } else {
-		$help = "N_($help)";
-	    }
-	    @{$entry} = ($name, $nick, $desc, $help);
-	}
-	
-
-	# Spit out the output
 	
 	# enumname is e.g. GMatchType
 	$enspace = $enumname;
@@ -338,10 +319,37 @@ while (<>) {
 	$enumlong = uc($enspace) . "_" . $enumshort;
 	$enumsym = lc($enspace) . "_" . lc($enumshort);
 
-  #The options might override the lower case name if it could not be generated correctly:
-  if (defined($option_lowercase_name)) {
-      $enumsym = $option_lowercase_name;
-  }
+	$enumnick = lc($enumshort);
+	$enumnick =~ tr/_/-/;
+
+	for $entry (@entries) {
+	    my ($name,$nick,$desc,$help) = @{$entry};
+            if (!defined $nick) {
+ 	        ($nick = $name) =~ s/^$enum_prefix//;
+	        $nick =~ tr/_/-/;
+	        $nick = lc($nick);
+            }
+	    if (!defined $desc) {
+		$desc = "\"$name\"";
+	    } else {
+		$desc = "NC_(\"$enumnick\", $desc)";
+	    }
+	    if (!defined $help) {
+		$help = "NULL";
+	    } else {
+		$help = "N_($help)";
+	    }
+	    @{$entry} = ($name, $nick, $desc, $help);
+	}
+	
+
+	# Spit out the output
+
+	# The options might override the lower case name if it could
+	# not be generated correctly:
+	if (defined($option_lowercase_name)) {
+	    $enumsym = $option_lowercase_name;
+	}
 
 	if ($firstenum) {
 	    $firstenum = 0;
@@ -363,6 +371,7 @@ while (<>) {
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
 	    $prod =~ s/\@EnumName\@/$enumname/g;
 	    $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+	    $prod =~ s/\@enumnick\@/$enumnick/g;
 	    $prod =~ s/\@ENUMNAME\@/$enumlong/g;
 	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
 	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
@@ -379,6 +388,7 @@ while (<>) {
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
             $prod =~ s/\@EnumName\@/$enumname/g;
             $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+	    $prod =~ s/\@enumnick\@/$enumnick/g;
             $prod =~ s/\@ENUMNAME\@/$enumlong/g;
 	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
 	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
@@ -416,6 +426,7 @@ while (<>) {
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
             $prod =~ s/\@EnumName\@/$enumname/g;
             $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+	    $prod =~ s/\@enumnick\@/$enumnick/g;
             $prod =~ s/\@ENUMNAME\@/$enumlong/g;
 	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
 	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
@@ -432,6 +443,7 @@ while (<>) {
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
             $prod =~ s/\@EnumName\@/$enumname/g;
             $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+	    $prod =~ s/\@enumnick\@/$enumnick/g;
             $prod =~ s/\@ENUMNAME\@/$enumlong/g;
 	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
 	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
@@ -469,6 +481,7 @@ while (<>) {
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
             $prod =~ s/\@EnumName\@/$enumname/g;
             $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+	    $prod =~ s/\@enumnick\@/$enumnick/g;
             $prod =~ s/\@ENUMNAME\@/$enumlong/g;
 	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
 	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }

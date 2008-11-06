@@ -39,11 +39,8 @@
 #undef ngettext
 #define ngettext(String1, String2, number) dngettext (GETTEXT_PACKAGE "-libgimp", String1, String2, number)
 
-#ifdef gettext_noop
-#    define N_(String) gettext_noop (String)
-#else
-#    define N_(String) (String)
-#endif
+#define N_(String) (String)
+#define NC_(Context,String) (String)
 
 
 #endif /* __LIBGIMP_INTL_H__ */

@@ -30,6 +30,7 @@ gimp_text_box_mode_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextBoxMode", values);
+      gimp_type_set_translation_context (type, "text-box-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -60,6 +61,7 @@ gimp_text_outline_get_type (void)
   if (G_UNLIKELY (! type))
     {
       type = g_enum_register_static ("GimpTextOutline", values);
+      gimp_type_set_translation_context (type, "text-outline");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

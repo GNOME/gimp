@@ -172,7 +172,7 @@ GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_LINEAR,                /*< desc="gradient|Linear"   >*/
+  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
   GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"         >*/
   GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
   GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
@@ -245,10 +245,10 @@ GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_INTERPOLATION_NONE,   /*< desc="interpolation|None"   >*/
-  GIMP_INTERPOLATION_LINEAR, /*< desc="interpolation|Linear" >*/
-  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"                >*/
-  GIMP_INTERPOLATION_LANCZOS /*< desc="Sinc (Lanczos3)"      >*/
+  GIMP_INTERPOLATION_NONE,   /*< desc="None"            >*/
+  GIMP_INTERPOLATION_LINEAR, /*< desc="Linear"          >*/
+  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"           >*/
+  GIMP_INTERPOLATION_LANCZOS /*< desc="Sinc (Lanczos3)" >*/
 } GimpInterpolationType;
 
 
@@ -269,7 +269,7 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_REPEAT_NONE,       /*< desc="repeat|None"     >*/
+  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
   GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
   GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
 } GimpRepeatMode;
@@ -479,10 +479,10 @@ GType gimp_text_hint_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_HINT_STYLE_NONE,     /*< desc="hinting|None"   >*/
-  GIMP_TEXT_HINT_STYLE_SLIGHT,   /*< desc="hinting|Slight" >*/
-  GIMP_TEXT_HINT_STYLE_MEDIUM,   /*< desc="hinting|Medium" >*/
-  GIMP_TEXT_HINT_STYLE_FULL,     /*< desc="hinting|Full"   >*/
+  GIMP_TEXT_HINT_STYLE_NONE,     /*< desc="None"   >*/
+  GIMP_TEXT_HINT_STYLE_SLIGHT,   /*< desc="Slight" >*/
+  GIMP_TEXT_HINT_STYLE_MEDIUM,   /*< desc="Medium" >*/
+  GIMP_TEXT_HINT_STYLE_FULL,     /*< desc="Full"   >*/
 } GimpTextHintStyle;
 
 
