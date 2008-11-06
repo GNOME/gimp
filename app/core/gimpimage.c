@@ -611,7 +611,7 @@ gimp_image_init (GimpImage *image)
 
   image->layers                = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
   image->channels              = gimp_drawable_stack_new (GIMP_TYPE_CHANNEL);
-  image->vectors               = gimp_list_new (GIMP_TYPE_VECTORS, TRUE);
+  image->vectors               = gimp_item_stack_new     (GIMP_TYPE_VECTORS);
   image->layer_stack           = NULL;
 
   g_signal_connect_swapped (image->layers, "update",
@@ -2947,9 +2947,7 @@ gimp_image_add_layer (GimpImage *image,
   /*  Don't add at a non-existing index  */
   position = MIN (position, gimp_container_num_children (image->layers));
 
-  g_object_ref_sink (layer);
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
-  g_object_unref (layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
@@ -3275,9 +3273,7 @@ gimp_image_add_channel (GimpImage   *image,
   /*  Don't add at a non-existing index  */
   position = MIN (position, gimp_container_num_children (image->channels));
 
-  g_object_ref_sink (channel);
   gimp_container_insert (image->channels, GIMP_OBJECT (channel), position);
-  g_object_unref (channel);
 
   /*  notify this image of the currently active channel  */
   gimp_image_set_active_channel (image, channel);
@@ -3507,9 +3503,7 @@ gimp_image_add_vectors (GimpImage   *image,
   /*  Don't add at a non-existing index  */
   position = MIN (position, gimp_container_num_children (image->vectors));
 
-  g_object_ref_sink (vectors);
   gimp_container_insert (image->vectors, GIMP_OBJECT (vectors), position);
-  g_object_unref (vectors);
 
   /*  notify this image of the currently active vectors  */
   gimp_image_set_active_vectors (image, vectors);

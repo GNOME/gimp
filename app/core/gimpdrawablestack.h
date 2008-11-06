@@ -22,7 +22,7 @@
 #ifndef __GIMP_DRAWABLE_STACK_H__
 #define __GIMP_DRAWABLE_STACK_H__
 
-#include "core/gimplist.h"
+#include "gimpitemstack.h"
 
 
 #define GIMP_TYPE_DRAWABLE_STACK            (gimp_drawable_stack_get_type ())
@@ -36,14 +36,14 @@ typedef struct _GimpDrawableStackClass GimpDrawableStackClass;
 
 struct _GimpDrawableStack
 {
-  GimpList  parent_instance;
+  GimpItemStack  parent_instance;
 
-  GeglNode *graph;
+  GeglNode      *graph;
 };
 
 struct _GimpDrawableStackClass
 {
-  GimpListClass  parent_class;
+  GimpItemStackClass  parent_class;
 
   void (* update) (GimpDrawableStack *stack,
                    gint               x,

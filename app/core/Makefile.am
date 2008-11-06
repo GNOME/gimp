@@ -244,6 +244,8 @@ libappcore_a_sources = \
 	gimpitem-preview.h			\
 	gimpitempropundo.c			\
 	gimpitempropundo.h			\
+	gimpitemstack.c				\
+	gimpitemstack.h				\
 	gimpitemundo.c				\
 	gimpitemundo.h				\
 	gimplayer.c				\

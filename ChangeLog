@@ -1,3 +1,18 @@
+2008-11-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpitemstack.[ch]: new GimpList subclass which (for
+	now) does nothing but taking ownership of its children by the
+	means of g_object_ref_sink().
+
+	* app/core/gimpdrawablestack.[ch]: derive from GimpItemStack.
+
+	* app/core/gimpimage.c: use a GimpItemStack instead of a plain
+	GimpList for the list of vectors. Remove code which takes
+	ownerships of added items from gimp_image_add_layer(),
+	add_channel() and add_vectors().
+
 2008-11-06  Nils Philippsen  <nils@redhat.com>
 
 	* plug-ins/file-jpeg/jpeg-save.c: fix memory leak

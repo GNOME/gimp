@@ -85,7 +85,7 @@ static void      gimp_drawable_stack_drawable_visible (GimpItem          *item,
                                                        GimpDrawableStack *stack);
 
 
-G_DEFINE_TYPE (GimpDrawableStack, gimp_drawable_stack, GIMP_TYPE_LIST)
+G_DEFINE_TYPE (GimpDrawableStack, gimp_drawable_stack, GIMP_TYPE_ITEM_STACK)
 
 #define parent_class gimp_drawable_stack_parent_class
 
