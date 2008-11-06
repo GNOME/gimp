@@ -417,13 +417,13 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * @value:      an integer value
  * @value_name: return location for the value's name (or %NULL)
  * @value_nick: return location for the value's nick (or %NULL)
- * @value_desc: return location for the value's translated desc (or %NULL)
+ * @value_desc: return location for the value's translated description (or %NULL)
  * @value_help: return location for the value's translated help (or %NULL)
  *
  * Checks if @value is valid for the enum registered as @enum_type.
  * If the value exists in that enum, its name, nick and its translated
- * desc and help are returned (if @value_name, @value_nick, @value_desc
- * and @value_help are not %NULL).
+ * description and help are returned (if @value_name, @value_nick,
+ * @value_desc and @value_help are not %NULL).
  *
  * Return value: %TRUE if @value is valid for the @enum_type,
  *               %FALSE otherwise
@@ -609,13 +609,13 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * @value:      an integer value
  * @value_name: return location for the value's name (or %NULL)
  * @value_nick: return location for the value's nick (or %NULL)
- * @value_desc: return location for the value's translated desc (or %NULL)
+ * @value_desc: return location for the value's translated description (or %NULL)
  * @value_help: return location for the value's translated help (or %NULL)
  *
  * Checks if @value is valid for the flags registered as @flags_type.
- * If the value exists in that flags, its name, nick and its translated
- * desc and help are returned (if @value_name, @value_nick, @value_desc
- * and @value_help are not %NULL).
+ * If the value exists in that flags, its name, nick and its
+ * translated description and help are returned (if @value_name,
+ * @value_nick, @value_desc and @value_help are not %NULL).
  *
  * Return value: %TRUE if @value is valid for the @flags_type,
  *               %FALSE otherwise
