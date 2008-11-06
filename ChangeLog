@@ -1,3 +1,7 @@
+2008-11-06  Nils Philippsen  <nils@redhat.com>
+
+	* plug-ins/file-jpeg/jpeg-save.c: fix memory leak
+
 2008-11-06  Sven Neumann  <sven@sven>
 
 	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_linefeed):
