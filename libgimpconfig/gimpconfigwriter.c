@@ -567,8 +567,9 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
   if (writer->buffer->len == 0 && !writer->comment)
     {
       if (write (writer->fd, "\n", 1) < 0)
-        g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                     g_strerror (errno));
+        g_set_error_literal (&writer->error,
+			     GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+			     g_strerror (errno));
     }
   else
     {
