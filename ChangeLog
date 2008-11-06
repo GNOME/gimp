@@ -1,5 +1,14 @@
 2008-11-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawablestack.[ch]: move the invalidate_previews()
+	API from here...
+
+	* app/core/gimpitemstack.[ch]: ...to here.
+
+	* app/core/gimpimage.c: changed accordingly.
+
+2008-11-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpitemstack.[ch]: new GimpList subclass which (for

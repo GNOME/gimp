@@ -113,3 +113,13 @@ gimp_item_stack_new (GType item_type)
                        "unique-names",  TRUE,
                        NULL);
 }
+
+void
+gimp_item_stack_invalidate_previews (GimpItemStack *stack)
+{
+  g_return_if_fail (GIMP_IS_ITEM_STACK (stack));
+
+  gimp_container_foreach (GIMP_CONTAINER (stack),
+                          (GFunc) gimp_viewable_invalidate_preview,
+                          NULL);
+}

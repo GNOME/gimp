@@ -45,8 +45,10 @@ struct _GimpItemStackClass
 };
 
 
-GType           gimp_item_stack_get_type (void) G_GNUC_CONST;
-GimpContainer * gimp_item_stack_new      (GType item_type);
+GType           gimp_item_stack_get_type            (void) G_GNUC_CONST;
+GimpContainer * gimp_item_stack_new                 (GType          item_type);
+
+void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
 
 
 #endif  /*  __GIMP_ITEM_STACK_H__  */

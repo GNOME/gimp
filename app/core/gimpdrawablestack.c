@@ -281,16 +281,6 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
   return stack->graph;
 }
 
-void
-gimp_drawable_stack_invalidate_previews (GimpDrawableStack *stack)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE_STACK (stack));
-
-  gimp_container_foreach (GIMP_CONTAINER (stack),
-                          (GFunc) gimp_viewable_invalidate_preview,
-                          NULL);
-}
-
 
 /*  private functions  */
 

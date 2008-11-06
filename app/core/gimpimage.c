@@ -736,10 +736,10 @@ gimp_image_constructor (GType                  type,
                     image);
 
   g_signal_connect_object (config, "notify::transparency-type",
-                           G_CALLBACK (gimp_drawable_stack_invalidate_previews),
+                           G_CALLBACK (gimp_item_stack_invalidate_previews),
                            image->layers, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::transparency-size",
-                           G_CALLBACK (gimp_drawable_stack_invalidate_previews),
+                           G_CALLBACK (gimp_item_stack_invalidate_previews),
                            image->layers, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::layer-previews",
                            G_CALLBACK (gimp_viewable_size_changed),
@@ -1136,7 +1136,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
                          gimp_image_get_width  (image),
                          gimp_image_get_height (image));
 
-      gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->layers));
+      gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (image->layers));
     }
 }
 
@@ -3792,6 +3792,6 @@ gimp_image_invalidate_previews (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->layers));
-  gimp_drawable_stack_invalidate_previews (GIMP_DRAWABLE_STACK (image->channels));
+  gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (image->layers));
+  gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (image->channels));
 }
