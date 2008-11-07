@@ -1,3 +1,9 @@
+2008-11-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette-load.c (gimp_palette_load_aco): improved
+	error handling. Fixes compiler warnings about ignoring the return
+	value of read().
+
 2008-11-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawablestack.[ch]: move the invalidate_previews()
@@ -26,7 +32,7 @@
 
 	* plug-ins/file-jpeg/jpeg-save.c: fix memory leak
 
-2008-11-06  Sven Neumann  <sven@sven>
+2008-11-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_linefeed):
 	use g_set_error_literal() here as well.
@@ -73,7 +79,7 @@
 	* libgimpbase/gimpbaseenums.c
 	* libgimpconfig/gimpcolorconfig-enums.c
 	* libgimpwidgets/gimpwidgetsenums.c: regenerated.
-	
+
 2008-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: some minor cleanups.
