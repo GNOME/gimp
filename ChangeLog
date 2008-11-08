@@ -1,5 +1,26 @@
 2008-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: add optional parameter "PixelRegion
+	*destPR" to GimpDrawable::apply_region().
+
+	* app/core/gimpdrawable-combine.[ch]: if the passed destPR is !=
+	NULL, write the result of the combination into that region instead
+	of the drawable's tiles. The region must have the exact size of
+	the result.
+
+	* app/core/gimp-edit.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-shadow.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer-floating-sel.c
+	* app/paint/gimppaintcore.c: pass NULL as destPR. Code actually
+	using this feature follows.
+
+2008-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: add new function
 	gimp_drawable_init_src_region() which will initialize a
 	PixelRegion on this drawable's "projection" (with the floating

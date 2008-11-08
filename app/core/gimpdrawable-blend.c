@@ -244,7 +244,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, _("Blend"),
                               opacity, paint_mode,
-                              NULL, x, y);
+                              NULL, NULL, x, y);
 
   /*  update the image  */
   gimp_drawable_update (drawable, x, y, width, height);

@@ -1004,6 +1004,7 @@ gimp_drawable_apply_region (GimpDrawable         *drawable,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode,
                             TileManager          *src1_tiles,
+                            PixelRegion          *destPR,
                             gint                  x,
                             gint                  y)
 {
@@ -1014,7 +1015,7 @@ gimp_drawable_apply_region (GimpDrawable         *drawable,
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable, src2PR,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
-                                                    src1_tiles,
+                                                    src1_tiles, destPR,
                                                     x, y);
 }
 

@@ -142,6 +142,7 @@ static void      gimp_channel_apply_region   (GimpDrawable      *drawable,
                                               gdouble            opacity,
                                               GimpLayerModeEffects  mode,
                                               TileManager       *src1_tiles,
+                                              PixelRegion       *destPR,
                                               gint               x,
                                               gint               y);
 static void      gimp_channel_replace_region (GimpDrawable      *drawable,
@@ -782,6 +783,7 @@ gimp_channel_apply_region (GimpDrawable         *drawable,
                            gdouble               opacity,
                            GimpLayerModeEffects  mode,
                            TileManager          *src1_tiles,
+                           PixelRegion          *destPR,
                            gint                  x,
                            gint                  y)
 {
@@ -790,7 +792,7 @@ gimp_channel_apply_region (GimpDrawable         *drawable,
   GIMP_DRAWABLE_CLASS (parent_class)->apply_region (drawable, src2PR,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
-                                                    src1_tiles,
+                                                    src1_tiles, destPR,
                                                     x, y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;

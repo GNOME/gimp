@@ -29,6 +29,7 @@ void   gimp_drawable_real_apply_region   (GimpDrawable         *drawable,
                                           gdouble               opacity,
                                           GimpLayerModeEffects  mode,
                                           TileManager          *src1_tiles,
+                                          PixelRegion          *destPR,
                                           gint                  x,
                                           gint                  y);
 void   gimp_drawable_real_replace_region (GimpDrawable         *drawable,

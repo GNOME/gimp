@@ -527,7 +527,7 @@ gimp_edit_fade (GimpImage   *image,
                                   gimp_object_get_name (GIMP_OBJECT (undo)),
                                   gimp_context_get_opacity (context),
                                   gimp_context_get_paint_mode (context),
-                                  NULL,
+                                  NULL, NULL,
                                   undo->x,
                                   undo->y);
 
@@ -659,7 +659,7 @@ gimp_edit_fill_internal (GimpImage            *image,
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, undo_desc,
                               opacity, paint_mode,
-                              NULL, x, y);
+                              NULL, NULL, x, y);
 
   tile_manager_unref (buf_tiles);
 

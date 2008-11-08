@@ -815,7 +815,7 @@ gimp_image_map_do (GimpImageMap *image_map)
           gimp_drawable_apply_region (image_map->drawable, &srcPR,
                                       FALSE, NULL,
                                       GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                      NULL,
+                                      NULL, NULL,
                                       x, y);
 
           gimp_drawable_update (image_map->drawable, x, y, w, h);
@@ -891,7 +891,7 @@ gimp_image_map_data_written (GObject             *operation,
   gimp_drawable_apply_region (image_map->drawable, &srcPR,
                               FALSE, NULL,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                              NULL,
+                              NULL, NULL,
                               extent->x, extent->y);
 
   gimp_drawable_update (image_map->drawable,

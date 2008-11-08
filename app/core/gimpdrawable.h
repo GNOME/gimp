@@ -79,6 +79,7 @@ struct _GimpDrawableClass
                                            gdouble               opacity,
                                            GimpLayerModeEffects  mode,
                                            TileManager          *src1_tiles,
+                                           PixelRegion          *destPR,
                                            gint                  x,
                                            gint                  y);
   void          (* replace_region)        (GimpDrawable         *drawable,
@@ -155,6 +156,7 @@ void            gimp_drawable_apply_region       (GimpDrawable       *drawable,
                                                   gdouble             opacity,
                                                   GimpLayerModeEffects  mode,
                                                   TileManager        *src1_tiles,
+                                                  PixelRegion        *destPR,
                                                   gint                x,
                                                   gint                y);
 void            gimp_drawable_replace_region     (GimpDrawable       *drawable,

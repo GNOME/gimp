@@ -487,7 +487,7 @@ floating_sel_composite (GimpLayer *layer,
                                       push_undo, NULL,
                                       gimp_layer_get_opacity (layer),
                                       gimp_layer_get_mode (layer),
-                                      NULL,
+                                      NULL, NULL,
                                       (x1 - offx), (y1 - offy));
 
           /*  restore lock alpha  */

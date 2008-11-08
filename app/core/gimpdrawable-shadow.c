@@ -97,6 +97,6 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
       gimp_drawable_apply_region (drawable, &shadowPR,
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                  NULL, x, y);
+                                  NULL, NULL, x, y);
     }
 }

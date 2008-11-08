@@ -42,6 +42,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                                  gdouble               opacity,
                                  GimpLayerModeEffects  mode,
                                  TileManager          *src1_tiles,
+                                 PixelRegion          *destPR,
                                  gint                  x,
                                  gint                  y)
 {
@@ -50,7 +51,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   GimpChannel     *mask  = gimp_image_get_mask (image);
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
-  PixelRegion      src1PR, destPR;
+  PixelRegion      src1PR, my_destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
 
@@ -129,20 +130,33 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   /* configure the pixel regions */
 
-  /* If an alternative to using the drawable's data as src1 was provided...
+  /* check if an alternative to using the drawable's data as src1 was
+   * provided...
    */
   if (src1_tiles)
-    pixel_region_init (&src1PR, src1_tiles,
-                       x1, y1, x2 - x1, y2 - y1,
-                       FALSE);
+    {
+      pixel_region_init (&src1PR, src1_tiles,
+                         x1, y1, x2 - x1, y2 - y1,
+                         FALSE);
+    }
   else
-    pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-                       x1, y1, x2 - x1, y2 - y1,
-                       FALSE);
+    {
+      pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
+                         x1, y1, x2 - x1, y2 - y1,
+                         FALSE);
+    }
 
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, x2 - x1, y2 - y1,
-                     TRUE);
+  /* check if an alternative to using the drawable's data as dest was
+   * provided...
+   */
+  if (!destPR)
+    {
+      pixel_region_init (&my_destPR, gimp_drawable_get_tiles (drawable),
+                         x1, y1, x2 - x1, y2 - y1,
+                         TRUE);
+      destPR = &my_destPR;
+    }
+
   pixel_region_resize (src2PR,
                        src2PR->x + (x1 - x), src2PR->y + (y1 - y),
                        x2 - x1, y2 - y1);
@@ -158,7 +172,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                          x2 - x1, y2 - y1,
                          FALSE);
 
-      combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
+      combine_regions (&src1PR, src2PR, destPR, &maskPR, NULL,
                        opacity * 255.999,
                        mode,
                        active_components,
@@ -166,7 +180,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
     }
   else
     {
-      combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
+      combine_regions (&src1PR, src2PR, destPR, NULL, NULL,
                        opacity * 255.999,
                        mode,
                        active_components,
