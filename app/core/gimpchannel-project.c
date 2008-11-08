@@ -51,9 +51,8 @@ gimp_channel_project_region (GimpDrawable *drawable,
   gimp_rgba_get_uchar (&channel->color,
                        &col[0], &col[1], &col[2], &opacity);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height,
-                     FALSE);
+  gimp_drawable_init_src_region (drawable, &srcPR,
+                                 x, y, width, height);
 
   if (combine)
     {

@@ -1,5 +1,16 @@
 2008-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: add new function
+	gimp_drawable_init_src_region() which will initialize a
+	PixelRegion on this drawable's "projection" (with the floating
+	selection combined), but for now just uses drawable->tiles.
+
+	* app/core/gimpchannel-project.c
+	* app/core/gimplayer-project.c: use it instead of
+	pixel_region_init() on the drawable's tiles.
+
+2008-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-combine.c: cleanup.
 
 2008-11-08  Michael Natterer  <mitch@gimp.org>

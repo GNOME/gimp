@@ -53,10 +53,8 @@ gimp_layer_project_region (GimpDrawable *drawable,
 
       PixelRegion srcPR;
 
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x, y, width, height,
-                         FALSE);
+      gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &srcPR,
+                                     x, y, width, height);
 
       copy_gray_to_region (&srcPR, projPR);
     }
@@ -72,17 +70,13 @@ gimp_layer_project_region (GimpDrawable *drawable,
       InitialMode      initial_mode;
       CombinationMode  combination_mode;
 
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (drawable),
-                         x, y, width, height,
-                         FALSE);
+      gimp_drawable_init_src_region (drawable, &srcPR,
+                                     x, y, width, height);
 
       if (mask && gimp_layer_mask_get_apply (mask))
         {
-          pixel_region_init (&maskPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                             x, y, width, height,
-                             FALSE);
+          gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &maskPR,
+                                         x, y, width, height);
           mask_pr = &maskPR;
         }
 

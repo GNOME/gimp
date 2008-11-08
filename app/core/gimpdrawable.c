@@ -1057,6 +1057,35 @@ gimp_drawable_project_region (GimpDrawable *drawable,
                                                       projPR, combine);
 }
 
+void
+gimp_drawable_init_src_region (GimpDrawable *drawable,
+                               PixelRegion  *srcPR,
+                               gint          x,
+                               gint          y,
+                               gint          width,
+                               gint          height)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (srcPR != NULL);
+
+  if (gimp_drawable_has_floating_sel (drawable))
+    {
+      /*  FIXME: return the composite of the layer and the floating
+       *  selection.
+       */
+      pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height,
+                         FALSE);
+    }
+  else
+    {
+      pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height,
+                         FALSE);
+    }
+}
+
 TileManager *
 gimp_drawable_get_tiles (GimpDrawable *drawable)
 {
