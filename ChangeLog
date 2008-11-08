@@ -1,5 +1,9 @@
 2008-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-combine.c: cleanup.
+
+2008-11-08  Michael Natterer  <mitch@gimp.org>
+
 	Abstract the legacy projection code away into a virtual function
 	of GimpDrawable:
 

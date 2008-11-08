@@ -45,20 +45,14 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                                  gint                  x,
                                  gint                  y)
 {
-  GimpImage       *image;
-  GimpItem        *item;
-  GimpChannel     *mask;
+  GimpItem        *item  = GIMP_ITEM (drawable);
+  GimpImage       *image = gimp_item_get_image (item);
+  GimpChannel     *mask  = gimp_image_get_mask (image);
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
-
-  item = GIMP_ITEM (drawable);
-
-  image = gimp_item_get_image (item);
-
-  mask = gimp_image_get_mask (image);
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -89,18 +83,16 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   if (mask)
     {
+      GimpItem *mask_item = GIMP_ITEM (mask);
+
       /*  make sure coordinates are in mask bounds ...
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1,
-                  - offset_x, gimp_item_get_width  (GIMP_ITEM (mask)) - offset_x);
-      y1 = CLAMP (y1,
-                  - offset_y, gimp_item_get_height (GIMP_ITEM (mask)) - offset_y);
-      x2 = CLAMP (x2,
-                  - offset_x, gimp_item_get_width  (GIMP_ITEM (mask)) - offset_x);
-      y2 = CLAMP (y2,
-                  - offset_y, gimp_item_get_height (GIMP_ITEM (mask)) - offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_get_height (mask_item) - offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_get_height (mask_item) - offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -135,21 +127,25 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
         }
     }
 
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
+  /* configure the pixel regions */
+
+  /* If an alternative to using the drawable's data as src1 was provided...
    */
   if (src1_tiles)
     pixel_region_init (&src1PR, src1_tiles,
-                       x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                       x1, y1, x2 - x1, y2 - y1,
+                       FALSE);
   else
     pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-                       x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                       x1, y1, x2 - x1, y2 - y1,
+                       FALSE);
 
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                     x1, y1, x2 - x1, y2 - y1,
+                     TRUE);
   pixel_region_resize (src2PR,
                        src2PR->x + (x1 - x), src2PR->y + (y1 - y),
-                       (x2 - x1), (y2 - y1));
+                       x2 - x1, y2 - y1);
 
   if (mask)
     {
@@ -159,7 +155,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                          x1 + offset_x,
                          y1 + offset_y,
-                         (x2 - x1), (y2 - y1),
+                         x2 - x1, y2 - y1,
                          FALSE);
 
       combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
@@ -194,20 +190,14 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
                                    gint          x,
                                    gint          y)
 {
-  GimpImage       *image;
-  GimpItem        *item;
-  GimpChannel     *mask;
+  GimpItem        *item  = GIMP_ITEM (drawable);
+  GimpImage       *image = gimp_item_get_image (item);
+  GimpChannel     *mask  = gimp_image_get_mask (image);
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
-
-  item = GIMP_ITEM (drawable);
-
-  image = gimp_item_get_image (item);
-
-  mask = gimp_image_get_mask (image);
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -238,34 +228,32 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
 
   if (mask)
     {
+      GimpItem *mask_item = GIMP_ITEM (mask);
+
       /*  make sure coordinates are in mask bounds ...
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1,
-                  - offset_x, gimp_item_get_width  (GIMP_ITEM (mask)) - offset_x);
-      y1 = CLAMP (y1,
-                  - offset_y, gimp_item_get_height (GIMP_ITEM (mask)) - offset_y);
-      x2 = CLAMP (x2,
-                  - offset_x, gimp_item_get_width  (GIMP_ITEM (mask)) - offset_x);
-      y2 = CLAMP (y2,
-                  - offset_y, gimp_item_get_height (GIMP_ITEM (mask)) - offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_get_height (mask_item) - offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_get_height (mask_item) - offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
     gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
 
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
-   */
+  /* configure the pixel regions */
   pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                     x1, y1, x2 - x1, y2 - y1,
+                     FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                     x1, y1, x2 - x1, y2 - y1,
+                     TRUE);
   pixel_region_resize (src2PR,
                        src2PR->x + (x1 - x), src2PR->y + (y1 - y),
-                       (x2 - x1), (y2 - y1));
+                       x2 - x1, y2 - y1);
 
   if (mask)
     {
@@ -276,7 +264,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                          x1 + offset_x,
                          y1 + offset_y,
-                         (x2 - x1), (y2 - y1),
+                         x2 - x1, y2 - y1,
                          FALSE);
 
       temp_data = g_malloc ((y2 - y1) * (x2 - x1));
