@@ -17,6 +17,7 @@
 #  zoom in     - powiekszenie
 #  zoom out    - zmniejszenie (nie pomniejszenie)
 #  colormap    - Paleta kolorów
+#  preset      - ustawienia
 #  Brushes, Patterns, Gradients -  Pędzle, desenie, gradienty
 #
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2008.
@@ -38,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-6.pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-15 21:32+0200\n"
-"PO-Revision-Date: 2008-10-13 16:46+0200\n"
+"POT-Creation-Date: 2008-11-08 22:02+0100\n"
+"PO-Revision-Date: 2008-11-04 12:30+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +298,7 @@ msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:104 ../app/core/gimp.c:828
+#: ../app/actions/actions.c:104 ../app/core/gimp.c:838
 #: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2738
 msgid "Brushes"
 msgstr "Pędzle"
@@ -376,7 +377,7 @@ msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:158 ../app/core/gimp.c:840
+#: ../app/actions/actions.c:158 ../app/core/gimp.c:850
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradients"
 msgstr "Gradienty"
@@ -406,13 +407,13 @@ msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:176 ../app/core/gimp.c:836
+#: ../app/actions/actions.c:176 ../app/core/gimp.c:846
 #: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2746
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:179 ../app/core/gimp.c:832
+#: ../app/actions/actions.c:179 ../app/core/gimp.c:842
 #: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2742
 msgid "Patterns"
 msgstr "Desenie"
@@ -435,7 +436,7 @@ msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:194 ../app/core/gimp.c:849
+#: ../app/actions/actions.c:194 ../app/core/gimp.c:859
 #: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "Szablony"
@@ -718,7 +719,7 @@ msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:567
+#: ../app/display/gimpdisplayshell-dnd.c:584
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
@@ -880,11 +881,11 @@ msgstr "Próbkuje wszystkie warstwy"
 
 # c-format
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
 #: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:520
+#: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
@@ -1893,7 +1894,7 @@ msgstr "Zapisz _kopię..."
 
 #: ../app/actions/file-actions.c:129
 msgid "Save this image with a different name, but keep its current name"
-msgstr "Zapisuje bieżący obraz pod inną nazwą, lecz zachowuje bieżącą nazwę"
+msgstr "Zapisuje bieżący obraz pod inną nazwą"
 
 #: ../app/actions/file-actions.c:134
 msgid "Save and Close..."
@@ -1903,7 +1904,7 @@ msgstr "Zapisz i zamknij..."
 msgid "Save this image and close its window"
 msgstr "Zapisuje bieżący obraz i zamyka okno"
 
-#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
 msgstr "Otwarcie obrazu"
@@ -1912,11 +1913,11 @@ msgstr "Otwarcie obrazu"
 msgid "Open Image as Layers"
 msgstr "Otwiera obraz jako warstwy"
 
-#: ../app/actions/file-commands.c:260
+#: ../app/actions/file-commands.c:266
 msgid "Saving canceled"
 msgstr "Zapisywanie anulowane"
 
-#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:275 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1928,40 +1929,40 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:294
+#: ../app/actions/file-commands.c:300
 msgid "No changes need to be saved"
 msgstr "Nie znaleziono zmian"
 
-#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:307 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Zapis obrazu"
 
-#: ../app/actions/file-commands.c:307
+#: ../app/actions/file-commands.c:313
 msgid "Save a Copy of the Image"
 msgstr "Zapis kopii obrazu"
 
-#: ../app/actions/file-commands.c:327
+#: ../app/actions/file-commands.c:333
 msgid "Create New Template"
 msgstr "Tworzenie nowego szablonu"
 
-#: ../app/actions/file-commands.c:331
+#: ../app/actions/file-commands.c:337
 msgid "Enter a name for this template"
 msgstr "Wprowadź nazwę szablonu"
 
-#: ../app/actions/file-commands.c:357
+#: ../app/actions/file-commands.c:363
 msgid "Revert failed. No file name associated with this image."
 msgstr "Przywrócenie obrazu nie powiodło się. Obrazowi nie nadano nazwy."
 
-#: ../app/actions/file-commands.c:370
+#: ../app/actions/file-commands.c:376
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-#: ../app/actions/file-commands.c:396
+#: ../app/actions/file-commands.c:402
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Czy przywrócić \"%s\" do wersji \"%s\"?"
 
-#: ../app/actions/file-commands.c:402
+#: ../app/actions/file-commands.c:408
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1969,12 +1970,12 @@ msgstr ""
 "Przywrócenie obrazu do stanu zapisanego w pliku spowoduje utratę wszystkich "
 "dokonanych w nim zmian, wraz z informacjami o historii operacji."
 
-#: ../app/actions/file-commands.c:557
+#: ../app/actions/file-commands.c:563
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
 # c-format
-#: ../app/actions/file-commands.c:605
+#: ../app/actions/file-commands.c:611
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1996,7 +1997,7 @@ msgstr "_Odśwież listę czcionek"
 
 #: ../app/actions/fonts-actions.c:49
 msgid "Rescan font list"
-msgstr "Odświeżenie listy czcionek"
+msgstr "Odświeżanie listy czcionek"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
@@ -2020,7 +2021,7 @@ msgstr "Rodzaj prawego koloru"
 
 #: ../app/actions/gradient-editor-actions.c:59
 msgid "Load Right Color Fr_om"
-msgstr "Pobranie pr_awego koloru"
+msgstr "Pobranie pr_awego koloru z"
 
 #: ../app/actions/gradient-editor-actions.c:61
 msgid "Sa_ve Right Color To"
@@ -3747,7 +3748,7 @@ msgstr "Przy_wróć domyślne opcje wszystkich narzędzi"
 
 #: ../app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
-msgstr "Przywrócenie domyślnych opcji wszystkich narzędzi"
+msgstr "Przywróca domyślne opcje wszystkich narzędzi"
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
@@ -3777,8 +3778,7 @@ msgstr "Przywrócenie opcji narzędzi"
 
 #: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
-msgstr ""
-"Czy na pewno przywrócić domyślne wartości opcji dla wszystkich narzędzi?"
+msgstr "Czy na pewno przywrócić domyślne wartości opcji wszystkich narzędzi?"
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
@@ -3846,7 +3846,7 @@ msgstr "Przywrócenie domyślnego porządku i widoczności narzędzi"
 
 #: ../app/actions/tools-actions.c:90
 msgid "_Show in Toolbox"
-msgstr "_Wyświetl w narzędziówce"
+msgstr "_Wyświetl w przyborniku"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
@@ -4422,7 +4422,7 @@ msgstr "Narzę_dziówka"
 
 #: ../app/actions/windows-actions.c:85
 msgid "Raise the toolbox"
-msgstr "Podnosi narzędziówkę"
+msgstr "Podnosi przybornik"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
@@ -5032,7 +5032,7 @@ msgid ""
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 msgstr ""
-"Kiedy jest włączona, okna doku (narzędziówki i palet), tymczasowo zostają "
+"Kiedy jest włączona, okna doku (przybornika i palet), tymczasowo zostają "
 "ustawione jako aktywne okna obrazu. Wtedy większość menedżerów okien "
 "zachowuje okna doku, ponad oknem obrazu. Niestety mogą także pojawić się "
 "inne efekty."
@@ -5099,23 +5099,23 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:390
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
-"Wyświetla aktywny kolor pierwszoplanowy oraz tła z kolorem tła w narzędziówce"
+"Wyświetla aktywny kolor pierwszoplanowy oraz tła z kolorem tła w przyborniku"
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "Wyświetla aktywny pędzel, deseń i gradient w narzędziówce"
+msgstr "Wyświetla aktywny pędzel, deseń i gradient w przyborniku"
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid "Show the currently active image in the toolbox."
-msgstr "Wyświetla aktywny obraz w narzędziówce"
+msgstr "Wyświetla aktywny obraz w przyborniku."
 
 #: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
-"Typ podpowiedzi powiązanej z oknem narzędziówki. Ustawienie to może wpłynąć "
-"na sposób, w jaki menedżer okien ozdabia i obsługuje okno narzędziówki."
+"Typ podpowiedzi powiązanej z oknem przybornika. Ustawienie to może wpłynąć "
+"na sposób, w jaki menedżer okien wyświetla okno przybornika."
 
 #: ../app/config/gimprc-blurbs.h:406
 msgid "Sets the manner in which transparency is displayed in images."
@@ -5818,31 +5818,31 @@ msgstr "Tworzenie katalogu \"%s\"..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu \"%s\": %s"
 
-#: ../app/core/gimp.c:533
+#: ../app/core/gimp.c:543
 msgid "Initialization"
 msgstr "Inicjalizacja"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:608
+#: ../app/core/gimp.c:618
 msgid "Internal Procedures"
 msgstr "Wewnętrzne procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Looking for data files"
 msgstr "Wyszukiwanie plików z danymi"
 
-#: ../app/core/gimp.c:824
+#: ../app/core/gimp.c:834
 msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:844
+#: ../app/core/gimp.c:854
 msgid "Fonts (this may take a while)"
 msgstr "Czcionki (może to zająć kilka minut)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2766
+#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2766
 msgid "Modules"
 msgstr "Moduły"
 
@@ -6141,12 +6141,12 @@ msgstr ""
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:71
+#: ../app/core/gimpdrawable-brightness-contrast.c:76
 msgid "Brightness_Contrast"
 msgstr "Jasność_kontrast"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:82
-#: ../app/tools/gimpbrightnesscontrasttool.c:110
+#: ../app/core/gimpdrawable-brightness-contrast.c:87
+#: ../app/tools/gimpbrightnesscontrasttool.c:111
 msgid "Brightness-Contrast"
 msgstr "Jasność i kontrast"
 
@@ -6199,7 +6199,7 @@ msgstr "Odcień i nasycenie"
 msgid "Hue_Saturation"
 msgstr "Odcień_nasycenie"
 
-#: ../app/core/gimpdrawable-invert.c:55 ../app/core/gimpdrawable-invert.c:63
+#: ../app/core/gimpdrawable-invert.c:60 ../app/core/gimpdrawable-invert.c:68
 msgid "Invert"
 msgstr "Inwersja"
 
@@ -6869,7 +6869,7 @@ msgstr ""
 msgid "Please wait"
 msgstr "Proszę czekać"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:240
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "Przesunięcie zaznaczenia"
 
@@ -7836,7 +7836,7 @@ msgstr "Ustaw warstwę lub ścieżkę na aktywną"
 
 #: ../app/dialogs/preferences-dialog.c:1960 ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
-msgstr "Narzędziówka"
+msgstr "Przybornik"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1972
@@ -8131,7 +8131,7 @@ msgstr "Podpowiedź do zarządzania oknami"
 
 #: ../app/dialogs/preferences-dialog.c:2626
 msgid "Hint for the _toolbox:"
-msgstr "Podpowiedź do _narzędziówki:"
+msgstr "Podpowiedź do _przybornika:"
 
 #: ../app/dialogs/preferences-dialog.c:2630
 msgid "Hint for other _docks:"
@@ -8139,7 +8139,7 @@ msgstr "Po_dpowiedź do innych doków:"
 
 #: ../app/dialogs/preferences-dialog.c:2635
 msgid "Toolbox and other docks are transient to the active image window"
-msgstr "Narzędziówka i inne doki są tymczasowo na aktywnym oknie obrazu"
+msgstr "Przybornik i inne doki są tymczasowo na aktywnym oknie obrazu"
 
 #: ../app/dialogs/preferences-dialog.c:2640
 msgid "Focus"
@@ -8639,8 +8639,8 @@ msgstr[2] ""
 "utracone."
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
-#: ../app/display/gimpdisplayshell-dnd.c:570
-#: ../app/display/gimpdisplayshell-dnd.c:641
+#: ../app/display/gimpdisplayshell-dnd.c:587
+#: ../app/display/gimpdisplayshell-dnd.c:658
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
@@ -8648,12 +8648,12 @@ msgstr "Upuszczenie nowej warstwy"
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:631
+#: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
@@ -8714,8 +8714,8 @@ msgstr "(zmodyfikowany)"
 msgid "(clean)"
 msgstr "(niezmodyfikowany)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:349
+#: ../app/display/gimpdisplayshell-title.c:346
+#: ../app/display/gimpdisplayshell-title.c:359
 #: ../app/widgets/gimpactiongroup.c:805
 msgid "(none)"
 msgstr "(brak)"
@@ -8740,18 +8740,18 @@ msgstr "Wtyczka %s zwróciła kod powodzenia, lecz nie zwróciła obrazu."
 msgid "%s plug-In could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
-#: ../app/file/file-open.c:452
+#: ../app/file/file-open.c:455
 #, c-format
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
 # c-format
-#: ../app/file/file-open.c:502
+#: ../app/file/file-open.c:505
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Nie można otworzyć pliku \"%s\": %s"
 
-#: ../app/file/file-open.c:610
+#: ../app/file/file-open.c:613
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -9103,12 +9103,12 @@ msgstr ""
 "Procedura \"%s\" została wywołana z błędnym typem argumentu #%d. Spodziewany "
 "%s, otrzymany %s."
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
+#: ../app/pdb/gimpprocedure.c:361 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura \"%s\" nie zwróciła wartości"
 
-#: ../app/pdb/gimpprocedure.c:584
+#: ../app/pdb/gimpprocedure.c:585
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -9117,7 +9117,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła zły typ wartości \"%s\" (#%d). Spodziewany %s, "
 "otrzymany %s."
 
-#: ../app/pdb/gimpprocedure.c:596
+#: ../app/pdb/gimpprocedure.c:597
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -9126,7 +9126,7 @@ msgstr ""
 "Procedura \"%s\" została wywołana z błędnym argumentem \"%s\" (#%d). "
 "Spodziewany %s, otrzymany %s."
 
-#: ../app/pdb/gimpprocedure.c:628
+#: ../app/pdb/gimpprocedure.c:629
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9135,7 +9135,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła błędny ID dla argumentu \"%s\". Prawdopodobnie "
 "wtyczka próbuje pracować na warstwie, która nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:640
+#: ../app/pdb/gimpprocedure.c:641
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9144,7 +9144,7 @@ msgstr ""
 "Procedura \"%s\" wywołała błędny ID dla argumentu \"%s\". Prawdopodobnie "
 "wtyczka próbuje pracować na warstwie, która nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:656
+#: ../app/pdb/gimpprocedure.c:657
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9153,7 +9153,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła błędny ID dla argumentu \"%s\". Prawdopodobnie "
 "wtyczka próbuje pracować na obrazie, który nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:668
+#: ../app/pdb/gimpprocedure.c:669
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9162,7 +9162,7 @@ msgstr ""
 "Procedura \"%s\" wywołała błędny ID dla argumentu \"%s\". Prawdopodobnie "
 "wtyczka próbuje pracować na obrazie, który nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:688
+#: ../app/pdb/gimpprocedure.c:689
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -9171,7 +9171,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła \"%s\", jako wartość \"%s\" (#%d, typ %s). Ta "
 "wartość jest poza zakresem."
 
-#: ../app/pdb/gimpprocedure.c:701
+#: ../app/pdb/gimpprocedure.c:702
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9604,40 +9604,40 @@ msgstr "%s aby przesunąć całą linię"
 msgid "Blend: "
 msgstr "Gradient: "
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:111
+#: ../app/tools/gimpbrightnesscontrasttool.c:112
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
 msgstr "Jasność i kontrast: Pozwala modyfikować jasność i kontrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:112
+#: ../app/tools/gimpbrightnesscontrasttool.c:113
 msgid "B_rightness-Contrast..."
 msgstr "Jas_ność i kontrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:132
+#: ../app/tools/gimpbrightnesscontrasttool.c:133
 msgid "Adjust Brightness and Contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:134
+#: ../app/tools/gimpbrightnesscontrasttool.c:135
 msgid "Import Brightness-Contrast settings"
 msgstr "Importowanie ustawień jasności i kontrastu"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:135
+#: ../app/tools/gimpbrightnesscontrasttool.c:136
 msgid "Export Brightness-Contrast settings"
 msgstr "Eksportowanie ustawień jasności i kontrastu"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:183
+#: ../app/tools/gimpbrightnesscontrasttool.c:184
 #, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Nie można modyfikować jasności i kontrastu na warstwach indeksowanych."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:320
+#: ../app/tools/gimpbrightnesscontrasttool.c:325
 msgid "_Brightness:"
 msgstr "_Jasność:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:335
+#: ../app/tools/gimpbrightnesscontrasttool.c:340
 msgid "Con_trast:"
 msgstr "_Kontrast:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:349
+#: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
 msgstr "Edytuje te ustawienia jako poziomy"
 
@@ -10123,13 +10123,13 @@ msgstr "Zakres"
 msgid "Exposure:"
 msgstr "Intensywność:"
 
-#: ../app/tools/gimpeditselectiontool.c:244
-#: ../app/tools/gimpeditselectiontool.c:1229
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1231
 msgid "Move Floating Selection"
 msgstr "Przesunięcie oderwanego zaznaczenia"
 
-#: ../app/tools/gimpeditselectiontool.c:457
-#: ../app/tools/gimpeditselectiontool.c:726
+#: ../app/tools/gimpeditselectiontool.c:459
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "Przesunięcie: "
 
@@ -10348,29 +10348,29 @@ msgstr "Zaznaczenie rozmyte: Zaznacza regularny obszar na podstawie koloru"
 msgid "Fu_zzy Select"
 msgstr "Zaznaczenie roz_myte"
 
-#: ../app/tools/gimpgegltool.c:83 ../app/tools/gimpgegltool.c:102
+#: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
 msgstr "Operacja GEGL-a"
 
-#: ../app/tools/gimpgegltool.c:84
+#: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: Wykonuje wybrane operacje GEGL-a"
 
-#: ../app/tools/gimpgegltool.c:85
+#: ../app/tools/gimpgegltool.c:94
 msgid "_GEGL Operation..."
 msgstr "Operacja _GEGL-a..."
 
-#: ../app/tools/gimpgegltool.c:149
+#: ../app/tools/gimpgegltool.c:158
 #, c-format
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Operacje GEGL-a nie działają na warstwach indeksowanych."
 
-#: ../app/tools/gimpgegltool.c:324
+#: ../app/tools/gimpgegltool.c:338
 msgid "_Operation:"
 msgstr "_Operacja:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:370
+#: ../app/tools/gimpgegltool.c:411
 msgid "Operation Settings"
 msgstr "Ustawienia operacji"
 
@@ -10474,7 +10474,7 @@ msgstr "R_esetuj kolor"
 
 #: ../app/tools/gimpimagemaptool-settings.c:81
 msgid "Pre_sets:"
-msgstr "Na_cisk: "
+msgstr "U_stawienia: "
 
 #: ../app/tools/gimpimagemaptool-settings.c:221
 #, c-format
@@ -12153,23 +12153,23 @@ msgstr "Komunikaty zostaną przekierowane na standardowe wyjście błędów."
 msgid "%s Message"
 msgstr "Komunikat: %s"
 
-#: ../app/widgets/gimpfiledialog.c:279
+#: ../app/widgets/gimpfiledialog.c:310
 msgid "Automatically Detected"
 msgstr "Rozpoznanie automatyczne"
 
-#: ../app/widgets/gimpfiledialog.c:289
+#: ../app/widgets/gimpfiledialog.c:320
 msgid "By Extension"
 msgstr "Według rozszerzenia"
 
-#: ../app/widgets/gimpfiledialog.c:617
+#: ../app/widgets/gimpfiledialog.c:652
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: ../app/widgets/gimpfiledialog.c:622
+#: ../app/widgets/gimpfiledialog.c:657
 msgid "All images"
 msgstr "Wszystkie obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:751
+#: ../app/widgets/gimpfiledialog.c:786
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
@@ -12293,15 +12293,15 @@ msgstr "Kolor _tła:"
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/widgets/gimphelp.c:267
+#: ../app/widgets/gimphelp.c:276
 msgid "Help browser is missing"
 msgstr "Nie można znaleźć przeglądarki pomocy"
 
-#: ../app/widgets/gimphelp.c:268
+#: ../app/widgets/gimphelp.c:277
 msgid "The GIMP help browser is not available."
 msgstr "Nie można odnaleźć przeglądarki pomocy programu GIMP."
 
-#: ../app/widgets/gimphelp.c:269
+#: ../app/widgets/gimphelp.c:278
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -12309,33 +12309,33 @@ msgstr ""
 "Nie można odnaleźć wtyczki przeglądarki pomocy programu GIMP. Alternatywnie, "
 "możesz użyć przeglądarki internetowej aby przeczytać strony pomocy. "
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:319
 msgid "Help browser doesn't start"
 msgstr "Nie można uruchomić przeglądarki pomocy"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:320
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Nie można uruchomić wtyczki przeglądarki pomocy programu GIMP."
 
-#: ../app/widgets/gimphelp.c:338
+#: ../app/widgets/gimphelp.c:347
 msgid "Use _Web Browser"
 msgstr "Użyj przeglądarki _WWW"
 
-#: ../app/widgets/gimphelp.c:587
+#: ../app/widgets/gimphelp.c:596
 msgid "GIMP user manual is missing"
 msgstr "Nie można znaleźć podręcznika użytkownika programu GIMP"
 
-#: ../app/widgets/gimphelp.c:594
+#: ../app/widgets/gimphelp.c:603
 msgid "_Read Online"
 msgstr "_Czytaj z sieci"
 
-#: ../app/widgets/gimphelp.c:618
+#: ../app/widgets/gimphelp.c:627
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "Podręcznik użytkownika programu GIMP nie został zainstalowany na tym "
 "komputerze."
 
-#: ../app/widgets/gimphelp.c:621
+#: ../app/widgets/gimphelp.c:630
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -12657,7 +12657,7 @@ msgstr "_Język:"
 msgid "_Use selected font"
 msgstr "_Użyj wybranej czcionki"
 
-#: ../app/widgets/gimpthumbbox.c:330
+#: ../app/widgets/gimpthumbbox.c:344
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -12666,20 +12666,20 @@ msgstr ""
 "Kliknięcie odświeża podgląd\n"
 "%s%sKliknięcie wymusza odświeżenie podglądu, nawet jeśli jest aktualny."
 
-#: ../app/widgets/gimpthumbbox.c:348
+#: ../app/widgets/gimpthumbbox.c:362
 msgid "Pr_eview"
 msgstr "_Podgląd"
 
-#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
+#: ../app/widgets/gimpthumbbox.c:417 ../app/widgets/gimpthumbbox.c:481
 msgid "No selection"
 msgstr "Brak zaznaczenia"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:609 ../app/widgets/gimpthumbbox.c:630
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniaturka %d z %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:743 ../app/widgets/gimpthumbbox.c:753
 msgid "Creating preview..."
 msgstr "Tworzenie podglądu ..."
 
@@ -12755,7 +12755,7 @@ msgstr "Usunięcie wybranego zestawu opcji..."
 #: ../app/widgets/gimptooloptionseditor.c:480
 #, c-format
 msgid "Error saving tool options presets: %s"
-msgstr "Błąd przy opcji narzędzia: %s"
+msgstr "Błąd przy zapisywaniu ustawień narzędzia: %s"
 
 #: ../app/widgets/gimpuimanager.c:738
 msgid "Your GIMP installation is incomplete:"
@@ -13014,8 +13014,7 @@ msgstr "Zaznacz jeżeli GIMP jest już uruchomiony, a potem wyjdź"
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr ""
-"Wyświetla numer identyfikacyjny ID X window, okna narzędziówki programu GIMP "
-"i kończy pracę"
+"Wyświetla numer identyfikacyjny ID okna przybornika GIMP-a i kończy pracę"
 
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
@@ -13027,7 +13026,7 @@ msgstr "Nie można połączyć się z programem GIMP."
 
 #: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
-msgstr "Upewnij się, że narzędziówka jest widoczna."
+msgstr "Upewnij się, że przybornik jest widoczny."
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote-x11.c:248
