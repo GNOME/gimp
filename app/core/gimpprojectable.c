@@ -242,33 +242,3 @@ gimp_projectable_get_channels (GimpProjectable *projectable)
 
   return NULL;
 }
-
-gboolean *
-gimp_projectable_get_components (GimpProjectable *projectable)
-{
-  GimpProjectableInterface *iface;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
-
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
-
-  if (iface->get_components)
-    return iface->get_components (projectable);
-
-  return NULL;
-}
-
-const guchar *
-gimp_projectable_get_colormap (GimpProjectable *projectable)
-{
-  GimpProjectableInterface *iface;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
-
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
-
-  if (iface->get_colormap)
-    return iface->get_colormap (projectable);
-
-  return NULL;
-}

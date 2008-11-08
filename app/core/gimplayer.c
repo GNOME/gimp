@@ -46,6 +46,7 @@
 #include "gimpimage.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayer.h"
+#include "gimplayer-project.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
@@ -275,6 +276,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
+  drawable_class->project_region        = gimp_layer_project_region;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
 
   klass->opacity_changed              = NULL;

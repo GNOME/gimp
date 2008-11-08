@@ -1,3 +1,29 @@
+2008-11-08  Michael Natterer  <mitch@gimp.org>
+
+	Abstract the legacy projection code away into a virtual function
+	of GimpDrawable:
+
+	* app/core/gimpdrawable.[ch]: add new virtual function
+	GimpDrawable::project_region() which projects an area of a
+	drawable onto a passed in PixelRegion.
+
+	* app/core/Makefile.am
+	* app/core/gimpchannel-project.[ch]
+	* app/core/gimplayer-project.[ch]: new files which implement it.
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: hook it in.
+
+	* app/core/gimpprojection-construct.c: get rid all the projection
+	code moved to above new files and project all drawables in one
+	loop.
+
+	* app/core/gimpprojectable.[ch]: remove the legacy methods
+	get_colormap() and get_components(), they are not needed any
+	longer.
+
+	* app/core/gimpimage.c: changed accordingly.
+
 2008-11-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette-load.c (gimp_palette_load_aco): improved

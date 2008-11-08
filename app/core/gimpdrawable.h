@@ -89,6 +89,13 @@ struct _GimpDrawableClass
                                            PixelRegion          *maskPR,
                                            gint                  x,
                                            gint                  y);
+  void           (* project_region)       (GimpDrawable         *drawable,
+                                           gint                  x,
+                                           gint                  y,
+                                           gint                  width,
+                                           gint                  height,
+                                           PixelRegion          *projPR,
+                                           gboolean              combine);
   TileManager * (* get_tiles)             (GimpDrawable         *drawable);
   void          (* set_tiles)             (GimpDrawable         *drawable,
                                            gboolean              push_undo,
@@ -158,6 +165,13 @@ void            gimp_drawable_replace_region     (GimpDrawable       *drawable,
                                                   PixelRegion        *maskPR,
                                                   gint                x,
                                                   gint                y);
+void            gimp_drawable_project_region     (GimpDrawable       *drawable,
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height,
+                                                  PixelRegion        *projPR,
+                                                  gboolean            combine);
 
 TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,

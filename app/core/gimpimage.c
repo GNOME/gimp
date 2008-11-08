@@ -174,7 +174,6 @@ static void        gimp_image_projectable_flush  (GimpProjectable   *projectable
                                                   gboolean           invalidate_preview);
 static GeglNode     * gimp_image_get_graph       (GimpProjectable   *projectable);
 static GimpImage    * gimp_image_get_image       (GimpProjectable   *projectable);
-static gboolean     * gimp_image_get_components  (GimpProjectable   *projectable);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -570,8 +569,6 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
   iface->get_layers         = (GList * (*) (GimpProjectable*)) gimp_image_get_layer_iter;
   iface->get_channels       = (GList * (*) (GimpProjectable*)) gimp_image_get_channel_iter;
-  iface->get_components     = gimp_image_get_components;
-  iface->get_colormap       = (const guchar * (*) (GimpProjectable*)) gimp_image_get_colormap;
 }
 
 static void
@@ -1194,14 +1191,6 @@ static GimpImage *
 gimp_image_get_image (GimpProjectable *projectable)
 {
   return GIMP_IMAGE (projectable);
-}
-
-static gboolean *
-gimp_image_get_components (GimpProjectable *projectable)
-{
-  GimpImage *image = GIMP_IMAGE (projectable);
-
-  return image->visible;
 }
 
 static GeglNode *

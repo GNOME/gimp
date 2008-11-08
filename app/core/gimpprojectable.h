@@ -56,8 +56,6 @@ struct _GimpProjectableInterface
   /*  legacy API virtual functions  */
   GList        * (* get_layers)         (GimpProjectable *projectable);
   GList        * (* get_channels)       (GimpProjectable *projectable);
-  gboolean     * (* get_components)     (GimpProjectable *projectable);
-  const guchar * (* get_colormap)       (GimpProjectable *projectable);
 };
 
 
@@ -82,8 +80,6 @@ void           gimp_projectable_invalidate_preview (GimpProjectable *projectable
 /*  legacy API  */
 GList        * gimp_projectable_get_layers         (GimpProjectable *projectable);
 GList        * gimp_projectable_get_channels       (GimpProjectable *projectable);
-gboolean     * gimp_projectable_get_components     (GimpProjectable *projectable);
-const guchar * gimp_projectable_get_colormap       (GimpProjectable *projectable);
 
 
 #endif  /* __GIMP_PROJECTABLE_H__ */

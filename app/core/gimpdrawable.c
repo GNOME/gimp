@@ -1039,6 +1039,24 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
                                                       x, y);
 }
 
+void
+gimp_drawable_project_region (GimpDrawable *drawable,
+                              gint          x,
+                              gint          y,
+                              gint          width,
+                              gint          height,
+                              PixelRegion  *projPR,
+                              gboolean      combine)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (projPR != NULL);
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->project_region (drawable,
+                                                      x, y, width, height,
+                                                      projPR, combine);
+}
+
 TileManager *
 gimp_drawable_get_tiles (GimpDrawable *drawable)
 {

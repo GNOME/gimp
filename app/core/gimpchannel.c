@@ -48,6 +48,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
+#include "gimpchannel-project.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
@@ -278,6 +279,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->get_active_components = gimp_channel_get_active_components;
   drawable_class->apply_region          = gimp_channel_apply_region;
   drawable_class->replace_region        = gimp_channel_replace_region;
+  drawable_class->project_region        = gimp_channel_project_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 
