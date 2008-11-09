@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 12:51+0100\n"
+"POT-Creation-Date: 2008-11-09 14:30+0100\n"
 "PO-Revision-Date: 2008-10-09 20:06+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -4361,205 +4361,171 @@ msgid "Raise the toolbox"
 msgstr "Покреће алатницу"
 
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
-msgstr "Умекшавање"
+msgstr "Углађена"
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Слободном руком"
 
 #: ../app/base/base-enums.c:56
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Вредност"
 
 #: ../app/base/base-enums.c:57
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Црвена"
 
 #: ../app/base/base-enums.c:58
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Зелена"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Плава"
 
 #: ../app/base/base-enums.c:60
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Алфа"
 
 #: ../app/base/base-enums.c:61
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "РГБ"
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "Нормално"
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "Утопи"
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "Иза"
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "Умножи"
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "Екран"
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Overlay"
-msgstr "Преклапање"
+msgstr "Преклопи"
 
 #: ../app/base/base-enums.c:119
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "Разлика"
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Addition"
-msgstr "Додатак"
+msgstr "Додај"
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
-msgstr "Избаци"
+msgstr "Одузми"
 
 #: ../app/base/base-enums.c:122
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "Само тамни"
 
 #: ../app/base/base-enums.c:123
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "Само светли"
 
 #: ../app/base/base-enums.c:124
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "Нијанса"
 
 #: ../app/base/base-enums.c:125
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "Засићеност"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "Боја"
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "Вредност"
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "Подели"
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "Смакни"
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "Спали"
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "Јако светло"
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "Слабо светло"
 
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
 msgstr "Зрнасто извлачење"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
 msgstr "Зрнасто спајање"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "Брисање боје"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "Бриши"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "Замени"
 
 #: ../app/base/base-enums.c:138
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "Небрисач"
@@ -5161,880 +5127,734 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредност за израз %s није исправна УТФ-8 реч"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "Ништа"
 
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "Флојд-Штајнберг (нормално)"
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "Флојд-Штајнберг (смањено отицање боја)"
 
 # Положено?
 #: ../app/core/core-enums.c:57
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr "Позиционирано"
 
 #: ../app/core/core-enums.c:87
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Састави најбољу палету"
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Користи палету прилагођену за веб"
 
 #: ../app/core/core-enums.c:89
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Користи црно-белу (1-битну) палету"
 
 #: ../app/core/core-enums.c:90
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Користи произвољну палету"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Прва ставка"
 
 #: ../app/core/core-enums.c:217
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Слика"
 
 #: ../app/core/core-enums.c:218
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Избор"
 
 #: ../app/core/core-enums.c:219
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Активни слој"
 
 #: ../app/core/core-enums.c:220
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Активни канал"
 
 #: ../app/core/core-enums.c:221
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Активна путања"
 
 #: ../app/core/core-enums.c:253
-#, fuzzy
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Боја четкице"
 
 #: ../app/core/core-enums.c:254
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Боја позадине"
 
 #: ../app/core/core-enums.c:255
-#, fuzzy
 msgctxt "fill-type"
 msgid "White"
 msgstr "Бела"
 
 #: ../app/core/core-enums.c:256
-#, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Провидност"
 
 #: ../app/core/core-enums.c:257
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Мустра"
 
 #: ../app/core/core-enums.c:258
-#, fuzzy
 msgctxt "fill-type"
 msgid "None"
 msgstr "Ништа"
 
 #: ../app/core/core-enums.c:286
-#, fuzzy
 msgctxt "fill-style"
 msgid "Solid color"
-msgstr "Пуна боја"
+msgstr "Једнобојно"
 
 #: ../app/core/core-enums.c:287
-#, fuzzy
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Мустра"
 
 #: ../app/core/core-enums.c:315
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Исцртај линију"
 
 #: ../app/core/core-enums.c:316
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Исцртај помоћу алата за цртање"
 
 #: ../app/core/core-enums.c:345
-#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Угаоно"
 
 #: ../app/core/core-enums.c:346
-#, fuzzy
 msgctxt "join-style"
 msgid "Round"
 msgstr "Заобљено"
 
 #: ../app/core/core-enums.c:347
-#, fuzzy
 msgctxt "join-style"
 msgid "Bevel"
-msgstr "Удубљење"
+msgstr "Удубљено"
 
 #: ../app/core/core-enums.c:376
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Оштро"
 
 #: ../app/core/core-enums.c:377
-#, fuzzy
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Заобљено"
 
 #: ../app/core/core-enums.c:378
-#, fuzzy
 msgctxt "cap-style"
 msgid "Square"
-msgstr "Квадрат"
+msgstr "Квадратно"
 
 #: ../app/core/core-enums.c:415
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Произвољно"
 
 #: ../app/core/core-enums.c:416
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Линија"
 
 #: ../app/core/core-enums.c:417
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Дуге цртице"
 
 #: ../app/core/core-enums.c:418
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Средње цртице"
 
 #: ../app/core/core-enums.c:419
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Кратке цртице"
 
 #: ../app/core/core-enums.c:420
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Ретке тачке"
 
 #: ../app/core/core-enums.c:421
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Обичне тачке"
 
 #: ../app/core/core-enums.c:422
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Густе тачке"
 
 #: ../app/core/core-enums.c:423
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Тачкасто"
 
 #: ../app/core/core-enums.c:424
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Црта,тачка"
 
 #: ../app/core/core-enums.c:425
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Црта, тачка, тачка"
 
 #: ../app/core/core-enums.c:454
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Круг"
 
 #: ../app/core/core-enums.c:455
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Квадрат"
 
 #: ../app/core/core-enums.c:456
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Ромбоид"
 
 #: ../app/core/core-enums.c:485
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Водоравно"
 
 #: ../app/core/core-enums.c:486
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Усправно"
 
 #: ../app/core/core-enums.c:487
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Непознато"
 
 #: ../app/core/core-enums.c:518
-#, fuzzy
 msgctxt "item-set"
 msgid "None"
 msgstr "Ништа"
 
 # bug: plural-forms
 #: ../app/core/core-enums.c:519
-#, fuzzy
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Сви слојеви"
 
 #: ../app/core/core-enums.c:520
-#, fuzzy
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Слојеви величине слике"
 
 #: ../app/core/core-enums.c:521
-#, fuzzy
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Сви видљиви слојеви"
 
 #: ../app/core/core-enums.c:522
-#, fuzzy
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Сви везани слојеви"
 
 #: ../app/core/core-enums.c:588
-#, fuzzy
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Мало"
 
 #: ../app/core/core-enums.c:589
-#, fuzzy
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Врло мало"
 
 #: ../app/core/core-enums.c:590
-#, fuzzy
 msgctxt "view-size"
 msgid "Small"
 msgstr "Мало"
 
 #: ../app/core/core-enums.c:591
-#, fuzzy
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Средње"
 
 #: ../app/core/core-enums.c:592
-#, fuzzy
 msgctxt "view-size"
 msgid "Large"
 msgstr "Велико"
 
 #: ../app/core/core-enums.c:593
-#, fuzzy
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Врло велико"
 
 #: ../app/core/core-enums.c:594
-#, fuzzy
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Огромно"
 
 #: ../app/core/core-enums.c:595
-#, fuzzy
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Ненормално велико"
 
 #: ../app/core/core-enums.c:596
-#, fuzzy
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Гигантско"
 
 #: ../app/core/core-enums.c:624
-#, fuzzy
 msgctxt "view-type"
 msgid "View as list"
 msgstr "У виду листе"
 
 #: ../app/core/core-enums.c:625
-#, fuzzy
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "У виду палете"
 
 #: ../app/core/core-enums.c:691
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Без умањеног приказа"
 
 #: ../app/core/core-enums.c:692
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Нормално (128х128)"
 
 #: ../app/core/core-enums.c:693
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Велико (256x256)"
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неисправно>>"
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Размера слике"
 
 #: ../app/core/core-enums.c:874
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Промени величину слике"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Изврни слику"
 
 #: ../app/core/core-enums.c:876
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Ротирај слику"
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Исеци слику"
 
 #: ../app/core/core-enums.c:878
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Претвори слику"
 
 #: ../app/core/core-enums.c:879
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Уклони ставку"
 
 #: ../app/core/core-enums.c:880
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Споји предмет"
 
 #: ../app/core/core-enums.c:881
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Споји путање"
 
 #: ../app/core/core-enums.c:882
-#, fuzzy
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Брза маска"
 
 #: ../app/core/core-enums.c:883 ../app/core/core-enums.c:914
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Мрежа"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:916
-#, fuzzy
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Вођице"
 
 #: ../app/core/core-enums.c:885 ../app/core/core-enums.c:917
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Референтна тачка"
 
 #: ../app/core/core-enums.c:886 ../app/core/core-enums.c:918
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Слој/канал"
 
 #: ../app/core/core-enums.c:887 ../app/core/core-enums.c:919
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Измена слоја/канала"
 
 #: ../app/core/core-enums.c:888 ../app/core/core-enums.c:920
-#, fuzzy
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска избора"
 
 #: ../app/core/core-enums.c:889 ../app/core/core-enums.c:923
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видљивост предмета"
 
 #: ../app/core/core-enums.c:890 ../app/core/core-enums.c:924
-#, fuzzy
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Вежи/одвежи предмет"
 
 #: ../app/core/core-enums.c:891
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Својства предмета"
 
 #: ../app/core/core-enums.c:892 ../app/core/core-enums.c:922
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Премести предмет"
 
 #: ../app/core/core-enums.c:893
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Размера предмета"
 
 #: ../app/core/core-enums.c:894
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Промени величину предмета"
 
 #: ../app/core/core-enums.c:895
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Додај слој"
 
 #: ../app/core/core-enums.c:896 ../app/core/core-enums.c:933
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Додај маску слоја"
 
 #: ../app/core/core-enums.c:897 ../app/core/core-enums.c:935
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Примени маску слоја"
 
 #: ../app/core/core-enums.c:898 ../app/core/core-enums.c:945
-#, fuzzy
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Плутајући избор у слој"
 
 #: ../app/core/core-enums.c:899
-#, fuzzy
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Плутајући избор"
 
 #: ../app/core/core-enums.c:900
-#, fuzzy
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Усидри плутајући избор"
 
 #: ../app/core/core-enums.c:901
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove floating selection"
 msgstr "Уклони плутајући избор"
 
 #: ../app/core/core-enums.c:902
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Убаци"
 
 #: ../app/core/core-enums.c:903
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Исеци"
 
 #: ../app/core/core-enums.c:904
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
 #: ../app/core/core-enums.c:905 ../app/core/core-enums.c:948
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Трансформација"
 
 #: ../app/core/core-enums.c:906 ../app/core/core-enums.c:949
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Цртај"
 
 #: ../app/core/core-enums.c:907 ../app/core/core-enums.c:952
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Прикачи паразита"
 
 #: ../app/core/core-enums.c:908 ../app/core/core-enums.c:953
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Одстрани паразита"
 
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Увези путање"
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Додатак"
 
 #: ../app/core/core-enums.c:911
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Врста слике"
 
 #: ../app/core/core-enums.c:912
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Величина слике"
 
 #: ../app/core/core-enums.c:913
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Промена резолуције слике"
 
 #: ../app/core/core-enums.c:915
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Промена индексиране палете"
 
 #: ../app/core/core-enums.c:921
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename item"
-msgstr "Преименуј предмет"
+msgstr "Преименуј ставку"
 
 #: ../app/core/core-enums.c:925
-#, fuzzy
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Нови слој"
 
 #: ../app/core/core-enums.c:926
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Обриши слој"
 
 #: ../app/core/core-enums.c:927
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reposition layer"
 msgstr "Премести слој"
 
 #: ../app/core/core-enums.c:928
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Постави режим слоја"
 
 # постављањем непровидности постављамо и провидност
 #: ../app/core/core-enums.c:929
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Постави провидност слоја"
 
 #: ../app/core/core-enums.c:930
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Откључај/закључај алфа канал"
 
 #: ../app/core/core-enums.c:931
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Слој са текстом"
 
 #: ../app/core/core-enums.c:932
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Измена слоја са текстом"
 
 #: ../app/core/core-enums.c:934
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Уклони маску слоја"
 
 #: ../app/core/core-enums.c:936
-#, fuzzy
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Прикажи маску слоја"
 
 #: ../app/core/core-enums.c:937
-#, fuzzy
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Нови канал"
 
 #: ../app/core/core-enums.c:938
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Обриши канал"
 
 #: ../app/core/core-enums.c:939
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reposition channel"
 msgstr "Премести канал"
 
 #: ../app/core/core-enums.c:940
-#, fuzzy
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Боја канала"
 
 #: ../app/core/core-enums.c:941
-#, fuzzy
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Нова путања"
 
 #: ../app/core/core-enums.c:942
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Обриши путању"
 
 #: ../app/core/core-enums.c:943
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Уређивање путање"
 
 #: ../app/core/core-enums.c:944
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reposition path"
 msgstr "Премести путању"
 
 #: ../app/core/core-enums.c:946
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rigor floating selection"
 msgstr "Учврсти плутајући избор"
 
 #: ../app/core/core-enums.c:947
-#, fuzzy
 msgctxt "undo-type"
 msgid "Relax floating selection"
 msgstr "Опусти плутајући избор"
 
 #: ../app/core/core-enums.c:950
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Мастило"
 
 #: ../app/core/core-enums.c:951
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Изабери боју четкице"
 
 #: ../app/core/core-enums.c:954
-#, fuzzy
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Није поништиво"
 
 #: ../app/core/core-enums.c:1226
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Композитно"
 
 #: ../app/core/core-enums.c:1227
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Црвена"
 
 #: ../app/core/core-enums.c:1228
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Зелена"
 
 #: ../app/core/core-enums.c:1229
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Плава"
 
 #: ../app/core/core-enums.c:1230
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Нијанса"
 
 #: ../app/core/core-enums.c:1231
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Засићеност"
 
 #: ../app/core/core-enums.c:1232
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Вредност"
 
 #: ../app/core/core-enums.c:1261
-#, fuzzy
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Порука"
 
 #: ../app/core/core-enums.c:1262
-#, fuzzy
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Упозорење"
 
 #: ../app/core/core-enums.c:1263
-#, fuzzy
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Грешка"
 
 #: ../app/core/core-enums.c:1292
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Питај за радњу"
 
 #: ../app/core/core-enums.c:1293
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Чувај угњеждени профил"
 
 #: ../app/core/core-enums.c:1294
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Претвори у РГБ радни простор"
@@ -7107,15 +6927,15 @@ msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Учитавам палету „%s“: РГБ вредност је изван опсега у %d. реду."
 
 #: ../app/core/gimppalette-load.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "Не могу да прочитам заглавље из „%s“: %s"
+msgstr "Не могу да прочитам заглавље из датотеке са палетом „%s“"
 
 # bug: cannot this be used in the above message?
 #: ../app/core/gimppalette-load.c:496 ../app/core/gimppalette-load.c:584
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr "Кобна грешка у „%s“ датотеци са палетом: недостаје магично заглавље."
+msgstr "Кобна грешка у обради датотеке са палетом „%s“"
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -7203,6 +7023,8 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
+"Преводи угаони у удубљени спој ако се угао споја протеже на већу удаљеност "
+"од „ограничење-угла * ширина-линије“."
 
 #: ../app/core/gimptemplate.c:106
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -8807,62 +8629,52 @@ msgid "Path name:"
 msgstr "Назив путање:"
 
 #: ../app/display/display-enums.c:24
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon"
 msgstr "Иконица алата"
 
 #: ../app/display/display-enums.c:25
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
 msgstr "Иконица алата са нишаном"
 
 #: ../app/display/display-enums.c:26
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Crosshair only"
 msgstr "Само нишан"
 
 #: ../app/display/display-enums.c:87
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "From theme"
 msgstr "На основу теме"
 
 # ово се односи на „шаховницу“
 #: ../app/display/display-enums.c:88
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Light check color"
 msgstr "Боја светлих поља"
 
 #: ../app/display/display-enums.c:89
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Dark check color"
 msgstr "Боја тамних поља"
 
 #: ../app/display/display-enums.c:90
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Custom color"
 msgstr "Произвољна боја"
 
 #: ../app/display/display-enums.c:119
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr "Без акције"
 
 #: ../app/display/display-enums.c:120
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr "Општи поглед"
 
 #: ../app/display/display-enums.c:121
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
 msgstr "Пребаци се на алат „Помери“"
@@ -8870,13 +8682,12 @@ msgstr "Пребаци се на алат „Помери“"
 #: ../app/display/display-enums.c:149
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "Низак"
 
 #: ../app/display/display-enums.c:150
-#, fuzzy
 msgctxt "zoom-quality"
 msgid "High"
-msgstr "Висина"
+msgstr "Висок"
 
 #: ../app/display/gimpdisplay-handlers.c:161
 #, c-format
@@ -9203,52 +9014,44 @@ msgid "Set a source image first."
 msgstr "Најпре изаберите изборну слику."
 
 #: ../app/paint/paint-enums.c:52
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Modify Perspective"
 msgstr "Измени перспективу"
 
 #: ../app/paint/paint-enums.c:53
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Perspective Clone"
 msgstr "Перспектива"
 
 #: ../app/paint/paint-enums.c:83
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "None"
 msgstr "Ништа"
 
 #: ../app/paint/paint-enums.c:84
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Aligned"
 msgstr "Поравнато"
 
 #: ../app/paint/paint-enums.c:85
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Registered"
 msgstr "Регистровано"
 
 #: ../app/paint/paint-enums.c:86
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Fixed"
-msgstr "Непромењљиво"
+msgstr "Непромењиво"
 
 #: ../app/paint/paint-enums.c:114
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Замућење"
 
 #: ../app/paint/paint-enums.c:115
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr "Изоштрено"
+msgstr "Изоштавање"
 
 #: ../app/pdb/channel-cmds.c:183
 msgid "Combine Masks"
@@ -11780,140 +11583,117 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "Нема активног слоја или канала за цртање"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "Без вођица"
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "Центриране линије"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "Правило трећина"
 
 #: ../app/tools/tools-enums.c:62
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Golden sections"
 msgstr "Златни пресек"
 
 #: ../app/tools/tools-enums.c:152
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Размера"
 
 #: ../app/tools/tools-enums.c:153
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "Ширина"
 
 #: ../app/tools/tools-enums.c:154
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "Висина"
 
 #: ../app/tools/tools-enums.c:155
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "Величина"
 
 #: ../app/tools/tools-enums.c:184
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Слободан избор"
 
 #: ../app/tools/tools-enums.c:185
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Утврђена величина"
 
 #: ../app/tools/tools-enums.c:186
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Утврђена размера"
 
 #: ../app/tools/tools-enums.c:215
-#, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Слој"
 
 #: ../app/tools/tools-enums.c:216
-#, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Избор"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Путању"
 
 # Можда нешто боље?
 #: ../app/tools/tools-enums.c:247
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "Оквирно"
 
 #: ../app/tools/tools-enums.c:248
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "Мрежа"
 
 #: ../app/tools/tools-enums.c:249
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "Слика"
 
 #: ../app/tools/tools-enums.c:250
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "Слика + вођице"
 
 #: ../app/tools/tools-enums.c:278
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "Број вођица"
 
 #: ../app/tools/tools-enums.c:279
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "Размак вођица"
 
 #: ../app/tools/tools-enums.c:308
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Дизајн"
 
 #: ../app/tools/tools-enums.c:309
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Уреди"
 
 #: ../app/tools/tools-enums.c:310
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Премести"
@@ -13204,164 +12984,137 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Неисправни УТФ-8 подаци у датотеци „%s“"
 
 #: ../app/widgets/widgets-enums.c:23
-#, fuzzy
 msgctxt "active-color"
 msgid "Foreground"
 msgstr "Боја четке"
 
 #: ../app/widgets/widgets-enums.c:24
-#, fuzzy
 msgctxt "active-color"
 msgid "Background"
 msgstr "Позадина"
 
 #: ../app/widgets/widgets-enums.c:85
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "Пиксел"
 
 #: ../app/widgets/widgets-enums.c:86
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "RGB"
 msgstr "РГБ"
 
 #: ../app/widgets/widgets-enums.c:87
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "ХСВ"
 
 #: ../app/widgets/widgets-enums.c:88
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Pick only"
 msgstr "Само избор"
 
 #: ../app/widgets/widgets-enums.c:119
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "Постави боју четке"
 
 #: ../app/widgets/widgets-enums.c:120
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "Постави боју позадине"
 
 #: ../app/widgets/widgets-enums.c:121
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "Додај у палету"
 
 #: ../app/widgets/widgets-enums.c:178
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Black & white"
 msgstr "Црно-бело"
 
 # може овако? — д
 #: ../app/widgets/widgets-enums.c:179
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Fancy"
 msgstr "Кичерај"
 
 #: ../app/widgets/widgets-enums.c:207
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr "Претраживач Гимпове помоћи"
 
 #: ../app/widgets/widgets-enums.c:208
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "Читач веба"
 
 #: ../app/widgets/widgets-enums.c:236
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Линеарни хистограм"
 
 #: ../app/widgets/widgets-enums.c:237
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Логаритамски хистограм"
 
 #: ../app/widgets/widgets-enums.c:271
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Иконица"
 
 #: ../app/widgets/widgets-enums.c:272
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Текуће стање"
 
 #: ../app/widgets/widgets-enums.c:273
-#, fuzzy
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Текст"
 
 #: ../app/widgets/widgets-enums.c:274
-#, fuzzy
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Опис"
 
 #: ../app/widgets/widgets-enums.c:275
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Иконица и текст"
 
 #: ../app/widgets/widgets-enums.c:276
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Иконица и опис"
 
 #: ../app/widgets/widgets-enums.c:277
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Стање и текст"
 
 #: ../app/widgets/widgets-enums.c:278
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стање и опис"
 
 #: ../app/widgets/widgets-enums.c:307
-#, fuzzy
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Обичан прозор"
 
 #: ../app/widgets/widgets-enums.c:308
-#, fuzzy
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "Помоћни прозор"
 
 #: ../app/widgets/widgets-enums.c:309
-#, fuzzy
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Држи изнад"
