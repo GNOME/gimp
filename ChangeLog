@@ -1,5 +1,10 @@
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpnavigationeditor.c: Clean up and simplify
+	little.
+
+2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_update_rulers): Avoid critical warnings
 	when converting an image window with a unit other than pixels into

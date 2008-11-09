@@ -161,7 +161,7 @@ gimp_navigation_editor_destroy (GtkObject *object)
 }
 
 static void
-gimp_navigation_editor_context_changed (GimpContext          *context,
+gimp_navigation_editor_display_changed (GimpContext          *context,
                                         GimpDisplay          *display,
                                         GimpNavigationEditor *editor)
 {
@@ -179,21 +179,20 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
 {
   GimpNavigationEditor *editor  = GIMP_NAVIGATION_EDITOR (docked);
   GimpDisplay          *display = NULL;
-  GimpDisplayShell     *shell   = NULL;
 
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_navigation_editor_context_changed,
+                                            gimp_navigation_editor_display_changed,
                                             editor);
     }
 
   editor->context = context;
 
-  if (context)
+  if (editor->context)
     {
       g_signal_connect (context, "display-changed",
-                        G_CALLBACK (gimp_navigation_editor_context_changed),
+                        G_CALLBACK (gimp_navigation_editor_display_changed),
                         editor);
 
       display = gimp_context_get_display (context);
@@ -202,10 +201,9 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
   gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
                                   context);
 
-  if (display)
-    shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_navigation_editor_set_shell (editor, shell);
+  gimp_navigation_editor_display_changed (editor->context,
+                                          display,
+                                          editor);
 }
 
 
