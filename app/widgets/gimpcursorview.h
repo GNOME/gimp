@@ -23,9 +23,6 @@
 #define __GIMP_CURSOR_VIEW_H__
 
 
-#include "gimpeditor.h"
-
-
 #define GIMP_TYPE_CURSOR_VIEW            (gimp_cursor_view_get_type ())
 #define GIMP_CURSOR_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURSOR_VIEW, GimpCursorView))
 #define GIMP_CURSOR_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURSOR_VIEW, GimpCursorViewClass))
@@ -35,28 +32,6 @@
 
 
 typedef struct _GimpCursorViewClass GimpCursorViewClass;
-
-struct _GimpCursorView
-{
-  GimpEditor   parent_instance;
-
-  GtkWidget   *coord_hbox;
-  GtkWidget   *color_hbox;
-
-  GtkWidget   *pixel_x_label;
-  GtkWidget   *pixel_y_label;
-  GtkWidget   *unit_x_label;
-  GtkWidget   *unit_y_label;
-  GtkWidget   *color_frame_1;
-  GtkWidget   *color_frame_2;
-
-  gboolean     sample_merged;
-};
-
-struct _GimpCursorViewClass
-{
-  GimpEditorClass  parent_class;
-};
 
 
 GType       gimp_cursor_view_get_type          (void) G_GNUC_CONST;

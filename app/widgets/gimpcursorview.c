@@ -41,6 +41,7 @@
 #include "gimpcolorframe.h"
 #include "gimpcursorview.h"
 #include "gimpdocked.h"
+#include "gimpeditor.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo-aux.h"
 
@@ -51,6 +52,29 @@ enum
 {
   PROP_0,
   PROP_SAMPLE_MERGED
+};
+
+
+struct _GimpCursorView
+{
+  GimpEditor  parent_instance;
+
+  GtkWidget  *coord_hbox;
+  GtkWidget  *color_hbox;
+
+  GtkWidget  *pixel_x_label;
+  GtkWidget  *pixel_y_label;
+  GtkWidget  *unit_x_label;
+  GtkWidget  *unit_y_label;
+  GtkWidget  *color_frame_1;
+  GtkWidget  *color_frame_2;
+
+  gboolean    sample_merged;
+};
+
+struct _GimpCursorViewClass
+{
+  GimpEditorClass  parent_class;
 };
 
 
@@ -71,6 +95,15 @@ static void   gimp_cursor_view_style_set         (GtkWidget    *widget,
 static void   gimp_cursor_view_set_aux_info      (GimpDocked   *docked,
                                                   GList        *aux_info);
 static GList *gimp_cursor_view_get_aux_info      (GimpDocked   *docked);
+
+static void   gimp_cursor_view_format_as_unit    (GimpUnit      unit,
+                                                  Gimp         *gimp,
+                                                  gchar        *output_buf,
+                                                  gint          output_buf_size,
+                                                  gdouble       pixel_value,
+                                                  gdouble       image_res);
+static void   gimp_cursor_view_set_label_italic  (GtkWidget    *label,
+                                                  gboolean      italic);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
@@ -312,6 +345,39 @@ gimp_cursor_view_get_aux_info (GimpDocked *docked)
 }
 
 static void
+gimp_cursor_view_format_as_unit (GimpUnit  unit,
+                                 Gimp     *gimp,
+                                 gchar    *output_buf,
+                                 gint      output_buf_size,
+                                 gdouble   pixel_value,
+                                 gdouble   image_res)
+{
+  gchar         format_buf[32];
+  gdouble       unit_factor;
+  gint          unit_digits;
+  const gchar  *unit_str;
+
+  unit_factor = _gimp_unit_get_factor (gimp, unit);
+  unit_digits = _gimp_unit_get_digits (gimp, unit);
+  unit_str    = _gimp_unit_get_abbreviation (gimp, unit);
+
+  g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s", unit_digits, unit_str);
+
+  g_snprintf (output_buf, output_buf_size, format_buf, pixel_value * unit_factor / image_res);
+}
+
+static void
+gimp_cursor_view_set_label_italic (GtkWidget *label,
+                                   gboolean   italic)
+{
+  PangoAttrType attribute = italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL;
+
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, attribute,
+                             -1);
+}
+
+static void
 gimp_cursor_view_style_set (GtkWidget *widget,
                             GtkStyle  *prev_style)
 {
@@ -375,10 +441,6 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 gdouble           y)
 {
   gboolean      in_image;
-  gdouble       unit_factor;
-  gint          unit_digits;
-  const gchar  *unit_str;
-  gchar         format_buf[32];
   gchar         buf[32];
   GimpImageType sample_type;
   GimpRGB       color;
@@ -397,26 +459,21 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
               y >= 0.0 && y < gimp_image_get_height (image));
 
-  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
-  unit_digits = _gimp_unit_get_digits (image->gimp, unit);
-  unit_str    = _gimp_unit_get_abbreviation (image->gimp, unit);
-
-#define FORMAT_STRING(s) (in_image ? (s) : "("s")")
-
-  g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (x));
+  g_snprintf (buf, sizeof (buf), "%d", (gint) floor (x));
   gtk_label_set_text (GTK_LABEL (view->pixel_x_label), buf);
+  gimp_cursor_view_set_label_italic (view->pixel_x_label, ! in_image);
 
-  g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (y));
+  g_snprintf (buf, sizeof (buf), "%d", (gint) floor (y));
   gtk_label_set_text (GTK_LABEL (view->pixel_y_label), buf);
+  gimp_cursor_view_set_label_italic (view->pixel_y_label, ! in_image);
 
-  g_snprintf (format_buf, sizeof (format_buf),
-              FORMAT_STRING ("%%.%df %s"), unit_digits, unit_str);
-
-  g_snprintf (buf, sizeof (buf), format_buf, x * unit_factor / xres);
+  gimp_cursor_view_format_as_unit (unit, image->gimp, buf, sizeof (buf), x, xres);
   gtk_label_set_text (GTK_LABEL (view->unit_x_label), buf);
+  gimp_cursor_view_set_label_italic (view->unit_x_label, ! in_image);
 
-  g_snprintf (buf, sizeof (buf), format_buf, y * unit_factor / yres);
+  gimp_cursor_view_format_as_unit (unit, image->gimp, buf, sizeof (buf), y, yres);
   gtk_label_set_text (GTK_LABEL (view->unit_y_label), buf);
+  gimp_cursor_view_set_label_italic (view->unit_y_label, ! in_image);
 
   if (gimp_image_pick_color (image, NULL,
                              (gint) floor (x),

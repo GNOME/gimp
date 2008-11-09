@@ -1,3 +1,10 @@
+2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpcursorview.[ch]: Don't expose implementation
+	details, introduce internal helper functions, and make coordinates
+	outside the image be represented with an italic font instead of
+	enclosed in parenthesis.
+
 2008-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.[ch]: add optional parameter "PixelRegion
