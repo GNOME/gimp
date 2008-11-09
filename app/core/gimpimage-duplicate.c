@@ -97,8 +97,6 @@ gimp_image_duplicate (GimpImage *image)
   floating_layer = gimp_image_floating_sel (image);
   if (floating_layer)
     {
-      floating_sel_relax (floating_layer, FALSE);
-
       floating_sel_drawable = floating_layer->fs.drawable;
       floating_layer = NULL;
     }

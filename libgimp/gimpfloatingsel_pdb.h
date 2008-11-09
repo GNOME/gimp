@@ -34,10 +34,12 @@ gboolean gimp_floating_sel_anchor   (gint32   floating_sel_ID);
 gboolean gimp_floating_sel_to_layer (gint32   floating_sel_ID);
 gboolean gimp_floating_sel_attach   (gint32   layer_ID,
                                      gint32   drawable_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_floating_sel_rigor    (gint32   floating_sel_ID,
                                      gboolean undo);
 gboolean gimp_floating_sel_relax    (gint32   floating_sel_ID,
                                      gboolean undo);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

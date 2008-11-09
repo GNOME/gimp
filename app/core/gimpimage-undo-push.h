@@ -200,12 +200,6 @@ GimpUndo * gimp_image_undo_push_vectors_reposition  (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_fs_to_layer         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *floating_layer);
-GimpUndo * gimp_image_undo_push_fs_rigor            (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *floating_layer);
-GimpUndo * gimp_image_undo_push_fs_relax            (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *floating_layer);
 
 
 /*  EEK undo  */

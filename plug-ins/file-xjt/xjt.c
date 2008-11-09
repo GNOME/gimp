@@ -1667,7 +1667,6 @@ save_xjt_image (const gchar  *filename,
   gint    l_nchannels;
   gint32  l_layer_id;
   gint32  l_channel_id;
-  gint32  l_floating_layer_id;
   gint32  l_selection_channel_id;
   int     l_sel;
   gint32  l_x1, l_x2, l_y1, l_y2;
@@ -1676,7 +1675,6 @@ save_xjt_image (const gchar  *filename,
   gint    l_wr_all_prp;
 
   l_rc = -1;  /* init retcode to Errorstate */
-  l_floating_layer_id = -1;
   l_fp_prp = NULL;
   l_layers_list = NULL;
   l_channels_list = NULL;
@@ -1734,15 +1732,6 @@ save_xjt_image (const gchar  *filename,
   /* write image properties */
   p_write_image_prp (l_dirname, l_fp_prp, image_id, l_wr_all_prp);
 
-
-  l_floating_layer_id = gimp_image_get_floating_sel (image_id);
-  if (l_floating_layer_id >= 0)
-    {
-      if (xjt_debug) printf ("XJT-DEBUG: call floating_sel_relax fsel_id=%d\n",
-                             (int) l_floating_layer_id);
-
-      gimp_floating_sel_relax (l_floating_layer_id, FALSE);
-    }
 
   l_layers_list = gimp_image_get_layers (image_id, &l_nlayers);
 
@@ -1905,14 +1894,6 @@ cleanup:
    if (l_fp_prp)
      {
        fclose (l_fp_prp);
-     }
-
-   if (l_floating_layer_id >= 0)
-     {
-       if (xjt_debug)
-         printf("XJT-DEBUG: here we should call floating_sel_rigor sel_id=%d\n",
-                (int)l_floating_layer_id);
-       gimp_floating_sel_rigor (l_floating_layer_id, FALSE);
      }
 
    g_free (l_layers_list);

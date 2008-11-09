@@ -48,10 +48,7 @@ struct _GimpLayer
   /*  Floating selections  */
   struct
   {
-    TileManager  *backing_store;      /*  for obscured regions           */
     GimpDrawable *drawable;           /*  floating sel is attached to    */
-    gboolean      initial;            /*  is fs composited yet?          */
-
     gboolean      boundary_known;     /*  is the current boundary valid  */
     BoundSeg     *segs;               /*  boundary of floating sel       */
     gint          num_segs;           /*  number of segs in boundary     */

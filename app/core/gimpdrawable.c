@@ -79,10 +79,6 @@ static void       gimp_drawable_removed            (GimpItem          *item);
 static void       gimp_drawable_visibility_changed (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type);
-static void       gimp_drawable_translate          (GimpItem          *item,
-                                                    gint               offset_x,
-                                                    gint               offset_y,
-                                                    gboolean           push_undo);
 static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_width,
                                                     gint               new_height,
@@ -207,7 +203,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->removed                = gimp_drawable_removed;
   item_class->visibility_changed     = gimp_drawable_visibility_changed;
   item_class->duplicate              = gimp_drawable_duplicate;
-  item_class->translate              = gimp_drawable_translate;
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
   item_class->flip                   = gimp_drawable_flip;
@@ -408,25 +403,6 @@ gimp_drawable_duplicate (GimpItem *item,
     }
 
   return new_item;
-}
-
-static void
-gimp_drawable_translate (GimpItem *item,
-                         gint      offset_x,
-                         gint      offset_y,
-                         gboolean  push_undo)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GimpImage    *image    = gimp_item_get_image (item);
-
-  if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_relax (gimp_image_floating_sel (image), FALSE);
-
-  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
-                                             push_undo);
-
-  if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_rigor (gimp_image_floating_sel (image), FALSE);
 }
 
 static void
@@ -1059,32 +1035,111 @@ gimp_drawable_project_region (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_init_src_region (GimpDrawable *drawable,
-                               PixelRegion  *srcPR,
-                               gint          x,
-                               gint          y,
-                               gint          width,
-                               gint          height)
+gimp_drawable_init_src_region (GimpDrawable  *drawable,
+                               PixelRegion   *srcPR,
+                               gint           x,
+                               gint           y,
+                               gint           width,
+                               gint           height,
+                               TileManager  **temp_tiles)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (srcPR != NULL);
+  g_return_if_fail (temp_tiles != NULL);
 
   if (gimp_drawable_has_floating_sel (drawable))
     {
-      /*  FIXME: return the composite of the layer and the floating
-       *  selection.
-       */
-      pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height,
-                         FALSE);
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpLayer *fs    = gimp_image_floating_sel (image);
+      gint       off_x, off_y;
+      gint       fs_off_x, fs_off_y;
+      gint       combine_x, combine_y;
+      gint       combine_width, combine_height;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
+
+      if (gimp_item_get_visible (GIMP_ITEM (fs)) &&
+          gimp_rectangle_intersect (x + off_x, y + off_y,
+                                    width, height,
+                                    fs_off_x, fs_off_y,
+                                    gimp_item_get_width  (GIMP_ITEM (fs)),
+                                    gimp_item_get_height (GIMP_ITEM (fs)),
+                                    &combine_x, &combine_y,
+                                    &combine_width, &combine_height))
+        {
+          PixelRegion tempPR;
+          PixelRegion destPR;
+          PixelRegion fsPR;
+          gboolean    lock_alpha = FALSE;
+
+          /*  a temporary buffer for the compisition of the drawable and
+           *  its floating selection
+           */
+          *temp_tiles = tile_manager_new (width, height,
+                                          gimp_drawable_bytes (drawable));
+
+          /*  first, initialize the entire buffer with the drawable's
+           *  contents
+           */
+          pixel_region_init (&tempPR, gimp_drawable_get_tiles (drawable),
+                             x, y, width, height,
+                             FALSE);
+          pixel_region_init (&destPR, *temp_tiles,
+                             0, 0, width, height,
+                             TRUE);
+          copy_region (&tempPR, &destPR);
+
+          /*  then, apply the floating selection onto the buffer just as
+           *  we apply it onto the drawable when anchoring the floating
+           *  selection
+           */
+          pixel_region_init (&fsPR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (fs)),
+                             combine_x - fs_off_x,
+                             combine_y - fs_off_y,
+                             combine_width, combine_height,
+                             FALSE);
+          pixel_region_init (&destPR, *temp_tiles,
+                             combine_x - x - off_x, combine_y - y - off_y,
+                             combine_width, combine_height,
+                             TRUE);
+
+          if (GIMP_IS_LAYER (drawable))
+            {
+              lock_alpha = gimp_layer_get_lock_alpha (GIMP_LAYER (drawable));
+
+              if (lock_alpha)
+                gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
+            }
+
+          gimp_drawable_apply_region (drawable, &fsPR,
+                                      FALSE, NULL,
+                                      gimp_layer_get_opacity (fs),
+                                      gimp_layer_get_mode (fs),
+                                      NULL, &destPR,
+                                      combine_x - off_y,
+                                      combine_y - off_y);
+
+          if (lock_alpha)
+            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), TRUE, FALSE);
+
+          /*  finally, return a PixelRegion on the composited buffer instead
+           *  of the drawable's tiles
+           */
+          pixel_region_init (srcPR, *temp_tiles,
+                             0, 0, width, height,
+                             FALSE);
+
+          return;
+       }
     }
-  else
-    {
-      pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height,
-                         FALSE);
-    }
+
+  pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
+                     x, y, width, height,
+                     FALSE);
+  *temp_tiles = NULL;
 }
 
 TileManager *
@@ -1149,16 +1204,10 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                             gimp_item_get_height (item));
     }
 
-  if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_relax (gimp_image_floating_sel (image), FALSE);
-
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,
                                                  offset_x, offset_y);
-
-  if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_rigor (gimp_image_floating_sel (image), FALSE);
 
   gimp_drawable_update (drawable,
                         0, 0,

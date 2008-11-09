@@ -160,10 +160,7 @@ CODE
 }
 
 sub floating_sel_rigor {
-    $blurb = 'Rigor the floating selection.';
-    $help  = 'This procedure rigors the floating selection.';
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ();
 
     @inargs = (
 	{ name => 'floating_sel', type => 'layer',
@@ -174,27 +171,13 @@ sub floating_sel_rigor {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_layer_is_floating_sel (floating_sel))
-    {
-      floating_sel_rigor (floating_sel, undo);
-    }
-  else
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                           _("Cannot rigor this layer because "
-                             "it is not a floating selection."));
-      success = FALSE;
-    }
 }
 CODE
     );
 }
 
 sub floating_sel_relax {
-    $blurb = 'Relax the floating selection.';
-    $help  = 'This procedure relaxes the floating selection.';
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ();
 
     @inargs = (
 	{ name => 'floating_sel', type => 'layer',
@@ -205,17 +188,6 @@ sub floating_sel_relax {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_layer_is_floating_sel (floating_sel))
-    {
-      floating_sel_relax (floating_sel, undo);
-    }
-  else
-    {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                           _("Cannot relax this layer because "
-                             "it is not a floating selection."));
-      success = FALSE;
-    }
 }
 CODE
     );
@@ -227,8 +199,12 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer
-	    floating_sel_attach floating_sel_rigor floating_sel_relax);
+@procs = qw(floating_sel_remove
+            floating_sel_anchor
+            floating_sel_to_layer
+            floating_sel_attach
+            floating_sel_rigor
+            floating_sel_relax);
 
 %exports = (app => [@procs], lib => [@procs]);
 

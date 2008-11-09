@@ -216,7 +216,6 @@ xcf_save_image (XcfInfo    *info,
                 GError    **error)
 {
   GimpLayer   *layer;
-  GimpLayer   *floating_layer;
   GimpChannel *channel;
   GList       *list;
   guint32      saved_pos;
@@ -230,10 +229,6 @@ xcf_save_image (XcfInfo    *info,
   gint         t1, t2, t3, t4;
   gchar        version_tag[16];
   GError      *tmp_error = NULL;
-
-  floating_layer = gimp_image_floating_sel (image);
-  if (floating_layer)
-    floating_sel_relax (floating_layer, FALSE);
 
   /* write out the tag information for the image */
   if (info->file_version > 0)
@@ -378,9 +373,6 @@ xcf_save_image (XcfInfo    *info,
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
   saved_pos = info->cp;
-
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, FALSE);
 
   return !ferror (info->fp);
 }

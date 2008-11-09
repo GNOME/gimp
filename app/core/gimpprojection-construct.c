@@ -191,13 +191,8 @@ gimp_projection_construct_legacy (GimpProjection *proj,
         {
           GimpLayer *layer = list->data;
 
-          if (gimp_layer_is_floating_sel (layer))
-            {
-              /*  composite the floating selection if it exists
-               */
-              floating_sel_composite (layer, x, y, w, h, FALSE);
-            }
-          else if (gimp_item_get_visible (GIMP_ITEM (layer)))
+          if (! gimp_layer_is_floating_sel (layer) &&
+              gimp_item_get_visible (GIMP_ITEM (layer)))
             {
               /*  only add layers that are visible and not floating selections
                *  to the list

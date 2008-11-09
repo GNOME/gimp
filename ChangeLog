@@ -1,3 +1,48 @@
+2008-11-09  Michael Natterer  <mitch@gimp.org>
+
+	Bye bye floating_sel_rigor() and floating_sel_relax():
+
+	* app/core/gimpdrawable.[ch] (gimp_drawable_init_src_region):
+	implement compositing the floating selection on the fly. Add
+	return parameter "TileManager **temp_tiles" which returns the temp
+	buffer used for compositing; the caller has to unref the tiles.
+
+	* app/core/gimpchannel-project.c
+	* app/core/gimplayer-project.c: unref the temp_tiles.
+
+	* app/core/gimplayer.[ch]: remove members fs.backing_store and
+	fs.initial.
+
+	* app/core/gimplayer-floating-sel.[ch]: remove functions rigor(),
+	relax(), store() and restore(), they are not needed any longer.
+	Some minor cleanup, more to come.
+
+	* app/core/gimpprojection-construct.c: don't composite the
+	floating selection before projecting because that happens on the
+	fly now.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpfloatingselundo.c
+	* app/core/gimpimage-undo-push.[ch]: remove the rigor and relax
+	undos.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/xcf/xcf-save.c: remove all calls to rigor and relax and all
+	implementations of virtual functions that were just there to
+	rigor/releax around chaining up.
+
+	* tools/pdbgen/pdb/floating_sel.pdb: remove all code from the
+	rigor and relax wrappers and deprecate the API.
+
+	* app/pdb/floating-sel-cmds.c
+	* libgimp/gimpfloatingsel_pdb.[ch]: regenerated.
+
+	* plug-ins/file-xjt/xjt.c: don't call rigor and relax.
+
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpcursorview.[ch]: Don't expose implementation

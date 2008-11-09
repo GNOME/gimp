@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -51,32 +52,41 @@ gimp_layer_project_region (GimpDrawable *drawable,
     {
       /*  If we're showing the layer mask instead of the layer...  */
 
-      PixelRegion srcPR;
+      PixelRegion  srcPR;
+      TileManager *temp_tiles;
 
       gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &srcPR,
-                                     x, y, width, height);
+                                     x, y, width, height,
+                                     &temp_tiles);
 
       copy_gray_to_region (&srcPR, projPR);
+
+      if (temp_tiles)
+        tile_manager_unref (temp_tiles);
     }
   else
     {
       /*  Otherwise, normal  */
 
-      GimpImage       *image    = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage       *image = gimp_item_get_image (GIMP_ITEM (layer));
       PixelRegion      srcPR;
       PixelRegion      maskPR;
-      PixelRegion     *mask_pr  = NULL;
-      const guchar    *colormap = NULL;
+      PixelRegion     *mask_pr          = NULL;
+      const guchar    *colormap         = NULL;
+      TileManager     *temp_mask_tiles  = NULL;
+      TileManager     *temp_layer_tiles = NULL;
       InitialMode      initial_mode;
       CombinationMode  combination_mode;
 
       gimp_drawable_init_src_region (drawable, &srcPR,
-                                     x, y, width, height);
+                                     x, y, width, height,
+                                     &temp_layer_tiles);
 
       if (mask && gimp_layer_mask_get_apply (mask))
         {
           gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &maskPR,
-                                         x, y, width, height);
+                                         x, y, width, height,
+                                         &temp_mask_tiles);
           mask_pr = &maskPR;
         }
 
@@ -132,5 +142,11 @@ gimp_layer_project_region (GimpDrawable *drawable,
                           image->visible,
                           initial_mode);
         }
+
+      if (temp_layer_tiles)
+        tile_manager_unref (temp_layer_tiles);
+
+      if (temp_mask_tiles)
+        tile_manager_unref (temp_mask_tiles);
     }
 }

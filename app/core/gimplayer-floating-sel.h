@@ -27,20 +27,6 @@ void             floating_sel_anchor            (GimpLayer     *layer);
 void             floating_sel_activate_drawable (GimpLayer     *layer);
 gboolean         floating_sel_to_layer          (GimpLayer     *layer,
                                                  GError       **error);
-void             floating_sel_store             (GimpLayer     *layer,
-                                                 gint           x,
-                                                 gint           y,
-                                                 gint           w,
-                                                 gint           h);
-void             floating_sel_restore           (GimpLayer     *layer,
-                                                 gint           x,
-                                                 gint           y,
-                                                 gint           w,
-                                                 gint           h);
-void             floating_sel_rigor             (GimpLayer     *layer,
-                                                 gboolean       push_undo);
-void             floating_sel_relax             (GimpLayer     *layer,
-                                                 gboolean       push_undo);
 void             floating_sel_composite         (GimpLayer     *layer,
                                                  gint           x,
                                                  gint           y,

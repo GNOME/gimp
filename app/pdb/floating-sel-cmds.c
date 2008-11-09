@@ -178,17 +178,6 @@ floating_sel_rigor_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_layer_is_floating_sel (floating_sel))
-        {
-          floating_sel_rigor (floating_sel, undo);
-        }
-      else
-        {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                               _("Cannot rigor this layer because "
-                                 "it is not a floating selection."));
-          success = FALSE;
-        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -212,17 +201,6 @@ floating_sel_relax_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_layer_is_floating_sel (floating_sel))
-        {
-          floating_sel_relax (floating_sel, undo);
-        }
-      else
-        {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                               _("Cannot relax this layer because "
-                                 "it is not a floating selection."));
-          success = FALSE;
-        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -340,12 +318,12 @@ register_floating_sel_procs (GimpPDB *pdb)
                                "gimp-floating-sel-rigor");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-rigor",
-                                     "Rigor the floating selection.",
-                                     "This procedure rigors the floating selection.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated!",
+                                     "This procedure is deprecated!",
+                                     "",
+                                     "",
+                                     "",
+                                     "NONE");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
@@ -369,12 +347,12 @@ register_floating_sel_procs (GimpPDB *pdb)
                                "gimp-floating-sel-relax");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-relax",
-                                     "Relax the floating selection.",
-                                     "This procedure relaxes the floating selection.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated!",
+                                     "This procedure is deprecated!",
+                                     "",
+                                     "",
+                                     "",
+                                     "NONE");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",

@@ -37,8 +37,6 @@ static GObject * gimp_floating_sel_undo_constructor (GType                  type
 static void      gimp_floating_sel_undo_pop         (GimpUndo              *undo,
                                                      GimpUndoMode           undo_mode,
                                                      GimpUndoAccumulator   *accum);
-static void      gimp_floating_sel_undo_free        (GimpUndo              *undo,
-                                                     GimpUndoMode           undo_mode);
 
 
 G_DEFINE_TYPE (GimpFloatingSelUndo, gimp_floating_sel_undo, GIMP_TYPE_ITEM_UNDO)
@@ -55,7 +53,6 @@ gimp_floating_sel_undo_class_init (GimpFloatingSelUndoClass *klass)
   object_class->constructor = gimp_floating_sel_undo_constructor;
 
   undo_class->pop           = gimp_floating_sel_undo_pop;
-  undo_class->free          = gimp_floating_sel_undo_free;
 }
 
 static void
@@ -82,10 +79,6 @@ gimp_floating_sel_undo_constructor (GType                  type,
 
   switch (GIMP_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_FS_RIGOR:
-    case GIMP_UNDO_FS_RELAX:
-      break;
-
     case GIMP_UNDO_FS_TO_LAYER:
       floating_sel_undo->drawable = layer->fs.drawable;
       break;
@@ -109,24 +102,6 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_FS_RIGOR:
-    case GIMP_UNDO_FS_RELAX:
-      if (! gimp_layer_is_floating_sel (floating_layer))
-        return;
-
-      if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
-           undo->undo_type == GIMP_UNDO_FS_RIGOR) ||
-          (undo_mode       == GIMP_UNDO_MODE_REDO &&
-           undo->undo_type == GIMP_UNDO_FS_RELAX))
-        {
-          floating_sel_relax (floating_layer, FALSE);
-        }
-      else
-        {
-          floating_sel_rigor (floating_layer, FALSE);
-        }
-      break;
-
     case GIMP_UNDO_FS_TO_LAYER:
       if (undo_mode == GIMP_UNDO_MODE_UNDO)
         {
@@ -137,26 +112,11 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           gimp_image_set_active_layer (undo->image, floating_layer);
           undo->image->floating_sel = floating_layer;
 
-          /*  store the contents of the drawable  */
-          floating_sel_store (floating_layer,
-                              GIMP_ITEM (floating_layer)->offset_x,
-                              GIMP_ITEM (floating_layer)->offset_y,
-                              gimp_item_get_width  (GIMP_ITEM (floating_layer)),
-                              gimp_item_get_height (GIMP_ITEM (floating_layer)));
-          floating_layer->fs.initial = TRUE;
-
           /*  clear the selection  */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));
         }
       else
         {
-          /*  restore the contents of the drawable  */
-          floating_sel_restore (floating_layer,
-                                GIMP_ITEM (floating_layer)->offset_x,
-                                GIMP_ITEM (floating_layer)->offset_y,
-                                gimp_item_get_width  (GIMP_ITEM (floating_layer)),
-                                gimp_item_get_height (GIMP_ITEM (floating_layer)));
-
           /*  Update the preview for the underlying drawable  */
           gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
 
@@ -181,20 +141,4 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
     default:
       g_assert_not_reached ();
     }
-}
-
-static void
-gimp_floating_sel_undo_free (GimpUndo     *undo,
-                             GimpUndoMode  undo_mode)
-{
-  GimpLayer *floating_layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-
-  if (undo->undo_type == GIMP_UNDO_FS_TO_LAYER &&
-      undo_mode       == GIMP_UNDO_MODE_UNDO)
-    {
-      tile_manager_unref (floating_layer->fs.backing_store);
-      floating_layer->fs.backing_store = NULL;
-    }
-
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

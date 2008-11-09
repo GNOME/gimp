@@ -24,6 +24,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_FLOATING_SEL_PDB_H__
+#include "gimpfloatingsel_pdb.h"
 
 /**
  * gimp_floating_sel_remove:
@@ -162,9 +165,7 @@ gimp_floating_sel_attach (gint32 layer_ID,
  * @floating_sel_ID: The floating selection.
  * @undo: .
  *
- * Rigor the floating selection.
- *
- * This procedure rigors the floating selection.
+ * This procedure is deprecated!
  *
  * Returns: TRUE on success.
  */
@@ -194,9 +195,7 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
  * @floating_sel_ID: The floating selection.
  * @undo: .
  *
- * Relax the floating selection.
- *
- * This procedure relaxes the floating selection.
+ * This procedure is deprecated!
  *
  * Returns: TRUE on success.
  */

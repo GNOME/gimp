@@ -820,9 +820,6 @@ gimp_image_convert (GimpImage               *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
-  if (gimp_image_floating_sel (image))
-    floating_sel_relax (gimp_image_floating_sel (image), TRUE);
-
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (image, NULL);
 
@@ -1069,9 +1066,6 @@ gimp_image_convert (GimpImage               *image,
   /*  Delete the quantizer object, if there is one */
   if (quantobj)
     quantobj->delete_func (quantobj);
-
-  if (gimp_image_floating_sel (image))
-    floating_sel_rigor (gimp_image_floating_sel (image), TRUE);
 
   gimp_image_undo_group_end (image);
 

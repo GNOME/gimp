@@ -27,6 +27,7 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -45,6 +46,7 @@ gimp_channel_project_region (GimpDrawable *drawable,
 {
   GimpChannel *channel = GIMP_CHANNEL (drawable);
   PixelRegion  srcPR;
+  TileManager *temp_tiles;
   guchar       col[3];
   guchar       opacity;
 
@@ -52,7 +54,8 @@ gimp_channel_project_region (GimpDrawable *drawable,
                        &col[0], &col[1], &col[2], &opacity);
 
   gimp_drawable_init_src_region (drawable, &srcPR,
-                                 x, y, width, height);
+                                 x, y, width, height,
+                                 &temp_tiles);
 
   if (combine)
     {
@@ -74,4 +77,7 @@ gimp_channel_project_region (GimpDrawable *drawable,
                        INITIAL_CHANNEL_MASK :
                        INITIAL_CHANNEL_SELECTION));
     }
+
+  if (temp_tiles)
+    tile_manager_unref (temp_tiles);
 }

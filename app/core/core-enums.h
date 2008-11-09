@@ -437,8 +437,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_VECTORS_MOD,              /*< desc="Path modification"           >*/
   GIMP_UNDO_VECTORS_REPOSITION,       /*< desc="Reposition path"             >*/
   GIMP_UNDO_FS_TO_LAYER,              /*< desc="Floating selection to layer" >*/
-  GIMP_UNDO_FS_RIGOR,                 /*< desc="Rigor floating selection"    >*/
-  GIMP_UNDO_FS_RELAX,                 /*< desc="Relax floating selection"    >*/
   GIMP_UNDO_TRANSFORM,                /*< desc="Transform"                   >*/
   GIMP_UNDO_PAINT,                    /*< desc="Paint"                       >*/
   GIMP_UNDO_INK,                      /*< desc="Ink"                         >*/

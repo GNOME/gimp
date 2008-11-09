@@ -159,13 +159,6 @@ static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
-static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
-                                                 gboolean            push_undo,
-                                                 const gchar        *undo_desc,
-                                                 TileManager        *tiles,
-                                                 GimpImageType       type,
-                                                 gint                offset_x,
-                                                 gint                offset_y);
 static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
@@ -277,7 +270,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->project_region        = gimp_layer_project_region;
-  drawable_class->set_tiles             = gimp_layer_set_tiles;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -314,9 +306,7 @@ gimp_layer_init (GimpLayer *layer)
   layer->mask       = NULL;
 
   /*  floating selection  */
-  layer->fs.backing_store  = NULL;
   layer->fs.drawable       = NULL;
-  layer->fs.initial        = TRUE;
   layer->fs.boundary_known = FALSE;
   layer->fs.segs           = NULL;
   layer->fs.num_segs       = 0;
@@ -396,12 +386,6 @@ gimp_layer_finalize (GObject *object)
       layer->mask = NULL;
     }
 
-  if (layer->fs.backing_store)
-    {
-      tile_manager_unref (layer->fs.backing_store);
-      layer->fs.backing_store = NULL;
-    }
-
   if (layer->fs.segs)
     {
       g_free (layer->fs.segs);
@@ -438,7 +422,6 @@ gimp_layer_get_memsize (GimpObject *object,
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
 
-  *gui_size += tile_manager_get_memsize (layer->fs.backing_store, FALSE);
   *gui_size += layer->fs.num_segs * sizeof (BoundSeg);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -485,29 +468,6 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
-}
-
-static void
-gimp_layer_set_tiles (GimpDrawable *drawable,
-                      gboolean      push_undo,
-                      const gchar  *undo_desc,
-                      TileManager  *tiles,
-                      GimpImageType type,
-                      gint          offset_x,
-                      gint          offset_y)
-{
-  GimpLayer *layer = GIMP_LAYER (drawable);
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_relax (layer, FALSE);
-
-  GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
-                                                 push_undo, undo_desc,
-                                                 tiles, type,
-                                                 offset_x, offset_y);
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_rigor (layer, FALSE);
 }
 
 static GeglNode *
@@ -752,14 +712,8 @@ gimp_layer_translate (GimpItem *item,
   /*  invalidate the selection boundary because of a layer modification  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_relax (layer, FALSE);
-
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_rigor (layer, FALSE);
 
   /*  update the new region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
