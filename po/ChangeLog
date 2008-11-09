@@ -1,3 +1,7 @@
+2008-11-10  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
+
+	* ru.po: updated and improved Russian translation.
+
 2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* POTFILES.in: Updated for gimpcursorview.c.
