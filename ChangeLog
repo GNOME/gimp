@@ -1,3 +1,11 @@
+2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_update_rulers): Avoid critical warnings
+	when converting an image window with a unit other than pixels into
+	a the empty image window. Probably fixes some of the crashes
+	reported by Windows users.
+
 2008-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-types.h: move GimpCursorView typedef from
