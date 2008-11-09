@@ -25,6 +25,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -55,7 +56,8 @@ floating_sel_remove_invoker (GimpProcedure      *procedure,
     {
       if (gimp_layer_is_floating_sel (floating_sel))
         {
-          floating_sel_remove (floating_sel);
+          gimp_image_remove_layer (gimp_item_get_image (GIMP_ITEM (floating_sel)),
+                                   floating_sel, TRUE, NULL);
         }
       else
         {

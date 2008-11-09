@@ -786,11 +786,8 @@ gimp_selection_extract (GimpChannel  *selection,
         {
           if (GIMP_IS_LAYER (pickable))
             {
-              if (gimp_layer_is_floating_sel (GIMP_LAYER (pickable)))
-                floating_sel_remove (GIMP_LAYER (pickable));
-              else
-                gimp_image_remove_layer (image, GIMP_LAYER (pickable),
-                                         TRUE, NULL);
+              gimp_image_remove_layer (image, GIMP_LAYER (pickable),
+                                       TRUE, NULL);
             }
           else if (GIMP_IS_LAYER_MASK (pickable))
             {

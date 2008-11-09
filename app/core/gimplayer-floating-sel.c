@@ -87,32 +87,6 @@ floating_sel_attach (GimpLayer    *layer,
 }
 
 void
-floating_sel_remove (GimpLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
-
-  image = gimp_item_get_image (GIMP_ITEM (layer->fs.drawable));
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_REMOVE,
-                               _("Remove Floating Selection"));
-
-  /*  Invalidate the preview of the obscured drawable.  We do this here
-   *  because it will not be done until the floating selection is removed,
-   *  at which point the obscured drawable's preview will not be declared
-   *  invalid.
-   */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
-
-  /*  remove the layer from the image  */
-  gimp_image_remove_layer (image, layer, TRUE, NULL);
-
-  gimp_image_undo_group_end (image);
-}
-
-void
 floating_sel_anchor (GimpLayer *layer)
 {
   GimpImage    *image;
@@ -140,33 +114,6 @@ floating_sel_anchor (GimpLayer *layer)
 
   /*  invalidate the boundaries  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (image)));
-}
-
-void
-floating_sel_activate_drawable (GimpLayer *layer)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
-
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  /*  set the underlying drawable to active  */
-  if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
-    {
-      GimpLayerMask *mask = GIMP_LAYER_MASK (layer->fs.drawable);
-
-      gimp_image_set_active_layer (image, gimp_layer_mask_get_layer (mask));
-    }
-  else if (GIMP_IS_CHANNEL (layer->fs.drawable))
-    {
-      gimp_image_set_active_channel (image, GIMP_CHANNEL (layer->fs.drawable));
-    }
-  else
-    {
-      gimp_image_set_active_layer (image, GIMP_LAYER (layer->fs.drawable));
-    }
 }
 
 gboolean
@@ -220,6 +167,33 @@ floating_sel_to_layer (GimpLayer  *layer,
   gimp_image_floating_selection_changed (image);
 
   return TRUE;
+}
+
+void
+floating_sel_activate_drawable (GimpLayer *layer)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  /*  set the underlying drawable to active  */
+  if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
+    {
+      GimpLayerMask *mask = GIMP_LAYER_MASK (layer->fs.drawable);
+
+      gimp_image_set_active_layer (image, gimp_layer_mask_get_layer (mask));
+    }
+  else if (GIMP_IS_CHANNEL (layer->fs.drawable))
+    {
+      gimp_image_set_active_channel (image, GIMP_CHANNEL (layer->fs.drawable));
+    }
+  else
+    {
+      gimp_image_set_active_layer (image, GIMP_LAYER (layer->fs.drawable));
+    }
 }
 
 const BoundSeg *

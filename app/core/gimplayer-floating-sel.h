@@ -22,11 +22,10 @@
 
 void             floating_sel_attach            (GimpLayer     *layer,
                                                  GimpDrawable  *drawable);
-void             floating_sel_remove            (GimpLayer     *layer);
 void             floating_sel_anchor            (GimpLayer     *layer);
-void             floating_sel_activate_drawable (GimpLayer     *layer);
 gboolean         floating_sel_to_layer          (GimpLayer     *layer,
                                                  GError       **error);
+void             floating_sel_activate_drawable (GimpLayer     *layer);
 const BoundSeg * floating_sel_boundary          (GimpLayer     *layer,
                                                  gint          *n_segs);
 void             floating_sel_invalidate        (GimpLayer     *layer);

@@ -554,7 +554,6 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
     case GIMP_UNDO_GROUP_FS_TO_LAYER:
     case GIMP_UNDO_GROUP_FS_FLOAT:
     case GIMP_UNDO_GROUP_FS_ANCHOR:
-    case GIMP_UNDO_GROUP_FS_REMOVE:
       return GIMP_DIRTY_IMAGE_STRUCTURE;
 
     case GIMP_UNDO_GROUP_EDIT_PASTE:

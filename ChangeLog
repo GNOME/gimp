@@ -1,5 +1,24 @@
 2008-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer-floating-sel.[ch]: remove
+	floating_sel_remove() and reorder one function.
+
+	* app/core/gimpimage.c (gimp_image_remove_layer): add the single
+	line of special code that needs to be done when removing a
+	floating selection.
+
+	* app/core/gimpselection.c
+	* app/actions/layers-commands.c
+	* tools/pdbgen/pdb/floating_sel.pdb: changed accordingly.
+
+	* app/pdb/floating-sel-cmds.c: regenerated.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo.c: remove enum value
+	GIMP_UNDO_GROUP_FS_REMOVE.
+
+2008-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.c
 	* app/core/gimpimage-convert.c
 	* app/core/gimpprojection-construct.c

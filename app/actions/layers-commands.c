@@ -481,11 +481,7 @@ layers_delete_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_remove (layer);
-  else
-    gimp_image_remove_layer (image, layer, TRUE, NULL);
-
+  gimp_image_remove_layer (image, layer, TRUE, NULL);
   gimp_image_flush (image);
 }
 

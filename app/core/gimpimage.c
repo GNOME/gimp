@@ -2950,10 +2950,11 @@ gimp_image_remove_layer (GimpImage *image,
                          gboolean   push_undo,
                          GimpLayer *new_active)
 {
-  GimpLayer *active_layer;
-  gint       index;
-  gboolean   old_has_alpha;
-  gboolean   undo_group = FALSE;
+  GimpLayer   *active_layer;
+  gint         index;
+  gboolean     old_has_alpha;
+  gboolean     undo_group = FALSE;
+  const gchar *undo_desc;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -2974,7 +2975,8 @@ gimp_image_remove_layer (GimpImage *image,
                                    _("Remove Layer"));
       undo_group = TRUE;
 
-      floating_sel_remove (gimp_image_floating_sel (image));
+      gimp_image_remove_layer (image, gimp_image_floating_sel (image),
+                               TRUE, NULL);
     }
 
   active_layer = gimp_image_get_active_layer (image);
@@ -2984,8 +2986,24 @@ gimp_image_remove_layer (GimpImage *image,
 
   old_has_alpha = gimp_image_has_alpha (image);
 
+  if (image->floating_sel == layer)
+    {
+      undo_desc = _("Remove Floating Selection");
+
+      /*  Invalidate the preview of the obscured drawable.  We do this here
+       *  because it will not be done until the floating selection is removed,
+       *  at which point the obscured drawable's preview will not be declared
+       *  invalid.
+       */
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+    }
+  else
+    {
+      undo_desc = _("Remove Layer");
+    }
+
   if (push_undo)
-    gimp_image_undo_push_layer_remove (image, _("Remove Layer"),
+    gimp_image_undo_push_layer_remove (image, undo_desc,
                                        layer, index, active_layer);
 
   g_object_ref (layer);
@@ -3293,7 +3311,8 @@ gimp_image_remove_channel (GimpImage   *image,
                                    _("Remove Channel"));
       undo_group = TRUE;
 
-      floating_sel_remove (gimp_image_floating_sel (image));
+      gimp_image_remove_layer (image, gimp_image_floating_sel (image),
+                               TRUE, NULL);
     }
 
   active_channel = gimp_image_get_active_channel (image);
