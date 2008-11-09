@@ -20,13 +20,13 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
-#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -40,6 +40,13 @@
 
 #include "gimp-intl.h"
 
+
+/*  local function prototypes  */
+
+static void   floating_sel_composite (GimpLayer *layer);
+
+
+/* public functions  */
 
 void
 floating_sel_attach (GimpLayer    *layer,
@@ -120,18 +127,8 @@ floating_sel_anchor (GimpLayer *layer)
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
                                _("Anchor Floating Selection"));
 
-  /* Invalidate the previews of the layer that will be composited
-   * with the floating section.
-   */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->fs.drawable));
-
   /*  Composite the floating selection contents  */
-  floating_sel_composite (layer,
-                          GIMP_ITEM (layer)->offset_x,
-                          GIMP_ITEM (layer)->offset_y,
-                          gimp_item_get_width  (GIMP_ITEM (layer)),
-                          gimp_item_get_height (GIMP_ITEM (layer)),
-                          TRUE);
+  floating_sel_composite (layer);
 
   drawable = layer->fs.drawable;
 
@@ -223,96 +220,6 @@ floating_sel_to_layer (GimpLayer  *layer,
   gimp_image_floating_selection_changed (image);
 
   return TRUE;
-}
-
-void
-floating_sel_composite (GimpLayer *layer,
-                        gint       x,
-                        gint       y,
-                        gint       w,
-                        gint       h,
-                        gboolean   push_undo)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
-
-  if (! (image = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
-
-  /*  What this function does is composite the specified area of the
-   *  drawble with the floating selection.  We do this when the image
-   *  is constructed, before any other composition takes place.
-   */
-
-  /*  First restore what's behind the image if necessary,
-   *  then check for visibility
-   */
-  if (gimp_item_get_visible (GIMP_ITEM (layer)))
-    {
-      gint offx, offy;
-      gint x1, y1, x2, y2;
-
-      /*  Find the minimum area we need to composite -- in image space  */
-      gimp_item_get_offset (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
-
-      x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
-      y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
-      x2 = MIN (GIMP_ITEM (layer)->offset_x +
-                gimp_item_get_width (GIMP_ITEM (layer)),
-                offx + gimp_item_get_width  (GIMP_ITEM (layer->fs.drawable)));
-      y2 = MIN (GIMP_ITEM (layer)->offset_y +
-                gimp_item_get_height (GIMP_ITEM (layer)),
-                offy + gimp_item_get_height (GIMP_ITEM (layer->fs.drawable)));
-
-      x1 = CLAMP (x, x1, x2);
-      y1 = CLAMP (y, y1, y2);
-      x2 = CLAMP (x + w, x1, x2);
-      y2 = CLAMP (y + h, y1, y2);
-
-      if ((x2 - x1) > 0 && (y2 - y1) > 0)
-        {
-          PixelRegion  fsPR;
-          GimpLayer   *d_layer    = NULL;
-          gboolean     lock_alpha = FALSE;
-
-          /*  composite the area from the layer to the drawable  */
-          pixel_region_init (&fsPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                             (x1 - GIMP_ITEM (layer)->offset_x),
-                             (y1 - GIMP_ITEM (layer)->offset_y),
-                             (x2 - x1), (y2 - y1), FALSE);
-
-          /*  a kludge here to prevent the case of the drawable
-           *  underneath having lock alpha on, and disallowing
-           *  the composited floating selection from being shown
-           */
-          if (GIMP_IS_LAYER (layer->fs.drawable))
-            {
-              d_layer = GIMP_LAYER (layer->fs.drawable);
-
-              lock_alpha = gimp_layer_get_lock_alpha (d_layer);
-
-              if (lock_alpha)
-                gimp_layer_set_lock_alpha (d_layer, FALSE, FALSE);
-            }
-
-          /*  apply the fs with the undo specified by the value
-           *  passed to this function
-           */
-          gimp_drawable_apply_region (layer->fs.drawable, &fsPR,
-                                      push_undo, NULL,
-                                      gimp_layer_get_opacity (layer),
-                                      gimp_layer_get_mode (layer),
-                                      NULL, NULL,
-                                      x1 - offx, y1 - offy);
-
-          /*  restore lock alpha  */
-          if (lock_alpha)
-            gimp_layer_set_lock_alpha (d_layer, TRUE, FALSE);
-        }
-    }
 }
 
 const BoundSeg *
@@ -407,4 +314,77 @@ floating_sel_invalidate (GimpLayer *layer)
 
   /*  Invalidate the boundary  */
   layer->fs.boundary_known = FALSE;
+}
+
+
+/*  private functions  */
+
+static void
+floating_sel_composite (GimpLayer *layer)
+{
+  GimpDrawable *drawable;
+  gint          off_x, off_y;
+  gint          dr_off_x, dr_off_y;
+  gint          combine_x, combine_y;
+  gint          combine_width, combine_height;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+
+  drawable = layer->fs.drawable;
+
+  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);
+
+  /*  First restore what's behind the image if necessary,
+   *  then check for visibility
+   */
+  if (gimp_item_get_visible (GIMP_ITEM (layer)) &&
+      gimp_rectangle_intersect (off_x, off_y,
+                                gimp_item_get_width  (GIMP_ITEM (layer)),
+                                gimp_item_get_height (GIMP_ITEM (layer)),
+                                dr_off_x, dr_off_y,
+                                gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                gimp_item_get_height (GIMP_ITEM (drawable)),
+                                &combine_x, &combine_y,
+                                &combine_width, &combine_height))
+    {
+      PixelRegion fsPR;
+      gboolean    lock_alpha = FALSE;
+
+      /*  composite the area from the layer to the drawable  */
+      pixel_region_init (&fsPR,
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                         combine_x - off_x,
+                         combine_y - off_y,
+                         combine_width, combine_height,
+                         FALSE);
+
+      /*  a kludge here to prevent the case of the drawable
+       *  underneath having lock alpha on, and disallowing
+       *  the composited floating selection from being shown
+       */
+      if (GIMP_IS_LAYER (drawable))
+        {
+          lock_alpha = gimp_layer_get_lock_alpha (GIMP_LAYER (drawable));
+
+          if (lock_alpha)
+            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
+        }
+
+      /*  apply the fs with the undo specified by the value
+       *  passed to this function
+       */
+      gimp_drawable_apply_region (drawable, &fsPR,
+                                  TRUE, NULL,
+                                  gimp_layer_get_opacity (layer),
+                                  gimp_layer_get_mode (layer),
+                                  NULL, NULL,
+                                  combine_x - dr_off_x,
+                                  combine_y - dr_off_y);
+
+      /*  restore lock alpha  */
+      if (lock_alpha)
+        gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), TRUE, FALSE);
+    }
 }

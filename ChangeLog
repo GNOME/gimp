@@ -1,5 +1,11 @@
 2008-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer-floating-sel.[ch]: made
+	floating_sel_composite() private and simplify it a lot by using
+	gimp_rectangle_intersect().
+
+2008-11-09  Michael Natterer  <mitch@gimp.org>
+
 	Bye bye floating_sel_rigor() and floating_sel_relax():
 
 	* app/core/gimpdrawable.[ch] (gimp_drawable_init_src_region):
