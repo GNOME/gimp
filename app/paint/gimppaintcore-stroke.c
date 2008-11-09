@@ -33,6 +33,8 @@
 #include "gimppaintcore-stroke.h"
 #include "gimppaintoptions.h"
 
+#include "gimp-intl.h"
+
 
 static void gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
                                                      gint        length);
@@ -233,6 +235,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 {
   GList    *stroke;
   gboolean  initialized = FALSE;
+  gboolean  due_to_lack_of_points = FALSE;
   gint      off_x, off_y;
   gint      vectors_off_x, vectors_off_y;
 
@@ -306,6 +309,10 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
               break;
             }
         }
+      else
+        {
+          due_to_lack_of_points = TRUE;
+        }
 
       if (coords)
         g_array_free (coords, TRUE);
@@ -316,6 +323,13 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
       gimp_paint_core_finish (core, drawable);
 
       gimp_paint_core_cleanup (core);
+    }
+
+  if (! initialized &&
+      due_to_lack_of_points &&
+      *error == NULL)
+    {
+      g_set_error (error, 0, 0, _("Not enough points to stroke"));
     }
 
   return initialized;

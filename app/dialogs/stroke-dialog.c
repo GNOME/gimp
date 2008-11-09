@@ -318,9 +318,10 @@ stroke_dialog_response (GtkWidget  *widget,
         if (! gimp_item_stroke (item, drawable, context, desc, FALSE, NULL,
                                 &error))
           {
-            gimp_message (context->gimp, G_OBJECT (widget),
+            gimp_message (context->gimp,
+                          G_OBJECT (widget),
                           GIMP_MESSAGE_WARNING,
-                          error->message);
+                          error ? error->message : "NULL");
             g_clear_error (&error);
             return;
           }
