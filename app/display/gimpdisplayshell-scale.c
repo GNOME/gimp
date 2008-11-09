@@ -215,19 +215,22 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
                                                         &scaled_viewport_offset_x,
                                                         &scaled_viewport_offset_y);
 
-  horizontal_lower -= img2real (shell, TRUE,
-                                FUNSCALEX (shell,
-                                           (gdouble) scaled_viewport_offset_x));
-  horizontal_upper -= img2real (shell, TRUE,
-                                FUNSCALEX (shell,
-                                           (gdouble) scaled_viewport_offset_x));
+  if (image)
+    {
+      horizontal_lower -= img2real (shell, TRUE,
+                                    FUNSCALEX (shell,
+                                               (gdouble) scaled_viewport_offset_x));
+      horizontal_upper -= img2real (shell, TRUE,
+                                    FUNSCALEX (shell,
+                                               (gdouble) scaled_viewport_offset_x));
 
-  vertical_lower   -= img2real (shell, FALSE,
-                                FUNSCALEY (shell,
-                                           (gdouble) scaled_viewport_offset_y));
-  vertical_upper   -= img2real (shell, FALSE,
-                                FUNSCALEY (shell,
-                                           (gdouble) scaled_viewport_offset_y));
+      vertical_lower   -= img2real (shell, FALSE,
+                                    FUNSCALEY (shell,
+                                               (gdouble) scaled_viewport_offset_y));
+      vertical_upper   -= img2real (shell, FALSE,
+                                    FUNSCALEY (shell,
+                                               (gdouble) scaled_viewport_offset_y));
+    }
 
 
   /* Finally setup the actual rulers */
