@@ -25,8 +25,9 @@
 #include "actions-types.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcursorview.h"
 #include "widgets/gimphelp-ids.h"
+
+#include "display/gimpcursorview.h"
 
 #include "cursor-info-actions.h"
 #include "cursor-info-commands.h"

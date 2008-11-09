@@ -1,3 +1,19 @@
+2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Prepare GimpCursorView for a dependency to GimpDisplayShell.
+
+	* app/widgets/gimpcursorview.[ch]: Move from here...
+
+	* app/display/gimpcursorview.[ch]: ...to here.
+
+	* app/widgets/Makefile.am
+	* app/display/Makefile.am: Change accordingly.
+
+	* app/actions/cursor-info-actions.c
+	* app/dialogs/dialogs-constructors.c
+	* app/actions/cursor-info-commands.c
+	* app/display/gimpdisplayshell-cursor.c: Update includes.
+
 2008-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer-floating-sel.[ch]: made

@@ -41,7 +41,6 @@
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview-utils.h"
-#include "widgets/gimpcursorview.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -67,6 +66,7 @@
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
+#include "display/gimpcursorview.h"
 #include "display/gimpnavigationeditor.h"
 
 #include "about-dialog.h"

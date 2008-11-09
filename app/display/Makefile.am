@@ -19,6 +19,8 @@ libappdisplay_a_sources = \
 	display-types.h				\
 	gimpcanvas.c				\
 	gimpcanvas.h				\
+	gimpcursorview.c			\
+	gimpcursorview.h			\
 	gimpdisplay.c				\
 	gimpdisplay.h				\
 	gimpdisplayoptions.c			\

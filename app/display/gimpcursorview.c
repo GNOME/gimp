@@ -31,19 +31,20 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "display-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"
 #include "core/gimpunit.h"
 
-#include "gimpcolorframe.h"
+#include "widgets/gimpcolorframe.h"
+#include "widgets/gimpdocked.h"
+#include "widgets/gimpeditor.h"
+#include "widgets/gimpmenufactory.h"
+#include "widgets/gimpsessioninfo-aux.h"
+
 #include "gimpcursorview.h"
-#include "gimpdocked.h"
-#include "gimpeditor.h"
-#include "gimpmenufactory.h"
-#include "gimpsessioninfo-aux.h"
 
 #include "gimp-intl.h"
 

@@ -29,11 +29,11 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcursor.h"
-#include "widgets/gimpcursorview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "gimpdisplay.h"
+#include "gimpcursorview.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-transform.h"
