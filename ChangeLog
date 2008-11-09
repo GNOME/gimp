@@ -1,5 +1,17 @@
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 558549 – Stroking a single-point path with a paint tool
+	crashes GIMP
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_vectors): Return an error message if there
+	were not enough points to stroke.
+
+	* app/dialogs/stroke-dialog.c (stroke_dialog_response): Guard
+	against crashes if an implementator forgets to set an error.
+
+2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpnavigationeditor.c: Clean up and simplify
 	little.
 
