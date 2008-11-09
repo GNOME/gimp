@@ -44,7 +44,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"

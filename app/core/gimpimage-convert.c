@@ -153,7 +153,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
 #include "gimpprogress.h"
 

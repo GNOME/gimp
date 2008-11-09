@@ -28,7 +28,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"

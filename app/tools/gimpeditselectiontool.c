@@ -40,7 +40,6 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimpprojection.h"
 #include "core/gimpselection.h"
 #include "core/gimpundostack.h"

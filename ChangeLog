@@ -1,3 +1,12 @@
+2008-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpprojection-construct.c
+	* app/tools/gimpeditselectiontool.c
+	* app/widgets/gimplayertreeview.c
+	* app/xcf/xcf-save.c: remove inclusion of "gimplayer-floating-sel.h"
+
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Prepare GimpCursorView for a dependency to GimpDisplayShell.

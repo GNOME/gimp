@@ -43,7 +43,6 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimppickable.h"
