@@ -1,3 +1,7 @@
+2008-08-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* POTFILES.in: Updated for gimpcursorview.c.
+
 2008-11-09  Goran Rakić  <grakic@devbase.net>
 
         * sr.po, sr@latin.po: Updated Serbian Translation (by Miloš Popović).
