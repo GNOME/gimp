@@ -719,10 +719,11 @@ gimp_cursor_view_get_sample_merged (GimpCursorView *view)
 void
 gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 GimpImage        *image,
-                                GimpUnit          unit,
+                                GimpUnit          shell_unit,
                                 gdouble           x,
                                 gdouble           y)
 {
+  GimpUnit      unit = shell_unit;
   gboolean      in_image;
   gchar         buf[32];
   GimpImageType sample_type;
@@ -775,6 +776,9 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
       gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_1));
       gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_2));
     }
+
+  /* Show the selection info from the image under the cursor if any */
+  gimp_cursor_view_update_selection_info (view, image, shell_unit);
 }
 
 void
@@ -789,4 +793,7 @@ gimp_cursor_view_clear_cursor (GimpCursorView *view)
 
   gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_1));
   gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_2));
+
+  /* Start showing selection info from the active image again */
+  gimp_cursor_view_update_selection_info (view, view->image, view->unit);
 }
