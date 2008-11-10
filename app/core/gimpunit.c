@@ -53,22 +53,30 @@ typedef struct
 static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
-  { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
+  { FALSE,  0.0, 0, "pixels",      "px", "px",
+    NC_("unit-singular", "pixel"),      NC_("unit-plural", "pixels")      },
 
   /* standard units */
-  { FALSE,  1.0, 2, "inches",      "''", "in", N_("inch"),       N_("inches") },
-  { FALSE, 25.4, 1, "millimeters", "mm", "mm", N_("millimeter"), N_("millimeters") },
+  { FALSE,  1.0, 2, "inches",      "''", "in",
+    NC_("unit-singular", "inch"),       NC_("unit-plural", "inches")      },
+
+  { FALSE, 25.4, 1, "millimeters", "mm", "mm",
+    NC_("unit-singular", "millimeter"), NC_("unit-plural", "millimeters") },
 
   /* professional units */
-  { FALSE, 72.0, 0, "points",      "pt", "pt", N_("point"),      N_("points") },
-  { FALSE,  6.0, 1, "picas",       "pc", "pc", N_("pica"),       N_("picas") },
+  { FALSE, 72.0, 0, "points",      "pt", "pt",
+    NC_("unit-singular", "point"),      NC_("unit-plural", "points")      },
+
+  { FALSE,  6.0, 1, "picas",       "pc", "pc",
+    NC_("unit-singular", "pica"),       NC_("unit-plural", "picas")       }
 };
 
 /*  not a unit at all but kept here to have the strings in one place
  */
 static const GimpUnitDef gimp_unit_percent =
 {
-  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("plural|percent")
+    FALSE,  0.0, 0, "percent",     "%",  "%", 
+    NC_("singular", "percent"),    NC_("plural", "percent")
 };
 
 
@@ -233,12 +241,10 @@ _gimp_unit_get_singular (Gimp     *gimp,
                         gimp_unit_defs[GIMP_UNIT_INCH].singular);
 
   if (unit < GIMP_UNIT_END)
-    return g_strip_context (gimp_unit_defs[unit].singular,
-                            gettext (gimp_unit_defs[unit].singular));
+    return g_dpgettext2 (NULL, "unit-singular", gimp_unit_defs[unit].singular);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strip_context (gimp_unit_percent.singular,
-                            gettext (gimp_unit_percent.singular));
+    return g_dpgettext2 (NULL, "unit-singular", gimp_unit_percent.singular);
 
   return _gimp_unit_get_user_unit (gimp, unit)->singular;
 }
@@ -252,12 +258,10 @@ _gimp_unit_get_plural (Gimp     *gimp,
                         gimp_unit_defs[GIMP_UNIT_INCH].plural);
 
   if (unit < GIMP_UNIT_END)
-    return g_strip_context (gimp_unit_defs[unit].plural,
-                            gettext (gimp_unit_defs[unit].plural));
+    return g_dpgettext2 (NULL, "unit-plural", gimp_unit_defs[unit].plural);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strip_context (gimp_unit_percent.plural,
-                            gettext (gimp_unit_percent.plural));
+    return g_dpgettext2 (NULL, "unit-plural", gimp_unit_percent.plural);
 
   return _gimp_unit_get_user_unit (gimp, unit)->plural;
 }
