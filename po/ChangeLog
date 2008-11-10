@@ -1,3 +1,7 @@
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing files.
+
 2008-11-10  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
 	* ru.po: updated and improved Russian translation.

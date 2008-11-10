@@ -63,6 +63,8 @@ app/actions/templates-actions.c
 app/actions/templates-commands.c
 app/actions/text-editor-actions.c
 app/actions/text-editor-commands.c
+app/actions/text-tool-actions.c
+app/actions/text-tool-commands.c
 app/actions/tool-options-actions.c
 app/actions/tool-options-commands.c
 app/actions/tools-actions.c
@@ -239,6 +241,7 @@ app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
+app/paint/gimppaintcore-stroke.c
 app/paint/gimppencil.c
 app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c
@@ -406,6 +409,7 @@ app/widgets/gimperrorconsole.c
 app/widgets/gimperrordialog.c
 app/widgets/gimpfiledialog.c
 app/widgets/gimpfileprocview.c
+app/widgets/gimpfilleditor.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
