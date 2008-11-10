@@ -1,5 +1,7 @@
 2008-11-10  Sven Neumann  <sven@gimp.org>
 
+	* de.po: updated German translation.
+
 	* POTFILES.in: added file with a new string that was needed to fix
 	a crash.
 
