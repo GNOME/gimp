@@ -272,7 +272,9 @@ query (void)
   {
     { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
     { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
-    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    },
+    { GIMP_PDB_INT32,  "image-type",   "Image type"                    },
+    { GIMP_PDB_INT32,  "num-layers",   "Number of pages"               }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -323,7 +325,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
+  static GimpParam  values[6];
   GimpRunMode       run_mode;
   GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
   gint32            image_ID = -1;
@@ -433,11 +435,12 @@ run (const gchar      *name,
         }
       else
         {
-          gdouble      width  = 0;
-          gdouble      height = 0;
+          gdouble      width     = 0;
+          gdouble      height    = 0;
           gdouble      scale;
-          gint32       image  = -1;
-          GdkPixbuf   *pixbuf = NULL;
+          gint32       image     = -1;
+          gint         num_pages = 0;
+          GdkPixbuf   *pixbuf    = NULL;
 
           /* Possibly retrieve last settings */
           gimp_get_data (LOAD_PROC, &loadvals);
@@ -455,7 +458,10 @@ run (const gchar      *name,
                   g_object_unref (page);
                 }
 
+              num_pages = poppler_document_get_n_pages (doc);
+
               pixbuf = get_thumbnail (doc, 0, param[1].data.d_int32);
+
               g_object_unref (doc);
             }
 
@@ -481,7 +487,7 @@ run (const gchar      *name,
 
           if (image != -1)
             {
-              *nreturn_vals = 4;
+              *nreturn_vals = 6;
 
               values[1].type         = GIMP_PDB_IMAGE;
               values[1].data.d_image = image;
@@ -489,6 +495,10 @@ run (const gchar      *name,
               values[2].data.d_int32 = width;
               values[3].type         = GIMP_PDB_INT32;
               values[3].data.d_int32 = height;
+              values[4].type         = GIMP_PDB_INT32;
+              values[4].data.d_int32 = GIMP_RGB_IMAGE;
+              values[5].type         = GIMP_PDB_INT32;
+              values[5].data.d_int32 = num_pages;
             }
           else
             {
