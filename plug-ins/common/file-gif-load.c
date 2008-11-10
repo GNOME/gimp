@@ -132,6 +132,12 @@ query (void)
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"     }
   };
+  static const GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Output image"                 },
+    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"    },
+    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"   }
+  };
 
   gimp_install_procedure (LOAD_PROC,
                           "Loads files of Compuserve GIF file format",
@@ -163,8 +169,8 @@ query (void)
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (thumb_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          thumb_args, load_return_vals);
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
 
   gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 }
@@ -176,7 +182,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[4];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GError            *error  = NULL;
   gint32             image_ID;
@@ -226,6 +232,15 @@ run (const gchar      *name,
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
+
+          if (strcmp (name, LOAD_THUMB_PROC) == 0)
+            {
+              *nreturn_vals = 4;
+              values[2].type         = GIMP_PDB_INT32;
+              values[2].data.d_int32 = gimp_image_width (image_ID);
+              values[3].type         = GIMP_PDB_INT32;
+              values[3].data.d_int32 = gimp_image_height (image_ID);
+            }
         }
       else
         {
@@ -421,6 +436,7 @@ load_image (const gchar  *filename,
               g_message ("EOF / read error on extension function code");
               return image_ID; /* will be -1 if failed on first image! */
             }
+
           DoExtension (fd, c);
           continue;
         }

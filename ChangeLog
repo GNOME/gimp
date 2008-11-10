@@ -1,3 +1,8 @@
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/file-gif-load.c: return image size from the
+	"file-gif-load-thumb" procedure.
+
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpcursorview.c ()
