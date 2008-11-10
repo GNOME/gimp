@@ -1,3 +1,8 @@
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added file with a new string that was needed to fix
+	a crash.
+
 2008-11-08  Wadim Dziedzic  <wdziedzic@aviary.pl>
 
 	* pl.po: Updated Polish translation by Bartosz Kosiorek

@@ -238,6 +238,7 @@ app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
+app/paint/gimppaintcore-stroke.c
 app/paint/gimppencil.c
 app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c
