@@ -91,7 +91,8 @@ typedef enum
 } SideToResize;
 
 
-#define FEQUAL(a,b) (fabs ((a) - (b)) < 0.0001)
+#define FEQUAL(a,b)       (fabs ((a) - (b)) < 0.0001)
+#define PIXEL_FEQUAL(a,b) (fabs ((a) - (b)) < 0.5)
 
 #define GIMP_RECTANGLE_TOOL_GET_PRIVATE(obj) \
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
@@ -2254,7 +2255,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
     }
   else if (strcmp  (pspec->name, "x") == 0 &&
-           !FEQUAL (private->x1, options_private->x))
+           !PIXEL_FEQUAL (private->x1, options_private->x))
     {
       gimp_rectangle_tool_synthesize_motion (rect_tool,
                                              GIMP_RECTANGLE_TOOL_MOVING,
@@ -2262,7 +2263,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                              private->y1);
     }
   else if (strcmp  (pspec->name, "y") == 0 &&
-           !FEQUAL (private->y1, options_private->y))
+           !PIXEL_FEQUAL (private->y1, options_private->y))
     {
       gimp_rectangle_tool_synthesize_motion (rect_tool,
                                              GIMP_RECTANGLE_TOOL_MOVING,
@@ -2270,7 +2271,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                              options_private->y);
     }
   else if (strcmp  (pspec->name, "width") == 0 &&
-           !FEQUAL (private->x2 - private->x1, options_private->width))
+           !PIXEL_FEQUAL (private->x2 - private->x1, options_private->width))
     {
       /* Calculate x2, y2 that will create a rectangle of given width, for the
        * current options.
@@ -2293,7 +2294,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                              private->y2);
     }
   else if (strcmp  (pspec->name, "height") == 0 &&
-           !FEQUAL (private->y2 - private->y1, options_private->height))
+           !PIXEL_FEQUAL (private->y2 - private->y1, options_private->height))
     {
       /* Calculate x2, y2 that will create a rectangle of given height, for the
        * current options.

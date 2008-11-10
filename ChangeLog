@@ -1,3 +1,14 @@
+2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+ 	Merged from trunk:
+
+	Bug 559716 – Changing crop size in Crop Tool Options can make UI
+	unresponsive
+
+	* app/tools/gimprectangletool.c: Accept a broader range of x, y,
+	width and height values from the tool options so we don't end up
+	in an infinite signal emission loop.
+
 2008-11-10  Michael Natterer  <mitch@gimp.org>
 
  	Merged from trunk:
