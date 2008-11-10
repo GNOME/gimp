@@ -1,3 +1,10 @@
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
+ 	Merged from trunk:
+
+	* plug-ins/common/file-pdf.c: fixed size of the GimpParam array
+	used for the return values.
+
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
  	Merged from trunk:
