@@ -1,3 +1,8 @@
+2008-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-curves.c (gimp_drawable_curves_explicit):
+	use GIMP_CURVE_FREE, not _SMOOTH. Fixes the resp. PDB call.
+
 2008-11-10  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpunit.c: use NC_() to provide translation contexts.
