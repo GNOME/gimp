@@ -33,6 +33,8 @@
 
 #include "display-types.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"
@@ -45,6 +47,8 @@
 #include "widgets/gimpsessioninfo-aux.h"
 
 #include "gimpcursorview.h"
+#include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
 
 #include "gimp-intl.h"
 
@@ -58,19 +62,29 @@ enum
 
 struct _GimpCursorView
 {
-  GimpEditor  parent_instance;
+  GimpEditor        parent_instance;
 
-  GtkWidget  *coord_hbox;
-  GtkWidget  *color_hbox;
+  GtkWidget        *coord_hbox;
+  GtkWidget        *selection_hbox;
+  GtkWidget        *color_hbox;
 
-  GtkWidget  *pixel_x_label;
-  GtkWidget  *pixel_y_label;
-  GtkWidget  *unit_x_label;
-  GtkWidget  *unit_y_label;
-  GtkWidget  *color_frame_1;
-  GtkWidget  *color_frame_2;
+  GtkWidget        *pixel_x_label;
+  GtkWidget        *pixel_y_label;
+  GtkWidget        *unit_x_label;
+  GtkWidget        *unit_y_label;
+  GtkWidget        *selection_x_label;
+  GtkWidget        *selection_y_label;
+  GtkWidget        *selection_width_label;
+  GtkWidget        *selection_height_label;
+  GtkWidget        *color_frame_1;
+  GtkWidget        *color_frame_2;
 
-  gboolean    sample_merged;
+  gboolean          sample_merged;
+
+  GimpContext      *context;
+  GimpDisplayShell *shell;
+  GimpImage        *image;
+  GimpUnit          unit;
 };
 
 struct _GimpCursorViewClass
@@ -79,32 +93,51 @@ struct _GimpCursorViewClass
 };
 
 
-static void   gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface);
+static void   gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
 
-static void   gimp_cursor_view_set_property      (GObject      *object,
-                                                  guint         property_id,
-                                                  const GValue *value,
-                                                  GParamSpec   *pspec);
-static void   gimp_cursor_view_get_property      (GObject      *object,
-                                                  guint         property_id,
-                                                  GValue       *value,
-                                                  GParamSpec   *pspec);
+static void   gimp_cursor_view_set_property          (GObject             *object,
+                                                      guint                property_id,
+                                                      const GValue        *value,
+                                                      GParamSpec          *pspec);
+static void   gimp_cursor_view_get_property          (GObject             *object,
+                                                      guint                property_id,
+                                                      GValue              *value,
+                                                      GParamSpec          *pspec);
 
-static void   gimp_cursor_view_style_set         (GtkWidget    *widget,
-                                                  GtkStyle      *prev_style);
+static void   gimp_cursor_view_style_set             (GtkWidget           *widget,
+                                                      GtkStyle            *prev_style);
 
-static void   gimp_cursor_view_set_aux_info      (GimpDocked   *docked,
-                                                  GList        *aux_info);
-static GList *gimp_cursor_view_get_aux_info      (GimpDocked   *docked);
+static void   gimp_cursor_view_set_aux_info          (GimpDocked          *docked,
+                                                      GList               *aux_info);
+static GList *gimp_cursor_view_get_aux_info          (GimpDocked          *docked);
 
-static void   gimp_cursor_view_format_as_unit    (GimpUnit      unit,
-                                                  Gimp         *gimp,
-                                                  gchar        *output_buf,
-                                                  gint          output_buf_size,
-                                                  gdouble       pixel_value,
-                                                  gdouble       image_res);
-static void   gimp_cursor_view_set_label_italic  (GtkWidget    *label,
-                                                  gboolean      italic);
+static void   gimp_cursor_view_set_context           (GimpDocked          *docked,
+                                                      GimpContext         *context);
+static void   gimp_cursor_view_image_changed         (GimpCursorView      *view,
+                                                      GimpImage           *image,
+                                                      GimpContext         *context);
+static void   gimp_cursor_view_mask_changed          (GimpCursorView      *view,
+                                                      GimpImage           *image);
+static void   gimp_cursor_view_diplay_changed        (GimpCursorView      *view,
+                                                      GimpDisplay         *display,
+                                                      GimpContext         *context);
+static void   gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
+                                                      GParamSpec          *pspec,
+                                                      GimpDisplayShell    *shell);
+static void   gimp_cursor_view_format_as_unit        (GimpUnit             unit,
+                                                      Gimp                *gimp,
+                                                      gchar               *output_buf,
+                                                      gint                 output_buf_size,
+                                                      gdouble              pixel_value,
+                                                      gdouble              image_res);
+static void   gimp_cursor_view_set_label_italic      (GtkWidget           *label,
+                                                      gboolean             italic);
+static void   gimp_cursor_view_update_selection_info (GimpCursorView      *view,
+                                                      GimpImage           *image,
+                                                      GimpUnit             unit);
+
+
+
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
@@ -144,6 +177,10 @@ gimp_cursor_view_init (GimpCursorView *view)
   gint       content_spacing;
 
   view->sample_merged = TRUE;
+  view->context       = NULL;
+  view->shell         = NULL;
+  view->image         = NULL;
+  view->unit          = GIMP_UNIT_PIXEL;
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
@@ -155,6 +192,13 @@ gimp_cursor_view_init (GimpCursorView *view)
   view->coord_hbox = gtk_hbox_new (TRUE, content_spacing);
   gtk_box_pack_start (GTK_BOX (view), view->coord_hbox, FALSE, FALSE, 0);
   gtk_widget_show (view->coord_hbox);
+
+  view->selection_hbox = gtk_hbox_new (TRUE, content_spacing);
+  gtk_box_pack_start (GTK_BOX (view), view->selection_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (view->selection_hbox);
+
+
+  /* Pixels */
 
   frame = gimp_frame_new (_("Pixels"));
   gtk_box_pack_start (GTK_BOX (view->coord_hbox), frame, TRUE, TRUE, 0);
@@ -178,6 +222,9 @@ gimp_cursor_view_init (GimpCursorView *view)
                              _("Y"), 0.5, 0.5,
                              view->pixel_y_label, 1, FALSE);
 
+
+  /* Units */
+
   frame = gimp_frame_new (_("Units"));
   gtk_box_pack_start (GTK_BOX (view->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -199,6 +246,53 @@ gimp_cursor_view_init (GimpCursorView *view)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y"), 0.5, 0.5,
                              view->unit_y_label, 1, FALSE);
+
+
+  /* Selection Bounding Box */
+
+  frame = gimp_frame_new (_("Selection Bounding Box"));
+  gtk_box_pack_start (GTK_BOX (view->selection_hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  view->selection_x_label = gtk_label_new (_("n/a"));
+  gtk_misc_set_alignment (GTK_MISC (view->selection_x_label), 1.0, 0.5);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("X"), 0.5, 0.5,
+                             view->selection_x_label, 1, FALSE);
+
+  view->selection_y_label = gtk_label_new (_("n/a"));
+  gtk_misc_set_alignment (GTK_MISC (view->selection_y_label), 1.0, 0.5);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Y"), 0.5, 0.5,
+                             view->selection_y_label, 1, FALSE);
+
+  frame = gimp_frame_new ("");
+  gtk_box_pack_start (GTK_BOX (view->selection_hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  view->selection_width_label = gtk_label_new (_("n/a"));
+  gtk_misc_set_alignment (GTK_MISC (view->selection_width_label), 1.0, 0.5);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("W"), 0.5, 0.5,
+                             view->selection_width_label, 1, FALSE);
+
+  view->selection_height_label = gtk_label_new (_("n/a"));
+  gtk_misc_set_alignment (GTK_MISC (view->selection_height_label), 1.0, 0.5);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("H"), 0.5, 0.5,
+                             view->selection_height_label, 1, FALSE);
 
 
   /* color information */
@@ -239,6 +333,7 @@ gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface)
 
   iface->set_aux_info = gimp_cursor_view_set_aux_info;
   iface->get_aux_info = gimp_cursor_view_get_aux_info;
+  iface->set_context  = gimp_cursor_view_set_context;
 }
 
 static void
@@ -354,17 +449,28 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
                                  gdouble   image_res)
 {
   gchar         format_buf[32];
-  gdouble       unit_factor;
-  gint          unit_digits;
-  const gchar  *unit_str;
+  gdouble       value;
+  gint          unit_digits = 0;
+  const gchar  *unit_str = "";
 
-  unit_factor = _gimp_unit_get_factor (gimp, unit);
-  unit_digits = _gimp_unit_get_digits (gimp, unit);
-  unit_str    = _gimp_unit_get_abbreviation (gimp, unit);
+  if (unit != GIMP_UNIT_PIXEL)
+    {
+      gdouble unit_factor;
+
+      unit_factor = _gimp_unit_get_factor (gimp, unit);
+      unit_digits = _gimp_unit_get_digits (gimp, unit);
+      unit_str    = _gimp_unit_get_abbreviation (gimp, unit);
+
+      value = pixel_value * unit_factor / image_res;
+    }
+  else
+    {
+      value = pixel_value;
+    }
 
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s", unit_digits, unit_str);
 
-  g_snprintf (output_buf, output_buf_size, format_buf, pixel_value * unit_factor / image_res);
+  g_snprintf (output_buf, output_buf_size, format_buf, value);
 }
 
 static void
@@ -391,8 +497,182 @@ gimp_cursor_view_style_set (GtkWidget *widget,
                         "content-spacing", &content_spacing,
                         NULL);
 
-  gtk_box_set_spacing (GTK_BOX (view->coord_hbox), content_spacing);
-  gtk_box_set_spacing (GTK_BOX (view->color_hbox), content_spacing);
+  gtk_box_set_spacing (GTK_BOX (view->coord_hbox),     content_spacing);
+  gtk_box_set_spacing (GTK_BOX (view->selection_hbox), content_spacing);
+  gtk_box_set_spacing (GTK_BOX (view->color_hbox),     content_spacing);
+}
+
+static void
+gimp_cursor_view_set_context (GimpDocked  *docked,
+                              GimpContext *context)
+{
+  GimpCursorView *view    = GIMP_CURSOR_VIEW (docked);
+  GimpDisplay    *display = NULL;
+  GimpImage      *image   = NULL;
+
+  if (view->context)
+    {
+      g_signal_handlers_disconnect_by_func (view->context,
+                                            gimp_cursor_view_diplay_changed,
+                                            view);
+      g_signal_handlers_disconnect_by_func (view->context,
+                                            gimp_cursor_view_image_changed,
+                                            view);
+    }
+
+  view->context = context;
+
+  if (view->context)
+    {
+      g_signal_connect_swapped (view->context, "display-changed",
+                                G_CALLBACK (gimp_cursor_view_diplay_changed),
+                                view);
+
+      g_signal_connect_swapped (view->context, "image-changed",
+                                G_CALLBACK (gimp_cursor_view_image_changed),
+                                view);
+
+      display = gimp_context_get_display (context);
+      image   = gimp_context_get_image (context);
+    }
+
+  gimp_cursor_view_diplay_changed (view,
+                                   display,
+                                   view->context);
+  gimp_cursor_view_image_changed (view,
+                                  image,
+                                  view->context);
+}
+
+static void
+gimp_cursor_view_image_changed (GimpCursorView *view,
+                                GimpImage      *image,
+                                GimpContext    *context)
+{
+  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+
+  if (image == view->image)
+    return;
+
+  if (view->image)
+    {
+      g_signal_handlers_disconnect_by_func (view->image,
+                                            gimp_cursor_view_mask_changed,
+                                            view);
+    }
+
+  view->image = image;
+
+  if (view->image)
+    {
+      g_signal_connect_swapped (view->image, "mask-changed",
+                                G_CALLBACK (gimp_cursor_view_mask_changed),
+                                view);
+    }
+
+  gimp_cursor_view_mask_changed (view, view->image);
+}
+
+static void
+gimp_cursor_view_mask_changed (GimpCursorView *view,
+                               GimpImage      *image)
+{
+  gimp_cursor_view_update_selection_info (view, view->image, view->unit);
+}
+
+static void
+gimp_cursor_view_diplay_changed (GimpCursorView *view,
+                                 GimpDisplay    *display,
+                                 GimpContext    *context)
+{
+  GimpDisplayShell *shell = NULL;
+
+  if (display)
+    shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  if (view->shell)
+    {
+      g_signal_handlers_disconnect_by_func (view->shell,
+                                            gimp_cursor_view_shell_unit_changed,
+                                            view);
+    }
+
+  view->shell = shell;
+
+  if (view->shell)
+    {
+      g_signal_connect_swapped (view->shell, "notify::unit",
+                                G_CALLBACK (gimp_cursor_view_shell_unit_changed),
+                                view);
+    }
+
+  gimp_cursor_view_shell_unit_changed (view,
+                                       NULL,
+                                       view->shell);
+}
+
+static void
+gimp_cursor_view_shell_unit_changed (GimpCursorView   *view,
+                                     GParamSpec       *pspec,
+                                     GimpDisplayShell *shell)
+{
+  GimpUnit new_unit = GIMP_UNIT_PIXEL;
+
+  if (shell)
+    {
+      new_unit = gimp_display_shell_get_unit (shell);
+    }
+
+  if (view->unit != new_unit)
+    {
+      gimp_cursor_view_update_selection_info (view, view->image, new_unit);
+      view->unit = new_unit;
+    }
+}
+
+static void gimp_cursor_view_update_selection_info (GimpCursorView *view,
+                                                    GimpImage      *image,
+                                                    GimpUnit        unit)
+{
+  gboolean bounds_exist = FALSE;
+  gint     x1, y1, x2, y2;
+
+  if (image)
+    {
+      bounds_exist = gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
+    }
+
+  if (bounds_exist)
+    {
+      Gimp     *gimp = image->gimp;
+      gint      width, height;
+      gdouble   xres, yres;
+      gchar     buf[32];
+
+      width  = x2 - x1;
+      height = y2 - y1;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), x1, xres);
+      gtk_label_set_text (GTK_LABEL (view->selection_x_label), buf);
+
+      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), y1, yres);
+      gtk_label_set_text (GTK_LABEL (view->selection_y_label), buf);
+
+      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), width, xres);
+      gtk_label_set_text (GTK_LABEL (view->selection_width_label), buf);
+
+      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), height, yres);
+      gtk_label_set_text (GTK_LABEL (view->selection_height_label), buf);
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (view->selection_x_label),      _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->selection_y_label),      _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->selection_width_label),  _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->selection_height_label), _("n/a"));
+    }
 }
 
 

@@ -1,3 +1,15 @@
+2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 138101 – Pointer (Information) tab should display selection
+	bounds
+
+	* app/display/gimpcursorview.c: Show the position and size of the
+	bounding box of the selection in the active image using the unit
+	of the active image window.
+
+	(gimp_cursor_view_format_as_unit): Don't add the unit abbreviation
+	if the unit is px.
+
 2008-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-curves.c (gimp_drawable_curves_explicit):
