@@ -129,7 +129,7 @@ gimp_drawable_curves_explicit (GimpDrawable *drawable,
 
   gimp_data_freeze (GIMP_DATA (curve));
 
-  gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+  gimp_curve_set_curve_type (curve, GIMP_CURVE_FREE);
 
   for (i = 0; i < 256; i++)
     gimp_curve_set_curve (curve,
