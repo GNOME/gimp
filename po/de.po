@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-10 09:46+0100\n"
-"PO-Revision-Date: 2008-11-10 09:55+0100\n"
+"POT-Creation-Date: 2008-11-10 20:39+0100\n"
+"PO-Revision-Date: 2008-11-10 20:39+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -844,7 +844,7 @@ msgstr "Zeigerinformationen-Menü"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-points-actions.c:47
-#: ../app/display/gimpcursorview.c:227
+#: ../app/display/gimpcursorview.c:323
 msgid "_Sample Merged"
 msgstr "_Vereinigung prüfen"
 
@@ -3719,8 +3719,8 @@ msgid "Create a path from the outlines of the current text"
 msgstr "Einen Pfad aus dem Umriss des Texts erzeugen"
 
 #: ../app/actions/text-tool-actions.c:95
-msgid "Text along Path"
-msgstr "Text an Pfad"
+msgid "Text _along Path"
+msgstr "Text an _Pfad"
 
 # XXX "... ziehen" (!?)
 #: ../app/actions/text-tool-actions.c:96
@@ -7179,58 +7179,65 @@ msgstr "Die vertikale Auflösung des Bildes."
 msgid "Background"
 msgstr "Hintergrund"
 
-#. pseudo unit
-#: ../app/core/gimpunit.c:56
+#: ../app/core/gimpunit.c:57
+msgctxt "unit-singular"
 msgid "pixel"
 msgstr "Pixel"
 
-#: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:877
-#: ../app/tools/gimpmeasuretool.c:1020 ../app/tools/gimpmeasuretool.c:1076
-#: ../app/tools/gimpmeasuretool.c:1104 ../app/tools/gimppainttool.c:616
+#: ../app/core/gimpunit.c:57
+msgctxt "unit-plural"
 msgid "pixels"
 msgstr "Pixel"
 
-#. standard units
-#: ../app/core/gimpunit.c:59
+#: ../app/core/gimpunit.c:61
+msgctxt "unit-singular"
 msgid "inch"
 msgstr "Zoll"
 
-#: ../app/core/gimpunit.c:59
+#: ../app/core/gimpunit.c:61
+msgctxt "unit-plural"
 msgid "inches"
 msgstr "Zoll"
 
-#: ../app/core/gimpunit.c:60
+#: ../app/core/gimpunit.c:64
+msgctxt "unit-singular"
 msgid "millimeter"
 msgstr "Millimeter"
 
-#: ../app/core/gimpunit.c:60
+#: ../app/core/gimpunit.c:64
+msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "Millimeter"
 
-#. professional units
-#: ../app/core/gimpunit.c:63
+#: ../app/core/gimpunit.c:68
+msgctxt "unit-singular"
 msgid "point"
 msgstr "Punkt"
 
-#: ../app/core/gimpunit.c:63
+#: ../app/core/gimpunit.c:68
+msgctxt "unit-plural"
 msgid "points"
 msgstr "Punkte"
 
-#: ../app/core/gimpunit.c:64
+#: ../app/core/gimpunit.c:71
+msgctxt "unit-singular"
 msgid "pica"
 msgstr "Pica"
 
-#: ../app/core/gimpunit.c:64
+#: ../app/core/gimpunit.c:71
+msgctxt "unit-plural"
 msgid "picas"
 msgstr "Pica"
 
-#: ../app/core/gimpunit.c:71
+#: ../app/core/gimpunit.c:79
+msgctxt "singular"
 msgid "percent"
 msgstr "Prozent"
 
-#: ../app/core/gimpunit.c:71
-msgid "plural|percent"
-msgstr "Prozente"
+#: ../app/core/gimpunit.c:79
+msgctxt "plural"
+msgid "percent"
+msgstr "Prozent"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
@@ -8259,8 +8266,9 @@ msgstr "Schachbrett_größe:"
 msgid "Monitor Resolution"
 msgstr "Bildschirmauflösung"
 
+#. Pixels
 #: ../app/dialogs/preferences-dialog.c:2319
-#: ../app/display/gimpcursorview.c:159 ../app/widgets/gimpgrideditor.c:269
+#: ../app/display/gimpcursorview.c:203 ../app/widgets/gimpgrideditor.c:269
 #: ../app/widgets/gimpgrideditor.c:301
 msgid "Pixels"
 msgstr "Pixel"
@@ -8836,25 +8844,47 @@ msgctxt "zoom-quality"
 msgid "High"
 msgstr "Hoch"
 
-#: ../app/display/gimpcursorview.c:169 ../app/display/gimpcursorview.c:175
-#: ../app/display/gimpcursorview.c:191 ../app/display/gimpcursorview.c:197
-#: ../app/display/gimpcursorview.c:503 ../app/display/gimpcursorview.c:504
-#: ../app/display/gimpcursorview.c:505 ../app/display/gimpcursorview.c:506
+#: ../app/display/gimpcursorview.c:213 ../app/display/gimpcursorview.c:219
+#: ../app/display/gimpcursorview.c:238 ../app/display/gimpcursorview.c:244
+#: ../app/display/gimpcursorview.c:263 ../app/display/gimpcursorview.c:269
+#: ../app/display/gimpcursorview.c:285 ../app/display/gimpcursorview.c:292
+#: ../app/display/gimpcursorview.c:673 ../app/display/gimpcursorview.c:674
+#: ../app/display/gimpcursorview.c:675 ../app/display/gimpcursorview.c:676
+#: ../app/display/gimpcursorview.c:785 ../app/display/gimpcursorview.c:786
+#: ../app/display/gimpcursorview.c:787 ../app/display/gimpcursorview.c:788
 #: ../app/widgets/gimpcolorframe.c:624
 msgid "n/a"
 msgstr "n.v."
 
-#: ../app/display/gimpcursorview.c:172 ../app/display/gimpcursorview.c:194
+#: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:241
+#: ../app/display/gimpcursorview.c:266
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:178 ../app/display/gimpcursorview.c:200
+#: ../app/display/gimpcursorview.c:222 ../app/display/gimpcursorview.c:247
+#: ../app/display/gimpcursorview.c:272
 msgid "Y"
 msgstr "Y"
 
-#: ../app/display/gimpcursorview.c:181
+#. Units
+#: ../app/display/gimpcursorview.c:228
 msgid "Units"
 msgstr "Einheiten"
+
+#. Selection Bounding Box
+#: ../app/display/gimpcursorview.c:253
+msgid "Selection Bounding Box"
+msgstr "Begrenzung der Auswahl"
+
+#. Width
+#: ../app/display/gimpcursorview.c:289
+msgid "W"
+msgstr "B"
+
+#. Height
+#: ../app/display/gimpcursorview.c:296
+msgid "H"
+msgstr "H"
 
 #: ../app/display/gimpdisplay-handlers.c:161
 #, c-format
@@ -10995,6 +11025,12 @@ msgstr "Klicken und ziehen Sie, um einen neuen Punkt hinzuzufügen"
 #: ../app/tools/gimpmeasuretool.c:628
 msgid "Click-Drag to move all points"
 msgstr "Klicken und ziehen Sie zum Verschieben aller Punkte"
+
+#: ../app/tools/gimpmeasuretool.c:877 ../app/tools/gimpmeasuretool.c:1020
+#: ../app/tools/gimpmeasuretool.c:1076 ../app/tools/gimpmeasuretool.c:1104
+#: ../app/tools/gimppainttool.c:616
+msgid "pixels"
+msgstr "Pixel"
 
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:989
@@ -13394,3 +13430,6 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#~ msgid "plural|percent"
+#~ msgstr "Prozente"

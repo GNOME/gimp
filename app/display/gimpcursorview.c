@@ -285,12 +285,14 @@ gimp_cursor_view_init (GimpCursorView *view)
   view->selection_width_label = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (view->selection_width_label), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             /* Width */
                              _("W"), 0.5, 0.5,
                              view->selection_width_label, 1, FALSE);
 
   view->selection_height_label = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (view->selection_height_label), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             /* Height */
                              _("H"), 0.5, 0.5,
                              view->selection_height_label, 1, FALSE);
 

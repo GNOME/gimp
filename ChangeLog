@@ -1,3 +1,7 @@
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpcursorview.c: added translation context.
+
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 138101 – Pointer (Information) tab should display selection
