@@ -456,7 +456,7 @@ unsharp_region (GimpPixelRgn *srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, width, bytes);
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
-      if (show_progress && row % 8 == 0)
+      if (show_progress && row % 16 == 0)
         gimp_progress_update ((gdouble) row / (3 * height));
     }
 
@@ -467,7 +467,7 @@ unsharp_region (GimpPixelRgn *srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
-      if (show_progress && col % 8 == 0)
+      if (show_progress && col % 16 == 0)
         gimp_progress_update ((gdouble) col / (3 * width) + 0.33);
     }
 
@@ -505,7 +505,7 @@ unsharp_region (GimpPixelRgn *srcPR,
             }
         }
 
-      if (show_progress && row % 8 == 0)
+      if (show_progress && row % 16 == 0)
         gimp_progress_update ((gdouble) row / (3 * height) + 0.67);
 
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);

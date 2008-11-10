@@ -1,5 +1,10 @@
 2008-11-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp-mask.c (unsharp_region): update the
+	progress less often.
+
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/text-tool-actions.c (text_tool_actions): added
 	missing mnemonic.
 
