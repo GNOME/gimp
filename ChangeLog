@@ -1,5 +1,10 @@
 2008-11-10  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/text-tool-actions.c (text_tool_actions): added
+	missing mnemonic.
+
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
 	Bug 559725 – Allow to set image-type and image-num-layers for
 	thumbnail
 

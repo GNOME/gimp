@@ -92,7 +92,7 @@ static const GimpActionEntry text_tool_actions[] =
     NULL },
 
   { "text-tool-text-along-path", GIMP_STOCK_PATH,
-    N_("Text along Path"), "",
+    N_("Text _along Path"), "",
     N_("Bend the text along the currently active path"),
     G_CALLBACK (text_tool_text_along_path_cmd_callback),
     NULL }
