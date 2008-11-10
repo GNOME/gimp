@@ -1,3 +1,10 @@
+2008-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-foreground-extract.c
+	* app/core/gimpdrawable-preview.c 
+	* app/core/gimplayer-project.c: use gimp_drawable_get_colormap()
+	instead of gimp_image_get_colormap().
+
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 558549 – Stroking a single-point path with a paint tool

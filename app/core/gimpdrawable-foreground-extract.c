@@ -32,7 +32,6 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-foreground-extract.h"
 #include "gimpimage.h"
-#include "gimpimage-colormap.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -80,7 +79,6 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
                                             gint          width,
                                             gint          height)
 {
-  GimpImage    *image;
   const guchar *colormap = NULL;
   gboolean      intersect;
   gint          offset_x;
@@ -89,10 +87,8 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
-    colormap = gimp_image_get_colormap (image);
+  if (gimp_drawable_is_indexed (drawable))
+    colormap = gimp_drawable_get_colormap (drawable);
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 

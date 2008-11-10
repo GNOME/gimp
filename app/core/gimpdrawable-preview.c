@@ -37,7 +37,6 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
-#include "gimpimage-colormap.h"
 #include "gimpdrawable-preview.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
@@ -70,7 +69,7 @@ gimp_drawable_get_preview (GimpViewable *viewable,
   GimpImage    *image;
 
   drawable = GIMP_DRAWABLE (viewable);
-  image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  image    = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (! image->gimp->config->layer_previews)
     return NULL;
@@ -154,7 +153,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)) == GIMP_INDEXED)
     return gimp_drawable_indexed_preview (drawable,
-                                          gimp_image_get_colormap (image),
+                                          gimp_drawable_get_colormap (drawable),
                                           src_x, src_y, src_width, src_height,
                                           dest_width, dest_height);
 

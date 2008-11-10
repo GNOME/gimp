@@ -30,7 +30,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpimage.h"
-#include "gimpimage-colormap.h"
 #include "gimplayer.h"
 #include "gimplayer-project.h"
 #include "gimplayermask.h"
@@ -108,13 +107,13 @@ gimp_layer_project_region (GimpDrawable *drawable,
           break;
 
         case GIMP_INDEXED_IMAGE:
-          colormap         = gimp_image_get_colormap (image),
+          colormap         = gimp_drawable_get_colormap (drawable),
           initial_mode     = INITIAL_INDEXED;
           combination_mode = COMBINE_INTEN_A_INDEXED;
           break;
 
         case GIMP_INDEXEDA_IMAGE:
-          colormap         = gimp_image_get_colormap (image),
+          colormap         = gimp_drawable_get_colormap (drawable),
           initial_mode     = INITIAL_INDEXED_ALPHA;
           combination_mode = COMBINE_INTEN_A_INDEXED_A;
          break;
