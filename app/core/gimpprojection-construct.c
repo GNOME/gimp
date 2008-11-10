@@ -144,7 +144,6 @@ gimp_projection_construct_gegl (GimpProjection *proj,
                                 gint            h)
 {
   GeglNode      *sink;
-  GeglProcessor *processor;
   GeglRectangle  rect;
 
   sink = gimp_projection_get_sink_node (proj);
@@ -154,11 +153,18 @@ gimp_projection_construct_gegl (GimpProjection *proj,
   rect.width  = w;
   rect.height = h;
 
-  processor = gegl_node_new_processor (sink, &rect);
+  if (! proj->processor)
+    proj->processor = gegl_node_new_processor (sink, &rect);
+  else
+    gegl_processor_set_rectangle (proj->processor, &rect);
 
-  while (gegl_processor_work (processor, NULL));
+  while (gegl_processor_work (proj->processor, NULL));
 
-  g_object_unref (processor);
+#ifdef __GNUC__
+#warning FIXME: keep the processor around once gegl_processor_set_rectangle() works
+#endif
+  g_object_unref (proj->processor);
+  proj->processor = NULL;
 }
 
 static void

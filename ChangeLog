@@ -1,3 +1,10 @@
+2008-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpprojection.[ch]
+	* app/core/gimpprojection-construct.c: add code that keeps the
+	gegl processor around across calls, but destroy it anyway until
+	gegl_processor_set_rectangle() is fixed.
+
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 559716 – Changing crop size in Crop Tool Options can make UI

@@ -58,6 +58,7 @@ struct _GimpProjection
   TilePyramid              *pyramid;
   GeglNode                 *graph;
   GeglNode                 *sink_node;
+  GeglProcessor            *processor;
 
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;

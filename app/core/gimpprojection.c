@@ -203,6 +203,12 @@ gimp_projection_finalize (GObject *object)
       proj->sink_node = NULL;
     }
 
+  if (proj->processor)
+    {
+      g_object_unref (proj->processor);
+      proj->processor = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
