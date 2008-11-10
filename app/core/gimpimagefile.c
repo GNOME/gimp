@@ -87,7 +87,9 @@ static void     gimp_thumbnail_set_info_from_image (GimpThumbnail  *thumbnail,
 static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     const gchar    *mime_type,
                                                     gint            width,
-                                                    gint            height);
+                                                    gint            height,
+                                                    GimpImageType   type,
+                                                    gint            num_layers);
 
 
 G_DEFINE_TYPE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE)
@@ -248,23 +250,27 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   if (image_state == GIMP_THUMB_STATE_REMOTE ||
       image_state >= GIMP_THUMB_STATE_EXISTS)
     {
-      GimpImage    *image;
-      gboolean      success;
-      gint          width     = 0;
-      gint          height    = 0;
-      const gchar  *mime_type = NULL;
-      GError       *error     = NULL;
+      GimpImage     *image;
+      gboolean       success;
+      gint           width      = 0;
+      gint           height     = 0;
+      const gchar   *mime_type  = NULL;
+      GError        *error      = NULL;
+      GimpImageType  type       = -1;
+      gint           num_layers = -1;
 
       g_object_ref (imagefile);
 
       image = file_open_thumbnail (imagefile->gimp, context, progress,
                                    thumbnail->image_uri, size,
-                                   &mime_type, &width, &height, NULL);
+                                   &mime_type, &width, &height,
+                                   &type, &num_layers, NULL);
 
       if (image)
         {
           gimp_thumbnail_set_info (imagefile->thumbnail,
-                                   mime_type, width, height);
+                                   mime_type, width, height,
+                                   type, num_layers);
         }
       else
         {
@@ -823,20 +829,52 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
                 NULL);
 }
 
+/**
+ * gimp_thumbnail_set_info:
+ * @thumbnail: #GimpThumbnail object
+ * @mime_type:  MIME type of the image associated with this thumbnail
+ * @width:      width of the image associated with this thumbnail
+ * @height:     height of the image associated with this thumbnail
+ * @type:       type of the image (or -1 if the type is not known)
+ * @num_layers: number of layers in the image
+ *              (or -1 if the number of layers is not known)
+ *
+ * Set information about the image associated with the @thumbnail object.
+ */
 static void
 gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
                          const gchar   *mime_type,
                          gint           width,
-                         gint           height)
+                         gint           height,
+                         GimpImageType  type,
+                         gint           num_layers)
 {
   /*  peek the thumbnail to make sure that mtime and filesize are set  */
   gimp_thumbnail_peek_image (thumbnail);
 
   g_object_set (thumbnail,
-                "image-mimetype",   mime_type,
-                "image-width",      width,
-                "image-height",     height,
-                "image-type",       NULL,
-                "image-num-layers", NULL,
+                "image-mimetype", mime_type,
+                "image-width",    width,
+                "image-height",   height,
                 NULL);
+
+  if (type != -1)
+    {
+      GimpEnumDesc *desc;
+
+      desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE),
+                                 type);
+
+      if (desc)
+        g_object_set (thumbnail,
+                      "image-type", desc->value_desc,
+                      NULL);
+    }
+
+  if (num_layers != -1)
+    {
+      g_object_set (thumbnail,
+                    "image-num-layers", num_layers,
+                    NULL);
+    }
 }

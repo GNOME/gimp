@@ -42,6 +42,8 @@ GimpImage * file_open_thumbnail             (Gimp                *gimp,
                                              const gchar        **mime_type,
                                              gint                *image_width,
                                              gint                *image_height,
+                                             GimpImageType       *type,
+                                             gint                *num_layers,
                                              GError             **error);
 GimpImage * file_open_with_display          (Gimp                *gimp,
                                              GimpContext         *context,

@@ -41,6 +41,7 @@
 #define R_OK 4
 #endif
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
@@ -205,17 +206,37 @@ file_open_image (Gimp                *gimp,
   return image;
 }
 
-/*  Attempts to load a thumbnail by using a registered thumbnail loader.  */
+/**
+ * file_open_thumbnail:
+ * @gimp:
+ * @context:
+ * @progress:
+ * @uri:          the URI of the image file
+ * @size:         requested size of the thumbnail
+ * @mime_type:    return location for image MIME type
+ * @image_width:  return location for image width
+ * @image_height: return location for image height
+ * @type:         return location for image type (set to -1 if unknown)
+ * @num_layers:   return location for number of layers
+ *                (set to -1 if the number of layers is not known)
+ * @error:
+ *
+ * Attempts to load a thumbnail by using a registered thumbnail loader.
+ *
+ * Return value: the thumbnail image
+ */
 GimpImage *
-file_open_thumbnail (Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     const gchar   *uri,
-                     gint           size,
-                     const gchar  **mime_type,
-                     gint          *image_width,
-                     gint          *image_height,
-                     GError       **error)
+file_open_thumbnail (Gimp           *gimp,
+                     GimpContext    *context,
+                     GimpProgress   *progress,
+                     const gchar    *uri,
+                     gint            size,
+                     const gchar   **mime_type,
+                     gint           *image_width,
+                     gint           *image_height,
+                     GimpImageType  *type,
+                     gint           *num_layers,
+                     GError        **error)
 {
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *procedure;
@@ -226,10 +247,14 @@ file_open_thumbnail (Gimp          *gimp,
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (image_width != NULL, NULL);
   g_return_val_if_fail (image_height != NULL, NULL);
+  g_return_val_if_fail (type != NULL, NULL);
+  g_return_val_if_fail (num_layers != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *image_width  = 0;
   *image_height = 0;
+  *type         = -1;
+  *num_layers   = -1;
 
   file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, uri,
                                    NULL);
@@ -263,16 +288,38 @@ file_open_thumbnail (Gimp          *gimp,
 
       status = g_value_get_enum (&return_vals->values[0]);
 
-      if (status == GIMP_PDB_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS &&
+          GIMP_VALUE_HOLDS_IMAGE_ID (&return_vals->values[1]))
         {
           image = gimp_value_get_image (&return_vals->values[1], gimp);
 
-          if (return_vals->n_values >= 3)
+          if (return_vals->n_values >= 3 &&
+              G_VALUE_HOLDS_INT (&return_vals->values[2]) &&
+              G_VALUE_HOLDS_INT (&return_vals->values[3]))
             {
               *image_width  = MAX (0,
                                    g_value_get_int (&return_vals->values[2]));
               *image_height = MAX (0,
                                    g_value_get_int (&return_vals->values[3]));
+
+              if (return_vals->n_values >= 5 &&
+                  G_VALUE_HOLDS_INT (&return_vals->values[4]))
+                {
+                  gint value = g_value_get_int (&return_vals->values[4]);
+
+                  if (gimp_enum_get_value (GIMP_TYPE_IMAGE_TYPE, value,
+                                           NULL, NULL, NULL, NULL))
+                    {
+                      *type = value;
+                    }
+                }
+
+              if (return_vals->n_values >= 6 &&
+                  G_VALUE_HOLDS_INT (&return_vals->values[5]))
+                {
+                  *num_layers = MAX (0,
+                                     g_value_get_int (&return_vals->values[5]));
+                }
             }
 
           if (image)

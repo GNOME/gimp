@@ -1,3 +1,16 @@
+2008-11-10  Sven Neumann  <sven@gimp.org>
+
+	Bug 559725 – Allow to set image-type and image-num-layers for
+	thumbnail
+
+	* app/file/file-open.[ch] (file_open_thumbnail): added parameters
+	for image-type and number of layers. Try to get these from the
+	procedure return values. Changes based on a patch from "tks".
+
+	* app/core/gimpimagefile.c (gimp_imagefile_create_thumbnail)
+	(gimp_thumbnail_set_info): set image-type and number of layers if
+	specified.
+
 2008-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-foreground-extract.c
