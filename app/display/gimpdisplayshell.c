@@ -674,6 +674,7 @@ gimp_display_shell_style_set (GtkWidget *widget,
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
   GtkRequisition    requisition;
   GdkGeometry       geometry;
+  GdkWindowHints    geometry_mask;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
@@ -691,9 +692,17 @@ gimp_display_shell_style_set (GtkWidget *widget,
       geometry.min_height += requisition.height;
     }
 
+  geometry_mask = GDK_HINT_MIN_SIZE;
+
+  /*  Only set user pos on the empty display because it gets a pos
+   *  set by gimp. All other displays should be placed by the window
+   *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
+   */
+  if (! shell->display->image)
+    geometry_mask |= GDK_HINT_USER_POS;
+
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
-                                 &geometry,
-                                 GDK_HINT_MIN_SIZE | GDK_HINT_USER_POS);
+                                 &geometry, geometry_mask);
 }
 
 static void
