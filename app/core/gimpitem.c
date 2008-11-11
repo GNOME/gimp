@@ -58,7 +58,9 @@ enum
   PROP_0,
   PROP_ID,
   PROP_WIDTH,
-  PROP_HEIGHT
+  PROP_HEIGHT,
+  PROP_OFFSET_X,
+  PROP_OFFSET_Y
 };
 
 
@@ -199,6 +201,18 @@ gimp_item_class_init (GimpItemClass *klass)
                                    g_param_spec_int ("height", NULL, NULL,
                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                      GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_OFFSET_X,
+                                   g_param_spec_int ("offset-x", NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE, 0,
+                                                     GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_OFFSET_Y,
+                                   g_param_spec_int ("offset-y", NULL, NULL,
+                                                     -GIMP_MAX_IMAGE_SIZE,
+                                                     GIMP_MAX_IMAGE_SIZE, 0,
+                                                     GIMP_PARAM_READABLE));
 }
 
 static void
@@ -254,6 +268,13 @@ gimp_item_get_property (GObject    *object,
     case PROP_HEIGHT:
       g_value_set_int (value, item->height);
       break;
+    case PROP_OFFSET_X:
+      g_value_set_int (value, item->offset_x);
+      break;
+    case PROP_OFFSET_Y:
+      g_value_set_int (value, item->offset_y);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -408,10 +429,9 @@ gimp_item_real_translate (GimpItem *item,
                           gint      offset_y,
                           gboolean  push_undo)
 {
-  item->offset_x += offset_x;
-  item->offset_y += offset_y;
-
-  gimp_item_sync_offset_node (item);
+  gimp_item_set_offset (item,
+                        item->offset_x + offset_x,
+                        item->offset_y + offset_y);
 }
 
 static void
@@ -423,13 +443,19 @@ gimp_item_real_scale (GimpItem              *item,
                       GimpInterpolationType  interpolation,
                       GimpProgress          *progress)
 {
-  item->width    = new_width;
-  item->height   = new_height;
-  item->offset_x = new_offset_x;
-  item->offset_y = new_offset_y;
+  if (item->width != new_width)
+    {
+      item->width = new_width;
+      g_object_notify (G_OBJECT (item), "width");
+    }
 
-  g_object_notify (G_OBJECT (item), "width");
-  g_object_notify (G_OBJECT (item), "height");
+  if (item->height != new_height)
+    {
+      item->height = new_height;
+      g_object_notify (G_OBJECT (item), "height");
+    }
+
+  gimp_item_set_offset (item, new_offset_x, new_offset_y);
 }
 
 static void
@@ -440,13 +466,21 @@ gimp_item_real_resize (GimpItem    *item,
                        gint         offset_x,
                        gint         offset_y)
 {
-  item->offset_x = item->offset_x - offset_x;
-  item->offset_y = item->offset_y - offset_y;
-  item->width    = new_width;
-  item->height   = new_height;
+  if (item->width != new_width)
+    {
+      item->width = new_width;
+      g_object_notify (G_OBJECT (item), "width");
+    }
 
-  g_object_notify (G_OBJECT (item), "width");
-  g_object_notify (G_OBJECT (item), "height");
+  if (item->height != new_height)
+    {
+      item->height = new_height;
+      g_object_notify (G_OBJECT (item), "height");
+    }
+
+  gimp_item_set_offset (item,
+                        item->offset_x - offset_x,
+                        item->offset_y - offset_y);
 }
 
 static GeglNode *
@@ -548,13 +582,19 @@ gimp_item_configure (GimpItem    *item,
       g_object_notify (G_OBJECT (item), "id");
     }
 
-  item->width    = width;
-  item->height   = height;
-  item->offset_x = offset_x;
-  item->offset_y = offset_y;
+  if (item->width != width)
+    {
+      item->width = width;
+      g_object_notify (G_OBJECT (item), "width");
+    }
 
-  g_object_notify (G_OBJECT (item), "width");
-  g_object_notify (G_OBJECT (item), "height");
+  if (item->height != height)
+    {
+      item->height = height;
+      g_object_notify (G_OBJECT (item), "height");
+    }
+
+  gimp_item_set_offset (item, offset_x, offset_y);
 
   if (name)
     gimp_object_set_name (GIMP_OBJECT (item), name);
@@ -713,10 +753,23 @@ gimp_item_set_offset (GimpItem *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  item->offset_x = offset_x;
-  item->offset_y = offset_y;
+  g_object_freeze_notify (G_OBJECT (item));
+
+  if (item->offset_x != offset_x)
+    {
+      item->offset_x = offset_x;
+      g_object_notify (G_OBJECT (item), "offset-x");
+    }
+
+  if (item->offset_y != offset_y)
+    {
+      item->offset_y = offset_y;
+      g_object_notify (G_OBJECT (item), "offset-y");
+    }
 
   gimp_item_sync_offset_node (item);
+
+  g_object_thaw_notify (G_OBJECT (item));
 }
 
 /**
@@ -817,8 +870,12 @@ gimp_item_scale (GimpItem              *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_SCALE,
                                  item_class->scale_desc);
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
                      interpolation, progress);
+
+  g_object_thaw_notify (G_OBJECT (item));
 
   if (gimp_item_is_attached (item))
     gimp_image_undo_group_end (image);
@@ -984,7 +1041,11 @@ gimp_item_resize (GimpItem    *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                  item_class->resize_desc);
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   item_class->resize (item, context, new_width, new_height, offset_x, offset_y);
+
+  g_object_thaw_notify (G_OBJECT (item));
 
   if (gimp_item_is_attached (item))
     gimp_image_undo_group_end (image);
@@ -1010,7 +1071,11 @@ gimp_item_flip (GimpItem            *item,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->flip_desc);
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   item_class->flip (item, context, flip_type, axis, clip_result);
+
+  g_object_thaw_notify (G_OBJECT (item));
 
   gimp_image_undo_group_end (image);
 }
@@ -1036,8 +1101,12 @@ gimp_item_rotate (GimpItem         *item,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->rotate_desc);
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   item_class->rotate (item, context, rotate_type, center_x, center_y,
                       clip_result);
+
+  g_object_thaw_notify (G_OBJECT (item));
 
   gimp_image_undo_group_end (image);
 }
@@ -1067,8 +1136,12 @@ gimp_item_transform (GimpItem               *item,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->transform_desc);
 
+  g_object_freeze_notify (G_OBJECT (item));
+
   item_class->transform (item, context, matrix, direction, interpolation,
                          recursion_level, clip_result, progress);
+
+  g_object_thaw_notify (G_OBJECT (item));
 
   gimp_image_undo_group_end (image);
 }
@@ -1139,11 +1212,12 @@ gimp_item_get_offset_node (GimpItem *item)
     {
       GeglNode *node = gimp_item_get_node (item);
 
-      item->offset_node = gegl_node_new_child (node,
-                                               "operation", "gegl:shift",
-                                               "x",         (gdouble) item->offset_x,
-                                               "y",         (gdouble) item->offset_y,
-                                               NULL);
+      item->offset_node =
+        gegl_node_new_child (node,
+                             "operation", "gegl:shift",
+                             "x",         (gdouble) item->offset_x,
+                             "y",         (gdouble) item->offset_y,
+                             NULL);
     }
 
   return item->offset_node;

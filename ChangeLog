@@ -1,3 +1,15 @@
+2008-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.c: add read-only "offset-x" and "offset-y"
+	properties. Call gimp_item_set_offset() from all places that set
+	offset_x and offset_y in this file. Freeze and thaw GObject
+	notification around all calls to virtual functions which might
+	emit notify. Add missing notifications whenever width and height
+	change.
+
+	* app/core/gimpimage-rotate.c: use gimp_item_set_offset() instead
+	of setting the values manually.
+
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
 	Bug 560300 – Document History did not clear when "Keep record of

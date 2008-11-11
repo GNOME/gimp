@@ -122,8 +122,7 @@ gimp_image_rotate (GimpImage        *image,
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
-      item->offset_x = 0;
-      item->offset_y = 0;
+      gimp_item_set_offset (item, 0, 0);
 
       if (progress)
         gimp_progress_set_value (progress, progress_current++ / progress_max);
@@ -138,10 +137,13 @@ gimp_image_rotate (GimpImage        *image,
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
-      item->width    = new_image_width;
-      item->height   = new_image_height;
-      item->offset_x = 0;
-      item->offset_y = 0;
+      item->width  = new_image_width;
+      item->height = new_image_height;
+
+      g_object_notify (G_OBJECT (item), "width");
+      g_object_notify (G_OBJECT (item), "height");
+
+      gimp_item_set_offset (item, 0, 0);
 
       gimp_item_translate (item,
                            (new_image_width  - gimp_image_get_width  (image)) / 2,
@@ -159,8 +161,7 @@ gimp_image_rotate (GimpImage        *image,
     gimp_item_rotate (GIMP_ITEM (mask), context,
                       rotate_type, center_x, center_y, FALSE);
 
-    GIMP_ITEM (mask)->offset_x = 0;
-    GIMP_ITEM (mask)->offset_y = 0;
+    gimp_item_set_offset (GIMP_ITEM (mask), 0, 0);
 
     if (progress)
       gimp_progress_set_value (progress, progress_current++ / progress_max);
