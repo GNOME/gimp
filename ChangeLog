@@ -1,3 +1,11 @@
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
+	Bug 557830 – PDB browser chokes as you are entering regex
+	characters
+
+	* libgimp/gimpprocbrowserdialog.c: check if the query is a valid
+	regex before calling gimp_procedural_db_query().
+
 2008-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.c: add read-only "offset-x" and "offset-y"
