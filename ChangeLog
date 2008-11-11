@@ -1,5 +1,15 @@
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
+	Bug 560300 – Document History did not clear when "Keep record of
+	used files" was unchecked
+	
+	* app/actions/documents-commands.c (documents_clear_cmd_callback):
+	don't purge the entire GtkRecentManager, but only clear items
+	added by GIMP. Do this regardless of the "save-document-history"
+	gimprc option.
+
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
 	Bug 560375 – Clearing an already empty document history crashes GIMP
 
 	* app/actions/documents-commands.c (documents_clear_cmd_callback):
