@@ -1,3 +1,13 @@
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
+ 	Merged from trunk:
+
+	Bug 560375 – Clearing an already empty document history crashes GIMP
+
+	* app/actions/documents-commands.c (documents_clear_cmd_callback):
+	gtk_recent_manager_purge_items() may return 0 but not set an
+	error.
+
 2008-11-11  Michael Natterer  <mitch@gimp.org>
 
  	Merged from trunk:
