@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-01 23:14+0000\n"
-"PO-Revision-Date: 2008-10-06 18:44+0200\n"
+"PO-Revision-Date: 2008-10-15 11:50+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -187,28 +187,27 @@ msgstr "_Ascendent"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Creează un gradient repetitiv folosind culorile din paletă"
+msgstr "Creează un degrade repetitiv folosind culorile din paletă"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr "Paletă la gradient _repetitiv"
+msgstr "Paletă la degrade _repetitiv"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
-msgstr "Creează un gradient folosind culorile din paletă"
+msgstr "Creează un degrade folosind culorile din paletă"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
-msgstr "Paletă la _gradient"
+msgstr "Paletă la de_grade"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
 msgstr "Felie"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
-#, fuzzy
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Taie o imagine în lungul ghidajelor ei, creează imagini și ??? tebelă HTML"
+msgstr "Taie o imagine în lungul ghidajelor ei, creează un fragment de imagine și tebelă HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."

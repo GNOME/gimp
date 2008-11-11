@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-20 11:30+0000\n"
-"PO-Revision-Date: 2008-09-29 01:44+0200\n"
+"PO-Revision-Date: 2008-10-15 11:50+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Dacă unele dintre fotografiile scanate nu arată suficient de colorate,
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
-msgstr "Dacă trasați o cale (Editare → Trasează o cale...), instrumentele de pictură pot fi folosite cu setările lor curente. Puteți folosi pensula de pictură în modul gradient, sau chiar în instrumentul Gumă de șters sau Mânjire."
+msgstr "Dacă trasați o cale (Editare → Trasează o cale...), instrumentele de pictură pot fi folosite cu setările lor curente. Puteți folosi pensula de pictură în modul degrade, sau chiar în instrumentul Gumă de șters sau Mânjire."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
