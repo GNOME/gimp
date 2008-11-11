@@ -1,5 +1,12 @@
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
+	Bug 560283 – "Scale image..." causes distortion around edges.
+
+	* app/paint-funcs/scale-region.c (scale): corrected fix for
+	bug #556248.
+
+2008-11-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/file-pdf.c: also return image type and number of
 	pages. Followup to bug #559725.
 
