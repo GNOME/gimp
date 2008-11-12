@@ -36,6 +36,8 @@
 
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
+
+#include "gimppluginerror.h"
 #include "gimppluginprocedure.h"
 #include "plug-in-menu-path.h"
 
@@ -349,7 +351,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     {
       basename = g_filename_display_basename (proc->prog);
 
-      g_set_error (error, 0, 0,
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\"\n"
                    "in the invalid menu location \"%s\".\n"
@@ -469,7 +471,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     {
       basename = g_filename_display_basename (proc->prog);
 
-      g_set_error (error, 0, 0,
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\" "
                    "in the invalid menu location \"%s\".\n"
@@ -505,7 +507,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
       basename = g_filename_display_basename (proc->prog);
 
-      g_set_error (error, 0, 0,
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n\n"
                    "attempted to install %s procedure \"%s\" "
                    "which does not take the standard %s Plug-In "

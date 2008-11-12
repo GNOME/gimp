@@ -346,7 +346,7 @@ gimp_procedure_execute (GimpProcedure  *procedure,
               if (return_vals->n_values > 1 &&
                   G_VALUE_HOLDS_STRING (&return_vals->values[1]))
                 {
-                  g_set_error_literal (error, 0, 0,
+                  g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_FAILED,
 				       g_value_get_string (&return_vals->values[1]));
                 }
             }

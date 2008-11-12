@@ -1,3 +1,12 @@
+2008-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimppdberror.h
+	* app/plug-in/gimppluginerror.h: added generic error codes.
+
+	* app/pdb/gimpprocedure.c
+	* app/plug-in/gimppluginprocedure.c: use the GIMP_PDB_ERROR and
+	GIMP_PLUG_IN_ERROR domains.
+
 2008-11-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimptransformtool.c: Align static function prototypes.

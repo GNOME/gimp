@@ -22,6 +22,7 @@
 
 typedef enum
 {
+  GIMP_PLUG_IN_FAILED,  /* generic error condition */
   GIMP_PLUG_IN_EXECUTION_FAILED,
   GIMP_PLUG_IN_NOT_FOUND
 } GimpPlugInErrorCode;
