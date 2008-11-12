@@ -57,6 +57,16 @@ typedef enum
 } GimpModuleState;
 
 
+#define GIMP_MODULE_ERROR (gimp_module_error_quark ())
+
+GQuark  gimp_module_error_quark (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MODULE_FAILED             /* generic error condition */
+} GimpModuleError;
+
+
 struct _GimpModuleInfo
 {
   guint32  abi_version;

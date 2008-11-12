@@ -40,6 +40,8 @@
 
 #include <gdk/gdkwin32.h>
 
+#include "libgimpmodule/gimpmodule.h"
+
 #include "gimpinputdevicestore.h"
 
 
@@ -210,19 +212,22 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
 
   if ((store->window = create_aux_window (store)) == NULL)
     {
-      g_set_error (&store->error, 0, 0, "Could not create aux window");
+      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+			   "Could not create aux window");
       return;
     }
 
   if ((dinput8 = LoadLibrary ("dinput8.dll")) == NULL)
     {
-      g_set_error (&store->error, 0, 0, "Could not load dinput8.dll");
+      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+			   "Could not load dinput8.dll");
       return;
     }
 
   if ((p_DirectInput8Create = (t_DirectInput8Create) GetProcAddress (dinput8, "DirectInput8Create")) == NULL)
     {
-      g_set_error (&store->error, 0, 0, "Could not find DirectInput8Create in dinput8.dll");
+      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+			   "Could not find DirectInput8Create in dinput8.dll");
       return;
     }
 
@@ -232,7 +237,9 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                                   (LPVOID *) &store->directinput8,
                                                   NULL))))
     {
-      g_set_error (&store->error, 0, 0, "DirectInput8Create failed: %s", g_win32_error_message (hresult));
+      g_set_error (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+		   "DirectInput8Create failed: %s",
+		   g_win32_error_message (hresult));
       return;
     }
 
@@ -242,7 +249,9 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                                     store,
                                                     DIEDFL_ATTACHEDONLY))))
     {
-      g_set_error (&store->error, 0, 0, "IDirectInput8::EnumDevices failed: %s", g_win32_error_message (hresult));
+      g_set_error (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+		   "IDirectInput8::EnumDevices failed: %s",
+		   g_win32_error_message (hresult));
       return;
     }
 }

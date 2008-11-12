@@ -28,13 +28,14 @@
 
 #include "gimpinputdevicestore.h"
 
+#include "libgimpmodule/gimpmodule.h"
+
 
 #ifdef HAVE_LIBHAL
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <hal/libhal.h>
-
 
 enum
 {
@@ -189,7 +190,9 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
         }
       else
         {
-          g_set_error (&store->error, 0, 0, "Unable to connect to hald");
+          g_set_error_literal (&store->error,
+			       GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+			       "Unable to connect to hald");
         }
 
       libhal_ctx_free (store->context);

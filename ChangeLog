@@ -1,5 +1,14 @@
 2008-11-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmodule/gimpmodule.[ch]: added GIMP_MODULE_ERROR domain.
+
+	* modules/gimpinputdevicestore-hal.c
+	* modules/gimpinputdevicestore-dx.c
+	* modules/controller-dx-dinput.c: use GIMP_MODULE_ERROR as error
+	domain instead of 0.
+
+2008-11-12  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimperror.[ch]: added GIMP_ERROR as general error domain.
 

@@ -402,6 +402,21 @@ gimp_module_register_enum (GTypeModule      *module,
   return g_type_module_register_enum (module, name, const_static_values);
 }
 
+/**
+ * gimp_module_error_quark:
+ *
+ * This function is never called directly. Use GIMP_MODULE_ERROR() instead.
+ *
+ * Return value: the #GQuark that defines the GIMP module error domain.
+ *
+ * Since: GIMP 2.8
+ **/
+GQuark
+gimp_module_error_quark (void)
+{
+  return g_quark_from_static_string ("gimp-module-error-quark");
+}
+
 
 /*  private functions  */
 
