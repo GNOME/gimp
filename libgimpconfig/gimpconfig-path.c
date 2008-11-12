@@ -29,6 +29,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "gimpconfig-error.h"
 #include "gimpconfig-path.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -374,7 +375,8 @@ gimp_config_path_expand_only (const gchar  *path,
 
           if (!s)
             {
-              g_set_error (error, 0, 0, _("Cannot expand ${%s}"), token);
+              g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+			   _("Cannot expand ${%s}"), token);
               g_free (token);
               goto cleanup;
             }
