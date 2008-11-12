@@ -29,6 +29,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
+#include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
@@ -159,7 +160,7 @@ gimp_blend_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Blend does not operate on indexed layers."));
       return FALSE;
     }

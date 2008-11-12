@@ -32,10 +32,11 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "core/gimppickable.h"
-#include "core/gimpimage.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpbrush.h"
+#include "core/gimpdrawable.h"
+#include "core/gimperror.h"
+#include "core/gimpimage.h"
+#include "core/gimppickable.h"
 
 #include "gimpheal.h"
 #include "gimpsourceoptions.h"
@@ -150,7 +151,7 @@ gimp_heal_start (GimpPaintCore     *paint_core,
 
   if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Healing does not operate on indexed layers."));
       return FALSE;
     }

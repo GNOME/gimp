@@ -43,6 +43,7 @@
 
 #include "config/gimpxmlparser.h"
 
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
@@ -333,10 +334,12 @@ gimp_vectors_import (GimpImage    *image,
       else
         {
           if (filename)
-            g_set_error (error, 0, 0, _("No paths found in '%s'"),
+            g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+			 _("No paths found in '%s'"),
                          gimp_filename_to_utf8 (filename));
           else
-            g_set_error (error, 0, 0, _("No paths found in the buffer"));
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+				 _("No paths found in the buffer"));
 
           success = FALSE;
         }

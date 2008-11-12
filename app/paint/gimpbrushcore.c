@@ -34,6 +34,7 @@
 
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 
@@ -349,7 +350,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (! core->main_brush)
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("No brushes available for use with this tool."));
       return FALSE;
     }

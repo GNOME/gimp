@@ -43,6 +43,7 @@
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
@@ -715,7 +716,7 @@ gimp_channel_stroke (GimpItem           *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Cannot stroke empty channel."));
       return FALSE;
     }

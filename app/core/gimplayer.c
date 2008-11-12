@@ -41,6 +41,7 @@
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
 #include "gimpdrawable-invert.h"
+#include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
@@ -667,7 +668,7 @@ gimp_layer_rename (GimpItem     *item,
     {
       if (GIMP_IS_CHANNEL (layer->fs.drawable))
         {
-          g_set_error_literal (error, 0, 0,
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("Cannot create a new layer from the floating "
 				 "selection because it belongs to a layer mask "
 				 "or channel."));
@@ -1286,7 +1287,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   if (layer->mask)
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Unable to add a layer mask since "
 			     "the layer already has one."));
       return NULL;
@@ -1297,7 +1298,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
       (gimp_item_get_height (GIMP_ITEM (layer)) !=
        gimp_item_get_height (GIMP_ITEM (mask))))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Cannot add layer mask of different "
 			     "dimensions than specified layer."));
       return NULL;

@@ -32,6 +32,7 @@
 #include "gegl/gimpdesaturateconfig.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -121,7 +122,7 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Desaturate does only operate on RGB layers."));
       return FALSE;
     }

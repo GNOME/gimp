@@ -36,6 +36,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimperror.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 
@@ -228,7 +229,8 @@ gimp_tool_options_delete (GimpToolOptions  *tool_options,
   if (g_unlink (filename) != 0 && errno != ENOENT)
     {
       retval = FALSE;
-      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+		   _("Deleting \"%s\" failed: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
     }
 

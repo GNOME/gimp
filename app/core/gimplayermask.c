@@ -27,6 +27,7 @@
 
 #include "core-types.h"
 
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -157,7 +158,8 @@ gimp_layer_mask_rename (GimpItem     *item,
 {
   /* reject renaming, layer masks are always named "<layer name> mask"  */
 
-  g_set_error (error, 0, 0, _("Cannot rename layer masks."));
+  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+	       _("Cannot rename layer masks."));
 
   return FALSE;
 }

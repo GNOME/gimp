@@ -164,6 +164,8 @@ libappcore_a_sources = \
 	gimpdrawablestack.h			\
 	gimpdrawableundo.c			\
 	gimpdrawableundo.h			\
+	gimperror.c				\
+	gimperror.h				\
 	gimpfilloptions.c			\
 	gimpfilloptions.h			\
 	gimpfloatingselundo.c			\

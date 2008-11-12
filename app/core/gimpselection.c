@@ -32,6 +32,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -271,7 +272,7 @@ gimp_selection_stroke (GimpItem           *item,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("There is no selection to stroke."));
       return FALSE;
     }
@@ -659,7 +660,7 @@ gimp_selection_extract (GimpChannel  *selection,
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Unable to cut or copy because the "
 			     "selected region is empty."));
       return NULL;
@@ -832,7 +833,7 @@ gimp_selection_float (GimpChannel   *selection,
   if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
       (x1 == x2 || y1 == y2))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Cannot float selection because the selected "
 			     "region is empty."));
       return NULL;

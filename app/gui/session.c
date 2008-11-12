@@ -304,7 +304,8 @@ session_clear (Gimp    *gimp,
 
   if (g_unlink (filename) != 0 && errno != ENOENT)
     {
-      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+		   _("Deleting \"%s\" failed: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       success = FALSE;
     }

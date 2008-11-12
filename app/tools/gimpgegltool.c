@@ -32,6 +32,7 @@
 #include "tools-types.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 
@@ -154,7 +155,7 @@ gimp_gegl_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("GEGL operations do not operate on indexed layers."));
       return FALSE;
     }

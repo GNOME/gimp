@@ -148,6 +148,7 @@
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-convert.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo.h"
@@ -787,7 +788,7 @@ gimp_image_convert (GimpImage               *image,
 
       if (custom_palette->n_colors < 1)
         {
-          g_set_error_literal (error, 0, 0,
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("Cannot convert image: palette is empty."));
           return FALSE;
         }

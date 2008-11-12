@@ -40,6 +40,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
+#include "gimperror.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
@@ -3150,7 +3151,8 @@ gimp_image_raise_layer (GimpImage  *image,
 
   if (index == 0)
     {
-      g_set_error_literal (error, 0, 0, _("Layer cannot be raised higher."));
+      g_set_error_literal (error,  GIMP_ERROR, GIMP_FAILED,
+			   _("Layer cannot be raised higher."));
       return FALSE;
     }
 
@@ -3174,7 +3176,8 @@ gimp_image_lower_layer (GimpImage  *image,
 
   if (index == gimp_container_num_children (image->layers) - 1)
     {
-      g_set_error_literal (error, 0, 0, _("Layer cannot be lowered more."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Layer cannot be lowered more."));
       return FALSE;
     }
 
@@ -3379,7 +3382,8 @@ gimp_image_raise_channel (GimpImage    *image,
 
   if (index == 0)
     {
-      g_set_error_literal (error, 0, 0, _("Channel cannot be raised higher."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Channel cannot be raised higher."));
       return FALSE;
     }
 
@@ -3415,7 +3419,8 @@ gimp_image_lower_channel (GimpImage    *image,
 
   if (index == gimp_container_num_children (image->channels) - 1)
     {
-      g_set_error_literal (error, 0, 0, _("Channel cannot be lowered more."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Channel cannot be lowered more."));
       return FALSE;
     }
 
@@ -3585,7 +3590,8 @@ gimp_image_raise_vectors (GimpImage    *image,
 
   if (index == 0)
     {
-      g_set_error_literal (error, 0, 0, _("Path cannot be raised higher."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Path cannot be raised higher."));
       return FALSE;
     }
 
@@ -3620,7 +3626,8 @@ gimp_image_lower_vectors (GimpImage    *image,
 
   if (index == gimp_container_num_children (image->vectors) - 1)
     {
-      g_set_error_literal (error, 0, 0, _("Path cannot be lowered more."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Path cannot be lowered more."));
       return FALSE;
     }
 

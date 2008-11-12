@@ -79,7 +79,8 @@ gimp_vectors_export_file (const GimpImage    *image,
   file = g_fopen (filename, "w");
   if (!file)
     {
-      g_set_error (error, 0, 0, _("Could not open '%s' for writing: %s"),
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+		   _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
@@ -92,7 +93,8 @@ gimp_vectors_export_file (const GimpImage    *image,
 
   if (fclose (file))
     {
-      g_set_error (error, 0, 0, _("Error while writing '%s': %s"),
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+		   _("Error while writing '%s': %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }

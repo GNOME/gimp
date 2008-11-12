@@ -36,6 +36,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimp-transform-region.h"
@@ -158,8 +159,9 @@ gimp_perspective_clone_start (GimpPaintCore     *paint_core,
 
   if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
     {
-      g_set_error_literal (error, 0, 0,
-			   _("Perspective Clone does not operate on indexed layers."));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Perspective Clone does not operate on "
+			     "indexed layers."));
       return FALSE;
     }
 

@@ -25,6 +25,7 @@
 #include "base/boundary.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -328,11 +329,10 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
       gimp_paint_core_cleanup (core);
     }
 
-  if (! initialized &&
-      due_to_lack_of_points &&
-      *error == NULL)
+  if (! initialized && due_to_lack_of_points && *error == NULL)
     {
-      g_set_error (error, 0, 0, _("Not enough points to stroke"));
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Not enough points to stroke"));
     }
 
   return initialized;

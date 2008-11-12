@@ -34,6 +34,7 @@
 #include "gegl/gimpoperationhuesaturation.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -167,7 +168,7 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Hue-Saturation operates only on RGB color layers."));
       return FALSE;
     }

@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
@@ -136,7 +137,7 @@ gimp_clone_start (GimpPaintCore     *paint_core,
     {
       if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
         {
-          g_set_error_literal (error, 0, 0,
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("No patterns available for use with this tool."));
           return FALSE;
         }

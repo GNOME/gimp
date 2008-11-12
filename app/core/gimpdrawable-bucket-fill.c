@@ -38,6 +38,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
 #include "gimppattern.h"
@@ -87,7 +88,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
       if (! pattern)
         {
-          g_set_error_literal (error, 0, 0,
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("No patterns available for this operation."));
           return FALSE;
         }

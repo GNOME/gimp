@@ -37,6 +37,7 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
@@ -285,7 +286,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
     }
   else
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Not enough visible paths for a merge. "
 			     "There must be at least two."));
       return NULL;

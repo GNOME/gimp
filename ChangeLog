@@ -1,5 +1,46 @@
 2008-11-12  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimperror.[ch]: added GIMP_ERROR as general error domain.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimpselection.c
+	* app/core/gimptooloptions.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimpperspectiveclone.c
+	* app/paint/gimpsourcecore.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdesaturatetool.c
+	* app/tools/gimpgegltool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/vectors/gimpvectors-import.c: use GIMP_ERROR as error domain
+	instead of 0, which is not accepted by g_set_error_literal().
+
+	* app/gui/session.c
+	* app/menus/menus.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimpdevices.c: use G_FILE_ERROR as error domain for
+	file errors.
+
+2008-11-12  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-icc-profile.c: use the GIMP_PLUG_IN_ERROR
 	domain.
 

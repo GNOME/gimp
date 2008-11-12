@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 
@@ -224,7 +225,8 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
     {
       if (! source_core->src_drawable)
         {
-          g_set_error_literal (error, 0, 0, _("Set a source image first."));
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			       _("Set a source image first."));
           return FALSE;
         }
 

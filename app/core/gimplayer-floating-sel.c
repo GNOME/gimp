@@ -31,6 +31,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -133,7 +134,7 @@ floating_sel_to_layer (GimpLayer  *layer,
   /*  Check if the floating layer belongs to a channel...  */
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Cannot create a new layer from the floating "
 			     "selection because it belongs to a layer mask "
 			     "or channel."));
