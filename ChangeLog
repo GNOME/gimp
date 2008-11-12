@@ -1,3 +1,7 @@
+2008-11-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimptransformtool.c: Align static function prototypes.
+
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
 	Bug 557830 – PDB browser chokes as you are entering regex
@@ -71,7 +75,7 @@
 
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/display/gimpcursorview.c ()
+	* app/display/gimpcursorview.c
 	(gimp_cursor_view_update_cursor): Show selection info from the
 	image under the cursor.
 
