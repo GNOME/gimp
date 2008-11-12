@@ -5,6 +5,7 @@ EXPORTS
 	gimp_module_db_new
 	gimp_module_db_refresh
 	gimp_module_db_set_load_inhibit
+	gimp_module_error_quark
 	gimp_module_get_type
 	gimp_module_info_copy
 	gimp_module_info_free

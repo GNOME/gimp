@@ -1,5 +1,10 @@
 2008-11-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbase.def: sorted.
+	* libgimpmodule/gimpmodule.def: updated.
+
+2008-11-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-path.c (gimp_config_path_expand_only):
 	set the error in the GIMP_CONFIG_ERROR domain.
 
