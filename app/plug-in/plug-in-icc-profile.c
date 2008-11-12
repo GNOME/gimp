@@ -184,7 +184,7 @@ plug_in_icc_profile_info (GimpImage     *image,
 
         default:
           if (error && *error == NULL)
-            g_set_error (error, 0, 0,
+            g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                          _("Error running '%s'"), ICC_PROFILE_INFO_PROC);
           break;
         }
@@ -194,7 +194,7 @@ plug_in_icc_profile_info (GimpImage     *image,
       return (status == GIMP_PDB_SUCCESS);
     }
 
-  g_set_error (error, 0, 0,
+  g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                _("Plug-In missing (%s)"), ICC_PROFILE_INFO_PROC);
 
   return FALSE;
@@ -243,7 +243,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
 
         default:
           if (error && *error == NULL)
-            g_set_error (error, 0, 0,
+            g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                          _("Error running '%s'"), ICC_PROFILE_FILE_INFO_PROC);
           break;
         }
@@ -253,7 +253,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
       return (status == GIMP_PDB_SUCCESS);
     }
 
-  g_set_error (error, 0, 0,
+  g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                _("Plug-In missing (%s)"), ICC_PROFILE_FILE_INFO_PROC);
 
   return FALSE;

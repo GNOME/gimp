@@ -1,5 +1,10 @@
 2008-11-12  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-icc-profile.c: use the GIMP_PLUG_IN_ERROR
+	domain.
+
+2008-11-12  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimppdberror.h
 	* app/plug-in/gimppluginerror.h: added generic error codes.
 
