@@ -1,3 +1,11 @@
+2008-11-12  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesource.c:
+	(gimp_operation_tile_source_prepare),
+	(gimp_operation_tile_source_process): cache the data in "RaGaBa A"
+	float instead as a copy of the tile managers exact data, this allows
+	more direct tile data access at projection compositing time.
+
 2008-11-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbase.def: sorted.

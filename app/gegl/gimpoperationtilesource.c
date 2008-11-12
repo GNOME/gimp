@@ -185,12 +185,8 @@ gimp_operation_tile_source_prepare (GeglOperation *operation)
 
   if (self->tile_manager)
     {
-      const Babl *format;
 
-      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager),
-                                        self->linear);
-
-      gegl_operation_set_format (operation, "output", format);
+      gegl_operation_set_format (operation, "output", babl_format("RaGaBaA float"));
     }
 }
 
@@ -224,7 +220,8 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
   if (! self->tile_manager)
     return FALSE;
 
-  format = gegl_operation_get_format (operation, "output");
+  format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager),
+                                    self->linear);
 
   pixel_region_init (&srcPR, self->tile_manager,
                      result->x,     result->y,
