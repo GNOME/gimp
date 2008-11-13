@@ -23,6 +23,9 @@
 #define __GIMP_CURSOR_VIEW_H__
 
 
+#include "widgets/gimpeditor.h"
+
+
 #define GIMP_TYPE_CURSOR_VIEW            (gimp_cursor_view_get_type ())
 #define GIMP_CURSOR_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURSOR_VIEW, GimpCursorView))
 #define GIMP_CURSOR_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURSOR_VIEW, GimpCursorViewClass))
@@ -32,6 +35,19 @@
 
 
 typedef struct _GimpCursorViewClass GimpCursorViewClass;
+typedef struct _GimpCursorViewPriv  GimpCursorViewPriv;
+
+struct _GimpCursorView
+{
+  GimpEditor          parent_instance;
+
+  GimpCursorViewPriv *priv;
+};
+
+struct _GimpCursorViewClass
+{
+  GimpEditorClass  parent_class;
+};
 
 
 GType       gimp_cursor_view_get_type          (void) G_GNUC_CONST;

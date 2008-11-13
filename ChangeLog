@@ -1,3 +1,10 @@
+2008-11-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpcursorview.[ch]: Move the instance struct to the
+	header but add a typed opaque priv pointer to it so we can avoid
+	exposing implementation details. Also move the class struct to the
+	header.
+
 2008-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_floating_sel_attached_to): get
