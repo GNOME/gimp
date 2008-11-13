@@ -1,3 +1,9 @@
+2008-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_draw_quad): check that the resulting area has
+	positive width and height.
+
 2008-11-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpcursorview.[ch]: Move the instance struct to the
