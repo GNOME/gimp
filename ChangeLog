@@ -1,5 +1,12 @@
 2008-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (image_floating_sel_attached_to): get
+	rid of useless casts.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2008-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.c: add read-only boolean properties "visible"
 	and "linked".
 
