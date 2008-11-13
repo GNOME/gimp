@@ -134,7 +134,6 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   GimpMessageBox *box;
   GClosure       *closure;
   GSource        *source;
-  gchar          *name;
   gchar          *title;
 
   if (shell->close_dialog)
@@ -143,10 +142,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
-
-  title = g_strdup_printf (_("Close %s"), name);
-  g_free (name);
+  title = g_strdup_printf (_("Close %s"), gimp_image_get_display_name (image));
 
   shell->close_dialog =
     dialog = gimp_message_dialog_new (title, GTK_STOCK_SAVE,
@@ -216,13 +212,11 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
                                        GimpMessageBox *box)
 {
   GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (box));
-  gchar     *name;
-
-  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
 
   if (window)
     {
-      gchar *title = g_strdup_printf (_("Close %s"), name);
+      gchar *title = g_strdup_printf (_("Close %s"),
+				      gimp_image_get_display_name (image));
 
       gtk_window_set_title (GTK_WINDOW (window), title);
       g_free (title);
@@ -231,8 +225,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
   gimp_message_box_set_primary_text (box,
                                      _("Save the changes to image '%s' "
                                        "before closing?"),
-                                     name);
-  g_free (name);
+                                     gimp_image_get_display_name (image));
 }
 
 

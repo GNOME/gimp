@@ -189,22 +189,17 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               title[i++] = '%';
               break;
 
-            case 'f': /* pruned filename */
+            case 'f': /* base filename */
               {
-                const gchar *uri = gimp_image_get_uri (image);
-                gchar       *basename;
+                const gchar *name = gimp_image_get_display_name (image);
 
-                basename = file_utils_uri_display_basename (uri);
-
-                i += print (title, title_len, i, "%s", basename);
-
-                g_free (basename);
+                i += print (title, title_len, i, "%s", name);
               }
               break;
 
             case 'F': /* full filename */
               {
-                gchar *filename;
+                gchar       *filename;
                 const gchar *uri = gimp_image_get_uri (image);
 
                 filename = file_utils_uri_display_name (uri);

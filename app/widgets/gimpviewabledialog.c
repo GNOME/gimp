@@ -372,20 +372,14 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
 
   if (GIMP_IS_ITEM (object))
     {
-      const gchar *uri;
-      gchar       *basename;
-      gchar       *tmp;
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (object));
+      gchar     *tmp;
 
-      uri = gimp_image_get_uri (gimp_item_get_image (GIMP_ITEM (object)));
       tmp = name;
-
-      basename = file_utils_uri_display_basename (uri);
       name = g_strdup_printf ("%s-%d (%s)",
                               tmp,
                               gimp_item_get_ID (GIMP_ITEM (object)),
-                              basename);
-
-      g_free (basename);
+                              gimp_image_get_display_name (image));
       g_free (tmp);
     }
 

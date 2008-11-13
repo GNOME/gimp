@@ -32,8 +32,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
-#include "file/file-utils.h"
-
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimpvectors.h"
@@ -387,26 +385,20 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
                              GimpImageBaseType   type,
                              GError            **error)
 {
-  gchar *name;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (gimp_image_base_type (image) == type)
     return TRUE;
 
-  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
-
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                _("Image '%s' (%d) is of type '%s', "
                  "but an image of type '%s' is expected"),
-               name,
+               gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE,
                                              gimp_image_base_type (image)),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
-
-  g_free (name);
 
   return FALSE;
 }
@@ -416,23 +408,17 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
                                  GimpImageBaseType   type,
                                  GError            **error)
 {
-  gchar *name;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (gimp_image_base_type (image) != type)
     return TRUE;
 
-  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
-
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                _("Image '%s' (%d) is already of type '%s'"),
-               name,
+               gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
-
-  g_free (name);
 
   return FALSE;
 }

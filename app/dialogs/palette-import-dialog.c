@@ -38,8 +38,6 @@
 #include "core/gimppalette.h"
 #include "core/gimppalette-import.h"
 
-#include "file/file-utils.h"
-
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
@@ -508,12 +506,11 @@ palette_import_image_changed (GimpContext  *context,
 
       if (image)
         {
-          gchar *name;
           gchar *label;
 
-          name = file_utils_uri_display_basename (gimp_image_get_uri (image));
-          label = g_strdup_printf ("%s-%d", name, gimp_image_get_ID (image));
-          g_free (name);
+          label = g_strdup_printf ("%s-%d",
+				   gimp_image_get_display_name (image),
+				   gimp_image_get_ID (image));
 
           gtk_entry_set_text (GTK_ENTRY (dialog->entry), label);
           g_free (label);

@@ -948,16 +948,29 @@ gimp_image_finalize (GObject *object)
       image->gimp = NULL;
     }
 
+  if (image->display_name)
+    {
+      g_free (image->display_name);
+      image->display_name = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
 gimp_image_name_changed (GimpObject *object)
 {
+  GimpImage   *image = GIMP_IMAGE (object);
   const gchar *name;
 
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
+  if (image->display_name)
+    {
+      g_free (image->display_name);
+      image->display_name = NULL;
+    }
 
   name = gimp_object_get_name (object);
 
@@ -1081,23 +1094,16 @@ static gchar *
 gimp_image_get_description (GimpViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpImage   *image = GIMP_IMAGE (viewable);
-  const gchar *uri;
-  gchar       *basename;
-  gchar       *retval;
-
-  uri = gimp_image_get_uri (GIMP_IMAGE (image));
-
-  basename = file_utils_uri_display_basename (uri);
+  GimpImage *image = GIMP_IMAGE (viewable);
 
   if (tooltip)
-    *tooltip = file_utils_uri_display_name (uri);
+    {
+      *tooltip = file_utils_uri_display_name (gimp_image_get_uri (image));
+    }
 
-  retval = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (image));
-
-  g_free (basename);
-
-  return retval;
+  return g_strdup_printf ("%s-%d",
+			  gimp_image_get_display_name (image),
+			  gimp_image_get_ID (image));
 }
 
 static void
@@ -1438,6 +1444,21 @@ gimp_image_get_filename (const GimpImage *image)
     return NULL;
 
   return g_filename_from_uri (uri, NULL, NULL);
+}
+
+const gchar *
+gimp_image_get_display_name (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  if (! image->display_name)
+    {
+      const gchar *uri = gimp_image_get_uri (image);
+
+      image->display_name = file_utils_uri_display_basename (uri);
+    }
+
+  return image->display_name;
 }
 
 void

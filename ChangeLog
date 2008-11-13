@@ -1,5 +1,18 @@
 2008-11-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: added gimp_image_get_display_name().
+
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpdisplayshell-close.c
+	* app/display/gimpdisplayshell-title.c
+	* app/pdb/gimppdb-utils.c
+
+	* app/widgets/gimpviewabledialog.c: use the new method instead of
+	getting the image URI and mangling it with
+	file_utils_uri_display_basename().
+
+2008-11-13  Sven Neumann  <sven@gimp.org>
+
 	Bug 559292 – SOTA Chrome cannot accept different textures
 
 	* app/pdb/gimppdb-utils.c (gimp_pdb_image_is_base_type)

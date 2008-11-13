@@ -107,6 +107,7 @@ struct _GimpImage
   GimpPlugInProcedure *load_proc;           /*  procedure used for loading   */
   GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
 
+  gchar             *display_name;          /*  display basename             */
   gint               width, height;         /*  width and height attributes  */
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
@@ -248,6 +249,8 @@ const gchar   * gimp_image_get_uri               (const GimpImage    *image);
 void            gimp_image_set_filename          (GimpImage          *image,
                                                   const gchar        *filename);
 gchar         * gimp_image_get_filename          (const GimpImage    *image);
+
+const gchar   * gimp_image_get_display_name      (GimpImage          *image);
 
 void            gimp_image_set_load_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
