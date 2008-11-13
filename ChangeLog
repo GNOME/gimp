@@ -18,7 +18,6 @@
 	* app/display/gimpdisplayshell-close.c
 	* app/display/gimpdisplayshell-title.c
 	* app/pdb/gimppdb-utils.c
-
 	* app/widgets/gimpviewabledialog.c: use the new method instead of
 	getting the image URI and mangling it with
 	file_utils_uri_display_basename().
