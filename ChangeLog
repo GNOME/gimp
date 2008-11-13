@@ -1,3 +1,11 @@
+2008-11-13  Sven Neumann  <sven@gimp.org>
+
+	Bug 559292 – SOTA Chrome cannot accept different textures
+
+	* app/pdb/gimppdb-utils.c (gimp_pdb_image_is_base_type)
+	(gimp_pdb_image_is_not_base_type): gimp_object_get_name() may 
+	return NULL for images. Use gimp_image_get_uri() instead.
+
 2008-11-12  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesource.c:
