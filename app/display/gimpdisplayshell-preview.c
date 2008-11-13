@@ -349,14 +349,13 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
                               gfloat       *v,
                               guchar        opacity)
 {
-  gint       x2[3], y2[3];
-  gfloat     u2[3], v2[3];
-  gint       minx, maxx, miny, maxy; /* screen bounds of the quad        */
-  gint       dwidth, dheight;        /* dimensions of dest               */
-  GdkPixbuf *area;                   /* quad sized area with dest pixels */
-  gint       c;
+  gint    x2[3], y2[3];
+  gfloat  u2[3], v2[3];
+  gint    minx, maxx, miny, maxy; /* screen bounds of the quad        */
+  gint    dwidth, dheight;        /* dimensions of dest               */
+  gint    c;
 
-  g_return_if_fail(GDK_IS_DRAWABLE (dest));
+  g_return_if_fail (GDK_IS_DRAWABLE (dest));
 
   x2[0] = x[3];  y2[0] = y[3];  u2[0] = u[3];  v2[0] = v[3];
   x2[1] = x[2];  y2[1] = y[2];  u2[1] = u[2];  v2[1] = v[2];
@@ -382,21 +381,27 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
     }
   if (minx < 0) minx = 0;
   if (miny < 0) miny = 0;
-  if (maxx > dwidth - 1)  maxx=dwidth  - 1;
-  if (maxy > dheight - 1) maxy=dheight - 1;
+  if (maxx > dwidth - 1)  maxx = dwidth  - 1;
+  if (maxy > dheight - 1) maxy = dheight - 1;
 
-  area = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-                         maxx - minx + 1, maxy - miny + 1);
-  g_return_if_fail (area != NULL);
+  if (minx <= maxx && miny <= maxy)
+    {
+      GdkPixbuf *area;
 
-  gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
-                               mask, mask_offx, mask_offy,
-                               x, y, u, v, opacity);
-  gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
-                               mask, mask_offx, mask_offy,
-                               x2, y2, u2, v2, opacity);
+      area = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                             maxx - minx + 1, maxy - miny + 1);
 
-  g_object_unref (area);
+      g_return_if_fail (area != NULL);
+
+      gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
+                                   mask, mask_offx, mask_offy,
+                                   x, y, u, v, opacity);
+      gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
+                                   mask, mask_offx, mask_offy,
+                                   x2, y2, u2, v2, opacity);
+
+      g_object_unref (area);
+    }
 }
 
 /**
