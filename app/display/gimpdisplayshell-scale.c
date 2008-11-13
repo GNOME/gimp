@@ -164,8 +164,6 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
   gdouble    vertical_lower;
   gdouble    vertical_upper;
   gdouble    vertical_max_size;
-  gint       scaled_viewport_offset_x;
-  gint       scaled_viewport_offset_y;
 
   if (! shell->display)
     return;
@@ -213,27 +211,22 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
 
   /* Adjust due to scrolling */
 
-  gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
-                                                        &scaled_viewport_offset_x,
-                                                        &scaled_viewport_offset_y);
-
   if (image)
     {
-      horizontal_lower -= img2real (shell, TRUE,
+      horizontal_lower += img2real (shell, TRUE,
                                     FUNSCALEX (shell,
-                                               (gdouble) scaled_viewport_offset_x));
-      horizontal_upper -= img2real (shell, TRUE,
+                                               (gdouble) shell->offset_x));
+      horizontal_upper += img2real (shell, TRUE,
                                     FUNSCALEX (shell,
-                                               (gdouble) scaled_viewport_offset_x));
+                                               (gdouble) shell->offset_x));
 
-      vertical_lower   -= img2real (shell, FALSE,
+      vertical_lower   += img2real (shell, FALSE,
                                     FUNSCALEY (shell,
-                                               (gdouble) scaled_viewport_offset_y));
-      vertical_upper   -= img2real (shell, FALSE,
+                                               (gdouble) shell->offset_y));
+      vertical_upper   += img2real (shell, FALSE,
                                     FUNSCALEY (shell,
-                                               (gdouble) scaled_viewport_offset_y));
+                                               (gdouble) shell->offset_y));
     }
-
 
   /* Finally setup the actual rulers */
 
@@ -455,7 +448,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
                             GIMP_ZOOM_TO,
                             zoom_factor,
                             GIMP_ZOOM_FOCUS_BEST_GUESS);
-  
+
   gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 

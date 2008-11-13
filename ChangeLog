@@ -1,5 +1,17 @@
 2008-11-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scroll.[ch]: removed function
+	gimp_display_shell_scroll_get_scaled_viewport_offset() as it was
+	only returning -shell->offset_x and -shell->offset_y and it
+	started to show up in profiles.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpdisplayshell-scale.c: use the shell offsets
+	directly.
+
+2008-11-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-preview.c
 	(gimp_display_shell_draw_quad): check that the resulting area has
 	positive width and height.
