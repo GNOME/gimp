@@ -60,7 +60,9 @@ enum
   PROP_WIDTH,
   PROP_HEIGHT,
   PROP_OFFSET_X,
-  PROP_OFFSET_Y
+  PROP_OFFSET_Y,
+  PROP_VISIBLE,
+  PROP_LINKED
 };
 
 
@@ -213,6 +215,16 @@ gimp_item_class_init (GimpItemClass *klass)
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_VISIBLE,
+                                   g_param_spec_boolean ("visible", NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_LINKED,
+                                   g_param_spec_boolean ("linked", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -273,6 +285,12 @@ gimp_item_get_property (GObject    *object,
       break;
     case PROP_OFFSET_Y:
       g_value_set_int (value, item->offset_y);
+      break;
+    case PROP_VISIBLE:
+      g_value_set_boolean (value, item->visible);
+      break;
+    case PROP_LINKED:
+      g_value_set_boolean (value, item->linked);
       break;
 
     default:
@@ -1444,6 +1462,8 @@ gimp_item_set_visible (GimpItem *item,
       item->visible = visible ? TRUE : FALSE;
 
       g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "visible");
     }
 }
 
@@ -1467,6 +1487,8 @@ gimp_item_set_linked (GimpItem *item,
       item->linked = linked ? TRUE : FALSE;
 
       g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "linked");
     }
 }
 
