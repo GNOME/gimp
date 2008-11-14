@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-17 00:58+0200\n"
-"PO-Revision-Date: 2008-09-17 01:03+0200\n"
+"PO-Revision-Date: 2008-11-14 08:23+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -8273,7 +8273,7 @@ msgstr "Lær mer"
 #.
 #: ../app/dialogs/tips-parser.c:188
 msgid "tips-locale:C"
-msgstr "tips-locale:no"
+msgstr "tips-locale:nb"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"

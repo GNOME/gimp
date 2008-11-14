@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-12 15:26+0100\n"
-"PO-Revision-Date: 2008-03-05 22:35+0100\n"
+"PO-Revision-Date: 2008-11-14 08:23+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kol-stue@online.no>\n"
 "Language-Team: Kolbjørn Stuestøl <kol-stue@online.no>\n"
 "MIME-Version: 1.0\n"
@@ -8274,7 +8274,7 @@ msgstr "Vis «Dagens tips» ved opning av GIMP"
 #.
 #: ../app/dialogs/tips-parser.c:189
 msgid "tips-locale:C"
-msgstr "tips-locale:no"
+msgstr "tips-locale:nn"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
