@@ -82,6 +82,7 @@ struct _GimpImageFlushAccumulator
 {
   gboolean alpha_changed;
   gboolean mask_changed;
+  gboolean floating_selection_changed;
   gboolean preview_invalidated;
 };
 
@@ -280,6 +281,8 @@ gint            gimp_image_get_height            (const GimpImage    *image);
 gboolean        gimp_image_has_alpha             (const GimpImage    *image);
 gboolean        gimp_image_is_empty              (const GimpImage    *image);
 
+void           gimp_image_set_floating_selection (GimpImage          *image,
+                                                  GimpLayer          *floating_sel);
 GimpLayer    * gimp_image_get_floating_selection (const GimpImage    *image);
 void       gimp_image_floating_selection_changed (GimpImage          *image);
 

@@ -110,7 +110,7 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
 
           floating_layer->fs.drawable = floating_sel_undo->drawable;
           gimp_image_set_active_layer (undo->image, floating_layer);
-          undo->image->floating_sel = floating_layer;
+          gimp_image_set_floating_selection (undo->image, floating_layer);
 
           /*  clear the selection  */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));
@@ -125,7 +125,7 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
 
           /*  update the pointers  */
           floating_layer->fs.drawable = NULL;
-          undo->image->floating_sel   = NULL;
+          gimp_image_set_floating_selection (undo->image, NULL);
         }
 
       gimp_object_name_changed (GIMP_OBJECT (floating_layer));
@@ -134,8 +134,6 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
                             0, 0,
                             gimp_item_get_width  (GIMP_ITEM (floating_layer)),
                             gimp_item_get_height (GIMP_ITEM (floating_layer)));
-
-      gimp_image_floating_selection_changed (undo->image);
       break;
 
     default:

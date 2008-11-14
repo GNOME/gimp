@@ -151,7 +151,7 @@ floating_sel_to_layer (GimpLayer  *layer,
 
   /*  Set pointers  */
   layer->fs.drawable  = NULL;
-  image->floating_sel = NULL;
+  gimp_image_set_floating_selection (image, NULL);
 
   gimp_item_set_visible (item, TRUE, TRUE);
   gimp_layer_set_lock_alpha (layer, FALSE, TRUE);
@@ -164,8 +164,6 @@ floating_sel_to_layer (GimpLayer  *layer,
                         0, 0,
                         gimp_item_get_width  (item),
                         gimp_item_get_height (item));
-
-  gimp_image_floating_selection_changed (image);
 
   return TRUE;
 }

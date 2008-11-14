@@ -667,9 +667,10 @@ gimp_image_init (GimpImage *image)
 
   image->preview               = NULL;
 
-  image->flush_accum.alpha_changed       = FALSE;
-  image->flush_accum.mask_changed        = FALSE;
-  image->flush_accum.preview_invalidated = FALSE;
+  image->flush_accum.alpha_changed              = FALSE;
+  image->flush_accum.mask_changed               = FALSE;
+  image->flush_accum.floating_selection_changed = FALSE;
+  image->flush_accum.preview_invalidated        = FALSE;
 }
 
 static GObject *
@@ -1185,6 +1186,12 @@ gimp_image_projectable_flush (GimpProjectable *projectable,
       image->flush_accum.mask_changed = FALSE;
     }
 
+  if (image->flush_accum.floating_selection_changed)
+    {
+      gimp_image_floating_selection_changed (image);
+      image->flush_accum.floating_selection_changed = FALSE;
+    }
+
   if (image->flush_accum.preview_invalidated)
     {
       /*  don't invalidate the preview here, the projection does this when
@@ -1613,6 +1620,21 @@ gimp_image_is_empty (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
 
   return gimp_container_is_empty (image->layers);
+}
+
+void
+gimp_image_set_floating_selection (GimpImage *image,
+                                   GimpLayer *floating_sel)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (floating_sel == NULL || GIMP_IS_LAYER (floating_sel));
+
+  if (image->floating_sel != floating_sel)
+    {
+      image->floating_sel = floating_sel;
+
+      image->flush_accum.floating_selection_changed = TRUE;
+    }
 }
 
 GimpLayer *
@@ -2929,10 +2951,6 @@ gimp_image_add_layer (GimpImage *image,
     gimp_image_undo_push_layer_add (image, _("Add Layer"),
                                     layer, active_layer);
 
-  /*  If the layer is a floating selection, set the fs pointer  */
-  if (gimp_layer_is_floating_sel (layer))
-    image->floating_sel = layer;
-
   /*  add the layer to the list at the specified position  */
   if (position == -1)
     {
@@ -2957,11 +2975,12 @@ gimp_image_add_layer (GimpImage *image,
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
 
+  /*  If the layer is a floating selection, set the fs pointer  */
+  if (gimp_layer_is_floating_sel (layer))
+    gimp_image_set_floating_selection (image, layer);
+
   if (old_has_alpha != gimp_image_has_alpha (image))
     image->flush_accum.alpha_changed = TRUE;
-
-  if (gimp_layer_is_floating_sel (layer))
-    gimp_image_floating_selection_changed (image);
 
   return TRUE;
 }
@@ -3042,11 +3061,9 @@ gimp_image_remove_layer (GimpImage *image,
       /*  If this was the floating selection, reset the fs pointer
        *  and activate the underlying drawable
        */
-      image->floating_sel = NULL;
+      gimp_image_set_floating_selection (image, NULL);
 
       floating_sel_activate_drawable (layer);
-
-      gimp_image_floating_selection_changed (image);
     }
   else if (layer == active_layer)
     {
