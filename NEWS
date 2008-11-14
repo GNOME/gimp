@@ -12,16 +12,17 @@ Overview of Changes since GIMP 2.6.2
 
 * Bugs fixed:
 
- 558660 – help behavior for locales without manual translation
- 559015 – Move tool gives bad information about px moved
- 558549 – Stroking a single-point path with a paint tool
-          crashes GIMP
+ 559490 – Wrong lang tags for 'no'
+ 559292 – SOTA Chrome cannot accept different textures
+ 560375 – Clearing an already empty document history crashes GIMP
+ 559580 – Image windows need better default locations
+ 560283 – "Scale image..." causes distortion around edges
  559716 – Changing crop size in Crop Tool Options can make UI
           unresponsive
- 560283 – "Scale image..." causes distortion around edges
- 559580 – Image windows need better default locations
- 560375 – Clearing an already empty document history crashes GIMP
- 559292 – SOTA Chrome cannot accept different textures
+ 558549 – Stroking a single-point path with a paint tool
+          crashes GIMP
+ 559015 – Move tool gives bad information about px moved
+ 558660 – help behavior for locales without manual translation
 
 
 
