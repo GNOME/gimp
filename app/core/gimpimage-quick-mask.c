@@ -85,7 +85,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
             {
               /* if no selection */
 
-              GimpLayer *floating_sel = gimp_image_floating_sel (image);
+              GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
               if (floating_sel)
                 floating_sel_to_layer (floating_sel, NULL);
@@ -126,7 +126,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
     {
       if (mask)
         {
-          GimpLayer *floating_sel = gimp_image_floating_sel (image);
+          GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        _("Disable Quick Mask"));

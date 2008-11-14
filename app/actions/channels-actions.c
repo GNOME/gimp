@@ -153,7 +153,7 @@ channels_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      fs = (gimp_image_floating_sel (image) != NULL);
+      fs = (gimp_image_get_floating_selection (image) != NULL);
 
       if (GIMP_IS_COMPONENT_EDITOR (data))
         {

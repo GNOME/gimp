@@ -174,7 +174,8 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
 
   if (item_view->image)
     {
-      GimpLayer *floating_sel = gimp_image_floating_sel (item_view->image);
+      GimpLayer *floating_sel =
+        gimp_image_get_floating_selection (item_view->image);
 
       success = (item         == NULL ||
                  floating_sel == NULL ||

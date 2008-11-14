@@ -465,7 +465,7 @@ xcf_save_layer_props (XcfInfo    *info,
   if (layer == gimp_image_get_active_layer (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
 
-  if (layer == gimp_image_floating_sel (image))
+  if (layer == gimp_image_get_floating_selection (image))
     {
       info->floating_sel_drawable = layer->fs.drawable;
       xcf_check_error (xcf_save_prop (info, image, PROP_FLOATING_SELECTION,

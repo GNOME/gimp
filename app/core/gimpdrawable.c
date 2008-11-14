@@ -1050,7 +1050,7 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
   if (gimp_drawable_has_floating_sel (drawable))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpLayer *fs    = gimp_image_floating_sel (image);
+      GimpLayer *fs    = gimp_image_get_floating_selection (image);
       gint       off_x, off_y;
       gint       fs_off_x, fs_off_y;
       gint       combine_x, combine_y;
@@ -1621,7 +1621,7 @@ gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 
   return (floating_sel && floating_sel->fs.drawable == drawable);
 }

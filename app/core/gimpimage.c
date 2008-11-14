@@ -1616,7 +1616,7 @@ gimp_image_is_empty (const GimpImage *image)
 }
 
 GimpLayer *
-gimp_image_floating_sel (const GimpImage *image)
+gimp_image_get_floating_selection (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -1685,7 +1685,7 @@ gimp_image_set_component_active (GimpImage       *image,
 
   if (index != -1 && active != image->active[index])
     {
-      GimpLayer *floating_sel = gimp_image_floating_sel (image);
+      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
       image->active[index] = active ? TRUE : FALSE;
 
@@ -2645,7 +2645,7 @@ gimp_image_set_active_layer (GimpImage *image,
                         gimp_container_have (image->layers,
                                              GIMP_OBJECT (layer)), NULL);
 
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 
   /*  Make sure the floating_sel always is the active layer  */
   if (floating_sel && layer != floating_sel)
@@ -2686,7 +2686,7 @@ gimp_image_set_active_channel (GimpImage   *image,
                                              GIMP_OBJECT (channel)), NULL);
 
   /*  Not if there is a floating selection  */
-  if (channel && gimp_image_floating_sel (image))
+  if (channel && gimp_image_get_floating_selection (image))
     return NULL;
 
   if (channel != image->active_channel)
@@ -2919,7 +2919,7 @@ gimp_image_add_layer (GimpImage *image,
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image,
                         FALSE);
 
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 
   active_layer = gimp_image_get_active_layer (image);
 
@@ -2997,7 +2997,7 @@ gimp_image_remove_layer (GimpImage *image,
                                    _("Remove Layer"));
       undo_group = TRUE;
 
-      gimp_image_remove_layer (image, gimp_image_floating_sel (image),
+      gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
                                TRUE, NULL);
     }
 
@@ -3008,7 +3008,7 @@ gimp_image_remove_layer (GimpImage *image,
 
   old_has_alpha = gimp_image_has_alpha (image);
 
-  if (image->floating_sel == layer)
+  if (gimp_image_get_floating_selection (image) == layer)
     {
       undo_desc = _("Remove Floating Selection");
 
@@ -3037,7 +3037,7 @@ gimp_image_remove_layer (GimpImage *image,
   gimp_container_remove (image->layers, GIMP_OBJECT (layer));
   image->layer_stack = g_slist_remove (image->layer_stack, layer);
 
-  if (image->floating_sel == layer)
+  if (gimp_image_get_floating_selection (image) == layer)
     {
       /*  If this was the floating selection, reset the fs pointer
        *  and activate the underlying drawable
@@ -3335,7 +3335,7 @@ gimp_image_remove_channel (GimpImage   *image,
                                    _("Remove Channel"));
       undo_group = TRUE;
 
-      gimp_image_remove_layer (image, gimp_image_floating_sel (image),
+      gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
                                TRUE, NULL);
     }
 

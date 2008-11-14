@@ -1679,7 +1679,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 }
 CODE
     );
@@ -1708,7 +1708,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpLayer *floating_sel = gimp_image_floating_sel (image);
+  GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
   if (floating_sel)
     drawable = floating_sel->fs.drawable;

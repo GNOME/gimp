@@ -1,3 +1,36 @@
+2008-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: rename gimp_image_floating_sel() to
+	gimp_image_get_floating_selection().
+
+	* app/actions/channels-actions.c
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.c
+	* app/actions/select-actions.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimpselection.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimpregionselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/image.pdb: changed accordingly, replaced some
+	instances of direct acces by the accessor.
+
+	* app/pdb/image-cmds.c: regenerated.
+
 2008-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scroll.[ch]: removed function

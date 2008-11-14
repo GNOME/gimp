@@ -849,9 +849,9 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
 
   /*  If there is a floating selection, anchor it  */
-  if (gimp_image_floating_sel (display->image))
+  if (gimp_image_get_floating_selection (display->image))
     {
-      floating_sel_anchor (gimp_image_floating_sel (display->image));
+      floating_sel_anchor (gimp_image_get_floating_selection (display->image));
       gimp_free_select_tool_halt (fst);
     }
   else

@@ -197,7 +197,7 @@ layer_select_advance (LayerSelect *layer_select,
     return;
 
   /*  If there is a floating selection, allow no advancement  */
-  if (gimp_image_floating_sel (layer_select->image))
+  if (gimp_image_get_floating_selection (layer_select->image))
     return;
 
   current_layer = gimp_image_get_active_layer (layer_select->image);

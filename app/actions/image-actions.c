@@ -246,7 +246,7 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      fs  = (gimp_image_floating_sel (image) != NULL);
+      fs  = (gimp_image_get_floating_selection (image) != NULL);
       aux = (gimp_image_get_active_channel (image) != NULL);
       lp  = ! gimp_image_is_empty (image);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));

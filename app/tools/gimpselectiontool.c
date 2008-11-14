@@ -174,7 +174,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   drawable     = gimp_image_get_active_drawable (display->image);
   layer        = gimp_image_pick_correlate_layer (display->image,
                                                   coords->x, coords->y);
-  floating_sel = gimp_image_floating_sel (display->image);
+  floating_sel = gimp_image_get_floating_selection (display->image);
 
   if (drawable)
     {

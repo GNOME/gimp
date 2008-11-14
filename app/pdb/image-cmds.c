@@ -745,7 +745,7 @@ image_get_floating_sel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      floating_sel = gimp_image_floating_sel (image);
+      floating_sel = gimp_image_get_floating_selection (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -774,7 +774,7 @@ image_floating_sel_attached_to_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpLayer *floating_sel = gimp_image_floating_sel (image);
+      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
       if (floating_sel)
         drawable = floating_sel->fs.drawable;

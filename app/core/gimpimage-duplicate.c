@@ -94,7 +94,7 @@ gimp_image_duplicate (GimpImage *image)
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   /*  Copy floating layer  */
-  floating_layer = gimp_image_floating_sel (image);
+  floating_layer = gimp_image_get_floating_selection (image);
   if (floating_layer)
     {
       floating_sel_drawable = floating_layer->fs.drawable;
@@ -127,7 +127,7 @@ gimp_image_duplicate (GimpImage *image)
       if (gimp_image_get_active_layer (image) == layer)
         active_layer = new_layer;
 
-      if (image->floating_sel == layer)
+      if (gimp_image_get_floating_selection (image) == layer)
         floating_layer = new_layer;
 
       if (floating_sel_drawable == GIMP_DRAWABLE (layer))

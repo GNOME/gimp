@@ -212,7 +212,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   /*  Make a check to see if it should be a floating selection translation  */
   if ((edit_mode == GIMP_TRANSLATE_MODE_MASK_TO_LAYER ||
        edit_mode == GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER) &&
-      gimp_image_floating_sel (display->image))
+      gimp_image_get_floating_selection (display->image))
     {
       edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
     }

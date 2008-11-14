@@ -760,9 +760,9 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
       gint         pressx;
       gint         pressy;
 
-      if (gimp_image_floating_sel (image))
+      if (gimp_image_get_floating_selection (image))
         {
-          floating_sel_anchor (gimp_image_floating_sel (image));
+          floating_sel_anchor (gimp_image_get_floating_selection (image));
           gimp_image_flush (image);
           return TRUE;
         }

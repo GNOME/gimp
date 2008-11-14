@@ -285,13 +285,15 @@ gimp_move_tool_button_press (GimpTool         *tool,
                                                              coords->x,
                                                              coords->y)))
             {
-              if (gimp_image_floating_sel (display->image) &&
+              if (gimp_image_get_floating_selection (display->image) &&
                   ! gimp_layer_is_floating_sel (layer))
                 {
                   /*  If there is a floating selection, and this aint it,
                    *  use the move tool to anchor it.
                    */
-                  move->floating_layer = gimp_image_floating_sel (display->image);
+                  move->floating_layer =
+                    gimp_image_get_floating_selection (display->image);
+
                   gimp_tool_control_activate (tool->control);
 
                   return;
@@ -749,7 +751,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
                                                          coords->x, coords->y)))
         {
           /*  if there is a floating selection, and this aint it...  */
-          if (gimp_image_floating_sel (display->image) &&
+          if (gimp_image_get_floating_selection (display->image) &&
               ! gimp_layer_is_floating_sel (layer))
             {
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;

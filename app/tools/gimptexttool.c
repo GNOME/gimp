@@ -1747,13 +1747,13 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
 
-  if (gimp_image_floating_sel (image))
+  if (gimp_image_get_floating_selection (image))
     {
       g_signal_handlers_block_by_func (image,
                                        gimp_text_tool_layer_changed,
                                        text_tool);
 
-      floating_sel_anchor (gimp_image_floating_sel (image));
+      floating_sel_anchor (gimp_image_get_floating_selection (image));
 
       g_signal_handlers_unblock_by_func (image,
                                          gimp_text_tool_layer_changed,

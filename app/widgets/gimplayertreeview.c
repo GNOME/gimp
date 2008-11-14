@@ -642,7 +642,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
     {
       GimpImage *dest_image = GIMP_ITEM_TREE_VIEW (tree_view)->image;
 
-      if (gimp_image_floating_sel (dest_image))
+      if (gimp_image_get_floating_selection (dest_image))
         return FALSE;
     }
 
@@ -858,7 +858,7 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
   GimpLayer             *floating_sel;
   GtkTreeIter           *iter;
 
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 
   if (floating_sel)
     {

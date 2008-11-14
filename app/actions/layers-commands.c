@@ -228,7 +228,7 @@ layers_new_cmd_callback (GtkAction *action,
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
    */
-  if ((floating_sel = gimp_image_floating_sel (image)))
+  if ((floating_sel = gimp_image_get_floating_selection (image)))
     {
       GError *error = NULL;
 
@@ -281,7 +281,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
    */
-  if ((floating_sel = gimp_image_floating_sel (image)))
+  if ((floating_sel = gimp_image_get_floating_selection (image)))
     {
       GError *error = NULL;
 

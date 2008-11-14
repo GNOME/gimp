@@ -330,7 +330,7 @@ gimp_selection_boundary (GimpChannel     *channel,
   GimpDrawable *drawable;
   GimpLayer    *layer;
 
-  if ((layer = gimp_image_floating_sel (image)))
+  if ((layer = gimp_image_get_floating_selection (image)))
     {
       /*  If there is a floating selection, then
        *  we need to do some slightly different boundaries.

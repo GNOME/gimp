@@ -65,7 +65,7 @@ floating_sel_attach (GimpLayer    *layer,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  floating_sel = gimp_image_floating_sel (image);
+  floating_sel = gimp_image_get_floating_selection (image);
 
   /*  If there is already a floating selection, anchor it  */
   if (floating_sel)

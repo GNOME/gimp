@@ -193,10 +193,10 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 
       if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_ANCHOR)
         {
-          if (gimp_image_floating_sel (display->image))
+          if (gimp_image_get_floating_selection (display->image))
             {
               /*  If there is a floating selection, anchor it  */
-              floating_sel_anchor (gimp_image_floating_sel (display->image));
+              floating_sel_anchor (gimp_image_get_floating_selection (display->image));
             }
           else
             {

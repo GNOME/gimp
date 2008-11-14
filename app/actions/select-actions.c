@@ -142,7 +142,7 @@ select_actions_update (GimpActionGroup *group,
     {
       drawable = gimp_image_get_active_drawable (image);
 
-      fs  = (gimp_image_floating_sel (image) != NULL);
+      fs  = (gimp_image_get_floating_selection (image) != NULL);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 

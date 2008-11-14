@@ -280,7 +280,7 @@ gint            gimp_image_get_height            (const GimpImage    *image);
 gboolean        gimp_image_has_alpha             (const GimpImage    *image);
 gboolean        gimp_image_is_empty              (const GimpImage    *image);
 
-GimpLayer     * gimp_image_floating_sel          (const GimpImage    *image);
+GimpLayer    * gimp_image_get_floating_selection (const GimpImage    *image);
 void       gimp_image_floating_selection_changed (GimpImage          *image);
 
 GimpChannel   * gimp_image_get_mask              (const GimpImage    *image);

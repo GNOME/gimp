@@ -1635,7 +1635,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   g_return_val_if_fail (y2 != NULL, FALSE);
 
   /*  If there is a floating selection, handle things differently  */
-  if ((layer = gimp_image_floating_sel (shell->display->image)))
+  if ((layer = gimp_image_get_floating_selection (shell->display->image)))
     {
       gint off_x;
       gint off_y;

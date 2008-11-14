@@ -76,9 +76,9 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   /* if there's a floating selection, anchor it */
-  if (gimp_image_floating_sel (image))
+  if (gimp_image_get_floating_selection (image))
     {
-      floating_sel_anchor (image->floating_sel);
+      floating_sel_anchor (gimp_image_get_floating_selection (image));
       had_floating_sel = TRUE;
     }
 
@@ -149,8 +149,8 @@ gimp_image_flatten (GimpImage   *image,
   gimp_set_busy (image->gimp);
 
   /* if there's a floating selection, anchor it */
-  if (gimp_image_floating_sel (image))
-    floating_sel_anchor (image->floating_sel);
+  if (gimp_image_get_floating_selection (image))
+    floating_sel_anchor (gimp_image_get_floating_selection (image));
 
   for (list = gimp_image_get_layer_iter (image);
        list;
