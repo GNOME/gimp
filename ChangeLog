@@ -1,3 +1,11 @@
+2008-11-15  Michael Natterer  <mitch@gimp.org>
+
+	Bug 560897 – Floating Selection, objects appearing in background
+
+	* app/core/gimpdrawable.c (gimp_drawable_init_src_region): use the
+	right offsets (not off_y for both x and y) when applying the
+	floating selection.
+
 2008-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/debug-commands.c
@@ -52,7 +60,7 @@
 	* app/core/gimpfloatingselundo.c (gimp_floating_sel_undo_pop)
 	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer): use
 	gimp_image_set_floating_selection() instead of setting
-	image->floating_sel menually and remove all calls to
+	image->floating_sel manually and remove all calls to
 	gimp_image_floating_selection_changed().
 
 2008-11-14  Michael Natterer  <mitch@gimp.org>

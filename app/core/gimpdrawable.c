@@ -1101,7 +1101,8 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                              combine_width, combine_height,
                              FALSE);
           pixel_region_init (&destPR, *temp_tiles,
-                             combine_x - x - off_x, combine_y - y - off_y,
+                             combine_x - x - off_x,
+                             combine_y - y - off_y,
                              combine_width, combine_height,
                              TRUE);
 
@@ -1118,7 +1119,7 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                       gimp_layer_get_opacity (fs),
                                       gimp_layer_get_mode (fs),
                                       NULL, &destPR,
-                                      combine_x - off_y,
+                                      combine_x - off_x,
                                       combine_y - off_y);
 
           if (lock_alpha)
