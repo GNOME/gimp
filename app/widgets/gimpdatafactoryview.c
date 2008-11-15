@@ -250,7 +250,7 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
       gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                           -1);
 
       data = GIMP_DATA (renderer->viewable);
@@ -270,7 +270,7 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
           name = gimp_viewable_get_description (renderer->viewable, NULL);
           gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
-                              tree_view->model_column_name, name,
+                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }

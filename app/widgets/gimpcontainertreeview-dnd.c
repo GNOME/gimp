@@ -106,7 +106,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                           -1);
 
       dest_viewable = renderer->viewable;

@@ -196,7 +196,7 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
       const gchar      *old_name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                           -1);
 
       object = GIMP_OBJECT (renderer->viewable);
@@ -216,7 +216,7 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
                                                        NULL);
 
           gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
-                              tree_view->model_column_name, name,
+                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }

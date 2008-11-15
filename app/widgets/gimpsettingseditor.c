@@ -281,11 +281,10 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
                                          GtkTreeIter  *iter,
                                          gpointer      data)
 {
-  GimpContainerTreeView *view = GIMP_CONTAINER_TREE_VIEW (data);
-  gchar                 *name = NULL;
+  gchar *name = NULL;
 
   gtk_tree_model_get (model, iter,
-                      view->model_column_name, &name,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, &name,
                       -1);
   g_free (name);
 
@@ -375,7 +374,7 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
       gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                           -1);
 
       object = GIMP_OBJECT (renderer->viewable);
@@ -405,7 +404,7 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
 
           name = gimp_viewable_get_description (renderer->viewable, NULL);
           gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
-                              tree_view->model_column_name, name,
+                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }

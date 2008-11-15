@@ -245,12 +245,11 @@ gimp_tool_view_eye_data_func (GtkTreeViewColumn *tree_column,
                               GtkTreeIter       *iter,
                               gpointer           data)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
-  GimpViewRenderer      *renderer;
-  gboolean               visible;
+  GimpViewRenderer *renderer;
+  gboolean          visible;
 
   gtk_tree_model_get (tree_model, iter,
-                      tree_view->model_column_renderer, &renderer,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                       -1);
 
   g_object_get (renderer->viewable, "visible", &visible, NULL);
@@ -281,7 +280,7 @@ gimp_tool_view_eye_clicked (GtkCellRendererToggle *toggle,
                     NULL);
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
                           -1);
 
       g_object_set (renderer->viewable, "visible", ! active, NULL);

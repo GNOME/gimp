@@ -164,6 +164,14 @@ typedef enum  /*< skip >*/
   GIMP_VIEW_BORDER_GREEN
 } GimpViewBorderType;
 
+typedef enum /*< skip >*/
+{
+  GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER,
+  GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,
+  GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
+  GIMP_CONTAINER_TREE_VIEW_COLUMN_LAST
+} GimpContainerTreeViewColumn;
+
 typedef enum  /*< skip >*/
 {
   GIMP_DND_TYPE_NONE         = 0,
