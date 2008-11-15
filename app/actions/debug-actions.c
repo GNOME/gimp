@@ -36,7 +36,7 @@
 
 static const GimpActionEntry debug_actions[] =
 {
-  { "debug-menu", NULL, "D_ebug" },
+  { "debug-menu", NULL, "_Debug" },
 
   { "debug-mem-profile", NULL,
     "_Memory Profile", NULL, NULL,
@@ -44,7 +44,7 @@ static const GimpActionEntry debug_actions[] =
     NULL },
 
   { "debug-benchmark-projection", NULL,
-    "Benchmark Projection", NULL,
+    "Benchmark _Projection", NULL,
     "Invalidates the entire projection, measures the time it takes to "
     "validate (render) it again, and print the result to stdout.",
     G_CALLBACK (debug_benchmark_projection_cmd_callback),
