@@ -7024,9 +7024,8 @@ msgid "Lizard"
 msgstr "蜥蜴"
 
 #: ../plug-ins/common/sphere-designer.c:295
-#, fuzzy
 msgid "Phong"
-msgstr "Phong"
+msgstr "光照模型 (Phong)"
 
 #: ../plug-ins/common/sphere-designer.c:296 ../plug-ins/flame/flame.c:774
 msgid "Noise"
@@ -9456,9 +9455,8 @@ msgid "Create spiral"
 msgstr "创建螺旋线"
 
 #: ../plug-ins/gfig/gfig-dialog.c:940
-#, fuzzy
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "创建 bezier 曲线。Shift + 按钮结束对象创建。"
+msgstr "创建贝塞尔曲线。Shift + 按钮结束对象创建。"
 
 #: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
@@ -9630,9 +9628,8 @@ msgid "Star Number of Points"
 msgstr "星形的点的数量"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "创建 Bezier 曲线"
+msgstr "创建贝塞尔曲线"
 
 #: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
@@ -11541,9 +11538,8 @@ msgid "URL"
 msgstr "URL"
 
 #: ../plug-ins/imagemap/imap_selection.c:406
-#, fuzzy
 msgid "ALT Text"
-msgstr "替代文字(ALT)"
+msgstr "替代文字 (ALT)"
 
 #: ../plug-ins/imagemap/imap_selection.c:416
 msgid "Target"
