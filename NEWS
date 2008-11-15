@@ -12,6 +12,9 @@ Overview of Changes since GIMP 2.6.2
 
 * Bugs fixed:
 
+ 560903 – Explicit zooming with e.g. '1' should handle
+	  zoom-focus better
+ 560245 – Zoom selection always centered in the Navigation tab
  559490 – Wrong lang tags for 'no'
  559292 – SOTA Chrome cannot accept different textures
  560375 – Clearing an already empty document history crashes GIMP
