@@ -49,13 +49,16 @@
 
 /*  local function prototypes  */
 
-static void   debug_dump_menus_recurse_menu (GtkWidget  *menu,
-                                             gint        depth,
-                                             gchar      *path);
-static void   debug_print_qdata             (GimpObject *object);
-static void   debug_print_qdata_foreach     (GQuark      key_id,
-                                             gpointer    data,
-                                             gpointer    user_data);
+static gboolean  debug_benchmark_projection    (GimpImage  *image);
+
+static void      debug_dump_menus_recurse_menu (GtkWidget  *menu,
+                                                gint        depth,
+                                                gchar      *path);
+
+static void      debug_print_qdata             (GimpObject *object);
+static void      debug_print_qdata_foreach     (GQuark      key_id,
+                                                gpointer    data,
+                                                gpointer    user_data);
 
 
 /*  public functions  */
@@ -79,44 +82,10 @@ void
 debug_benchmark_projection_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
-  GimpImage      *image      = NULL;
-  GimpProjection *projection = NULL;
-  TileManager    *tiles      = NULL;
-  GTimer         *timer      = NULL;
+  GimpImage *image;
   return_if_no_image (image, data);
 
-  projection = gimp_image_get_projection (image);
-  tiles      = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
-  timer      = g_timer_new ();
-
-  if (projection && tiles && timer)
-    {
-      int x = 0;
-      int y = 0;
-
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
-      gimp_projection_flush_now (projection);
-
-      g_timer_start (timer);
-      for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
-        {
-          for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
-            {
-              Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
-
-              tile_release (tile, FALSE);
-            }
-        }
-      g_timer_stop (timer);
-
-      g_print ("Validation of the entire projection took %.0f ms\n",
-               1000 * g_timer_elapsed (timer, NULL));
-
-      g_timer_destroy (timer);
-    }
+  g_idle_add ((GSourceFunc) debug_benchmark_projection, g_object_ref (image));
 }
 
 void
@@ -145,7 +114,8 @@ debug_dump_menus_cmd_callback (GtkAction *action,
 
               if (GTK_IS_MENU_SHELL (ui_entry->widget))
                 {
-                  g_print ("\n\n========================================\n"
+                  g_print ("\n\n"
+                           "========================================\n"
                            "Menu: %s%s\n"
                            "========================================\n\n",
                            entry->identifier, ui_entry->ui_path);
@@ -200,6 +170,44 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static gboolean
+debug_benchmark_projection (GimpImage *image)
+{
+  GimpProjection *projection = gimp_image_get_projection (image);
+  TileManager    *tiles;
+  GTimer         *timer;
+  gint            x, y;
+
+  gimp_image_update (image,
+                     0, 0,
+                     gimp_image_get_width  (image),
+                     gimp_image_get_height (image));
+  gimp_projection_flush_now (projection);
+
+  tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
+
+  timer = g_timer_new ();
+
+  for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
+    {
+      for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
+        {
+          Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
+
+          tile_release (tile, FALSE);
+        }
+    }
+
+  g_print ("Validation of the entire projection took %.0f ms\n",
+           1000 * g_timer_elapsed (timer, NULL));
+
+  g_timer_destroy (timer);
+
+  g_object_unref (image);
+
+  return FALSE;
+}
 
 static void
 debug_dump_menus_recurse_menu (GtkWidget *menu,

@@ -1,3 +1,9 @@
+2008-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/debug-commands.c
+	(debug_benchmark_projection_cmd_callback): run the benchmark in an
+	idle callback.
+
 2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/actions/debug-actions.c: Fix mnemonics for the Debug sub
