@@ -17,6 +17,7 @@
 	Use the new enum for explicit zooming.
 
 	* app/display/display-enums.c: Regenerated.
+
 2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
 
  	Merged from trunk:
