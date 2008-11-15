@@ -87,9 +87,20 @@ GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ZOOM_FOCUS_BEST_GUESS,    /* Make a best guess                       */
-  GIMP_ZOOM_FOCUS_POINTER,       /* Use the mouse cursor (if within canvas) */
-  GIMP_ZOOM_FOCUS_IMAGE_CENTER   /* Use the image center                    */
+  /* Make a best guess */
+  GIMP_ZOOM_FOCUS_BEST_GUESS,
+
+  /* Use the mouse cursor (if within canvas) */
+  GIMP_ZOOM_FOCUS_POINTER,
+
+  /* Use the image center */
+  GIMP_ZOOM_FOCUS_IMAGE_CENTER,
+
+  /* If the image is centered, retain the centering. Else use
+   * _BEST_GUESS
+   */
+  GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS
+
 } GimpZoomFocus;
 
 
