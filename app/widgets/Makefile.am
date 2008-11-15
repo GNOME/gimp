@@ -83,6 +83,7 @@ libappwidgets_a_sources = \
 	gimpcontainertreeview.h		\
 	gimpcontainertreeview-dnd.c	\
 	gimpcontainertreeview-dnd.h	\
+	gimpcontainertreeview-private.h	\
 	gimpcontainerview.c		\
 	gimpcontainerview.h		\
 	gimpcontainerview-utils.c	\

@@ -30,6 +30,7 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
+#include "gimpcontainertreeview-private.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpviewrenderer.h"
@@ -184,7 +185,7 @@ gimp_container_tree_view_scroll_timeout (gpointer data)
   g_print ("scroll_timeout: scrolling by %d\n", SCROLL_STEP);
 #endif
 
-  if (tree_view->scroll_dir == GDK_SCROLL_UP)
+  if (tree_view->priv->scroll_dir == GDK_SCROLL_UP)
     new_value = gtk_adjustment_get_value (adj) - SCROLL_STEP;
   else
     new_value = gtk_adjustment_get_value (adj) + SCROLL_STEP;
@@ -193,12 +194,12 @@ gimp_container_tree_view_scroll_timeout (gpointer data)
 
   gtk_adjustment_set_value (adj, new_value);
 
-  if (tree_view->scroll_timeout_id)
+  if (tree_view->priv->scroll_timeout_id)
     {
-      g_source_remove (tree_view->scroll_timeout_id);
+      g_source_remove (tree_view->priv->scroll_timeout_id);
 
-      tree_view->scroll_timeout_id =
-        g_timeout_add (tree_view->scroll_timeout_interval,
+      tree_view->priv->scroll_timeout_id =
+        g_timeout_add (tree_view->priv->scroll_timeout_interval,
                        gimp_container_tree_view_scroll_timeout,
                        tree_view);
     }
@@ -212,10 +213,10 @@ gimp_container_tree_view_drag_leave (GtkWidget             *widget,
                                      guint                  time,
                                      GimpContainerTreeView *tree_view)
 {
-  if (tree_view->scroll_timeout_id)
+  if (tree_view->priv->scroll_timeout_id)
     {
-      g_source_remove (tree_view->scroll_timeout_id);
-      tree_view->scroll_timeout_id = 0;
+      g_source_remove (tree_view->priv->scroll_timeout_id);
+      tree_view->priv->scroll_timeout_id = 0;
     }
 
   gtk_tree_view_set_drag_dest_row (tree_view->view, NULL, 0);
@@ -238,32 +239,32 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
 
       if (y < SCROLL_DISTANCE)
         {
-          tree_view->scroll_dir = GDK_SCROLL_UP;
+          tree_view->priv->scroll_dir = GDK_SCROLL_UP;
           distance = MIN (-y, -1);
         }
       else
         {
-          tree_view->scroll_dir = GDK_SCROLL_DOWN;
+          tree_view->priv->scroll_dir = GDK_SCROLL_DOWN;
           distance = MAX (widget->allocation.height - y, 1);
         }
 
-      tree_view->scroll_timeout_interval = SCROLL_INTERVAL * ABS (distance);
+      tree_view->priv->scroll_timeout_interval = SCROLL_INTERVAL * ABS (distance);
 
 #ifdef SCROLL_DEBUG
       g_print ("drag_motion: scroll_distance = %d  scroll_interval = %d\n",
-               distance, tree_view->scroll_timeout_interval);
+               distance, tree_view->priv->scroll_timeout_interval);
 #endif
 
-      if (! tree_view->scroll_timeout_id)
-        tree_view->scroll_timeout_id =
-          g_timeout_add (tree_view->scroll_timeout_interval,
+      if (! tree_view->priv->scroll_timeout_id)
+        tree_view->priv->scroll_timeout_id =
+          g_timeout_add (tree_view->priv->scroll_timeout_interval,
                          gimp_container_tree_view_scroll_timeout,
                          tree_view);
     }
-  else if (tree_view->scroll_timeout_id)
+  else if (tree_view->priv->scroll_timeout_id)
     {
-      g_source_remove (tree_view->scroll_timeout_id);
-      tree_view->scroll_timeout_id = 0;
+      g_source_remove (tree_view->priv->scroll_timeout_id);
+      tree_view->priv->scroll_timeout_id = 0;
     }
 
   if (gimp_container_tree_view_drop_status (tree_view,
@@ -297,10 +298,10 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
   GdkAtom                  target;
   GtkTreeViewDropPosition  drop_pos;
 
-  if (tree_view->scroll_timeout_id)
+  if (tree_view->priv->scroll_timeout_id)
     {
-      g_source_remove (tree_view->scroll_timeout_id);
-      tree_view->scroll_timeout_id = 0;
+      g_source_remove (tree_view->priv->scroll_timeout_id);
+      tree_view->priv->scroll_timeout_id = 0;
     }
 
   if (gimp_container_tree_view_drop_status (tree_view,

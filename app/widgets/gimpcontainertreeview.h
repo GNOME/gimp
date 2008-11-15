@@ -35,37 +35,32 @@
 
 
 typedef struct _GimpContainerTreeViewClass GimpContainerTreeViewClass;
+typedef struct _GimpContainerTreeViewPriv  GimpContainerTreeViewPriv;
 
 struct _GimpContainerTreeView
 {
-  GimpContainerBox   parent_instance;
+  GimpContainerBox           parent_instance;
 
-  GtkTreeModel      *model;
-  gint               n_model_columns;
-  GType              model_columns[16];
+  GtkTreeModel              *model;
+  gint                       n_model_columns;
+  GType                      model_columns[16];
 
-  gint               model_column_renderer;
-  gint               model_column_name;
-  gint               model_column_name_attributes;
+  gint                       model_column_renderer;
+  gint                       model_column_name;
+  gint                       model_column_name_attributes;
 
-  GtkTreeView       *view;
-  GtkTreeSelection  *selection;
+  GtkTreeView               *view;
 
-  GtkTreeViewColumn *main_column;
-  GtkCellRenderer   *renderer_cell;
-  GtkCellRenderer   *name_cell;
+  GtkTreeViewColumn         *main_column;
+  GtkCellRenderer           *renderer_cell;
 
-  GList             *toggle_cells;
-  GList             *renderer_cells;
-  GList             *editable_cells;
+  GList                     *toggle_cells;
+  GList                     *renderer_cells;
 
-  gboolean           dnd_drop_to_empty;
-  Gimp              *dnd_gimp; /* eek */
-  GimpViewRenderer  *dnd_renderer;
+  gboolean                   dnd_drop_to_empty;
+  Gimp                      *dnd_gimp; /* eek */
 
-  guint              scroll_timeout_id;
-  guint              scroll_timeout_interval;
-  GdkScrollDirection scroll_dir;
+  GimpContainerTreeViewPriv *priv;
 };
 
 struct _GimpContainerTreeViewClass
