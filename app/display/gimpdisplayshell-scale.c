@@ -59,7 +59,7 @@ static gboolean  gimp_display_shell_scale_image_starts_to_fit
                                                           gdouble           current_scale,
                                                           gboolean         *vertically,
                                                           gboolean         *horizontally);
-static void      gimp_display_shell_scale_viewport_coord_almost_centered
+static gboolean  gimp_display_shell_scale_viewport_coord_almost_centered
                                                          (GimpDisplayShell *shell,
                                                           gint              x,
                                                           gint              y,
@@ -892,21 +892,28 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
  * @vertically:
  *
  **/
-static void
+static gboolean
 gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell,
                                                          gint              x,
                                                          gint              y,
                                                          gboolean         *horizontally,
                                                          gboolean         *vertically)
 {
-  gint center_x = shell->disp_width  / 2;
-  gint center_y = shell->disp_height / 2;
+  gboolean local_horizontally;
+  gboolean local_vertically;
+  gint     center_x = shell->disp_width  / 2;
+  gint     center_y = shell->disp_height / 2;
 
-  *horizontally = x > center_x - ALMOST_CENTERED_THRESHOLD &&
-                  x < center_x + ALMOST_CENTERED_THRESHOLD;
+  local_horizontally = (x > center_x - ALMOST_CENTERED_THRESHOLD &&
+                        x < center_x + ALMOST_CENTERED_THRESHOLD);
 
-  *vertically   = y > center_y - ALMOST_CENTERED_THRESHOLD &&
-                  y < center_y + ALMOST_CENTERED_THRESHOLD;
+  local_vertically   = (y > center_y - ALMOST_CENTERED_THRESHOLD &&
+                        y < center_y + ALMOST_CENTERED_THRESHOLD);
+
+  if (horizontally) *horizontally = local_horizontally;
+  if (vertically)   *vertically   = local_vertically;
+
+  return local_horizontally && local_vertically;
 }
 
 static void
@@ -942,8 +949,9 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gint             *y,
                                          GimpZoomFocus     zoom_focus)
 {
-  gint image_center_x, image_center_y;
-  gint other_x, other_y;
+  GimpZoomFocus real_zoom_focus = zoom_focus;
+  gint          image_center_x, image_center_y;
+  gint          other_x, other_y;
 
   /* Calculate stops-to-fit focus point */
   gimp_display_shell_scale_get_image_center_viewport (shell,
@@ -1000,7 +1008,25 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
   }
 
   /* Decide which one to use for each axis */
-  switch (zoom_focus)
+  if (zoom_focus == GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS)
+    {
+      gboolean centered;
+
+      centered = gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+                                                                          image_center_x,
+                                                                          image_center_y,
+                                                                          NULL,
+                                                                          NULL);
+      real_zoom_focus = (centered ?
+                         GIMP_ZOOM_FOCUS_IMAGE_CENTER :
+                         GIMP_ZOOM_FOCUS_BEST_GUESS);
+    }
+  else
+    {
+      real_zoom_focus = zoom_focus;
+    }
+
+  switch (real_zoom_focus)
     {
     case GIMP_ZOOM_FOCUS_POINTER:
       *x = other_x;

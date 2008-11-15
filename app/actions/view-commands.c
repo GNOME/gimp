@@ -218,7 +218,7 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
         gimp_display_shell_scale (shell,
                                   GIMP_ZOOM_TO,
                                   (gdouble) value / 10000,
-                                  GIMP_ZOOM_FOCUS_IMAGE_CENTER);
+                                  GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
     }
 }
 
