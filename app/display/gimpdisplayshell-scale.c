@@ -66,6 +66,12 @@ static void      gimp_display_shell_scale_viewport_coord_almost_centered
                                                           gboolean         *horizontally,
                                                           gboolean         *vertically);
 
+static void      gimp_display_shell_scale_get_image_center_viewport
+                                                         (GimpDisplayShell *shell,
+                                                          gint             *image_center_x,
+                                                          gint             *image_center_y);
+
+
 static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
@@ -376,10 +382,14 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
         }
       else
         {
-          gboolean starts_fitting_horizontally;
-          gboolean starts_fitting_vertically;
-          gboolean almost_centered_horizontally;
-          gboolean almost_centered_vertically;
+          gboolean starts_fitting_horiz;
+          gboolean starts_fitting_vert;
+          gboolean zoom_focus_almost_centered_horiz;
+          gboolean zoom_focus_almost_centered_vert;
+          gboolean image_center_almost_centered_horiz;
+          gboolean image_center_almost_centered_vert;
+          gint     image_center_x;
+          gint     image_center_y;
 
           gimp_display_shell_scale_get_zoom_focus (shell,
                                                    real_new_scale,
@@ -387,6 +397,9 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                                    &x,
                                                    &y,
                                                    zoom_focus);
+          gimp_display_shell_scale_get_image_center_viewport (shell,
+                                                              &image_center_x,
+                                                              &image_center_y);
 
           gimp_display_shell_scale_to (shell, real_new_scale, x, y);
 
@@ -398,18 +411,27 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           gimp_display_shell_scale_image_starts_to_fit (shell,
                                                         real_new_scale,
                                                         current_scale,
-                                                        &starts_fitting_horizontally,
-                                                        &starts_fitting_vertically);
+                                                        &starts_fitting_horiz,
+                                                        &starts_fitting_vert);
+
           gimp_display_shell_scale_viewport_coord_almost_centered (shell,
                                                                    x,
                                                                    y,
-                                                                   &almost_centered_horizontally,
-                                                                   &almost_centered_vertically);
+                                                                   &zoom_focus_almost_centered_horiz,
+                                                                   &zoom_focus_almost_centered_vert);
+          gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+                                                                   image_center_x,
+                                                                   image_center_y,
+                                                                   &image_center_almost_centered_horiz,
+                                                                   &image_center_almost_centered_vert);
+            
           gimp_display_shell_scroll_center_image (shell,
-                                                  starts_fitting_horizontally ||
-                                                  almost_centered_horizontally,
-                                                  starts_fitting_vertically ||
-                                                  almost_centered_vertically);
+                                                  starts_fitting_horiz ||
+                                                  (zoom_focus_almost_centered_horiz &&
+                                                   image_center_almost_centered_horiz),
+                                                  starts_fitting_vert ||
+                                                  (zoom_focus_almost_centered_vert &&
+                                                   image_center_almost_centered_vert));
         }
     }
 }
@@ -887,6 +909,21 @@ gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell
                   y < center_y + ALMOST_CENTERED_THRESHOLD;
 }
 
+static void
+gimp_display_shell_scale_get_image_center_viewport (GimpDisplayShell *shell,
+                                                    gint             *image_center_x,
+                                                    gint             *image_center_y)
+{
+  gint sw, sh;
+
+  gimp_display_shell_draw_get_scaled_image_size (shell,
+                                                 &sw,
+                                                 &sh);
+
+  if (image_center_x) *image_center_x = -shell->offset_x + sw / 2;
+  if (image_center_y) *image_center_y = -shell->offset_y + sh / 2;
+}
+
 /**
  * gimp_display_shell_scale_get_zoom_focus:
  * @shell:
@@ -909,15 +946,9 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
   gint other_x, other_y;
 
   /* Calculate stops-to-fit focus point */
-  {
-    gint sw, sh;
-
-    gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                   &sw,
-                                                   &sh);
-    image_center_x = -shell->offset_x + sw / 2;
-    image_center_y = -shell->offset_y + sh / 2;
-  }
+  gimp_display_shell_scale_get_image_center_viewport (shell,
+                                                      &image_center_x,
+                                                      &image_center_y);
 
   /* Calculate other focus point */
   {
