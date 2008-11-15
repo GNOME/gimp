@@ -63,6 +63,8 @@ struct _GimpDisplayShell
 {
   GimpWindow         parent_instance;
 
+  /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
+
   GimpDisplay       *display;
 
   GimpUIManager     *menubar_manager;
@@ -70,14 +72,18 @@ struct _GimpDisplayShell
 
   GimpDialogFactory *display_factory;
 
-  gdouble            monitor_xres;
-  gdouble            monitor_yres;
+  GimpDisplayOptions *options;
+  GimpDisplayOptions *fullscreen_options;
+  GimpDisplayOptions *no_image_options;
+
+  gboolean           snap_to_guides;   /*  should the guides be snapped to?   */
+  gboolean           snap_to_grid;     /*  should the grid be snapped to?     */
+  gboolean           snap_to_canvas;   /*  should the canvas be snapped to?   */
+  gboolean           snap_to_vectors;  /*  should the active path be snapped  */
+
+  /* --- cacheline 3 boundary (192 bytes) --- */
 
   GimpUnit           unit;
-
-  GimpZoomModel     *zoom;
-  gdouble            other_scale;      /*  scale factor entered in Zoom->Other*/
-  gboolean           dot_for_dot;      /*  ignore monitor resolution          */
 
   gint               offset_x;         /*  offset of display image            */
   gint               offset_y;
@@ -85,24 +91,41 @@ struct _GimpDisplayShell
   gdouble            scale_x;          /*  horizontal scale factor            */
   gdouble            scale_y;          /*  vertical scale factor              */
 
+  gdouble            monitor_xres;
+  gdouble            monitor_yres;
+  gboolean           dot_for_dot;      /*  ignore monitor resolution          */
+
   gint               x_src_dec;        /*  increments for the bresenham style */
   gint               y_src_dec;        /*  image --> display transformation   */
   gint               x_dest_inc;
   gint               y_dest_inc;
+
+  /* --- cacheline 4 boundary (256 bytes) --- */
+
+  GimpZoomModel     *zoom;
 
   gdouble            last_scale;       /*  scale used when reverting zoom     */
   guint              last_scale_time;  /*  time when last_scale was set       */
   gint               last_offset_x;    /*  offsets used when reverting zoom   */
   gint               last_offset_y;
 
+  guint32            last_motion_time; /*  previous time of a forwarded motion event  */
+  guint32            last_read_motion_time;
+  gdouble            last_motion_delta_time;
+  gdouble            last_motion_delta_x;
+  gdouble            last_motion_delta_y;
+  gdouble            last_motion_distance;
+
+  /* --- cacheline 5 boundary (320 bytes) --- */
+
+  GimpCoords         last_coords;      /* last motion event                   */
+
+  gdouble            other_scale;      /*  scale factor entered in Zoom->Other*/
+
   gint               disp_width;       /*  width of drawing area              */
   gint               disp_height;      /*  height of drawing area             */
 
   gboolean           proximity;        /*  is a device in proximity           */
-  gboolean           snap_to_guides;   /*  should the guides be snapped to?   */
-  gboolean           snap_to_grid;     /*  should the grid be snapped to?     */
-  gboolean           snap_to_canvas;   /*  should the canvas be snapped to?   */
-  gboolean           snap_to_vectors;  /*  should the active path be snapped  */
 
   Selection         *selection;        /*  Selection (marching ants)          */
 
@@ -168,34 +191,21 @@ struct _GimpDisplayShell
 
   gboolean           size_allocate_from_configure_event;
 
-  GimpDisplayOptions *options;
-  GimpDisplayOptions *fullscreen_options;
-  GimpDisplayOptions *no_image_options;
-
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean           space_pressed;
   gboolean           space_release_pending;
   const gchar       *space_shaded_tool;
+
   gboolean           scrolling;
   gint               scroll_start_x;
   gint               scroll_start_y;
+  gpointer           scroll_info;
+
   gboolean           button_press_before_focus;
 
   GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
   GimpChannelType    mask_color;
-
-  gpointer           scroll_info;
-
-  GimpCoords         last_coords;      /* last motion event                   */
-
-  guint32            last_motion_time; /*  previous time of a forwarded motion event  */
-  guint32            last_read_motion_time;
-  gdouble            last_motion_delta_time;
-  gdouble            last_motion_delta_x;
-  gdouble            last_motion_delta_y;
-  gdouble            last_motion_distance;
-
 };
 
 struct _GimpDisplayShellClass

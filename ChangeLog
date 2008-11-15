@@ -1,3 +1,13 @@
+2008-11-16  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.h: optimize access to
+	GimpDisplayShell struct members by placing related and frequently
+	accessed members like like scale and offset into the same
+	cacheline.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init): resort
+	initialization accordingly.
+
 2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/widgets-enums.h: Put the GimpContainerTreeView enums

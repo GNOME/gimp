@@ -241,6 +241,15 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->menubar_manager        = NULL;
   shell->popup_manager          = NULL;
 
+  shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+  shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
+  shell->no_image_options       = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
+
+  shell->snap_to_guides         = TRUE;
+  shell->snap_to_grid           = FALSE;
+  shell->snap_to_canvas         = FALSE;
+  shell->snap_to_vectors        = FALSE;
+
   shell->unit                   = GIMP_UNIT_PIXEL;
 
   shell->zoom                   = gimp_zoom_model_new ();
@@ -261,14 +270,16 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->last_offset_x          = 0;
   shell->last_offset_y          = 0;
 
+  shell->last_motion_time       = 0;
+  shell->last_motion_delta_x    = 0.0;
+  shell->last_motion_delta_y    = 0.0;
+  shell->last_motion_distance   = 0.0;
+  shell->last_motion_delta_time = 0.0;
+
   shell->disp_width             = 0;
   shell->disp_height            = 0;
 
   shell->proximity              = FALSE;
-  shell->snap_to_guides         = TRUE;
-  shell->snap_to_grid           = FALSE;
-  shell->snap_to_canvas         = FALSE;
-  shell->snap_to_vectors        = FALSE;
 
   shell->selection              = NULL;
 
@@ -333,10 +344,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->size_allocate_from_configure_event = FALSE;
 
-  shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
-  shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
-  shell->no_image_options       = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
-
   shell->space_pressed          = FALSE;
   shell->space_release_pending  = FALSE;
   shell->space_shaded_tool      = NULL;
@@ -348,12 +355,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->highlight              = NULL;
   shell->mask                   = NULL;
-
-  shell->last_motion_time       = 0;
-  shell->last_motion_delta_x    = 0.0;
-  shell->last_motion_delta_y    = 0.0;
-  shell->last_motion_distance   = 0.0;
-  shell->last_motion_delta_time = 0.0;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
