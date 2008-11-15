@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 16:26+0000\n"
-"PO-Revision-Date: 2008-11-06 22:34+0800\n"
+"PO-Revision-Date: 2008-11-15 22:47+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -429,7 +429,6 @@ msgid "Brushes Menu"
 msgstr "画笔菜单"
 
 #: ../app/actions/brushes-actions.c:47
-#, fuzzy
 msgid "_Open Brush as Image"
 msgstr "作为图像打开画笔(_O)"
 
@@ -1488,7 +1487,6 @@ msgid "Remove all operations from the undo history"
 msgstr "从撤消历史中删除全部操作"
 
 #: ../app/actions/edit-actions.c:103 ../app/actions/edit-actions.c:316
-#, fuzzy
 msgid "_Fade..."
 msgstr "淡出(_F)..."
 
@@ -1633,7 +1631,6 @@ msgid "_Redo %s"
 msgstr "重做 %s(_R)"
 
 #: ../app/actions/edit-actions.c:302
-#, fuzzy
 msgid "_Fade %s..."
 msgstr "淡出(_F) %s..."
 
@@ -5504,7 +5501,6 @@ msgid "Rigor floating selection"
 msgstr "固定浮动选区"
 
 #: ../app/core/core-enums.c:925
-#, fuzzy
 msgid "Relax floating selection"
 msgstr "删除浮动选区"
 
@@ -9242,7 +9238,6 @@ msgid "Con_trast:"
 msgstr "对比度(_T)："
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:349
-#, fuzzy
 msgid "Edit these Settings as Levels"
 msgstr "作为色阶编辑这些设置"
 
@@ -10978,7 +10973,6 @@ msgid "No guides"
 msgstr "无参考线"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgid "Center lines"
 msgstr "中线"
 
