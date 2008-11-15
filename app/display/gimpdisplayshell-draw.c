@@ -573,7 +573,9 @@ gimp_display_shell_draw_area (const GimpDisplayShell *shell,
   if (! shell->display->image)
     return;
 
-  gimp_display_shell_scroll_get_scaled_viewport_offset (shell, &sx, &sy);
+  sx = - shell->offset_x;
+  sy = - shell->offset_y;
+
   gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
 
   /*  check if the passed in area intersects with

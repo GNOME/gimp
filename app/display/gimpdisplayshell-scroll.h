@@ -53,9 +53,6 @@ void   gimp_display_shell_scroll_get_viewport               (const GimpDisplaySh
                                                              gdouble                *y,
                                                              gdouble                *w,
                                                              gdouble                *h);
-void   gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *shell,
-                                                             gint                   *x,
-                                                             gint                   *y);
 void   gimp_display_shell_scroll_get_disp_offset            (const GimpDisplayShell *shell,
                                                              gint                   *disp_xoffset,
                                                              gint                   *disp_yoffset);

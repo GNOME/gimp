@@ -432,18 +432,12 @@ gimp_display_shell_scroll_get_scaled_viewport (const GimpDisplayShell *shell,
                                                gint                   *w,
                                                gint                   *h)
 {
-  gint scaled_viewport_offset_x;
-  gint scaled_viewport_offset_y;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scroll_get_scaled_viewport_offset (shell,
-                                                        &scaled_viewport_offset_x,
-                                                        &scaled_viewport_offset_y);
-  if (x) *x = -scaled_viewport_offset_x;
-  if (y) *y = -scaled_viewport_offset_y;
-  if (w) *w =  shell->disp_width;
-  if (h) *h =  shell->disp_height;
+  *x = shell->offset_x;
+  *y = shell->offset_y;
+  *w = shell->disp_width;
+  *h = shell->disp_height;
 }
 
 /**
@@ -466,30 +460,10 @@ gimp_display_shell_scroll_get_viewport (const GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (x) *x = shell->offset_x    / shell->scale_x;
-  if (y) *y = shell->offset_y    / shell->scale_y;
-  if (w) *w = shell->disp_width  / shell->scale_x;
-  if (h) *h = shell->disp_height / shell->scale_y;
-}
-
-/**
- * gimp_display_shell_scroll_get_scaled_viewport_offset:
- * @shell:
- * @x:
- * @y:
- *
- * Gets the scaled image offset in viewport coordinates
- *
- **/
-void
-gimp_display_shell_scroll_get_scaled_viewport_offset (const GimpDisplayShell *shell,
-                                                      gint                   *x,
-                                                      gint                   *y)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (x) *x = -shell->offset_x;
-  if (y) *y = -shell->offset_y;
+  *x = shell->offset_x    / shell->scale_x;
+  *y = shell->offset_y    / shell->scale_y;
+  *w = shell->disp_width  / shell->scale_x;
+  *h = shell->disp_height / shell->scale_y;
 }
 
 /**
@@ -551,8 +525,8 @@ gimp_display_shell_scroll_get_render_start_offset (const GimpDisplayShell *shell
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (offset_x) *offset_x = MAX (0, shell->offset_x);
-  if (offset_y) *offset_y = MAX (0, shell->offset_y);
+  *offset_x = MAX (0, shell->offset_x);
+  *offset_y = MAX (0, shell->offset_y);
 }
 
 /**
