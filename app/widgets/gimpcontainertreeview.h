@@ -59,8 +59,6 @@ struct _GimpContainerTreeView
   GList             *renderer_cells;
   GList             *editable_cells;
 
-  GQuark             invalidate_preview_handler_id;
-
   gboolean           dnd_drop_to_empty;
   Gimp              *dnd_gimp; /* eek */
   GimpViewRenderer  *dnd_renderer;
