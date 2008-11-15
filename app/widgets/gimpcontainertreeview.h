@@ -45,10 +45,6 @@ struct _GimpContainerTreeView
   gint                       n_model_columns;
   GType                      model_columns[16];
 
-  gint                       model_column_renderer;
-  gint                       model_column_name;
-  gint                       model_column_name_attributes;
-
   GtkTreeView               *view;
 
   GtkTreeViewColumn         *main_column;

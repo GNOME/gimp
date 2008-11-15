@@ -4,7 +4,7 @@
 	here instead of exposing them through silly class instance
 	members.
 
-	* app/widgets/gimpcontainertreeview.c: 
+	* app/widgets/gimpcontainertreeview.[ch]: 
 	* app/widgets/gimpcontainertreeview-dnd.c
 	* app/widgets/gimpdatafactoryview.c
 	* app/widgets/gimpitemtreeview.c
