@@ -1,3 +1,12 @@
+2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 560245 – Zoom selection always centered in the Navigation tab
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	Also take the image center and not only the zoom focus point into
+	account when deciding whether or not to center the image after
+	zoom.
+
 2008-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch] (struct GimpImageFlushAccumulator):
