@@ -1,5 +1,13 @@
 2008-11-16  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimpcontainertreeview.[ch]: Move container tree view
+	model column enums here and call the last enum _N_COLUMNS.
+
+	* app/widgets/widgets-enums.h: Remove the enum. It was meant only
+	for the container tree view class hierarchy anyway.
+
+2008-11-16  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpcontainertreeview.[ch]
 	(gimp_container_tree_view_set_dnd_drop_to_empty): New setter
 	function so that we can make the "gboolean dnd_drop_to_empty"

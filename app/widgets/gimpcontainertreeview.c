@@ -161,7 +161,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                                  GIMP_TYPE_CONTAINER_TREE_VIEW,
                                                  GimpContainerTreeViewPriv);
 
-  tree_view->n_model_columns = GIMP_CONTAINER_TREE_VIEW_COLUMN_LAST;
+  tree_view->n_model_columns = GIMP_CONTAINER_TREE_VIEW_N_COLUMNS;
 
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER]        = GIMP_TYPE_VIEW_RENDERER;
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME]            = G_TYPE_STRING;
