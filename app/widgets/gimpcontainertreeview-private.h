@@ -25,19 +25,22 @@
 
 struct _GimpContainerTreeViewPriv
 {
-  GtkTreeSelection  *selection;
+  GtkTreeSelection   *selection;
 
-  GtkCellRenderer   *name_cell;
+  GtkCellRenderer    *name_cell;
 
-  GList             *editable_cells;
+  GList              *editable_cells;
 
-  GimpViewRenderer  *dnd_renderer;
+  GimpViewRenderer   *dnd_renderer;
 
-  guint              scroll_timeout_id;
-  guint              scroll_timeout_interval;
-  GdkScrollDirection scroll_dir;
+  GList              *toggle_cells;
+  GList              *renderer_cells;
 
-  gboolean           dnd_drop_to_empty;
+  guint               scroll_timeout_id;
+  guint               scroll_timeout_interval;
+  GdkScrollDirection  scroll_dir;
+
+  gboolean            dnd_drop_to_empty;
 };
 
 

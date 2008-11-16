@@ -59,9 +59,6 @@ struct _GimpContainerTreeView
   GtkTreeViewColumn         *main_column;
   GtkCellRenderer           *renderer_cell;
 
-  GList                     *toggle_cells;
-  GList                     *renderer_cells;
-
   Gimp                      *dnd_gimp; /* eek */
 
   GimpContainerTreeViewPriv *priv;
@@ -113,6 +110,18 @@ GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
                                                GimpContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
+
+void        gimp_container_tree_view_set_main_column_title
+                                              (GimpContainerTreeView *tree_view,
+                                               const gchar           *title);
+
+void        gimp_container_tree_view_prepend_toggle_cell_renderer
+                                              (GimpContainerTreeView *tree_view,
+                                               GtkCellRenderer       *cell_renderer);
+
+void        gimp_container_tree_view_prepend_cell_renderer
+                                              (GimpContainerTreeView *tree_view,
+                                               GtkCellRenderer       *cell_renderer);
 
 void        gimp_container_tree_view_set_dnd_drop_to_empty
                                               (GimpContainerTreeView *tree_view,

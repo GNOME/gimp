@@ -238,8 +238,8 @@ gimp_container_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_container_tree_view_name_canceled),
                     tree_view);
 
-  tree_view->renderer_cells = g_list_prepend (tree_view->renderer_cells,
-                                              tree_view->renderer_cell);
+  tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
+                                                    tree_view->renderer_cell);
 
   tree_view->priv->selection = gtk_tree_view_get_selection (tree_view->view);
 
@@ -272,16 +272,16 @@ gimp_container_tree_view_finalize (GObject *object)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
 
-  if (tree_view->toggle_cells)
+  if (tree_view->priv->toggle_cells)
     {
-      g_list_free (tree_view->toggle_cells);
-      tree_view->toggle_cells = NULL;
+      g_list_free (tree_view->priv->toggle_cells);
+      tree_view->priv->toggle_cells = NULL;
     }
 
-  if (tree_view->renderer_cells)
+  if (tree_view->priv->renderer_cells)
     {
-      g_list_free (tree_view->renderer_cells);
-      tree_view->renderer_cells = NULL;
+      g_list_free (tree_view->priv->renderer_cells);
+      tree_view->priv->renderer_cells = NULL;
     }
 
   if (tree_view->priv->editable_cells)
@@ -393,6 +393,38 @@ gimp_container_tree_view_new (GimpContainer *container,
     gimp_container_view_set_context (view, context);
 
   return GTK_WIDGET (tree_view);
+}
+
+void
+gimp_container_tree_view_set_main_column_title (GimpContainerTreeView *tree_view,
+                                                const gchar           *title)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+
+  gtk_tree_view_column_set_title (tree_view->main_column,
+                                  title);
+}
+
+void
+gimp_container_tree_view_prepend_toggle_cell_renderer (GimpContainerTreeView *tree_view,
+                                                       GtkCellRenderer       *cell_renderer)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+
+  tree_view->priv->toggle_cells = g_list_prepend (tree_view->priv->toggle_cells,
+                                                  cell_renderer);
+}
+
+void
+gimp_container_tree_view_prepend_cell_renderer (GimpContainerTreeView *tree_view,
+                                                GtkCellRenderer       *cell_renderer)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+
+  tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
+                                                    cell_renderer);
 }
 
 void
@@ -590,7 +622,7 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
         {
           GList *list;
 
-          for (list = tree_view->renderer_cells; list; list = list->next)
+          for (list = tree_view->priv->renderer_cells; list; list = list->next)
             g_object_set (list->data, "renderer", NULL, NULL);
         }
     }
@@ -750,7 +782,7 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
     {
       GList *list;
 
-      for (list = tree_view->renderer_cells; list; list = list->next)
+      for (list = tree_view->priv->renderer_cells; list; list = list->next)
         g_object_set (list->data, "renderer", NULL, NULL);
     }
 
@@ -793,7 +825,7 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
   if (! tree_widget)
     return;
 
-  for (list = tree_view->toggle_cells; list; list = g_list_next (list))
+  for (list = tree_view->priv->toggle_cells; list; list = g_list_next (list))
     {
       gchar       *stock_id;
       GtkIconSize  icon_size;
@@ -952,14 +984,14 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       toggled_cell = (GimpCellRendererToggle *)
         gimp_container_tree_view_find_click_cell (widget,
-                                                  tree_view->toggle_cells,
+                                                  tree_view->priv->toggle_cells,
                                                   column, &column_area,
                                                   bevent->x, bevent->y);
 
       if (! toggled_cell)
         clicked_cell = (GimpCellRendererViewable *)
           gimp_container_tree_view_find_click_cell (widget,
-                                                    tree_view->renderer_cells,
+                                                    tree_view->priv->renderer_cells,
                                                     column, &column_area,
                                                     bevent->x, bevent->y);
 

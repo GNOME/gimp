@@ -179,8 +179,8 @@ gimp_tool_view_new (GimpViewType     view_type,
                                                 tree_view,
                                                 NULL);
 
-      tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                                eye_cell);
+      gimp_container_tree_view_prepend_toggle_cell_renderer (tree_view,
+                                                             eye_cell);
 
       g_signal_connect (eye_cell, "clicked",
                         G_CALLBACK (gimp_tool_view_eye_clicked),

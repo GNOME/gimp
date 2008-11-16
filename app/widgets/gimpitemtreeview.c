@@ -298,8 +298,8 @@ gimp_item_tree_view_constructor (GType                  type,
                                        item_view->model_column_visible,
                                        NULL);
 
-  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                            item_view->eye_cell);
+  gimp_container_tree_view_prepend_toggle_cell_renderer (tree_view,
+                                                         item_view->eye_cell);
 
   g_signal_connect (item_view->eye_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_eye_clicked),
@@ -315,8 +315,8 @@ gimp_item_tree_view_constructor (GType                  type,
                                        item_view->model_column_linked,
                                        NULL);
 
-  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                            item_view->chain_cell);
+  gimp_container_tree_view_prepend_toggle_cell_renderer (tree_view,
+                                                         item_view->chain_cell);
 
   g_signal_connect (item_view->chain_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_chain_clicked),
