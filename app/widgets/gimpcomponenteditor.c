@@ -49,7 +49,7 @@ enum
   COLUMN_VISIBLE,
   COLUMN_RENDERER,
   COLUMN_NAME,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 
@@ -122,7 +122,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  list = gtk_list_store_new (NUM_COLUMNS,
+  list = gtk_list_store_new (N_COLUMNS,
                              G_TYPE_INT,
                              G_TYPE_BOOLEAN,
                              GIMP_TYPE_VIEW_RENDERER,

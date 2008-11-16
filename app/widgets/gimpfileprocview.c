@@ -43,7 +43,7 @@ enum
   COLUMN_LABEL,
   COLUMN_EXTENSIONS,
   COLUMN_HELP_ID,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 enum
@@ -120,7 +120,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (N_COLUMNS,
                               GIMP_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC   */
                               G_TYPE_STRING,          /*  COLUMN_LABEL       */
                               G_TYPE_STRING,          /*  COLUMN_EXTENSIONS  */

@@ -128,7 +128,7 @@ gimp_container_entry_init (GimpContainerEntry *entry)
                              "popup-set-width",    FALSE,
                              NULL);
 
-  store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_NUM_COLUMNS,
+  store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_N_COLUMNS,
                               GIMP_TYPE_VIEW_RENDERER,
                               G_TYPE_STRING);
 

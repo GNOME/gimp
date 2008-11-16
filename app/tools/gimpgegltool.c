@@ -51,7 +51,7 @@ enum
   COLUMN_NAME,
   COLUMN_LABEL,
   COLUMN_STOCK_ID,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 
@@ -336,7 +336,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (N_COLUMNS,
 			      G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   opclasses = gimp_get_geglopclasses ();
@@ -354,7 +354,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
         {
 	  const gchar *stock_id;
 	  const gchar *label;
-	  
+
 	  if (g_str_has_prefix (opclass->name, "gegl:"))
 	    {
 	      label    = opclass->name + strlen ("gegl:");

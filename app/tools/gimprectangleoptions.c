@@ -43,7 +43,7 @@ enum
   COLUMN_LEFT_NUMBER,
   COLUMN_RIGHT_NUMBER,
   COLUMN_TEXT,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 
@@ -335,12 +335,12 @@ gimp_rectangle_options_get_private (GimpRectangleOptions *options)
     {
       private = g_slice_new0 (GimpRectangleOptionsPrivate);
 
-      private->aspect_history = gtk_list_store_new (NUM_COLUMNS,
+      private->aspect_history = gtk_list_store_new (N_COLUMNS,
                                                     G_TYPE_DOUBLE,
                                                     G_TYPE_DOUBLE,
                                                     G_TYPE_STRING);
 
-      private->size_history = gtk_list_store_new (NUM_COLUMNS,
+      private->size_history = gtk_list_store_new (N_COLUMNS,
                                                   G_TYPE_DOUBLE,
                                                   G_TYPE_DOUBLE,
                                                   G_TYPE_STRING);

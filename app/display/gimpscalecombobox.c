@@ -40,10 +40,10 @@
 
 enum
 {
-  SCALE,
-  LABEL,
-  PERSISTENT,
-  NUM_COLUMNS
+  COLUMN_SCALE,
+  COLUMN_LABEL,
+  COLUMN_PERSISTENT,
+  N_COLUMNS
 };
 
 enum
@@ -123,7 +123,7 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
   combo_box->scale     = 1.0;
   combo_box->last_path = NULL;
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_DOUBLE,    /* SCALE       */
                               G_TYPE_STRING,    /* LABEL       */
                               G_TYPE_BOOLEAN);  /* PERSISTENT  */
@@ -131,7 +131,8 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  gtk_combo_box_entry_set_text_column (GTK_COMBO_BOX_ENTRY (combo_box), LABEL);
+  gtk_combo_box_entry_set_text_column (GTK_COMBO_BOX_ENTRY (combo_box),
+                                       COLUMN_LABEL);
 
   entry = gtk_bin_get_child (GTK_BIN (combo_box));
 
@@ -151,7 +152,7 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
   gtk_cell_layout_clear (layout);
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "text", LABEL,
+                                  "text", COLUMN_LABEL,
                                   NULL);
 
   for (i = 8; i > 0; i /= 2)
@@ -245,7 +246,7 @@ gimp_scale_combo_box_changed (GimpScaleComboBox *combo_box)
       gdouble       scale;
 
       gtk_tree_model_get (model, &iter,
-                          SCALE, &scale,
+                          COLUMN_SCALE, &scale,
                           -1);
       if (scale > 0.0)
         {
@@ -378,9 +379,9 @@ gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
                 "%.3g\342\200\211%%", 100.0 * scale);
 
   gtk_list_store_set (store, iter,
-                      SCALE,      scale,
-                      LABEL,      label,
-                      PERSISTENT, persistent,
+                      COLUMN_SCALE,      scale,
+                      COLUMN_LABEL,      label,
+                      COLUMN_PERSISTENT, persistent,
                       -1);
 }
 
@@ -479,7 +480,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
       gdouble  this;
 
       gtk_tree_model_get (model, &iter,
-                          SCALE, &this,
+                          COLUMN_SCALE, &this,
                           -1);
 
       if (fabs (this - scale) < 0.0001)
@@ -497,7 +498,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
           gdouble  this;
 
           gtk_tree_model_get (model, &sibling,
-                              SCALE, &this,
+                              COLUMN_SCALE, &this,
                               -1);
 
           if (this < scale)
@@ -511,7 +512,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
   gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
 
   gtk_tree_model_get (model, &iter,
-                      PERSISTENT, &persistent,
+                      COLUMN_PERSISTENT, &persistent,
                       -1);
   if (! persistent)
     {

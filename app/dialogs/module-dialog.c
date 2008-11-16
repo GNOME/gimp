@@ -47,7 +47,7 @@ enum
   COLUMN_NAME,
   COLUMN_ENABLED,
   COLUMN_MODULE,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 enum
@@ -57,7 +57,7 @@ enum
   INFO_DATE,
   INFO_COPYRIGHT,
   INFO_LOCATION,
-  NUM_INFOS
+  N_INFOS
 };
 
 typedef struct
@@ -69,7 +69,7 @@ typedef struct
 
   GtkWidget    *hint;
   GtkWidget    *table;
-  GtkWidget    *label[NUM_INFOS];
+  GtkWidget    *label[N_INFOS];
   GtkWidget    *error_box;
   GtkWidget    *error_label;
 } ModuleDialog;
@@ -164,7 +164,7 @@ module_dialog_new (Gimp *gimp)
   gtk_widget_set_size_request (listbox, 124, 100);
   gtk_widget_show (listbox);
 
-  dialog->list = gtk_list_store_new (NUM_COLUMNS,
+  dialog->list = gtk_list_store_new (N_COLUMNS,
                                      G_TYPE_STRING,
                                      G_TYPE_BOOLEAN,
                                      GIMP_TYPE_MODULE);
@@ -196,7 +196,7 @@ module_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (listbox), view);
   gtk_widget_show (view);
 
-  dialog->table = gtk_table_new (2, NUM_INFOS, FALSE);
+  dialog->table = gtk_table_new (2, N_INFOS, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (dialog->table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->table, FALSE, FALSE, 0);
   gtk_widget_show (dialog->table);
@@ -413,7 +413,7 @@ dialog_info_update (GimpModuleDB *db,
 {
   GtkTreeModel *model           = GTK_TREE_MODEL (dialog->list);
   GtkTreeIter   iter;
-  const gchar  *text[NUM_INFOS] = { NULL, };
+  const gchar  *text[N_INFOS] = { NULL, };
   gchar        *location        = NULL;
   gboolean      iter_valid;
   gint          i;
@@ -443,7 +443,7 @@ dialog_info_update (GimpModuleDB *db,
 
   if (! module)
     {
-      for (i = 0; i < NUM_INFOS; i++)
+      for (i = 0; i < N_INFOS; i++)
         gtk_label_set_text (GTK_LABEL (dialog->label[i]), NULL);
 
       gtk_label_set_text (GTK_LABEL (dialog->error_label), NULL);
@@ -469,7 +469,7 @@ dialog_info_update (GimpModuleDB *db,
                               location : _("No longer available"));
     }
 
-  for (i = 0; i < NUM_INFOS; i++)
+  for (i = 0; i < N_INFOS; i++)
     gtk_label_set_text (GTK_LABEL (dialog->label[i]),
                         text[i] ? text[i] : "--");
 

@@ -205,7 +205,7 @@ gimp_action_view_new (GimpUIManager *manager,
 
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
-  store = gtk_tree_store_new (GIMP_ACTION_VIEW_NUM_COLUMNS,
+  store = gtk_tree_store_new (GIMP_ACTION_VIEW_N_COLUMNS,
                               G_TYPE_BOOLEAN,         /* COLUMN_VISIBLE        */
                               GTK_TYPE_ACTION,        /* COLUMN_ACTION         */
                               G_TYPE_STRING,          /* COLUMN_STOCK_ID       */

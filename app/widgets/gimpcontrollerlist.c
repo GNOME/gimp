@@ -65,7 +65,7 @@ enum
   COLUMN_ICON,
   COLUMN_NAME,
   COLUMN_TYPE,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 
@@ -169,7 +169,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_box_pack_start (GTK_BOX (hbox), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
-  list->src = gtk_list_store_new (NUM_COLUMNS,
+  list->src = gtk_list_store_new (N_COLUMNS,
                                   G_TYPE_STRING,
                                   G_TYPE_STRING,
                                   G_TYPE_GTYPE);

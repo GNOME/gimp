@@ -59,7 +59,7 @@ enum
   COLUMN_BLURB,
   COLUMN_STOCK_ID,
   COLUMN_ACTION,
-  NUM_COLUMNS
+  N_COLUMNS
 };
 
 
@@ -272,7 +272,7 @@ gimp_controller_editor_constructor (GType                  type,
 
   g_free (property_specs);
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
