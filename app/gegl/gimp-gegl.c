@@ -27,6 +27,10 @@
 
 #include "base/tile.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "core/gimp.h"
+
 #include "gimp-gegl.h"
 #include "gimpoperationcolorbalance.h"
 #include "gimpoperationcolorize.h"
@@ -42,13 +46,27 @@
 #include "gimpoperationpointlayermode.h"
 
 
+static void  gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config);
+
+
 void
-gimp_gegl_init (void)
+gimp_gegl_init (Gimp *gimp)
 {
+  GimpBaseConfig *config;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  config = GIMP_BASE_CONFIG (gimp->config);
+
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
+                "cache-size",  config->tile_cache_size,
                 NULL);
+
+  g_signal_connect (config, "notify::tile-cache-size",
+                    G_CALLBACK (gimp_gegl_notify_tile_cache_size),
+                    NULL);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
@@ -63,4 +81,12 @@ gimp_gegl_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
+}
+
+static void
+gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config)
+{
+  g_object_set (gegl_config (),
+                "cache-size", config->tile_cache_size,
+                NULL);
 }

@@ -187,7 +187,7 @@ app_run (const gchar         *full_prog_name,
   /*  initialize lowlevel stuff  */
   swap_is_ok = base_init (config, be_verbose, use_cpu_accel);
 
-  gimp_gegl_init ();
+  gimp_gegl_init (gimp);
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)

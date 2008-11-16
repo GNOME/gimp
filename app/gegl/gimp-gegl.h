@@ -23,7 +23,7 @@
 #define __GIMP_GEGL_H__
 
 
-void   gimp_gegl_init (void);
+void   gimp_gegl_init (Gimp *gimp);
 
 
 #endif /* __GIMP_GEGL_H__ */
