@@ -125,7 +125,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
         }
     }
 
-  if (dest_viewable || tree_view->dnd_drop_to_empty)
+  if (dest_viewable || tree_view->priv->dnd_drop_to_empty)
     {
       if (GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view)->drop_possible (tree_view,
                                                                          src_type,

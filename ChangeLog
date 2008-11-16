@@ -1,3 +1,17 @@
+2008-11-16  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpcontainertreeview.[ch]
+	(gimp_container_tree_view_set_dnd_drop_to_empty): New setter
+	function so that we can make the "gboolean dnd_drop_to_empty"
+	class instance member private.
+
+	* app/widgets/gimpcontainertreeview-private.h: Move member here.
+
+	* app/widgets/gimpcontainertreeview-dnd.c: Go through priv pointer.
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_init): Use
+	the new function.
+
 2008-11-16  Sven Neumann  <sven@gimp.org>
 
 	* app/app.c

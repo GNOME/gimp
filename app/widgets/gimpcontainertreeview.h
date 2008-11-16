@@ -53,7 +53,6 @@ struct _GimpContainerTreeView
   GList                     *toggle_cells;
   GList                     *renderer_cells;
 
-  gboolean                   dnd_drop_to_empty;
   Gimp                      *dnd_gimp; /* eek */
 
   GimpContainerTreeViewPriv *priv;
@@ -106,6 +105,9 @@ GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
                                                gint           view_size,
                                                gint           view_border_width);
 
+void        gimp_container_tree_view_set_dnd_drop_to_empty
+                                              (GimpContainerTreeView *tree_view,
+                                               gboolean               dnd_drop_to_emtpy);
 void
  gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
                                                GCallback              callback,

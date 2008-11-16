@@ -396,6 +396,15 @@ gimp_container_tree_view_new (GimpContainer *container,
 }
 
 void
+gimp_container_tree_view_set_dnd_drop_to_empty (GimpContainerTreeView *tree_view,
+                                                gboolean               dnd_drop_to_empty)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+
+  tree_view->priv->dnd_drop_to_empty = dnd_drop_to_empty;
+}
+
+void
 gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
                                               GCallback              callback,
                                               gpointer               data)

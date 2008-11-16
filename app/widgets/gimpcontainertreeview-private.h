@@ -36,6 +36,8 @@ struct _GimpContainerTreeViewPriv
   guint              scroll_timeout_id;
   guint              scroll_timeout_interval;
   GdkScrollDirection scroll_dir;
+
+  gboolean           dnd_drop_to_empty;
 };
 
 

@@ -257,7 +257,7 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
   tree_view->n_model_columns++;
 
-  tree_view->dnd_drop_to_empty = TRUE;
+  gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->image  = NULL;
 
