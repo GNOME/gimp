@@ -1,5 +1,11 @@
 2008-11-16  Sven Neumann  <sven@gimp.org>
 
+	* app/app.c
+	* app/gegl/gimp-gegl.[ch] (gimp_gegl_init): set the GEGL cache size
+	as large as the GIMP tile-cache.
+
+2008-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.h: optimize access to
 	GimpDisplayShell struct members by placing related and frequently
 	accessed members like like scale and offset into the same
