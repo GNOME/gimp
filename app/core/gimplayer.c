@@ -69,7 +69,8 @@ enum
   PROP_0,
   PROP_OPACITY,
   PROP_MODE,
-  PROP_LOCK_ALPHA
+  PROP_LOCK_ALPHA,
+  PROP_FLOATING_SELECTION
 };
 
 
@@ -295,6 +296,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_FLOATING_SELECTION,
+                                   g_param_spec_boolean ("floating-selection",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -327,11 +334,6 @@ gimp_layer_set_property (GObject      *object,
 {
   switch (property_id)
     {
-    case PROP_OPACITY:
-    case PROP_MODE:
-    case PROP_LOCK_ALPHA:
-      g_assert_not_reached ();
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -349,14 +351,18 @@ gimp_layer_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_OPACITY:
-      g_value_set_double (value, layer->opacity);
+      g_value_set_double (value, gimp_layer_get_opacity (layer));
       break;
     case PROP_MODE:
-      g_value_set_enum (value, layer->mode);
+      g_value_set_enum (value, gimp_layer_get_mode (layer));
       break;
     case PROP_LOCK_ALPHA:
-      g_value_set_boolean (value, layer->lock_alpha);
+      g_value_set_boolean (value, gimp_layer_get_lock_alpha (layer));
       break;
+    case PROP_FLOATING_SELECTION:
+      g_value_set_boolean (value, gimp_layer_is_floating_sel (layer));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -1872,6 +1878,28 @@ gimp_layer_get_mask (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
   return layer->mask;
+}
+
+void
+gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
+                                      GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
+
+  if (layer->fs.drawable != drawable)
+    {
+      if (layer->fs.segs)
+        {
+          g_free (layer->fs.segs);
+          layer->fs.segs     = NULL;
+          layer->fs.num_segs = 0;
+        }
+
+      layer->fs.drawable = drawable;
+
+      g_object_notify (G_OBJECT (layer), "floating-selection");
+    }
 }
 
 gboolean

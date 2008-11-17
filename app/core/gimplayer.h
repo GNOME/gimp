@@ -118,6 +118,8 @@ BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer,
 
 GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 
+void      gimp_layer_set_floating_sel_drawable (GimpLayer            *layer,
+                                                GimpDrawable         *drawable);
 gboolean        gimp_layer_is_floating_sel     (const GimpLayer      *layer);
 
 void            gimp_layer_set_opacity         (GimpLayer            *layer,

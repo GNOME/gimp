@@ -21,16 +21,12 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
 
-#include "paint-funcs/paint-funcs.h"
-
-#include "gimp.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -79,9 +75,10 @@ floating_sel_attach (GimpLayer    *layer,
         drawable = gimp_image_get_active_drawable (image);
     }
 
-  /*  set the drawable and allocate a backing store  */
+  /*  set the drawable  */
   gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
-  layer->fs.drawable = drawable;
+
+  gimp_layer_set_floating_sel_drawable (layer, drawable);
 
   /*  add the layer to the image  */
   gimp_image_add_layer (image, layer, 0, TRUE);
@@ -90,8 +87,7 @@ floating_sel_attach (GimpLayer    *layer,
 void
 floating_sel_anchor (GimpLayer *layer)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -104,8 +100,6 @@ floating_sel_anchor (GimpLayer *layer)
 
   /*  Composite the floating selection contents  */
   floating_sel_composite (layer);
-
-  drawable = layer->fs.drawable;
 
   /*  remove the floating selection  */
   gimp_image_remove_layer (image, layer, TRUE, NULL);
@@ -150,7 +144,7 @@ floating_sel_to_layer (GimpLayer  *layer,
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
   /*  Set pointers  */
-  layer->fs.drawable  = NULL;
+  gimp_layer_set_floating_sel_drawable (layer, NULL);
   gimp_image_set_floating_selection (image, NULL);
 
   gimp_item_set_visible (item, TRUE, TRUE);

@@ -108,7 +108,8 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           /*  Update the preview for the floating sel  */
           gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
 
-          floating_layer->fs.drawable = floating_sel_undo->drawable;
+          gimp_layer_set_floating_sel_drawable (floating_layer,
+                                                floating_sel_undo->drawable);
           gimp_image_set_active_layer (undo->image, floating_layer);
           gimp_image_set_floating_selection (undo->image, floating_layer);
 
@@ -124,7 +125,7 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));
 
           /*  update the pointers  */
-          floating_layer->fs.drawable = NULL;
+          gimp_layer_set_floating_sel_drawable (floating_layer, NULL);
           gimp_image_set_floating_selection (undo->image, NULL);
         }
 

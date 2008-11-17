@@ -1,3 +1,17 @@
+2008-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.[ch]: add boolean property
+	"floating-selection" which indicates if the layer is a floating
+	selection. Add new API gimp_layer_set_floating_sel_drawable()
+	which sets layer->fs.drawable and emits notify on the property.
+	Did some minor cleanup in the existing property code.
+
+	* app/core/gimpfloatingselundo.c: use the new function instead of
+	setting layer->fs.drawable manually.
+
+	* app/core/gimplayer-floating-sel.c: same here. Remove some
+	includes and local variables that are obsolete.
+
 2008-11-16  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpcontainertreeview.[ch]
