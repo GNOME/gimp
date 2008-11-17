@@ -353,8 +353,7 @@ gimp_drawable_visibility_changed (GimpItem *item)
         }
     }
 
-  if (GIMP_ITEM_CLASS (parent_class)->visibility_changed)
-    GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
+  GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);
 }
 
 static GimpItem *
