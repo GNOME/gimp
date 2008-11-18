@@ -173,8 +173,6 @@ load_layer_resource (PSDlayerres  *res_a,
                      FILE         *f,
                      GError      **error)
 {
-  gint  pad;
-
   /* Set file position to start of layer resource data block */
   if (fseek (f, res_a->data_start, SEEK_SET) < 0)
     {
@@ -232,14 +230,8 @@ load_layer_resource (PSDlayerres  *res_a,
         load_resource_unknown (res_a, lyr_a, f, error);
     }
 
-  /* Layer blocks are null padded to even length */
-  if (res_a->data_len % 2 == 0)
-    pad = 0;
-  else
-    pad = 1;
-
   /* Set file position to end of layer resource block */
-  if (fseek (f, res_a->data_start + res_a->data_len + pad, SEEK_SET) < 0)
+  if (fseek (f, res_a->data_start + res_a->data_len, SEEK_SET) < 0)
     {
       psd_set_error (feof (f), errno, error);
       return -1;

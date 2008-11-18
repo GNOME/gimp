@@ -1,6 +1,15 @@
+2008-11-18  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	Bug 559239 – Error while loading psd-data
+
+	* plug-ins/file-psd/psd-layer-res-load.c (load_layer_resource):
+	Layer resource data should not be padded.
+
 2008-11-15  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* app/display/gimpdisplayshell-scroll.[ch]: removed function
 	gimp_display_shell_scroll_get_scaled_viewport_offset() as it was
@@ -14,7 +23,7 @@
 
 2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 560903 – Explicit zooming with e.g. '1' should handle
 	zoom-focus better
@@ -34,7 +43,7 @@
 
 2008-11-15  Martin Nordholts  <martinn@svn.gnome.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 560245 – Zoom selection always centered in the Navigation tab
 
@@ -45,7 +54,7 @@
 
 2008-11-14  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* app/display/gimpdisplayshell-preview.c
 	(gimp_display_shell_draw_quad): check that the resulting area has
@@ -53,7 +62,7 @@
 
 2008-11-13  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 559292 – SOTA Chrome cannot accept different textures
 
@@ -63,7 +72,7 @@
 
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 560375 – Clearing an already empty document history crashes GIMP
 
@@ -73,7 +82,7 @@
 
 2008-11-11  Michael Natterer  <mitch@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 559580 – Image windows need better default locations
 
@@ -84,7 +93,7 @@
 
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 560283 – "Scale image..." causes distortion around edges.
 
@@ -93,14 +102,14 @@
 
 2008-11-11  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* plug-ins/common/file-pdf.c: fixed size of the GimpParam array
 	used for the return values.
 
 2008-11-10  Martin Nordholts  <martinn@svn.gnome.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 559716 – Changing crop size in Crop Tool Options can make UI
 	unresponsive
@@ -111,14 +120,14 @@
 
 2008-11-10  Michael Natterer  <mitch@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* app/core/gimpdrawable-curves.c (gimp_drawable_curves_explicit):
 	use GIMP_CURVE_FREE, not _SMOOTH. Fixes the resp. PDB call.
 
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 558549 – Stroking a single-point path with a paint tool
 	crashes GIMP
@@ -132,7 +141,7 @@
 
 2008-11-09  Martin Nordholts  <martinn@svn.gnome.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* app/display/gimpdisplayshell-scale.c
 	(gimp_display_shell_scale_update_rulers): Avoid critical warnings
@@ -142,7 +151,7 @@
 
 2008-11-04  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	* app/display/gimpdisplayshell-dnd.c
 	(gimp_display_shell_drop_uri_list): when dropping multiple images
@@ -157,7 +166,7 @@
 
 2008-11-03  Michael Natterer  <mitch@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 559015 – Move tool gives bad information about px moved
 
@@ -171,7 +180,7 @@
 2008-10-31  Sven Neumann  <sven@gimp.org>
 
 	Bug 558660 – help behavior for locales without manual translation
-	
+
 	* app/widgets/gimphelp.c (gimp_help_user_manual_is_installed):
 	as a fallback check for the english user manual.
 
@@ -198,7 +207,7 @@
 
 2008-10-29  Sven Neumann  <sven@gimp.org>
 
- 	Merged from trunk:
+	Merged from trunk:
 
 	Bug 557950 – Scaling in Gimp 2.6 is much slower than in Gimp 2.4
 
