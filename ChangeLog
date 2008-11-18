@@ -1,3 +1,10 @@
+2008-11-18  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 559239 – Error while loading psd-data
+
+	* plug-ins/file-psd/psd-layer-res-load.c (load_layer_resource):
+	Layer resource data should not be padded.
+
 2008-11-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unit-editor.c (columns): corrected column
