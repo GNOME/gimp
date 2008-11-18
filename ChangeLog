@@ -1,3 +1,8 @@
+2008-11-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/unit-editor.c (columns): corrected column
+	tooltip (pointed out by Cristian Secară).
+
 2008-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_visibility_changed):

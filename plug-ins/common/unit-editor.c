@@ -101,7 +101,7 @@ static const UnitColumn columns[] =
                            "the input field should provide to get "
                            "approximately the same accuracy as an "
                            "\"inch\" input field with two decimal digits.") },
-  { N_("Symbol"),       N_("The unit's symbol if it has one (e.g. \"'\" "
+  { N_("Symbol"),       N_("The unit's symbol if it has one (e.g. \" "
                            "for inches). The unit's abbreviation is used "
                            "if doesn't have a symbol.")                     },
   { N_("Abbreviation"), N_("The unit's abbreviation (e.g. \"cm\" for "
