@@ -2,7 +2,7 @@
 
 	Merged from trunk:
 
-	Bug 558454 – Plugin Map Color Range disapears from GIMP
+	Bug 558454 – Plugin Map Color Range disappears from GIMP
 
 	* plug-ins/script-fu/scripts/Makefile.am
 
