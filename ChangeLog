@@ -1,3 +1,8 @@
+2008-11-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* README: Remove reference to the inactive gimpwin-users mailing
+	list.
+
 2008-11-18  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 559239 – Error while loading psd-data
