@@ -68,6 +68,8 @@ static pointer  script_fu_quit_call              (scheme    *sc,
 static pointer  script_fu_nil_call               (scheme    *sc,
                                                   pointer    a);
 
+static gboolean ts_load_file                     (const gchar *dirname,
+                                                  const gchar *basename);
 
 typedef struct
 {
@@ -239,30 +241,17 @@ tinyscheme_init (const gchar *path,
 
       for (list = dir_list; list; list = g_list_next (list))
         {
-          gchar *filename = g_build_filename (list->data,
-                                              "script-fu.init", NULL);
-          FILE  *fin      = g_fopen (filename, "rb");
-
-          g_free (filename);
-
-          if (fin)
+          if (ts_load_file (list->data, "script-fu.init"))
             {
-              scheme_load_file (&sc, fin);
-              fclose (fin);
-
               /*  To improve compatibility with older Script-Fu scripts,
                *  load script-fu-compat.init from the same directory.
                */
-              filename = g_build_filename (list->data,
-                                           "script-fu-compat.init", NULL);
-              fin = g_fopen (filename, "rb");
-              g_free (filename);
+              ts_load_file (list->data, "script-fu-compat.init");
 
-              if (fin)
-                {
-                  scheme_load_file (&sc, fin);
-                  fclose (fin);
-                }
+              /*  To improve compatibility with older GIMP version,
+               *  load plug-in-compat.init from the same directory.
+               */
+              ts_load_file (list->data, "plug-in-compat.init");
 
               break;
             }
@@ -576,6 +565,30 @@ ts_init_procedures (scheme   *sc,
     }
 
   g_free (proc_list);
+}
+
+static gboolean
+ts_load_file (const gchar *dirname,
+              const gchar *basename)
+{
+  gchar *filename;
+  FILE  *fin;
+
+  filename = g_build_filename (dirname, basename, NULL);
+
+  fin = g_fopen (filename, "rb");
+
+  g_free (filename);
+
+  if (fin)
+    {
+      scheme_load_file (&sc, fin);
+      fclose (fin);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void

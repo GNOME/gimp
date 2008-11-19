@@ -7,6 +7,7 @@ scriptdatadir = $(gimpdatadir)/scripts
 scripts = \
 	script-fu.init			\
 	script-fu-compat.init		\
+	plug-in-compat.init		\
 	3d-outline.scm			\
 	3dTruchet.scm			\
 	add-bevel.scm			\
