@@ -1,0 +1,24 @@
+; The Scheme code in this file provides some compatibility with
+; scripts that were originally written for use with older versions of
+; GIMP.
+;
+; It provides PDB procedures that used to be provided by plug-ins that
+; were since then removed from the GIMP distribution. You should not
+; use these in newly written scripts as the functions defined here may
+; be removed at some later date.
+
+
+(define (plug-in-color-map run-mode img layer
+			   src-color-1 src-color-2 dest-color-1 dest-color-2
+			   map-mode)
+  (gimp-levels layer HISTOGRAM-RED
+	       (car src-color-1) (car src-color-2) 1.0
+	       (- 255 (car dest-color-1)) (- 255 (car dest-color-2)))
+  (gimp-levels layer  HISTOGRAM-GREEN
+	       (cadr 	src-color-1) (cadr src-color-2) 1.0
+	       (- 255 (cadr dest-color-1)) (- 255 (cadr dest-color-2)))
+  (gimp-levels layer HISTOGRAM-BLUE
+	       (caddr src-color-1) (caddr src-color-2) 1.0
+	       (- 255 (caddr dest-color-1)) (- 255 (caddr dest-color-2)))
+  (gimp-levels layer HISTOGRAM-VALUE 0 255 1.0 255 0)
+)

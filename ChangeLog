@@ -1,3 +1,17 @@
+2008-11-19  Sven Neumann  <sven@gimp.org>
+
+	Bug 558454 – Plugin Map Color Range disapears from GIMP
+
+	* plug-ins/script-fu/scripts/Makefile.am
+
+	* plug-ins/script-fu/scripts/plug-in-compat.init: new file
+	providing compatibility with plug-ins from older GIMP
+	versions. Contains a reimplementation of plug-in-color-map based
+	on ideas and code from Eric Lamarque.
+
+	* plug-ins/script-fu/scheme-wrapper.c (tinyscheme_init): load the
+	plug-in-compat.init file.
+
 2008-11-19  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* README: Remove reference to the inactive gimpwin-users mailing
