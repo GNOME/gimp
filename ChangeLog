@@ -1,6 +1,6 @@
 2008-11-19  Sven Neumann  <sven@gimp.org>
 
-	Bug 558454 – Plugin Map Color Range disapears from GIMP
+	Bug 558454 – Plugin Map Color Range disappears from GIMP
 
 	* plug-ins/script-fu/scripts/Makefile.am
 
