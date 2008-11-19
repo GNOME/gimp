@@ -12,6 +12,8 @@ Overview of Changes since GIMP 2.6.2
 
 * Bugs fixed:
 
+ 558454 – Plugin Map Color Range disappears from GIMP
+ 559239 – Error while loading psd-data
  560903 – Explicit zooming with e.g. '1' should handle
 	  zoom-focus better
  560245 – Zoom selection always centered in the Navigation tab
