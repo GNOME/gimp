@@ -1,5 +1,19 @@
 2008-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpundo.h (struct GimpUndoAccumulator): remove members
+	"quick_mask_changed" and "alpha_changed" (the former was unused
+	and the latter is entirely handled by the image's flush
+	accumulator now.
+
+	* app/core/gimpimage-undo.c
+	* app/core/gimplayerundo.c: changed accordingly.
+
+2008-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c: add read-only "mask" property.
+
+2008-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-quick-mask.c (gimp_image_get_quick_mask_state):
 	image->quick_mask_state is a boolean, return it directly instead
 	of "state != NULL".

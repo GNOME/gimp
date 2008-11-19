@@ -393,12 +393,6 @@ gimp_image_undo_pop_stack (GimpImage     *image,
       if (accum.unit_changed)
         gimp_image_unit_changed (image);
 
-      if (accum.quick_mask_changed)
-        gimp_image_quick_mask_changed (image);
-
-      if (accum.alpha_changed)
-        gimp_image_alpha_changed (image);
-
       /* let others know that we just popped an action */
       gimp_image_undo_event (image,
                              (undo_mode == GIMP_UNDO_MODE_UNDO) ?

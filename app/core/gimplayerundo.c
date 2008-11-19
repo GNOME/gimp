@@ -178,11 +178,8 @@ gimp_layer_undo_pop (GimpUndo            *undo,
 {
   GimpLayerUndo *layer_undo = GIMP_LAYER_UNDO (undo);
   GimpLayer     *layer      = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-  gboolean       old_has_alpha;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
-
-  old_has_alpha = gimp_image_has_alpha (undo->image);
 
   if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
        undo->undo_type == GIMP_UNDO_LAYER_ADD) ||
@@ -217,7 +214,4 @@ gimp_layer_undo_pop (GimpUndo            *undo,
           GIMP_ITEM (mask)->removed = FALSE;
         }
     }
-
-  if (old_has_alpha != gimp_image_has_alpha (undo->image))
-    accum->alpha_changed = TRUE;
 }
