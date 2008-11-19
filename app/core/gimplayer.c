@@ -70,6 +70,7 @@ enum
   PROP_OPACITY,
   PROP_MODE,
   PROP_LOCK_ALPHA,
+  PROP_MASK,
   PROP_FLOATING_SELECTION
 };
 
@@ -297,6 +298,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
 
+  g_object_class_install_property (object_class, PROP_MASK,
+                                   g_param_spec_object ("mask",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_LAYER_MASK,
+                                                        GIMP_PARAM_READABLE));
+
   g_object_class_install_property (object_class, PROP_FLOATING_SELECTION,
                                    g_param_spec_boolean ("floating-selection",
                                                          NULL, NULL,
@@ -358,6 +365,9 @@ gimp_layer_get_property (GObject    *object,
       break;
     case PROP_LOCK_ALPHA:
       g_value_set_boolean (value, gimp_layer_get_lock_alpha (layer));
+      break;
+    case PROP_MASK:
+      g_value_set_object (value, gimp_layer_get_mask (layer));
       break;
     case PROP_FLOATING_SELECTION:
       g_value_set_boolean (value, gimp_layer_is_floating_sel (layer));
@@ -1343,6 +1353,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 
+  g_object_notify (G_OBJECT (layer), "mask");
+
   return layer->mask;
 }
 
@@ -1672,6 +1684,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
+
+  g_object_notify (G_OBJECT (layer), "mask");
 }
 
 void
