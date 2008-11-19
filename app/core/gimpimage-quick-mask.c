@@ -155,7 +155,7 @@ gimp_image_get_quick_mask_state (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return (image->quick_mask_state != 0);
+  return image->quick_mask_state;
 }
 
 void

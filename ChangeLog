@@ -1,3 +1,9 @@
+2008-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-quick-mask.c (gimp_image_get_quick_mask_state):
+	image->quick_mask_state is a boolean, return it directly instead
+	of "state != NULL".
+
 2008-11-19  Sven Neumann  <sven@gimp.org>
 
 	Bug 558454 – Plugin Map Color Range disappears from GIMP
