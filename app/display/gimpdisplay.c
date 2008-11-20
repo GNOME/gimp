@@ -453,7 +453,7 @@ gimp_display_close (GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  if (gimp_container_num_children (display->gimp->displays) > 1)
+  if (gimp_container_get_n_children (display->gimp->displays) > 1)
     {
       gimp_display_delete (display);
     }

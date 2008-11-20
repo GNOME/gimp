@@ -194,10 +194,10 @@ gimp_list_get_memsize (GimpObject *object,
   GimpList *list    = GIMP_LIST (object);
   gint64    memsize = 0;
 
-  memsize += (gimp_container_num_children (GIMP_CONTAINER (list)) *
+  memsize += (gimp_container_get_n_children (GIMP_CONTAINER (list)) *
               sizeof (GList));
 
-  if (gimp_container_policy (GIMP_CONTAINER (list)) ==
+  if (gimp_container_get_policy (GIMP_CONTAINER (list)) ==
       GIMP_CONTAINER_POLICY_STRONG)
     {
       GList *glist;

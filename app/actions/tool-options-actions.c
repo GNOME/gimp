@@ -179,7 +179,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
     }
 
   if (presets)
-    n_children = gimp_container_num_children (presets);
+    n_children = gimp_container_get_n_children (presets);
 
   if (n_children > 0)
     {

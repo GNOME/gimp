@@ -224,7 +224,7 @@ gimp_settings_box_constructor (GType                  type,
   g_assert (GIMP_IS_CONTAINER (box->container));
   g_assert (box->filename != NULL);
 
-  if (gimp_container_num_children (box->container) == 0)
+  if (gimp_container_get_n_children (box->container) == 0)
     gimp_settings_box_deserialize (box);
 
   box->combo = gimp_container_combo_box_new (box->container,

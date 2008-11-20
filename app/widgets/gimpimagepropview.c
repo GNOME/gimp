@@ -514,17 +514,17 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   /*  number of layers  */
   g_snprintf (buf, sizeof (buf), "%d",
-              gimp_container_num_children (image->layers));
+              gimp_container_get_n_children (image->layers));
   gtk_label_set_text (GTK_LABEL (view->layers_label), buf);
 
   /*  number of channels  */
   g_snprintf (buf, sizeof (buf), "%d",
-              gimp_container_num_children (image->channels));
+              gimp_container_get_n_children (image->channels));
   gtk_label_set_text (GTK_LABEL (view->channels_label), buf);
 
   /*  number of vectors  */
   g_snprintf (buf, sizeof (buf), "%d",
-              gimp_container_num_children (image->vectors));
+              gimp_container_get_n_children (image->vectors));
   gtk_label_set_text (GTK_LABEL (view->vectors_label), buf);
 }
 

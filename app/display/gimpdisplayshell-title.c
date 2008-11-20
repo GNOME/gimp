@@ -310,12 +310,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'l': /* number of layers */
               i += print (title, title_len, i, "%d",
-                          gimp_container_num_children (image->layers));
+                          gimp_container_get_n_children (image->layers));
               break;
 
             case 'L': /* number of layers (long) */
               {
-                gint num = gimp_container_num_children (image->layers);
+                gint num = gimp_container_get_n_children (image->layers);
 
                 i += print (title, title_len, i,
                             ngettext ("%d layer", "%d layers", num), num);

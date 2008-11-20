@@ -284,7 +284,7 @@ gui_get_empty_display (Gimp *gimp)
 {
   GimpObject *display = NULL;
 
-  if (gimp_container_num_children (gimp->displays) == 1)
+  if (gimp_container_get_n_children (gimp->displays) == 1)
     {
       display = gimp_container_get_first_child (gimp->displays);
 

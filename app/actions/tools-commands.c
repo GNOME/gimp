@@ -190,7 +190,7 @@ tools_lower_cmd_callback (GtkAction *action,
       index     = gimp_container_get_child_index (container,
                                                   GIMP_OBJECT (tool_info));
 
-      if (index + 1 < gimp_container_num_children (container))
+      if (index + 1 < gimp_container_get_n_children (container))
         gimp_container_reorder (container, GIMP_OBJECT (tool_info), index + 1);
     }
 }
@@ -211,7 +211,7 @@ tools_lower_to_bottom_cmd_callback (GtkAction *action,
       gint           index;
 
       container = context->gimp->tool_info_list;
-      index     = gimp_container_num_children (container) - 1;
+      index     = gimp_container_get_n_children (container) - 1;
 
       index = index >= 0 ? index : 0;
 

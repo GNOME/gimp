@@ -1263,7 +1263,7 @@ static void
 gimp_image_layer_alpha_changed (GimpDrawable *drawable,
                                 GimpImage    *image)
 {
-  if (gimp_container_num_children (image->layers) == 1)
+  if (gimp_container_get_n_children (image->layers) == 1)
     image->flush_accum.alpha_changed = TRUE;
 }
 
@@ -1610,7 +1610,7 @@ gimp_image_has_alpha (const GimpImage *image)
 
   layer = gimp_image_get_layer_by_index (image, 0);
 
-  return ((gimp_container_num_children (image->layers) > 1) ||
+  return ((gimp_container_get_n_children (image->layers) > 1) ||
           (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
 }
 
@@ -2968,7 +2968,7 @@ gimp_image_add_layer (GimpImage *image,
     position = 1;
 
   /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_num_children (image->layers));
+  position = MIN (position, gimp_container_get_n_children (image->layers));
 
   gimp_container_insert (image->layers, GIMP_OBJECT (layer), position);
 
@@ -3077,7 +3077,7 @@ gimp_image_remove_layer (GimpImage *image,
         }
       else
         {
-          gint n_children = gimp_container_num_children (image->layers);
+          gint n_children = gimp_container_get_n_children (image->layers);
 
           if (n_children > 0)
             {
@@ -3212,7 +3212,7 @@ gimp_image_lower_layer (GimpImage  *image,
   index = gimp_container_get_child_index (image->layers,
                                           GIMP_OBJECT (layer));
 
-  if (index == gimp_container_num_children (image->layers) - 1)
+  if (index == gimp_container_get_n_children (image->layers) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Layer cannot be lowered more."));
@@ -3243,7 +3243,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  length = gimp_container_num_children (image->layers);
+  length = gimp_container_get_n_children (image->layers);
 
   return gimp_image_position_layer (image, layer, length - 1,
                                     TRUE, _("Lower Layer to Bottom"));
@@ -3267,7 +3267,7 @@ gimp_image_position_layer (GimpImage   *image,
   if (index < 0)
     return FALSE;
 
-  num_layers = gimp_container_num_children (image->layers);
+  num_layers = gimp_container_get_n_children (image->layers);
 
   new_index = CLAMP (new_index, 0, num_layers - 1);
 
@@ -3313,7 +3313,7 @@ gimp_image_add_channel (GimpImage   *image,
     }
 
   /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_num_children (image->channels));
+  position = MIN (position, gimp_container_get_n_children (image->channels));
 
   gimp_container_insert (image->channels, GIMP_OBJECT (channel), position);
 
@@ -3378,7 +3378,7 @@ gimp_image_remove_channel (GimpImage   *image,
         }
       else
         {
-          gint n_children = gimp_container_num_children (image->channels);
+          gint n_children = gimp_container_get_n_children (image->channels);
 
           if (n_children > 0)
             {
@@ -3455,7 +3455,7 @@ gimp_image_lower_channel (GimpImage    *image,
   index = gimp_container_get_child_index (image->channels,
                                           GIMP_OBJECT (channel));
 
-  if (index == gimp_container_num_children (image->channels) - 1)
+  if (index == gimp_container_get_n_children (image->channels) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Channel cannot be lowered more."));
@@ -3475,7 +3475,7 @@ gimp_image_lower_channel_to_bottom (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  length = gimp_container_num_children (image->channels);
+  length = gimp_container_get_n_children (image->channels);
 
   return gimp_image_position_channel (image, channel, length - 1,
                                       TRUE, _("Lower Channel to Bottom"));
@@ -3499,7 +3499,7 @@ gimp_image_position_channel (GimpImage   *image,
   if (index < 0)
     return FALSE;
 
-  num_channels = gimp_container_num_children (image->channels);
+  num_channels = gimp_container_get_n_children (image->channels);
 
   new_index = CLAMP (new_index, 0, num_channels - 1);
 
@@ -3546,7 +3546,7 @@ gimp_image_add_vectors (GimpImage   *image,
     }
 
   /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_num_children (image->vectors));
+  position = MIN (position, gimp_container_get_n_children (image->vectors));
 
   gimp_container_insert (image->vectors, GIMP_OBJECT (vectors), position);
 
@@ -3592,7 +3592,7 @@ gimp_image_remove_vectors (GimpImage   *image,
         }
       else
         {
-          gint n_children = gimp_container_num_children (image->vectors);
+          gint n_children = gimp_container_get_n_children (image->vectors);
 
           if (n_children > 0)
             {
@@ -3662,7 +3662,7 @@ gimp_image_lower_vectors (GimpImage    *image,
   index = gimp_container_get_child_index (image->vectors,
                                           GIMP_OBJECT (vectors));
 
-  if (index == gimp_container_num_children (image->vectors) - 1)
+  if (index == gimp_container_get_n_children (image->vectors) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Path cannot be lowered more."));
@@ -3682,7 +3682,7 @@ gimp_image_lower_vectors_to_bottom (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
-  length = gimp_container_num_children (image->vectors);
+  length = gimp_container_get_n_children (image->vectors);
 
   return gimp_image_position_vectors (image, vectors, length - 1,
                                       TRUE, _("Lower Path to Bottom"));
@@ -3706,7 +3706,7 @@ gimp_image_position_vectors (GimpImage   *image,
   if (index < 0)
     return FALSE;
 
-  num_vectors = gimp_container_num_children (image->vectors);
+  num_vectors = gimp_container_get_n_children (image->vectors);
 
   new_index = CLAMP (new_index, 0, num_vectors - 1);
 

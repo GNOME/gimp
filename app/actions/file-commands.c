@@ -149,7 +149,7 @@ file_open_recent_cmd_callback (GtkAction *action,
   gint           num_entries;
   return_if_no_gimp (gimp, data);
 
-  num_entries = gimp_container_num_children (gimp->documents);
+  num_entries = gimp_container_get_n_children (gimp->documents);
 
   if (value >= num_entries)
     return;

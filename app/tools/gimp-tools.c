@@ -248,7 +248,7 @@ gimp_tools_restore (Gimp *gimp)
   if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,
                                     NULL, NULL))
     {
-      gint n = gimp_container_num_children (gimp->tool_info_list);
+      gint n = gimp_container_get_n_children (gimp->tool_info_list);
       gint i;
 
       gimp_list_reverse (GIMP_LIST (gimp_list));

@@ -69,9 +69,9 @@ gimp_image_flip (GimpImage           *image,
       return;
     }
 
-  progress_max = (gimp_container_num_children (image->channels) +
-                  gimp_container_num_children (image->layers)   +
-                  gimp_container_num_children (image->vectors)  +
+  progress_max = (gimp_container_get_n_children (image->channels) +
+                  gimp_container_get_n_children (image->layers)   +
+                  gimp_container_get_n_children (image->vectors)  +
                   1 /* selection */);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);

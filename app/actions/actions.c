@@ -531,7 +531,7 @@ action_select_object (GimpActionSelectType  select_type,
   if (! current)
     return NULL;
 
-  n_children = gimp_container_num_children (container);
+  n_children = gimp_container_get_n_children (container);
 
   if (n_children == 0)
     return NULL;

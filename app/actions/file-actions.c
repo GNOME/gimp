@@ -260,7 +260,7 @@ file_actions_last_opened_update (GimpContainer   *container,
   gint i;
   gint n = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
 
-  num_documents = gimp_container_num_children (container);
+  num_documents = gimp_container_get_n_children (container);
 
   for (i = 0; i < n; i++)
     {
@@ -330,7 +330,7 @@ file_actions_close_all_update (GimpContainer   *images,
                                GimpActionGroup *group)
 {
   GimpContainer *container  = group->gimp->displays;
-  gint           n_displays = gimp_container_num_children (container);
+  gint           n_displays = gimp_container_get_n_children (container);
   gboolean       sensitive  = (n_displays > 0);
 
   if (n_displays == 1)

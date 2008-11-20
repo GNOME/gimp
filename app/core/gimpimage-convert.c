@@ -798,7 +798,7 @@ gimp_image_convert (GimpImage               *image,
 
   gimp_set_busy (image->gimp);
 
-  n_layers = gimp_container_num_children (GIMP_CONTAINER (image->layers));
+  n_layers = gimp_container_get_n_children (GIMP_CONTAINER (image->layers));
 
   switch (new_type)
     {

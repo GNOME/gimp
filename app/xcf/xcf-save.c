@@ -252,8 +252,8 @@ xcf_save_image (XcfInfo    *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
-  n_layers   = (guint) gimp_container_num_children (image->layers);
-  n_channels = (guint) gimp_container_num_children (image->channels);
+  n_layers   = (guint) gimp_container_get_n_children (image->layers);
+  n_channels = (guint) gimp_container_get_n_children (image->channels);
 
   max_progress = 1 + n_layers + n_channels;
 
@@ -415,7 +415,7 @@ xcf_save_image_props (XcfInfo    *info,
   if (unit < _gimp_unit_get_number_of_built_in_units (image->gimp))
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit));
 
-  if (gimp_container_num_children (image->vectors) > 0)
+  if (gimp_container_get_n_children (image->vectors) > 0)
     {
       if (gimp_vectors_compat_is_compatible (image))
         xcf_check_error (xcf_save_prop (info, image, PROP_PATHS, error));
@@ -1605,7 +1605,7 @@ xcf_save_old_paths (XcfInfo    *info,
    * then each path:-
    */
 
-  num_paths = gimp_container_num_children (image->vectors);
+  num_paths = gimp_container_get_n_children (image->vectors);
 
   active_vectors = gimp_image_get_active_vectors (image);
 
@@ -1722,7 +1722,7 @@ xcf_save_vectors (XcfInfo    *info,
     active_index = gimp_container_get_child_index (image->vectors,
                                                    GIMP_OBJECT (active_vectors));
 
-  num_paths = gimp_container_num_children (image->vectors);
+  num_paths = gimp_container_get_n_children (image->vectors);
 
   xcf_write_int32_check_error (info, &version,      1);
   xcf_write_int32_check_error (info, &active_index, 1);

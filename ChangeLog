@@ -1,5 +1,47 @@
 2008-11-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	s/gimp_container_children_type/gimp_container_get_children_type/
+	s/gimp_container_policy/gimp_container_get_policy/
+	s/gimp_container_num_children/gimp_container_get_n_children/
+
+	* app/actions/actions.c
+	* app/actions/file-actions.c
+	* app/actions/file-commands.c
+	* app/actions/tool-options-actions.c
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.c
+	* app/actions/vectors-actions.c
+	* app/core/gimpcontainer-filter.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontainer.h
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagefile.c
+	* app/core/gimplist.c
+	* app/core/gimpundostack.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/quit-dialog.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell-title.c
+	* app/gui/gui-vtable.c
+	* app/menus/tool-options-menu.c
+	* app/tools/gimp-tools.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimpsettingsbox.c
+	* app/widgets/gimpviewablebutton.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+
+2008-11-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpcontainer.[ch]: Don't expose class instance members
 	marked as private.
 

@@ -519,7 +519,7 @@ gimp_container_disconnect_callback (GimpObject *object,
 }
 
 GType
-gimp_container_children_type (const GimpContainer *container)
+gimp_container_get_children_type (const GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), G_TYPE_NONE);
 
@@ -527,7 +527,7 @@ gimp_container_children_type (const GimpContainer *container)
 }
 
 GimpContainerPolicy
-gimp_container_policy (const GimpContainer *container)
+gimp_container_get_policy (const GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
 
@@ -535,7 +535,7 @@ gimp_container_policy (const GimpContainer *container)
 }
 
 gint
-gimp_container_num_children (const GimpContainer *container)
+gimp_container_get_n_children (const GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
 
@@ -903,7 +903,7 @@ gimp_container_get_name_array (const GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (length != NULL, NULL);
 
-  *length = gimp_container_num_children (container);
+  *length = gimp_container_get_n_children (container);
   if (*length == 0)
     return NULL;
 

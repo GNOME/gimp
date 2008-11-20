@@ -199,7 +199,7 @@ gimp_viewable_button_scroll_event (GtkWidget      *widget,
       gint n_children;
       gint new_index = index;
 
-      n_children = gimp_container_num_children (button->container);
+      n_children = gimp_container_get_n_children (button->container);
 
       if (sevent->direction == GDK_SCROLL_UP)
         {

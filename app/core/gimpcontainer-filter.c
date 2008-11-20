@@ -72,7 +72,7 @@ gimp_container_filter (const GimpContainer  *container,
 
   result =
     g_object_new (G_TYPE_FROM_INSTANCE (container),
-                  "children-type", gimp_container_children_type (container),
+                  "children-type", gimp_container_get_children_type (container),
                   "policy",        GIMP_CONTAINER_POLICY_WEAK,
                   NULL);
 

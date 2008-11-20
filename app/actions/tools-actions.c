@@ -702,7 +702,7 @@ tools_actions_update (GimpActionGroup *group,
 
       SET_ACTIVE ("tools-visibility", tool_info->visible);
 
-      last_index = gimp_container_num_children (container) -1;
+      last_index = gimp_container_get_n_children (container) -1;
       index      = gimp_container_get_child_index   (container,
                                                      GIMP_OBJECT (tool_info));
 

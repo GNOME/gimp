@@ -71,9 +71,9 @@ gimp_image_scale (GimpImage             *image,
 
   sub_progress = gimp_sub_progress_new (progress);
 
-  progress_steps = (gimp_container_num_children (image->channels) +
-                    gimp_container_num_children (image->layers)   +
-                    gimp_container_num_children (image->vectors)  +
+  progress_steps = (gimp_container_get_n_children (image->channels) +
+                    gimp_container_get_n_children (image->layers)   +
+                    gimp_container_get_n_children (image->vectors)  +
                     1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));

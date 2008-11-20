@@ -79,9 +79,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_set_busy (image->gimp);
 
-  progress_max = (gimp_container_num_children (image->channels) +
-                  gimp_container_num_children (image->layers)   +
-                  gimp_container_num_children (image->vectors)  +
+  progress_max = (gimp_container_get_n_children (image->channels) +
+                  gimp_container_get_n_children (image->layers)   +
+                  gimp_container_get_n_children (image->vectors)  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));

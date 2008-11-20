@@ -208,5 +208,5 @@ gimp_undo_stack_get_depth (GimpUndoStack *stack)
 {
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), 0);
 
-  return gimp_container_num_children (stack->undos);
+  return gimp_container_get_n_children (stack->undos);
 }

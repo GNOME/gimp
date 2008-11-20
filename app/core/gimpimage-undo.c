@@ -419,23 +419,23 @@ gimp_image_undo_free_space (GimpImage *image)
 
 #ifdef DEBUG_IMAGE_UNDO
   g_printerr ("undo_steps: %d    undo_bytes: %ld\n",
-              gimp_container_num_children (container),
+              gimp_container_get_n_children (container),
               (glong) gimp_object_get_memsize (GIMP_OBJECT (container), NULL));
 #endif
 
   /*  keep at least min_undo_levels undo steps  */
-  if (gimp_container_num_children (container) <= min_undo_levels)
+  if (gimp_container_get_n_children (container) <= min_undo_levels)
     return;
 
   while ((gimp_object_get_memsize (GIMP_OBJECT (container), NULL) > undo_size) ||
-         (gimp_container_num_children (container) > max_undo_levels))
+         (gimp_container_get_n_children (container) > max_undo_levels))
     {
       GimpUndo *freed = gimp_undo_stack_free_bottom (image->undo_stack,
                                                      GIMP_UNDO_MODE_UNDO);
 
 #ifdef DEBUG_IMAGE_UNDO
       g_printerr ("freed one step: undo_steps: %d    undo_bytes: %ld\n",
-                  gimp_container_num_children (container),
+                  gimp_container_get_n_children (container),
                   (glong) gimp_object_get_memsize (GIMP_OBJECT (container),
                                                    NULL));
 #endif
@@ -444,7 +444,7 @@ gimp_image_undo_free_space (GimpImage *image)
 
       g_object_unref (freed);
 
-      if (gimp_container_num_children (container) <= min_undo_levels)
+      if (gimp_container_get_n_children (container) <= min_undo_levels)
         return;
     }
 }
@@ -456,21 +456,21 @@ gimp_image_undo_free_redo (GimpImage *image)
 
 #ifdef DEBUG_IMAGE_UNDO
   g_printerr ("redo_steps: %d    redo_bytes: %ld\n",
-              gimp_container_num_children (container),
+              gimp_container_get_n_children (container),
               (glong) gimp_object_get_memsize (GIMP_OBJECT (container), NULL));
 #endif
 
   if (gimp_container_is_empty (container))
     return;
 
-  while (gimp_container_num_children (container) > 0)
+  while (gimp_container_get_n_children (container) > 0)
     {
       GimpUndo *freed = gimp_undo_stack_free_bottom (image->redo_stack,
                                                      GIMP_UNDO_MODE_REDO);
 
 #ifdef DEBUG_IMAGE_UNDO
       g_printerr ("freed one step: redo_steps: %d    redo_bytes: %ld\n",
-                  gimp_container_num_children (container),
+                  gimp_container_get_n_children (container),
                   (glong )gimp_object_get_memsize (GIMP_OBJECT (container),
                                                    NULL));
 #endif

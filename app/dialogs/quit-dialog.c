@@ -143,7 +143,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                                            -1);
 
   view_size = gimp->config->layer_preview_size;
-  rows      = CLAMP (gimp_container_num_children (images), 3, 6);
+  rows      = CLAMP (gimp_container_get_n_children (images), 3, 6);
 
   view = gimp_container_tree_view_new (images, context, view_size, 1);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
@@ -205,7 +205,7 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
                                          GimpObject     *image,
                                          GimpMessageBox *box)
 {
-  gint       num_images = gimp_container_num_children (images);
+  gint       num_images = gimp_container_get_n_children (images);
   GtkWidget *label      = g_object_get_data (G_OBJECT (box), "lost-label");
   GtkWidget *button     = g_object_get_data (G_OBJECT (box), "ok-button");
   GtkWidget *dialog     = gtk_widget_get_toplevel (button);

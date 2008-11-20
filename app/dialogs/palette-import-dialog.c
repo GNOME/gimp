@@ -747,7 +747,7 @@ palette_import_image_remove (GimpContainer *container,
                              GimpImage     *image,
                              ImportDialog  *dialog)
 {
-  if (! gimp_container_num_children (dialog->context->gimp->images))
+  if (! gimp_container_get_n_children (dialog->context->gimp->images))
     {
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->image_radio)))
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->gradient_radio),

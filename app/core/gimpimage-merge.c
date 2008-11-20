@@ -486,7 +486,7 @@ gimp_image_merge_layers (GimpImage     *image,
        */
       layer = reverse_list->data;
       position =
-        gimp_container_num_children (image->layers) -
+        gimp_container_get_n_children (image->layers) -
         gimp_container_get_child_index (image->layers, GIMP_OBJECT (layer));
     }
 
@@ -601,7 +601,7 @@ gimp_image_merge_layers (GimpImage     *image,
       /*  Add the layer to the image  */
       gimp_image_add_layer
         (image, merge_layer,
-         gimp_container_num_children (image->layers) - position + 1,
+         gimp_container_get_n_children (image->layers) - position + 1,
          TRUE);
     }
 

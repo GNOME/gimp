@@ -82,9 +82,9 @@ struct _GimpContainerClass
 
 GType        gimp_container_get_type           (void) G_GNUC_CONST;
 
-GType        gimp_container_children_type      (const GimpContainer *container);
-GimpContainerPolicy gimp_container_policy      (const GimpContainer *container);
-gint         gimp_container_num_children       (const GimpContainer *container);
+GType        gimp_container_get_children_type  (const GimpContainer *container);
+GimpContainerPolicy gimp_container_get_policy  (const GimpContainer *container);
+gint         gimp_container_get_n_children     (const GimpContainer *container);
 
 gboolean     gimp_container_add                (GimpContainer       *container,
                                                 GimpObject          *object);

@@ -139,7 +139,7 @@ tool_options_menu_update_presets (GimpUIManager *manager,
   gint n_children;
   gint i;
 
-  n_children = gimp_container_num_children (presets);
+  n_children = gimp_container_get_n_children (presets);
 
   for (i = 0; i < n_children; i++)
     {

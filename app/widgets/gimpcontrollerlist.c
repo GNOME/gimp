@@ -704,7 +704,7 @@ gimp_controller_list_down_clicked (GtkWidget          *button,
   index = gimp_container_get_child_index (container,
                                           GIMP_OBJECT (list->dest_info));
 
-  if (index < gimp_container_num_children (container) - 1)
+  if (index < gimp_container_get_n_children (container) - 1)
     gimp_container_reorder (container, GIMP_OBJECT (list->dest_info),
                             index + 1);
 }
