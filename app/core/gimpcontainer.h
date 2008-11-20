@@ -35,6 +35,7 @@
 
 
 typedef struct _GimpContainerClass GimpContainerClass;
+typedef struct _GimpContainerPriv  GimpContainerPriv;
 
 struct _GimpContainer
 {
@@ -45,9 +46,7 @@ struct _GimpContainer
   GimpContainerPolicy  policy;
   gint                 num_children;
 
-  /*  private  */
-  GList               *handlers;
-  gint                 freeze_count;
+  GimpContainerPriv   *priv;
 };
 
 struct _GimpContainerClass

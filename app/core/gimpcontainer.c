@@ -42,16 +42,6 @@
 #endif
 
 
-typedef struct _GimpContainerHandler
-{
-  gchar     *signame;
-  GCallback  callback;
-  gpointer   callback_data;
-
-  GQuark     quark;  /*  used to attach the signal id's of child signals  */
-} GimpContainerHandler;
-
-
 enum
 {
   ADD,
@@ -67,6 +57,22 @@ enum
   PROP_0,
   PROP_CHILDREN_TYPE,
   PROP_POLICY
+};
+
+
+typedef struct
+{
+  gchar     *signame;
+  GCallback  callback;
+  gpointer   callback_data;
+
+  GQuark     quark;  /*  used to attach the signal id's of child signals  */
+} GimpContainerHandler;
+
+struct _GimpContainerPriv
+{
+  GList *handlers;
+  gint   freeze_count;
 };
 
 
@@ -202,6 +208,8 @@ gimp_container_class_init (GimpContainerClass *klass)
                                                       GIMP_CONTAINER_POLICY_STRONG,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (klass, sizeof (GimpContainerPriv));
 }
 
 static void
@@ -214,12 +222,15 @@ gimp_container_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_container_init (GimpContainer *container)
 {
-  container->children_type = G_TYPE_NONE;
-  container->policy        = GIMP_CONTAINER_POLICY_STRONG;
-  container->num_children  = 0;
+  container->priv = G_TYPE_INSTANCE_GET_PRIVATE (container,
+                                                 GIMP_TYPE_CONTAINER,
+                                                 GimpContainerPriv);
+  container->priv->handlers     = NULL;
+  container->priv->freeze_count = 0;
 
-  container->handlers      = NULL;
-  container->freeze_count  = 0;
+  container->children_type      = G_TYPE_NONE;
+  container->policy             = GIMP_CONTAINER_POLICY_STRONG;
+  container->num_children       = 0;
 }
 
 static void
@@ -229,10 +240,10 @@ gimp_container_dispose (GObject *object)
 
   gimp_container_clear (container);
 
-  while (container->handlers)
+  while (container->priv->handlers)
     gimp_container_remove_handler (container,
                                    ((GimpContainerHandler *)
-                                    container->handlers->data)->quark);
+                                    container->priv->handlers->data)->quark);
 
   if (container->children_type != G_TYPE_NONE)
     {
@@ -296,7 +307,7 @@ gimp_container_get_memsize (GimpObject *object,
   gint64         memsize   = 0;
   GList         *list;
 
-  for (list = container->handlers; list; list = g_list_next (list))
+  for (list = container->priv->handlers; list; list = g_list_next (list))
     {
       GimpContainerHandler *handler = list->data;
 
@@ -551,7 +562,7 @@ gimp_container_add (GimpContainer *container,
       return FALSE;
     }
 
-  for (list = container->handlers; list; list = g_list_next (list))
+  for (list = container->priv->handlers; list; list = g_list_next (list))
     {
       GimpContainerHandler *handler = list->data;
       gulong                handler_id;
@@ -614,7 +625,7 @@ gimp_container_remove (GimpContainer *container,
       return FALSE;
     }
 
-  for (list = container->handlers; list; list = g_list_next (list))
+  for (list = container->priv->handlers; list; list = g_list_next (list))
     {
       GimpContainerHandler *handler = list->data;
       gulong                handler_id;
@@ -723,9 +734,9 @@ gimp_container_freeze (GimpContainer *container)
 {
   g_return_if_fail (GIMP_IS_CONTAINER (container));
 
-  container->freeze_count++;
+  container->priv->freeze_count++;
 
-  if (container->freeze_count == 1)
+  if (container->priv->freeze_count == 1)
     g_signal_emit (container, container_signals[FREEZE], 0);
 }
 
@@ -734,10 +745,10 @@ gimp_container_thaw (GimpContainer *container)
 {
   g_return_if_fail (GIMP_IS_CONTAINER (container));
 
-  if (container->freeze_count > 0)
-    container->freeze_count--;
+  if (container->priv->freeze_count > 0)
+    container->priv->freeze_count--;
 
-  if (container->freeze_count == 0)
+  if (container->priv->freeze_count == 0)
     g_signal_emit (container, container_signals[THAW], 0);
 }
 
@@ -746,7 +757,7 @@ gimp_container_frozen (GimpContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
 
-  return (container->freeze_count > 0) ? TRUE : FALSE;
+  return (container->priv->freeze_count > 0) ? TRUE : FALSE;
 }
 
 void
@@ -953,7 +964,7 @@ gimp_container_add_handler (GimpContainer *container,
 
   g_free (key);
 
-  container->handlers = g_list_prepend (container->handlers, handler);
+  container->priv->handlers = g_list_prepend (container->priv->handlers, handler);
 
   gimp_container_foreach (container,
                           (GFunc) gimp_container_add_handler_foreach_func,
@@ -989,7 +1000,7 @@ gimp_container_remove_handler (GimpContainer *container,
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (id != 0);
 
-  for (list = container->handlers; list; list = g_list_next (list))
+  for (list = container->priv->handlers; list; list = g_list_next (list))
     {
       handler = (GimpContainerHandler *) list->data;
 
@@ -1010,7 +1021,7 @@ gimp_container_remove_handler (GimpContainer *container,
                           (GFunc) gimp_container_remove_handler_foreach_func,
                           handler);
 
-  container->handlers = g_list_remove (container->handlers, handler);
+  container->priv->handlers = g_list_remove (container->priv->handlers, handler);
 
   g_free (handler->signame);
   g_slice_free (GimpContainerHandler, handler);
