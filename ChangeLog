@@ -1,4 +1,10 @@
-2008-11-20  Martin Nordholts  <martinn@svn.gnome.org>
+2008-11-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpcontainer.[ch]: Move the rest of the class instance
+	members to GimpContainerPriv and rename the member num_children to
+	n_children.
+
+2008-11-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Use GimpContainer getters instead of poking into the class
 	instance struct.

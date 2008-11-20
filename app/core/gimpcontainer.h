@@ -39,14 +39,9 @@ typedef struct _GimpContainerPriv  GimpContainerPriv;
 
 struct _GimpContainer
 {
-  GimpObject           parent_instance;
+  GimpObject         parent_instance;
 
-  /*  public, read-only  */
-  GType                children_type;
-  GimpContainerPolicy  policy;
-  gint                 num_children;
-
-  GimpContainerPriv   *priv;
+  GimpContainerPriv *priv;
 };
 
 struct _GimpContainerClass
