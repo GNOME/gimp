@@ -263,12 +263,12 @@ gimp_container_grid_view_move_by (GimpContainerGridView *grid_view,
   index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
 
   index += x;
-  index = CLAMP (index, 0, container->num_children - 1);
+  index = CLAMP (index, 0, gimp_container_get_n_children (container) - 1);
 
   index += y * grid_view->columns;
   while (index < 0)
     index += grid_view->columns;
-  while (index >= container->num_children)
+  while (index >= gimp_container_get_n_children (container))
     index -= grid_view->columns;
 
   item = (GimpViewable *) gimp_container_get_child_by_index (container, index);
@@ -299,7 +299,7 @@ gimp_container_grid_view_move_cursor (GimpContainerGridView *grid_view,
                                                count * grid_view->visible_rows);
 
     case GTK_MOVEMENT_BUFFER_ENDS:
-      count = count < 0 ? 0 : container->num_children - 1;
+      count = count < 0 ? 0 : gimp_container_get_n_children (container) - 1;
 
       item = (GimpViewable *) gimp_container_get_child_by_index (container,
                                                                  count);

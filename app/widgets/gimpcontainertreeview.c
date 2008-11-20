@@ -509,9 +509,9 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
       if (! container)
         {
           if (gimp_dnd_viewable_source_remove (GTK_WIDGET (tree_view->view),
-                                               old_container->children_type))
+                                               gimp_container_get_children_type (old_container)))
             {
-              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (old_container->children_type))->get_size)
+              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_children_type (old_container)))->get_size)
                 gimp_dnd_pixbuf_source_remove (GTK_WIDGET (tree_view->view));
 
               gtk_drag_source_unset (GTK_WIDGET (tree_view->view));
@@ -526,15 +526,15 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
     {
       if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (tree_view->view),
                                             GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                                            container->children_type,
+                                            gimp_container_get_children_type (container),
                                             GDK_ACTION_COPY))
         {
           gimp_dnd_viewable_source_add (GTK_WIDGET (tree_view->view),
-                                        container->children_type,
+                                        gimp_container_get_children_type (container),
                                         gimp_container_tree_view_drag_viewable,
                                         tree_view);
 
-          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (container->children_type))->get_size)
+          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_children_type (container)))->get_size)
             gimp_dnd_pixbuf_source_add (GTK_WIDGET (tree_view->view),
                                         gimp_container_tree_view_drag_pixbuf,
                                         tree_view);
@@ -663,7 +663,8 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
           g_object_unref (renderer);
         }
 
-      if (new_index == -1 || new_index == container->num_children - 1)
+      if (new_index == -1 ||
+          new_index == gimp_container_get_n_children (container) - 1)
         {
           gtk_list_store_move_before (GTK_LIST_STORE (tree_view->model),
                                       iter, NULL);

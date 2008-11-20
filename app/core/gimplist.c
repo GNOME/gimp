@@ -259,7 +259,8 @@ gimp_list_reorder (GimpContainer *container,
 
   list->list = g_list_remove (list->list, object);
 
-  if (new_index == -1 || new_index == container->num_children - 1)
+  if (new_index == -1 ||
+      new_index == gimp_container_get_n_children (container) - 1)
     list->list = g_list_append (list->list, object);
   else
     list->list = g_list_insert (list->list, object, new_index);
@@ -414,7 +415,7 @@ gimp_list_reverse (GimpList *list)
 {
   g_return_if_fail (GIMP_IS_LIST (list));
 
-  if (GIMP_CONTAINER (list)->num_children > 1)
+  if (gimp_container_get_n_children (GIMP_CONTAINER (list)) > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
       list->list = g_list_reverse (list->list);
@@ -462,7 +463,7 @@ gimp_list_sort (GimpList     *list,
   g_return_if_fail (GIMP_IS_LIST (list));
   g_return_if_fail (sort_func != NULL);
 
-  if (GIMP_CONTAINER (list)->num_children > 1)
+  if (gimp_container_get_n_children (GIMP_CONTAINER (list)) > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
       list->list = g_list_sort (list->list, sort_func);

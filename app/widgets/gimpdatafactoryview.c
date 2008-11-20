@@ -198,13 +198,13 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->edit_button),
-                                  factory->container->children_type);
+                                  gimp_container_get_children_type (factory->container));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->duplicate_button),
-                                  factory->container->children_type);
+                                  gimp_container_get_children_type (factory->container));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->delete_button),
-                                  factory->container->children_type);
+                                  gimp_container_get_children_type (factory->container));
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 

@@ -75,7 +75,8 @@ gimp_item_stack_constructor (GType                  type,
 
   container = GIMP_CONTAINER (object);
 
-  g_assert (g_type_is_a (container->children_type, GIMP_TYPE_ITEM));
+  g_assert (g_type_is_a (gimp_container_get_children_type (container),
+                         GIMP_TYPE_ITEM));
 
   return object;
 }

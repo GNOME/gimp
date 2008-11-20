@@ -679,12 +679,14 @@ context_select_object (GimpActionSelectType  select_type,
 {
   GimpObject *current;
 
-  current = gimp_context_get_by_type (context, container->children_type);
+  current = gimp_context_get_by_type (context,
+                                      gimp_container_get_children_type (container));
 
   current = action_select_object (select_type, container, current);
 
   if (current)
-    gimp_context_set_by_type (context, container->children_type, current);
+    gimp_context_set_by_type (context,
+                              gimp_container_get_children_type (container), current);
 }
 
 static gint

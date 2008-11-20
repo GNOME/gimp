@@ -175,7 +175,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 
   {
     GimpObject *object = gimp_context_get_by_type (context,
-                                                   container->children_type);
+                                                   gimp_container_get_children_type (container));
 
     gimp_container_editor_select_item (GTK_WIDGET (editor->view),
                                        (GimpViewable *) object, NULL,

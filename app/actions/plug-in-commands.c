@@ -135,7 +135,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
           context   = gimp_container_view_get_context (editor->view);
 
           object = gimp_context_get_by_type (context,
-                                             container->children_type);
+                                             gimp_container_get_children_type (container));
 
           n_args = plug_in_collect_data_args (action, object,
                                               procedure->args,

@@ -73,7 +73,7 @@ gimp_container_view_remove_active (GimpContainerView *view)
     {
       GimpObject *active;
 
-      active = gimp_context_get_by_type (context, container->children_type);
+      active = gimp_context_get_by_type (context, gimp_container_get_children_type (container));
 
       if (active)
         {
@@ -83,7 +83,8 @@ gimp_container_view_remove_active (GimpContainerView *view)
                                                        active);
 
           if (new)
-            gimp_context_set_by_type (context, container->children_type,
+            gimp_context_set_by_type (context,
+                                      gimp_container_get_children_type (container),
                                       new);
 
           gimp_container_remove (container, active);

@@ -347,7 +347,7 @@ gimp_container_view_set_container (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
   if (container)
-    g_return_if_fail (g_type_is_a (container->children_type,
+    g_return_if_fail (g_type_is_a (gimp_container_get_children_type (container),
                                    GIMP_TYPE_VIEWABLE));
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
@@ -392,7 +392,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       if (private->context)
         {
-          GType        children_type = private->container->children_type;
+          GType        children_type = gimp_container_get_children_type (private->container);
           const gchar *signal_name;
 
           signal_name = gimp_context_type_to_signal_name (children_type);
@@ -417,7 +417,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
   if (private->container)
     {
-      GType              children_type = private->container->children_type;
+      GType              children_type = gimp_container_get_children_type (private->container);
       GimpViewableClass *viewable_class;
 
       viewable_class = g_type_class_ref (children_type);
@@ -526,7 +526,7 @@ gimp_container_view_real_set_context (GimpContainerView *view,
     {
       if (private->container)
         {
-          GType        children_type = private->container->children_type;
+          GType        children_type = gimp_container_get_children_type (private->container);
           const gchar *signal_name;
 
           signal_name = gimp_context_type_to_signal_name (children_type);
@@ -557,7 +557,7 @@ gimp_container_view_real_set_context (GimpContainerView *view,
 
       if (private->container)
         {
-          GType        children_type = private->container->children_type;
+          GType        children_type = gimp_container_get_children_type (private->container);
           const gchar *signal_name;
 
           signal_name = gimp_context_type_to_signal_name (children_type);
@@ -800,7 +800,7 @@ gimp_container_view_item_selected (GimpContainerView *view,
   /* HACK */
   if (private->container && private->context)
     {
-      GType        children_type = private->container->children_type;
+      GType        children_type = gimp_container_get_children_type (private->container);
       const gchar *signal_name;
 
       signal_name = gimp_context_type_to_signal_name (children_type);
@@ -830,7 +830,7 @@ gimp_container_view_item_selected (GimpContainerView *view,
                                        view);
 
       gimp_context_set_by_type (context,
-                                private->container->children_type,
+                                gimp_container_get_children_type (private->container),
                                 GIMP_OBJECT (viewable));
 
       g_signal_handlers_unblock_by_func (context,
@@ -1081,7 +1081,7 @@ gimp_container_view_thaw (GimpContainerView *view,
 
   if (private->context)
     {
-      GType        children_type = private->container->children_type;
+      GType        children_type = gimp_container_get_children_type (private->container);
       const gchar *signal_name;
 
       signal_name = gimp_context_type_to_signal_name (children_type);

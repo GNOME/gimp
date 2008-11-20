@@ -427,7 +427,7 @@ gimp_settings_box_get_property (GObject    *object,
 static void
 gimp_settings_box_separator_add (GimpContainer *container)
 {
-  GimpObject *sep = g_object_new (container->children_type, NULL);
+  GimpObject *sep = g_object_new (gimp_container_get_children_type (container), NULL);
 
   gimp_container_add (container, sep);
   g_object_unref (sep);

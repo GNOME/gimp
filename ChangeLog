@@ -1,5 +1,34 @@
 2008-11-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Use GimpContainer getters instead of poking into the class
+	instance struct.
+
+	* app/actions/context-commands.c
+	* app/actions/data-commands.c
+	* app/actions/plug-in-commands.c
+	* app/actions/templates-commands.c
+	* app/core/gimp-utils.c
+	* app/core/gimpdrawablestack.c
+	* app/core/gimpitemstack.c
+	* app/core/gimplist.c
+	* app/gui/gui-vtable.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainerentry.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpsettingsbox.c
+	* app/widgets/gimpviewablebutton.c
+
+2008-11-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	s/gimp_container_children_type/gimp_container_get_children_type/
 	s/gimp_container_policy/gimp_container_get_policy/
 	s/gimp_container_num_children/gimp_container_get_n_children/

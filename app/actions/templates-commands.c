@@ -144,7 +144,8 @@ templates_duplicate_cmd_callback (GtkAction *action,
       new_template = gimp_config_duplicate (GIMP_CONFIG (template));
 
       gimp_container_add (container, GIMP_OBJECT (new_template));
-      gimp_context_set_by_type (context, container->children_type,
+      gimp_context_set_by_type (context,
+                                gimp_container_get_children_type (container),
                                 GIMP_OBJECT (new_template));
       g_object_unref (new_template);
 
@@ -299,7 +300,7 @@ templates_delete_response (GtkWidget          *dialog,
         {
           if (new_active)
             gimp_context_set_by_type (delete_data->context,
-                                      delete_data->container->children_type,
+                                      gimp_container_get_children_type (delete_data->container),
                                       new_active);
 
           gimp_container_remove (delete_data->container,

@@ -485,7 +485,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
   gint               dest_index = -1;
 
   if (src_viewable && g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
-                                   container->children_type))
+                                   gimp_container_get_children_type (container)))
     {
       if (src_viewable == dest_viewable)
         return FALSE;
@@ -525,7 +525,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
   if (return_drag_action)
     {
       if (src_viewable && g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
-                                       container->children_type))
+                                       gimp_container_get_children_type (container)))
         *return_drag_action = GDK_ACTION_MOVE;
       else
         *return_drag_action = GDK_ACTION_COPY;

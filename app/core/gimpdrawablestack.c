@@ -136,7 +136,8 @@ gimp_drawable_stack_constructor (GType                  type,
 
   container = GIMP_CONTAINER (object);
 
-  g_assert (g_type_is_a (container->children_type, GIMP_TYPE_DRAWABLE));
+  g_assert (g_type_is_a (gimp_container_get_children_type (container),
+                         GIMP_TYPE_DRAWABLE));
 
   gimp_container_add_handler (container, "update",
                               G_CALLBACK (gimp_drawable_stack_drawable_update),

@@ -287,9 +287,9 @@ gimp_container_popup_real_confirm (GimpContainerPopup *popup)
   GimpObject *object;
 
   object = gimp_context_get_by_type (popup->context,
-                                     popup->container->children_type);
+                                     gimp_container_get_children_type (popup->container));
   gimp_context_set_by_type (popup->orig_context,
-                            popup->container->children_type,
+                            gimp_container_get_children_type (popup->container),
                             object);
 
   if (gtk_grab_get_current () == widget)
@@ -369,7 +369,7 @@ gimp_container_popup_new (GimpContainer     *container,
   popup->view_border_width = view_border_width;
 
   g_signal_connect (popup->context,
-                    gimp_context_type_to_signal_name (container->children_type),
+                    gimp_context_type_to_signal_name (gimp_container_get_children_type (container)),
                     G_CALLBACK (gimp_container_popup_context_changed),
                     popup);
 

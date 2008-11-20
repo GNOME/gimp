@@ -297,7 +297,8 @@ gimp_container_entry_reorder_item (GimpContainerView *view,
   if (!iter)
     return;
 
-  if (new_index == -1 || new_index == container->num_children - 1)
+  if (new_index == -1 ||
+      new_index == gimp_container_get_n_children (container) - 1)
     {
       gtk_list_store_move_before (GTK_LIST_STORE (model), iter, NULL);
     }

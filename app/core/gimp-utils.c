@@ -508,7 +508,8 @@ gimp_container_get_neighbor_of_active (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_OBJECT (active), NULL);
 
-  if (active == gimp_context_get_by_type (context, container->children_type))
+  if (active == gimp_context_get_by_type (context,
+                                          gimp_container_get_children_type (container)))
     {
       gint index = gimp_container_get_child_index (container, active);
 
