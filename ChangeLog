@@ -1,5 +1,9 @@
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.6.4 (interface age 4).
+
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.6.3 release.
 
 2008-11-19  Sven Neumann  <sven@gimp.org>
