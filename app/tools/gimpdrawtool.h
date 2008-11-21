@@ -187,6 +187,32 @@ void       gimp_draw_tool_draw_corner              (GimpDrawTool     *draw_tool,
                                                     gint              height,
                                                     GtkAnchorType     anchor,
                                                     gboolean          use_offsets);
+void       gimp_draw_tool_draw_lines               (GimpDrawTool     *draw_tool,
+                                                    const GimpVector2 *points,
+                                                    gint              n_points,
+                                                    gboolean          filled,
+                                                    gboolean          use_offsets);
+
+void       gimp_draw_tool_draw_strokes             (GimpDrawTool     *draw_tool,
+                                                    const GimpCoords *points,
+                                                    gint              n_points,
+                                                    gboolean          filled,
+                                                    gboolean          use_offsets);
+
+void       gimp_draw_tool_draw_boundary            (GimpDrawTool     *draw_tool,
+                                                    const BoundSeg   *bound_segs,
+                                                    gint              n_bound_segs,
+                                                    gdouble           offset_x,
+                                                    gdouble           offset_y,
+                                                    gboolean          use_offsets);
+
+void       gimp_draw_tool_draw_text_cursor         (GimpDrawTool     *draw_tool,
+                                                    gdouble           x1,
+                                                    gdouble           y1,
+                                                    gdouble           x2,
+                                                    gdouble           y2,
+                                                    gboolean          use_offsets);
+
 gboolean   gimp_draw_tool_on_handle                (GimpDrawTool     *draw_tool,
                                                     GimpDisplay      *display,
                                                     gdouble           x,
@@ -231,32 +257,6 @@ gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool     *draw_tool,
                                                     GimpAnchor      **ret_segment_end,
                                                     GimpStroke      **ret_stroke,
                                                     GimpVectors     **ret_vectors);
-
-void       gimp_draw_tool_draw_lines               (GimpDrawTool     *draw_tool,
-                                                    const GimpVector2 *points,
-                                                    gint              n_points,
-                                                    gboolean          filled,
-                                                    gboolean          use_offsets);
-
-void       gimp_draw_tool_draw_strokes             (GimpDrawTool     *draw_tool,
-                                                    const GimpCoords *points,
-                                                    gint              n_points,
-                                                    gboolean          filled,
-                                                    gboolean          use_offsets);
-
-void       gimp_draw_tool_draw_boundary            (GimpDrawTool     *draw_tool,
-                                                    const BoundSeg   *bound_segs,
-                                                    gint              n_bound_segs,
-                                                    gdouble           offset_x,
-                                                    gdouble           offset_y,
-                                                    gboolean          use_offsets);
-
-void       gimp_draw_tool_draw_text_cursor         (GimpDrawTool     *draw_tool,
-                                                    gdouble           x1,
-                                                    gdouble           y1,
-                                                    gdouble           x2,
-                                                    gdouble           y2,
-                                                    gboolean          use_offsets);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

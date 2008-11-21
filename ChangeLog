@@ -1,5 +1,10 @@
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]: reordered functions to keep those
+	that actually draw together.
+
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c (gimp_projection_get_tiles_at_level)
 	cosmetics.
 

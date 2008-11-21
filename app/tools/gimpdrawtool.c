@@ -1363,6 +1363,261 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
     }
 }
 
+
+void
+gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
+                           const GimpVector2 *points,
+                           gint               n_points,
+                           gboolean           filled,
+                           gboolean           use_offsets)
+{
+  GimpDisplayShell *shell;
+  GdkPoint         *coords;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (points == NULL || n_points == 0)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  coords = g_new (GdkPoint, n_points);
+
+  gimp_display_shell_transform_points (shell,
+                                       points, coords, n_points, use_offsets);
+
+  if (filled)
+    {
+      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                TRUE, coords, n_points);
+    }
+  else
+    {
+      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                              GIMP_CANVAS_STYLE_XOR,
+                              coords, n_points);
+    }
+
+  g_free (coords);
+}
+
+void
+gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
+                             const GimpCoords *points,
+                             gint              n_points,
+                             gboolean          filled,
+                             gboolean          use_offsets)
+{
+  GimpDisplayShell *shell;
+  GdkPoint         *coords;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (n_points == 0)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  coords = g_new (GdkPoint, n_points);
+
+  gimp_display_shell_transform_coords (shell,
+                                       points, coords, n_points, use_offsets);
+
+  if (filled)
+    {
+      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                TRUE, coords, n_points);
+    }
+  else
+    {
+      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                              GIMP_CANVAS_STYLE_XOR,
+                              coords, n_points);
+    }
+
+  g_free (coords);
+}
+
+/**
+ * gimp_draw_tool_draw_boundary:
+ * @draw_tool:    a #GimpDrawTool
+ * @bound_segs:   the sorted brush outline
+ * @n_bound_segs: the number of segments in @bound_segs
+ * @offset_x:     x offset
+ * @offset_y:     y offset
+ * @use_offsets:  whether to use offsets
+ *
+ * Draw the boundary of the brush that @draw_tool uses. The boundary
+ * should be sorted with sort_boundary(), and @n_bound_segs should
+ * include the sentinel segments inserted by sort_boundary() that
+ * indicate the end of connected segment sequences (groups) .
+ */
+void
+gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
+                              const BoundSeg *bound_segs,
+                              gint            n_bound_segs,
+                              gdouble         offset_x,
+                              gdouble         offset_y,
+                              gboolean        use_offsets)
+{
+  GimpDisplayShell *shell;
+  GdkPoint         *gdk_points;
+  gint              n_gdk_points;
+  gint              xmax, ymax;
+  gdouble           x, y;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (n_bound_segs > 0);
+  g_return_if_fail (bound_segs != NULL);
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  gdk_points = g_new0 (GdkPoint, n_bound_segs + 1);
+  n_gdk_points = 0;
+
+  xmax = shell->disp_width  + 1;
+  ymax = shell->disp_height + 1;
+
+  /* The sorted boundary has sentinel segments inserted at the end of
+   * each group.
+   */
+  for (i = 0; i < n_bound_segs; i++)
+    {
+      if (bound_segs[i].x1 == -1 &&
+          bound_segs[i].y1 == -1 &&
+          bound_segs[i].x2 == -1 &&
+          bound_segs[i].y2 == -1)
+        {
+          /* Group ends */
+          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR_DOTTED,
+                                  gdk_points, n_gdk_points);
+          n_gdk_points = 0;
+          continue;
+        }
+
+      if (n_gdk_points == 0)
+        {
+          gimp_display_shell_transform_xy_f (shell,
+                                             bound_segs[i].x1 + offset_x,
+                                             bound_segs[i].y1 + offset_y,
+                                             &x, &y,
+                                             use_offsets);
+
+          gdk_points[0].x = PROJ_ROUND (CLAMP (x, -1, xmax));
+          gdk_points[0].y = PROJ_ROUND (CLAMP (y, -1, ymax));
+
+          /*  If this segment is a closing segment && the segments lie inside
+           *  the region, OR if this is an opening segment and the segments
+           *  lie outside the region...
+           *  we need to transform it by one display pixel
+           */
+          if (! bound_segs[i].open)
+            {
+              /*  If it is vertical  */
+              if (bound_segs[i].x1 == bound_segs[i].x2)
+                {
+                  gdk_points[0].x -= 1;
+                }
+              else
+                {
+                  gdk_points[0].y -= 1;
+                }
+            }
+
+          n_gdk_points++;
+        }
+
+      g_assert (n_gdk_points < n_bound_segs + 1);
+
+      gimp_display_shell_transform_xy_f (shell,
+                                         bound_segs[i].x2 + offset_x,
+                                         bound_segs[i].y2 + offset_y,
+                                         &x, &y,
+                                         use_offsets);
+
+      gdk_points[n_gdk_points].x = PROJ_ROUND (CLAMP (x, -1, xmax));
+      gdk_points[n_gdk_points].y = PROJ_ROUND (CLAMP (y, -1, ymax));
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! bound_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (bound_segs[i].x1 == bound_segs[i].x2)
+            {
+              gdk_points[n_gdk_points    ].x -= 1;
+              gdk_points[n_gdk_points - 1].x -= 1;
+            }
+          else
+            {
+              gdk_points[n_gdk_points    ].y -= 1;
+              gdk_points[n_gdk_points - 1].y -= 1;
+            }
+        }
+
+      n_gdk_points++;
+    }
+
+  g_free (gdk_points);
+}
+
+void
+gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
+                                 gdouble       x1,
+                                 gdouble       y1,
+                                 gdouble       x2,
+                                 gdouble       y2,
+                                 gboolean      use_offsets)
+{
+  GimpDisplayShell *shell;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+
+  gimp_display_shell_transform_xy_f (shell,
+                                     x1, y1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x2, y2,
+                                     &tx2, &ty2,
+                                     use_offsets);
+
+  /*  vertical line  */
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx1), PROJ_ROUND (ty1) + 2,
+                         PROJ_ROUND (tx2), PROJ_ROUND (ty2) - 2);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx1) - 1, PROJ_ROUND (ty1) + 2,
+                         PROJ_ROUND (tx2) - 1, PROJ_ROUND (ty2) - 2);
+
+  /*  top serif  */
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1),
+                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1));
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1) + 1,
+                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1) + 1);
+
+  /*  bottom serif  */
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 1,
+                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 1);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
+                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
+}
+
 gboolean
 gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
                           GimpDisplay    *display,
@@ -1671,260 +1926,6 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
     }
 
   return FALSE;
-}
-
-void
-gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
-                           const GimpVector2 *points,
-                           gint               n_points,
-                           gboolean           filled,
-                           gboolean           use_offsets)
-{
-  GimpDisplayShell *shell;
-  GdkPoint         *coords;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  if (points == NULL || n_points == 0)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-
-  coords = g_new (GdkPoint, n_points);
-
-  gimp_display_shell_transform_points (shell,
-                                       points, coords, n_points, use_offsets);
-
-  if (filled)
-    {
-      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                TRUE, coords, n_points);
-    }
-  else
-    {
-      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                              GIMP_CANVAS_STYLE_XOR,
-                              coords, n_points);
-    }
-
-  g_free (coords);
-}
-
-void
-gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
-                             const GimpCoords *points,
-                             gint              n_points,
-                             gboolean          filled,
-                             gboolean          use_offsets)
-{
-  GimpDisplayShell *shell;
-  GdkPoint         *coords;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  if (n_points == 0)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-
-  coords = g_new (GdkPoint, n_points);
-
-  gimp_display_shell_transform_coords (shell,
-                                       points, coords, n_points, use_offsets);
-
-  if (filled)
-    {
-      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                TRUE, coords, n_points);
-    }
-  else
-    {
-      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                              GIMP_CANVAS_STYLE_XOR,
-                              coords, n_points);
-    }
-
-  g_free (coords);
-}
-
-/**
- * gimp_draw_tool_draw_boundary:
- * @draw_tool:    a #GimpDrawTool
- * @bound_segs:   the sorted brush outline
- * @n_bound_segs: the number of segments in @bound_segs
- * @offset_x:     x offset
- * @offset_y:     y offset
- * @use_offsets:  whether to use offsets
- *
- * Draw the boundary of the brush that @draw_tool uses. The boundary
- * should be sorted with sort_boundary(), and @n_bound_segs should
- * include the sentinel segments inserted by sort_boundary() that
- * indicate the end of connected segment sequences (groups) .
- */
-void
-gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
-                              const BoundSeg *bound_segs,
-                              gint            n_bound_segs,
-                              gdouble         offset_x,
-                              gdouble         offset_y,
-                              gboolean        use_offsets)
-{
-  GimpDisplayShell *shell;
-  GdkPoint         *gdk_points;
-  gint              n_gdk_points;
-  gint              xmax, ymax;
-  gdouble           x, y;
-  gint              i;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (n_bound_segs > 0);
-  g_return_if_fail (bound_segs != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-
-  gdk_points = g_new0 (GdkPoint, n_bound_segs + 1);
-  n_gdk_points = 0;
-
-  xmax = shell->disp_width  + 1;
-  ymax = shell->disp_height + 1;
-
-  /* The sorted boundary has sentinel segments inserted at the end of
-   * each group.
-   */
-  for (i = 0; i < n_bound_segs; i++)
-    {
-      if (bound_segs[i].x1 == -1 &&
-          bound_segs[i].y1 == -1 &&
-          bound_segs[i].x2 == -1 &&
-          bound_segs[i].y2 == -1)
-        {
-          /* Group ends */
-          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR_DOTTED,
-                                  gdk_points, n_gdk_points);
-          n_gdk_points = 0;
-          continue;
-        }
-
-      if (n_gdk_points == 0)
-        {
-          gimp_display_shell_transform_xy_f (shell,
-                                             bound_segs[i].x1 + offset_x,
-                                             bound_segs[i].y1 + offset_y,
-                                             &x, &y,
-                                             use_offsets);
-
-          gdk_points[0].x = PROJ_ROUND (CLAMP (x, -1, xmax));
-          gdk_points[0].y = PROJ_ROUND (CLAMP (y, -1, ymax));
-
-          /*  If this segment is a closing segment && the segments lie inside
-           *  the region, OR if this is an opening segment and the segments
-           *  lie outside the region...
-           *  we need to transform it by one display pixel
-           */
-          if (! bound_segs[i].open)
-            {
-              /*  If it is vertical  */
-              if (bound_segs[i].x1 == bound_segs[i].x2)
-                {
-                  gdk_points[0].x -= 1;
-                }
-              else
-                {
-                  gdk_points[0].y -= 1;
-                }
-            }
-
-          n_gdk_points++;
-        }
-
-      g_assert (n_gdk_points < n_bound_segs + 1);
-
-      gimp_display_shell_transform_xy_f (shell,
-                                         bound_segs[i].x2 + offset_x,
-                                         bound_segs[i].y2 + offset_y,
-                                         &x, &y,
-                                         use_offsets);
-
-      gdk_points[n_gdk_points].x = PROJ_ROUND (CLAMP (x, -1, xmax));
-      gdk_points[n_gdk_points].y = PROJ_ROUND (CLAMP (y, -1, ymax));
-
-      /*  If this segment is a closing segment && the segments lie inside
-       *  the region, OR if this is an opening segment and the segments
-       *  lie outside the region...
-       *  we need to transform it by one display pixel
-       */
-      if (! bound_segs[i].open)
-        {
-          /*  If it is vertical  */
-          if (bound_segs[i].x1 == bound_segs[i].x2)
-            {
-              gdk_points[n_gdk_points    ].x -= 1;
-              gdk_points[n_gdk_points - 1].x -= 1;
-            }
-          else
-            {
-              gdk_points[n_gdk_points    ].y -= 1;
-              gdk_points[n_gdk_points - 1].y -= 1;
-            }
-        }
-
-      n_gdk_points++;
-    }
-
-  g_free (gdk_points);
-}
-
-void
-gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
-                                 gdouble       x1,
-                                 gdouble       y1,
-                                 gdouble       x2,
-                                 gdouble       y2,
-                                 gboolean      use_offsets)
-{
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x1, y1,
-                                     &tx1, &ty1,
-                                     use_offsets);
-  gimp_display_shell_transform_xy_f (shell,
-                                     x2, y2,
-                                     &tx2, &ty2,
-                                     use_offsets);
-
-  /*  vertical line  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1), PROJ_ROUND (ty1) + 2,
-                         PROJ_ROUND (tx2), PROJ_ROUND (ty2) - 2);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 1, PROJ_ROUND (ty1) + 2,
-                         PROJ_ROUND (tx2) - 1, PROJ_ROUND (ty2) - 2);
-
-  /*  top serif  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1),
-                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1));
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1) + 1,
-                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1) + 1);
-
-  /*  bottom serif  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 1,
-                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 1);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
-                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
 }
 
 
