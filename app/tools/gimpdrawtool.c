@@ -43,35 +43,38 @@
 #include "gimpdrawtool.h"
 
 
-static void          gimp_draw_tool_finalize    (GObject        *object);
+static void          gimp_draw_tool_finalize     (GObject        *object);
 
-static gboolean      gimp_draw_tool_has_display (GimpTool       *tool,
-                                                 GimpDisplay    *display);
-static GimpDisplay * gimp_draw_tool_has_image   (GimpTool       *tool,
-                                                 GimpImage      *image);
-static void          gimp_draw_tool_control     (GimpTool       *tool,
-                                                 GimpToolAction  action,
-                                                 GimpDisplay    *display);
+static gboolean      gimp_draw_tool_has_display  (GimpTool       *tool,
+                                                  GimpDisplay    *display);
+static GimpDisplay * gimp_draw_tool_has_image    (GimpTool       *tool,
+                                                  GimpImage      *image);
+static void          gimp_draw_tool_control      (GimpTool       *tool,
+                                                  GimpToolAction  action,
+                                                  GimpDisplay    *display);
 
-static void          gimp_draw_tool_draw        (GimpDrawTool   *draw_tool);
-static void          gimp_draw_tool_real_draw   (GimpDrawTool   *draw_tool);
+static void          gimp_draw_tool_draw         (GimpDrawTool   *draw_tool);
+static void          gimp_draw_tool_real_draw    (GimpDrawTool   *draw_tool);
+
+static void          gimp_draw_tool_draw_vectors (GimpDrawTool   *draw_tool,
+                                                  GList          *vectors);
 
 static inline void   gimp_draw_tool_shift_to_north_west
-                                                (gdouble         x,
-                                                 gdouble         y,
-                                                 gint            handle_width,
-                                                 gint            handle_height,
-                                                 GtkAnchorType   anchor,
-                                                 gdouble        *shifted_x,
-                                                 gdouble        *shifted_y);
+                                                 (gdouble         x,
+                                                  gdouble         y,
+                                                  gint            handle_width,
+                                                  gint            handle_height,
+                                                  GtkAnchorType   anchor,
+                                                  gdouble        *shifted_x,
+                                                  gdouble        *shifted_y);
 static inline void   gimp_draw_tool_shift_to_center
-                                                (gdouble         x,
-                                                 gdouble         y,
-                                                 gint            handle_width,
-                                                 gint            handle_height,
-                                                 GtkAnchorType   anchor,
-                                                 gdouble        *shifted_x,
-                                                 gdouble        *shifted_y);
+                                                 (gdouble         x,
+                                                  gdouble         y,
+                                                  gint            handle_width,
+                                                  gint            handle_height,
+                                                  GtkAnchorType   anchor,
+                                                  gdouble        *shifted_x,
+                                                  gdouble        *shifted_y);
 
 
 G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
@@ -198,49 +201,8 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
 {
-  GList *list;
-
-  if (! draw_tool->vectors)
-    return;
-
-  for (list = draw_tool->vectors; list; list = g_list_next (list))
-    {
-      GimpVectors *vectors = list->data;
-      GimpStroke  *stroke  = NULL;
-
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-        {
-          GArray   *coords;
-          gboolean  closed;
-
-          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-          if (coords && coords->len)
-            {
-              if (draw_tool->transform)
-                {
-                  gint i;
-
-                  for (i = 0; i < coords->len; i++)
-                    {
-                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
-
-                      gimp_matrix3_transform_point (draw_tool->transform,
-                                                    curr->x, curr->y,
-                                                    &curr->x, &curr->y);
-                    }
-                }
-
-              gimp_draw_tool_draw_strokes (draw_tool,
-                                           &g_array_index (coords,
-                                                           GimpCoords, 0),
-                                           coords->len, FALSE, FALSE);
-            }
-
-          if (coords)
-            g_array_free (coords, TRUE);
-        }
-    }
+  if (draw_tool->vectors)
+    gimp_draw_tool_draw_vectors (draw_tool, draw_tool->vectors);
 }
 
 void
@@ -1616,6 +1578,53 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
                          PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
                          PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
+}
+
+/*  This is called from gimp_draw_tool_real_draw()  */
+static void
+gimp_draw_tool_draw_vectors (GimpDrawTool *draw_tool,
+                             GList        *vectors)
+{
+  GList *list;
+
+  for (list = vectors; list; list = g_list_next (list))
+    {
+      GimpVectors *vectors = list->data;
+      GimpStroke  *stroke  = NULL;
+
+      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+        {
+          GArray   *coords;
+          gboolean  closed;
+
+          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+          if (coords && coords->len)
+            {
+              if (draw_tool->transform)
+                {
+                  gint i;
+
+                  for (i = 0; i < coords->len; i++)
+                    {
+                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
+
+                      gimp_matrix3_transform_point (draw_tool->transform,
+                                                    curr->x, curr->y,
+                                                    &curr->x, &curr->y);
+                    }
+                }
+
+              gimp_draw_tool_draw_strokes (draw_tool,
+                                           &g_array_index (coords,
+                                                           GimpCoords, 0),
+                                           coords->len, FALSE, FALSE);
+            }
+
+          if (coords)
+            g_array_free (coords, TRUE);
+        }
+    }
 }
 
 gboolean

@@ -1,5 +1,10 @@
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_real_draw): moved
+	vectors drawing to its own function.
+
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]: reordered functions to keep those
 	that actually draw together.
 
