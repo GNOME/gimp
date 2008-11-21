@@ -1,5 +1,11 @@
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderervectors.c
+	(gimp_view_renderer_vectors_draw): inlined local variables that
+	are only used once.
+
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.c (gimp_draw_tool_real_draw): moved
 	vectors drawing to its own function.
 

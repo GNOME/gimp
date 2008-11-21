@@ -73,14 +73,12 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   GtkStyle       *style   = gtk_widget_get_style (widget);
   GimpVectors    *vectors = GIMP_VECTORS (renderer->viewable);
   GimpBezierDesc *bezdesc;
-  gint            x, y;
 
   gdk_cairo_set_source_color (cr, &style->white);
 
-  x = area->x + (area->width  - renderer->width)  / 2;
-  y = area->y + (area->height - renderer->height) / 2;
-
-  cairo_translate (cr, x, y);
+  cairo_translate (cr,
+                   area->x + (area->width  - renderer->width)  / 2,
+                   area->y + (area->height - renderer->height) / 2);
   cairo_rectangle (cr, 0, 0, renderer->width, renderer->height);
   cairo_clip_preserve (cr);
   cairo_fill (cr);
