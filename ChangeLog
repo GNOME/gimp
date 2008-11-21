@@ -1,5 +1,11 @@
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]: removed unused methods
+	gimp_draw_tool_set_vectors() and gimp_draw_tool_set_transform()
+	and related infrastructure.
+
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrenderervectors.c
 	(gimp_view_renderer_vectors_draw): inlined local variables that
 	are only used once.

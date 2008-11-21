@@ -43,8 +43,6 @@
 #include "gimpdrawtool.h"
 
 
-static void          gimp_draw_tool_finalize     (GObject        *object);
-
 static gboolean      gimp_draw_tool_has_display  (GimpTool       *tool,
                                                   GimpDisplay    *display);
 static GimpDisplay * gimp_draw_tool_has_image    (GimpTool       *tool,
@@ -55,9 +53,6 @@ static void          gimp_draw_tool_control      (GimpTool       *tool,
 
 static void          gimp_draw_tool_draw         (GimpDrawTool   *draw_tool);
 static void          gimp_draw_tool_real_draw    (GimpDrawTool   *draw_tool);
-
-static void          gimp_draw_tool_draw_vectors (GimpDrawTool   *draw_tool,
-                                                  GList          *vectors);
 
 static inline void   gimp_draw_tool_shift_to_north_west
                                                  (gdouble         x,
@@ -85,10 +80,7 @@ G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
 static void
 gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
-
-  object_class->finalize  = gimp_draw_tool_finalize;
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   tool_class->has_display = gimp_draw_tool_has_display;
   tool_class->has_image   = gimp_draw_tool_has_image;
@@ -104,30 +96,6 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 
   draw_tool->paused_count = 0;
   draw_tool->is_drawn     = FALSE;
-
-  draw_tool->vectors      = NULL;
-  draw_tool->transform    = NULL;
-}
-
-static void
-gimp_draw_tool_finalize (GObject *object)
-{
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (object);
-
-  if (draw_tool->vectors)
-    {
-      g_list_foreach (draw_tool->vectors, (GFunc) g_object_unref, NULL);
-      g_list_free (draw_tool->vectors);
-      draw_tool->vectors = NULL;
-    }
-
-  if (draw_tool->transform)
-    {
-      g_slice_free (GimpMatrix3, draw_tool->transform);
-      draw_tool->transform = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -201,8 +169,7 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->vectors)
-    gimp_draw_tool_draw_vectors (draw_tool, draw_tool->vectors);
+  /* the default implementation does nothing */
 }
 
 void
@@ -274,50 +241,6 @@ gimp_draw_tool_is_drawn (GimpDrawTool *draw_tool)
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
 
   return draw_tool->is_drawn;
-}
-
-void
-gimp_draw_tool_set_vectors (GimpDrawTool *draw_tool,
-                            GList        *vectors)
-{
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  gimp_draw_tool_pause (draw_tool);
-
-  if (draw_tool->vectors)
-    {
-      g_list_foreach (draw_tool->vectors, (GFunc) g_object_unref, NULL);
-      g_list_free (draw_tool->vectors);
-      draw_tool->vectors = NULL;
-    }
-
-  if (vectors)
-    {
-      draw_tool->vectors = g_list_copy (vectors);
-      g_list_foreach (draw_tool->vectors, (GFunc) g_object_ref, NULL);
-    }
-
-  gimp_draw_tool_resume (draw_tool);
-}
-
-void
-gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
-                              GimpMatrix3  *transform)
-{
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  gimp_draw_tool_pause (draw_tool);
-
-  if (draw_tool->transform)
-    {
-      g_slice_free (GimpMatrix3, draw_tool->transform);
-      draw_tool->transform = NULL;
-    }
-
-  if (transform)
-    draw_tool->transform = g_slice_dup (GimpMatrix3, transform);
-
-  gimp_draw_tool_resume (draw_tool);
 }
 
 /**
@@ -1578,53 +1501,6 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
                          PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
                          PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
-}
-
-/*  This is called from gimp_draw_tool_real_draw()  */
-static void
-gimp_draw_tool_draw_vectors (GimpDrawTool *draw_tool,
-                             GList        *vectors)
-{
-  GList *list;
-
-  for (list = vectors; list; list = g_list_next (list))
-    {
-      GimpVectors *vectors = list->data;
-      GimpStroke  *stroke  = NULL;
-
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-        {
-          GArray   *coords;
-          gboolean  closed;
-
-          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-          if (coords && coords->len)
-            {
-              if (draw_tool->transform)
-                {
-                  gint i;
-
-                  for (i = 0; i < coords->len; i++)
-                    {
-                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
-
-                      gimp_matrix3_transform_point (draw_tool->transform,
-                                                    curr->x, curr->y,
-                                                    &curr->x, &curr->y);
-                    }
-                }
-
-              gimp_draw_tool_draw_strokes (draw_tool,
-                                           &g_array_index (coords,
-                                                           GimpCoords, 0),
-                                           coords->len, FALSE, FALSE);
-            }
-
-          if (coords)
-            g_array_free (coords, TRUE);
-        }
-    }
 }
 
 gboolean

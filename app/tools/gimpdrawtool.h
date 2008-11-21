@@ -45,17 +45,14 @@ typedef struct _GimpDrawToolClass GimpDrawToolClass;
 
 struct _GimpDrawTool
 {
-  GimpTool      parent_instance;
+  GimpTool        parent_instance;
 
-  GimpDisplay  *display;      /*  The display we are drawing to (may be
-                               *  a different one than tool->display)
-                               */
+  GimpDisplay    *display;      /*  The display we are drawing to (may be
+                                 *  a different one than tool->display)
+                                 */
 
-  gint          paused_count; /*  count to keep track of multiple pauses */
-  gboolean      is_drawn;     /*  is the stuff we draw currently visible */
-
-  GList        *vectors;      /*  GimpVectors to render                  */
-  GimpMatrix3  *transform;    /*  Transformation matrix of the vectors   */
+  gint            paused_count; /*  count to keep track of multiple pauses */
+  gboolean        is_drawn;     /*  is the stuff we draw currently visible */
 };
 
 struct _GimpDrawToolClass
