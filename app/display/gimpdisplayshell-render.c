@@ -202,7 +202,7 @@ static void  gimp_display_shell_render_highlight (const GimpDisplayShell *shell,
                                                   gint                    y,
                                                   gint                    w,
                                                   gint                    h,
-                                                  GdkRectangle           *highlight);
+                                                  const GdkRectangle     *highlight);
 static void  gimp_display_shell_render_mask      (const GimpDisplayShell *shell,
                                                   RenderInfo             *info);
 
@@ -220,7 +220,7 @@ gimp_display_shell_render (const GimpDisplayShell *shell,
                            gint                    y,
                            gint                    w,
                            gint                    h,
-                           GdkRectangle           *highlight)
+                           const GdkRectangle     *highlight)
 {
   GimpProjection *projection;
   GimpImage      *image;
@@ -236,7 +236,8 @@ gimp_display_shell_render (const GimpDisplayShell *shell,
 
   projection = gimp_image_get_projection (image);
 
-  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
+  gimp_display_shell_scroll_get_render_start_offset (shell,
+						     &offset_x, &offset_y);
 
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
@@ -322,15 +323,18 @@ gimp_display_shell_render (const GimpDisplayShell *shell,
     gint disp_xoffset, disp_yoffset;
     gint offset_x, offset_y;
 
-    gimp_display_shell_scroll_get_disp_offset (shell, &disp_xoffset, &disp_yoffset);
-    gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
+    gimp_display_shell_scroll_get_disp_offset (shell,
+					       &disp_xoffset, &disp_yoffset);
+    gimp_display_shell_scroll_get_render_start_offset (shell,
+						       &offset_x, &offset_y);
 
-    gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
-                        x + disp_xoffset, y + disp_yoffset,
-                        w, h,
-                        shell->render_buf,
-                        3 * GIMP_DISPLAY_RENDER_BUF_WIDTH,
-                        offset_x, offset_y);
+    gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas),
+			  GIMP_CANVAS_STYLE_RENDER,
+			  x + disp_xoffset, y + disp_yoffset,
+			  w, h,
+			  shell->render_buf,
+			  3 * GIMP_DISPLAY_RENDER_BUF_WIDTH,
+			  offset_x, offset_y);
   }
 }
 
@@ -350,14 +354,15 @@ gimp_display_shell_render_highlight (const GimpDisplayShell *shell,
                                      gint                    y,
                                      gint                    w,
                                      gint                    h,
-                                     GdkRectangle           *highlight)
+                                     const GdkRectangle     *highlight)
 {
   guchar       *buf  = shell->render_buf;
   GdkRectangle  rect;
   gint          offset_x;
   gint          offset_y;
 
-  gimp_display_shell_scroll_get_render_start_offset (shell, &offset_x, &offset_y);
+  gimp_display_shell_scroll_get_render_start_offset (shell,
+						     &offset_x, &offset_y);
 
   rect.x      = x + offset_x;
   rect.y      = y + offset_y;

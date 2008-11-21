@@ -28,7 +28,7 @@ void   gimp_display_shell_render      (const GimpDisplayShell *shell,
                                        gint                    y,
                                        gint                    w,
                                        gint                    h,
-                                       GdkRectangle           *highlight);
+                                       const GdkRectangle     *highlight);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */

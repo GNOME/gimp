@@ -1,3 +1,10 @@
+2008-11-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprojection.c (gimp_projection_get_tiles_at_level)
+	cosmetics.
+
+	* app/display/gimpdisplayshell-render.[ch]: added const qualifier.
+
 2008-11-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpcolormapeditor.c
