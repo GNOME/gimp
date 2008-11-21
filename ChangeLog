@@ -1,5 +1,6 @@
 2008-11-21  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimpcolormapeditor.c
 	* app/widgets/gimpselectioneditor.c: For consistency, prefix the
 	#warning:s with FIXME.
 
