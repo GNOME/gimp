@@ -9,8 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-31 10:31+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&amp;component=general\n"
+"POT-Creation-Date: 2008-11-21 21:44+0000\n"
 "PO-Revision-Date: 2008-10-31 18:27+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -234,22 +235,18 @@ msgid "Luminosity pha_seshift:"
 msgstr "亮度相移(_S)："
 
 #: ../plug-ins/common/alien-map.c:183
-#, fuzzy
 msgid "Alter colors in various psychedelic ways"
 msgstr "以多种迷幻的方式变换颜色"
 
 #: ../plug-ins/common/alien-map.c:188
-#, fuzzy
 msgid "_Alien Map..."
 msgstr "奇异映射(_A)..."
 
 #: ../plug-ins/common/alien-map.c:320
-#, fuzzy
 msgid "Alien Map: Transforming"
 msgstr "奇异映射：变换"
 
 #: ../plug-ins/common/alien-map.c:393
-#, fuzzy
 msgid "Alien Map"
 msgstr "奇异映射"
 
@@ -601,7 +598,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
+#: ../plug-ins/common/file-gif-load.c:927 ../plug-ins/common/file-pcx.c:412
 #: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
@@ -650,7 +647,7 @@ msgstr "选择性高斯模糊"
 #: ../plug-ins/common/edge-dog.c:267 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1701
+#: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1699
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "无法对索引颜色图像进行操作。"
@@ -728,19 +725,16 @@ msgid "Blur Type"
 msgstr "模糊类型"
 
 #: ../plug-ins/common/blur-motion.c:1049
-#, fuzzy
 msgctxt "blur-type"
 msgid "_Linear"
 msgstr "线性(_L)"
 
 #: ../plug-ins/common/blur-motion.c:1050
-#, fuzzy
 msgctxt "blur-type"
 msgid "_Radial"
 msgstr "转向(_R)"
 
 #: ../plug-ins/common/blur-motion.c:1051
-#, fuzzy
 msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "缩放(_Z)"
@@ -755,7 +749,7 @@ msgstr "模糊中心"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2725
 #: ../plug-ins/lighting/lighting-ui.c:477
 msgid "_X:"
-msgstr "X(_X)："
+msgstr "_X："
 
 #: ../plug-ins/common/blur-motion.c:1099 ../plug-ins/common/lens-flare.c:777
 #: ../plug-ins/common/nova.c:468 ../plug-ins/common/tile-paper.c:291
@@ -763,7 +757,7 @@ msgstr "X(_X)："
 #: ../plug-ins/gradient-flare/gradient-flare.c:2729
 #: ../plug-ins/lighting/lighting-ui.c:492
 msgid "_Y:"
-msgstr "Y(_Y)："
+msgstr "_Y："
 
 #: ../plug-ins/common/blur-motion.c:1101
 msgid "Blur _outward"
@@ -1015,9 +1009,9 @@ msgstr "加载通道混合器设置"
 #: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-compressor.c:498
 #: ../plug-ins/common/file-compressor.c:666
 #: ../plug-ins/common/file-dicom.c:325 ../plug-ins/common/file-gbr.c:361
-#: ../plug-ins/common/file-gif-load.c:340 ../plug-ins/common/file-gih.c:662
+#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:662
 #: ../plug-ins/common/file-mng.c:1073 ../plug-ins/common/file-pat.c:330
-#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
+#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:551
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
 #: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1751
@@ -1034,7 +1028,7 @@ msgstr "加载通道混合器设置"
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:272
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:190
-#: ../plug-ins/file-xjt/xjt.c:2560 ../plug-ins/file-xjt/xjt.c:2568
+#: ../plug-ins/file-xjt/xjt.c:2541 ../plug-ins/file-xjt/xjt.c:2549
 #: ../plug-ins/flame/flame.c:412
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:929
@@ -1068,13 +1062,13 @@ msgstr "保存通道混合器设置"
 #: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
-#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1638
+#: ../plug-ins/file-jpeg/jpeg-save.c:330 ../plug-ins/file-psd/psd-save.c:1638
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
-#: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
+#: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1727
 #: ../plug-ins/flame/flame.c:443
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
-#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2374
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2375
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -3009,9 +3003,9 @@ msgstr "加载 KISS 色板"
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:330
-#: ../plug-ins/common/file-gbr.c:366 ../plug-ins/common/file-gif-load.c:345
+#: ../plug-ins/common/file-gbr.c:366 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:667 ../plug-ins/common/file-pat.c:335
-#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:586
+#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:596
 #: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:728
 #: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1042
 #: ../plug-ins/common/file-raw.c:671 ../plug-ins/common/file-sunras.c:486
@@ -3021,7 +3015,7 @@ msgstr "加载 KISS 色板"
 #: ../plug-ins/file-bmp/bmp-read.c:159 ../plug-ins/file-faxg3/faxg3.c:217
 #: ../plug-ins/file-fli/fli-gimp.c:502 ../plug-ins/file-ico/ico-load.c:646
 #: ../plug-ins/file-jpeg/jpeg-load.c:115 ../plug-ins/file-psd/psd-load.c:136
-#: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3363
+#: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
 msgstr "打开“%s”"
@@ -3047,9 +3041,9 @@ msgstr "不支持的位深度(%d)！"
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
-#: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
+#: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:287
 #: ../plug-ins/file-psd/psd-save.c:1643 ../plug-ins/file-sgi/sgi.c:554
-#: ../plug-ins/file-xjt/xjt.c:1710
+#: ../plug-ins/file-xjt/xjt.c:1708
 #, c-format
 msgid "Saving '%s'"
 msgstr "保存“%s”"
@@ -3151,7 +3145,7 @@ msgstr "无法保存带有 Alpha 通道的图像。"
 
 #: ../plug-ins/common/file-dicom.c:784 ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:604 ../plug-ins/file-fits/fits.c:466
-#: ../plug-ins/file-xjt/xjt.c:1705
+#: ../plug-ins/file-xjt/xjt.c:1703
 msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
 
@@ -3197,41 +3191,41 @@ msgstr "间距："
 msgid "Description:"
 msgstr "描述："
 
-#: ../plug-ins/common/file-gif-load.c:142
+#: ../plug-ins/common/file-gif-load.c:148
 #: ../plug-ins/common/file-gif-save.c:168
 msgid "GIF image"
 msgstr "GIF 图像"
 
-#: ../plug-ins/common/file-gif-load.c:357
+#: ../plug-ins/common/file-gif-load.c:372
 msgid "This is not a GIF file"
 msgstr "不是 GIF 文件"
 
-#: ../plug-ins/common/file-gif-load.c:396
+#: ../plug-ins/common/file-gif-load.c:411
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "像素非正方形。图像看起来可能扁了。"
 
-#: ../plug-ins/common/file-gif-load.c:913
+#: ../plug-ins/common/file-gif-load.c:929
 #, c-format
 msgid "Background (%d%s)"
 msgstr "背景 (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:936
+#: ../plug-ins/common/file-gif-load.c:952
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "打开“%s”(第%d帧)"
 
-#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:794
+#: ../plug-ins/common/file-gif-load.c:981 ../plug-ins/common/iwarp.c:794
 #: ../plug-ins/common/iwarp.c:829
 #, c-format
 msgid "Frame %d"
 msgstr "帧 %d"
 
-#: ../plug-ins/common/file-gif-load.c:967
+#: ../plug-ins/common/file-gif-load.c:983
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "帧 %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:998
+#: ../plug-ins/common/file-gif-load.c:1014
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3728,42 +3722,42 @@ msgstr "下边框超出边界(须 < %d)：%d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
 
-#: ../plug-ins/common/file-pdf.c:288
+#: ../plug-ins/common/file-pdf.c:290
 msgid "Portable Document Format"
 msgstr "便携式文档格式"
 
-#: ../plug-ins/common/file-pdf.c:620
+#: ../plug-ins/common/file-pdf.c:630
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:622 ../plug-ins/common/file-ps.c:1125
+#: ../plug-ins/common/file-pdf.c:632 ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
 msgstr "%s 页"
 
-#: ../plug-ins/common/file-pdf.c:808
+#: ../plug-ins/common/file-pdf.c:818
 msgid "Import from PDF"
 msgstr "从 PDF 导入"
 
-#: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf.c:823 ../plug-ins/common/file-ps.c:3100
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: ../plug-ins/common/file-pdf.c:879
+#: ../plug-ins/common/file-pdf.c:889
 msgid "_Width (pixels):"
 msgstr "宽度(像素)(_W)："
 
-#: ../plug-ins/common/file-pdf.c:880
+#: ../plug-ins/common/file-pdf.c:890
 msgid "_Height (pixels):"
 msgstr "高度(像素)(_H)："
 
-#: ../plug-ins/common/file-pdf.c:882
+#: ../plug-ins/common/file-pdf.c:892
 msgid "_Resolution:"
 msgstr "分辨率(_R)："
 
-#: ../plug-ins/common/file-pdf.c:1156
+#: ../plug-ins/common/file-pdf.c:1166
 #, c-format
 msgid "pixels/%s"
 msgstr "像素/%s"
@@ -3844,7 +3838,7 @@ msgstr "保存透明像素的颜色值(_V)"
 msgid "Co_mpression level:"
 msgstr "压缩等级(_M)："
 
-#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1185
+#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1190
 msgid "_Load Defaults"
 msgstr "加载默认值(_L)"
 
@@ -7436,8 +7430,9 @@ msgid "Symbol"
 msgstr "符号"
 
 #: ../plug-ins/common/unit-editor.c:104
+#, fuzzy
 msgid ""
-"The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
+"The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
 "此单位的符号，如果有的话(例如英寸的符号是“'”)。如果此单位没有符号则使用它的缩"
@@ -8131,7 +8126,7 @@ msgstr "另存为 BMP"
 msgid "_Run-Length Encoded"
 msgstr "行程长度编码(_R)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:899
+#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:904
 msgid "_Advanced Options"
 msgstr "高级选项(_A)"
 
@@ -8291,76 +8286,76 @@ msgstr "您是否想要让 GIMP 将其旋转为标准方向？"
 msgid "JPEG preview"
 msgstr "JPEG 预览"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:200
-#, c-format
-msgid "File size: %02.01f kB"
-msgstr "文件大小：%02.01f kB"
+#: ../plug-ins/file-jpeg/jpeg-save.c:202
+#, fuzzy, c-format
+msgid "File size: %s"
+msgstr "方块大小(_T)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:682
+#: ../plug-ins/file-jpeg/jpeg-save.c:687
 msgid "Calculating file size..."
 msgstr "正在计算文件大小..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:773 ../plug-ins/file-jpeg/jpeg-save.c:875
+#: ../plug-ins/file-jpeg/jpeg-save.c:778 ../plug-ins/file-jpeg/jpeg-save.c:880
 msgid "File size: unknown"
 msgstr "文件大小：未知"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:826
+#: ../plug-ins/file-jpeg/jpeg-save.c:831
 msgid "Save as JPEG"
 msgstr "另存为 JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:861
+#: ../plug-ins/file-jpeg/jpeg-save.c:866
 msgid "_Quality:"
 msgstr "质量(_Q)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:865
+#: ../plug-ins/file-jpeg/jpeg-save.c:870
 msgid "JPEG quality parameter"
 msgstr "JPEG 质量参数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:884
+#: ../plug-ins/file-jpeg/jpeg-save.c:889
 msgid "Enable preview to obtain the file size."
 msgstr "启用预览以获得文件大小。"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:887
+#: ../plug-ins/file-jpeg/jpeg-save.c:892
 msgid "Sho_w preview in image window"
 msgstr "在图像窗口中显示预览(_W)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:928
+#: ../plug-ins/file-jpeg/jpeg-save.c:933
 msgid "S_moothing:"
 msgstr "平滑(_M)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:941
+#: ../plug-ins/file-jpeg/jpeg-save.c:946
 msgid "Frequency (rows):"
 msgstr "频率(行)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:957
+#: ../plug-ins/file-jpeg/jpeg-save.c:962
 msgid "Use _restart markers"
 msgstr "使用重新开始标记(_R)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:973
+#: ../plug-ins/file-jpeg/jpeg-save.c:978
 msgid "_Optimize"
 msgstr "优化(_O)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:987
+#: ../plug-ins/file-jpeg/jpeg-save.c:992
 msgid "_Progressive"
 msgstr "渐进(_P)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1003
+#: ../plug-ins/file-jpeg/jpeg-save.c:1008
 msgid "Save _EXIF data"
 msgstr "保存 EXIF 数据(_E)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1020
+#: ../plug-ins/file-jpeg/jpeg-save.c:1025
 msgid "Save _thumbnail"
 msgstr "保存缩略图(_T)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1037
+#: ../plug-ins/file-jpeg/jpeg-save.c:1042
 msgid "Save _XMP data"
 msgstr "保存 XMP 数据(_X)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1052
+#: ../plug-ins/file-jpeg/jpeg-save.c:1057
 msgid "_Use quality settings from original image"
 msgstr "使用原图像的品质设定(_U)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1063
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8370,48 +8365,48 @@ msgstr ""
 "取得几乎一致的品质和文件大小。"
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1082
+#: ../plug-ins/file-jpeg/jpeg-save.c:1087
 msgid "Su_bsampling:"
 msgstr "子采样(_B)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1089
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (最高品质)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1091
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1098
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1100
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (最小文件)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1125
+#: ../plug-ins/file-jpeg/jpeg-save.c:1130
 msgid "_DCT method:"
 msgstr "DCT 方法(_D)："
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1136
 msgid "Fast Integer"
 msgstr "快速整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1132
+#: ../plug-ins/file-jpeg/jpeg-save.c:1137
 msgid "Integer"
 msgstr "整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1133
+#: ../plug-ins/file-jpeg/jpeg-save.c:1138
 msgid "Floating-Point"
 msgstr "浮点数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1149
+#: ../plug-ins/file-jpeg/jpeg-save.c:1154
 msgid "Comment"
 msgstr "注释"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1194
+#: ../plug-ins/file-jpeg/jpeg-save.c:1199
 msgid "Sa_ve Defaults"
 msgstr "保存默认值(_V)"
 
@@ -8746,17 +8741,17 @@ msgstr "质量："
 msgid "Smoothing:"
 msgstr "平滑："
 
-#: ../plug-ins/file-xjt/xjt.c:1719 ../plug-ins/file-xjt/xjt.c:3373
+#: ../plug-ins/file-xjt/xjt.c:1717 ../plug-ins/file-xjt/xjt.c:3354
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "无法创建工作目录“%s”：%s"
 
-#: ../plug-ins/file-xjt/xjt.c:3239
+#: ../plug-ins/file-xjt/xjt.c:3220
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "错误：无法读取 XJT 属性文件“%s”。"
 
-#: ../plug-ins/file-xjt/xjt.c:3246
+#: ../plug-ins/file-xjt/xjt.c:3227
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "错误：XJT 属性文件“%s”为空。"
@@ -10824,25 +10819,25 @@ msgstr "渲染 IFS (%d/%d)"
 msgid "Transformation %s"
 msgstr "变换 %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2379
+#: ../plug-ins/ifs-compose/ifs-compose.c:2380
 msgid "Save failed"
 msgstr "保存失败"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2460
-#: ../plug-ins/ifs-compose/ifs-compose.c:2473
+#: ../plug-ins/ifs-compose/ifs-compose.c:2461
+#: ../plug-ins/ifs-compose/ifs-compose.c:2474
 msgid "Open failed"
 msgstr "打开失败"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2468
+#: ../plug-ins/ifs-compose/ifs-compose.c:2469
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "文件“%s”似乎不是 IFS 分形文件。"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2508
+#: ../plug-ins/ifs-compose/ifs-compose.c:2509
 msgid "Save as IFS Fractal file"
 msgstr "另存为 IFS 分形文件"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2545
+#: ../plug-ins/ifs-compose/ifs-compose.c:2546
 msgid "Open IFS Fractal file"
 msgstr "打开 IFS 分形文件"
 
@@ -12371,11 +12366,11 @@ msgstr "页面设置(_U)"
 msgid "Image Settings"
 msgstr "图像设置"
 
-#: ../plug-ins/print/print.c:348
+#: ../plug-ins/print/print.c:349
 msgid "An error occurred while trying to print:"
 msgstr "试图打印时发生错误："
 
-#: ../plug-ins/print/print.c:375
+#: ../plug-ins/print/print.c:376
 msgid "Printing"
 msgstr "打印"
 
@@ -12440,3 +12435,6 @@ msgstr "屏幕截图(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "没有取得数据"
+
+#~ msgid "File size: %02.01f kB"
+#~ msgstr "文件大小：%02.01f kB"
