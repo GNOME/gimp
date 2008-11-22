@@ -237,9 +237,7 @@ static const gchar man_page_footer[] =
 "Per-user configuration file\n"
 "\n"
 ".SH \"SEE ALSO\"\n"
-".BR gimp (1),\n"
-".BR gimptool (1),\n"
-".BR gimp\\-remote (1)\n";
+".BR gimp (1),\n";
 
 
 static void

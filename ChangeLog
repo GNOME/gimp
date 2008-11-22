@@ -1,3 +1,8 @@
+2008-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c: removed reference to gimp-remote
+	manual page in the generated gimprc manual page.
+
 2008-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpselection.[ch]: make the entire selection
