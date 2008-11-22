@@ -195,7 +195,7 @@ selection_float_invoker (GimpProcedure      *procedure,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          layer = gimp_selection_float (gimp_image_get_mask (image),
+          layer = gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
                                         drawable, context, TRUE, offx, offy,
                                         error);
           if (! layer)
@@ -479,7 +479,7 @@ selection_save_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      channel = gimp_selection_save (gimp_image_get_mask (image));
+      channel = gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
 
       if (! channel)
         success = FALSE;

@@ -553,50 +553,45 @@ gimp_selection_pop_stroking (GimpSelection *selection)
 }
 
 void
-gimp_selection_load (GimpChannel *selection,
-                     GimpChannel *channel)
+gimp_selection_load (GimpSelection *selection,
+                     GimpChannel   *channel)
 {
-  GimpItem    *src_item;
-  GimpItem    *dest_item;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
+  PixelRegion srcPR;
+  PixelRegion destPR;
+  gint        width;
+  gint        height;
 
   g_return_if_fail (GIMP_IS_SELECTION (selection));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  src_item  = GIMP_ITEM (channel);
-  dest_item = GIMP_ITEM (selection);
+  width  = gimp_item_get_width  (GIMP_ITEM (selection));
+  height = gimp_item_get_height (GIMP_ITEM (selection));
 
-  g_return_if_fail (gimp_item_get_width  (src_item) == gimp_item_get_width  (dest_item));
-  g_return_if_fail (gimp_item_get_height (src_item) == gimp_item_get_height (dest_item));
+  g_return_if_fail (width  == gimp_item_get_width  (GIMP_ITEM (channel)));
+  g_return_if_fail (height == gimp_item_get_height (GIMP_ITEM (channel)));
 
-  gimp_channel_push_undo (selection, _("Channel to Selection"));
+  gimp_channel_push_undo (GIMP_CHANNEL (selection),
+                          _("Channel to Selection"));
 
   /*  copy the channel to the mask  */
   pixel_region_init (&srcPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (src_item),
-                     gimp_item_get_height (src_item),
+                     0, 0, width, height,
                      FALSE);
   pixel_region_init (&destPR,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
-                     0, 0,
-                     gimp_item_get_width  (dest_item),
-                     gimp_item_get_height (dest_item),
+                     0, 0, width, height,
                      TRUE);
   copy_region (&srcPR, &destPR);
 
-  selection->bounds_known = FALSE;
+  GIMP_CHANNEL (selection)->bounds_known = FALSE;
 
   gimp_drawable_update (GIMP_DRAWABLE (selection),
-                        0, 0,
-                        gimp_item_get_width  (dest_item),
-                        gimp_item_get_height (dest_item));
+                        0, 0, width, height);
 }
 
 GimpChannel *
-gimp_selection_save (GimpChannel *selection)
+gimp_selection_save (GimpSelection *selection)
 {
   GimpImage   *image;
   GimpChannel *new_channel;
@@ -617,13 +612,13 @@ gimp_selection_save (GimpChannel *selection)
 }
 
 TileManager *
-gimp_selection_extract (GimpChannel  *selection,
-                        GimpPickable *pickable,
-                        GimpContext  *context,
-                        gboolean      cut_image,
-                        gboolean      keep_indexed,
-                        gboolean      add_alpha,
-                        GError      **error)
+gimp_selection_extract (GimpSelection *selection,
+                        GimpPickable  *pickable,
+                        GimpContext   *context,
+                        gboolean       cut_image,
+                        gboolean       keep_indexed,
+                        gboolean       add_alpha,
+                        GError       **error)
 {
   GimpImage         *image;
   TileManager       *tiles;
@@ -807,7 +802,7 @@ gimp_selection_extract (GimpChannel  *selection,
 }
 
 GimpLayer *
-gimp_selection_float (GimpChannel   *selection,
+gimp_selection_float (GimpSelection *selection,
                       GimpDrawable  *drawable,
                       GimpContext   *context,
                       gboolean       cut_image,
@@ -848,7 +843,7 @@ gimp_selection_float (GimpChannel   *selection,
                                   cut_image, FALSE, TRUE, NULL);
 
   /*  Clear the selection  */
-  gimp_channel_clear (selection, NULL, TRUE);
+  gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
 
   /* Create a new layer from the buffer, using the drawable's type
    *  because it may be different from the image's type if we cut from
@@ -875,7 +870,7 @@ gimp_selection_float (GimpChannel   *selection,
   gimp_image_undo_group_end (image);
 
   /*  invalidate the image's boundary variables  */
-  selection->boundary_known = FALSE;
+  GIMP_CHANNEL (selection)->boundary_known = FALSE;
 
   return layer;
 }

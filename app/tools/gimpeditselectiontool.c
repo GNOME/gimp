@@ -681,7 +681,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
         case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
         case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-          if (! gimp_selection_float (gimp_image_get_mask (display->image),
+          if (! gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (display->image)),
                                       GIMP_DRAWABLE (active_item),
                                       gimp_get_user_context (display->image->gimp),
                                       edit_select->edit_mode ==

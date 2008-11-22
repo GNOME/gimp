@@ -124,7 +124,7 @@ select_float_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (gimp_selection_float (gimp_image_get_mask (image),
+  if (gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
                             gimp_image_get_active_drawable (image),
                             action_data_get_context (data),
                             TRUE, 0, 0, &error))
@@ -305,7 +305,7 @@ select_save_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  gimp_selection_save (gimp_image_get_mask (image));
+  gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
   gimp_image_flush (image);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,

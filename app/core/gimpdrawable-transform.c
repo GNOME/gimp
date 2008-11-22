@@ -790,7 +790,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        */
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
         {
-          tiles = gimp_selection_extract (gimp_image_get_mask (image),
+          tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
                                           GIMP_PICKABLE (drawable),
                                           context,
                                           TRUE, FALSE, TRUE,
@@ -808,7 +808,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
     }
   else  /*  otherwise, just copy the layer  */
     {
-      tiles = gimp_selection_extract (gimp_image_get_mask (image),
+      tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
                                       GIMP_PICKABLE (drawable),
                                       context,
                                       FALSE, TRUE, GIMP_IS_LAYER (drawable),

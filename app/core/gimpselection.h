@@ -55,11 +55,11 @@ GimpChannel * gimp_selection_new           (GimpImage     *image,
 gint          gimp_selection_push_stroking (GimpSelection *selection);
 gint          gimp_selection_pop_stroking  (GimpSelection *selection);
 
-void          gimp_selection_load          (GimpChannel   *selection,
+void          gimp_selection_load          (GimpSelection *selection,
                                             GimpChannel   *channel);
-GimpChannel * gimp_selection_save          (GimpChannel   *selection);
+GimpChannel * gimp_selection_save          (GimpSelection *selection);
 
-TileManager * gimp_selection_extract       (GimpChannel   *selection,
+TileManager * gimp_selection_extract       (GimpSelection *selection,
                                             GimpPickable  *pickable,
                                             GimpContext   *context,
                                             gboolean       cut_image,
@@ -67,7 +67,7 @@ TileManager * gimp_selection_extract       (GimpChannel   *selection,
                                             gboolean       add_alpha,
                                             GError       **error);
 
-GimpLayer   * gimp_selection_float         (GimpChannel   *selection,
+GimpLayer   * gimp_selection_float         (GimpSelection *selection,
                                             GimpDrawable  *drawable,
                                             GimpContext   *context,
                                             gboolean       cut_image,

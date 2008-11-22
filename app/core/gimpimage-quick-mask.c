@@ -137,7 +137,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           if (floating_sel && floating_sel->fs.drawable == GIMP_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
 
-          gimp_selection_load (gimp_image_get_mask (image), mask);
+          gimp_selection_load (GIMP_SELECTION (gimp_image_get_mask (image)),
+                               mask);
           gimp_image_remove_channel (image, mask, TRUE, NULL);
 
           if (! channel_was_active)
