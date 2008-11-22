@@ -1,3 +1,10 @@
+2008-11-22  Sven Neumann  <sven@gimp.org>
+
+	Bug 561899 – GIMP can't save to mounted filesystem if file exists
+
+	* plug-ins/file-uri/uri-backend-gvfs.c (copy_uri): pass the
+	G_FILE_COPY_OVERWRITE flag to g_file_copy().
+
 2008-11-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch]: removed unused methods
