@@ -298,7 +298,7 @@ copy_uri (const gchar  *src_uri,
 
   progress.mode = mode;
 
-  success = g_file_copy (src_file, dest_file, 0, NULL,
+  success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
                          uri_progress_callback, &progress,
                          error);
 
