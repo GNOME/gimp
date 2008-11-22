@@ -1,21 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# zh_CN translation of gimp-libgimp.
+# Copyright (C) 2008 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008.
-#
+# Aron Xu <aronmalache@163.com>, 2008.
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
+"Project-Id-Version: gimp-libgimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-05 09:22+0100\n"
-"PO-Revision-Date: 2006-05-03 15:46+0800\n"
-"Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
+"PO-Revision-Date: 2008-11-22 14:38+0800\n"
+"Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -112,6 +111,7 @@ msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s 插件只能处理 RGB 或灰度图像"
 
 #: ../libgimp/gimpexport.c:327
+#, fuzzy
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s 插件只能处理 RGB 或索引图像"
 
@@ -263,19 +263,18 @@ msgid "Searching by type"
 msgstr "按类型搜索"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
+#, fuzzy
 msgid "%d procedure"
-msgid_plural "%d procedures"
-msgstr[0] "%d 个过程"
+msgstr "%d 个过程"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
-#, c-format
+#, fuzzy, c-format
 msgid "%d procedure matches your query"
-msgid_plural "%d procedures match your query"
-msgstr[0] "您的查询有 %d 个过程匹配"
+msgstr "您的查询有 %d 个过程匹配"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
@@ -382,15 +381,18 @@ msgstr "替换当前选区"
 msgid "Intersect with the current selection"
 msgstr "与当前选区相交"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:162
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "红色"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "绿色"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "蓝色"
 
@@ -402,7 +404,8 @@ msgstr "灰度"
 msgid "Indexed"
 msgstr "索引"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -535,6 +538,7 @@ msgid "Solid"
 msgstr "实线"
 
 #: ../libgimpbase/gimpbaseenums.c:462
+#, fuzzy
 msgid "Stock ID"
 msgstr "存储 ID"
 
@@ -564,15 +568,16 @@ msgstr "RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB-alpha"
-msgstr "RGB-alpha"
+msgstr "RGB -alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale-alpha"
-msgstr "灰度-alpha"
+msgstr "灰度 -alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:532
+#, fuzzy
 msgid "Indexed-alpha"
-msgstr "索引-alpha"
+msgstr "索引 -alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
@@ -632,7 +637,7 @@ msgstr "点"
 
 #: ../libgimpbase/gimpbaseenums.c:714
 msgid "Shadows"
-msgstr "阴暗"
+msgstr "阴影"
 
 #: ../libgimpbase/gimpbaseenums.c:715
 msgid "Midtones"
@@ -664,7 +669,7 @@ msgstr "剪裁到结果"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr "比例剪裁"
+msgstr "按比例剪裁"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
@@ -685,8 +690,7 @@ msgstr "临时过程"
 #: ../libgimpbase/gimpmemsize.c:180
 #, c-format
 msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d 字节"
+msgstr "%d 字节"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
@@ -752,8 +756,8 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"当启用时，GIMP 将试图使用窗口系统显示色彩配置文件。这样已设置好的配置文件"
-"将只用来作为后备。"
+"当启用时，GIMP 将试图使用窗口系统显示色彩配置文件。这样已设置好的配置文件将只"
+"用来作为后备。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
@@ -775,15 +779,13 @@ msgstr "设定色彩如何映射到您的显示器。"
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr ""
-"设定色彩如何从 RGB 工作空间转换到打印仿真设备。"
+msgstr "设定色彩如何从 RGB 工作空间转换到打印仿真设备。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:61
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
-msgstr ""
-"当启用时，打印模拟将标记出不能在目标色彩空间表示的颜色。"
+msgstr "如果启用，打印模拟将标记出不能在目标色彩空间表示的颜色。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
@@ -826,22 +828,22 @@ msgstr "%s 的值不是有效的 UTF-8 字符串"
 #: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "期待布尔值 %s 为“yes”或“no”，但得到“%s”"
+msgstr "期待布尔值 %s 为 “yes” 或 “no”，但得到 “%s”"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "%2$s 的值“%1$s”无效"
+msgstr "%2$s 的值 “%1$s” 无效"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "%2$s 的值“%1$ld”无效"
+msgstr "%2$s 的值 “%1$ld” 无效"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "解析“%s”时：%s"
+msgstr "解析 “%s” 时：%s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
@@ -859,17 +861,17 @@ msgstr "无法扩展 ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:693
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "写“%s”时出错：%s"
+msgstr "写入 “%s” 时出错：%s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "无法为“%s”创建临时文件：%s"
+msgstr "无法为 “%s” 创建临时文件：%s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "无法打开“%s”并写入：%s"
+msgstr "无法为写入打开 “%s”：%s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
@@ -886,7 +888,7 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"写“%s”的临时文件时出错：%s\n"
+"写 “%s” 的临时文件时出错：%s\n"
 "没有创建文件。"
 
 #: ../libgimpconfig/gimpconfigwriter.c:711
@@ -901,7 +903,7 @@ msgstr "无效的 UTF-8 字符串"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "解析“%s”第 %d 行时出错：%s"
+msgstr "解析 “%s” 第 %d 行时出错：%s"
 
 #: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
 #: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
@@ -935,7 +937,8 @@ msgstr ""
 "无法确定有效的主目录。\n"
 "将缩略图改放在临时文件的目录(%s)中。"
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:249
+#: ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
@@ -947,7 +950,7 @@ msgstr "缩略图没有包含 Thumb::URI 标签"
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "无法为“%s”创建缩略图：%s"
+msgstr "无法为 “%s” 创建缩略图：%s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
@@ -974,8 +977,9 @@ msgid "Select color profile from disk..."
 msgstr "从磁盘选择色彩配置文件..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#, fuzzy
 msgid "profile|None"
-msgstr "无"
+msgstr "配置文件|无"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1017,15 +1021,15 @@ msgstr "选择文件"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
-msgstr "千字节"
+msgstr "KB"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
-msgstr "兆字节"
+msgstr "MB"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
-msgstr "G 字节"
+msgstr "GB"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
@@ -1061,9 +1065,9 @@ msgstr "已选中一页"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
 #: ../libgimpwidgets/gimppageselector.c:1187
+#, fuzzy
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
-msgstr[0] "已选中 %d 页"
+msgstr "已选中 %d 页"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1093,9 +1097,9 @@ msgid "_Preview"
 msgstr "预览(_P)"
 
 #: ../libgimpwidgets/gimppropwidgets.c:1901
+#, fuzzy
 msgid "This text input field is limited to %d character."
-msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "此文本输入框限制为 %d 个字符。"
+msgstr "此文本输入框限制为 %d 个字符。"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1212,44 +1216,52 @@ msgid "Landscape"
 msgstr "横向"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:123
+#, fuzzy
 msgid "_H"
-msgstr "色(_H)"
+msgstr "色调(_H)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "色调"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
+#, fuzzy
 msgid "_S"
-msgstr "饱(_S)"
+msgstr "饱和度(_S)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "饱和度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:125
+#, fuzzy
 msgid "_V"
-msgstr "亮(_V)"
+msgstr "亮度(_V)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:125
+#, fuzzy
 msgid "Value"
 msgstr "亮度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
+#, fuzzy
 msgid "_R"
 msgstr "红(_R)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
+#, fuzzy
 msgid "_G"
 msgstr "绿(_G)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
+#, fuzzy
 msgid "_B"
 msgstr "蓝(_B)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
+#, fuzzy
 msgid "_A"
-msgstr "A(_A)"
+msgstr "_A"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
@@ -1327,8 +1339,7 @@ msgstr "颜色管理"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"此滤镜从首选项对话项中的色彩管理部分获得其配置。"
+msgstr "此滤镜从首选项对话项中的色彩管理部分获得其配置。"
 
 #: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
@@ -1388,21 +1399,25 @@ msgstr "CMYK"
 
 #. Cyan
 #: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#, fuzzy
 msgid "_C"
 msgstr "青(_C)"
 
 #. Magenta
 #: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#, fuzzy
 msgid "_M"
-msgstr "品(_M)"
+msgstr "品红(_M)"
 
 #. Yellow
 #: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#, fuzzy
 msgid "_Y"
 msgstr "黄(_Y)"
 
 #. Key (Black)
 #: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#, fuzzy
 msgid "_K"
 msgstr "黑(_K)"
 
@@ -1443,12 +1458,14 @@ msgid "Profile: %s"
 msgstr "配置文件：%s"
 
 #: ../modules/colorsel_triangle.c:104
+#, fuzzy
 msgid "Painter-style triangle color selector"
-msgstr "画家风格的三角颜色选择器"
+msgstr "水彩风格的颜色选择器"
 
 #: ../modules/colorsel_triangle.c:170
+#, fuzzy
 msgid "Triangle"
-msgstr "三角"
+msgstr "三角波"
 
 #: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
@@ -1599,36 +1616,36 @@ msgstr "Y 轴向左摇动"
 #: ../modules/controller_linux_input.c:101
 #: ../modules/controller_dx_dinput.c:514
 msgid "Z Axis Turn Left"
-msgstr "Z 轴转左"
+msgstr "Z 轴向左转"
 
 #: ../modules/controller_linux_input.c:102
 #: ../modules/controller_dx_dinput.c:517
 msgid "Z Axis Turn Right"
-msgstr "Z 轴转右"
+msgstr "Z 轴向右转"
 
 #: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr ""
+msgstr "水平轮向后转"
 
 #: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr ""
+msgstr "水平轮向前转"
 
 #: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
-msgstr "表盘转左"
+msgstr "表盘向左转"
 
 #: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
-msgstr "表盘转右"
+msgstr "表盘向右转"
 
 #: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
-msgstr "操纵盘转左"
+msgstr "轮向向左转"
 
 #: ../modules/controller_linux_input.c:109
 msgid "Wheel Turn Right"
-msgstr "操纵盘转右"
+msgstr "轮向向右转"
 
 #: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
@@ -1757,7 +1774,7 @@ msgstr "要读取的 MIDI 事件的设备名称。"
 
 #: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "输入“alsa”可使用 ALSA 音序器。"
+msgstr "输入 “alsa” 可使用 ALSA 音序器。"
 
 #: ../modules/controller_midi.c:254
 msgid "Channel:"
@@ -1800,3 +1817,41 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 输入控制器"
 
+#~ msgid "success"
+#~ msgstr "成功"
+
+#~ msgid "execution error"
+#~ msgstr "执行错误"
+
+#~ msgid "calling error"
+#~ msgstr "调用错误"
+
+#~ msgid "cancelled"
+#~ msgstr "已取消"
+
+#~ msgid "From left to right"
+#~ msgstr "从左至右"
+
+#~ msgid "From right to left"
+#~ msgstr "从右至左"
+
+#~ msgid "Left justified"
+#~ msgstr "左对齐"
+
+#~ msgid "Right justified"
+#~ msgstr "右对齐"
+
+#~ msgid "Centered"
+#~ msgstr "居中"
+
+#~ msgid "Filled"
+#~ msgstr "填充"
+
+#~ msgid "Press F1 for more help"
+#~ msgstr "按 F1 以获得更多帮助"
+
+#~ msgid "HSV color wheel"
+#~ msgstr "HSV 色轮"
+
+#~ msgid "Wheel"
+#~ msgstr "轮"
