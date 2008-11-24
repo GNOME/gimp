@@ -1,3 +1,7 @@
+2008-11-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/Makefile.am: Sort entries.
+
 2008-11-22  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c: removed reference to gimp-remote

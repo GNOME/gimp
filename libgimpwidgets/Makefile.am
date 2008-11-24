@@ -59,10 +59,6 @@ INCLUDES = \
 lib_LTLIBRARIES = libgimpwidgets-2.0.la
 
 libgimpwidgets_2_0_la_sources = \
-	gimpwidgets.c			\
-	gimpwidgets.h			\
-	gimpwidgetsenums.h		\
-	gimpwidgetstypes.h		\
 	gimpbrowser.c			\
 	gimpbrowser.h			\
 	gimpbutton.c			\
@@ -83,37 +79,37 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcolordisplay.h		\
 	gimpcolordisplaystack.c		\
 	gimpcolordisplaystack.h		\
-	gimpenumwidgets.c		\
-	gimpenumwidgets.h		\
 	gimpcolorhexentry.c		\
 	gimpcolorhexentry.h		\
-	gimpcolorprofilecombobox.c	\
-	gimpcolorprofilecombobox.h	\
-	gimpcolorprofilestore.c		\
-	gimpcolorprofilestore.h		\
-	gimpcolorprofilestore-private.h	\
 	gimpcolornotebook.c		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilecombobox.c	\
+	gimpcolorprofilecombobox.h	\
+	gimpcolorprofilestore-private.h	\
+	gimpcolorprofilestore.c		\
+	gimpcolorprofilestore.h		\
 	gimpcolorscale.c		\
 	gimpcolorscale.h		\
 	gimpcolorscales.c		\
 	gimpcolorscales.h		\
-	gimpcolorselector.c		\
-	gimpcolorselector.h		\
 	gimpcolorselect.c		\
 	gimpcolorselect.h		\
 	gimpcolorselection.c		\
 	gimpcolorselection.h		\
+	gimpcolorselector.c		\
+	gimpcolorselector.h		\
 	gimpcontroller.c		\
 	gimpcontroller.h		\
 	gimpdialog.c			\
 	gimpdialog.h			\
-	gimpenumstore.c			\
-	gimpenumstore.h			\
 	gimpenumcombobox.c		\
 	gimpenumcombobox.h		\
 	gimpenumlabel.c			\
 	gimpenumlabel.h			\
+	gimpenumstore.c			\
+	gimpenumstore.h			\
+	gimpenumwidgets.c		\
+	gimpenumwidgets.h		\
 	gimpfileentry.c			\
 	gimpfileentry.h			\
 	gimpframe.c			\
@@ -130,10 +126,10 @@ libgimpwidgets_2_0_la_sources = \
 	gimpmemsizeentry.h		\
 	gimpnumberpairentry.c		\
 	gimpnumberpairentry.h		\
-	gimpoldwidgets.c		\
-	gimpoldwidgets.h		\
 	gimpoffsetarea.c		\
 	gimpoffsetarea.h		\
+	gimpoldwidgets.c		\
+	gimpoldwidgets.h		\
 	gimppageselector.c		\
 	gimppageselector.h		\
 	gimppatheditor.c		\
@@ -164,27 +160,28 @@ libgimpwidgets_2_0_la_sources = \
 	gimpstringcombobox.h		\
 	gimpunitmenu.c			\
 	gimpunitmenu.h			\
-	gimpzoommodel.c			\
-	gimpzoommodel.h			\
 	gimpwidgets-private.c		\
-	gimpwidgets-private.h
+	gimpwidgets-private.h		\
+	gimpwidgets.c			\
+	gimpwidgets.h			\
+	gimpwidgetsenums.h		\
+	gimpwidgetstypes.h		\
+	gimpzoommodel.c			\
+	gimpzoommodel.h
 
 libgimpwidgets_2_0_la_built_sources = \
+	gimp-wilber-pixbufs.h	\
 	gimpwidgetsenums.c	\
 	gimpwidgetsmarshal.c	\
-	gimpwidgetsmarshal.h	\
-	gimp-wilber-pixbufs.h	
+	gimpwidgetsmarshal.h
 
 libgimpwidgets_2_0_la_extra_sources = gimpwidgetsmarshal.list
 
-libgimpwidgets_2_0_la_SOURCES = 		\
+libgimpwidgets_2_0_la_SOURCES = \
 	$(libgimpwidgets_2_0_la_built_sources)	\
 	$(libgimpwidgets_2_0_la_sources)
 
 libgimpwidgetsinclude_HEADERS = \
-	gimpwidgets.h			\
-	gimpwidgetsenums.h		\
-	gimpwidgetstypes.h		\
 	gimpbrowser.h			\
 	gimpbutton.h			\
 	gimpcairo-utils.h		\
@@ -193,17 +190,17 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpchainbutton.h		\
 	gimpcolorarea.h			\
 	gimpcolorbutton.h		\
-	gimpcolorprofilecombobox.h	\
-	gimpcolorprofilestore.h		\
 	gimpcolordisplay.h		\
 	gimpcolordisplaystack.h		\
 	gimpcolorhexentry.h		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilecombobox.h	\
+	gimpcolorprofilestore.h		\
 	gimpcolorscale.h		\
 	gimpcolorscales.h		\
-	gimpcolorselector.h		\
 	gimpcolorselect.h		\
 	gimpcolorselection.h		\
+	gimpcolorselector.h		\
 	gimpcontroller.h		\
 	gimpdialog.h			\
 	gimpenumcombobox.h		\
@@ -218,8 +215,8 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpintstore.h			\
 	gimpmemsizeentry.h		\
 	gimpnumberpairentry.h		\
-	gimpoldwidgets.h		\
 	gimpoffsetarea.h		\
+	gimpoldwidgets.h		\
 	gimppageselector.h		\
 	gimppatheditor.h		\
 	gimppickbutton.h		\
@@ -235,6 +232,9 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitmenu.h			\
+	gimpwidgets.h			\
+	gimpwidgetsenums.h		\
+	gimpwidgetstypes.h		\
 	gimpzoommodel.h
 
 libgimpwidgets_2_0_la_LDFLAGS = \
