@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 11:06+0900\n"
-"PO-Revision-Date: 2008-10-30 23:32+0900\n"
+"POT-Creation-Date: 2008-11-24 09:21+0900\n"
+"PO-Revision-Date: 2008-11-22 09:50+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgstr "ライセンス情報を表示して終了する"
 
 #: ../app/main.c:154
 msgid "Be more verbose"
-msgstr "詳細な起動メッセージを表示する"
+msgstr "詳細なメッセージを表示する"
 
 #: ../app/main.c:159
 msgid "Start a new GIMP instance"
@@ -113,7 +113,7 @@ msgstr "新しいインスタンスを起動する"
 
 #: ../app/main.c:164
 msgid "Open images as new"
-msgstr "指定ファイルを新しい画像（名称未設定）として開く"
+msgstr "指定ドキュメントを新しい画像（名称未設定）として開く"
 
 #: ../app/main.c:169
 msgid "Run without a user interface"
@@ -133,11 +133,11 @@ msgstr "起動時にスタートアップウィンドウ（スプラッシュ）
 
 #: ../app/main.c:189
 msgid "Do not use shared memory between GIMP and plugins"
-msgstr "GIMPとプラグインの間でメモリを共有しない"
+msgstr "GIMP とプラグインの間でメモリを共有しない"
 
 #: ../app/main.c:194
 msgid "Do not use special CPU acceleration functions"
-msgstr "特別なCPUアクセラレータ機能を使用しない"
+msgstr "特別な CPU アクセラレータ機能を使用しない"
 
 #: ../app/main.c:199
 msgid "Use an alternate sessionrc file"
@@ -166,7 +166,7 @@ msgstr "警告をコンソールに出力（ダイアログに表示しない）
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:230
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB互換モードの指定 (off|on|warn)"
+msgstr "PDB 互換モードの指定 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:236
@@ -199,7 +199,7 @@ msgstr ""
 
 #: ../app/main.c:392
 msgid "Another GIMP instance is already running."
-msgstr "GIMPは既に実行されています。"
+msgstr "GIMP は既に実行されています。"
 
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
@@ -689,7 +689,7 @@ msgid "New Channel Color"
 msgstr "チャンネル表示色"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:567
+#: ../app/display/gimpdisplayshell-dnd.c:584
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
@@ -847,12 +847,12 @@ msgstr "レイヤー結合色(_S)"
 msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
-#: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
+#: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
 #: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
 #: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:520
+#: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
@@ -1041,11 +1041,7 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:124
 msgid "Open the brush editor"
-msgstr ""
-"ブラシダイアログを開きます。\n"
-"使用可能なブラシの一覧を表示します。クリックされたアイテムがアクティブにな"
-"り、コマンドアイコンのクリックまたはアイテム上の右クリックでコマンドを選択・"
-"実行します。"
+msgstr "ブラシ・エディタを開きます"
 
 #: ../app/actions/dialogs-actions.c:129
 msgid "P_atterns"
@@ -1072,10 +1068,7 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:142
 msgid "Open the gradient editor"
-msgstr ""
-"グラデーションダイアログを開きます。使用可能なグラデーションの一覧を表示しま"
-"す。クリックされたアイテムがアクティブになり、コマンドアイコンのクリックまた"
-"はアイテム上の右クリックでコマンドを選択・実行します。"
+msgstr "グラデーション・エディタを開きます"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "Pal_ettes"
@@ -1091,11 +1084,7 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:154
 msgid "Open the palette editor"
-msgstr ""
-"パレットダイアログを開きます。\n"
-"使用可能なパレットの一覧を表示します。クリックされたアイテムがアクティブにな"
-"り、コマンドアイコンのクリックまたはアイテム上の右クリックでコマンドを選択・"
-"実行します。"
+msgstr "パレット・エディタを開きます"
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Fonts"
@@ -1152,9 +1141,9 @@ msgstr "テンプレート(_T)"
 msgid "Open the image templates dialog"
 msgstr ""
 "テンプレートダイアログを開きます。\n"
-"使用可能な画像テンプレートの一覧を表示します。クリックでアイテムを選択し、コ"
-"マンドアイコンのクリックまたはアイテム上の右クリックでコマンドを選択・実行し"
-"ます。"
+"使用可能な画像テンプレート (幅・高さ・解像度のひな型) の一覧を表示します。ク"
+"リックでアイテムを選択し、コマンドアイコンのクリックまたはアイテム上の右ク"
+"リックでコマンドを選択・実行します。"
 
 #: ../app/actions/dialogs-actions.c:189
 msgid "T_ools"
@@ -1194,7 +1183,7 @@ msgstr "キーボードショートカット(_K)"
 
 #: ../app/actions/dialogs-actions.c:213
 msgid "Open the keyboard shortcuts editor"
-msgstr "キーボードショートカットダイアログを開きます"
+msgstr "キーボードショートカット・エディタを開きます"
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Modules"
@@ -2714,7 +2703,7 @@ msgstr "ビューを前面へ(_R)"
 
 #: ../app/actions/images-actions.c:48
 msgid "Raise this image's displays"
-msgstr "この画像のディスプレイを前面に"
+msgstr "この画像のウィンドウを前面に"
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
 msgid "_New View"
@@ -2722,7 +2711,7 @@ msgstr "新しいウィンドウ(_N)"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr "この画像に対する新しいディスプレイを作成"
+msgstr "この画像を別の画像ウィンドウで表示します"
 
 #: ../app/actions/images-actions.c:59
 msgid "_Delete Image"
@@ -2878,7 +2867,7 @@ msgstr "文字情報の破棄(_D)"
 
 #: ../app/actions/layers-actions.c:153
 msgid "Turn this text layer into a normal layer"
-msgstr "テキストレイヤーを通常のレイヤーに変更します"
+msgstr "テキストレイヤーから文字情報を破棄して通常のレイヤーに変換します"
 
 #: ../app/actions/layers-actions.c:158
 msgid "Text to _Path"
@@ -2890,11 +2879,12 @@ msgstr "このテキストレイヤーからパスを作成します"
 
 #: ../app/actions/layers-actions.c:164
 msgid "Text alon_g Path"
-msgstr "パスに沿ったテキストアウトライン(_G)"
+msgstr "パスに沿ってテキストを配置(_G)"
 
 #: ../app/actions/layers-actions.c:165
 msgid "Warp this layer's text along the current path"
-msgstr "テキストからアクティブなパスに沿ったアウトライン(パス)を生成します"
+msgstr ""
+"アクティブなパスに沿ってテキストを配置します (テキスト輪郭のパスを生成します)"
 
 #: ../app/actions/layers-actions.c:170
 msgid "Layer B_oundary Size..."
@@ -3467,7 +3457,7 @@ msgid "Toggle _Quick Mask"
 msgstr "クイックマスクの切り替え(_Q)"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1158
+#: ../app/display/gimpdisplayshell.c:1167
 msgid "Toggle Quick Mask"
 msgstr "クイックマスクの切り替え"
 
@@ -4742,8 +4732,8 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
-"コンテキストによったカーソルはクールです。標準で有効になっていますが、多少の"
-"オーバーヘッドがあるため、無効にすることもできます。"
+"状況適応型のマウスカーソルは有用です。既定では有効になっています。多少のオー"
+"バーヘッドがあるため、無効にすることもできます。"
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid ""
@@ -6904,7 +6894,7 @@ msgstr ""
 msgid "Please wait"
 msgstr "お待ち下さい"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:240
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "選択範囲を移動"
 
@@ -8591,28 +8581,27 @@ msgstr "高品位"
 msgid "Image saved to '%s'"
 msgstr "画像は、ファイル '%s' に保存されました"
 
-#: ../app/display/gimpdisplayshell.c:1024
+#: ../app/display/gimpdisplayshell.c:1033
 msgid "Access the image menu"
 msgstr "画像メニューにアクセス"
 
-#: ../app/display/gimpdisplayshell.c:1129
+#: ../app/display/gimpdisplayshell.c:1138
 msgid "Zoom image when window size changes"
 msgstr "ウィンドウサイズ変更時に画像をズーム"
 
-#: ../app/display/gimpdisplayshell.c:1179
+#: ../app/display/gimpdisplayshell.c:1188
 msgid "Navigate the image display"
 msgstr "この画像のナビゲーションプレビューを表示します"
 
-#: ../app/display/gimpdisplayshell.c:1274
-#: ../app/display/gimpdisplayshell.c:1364 ../app/widgets/gimptoolbox.c:222
+#: ../app/display/gimpdisplayshell.c:1283
+#: ../app/display/gimpdisplayshell.c:1373 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr ""
-"ここに画像ドキュメントのアイコンをドロップすると、その画像を開きます。\n"
+"ここに画像ドキュメント・アイコンをドロップすると、その画像を開きます。（ツー"
+"ルボックスに画像ドキュメント・アイコンをドロップして開くこともできます。）\n"
 "\n"
-"画像が既に開かれているウィンドウに画像ドキュメントのアイコンをドロップする"
-"と、そのドキュメントはレイヤーとして開かれます。\n"
-"ツールボックスに画像ドキュメントのアイコンをドロップすると、そのドキュメント"
-"は常に画像として開かれます。"
+"既に画像が開かれているウィンドウに画像ドキュメント・アイコンをドロップした場"
+"合は、その画像ドキュメントはレイヤーとして開かれます。"
 
 #: ../app/display/gimpdisplayshell-close.c:147
 #: ../app/display/gimpdisplayshell-close.c:224
@@ -8657,8 +8646,8 @@ msgstr[0] "保存しない場合は 1 分前からの変更が破棄されます
 msgstr[1] "保存しない場合は %d 分前からの変更が破棄されます。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
-#: ../app/display/gimpdisplayshell-dnd.c:570
-#: ../app/display/gimpdisplayshell-dnd.c:641
+#: ../app/display/gimpdisplayshell-dnd.c:587
+#: ../app/display/gimpdisplayshell-dnd.c:658
 msgid "Drop New Layer"
 msgstr "新しいレイヤーをドロップ"
 
@@ -8666,12 +8655,12 @@ msgstr "新しいレイヤーをドロップ"
 msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
-#: ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "レイヤーをドロップ"
 
-#: ../app/display/gimpdisplayshell-dnd.c:631
+#: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "ドロップされたバッファ"
@@ -8867,6 +8856,11 @@ msgstr "インデックスレイヤーでは修復ブラシは使えません"
 msgid "Paintbrush"
 msgstr "ブラシで描画"
 
+#: ../app/paint/gimppaintcore-stroke.c:332
+#, c-format
+msgid "Not enough points to stroke"
+msgstr "アンカーポイントが不足しているので描画できません"
+
 #: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
 msgstr "鉛筆で描画"
@@ -8982,130 +8976,130 @@ msgstr ""
 msgid "Procedure '%s' not found"
 msgstr "プロシージャ '%s' が見つかりません。"
 
-#: ../app/pdb/gimppdb-utils.c:59
+#: ../app/pdb/gimppdb-utils.c:61
 #, c-format
 msgid "Invalid empty brush name"
 msgstr "ブラシ名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:69
+#: ../app/pdb/gimppdb-utils.c:71
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "ブラシ '%s' が見つかりません。"
 
-#: ../app/pdb/gimppdb-utils.c:74
+#: ../app/pdb/gimppdb-utils.c:76
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "'%s' は編集可能なブラシではありません。"
 
-#: ../app/pdb/gimppdb-utils.c:100
+#: ../app/pdb/gimppdb-utils.c:102
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "'%s' は生成されたブラシではありません。"
 
-#: ../app/pdb/gimppdb-utils.c:120
+#: ../app/pdb/gimppdb-utils.c:122
 #, c-format
 msgid "Invalid empty pattern name"
 msgstr "パターン名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:130
+#: ../app/pdb/gimppdb-utils.c:132
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "パターン '%s' が見つかりません"
 
-#: ../app/pdb/gimppdb-utils.c:150
+#: ../app/pdb/gimppdb-utils.c:152
 #, c-format
 msgid "Invalid empty gradient name"
 msgstr "グラデーション名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:160
+#: ../app/pdb/gimppdb-utils.c:162
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "グラデーション '%s' が見つかりません"
 
-#: ../app/pdb/gimppdb-utils.c:165
+#: ../app/pdb/gimppdb-utils.c:167
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "'%s' は編集可能なグラデーションではありません。"
 
-#: ../app/pdb/gimppdb-utils.c:186
+#: ../app/pdb/gimppdb-utils.c:188
 #, c-format
 msgid "Invalid empty palette name"
 msgstr "パレット名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:196
+#: ../app/pdb/gimppdb-utils.c:198
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "パレット '%s' が見つかりません"
 
-#: ../app/pdb/gimppdb-utils.c:201
+#: ../app/pdb/gimppdb-utils.c:203
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "'%s' は編集可能なパターンではありません。"
 
-#: ../app/pdb/gimppdb-utils.c:221
+#: ../app/pdb/gimppdb-utils.c:223
 #, c-format
 msgid "Invalid empty font name"
 msgstr "フォント名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:233
 #, c-format
 msgid "Font '%s' not found"
 msgstr "フォント '%s' が見つかりません"
 
-#: ../app/pdb/gimppdb-utils.c:250
+#: ../app/pdb/gimppdb-utils.c:252
 #, c-format
 msgid "Invalid empty buffer name"
 msgstr "(名前付きバッファの)バッファ名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:262
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "名前付きバッファ '%s' が見つかりません"
 
-#: ../app/pdb/gimppdb-utils.c:279
+#: ../app/pdb/gimppdb-utils.c:281
 #, c-format
 msgid "Invalid empty paint method name"
 msgstr "(名前付き描画メソッドの)メソッド名が不適切または空です。"
 
-#: ../app/pdb/gimppdb-utils.c:289
+#: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "描画メッソド '%s' は存在しません。"
 
-#: ../app/pdb/gimppdb-utils.c:305
+#: ../app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid ""
 "Item '%s' (%d) can not be used because it has not been added to an image"
 msgstr "アイテム '%s' (%d) は、画像に加えられていなかったので使用されません。"
 
-#: ../app/pdb/gimppdb-utils.c:327
+#: ../app/pdb/gimppdb-utils.c:329
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "アイテム '%s' (%d) は既に画像に加えられています。"
 
-#: ../app/pdb/gimppdb-utils.c:335
+#: ../app/pdb/gimppdb-utils.c:337
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "アイテム '%s' (%d) を誤った画像に加えようとしています"
 
-#: ../app/pdb/gimppdb-utils.c:354
+#: ../app/pdb/gimppdb-utils.c:356
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
 msgstr "レイヤー '%s' (%d) は、テキストレイヤーではないので使用されません。"
 
-#: ../app/pdb/gimppdb-utils.c:395
+#: ../app/pdb/gimppdb-utils.c:401
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "要求される画像は '%4$s' 形式のものですが、画像 '%1$s' (%2$d) は '%3$s' 形式で"
 "す。"
 
-#: ../app/pdb/gimppdb-utils.c:418
+#: ../app/pdb/gimppdb-utils.c:430
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "画像 '%s' (%d) は、既に '%s' 形式です。"
 
-#: ../app/pdb/gimppdb-utils.c:441
+#: ../app/pdb/gimppdb-utils.c:455
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "ベクターオブジェクト %d は ID %d によるストロークを含みません"
@@ -9119,12 +9113,12 @@ msgstr ""
 "プロシージャ '%s' は、%d 番目の引数に誤ったデータ型（ %s でなければいけないと"
 "ころに %s ）を用いて呼び出されました。"
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
+#: ../app/pdb/gimpprocedure.c:361 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "プロシージャ '%s' には戻り値がありませんでした。"
 
-#: ../app/pdb/gimpprocedure.c:584
+#: ../app/pdb/gimpprocedure.c:585
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -9133,7 +9127,7 @@ msgstr ""
 "プロシージャ '%s' の戻り値 '%s'(%d 番目)はデータ型を誤っています 。(%s のはず"
 "が %s で戻っています。)"
 
-#: ../app/pdb/gimpprocedure.c:596
+#: ../app/pdb/gimpprocedure.c:597
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -9142,7 +9136,7 @@ msgstr ""
 "プロシージャ '%s' 呼び出し時の引数 '%s'(%d 番目の引数) は、データ型を誤ってい"
 "ます。（%s のはずが %s でした。)"
 
-#: ../app/pdb/gimpprocedure.c:628
+#: ../app/pdb/gimpprocedure.c:629
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9151,7 +9145,7 @@ msgstr ""
 "プロシージャ '%s' は、引数 '%s' に対して無効な ID を返しました。すでに存在し"
 "ていないレイヤーに対してプラグインが処理を進めようとしているようです。"
 
-#: ../app/pdb/gimpprocedure.c:640
+#: ../app/pdb/gimpprocedure.c:641
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9160,7 +9154,7 @@ msgstr ""
 "プロシージャ '%s' 呼び出し時の引数 '%s' の値は、無効な ID です。プラグイン"
 "は、すでに存在しないレイヤーに対して処理を進めようとしているようです。"
 
-#: ../app/pdb/gimpprocedure.c:656
+#: ../app/pdb/gimpprocedure.c:657
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9169,7 +9163,7 @@ msgstr ""
 "プロシージャ '%s' は、引数 '%s' に対して無効な ID を返しました。プラグイン"
 "は、すでに存在しない画像に対して処理を進めようとしているようです。"
 
-#: ../app/pdb/gimpprocedure.c:668
+#: ../app/pdb/gimpprocedure.c:669
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9178,7 +9172,7 @@ msgstr ""
 "プロシージャ '%s' 呼び出し時の引数 '%s' の値は、無効な ID です。プラグイン"
 "は、すでに存在しない画像に対して処理を進めようとしているようです。"
 
-#: ../app/pdb/gimpprocedure.c:688
+#: ../app/pdb/gimpprocedure.c:689
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -9187,7 +9181,7 @@ msgstr ""
 "プロシージャ '%1$s' は戻り値 '%3$s' (%4$d 番目、%5$s 型)として値 '%2$s' を返"
 "しましたが、この値は適正値の範囲外です。"
 
-#: ../app/pdb/gimpprocedure.c:701
+#: ../app/pdb/gimpprocedure.c:702
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -10164,13 +10158,13 @@ msgstr "範囲"
 msgid "Exposure:"
 msgstr "露出: "
 
-#: ../app/tools/gimpeditselectiontool.c:244
-#: ../app/tools/gimpeditselectiontool.c:1229
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1231
 msgid "Move Floating Selection"
 msgstr "フローティング選択範囲の移動"
 
-#: ../app/tools/gimpeditselectiontool.c:457
-#: ../app/tools/gimpeditselectiontool.c:726
+#: ../app/tools/gimpeditselectiontool.c:459
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "移動: "
 
@@ -10403,18 +10397,18 @@ msgstr "GEGL 操作"
 #: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr ""
-"【GEGL を操作】\n"
+"【GEGL 操作】\n"
 "任意の GEGL 操作を行い画像に変化を与えます。 GEGL 操作はインデックスレイヤー"
 "では利用できません。"
 
 #: ../app/tools/gimpgegltool.c:94
 msgid "_GEGL Operation..."
-msgstr "GEGL を操作(_G)"
+msgstr "GEGL 操作(_G)"
 
 #: ../app/tools/gimpgegltool.c:158
 #, c-format
 msgid "GEGL operations do not operate on indexed layers."
-msgstr "インデックスレイヤーでは GEGL を操作できません。"
+msgstr "インデックスレイヤーでは GEGL 操作はできません。"
 
 #: ../app/tools/gimpgegltool.c:338
 msgid "_Operation:"
@@ -11055,7 +11049,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "矩形選択(_R)"
 
-#: ../app/tools/gimprectangletool.c:1084 ../app/tools/gimprectangletool.c:1980
+#: ../app/tools/gimprectangletool.c:1085 ../app/tools/gimprectangletool.c:1981
 msgid "Rectangle: "
 msgstr "矩形: "
 
@@ -11220,7 +11214,9 @@ msgstr "クリックでラインをにじませます"
 #: ../app/tools/gimptextoptions.c:127
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr "小さい文字サイズの場合に明瞭なビットマップを生成するためのヒント情報"
+msgstr ""
+"ヒント情報を利用すると、小さなフォントサイズの場合でも明瞭なビットマップが生"
+"成されるように線幅が補正されます"
 
 #: ../app/tools/gimptextoptions.c:134
 msgid ""
@@ -11273,9 +11269,7 @@ msgstr "テキストからパスを生成"
 
 #: ../app/tools/gimptextoptions.c:527
 msgid "Text along Path"
-msgstr ""
-"パスに沿ったテキスト\n"
-"アウトラインの生成"
+msgstr "パスに沿ってテキストを配置"
 
 #: ../app/tools/gimptexttool.c:161
 msgid "Text Tool: Create or edit text layers"
