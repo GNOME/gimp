@@ -1,3 +1,7 @@
+2008-11-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* POTFILES.in: Sort entries.
+
 2008-11-11  Mugurel Tudor  <mugurelu@gnome.ro>
 
 	* ro.po: Updated Romanian translation
