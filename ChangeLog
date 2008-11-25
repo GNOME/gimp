@@ -1,3 +1,7 @@
+2008-11-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c: minor code cleanup.
+
 2008-11-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/Makefile.am: Sort entries.

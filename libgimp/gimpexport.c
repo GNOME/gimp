@@ -207,6 +207,13 @@ export_add_alpha (gint32  image_ID,
   g_free (layers);
 }
 
+static void
+export_void (gint32  image_ID,
+             gint32 *drawable_ID)
+{
+  /* do nothing */
+}
+
 
 /* a set of predefined actions */
 
@@ -349,6 +356,27 @@ static ExportAction export_action_add_alpha =
   { N_("Add Alpha Channel"), NULL},
   0
 };
+
+
+static ExportFunc
+export_action_get_func (const ExportAction *action)
+{
+  if (action->choice == 0 && action->default_action)
+    return action->default_action;
+
+  if (action->choice == 1 && action->alt_action)
+    return action->alt_action;
+
+  return export_void;
+}
+
+static void
+export_action_perform (const ExportAction *action,
+                       gint32              image_ID,
+                       gint32             *drawable_ID)
+{
+  export_action_get_func (action) (image_ID, drawable_ID);
+}
 
 
 /* dialog functions */
@@ -637,7 +665,6 @@ gimp_export_image (gint32                 *image_ID,
                    GimpExportCapabilities  capabilities)
 {
   GSList            *actions = NULL;
-  GSList            *list;
   GimpImageBaseType  type;
   gint32             i;
   gint32             n_layers;
@@ -879,6 +906,8 @@ gimp_export_image (gint32                 *image_ID,
 
   if (retval == GIMP_EXPORT_EXPORT)
     {
+      GSList *list;
+
       *image_ID = gimp_image_duplicate (*image_ID);
       *drawable_ID = gimp_image_get_active_layer (*image_ID);
 
@@ -886,12 +915,7 @@ gimp_export_image (gint32                 *image_ID,
 
       for (list = actions; list; list = list->next)
         {
-          ExportAction *action = list->data;
-
-          if (action->choice == 0 && action->default_action)
-            action->default_action (*image_ID, drawable_ID);
-          else if (action->choice == 1 && action->alt_action)
-            action->alt_action (*image_ID, drawable_ID);
+          export_action_perform (list->data, *image_ID, drawable_ID);
         }
     }
 
