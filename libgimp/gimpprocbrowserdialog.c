@@ -380,8 +380,10 @@ browser_search (GimpBrowser           *browser,
       gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view), NULL);
       dialog->store = NULL;
 
-      gimp_browser_show_message (browser,
-                                 _("Search term invalid or incomplete"));
+      gimp_browser_show_message (browser, _("No matches"));
+
+      gtk_label_set_text (GTK_LABEL (browser->count_label),
+                          _("Search term invalid or incomplete"));
       return;
     }
 

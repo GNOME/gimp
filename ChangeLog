@@ -1,5 +1,11 @@
 2008-11-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprocbrowserdialog.c (browser_search): show the
+	"invalid search term" message in the label below the list instead
+	of in the pane on the right side.
+
+2008-11-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c: minor code cleanup.
 
 2008-11-24  Martin Nordholts  <martinn@svn.gnome.org>
