@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 06:01+0000\n"
-"PO-Revision-Date: 2008-09-17 15:50+0900\n"
-"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
+"POT-Creation-Date: 2008-11-22 23:51+0900\n"
+"PO-Revision-Date: 2008-11-22 23:53+0900\n"
+"Last-Translator: Choi, JiHui <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,22 +21,22 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1044
+#: ../libgimp/gimp.c:1045
 msgid "success"
 msgstr "성공"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1048
+#: ../libgimp/gimp.c:1049
 msgid "execution error"
 msgstr "실행 오류"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1052
+#: ../libgimp/gimp.c:1053
 msgid "calling error"
 msgstr "호출 오류"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1056
+#: ../libgimp/gimp.c:1057
 msgid "cancelled"
 msgstr "취소됨"
 
@@ -1147,11 +1147,11 @@ msgstr "연결됨"
 
 #: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr "새로 붙여 넣기"
+msgstr "새로 붙여넣기"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr "안에 붙여 넣기"
+msgstr "안에 붙여넣기"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
@@ -1489,11 +1489,11 @@ msgstr "수채화"
 msgid "Pressure"
 msgstr "압력"
 
-#: ../modules/color-selector-wheel.c:98
+#: ../modules/color-selector-wheel.c:103
 msgid "HSV color wheel"
 msgstr "HSV 색상 휠"
 
-#: ../modules/color-selector-wheel.c:129
+#: ../modules/color-selector-wheel.c:134
 msgid "Wheel"
 msgstr "휠"
 

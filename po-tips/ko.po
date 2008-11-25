@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 06:01+0000\n"
-"PO-Revision-Date: 2008-09-17 15:51+0900\n"
-"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
+"POT-Creation-Date: 2008-11-22 23:51+0900\n"
+"PO-Revision-Date: 2008-11-22 23:53+0900\n"
+"Last-Translator: Choi, JiHui <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgstr "떠있는 선택은 이미지에 다른 조작을 하기 전에 새 레�
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
-msgstr "기본 설정 대화상자에서 &quot;동적인 키보드 단축키&quot;를 선택한 다음, 단축키를 재할당 할 수 있습니다. 단축키를 설정하려면 해당 메뉴를 열고, 메뉴 항목을 선택하고, 원하는 키 조합을 누르면 됩니다. &quot;마칠 때 키보드 단축키 저장&quot;을 선택했다면, 김프를 마칠 때 단축키 설정이 저장됩니다. 나중에 단축키간의 충돌을 방지하기 위해  &quot;동적인 키보드 단축키&quot;를 비활성화시킬 수도 있습니다."
+msgstr "기본 설정 대화상자에서 &quot;동적인 키보드 바로 가기&quot;를 선택한 다음, 단축키를 재할당 할 수 있습니다. 단축키를 설정하려면 해당 메뉴를 열고, 메뉴 항목을 선택하고, 원하는 키 조합을 누르면 됩니다. &quot;마칠 때 키보드 단축키 저장&quot;을 선택했다면, 김프를 마칠 때 단축키 설정이 저장됩니다. 나중에 단축키간의 충돌을 방지하기 위해  &quot;동적인 키보드 단축키&quot;를 비활성화시킬 수도 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."

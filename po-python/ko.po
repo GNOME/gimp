@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 06:01+0000\n"
-"PO-Revision-Date: 2008-09-17 15:50+0900\n"
-"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
+"POT-Creation-Date: 2008-11-22 23:51+0900\n"
+"PO-Revision-Date: 2008-11-22 23:54+0900\n"
+"Last-Translator: Choi, JiHui <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +37,7 @@ msgstr "자세한 정보(_M)"
 #: ../plug-ins/pygimp/gimpfu.py:523
 #: ../plug-ins/pygimp/gimpfu.py:529
 msgid "No"
-msgstr "아니오"
+msgstr "아니요"
 
 #: ../plug-ins/pygimp/gimpfu.py:521
 #: ../plug-ins/pygimp/gimpfu.py:529
@@ -209,47 +209,49 @@ msgstr "팔레트를 그라디언트로(_G)"
 msgid "Slice"
 msgstr "잘게 잘라내기"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "안내선에 따라 이미지를 자르고, 이미지와 HTML 테이블 태그를 만들기"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
 msgid "_Slice..."
 msgstr "잘게 잘라내기(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Path for HTML export"
 msgstr "HTML를  내보낼 경로"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Filename for export"
 msgstr "내보낼 파일 이름"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Image name prefix"
 msgstr "이미지명 접두어"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Image format"
 msgstr "이미지 형식"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Separate image folder"
 msgstr "분리된 이미지 폴더"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Folder for image export"
 msgstr "이미지를 내보낼 폴더"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Space between table elements"
 msgstr "테이블 요소 사이의 간격"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Javascript for onmouseover and clicked"
 msgstr "마우스오버와 클릭을 위한 자바스크립트"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Skip animation for table caps"
 msgstr "테이블보를 위한 애니메이션 안보기"
 

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 06:01+0000\n"
-"PO-Revision-Date: 2008-09-17 15:51+0900\n"
-"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
+"POT-Creation-Date: 2008-11-22 23:51+0900\n"
+"PO-Revision-Date: 2008-11-22 23:55+0900\n"
+"Last-Translator: Choi, JiHui <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,88 +54,73 @@ msgstr "Script-Fu 프로시저 찾아보기"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용합니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" 스크립트가 이미 실행되고 있습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:243
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:305
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:353
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 색상 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 폴더 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 글꼴 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 팔레트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 무늬 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:506
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 그라디언트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:515
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러시 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:914
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"실행 중 오류\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while executing %s:"
+msgstr "실행 중 오류 %s:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족합니다."
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:710
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
-msgid ""
-"Error while loading\n"
-"\"%s\"\n"
-"\n"
-"%s"
-msgstr ""
-"불러오는 중 오류\n"
-"\"%s\"\n"
-"\n"
-"%s"
+msgid "Error while loading %s:"
+msgstr "불러오는 중 오류 %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
@@ -1522,7 +1507,7 @@ msgstr "색상 수"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Remove background"
-msgstr "배경 지우기"
+msgstr "배경 제거하기"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
