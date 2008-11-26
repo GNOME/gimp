@@ -425,7 +425,13 @@ prefs_template_select_callback (GimpContainerView *view,
                                 GimpTemplate      *edit_template)
 {
   if (template)
-    gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template), 0);
+    {
+      /*  make sure the resolution values are copied first (see bug #546924)  */
+      gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template),
+                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
+      gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template),
+                        0);
+    }
 }
 
 static void
