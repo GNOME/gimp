@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-30 22:11+0000\n"
-"PO-Revision-Date: 2008-10-02 16:38+0100\n"
+"POT-Creation-Date: 2008-10-09 18:11+0000\n"
+"PO-Revision-Date: 2008-10-23 23:46+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "GIMP"
 #: ../app/about.h:27
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "Program GNU za obdelavo slik (GIMP, slovensko GOS)"
+msgstr "GIMP - program GNU za obdelavo slik"
 
 #: ../app/about.h:30
 msgid ""
@@ -698,7 +698,7 @@ msgstr "Barva novega kanala"
 #: ../app/display/gimpdisplayshell-dnd.c:567
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773
-#: ../app/widgets/gimptoolbox-dnd.c:310
+#: ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopija kanala %s"
@@ -861,14 +861,14 @@ msgstr "Vzorči spojeno"
 
 #: ../app/actions/data-commands.c:107
 #: ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:180
-#: ../app/dialogs/file-open-dialog.c:213
-#: ../app/dialogs/file-open-dialog.c:259
+#: ../app/actions/file-commands.c:181
+#: ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:520
 #: ../app/widgets/gimplayertreeview.c:730
-#: ../app/widgets/gimptoolbox-dnd.c:155
+#: ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
@@ -924,7 +924,7 @@ msgstr "Odpre pogovorno okno za stanje naprave"
 
 #: ../app/actions/dialogs-actions.c:51
 msgid "_Layers"
-msgstr "_Plasti"
+msgstr "P_lasti"
 
 #: ../app/actions/dialogs-actions.c:52
 msgid "Open the layers dialog"
@@ -948,7 +948,7 @@ msgstr "Odpre pogovorno okno poti"
 
 #: ../app/actions/dialogs-actions.c:69
 msgid "Color_map"
-msgstr "_Katalog barv"
+msgstr "Katalog _barv"
 
 #: ../app/actions/dialogs-actions.c:70
 msgid "Open the colormap dialog"
@@ -964,7 +964,7 @@ msgstr "Odpre pogovorno okno histograma"
 
 #: ../app/actions/dialogs-actions.c:81
 msgid "_Selection Editor"
-msgstr "Urejevalnik _izbire"
+msgstr "_Urejevalnik izbire"
 
 #: ../app/actions/dialogs-actions.c:82
 msgid "Open the selection editor"
@@ -1025,7 +1025,7 @@ msgstr "Odpri urejevalnik čopičev"
 
 #: ../app/actions/dialogs-actions.c:129
 msgid "P_atterns"
-msgstr "V_zorci"
+msgstr "Vzor_ci"
 
 #: ../app/actions/dialogs-actions.c:130
 msgid "Open the patterns dialog"
@@ -1065,7 +1065,7 @@ msgstr "Odpre pogovorno okno pisav"
 
 #: ../app/actions/dialogs-actions.c:165
 msgid "B_uffers"
-msgstr "Med_pomnilniki"
+msgstr "Me_dpomnilniki"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
@@ -1535,7 +1535,7 @@ msgstr "Odstrani vse operacije iz zgodovine razveljavitev"
 #: ../app/actions/edit-actions.c:102
 #: ../app/actions/edit-actions.c:315
 msgid "_Fade..."
-msgstr "_Pojemanje ..."
+msgstr "Poje_manje ..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
@@ -1560,7 +1560,7 @@ msgstr "Kopiraj izbrane točke na odložišče"
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
 msgid "Copy _Visible"
-msgstr "Kopiraj _vidno"
+msgstr "Kopiraj vi_dno"
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy what is visible in the selected region"
@@ -1849,7 +1849,7 @@ msgstr "Ustvari novo predlogo iz te slike"
 
 #: ../app/actions/file-actions.c:95
 msgid "Re_vert"
-msgstr "Pov_rni"
+msgstr "Po_vrni"
 
 #: ../app/actions/file-actions.c:96
 msgid "Reload the image file from disk"
@@ -1889,7 +1889,7 @@ msgstr "Shrani to sliko pod drugim imenom"
 
 #: ../app/actions/file-actions.c:128
 msgid "Save a Cop_y..."
-msgstr "Shrani kop_ijo ..."
+msgstr "Shrani kopij_o ..."
 
 #: ../app/actions/file-actions.c:129
 msgid "Save this image with a different name, but keep its current name"
@@ -1903,11 +1903,21 @@ msgstr "Shrani in zapri ..."
 msgid "Save this image and close its window"
 msgstr "Shrani to sliko in zapri njeno okno"
 
-#: ../app/actions/file-commands.c:259
+#: ../app/actions/file-commands.c:104
+#: ../app/actions/file-commands.c:450
+#: ../app/dialogs/file-open-dialog.c:76
+msgid "Open Image"
+msgstr "Odpri sliko"
+
+#: ../app/actions/file-commands.c:125
+msgid "Open Image as Layers"
+msgstr "Odpri sliko kot plasti"
+
+#: ../app/actions/file-commands.c:260
 msgid "Saving canceled"
 msgstr "Shranjevanje preklicano"
 
-#: ../app/actions/file-commands.c:268
+#: ../app/actions/file-commands.c:269
 #: ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
@@ -1920,52 +1930,43 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:293
+#: ../app/actions/file-commands.c:294
 msgid "No changes need to be saved"
 msgstr "Nobenih sprememb ni potrebno shraniti"
 
-#: ../app/actions/file-commands.c:300
+#: ../app/actions/file-commands.c:301
 #: ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Shrani sliko"
 
-#: ../app/actions/file-commands.c:306
+#: ../app/actions/file-commands.c:307
 msgid "Save a Copy of the Image"
 msgstr "Shrani kopijo slike"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:327
 msgid "Create New Template"
 msgstr "Ustvari novo predlogo"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:331
 msgid "Enter a name for this template"
 msgstr "Vnesite ime za predlogo"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:357
 msgid "Revert failed. No file name associated with this image."
 msgstr "Povrnitev ni uspela. Nobena datoteka ni povezana s to sliko."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:370
 msgid "Revert Image"
 msgstr "Povrni sliko"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:396
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Želite povrniti '%s' v '%s'?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:402
 msgid "By reverting the image to the state saved on disk, you will lose all changes, including all undo information."
 msgstr "S povrnitvijo slike v zadnje shranjeno stanje boste izgubili vse spremembe in podatke za razveljavitve."
-
-#: ../app/actions/file-commands.c:477
-msgid "Open Image as Layers"
-msgstr "Odpri sliko kot plasti"
-
-#: ../app/actions/file-commands.c:482
-#: ../app/dialogs/file-open-dialog.c:76
-msgid "Open Image"
-msgstr "Odpri sliko"
 
 #: ../app/actions/file-commands.c:557
 msgid "(Unnamed Template)"
@@ -2389,7 +2390,7 @@ msgstr "Shrani '%s' kot žarek POV"
 #: ../app/actions/help-actions.c:38
 #: ../app/actions/help-actions.c:41
 msgid "_Help"
-msgstr "_Pomoč"
+msgstr "Po_moč"
 
 #: ../app/actions/help-actions.c:42
 msgid "Open the GIMP user manual"
@@ -2397,7 +2398,7 @@ msgstr "Odpri priročnik za uporabo GIMPa"
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
-msgstr "_Pojavna pomoč"
+msgstr "Poja_vna pomoč"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
@@ -2419,7 +2420,7 @@ msgstr "_Način"
 #: ../app/actions/image-actions.c:56
 #: ../app/actions/layers-actions.c:56
 msgid "_Transform"
-msgstr "_Preoblikuj"
+msgstr "Preo_blikuj"
 
 #: ../app/actions/image-actions.c:57
 msgid "_Guides"
@@ -2430,7 +2431,7 @@ msgid "I_nfo"
 msgstr "I_nformacije"
 
 #: ../app/actions/image-actions.c:61
-#: ../app/tools/gimplevelstool.c:645
+#: ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Samodejno"
@@ -2677,7 +2678,7 @@ msgstr "Meni plasti"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr "_Plast"
+msgstr "P_last"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -3079,7 +3080,7 @@ msgid "Please select a channel first"
 msgstr "Najprej, prosim, izberite kanal"
 
 #: ../app/actions/layers-commands.c:1044
-#: ../app/core/gimplayer.c:1280
+#: ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Dodaj masko plasti"
@@ -3722,8 +3723,8 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 #: ../app/core/gimppalette-load.c:456
 #: ../app/core/gimppalette-load.c:599
 #: ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:616
-#: ../app/tools/gimplevelstool.c:735
+#: ../app/tools/gimpcurvestool.c:623
+#: ../app/tools/gimplevelstool.c:743
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3869,7 +3870,7 @@ msgstr "_Pokaži v orodjarni"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
-msgstr "_Po barvi"
+msgstr "Po _barvi"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
@@ -4410,11 +4411,11 @@ msgstr "D_rugo (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
 
-#: ../app/actions/view-commands.c:589
+#: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
 msgstr "Nastavite barvo polnila platna"
 
-#: ../app/actions/view-commands.c:591
+#: ../app/actions/view-commands.c:615
 msgid "Set Custom Canvas Padding Color"
 msgstr "Izberi lastne barve polnila platna oz. podlage"
 
@@ -4430,7 +4431,7 @@ msgstr "Pomakni okno na zaslon %s"
 
 #: ../app/actions/windows-actions.c:79
 msgid "_Windows"
-msgstr "_Okna"
+msgstr "O_kna"
 
 #: ../app/actions/windows-actions.c:80
 msgid "_Recently Closed Docks"
@@ -4608,8 +4609,8 @@ msgstr "Izmenjalni datoteki ni mogoče spremeniti velikosti: %s"
 #: ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:239
-#: ../app/tools/gimpcurvestool.c:664
-#: ../app/tools/gimplevelstool.c:762
+#: ../app/tools/gimpcurvestool.c:676
+#: ../app/tools/gimplevelstool.c:796
 #: ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:422
 #, c-format
@@ -5954,7 +5955,7 @@ msgstr "Prebarvaj"
 
 #: ../app/core/gimpdrawable-curves.c:165
 #: ../app/core/gimpdrawable-curves.c:182
-#: ../app/tools/gimpcurvestool.c:136
+#: ../app/tools/gimpcurvestool.c:140
 msgid "Curves"
 msgstr "Krivulje"
 
@@ -5988,7 +5989,7 @@ msgstr "Preobrni"
 
 #: ../app/core/gimpdrawable-levels.c:154
 #: ../app/core/gimpdrawable-levels.c:170
-#: ../app/tools/gimplevelstool.c:146
+#: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
 msgstr "Ravni"
 
@@ -6258,97 +6259,97 @@ msgstr "Odstrani zajedalca s slike"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: ../app/core/gimpimage.c:2940
-#: ../app/core/gimpimage.c:2953
+#: ../app/core/gimpimage.c:2935
+#: ../app/core/gimpimage.c:2948
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3092
 msgid "Layer cannot be raised higher."
 msgstr "Plasti ni mogoče dvigniti višje."
 
-#: ../app/core/gimpimage.c:3102
+#: ../app/core/gimpimage.c:3097
 msgid "Raise Layer"
 msgstr "Dvigni plast"
 
-#: ../app/core/gimpimage.c:3121
+#: ../app/core/gimpimage.c:3116
 msgid "Layer cannot be lowered more."
 msgstr "Plasti ni mogoče bolj spustiti."
 
-#: ../app/core/gimpimage.c:3126
+#: ../app/core/gimpimage.c:3121
 msgid "Lower Layer"
 msgstr "Spusti plast"
 
-#: ../app/core/gimpimage.c:3137
+#: ../app/core/gimpimage.c:3132
 msgid "Raise Layer to Top"
 msgstr "Dvigni plast na vrh"
 
-#: ../app/core/gimpimage.c:3152
+#: ../app/core/gimpimage.c:3147
 msgid "Lower Layer to Bottom"
 msgstr "Spusti plast na dno"
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3209
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: ../app/core/gimpimage.c:3259
-#: ../app/core/gimpimage.c:3270
+#: ../app/core/gimpimage.c:3252
+#: ../app/core/gimpimage.c:3263
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: ../app/core/gimpimage.c:3319
+#: ../app/core/gimpimage.c:3312
 msgid "Channel cannot be raised higher."
 msgstr "Kanala ni mogoče dvigniti višje."
 
-#: ../app/core/gimpimage.c:3324
+#: ../app/core/gimpimage.c:3317
 msgid "Raise Channel"
 msgstr "Dvigni kanal"
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3328
 msgid "Raise Channel to Top"
 msgstr "Dvigni kanal na vrh"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3348
 msgid "Channel cannot be lowered more."
 msgstr "Kanala ni mogoče bolj spustiti."
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3353
 msgid "Lower Channel"
 msgstr "Spusti kanal"
 
-#: ../app/core/gimpimage.c:3375
+#: ../app/core/gimpimage.c:3368
 msgid "Lower Channel to Bottom"
 msgstr "Spusti kanal na dno"
 
-#: ../app/core/gimpimage.c:3439
+#: ../app/core/gimpimage.c:3432
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: ../app/core/gimpimage.c:3485
+#: ../app/core/gimpimage.c:3476
 msgid "Remove Path"
 msgstr "Odstrani pot"
 
-#: ../app/core/gimpimage.c:3531
+#: ../app/core/gimpimage.c:3522
 msgid "Path cannot be raised higher."
 msgstr "Poti ni mogoče dvigniti višje."
 
-#: ../app/core/gimpimage.c:3536
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path"
 msgstr "Dvigni pot"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3538
 msgid "Raise Path to Top"
 msgstr "Dvigni pot na vrh"
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3557
 msgid "Path cannot be lowered more."
 msgstr "Poti ni mogoče bolj spustiti."
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3562
 msgid "Lower Path"
 msgstr "Spusti pot"
 
-#: ../app/core/gimpimage.c:3586
+#: ../app/core/gimpimage.c:3577
 msgid "Lower Path to Bottom"
 msgstr "Spusti pot na dno"
 
@@ -6472,7 +6473,7 @@ msgid "Rotate Layer"
 msgstr "Zasukaj plast"
 
 #: ../app/core/gimplayer.c:405
-#: ../app/core/gimplayer.c:1327
+#: ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6487,38 +6488,38 @@ msgstr ""
 "Plavajoči izbor\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1263
+#: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: ../app/core/gimplayer.c:1274
+#: ../app/core/gimplayer.c:1276
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: ../app/core/gimplayer.c:1554
+#: ../app/core/gimplayer.c:1556
 #: ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Uporabi masko plasti"
 
-#: ../app/core/gimplayer.c:1555
+#: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
 msgstr "Izbriši masko plasti"
 
-#: ../app/core/gimplayer.c:1667
+#: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: ../app/core/gimplayer.c:1721
+#: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
 
@@ -6892,7 +6893,7 @@ msgstr "_Način:"
 msgid "_Opacity:"
 msgstr "_Prekrivnost:"
 
-#: ../app/dialogs/file-open-dialog.c:246
+#: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
 msgstr "Odpri plasti"
 
@@ -7956,11 +7957,11 @@ msgstr "Skripti"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Script-Fu Folders"
-msgstr "Mape Script-Fu"
+msgstr "Mape Skript-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Script-Fu Folders"
-msgstr "Izberite mape Script-Fu"
+msgstr "Izberite mape Skript-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2766
 msgid "Module Folders"
@@ -8353,7 +8354,7 @@ msgstr "Spusti plasti"
 
 #: ../app/display/gimpdisplayshell-dnd.c:631
 #: ../app/widgets/gimplayertreeview.c:801
-#: ../app/widgets/gimptoolbox-dnd.c:358
+#: ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
 
@@ -8475,12 +8476,12 @@ msgstr "'%s:' ni veljaven zapis URI"
 msgid "Invalid character sequence in URI"
 msgstr "Neveljavno zaporedje znakov v naslovu URI"
 
-#: ../app/gegl/gimpcurvesconfig.c:382
+#: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "ni datoteka krivulj GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:396
+#: ../app/gegl/gimpcurvesconfig.c:398
 #: ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
@@ -8795,7 +8796,7 @@ msgid "Procedure '%s' has been called with a wrong type for argument #%d. Expect
 msgstr "Procedura '%s' je bila klicana z napačno vrsto vrednosti argumenta #%d. Pričakovano %s, prejeto %s."
 
 #: ../app/pdb/gimpprocedure.c:360
-#: ../app/plug-in/gimppluginprocframe.c:203
+#: ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura '%s' ni vrnila nobenih vrednosti"
@@ -8913,7 +8914,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Preklicano"
 
-#: ../app/plug-in/gimpplugin.c:637
+#: ../app/plug-in/gimpplugin.c:639
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -9445,7 +9446,7 @@ msgid "Select Range to Adjust"
 msgstr "Izberite obseg za prilagajanje"
 
 #: ../app/tools/gimpcolorbalancetool.c:279
-#: ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
 msgstr "Prilagodi ravni barv"
 
@@ -9655,57 +9656,62 @@ msgstr "_Obreži"
 msgid "Click or press Enter to crop"
 msgstr "Kliknite ali pritisnite Enter za obrezovanje."
 
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "Orodje Krivulje: Prilagodi ravni barv"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
 msgstr "_Krivulje ..."
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
 msgstr "Prilagodi krivulje barv"
 
-#: ../app/tools/gimpcurvestool.c:166
+#: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
 msgstr "Uvozi krivulje"
 
-#: ../app/tools/gimpcurvestool.c:167
+#: ../app/tools/gimpcurvestool.c:171
 msgid "Export Curves"
 msgstr "Izvozi krivulje"
 
-#: ../app/tools/gimpcurvestool.c:217
+#: ../app/tools/gimpcurvestool.c:221
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Krivulje ne delujejo na indeksiranih plasteh."
 
-#: ../app/tools/gimpcurvestool.c:319
+#: ../app/tools/gimpcurvestool.c:323
 msgid "Click to add a control point"
 msgstr "Kliknite za dodatek kontrolne točke"
 
-#: ../app/tools/gimpcurvestool.c:324
+#: ../app/tools/gimpcurvestool.c:328
 msgid "Click to add control points to all channels"
 msgstr "Kliknite za dodajanje nadzornih točk vsem kanalom"
 
-#: ../app/tools/gimpcurvestool.c:433
-#: ../app/tools/gimplevelstool.c:372
+#: ../app/tools/gimpcurvestool.c:441
+#: ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:459
-#: ../app/tools/gimplevelstool.c:396
+#: ../app/tools/gimpcurvestool.c:467
+#: ../app/tools/gimplevelstool.c:404
 msgid "R_eset Channel"
 msgstr "Po_nastavi kanal"
 
-#: ../app/tools/gimpcurvestool.c:549
+#: ../app/tools/gimpcurvestool.c:557
 msgid "Curve _type:"
 msgstr "Vrsta _krivulje:"
 
-#: ../app/tools/gimpcurvestool.c:625
+#: ../app/tools/gimpcurvestool.c:632
+#: ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Ni mogoče brati glave iz '%s': %s"
+
+#: ../app/tools/gimpcurvestool.c:705
+msgid "Use _old curves file format"
+msgstr "Uporabi _stare datoteke krivulj"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -10226,65 +10232,69 @@ msgstr "Pritisnite Enter za pretvorbo izbora"
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknite ali kliknite-povlecite za dodajanje točke."
 
-#: ../app/tools/gimplevelstool.c:147
+#: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
 msgstr "Orodje Ravni: Prilagodi barvne ravni"
 
-#: ../app/tools/gimplevelstool.c:148
+#: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
 msgstr "_Ravni ..."
 
-#: ../app/tools/gimplevelstool.c:170
+#: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
 msgstr "Uvozi ravni"
 
-#: ../app/tools/gimplevelstool.c:171
+#: ../app/tools/gimplevelstool.c:175
 msgid "Export Levels"
 msgstr "Izvozi ravni"
 
-#: ../app/tools/gimplevelstool.c:224
+#: ../app/tools/gimplevelstool.c:228
 #, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Ravni ne delujejo na indeksiranih plasteh."
 
-#: ../app/tools/gimplevelstool.c:306
+#: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
 msgstr "Izberite črno točko"
 
-#: ../app/tools/gimplevelstool.c:310
+#: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
 msgstr "Izberite sivo točko"
 
-#: ../app/tools/gimplevelstool.c:314
+#: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
 msgstr "Izberite belo točko"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:411
+#: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
 msgstr "Vhodne ravni"
 
-#: ../app/tools/gimplevelstool.c:514
+#: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
 msgstr "Gama"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:556
+#: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
 msgstr "Izhodne ravni"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:633
+#: ../app/tools/gimplevelstool.c:641
 msgid "All Channels"
 msgstr "Vsi kanali"
 
-#: ../app/tools/gimplevelstool.c:647
+#: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
 msgstr "Samodejno prilagodi ravni"
 
-#: ../app/tools/gimplevelstool.c:674
+#: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
 msgstr "Te nastavitve urejaj kot krivulje"
+
+#: ../app/tools/gimplevelstool.c:825
+msgid "Use _old levels file format"
+msgstr "Uporabi _stare datoteke krivulj"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -11788,15 +11798,15 @@ msgstr "samodejno prepoznana"
 msgid "By Extension"
 msgstr "Po končnici"
 
-#: ../app/widgets/gimpfiledialog.c:605
+#: ../app/widgets/gimpfiledialog.c:617
 msgid "All files"
 msgstr "Vse datoteke"
 
-#: ../app/widgets/gimpfiledialog.c:610
+#: ../app/widgets/gimpfiledialog.c:622
 msgid "All images"
 msgstr "Vse slike"
 
-#: ../app/widgets/gimpfiledialog.c:739
+#: ../app/widgets/gimpfiledialog.c:751
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Izberite vrsto datotek (%s)"
@@ -12135,39 +12145,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neveljaven UTF-8"
 
-#: ../app/widgets/gimpsettingsbox.c:226
+#: ../app/widgets/gimpsettingsbox.c:239
 msgid "Pick a setting from the list"
 msgstr "Izberite nastavitev s seznama"
 
-#: ../app/widgets/gimpsettingsbox.c:247
+#: ../app/widgets/gimpsettingsbox.c:260
 msgid "Add settings to favorites"
 msgstr "Dodaj nastavitve med priljubljene"
 
-#: ../app/widgets/gimpsettingsbox.c:275
+#: ../app/widgets/gimpsettingsbox.c:288
 msgid "_Import Settings from File..."
 msgstr "_Uvozi nastavitve iz datoteke ..."
 
-#: ../app/widgets/gimpsettingsbox.c:281
+#: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "_Izvozi nastavitve v datoteko ..."
 
-#: ../app/widgets/gimpsettingsbox.c:288
+#: ../app/widgets/gimpsettingsbox.c:301
 msgid "_Manage Settings..."
 msgstr "_Upravljaj z nastavitvami ..."
 
-#: ../app/widgets/gimpsettingsbox.c:575
+#: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "Dodaj nastavitve med priljubljene"
 
-#: ../app/widgets/gimpsettingsbox.c:578
+#: ../app/widgets/gimpsettingsbox.c:591
 msgid "Enter a name for the settings"
 msgstr "Vnesite ime za nastavitve"
 
-#: ../app/widgets/gimpsettingsbox.c:579
+#: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "Shranjene nastavitve"
 
-#: ../app/widgets/gimpsettingsbox.c:614
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Manage Saved Settings"
 msgstr "Upravljaj s shranjenimi možnostmi"
 
