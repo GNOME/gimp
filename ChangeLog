@@ -1,3 +1,14 @@
+2008-11-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	Bug 562366 – Default image dimensions are not correctly
+	transferred in the file/new dialog box
+
+	* app/dialogs/preferences-dialog.c
+	(prefs_template_select_callback): We need to copy the template in
+	the same way as in the New Image dialog.
+
 2008-11-22  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
