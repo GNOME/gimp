@@ -1,3 +1,8 @@
+2008-11-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-duplicate.c: split spaghetti code into lots
+	of helper functions.
+
 2008-11-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpprocbrowserdialog.c (browser_search): show the

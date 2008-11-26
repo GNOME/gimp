@@ -43,21 +43,49 @@
 #include "vectors/gimpvectors.h"
 
 
+static void          gimp_image_duplicate_resolution     (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_save_folder    (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_colormap       (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static GimpLayer   * gimp_image_duplicate_layers         (GimpImage     *image,
+                                                          GimpImage     *new_image,
+                                                          GimpLayer    **new_floating_layer,
+                                                          GimpDrawable **floating_sel_drawable,
+                                                          GimpDrawable **new_floating_sel_drawable);
+static GimpChannel * gimp_image_duplicate_channels       (GimpImage     *image,
+                                                          GimpImage     *new_image,
+                                                          GimpDrawable  *floating_sel_drawable,
+                                                          GimpDrawable **new_floating_sel_drawable);
+static GimpVectors * gimp_image_duplicate_vectors        (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_mask           (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_components     (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_guides         (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_sample_points  (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_grid           (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_quick_mask     (GimpImage     *image,
+                                                          GimpImage     *new_image);
+static void          gimp_image_duplicate_parasites      (GimpImage     *image,
+                                                          GimpImage     *new_image);
+
+
 GimpImage *
 gimp_image_duplicate (GimpImage *image)
 {
   GimpImage    *new_image;
-  GimpLayer    *floating_layer;
-  GList        *list;
-  GimpLayer    *active_layer              = NULL;
-  GimpChannel  *active_channel            = NULL;
-  GimpVectors  *active_vectors            = NULL;
-  GimpDrawable *new_floating_sel_drawable = NULL;
+  GimpLayer    *active_layer;
+  GimpChannel  *active_channel;
+  GimpVectors  *active_vectors;
+  GimpLayer    *new_floating_layer        = NULL;
   GimpDrawable *floating_sel_drawable     = NULL;
-  gchar        *filename;
-  gdouble       xres;
-  gdouble       yres;
-  gint          count;
+  GimpDrawable *new_floating_sel_drawable = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -72,7 +100,86 @@ gimp_image_duplicate (GimpImage *image)
   gimp_image_undo_disable (new_image);
 
   /*  Store the folder to be used by the save dialog  */
-  filename = gimp_image_get_filename (image);
+  gimp_image_duplicate_save_folder (image, new_image);
+
+
+  /*  Copy the colormap if necessary  */
+  gimp_image_duplicate_colormap (image, new_image);
+
+  /*  Copy resolution information  */
+  gimp_image_duplicate_resolution (image, new_image);
+
+  /*  Copy the layers  */
+  active_layer = gimp_image_duplicate_layers (image, new_image,
+                                              &new_floating_layer,
+                                              &floating_sel_drawable,
+                                              &new_floating_sel_drawable);
+
+  /*  Copy the channels  */
+  active_channel = gimp_image_duplicate_channels (image, new_image,
+                                                  floating_sel_drawable,
+                                                  &new_floating_sel_drawable);
+
+  /*  Copy any vectors  */
+  active_vectors = gimp_image_duplicate_vectors (image, new_image);
+
+  /*  Copy the selection mask  */
+  gimp_image_duplicate_mask (image, new_image);
+
+  if (new_floating_layer)
+    floating_sel_attach (new_floating_layer, new_floating_sel_drawable);
+
+  /*  Set active layer, active channel, active vectors  */
+  if (active_layer)
+    gimp_image_set_active_layer (new_image, active_layer);
+
+  if (active_channel)
+    gimp_image_set_active_channel (new_image, active_channel);
+
+  if (active_vectors)
+    gimp_image_set_active_vectors (new_image, active_vectors);
+
+  /*  Copy state of all color channels  */
+  gimp_image_duplicate_components (image, new_image);
+
+  /*  Copy any guides  */
+  gimp_image_duplicate_guides (image, new_image);
+
+  /*  Copy any sample points  */
+  gimp_image_duplicate_sample_points (image, new_image);
+
+  /*  Copy the grid  */
+  gimp_image_duplicate_grid (image, new_image);
+
+  /*  Copy the quick mask info  */
+  gimp_image_duplicate_quick_mask (image, new_image);
+
+  /*  Copy parasites  */
+  gimp_image_duplicate_parasites (image, new_image);
+
+  gimp_image_undo_enable (new_image);
+
+  return new_image;
+}
+
+static void
+gimp_image_duplicate_resolution (GimpImage *image,
+                                 GimpImage *new_image)
+{
+  gdouble xres;
+  gdouble yres;
+
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
+}
+
+static void
+gimp_image_duplicate_save_folder (GimpImage *image,
+                                  GimpImage *new_image)
+{
+  gchar *filename = gimp_image_get_filename (image);
+
   if (filename)
     {
       g_object_set_data_full (G_OBJECT (new_image), "gimp-image-dirname",
@@ -80,28 +187,39 @@ gimp_image_duplicate (GimpImage *image)
                               (GDestroyNotify) g_free);
       g_free (filename);
     }
+}
 
-  /*  Copy the colormap if necessary  */
+static void
+gimp_image_duplicate_colormap (GimpImage *image,
+                               GimpImage *new_image)
+{
   if (gimp_image_base_type (new_image) == GIMP_INDEXED)
     gimp_image_set_colormap (new_image,
                              gimp_image_get_colormap (image),
                              gimp_image_get_colormap_size (image),
                              FALSE);
+}
 
-  /*  Copy resolution information  */
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_image_set_resolution (new_image, xres, yres);
-  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
+static GimpLayer *
+gimp_image_duplicate_layers (GimpImage     *image,
+                             GimpImage     *new_image,
+                             GimpLayer    **floating_layer,
+                             GimpDrawable **floating_sel_drawable,
+                             GimpDrawable **new_floating_sel_drawable)
+{
+  GimpLayer *active_layer = NULL;
+  GimpLayer *floating_selection;
+  GList     *list;
+  gint       count;
 
   /*  Copy floating layer  */
-  floating_layer = gimp_image_get_floating_selection (image);
-  if (floating_layer)
+  floating_selection = gimp_image_get_floating_selection (image);
+
+  if (floating_selection)
     {
-      floating_sel_drawable = floating_layer->fs.drawable;
-      floating_layer = NULL;
+      *floating_sel_drawable = floating_selection->fs.drawable;
     }
 
-  /*  Copy the layers  */
   for (list = gimp_image_get_layer_iter (image), count = 0;
        list;
        list = g_list_next (list))
@@ -128,16 +246,28 @@ gimp_image_duplicate (GimpImage *image)
         active_layer = new_layer;
 
       if (gimp_image_get_floating_selection (image) == layer)
-        floating_layer = new_layer;
+        *floating_layer = new_layer;
 
-      if (floating_sel_drawable == GIMP_DRAWABLE (layer))
-        new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
+      if (*floating_sel_drawable == GIMP_DRAWABLE (layer))
+        *new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
-      if (floating_layer != new_layer)
+      if (*floating_layer != new_layer)
         gimp_image_add_layer (new_image, new_layer, count++, FALSE);
     }
 
-  /*  Copy the channels  */
+  return active_layer;
+}
+
+static GimpChannel *
+gimp_image_duplicate_channels (GimpImage     *image,
+                               GimpImage     *new_image,
+                               GimpDrawable  *floating_sel_drawable,
+                               GimpDrawable **new_floating_sel_drawable)
+{
+  GimpChannel *active_channel = NULL;
+  GList       *list;
+  gint         count;
+
   for (list = gimp_image_get_channel_iter (image), count = 0;
        list;
        list = g_list_next (list))
@@ -157,12 +287,22 @@ gimp_image_duplicate (GimpImage *image)
         active_channel = (new_channel);
 
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
-        new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
+        *new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       gimp_image_add_channel (new_image, new_channel, count++, FALSE);
     }
 
-  /*  Copy any vectors  */
+  return active_channel;
+}
+
+static GimpVectors *
+gimp_image_duplicate_vectors (GimpImage *image,
+                              GimpImage *new_image)
+{
+  GimpVectors *active_vectors = NULL;
+  GList       *list;
+  gint         count;
+
   for (list = gimp_image_get_vectors_iter (image), count = 0;
        list;
        list = g_list_next (list))
@@ -184,55 +324,58 @@ gimp_image_duplicate (GimpImage *image)
       gimp_image_add_vectors (new_image, new_vectors, count++, FALSE);
     }
 
-  /*  Copy the selection mask  */
-  {
-    TileManager *src_tiles;
-    TileManager *dest_tiles;
-    PixelRegion  srcPR, destPR;
+  return active_vectors;
+}
 
-    src_tiles  =
-      gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (image)));
-    dest_tiles =
-      gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (new_image)));
+static void
+gimp_image_duplicate_mask (GimpImage *image,
+                           GimpImage *new_image)
+{
+  TileManager *src_tiles;
+  TileManager *dest_tiles;
+  PixelRegion  srcPR, destPR;
 
-    pixel_region_init (&srcPR, src_tiles,
-                       0, 0,
-                       gimp_image_get_width  (image),
-                       gimp_image_get_height (image),
-                       FALSE);
-    pixel_region_init (&destPR, dest_tiles,
-                       0, 0,
-                       gimp_image_get_width  (image),
-                       gimp_image_get_height (image),
-                       TRUE);
+  src_tiles  =
+    gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (image)));
+  dest_tiles =
+    gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (new_image)));
 
-    copy_region (&srcPR, &destPR);
+  pixel_region_init (&srcPR, src_tiles,
+                     0, 0,
+                     gimp_image_get_width  (image),
+                     gimp_image_get_height (image),
+                     FALSE);
+  pixel_region_init (&destPR, dest_tiles,
+                     0, 0,
+                     gimp_image_get_width  (image),
+                     gimp_image_get_height (image),
+                     TRUE);
 
-    new_image->selection_mask->bounds_known   = FALSE;
-    new_image->selection_mask->boundary_known = FALSE;
-  }
+  copy_region (&srcPR, &destPR);
 
-  if (floating_layer)
-    floating_sel_attach (floating_layer, new_floating_sel_drawable);
+  new_image->selection_mask->bounds_known   = FALSE;
+  new_image->selection_mask->boundary_known = FALSE;
+}
 
-  /*  Set active layer, active channel, active vectors  */
-  if (active_layer)
-    gimp_image_set_active_layer (new_image, active_layer);
+static void
+gimp_image_duplicate_components (GimpImage *image,
+                                 GimpImage *new_image)
+{
+  gint count;
 
-  if (active_channel)
-    gimp_image_set_active_channel (new_image, active_channel);
-
-  if (active_vectors)
-    gimp_image_set_active_vectors (new_image, active_vectors);
-
-  /*  Copy state of all color channels  */
   for (count = 0; count < MAX_CHANNELS; count++)
     {
       new_image->visible[count] = image->visible[count];
       new_image->active[count]  = image->active[count];
     }
+}
 
-  /*  Copy any guides  */
+static void
+gimp_image_duplicate_guides (GimpImage *image,
+                             GimpImage *new_image)
+{
+  GList *list;
+
   for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
     {
       GimpGuide *guide    = list->data;
@@ -252,9 +395,17 @@ gimp_image_duplicate (GimpImage *image)
           g_error ("Unknown guide orientation.\n");
         }
     }
+}
 
-  /*  Copy any sample points  */
-  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
+static void
+gimp_image_duplicate_sample_points (GimpImage *image,
+                                    GimpImage *new_image)
+{
+  GList *list;
+
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 
@@ -263,24 +414,32 @@ gimp_image_duplicate (GimpImage *image)
                                           sample_point->y,
                                           FALSE);
     }
+}
 
-  /*  Copy the grid  */
+static void
+gimp_image_duplicate_grid (GimpImage *image,
+                           GimpImage *new_image)
+{
   if (image->grid)
     gimp_image_set_grid (new_image, image->grid, FALSE);
+}
 
-  /*  Copy the quick mask info  */
+static void
+gimp_image_duplicate_quick_mask (GimpImage *image,
+                                 GimpImage *new_image)
+{
   new_image->quick_mask_state    = image->quick_mask_state;
   new_image->quick_mask_inverted = image->quick_mask_inverted;
   new_image->quick_mask_color    = image->quick_mask_color;
+}
 
-  /*  Copy parasites  */
+static void
+gimp_image_duplicate_parasites (GimpImage *image,
+                                GimpImage *new_image)
+{
   if (image->parasites)
     {
       g_object_unref (new_image->parasites);
       new_image->parasites = gimp_parasite_list_copy (image->parasites);
     }
-
-  gimp_image_undo_enable (new_image);
-
-  return new_image;
 }
