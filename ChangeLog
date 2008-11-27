@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* plug-ins/pygimp/gimpfu.py (SpinnerEntry): let SpinnerEntry
+	return a float instead of trying to convert the value to an int.
+
+2008-11-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 562386 – PF_SLIDER and PF_SPINNER 'Step' values do not change
 	consistently...
 

@@ -506,12 +506,6 @@ def _interact(proc_name, start_params):
                 digits = 20
             gtk.SpinButton.__init__(self, self.adj, step, int(digits))
 
-        def get_value(self):
-            try:
-                return int(self.get_text())
-            except ValueError, e:
-                raise EntryValueError, e.args
-
     class ToggleEntry(gtk.ToggleButton):
         def __init__(self, default=0):
             gtk.ToggleButton.__init__(self)
