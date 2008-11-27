@@ -1,3 +1,12 @@
+2008-11-27  Sven Neumann  <sven@gimp.org>
+
+	Bug 562386 – PF_SLIDER and PF_SPINNER 'Step' values do not change
+	consistently...
+
+	* plug-ins/pygimp/gimpfu.py (SpinnerEntry): initialize the
+	spin-button the way that gtk_spin_button_new_with_range() is
+	implemented.
+
 2008-11-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 562366 – Default image dimensions are not correctly
