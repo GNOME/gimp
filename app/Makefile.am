@@ -182,6 +182,7 @@ gimp_console_2_6_LDADD = \
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(GEGL_LIBS)			\
+	$(GLIB_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)
