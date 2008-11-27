@@ -3120,7 +3120,7 @@
   (is-constructor-of "GimpPaletteSelectButton")
   (return-type "GtkWidget*")
   (properties
-    '("title")
+    '("title" (optional))
     '("palette-name" (argname "palette_name") (optional))
   )
 )
