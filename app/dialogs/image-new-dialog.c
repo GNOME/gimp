@@ -187,7 +187,11 @@ image_new_dialog_set (GtkWidget    *widget,
       template = gimp_image_new_get_last_template (dialog->context->gimp,
                                                    image);
 
-      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
+      /*  make sure the resolution values are copied first (see bug #546924)  */
+      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
+                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
+      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
+                        0);
 
       g_object_unref (template);
     }

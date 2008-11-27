@@ -9,6 +9,9 @@
 	(prefs_template_select_callback): We need to copy the template in
 	the same way as in the New Image dialog.
 
+	* app/dialogs/image-new-dialog.c (image_new_dialog_set): ... and
+	when we copy the template to the New Image dialog.
+
 2008-11-22  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
