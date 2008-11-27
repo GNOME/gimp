@@ -1,3 +1,10 @@
+2008-11-27  Michael Natterer  <mitch@gimp.org>
+
+	Bug 562427 – Compilation with --as-needed
+
+	* app/Makefile.am (gimp_console_2_7_LDADD): add $(GLIB_LIBS) so
+	libgthread gets pulled in explicitely.
+
 2008-11-27  Sven Neumann  <sven@gimp.org>
 
 	Bug 562386 – PF_SLIDER and PF_SPINNER 'Step' values do not change
