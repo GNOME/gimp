@@ -1,3 +1,11 @@
+2008-11-27  Sven Neumann  <sven@gimp.org>
+
+	Bug 562459 – PF_PALETTE: 'TypeError' when used in a plugin that is
+	registered in <Image>
+
+	* plug-ins/pygimp/gimpui.defs (gimp_palette_select_button_new):
+	the 'title' parameter is optional.
+
 2008-11-27  Michael Natterer  <mitch@gimp.org>
 
 	Bug 562427 – Compilation with --as-needed
