@@ -390,9 +390,8 @@ msgid "Templates"
 msgstr "模板"
 
 #: ../app/actions/actions.c:199
-#, fuzzy
 msgid "Text Tool"
-msgstr "文字工具(_X)"
+msgstr "文字工具"
 
 #: ../app/actions/actions.c:202
 msgid "Text Editor"
@@ -1328,7 +1327,6 @@ msgid "Clear the Recent Documents list?"
 msgstr "清除最近的文档列表吗？"
 
 #: ../app/actions/documents-commands.c:218
-#, fuzzy
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
@@ -1363,7 +1361,6 @@ msgid "_Offset..."
 msgstr "位移(_O)..."
 
 #: ../app/actions/drawable-actions.c:65
-#, fuzzy
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "偏移像素，可选择在边界处回卷像素"
 
@@ -3642,32 +3639,26 @@ msgid "Could not open '%s' for reading: %s"
 msgstr "无法打开“%s”并读取：%s"
 
 #: ../app/actions/text-tool-actions.c:50
-#, fuzzy
 msgid "Text Tool Menu"
-msgstr "文字工具(_X)"
+msgstr "文字工具菜单"
 
 #: ../app/actions/text-tool-actions.c:54
-#, fuzzy
 msgid "Input _Methods"
-msgstr "输入色阶"
+msgstr "输入色阶(_M)"
 
 #: ../app/actions/text-tool-actions.c:73
-#, fuzzy
 msgid "_Delete"
-msgstr "删除路径(_D)"
+msgstr "删除(_D)"
 
 #: ../app/actions/text-tool-actions.c:78
-#, fuzzy
 msgid "_Open text file..."
-msgstr "打开显示(_O)..."
+msgstr "打开文本文件(_O)..."
 
 #: ../app/actions/text-tool-actions.c:89
-#, fuzzy
 msgid "_Path from Text"
-msgstr "从文字创建路径"
+msgstr "从文字创建路径(_P)"
 
 #: ../app/actions/text-tool-actions.c:90
-#, fuzzy
 msgid "Create a path from the outlines of the current text"
 msgstr "根据此文字图层创建路径"
 
@@ -3677,7 +3668,6 @@ msgid "Text _along Path"
 msgstr "文字沿路径"
 
 #: ../app/actions/text-tool-actions.c:96
-#, fuzzy
 msgid "Bend the text along the currently active path"
 msgstr "沿活动路径环绕此层的文字"
 
@@ -5487,7 +5477,6 @@ msgid "Grid"
 msgstr "网格"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:912
-#, fuzzy
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "参考线"
@@ -5726,10 +5715,9 @@ msgid "Delete path"
 msgstr "删除路径"
 
 #: ../app/core/core-enums.c:939
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path modification"
-msgstr "修改修改"
+msgstr "路径修改"
 
 #: ../app/core/core-enums.c:940
 msgctxt "undo-type"
@@ -8663,31 +8651,31 @@ msgstr "不保存(_N)"
 #: ../app/display/gimpdisplayshell-close.c:226
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "关闭图像“%s”前保存修改吗？"
+msgstr "关闭图像 “%s” 前保存修改吗？"
 
 #: ../app/display/gimpdisplayshell-close.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "如果您现在关闭这些图像，更改将会丢失。"
+msgstr[0] "如果您现在关闭这些图像，最近 %d 小时内的修改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:258
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
 "be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] "如果您不保存图像，从 %d 分钟前起前所作的修改将会丢失。"
+msgstr[0] "如果您不保存图像，最近 %d 分钟内的修改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "如果您现在关闭这些图像，更改将会丢失。"
+msgstr[0] "如果您现在关闭这些图像，最近 %d 分钟内的修改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:256
 #: ../app/display/gimpdisplayshell-dnd.c:588
@@ -8869,7 +8857,6 @@ msgid "Convolve"
 msgstr "卷积"
 
 #: ../app/paint/gimpdodgeburn.c:87
-#, fuzzy
 msgid "Dodge/Burn"
 msgstr "减淡/加深"
 
@@ -8923,49 +8910,41 @@ msgid "Set a source image first."
 msgstr "先设置源图像。"
 
 #: ../app/paint/paint-enums.c:52
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Modify Perspective"
 msgstr "修改透视"
 
 #: ../app/paint/paint-enums.c:53
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Perspective Clone"
 msgstr "透视克隆"
 
 #: ../app/paint/paint-enums.c:83
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "None"
 msgstr "无"
 
 #: ../app/paint/paint-enums.c:84
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Aligned"
 msgstr "已对齐"
 
 #: ../app/paint/paint-enums.c:85
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Registered"
 msgstr "已记录"
 
 #: ../app/paint/paint-enums.c:86
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "已修复"
 
 #: ../app/paint/paint-enums.c:114
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "模糊"
 
 #: ../app/paint/paint-enums.c:115
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "锐化"
@@ -10098,27 +10077,22 @@ msgid "Choose shade of gray based on:"
 msgstr "选择灰色梯度基于："
 
 #: ../app/tools/gimpdodgeburntool.c:73
-#, fuzzy
 msgid "Dodge / Burn"
 msgstr "减淡 / 加深"
 
 #: ../app/tools/gimpdodgeburntool.c:74
-#, fuzzy
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr "减淡 / 加深工具：使用画笔选择性地加亮或加深"
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge / Burn"
-msgstr "减淡 / 加深(_G)"
+msgstr "减淡/加深(_G)"
 
 #: ../app/tools/gimpdodgeburntool.c:173
-#, fuzzy
 msgid "Click to dodge"
 msgstr "点击以减淡"
 
 #: ../app/tools/gimpdodgeburntool.c:174
-#, fuzzy
 msgid "Click to dodge the line"
 msgstr "点击可减淡线段"
 
@@ -10136,7 +10110,7 @@ msgid "Click to burn the line"
 msgstr "点击可加深线段"
 
 #: ../app/tools/gimpdodgeburntool.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "%s to dodge"
 msgstr "%s 以减淡"
 
@@ -10323,7 +10297,6 @@ msgid "Rougly outline the object to extract"
 msgstr "大致地勾勒出对象的轮廓以便提取"
 
 #: ../app/tools/gimpforegroundselecttool.c:767
-#, fuzzy
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
@@ -10354,7 +10327,6 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "点击并拖动添加一个自由段，点击添加一个多边形段"
 
 #: ../app/tools/gimpfreeselecttool.c:1582
-#, fuzzy
 msgctxt "command"
 msgid "Free Select"
 msgstr "自由选择"
@@ -10761,7 +10733,6 @@ msgid "Move:"
 msgstr "移动："
 
 #: ../app/tools/gimpmovetool.c:128
-#, fuzzy
 msgctxt "tool"
 msgid "Move"
 msgstr "移动"
@@ -10924,7 +10895,6 @@ msgid "_Perspective"
 msgstr "透视(_P)"
 
 #: ../app/tools/gimpperspectivetool.c:100
-#, fuzzy
 msgctxt "command"
 msgid "Perspective"
 msgstr "透视"
@@ -11068,7 +11038,6 @@ msgid "_Scale"
 msgstr "缩放(_S)"
 
 #: ../app/tools/gimpscaletool.c:107
-#, fuzzy
 msgctxt "command"
 msgid "Scale"
 msgstr "缩放"
@@ -11130,7 +11099,6 @@ msgid "S_hear"
 msgstr "切变(_H)"
 
 #: ../app/tools/gimpsheartool.c:110
-#, fuzzy
 msgctxt "command"
 msgid "Shear"
 msgstr "切变"
@@ -11187,12 +11155,10 @@ msgid "Font:"
 msgstr "字体："
 
 #: ../app/tools/gimptextoptions.c:462
-#, fuzzy
 msgid "Use editor"
-msgstr "文本编辑器"
+msgstr "使用文本编辑器"
 
 #: ../app/tools/gimptextoptions.c:482
-#, fuzzy
 msgid "Hinting:"
 msgstr "微调"
 
@@ -11484,22 +11450,19 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "没有活动图层或通道可以勾画"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "无参考线"
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "中线"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
-msgstr "路径数量："
+msgstr ""
 
 #: ../app/tools/tools-enums.c:62
 #, fuzzy
@@ -11508,115 +11471,96 @@ msgid "Golden sections"
 msgstr "移动选区"
 
 #: ../app/tools/tools-enums.c:152
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "宽高比"
 
 #: ../app/tools/tools-enums.c:153
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "宽度"
 
 #: ../app/tools/tools-enums.c:154
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "高度"
 
 #: ../app/tools/tools-enums.c:155
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "大小"
 
 #: ../app/tools/tools-enums.c:184
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "自由选择"
 
 #: ../app/tools/tools-enums.c:185
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "固定大小"
 
 #: ../app/tools/tools-enums.c:186
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "固定宽高比"
 
 #: ../app/tools/tools-enums.c:215
-#, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "图层"
 
 #: ../app/tools/tools-enums.c:216
-#, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "选区"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
 msgctxt "transform-type"
 msgid "Path"
 msgstr "路径"
 
 #: ../app/tools/tools-enums.c:247
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "轮廓"
 
 #: ../app/tools/tools-enums.c:248
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "网格"
 
 #: ../app/tools/tools-enums.c:249
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "图像"
 
 #: ../app/tools/tools-enums.c:250
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "图像 + 网格"
 
 #: ../app/tools/tools-enums.c:278
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "网格线数量"
 
 #: ../app/tools/tools-enums.c:279
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "网格线间距"
 
 #: ../app/tools/tools-enums.c:308
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "设计"
 
 #: ../app/tools/tools-enums.c:309
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "编辑"
 
 #: ../app/tools/tools-enums.c:310
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "移动"
@@ -12225,9 +12169,8 @@ msgid "Extensions"
 msgstr "扩展名"
 
 #: ../app/widgets/gimpfilleditor.c:128
-#, fuzzy
 msgid "Fill Color"
-msgstr "以前景色填充(_F)"
+msgstr "以前景色填充"
 
 #: ../app/widgets/gimpfilleditor.c:146
 msgid "_Antialiasing"
@@ -12887,163 +12830,136 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "文件“%s”中含有无效的 UTF-8 数据。"
 
 #: ../app/widgets/widgets-enums.c:23
-#, fuzzy
 msgctxt "active-color"
 msgid "Foreground"
 msgstr "前景"
 
 #: ../app/widgets/widgets-enums.c:24
-#, fuzzy
 msgctxt "active-color"
 msgid "Background"
 msgstr "背景"
 
 #: ../app/widgets/widgets-enums.c:85
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "像素"
 
 #: ../app/widgets/widgets-enums.c:86
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../app/widgets/widgets-enums.c:87
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:88
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Pick only"
 msgstr "仅拾取"
 
 #: ../app/widgets/widgets-enums.c:119
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "设为前景色"
 
 #: ../app/widgets/widgets-enums.c:120
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "设为背景色"
 
 #: ../app/widgets/widgets-enums.c:121
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "添加到色板"
 
 #: ../app/widgets/widgets-enums.c:178
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Black & white"
 msgstr "黑白"
 
 #: ../app/widgets/widgets-enums.c:179
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Fancy"
 msgstr "漂亮"
 
 #: ../app/widgets/widgets-enums.c:207
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr "GIMP 帮助浏览器"
 
 #: ../app/widgets/widgets-enums.c:208
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "Web 浏览器"
 
 #: ../app/widgets/widgets-enums.c:236
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "线性直方图"
 
 #: ../app/widgets/widgets-enums.c:237
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "对数直方图"
 
 #: ../app/widgets/widgets-enums.c:271
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "图标"
 
 #: ../app/widgets/widgets-enums.c:272
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "当前状态"
 
 #: ../app/widgets/widgets-enums.c:273
-#, fuzzy
 msgctxt "tab-style"
 msgid "Text"
-msgstr "文字"
+msgstr "文本"
 
 #: ../app/widgets/widgets-enums.c:274
-#, fuzzy
 msgctxt "tab-style"
 msgid "Description"
 msgstr "描述"
 
 #: ../app/widgets/widgets-enums.c:275
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "图标和文字"
 
 #: ../app/widgets/widgets-enums.c:276
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "图标和描述"
 
 #: ../app/widgets/widgets-enums.c:277
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "状态和文字"
 
 #: ../app/widgets/widgets-enums.c:278
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "状态和描述"
 
 #: ../app/widgets/widgets-enums.c:307
-#, fuzzy
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "普通窗口"
 
 #: ../app/widgets/widgets-enums.c:308
-#, fuzzy
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "工具窗口"
 
 #: ../app/widgets/widgets-enums.c:309
-#, fuzzy
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "保持在上方"
