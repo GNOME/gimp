@@ -6849,7 +6849,7 @@ msgstr "读取色板文件“%s”：第 %d 行 RGB 取值超出范围。"
 #: ../app/core/gimppalette-load.c:473
 #, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "无法从“%s”中读取文件头：%s"
+msgstr "无法从“%s”中读取文件头"
 
 #: ../app/core/gimppalette-load.c:496 ../app/core/gimppalette-load.c:584
 #, c-format
