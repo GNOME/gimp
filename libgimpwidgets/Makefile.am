@@ -160,6 +160,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpstringcombobox.h		\
 	gimpunitmenu.c			\
 	gimpunitmenu.h			\
+	gimpwidgets-error.c		\
+	gimpwidgets-error.h		\
 	gimpwidgets-private.c		\
 	gimpwidgets-private.h		\
 	gimpwidgets.c			\
@@ -232,6 +234,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitmenu.h			\
+	gimpwidgets-error.h		\
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\

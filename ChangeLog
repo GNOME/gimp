@@ -1,3 +1,11 @@
+2008-11-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpwidgets-error.[ch]: New files defining
+	GIMP_WIDGETS_ERROR domain with currently only a
+	GIMP_WIDGETS_PARSE_ERROR error code.
+
+	* libgimpwidgets/Makefile.am: Add the new files here.
+
 2008-11-27  Sven Neumann  <sven@gimp.org>
 
 	Bug 562459 – PF_PALETTE: 'TypeError' when used in a plugin that is
