@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-  GIMP_WIDGETS_PARSE_ERROR,
+  GIMP_WIDGETS_PARSE_ERROR
 } GimpWidgetsError;
 
 
