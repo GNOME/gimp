@@ -1,3 +1,7 @@
+2008-12-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.def: added gimp_widgets_error_quark.
+
 2008-12-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpwidgets-error.h: Added 'Since: GIMP 2.8' to
