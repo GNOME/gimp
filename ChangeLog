@@ -1,3 +1,10 @@
+2008-12-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpwidgets-error.h: Added 'Since: GIMP 2.8' to
+	GIMP_WIDGETS_ERROR.
+
+	* libgimpwidgets/gimpwidgets.h: Added gimpwidgets-error.h.
+
 2008-11-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpwidgets-error.[ch]: New files defining

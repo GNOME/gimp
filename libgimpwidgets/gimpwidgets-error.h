@@ -32,6 +32,13 @@ typedef enum
 } GimpWidgetsError;
 
 
+/**
+ * GIMP_WIDGETS_ERROR:
+ *
+ * The GIMP widgets error domain.
+ *
+ * Since: GIMP 2.8
+ */
 #define GIMP_WIDGETS_ERROR (gimp_widgets_error_quark ())
 
 GQuark  gimp_widgets_error_quark (void) G_GNUC_CONST;
