@@ -8565,13 +8565,12 @@ msgstr "切换到移动工具"
 #: ../app/display/display-enums.c:149
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "低"
 
 #: ../app/display/display-enums.c:150
-#, fuzzy
 msgctxt "zoom-quality"
 msgid "High"
-msgstr ""
+msgstr "高"
 
 #: ../app/display/gimpcursorview.c:213 ../app/display/gimpcursorview.c:219
 #: ../app/display/gimpcursorview.c:238 ../app/display/gimpcursorview.c:244
@@ -8602,19 +8601,18 @@ msgstr "单位"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:253
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "选区编辑器"
+msgstr "选区包围框"
 
 #. Width
 #: ../app/display/gimpcursorview.c:289
 msgid "W"
-msgstr ""
+msgstr "宽"
 
 #. Height
 #: ../app/display/gimpcursorview.c:296
 msgid "H"
-msgstr ""
+msgstr "高"
 
 #: ../app/display/gimpdisplay-handlers.c:161
 #, c-format
@@ -8886,7 +8884,7 @@ msgstr "涂画"
 
 #: ../app/paint/gimppaintcore-stroke.c:335
 msgid "Not enough points to stroke"
-msgstr ""
+msgstr "没有足够的点可勾画"
 
 #: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
@@ -11149,6 +11147,7 @@ msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
 msgstr ""
+"对于文字输入使用外部编辑器窗口，而不是直接在画布上编辑"
 
 #: ../app/tools/gimptextoptions.c:446
 msgid "Font:"
