@@ -153,16 +153,18 @@ load_image (const gchar  *filename,
     goto out;
 
   group = g_key_file_get_start_group (file);
-  if (! group || strcmp (group, "Desktop Entry") != 0)
+  if (! group || strcmp (group, G_KEY_FILE_DESKTOP_GROUP) != 0)
     goto out;
 
-  value = g_key_file_get_value (file, group, "Type", &error);
-  if (! value || strcmp (value, "Link") != 0)
+  value = g_key_file_get_value (file,
+                                group, G_KEY_FILE_DESKTOP_KEY_TYPE, &error);
+  if (! value || strcmp (value, G_KEY_FILE_DESKTOP_TYPE_LINK) != 0)
     goto out;
 
   g_free (value);
 
-  value = g_key_file_get_value (file, group, "URL", &error);
+  value = g_key_file_get_value (file,
+                                group, G_KEY_FILE_DESKTOP_KEY_URL, &error);
   if (value)
     image_ID = gimp_file_load (run_mode, value, value);
 
