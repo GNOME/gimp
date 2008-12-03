@@ -1,5 +1,10 @@
 2008-12-03  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpitem.c (gimp_item_get_offset_node): use
+	"gegl:translate" instead of "gegl:shift".
+
+2008-12-03  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagemap.c: renamed GeglNode shift to translate.
 	Use "gegl:translate" instead of "gegl:shift".
 

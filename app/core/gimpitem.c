@@ -1232,7 +1232,7 @@ gimp_item_get_offset_node (GimpItem *item)
 
       item->offset_node =
         gegl_node_new_child (node,
-                             "operation", "gegl:shift",
+                             "operation", "gegl:translate",
                              "x",         (gdouble) item->offset_x,
                              "y",         (gdouble) item->offset_y,
                              NULL);
