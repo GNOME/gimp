@@ -471,7 +471,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                  NULL);
 
 	  shift_name =
-	    gimp_gegl_check_version (0, 0, 21) ? "gegl:shift" : "shift";
+	    gimp_gegl_check_version (0, 0, 21) ? "gegl:translate" : "shift";
 
           image_map->shift =
             gegl_node_new_child (image_map->gegl,

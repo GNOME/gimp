@@ -1,3 +1,8 @@
+2008-12-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_apply): when compiling
+	against GEGL from trunk, use "gegl:translate" instead of "shift".
+
 2008-11-27  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
