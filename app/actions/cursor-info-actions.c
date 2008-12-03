@@ -38,15 +38,15 @@
 static const GimpActionEntry cursor_info_actions[] =
 {
   { "cursor-info-popup", GIMP_STOCK_CURSOR,
-    N_("Pointer Information Menu"), NULL, NULL, NULL,
+    NC_("cursor-info-action", "Pointer Information Menu"), NULL, NULL, NULL,
     GIMP_HELP_POINTER_INFO_DIALOG }
 };
 
 static const GimpToggleActionEntry cursor_info_toggle_actions[] =
 {
   { "cursor-info-sample-merged", NULL,
-    N_("_Sample Merged"), "",
-    N_("Sample Merged"),
+    NC_("cursor-info-action", "_Sample Merged"), "",
+    N_("Use the composite color of all visible layers"),
     G_CALLBACK (cursor_info_sample_merged_cmd_callback),
     TRUE,
     GIMP_HELP_POINTER_INFO_SAMPLE_MERGED }
@@ -56,11 +56,11 @@ static const GimpToggleActionEntry cursor_info_toggle_actions[] =
 void
 cursor_info_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "cursor-info-action",
                                  cursor_info_actions,
                                  G_N_ELEMENTS (cursor_info_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "cursor-info-action",
                                         cursor_info_toggle_actions,
                                         G_N_ELEMENTS (cursor_info_toggle_actions));
 }

@@ -41,11 +41,11 @@
 static const GimpActionEntry fonts_actions[] =
 {
   { "fonts-popup", GIMP_STOCK_FONT,
-    N_("Fonts Menu"), NULL, NULL, NULL,
+    NC_("fonts-action", "Fonts Menu"), NULL, NULL, NULL,
     GIMP_HELP_FONT_DIALOG },
 
   { "fonts-refresh", GTK_STOCK_REFRESH,
-    N_("_Rescan Font List"), "",
+    NC_("fonts-action", "_Rescan Font List"), "",
     N_("Rescan font list"),
     G_CALLBACK (fonts_refresh_cmd_callback),
     GIMP_HELP_FONT_REFRESH }
@@ -55,7 +55,7 @@ static const GimpActionEntry fonts_actions[] =
 void
 fonts_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "fonts-action",
                                  fonts_actions,
                                  G_N_ELEMENTS (fonts_actions));
 }

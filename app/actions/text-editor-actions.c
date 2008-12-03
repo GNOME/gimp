@@ -41,13 +41,13 @@ static const GimpActionEntry text_editor_actions[] =
     GIMP_HELP_TEXT_EDITOR_DIALOG },
 
   { "text-editor-load", GTK_STOCK_OPEN,
-    N_("Open"), "",
+    NC_("text-editor-action", "Open"), "",
     N_("Load text from file"),
     G_CALLBACK (text_editor_load_cmd_callback),
     NULL },
 
   { "text-editor-clear", GTK_STOCK_CLEAR,
-    N_("Clear"), "",
+    NC_("text-editor-action", "Clear"), "",
     N_("Clear all text"),
     G_CALLBACK (text_editor_clear_cmd_callback),
     NULL }
@@ -56,13 +56,13 @@ static const GimpActionEntry text_editor_actions[] =
 static const GimpRadioActionEntry text_editor_direction_actions[] =
 {
   { "text-editor-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
-    N_("LTR"), "",
+    NC_("text-editor-action", "LTR"), "",
     N_("From left to right"),
     GIMP_TEXT_DIRECTION_LTR,
     NULL },
 
   { "text-editor-direction-rtl", GIMP_STOCK_TEXT_DIR_RTL,
-    N_("RTL"), "",
+    NC_("text-editor-action", "RTL"), "",
     N_("From right to left"),
     GIMP_TEXT_DIRECTION_RTL,
     NULL }
@@ -72,11 +72,11 @@ static const GimpRadioActionEntry text_editor_direction_actions[] =
 void
 text_editor_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "text-editor-action",
                                  text_editor_actions,
                                  G_N_ELEMENTS (text_editor_actions));
 
-  gimp_action_group_add_radio_actions (group,
+  gimp_action_group_add_radio_actions (group, "text-editor-action",
                                        text_editor_direction_actions,
                                        G_N_ELEMENTS (text_editor_direction_actions),
                                        NULL,

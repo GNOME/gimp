@@ -40,41 +40,41 @@
 static const GimpActionEntry patterns_actions[] =
 {
   { "patterns-popup", GIMP_STOCK_PATTERN,
-    N_("Patterns Menu"), NULL, NULL, NULL,
+    NC_("patterns-action", "Patterns Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATTERN_DIALOG },
 
   { "patterns-open-as-image", GTK_STOCK_OPEN,
-    N_("_Open Pattern as Image"), "",
+    NC_("patterns-action", "_Open Pattern as Image"), "",
     N_("Open pattern as image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
 
   { "patterns-new", GTK_STOCK_NEW,
-    N_("_New Pattern"), "",
-    N_("New pattern"),
+    NC_("patterns-action", "_New Pattern"), "",
+    N_("Create a new pattern"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PATTERN_NEW },
 
   { "patterns-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Pattern"), NULL,
-    N_("Duplicate pattern"),
+    NC_("patterns-action", "D_uplicate Pattern"), NULL,
+    N_("Duplicate this pattern"),
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-copy-location", GTK_STOCK_COPY,
-    N_("Copy Pattern _Location"), "",
+    NC_("patterns-action", "Copy Pattern _Location"), "",
     N_("Copy pattern file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
   { "patterns-delete", GTK_STOCK_DELETE,
-    N_("_Delete Pattern"), "",
-    N_("Delete pattern"),
+    NC_("patterns-action", "_Delete Pattern"), "",
+    N_("Delete this pattern"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },
 
   { "patterns-refresh", GTK_STOCK_REFRESH,
-    N_("_Refresh Patterns"), "",
+    NC_("patterns-action", "_Refresh Patterns"), "",
     N_("Refresh patterns"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_PATTERN_REFRESH }
@@ -83,7 +83,7 @@ static const GimpActionEntry patterns_actions[] =
 static const GimpStringActionEntry patterns_edit_actions[] =
 {
   { "patterns-edit", GTK_STOCK_EDIT,
-    N_("_Edit Pattern..."), NULL,
+    NC_("patterns-action", "_Edit Pattern..."), NULL,
     N_("Edit pattern"),
     "gimp-pattern-editor",
     GIMP_HELP_PATTERN_EDIT }
@@ -93,11 +93,11 @@ static const GimpStringActionEntry patterns_edit_actions[] =
 void
 patterns_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "patterns-action",
                                  patterns_actions,
                                  G_N_ELEMENTS (patterns_actions));
 
-  gimp_action_group_add_string_actions (group,
+  gimp_action_group_add_string_actions (group, "patterns-action",
                                         patterns_edit_actions,
                                         G_N_ELEMENTS (patterns_edit_actions),
                                         G_CALLBACK (data_edit_cmd_callback));

@@ -40,14 +40,14 @@
 static const GimpActionEntry brush_editor_actions[] =
 {
   { "brush-editor-popup", GIMP_STOCK_BRUSH,
-    N_("Brush Editor Menu"), NULL, NULL, NULL,
+    NC_("brush-editor-action", "Brush Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_EDITOR_DIALOG }
 };
 
 static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 {
   { "brush-editor-edit-active", GIMP_STOCK_LINKED,
-    N_("Edit Active Brush"), NULL, NULL,
+    NC_("brush-editor-action", "Edit Active Brush"), NULL, NULL,
     G_CALLBACK (data_editor_edit_active_cmd_callback),
     FALSE,
     GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE }
@@ -57,11 +57,11 @@ static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 void
 brush_editor_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "brush-editor-action",
                                  brush_editor_actions,
                                  G_N_ELEMENTS (brush_editor_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "brush-editor-action",
                                         brush_editor_toggle_actions,
                                         G_N_ELEMENTS (brush_editor_toggle_actions));
 }

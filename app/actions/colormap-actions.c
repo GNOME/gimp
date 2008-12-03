@@ -42,12 +42,12 @@
 static const GimpActionEntry colormap_actions[] =
 {
   { "colormap-popup", GIMP_STOCK_COLORMAP,
-    N_("Colormap Menu"), NULL, NULL, NULL,
+    NC_("colormap-action", "Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
   { "colormap-edit-color", GTK_STOCK_EDIT,
-    N_("_Edit Color..."), NULL,
-    N_("Edit color"),
+    NC_("colormap-action", "_Edit Color..."), NULL,
+    N_("Edit this color"),
     G_CALLBACK (colormap_edit_color_cmd_callback),
     GIMP_HELP_INDEXED_PALETTE_EDIT }
 };
@@ -55,13 +55,13 @@ static const GimpActionEntry colormap_actions[] =
 static const GimpEnumActionEntry colormap_add_color_actions[] =
 {
   { "colormap-add-color-from-fg", GTK_STOCK_ADD,
-    N_("_Add Color from FG"), "",
+    NC_("colormap-action", "_Add Color from FG"), "",
     N_("Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
   { "colormap-add-color-from-bg", GTK_STOCK_ADD,
-    N_("_Add Color from BG"), "",
+    NC_("colormap-action", "_Add Color from BG"), "",
     N_("Add current background color"),
     TRUE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD }
@@ -71,11 +71,11 @@ static const GimpEnumActionEntry colormap_add_color_actions[] =
 void
 colormap_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "colormap-action",
                                  colormap_actions,
                                  G_N_ELEMENTS (colormap_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "colormap-action",
                                       colormap_add_color_actions,
                                       G_N_ELEMENTS (colormap_add_color_actions),
                                       G_CALLBACK (colormap_add_color_cmd_callback));

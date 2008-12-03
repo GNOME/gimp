@@ -77,12 +77,15 @@ static void   windows_actions_recent_remove  (GimpContainer     *container,
 
 static const GimpActionEntry windows_actions[] =
 {
-  { "windows-menu",         NULL, N_("_Windows")               },
-  { "windows-docks-menu",   NULL, N_("_Recently Closed Docks") },
-  { "windows-dialogs-menu", NULL, N_("_Dockable Dialogs")      },
+  { "windows-menu",         NULL, NC_("windows-action",
+                                      "_Windows")               },
+  { "windows-docks-menu",   NULL, NC_("windows-action",
+                                      "_Recently Closed Docks") },
+  { "windows-dialogs-menu", NULL, NC_("windows-action",
+                                      "_Dockable Dialogs")      },
 
   { "windows-show-toolbox", NULL,
-    N_("Tool_box"), "<control>B",
+    NC_("windows-action", "Tool_box"), "<control>B",
     N_("Raise the toolbox"),
     G_CALLBACK (windows_show_toolbox_cmd_callback),
     GIMP_HELP_TOOLBOX }
@@ -94,7 +97,7 @@ windows_actions_setup (GimpActionGroup *group)
 {
   GList *list;
 
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "windows-action",
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
 
@@ -215,7 +218,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           entry.callback    = G_CALLBACK (windows_show_display_cmd_callback);
           entry.help_id     = NULL;
 
-          gimp_action_group_add_actions (group, &entry, 1);
+          gimp_action_group_add_actions (group, NULL, &entry, 1);
 
           action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                                 action_name);
@@ -280,7 +283,7 @@ windows_actions_dock_added (GimpDialogFactory *factory,
   entry.callback    = G_CALLBACK (windows_show_dock_cmd_callback);
   entry.help_id     = GIMP_HELP_WINDOWS_SHOW_DOCK;
 
-  gimp_action_group_add_actions (group, &entry, 1);
+  gimp_action_group_add_actions (group, NULL, &entry, 1);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         action_name);
@@ -368,7 +371,7 @@ windows_actions_recent_add (GimpContainer   *container,
   entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
   entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;
 
-  gimp_action_group_add_actions (group, &entry, 1);
+  gimp_action_group_add_actions (group, NULL, &entry, 1);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         action_name);

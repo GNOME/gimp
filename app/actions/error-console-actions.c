@@ -37,17 +37,17 @@
 static const GimpActionEntry error_console_actions[] =
 {
   { "error-console-popup", GIMP_STOCK_WARNING,
-    N_("Error Console Menu"), NULL, NULL, NULL,
+    NC_("error-console-action", "Error Console Menu"), NULL, NULL, NULL,
     GIMP_HELP_ERRORS_DIALOG },
 
   { "error-console-clear", GTK_STOCK_CLEAR,
-    N_("_Clear"), "",
+    NC_("error-console-action", "_Clear"), "",
     N_("Clear error console"),
     G_CALLBACK (error_console_clear_cmd_callback),
     GIMP_HELP_ERRORS_CLEAR },
 
   { "error-console-select-all", NULL,
-    N_("Select _All"), "",
+    NC_("error-console-action", "Select _All"), "",
     N_("Select all errors"),
     G_CALLBACK (error_console_select_all_cmd_callback),
     GIMP_HELP_ERRORS_SELECT_ALL }
@@ -56,13 +56,13 @@ static const GimpActionEntry error_console_actions[] =
 static const GimpEnumActionEntry error_console_save_actions[] =
 {
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
-    N_("_Save Error Log to File..."), "",
+    NC_("error-console-action", "_Save Error Log to File..."), "",
     N_("Save error log"),
     FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
   { "error-console-save-selection", GTK_STOCK_SAVE_AS,
-    N_("Save S_election to File..."), "",
+    NC_("error-console-action", "Save S_election to File..."), "",
     N_("Save selection"),
     TRUE, FALSE,
     GIMP_HELP_ERRORS_SAVE }
@@ -72,11 +72,11 @@ static const GimpEnumActionEntry error_console_save_actions[] =
 void
 error_console_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "error-console-action",
                                  error_console_actions,
                                  G_N_ELEMENTS (error_console_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "error-console-action",
                                       error_console_save_actions,
                                       G_N_ELEMENTS (error_console_save_actions),
                                       G_CALLBACK (error_console_save_cmd_callback));

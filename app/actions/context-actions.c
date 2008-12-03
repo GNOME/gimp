@@ -43,32 +43,48 @@
 
 static const GimpActionEntry context_actions[] =
 {
-  { "context-menu",            NULL,                      N_("_Context")    },
-  { "context-colors-menu",     GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")     },
-  { "context-opacity-menu",    GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")    },
-  { "context-paint-mode-menu", GIMP_STOCK_TOOL_PENCIL,    N_("Paint _Mode") },
-  { "context-tool-menu",       GIMP_STOCK_TOOLS,          N_("_Tool")       },
-  { "context-brush-menu",      GIMP_STOCK_BRUSH,          N_("_Brush")      },
-  { "context-pattern-menu",    GIMP_STOCK_PATTERN,        N_("_Pattern")    },
-  { "context-palette-menu",    GIMP_STOCK_PALETTE,        N_("_Palette")    },
-  { "context-gradient-menu",   GIMP_STOCK_GRADIENT,       N_("_Gradient")   },
-  { "context-font-menu",       GIMP_STOCK_FONT,           N_("_Font")       },
+  { "context-menu",            NULL,                      NC_("context-action",
+                                                              "_Context")    },
+  { "context-colors-menu",     GIMP_STOCK_DEFAULT_COLORS, NC_("context-action",
+                                                              "_Colors")     },
+  { "context-opacity-menu",    GIMP_STOCK_TRANSPARENCY,   NC_("context-action",
+                                                              "_Opacity")    },
+  { "context-paint-mode-menu", GIMP_STOCK_TOOL_PENCIL,    NC_("context-action",
+                                                              "Paint _Mode") },
+  { "context-tool-menu",       GIMP_STOCK_TOOLS,          NC_("context-action",
+                                                              "_Tool")       },
+  { "context-brush-menu",      GIMP_STOCK_BRUSH,          NC_("context-action",
+                                                              "_Brush")      },
+  { "context-pattern-menu",    GIMP_STOCK_PATTERN,        NC_("context-action",
+                                                              "_Pattern")    },
+  { "context-palette-menu",    GIMP_STOCK_PALETTE,        NC_("context-action",
+                                                              "_Palette")    },
+  { "context-gradient-menu",   GIMP_STOCK_GRADIENT,       NC_("context-action",
+                                                              "_Gradient")   },
+  { "context-font-menu",       GIMP_STOCK_FONT,           NC_("context-action",
+                                                              "_Font")       },
 
-  { "context-brush-shape-menu",    NULL,                  N_("_Shape")      },
-  { "context-brush-radius-menu",   NULL,                  N_("_Radius")     },
-  { "context-brush-spikes-menu",   NULL,                  N_("S_pikes")     },
-  { "context-brush-hardness-menu", NULL,                  N_("_Hardness")   },
-  { "context-brush-aspect-menu",   NULL,                  N_("_Aspect")     },
-  { "context-brush-angle-menu",    NULL,                  N_("A_ngle")      },
+  { "context-brush-shape-menu",    NULL,                  NC_("context-action",
+                                                              "_Shape")      },
+  { "context-brush-radius-menu",   NULL,                  NC_("context-action",
+                                                              "_Radius")     },
+  { "context-brush-spikes-menu",   NULL,                  NC_("context-action",
+                                                              "S_pikes")     },
+  { "context-brush-hardness-menu", NULL,                  NC_("context-action",
+                                                              "_Hardness")   },
+  { "context-brush-aspect-menu",   NULL,                  NC_("context-action",
+                                                              "_Aspect")     },
+  { "context-brush-angle-menu",    NULL,                  NC_("context-action",
+                                                              "A_ngle")      },
 
   { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
-    N_("_Default Colors"), "D",
+    NC_("context-action", "_Default Colors"), "D",
     N_("Set foreground color to black, background color to white"),
     G_CALLBACK (context_colors_default_cmd_callback),
     GIMP_HELP_TOOLBOX_DEFAULT_COLORS },
 
   { "context-colors-swap", GIMP_STOCK_SWAP_COLORS,
-    N_("S_wap Colors"), "X",
+    NC_("context-action", "S_wap Colors"), "X",
     N_("Exchange foreground and background colors"),
     G_CALLBACK (context_colors_swap_cmd_callback),
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
@@ -1074,149 +1090,149 @@ static const GimpEnumActionEntry context_brush_angle_actions[] =
 void
 context_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "context-action",
                                  context_actions,
                                  G_N_ELEMENTS (context_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_palette_foreground_actions,
                                       G_N_ELEMENTS (context_palette_foreground_actions),
                                       G_CALLBACK (context_palette_foreground_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_palette_background_actions,
                                       G_N_ELEMENTS (context_palette_background_actions),
                                       G_CALLBACK (context_palette_background_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_colormap_foreground_actions,
                                       G_N_ELEMENTS (context_colormap_foreground_actions),
                                       G_CALLBACK (context_colormap_foreground_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_colormap_background_actions,
                                       G_N_ELEMENTS (context_colormap_background_actions),
                                       G_CALLBACK (context_colormap_background_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_swatch_foreground_actions,
                                       G_N_ELEMENTS (context_swatch_foreground_actions),
                                       G_CALLBACK (context_swatch_foreground_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_swatch_background_actions,
                                       G_N_ELEMENTS (context_swatch_background_actions),
                                       G_CALLBACK (context_swatch_background_cmd_callback));
 
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_red_actions,
                                       G_N_ELEMENTS (context_foreground_red_actions),
                                       G_CALLBACK (context_foreground_red_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_green_actions,
                                       G_N_ELEMENTS (context_foreground_green_actions),
                                       G_CALLBACK (context_foreground_green_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_blue_actions,
                                       G_N_ELEMENTS (context_foreground_blue_actions),
                                       G_CALLBACK (context_foreground_blue_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_hue_actions,
                                       G_N_ELEMENTS (context_foreground_hue_actions),
                                       G_CALLBACK (context_foreground_hue_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_saturation_actions,
                                       G_N_ELEMENTS (context_foreground_saturation_actions),
                                       G_CALLBACK (context_foreground_saturation_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_foreground_value_actions,
                                       G_N_ELEMENTS (context_foreground_value_actions),
                                       G_CALLBACK (context_foreground_value_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_red_actions,
                                       G_N_ELEMENTS (context_background_red_actions),
                                       G_CALLBACK (context_background_red_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_green_actions,
                                       G_N_ELEMENTS (context_background_green_actions),
                                       G_CALLBACK (context_background_green_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_blue_actions,
                                       G_N_ELEMENTS (context_background_blue_actions),
                                       G_CALLBACK (context_background_blue_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_hue_actions,
                                       G_N_ELEMENTS (context_background_hue_actions),
                                       G_CALLBACK (context_background_hue_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_saturation_actions,
                                       G_N_ELEMENTS (context_background_saturation_actions),
                                       G_CALLBACK (context_background_saturation_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_background_value_actions,
                                       G_N_ELEMENTS (context_background_value_actions),
                                       G_CALLBACK (context_background_value_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_opacity_actions,
                                       G_N_ELEMENTS (context_opacity_actions),
                                       G_CALLBACK (context_opacity_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_paint_mode_actions,
                                       G_N_ELEMENTS (context_paint_mode_actions),
                                       G_CALLBACK (context_paint_mode_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_tool_select_actions,
                                       G_N_ELEMENTS (context_tool_select_actions),
                                       G_CALLBACK (context_tool_select_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_select_actions,
                                       G_N_ELEMENTS (context_brush_select_actions),
                                       G_CALLBACK (context_brush_select_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_pattern_select_actions,
                                       G_N_ELEMENTS (context_pattern_select_actions),
                                       G_CALLBACK (context_pattern_select_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_palette_select_actions,
                                       G_N_ELEMENTS (context_palette_select_actions),
                                       G_CALLBACK (context_palette_select_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_gradient_select_actions,
                                       G_N_ELEMENTS (context_gradient_select_actions),
                                       G_CALLBACK (context_gradient_select_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_font_select_actions,
                                       G_N_ELEMENTS (context_font_select_actions),
                                       G_CALLBACK (context_font_select_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_spacing_actions,
                                       G_N_ELEMENTS (context_brush_spacing_actions),
                                       G_CALLBACK (context_brush_spacing_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_shape_actions,
                                       G_N_ELEMENTS (context_brush_shape_actions),
                                       G_CALLBACK (context_brush_shape_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_radius_actions,
                                       G_N_ELEMENTS (context_brush_radius_actions),
                                       G_CALLBACK (context_brush_radius_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_spikes_actions,
                                       G_N_ELEMENTS (context_brush_spikes_actions),
                                       G_CALLBACK (context_brush_spikes_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_hardness_actions,
                                       G_N_ELEMENTS (context_brush_hardness_actions),
                                       G_CALLBACK (context_brush_hardness_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_aspect_actions,
                                       G_N_ELEMENTS (context_brush_aspect_actions),
                                       G_CALLBACK (context_brush_aspect_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       context_brush_angle_actions,
                                       G_N_ELEMENTS (context_brush_angle_actions),
                                       G_CALLBACK (context_brush_angle_cmd_callback));

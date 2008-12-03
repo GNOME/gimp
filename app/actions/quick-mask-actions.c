@@ -40,11 +40,11 @@
 static const GimpActionEntry quick_mask_actions[] =
 {
   { "quick-mask-popup", NULL,
-    N_("Quick Mask Menu"), NULL, NULL, NULL,
+    NC_("quick-mask-action", "Quick Mask Menu"), NULL, NULL, NULL,
     GIMP_HELP_QUICK_MASK },
 
   { "quick-mask-configure", NULL,
-    N_("_Configure Color and Opacity..."), NULL, NULL,
+    NC_("quick-mask-action", "_Configure Color and Opacity..."), NULL, NULL,
     G_CALLBACK (quick_mask_configure_cmd_callback),
     GIMP_HELP_QUICK_MASK_EDIT }
 };
@@ -52,7 +52,8 @@ static const GimpActionEntry quick_mask_actions[] =
 static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 {
   { "quick-mask-toggle", GIMP_STOCK_QUICK_MASK_ON,
-    N_("Toggle _Quick Mask"), "<shift>Q", N_("Toggle Quick Mask"),
+    NC_("quick-mask-action", "Toggle _Quick Mask"), "<shift>Q",
+    N_("Toggle Quick Mask"),
     G_CALLBACK (quick_mask_toggle_cmd_callback),
     FALSE,
     GIMP_HELP_QUICK_MASK_TOGGLE }
@@ -61,12 +62,12 @@ static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 static const GimpRadioActionEntry quick_mask_invert_actions[] =
 {
   { "quick-mask-invert-on", NULL,
-    N_("Mask _Selected Areas"), NULL, NULL,
+    NC_("quick-mask-action", "Mask _Selected Areas"), NULL, NULL,
     TRUE,
     GIMP_HELP_QUICK_MASK_INVERT },
 
   { "quick-mask-invert-off", NULL,
-    N_("Mask _Unselected Areas"), NULL, NULL,
+    NC_("quick-mask-action", "Mask _Unselected Areas"), NULL, NULL,
     FALSE,
     GIMP_HELP_QUICK_MASK_INVERT }
 };
@@ -75,15 +76,15 @@ static const GimpRadioActionEntry quick_mask_invert_actions[] =
 void
 quick_mask_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "quick-mask-action",
                                  quick_mask_actions,
                                  G_N_ELEMENTS (quick_mask_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "quick-mask-action",
                                         quick_mask_toggle_actions,
                                         G_N_ELEMENTS (quick_mask_toggle_actions));
 
-  gimp_action_group_add_radio_actions (group,
+  gimp_action_group_add_radio_actions (group, "quick-mask-action",
                                        quick_mask_invert_actions,
                                        G_N_ELEMENTS (quick_mask_invert_actions),
                                        NULL,

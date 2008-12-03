@@ -40,16 +40,16 @@
 static const GimpActionEntry dock_actions[] =
 {
   { "dock-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
-    N_("M_ove to Screen"), NULL, NULL, NULL,
+    NC_("dock-action", "M_ove to Screen"), NULL, NULL, NULL,
     GIMP_HELP_DOCK_CHANGE_SCREEN },
 
   { "dock-close", GTK_STOCK_CLOSE,
-    N_("Close Dock"), NULL, NULL,
+    NC_("dock-action", "Close Dock"), NULL, NULL,
     G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_DOCK_CLOSE },
 
   { "dock-open-display", NULL,
-    N_("_Open Display..."), NULL,
+    NC_("dock-action", "_Open Display..."), NULL,
     N_("Connect to another display"),
     G_CALLBACK (window_open_display_cmd_callback),
     NULL }
@@ -58,13 +58,13 @@ static const GimpActionEntry dock_actions[] =
 static const GimpToggleActionEntry dock_toggle_actions[] =
 {
   { "dock-show-image-menu", NULL,
-    N_("_Show Image Selection"), NULL, NULL,
+    NC_("dock-action", "_Show Image Selection"), NULL, NULL,
     G_CALLBACK (dock_toggle_image_menu_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_IMAGE_MENU },
 
   { "dock-auto-follow-active", NULL,
-    N_("Auto _Follow Active Image"), NULL, NULL,
+    NC_("dock-action", "Auto _Follow Active Image"), NULL, NULL,
     G_CALLBACK (dock_toggle_auto_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_AUTO_BUTTON }
@@ -74,11 +74,11 @@ static const GimpToggleActionEntry dock_toggle_actions[] =
 void
 dock_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "dock-action",
                                  dock_actions,
                                  G_N_ELEMENTS (dock_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "dock-action",
                                         dock_toggle_actions,
                                         G_N_ELEMENTS (dock_toggle_actions));
 

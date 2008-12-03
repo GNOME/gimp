@@ -40,41 +40,41 @@
 static const GimpActionEntry brushes_actions[] =
 {
   { "brushes-popup", GIMP_STOCK_BRUSH,
-    N_("Brushes Menu"), NULL, NULL, NULL,
+    NC_("brushes-action", "Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
   { "brushes-open-as-image", GTK_STOCK_OPEN,
-    N_("_Open Brush as Image"), "",
+    NC_("brushes-action", "_Open Brush as Image"), "",
     N_("Open brush as image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
   { "brushes-new", GTK_STOCK_NEW,
-    N_("_New Brush"), "",
-    N_("New brush"),
+    NC_("brushes-action", "_New Brush"), "",
+    N_("Create a new brush"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_BRUSH_NEW },
 
   { "brushes-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Brush"), NULL,
-    N_("Duplicate brush"),
+    NC_("brushes-action", "D_uplicate Brush"), NULL,
+    N_("Duplicate this brush"),
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
   { "brushes-copy-location", GTK_STOCK_COPY,
-    N_("Copy Brush _Location"), "",
+    NC_("brushes-action", "Copy Brush _Location"), "",
     N_("Copy brush file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_BRUSH_COPY_LOCATION },
 
   { "brushes-delete", GTK_STOCK_DELETE,
-    N_("_Delete Brush"), "",
-    N_("Delete brush"),
+    NC_("brushes-action", "_Delete Brush"), "",
+    N_("Delete this brush"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_BRUSH_DELETE },
 
   { "brushes-refresh", GTK_STOCK_REFRESH,
-    N_("_Refresh Brushes"), "",
+    NC_("brushes-action", "_Refresh Brushes"), "",
     N_("Refresh brushes"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_BRUSH_REFRESH }
@@ -83,7 +83,7 @@ static const GimpActionEntry brushes_actions[] =
 static const GimpStringActionEntry brushes_edit_actions[] =
 {
   { "brushes-edit", GTK_STOCK_EDIT,
-    N_("_Edit Brush..."), NULL,
+    NC_("brushes-action", "_Edit Brush..."), NULL,
     N_("Edit brush"),
     "gimp-brush-editor",
     GIMP_HELP_BRUSH_EDIT }
@@ -93,11 +93,11 @@ static const GimpStringActionEntry brushes_edit_actions[] =
 void
 brushes_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "brushes-action",
                                  brushes_actions,
                                  G_N_ELEMENTS (brushes_actions));
 
-  gimp_action_group_add_string_actions (group,
+  gimp_action_group_add_string_actions (group, "brushes-action",
                                         brushes_edit_actions,
                                         G_N_ELEMENTS (brushes_edit_actions),
                                         G_CALLBACK (data_edit_cmd_callback));

@@ -41,23 +41,23 @@
 static const GimpActionEntry images_actions[] =
 {
   { "images-popup", GIMP_STOCK_IMAGES,
-    N_("Images Menu"), NULL, NULL, NULL,
+    NC_("images-action", "Images Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_DIALOG },
 
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
-    N_("_Raise Views"), "",
+    NC_("images-action", "_Raise Views"), "",
     N_("Raise this image's displays"),
     G_CALLBACK (images_raise_views_cmd_callback),
     NULL },
 
   { "images-new-view", GTK_STOCK_NEW,
-    N_("_New View"), "",
+    NC_("images-action", "_New View"), "",
     N_("Create a new display for this image"),
     G_CALLBACK (images_new_view_cmd_callback),
     NULL },
 
   { "images-delete", GTK_STOCK_DELETE,
-    N_("_Delete Image"), "",
+    NC_("images-action", "_Delete Image"), "",
     N_("Delete this image"),
     G_CALLBACK (images_delete_image_cmd_callback),
     NULL }
@@ -68,7 +68,7 @@ void
 images_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
-                                 images_actions,
+                                 images_actions, "images-action",
                                  G_N_ELEMENTS (images_actions));
 }
 

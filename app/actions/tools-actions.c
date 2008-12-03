@@ -44,41 +44,41 @@
 static const GimpActionEntry tools_actions[] =
 {
   { "tools-popup", GIMP_STOCK_TOOLS,
-    N_("Tools Menu"), NULL, NULL, NULL,
+    NC_("tools-action", "Tools Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOLS_DIALOG },
 
-  { "tools-menu",           NULL, N_("_Tools")           },
-  { "tools-select-menu",    NULL, N_("_Selection Tools") },
-  { "tools-paint-menu",     NULL, N_("_Paint Tools")     },
-  { "tools-transform-menu", NULL, N_("_Transform Tools") },
-  { "tools-color-menu",     NULL, N_("_Color Tools")     },
+  { "tools-menu",           NULL, NC_("tools-action", "_Tools")           },
+  { "tools-select-menu",    NULL, NC_("tools-action", "_Selection Tools") },
+  { "tools-paint-menu",     NULL, NC_("tools-action", "_Paint Tools")     },
+  { "tools-transform-menu", NULL, NC_("tools-action", "_Transform Tools") },
+  { "tools-color-menu",     NULL, NC_("tools-action", "_Color Tools")     },
 
   { "tools-raise", GTK_STOCK_GO_UP,
-    N_("R_aise Tool"), NULL,
+    NC_("tools-action", "R_aise Tool"), NULL,
     N_("Raise tool"),
     G_CALLBACK (tools_raise_cmd_callback),
     NULL },
 
   { "tools-raise-to-top", GTK_STOCK_GOTO_TOP,
-    N_("Ra_ise to Top"), NULL,
+    NC_("tools-action", "Ra_ise to Top"), NULL,
     N_("Raise tool to top"),
     G_CALLBACK (tools_raise_to_top_cmd_callback),
     NULL },
 
   { "tools-lower", GTK_STOCK_GO_DOWN,
-    N_("L_ower Tool"), NULL,
+    NC_("tools-action", "L_ower Tool"), NULL,
     N_("Lower tool"),
     G_CALLBACK (tools_lower_cmd_callback),
     NULL },
 
   { "tools-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    N_("Lo_wer to Bottom"), NULL,
+    NC_("tools-action", "Lo_wer to Bottom"), NULL,
     N_("Lower tool to bottom"),
     G_CALLBACK (tools_lower_to_bottom_cmd_callback),
     NULL },
 
   { "tools-reset", GIMP_STOCK_RESET,
-    N_("_Reset Order & Visibility"), NULL,
+    NC_("tools-action", "_Reset Order & Visibility"), NULL,
     N_("Reset tool order and visibility"),
     G_CALLBACK (tools_reset_cmd_callback),
     NULL }
@@ -87,7 +87,7 @@ static const GimpActionEntry tools_actions[] =
 static const GimpToggleActionEntry tools_toggle_actions[] =
 {
   { "tools-visibility", GIMP_STOCK_VISIBLE,
-    N_("_Show in Toolbox"), NULL, NULL,
+    NC_("tools-action", "_Show in Toolbox"), NULL, NULL,
     G_CALLBACK (tools_toggle_visibility_cmd_callback),
     TRUE,
     NULL /* FIXME */ }
@@ -96,13 +96,13 @@ static const GimpToggleActionEntry tools_toggle_actions[] =
 static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
-    N_("_By Color"), NULL,
+    NC_("tools-action", "_By Color"), NULL,
     N_("Select regions with similar colors"),
     "gimp-by-color-select-tool",
     GIMP_HELP_TOOL_BY_COLOR_SELECT },
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
-    N_("_Arbitrary Rotation..."), "",
+    NC_("tools-action", "_Arbitrary Rotation..."), "",
     N_("Rotate by an arbitrary angle"),
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
@@ -563,15 +563,15 @@ tools_actions_setup (GimpActionGroup *group)
   GtkAction *action;
   GList     *list;
 
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "tools-action",
                                  tools_actions,
                                  G_N_ELEMENTS (tools_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "tools-action",
                                         tools_toggle_actions,
                                         G_N_ELEMENTS (tools_toggle_actions));
 
-  gimp_action_group_add_string_actions (group,
+  gimp_action_group_add_string_actions (group, "tools-action",
                                         tools_alternative_actions,
                                         G_N_ELEMENTS (tools_alternative_actions),
                                         G_CALLBACK (tools_select_cmd_callback));
@@ -580,61 +580,61 @@ tools_actions_setup (GimpActionGroup *group)
                                         "tools-by-color-select-short");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_color_average_radius_actions,
                                       G_N_ELEMENTS (tools_color_average_radius_actions),
                                       G_CALLBACK (tools_color_average_radius_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_paint_brush_scale_actions,
                                       G_N_ELEMENTS (tools_paint_brush_scale_actions),
                                       G_CALLBACK (tools_paint_brush_scale_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_size_actions,
                                       G_N_ELEMENTS (tools_ink_blob_size_actions),
                                       G_CALLBACK (tools_ink_blob_size_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_aspect_actions,
                                       G_N_ELEMENTS (tools_ink_blob_aspect_actions),
                                       G_CALLBACK (tools_ink_blob_aspect_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_angle_actions,
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,
                                       G_N_ELEMENTS (tools_foreground_select_brush_size_actions),
                                       G_CALLBACK (tools_fg_select_brush_size_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_transform_preview_opacity_actions,
                                       G_N_ELEMENTS (tools_transform_preview_opacity_actions),
                                       G_CALLBACK (tools_transform_preview_opacity_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_value_1_actions,
                                       G_N_ELEMENTS (tools_value_1_actions),
                                       G_CALLBACK (tools_value_1_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_value_2_actions,
                                       G_N_ELEMENTS (tools_value_2_actions),
                                       G_CALLBACK (tools_value_2_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_value_3_actions,
                                       G_N_ELEMENTS (tools_value_3_actions),
                                       G_CALLBACK (tools_value_3_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_value_4_actions,
                                       G_N_ELEMENTS (tools_value_4_actions),
                                       G_CALLBACK (tools_value_4_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_object_1_actions,
                                       G_N_ELEMENTS (tools_object_1_actions),
                                       G_CALLBACK (tools_object_1_cmd_callback));
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       tools_object_2_actions,
                                       G_N_ELEMENTS (tools_object_2_actions),
                                       G_CALLBACK (tools_object_2_cmd_callback));
@@ -669,7 +669,7 @@ tools_actions_setup (GimpActionGroup *group)
           entry.help_id     = tool_info->help_id;
           entry.value       = identifier;
 
-          gimp_action_group_add_string_actions (group,
+          gimp_action_group_add_string_actions (group, NULL,
                                                 &entry, 1,
                                                 G_CALLBACK (tools_select_cmd_callback));
 

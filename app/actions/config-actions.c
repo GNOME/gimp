@@ -36,7 +36,7 @@
 static const GimpToggleActionEntry config_toggle_actions[] =
 {
   { "config-use-gegl", NULL,
-    N_("Use _GEGL"), NULL,
+    NC_("config-action", "Use _GEGL"), NULL,
     N_("If possible, use GEGL for image processing"),
     G_CALLBACK (config_use_gegl_cmd_callback),
     FALSE,
@@ -61,7 +61,7 @@ config_actions_use_gegl_notify (GObject         *config,
 void
 config_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "config-action",
                                         config_toggle_actions,
                                         G_N_ELEMENTS (config_toggle_actions));
 

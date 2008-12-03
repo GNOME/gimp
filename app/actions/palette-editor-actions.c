@@ -41,18 +41,18 @@
 static const GimpActionEntry palette_editor_actions[] =
 {
   { "palette-editor-popup", GIMP_STOCK_PALETTE,
-    N_("Palette Editor Menu"), NULL, NULL, NULL,
+    NC_("palette-editor-action", "Palette Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_EDITOR_DIALOG },
 
   { "palette-editor-edit-color", GTK_STOCK_EDIT,
-    N_("_Edit Color..."), "",
-    N_("Edit color"),
+    NC_("palette-editor-action", "_Edit Color..."), "",
+    N_("Edit this color"),
     G_CALLBACK (palette_editor_edit_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_EDIT },
 
   { "palette-editor-delete-color", GTK_STOCK_DELETE,
-    N_("_Delete Color"), "",
-    N_("Delete color"),
+    NC_("palette-editor-action", "_Delete Color"), "",
+    N_("Delete this color"),
     G_CALLBACK (palette_editor_delete_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_DELETE }
 };
@@ -60,7 +60,7 @@ static const GimpActionEntry palette_editor_actions[] =
 static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 {
   { "palette-editor-edit-active", GIMP_STOCK_LINKED,
-    N_("Edit Active Palette"), NULL, NULL,
+    NC_("palette-editor-action", "Edit Active Palette"), NULL, NULL,
     G_CALLBACK (data_editor_edit_active_cmd_callback),
     FALSE,
     GIMP_HELP_PALETTE_EDITOR_EDIT_ACTIVE }
@@ -69,13 +69,13 @@ static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 static const GimpEnumActionEntry palette_editor_new_actions[] =
 {
   { "palette-editor-new-color-fg", GTK_STOCK_NEW,
-    N_("New Color from _FG"), "",
+    NC_("palette-editor-action", "New Color from _FG"), "",
     N_("New color from foreground color"),
     FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
   { "palette-editor-new-color-bg", GTK_STOCK_NEW,
-    N_("New Color from _BG"), "",
+    NC_("palette-editor-action", "New Color from _BG"), "",
     N_("New color from background color"),
     TRUE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW }
@@ -106,20 +106,20 @@ static const GimpEnumActionEntry palette_editor_zoom_actions[] =
 void
 palette_editor_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "palette-editor-action",
                                  palette_editor_actions,
                                  G_N_ELEMENTS (palette_editor_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "palette-editor-action",
                                         palette_editor_toggle_actions,
                                         G_N_ELEMENTS (palette_editor_toggle_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "palette-editor-action",
                                       palette_editor_new_actions,
                                       G_N_ELEMENTS (palette_editor_new_actions),
                                       G_CALLBACK (palette_editor_new_color_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       palette_editor_zoom_actions,
                                       G_N_ELEMENTS (palette_editor_zoom_actions),
                                       G_CALLBACK (palette_editor_zoom_cmd_callback));

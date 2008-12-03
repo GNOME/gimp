@@ -45,165 +45,165 @@
 static const GimpActionEntry layers_actions[] =
 {
   { "layers-popup", GIMP_STOCK_LAYERS,
-    N_("Layers Menu"), NULL, NULL, NULL,
+    NC_("layers-action", "Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
 
-  { "layers-menu",              NULL,                      N_("_Layer")        },
-  { "layers-stack-menu",        NULL,                      N_("Stac_k")        },
-  { "layers-text-to-selection-menu", GIMP_STOCK_TOOL_TEXT, N_("Te_xt to Selection") },
-  { "layers-mask-menu",         NULL,                      N_("_Mask")         },
-  { "layers-transparency-menu", NULL,                      N_("Tr_ansparency") },
-  { "layers-transform-menu",    NULL,                      N_("_Transform")    },
-  { "layers-properties-menu",   GTK_STOCK_PROPERTIES,      N_("_Properties")   },
-  { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")      },
-  { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,    N_("Layer _Mode")   },
+  { "layers-menu",              NULL,                      NC_("layers-action", "_Layer")        },
+  { "layers-stack-menu",        NULL,                      NC_("layers-action", "Stac_k")        },
+  { "layers-text-to-selection-menu", GIMP_STOCK_TOOL_TEXT, NC_("layers-action", "Te_xt to Selection") },
+  { "layers-mask-menu",         NULL,                      NC_("layers-action", "_Mask")         },
+  { "layers-transparency-menu", NULL,                      NC_("layers-action", "Tr_ansparency") },
+  { "layers-transform-menu",    NULL,                      NC_("layers-action", "_Transform")    },
+  { "layers-properties-menu",   GTK_STOCK_PROPERTIES,      NC_("layers-action", "_Properties")   },
+  { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY,   NC_("layers-action", "_Opacity")      },
+  { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,    NC_("layers-action", "Layer _Mode")   },
 
   { "layers-text-tool", GIMP_STOCK_TOOL_TEXT,
-    N_("Te_xt Tool"), NULL,
+    NC_("layers-action", "Te_xt Tool"), NULL,
     N_("Activate the text tool on this text layer"),
     G_CALLBACK (layers_text_tool_cmd_callback),
     GIMP_HELP_TOOL_TEXT },
 
   { "layers-edit-attributes", GTK_STOCK_EDIT,
-    N_("_Edit Layer Attributes..."), NULL,
+    NC_("layers-action", "_Edit Layer Attributes..."), NULL,
     N_("Edit the layer's name"),
     G_CALLBACK (layers_edit_attributes_cmd_callback),
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-new", GTK_STOCK_NEW,
-    N_("_New Layer..."), "<control><shift>N",
+    NC_("layers-action", "_New Layer..."), "<control><shift>N",
     N_("Create a new layer and add it to the image"),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
   { "layers-new-last-values", GTK_STOCK_NEW,
-    N_("_New Layer"), "",
+    NC_("layers-action", "_New Layer"), "",
     N_("Create a new layer with last used values"),
     G_CALLBACK (layers_new_last_vals_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
   { "layers-new-from-visible", NULL,
-    N_("New from _Visible"), NULL,
+    NC_("layers-action", "New from _Visible"), NULL,
     N_("Create a new layer from what is visible in this image"),
     G_CALLBACK (layers_new_from_visible_cmd_callback),
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Layer"), "<control><shift>D",
+    NC_("layers-action", "D_uplicate Layer"), "<control><shift>D",
     N_("Create a duplicate of the layer and add it to the image"),
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
 
   { "layers-delete", GTK_STOCK_DELETE,
-    N_("_Delete Layer"), "",
+    NC_("layers-action", "_Delete Layer"), "",
     N_("Delete this layer"),
     G_CALLBACK (layers_delete_cmd_callback),
     GIMP_HELP_LAYER_DELETE },
 
   { "layers-raise", GTK_STOCK_GO_UP,
-    N_("_Raise Layer"), "",
+    NC_("layers-action", "_Raise Layer"), "",
     N_("Raise this layer one step in the layer stack"),
     G_CALLBACK (layers_raise_cmd_callback),
     GIMP_HELP_LAYER_RAISE },
 
   { "layers-raise-to-top", GTK_STOCK_GOTO_TOP,
-    N_("Layer to _Top"), "",
+    NC_("layers-action", "Layer to _Top"), "",
     N_("Move this layer to the top of the layer stack"),
     G_CALLBACK (layers_raise_to_top_cmd_callback),
     GIMP_HELP_LAYER_RAISE_TO_TOP },
 
   { "layers-lower", GTK_STOCK_GO_DOWN,
-    N_("_Lower Layer"), "",
+    NC_("layers-action", "_Lower Layer"), "",
     N_("Lower this layer one step in the layer stack"),
     G_CALLBACK (layers_lower_cmd_callback),
     GIMP_HELP_LAYER_LOWER },
 
   { "layers-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    N_("Layer to _Bottom"), "",
+    NC_("layers-action", "Layer to _Bottom"), "",
     N_("Move this layer to the bottom of the layer stack"),
     G_CALLBACK (layers_lower_to_bottom_cmd_callback),
     GIMP_HELP_LAYER_LOWER_TO_BOTTOM },
 
   { "layers-anchor", GIMP_STOCK_ANCHOR,
-    N_("_Anchor Layer"), "<control>H",
+    NC_("layers-action", "_Anchor Layer"), "<control>H",
     N_("Anchor the floating layer"),
     G_CALLBACK (layers_anchor_cmd_callback),
     GIMP_HELP_LAYER_ANCHOR },
 
   { "layers-merge-down", GIMP_STOCK_MERGE_DOWN,
-    N_("Merge Do_wn"), NULL,
+    NC_("layers-action", "Merge Do_wn"), NULL,
     N_("Merge this layer with the one below it"),
     G_CALLBACK (layers_merge_down_cmd_callback),
     GIMP_HELP_LAYER_MERGE_DOWN },
 
   { "layers-merge-layers", NULL,
-    N_("Merge _Visible Layers..."), NULL,
+    NC_("layers-action", "Merge _Visible Layers..."), NULL,
     N_("Merge all visible layers into one layer"),
     G_CALLBACK (image_merge_layers_cmd_callback),
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "layers-flatten-image", NULL,
-    N_("_Flatten Image"), NULL,
+    NC_("layers-action", "_Flatten Image"), NULL,
     N_("Merge all layers into one and remove transparency"),
     G_CALLBACK (image_flatten_image_cmd_callback),
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "layers-text-discard", GIMP_STOCK_TOOL_TEXT,
-    N_("_Discard Text Information"), NULL,
+    NC_("layers-action", "_Discard Text Information"), NULL,
     N_("Turn this text layer into a normal layer"),
     G_CALLBACK (layers_text_discard_cmd_callback),
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
   { "layers-text-to-vectors", GIMP_STOCK_TOOL_TEXT,
-    N_("Text to _Path"), NULL,
+    NC_("layers-action", "Text to _Path"), NULL,
     N_("Create a path from this text layer"),
     G_CALLBACK (layers_text_to_vectors_cmd_callback),
     GIMP_HELP_LAYER_TEXT_TO_PATH },
 
   { "layers-text-along-vectors", GIMP_STOCK_TOOL_TEXT,
-    N_("Text alon_g Path"), NULL,
+    NC_("layers-action", "Text alon_g Path"), NULL,
     N_("Warp this layer's text along the current path"),
     G_CALLBACK (layers_text_along_vectors_cmd_callback),
     GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
   { "layers-resize", GIMP_STOCK_RESIZE,
-    N_("Layer B_oundary Size..."), NULL,
+    NC_("layers-action", "Layer B_oundary Size..."), NULL,
     N_("Adjust the layer dimensions"),
     G_CALLBACK (layers_resize_cmd_callback),
     GIMP_HELP_LAYER_RESIZE },
 
   { "layers-resize-to-image", GIMP_STOCK_LAYER_TO_IMAGESIZE,
-    N_("Layer to _Image Size"), NULL,
+    NC_("layers-action", "Layer to _Image Size"), NULL,
     N_("Resize the layer to the size of the image"),
     G_CALLBACK (layers_resize_to_image_cmd_callback),
     GIMP_HELP_LAYER_RESIZE_TO_IMAGE },
 
   { "layers-scale", GIMP_STOCK_SCALE,
-    N_("_Scale Layer..."), NULL,
+    NC_("layers-action", "_Scale Layer..."), NULL,
     N_("Change the size of the layer content"),
     G_CALLBACK (layers_scale_cmd_callback),
     GIMP_HELP_LAYER_SCALE },
 
   { "layers-crop", GIMP_STOCK_TOOL_CROP,
-    N_("_Crop to Selection"), NULL,
+    NC_("layers-action", "_Crop to Selection"), NULL,
     N_("Crop the layer to the extents of the selection"),
     G_CALLBACK (layers_crop_cmd_callback),
     GIMP_HELP_LAYER_CROP },
 
   { "layers-mask-add", GIMP_STOCK_LAYER_MASK,
-    N_("Add La_yer Mask..."), NULL,
+    NC_("layers-action", "Add La_yer Mask..."), NULL,
     N_("Add a mask that allows non-destructive editing of transparency"),
     G_CALLBACK (layers_mask_add_cmd_callback),
     GIMP_HELP_LAYER_MASK_ADD },
 
   { "layers-alpha-add", GIMP_STOCK_TRANSPARENCY,
-    N_("Add Alpha C_hannel"), NULL,
+    NC_("layers-action", "Add Alpha C_hannel"), NULL,
     N_("Add transparency information to the layer"),
     G_CALLBACK (layers_alpha_add_cmd_callback),
     GIMP_HELP_LAYER_ALPHA_ADD },
 
   { "layers-alpha-remove", NULL,
-    N_("_Remove Alpha Channel"), NULL,
+    NC_("layers-action", "_Remove Alpha Channel"), NULL,
     N_("Remove transparency information from the layer"),
     G_CALLBACK (layers_alpha_remove_cmd_callback),
     GIMP_HELP_LAYER_ALPHA_REMOVE }
@@ -212,27 +212,27 @@ static const GimpActionEntry layers_actions[] =
 static const GimpToggleActionEntry layers_toggle_actions[] =
 {
   { "layers-lock-alpha", GIMP_STOCK_TRANSPARENCY,
-    N_("Lock Alph_a Channel"), NULL,
+    NC_("layers-action", "Lock Alph_a Channel"), NULL,
     N_("Keep transparency information on this layer from being modified"),
     G_CALLBACK (layers_lock_alpha_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LOCK_ALPHA },
 
   { "layers-mask-edit", GTK_STOCK_EDIT,
-    N_("_Edit Layer Mask"), NULL,
+    NC_("layers-action", "_Edit Layer Mask"), NULL,
     N_("Work on the layer mask"),
     G_CALLBACK (layers_mask_edit_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_MASK_EDIT },
 
   { "layers-mask-show", GIMP_STOCK_VISIBLE,
-    N_("S_how Layer Mask"), NULL, NULL,
+    NC_("layers-action", "S_how Layer Mask"), NULL, NULL,
     G_CALLBACK (layers_mask_show_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_MASK_SHOW },
 
   { "layers-mask-disable", NULL,
-    N_("_Disable Layer Mask"), NULL,
+    NC_("layers-action", "_Disable Layer Mask"), NULL,
     N_("Dismiss the effect of the layer mask"),
     G_CALLBACK (layers_mask_disable_cmd_callback),
     FALSE,
@@ -242,13 +242,13 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
 static const GimpEnumActionEntry layers_mask_apply_actions[] =
 {
   { "layers-mask-apply", NULL,
-    N_("Apply Layer _Mask"), NULL,
+    NC_("layers-action", "Apply Layer _Mask"), NULL,
     N_("Apply the effect of the layer mask and remove it"),
     GIMP_MASK_APPLY, FALSE,
     GIMP_HELP_LAYER_MASK_APPLY },
 
   { "layers-mask-delete", GTK_STOCK_DELETE,
-    N_("Delete Layer Mas_k"), "",
+    NC_("layers-action", "Delete Layer Mas_k"), "",
     N_("Remove the layer mask and its effect"),
     GIMP_MASK_DISCARD, FALSE,
     GIMP_HELP_LAYER_MASK_DELETE }
@@ -257,25 +257,25 @@ static const GimpEnumActionEntry layers_mask_apply_actions[] =
 static const GimpEnumActionEntry layers_mask_to_selection_actions[] =
 {
   { "layers-mask-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    N_("_Mask to Selection"), NULL,
+    NC_("layers-action", "_Mask to Selection"), NULL,
     N_("Replace the selection with the layer mask"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_REPLACE },
 
   { "layers-mask-selection-add", GIMP_STOCK_SELECTION_ADD,
-    N_("_Add to Selection"), NULL,
+    NC_("layers-action", "_Add to Selection"), NULL,
     N_("Add the layer mask to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_ADD },
 
   { "layers-mask-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    N_("_Subtract from Selection"), NULL,
+    NC_("layers-action", "_Subtract from Selection"), NULL,
     N_("Subtract the layer mask from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_SUBTRACT },
 
   { "layers-mask-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    N_("_Intersect with Selection"), NULL,
+    NC_("layers-action", "_Intersect with Selection"), NULL,
     N_("Intersect the layer mask with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_INTERSECT }
@@ -284,25 +284,25 @@ static const GimpEnumActionEntry layers_mask_to_selection_actions[] =
 static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 {
   { "layers-alpha-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    N_("Al_pha to Selection"), NULL,
+    NC_("layers-action", "Al_pha to Selection"), NULL,
     N_("Replace the selection with the layer's alpha channel"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_REPLACE },
 
   { "layers-alpha-selection-add", GIMP_STOCK_SELECTION_ADD,
-    N_("A_dd to Selection"), NULL,
+    NC_("layers-action", "A_dd to Selection"), NULL,
     N_("Add the layer's alpha channel to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_ADD },
 
   { "layers-alpha-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    N_("_Subtract from Selection"), NULL,
+    NC_("layers-action", "_Subtract from Selection"), NULL,
     N_("Subtract the layer's alpha channel from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_SUBTRACT },
 
   { "layers-alpha-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    N_("_Intersect with Selection"), NULL,
+    NC_("layers-action", "_Intersect with Selection"), NULL,
     N_("Intersect the layer's alpha channel with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
@@ -311,25 +311,25 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 static const GimpEnumActionEntry layers_text_to_selection_actions[] =
 {
   { "layers-text-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    N_("_Text to Selection"), NULL,
+    NC_("layers-action", "_Text to Selection"), NULL,
     N_("Replace the selection with the text layer's outline"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_TEXT_SELECTION_REPLACE },
 
   { "layers-text-selection-add", GIMP_STOCK_SELECTION_ADD,
-    N_("A_dd to Selection"), NULL,
+    NC_("layers-action", "A_dd to Selection"), NULL,
     N_("Add the text layer's outline to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_TEXT_SELECTION_ADD },
 
   { "layers-text-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    N_("_Subtract from Selection"), NULL,
+    NC_("layers-action", "_Subtract from Selection"), NULL,
     N_("Subtract the text layer's outline from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_TEXT_SELECTION_SUBTRACT },
 
   { "layers-text-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    N_("_Intersect with Selection"), NULL,
+    NC_("layers-action", "_Intersect with Selection"), NULL,
     N_("Intersect the text layer's outline with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_TEXT_SELECTION_INTERSECT }
@@ -338,25 +338,25 @@ static const GimpEnumActionEntry layers_text_to_selection_actions[] =
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
-    N_("Select _Top Layer"), "Home",
+    NC_("layers-action", "Select _Top Layer"), "Home",
     N_("Select the topmost layer"),
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_TOP },
 
   { "layers-select-bottom", NULL,
-    N_("Select _Bottom Layer"), "End",
+    NC_("layers-action", "Select _Bottom Layer"), "End",
     N_("Select the bottommost layer"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_BOTTOM },
 
   { "layers-select-previous", NULL,
-    N_("Select _Previous Layer"), "Prior",
+    NC_("layers-action", "Select _Previous Layer"), "Prior",
     N_("Select the layer above the current layer"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
-    N_("Select _Next Layer"), "Next",
+    NC_("layers-action", "Select _Next Layer"), "Next",
     N_("Select the layer below the current layer"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
@@ -365,7 +365,7 @@ static const GimpEnumActionEntry layers_select_actions[] =
 static const GimpEnumActionEntry layers_opacity_actions[] =
 {
   { "layers-opacity-set", GIMP_STOCK_TRANSPARENCY,
-    N_("Set Opacity"), NULL, NULL,
+    "Set Opacity", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-transparent", GIMP_STOCK_TRANSPARENCY,
@@ -418,45 +418,45 @@ static const GimpEnumActionEntry layers_mode_actions[] =
 void
 layers_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "layers-action",
                                  layers_actions,
                                  G_N_ELEMENTS (layers_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "layers-action",
                                         layers_toggle_actions,
                                         G_N_ELEMENTS (layers_toggle_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_mask_apply_actions,
                                       G_N_ELEMENTS (layers_mask_apply_actions),
                                       G_CALLBACK (layers_mask_apply_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_mask_to_selection_actions,
                                       G_N_ELEMENTS (layers_mask_to_selection_actions),
                                       G_CALLBACK (layers_mask_to_selection_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_alpha_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_text_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_select_actions,
                                       G_N_ELEMENTS (layers_select_actions),
                                       G_CALLBACK (layers_select_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       layers_opacity_actions,
                                       G_N_ELEMENTS (layers_opacity_actions),
                                       G_CALLBACK (layers_opacity_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, NULL,
                                       layers_mode_actions,
                                       G_N_ELEMENTS (layers_mode_actions),
                                       G_CALLBACK (layers_mode_cmd_callback));

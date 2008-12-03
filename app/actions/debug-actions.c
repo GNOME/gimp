@@ -72,7 +72,7 @@ void
 debug_actions_setup (GimpActionGroup *group)
 {
 #ifdef ENABLE_DEBUG_MENU
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, NULL,
                                  debug_actions,
                                  G_N_ELEMENTS (debug_actions));
 #endif

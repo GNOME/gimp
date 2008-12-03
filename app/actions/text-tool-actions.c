@@ -47,52 +47,52 @@
 static const GimpActionEntry text_tool_actions[] =
 {
   { "text-tool-popup", NULL,
-    N_("Text Tool Menu"), NULL, NULL, NULL,
+    NC_("text-tool-action", "Text Tool Menu"), NULL, NULL, NULL,
     NULL },
 
   { "text-tool-input-methods-menu", NULL,
-    N_("Input _Methods"), NULL, NULL, NULL,
+    NC_("text-tool-action", "Input _Methods"), NULL, NULL, NULL,
     NULL },
 
   { "text-tool-cut", GTK_STOCK_CUT,
-    N_("Cu_t"), NULL, NULL,
+    NC_("text-tool-action", "Cu_t"), NULL, NULL,
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
 
   { "text-tool-copy", GTK_STOCK_COPY,
-    N_("_Copy"), NULL, NULL,
+    NC_("text-tool-action", "_Copy"), NULL, NULL,
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },
 
   { "text-tool-paste", GTK_STOCK_PASTE,
-    N_("_Paste"), NULL, NULL,
+    NC_("text-tool-action", "_Paste"), NULL, NULL,
     G_CALLBACK (text_tool_paste_cmd_callback),
     NULL },
 
   { "text-tool-delete", GTK_STOCK_DELETE,
-    N_("_Delete"), NULL, NULL,
+    NC_("text-tool-action", "_Delete"), NULL, NULL,
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },
 
   { "text-tool-load", GTK_STOCK_OPEN,
-    N_("_Open text file..."), NULL, NULL,
+    NC_("text-tool-action", "_Open text file..."), NULL, NULL,
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
   { "text-tool-clear", GTK_STOCK_CLEAR,
-    N_("Cl_ear"), "",
+    NC_("text-tool-action", "Cl_ear"), "",
     N_("Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),
     NULL },
 
   { "text-tool-text-to-path", GIMP_STOCK_PATH,
-    N_("_Path from Text"), "",
+    NC_("text-tool-action", "_Path from Text"), "",
     N_("Create a path from the outlines of the current text"),
     G_CALLBACK (text_tool_text_to_path_cmd_callback),
     NULL },
 
   { "text-tool-text-along-path", GIMP_STOCK_PATH,
-    N_("Text _along Path"), "",
+    NC_("text-tool-action", "Text _along Path"), "",
     N_("Bend the text along the currently active path"),
     G_CALLBACK (text_tool_text_along_path_cmd_callback),
     NULL }
@@ -101,12 +101,12 @@ static const GimpActionEntry text_tool_actions[] =
 static const GimpRadioActionEntry text_tool_direction_actions[] =
 {
   { "text-tool-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
-    N_("From left to right"), NULL, NULL,
+    NC_("text-tool-action", "From left to right"), NULL, NULL,
     GIMP_TEXT_DIRECTION_LTR,
     NULL },
 
   { "text-tool-direction-rtl", GIMP_STOCK_TEXT_DIR_RTL,
-    N_("From right to left"), NULL, NULL,
+    NC_("text-tool-action", "From right to left"), NULL, NULL,
     GIMP_TEXT_DIRECTION_RTL,
     NULL }
 };
@@ -115,11 +115,11 @@ static const GimpRadioActionEntry text_tool_direction_actions[] =
 void
 text_tool_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "text-tool-action",
                                  text_tool_actions,
                                  G_N_ELEMENTS (text_tool_actions));
 
-  gimp_action_group_add_radio_actions (group,
+  gimp_action_group_add_radio_actions (group, "text-tool-action",
                                        text_tool_direction_actions,
                                        G_N_ELEMENTS (text_tool_direction_actions),
                                        NULL,

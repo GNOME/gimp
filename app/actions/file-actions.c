@@ -64,48 +64,48 @@ static void   file_actions_close_all_update    (GimpContainer   *images,
 
 static const GimpActionEntry file_actions[] =
 {
-  { "file-menu",             NULL, N_("_File")        },
-  { "file-create-menu",      NULL, N_("Create")       },
-  { "file-open-recent-menu", NULL, N_("Open _Recent") },
+  { "file-menu",             NULL, NC_("file-action", "_File")        },
+  { "file-create-menu",      NULL, NC_("file-action", "Create")       },
+  { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
   { "file-open", GTK_STOCK_OPEN,
-    N_("_Open..."), NULL,
+    NC_("file-action", "_Open..."), NULL,
     N_("Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layers", GIMP_STOCK_LAYER,
-    N_("Op_en as Layers..."), "<control><alt>O",
+    NC_("file-action", "Op_en as Layers..."), "<control><alt>O",
     N_("Open an image file as layers"),
     G_CALLBACK (file_open_as_layers_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
-    N_("Open _Location..."), NULL,
+    NC_("file-action", "Open _Location..."), NULL,
     N_("Open an image file from a specified location"),
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-save-as-template", NULL,
-    N_("Save as _Template..."), NULL,
+    NC_("file-action", "Save as _Template..."), NULL,
     N_("Create a new template from this image"),
     G_CALLBACK (file_save_template_cmd_callback),
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
-    N_("Re_vert"), NULL,
+    NC_("file-action", "Re_vert"), NULL,
     N_("Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GTK_STOCK_CLOSE,
-    N_("Close all"), "<shift><control>W",
+    NC_("file-action", "Close all"), "<shift><control>W",
     N_("Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
   { "file-quit", GTK_STOCK_QUIT,
-    N_("_Quit"), "<control>Q",
+    NC_("file-action", "_Quit"), "<control>Q",
     N_("Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
     GIMP_HELP_FILE_QUIT }
@@ -114,25 +114,25 @@ static const GimpActionEntry file_actions[] =
 static const GimpEnumActionEntry file_save_actions[] =
 {
   { "file-save", GTK_STOCK_SAVE,
-    N_("_Save"), "<control>S",
+    NC_("file-action", "_Save"), "<control>S",
     N_("Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
   { "file-save-as", GTK_STOCK_SAVE_AS,
-    N_("Save _As..."), "<control><shift>S",
+    NC_("file-action", "Save _As..."), "<control><shift>S",
     N_("Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
     GIMP_HELP_FILE_SAVE_AS },
 
   { "file-save-a-copy", NULL,
-    N_("Save a Cop_y..."), NULL,
+    NC_("file-action", "Save a Cop_y..."), NULL,
     N_("Save this image with a different name, but keep its current name"),
     GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
     GIMP_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-and-close", NULL,
-    N_("Save and Close..."), NULL,
+    NC_("file-action", "Save and Close..."), NULL,
     N_("Save this image and close its window"),
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE }
@@ -145,11 +145,11 @@ file_actions_setup (GimpActionGroup *group)
   gint                 n_entries;
   gint                 i;
 
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "file-action",
                                  file_actions,
                                  G_N_ELEMENTS (file_actions));
 
-  gimp_action_group_add_enum_actions (group,
+  gimp_action_group_add_enum_actions (group, "file-action",
                                       file_save_actions,
                                       G_N_ELEMENTS (file_save_actions),
                                       G_CALLBACK (file_save_cmd_callback));
@@ -176,7 +176,7 @@ file_actions_setup (GimpActionGroup *group)
         entries[i].accelerator = "";
     }
 
-  gimp_action_group_add_enum_actions (group, entries, n_entries,
+  gimp_action_group_add_enum_actions (group, NULL, entries, n_entries,
                                       G_CALLBACK (file_open_recent_cmd_callback));
 
   for (i = 0; i < n_entries; i++)

@@ -39,59 +39,59 @@
 static const GimpActionEntry documents_actions[] =
 {
   { "documents-popup", "document-open-recent",
-    N_("Documents Menu"), NULL, NULL, NULL,
+    NC_("documents-action", "Documents Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCUMENT_DIALOG },
 
   { "documents-open", GTK_STOCK_OPEN,
-    N_("_Open Image"), "",
+    NC_("documents-action", "_Open Image"), "",
     N_("Open the selected entry"),
     G_CALLBACK (documents_open_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-raise-or-open", NULL,
-    N_("_Raise or Open Image"), "",
+    NC_("documents-action", "_Raise or Open Image"), "",
     N_("Raise window if already open"),
     G_CALLBACK (documents_raise_or_open_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-file-open-dialog", NULL,
-    N_("File Open _Dialog"), "",
+    NC_("documents-action", "File Open _Dialog"), "",
     N_("Open image dialog"),
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-copy-location", GTK_STOCK_COPY,
-    N_("Copy Image _Location"), "",
+    NC_("documents-action", "Copy Image _Location"), "",
     N_("Copy image location to clipboard"),
     G_CALLBACK (documents_copy_location_cmd_callback),
     GIMP_HELP_DOCUMENT_COPY_LOCATION },
 
   { "documents-remove", GTK_STOCK_REMOVE,
-    N_("Remove _Entry"), "",
+    NC_("documents-action", "Remove _Entry"), "",
     N_("Remove the selected entry"),
     G_CALLBACK (documents_remove_cmd_callback),
     GIMP_HELP_DOCUMENT_REMOVE },
 
   { "documents-clear", GTK_STOCK_CLEAR,
-    N_("_Clear History"), "",
+    NC_("documents-action", "_Clear History"), "",
     N_("Clear the entire document history"),
     G_CALLBACK (documents_clear_cmd_callback),
     GIMP_HELP_DOCUMENT_CLEAR },
 
   { "documents-recreate-preview", GTK_STOCK_REFRESH,
-    N_("Recreate _Preview"), "",
+    NC_("documents-action", "Recreate _Preview"), "",
     N_("Recreate preview"),
     G_CALLBACK (documents_recreate_preview_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-reload-previews", NULL,
-    N_("Reload _all Previews"), "",
+    NC_("documents-action", "Reload _all Previews"), "",
     N_("Reload all previews"),
     G_CALLBACK (documents_reload_previews_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-remove-dangling", NULL,
-    N_("Remove Dangling E_ntries"), "",
+    NC_("documents-action", "Remove Dangling E_ntries"), "",
     N_("Remove dangling entries"),
     G_CALLBACK (documents_remove_dangling_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH }
@@ -101,7 +101,7 @@ static const GimpActionEntry documents_actions[] =
 void
 documents_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "documents-action",
                                  documents_actions,
                                  G_N_ELEMENTS (documents_actions));
 }

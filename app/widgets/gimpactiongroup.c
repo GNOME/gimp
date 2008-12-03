@@ -352,6 +352,7 @@ gimp_action_group_update (GimpActionGroup *group,
 
 void
 gimp_action_group_add_actions (GimpActionGroup       *group,
+			       const gchar           *label_context,
                                const GimpActionEntry *entries,
                                guint                  n_entries)
 {
@@ -368,8 +369,11 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label   = (gchar *) g_strip_context (entries[i].label,
-                                           gettext (entries[i].label));
+      if (label_context)
+	label = (gchar *) g_dpgettext2 (NULL, label_context, entries[i].label);
+      else
+	label = gettext (entries[i].label);
+
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)
@@ -401,6 +405,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 
 void
 gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
+                                      const gchar                 *label_context,
                                       const GimpToggleActionEntry *entries,
                                       guint                        n_entries)
 {
@@ -417,8 +422,11 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label   = (gchar *) g_strip_context (entries[i].label,
-                                           gettext (entries[i].label));
+      if (label_context)
+	label = (gchar *) g_dpgettext2 (NULL, label_context, entries[i].label);
+      else
+	label = gettext (entries[i].label);
+
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)
@@ -452,6 +460,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
 GSList *
 gimp_action_group_add_radio_actions (GimpActionGroup            *group,
+                                     const gchar                *label_context,
                                      const GimpRadioActionEntry *entries,
                                      guint                       n_entries,
                                      GSList                     *radio_group,
@@ -472,8 +481,11 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label   = (gchar *) g_strip_context (entries[i].label,
-                                           gettext (entries[i].label));
+      if (label_context)
+	label = (gchar *) g_dpgettext2 (NULL, label_context, entries[i].label);
+      else
+	label = gettext (entries[i].label);
+
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)
@@ -517,6 +529,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
 
 void
 gimp_action_group_add_enum_actions (GimpActionGroup           *group,
+                                    const gchar               *label_context,
                                     const GimpEnumActionEntry *entries,
                                     guint                      n_entries,
                                     GCallback                  callback)
@@ -534,8 +547,11 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label   = (gchar *) g_strip_context (entries[i].label,
-                                           gettext (entries[i].label));
+      if (label_context)
+	label = (gchar *) g_dpgettext2 (NULL, label_context, entries[i].label);
+      else
+	label = gettext (entries[i].label);
+
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)
@@ -569,6 +585,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 
 void
 gimp_action_group_add_string_actions (GimpActionGroup             *group,
+                                      const gchar                 *label_context,
                                       const GimpStringActionEntry *entries,
                                       guint                        n_entries,
                                       GCallback                    callback)
@@ -586,8 +603,11 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label   = (gchar *) g_strip_context (entries[i].label,
-                                           gettext (entries[i].label));
+      if (label_context)
+	label = (gchar *) g_dpgettext2 (NULL, label_context, entries[i].label);
+      else
+	label = gettext (entries[i].label);
+
       tooltip = gettext (entries[i].tooltip);
 
       if (! group->mnemonics)

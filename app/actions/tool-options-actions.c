@@ -53,38 +53,38 @@ static void tool_options_actions_update_presets (GimpActionGroup *group,
 static const GimpActionEntry tool_options_actions[] =
 {
   { "tool-options-popup", GIMP_STOCK_TOOL_OPTIONS,
-    N_("Tool Options Menu"), NULL, NULL, NULL,
+    NC_("tool-options-action", "Tool Options Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
   { "tool-options-save-menu", GTK_STOCK_SAVE,
-    N_("_Save Options To"), "", NULL, NULL,
+    NC_("tool-options-action", "_Save Options To"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
   { "tool-options-restore-menu", GTK_STOCK_REVERT_TO_SAVED,
-    N_("_Restore Options From"), "", NULL, NULL,
+    NC_("tool-options-action", "_Restore Options From"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RESTORE },
 
   { "tool-options-rename-menu", GTK_STOCK_EDIT,
-    N_("Re_name Saved Options"), NULL, NULL, NULL,
+    NC_("tool-options-action", "Re_name Saved Options"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RENAME },
 
   { "tool-options-delete-menu", GTK_STOCK_DELETE,
-    N_("_Delete Saved Options"), "", NULL, NULL,
+    NC_("tool-options-action", "_Delete Saved Options"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DELETE },
 
   { "tool-options-save-new", GTK_STOCK_NEW,
-    N_("_New Entry..."), "", NULL,
+    NC_("tool-options-action", "_New Entry..."), "", NULL,
     G_CALLBACK (tool_options_save_new_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
   { "tool-options-reset", GIMP_STOCK_RESET,
-    N_("R_eset Tool Options"), "",
-    N_("Reset to default values"),
+    NC_("tool-options-action", "R_eset Tool Options"), "",
+    NC_("tool-options-action", "Reset to default values"),
     G_CALLBACK (tool_options_reset_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_RESET },
 
   { "tool-options-reset-all", GIMP_STOCK_RESET,
-    N_("Reset _all Tool Options"), "",
+    NC_("tool-options-action", "Reset _all Tool Options"), "",
     N_("Reset all tool options"),
     G_CALLBACK (tool_options_reset_all_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_RESET }
@@ -101,7 +101,7 @@ static const GimpActionEntry tool_options_actions[] =
 void
 tool_options_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "tool-options-action",
                                  tool_options_actions,
                                  G_N_ELEMENTS (tool_options_actions));
 
@@ -204,7 +204,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
           entry.label = gimp_object_get_name (GIMP_OBJECT (options));
           entry.value = i;
 
-          gimp_action_group_add_enum_actions (group, &entry, 1, callback);
+          gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);
 
           g_free ((gchar *) entry.name);
         }

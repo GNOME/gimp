@@ -178,7 +178,8 @@ window_actions_display_opened (GdkDisplayManager *manager,
 
   radio_group = g_object_get_data (G_OBJECT (group),
                                    "change-to-screen-radio-group");
-  radio_group = gimp_action_group_add_radio_actions (group, entries, n_screens,
+  radio_group = gimp_action_group_add_radio_actions (group, NULL,
+                                                     entries, n_screens,
                                                      radio_group, 0,
                                                      G_CALLBACK (window_move_to_screen_cmd_callback));
   g_object_set_data (G_OBJECT (group), "change-to-screen-radio-group",

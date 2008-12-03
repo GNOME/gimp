@@ -37,15 +37,15 @@
 static const GimpActionEntry sample_points_actions[] =
 {
   { "sample-points-popup", GIMP_STOCK_SAMPLE_POINT,
-    N_("Sample Point Menu"), NULL, NULL, NULL,
+    NC_("sample-points-action", "Sample Point Menu"), NULL, NULL, NULL,
     GIMP_HELP_SAMPLE_POINT_DIALOG }
 };
 
 static const GimpToggleActionEntry sample_points_toggle_actions[] =
 {
   { "sample-points-sample-merged", NULL,
-    N_("_Sample Merged"), "",
-    N_("Sample Merged"),
+    NC_("sample-points-action", "_Sample Merged"), "",
+    N_("Use the composite color of all visible layers"),
     G_CALLBACK (sample_points_sample_merged_cmd_callback),
     TRUE,
     GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED }
@@ -55,11 +55,11 @@ static const GimpToggleActionEntry sample_points_toggle_actions[] =
 void
 sample_points_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
+  gimp_action_group_add_actions (group, "sample-points-action",
                                  sample_points_actions,
                                  G_N_ELEMENTS (sample_points_actions));
 
-  gimp_action_group_add_toggle_actions (group,
+  gimp_action_group_add_toggle_actions (group, "sample-points-action",
                                         sample_points_toggle_actions,
                                         G_N_ELEMENTS (sample_points_toggle_actions));
 }

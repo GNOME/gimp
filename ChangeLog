@@ -1,5 +1,14 @@
 2008-12-03  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpactiongroup.[ch]: added an extra parameter for
+	the translation context to all gimp_action_group_add methods.
+
+	* app/actions/*.c: added a translation context to all action
+	labels. Also unified and improved the labels and tooltips in a few
+	places.
+	
+2008-12-03  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpactiongroup.c: check that the action name is
 	unique before adding it to a GimpActionGroup.
 
