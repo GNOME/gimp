@@ -68,8 +68,6 @@
  *                          or g_spawn_sync().
  * V 1.17  PK, 19-Sep-2004: Fix problem with interpretation of bounding box
  */
-#define VERSIO 1.17
-static char dversio[] = "v1.17  19-Sep-2004";
 
 #include "config.h"
 
@@ -106,6 +104,8 @@ static char dversio[] = "v1.17  19-Sep-2004";
 #endif
 #endif
 
+#define VERSIO 1.17
+static const gchar dversio[] = "v1.17  19-Sep-2004";
 
 #define LOAD_PS_PROC         "file-ps-load"
 #define LOAD_EPS_PROC        "file-eps-load"
@@ -154,8 +154,8 @@ static PSLoadVals plvals =
 *  be loaded, so that they can be updated when desired resolution is
 *  changed
 */
-GtkWidget      *ps_width_spinbutton;
-GtkWidget      *ps_height_spinbutton;
+static GtkWidget *ps_width_spinbutton;
+static GtkWidget *ps_height_spinbutton;
 
 /* Save info  */
 typedef struct
@@ -183,6 +183,8 @@ static PSSaveVals psvals =
   FALSE,          /* Preview flag */
   256             /* Preview size */
 };
+
+static const char hex[] = "0123456789abcdef";
 
 
 /* Declare some local functions.
@@ -2518,7 +2520,6 @@ save_gray  (FILE   *ofp,
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  static char *hex = "0123456789abcdef";
   int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -2622,7 +2623,6 @@ save_bw (FILE   *ofp,
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  static char *hex = "0123456789abcdef";
   gint level2 = (psvals.level > 1);
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
@@ -2754,8 +2754,6 @@ save_index (FILE   *ofp,
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  static char *hex = "0123456789abcdef";
-  static char *background = "000000";
   int level2 = (psvals.level > 1);
 
   cmap = cmap_start = gimp_image_get_colormap (image_ID, &ncols);
@@ -2766,7 +2764,7 @@ save_index (FILE   *ofp,
     {
       if (j >= ncols)
         {
-          memcpy (ct, background, 6);
+          memset (ct, 0, 6);
           ct += 6;
         }
       else
@@ -2903,7 +2901,6 @@ save_rgb (FILE   *ofp,
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  static char *hex = "0123456789abcdef";
   int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
