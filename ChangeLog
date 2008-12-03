@@ -1,5 +1,11 @@
 2008-12-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/file-tiff-save.c (save_image)
+	(image_is_monochrome): allow to save images that are plain white or
+	plain black using the CCITT Fax compression methods.
+
+2008-12-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/file-ps.c: minor cleanup.
 
 2008-12-03  Sven Neumann  <sven@gimp.org>

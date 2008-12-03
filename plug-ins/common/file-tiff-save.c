@@ -425,13 +425,13 @@ image_is_monochrome (gint32 image)
 
   if (colors)
     {
-      if (num_colors == 2)
+      if (num_colors == 2 || num_colors == 1)
         {
-          const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
-          const guchar   wb_map[] = { 255, 255, 255, 0, 0, 0 };
+          const guchar  bw_map[] = { 0, 0, 0, 255, 255, 255 };
+          const guchar  wb_map[] = { 255, 255, 255, 0, 0, 0 };
 
-          if (memcmp (colors, bw_map, 6) == 0 ||
-              memcmp (colors, wb_map, 6) == 0)
+          if (memcmp (colors, bw_map, 3 * num_colors) == 0 ||
+              memcmp (colors, wb_map, 3 * num_colors) == 0)
             {
               monochrome = TRUE;
             }
@@ -649,7 +649,7 @@ save_image (const gchar  *filename,
   gint           bytesperrow;
   guchar        *t, *src, *data;
   guchar        *cmap;
-  gint           colors;
+  gint           num_colors;
   gint           success;
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
@@ -740,16 +740,16 @@ save_image (const gchar  *filename,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, &colors);
+      cmap = gimp_image_get_colormap (image, &num_colors);
 
-      if (colors == 2)
+      if (num_colors == 2 || num_colors == 1)
         {
-          is_bw = (memcmp (cmap, bw_map, 6) == 0);
+          is_bw = (memcmp (cmap, bw_map, 3 * num_colors) == 0);
           photometric = PHOTOMETRIC_MINISWHITE;
 
           if (!is_bw)
             {
-              is_bw = (memcmp (cmap, wb_map, 6) == 0);
+              is_bw = (memcmp (cmap, wb_map, 3 * num_colors) == 0);
 
               if (is_bw)
                 invert = FALSE;
@@ -765,7 +765,7 @@ save_image (const gchar  *filename,
           bitspersample = 8;
           photometric   = PHOTOMETRIC_PALETTE;
 
-          for (i = 0; i < colors; i++)
+          for (i = 0; i < num_colors; i++)
             {
               red[i] = cmap[i * 3 + 0] * 65535 / 255;
               grn[i] = cmap[i * 3 + 1] * 65535 / 255;
