@@ -74,7 +74,7 @@ struct _GimpImageMap
 
   GeglNode              *gegl;
   GeglNode              *input;
-  GeglNode              *shift;
+  GeglNode              *translate;
   GeglNode              *operation;
   GeglNode              *output;
   GeglProcessor         *processor;
@@ -217,10 +217,10 @@ gimp_image_map_finalize (GObject *object)
   if (image_map->gegl)
     {
       g_object_unref (image_map->gegl);
-      image_map->gegl = NULL;
-      image_map->input = NULL;
-      image_map->shift = NULL;
-      image_map->output = NULL;
+      image_map->gegl      = NULL;
+      image_map->input     = NULL;
+      image_map->translate = NULL;
+      image_map->output    = NULL;
     }
 
   if (image_map->operation)
@@ -466,9 +466,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                  "operation", "gimp:tilemanager-source",
                                  NULL);
 
-          image_map->shift =
+          image_map->translate =
             gegl_node_new_child (image_map->gegl,
-                                 "operation", "gegl:shift",
+                                 "operation", "gegl:translate",
                                  NULL);
 
           gegl_node_add_child (image_map->gegl, image_map->operation);
@@ -499,7 +499,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                *  filter OP, connect it on both ends.
                */
               gegl_node_link_many (image_map->input,
-                                   image_map->shift,
+                                   image_map->translate,
                                    image_map->operation,
                                    image_map->output,
                                    NULL);
@@ -515,7 +515,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                                     NULL);
 
               gegl_node_link_many (image_map->input,
-                                   image_map->shift,
+                                   image_map->translate,
                                    over,
                                    image_map->output,
                                    NULL);
@@ -528,7 +528,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
               /* otherwise we just construct a silly nop pipleline
                */
               gegl_node_link_many (image_map->input,
-                                   image_map->shift,
+                                   image_map->translate,
                                    image_map->output,
                                    NULL);
             }
@@ -539,7 +539,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                      "linear",       TRUE,
                      NULL);
 
-      gegl_node_set (image_map->shift,
+      gegl_node_set (image_map->translate,
                      "x", (gdouble) rect.x,
                      "y", (gdouble) rect.y,
                      NULL);

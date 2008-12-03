@@ -1,3 +1,8 @@
+2008-12-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c: renamed GeglNode shift to translate.
+	Use "gegl:translate" instead of "gegl:shift".
+
 2008-12-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-desktop-link.c: use the G_KEY_FILE_DESKTOP
