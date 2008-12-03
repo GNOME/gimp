@@ -52,19 +52,19 @@ enum
 };
 
 
-static GObject * gimp_action_group_constructor (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void   gimp_action_group_dispose        (GObject               *object);
-static void   gimp_action_group_finalize       (GObject               *object);
-static void   gimp_action_group_set_property   (GObject               *object,
-                                                guint                  prop_id,
-                                                const GValue          *value,
-                                                GParamSpec            *pspec);
-static void   gimp_action_group_get_property   (GObject               *object,
-                                                guint                  prop_id,
-                                                GValue                *value,
-                                                GParamSpec            *pspec);
+static GObject * gimp_action_group_constructor   (GType                  type,
+                                                  guint                  n_params,
+                                                  GObjectConstructParam *params);
+static void      gimp_action_group_dispose       (GObject               *object);
+static void      gimp_action_group_finalize      (GObject               *object);
+static void      gimp_action_group_set_property  (GObject               *object,
+                                                  guint                  prop_id,
+                                                  const GValue          *value,
+                                                  GParamSpec            *pspec);
+static void      gimp_action_group_get_property  (GObject               *object,
+                                                  guint                  prop_id,
+                                                  GValue                *value,
+                                                  GParamSpec            *pspec);
 
 
 G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP)
@@ -111,8 +111,7 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
-  klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                         g_free, NULL);
+  klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 }
 
 static void
@@ -262,6 +261,23 @@ gimp_action_group_get_property (GObject    *object,
     }
 }
 
+static gboolean
+gimp_action_group_check_unique_action (GimpActionGroup *group,
+				       const gchar     *action_name)
+{
+  if (G_UNLIKELY (gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                               action_name)))
+    {
+      g_warning ("Refusing to add non-unique action '%s' to action group '%s'",
+	 	 action_name,
+                 gtk_action_group_get_name (GTK_ACTION_GROUP (group)));
+      return FALSE;
+    }
+
+  return TRUE;
+
+}
+
 /**
  * gimp_action_group_new:
  * @gimp:        the @Gimp instance this action group belongs to
@@ -349,6 +365,9 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
       gchar       *label;
       const gchar *tooltip;
 
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
+
       label   = (gchar *) g_strip_context (entries[i].label,
                                            gettext (entries[i].label));
       tooltip = gettext (entries[i].tooltip);
@@ -394,6 +413,9 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       GtkToggleAction *action;
       gchar           *label;
       const gchar     *tooltip;
+
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
 
       label   = (gchar *) g_strip_context (entries[i].label,
                                            gettext (entries[i].label));
@@ -446,6 +468,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       GtkRadioAction *action;
       gchar          *label;
       const gchar    *tooltip;
+
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
 
       label   = (gchar *) g_strip_context (entries[i].label,
                                            gettext (entries[i].label));
@@ -506,6 +531,9 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
       gchar          *label;
       const gchar    *tooltip;
 
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
+
       label   = (gchar *) g_strip_context (entries[i].label,
                                            gettext (entries[i].label));
       tooltip = gettext (entries[i].tooltip);
@@ -555,6 +583,9 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       gchar            *label;
       const gchar      *tooltip;
 
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
+
       label   = (gchar *) g_strip_context (entries[i].label,
                                            gettext (entries[i].label));
       tooltip = gettext (entries[i].tooltip);
@@ -601,6 +632,9 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
     {
       GimpPlugInAction *action;
       gchar            *label;
+
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
 
       label = (gchar *) entries[i].label;
 
