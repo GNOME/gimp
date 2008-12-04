@@ -216,7 +216,7 @@ register_convert_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-rgb",
                                      "Convert specified image to RGB color",
-                                     "This procedure converts the specified image to RGB color. This process requires an image in RGB or Indexed color mode. No image content is lost in this process aside from the colormap for an indexed image.",
+                                     "This procedure converts the specified image to RGB color. This process requires an image in Grayscale or Indexed color mode. No image content is lost in this process aside from the colormap for an indexed image.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

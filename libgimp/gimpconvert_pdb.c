@@ -32,8 +32,8 @@
  * Convert specified image to RGB color
  *
  * This procedure converts the specified image to RGB color. This
- * process requires an image in RGB or Indexed color mode. No image
- * content is lost in this process aside from the colormap for an
+ * process requires an image in Grayscale or Indexed color mode. No
+ * image content is lost in this process aside from the colormap for an
  * indexed image.
  *
  * Returns: TRUE on success.
