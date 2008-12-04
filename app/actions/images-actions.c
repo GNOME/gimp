@@ -67,8 +67,8 @@ static const GimpActionEntry images_actions[] =
 void
 images_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
-                                 "images-action", images_actions,
+  gimp_action_group_add_actions (group, "images-action",
+                                 images_actions,
                                  G_N_ELEMENTS (images_actions));
 }
 
