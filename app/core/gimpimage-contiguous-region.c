@@ -379,36 +379,44 @@ pixel_difference (const guchar        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_H:
-          av0 = (gint)col1[0];
-          av1 = (gint)col1[1];
-          av2 = (gint)col1[2];
-          bv0 = (gint)col2[0];
-          bv1 = (gint)col2[1];
-          bv2 = (gint)col2[2];
+          av0 = (gint) col1[0];
+          av1 = (gint) col1[1];
+          av2 = (gint) col1[2];
+          bv0 = (gint) col2[0];
+          bv1 = (gint) col2[1];
+          bv2 = (gint) col2[2];
           gimp_rgb_to_hsv_int (&av0, &av1, &av2);
           gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
-          max = abs (av0 - bv0);
+          /* wrap around candidates for the actual distance */
+          {
+            gint dist1 = abs (av0 - bv0);
+            gint dist2 = abs (av0 - 360 - bv0);
+            gint dist3 = abs (av0 - bv0 + 360);
+            max = MIN (dist1, dist2);
+            if (max > dist3)
+              max = dist3;
+          }
           break;
 
         case GIMP_SELECT_CRITERION_S:
-          av0 = (gint)col1[0];
-          av1 = (gint)col1[1];
-          av2 = (gint)col1[2];
-          bv0 = (gint)col2[0];
-          bv1 = (gint)col2[1];
-          bv2 = (gint)col2[2];
+          av0 = (gint) col1[0];
+          av1 = (gint) col1[1];
+          av2 = (gint) col1[2];
+          bv0 = (gint) col2[0];
+          bv1 = (gint) col2[1];
+          bv2 = (gint) col2[2];
           gimp_rgb_to_hsv_int (&av0, &av1, &av2);
           gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
           max = abs (av1 - bv1);
           break;
 
         case GIMP_SELECT_CRITERION_V:
-          av0 = (gint)col1[0];
-          av1 = (gint)col1[1];
-          av2 = (gint)col1[2];
-          bv0 = (gint)col2[0];
-          bv1 = (gint)col2[1];
-          bv2 = (gint)col2[2];
+          av0 = (gint) col1[0];
+          av1 = (gint) col1[1];
+          av2 = (gint) col1[2];
+          bv0 = (gint) col2[0];
+          bv1 = (gint) col2[1];
+          bv2 = (gint) col2[2];
           gimp_rgb_to_hsv_int (&av0, &av1, &av2);
           gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
           max = abs (av2 - bv2);
