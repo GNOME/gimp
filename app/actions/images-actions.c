@@ -68,7 +68,7 @@ void
 images_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group,
-                                 images_actions, "images-action",
+                                 "images-action", images_actions,
                                  G_N_ELEMENTS (images_actions));
 }
 

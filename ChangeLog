@@ -1,3 +1,8 @@
+2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/images-actions.c (images_actions_setup): Pass
+	arguments to gimp_action_group_add_actions() in the right order.
+
 2008-12-04  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/convert.pdb: fixed an error in the documentation
