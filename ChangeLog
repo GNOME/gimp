@@ -1,3 +1,8 @@
+2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimp.c
+	* app/widgets/gimpdatafactoryview.c: Sort #includes.
+
 2008-12-04  Sven Neumann  <sven@gimp.org>
 
 	Bug 563130 – Hue selection mode does not cross the 0-360 degrees line

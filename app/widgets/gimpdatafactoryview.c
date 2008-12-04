@@ -38,13 +38,13 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
 
-#include "gimpcontainerview.h"
-#include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
+#include "gimpdatafactoryview.h"
 #include "gimpdnd.h"
-#include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
