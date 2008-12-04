@@ -1,3 +1,12 @@
+2008-12-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	Bug 563130 – Hue selection mode does not cross the 0-360 degrees line
+
+	* app/core/gimpimage-contiguous-region.c (pixel_difference):
+	applied patch from Daniel Hornung.
+
 2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Merged from trunk:
