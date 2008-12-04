@@ -1,5 +1,14 @@
 2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 563179 – Scrollbars not resized when we extend the canvas size
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): Add explicit
+	call to gimp_display_shell_scroll_clamp_and_update() at the end to
+	make sure it is called.
+
+2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/actions/images-actions.c (images_actions_setup): Pass
 	arguments to gimp_action_group_add_actions() in the right order.
 
