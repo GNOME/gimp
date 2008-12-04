@@ -1,5 +1,13 @@
 2008-12-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/convert.pdb: fixed an error in the documentation
+	of the gimp-image-convert-rgb procedure.
+
+	* app/pdb/convert-cmds.c
+	* libgimp/gimpconvert_pdb.c: regenerated.
+
+2008-12-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpactiongroup.[ch]: also use the translation
 	context for the tooltips.
 
