@@ -98,7 +98,7 @@ GimpActionFactory *global_action_factory = NULL;
 
 /*  private variables  */
 
-static GimpActionFactoryEntry action_groups[] =
+static const GimpActionFactoryEntry action_groups[] =
 {
   { "brush-editor", N_("Brush Editor"), GIMP_STOCK_BRUSH,
     brush_editor_actions_setup,

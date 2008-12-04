@@ -46,13 +46,13 @@ static const GimpActionEntry palette_editor_actions[] =
 
   { "palette-editor-edit-color", GTK_STOCK_EDIT,
     NC_("palette-editor-action", "_Edit Color..."), "",
-    N_("Edit this color"),
+    NC_("palette-editor-action", "Edit this entry"),
     G_CALLBACK (palette_editor_edit_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_EDIT },
 
   { "palette-editor-delete-color", GTK_STOCK_DELETE,
     NC_("palette-editor-action", "_Delete Color"), "",
-    N_("Delete this color"),
+    NC_("palette-editor-action", "Delete this entry"),
     G_CALLBACK (palette_editor_delete_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_DELETE }
 };
@@ -70,13 +70,15 @@ static const GimpEnumActionEntry palette_editor_new_actions[] =
 {
   { "palette-editor-new-color-fg", GTK_STOCK_NEW,
     NC_("palette-editor-action", "New Color from _FG"), "",
-    N_("New color from foreground color"),
+    NC_("palette-editor-action",
+        "Create a new entry from the foreground color"),
     FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
   { "palette-editor-new-color-bg", GTK_STOCK_NEW,
     NC_("palette-editor-action", "New Color from _BG"), "",
-    N_("New color from background color"),
+    NC_("palette-editor-action",
+        "Create a new entry from the background color"),
     TRUE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW }
 };

@@ -265,7 +265,8 @@ static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-foreground-transparent", NULL,
-    NC_("gradient-editor-color-type", "Fo_reground Color (Transparent)"), NULL, NULL,
+    NC_("gradient-editor-color-type",
+        "Fo_reground Color (Transparent)"), NULL, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
@@ -275,7 +276,8 @@ static const GimpRadioActionEntry gradient_editor_left_color_type_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-left-color-background-transparent", NULL,
-    NC_("gradient-editor-color-type", "B_ackground Color (Transparent)"), NULL, NULL,
+    NC_("gradient-editor-color-type",
+        "B_ackground Color (Transparent)"), NULL, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR }
 };
@@ -293,7 +295,8 @@ static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-foreground-transparent", NULL,
-    NC_("gradient-editor-color-type", "Fo_reground Color (Transparent)"), NULL, NULL,
+    NC_("gradient-editor-color-type",
+        "Fo_reground Color (Transparent)"), NULL, NULL,
     GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
@@ -303,7 +306,8 @@ static const GimpRadioActionEntry gradient_editor_right_color_type_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-right-color-background-transparent", NULL,
-    NC_("gradient-editor-color-type", "B_ackground Color (Transparent)"), NULL, NULL,
+    NC_("gradient-editor-color-type",
+        "B_ackground Color (Transparent)"), NULL, NULL,
     GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR }
 };

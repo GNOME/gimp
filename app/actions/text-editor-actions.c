@@ -42,13 +42,13 @@ static const GimpActionEntry text_editor_actions[] =
 
   { "text-editor-load", GTK_STOCK_OPEN,
     NC_("text-editor-action", "Open"), "",
-    N_("Load text from file"),
+    NC_("text-editor-action", "Load text from file"),
     G_CALLBACK (text_editor_load_cmd_callback),
     NULL },
 
   { "text-editor-clear", GTK_STOCK_CLEAR,
     NC_("text-editor-action", "Clear"), "",
-    N_("Clear all text"),
+    NC_("text-editor-action", "Clear all text"),
     G_CALLBACK (text_editor_clear_cmd_callback),
     NULL }
 };
@@ -57,13 +57,13 @@ static const GimpRadioActionEntry text_editor_direction_actions[] =
 {
   { "text-editor-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
     NC_("text-editor-action", "LTR"), "",
-    N_("From left to right"),
+    NC_("text-editor-action", "From left to right"),
     GIMP_TEXT_DIRECTION_LTR,
     NULL },
 
   { "text-editor-direction-rtl", GIMP_STOCK_TEXT_DIR_RTL,
     NC_("text-editor-action", "RTL"), "",
-    N_("From right to left"),
+    NC_("text-editor-action", "From right to left"),
     GIMP_TEXT_DIRECTION_RTL,
     NULL }
 };

@@ -70,43 +70,43 @@ static const GimpActionEntry file_actions[] =
 
   { "file-open", GTK_STOCK_OPEN,
     NC_("file-action", "_Open..."), NULL,
-    N_("Open an image file"),
+    NC_("file-action", "Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layers", GIMP_STOCK_LAYER,
     NC_("file-action", "Op_en as Layers..."), "<control><alt>O",
-    N_("Open an image file as layers"),
+    NC_("file-action", "Open an image file as layers"),
     G_CALLBACK (file_open_as_layers_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
     NC_("file-action", "Open _Location..."), NULL,
-    N_("Open an image file from a specified location"),
+    NC_("file-action", "Open an image file from a specified location"),
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-save-as-template", NULL,
     NC_("file-action", "Save as _Template..."), NULL,
-    N_("Create a new template from this image"),
+    NC_("file-action", "Create a new template from this image"),
     G_CALLBACK (file_save_template_cmd_callback),
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
     NC_("file-action", "Re_vert"), NULL,
-    N_("Reload the image file from disk"),
+    NC_("file-action", "Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GTK_STOCK_CLOSE,
     NC_("file-action", "Close all"), "<shift><control>W",
-    N_("Close all opened images"),
+    NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
   { "file-quit", GTK_STOCK_QUIT,
     NC_("file-action", "_Quit"), "<control>Q",
-    N_("Quit the GNU Image Manipulation Program"),
+    NC_("file-action", "Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
     GIMP_HELP_FILE_QUIT }
 };
@@ -115,25 +115,26 @@ static const GimpEnumActionEntry file_save_actions[] =
 {
   { "file-save", GTK_STOCK_SAVE,
     NC_("file-action", "_Save"), "<control>S",
-    N_("Save this image"),
+    NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
   { "file-save-as", GTK_STOCK_SAVE_AS,
     NC_("file-action", "Save _As..."), "<control><shift>S",
-    N_("Save this image with a different name"),
+    NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
     GIMP_HELP_FILE_SAVE_AS },
 
   { "file-save-a-copy", NULL,
     NC_("file-action", "Save a Cop_y..."), NULL,
-    N_("Save this image with a different name, but keep its current name"),
+    NC_("file-action",
+        "Save this image with a different name, but keep its current name"),
     GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
     GIMP_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-and-close", NULL,
     NC_("file-action", "Save and Close..."), NULL,
-    N_("Save this image and close its window"),
+    NC_("file-action", "Save this image and close its window"),
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE }
 };

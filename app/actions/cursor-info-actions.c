@@ -46,7 +46,7 @@ static const GimpToggleActionEntry cursor_info_toggle_actions[] =
 {
   { "cursor-info-sample-merged", NULL,
     NC_("cursor-info-action", "_Sample Merged"), "",
-    N_("Use the composite color of all visible layers"),
+    NC_("cursor-info-action", "Use the composite color of all visible layers"),
     G_CALLBACK (cursor_info_sample_merged_cmd_callback),
     TRUE,
     GIMP_HELP_POINTER_INFO_SAMPLE_MERGED }

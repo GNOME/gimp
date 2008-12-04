@@ -53,7 +53,7 @@ static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 {
   { "quick-mask-toggle", GIMP_STOCK_QUICK_MASK_ON,
     NC_("quick-mask-action", "Toggle _Quick Mask"), "<shift>Q",
-    N_("Toggle Quick Mask"),
+    NC_("quick-mask-action", "Toggle Quick Mask on/off"),
     G_CALLBACK (quick_mask_toggle_cmd_callback),
     FALSE,
     GIMP_HELP_QUICK_MASK_TOGGLE }

@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 16:18+0100\n"
-"PO-Revision-Date: 2008-12-03 16:19+0100\n"
+"POT-Creation-Date: 2008-12-04 11:28+0100\n"
+"PO-Revision-Date: 2008-12-04 11:28+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -463,6 +463,7 @@ msgid "_Open Brush as Image"
 msgstr "Pinsel _als Bild öffnen"
 
 #: ../app/actions/brushes-actions.c:48
+msgctxt "brushes-action"
 msgid "Open brush as image"
 msgstr "Pinsel als Bild öffnen"
 
@@ -472,6 +473,7 @@ msgid "_New Brush"
 msgstr "_Neuer Pinsel"
 
 #: ../app/actions/brushes-actions.c:54
+msgctxt "brushes-action"
 msgid "Create a new brush"
 msgstr "Einen neuen Pinsel erstellen"
 
@@ -481,6 +483,7 @@ msgid "D_uplicate Brush"
 msgstr "Pinsel _duplizieren"
 
 #: ../app/actions/brushes-actions.c:60
+msgctxt "brushes-action"
 msgid "Duplicate this brush"
 msgstr "Diesen Pinsel duplizieren"
 
@@ -490,6 +493,7 @@ msgid "Copy Brush _Location"
 msgstr "Speicher_ort des Pinsels kopieren"
 
 #: ../app/actions/brushes-actions.c:66
+msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
 msgstr "Den Speicherort der Pinseldatei in die Zwischenablage kopieren"
 
@@ -499,6 +503,7 @@ msgid "_Delete Brush"
 msgstr "Pinsel _löschen"
 
 #: ../app/actions/brushes-actions.c:72
+msgctxt "brushes-action"
 msgid "Delete this brush"
 msgstr "Diesen Pinsel löschen"
 
@@ -508,6 +513,7 @@ msgid "_Refresh Brushes"
 msgstr "Pinsel n_eu laden"
 
 #: ../app/actions/brushes-actions.c:78
+msgctxt "brushes-action"
 msgid "Refresh brushes"
 msgstr "Pinsel neu laden"
 
@@ -517,8 +523,9 @@ msgid "_Edit Brush..."
 msgstr "Pinsel b_earbeiten …"
 
 #: ../app/actions/brushes-actions.c:87
-msgid "Edit brush"
-msgstr "Pinsel bearbeiten …"
+msgctxt "brushes-action"
+msgid "Edit this brush"
+msgstr "Diesen Pinsel bearbeiten"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -531,6 +538,7 @@ msgid "_Paste Buffer"
 msgstr "Ablage e_infügen"
 
 #: ../app/actions/buffers-actions.c:47
+msgctxt "buffers-action"
 msgid "Paste the selected buffer"
 msgstr "Ausgewählte Ablage einfügen"
 
@@ -540,6 +548,7 @@ msgid "Paste Buffer _Into"
 msgstr "Ablage ein_fügen in"
 
 #: ../app/actions/buffers-actions.c:53
+msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
 msgstr "Fügt die gewählte Ablage in die Auswahl ein"
 
@@ -549,7 +558,8 @@ msgid "Paste Buffer as _New"
 msgstr "Ablage als _neues Bild"
 
 #: ../app/actions/buffers-actions.c:59
-msgid "Paste the selected buffer as new image"
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new image"
 msgstr "Ein neues Bild aus der gewählten Ablage erstellen"
 
 #: ../app/actions/buffers-actions.c:64
@@ -558,6 +568,7 @@ msgid "_Delete Buffer"
 msgstr "Ablage _löschen"
 
 #: ../app/actions/buffers-actions.c:65
+msgctxt "buffers-action"
 msgid "Delete the selected buffer"
 msgstr "Die gewählten Ablage löschen"
 
@@ -572,6 +583,7 @@ msgid "_Edit Channel Attributes..."
 msgstr "Kanalei_genschaften …"
 
 #: ../app/actions/channels-actions.c:49
+msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
 msgstr "Name, Farbe und Deckkraft des Kanals bearbeiten"
 
@@ -581,6 +593,7 @@ msgid "_New Channel..."
 msgstr "_Neuer Kanal …"
 
 #: ../app/actions/channels-actions.c:55
+msgctxt "channels-action"
 msgid "Create a new channel"
 msgstr "Einen neuen Kanal erstellen"
 
@@ -590,6 +603,7 @@ msgid "_New Channel"
 msgstr "_Neuer Kanal"
 
 #: ../app/actions/channels-actions.c:61
+msgctxt "channels-action"
 msgid "Create a new channel with last used values"
 msgstr "Einen neuen Kanal mit den zuletzt verwendeten Werten erstellen"
 
@@ -598,88 +612,98 @@ msgctxt "channels-action"
 msgid "D_uplicate Channel"
 msgstr "Kanal _duplizieren"
 
-#: ../app/actions/channels-actions.c:67
+#: ../app/actions/channels-actions.c:68
+msgctxt "channels-action"
 msgid "Create a duplicate of this channel and add it to the image"
 msgstr "Ein Duplikat dieses Kanals erstellen und es zum Bild hinzufügen"
 
-#: ../app/actions/channels-actions.c:72
+#: ../app/actions/channels-actions.c:73
 msgctxt "channels-action"
 msgid "_Delete Channel"
 msgstr "Kanal _löschen"
 
-#: ../app/actions/channels-actions.c:73
+#: ../app/actions/channels-actions.c:74
+msgctxt "channels-action"
 msgid "Delete this channel"
 msgstr "Diesen Kanal löschen"
 
-#: ../app/actions/channels-actions.c:78
+#: ../app/actions/channels-actions.c:79
 msgctxt "channels-action"
 msgid "_Raise Channel"
 msgstr "Kanal _anheben"
 
-#: ../app/actions/channels-actions.c:79
+#: ../app/actions/channels-actions.c:80
+msgctxt "channels-action"
 msgid "Raise this channel one step in the channel stack"
 msgstr "Diesen Kanal um einen Schritt im Stapel anheben"
 
-#: ../app/actions/channels-actions.c:84
+#: ../app/actions/channels-actions.c:85
 msgctxt "channels-action"
 msgid "Raise Channel to _Top"
 msgstr "Kanal nach ganz _oben"
 
-#: ../app/actions/channels-actions.c:85
+#: ../app/actions/channels-actions.c:87
+msgctxt "channels-action"
 msgid "Raise this channel to the top of the channel stack"
 msgstr "Den Kanal an die Spitze des Stapels setzen"
 
-#: ../app/actions/channels-actions.c:90
+#: ../app/actions/channels-actions.c:92
 msgctxt "channels-action"
 msgid "_Lower Channel"
 msgstr "Kanal a_bsenken"
 
-#: ../app/actions/channels-actions.c:91
+#: ../app/actions/channels-actions.c:93
+msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
 msgstr "Den Kanal um einen Schritt im Stapel absenken"
 
-#: ../app/actions/channels-actions.c:96
+#: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
 msgid "Lower Channel to _Bottom"
 msgstr "Kanal nach ganz _unten"
 
-#: ../app/actions/channels-actions.c:97
+#: ../app/actions/channels-actions.c:100
+msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
 msgstr "Den Kanal ans Ende des Stapels setzen"
 
-#: ../app/actions/channels-actions.c:105
+#: ../app/actions/channels-actions.c:108
 msgctxt "channels-action"
 msgid "Channel to Sele_ction"
 msgstr "Aus_wahl aus Kanal"
 
-#: ../app/actions/channels-actions.c:106
+#: ../app/actions/channels-actions.c:109
+msgctxt "channels-action"
 msgid "Replace the selection with this channel"
 msgstr "Die Auswahl durch diesen Kanal ersetzen"
 
-#: ../app/actions/channels-actions.c:111
+#: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
 msgstr "Zur Auswahl _hinzufügen"
 
-#: ../app/actions/channels-actions.c:112
+#: ../app/actions/channels-actions.c:115
+msgctxt "channels-action"
 msgid "Add this channel to the current selection"
 msgstr "Diesen Kanal der Auswahl hinzufügen"
 
-#: ../app/actions/channels-actions.c:117
+#: ../app/actions/channels-actions.c:120
 msgctxt "channels-action"
 msgid "_Subtract from Selection"
 msgstr "Von Auswahl ab_ziehen"
 
-#: ../app/actions/channels-actions.c:118
+#: ../app/actions/channels-actions.c:121
+msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
 msgstr "Diesen Kanal von der Auswahl abziehen"
 
-#: ../app/actions/channels-actions.c:123
+#: ../app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
 msgstr "Schnittmenge _bilden"
 
-#: ../app/actions/channels-actions.c:124
+#: ../app/actions/channels-actions.c:127
+msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Die Schnittmenge dieses Kanals mit der Auswahl bilden"
 
@@ -741,7 +765,7 @@ msgid "_Edit Color..."
 msgstr "Farbe _bearbeiten …"
 
 #: ../app/actions/colormap-actions.c:50
-#: ../app/actions/palette-editor-actions.c:49
+msgctxt "colormap-action"
 msgid "Edit this color"
 msgstr "Diese Farbe bearbeiten"
 
@@ -751,6 +775,7 @@ msgid "_Add Color from FG"
 msgstr "_Vordergrundfarbe einfügen"
 
 #: ../app/actions/colormap-actions.c:59
+msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "Die aktuelle Vordergrundfarbe einfügen"
 
@@ -760,6 +785,7 @@ msgid "_Add Color from BG"
 msgstr "_Hintergrundfarbe einfügen"
 
 #: ../app/actions/colormap-actions.c:65
+msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr "Die aktuelle Hintergrundfarbe einfügen"
 
@@ -778,6 +804,7 @@ msgid "Use _GEGL"
 msgstr "_GEGL verwenden"
 
 #: ../app/actions/config-actions.c:40
+msgctxt "config-action"
 msgid "If possible, use GEGL for image processing"
 msgstr "Wenn möglich, verwende GEGL für die Bildbearbeitung"
 
@@ -866,17 +893,19 @@ msgctxt "context-action"
 msgid "_Default Colors"
 msgstr "_Standardfarben"
 
-#: ../app/actions/context-actions.c:82
+#: ../app/actions/context-actions.c:83
+msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
 msgstr ""
 "Die Vordergrundfarbe auf Schwarz und die Hintergrundfarbe auf Weiß setzen"
 
-#: ../app/actions/context-actions.c:87
+#: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "S_wap Colors"
 msgstr "Farben _vertauschen"
 
-#: ../app/actions/context-actions.c:88
+#: ../app/actions/context-actions.c:89
+msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr "Die Vorder- und Hintergrundfarbe vertauschen"
 
@@ -891,7 +920,7 @@ msgid "_Sample Merged"
 msgstr "_Vereinigung zeigen"
 
 #: ../app/actions/cursor-info-actions.c:49
-#: ../app/actions/sample-points-actions.c:48
+msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Das Ergebnis der Komposition aller sichtbaren Ebenen verwenden"
 
@@ -944,6 +973,7 @@ msgid "Tool _Options"
 msgstr "Werkzeug_einstellungen"
 
 #: ../app/actions/dialogs-actions.c:40
+msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Den Dialog »Werkzeugeinstellungen« anzeigen"
 
@@ -953,6 +983,7 @@ msgid "_Device Status"
 msgstr "_Gerätestatus"
 
 #: ../app/actions/dialogs-actions.c:46
+msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Den Dialog »Gerätestatus« anzeigen"
 
@@ -962,6 +993,7 @@ msgid "_Layers"
 msgstr "_Ebenen"
 
 #: ../app/actions/dialogs-actions.c:52
+msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Den Dialog »Ebenen« anzeigen"
 
@@ -971,6 +1003,7 @@ msgid "_Channels"
 msgstr "_Kanäle"
 
 #: ../app/actions/dialogs-actions.c:58
+msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Den Dialog »Kanäle« anzeigen"
 
@@ -980,6 +1013,7 @@ msgid "_Paths"
 msgstr "_Pfade"
 
 #: ../app/actions/dialogs-actions.c:64
+msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Den Dialog »Pfade« anzeigen"
 
@@ -989,6 +1023,7 @@ msgid "Color_map"
 msgstr "Farb_tabelle"
 
 #: ../app/actions/dialogs-actions.c:70
+msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Den Dialog »Farbtabelle« anzeigen"
 
@@ -998,6 +1033,7 @@ msgid "Histogra_m"
 msgstr "_Histogramm"
 
 #: ../app/actions/dialogs-actions.c:76
+msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Den Dialog »Histogramm« anzeigen"
 
@@ -1007,6 +1043,7 @@ msgid "_Selection Editor"
 msgstr "Auswahl_editor"
 
 #: ../app/actions/dialogs-actions.c:82
+msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Den Dialog »Auswahleditor« anzeigen"
 
@@ -1016,6 +1053,7 @@ msgid "Na_vigation"
 msgstr "_Navigation"
 
 #: ../app/actions/dialogs-actions.c:88
+msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Den Dialog »Navigation« anzeigen"
 
@@ -1025,6 +1063,7 @@ msgid "Undo _History"
 msgstr "_Journal"
 
 #: ../app/actions/dialogs-actions.c:94
+msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Das Journal anzeigen"
 
@@ -1034,6 +1073,7 @@ msgid "Pointer"
 msgstr "Zeiger"
 
 #: ../app/actions/dialogs-actions.c:100
+msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Den Dialog »Zeigerinformationen« anzeigen"
 
@@ -1043,6 +1083,7 @@ msgid "_Sample Points"
 msgstr "Pr_üfpunkte"
 
 #: ../app/actions/dialogs-actions.c:106
+msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Den Dialog »Prüfpunkte« anzeigen"
 
@@ -1052,6 +1093,7 @@ msgid "Colo_rs"
 msgstr "_Farben"
 
 #: ../app/actions/dialogs-actions.c:112
+msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Den Dialog für Vorder- und Hintergrundfarbe anzeigen"
 
@@ -1061,6 +1103,7 @@ msgid "_Brushes"
 msgstr "_Pinsel"
 
 #: ../app/actions/dialogs-actions.c:118
+msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Den Dialog »Pinsel« anzeigen"
 
@@ -1070,6 +1113,7 @@ msgid "Brush Editor"
 msgstr "Pinseleditor"
 
 #: ../app/actions/dialogs-actions.c:124
+msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Den Dialog »Pinseleditor« anzeigen"
 
@@ -1079,6 +1123,7 @@ msgid "P_atterns"
 msgstr "_Muster"
 
 #: ../app/actions/dialogs-actions.c:130
+msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Den Dialog »Muster« anzeigen"
 
@@ -1088,6 +1133,7 @@ msgid "_Gradients"
 msgstr "Fa_rbverläufe"
 
 #: ../app/actions/dialogs-actions.c:136
+msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Den Dialog »Farbverläufe« anzeigen"
 
@@ -1097,6 +1143,7 @@ msgid "Gradient Editor"
 msgstr "Farbverlaufseditor"
 
 #: ../app/actions/dialogs-actions.c:142
+msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Den Dialog »Farbverlaufseditor« anzeigen"
 
@@ -1106,6 +1153,7 @@ msgid "Pal_ettes"
 msgstr "_Paletten"
 
 #: ../app/actions/dialogs-actions.c:148
+msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Den Dialog »Palletten« anzeigen"
 
@@ -1115,6 +1163,7 @@ msgid "Palette Editor"
 msgstr "Paletteneditor"
 
 #: ../app/actions/dialogs-actions.c:154
+msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Den Dialog »Palletteneditor« anzeigen"
 
@@ -1124,6 +1173,7 @@ msgid "_Fonts"
 msgstr "_Schriften"
 
 #: ../app/actions/dialogs-actions.c:160
+msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Den Dialog »Schriften« anzeigen"
 
@@ -1133,6 +1183,7 @@ msgid "B_uffers"
 msgstr "A_blagen"
 
 #: ../app/actions/dialogs-actions.c:166
+msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Den Dialog »Ablagen« anzeigen"
 
@@ -1142,6 +1193,7 @@ msgid "_Images"
 msgstr "_Bilder"
 
 #: ../app/actions/dialogs-actions.c:172
+msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Den Dialog »Bilder« anzeigen"
 
@@ -1151,6 +1203,7 @@ msgid "Document Histor_y"
 msgstr "_Dokumentenindex"
 
 #: ../app/actions/dialogs-actions.c:178
+msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Den Dialog »Dokumentenindex« anzeigen"
 
@@ -1160,6 +1213,7 @@ msgid "_Templates"
 msgstr "_Vorlagen"
 
 #: ../app/actions/dialogs-actions.c:184
+msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Den Vorlagendialog anzeigen"
 
@@ -1169,6 +1223,7 @@ msgid "T_ools"
 msgstr "_Werkzeuge"
 
 #: ../app/actions/dialogs-actions.c:190
+msgctxt "dialogs-action"
 msgid "Open the tools dialog"
 msgstr "Den Dialog »Werkzeuge« anzeigen"
 
@@ -1178,6 +1233,7 @@ msgid "Error Co_nsole"
 msgstr "_Fehlerausgabe"
 
 #: ../app/actions/dialogs-actions.c:196
+msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Öffnet ein extra Fenster für die Fehlerausgabe"
 
@@ -1187,6 +1243,7 @@ msgid "_Preferences"
 msgstr "_Einstellungen"
 
 #: ../app/actions/dialogs-actions.c:207
+msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Den Dialog »Einstellungen« anzeigen"
 
@@ -1196,6 +1253,7 @@ msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkombinationen"
 
 #: ../app/actions/dialogs-actions.c:213
+msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Den Editor für die Tastenkombinationen öffnen"
 
@@ -1205,6 +1263,7 @@ msgid "_Modules"
 msgstr "_Module"
 
 #: ../app/actions/dialogs-actions.c:219
+msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Die Modulverwaltung öffnen"
 
@@ -1214,6 +1273,7 @@ msgid "_Tip of the Day"
 msgstr "_Tipp des Tages"
 
 #: ../app/actions/dialogs-actions.c:225
+msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Zeigt hilfreiche Tipps zur Benutzung von GIMP"
 
@@ -1222,8 +1282,8 @@ msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Info"
 
-#: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:473
+#: ../app/actions/dialogs-actions.c:231
+msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Informationen zu GIMP"
 
@@ -1242,7 +1302,8 @@ msgctxt "dock-action"
 msgid "_Open Display..."
 msgstr "_Anzeige öffnen …"
 
-#: ../app/actions/dock-actions.c:53 ../app/actions/view-actions.c:126
+#: ../app/actions/dock-actions.c:53
+msgctxt "dock-action"
 msgid "Connect to another display"
 msgstr "Mit einer anderen Anzeige verbinden"
 
@@ -1261,121 +1322,122 @@ msgctxt "dockable-action"
 msgid "Dialogs Menu"
 msgstr "Dialogmenü"
 
-#: ../app/actions/dockable-actions.c:53
+#: ../app/actions/dockable-actions.c:54
 msgctxt "dockable-action"
 msgid "_Add Tab"
 msgstr "Reiter _hinzufügen"
 
-#: ../app/actions/dockable-actions.c:54
+#: ../app/actions/dockable-actions.c:56
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr "Vorschau_größe"
 
-#: ../app/actions/dockable-actions.c:55
+#: ../app/actions/dockable-actions.c:58
 msgctxt "dockable-action"
 msgid "_Tab Style"
 msgstr "Reiter_stil"
 
-#: ../app/actions/dockable-actions.c:58
+#: ../app/actions/dockable-actions.c:61
 msgctxt "dockable-action"
 msgid "_Close Tab"
 msgstr "Reiter s_chließen"
 
-#: ../app/actions/dockable-actions.c:63
+#: ../app/actions/dockable-actions.c:66
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr "Reiter _lösen"
 
-#: ../app/actions/dockable-actions.c:82
+#: ../app/actions/dockable-actions.c:85
 msgctxt "preview-size"
 msgid "_Tiny"
 msgstr "_Winzig"
 
-#: ../app/actions/dockable-actions.c:84
+#: ../app/actions/dockable-actions.c:87
 msgctxt "preview-size"
 msgid "E_xtra Small"
 msgstr "_Sehr klein"
 
-#: ../app/actions/dockable-actions.c:86
+#: ../app/actions/dockable-actions.c:89
 msgctxt "preview-size"
 msgid "_Small"
 msgstr "_Klein"
 
-#: ../app/actions/dockable-actions.c:88
+#: ../app/actions/dockable-actions.c:91
 msgctxt "preview-size"
 msgid "_Medium"
 msgstr "_Mittel"
 
-#: ../app/actions/dockable-actions.c:90
+#: ../app/actions/dockable-actions.c:93
 msgctxt "preview-size"
 msgid "_Large"
 msgstr "_Groß"
 
-#: ../app/actions/dockable-actions.c:92
+#: ../app/actions/dockable-actions.c:95
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr "S_ehr groß"
 
-#: ../app/actions/dockable-actions.c:94
+#: ../app/actions/dockable-actions.c:97
 msgctxt "preview-size"
 msgid "_Huge"
 msgstr "_Riesig"
 
-#: ../app/actions/dockable-actions.c:96
+#: ../app/actions/dockable-actions.c:99
 msgctxt "preview-size"
 msgid "_Enormous"
 msgstr "_Enorm"
 
-#: ../app/actions/dockable-actions.c:98
+#: ../app/actions/dockable-actions.c:101
 msgctxt "preview-size"
 msgid "_Gigantic"
 msgstr "_Gigantisch"
 
-#: ../app/actions/dockable-actions.c:104
+#: ../app/actions/dockable-actions.c:107
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr "_Symbol"
 
-#: ../app/actions/dockable-actions.c:106
+#: ../app/actions/dockable-actions.c:109
 msgctxt "tab-style"
 msgid "Current _Status"
 msgstr "Aktueller _Status"
 
-#: ../app/actions/dockable-actions.c:108
+#: ../app/actions/dockable-actions.c:111
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "_Text"
 
-#: ../app/actions/dockable-actions.c:110
+#: ../app/actions/dockable-actions.c:113
 msgctxt "tab-style"
 msgid "I_con & Text"
 msgstr "Symbol _und Text"
 
-#: ../app/actions/dockable-actions.c:112
+#: ../app/actions/dockable-actions.c:115
 msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_atus und Text"
 
-#: ../app/actions/dockable-actions.c:122
+#: ../app/actions/dockable-actions.c:125
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
 msgstr "Reiter _sperren"
 
-#: ../app/actions/dockable-actions.c:123
+#: ../app/actions/dockable-actions.c:127
+msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr "Diese Reiter davor bewahren, mit der Maus bewegt zu werden"
 
-#: ../app/actions/dockable-actions.c:129
+#: ../app/actions/dockable-actions.c:133
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr "_Schaltflächen zeigen"
 
-#: ../app/actions/dockable-actions.c:138
+#: ../app/actions/dockable-actions.c:142
 msgctxt "dockable-action"
 msgid "View as _List"
 msgstr "Als _Liste anzeigen"
 
-#: ../app/actions/dockable-actions.c:143
+#: ../app/actions/dockable-actions.c:147
 msgctxt "dockable-action"
 msgid "View as _Grid"
 msgstr "Als _Raster anzeigen"
@@ -1391,6 +1453,7 @@ msgid "_Open Image"
 msgstr "Bild ö_ffnen"
 
 #: ../app/actions/documents-actions.c:47
+msgctxt "documents-action"
 msgid "Open the selected entry"
 msgstr "Gewählten Eintrag öffnen"
 
@@ -1400,6 +1463,7 @@ msgid "_Raise or Open Image"
 msgstr "Bild öffnen oder _anheben"
 
 #: ../app/actions/documents-actions.c:53
+msgctxt "documents-action"
 msgid "Raise window if already open"
 msgstr "Fenster in den Vordergrund bringen, falls es schon geöffnet ist"
 
@@ -1409,6 +1473,7 @@ msgid "File Open _Dialog"
 msgstr "Datei-Öffnen-_Dialog"
 
 #: ../app/actions/documents-actions.c:59
+msgctxt "documents-action"
 msgid "Open image dialog"
 msgstr "Dialog um ein Bild zu öffnen"
 
@@ -1418,6 +1483,7 @@ msgid "Copy Image _Location"
 msgstr "Speicher_ort des Bild kopieren"
 
 #: ../app/actions/documents-actions.c:65
+msgctxt "documents-action"
 msgid "Copy image location to clipboard"
 msgstr "Den Speicherort des Bildes in die Zwischenablage kopieren"
 
@@ -1427,6 +1493,7 @@ msgid "Remove _Entry"
 msgstr "Eintrag _entfernen"
 
 #: ../app/actions/documents-actions.c:71
+msgctxt "documents-action"
 msgid "Remove the selected entry"
 msgstr "Den gewählten Eintrag entfernen"
 
@@ -1436,8 +1503,9 @@ msgid "_Clear History"
 msgstr "Journal sä_ubern"
 
 #: ../app/actions/documents-actions.c:77
+msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Das gesamte Journal dieses Dokuments säubern"
+msgstr "Die Liste der verwendeten Dokumente säubern"
 
 #: ../app/actions/documents-actions.c:82
 msgctxt "documents-action"
@@ -1445,26 +1513,29 @@ msgid "Recreate _Preview"
 msgstr "_Vorschau neu erzeugen"
 
 #: ../app/actions/documents-actions.c:83
+msgctxt "documents-action"
 msgid "Recreate preview"
 msgstr "Vorschau neu erzeugen"
 
 #: ../app/actions/documents-actions.c:88
 msgctxt "documents-action"
 msgid "Reload _all Previews"
-msgstr "A_lle Vorschaufenster neu laden"
+msgstr "A_lle Vorschauen neu laden"
 
 #: ../app/actions/documents-actions.c:89
+msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "Alle Vorschaufenster neu laden"
+msgstr "Alle Vorschaubilder neu laden"
 
 #: ../app/actions/documents-actions.c:94
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
 msgstr "_Hängende Einträge entfernen"
 
-#: ../app/actions/documents-actions.c:95
-msgid "Remove dangling entries"
-msgstr "Hängende Einträge entfernen"
+#: ../app/actions/documents-actions.c:96
+msgctxt "documents-action"
+msgid "Remove entries for which the corresponding file is not available"
+msgstr "Einträge entfernen, für die die dazugehörige Datei nicht existiert"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
@@ -1488,6 +1559,7 @@ msgid "_Equalize"
 msgstr "_Abgleichen"
 
 #: ../app/actions/drawable-actions.c:47
+msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
 msgstr "Automatische Kontrastverbesserung"
 
@@ -1497,6 +1569,7 @@ msgid "In_vert"
 msgstr "_Invertieren"
 
 #: ../app/actions/drawable-actions.c:53
+msgctxt "drawable-action"
 msgid "Invert the colors"
 msgstr "Kehrt den Farbwert jedes Pixels um"
 
@@ -1506,6 +1579,7 @@ msgid "_White Balance"
 msgstr "_Weißabgleich"
 
 #: ../app/actions/drawable-actions.c:59
+msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Automatischer Weißabgleich"
 
@@ -1514,70 +1588,78 @@ msgctxt "drawable-action"
 msgid "_Offset..."
 msgstr "_Versatz …"
 
-#: ../app/actions/drawable-actions.c:65
+#: ../app/actions/drawable-actions.c:66
+msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Pixel verschieben, und sie optional an den Rändern umbrechen"
 
-#: ../app/actions/drawable-actions.c:73
+#: ../app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
 msgid "_Linked"
 msgstr "_Verknüpft"
 
-#: ../app/actions/drawable-actions.c:74
+#: ../app/actions/drawable-actions.c:75
+msgctxt "drawable-action"
 msgid "Toggle the linked state"
 msgstr "Verknüpfungsstatus ändern"
 
-#: ../app/actions/drawable-actions.c:80
+#: ../app/actions/drawable-actions.c:81
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr "_Sichtbar"
 
-#: ../app/actions/drawable-actions.c:81
+#: ../app/actions/drawable-actions.c:82
+msgctxt "drawable-action"
 msgid "Toggle visibility"
 msgstr "Sichtbarkeit einstellen"
 
-#: ../app/actions/drawable-actions.c:90
+#: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "_Horizontal spiegeln"
 
-#: ../app/actions/drawable-actions.c:91
+#: ../app/actions/drawable-actions.c:92
+msgctxt "drawable-action"
 msgid "Flip horizontally"
 msgstr "Horizontal spiegeln"
 
-#: ../app/actions/drawable-actions.c:96
+#: ../app/actions/drawable-actions.c:97
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "_Vertikal spiegeln"
 
-#: ../app/actions/drawable-actions.c:97
+#: ../app/actions/drawable-actions.c:98
+msgctxt "drawable-action"
 msgid "Flip vertically"
 msgstr "Vertikal spiegeln"
 
-#: ../app/actions/drawable-actions.c:105
+#: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Um 90° im _Uhrzeigersinn drehen"
 
-#: ../app/actions/drawable-actions.c:106
+#: ../app/actions/drawable-actions.c:107
+msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Um 90° nach rechts drehen"
 
-#: ../app/actions/drawable-actions.c:111
+#: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "Um _180° drehen"
 
-#: ../app/actions/drawable-actions.c:112
+#: ../app/actions/drawable-actions.c:113
+msgctxt "drawable-action"
 msgid "Turn upside-down"
 msgstr "Auf den Kopf stellen"
 
-#: ../app/actions/drawable-actions.c:117
+#: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Um 90° _gegen den Uhrzeigersinn drehen"
 
-#: ../app/actions/drawable-actions.c:118
+#: ../app/actions/drawable-actions.c:119
+msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Um 90° nach links drehen"
 
@@ -1619,6 +1701,7 @@ msgid "_Undo"
 msgstr "_Rückgängig"
 
 #: ../app/actions/edit-actions.c:74
+msgctxt "edit-action"
 msgid "Undo the last operation"
 msgstr "Die letzte Operation rückgängig machen"
 
@@ -1628,6 +1711,7 @@ msgid "_Redo"
 msgstr "_Wiederherstellen"
 
 #: ../app/actions/edit-actions.c:80
+msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
 msgstr "Die zuletzt zurück genommene Operation wiederherstellen"
 
@@ -1637,6 +1721,7 @@ msgid "Strong Undo"
 msgstr "Starkes Rückgängig"
 
 #: ../app/actions/edit-actions.c:86
+msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
 msgstr ""
 "Die letzte Aktion zurücknehmen und dabei Änderungen an Sichtbarkeit übergehen"
@@ -1646,197 +1731,215 @@ msgctxt "edit-action"
 msgid "Strong Redo"
 msgstr "Starkes Wiederherstellen"
 
-#: ../app/actions/edit-actions.c:92
+#: ../app/actions/edit-actions.c:93
+msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
 "Die zuletzt zurück genommene Operation wiederherstellen und dabei Änderungen "
 "an Sichtbarkeit übergehen"
 
-#: ../app/actions/edit-actions.c:97
+#: ../app/actions/edit-actions.c:98
 msgctxt "edit-action"
 msgid "_Clear Undo History"
 msgstr "Journal _leeren"
 
-#: ../app/actions/edit-actions.c:98
+#: ../app/actions/edit-actions.c:99
+msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
 msgstr "Alle Einträge aus dem Journal entfernen"
 
-#: ../app/actions/edit-actions.c:103
+#: ../app/actions/edit-actions.c:104
 msgctxt "edit-action"
 msgid "_Fade..."
 msgstr "_Verblassen …"
 
-#: ../app/actions/edit-actions.c:104
+#: ../app/actions/edit-actions.c:106
+msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
 "Den Zeichenmodus und die Deckkraft der letzten Pixel-Modifikation bearbeiten"
 
-#: ../app/actions/edit-actions.c:109
+#: ../app/actions/edit-actions.c:111
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "_Ausschneiden"
 
-#: ../app/actions/edit-actions.c:110
+#: ../app/actions/edit-actions.c:112
+msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
 msgstr "Ausgewählte Pixel in die Zwischenablage verschieben"
 
-#: ../app/actions/edit-actions.c:115
+#: ../app/actions/edit-actions.c:117
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "_Kopieren"
 
-#: ../app/actions/edit-actions.c:116
+#: ../app/actions/edit-actions.c:118
+msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
 msgstr "Ausgewählte Pixel in die Zwischenablage kopieren"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:121
+#: ../app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Copy _Visible"
 msgstr "_Sichtbares kopieren"
 
-#: ../app/actions/edit-actions.c:122
+#: ../app/actions/edit-actions.c:124
+msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
 msgstr "Kopiert das was sichtbar und ausgewählt ist in die Zwischenablage"
 
-#: ../app/actions/edit-actions.c:127
+#: ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "E_infügen"
 
-#: ../app/actions/edit-actions.c:128
+#: ../app/actions/edit-actions.c:130
+msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "Aus der Zwischenablage einfügen"
 
-#: ../app/actions/edit-actions.c:133
+#: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Paste _Into"
 msgstr "In Aus_wahl einfügen"
 
-#: ../app/actions/edit-actions.c:134
+#: ../app/actions/edit-actions.c:137
+msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Den Inhalt der Zwischenablage in die Auswahl einfügen"
 
-#: ../app/actions/edit-actions.c:139
+#: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Aus _Zwischenablage"
 
-#: ../app/actions/edit-actions.c:140 ../app/actions/edit-actions.c:146
+#: ../app/actions/edit-actions.c:143 ../app/actions/edit-actions.c:149
+msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Ein neues Bild aus dem Inhalt der Zwischenablage erzeugen"
 
-#: ../app/actions/edit-actions.c:145
+#: ../app/actions/edit-actions.c:148
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "Neues _Bild"
 
-#: ../app/actions/edit-actions.c:151
+#: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "New _Layer"
 msgstr "Neue _Ebene"
 
-#: ../app/actions/edit-actions.c:152
+#: ../app/actions/edit-actions.c:155
+msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
 msgstr "Ein neue Ebene aus dem Inhalt der Zwischenablage erzeugen"
 
-#: ../app/actions/edit-actions.c:157
+#: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "In Ablage _verschieben …"
 
-#: ../app/actions/edit-actions.c:158
+#: ../app/actions/edit-actions.c:161
+msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Ausgewählte Pixel in eine benannte Ablage verschieben"
 
-#: ../app/actions/edit-actions.c:163
+#: ../app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "In Ablage _kopieren …"
 
-#: ../app/actions/edit-actions.c:164
+#: ../app/actions/edit-actions.c:167
+msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Ausgewählte Pixel in eine benannte Ablage kopieren"
 
 #. GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:169
+#: ../app/actions/edit-actions.c:172
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "_Sichtbares in Ablage kopieren …"
 
-#: ../app/actions/edit-actions.c:170
+#: ../app/actions/edit-actions.c:173
+msgctxt "edit-action"
 msgid "Copy the selected region to a named buffer"
 msgstr "Ausgewählten Bereich in eine benannte Ablage kopieren"
 
-#: ../app/actions/edit-actions.c:175
+#: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "Aus Ablage _einfügen …"
 
-#: ../app/actions/edit-actions.c:176
+#: ../app/actions/edit-actions.c:179
+msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Den Inhalt einer benannten Ablage einfügen"
 
-#: ../app/actions/edit-actions.c:181
+#: ../app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_Löschen"
 
-#: ../app/actions/edit-actions.c:182
+#: ../app/actions/edit-actions.c:185
+msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Ausgewählte Pixel entfernen"
 
-#: ../app/actions/edit-actions.c:190
+#: ../app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Mit _Vordergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:191
+#: ../app/actions/edit-actions.c:194
+msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Die Auswahl mit der Vordergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:196
+#: ../app/actions/edit-actions.c:199
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Mit _Hintergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:197
+#: ../app/actions/edit-actions.c:200
+msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Die Auswahl mit der Hintergrundfarbe füllen"
 
-#: ../app/actions/edit-actions.c:202
+#: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
 msgid "Fill with P_attern"
 msgstr "Mit _Muster füllen"
 
-#: ../app/actions/edit-actions.c:203
+#: ../app/actions/edit-actions.c:206
+msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Die Auswahl mit dem aktuellen Muster füllen"
 
-#: ../app/actions/edit-actions.c:280
+#: ../app/actions/edit-actions.c:283
 #, c-format
 msgid "_Undo %s"
 msgstr "_Rückgängig: %s"
 
-#: ../app/actions/edit-actions.c:287
+#: ../app/actions/edit-actions.c:290
 #, c-format
 msgid "_Redo %s"
 msgstr "_Wiederholen: %s"
 
-#: ../app/actions/edit-actions.c:302
+#: ../app/actions/edit-actions.c:305
 #, c-format
 msgid "_Fade %s..."
 msgstr "%s verblassen …"
 
-#: ../app/actions/edit-actions.c:314
+#: ../app/actions/edit-actions.c:317
 msgid "_Undo"
 msgstr "_Rückgängig"
 
-#: ../app/actions/edit-actions.c:315
+#: ../app/actions/edit-actions.c:318
 msgid "_Redo"
 msgstr "_Wiederherstellen"
 
-#: ../app/actions/edit-actions.c:316
+#: ../app/actions/edit-actions.c:319
 msgid "_Fade..."
 msgstr "_Verblassen …"
 
@@ -1919,6 +2022,7 @@ msgid "_Clear"
 msgstr "_Leeren"
 
 #: ../app/actions/error-console-actions.c:45
+msgctxt "error-console-action"
 msgid "Clear error console"
 msgstr "Fehlerkonsole leeren"
 
@@ -1928,7 +2032,8 @@ msgid "Select _All"
 msgstr "_Alles auswählen"
 
 #: ../app/actions/error-console-actions.c:51
-msgid "Select all errors"
+msgctxt "error-console-action"
+msgid "Select all error messages"
 msgstr "Alle Fehlermeldungen auswählen"
 
 #: ../app/actions/error-console-actions.c:59
@@ -1937,8 +2042,9 @@ msgid "_Save Error Log to File..."
 msgstr "Fehlerprotokoll in Datei _speichern …"
 
 #: ../app/actions/error-console-actions.c:60
-msgid "Save error log"
-msgstr "Fehlerprotokoll speichern"
+msgctxt "error-console-action"
+msgid "Write all error mesaages to a file"
+msgstr "Alle Fehlermeldungen in eine Datei schreiben"
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
@@ -1946,8 +2052,9 @@ msgid "Save S_election to File..."
 msgstr "Aus_wahl in Datei speichern …"
 
 #: ../app/actions/error-console-actions.c:66
-msgid "Save selection"
-msgstr "Auswahl speichern"
+msgctxt "error-console-action"
+msgid "Write the selected error messages to a file"
+msgstr "Die ausgewählten Fehlermeldungen in eine Datei schreiben"
 
 #: ../app/actions/error-console-commands.c:85
 msgid "Cannot save. Nothing is selected."
@@ -1987,6 +2094,7 @@ msgid "_Open..."
 msgstr "Ö_ffnen …"
 
 #: ../app/actions/file-actions.c:73
+msgctxt "file-action"
 msgid "Open an image file"
 msgstr "Eine Bilddatei öffnen"
 
@@ -1996,6 +2104,7 @@ msgid "Op_en as Layers..."
 msgstr "Als _Ebenen öffnen …"
 
 #: ../app/actions/file-actions.c:79
+msgctxt "file-action"
 msgid "Open an image file as layers"
 msgstr "Bilddatei als Ebenen öffnen"
 
@@ -2005,6 +2114,7 @@ msgid "Open _Location..."
 msgstr "Adresse öffnen …"
 
 #: ../app/actions/file-actions.c:85
+msgctxt "file-action"
 msgid "Open an image file from a specified location"
 msgstr "Bilddatei von einer angegebenen Adresse öffnen"
 
@@ -2014,6 +2124,7 @@ msgid "Save as _Template..."
 msgstr "Als _Vorlage speichern …"
 
 #: ../app/actions/file-actions.c:91
+msgctxt "file-action"
 msgid "Create a new template from this image"
 msgstr "Aus diesem Bild eine neue Vorlage erzeugen"
 
@@ -2023,6 +2134,7 @@ msgid "Re_vert"
 msgstr "_Wiederherstellen"
 
 #: ../app/actions/file-actions.c:97
+msgctxt "file-action"
 msgid "Reload the image file from disk"
 msgstr "Den zuletzt gespeicherten Stand wiederherstellen"
 
@@ -2032,6 +2144,7 @@ msgid "Close all"
 msgstr "Alle schließen"
 
 #: ../app/actions/file-actions.c:103
+msgctxt "file-action"
 msgid "Close all opened images"
 msgstr "Alle geöffneten Bilder schließen"
 
@@ -2041,6 +2154,7 @@ msgid "_Quit"
 msgstr "_Beenden"
 
 #: ../app/actions/file-actions.c:109
+msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Das GNU Image Manipulation Program beenden"
 
@@ -2050,6 +2164,7 @@ msgid "_Save"
 msgstr "_Speichern"
 
 #: ../app/actions/file-actions.c:118
+msgctxt "file-action"
 msgid "Save this image"
 msgstr "Dieses Bild speichern"
 
@@ -2059,6 +2174,7 @@ msgid "Save _As..."
 msgstr "Speichern _unter …"
 
 #: ../app/actions/file-actions.c:124
+msgctxt "file-action"
 msgid "Save this image with a different name"
 msgstr "Dieses Bild unter einem anderen Namen speichern"
 
@@ -2067,18 +2183,20 @@ msgctxt "file-action"
 msgid "Save a Cop_y..."
 msgstr "_Kopie speichern …"
 
-#: ../app/actions/file-actions.c:130
+#: ../app/actions/file-actions.c:131
+msgctxt "file-action"
 msgid "Save this image with a different name, but keep its current name"
 msgstr ""
 "Dieses Bild unter einem anderen Namen speichern, aber den Namen des "
 "geöffneten Bildes behalten"
 
-#: ../app/actions/file-actions.c:135
+#: ../app/actions/file-actions.c:136
 msgctxt "file-action"
 msgid "Save and Close..."
 msgstr "Speichern und schließen …"
 
-#: ../app/actions/file-actions.c:136
+#: ../app/actions/file-actions.c:137
+msgctxt "file-action"
 msgid "Save this image and close its window"
 msgstr "Dieses Bild speichern und das Bildfenster schließen"
 
@@ -2176,8 +2294,9 @@ msgid "_Rescan Font List"
 msgstr "Schriften _neu einlesen"
 
 #: ../app/actions/fonts-actions.c:49
-msgid "Rescan font list"
-msgstr "Schriftenliste neu einlesen"
+msgctxt "fonts-action"
+msgid "Rescan the installed fonts"
+msgstr "Die installieren Schriften neu durchsuchen"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
@@ -2272,183 +2391,181 @@ msgid "_Left Endpoint"
 msgstr "Linker Endpunkt"
 
 #: ../app/actions/gradient-editor-actions.c:258
-#: ../app/actions/gradient-editor-actions.c:286
+#: ../app/actions/gradient-editor-actions.c:288
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Fest"
 
 #: ../app/actions/gradient-editor-actions.c:263
-#: ../app/actions/gradient-editor-actions.c:291
+#: ../app/actions/gradient-editor-actions.c:293
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "_Vordergrundfarbe"
 
-#: ../app/actions/gradient-editor-actions.c:268
-#: ../app/actions/gradient-editor-actions.c:296
+#: ../app/actions/gradient-editor-actions.c:269
+#: ../app/actions/gradient-editor-actions.c:299
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "V_ordergrundfarbe (transparent)"
 
-#: ../app/actions/gradient-editor-actions.c:273
-#: ../app/actions/gradient-editor-actions.c:301
+#: ../app/actions/gradient-editor-actions.c:274
+#: ../app/actions/gradient-editor-actions.c:304
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "_Hintergrundfarbe"
 
-#: ../app/actions/gradient-editor-actions.c:278
-#: ../app/actions/gradient-editor-actions.c:306
+#: ../app/actions/gradient-editor-actions.c:280
+#: ../app/actions/gradient-editor-actions.c:310
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "H_intergrundfarbe (transparent)"
 
-#: ../app/actions/gradient-editor-actions.c:314
+#: ../app/actions/gradient-editor-actions.c:318
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_Linear"
 
-#: ../app/actions/gradient-editor-actions.c:319
+#: ../app/actions/gradient-editor-actions.c:323
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_Kurven"
 
-#: ../app/actions/gradient-editor-actions.c:324
+#: ../app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_Sinusförmig"
 
-#: ../app/actions/gradient-editor-actions.c:329
+#: ../app/actions/gradient-editor-actions.c:333
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "Sphärisch (_zunehmend)"
 
-#: ../app/actions/gradient-editor-actions.c:334
+#: ../app/actions/gradient-editor-actions.c:338
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "Sphärisch (_abnehmend)"
 
-#: ../app/actions/gradient-editor-actions.c:339
+#: ../app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(Variiert)"
 
-#: ../app/actions/gradient-editor-actions.c:347
+#: ../app/actions/gradient-editor-actions.c:351
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/gradient-editor-actions.c:352
+#: ../app/actions/gradient-editor-actions.c:356
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (Farbton _gegen Uhrzeigersinn)"
 
-#: ../app/actions/gradient-editor-actions.c:357
+#: ../app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (Farbton _im Uhrzeigersinn)"
 
-#: ../app/actions/gradient-editor-actions.c:362
+#: ../app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(Variiert)"
 
-#: ../app/actions/gradient-editor-actions.c:370
+#: ../app/actions/gradient-editor-actions.c:374
 msgid "Zoom In"
 msgstr "Vergrößern"
 
-#: ../app/actions/gradient-editor-actions.c:371
-#: ../app/actions/palette-editor-actions.c:88
-#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
+#: ../app/actions/gradient-editor-actions.c:375
+#: ../app/actions/palette-editor-actions.c:90
 msgid "Zoom in"
 msgstr "Vergrößern"
 
-#: ../app/actions/gradient-editor-actions.c:376
+#: ../app/actions/gradient-editor-actions.c:380
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
-#: ../app/actions/gradient-editor-actions.c:377
-#: ../app/actions/palette-editor-actions.c:94
-#: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
+#: ../app/actions/gradient-editor-actions.c:381
+#: ../app/actions/palette-editor-actions.c:96
 msgid "Zoom out"
 msgstr "Verkleinern"
 
-#: ../app/actions/gradient-editor-actions.c:382
+#: ../app/actions/gradient-editor-actions.c:386
 msgid "Zoom All"
 msgstr "Alles anzeigen"
 
-#: ../app/actions/gradient-editor-actions.c:383
-#: ../app/actions/palette-editor-actions.c:100
+#: ../app/actions/gradient-editor-actions.c:387
+#: ../app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
 msgstr "Alles anzeigen"
 
-#: ../app/actions/gradient-editor-actions.c:773
+#: ../app/actions/gradient-editor-actions.c:777
 msgid "_Blending Function for Segment"
 msgstr "_Verlaufsfunktion für Segment"
 
-#: ../app/actions/gradient-editor-actions.c:775
+#: ../app/actions/gradient-editor-actions.c:779
 msgid "Coloring _Type for Segment"
 msgstr "_Färbungsart für Segment"
 
-#: ../app/actions/gradient-editor-actions.c:778
+#: ../app/actions/gradient-editor-actions.c:782
 msgid "_Flip Segment"
 msgstr "Segment sp_iegeln"
 
-#: ../app/actions/gradient-editor-actions.c:780
+#: ../app/actions/gradient-editor-actions.c:784
 msgid "_Replicate Segment..."
 msgstr "Segment _duplizieren …"
 
-#: ../app/actions/gradient-editor-actions.c:782
+#: ../app/actions/gradient-editor-actions.c:786
 msgid "Split Segment at _Midpoint"
 msgstr "Segment _mittig teilen"
 
-#: ../app/actions/gradient-editor-actions.c:784
+#: ../app/actions/gradient-editor-actions.c:788
 msgid "Split Segment _Uniformly..."
 msgstr "Segment _gleichmäßig aufteilen …"
 
-#: ../app/actions/gradient-editor-actions.c:786
+#: ../app/actions/gradient-editor-actions.c:790
 msgid "_Delete Segment"
 msgstr "Segment _löschen"
 
-#: ../app/actions/gradient-editor-actions.c:788
+#: ../app/actions/gradient-editor-actions.c:792
 msgid "Re-_center Segment's Midpoint"
 msgstr "Mittelpunkt des Segments _zentrieren"
 
-#: ../app/actions/gradient-editor-actions.c:790
+#: ../app/actions/gradient-editor-actions.c:794
 msgid "Re-distribute _Handles in Segment"
 msgstr "Punkte _gleichmäßig im Segment verteilen"
 
-#: ../app/actions/gradient-editor-actions.c:795
+#: ../app/actions/gradient-editor-actions.c:799
 msgid "_Blending Function for Selection"
 msgstr "_Verlaufsfunktion für Auswahl"
 
-#: ../app/actions/gradient-editor-actions.c:797
+#: ../app/actions/gradient-editor-actions.c:801
 msgid "Coloring _Type for Selection"
 msgstr "_Färbungsart für Auswahl"
 
-#: ../app/actions/gradient-editor-actions.c:800
+#: ../app/actions/gradient-editor-actions.c:804
 msgid "_Flip Selection"
 msgstr "Auswahl sp_iegeln"
 
-#: ../app/actions/gradient-editor-actions.c:802
+#: ../app/actions/gradient-editor-actions.c:806
 msgid "_Replicate Selection..."
 msgstr "Auswahl _duplizieren …"
 
-#: ../app/actions/gradient-editor-actions.c:804
+#: ../app/actions/gradient-editor-actions.c:808
 msgid "Split Segments at _Midpoints"
 msgstr "Segmente an _Mittelpunkten aufteilen"
 
-#: ../app/actions/gradient-editor-actions.c:806
+#: ../app/actions/gradient-editor-actions.c:810
 msgid "Split Segments _Uniformly..."
 msgstr "Segmente _gleichmäßig aufteilen …"
 
-#: ../app/actions/gradient-editor-actions.c:808
+#: ../app/actions/gradient-editor-actions.c:812
 msgid "_Delete Selection"
 msgstr "Auswahl _löschen"
 
-#: ../app/actions/gradient-editor-actions.c:810
+#: ../app/actions/gradient-editor-actions.c:814
 msgid "Re-_center Midpoints in Selection"
 msgstr "Mittelpunkte in Auswahl _zentrieren"
 
-#: ../app/actions/gradient-editor-actions.c:812
+#: ../app/actions/gradient-editor-actions.c:816
 msgid "Re-distribute _Handles in Selection"
 msgstr "Punkte _gleichmäßig in Auswahl verteilen"
 
@@ -2551,6 +2668,7 @@ msgid "_New Gradient"
 msgstr "_Neuer Farbverlauf"
 
 #: ../app/actions/gradients-actions.c:49
+msgctxt "gradients-action"
 msgid "Create a new gradient"
 msgstr "Ein neues Bild erstellen"
 
@@ -2560,6 +2678,7 @@ msgid "D_uplicate Gradient"
 msgstr "Farbverlauf _duplizieren"
 
 #: ../app/actions/gradients-actions.c:55
+msgctxt "gradients-action"
 msgid "Duplicate this gradient"
 msgstr "Farbverlauf duplizieren"
 
@@ -2569,6 +2688,7 @@ msgid "Copy Gradient _Location"
 msgstr "Speicher_ort des Farbverlaufs kopieren"
 
 #: ../app/actions/gradients-actions.c:61
+msgctxt "gradients-action"
 msgid "Copy gradient file location to clipboard"
 msgstr "Den Speicherort der Farbverlaufsdatei in Zwischenablage kopieren"
 
@@ -2578,6 +2698,7 @@ msgid "Save as _POV-Ray..."
 msgstr "Als _POV-Ray-Datei speichern …"
 
 #: ../app/actions/gradients-actions.c:67
+msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
 msgstr "Farbverlauf als POV-Ray-Datei speichern"
 
@@ -2587,8 +2708,9 @@ msgid "_Delete Gradient"
 msgstr "Farbverlauf _löschen"
 
 #: ../app/actions/gradients-actions.c:73
+msgctxt "gradients-action"
 msgid "Delete this gradient"
-msgstr "Farbverlauf löschen"
+msgstr "Diesen Farbverlauf löschen"
 
 #: ../app/actions/gradients-actions.c:78
 msgctxt "gradients-action"
@@ -2596,6 +2718,7 @@ msgid "_Refresh Gradients"
 msgstr "Farbverläufe n_eu laden"
 
 #: ../app/actions/gradients-actions.c:79
+msgctxt "gradients-action"
 msgid "Refresh gradients"
 msgstr "Farbverläufe neu laden"
 
@@ -2605,6 +2728,7 @@ msgid "_Edit Gradient..."
 msgstr "Farbverlauf _bearbeiten …"
 
 #: ../app/actions/gradients-actions.c:88
+msgctxt "gradients-action"
 msgid "Edit gradient"
 msgstr "Farbverlauf bearbeiten"
 
@@ -2619,6 +2743,7 @@ msgid "_Help"
 msgstr "_Hilfe"
 
 #: ../app/actions/help-actions.c:42
+msgctxt "help-action"
 msgid "Open the GIMP user manual"
 msgstr "Das GIMP-Benutzerhandbuch öffnen"
 
@@ -2628,6 +2753,7 @@ msgid "_Context Help"
 msgstr "_Kontexthilfe"
 
 #: ../app/actions/help-actions.c:48
+msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Hilfe für ein bestimmtes Bedienelement anzeigen"
 
@@ -2687,6 +2813,7 @@ msgid "_New..."
 msgstr "_Neu …"
 
 #: ../app/actions/image-actions.c:68
+msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Ein neues Bild erstellen"
 
@@ -2696,6 +2823,7 @@ msgid "Can_vas Size..."
 msgstr "_Leinwandgröße …"
 
 #: ../app/actions/image-actions.c:74
+msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Bildabmessungen anpassen"
 
@@ -2705,6 +2833,7 @@ msgid "F_it Canvas to Layers"
 msgstr "_Leinwand an Ebenen anpassen"
 
 #: ../app/actions/image-actions.c:80
+msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Bildgröße so verändern, dass alle Ebenen hineinpassen"
 
@@ -2714,6 +2843,7 @@ msgid "F_it Canvas to Selection"
 msgstr "Leinwand an _Auswahl anpassen"
 
 #: ../app/actions/image-actions.c:86
+msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Leinwand auf die Auswahlgröße zurechtschneiden"
 
@@ -2723,6 +2853,7 @@ msgid "_Print Size..."
 msgstr "_Druckgröße …"
 
 #: ../app/actions/image-actions.c:92
+msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Die Druckauflösung anpassen"
 
@@ -2732,6 +2863,7 @@ msgid "_Scale Image..."
 msgstr "Bild _skalieren"
 
 #: ../app/actions/image-actions.c:98
+msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Die Größe des Bildinhaltes ändern"
 
@@ -2742,6 +2874,7 @@ msgstr "Auf Auswahl _zuschneiden"
 
 # XXX Das Bild auf die Auswahlgröße zurechtschneiden
 #: ../app/actions/image-actions.c:104
+msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Schneidet das Bild auf die Auswahlgröße zurecht"
 
@@ -2751,6 +2884,7 @@ msgid "_Duplicate"
 msgstr "_Duplizieren"
 
 #: ../app/actions/image-actions.c:110
+msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Ein Duplikat dieses Bildes erzeugen"
 
@@ -2759,7 +2893,8 @@ msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Sichtbare _Ebenen vereinen …"
 
-#: ../app/actions/image-actions.c:116 ../app/actions/layers-actions.c:141
+#: ../app/actions/image-actions.c:116
+msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Alle sichtbaren Ebenen in einer Ebene vereinigen"
 
@@ -2768,7 +2903,8 @@ msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "Bild z_usammenfügen"
 
-#: ../app/actions/image-actions.c:122 ../app/actions/layers-actions.c:147
+#: ../app/actions/image-actions.c:122
+msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Alle Ebenen in einer vereinen und die Transparenz entfernen"
 
@@ -2778,6 +2914,7 @@ msgid "Configure G_rid..."
 msgstr "_Raster konfigurieren …"
 
 #: ../app/actions/image-actions.c:128
+msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Das Raster für dieses Bild einstellen"
 
@@ -2787,6 +2924,7 @@ msgid "Image Pr_operties"
 msgstr "Bild_eigenschaften"
 
 #: ../app/actions/image-actions.c:134
+msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Bildinformationen anzeigen"
 
@@ -2796,6 +2934,7 @@ msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:143
+msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Bild in den RGB-Farbraum umwandeln"
 
@@ -2805,6 +2944,7 @@ msgid "_Grayscale"
 msgstr "_Graustufen"
 
 #: ../app/actions/image-actions.c:148
+msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Bild in Graustufen umwandeln"
 
@@ -2814,6 +2954,7 @@ msgid "_Indexed..."
 msgstr "I_ndiziert …"
 
 #: ../app/actions/image-actions.c:153
+msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Bild in indizierte Farben umwandeln"
 
@@ -2823,6 +2964,7 @@ msgid "Flip _Horizontally"
 msgstr "_Horizontal spiegeln"
 
 #: ../app/actions/image-actions.c:161
+msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Das Bild horizontal spiegeln"
 
@@ -2832,6 +2974,7 @@ msgid "Flip _Vertically"
 msgstr "_Vertikal spiegeln"
 
 #: ../app/actions/image-actions.c:167
+msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Das Bild vertikal spiegeln"
 
@@ -2841,6 +2984,7 @@ msgid "Rotate 90° _clockwise"
 msgstr "Um 90° im _Uhrzeigersinn drehen"
 
 #: ../app/actions/image-actions.c:176
+msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Das Bild um 90 Grad nach rechts drehen"
 
@@ -2850,6 +2994,7 @@ msgid "Rotate _180°"
 msgstr "Um _180° drehen"
 
 #: ../app/actions/image-actions.c:182
+msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Das Bild auf den Kopf stellen"
 
@@ -2859,6 +3004,7 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Um 90° _gegen den Uhrzeigersinn drehen"
 
 #: ../app/actions/image-actions.c:188
+msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Das Bild um 90 Grad nach links drehen"
 
@@ -2924,6 +3070,7 @@ msgid "_Raise Views"
 msgstr "Ansichten an_heben"
 
 #: ../app/actions/images-actions.c:49
+msgctxt "images-action"
 msgid "Raise this image's displays"
 msgstr "Die Ansichten dieses Bildes anheben"
 
@@ -2933,6 +3080,7 @@ msgid "_New View"
 msgstr "_Neue Ansicht"
 
 #: ../app/actions/images-actions.c:55
+msgctxt "images-action"
 msgid "Create a new display for this image"
 msgstr "Eine neue Ansicht für dieses Bild erzeugen"
 
@@ -2942,6 +3090,7 @@ msgid "_Delete Image"
 msgstr "Bild _löschen"
 
 #: ../app/actions/images-actions.c:61
+msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Dieses Bild löschen"
 
@@ -2950,439 +3099,493 @@ msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Ebenenmenü"
 
-#: ../app/actions/layers-actions.c:51
+#: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Ebene"
 
-#: ../app/actions/layers-actions.c:52
+#: ../app/actions/layers-actions.c:54
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Stapel"
 
-#: ../app/actions/layers-actions.c:53
+#: ../app/actions/layers-actions.c:56
 msgctxt "layers-action"
 msgid "Te_xt to Selection"
 msgstr "Auswahl aus Te_xt"
 
-#: ../app/actions/layers-actions.c:54
+#: ../app/actions/layers-actions.c:58
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maske"
 
-#: ../app/actions/layers-actions.c:55
+#: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Tr_ansparenz"
 
-#: ../app/actions/layers-actions.c:56
+#: ../app/actions/layers-actions.c:62
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: ../app/actions/layers-actions.c:57
+#: ../app/actions/layers-actions.c:64
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "_Eigenschaften"
 
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:66
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "_Deckkraft"
 
-#: ../app/actions/layers-actions.c:59
+#: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "Ebenen_modus"
 
-#: ../app/actions/layers-actions.c:62
+#: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "Te_xtwerkzeug"
 
-#: ../app/actions/layers-actions.c:63
+#: ../app/actions/layers-actions.c:72
+msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Das Textwerkzeug für diese Textebene aktivieren"
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "Ebenenei_genschaften …"
 
-#: ../app/actions/layers-actions.c:69
+#: ../app/actions/layers-actions.c:78
+msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Ebenenname bearbeiten"
 
-#: ../app/actions/layers-actions.c:74
+#: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Neue Ebene …"
 
-#: ../app/actions/layers-actions.c:75
+#: ../app/actions/layers-actions.c:84
+msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Eine neue Ebene erstellen und zum Ebenenstapel hinzufügen"
 
-#: ../app/actions/layers-actions.c:80
+#: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/actions/layers-actions.c:81
+#: ../app/actions/layers-actions.c:90
+msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Eine neue Ebene mit den zuletzt verwendeten Werten erstellen"
 
-#: ../app/actions/layers-actions.c:86
+#: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "N_eu aus Sichtbarem"
 
-#: ../app/actions/layers-actions.c:87
+#: ../app/actions/layers-actions.c:97
+msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Eine neue Ebene erstellen, aus dem, was in diesem Bild zu sehen ist"
 
-#: ../app/actions/layers-actions.c:92
+#: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "Ebene _duplizieren"
 
-#: ../app/actions/layers-actions.c:93
+#: ../app/actions/layers-actions.c:104
+msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Ein Duplikat dieser Ebene erstellen und zum Ebenenstapel hinzufügen"
 
-#: ../app/actions/layers-actions.c:98
+#: ../app/actions/layers-actions.c:109
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "Ebene _löschen"
 
-#: ../app/actions/layers-actions.c:99
+#: ../app/actions/layers-actions.c:110
+msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Diese Ebene löschen"
 
-#: ../app/actions/layers-actions.c:104
+#: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "Ebene an_heben"
 
-#: ../app/actions/layers-actions.c:105
+#: ../app/actions/layers-actions.c:116
+msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Die Ebene um einen Schritt im Stapel anheben"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Ebene nach ganz _oben"
 
-#: ../app/actions/layers-actions.c:111
+#: ../app/actions/layers-actions.c:122
+msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Die Ebene an die Spitze des Stapels setzen"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "Ebene a_bsenken"
 
-#: ../app/actions/layers-actions.c:117
+#: ../app/actions/layers-actions.c:128
+msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Die Ebene um einen Schritt im Stapel absenken"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Ebene nach ganz _unten"
 
-#: ../app/actions/layers-actions.c:123
+#: ../app/actions/layers-actions.c:134
+msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Die Ebene ans Ende des Stapels setzen"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "Ebene _verankern"
 
-#: ../app/actions/layers-actions.c:129
+#: ../app/actions/layers-actions.c:140
+msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Schwebende Auswahl verankern"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "Nach un_ten vereinen"
 
-#: ../app/actions/layers-actions.c:135
+#: ../app/actions/layers-actions.c:146
+msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "Diese Ebene mit der darunterliegenden vereinen"
 
-#: ../app/actions/layers-actions.c:140
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Sichtbare _Ebenen vereinen …"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:152
+msgctxt "layers-action"
+msgid "Merge all visible layers into one layer"
+msgstr "Alle sichtbaren Ebenen in einer Ebene vereinigen"
+
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "Bild z_usammenfügen"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:158
+msgctxt "layers-action"
+msgid "Merge all layers into one and remove transparency"
+msgstr "Alle Ebenen in einer vereinen und die Transparenz entfernen"
+
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "Te_xtinformationen verwerfen"
 
-#: ../app/actions/layers-actions.c:153
+#: ../app/actions/layers-actions.c:164
+msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Die Textebene in eine normale Ebene umwandeln"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "_Pfad aus Text"
 
-#: ../app/actions/layers-actions.c:159
+#: ../app/actions/layers-actions.c:170
+msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Einen Pfad aus dem Text der Ebene erzeugen"
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Text am Pfad entlan_g"
 
 # XXX "... ziehen" (!?)
-#: ../app/actions/layers-actions.c:165
+#: ../app/actions/layers-actions.c:176
+msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Den Text der Ebene am aktuellen Pfad entlang verzerren"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Ebenen_größe …"
 
-#: ../app/actions/layers-actions.c:171
+#: ../app/actions/layers-actions.c:182
+msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Die Größe der Ebene anpassen"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Ebene auf _Bildgröße"
 
-#: ../app/actions/layers-actions.c:177
+#: ../app/actions/layers-actions.c:188
+msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Die Größe der Ebene an die Bildgröße anpassen"
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "Ebene _skalieren …"
 
-#: ../app/actions/layers-actions.c:183
+#: ../app/actions/layers-actions.c:194
+msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Die Größe des Ebeneninhaltes ändern"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Auf Auswahl _zuschneiden"
 
-#: ../app/actions/layers-actions.c:189
+#: ../app/actions/layers-actions.c:200
+msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Die Ebene auf die Auswahlgröße zurechtschneiden"
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Ebenenmaske _hinzufügen …"
 
-#: ../app/actions/layers-actions.c:195
+#: ../app/actions/layers-actions.c:207
+msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "Eine Maske hinzufügen, die ein nicht-destruktives Bearbeiten der Transparenz "
 "ermöglicht"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:212
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Alphakanal hin_zufügen"
 
-#: ../app/actions/layers-actions.c:201
+#: ../app/actions/layers-actions.c:213
+msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Transparenzinformationen zur Ebene hinzufügen"
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "Alphakanal _entfernen"
 
-#: ../app/actions/layers-actions.c:207
+#: ../app/actions/layers-actions.c:219
+msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Transparenzinformationen von der Ebene entfernen"
 
-#: ../app/actions/layers-actions.c:215
+#: ../app/actions/layers-actions.c:227
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Alphakanal _sperren"
 
-#: ../app/actions/layers-actions.c:216
+#: ../app/actions/layers-actions.c:229
+msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Transparenzinformationen dieser Ebene vor Änderungen schützen"
 
-#: ../app/actions/layers-actions.c:222
+#: ../app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Ebenen_maske bearbeiten"
 
-#: ../app/actions/layers-actions.c:223
+#: ../app/actions/layers-actions.c:236
+msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "An der Ebenenmaske arbeiten"
 
-#: ../app/actions/layers-actions.c:229
+#: ../app/actions/layers-actions.c:242
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "E_benenmaske anzeigen"
 
-#: ../app/actions/layers-actions.c:235
+#: ../app/actions/layers-actions.c:248
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "Ebenenmaske _deaktivieren"
 
-#: ../app/actions/layers-actions.c:236
+#: ../app/actions/layers-actions.c:249
+msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Effekt der Ebenenmaske übergehen"
 
-#: ../app/actions/layers-actions.c:245
+#: ../app/actions/layers-actions.c:258
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Ebenenmaske an_wenden"
 
-#: ../app/actions/layers-actions.c:246
+#: ../app/actions/layers-actions.c:259
+msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Effekt anwenden und die Ebenenmaske entfernen"
 
-#: ../app/actions/layers-actions.c:251
+#: ../app/actions/layers-actions.c:264
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Ebenenmaske lös_chen"
 
-#: ../app/actions/layers-actions.c:252
+#: ../app/actions/layers-actions.c:265
+msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Ebenenmaske und deren Effekt entfernen"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:273
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "Auswahl aus _Maske"
 
-#: ../app/actions/layers-actions.c:261
+#: ../app/actions/layers-actions.c:274
+msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Die Auswahl durch die Ebenenmaske ersetzen"
 
-#: ../app/actions/layers-actions.c:266
+#: ../app/actions/layers-actions.c:279
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "Zur Auswahl _hinzufügen"
 
-#: ../app/actions/layers-actions.c:267
+#: ../app/actions/layers-actions.c:280
+msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Die Ebenenmaske zur Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:272 ../app/actions/layers-actions.c:299
-#: ../app/actions/layers-actions.c:326
+#: ../app/actions/layers-actions.c:285 ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:344
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "Von Auswahl ab_ziehen"
 
-#: ../app/actions/layers-actions.c:273
+#: ../app/actions/layers-actions.c:286
+msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Die Ebenenmaske von der Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:278 ../app/actions/layers-actions.c:305
-#: ../app/actions/layers-actions.c:332
+#: ../app/actions/layers-actions.c:291 ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:351
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "Schnittmenge _bilden"
 
-#: ../app/actions/layers-actions.c:279
+#: ../app/actions/layers-actions.c:292
+msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Die Ebenenmaske mit der Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:287
+#: ../app/actions/layers-actions.c:300
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Aus_wahl aus Alphakanal"
 
-#: ../app/actions/layers-actions.c:288
+#: ../app/actions/layers-actions.c:302
+msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Die Auswahl durch den Alphakanal der Ebene ersetzen"
 
-#: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
+#: ../app/actions/layers-actions.c:307 ../app/actions/layers-actions.c:337
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "Zur Auswahl _hinzufügen"
 
-#: ../app/actions/layers-actions.c:294
+#: ../app/actions/layers-actions.c:309
+msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Den Alphakanal der Ebene zur Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:300
+#: ../app/actions/layers-actions.c:316
+msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Den Alphakanal der Ebene von der Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:306
+#: ../app/actions/layers-actions.c:323
+msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Den Alphakanal der Ebene mit der Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:331
 msgctxt "layers-action"
 msgid "_Text to Selection"
 msgstr "Auswahl aus _Text"
 
-#: ../app/actions/layers-actions.c:315
+#: ../app/actions/layers-actions.c:332
+msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
 msgstr "Die Auswahl mit dem Umriss der Textebene ersetzen"
 
-#: ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:339
+msgctxt "layers-action"
 msgid "Add the text layer's outline to the current selection"
 msgstr "Den Umriss der Textebene zur aktuellen Auswahl hinzufügen"
 
-#: ../app/actions/layers-actions.c:327
+#: ../app/actions/layers-actions.c:346
+msgctxt "layers-action"
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "Den Umriss der Textebene von der aktuellen Auswahl abziehen"
 
-#: ../app/actions/layers-actions.c:333
+#: ../app/actions/layers-actions.c:353
+msgctxt "layers-action"
 msgid "Intersect the text layer's outline with the current selection"
 msgstr "Den Umriss der Textebene mit der aktuellen Auswahl schneiden"
 
-#: ../app/actions/layers-actions.c:341
+#: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "_Oberste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:342
+#: ../app/actions/layers-actions.c:362
+msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Die oberste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:347
+#: ../app/actions/layers-actions.c:367
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "_Unterste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:348
+#: ../app/actions/layers-actions.c:368
+msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Die unterste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:353
+#: ../app/actions/layers-actions.c:373
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "_Vorherige Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:354
+#: ../app/actions/layers-actions.c:374
+msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Die Ebene oberhalb der aktiven Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:359
+#: ../app/actions/layers-actions.c:379
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "_Nächste Ebene auswählen"
 
-#: ../app/actions/layers-actions.c:360
+#: ../app/actions/layers-actions.c:380
+msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Die Ebene unterhalb der aktiven Ebene auswählen"
 
@@ -3444,14 +3647,20 @@ msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "Farbe _bearbeiten …"
 
+#: ../app/actions/palette-editor-actions.c:49
+msgctxt "palette-editor-action"
+msgid "Edit this entry"
+msgstr "Diesen Eintrag bearbeiten"
+
 #: ../app/actions/palette-editor-actions.c:54
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr "Farbe _löschen"
 
 #: ../app/actions/palette-editor-actions.c:55
-msgid "Delete this color"
-msgstr "Diese Farbe löschen"
+msgctxt "palette-editor-action"
+msgid "Delete this entry"
+msgstr "Diesen Eintrag löschen"
 
 #: ../app/actions/palette-editor-actions.c:63
 msgctxt "palette-editor-action"
@@ -3463,28 +3672,30 @@ msgctxt "palette-editor-action"
 msgid "New Color from _FG"
 msgstr "Neue Farbe aus _Vordergrund"
 
-#: ../app/actions/palette-editor-actions.c:73
-msgid "New color from foreground color"
-msgstr "Neue Farbe aus Vordergrundfarbe"
+#: ../app/actions/palette-editor-actions.c:74
+msgctxt "palette-editor-action"
+msgid "Create a new entry from the foreground color"
+msgstr "Einen neuen Eintrag aus der Vordergrundfarbe erstellen"
 
-#: ../app/actions/palette-editor-actions.c:78
+#: ../app/actions/palette-editor-actions.c:79
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
 msgstr "Neue Farbe aus _Hintergrund"
 
-#: ../app/actions/palette-editor-actions.c:79
-msgid "New color from background color"
-msgstr "Neue Farbe aus Hintergrundfarbe"
+#: ../app/actions/palette-editor-actions.c:81
+msgctxt "palette-editor-action"
+msgid "Create a new entry from the background color"
+msgstr "Einen neuen Eintrag aus der Hintergrundfarbe erstellen"
 
-#: ../app/actions/palette-editor-actions.c:87
+#: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom _In"
 msgstr "Ver_größern"
 
-#: ../app/actions/palette-editor-actions.c:93
+#: ../app/actions/palette-editor-actions.c:95
 msgid "Zoom _Out"
 msgstr "Ver_kleinern"
 
-#: ../app/actions/palette-editor-actions.c:99
+#: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom _All"
 msgstr "_Alles anzeigen"
 
@@ -3507,6 +3718,7 @@ msgid "_New Palette"
 msgstr "_Neue Palette"
 
 #: ../app/actions/palettes-actions.c:49
+msgctxt "palettes-action"
 msgid "Create a new palette"
 msgstr "Eine neue Palette erstellen"
 
@@ -3516,6 +3728,7 @@ msgid "_Import Palette..."
 msgstr "Palette _importieren …"
 
 #: ../app/actions/palettes-actions.c:55
+msgctxt "palettes-action"
 msgid "Import palette"
 msgstr "Palette importieren"
 
@@ -3525,6 +3738,7 @@ msgid "D_uplicate Palette"
 msgstr "Palette _duplizieren"
 
 #: ../app/actions/palettes-actions.c:61
+msgctxt "palettes-action"
 msgid "Duplicate this palette"
 msgstr "Diese Palette duplizieren"
 
@@ -3534,6 +3748,7 @@ msgid "_Merge Palettes..."
 msgstr "Paletten _vereinen …"
 
 #: ../app/actions/palettes-actions.c:67
+msgctxt "palettes-action"
 msgid "Merge palettes"
 msgstr "Paletten vereinen"
 
@@ -3543,6 +3758,7 @@ msgid "Copy Palette _Location"
 msgstr "Speicher_ort der Palette kopieren"
 
 #: ../app/actions/palettes-actions.c:73
+msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
 msgstr "Speicherort der Palettendatei in Zwischenablage kopieren"
 
@@ -3552,6 +3768,7 @@ msgid "_Delete Palette"
 msgstr "Palette _löschen"
 
 #: ../app/actions/palettes-actions.c:79
+msgctxt "palettes-action"
 msgid "Delete this palette"
 msgstr "Diese Palette löschen"
 
@@ -3561,6 +3778,7 @@ msgid "_Refresh Palettes"
 msgstr "Paletten n_eu laden"
 
 #: ../app/actions/palettes-actions.c:85
+msgctxt "palettes-action"
 msgid "Refresh palettes"
 msgstr "Paletten neu laden"
 
@@ -3570,6 +3788,7 @@ msgid "_Edit Palette..."
 msgstr "Palette _bearbeiten …"
 
 #: ../app/actions/palettes-actions.c:94
+msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr "Palette bearbeiten"
 
@@ -3592,7 +3811,8 @@ msgid "_Open Pattern as Image"
 msgstr "Muster als Bild ö_ffnen"
 
 #: ../app/actions/patterns-actions.c:48
-msgid "Open pattern as image"
+msgctxt "patterns-action"
+msgid "Open this pattern as an image"
 msgstr "Muster als Bild öffnen"
 
 #: ../app/actions/patterns-actions.c:53
@@ -3601,6 +3821,7 @@ msgid "_New Pattern"
 msgstr "_Neues Muster"
 
 #: ../app/actions/patterns-actions.c:54
+msgctxt "patterns-action"
 msgid "Create a new pattern"
 msgstr "Ein neues Muster erstellen"
 
@@ -3610,6 +3831,7 @@ msgid "D_uplicate Pattern"
 msgstr "Muster _duplizieren"
 
 #: ../app/actions/patterns-actions.c:60
+msgctxt "patterns-action"
 msgid "Duplicate this pattern"
 msgstr "Dieses Muster duplizieren"
 
@@ -3619,6 +3841,7 @@ msgid "Copy Pattern _Location"
 msgstr "Speicher_ort des Musters kopieren"
 
 #: ../app/actions/patterns-actions.c:66
+msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
 msgstr "Den Speicherort der Musterdatei in Zwischenablage kopieren"
 
@@ -3628,6 +3851,7 @@ msgid "_Delete Pattern"
 msgstr "Muster _löschen"
 
 #: ../app/actions/patterns-actions.c:72
+msgctxt "patterns-action"
 msgid "Delete this pattern"
 msgstr "Dieses Muster löschen"
 
@@ -3637,6 +3861,7 @@ msgid "_Refresh Patterns"
 msgstr "Muster n_eu laden"
 
 #: ../app/actions/patterns-actions.c:78
+msgctxt "patterns-action"
 msgid "Refresh patterns"
 msgstr "Muster neu laden"
 
@@ -3646,6 +3871,7 @@ msgid "_Edit Pattern..."
 msgstr "Muster _bearbeiten …"
 
 #: ../app/actions/patterns-actions.c:87
+msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "Muster bearbeiten"
 
@@ -3750,6 +3976,7 @@ msgid "Reset all _Filters"
 msgstr "Alle _Filter zurücksetzen"
 
 #: ../app/actions/plug-in-actions.c:125
+msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "Die Einstellungen aller Plugins auf die Standardwerte zurücksetzen"
 
@@ -3758,34 +3985,36 @@ msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "Letzte Aktion _wiederholen"
 
-#: ../app/actions/plug-in-actions.c:134
+#: ../app/actions/plug-in-actions.c:135
+msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "Das Plugin mit gleichen Einstellungen erneut ausführen"
 
-#: ../app/actions/plug-in-actions.c:139
+#: ../app/actions/plug-in-actions.c:140
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
 msgstr "_Letzte Aktion anzeigen"
 
-#: ../app/actions/plug-in-actions.c:140
+#: ../app/actions/plug-in-actions.c:141
+msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "Das Dialogfenster des zuletzt genutzten Plugins erneut anzeigen"
 
-#: ../app/actions/plug-in-actions.c:523
+#: ../app/actions/plug-in-actions.c:524
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "»%s« _wiederholen"
 
-#: ../app/actions/plug-in-actions.c:524
+#: ../app/actions/plug-in-actions.c:525
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "»%s« _erneut anzeigen"
 
-#: ../app/actions/plug-in-actions.c:540
+#: ../app/actions/plug-in-actions.c:541
 msgid "Repeat Last"
 msgstr "Letzte Aktion wiederholen"
 
-#: ../app/actions/plug-in-actions.c:542
+#: ../app/actions/plug-in-actions.c:543
 msgid "Re-Show Last"
 msgstr "Letzte Aktion erneut anzeigen"
 
@@ -3814,8 +4043,8 @@ msgid "Toggle _Quick Mask"
 msgstr "_Schnellmaske umschalten"
 
 #: ../app/actions/quick-mask-actions.c:56
-#: ../app/display/gimpdisplayshell.c:1183
-msgid "Toggle Quick Mask"
+msgctxt "quick-mask-action"
+msgid "Toggle Quick Mask on/off"
 msgstr "Schnellmaske umschalten"
 
 #: ../app/actions/quick-mask-actions.c:65
@@ -3854,6 +4083,11 @@ msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "_Vereinigung prüfen"
 
+#: ../app/actions/sample-points-actions.c:49
+msgctxt "sample-points-action"
+msgid "Use the composite color of all visible layers"
+msgstr "Das Ergebnis der Komposition aller sichtbaren Ebenen verwenden"
+
 #: ../app/actions/select-actions.c:45
 msgctxt "select-action"
 msgid "Selection Editor Menu"
@@ -3870,6 +4104,7 @@ msgid "_All"
 msgstr "_Alles"
 
 #: ../app/actions/select-actions.c:52
+msgctxt "select-action"
 msgid "Select everything"
 msgstr "Alles auswählen"
 
@@ -3879,6 +4114,7 @@ msgid "_None"
 msgstr "Nichts"
 
 #: ../app/actions/select-actions.c:58
+msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr "Die Auswahl verwerfen"
 
@@ -3888,6 +4124,7 @@ msgid "_Invert"
 msgstr "_Invertieren"
 
 #: ../app/actions/select-actions.c:64
+msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "Die Auswahl invertieren"
 
@@ -3897,6 +4134,7 @@ msgid "_Float"
 msgstr "_Schwebend"
 
 #: ../app/actions/select-actions.c:70
+msgctxt "select-action"
 msgid "Create a floating selection"
 msgstr "Eine Schwebende Auswahl erzeugen"
 
@@ -3905,70 +4143,78 @@ msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "A_usblenden …"
 
-#: ../app/actions/select-actions.c:76
+#: ../app/actions/select-actions.c:77
+msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "Auswahlkante weichzeichnen, um einen weichen Übergang zu erhalten"
 
-#: ../app/actions/select-actions.c:81
+#: ../app/actions/select-actions.c:82
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "_Schärfen"
 
-#: ../app/actions/select-actions.c:82
+#: ../app/actions/select-actions.c:83
+msgctxt "select-action"
 msgid "Remove fuzzyness from the selection"
 msgstr "Unschärfe von der Auswahl entfernen"
 
-#: ../app/actions/select-actions.c:87
+#: ../app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "Ver_kleinern …"
 
-#: ../app/actions/select-actions.c:88
+#: ../app/actions/select-actions.c:89
+msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "Auswahl zusammenziehen"
 
-#: ../app/actions/select-actions.c:93
+#: ../app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "Ver_größern …"
 
-#: ../app/actions/select-actions.c:94
+#: ../app/actions/select-actions.c:95
+msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "Auswahl vergrößern"
 
-#: ../app/actions/select-actions.c:99
+#: ../app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "_Rand …"
 
-#: ../app/actions/select-actions.c:100
+#: ../app/actions/select-actions.c:101
+msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "Auswahl durch ihre Grenze ersetzen"
 
-#: ../app/actions/select-actions.c:105
+#: ../app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "In _Kanal speichern"
 
-#: ../app/actions/select-actions.c:106
+#: ../app/actions/select-actions.c:107
+msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "Auswahl in Kanal speichern"
 
-#: ../app/actions/select-actions.c:111
+#: ../app/actions/select-actions.c:112
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "Auswahl nach_ziehen …"
 
-#: ../app/actions/select-actions.c:112
+#: ../app/actions/select-actions.c:113
+msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Am Umriss der Auswahl entlang zeichnen"
 
-#: ../app/actions/select-actions.c:117
+#: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "Auswahl nach_ziehen"
 
-#: ../app/actions/select-actions.c:118
+#: ../app/actions/select-actions.c:119
+msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Auswahl mit den zuletzt benutzten Werten nachziehen"
 
@@ -4041,6 +4287,7 @@ msgid "_Create Image from Template"
 msgstr "B_ild aus Vorlage erstellen"
 
 #: ../app/actions/templates-actions.c:47
+msgctxt "templates-action"
 msgid "Create a new image from the selected template"
 msgstr "Ein neues Bild aus der gewählten Vorlage erzeugen"
 
@@ -4050,6 +4297,7 @@ msgid "_New Template..."
 msgstr "_Neue Vorlage …"
 
 #: ../app/actions/templates-actions.c:53
+msgctxt "templates-action"
 msgid "Create a new template"
 msgstr "Eine neue Vorlage erstellen"
 
@@ -4059,6 +4307,7 @@ msgid "D_uplicate Template..."
 msgstr "Vorlage _duplizieren …"
 
 #: ../app/actions/templates-actions.c:59
+msgctxt "templates-action"
 msgid "Duplicate this template"
 msgstr "Diese Vorlage duplizieren"
 
@@ -4068,6 +4317,7 @@ msgid "_Edit Template..."
 msgstr "Vorlage _bearbeiten …"
 
 #: ../app/actions/templates-actions.c:65
+msgctxt "templates-action"
 msgid "Edit this template"
 msgstr "Diese Vorlage bearbeiten"
 
@@ -4077,6 +4327,7 @@ msgid "_Delete Template"
 msgstr "Vorlage _löschen"
 
 #: ../app/actions/templates-actions.c:71
+msgctxt "templates-action"
 msgid "Delete this template"
 msgstr "Diese Vorlage löschen"
 
@@ -4111,6 +4362,7 @@ msgid "Open"
 msgstr "Öffnen"
 
 #: ../app/actions/text-editor-actions.c:45
+msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Text aus Datei laden"
 
@@ -4120,7 +4372,7 @@ msgid "Clear"
 msgstr "Löschen"
 
 #: ../app/actions/text-editor-actions.c:51
-#: ../app/actions/text-tool-actions.c:84
+msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Gesamten Text löschen"
 
@@ -4130,6 +4382,7 @@ msgid "LTR"
 msgstr "Links nach Rechts"
 
 #: ../app/actions/text-editor-actions.c:60
+msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Von Links nach Rechts"
 
@@ -4139,6 +4392,7 @@ msgid "RTL"
 msgstr "Rechts nach Links"
 
 #: ../app/actions/text-editor-actions.c:66
+msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Von Rechts nach Links"
 
@@ -4202,31 +4456,38 @@ msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "_Löschen"
 
+#: ../app/actions/text-tool-actions.c:84
+msgctxt "text-tool-action"
+msgid "Clear all text"
+msgstr "Gesamten Text löschen"
+
 #: ../app/actions/text-tool-actions.c:89
 msgctxt "text-tool-action"
 msgid "_Path from Text"
 msgstr "_Pfad aus Text"
 
-#: ../app/actions/text-tool-actions.c:90
+#: ../app/actions/text-tool-actions.c:91
+msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "Einen Pfad aus dem Umriss des Texts erzeugen"
 
-#: ../app/actions/text-tool-actions.c:95
+#: ../app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Text an _Pfad"
 
 # XXX "... ziehen" (!?)
-#: ../app/actions/text-tool-actions.c:96
+#: ../app/actions/text-tool-actions.c:98
+msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Den am aktuellen Pfad entlang verbiegen"
 
-#: ../app/actions/text-tool-actions.c:104
+#: ../app/actions/text-tool-actions.c:106
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Von Links nach Rechts"
 
-#: ../app/actions/text-tool-actions.c:109
+#: ../app/actions/text-tool-actions.c:111
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Von Rechts nach Links"
@@ -4278,6 +4539,7 @@ msgid "Reset _all Tool Options"
 msgstr "_Alle Werkzeugeinstellungen zurücksetzen"
 
 #: ../app/actions/tool-options-actions.c:88
+msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "Alle Werkzeugeinstellungen zurücksetzen"
 
@@ -4349,8 +4611,9 @@ msgid "R_aise Tool"
 msgstr "Werkzeug an_heben"
 
 #: ../app/actions/tools-actions.c:58
-msgid "Raise tool"
-msgstr "Werkzeug anheben"
+msgctxt "tools-action"
+msgid "Raise this tool"
+msgstr "Das Werkzeug anheben"
 
 #: ../app/actions/tools-actions.c:63
 msgctxt "tools-action"
@@ -4358,7 +4621,8 @@ msgid "Ra_ise to Top"
 msgstr "Nach ganz _oben"
 
 #: ../app/actions/tools-actions.c:64
-msgid "Raise tool to top"
+msgctxt "tools-action"
+msgid "Raise this tool to the top"
 msgstr "Das Werkzeug nach ganz oben anheben"
 
 #: ../app/actions/tools-actions.c:69
@@ -4367,8 +4631,9 @@ msgid "L_ower Tool"
 msgstr "Werkzeug ab_senken"
 
 #: ../app/actions/tools-actions.c:70
-msgid "Lower tool"
-msgstr "Werkzeug absenken"
+msgctxt "tools-action"
+msgid "Lower this tool"
+msgstr "Das Werkzeug absenken"
 
 #: ../app/actions/tools-actions.c:75
 msgctxt "tools-action"
@@ -4376,7 +4641,8 @@ msgid "Lo_wer to Bottom"
 msgstr "Nach ganz _unten"
 
 #: ../app/actions/tools-actions.c:76
-msgid "Lower tool to bottom"
+msgctxt "tools-action"
+msgid "Lower this tool to the bottom"
 msgstr "Das Werkzeug nach ganz unten absenken"
 
 #: ../app/actions/tools-actions.c:81
@@ -4385,6 +4651,7 @@ msgid "_Reset Order & Visibility"
 msgstr "Ordnung und Sichtbarkeit _wiederherstellen"
 
 #: ../app/actions/tools-actions.c:82
+msgctxt "tools-action"
 msgid "Reset tool order and visibility"
 msgstr "Die Ordnung und Sichtbarkeit der Werkzeuge wiederherstellen"
 
@@ -4399,6 +4666,7 @@ msgid "_By Color"
 msgstr "Nach _Farbe"
 
 #: ../app/actions/tools-actions.c:100
+msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "Bildbereiche mit ähnlichen Farben auswählen"
 
@@ -4408,6 +4676,7 @@ msgid "_Arbitrary Rotation..."
 msgstr "_Beliebig drehen …"
 
 #: ../app/actions/tools-actions.c:106
+msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
 msgstr "Um einen beliebigen Winkel drehen"
 
@@ -4427,6 +4696,7 @@ msgid "_Edit Path Attributes..."
 msgstr "Pfadei_genschaften …"
 
 #: ../app/actions/vectors-actions.c:55
+msgctxt "vectors-action"
 msgid "Edit path attributes"
 msgstr "Pfadeigenschaften bearbeiten"
 
@@ -4436,6 +4706,7 @@ msgid "_New Path..."
 msgstr "_Neuer Pfad …"
 
 #: ../app/actions/vectors-actions.c:61
+msgctxt "vectors-action"
 msgid "Create a new path..."
 msgstr "Eine neue Vorlage erstellen"
 
@@ -4445,7 +4716,8 @@ msgid "_New Path with last values"
 msgstr "Neuer Pfad mit den aktuellen Werten"
 
 #: ../app/actions/vectors-actions.c:67
-msgid "Create a new path with last values"
+msgctxt "vectors-action"
+msgid "Create a new path with last used values"
 msgstr "Eine neue Ebene mit den zuletzt verwendeten Werten erstellen"
 
 #: ../app/actions/vectors-actions.c:72
@@ -4454,8 +4726,9 @@ msgid "D_uplicate Path"
 msgstr "Pfad _duplizieren"
 
 #: ../app/actions/vectors-actions.c:73
+msgctxt "vectors-action"
 msgid "Duplicate this path"
-msgstr "Pfad duplizieren"
+msgstr "Diesen Pfad duplizieren"
 
 #: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
@@ -4463,8 +4736,9 @@ msgid "_Delete Path"
 msgstr "Pfad _löschen"
 
 #: ../app/actions/vectors-actions.c:79
+msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "Pfad löschen"
+msgstr "Diesen Pfad löschen"
 
 #: ../app/actions/vectors-actions.c:84
 msgctxt "vectors-action"
@@ -4477,8 +4751,9 @@ msgid "_Raise Path"
 msgstr "Pfad _anheben"
 
 #: ../app/actions/vectors-actions.c:90
-msgid "Raise path"
-msgstr "Pfad anheben"
+msgctxt "vectors-action"
+msgid "Raise this path"
+msgstr "Diesen Pfad anheben"
 
 #: ../app/actions/vectors-actions.c:95
 msgctxt "vectors-action"
@@ -4486,8 +4761,9 @@ msgid "Raise Path to _Top"
 msgstr "Pfad nach ganz _oben"
 
 #: ../app/actions/vectors-actions.c:96
-msgid "Raise path to top"
-msgstr "Pfad nach ganz oben anheben"
+msgctxt "vectors-action"
+msgid "Raise this path to the top"
+msgstr "Diesen Pfad nach ganz oben anheben"
 
 #: ../app/actions/vectors-actions.c:101
 msgctxt "vectors-action"
@@ -4495,8 +4771,9 @@ msgid "_Lower Path"
 msgstr "Pfad a_bsenken"
 
 #: ../app/actions/vectors-actions.c:102
-msgid "Lower path"
-msgstr "Pfad absenken"
+msgctxt "vectors-action"
+msgid "Lower this path"
+msgstr "Diesen Pfad absenken"
 
 #: ../app/actions/vectors-actions.c:107
 msgctxt "vectors-action"
@@ -4504,8 +4781,9 @@ msgid "Lower Path to _Bottom"
 msgstr "Pfad nach ganz _unten"
 
 #: ../app/actions/vectors-actions.c:108
-msgid "Lower path to bottom"
-msgstr "Pfad nach ganz unten absenken"
+msgctxt "vectors-action"
+msgid "Lower this path to the bottom"
+msgstr "Diesen Pfad nach ganz unten absenken"
 
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
@@ -4513,6 +4791,7 @@ msgid "Stro_ke Path..."
 msgstr "_Pfad nachziehen …"
 
 #: ../app/actions/vectors-actions.c:114
+msgctxt "vectors-action"
 msgid "Paint along the path"
 msgstr "Am Pfad entlang zeichnen"
 
@@ -4522,6 +4801,7 @@ msgid "Stro_ke Path"
 msgstr "Pfad _nachziehen"
 
 #: ../app/actions/vectors-actions.c:120
+msgctxt "vectors-action"
 msgid "Paint along the path with last values"
 msgstr "Mit den zuletzt benutzten Werten am Pfad entlang zeichnen"
 
@@ -4560,7 +4840,8 @@ msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Aus_wahl aus Pfad"
 
-#: ../app/actions/vectors-actions.c:164 ../app/tools/gimpvectortool.c:1913
+#: ../app/actions/vectors-actions.c:164
+msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Auswahl aus Pfad"
 
@@ -4570,6 +4851,7 @@ msgid "Fr_om Path"
 msgstr "_Vom Pfad"
 
 #: ../app/actions/vectors-actions.c:170
+msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Die Auswahl durch den Pfad ersetzen"
 
@@ -4579,6 +4861,7 @@ msgid "_Add to Selection"
 msgstr "Zur Auswahl _hinzufügen"
 
 #: ../app/actions/vectors-actions.c:176
+msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Den Pfad der Auswahl hinzufügen"
 
@@ -4588,6 +4871,7 @@ msgid "_Subtract from Selection"
 msgstr "Von Auswahl ab_ziehen"
 
 #: ../app/actions/vectors-actions.c:182
+msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr "Den Pfas von der Auswahl abziehen"
 
@@ -4597,6 +4881,7 @@ msgid "_Intersect with Selection"
 msgstr "Schnittmenge _bilden"
 
 #: ../app/actions/vectors-actions.c:188
+msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Die Schnittmenge des Pfades mit der Auswahl bilden"
 
@@ -4606,6 +4891,7 @@ msgid "Selecti_on to Path"
 msgstr "P_fad aus Auswahl"
 
 #: ../app/actions/vectors-actions.c:197 ../app/actions/vectors-actions.c:203
+msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Pfad aus Auswahl"
 
@@ -4621,6 +4907,7 @@ msgid "Selection to Path (_Advanced)"
 msgstr "Pfad aus Auswahl (_Erweitert)"
 
 #: ../app/actions/vectors-actions.c:209
+msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Erweiterte Einstellungen"
 
@@ -4677,6 +4964,7 @@ msgid "_New View"
 msgstr "_Neue Ansicht"
 
 #: ../app/actions/view-actions.c:78
+msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Eine neue Ansicht für das Bild erzeugen"
 
@@ -4686,6 +4974,7 @@ msgid "_Close"
 msgstr "_Schließen"
 
 #: ../app/actions/view-actions.c:84
+msgctxt "view-action"
 msgid "Close this image window"
 msgstr "Dieses Bildfenster schließen"
 
@@ -4695,6 +4984,7 @@ msgid "_Fit Image in Window"
 msgstr "Bild _in Fenster einpassen"
 
 #: ../app/actions/view-actions.c:90
+msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Die Bildgröße so anpassen, dass das Bild vollständig sichtbar ist"
 
@@ -4704,6 +4994,7 @@ msgid "Fi_ll Window"
 msgstr "Fenster füllen"
 
 #: ../app/actions/view-actions.c:96
+msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr ""
 "Die Vergrößerung so anpassen, dass das Fenster vollständig ausgefüllt ist"
@@ -4714,6 +5005,7 @@ msgid "Re_vert Zoom"
 msgstr "_Vergrößerung zurücksetzen"
 
 #: ../app/actions/view-actions.c:102
+msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Vorherige Vergrößerungsstufe wiederherstellen"
 
@@ -4723,6 +5015,7 @@ msgid "Na_vigation Window"
 msgstr "Navi_gationsfenster"
 
 #: ../app/actions/view-actions.c:108
+msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Eine Übersicht für dieses Bild anzeigen"
 
@@ -4732,6 +5025,7 @@ msgid "Display _Filters..."
 msgstr "Ansichts_filter …"
 
 #: ../app/actions/view-actions.c:114
+msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Auf diese Ansicht angewendete Filter einstellen"
 
@@ -4741,6 +5035,7 @@ msgid "Shrink _Wrap"
 msgstr "Fenster an_passen"
 
 #: ../app/actions/view-actions.c:120
+msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Größe des Bildfensters auf die Größe der Bildansicht reduzieren"
 
@@ -4749,12 +5044,18 @@ msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Anzeige öffnen …"
 
+#: ../app/actions/view-actions.c:126
+msgctxt "view-action"
+msgid "Connect to another display"
+msgstr "Mit einer anderen Anzeige verbinden"
+
 #: ../app/actions/view-actions.c:134
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Punkt für Punkt"
 
 #: ../app/actions/view-actions.c:135
+msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Ein Pixel auf dem Bildschirms repräsentiert ein Pixel des Bildes"
 
@@ -4764,6 +5065,7 @@ msgid "Show _Selection"
 msgstr "_Auswahl anzeigen"
 
 #: ../app/actions/view-actions.c:142
+msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Umriss der Auswahl anzeigen"
 
@@ -4773,6 +5075,7 @@ msgid "Show _Layer Boundary"
 msgstr "_Ebenenrahmen anzeigen"
 
 #: ../app/actions/view-actions.c:149
+msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Einen Rahmen um die aktive Ebene zeichnen"
 
@@ -4782,6 +5085,7 @@ msgid "Show _Guides"
 msgstr "_Hilfslinien anzeigen"
 
 #: ../app/actions/view-actions.c:156
+msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Die Hilfslinien des Bildes anzeigen"
 
@@ -4791,6 +5095,7 @@ msgid "S_how Grid"
 msgstr "_Raster anzeigen"
 
 #: ../app/actions/view-actions.c:163
+msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Das Bildraster anzeigen"
 
@@ -4800,6 +5105,7 @@ msgid "Show Sample Points"
 msgstr "Prüfpunkte anzeigen"
 
 #: ../app/actions/view-actions.c:170
+msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Die Prüfpunkte des Bildes anzeigen"
 
@@ -4809,6 +5115,7 @@ msgid "Sn_ap to Guides"
 msgstr "_Magnetische Hilfslinien"
 
 #: ../app/actions/view-actions.c:177
+msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Werkzeugaktionen an den Hilfslinien einrasten"
 
@@ -4818,6 +5125,7 @@ msgid "Sna_p to Grid"
 msgstr "Magnetis_ches Raster"
 
 #: ../app/actions/view-actions.c:184
+msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Werkzeugaktionen am Raster ausrichten"
 
@@ -4827,6 +5135,7 @@ msgid "Snap to _Canvas Edges"
 msgstr "An _Leinwandkanten einrasten"
 
 #: ../app/actions/view-actions.c:191
+msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Werkzeugaktionen an den Kanten der Zeichenfläche einrasten"
 
@@ -4836,6 +5145,7 @@ msgid "Snap t_o Active Path"
 msgstr "Am aktiven P_fad einrasten"
 
 #: ../app/actions/view-actions.c:198
+msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Werkzeugaktionen am aktiven Pfad einrasten"
 
@@ -4845,6 +5155,7 @@ msgid "Show _Menubar"
 msgstr "Menüleis_te anzeigen"
 
 #: ../app/actions/view-actions.c:205
+msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Die Menüleiste dieses Fensters anzeigen"
 
@@ -4854,6 +5165,7 @@ msgid "Show R_ulers"
 msgstr "_Lineale anzeigen"
 
 #: ../app/actions/view-actions.c:212
+msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Die Lineale dieses Fensters anzeigen"
 
@@ -4863,6 +5175,7 @@ msgid "Show Scroll_bars"
 msgstr "_Bildlaufleisten anzeigen"
 
 #: ../app/actions/view-actions.c:219
+msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Die Bildlaufleisten dieses Fensters anzeigen"
 
@@ -4872,6 +5185,7 @@ msgid "Show S_tatusbar"
 msgstr "_Statusleiste anzeigen"
 
 #: ../app/actions/view-actions.c:226
+msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Die Statusleiste dieses Fensters anzeigen"
 
@@ -4881,6 +5195,7 @@ msgid "Fullscr_een"
 msgstr "_Vollbild"
 
 #: ../app/actions/view-actions.c:233
+msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "In Vollbildansicht umschalten"
 
@@ -4889,10 +5204,20 @@ msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Ver_kleinern"
 
+#: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
+msgctxt "view-action"
+msgid "Zoom out"
+msgstr "Verkleinern"
+
 #: ../app/actions/view-actions.c:270
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "Ver_größern"
+
+#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
+msgctxt "view-action"
+msgid "Zoom in"
+msgstr "Vergrößern"
 
 #: ../app/actions/view-actions.c:276
 msgctxt "view-zoom-action"
@@ -4910,6 +5235,7 @@ msgid "1_6:1  (1600%)"
 msgstr "1_6:1 (1600%)"
 
 #: ../app/actions/view-actions.c:302
+msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Maßstab 16:1"
 
@@ -4919,6 +5245,7 @@ msgid "_8:1  (800%)"
 msgstr "_8:1 (800%)"
 
 #: ../app/actions/view-actions.c:308
+msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Maßstab 8:1"
 
@@ -4928,6 +5255,7 @@ msgid "_4:1  (400%)"
 msgstr "_4:1 (400%)"
 
 #: ../app/actions/view-actions.c:314
+msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Maßstab 4:1"
 
@@ -4937,6 +5265,7 @@ msgid "_2:1  (200%)"
 msgstr "_2:1 (200%)"
 
 #: ../app/actions/view-actions.c:320
+msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Maßstab 2:1"
 
@@ -4946,6 +5275,7 @@ msgid "_1:1  (100%)"
 msgstr "_1:1 (100%)"
 
 #: ../app/actions/view-actions.c:326
+msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Maßstab 1:1"
 
@@ -4955,6 +5285,7 @@ msgid "1:_2  (50%)"
 msgstr "1:_2 (50%)"
 
 #: ../app/actions/view-actions.c:332
+msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Maßstab 2:1"
 
@@ -4964,6 +5295,7 @@ msgid "1:_4  (25%)"
 msgstr "1:_4 (25%)"
 
 #: ../app/actions/view-actions.c:338
+msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Maßstab 1:4"
 
@@ -4973,6 +5305,7 @@ msgid "1:_8  (12.5%)"
 msgstr "1:_8 (12.5%)"
 
 #: ../app/actions/view-actions.c:344
+msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Maßstab 1:8"
 
@@ -4982,6 +5315,7 @@ msgid "1:1_6  (6.25%)"
 msgstr "1:1_6 (6.25%)"
 
 #: ../app/actions/view-actions.c:350
+msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Maßstab 1:16"
 
@@ -4991,6 +5325,7 @@ msgid "Othe_r..."
 msgstr "_Benutzerdefiniert …"
 
 #: ../app/actions/view-actions.c:356
+msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Einen benutzerdefinierten Vergrößerungsfaktor setzen"
 
@@ -5000,6 +5335,7 @@ msgid "From _Theme"
 msgstr "Dem _Thema entsprechend"
 
 #: ../app/actions/view-actions.c:365
+msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Die Hintergrundfarbe des aktuellen Themas verwenden"
 
@@ -5009,6 +5345,7 @@ msgid "_Light Check Color"
 msgstr "H_elle Schachbrettfarbe"
 
 #: ../app/actions/view-actions.c:371
+msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Helle Schachbrettfarbe verwenden"
 
@@ -5018,6 +5355,7 @@ msgid "_Dark Check Color"
 msgstr "_Dunkle Schachbrettfarbe"
 
 #: ../app/actions/view-actions.c:377
+msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Dunkle Schachbrettfarbe verwenden"
 
@@ -5027,6 +5365,7 @@ msgid "Select _Custom Color..."
 msgstr "_Benutzerdefinierte Farbe wählen …"
 
 #: ../app/actions/view-actions.c:383
+msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Eine beliebige Farbe verwenden"
 
@@ -5035,25 +5374,26 @@ msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Den _Einstellungen entsprechend"
 
-#: ../app/actions/view-actions.c:389
+#: ../app/actions/view-actions.c:390
+msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Abstandsfarbe zur eingestellten Standardfarbe zurücksetzen"
 
-#: ../app/actions/view-actions.c:580
+#: ../app/actions/view-actions.c:581
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "_Vergrößerung (%d%%) zurücksetzen"
 
-#: ../app/actions/view-actions.c:588
+#: ../app/actions/view-actions.c:589
 msgid "Re_vert Zoom"
 msgstr "_Vergrößerung zurücksetzen"
 
-#: ../app/actions/view-actions.c:718
+#: ../app/actions/view-actions.c:719
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "A_ndere (%s) …"
 
-#: ../app/actions/view-actions.c:727
+#: ../app/actions/view-actions.c:728
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Vergrößerung (%s)"
@@ -5097,6 +5437,7 @@ msgid "Tool_box"
 msgstr "_Werkzeugkasten"
 
 #: ../app/actions/windows-actions.c:89
+msgctxt "windows-action"
 msgid "Raise the toolbox"
 msgstr "Werkzeugkasten anheben"
 
@@ -7900,6 +8241,10 @@ msgctxt "plural"
 msgid "percent"
 msgstr "Prozent"
 
+#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:473
+msgid "About GIMP"
+msgstr "Informationen zu GIMP"
+
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
 msgstr "Die Internet-Seite von GIMP öffnen"
@@ -9581,6 +9926,10 @@ msgstr "Auf das Bildmenü zugreifen"
 msgid "Zoom image when window size changes"
 msgstr "Bild vergrößern, wenn die Fenstergröße sich ändert"
 
+#: ../app/display/gimpdisplayshell.c:1183
+msgid "Toggle Quick Mask"
+msgstr "Schnellmaske umschalten"
+
 #: ../app/display/gimpdisplayshell.c:1204
 msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
@@ -9726,7 +10075,7 @@ msgstr "(bereinigt)"
 
 #: ../app/display/gimpdisplayshell-title.c:342
 #: ../app/display/gimpdisplayshell-title.c:355
-#: ../app/widgets/gimpactiongroup.c:859
+#: ../app/widgets/gimpactiongroup.c:889
 msgid "(none)"
 msgstr "(kein)"
 
@@ -12473,6 +12822,10 @@ msgstr "Klicken Sie um den Knoten abzuwinkeln"
 msgid "Delete Anchors"
 msgstr "Anker löschen"
 
+#: ../app/tools/gimpvectortool.c:1913
+msgid "Path to selection"
+msgstr "Auswahl aus Pfad"
+
 #: ../app/tools/gimpvectortool.c:1940
 msgid "There is no active layer or channel to stroke to"
 msgstr ""
@@ -12657,7 +13010,7 @@ msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 msgid "_Search:"
 msgstr "_Suche:"
 
-#: ../app/widgets/gimpactiongroup.c:856
+#: ../app/widgets/gimpactiongroup.c:886
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -14114,3 +14467,20 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
 
+#~ msgid "Remove dangling entries"
+#~ msgstr "Hängende Einträge entfernen"
+
+#~ msgid "Save error log"
+#~ msgstr "Fehlerprotokoll speichern"
+
+#~ msgid "Save selection"
+#~ msgstr "Auswahl speichern"
+
+#~ msgid "Rescan font list"
+#~ msgstr "Schriftenliste neu einlesen"
+
+#~ msgid "Delete this color"
+#~ msgstr "Diese Farbe löschen"
+
+#~ msgid "Raise tool"
+#~ msgstr "Werkzeug anheben"

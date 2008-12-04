@@ -44,31 +44,31 @@ static const GimpActionEntry templates_actions[] =
 
   { "templates-create-image", GIMP_STOCK_IMAGE,
     NC_("templates-action", "_Create Image from Template"), "",
-    N_("Create a new image from the selected template"),
+    NC_("templates-action", "Create a new image from the selected template"),
     G_CALLBACK (templates_create_image_cmd_callback),
     GIMP_HELP_TEMPLATE_IMAGE_NEW },
 
   { "templates-new", GTK_STOCK_NEW,
     NC_("templates-action", "_New Template..."), "",
-    N_("Create a new template"),
+    NC_("templates-action", "Create a new template"),
     G_CALLBACK (templates_new_cmd_callback),
     GIMP_HELP_TEMPLATE_NEW },
 
   { "templates-duplicate", GIMP_STOCK_DUPLICATE,
     NC_("templates-action", "D_uplicate Template..."), "",
-    N_("Duplicate this template"),
+    NC_("templates-action", "Duplicate this template"),
     G_CALLBACK (templates_duplicate_cmd_callback),
     GIMP_HELP_TEMPLATE_DUPLICATE },
 
   { "templates-edit", GTK_STOCK_EDIT,
     NC_("templates-action", "_Edit Template..."), "",
-    N_("Edit this template"),
+    NC_("templates-action", "Edit this template"),
     G_CALLBACK (templates_edit_cmd_callback),
     GIMP_HELP_TEMPLATE_EDIT },
 
   { "templates-delete", GTK_STOCK_DELETE,
     NC_("templates-action", "_Delete Template"), "",
-    N_("Delete this template"),
+    NC_("templates-action", "Delete this template"),
     G_CALLBACK (templates_delete_cmd_callback),
     GIMP_HELP_TEMPLATE_DELETE }
 };

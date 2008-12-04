@@ -50,7 +50,7 @@ static const GimpActionEntry dock_actions[] =
 
   { "dock-open-display", NULL,
     NC_("dock-action", "_Open Display..."), NULL,
-    N_("Connect to another display"),
+    NC_("dock-action", "Connect to another display"),
     G_CALLBACK (window_open_display_cmd_callback),
     NULL }
 };

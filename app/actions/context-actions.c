@@ -79,13 +79,14 @@ static const GimpActionEntry context_actions[] =
 
   { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
     NC_("context-action", "_Default Colors"), "D",
-    N_("Set foreground color to black, background color to white"),
+    NC_("context-action",
+        "Set foreground color to black, background color to white"),
     G_CALLBACK (context_colors_default_cmd_callback),
     GIMP_HELP_TOOLBOX_DEFAULT_COLORS },
 
   { "context-colors-swap", GIMP_STOCK_SWAP_COLORS,
     NC_("context-action", "S_wap Colors"), "X",
-    N_("Exchange foreground and background colors"),
+    NC_("context-action", "Exchange foreground and background colors"),
     G_CALLBACK (context_colors_swap_cmd_callback),
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };

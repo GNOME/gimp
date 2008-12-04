@@ -44,25 +44,25 @@ static const GimpActionEntry buffers_actions[] =
 
   { "buffers-paste", GTK_STOCK_PASTE,
     NC_("buffers-action", "_Paste Buffer"), "",
-    N_("Paste the selected buffer"),
+    NC_("buffers-action", "Paste the selected buffer"),
     G_CALLBACK (buffers_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 
   { "buffers-paste-into", GIMP_STOCK_PASTE_INTO,
     NC_("buffers-action", "Paste Buffer _Into"), NULL,
-    N_("Paste the selected buffer into the selection"),
+    NC_("buffers-action", "Paste the selected buffer into the selection"),
     G_CALLBACK (buffers_paste_into_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_INTO },
 
   { "buffers-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New"), NULL,
-    N_("Paste the selected buffer as new image"),
+    NC_("buffers-action", "Paste the selected buffer as a new image"),
     G_CALLBACK (buffers_paste_as_new_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW },
 
   { "buffers-delete", GTK_STOCK_DELETE,
     NC_("buffers-action", "_Delete Buffer"), "",
-    N_("Delete the selected buffer"),
+    NC_("buffers-action", "Delete the selected buffer"),
     G_CALLBACK (buffers_delete_cmd_callback),
     GIMP_HELP_BUFFER_DELETE }
 };

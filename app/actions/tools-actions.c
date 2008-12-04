@@ -55,31 +55,31 @@ static const GimpActionEntry tools_actions[] =
 
   { "tools-raise", GTK_STOCK_GO_UP,
     NC_("tools-action", "R_aise Tool"), NULL,
-    N_("Raise tool"),
+    NC_("tools-action", "Raise this tool"),
     G_CALLBACK (tools_raise_cmd_callback),
     NULL },
 
   { "tools-raise-to-top", GTK_STOCK_GOTO_TOP,
     NC_("tools-action", "Ra_ise to Top"), NULL,
-    N_("Raise tool to top"),
+    NC_("tools-action", "Raise this tool to the top"),
     G_CALLBACK (tools_raise_to_top_cmd_callback),
     NULL },
 
   { "tools-lower", GTK_STOCK_GO_DOWN,
     NC_("tools-action", "L_ower Tool"), NULL,
-    N_("Lower tool"),
+    NC_("tools-action", "Lower this tool"),
     G_CALLBACK (tools_lower_cmd_callback),
     NULL },
 
   { "tools-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
     NC_("tools-action", "Lo_wer to Bottom"), NULL,
-    N_("Lower tool to bottom"),
+    NC_("tools-action", "Lower this tool to the bottom"),
     G_CALLBACK (tools_lower_to_bottom_cmd_callback),
     NULL },
 
   { "tools-reset", GIMP_STOCK_RESET,
     NC_("tools-action", "_Reset Order & Visibility"), NULL,
-    N_("Reset tool order and visibility"),
+    NC_("tools-action", "Reset tool order and visibility"),
     G_CALLBACK (tools_reset_cmd_callback),
     NULL }
 };
@@ -97,13 +97,13 @@ static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
     NC_("tools-action", "_By Color"), NULL,
-    N_("Select regions with similar colors"),
+    NC_("tools-action", "Select regions with similar colors"),
     "gimp-by-color-select-tool",
     GIMP_HELP_TOOL_BY_COLOR_SELECT },
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
     NC_("tools-action", "_Arbitrary Rotation..."), "",
-    N_("Rotate by an arbitrary angle"),
+    NC_("tools-action", "Rotate by an arbitrary angle"),
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
 };

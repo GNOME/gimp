@@ -45,7 +45,8 @@ static const GimpToggleActionEntry sample_points_toggle_actions[] =
 {
   { "sample-points-sample-merged", NULL,
     NC_("sample-points-action", "_Sample Merged"), "",
-    N_("Use the composite color of all visible layers"),
+    NC_("sample-points-action",
+        "Use the composite color of all visible layers"),
     G_CALLBACK (sample_points_sample_merged_cmd_callback),
     TRUE,
     GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED }

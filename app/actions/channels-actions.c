@@ -46,55 +46,58 @@ static const GimpActionEntry channels_actions[] =
 
   { "channels-edit-attributes", GTK_STOCK_EDIT,
     NC_("channels-action", "_Edit Channel Attributes..."), NULL,
-    N_("Edit the channel's name, color and opacity"),
+    NC_("channels-action", "Edit the channel's name, color and opacity"),
     G_CALLBACK (channels_edit_attributes_cmd_callback),
     GIMP_HELP_CHANNEL_EDIT },
 
   { "channels-new", GTK_STOCK_NEW,
     NC_("channels-action", "_New Channel..."), "",
-    N_("Create a new channel"),
+    NC_("channels-action", "Create a new channel"),
     G_CALLBACK (channels_new_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-new-last-values", GTK_STOCK_NEW,
     NC_("channels-action", "_New Channel"), "",
-    N_("Create a new channel with last used values"),
+    NC_("channels-action", "Create a new channel with last used values"),
     G_CALLBACK (channels_new_last_vals_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-duplicate", GIMP_STOCK_DUPLICATE,
     NC_("channels-action", "D_uplicate Channel"), NULL,
-    N_("Create a duplicate of this channel and add it to the image"),
+    NC_("channels-action",
+        "Create a duplicate of this channel and add it to the image"),
     G_CALLBACK (channels_duplicate_cmd_callback),
     GIMP_HELP_CHANNEL_DUPLICATE },
 
   { "channels-delete", GTK_STOCK_DELETE,
     NC_("channels-action", "_Delete Channel"), "",
-    N_("Delete this channel"),
+    NC_("channels-action", "Delete this channel"),
     G_CALLBACK (channels_delete_cmd_callback),
     GIMP_HELP_CHANNEL_DELETE },
 
   { "channels-raise", GTK_STOCK_GO_UP,
     NC_("channels-action", "_Raise Channel"), "",
-    N_("Raise this channel one step in the channel stack"),
+    NC_("channels-action", "Raise this channel one step in the channel stack"),
     G_CALLBACK (channels_raise_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE },
 
   { "channels-raise-to-top", GTK_STOCK_GOTO_TOP,
     NC_("channels-action", "Raise Channel to _Top"), "",
-    N_("Raise this channel to the top of the channel stack"),
+    NC_("channels-action",
+        "Raise this channel to the top of the channel stack"),
     G_CALLBACK (channels_raise_to_top_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE_TO_TOP },
 
   { "channels-lower", GTK_STOCK_GO_DOWN,
     NC_("channels-action", "_Lower Channel"), "",
-    N_("Lower this channel one step in the channel stack"),
+    NC_("channels-action", "Lower this channel one step in the channel stack"),
     G_CALLBACK (channels_lower_cmd_callback),
     GIMP_HELP_CHANNEL_LOWER },
 
   { "channels-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
     NC_("channels-action", "Lower Channel to _Bottom"), "",
-    N_("Lower this channel to the bottom of the channel stack"),
+    NC_("channels-action",
+        "Lower this channel to the bottom of the channel stack"),
     G_CALLBACK (channels_lower_to_bottom_cmd_callback),
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
@@ -103,25 +106,25 @@ static const GimpEnumActionEntry channels_to_selection_actions[] =
 {
   { "channels-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     NC_("channels-action", "Channel to Sele_ction"), NULL,
-    N_("Replace the selection with this channel"),
+    NC_("channels-action", "Replace the selection with this channel"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_REPLACE },
 
   { "channels-selection-add", GIMP_STOCK_SELECTION_ADD,
     NC_("channels-action", "_Add to Selection"), NULL,
-    N_("Add this channel to the current selection"),
+    NC_("channels-action", "Add this channel to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_ADD },
 
   { "channels-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
     NC_("channels-action", "_Subtract from Selection"), NULL,
-    N_("Subtract this channel from the current selection"),
+    NC_("channels-action", "Subtract this channel from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_SUBTRACT },
 
   { "channels-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
     NC_("channels-action", "_Intersect with Selection"), NULL,
-    N_("Intersect this channel with the current selection"),
+    NC_("channels-action", "Intersect this channel with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_INTERSECT }
 };

@@ -45,37 +45,37 @@ static const GimpActionEntry patterns_actions[] =
 
   { "patterns-open-as-image", GTK_STOCK_OPEN,
     NC_("patterns-action", "_Open Pattern as Image"), "",
-    N_("Open pattern as image"),
+    NC_("patterns-action", "Open this pattern as an image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
 
   { "patterns-new", GTK_STOCK_NEW,
     NC_("patterns-action", "_New Pattern"), "",
-    N_("Create a new pattern"),
+    NC_("patterns-action", "Create a new pattern"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PATTERN_NEW },
 
   { "patterns-duplicate", GIMP_STOCK_DUPLICATE,
     NC_("patterns-action", "D_uplicate Pattern"), NULL,
-    N_("Duplicate this pattern"),
+    NC_("patterns-action", "Duplicate this pattern"),
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-copy-location", GTK_STOCK_COPY,
     NC_("patterns-action", "Copy Pattern _Location"), "",
-    N_("Copy pattern file location to clipboard"),
+    NC_("patterns-action", "Copy pattern file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
   { "patterns-delete", GTK_STOCK_DELETE,
     NC_("patterns-action", "_Delete Pattern"), "",
-    N_("Delete this pattern"),
+    NC_("patterns-action", "Delete this pattern"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },
 
   { "patterns-refresh", GTK_STOCK_REFRESH,
     NC_("patterns-action", "_Refresh Patterns"), "",
-    N_("Refresh patterns"),
+    NC_("patterns-action", "Refresh patterns"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_PATTERN_REFRESH }
 };
@@ -84,7 +84,7 @@ static const GimpStringActionEntry patterns_edit_actions[] =
 {
   { "patterns-edit", GTK_STOCK_EDIT,
     NC_("patterns-action", "_Edit Pattern..."), NULL,
-    N_("Edit pattern"),
+    NC_("patterns-action", "Edit pattern"),
     "gimp-pattern-editor",
     GIMP_HELP_PATTERN_EDIT }
 };

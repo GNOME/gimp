@@ -81,19 +81,21 @@ static const GimpActionEntry text_tool_actions[] =
 
   { "text-tool-clear", GTK_STOCK_CLEAR,
     NC_("text-tool-action", "Cl_ear"), "",
-    N_("Clear all text"),
+    NC_("text-tool-action", "Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),
     NULL },
 
   { "text-tool-text-to-path", GIMP_STOCK_PATH,
     NC_("text-tool-action", "_Path from Text"), "",
-    N_("Create a path from the outlines of the current text"),
+    NC_("text-tool-action",
+        "Create a path from the outlines of the current text"),
     G_CALLBACK (text_tool_text_to_path_cmd_callback),
     NULL },
 
   { "text-tool-text-along-path", GIMP_STOCK_PATH,
     NC_("text-tool-action", "Text _along Path"), "",
-    N_("Bend the text along the currently active path"),
+    NC_("text-tool-action",
+        "Bend the text along the currently active path"),
     G_CALLBACK (text_tool_text_along_path_cmd_callback),
     NULL }
 };

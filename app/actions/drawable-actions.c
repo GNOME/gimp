@@ -44,25 +44,26 @@ static const GimpActionEntry drawable_actions[] =
 {
   { "drawable-equalize", NULL,
     NC_("drawable-action", "_Equalize"), NULL,
-    N_("Automatic contrast enhancement"),
+    NC_("drawable-action", "Automatic contrast enhancement"),
     G_CALLBACK (drawable_equalize_cmd_callback),
     GIMP_HELP_LAYER_EQUALIZE },
 
   { "drawable-invert", GIMP_STOCK_INVERT,
     NC_("drawable-action", "In_vert"), NULL,
-    N_("Invert the colors"),
+    NC_("drawable-action", "Invert the colors"),
     G_CALLBACK (drawable_invert_cmd_callback),
     GIMP_HELP_LAYER_INVERT },
 
   { "drawable-levels-stretch", NULL,
     NC_("drawable-action", "_White Balance"), NULL,
-    N_("Automatic white balance correction"),
+    NC_("drawable-action", "Automatic white balance correction"),
     G_CALLBACK (drawable_levels_stretch_cmd_callback),
     GIMP_HELP_LAYER_WHITE_BALANCE},
 
   { "drawable-offset", NULL,
     NC_("drawable-action", "_Offset..."), "<control><shift>O",
-    N_("Shift the pixels, optionally wrapping them at the borders"),
+    NC_("drawable-action",
+        "Shift the pixels, optionally wrapping them at the borders"),
     G_CALLBACK (drawable_offset_cmd_callback),
     GIMP_HELP_LAYER_OFFSET }
 };
@@ -71,14 +72,14 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-linked", GIMP_STOCK_LINKED,
     NC_("drawable-action", "_Linked"), NULL,
-    N_("Toggle the linked state"),
+    NC_("drawable-action", "Toggle the linked state"),
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LINKED },
 
   { "drawable-visible", GIMP_STOCK_VISIBLE,
     NC_("drawable-action", "_Visible"), NULL,
-    N_("Toggle visibility"),
+    NC_("drawable-action", "Toggle visibility"),
     G_CALLBACK (drawable_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE }
@@ -88,13 +89,13 @@ static const GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
     NC_("drawable-action", "Flip _Horizontally"), NULL,
-    N_("Flip horizontally"),
+    NC_("drawable-action", "Flip horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_LAYER_FLIP_HORIZONTAL },
 
   { "drawable-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
     NC_("drawable-action", "Flip _Vertically"), NULL,
-    N_("Flip vertically"),
+    NC_("drawable-action", "Flip vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_LAYER_FLIP_VERTICAL }
 };
@@ -103,19 +104,19 @@ static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_STOCK_ROTATE_90,
     NC_("drawable-action", "Rotate 90° _clockwise"), NULL,
-    N_("Rotate 90 degrees to the right"),
+    NC_("drawable-action", "Rotate 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
   { "drawable-rotate-180", GIMP_STOCK_ROTATE_180,
     NC_("drawable-action", "Rotate _180°"), NULL,
-    N_("Turn upside-down"),
+    NC_("drawable-action", "Turn upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_STOCK_ROTATE_270,
     NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL,
-    N_("Rotate 90 degrees to the left"),
+    NC_("drawable-action", "Rotate 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }
 };

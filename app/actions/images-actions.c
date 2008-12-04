@@ -46,19 +46,19 @@ static const GimpActionEntry images_actions[] =
 
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
     NC_("images-action", "_Raise Views"), "",
-    N_("Raise this image's displays"),
+    NC_("images-action", "Raise this image's displays"),
     G_CALLBACK (images_raise_views_cmd_callback),
     NULL },
 
   { "images-new-view", GTK_STOCK_NEW,
     NC_("images-action", "_New View"), "",
-    N_("Create a new display for this image"),
+    NC_("images-action", "Create a new display for this image"),
     G_CALLBACK (images_new_view_cmd_callback),
     NULL },
 
   { "images-delete", GTK_STOCK_DELETE,
     NC_("images-action", "_Delete Image"), "",
-    N_("Delete this image"),
+    NC_("images-action", "Delete this image"),
     G_CALLBACK (images_delete_image_cmd_callback),
     NULL }
 };

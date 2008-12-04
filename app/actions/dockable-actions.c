@@ -49,10 +49,13 @@ static const GimpActionEntry dockable_actions[] =
     NC_("dockable-action", "Dialogs Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCK },
 
-  { "dockable-menu",               GTK_STOCK_MISSING_IMAGE, "" },
-  { "dockable-add-tab-menu",       NULL, NC_("dockable-action", "_Add Tab")        },
-  { "dockable-preview-size-menu",  NULL, NC_("dockable-action", "_Preview Size")   },
-  { "dockable-tab-style-menu",     NULL, NC_("dockable-action", "_Tab Style")      },
+  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, "" },
+  { "dockable-add-tab-menu",      NULL, NC_("dockable-action",
+                                            "_Add Tab")        },
+  { "dockable-preview-size-menu", NULL, NC_("dockable-action",
+                                            "_Preview Size")   },
+  { "dockable-tab-style-menu",    NULL, NC_("dockable-action",
+                                            "_Tab Style")      },
 
   { "dockable-close-tab", GTK_STOCK_CLOSE,
     NC_("dockable-action", "_Close Tab"), "", NULL,
@@ -120,7 +123,8 @@ static const GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-lock-tab", NULL,
     NC_("dockable-action", "Loc_k Tab to Dock"), NULL,
-    N_("Protect this tab from being dragged with the mouse pointer"),
+    NC_("dockable-action",
+        "Protect this tab from being dragged with the mouse pointer"),
     G_CALLBACK (dockable_lock_tab_cmd_callback),
     FALSE,
     GIMP_HELP_DOCK_TAB_LOCK },

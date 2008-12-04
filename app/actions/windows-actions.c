@@ -86,7 +86,7 @@ static const GimpActionEntry windows_actions[] =
 
   { "windows-show-toolbox", NULL,
     NC_("windows-action", "Tool_box"), "<control>B",
-    N_("Raise the toolbox"),
+    NC_("windows-action", "Raise the toolbox"),
     G_CALLBACK (windows_show_toolbox_cmd_callback),
     GIMP_HELP_TOOLBOX }
 };
