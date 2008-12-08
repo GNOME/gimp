@@ -67,13 +67,6 @@ enum
 };
 
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
-GeglNode * gegl_node_add_child (GeglNode *self,
-                                GeglNode *child);
-
-
 static void gimp_channel_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_channel_finalize      (GObject           *object);

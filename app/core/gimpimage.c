@@ -120,13 +120,6 @@ enum
 };
 
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
-GeglNode * gegl_node_add_child (GeglNode *self,
-                                GeglNode *child);
-
-
 /*  local function prototypes  */
 
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);

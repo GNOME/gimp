@@ -1,3 +1,14 @@
+2008-12-08  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-operation.c
+	* app/core/gimpdrawablestack.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer.c
+	* app/core/gimpprojection.c: gegl_node_add_child() and
+	gegl_node_remove_child() are public API in GEGL now.
+
 2008-12-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimp.c

@@ -75,19 +75,6 @@ enum
 };
 
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
-GeglNode * gegl_node_add_child (GeglNode *self,
-                                GeglNode *child);
-
-#ifdef __GNUC__
-#warning FIXME: gegl_node_remove_child() needs to be public
-#endif
-GeglNode * gegl_node_remove_child (GeglNode *self,
-                                   GeglNode *child);
-
-
 static void   gimp_layer_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_layer_set_property       (GObject            *object,

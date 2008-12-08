@@ -32,13 +32,6 @@
 #include "gimpdrawable-shadow.h"
 #include "gimpprogress.h"
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() is not public API
-#endif
-
-extern GeglNode * gegl_node_add_child (GeglNode *self,
-                                       GeglNode *child);
-
 
 void
 gimp_drawable_apply_operation (GimpDrawable *drawable,

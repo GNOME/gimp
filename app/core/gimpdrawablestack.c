@@ -37,19 +37,6 @@ enum
 };
 
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
-GeglNode * gegl_node_add_child (GeglNode *self,
-                                GeglNode *child);
-
-#ifdef __GNUC__
-#warning FIXME: gegl_node_remove_child() needs to be public
-#endif
-GeglNode * gegl_node_remove_child (GeglNode *self,
-                                   GeglNode *child);
-
-
 /*  local function prototypes  */
 
 static GObject * gimp_drawable_stack_constructor      (GType              type,

@@ -37,11 +37,7 @@
 #include "gimppickable.h"
 #include "gimpviewable.h"
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
-GeglNode * gegl_node_add_child (GeglNode *self,
-                                GeglNode *child);
+
 #ifdef __GNUC__
 #warning FIXME: gegl_node_get_pad() or something similar needs to be public
 #endif
