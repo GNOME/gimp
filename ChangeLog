@@ -1,3 +1,8 @@
+2008-12-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb-parse.c: updated link to the color keywords
+	in the SVG spec.
+
 2008-12-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpchannel.c

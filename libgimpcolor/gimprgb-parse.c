@@ -217,7 +217,8 @@ static const ColorEntry named_colors[] =
  * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
  *
  * Attempts to parse a color name. This function accepts <ulink
- * url="http://www.w3.org/TR/SVG/types.html">SVG 1.0 color keywords</ulink>.
+ * url="http://www.w3.org/TR/SVG/types.html#ColorKeywords">SVG 1.0
+ * color keywords</ulink>.
  *
  * This function does not touch the alpha component of @rgb.
  *
