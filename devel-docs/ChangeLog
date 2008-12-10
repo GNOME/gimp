@@ -1,3 +1,7 @@
+2008-12-10  Sven Neumann  <sven@gimp.org>
+
+	* README.gtkdoc: added a link to http://www.gtk.org/gtk-doc/
+
 2008-11-22  Sven Neumann  <sven@gimp.org>
 
 	* parasites.txt: removed obsolete section about gserialize.

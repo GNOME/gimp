@@ -10,9 +10,10 @@ but not before libgimp is properly documented.
 Principle
 ---------
 
-The documentation is extracted out of the source using gtk-doc. We use
-a combination of comment blocks embedded into the source and
-additional information added manually into SGML template files.
+The documentation is extracted out of the source using gtk-doc (see
+http://www.gtk.org/gtk-doc/). We use a combination of comment blocks
+embedded into the source and additional information added manually
+into SGML template files.
 
 
 Requirements
