@@ -1,5 +1,10 @@
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimptagged.c (gimp_tagged_add_tag): Remove weird const
+	qualifier.
+
+2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
 
 	Partial merge of code from Aurimas Juška.
