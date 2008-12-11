@@ -1,3 +1,9 @@
+2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	s/gimp_tagged_get_get_tags/gimp_tagged_get_tags/
+
+	* app/core/gimptagged.[ch]
+
 2008-12-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb-parse.c: updated link to the color keywords

@@ -146,7 +146,7 @@ gimp_tagged_remove_tag (GimpTagged *tagged,
  * Return value: a list of tags
  **/
 GList *
-gimp_tagged_get_get_tags (GimpTagged *tagged)
+gimp_tagged_get_tags (GimpTagged *tagged)
 {
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), NULL);
 
