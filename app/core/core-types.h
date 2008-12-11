@@ -148,6 +148,7 @@ typedef struct _GimpParasiteList    GimpParasiteList;
 typedef struct _GimpPdbProgress     GimpPdbProgress;
 typedef struct _GimpProjection      GimpProjection;
 typedef struct _GimpSubProgress     GimpSubProgress;
+typedef struct _GimpTag             GimpTag;
 
 
 /*  interfaces  */
@@ -167,13 +168,6 @@ typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef struct _GimpScanConvert     GimpScanConvert;
 typedef         guint32             GimpTattoo;
-
-
-/*  tags  */
-
-typedef GQuark                      GimpTag;
-#define gimp_tag_new(name)          g_quark_from_string (name)
-#define gimp_tag_get_name(tag)      g_quark_to_string (name)
 
 
 /*  functions  */

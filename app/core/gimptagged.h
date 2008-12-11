@@ -37,15 +37,15 @@ struct _GimpTaggedInterface
 
   /*  signals            */
   void       (* tag_added)      (GimpTagged *tagged,
-                                 GimpTag     tag);
+                                 GimpTag    *tag);
   void       (* tag_removed)    (GimpTagged *tagged,
-                                 GimpTag     tag);
+                                 GimpTag    *tag);
 
   /*  virtual functions  */
   gboolean   (* add_tag)        (GimpTagged *tagged,
-                                 GimpTag     tag);
+                                 GimpTag    *tag);
   gboolean   (* remove_tag)     (GimpTagged *tagged,
-                                 GimpTag     tag);
+                                 GimpTag    *tag);
   GList    * (* get_tags)       (GimpTagged *tagged);
   gchar    * (* get_identifier) (GimpTagged *tagged);
   gchar    * (* get_checksum)   (GimpTagged *tagged);
@@ -55,9 +55,9 @@ struct _GimpTaggedInterface
 GType      gimp_tagged_interface_get_type (void) G_GNUC_CONST;
 
 void       gimp_tagged_add_tag            (GimpTagged *tagged,
-                                           GimpTag     tag);
+                                           GimpTag    *tag);
 void       gimp_tagged_remove_tag         (GimpTagged *tagged,
-                                           GimpTag     tag);
+                                           GimpTag    *tag);
 GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
 gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
 gchar    * gimp_tagged_get_checksum       (GimpTagged *tagged);

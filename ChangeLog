@@ -1,5 +1,22 @@
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
+	Partial merge of code from Aurimas Juška.
+
+	* app/core/gimptag.c: A new minimal GimpTag type with only a
+	gimp_tag_equals() class function so that we can
+
+	* app/core/gimptagged.c
+	* app/core/gimpdata.c (gimp_data_add_tag, gimp_data_remove_tag):
+	Adapt these to GimpTag being an object instead of a GQuark.
+
+	* app/core/core-types.h: Update GimpTag typedef.
+
+	* app/core/Makefile.am: Add gimptag.[ch].
+
+2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/core-types.h: Sort typedefs.
 
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
