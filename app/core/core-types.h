@@ -139,7 +139,6 @@ typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
 
 typedef struct _GimpBuffer          GimpBuffer;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
-/* typedef struct _GimpGrid         GimpGrid; in config-types.h */
 typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpImageMap        GimpImageMap;
@@ -149,7 +148,6 @@ typedef struct _GimpParasiteList    GimpParasiteList;
 typedef struct _GimpPdbProgress     GimpPdbProgress;
 typedef struct _GimpProjection      GimpProjection;
 typedef struct _GimpSubProgress     GimpSubProgress;
-/* typedef struct _GimpTemplate     GimpTemplate; in config-types.h */
 
 
 /*  interfaces  */
