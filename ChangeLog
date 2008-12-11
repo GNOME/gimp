@@ -1,5 +1,9 @@
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/core-types.h: Sort typedefs.
+
+2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/core-types.h: Remove references to typedefs in
 	config-types.h that are more annoying than helpful.
 
