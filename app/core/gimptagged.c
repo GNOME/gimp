@@ -152,3 +152,45 @@ gimp_tagged_get_tags (GimpTagged *tagged)
 
   return GIMP_TAGGED_GET_INTERFACE (tagged)->get_tags (tagged);
 }
+
+/**
+ * gimp_tagged_get_identifier:
+ * @tagged: an object that implements the %GimpTagged interface
+ *
+ * Returns an identifier string which uniquely identifies the tagged
+ * object. Two different objects must have unique identifiers but may
+ * have the same checksum (which will be the case if one object is a
+ * copy of the other).
+ *
+ * Return value: a newly allocated string containing unique identifier
+ * of the object. It must be freed using #g_free.
+ **/
+gchar *
+gimp_tagged_get_identifier (GimpTagged *tagged)
+{
+  g_return_val_if_fail (GIMP_IS_TAGGED (tagged), NULL);
+
+  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_identifier (tagged);
+}
+
+/**
+ * gimp_tagged_get_checksum:
+ * @tagged: an object that implements the %GimpTagged interface
+ *
+ * Returns the checksum of the @tagged object. It is used to remap the
+ * tags for an object for which the identifier has changed, for
+ * example if the user has renamed a data file since the last session.
+ *
+ * If the object does not want to support such remapping (objects not
+ * stored in file for example) it can return #NULL.
+ *
+ * Return value: checksum string if object needs identifier remapping,
+ * #NULL otherwise. Returned string must be freed with #g_free().
+ **/
+gchar *
+gimp_tagged_get_checksum (GimpTagged *tagged)
+{
+  g_return_val_if_fail (GIMP_IS_TAGGED (tagged), FALSE);
+
+  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_checksum (tagged);
+}

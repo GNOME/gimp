@@ -1,5 +1,14 @@
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
+	Partial merge of code from Aurimas Juška.
+
+	* app/core/gimptagged.[ch]: Added GimpTagged::get_identifier() and
+	GimpTagged::get_checksum().
+
+2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	s/gimp_tagged_get_get_tags/gimp_tagged_get_tags/
 
 	* app/core/gimptagged.[ch]

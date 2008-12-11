@@ -36,17 +36,19 @@ struct _GimpTaggedInterface
   GTypeInterface base_iface;
 
   /*  signals            */
-  void       (* tag_added)   (GimpTagged *tagged,
-                              GimpTag     tag);
-  void       (* tag_removed) (GimpTagged *tagged,
-                              GimpTag     tag);
+  void       (* tag_added)      (GimpTagged *tagged,
+                                 GimpTag     tag);
+  void       (* tag_removed)    (GimpTagged *tagged,
+                                 GimpTag     tag);
 
   /*  virtual functions  */
-  gboolean   (* add_tag)     (GimpTagged *tagged,
-                              GimpTag     tag);
-  gboolean   (* remove_tag)  (GimpTagged *tagged,
-                              GimpTag     tag);
-  GList    * (* get_tags)    (GimpTagged *tagged);
+  gboolean   (* add_tag)        (GimpTagged *tagged,
+                                 GimpTag     tag);
+  gboolean   (* remove_tag)     (GimpTagged *tagged,
+                                 GimpTag     tag);
+  GList    * (* get_tags)       (GimpTagged *tagged);
+  gchar    * (* get_identifier) (GimpTagged *tagged);
+  gchar    * (* get_checksum)   (GimpTagged *tagged);
 };
 
 
@@ -57,6 +59,8 @@ void       gimp_tagged_add_tag            (GimpTagged *tagged,
 void       gimp_tagged_remove_tag         (GimpTagged *tagged,
                                            GimpTag     tag);
 GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
+gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
+gchar    * gimp_tagged_get_checksum       (GimpTagged *tagged);
 
 
 #endif  /* __GIMP_TAGGED_H__ */
