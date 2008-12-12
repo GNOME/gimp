@@ -285,7 +285,8 @@ gimp_gradient_get_standard (void)
       standard_gradient = gimp_gradient_new ("Standard");
 
       standard_gradient->dirty = FALSE;
-      gimp_data_make_internal (standard_gradient);
+      gimp_data_make_internal (standard_gradient,
+                               "gimp-gradient-standard");
 
       g_object_ref (standard_gradient);
     }

@@ -88,7 +88,7 @@ gimp_gradients_add_gradient (Gimp        *gimp,
 {
   GimpGradient *gradient = GIMP_GRADIENT (gimp_gradient_new (name));
 
-  gimp_data_make_internal (GIMP_DATA (gradient));
+  gimp_data_make_internal (GIMP_DATA (gradient), id);
 
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;

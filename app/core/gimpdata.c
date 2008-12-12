@@ -210,6 +210,7 @@ gimp_data_init (GimpData      *data,
   data->freeze_count = 0;
   data->mtime        = 0;
   data->tags         = NULL;
+  data->identifier   = NULL;
 
   /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
    *  here, because the latter is always GimpDataClass itself
@@ -250,6 +251,12 @@ gimp_data_finalize (GObject *object)
     {
       g_list_free (data->tags);
       data->tags = NULL;
+    }
+
+  if (data->identifier)
+    {
+      g_free (data->identifier);
+      data->identifier = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -713,9 +720,13 @@ gimp_data_duplicate (GimpData *data)
  * saved to disk.  Note that if you do this, later calls to
  * gimp_data_save() and gimp_data_delete_from_disk() will
  * automatically return successfully without giving any warning.
+ *
+ * The identifier name shall be an untranslated globally unique string
+ * that identifies the internal object across sessions.
  **/
 void
-gimp_data_make_internal (GimpData *data)
+gimp_data_make_internal (GimpData      *data,
+                         const gchar   *identifier)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
 
@@ -724,6 +735,8 @@ gimp_data_make_internal (GimpData *data)
       g_free (data->filename);
       data->filename = NULL;
     }
+
+  data->identifier = g_strdup (identifier);
 
   data->internal  = TRUE;
   data->writable  = FALSE;

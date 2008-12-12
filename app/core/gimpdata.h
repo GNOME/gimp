@@ -59,6 +59,11 @@ struct _GimpData
   gint          freeze_count;
   time_t        mtime;
 
+  /* Identifies the GimpData object across sessions. Used when there
+   * is not a filename associated with the object.
+   */
+  gchar        *identifier;
+
   GList        *tags;
 };
 
@@ -102,7 +107,8 @@ const gchar * gimp_data_get_mime_type    (GimpData     *data);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data);
 
-void          gimp_data_make_internal    (GimpData     *data);
+void          gimp_data_make_internal    (GimpData     *data,
+                                          const gchar  *identifier);
 
 gint          gimp_data_compare          (GimpData     *data1,
                                           GimpData     *data2);

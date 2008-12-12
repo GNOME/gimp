@@ -534,7 +534,8 @@ gimp_curve_get_standard (void)
       standard_curve = gimp_curve_new ("Standard");
 
       standard_curve->dirty = FALSE;
-      gimp_data_make_internal (standard_curve);
+      gimp_data_make_internal (standard_curve,
+                               "gimp-curve-standard");
 
       g_object_ref (standard_curve);
     }

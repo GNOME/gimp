@@ -602,14 +602,16 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  add the clipboard brush  */
   clipboard_brush = gimp_brush_clipboard_new (gimp);
-  gimp_data_make_internal (GIMP_DATA (clipboard_brush));
+  gimp_data_make_internal (GIMP_DATA (clipboard_brush),
+                           "gimp-brush-clipboard");
   gimp_container_add (gimp->brush_factory->container,
                       GIMP_OBJECT (clipboard_brush));
   g_object_unref (clipboard_brush);
 
   /*  add the clipboard pattern  */
   clipboard_pattern = gimp_pattern_clipboard_new (gimp);
-  gimp_data_make_internal (GIMP_DATA (clipboard_pattern));
+  gimp_data_make_internal (GIMP_DATA (clipboard_pattern),
+                           "gimp-pattern-clipboard");
   gimp_container_add (gimp->pattern_factory->container,
                       GIMP_OBJECT (clipboard_pattern));
   g_object_unref (clipboard_pattern);

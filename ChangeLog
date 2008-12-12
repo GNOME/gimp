@@ -1,5 +1,25 @@
 2008-12-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
+	Partial merge of code from Aurimas Juška.
+
+	* app/core/gimpdata.[ch] (gimp_data_make_internal): Add an
+	'identifier' parameter/instance struct member that can be used to
+	identify the internal GimpData object across sessions. It is the
+	internal-object counterpart to a file path.
+
+	* app/core/gimp.c
+	* app/core/gimpcurve.c
+	* app/core/gimpbrush.c
+	* app/core/gimppattern.c
+	* app/core/gimppalette.c
+	* app/core/gimpgradient.c
+	* app/core/gimp-gradients.c: Assign an identifier to the the
+	internal GimpData objects.
+
+2008-12-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimptagged.c (gimp_tagged_get_identifier): Clarify
 	documentation.
 
