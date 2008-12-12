@@ -3190,7 +3190,6 @@ msgid "Delete this layer"
 msgstr "删除此图层"
 
 #: ../app/actions/layers-actions.c:115
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "升高图层(_R)"
@@ -3253,7 +3252,6 @@ msgid "Merge Do_wn"
 msgstr "向下合并(_W)"
 
 #: ../app/actions/layers-actions.c:146
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "将此图层与其下的一层合并"
@@ -3563,7 +3561,6 @@ msgid "Select the bottommost layer"
 msgstr "选择最底端图层"
 
 #: ../app/actions/layers-actions.c:373
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "选择前一图层(_P)"
@@ -3574,7 +3571,6 @@ msgid "Select the layer above the current layer"
 msgstr "选择活动图层上方的图层"
 
 #: ../app/actions/layers-actions.c:379
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "选择后一图层(_N)"
@@ -3903,7 +3899,6 @@ msgid "En_hance"
 msgstr "增强(_H)"
 
 #: ../app/actions/plug-in-actions.c:97
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "组合(_O)"
@@ -4045,13 +4040,11 @@ msgid "Toggle Quick Mask on/off"
 msgstr "切换快速蒙板"
 
 #: ../app/actions/quick-mask-actions.c:65
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
 msgstr "掩蔽选中区域(_S)"
 
 #: ../app/actions/quick-mask-actions.c:70
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "掩蔽非选中区域(_U)"
@@ -4078,7 +4071,6 @@ msgid "Sample Point Menu"
 msgstr "采样点菜单"
 
 #: ../app/actions/sample-points-actions.c:47
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "位样合并(_S)"
@@ -4099,7 +4091,6 @@ msgid "_Select"
 msgstr "选择(_S)"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
 msgstr "完整显示(_A)"
