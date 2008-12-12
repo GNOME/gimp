@@ -1,3 +1,8 @@
+2008-12-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimptagged.c (gimp_tagged_get_identifier): Clarify
+	documentation.
+
 2008-12-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project

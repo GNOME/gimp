@@ -161,7 +161,9 @@ gimp_tagged_get_tags (GimpTagged *tagged)
  * Returns an identifier string which uniquely identifies the tagged
  * object. Two different objects must have unique identifiers but may
  * have the same checksum (which will be the case if one object is a
- * copy of the other).
+ * copy of the other). The identifier must be the same across
+ * sessions, so for example an instance pointer cannot be used as an
+ * identifier.
  *
  * Return value: a newly allocated string containing unique identifier
  * of the object. It must be freed using #g_free.
