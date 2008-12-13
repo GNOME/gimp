@@ -19,7 +19,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -6376,14 +6375,12 @@ msgstr "(预览已经过时)"
 #: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:566
 #, c-format
 msgid "%d × %d pixel"
-msgid_plural "%d × %d pixels"
-msgstr[0] "%d x %d 像素"
+msgstr "%d x %d 像素"
 
 #: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:325
 #, c-format
 msgid "%d layer"
-msgid_plural "%d layers"
-msgstr[0] "%d 个图层"
+msgstr "%d 个图层"
 
 #: ../app/core/gimpimagefile.c:675
 #, c-format
@@ -8045,8 +8042,7 @@ msgstr "如果您现在关闭这些图像，更改将会丢失。"
 #: ../app/dialogs/quit-dialog.c:216
 #, c-format
 msgid "There is one image with unsaved changes:"
-msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "有 %d 幅图像修改后还没保存："
+msgstr "有图像修改后还没保存："
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -8295,26 +8291,20 @@ msgstr "关闭图像 “%s” 前保存修改吗？"
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "如果您现在关闭这些图像，最近一小时的更改将会丢失。"
+msgstr "如果您现在关闭这些图像，最近一小时的更改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
 "be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] "如果您不保存图像，从1小时零 %d 分钟前所作的修改将会丢失。"
+msgstr "如果您不保存图像，从1小时零 %d 分钟前所作的修改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "如果您现在关闭这些图像，最近 %d 分钟的更改将会丢失。"
+msgstr "如果您现在关闭这些图像，最近1分钟的更改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
 #: ../app/display/gimpdisplayshell-dnd.c:587
@@ -9681,7 +9671,7 @@ msgstr "曲线类型(_T)"
 #: ../app/tools/gimpcurvestool.c:632 ../app/tools/gimplevelstool.c:752
 #, c-format
 msgid "Could not read header from '%s': %s"
-msgstr "无法从“%2$s”中读取 %1$d 字节：%3$s"
+msgstr "无法从“%s”中读取头：%s"
 
 #: ../app/tools/gimpcurvestool.c:705
 msgid "Use _old curves file format"
@@ -12781,11 +12771,6 @@ msgstr "无法启动“%s”：%s"
 
 #~ msgid "Show tip next time GIMP starts"
 #~ msgstr "下次 GIMP 启动时显示提示"
-
-#~ msgid ""
-#~ "If you don't save the image, changes from the last hour will be lost.If "
-#~ "you don't save the image, changes from the last %d hours will be lost."
-#~ msgstr "如果您不保存图像，从前 %d 小时起所作的修改将会丢失。"
 
 #~ msgid ""
 #~ "If you don't save the image, changes from the last hour and %d minute "
