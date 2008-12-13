@@ -33,43 +33,44 @@ struct _TempBuf
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new         (gint           width,
-                                gint           height,
-                                gint           bytes,
-                                gint           x,
-                                gint           y,
-                                const guchar  *color);
-TempBuf * temp_buf_new_check   (gint           width,
-                                gint           height,
-                                GimpCheckType  check_type,
-                                GimpCheckSize  check_size);
-TempBuf * temp_buf_copy        (TempBuf       *src,
-                                TempBuf       *dest);
-TempBuf * temp_buf_resize      (TempBuf       *buf,
-                                gint           bytes,
-                                gint           x,
-                                gint           y,
-                                gint           width,
-                                gint           height);
-TempBuf * temp_buf_scale       (TempBuf       *buf,
-                                gint           width,
-                                gint           height) G_GNUC_WARN_UNUSED_RESULT;
-TempBuf * temp_buf_copy_area   (TempBuf       *src,
-                                TempBuf       *dest,
-                                gint           x,
-                                gint           y,
-                                gint           width,
-                                gint           height,
-                                gint           dest_x,
-                                gint           dest_y);
+TempBuf * temp_buf_new           (gint           width,
+                                  gint           height,
+                                  gint           bytes,
+                                  gint           x,
+                                  gint           y,
+                                  const guchar  *color);
+TempBuf * temp_buf_new_check     (gint           width,
+                                  gint           height,
+                                  GimpCheckType  check_type,
+                                  GimpCheckSize  check_size);
+TempBuf * temp_buf_copy          (TempBuf       *src,
+                                  TempBuf       *dest);
+TempBuf * temp_buf_resize        (TempBuf       *buf,
+                                  gint           bytes,
+                                  gint           x,
+                                  gint           y,
+                                  gint           width,
+                                  gint           height);
+TempBuf * temp_buf_scale         (TempBuf       *buf,
+                                  gint           width,
+                                  gint           height) G_GNUC_WARN_UNUSED_RESULT;
+TempBuf * temp_buf_copy_area     (TempBuf       *src,
+                                  TempBuf       *dest,
+                                  gint           x,
+                                  gint           y,
+                                  gint           width,
+                                  gint           height,
+                                  gint           dest_x,
+                                  gint           dest_y);
 
-void      temp_buf_demultiply  (TempBuf       *buf);
+void      temp_buf_demultiply    (TempBuf       *buf);
 
-void      temp_buf_free        (TempBuf       *buf);
-guchar  * temp_buf_get_data    (TempBuf       *buf);
-guchar  * temp_buf_data_clear  (TempBuf       *buf);
+void      temp_buf_free          (TempBuf       *buf);
+guchar  * temp_buf_get_data      (TempBuf       *buf);
+gsize     temp_buf_get_data_size (TempBuf       *buf);
+guchar  * temp_buf_data_clear    (TempBuf       *buf);
 
-gsize     temp_buf_get_memsize (TempBuf       *buf);
+gsize     temp_buf_get_memsize   (TempBuf       *buf);
 
 
 #endif  /*  __TEMP_BUF_H__  */

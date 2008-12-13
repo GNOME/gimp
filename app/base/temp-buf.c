@@ -196,7 +196,7 @@ temp_buf_copy (TempBuf *src,
     {
       memcpy (temp_buf_get_data (dest),
               temp_buf_get_data (src),
-              src->width * src->height * src->bytes);
+              temp_buf_get_data_size (src));
     }
 
   return dest;
@@ -413,6 +413,12 @@ temp_buf_get_data (TempBuf *buf)
   return buf->data;
 }
 
+gsize
+temp_buf_get_data_size (TempBuf *buf)
+{
+  return buf->bytes * buf->width * buf->height;
+}
+
 guchar *
 temp_buf_data_clear (TempBuf *buf)
 {
@@ -425,7 +431,7 @@ gsize
 temp_buf_get_memsize (TempBuf *buf)
 {
   if (buf)
-    return (sizeof (TempBuf) + buf->bytes * buf->width * buf->height);
+    return (sizeof (TempBuf) + temp_buf_get_data_size (buf));
 
   return 0;
 }

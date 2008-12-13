@@ -263,9 +263,7 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
   GValueArray *return_vals;
 
   array = gimp_array_new (temp_buf_get_data (brush->mask),
-                          brush->mask->width *
-                          brush->mask->height *
-                          brush->mask->bytes,
+                          temp_buf_get_data_size (brush->mask),
                           TRUE);
 
   return_vals =

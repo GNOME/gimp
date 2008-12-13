@@ -1,5 +1,13 @@
 2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Introduce temp_buf_get_data_size() and use it.
+
+	* app/base/temp-buf.[ch]
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimppatternselect.c
+
+2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	s/temp_buf_data/temp_buf_get_data/
 
 	* app/base/pixel-region.c
