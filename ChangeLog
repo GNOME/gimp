@@ -1,5 +1,10 @@
 2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimp.c: We shall unref in dispose() and free in
+	finalize(), not vice versa.
+
+2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
 
 	Partial merge of code from Aurimas Juška.
