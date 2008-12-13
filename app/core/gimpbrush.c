@@ -21,6 +21,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -31,6 +32,7 @@
 #include "gimpbrush-scale.h"
 #include "gimpbrushgenerated.h"
 #include "gimpmarshal.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
@@ -48,39 +50,45 @@ enum
 };
 
 
-static void          gimp_brush_set_property          (GObject       *object,
-                                                       guint          property_id,
-                                                       const GValue  *value,
-                                                       GParamSpec    *pspec);
-static void          gimp_brush_get_property          (GObject       *object,
-                                                       guint          property_id,
-                                                       GValue        *value,
-                                                       GParamSpec    *pspec);
-static void          gimp_brush_finalize              (GObject       *object);
+static void          gimp_brush_tagged_iface_init     (GimpTaggedInterface  *iface);
 
-static gint64        gimp_brush_get_memsize           (GimpObject    *object,
-                                                       gint64        *gui_size);
+static void          gimp_brush_set_property          (GObject              *object,
+                                                       guint                 property_id,
+                                                       const GValue         *value,
+                                                       GParamSpec           *pspec);
+static void          gimp_brush_get_property          (GObject              *object,
+                                                       guint                 property_id,
+                                                       GValue               *value,
+                                                       GParamSpec           *pspec);
+static void          gimp_brush_finalize              (GObject              *object);
 
-static gboolean      gimp_brush_get_size              (GimpViewable  *viewable,
-                                                       gint          *width,
-                                                       gint          *height);
-static TempBuf     * gimp_brush_get_new_preview       (GimpViewable  *viewable,
-                                                       GimpContext   *context,
-                                                       gint           width,
-                                                       gint           height);
-static gchar       * gimp_brush_get_description       (GimpViewable  *viewable,
-                                                       gchar        **tooltip);
-static const gchar * gimp_brush_get_extension         (GimpData      *data);
+static gint64        gimp_brush_get_memsize           (GimpObject           *object,
+                                                       gint64               *gui_size);
 
-static GimpBrush   * gimp_brush_real_select_brush     (GimpBrush     *brush,
-                                                       GimpCoords    *last_coords,
-                                                       GimpCoords    *cur_coords);
-static gboolean      gimp_brush_real_want_null_motion (GimpBrush     *brush,
-                                                       GimpCoords    *last_coords,
-                                                       GimpCoords    *cur_coords);
+static gboolean      gimp_brush_get_size              (GimpViewable         *viewable,
+                                                       gint                 *width,
+                                                       gint                 *height);
+static TempBuf     * gimp_brush_get_new_preview       (GimpViewable         *viewable,
+                                                       GimpContext          *context,
+                                                       gint                  width,
+                                                       gint                  height);
+static gchar       * gimp_brush_get_description       (GimpViewable         *viewable,
+                                                       gchar               **tooltip);
+static const gchar * gimp_brush_get_extension         (GimpData             *data);
+
+static GimpBrush   * gimp_brush_real_select_brush     (GimpBrush            *brush,
+                                                       GimpCoords           *last_coords,
+                                                       GimpCoords           *cur_coords);
+static gboolean      gimp_brush_real_want_null_motion (GimpBrush            *brush,
+                                                       GimpCoords           *last_coords,
+                                                       GimpCoords           *cur_coords);
+
+static gchar       * gimp_brush_get_checksum          (GimpTagged           *tagged);
 
 
-G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_brush_tagged_iface_init))
 
 #define parent_class gimp_brush_parent_class
 
@@ -129,6 +137,12 @@ gimp_brush_class_init (GimpBrushClass *klass)
                                                         1.0, 5000.0, 20.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_brush_tagged_iface_init (GimpTaggedInterface *iface)
+{
+  iface->get_checksum = gimp_brush_get_checksum;
 }
 
 static void
@@ -357,6 +371,30 @@ gimp_brush_real_want_null_motion (GimpBrush  *brush,
   return TRUE;
 }
 
+static gchar *
+gimp_brush_get_checksum (GimpTagged *tagged)
+{
+  GimpBrush *brush           = GIMP_BRUSH (tagged);
+  gchar     *checksum_string = NULL;
+
+  if (brush->mask)
+    {
+      GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+      g_checksum_update (checksum, temp_buf_get_data (brush->mask), temp_buf_get_data_size (brush->mask));
+      if (brush->pixmap)
+        g_checksum_update (checksum, temp_buf_get_data (brush->pixmap), temp_buf_get_data_size (brush->pixmap));
+      g_checksum_update (checksum, (const guchar *) &brush->spacing, sizeof (brush->spacing));
+      g_checksum_update (checksum, (const guchar *) &brush->x_axis, sizeof (brush->x_axis));
+      g_checksum_update (checksum, (const guchar *) &brush->y_axis, sizeof (brush->y_axis));
+
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+      g_checksum_free (checksum);
+    }
+
+  return checksum_string;
+}
 
 /*  public functions  */
 

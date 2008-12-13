@@ -30,30 +30,36 @@
 
 #include "gimppattern.h"
 #include "gimppattern-load.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
 
-static void          gimp_pattern_finalize        (GObject       *object);
+static void          gimp_pattern_tagged_iface_init (GimpTaggedInterface  *iface);
+static void          gimp_pattern_finalize          (GObject              *object);
 
-static gint64        gimp_pattern_get_memsize     (GimpObject    *object,
-                                                   gint64        *gui_size);
+static gint64        gimp_pattern_get_memsize       (GimpObject           *object,
+                                                     gint64               *gui_size);
 
-static gboolean      gimp_pattern_get_size        (GimpViewable  *viewable,
-                                                   gint          *width,
-                                                   gint          *height);
-static TempBuf     * gimp_pattern_get_new_preview (GimpViewable  *viewable,
-                                                   GimpContext   *context,
-                                                   gint           width,
-                                                   gint           height);
-static gchar       * gimp_pattern_get_description (GimpViewable  *viewable,
-                                                   gchar        **tooltip);
+static gboolean      gimp_pattern_get_size          (GimpViewable         *viewable,
+                                                     gint                 *width,
+                                                     gint                 *height);
+static TempBuf     * gimp_pattern_get_new_preview   (GimpViewable         *viewable,
+                                                     GimpContext          *context,
+                                                     gint                  width,
+                                                     gint                  height);
+static gchar       * gimp_pattern_get_description   (GimpViewable         *viewable,
+                                                     gchar               **tooltip);
 
-static const gchar * gimp_pattern_get_extension   (GimpData      *data);
-static GimpData    * gimp_pattern_duplicate       (GimpData      *data);
+static const gchar * gimp_pattern_get_extension     (GimpData             *data);
+static GimpData    * gimp_pattern_duplicate         (GimpData             *data);
+
+static gchar       * gimp_pattern_get_checksum      (GimpTagged           *tagged);
 
 
-G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_CODE (GimpPattern, gimp_pattern, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_pattern_tagged_iface_init))
 
 #define parent_class gimp_pattern_parent_class
 
@@ -77,6 +83,12 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   data_class->get_extension        = gimp_pattern_get_extension;
   data_class->duplicate            = gimp_pattern_duplicate;
+}
+
+static void
+gimp_pattern_tagged_iface_init (GimpTaggedInterface *iface)
+{
+  iface->get_checksum = gimp_pattern_get_checksum;
 }
 
 static void
@@ -175,6 +187,26 @@ gimp_pattern_duplicate (GimpData *data)
   pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
 
   return GIMP_DATA (pattern);
+}
+
+static gchar *
+gimp_pattern_get_checksum (GimpTagged *tagged)
+{
+  GimpPattern *pattern         = GIMP_PATTERN (tagged);
+  gchar       *checksum_string = NULL;
+
+  if (pattern->mask)
+    {
+      GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
+
+      g_checksum_update (checksum, temp_buf_get_data (pattern->mask), temp_buf_get_data_size (pattern->mask));
+
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+      g_checksum_free (checksum);
+    }
+
+  return checksum_string;
 }
 
 GimpData *

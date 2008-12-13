@@ -94,6 +94,8 @@ static gboolean  gimp_data_add_tag           (GimpTagged            *tagged,
 static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
                                               GimpTag               *tag);
 static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
+static gchar *   gimp_data_get_identifier    (GimpTagged            *tagged);
+static gchar *   gimp_data_get_checksum      (GimpTagged            *tagged);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -192,9 +194,11 @@ gimp_data_class_init (GimpDataClass *klass)
 static void
 gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
 {
-  iface->add_tag    = gimp_data_add_tag;
-  iface->remove_tag = gimp_data_remove_tag;
-  iface->get_tags   = gimp_data_get_tags;
+  iface->add_tag        = gimp_data_add_tag;
+  iface->remove_tag     = gimp_data_remove_tag;
+  iface->get_tags       = gimp_data_get_tags;
+  iface->get_identifier = gimp_data_get_identifier;
+  iface->get_checksum   = gimp_data_get_checksum;
 }
 
 static void
@@ -402,6 +406,36 @@ static GList *
 gimp_data_get_tags (GimpTagged *tagged)
 {
   return GIMP_DATA (tagged)->tags;
+}
+
+static gchar*
+gimp_data_get_identifier (GimpTagged *tagged)
+{
+  GimpData *data       = GIMP_DATA (tagged);
+  gchar    *identifier = NULL;
+
+  if (data->filename)
+    {
+      identifier = g_filename_to_utf8 (data->filename, -1, NULL, NULL, NULL);
+
+      if (! identifier)
+        {
+          g_warning ("Failed to convert '%s' to utf8.\n", data->filename);
+          identifier = g_strdup (data->filename);
+        }
+    }
+  else if (data->internal)
+    {
+      identifier = g_strdup (data->identifier);
+    }
+
+  return identifier;
+}
+
+static gchar *
+gimp_data_get_checksum (GimpTagged *tagged)
+{
+  return NULL;
 }
 
 /**

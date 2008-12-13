@@ -33,6 +33,7 @@
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
@@ -40,38 +41,43 @@
 
 /*  local function prototypes  */
 
-static void          gimp_palette_finalize          (GObject           *object);
+static void          gimp_palette_tagged_iface_init (GimpTaggedInterface  *iface);
 
-static gint64        gimp_palette_get_memsize       (GimpObject        *object,
-                                                     gint64            *gui_size);
+static void          gimp_palette_finalize          (GObject              *object);
 
-static void          gimp_palette_get_preview_size  (GimpViewable      *viewable,
-                                                     gint               size,
-                                                     gboolean           popup,
-                                                     gboolean           dot_for_dot,
-                                                     gint              *width,
-                                                     gint              *height);
-static gboolean      gimp_palette_get_popup_size    (GimpViewable      *viewable,
-                                                     gint               width,
-                                                     gint               height,
-                                                     gboolean           dot_for_dot,
-                                                     gint              *popup_width,
-                                                     gint              *popup_height);
-static TempBuf     * gimp_palette_get_new_preview   (GimpViewable      *viewable,
-                                                     GimpContext       *context,
-                                                     gint               width,
-                                                     gint               height);
-static gchar       * gimp_palette_get_description   (GimpViewable      *viewable,
-                                                     gchar            **tooltip);
-static const gchar * gimp_palette_get_extension     (GimpData          *data);
-static GimpData    * gimp_palette_duplicate         (GimpData          *data);
+static gint64        gimp_palette_get_memsize       (GimpObject           *object,
+                                                     gint64               *gui_size);
 
-static void          gimp_palette_entry_free        (GimpPaletteEntry  *entry);
-static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry  *entry,
-                                                     gint64            *gui_size);
+static void          gimp_palette_get_preview_size  (GimpViewable         *viewable,
+                                                     gint                  size,
+                                                     gboolean              popup,
+                                                     gboolean              dot_for_dot,
+                                                     gint                 *width,
+                                                     gint                 *height);
+static gboolean      gimp_palette_get_popup_size    (GimpViewable         *viewable,
+                                                     gint                  width,
+                                                     gint                  height,
+                                                     gboolean              dot_for_dot,
+                                                     gint                 *popup_width,
+                                                     gint                 *popup_height);
+static TempBuf     * gimp_palette_get_new_preview   (GimpViewable         *viewable,
+                                                     GimpContext          *context,
+                                                     gint                  width,
+                                                     gint                  height);
+static gchar       * gimp_palette_get_description   (GimpViewable         *viewable,
+                                                     gchar               **tooltip);
+static const gchar * gimp_palette_get_extension     (GimpData             *data);
+static GimpData    * gimp_palette_duplicate         (GimpData             *data);
+
+static void          gimp_palette_entry_free        (GimpPaletteEntry     *entry);
+static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry     *entry,
+                                                     gint64               *gui_size);
+static gchar       * gimp_palette_get_checksum      (GimpTagged           *tagged);
 
 
-G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_CODE (GimpPalette, gimp_palette, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_palette_tagged_iface_init))
 
 #define parent_class gimp_palette_parent_class
 
@@ -97,6 +103,12 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   data_class->save                 = gimp_palette_save;
   data_class->get_extension        = gimp_palette_get_extension;
   data_class->duplicate            = gimp_palette_duplicate;
+}
+
+static void
+gimp_palette_tagged_iface_init (GimpTaggedInterface *iface)
+{
+  iface->get_checksum = gimp_palette_get_checksum;
 }
 
 static void
@@ -315,6 +327,39 @@ gimp_palette_duplicate (GimpData *data)
     }
 
   return GIMP_DATA (new);
+}
+
+static gchar *
+gimp_palette_get_checksum (GimpTagged *tagged)
+{
+  GimpPalette *palette         = GIMP_PALETTE (tagged);
+  gchar       *checksum_string = NULL;
+
+  if (palette->n_colors > 0)
+    {
+      GChecksum *checksum       = g_checksum_new (G_CHECKSUM_MD5);
+      GList     *color_iterator = palette->colors;
+
+      g_checksum_update (checksum, (const guchar *) &palette->n_colors, sizeof (palette->n_colors));
+      g_checksum_update (checksum, (const guchar *) &palette->n_columns, sizeof (palette->n_columns));
+
+      while (color_iterator)
+        {
+          GimpPaletteEntry *entry = (GimpPaletteEntry *) color_iterator->data;
+
+          g_checksum_update (checksum, (const guchar *) &entry->color, sizeof (entry->color));
+          if (entry->name)
+            g_checksum_update (checksum, (const guchar *) entry->name, strlen (entry->name));
+
+          color_iterator = g_list_next (color_iterator);
+        }
+
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+      g_checksum_free (checksum);
+    }
+
+  return checksum_string;
 }
 
 GimpPaletteEntry *

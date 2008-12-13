@@ -1,5 +1,21 @@
 2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
+	Partial merge of code from Aurimas Juška.
+
+	* app/core/gimpdata.c: Implement GimpTagged::get_identifier() and
+	GimpTagged::get_checksum().
+
+	* app/core/gimpbrush.c: 
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: Implement GimpTagged::get_checksum().
+	They all use the GimpData implementation of
+	GimpTagged::get_identifier().
+
+2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Introduce temp_buf_get_data_size() and use it.
 
 	* app/base/temp-buf.[ch]

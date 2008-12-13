@@ -33,39 +33,43 @@
 #include "gimpgradient.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient-save.h"
+#include "gimptagged.h"
 
 
 #define EPSILON 1e-10
 
 
-static void          gimp_gradient_finalize         (GObject           *object);
+static void          gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface);
+static void          gimp_gradient_finalize          (GObject             *object);
 
-static gint64        gimp_gradient_get_memsize      (GimpObject        *object,
-                                                     gint64            *gui_size);
+static gint64        gimp_gradient_get_memsize       (GimpObject          *object,
+                                                      gint64              *gui_size);
 
-static void          gimp_gradient_get_preview_size (GimpViewable      *viewable,
-                                                     gint               size,
-                                                     gboolean           popup,
-                                                     gboolean           dot_for_dot,
-                                                     gint              *width,
-                                                     gint              *height);
-static gboolean      gimp_gradient_get_popup_size   (GimpViewable      *viewable,
-                                                     gint               width,
-                                                     gint               height,
-                                                     gboolean           dot_for_dot,
-                                                     gint              *popup_width,
-                                                     gint              *popup_height);
-static TempBuf     * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
-                                                     GimpContext       *context,
-                                                     gint               width,
-                                                     gint               height);
-static const gchar * gimp_gradient_get_extension    (GimpData          *data);
-static GimpData    * gimp_gradient_duplicate        (GimpData          *data);
+static void          gimp_gradient_get_preview_size  (GimpViewable        *viewable,
+                                                      gint                 size,
+                                                      gboolean             popup,
+                                                      gboolean             dot_for_dot,
+                                                      gint                *width,
+                                                      gint                *height);
+static gboolean      gimp_gradient_get_popup_size    (GimpViewable        *viewable,
+                                                      gint                 width,
+                                                      gint                 height,
+                                                      gboolean             dot_for_dot,
+                                                      gint                *popup_width,
+                                                      gint                *popup_height);
+static TempBuf     * gimp_gradient_get_new_preview   (GimpViewable        *viewable,
+                                                      GimpContext         *context,
+                                                      gint                 width,
+                                                      gint                 height);
+static const gchar * gimp_gradient_get_extension     (GimpData            *data);
+static GimpData    * gimp_gradient_duplicate         (GimpData            *data);
+
+static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
 
 static GimpGradientSegment *
-              gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
-                                                     GimpGradientSegment *seg,
-                                                     gdouble              pos);
+              gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
+                                                      GimpGradientSegment *seg,
+                                                      gdouble              pos);
 
 
 static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
@@ -80,7 +84,9 @@ static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  mid
                                                                     gdouble  pos);
 
 
-G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_CODE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_gradient_tagged_iface_init))
 
 #define parent_class gimp_gradient_parent_class
 
@@ -105,6 +111,12 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   data_class->save                 = gimp_gradient_save;
   data_class->get_extension        = gimp_gradient_get_extension;
   data_class->duplicate            = gimp_gradient_duplicate;
+}
+
+static void
+gimp_gradient_tagged_iface_init (GimpTaggedInterface *iface)
+{
+  iface->get_checksum = gimp_gradient_get_checksum;
 }
 
 static void
@@ -255,6 +267,39 @@ gimp_gradient_duplicate (GimpData *data)
   return GIMP_DATA (gradient);
 }
 
+static gchar *
+gimp_gradient_get_checksum (GimpTagged *tagged)
+{
+  GimpGradient *gradient        = GIMP_GRADIENT (tagged);
+  gchar        *checksum_string = NULL;
+
+  if (gradient->segments)
+    {
+      GChecksum           *checksum = g_checksum_new (G_CHECKSUM_MD5);
+      GimpGradientSegment *segment  = gradient->segments;
+
+      while (segment)
+        {
+          g_checksum_update (checksum, (const guchar *) &segment->left, sizeof (segment->left));
+          g_checksum_update (checksum, (const guchar *) &segment->middle, sizeof (segment->middle));
+          g_checksum_update (checksum, (const guchar *) &segment->right,sizeof (segment->right));
+          g_checksum_update (checksum, (const guchar *) &segment->left_color_type, sizeof (segment->left_color_type));
+          g_checksum_update (checksum, (const guchar *) &segment->left_color, sizeof (segment->left_color));
+          g_checksum_update (checksum, (const guchar *) &segment->right_color_type, sizeof (segment->right_color_type));
+          g_checksum_update (checksum, (const guchar *) &segment->right_color, sizeof (segment->right_color));
+          g_checksum_update (checksum, (const guchar *) &segment->type, sizeof (segment->type));
+          g_checksum_update (checksum, (const guchar *) &segment->color, sizeof (segment->color));
+
+          segment = segment->next;
+        }
+
+      checksum_string = g_strdup (g_checksum_get_string (checksum));
+
+      g_checksum_free (checksum);
+    }
+
+  return checksum_string;
+}
 
 /*  public functions  */
 
