@@ -191,7 +191,7 @@ pattern_pixels_mask (guchar       *dest,
   guint         i;
 
   /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = (temp_buf_data (pattern) +
+  pat = (temp_buf_get_data (pattern) +
          (y % pattern->height) * pattern->width * pattern->bytes);
 
 

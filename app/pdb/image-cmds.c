@@ -1738,7 +1738,7 @@ image_thumbnail_invoker (GimpProcedure      *procedure,
           actual_height        = buf->height;
           bpp                  = buf->bytes;
           thumbnail_data_count = actual_width * actual_height * bpp;
-          thumbnail_data       = g_memdup (temp_buf_data (buf),
+          thumbnail_data       = g_memdup (temp_buf_get_data (buf),
                                            thumbnail_data_count);
 
           temp_buf_free (buf);

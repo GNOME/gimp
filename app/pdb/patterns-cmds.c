@@ -162,7 +162,7 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
           mask_bpp    = pattern->mask->bytes;
           length      = pattern->mask->height * pattern->mask->width *
                         pattern->mask->bytes;
-          mask_data   = g_memdup (temp_buf_data (pattern->mask), length);
+          mask_data   = g_memdup (temp_buf_get_data (pattern->mask), length);
         }
       else
         success = FALSE;

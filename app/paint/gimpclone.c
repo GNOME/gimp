@@ -315,7 +315,7 @@ gimp_clone_line_pattern (GimpImage     *dest_image,
     y += pattern->mask->height;
 
   /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = temp_buf_data (pattern->mask) +
+  pat = temp_buf_get_data (pattern->mask) +
     (y % pattern->mask->height) * pattern->mask->width * pat_bytes;
 
   color_type = (pat_bytes == 3 ||

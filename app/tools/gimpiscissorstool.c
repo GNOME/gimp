@@ -1584,7 +1584,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
   width = dp_buf->width;
 
   /*  Start the data pointer at the correct location  */
-  data = (guint *) temp_buf_data (dp_buf) + (ye - y1) * width + (xe - x1);
+  data = (guint *) temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
 
   x = xe;
   y = ye;

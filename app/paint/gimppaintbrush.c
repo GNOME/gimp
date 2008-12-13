@@ -145,7 +145,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                           &col[BLUE]);
       col[ALPHA] = OPAQUE_OPACITY;
 
-      color_pixels (temp_buf_data (area), col,
+      color_pixels (temp_buf_get_data (area), col,
                     area->width * area->height,
                     area->bytes);
 
@@ -168,7 +168,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       col[area->bytes - 1] = OPAQUE_OPACITY;
 
-      color_pixels (temp_buf_data (area), col,
+      color_pixels (temp_buf_get_data (area), col,
                     area->width * area->height,
                     area->bytes);
     }

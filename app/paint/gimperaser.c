@@ -128,7 +128,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   col[area->bytes - 1] = OPAQUE_OPACITY;
 
   /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
+  color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
 
   opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,

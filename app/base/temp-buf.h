@@ -27,7 +27,7 @@ struct _TempBuf
   gint      height;
   gint      x, y;       /*  origin of data source                          */
   guchar   *data;       /*  The data buffer. Do never access this field
-                            directly, use temp_buf_data() instead !!       */
+                            directly, use temp_buf_get_data() instead !!   */
 };
 
 
@@ -66,7 +66,7 @@ TempBuf * temp_buf_copy_area   (TempBuf       *src,
 void      temp_buf_demultiply  (TempBuf       *buf);
 
 void      temp_buf_free        (TempBuf       *buf);
-guchar  * temp_buf_data        (TempBuf       *buf);
+guchar  * temp_buf_get_data    (TempBuf       *buf);
 guchar  * temp_buf_data_clear  (TempBuf       *buf);
 
 gsize     temp_buf_get_memsize (TempBuf       *buf);

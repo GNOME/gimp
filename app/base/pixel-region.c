@@ -76,7 +76,7 @@ pixel_region_init_temp_buf (PixelRegion *PR,
                             gint         w,
                             gint         h)
 {
-  PR->data          = temp_buf_data (temp_buf);
+  PR->data          = temp_buf_get_data (temp_buf);
   PR->tiles         = NULL;
   PR->curtile       = NULL;
   PR->offx          = 0;

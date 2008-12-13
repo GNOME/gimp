@@ -1,3 +1,41 @@
+2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	s/temp_buf_data/temp_buf_get_data/
+
+	* app/base/pixel-region.c
+	* app/base/temp-buf.c
+	* app/base/temp-buf.h
+	* app/core/gimpbrush-load.c
+	* app/core/gimpbrush-scale.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern-load.c
+	* app/core/gimppattern.c
+	* app/core/gimppreviewcache.c
+	* app/core/gimpviewable.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpink.c
+	* app/paint/gimppaintbrush.c
+	* app/pdb/brush-cmds.c
+	* app/pdb/brushes-cmds.c
+	* app/pdb/drawable-cmds.c
+	* app/pdb/image-cmds.c
+	* app/pdb/pattern-cmds.c
+	* app/pdb/patterns-cmds.c
+	* app/text/gimpfont.c
+	* app/tools/gimpiscissorstool.c
+	* app/vectors/gimpvectors-preview.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimpviewrenderer.c
+
 2008-12-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project

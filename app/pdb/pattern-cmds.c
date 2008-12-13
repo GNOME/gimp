@@ -112,7 +112,7 @@ pattern_get_pixels_invoker (GimpProcedure      *procedure,
           bpp             = pattern->mask->bytes;
           num_color_bytes = pattern->mask->height * pattern->mask->width *
                             pattern->mask->bytes;
-          color_bytes     = g_memdup (temp_buf_data (pattern->mask),
+          color_bytes     = g_memdup (temp_buf_get_data (pattern->mask),
                                       num_color_bytes);
         }
       else

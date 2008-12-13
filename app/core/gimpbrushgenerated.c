@@ -429,7 +429,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                        half_height * 2 + 1,
                        1, half_width, half_height, NULL);
 
-  centerp = temp_buf_data (mask) + half_height * mask->width + half_width;
+  centerp = temp_buf_get_data (mask) + half_height * mask->width + half_width;
 
   lookup = gimp_brush_generated_calc_lut (radius, hardness);
 

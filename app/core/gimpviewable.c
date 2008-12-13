@@ -350,7 +350,7 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
           bytes    = color_bytes;
         }
 
-      pixbuf = gdk_pixbuf_new_from_data (g_memdup (temp_buf_data (temp_buf),
+      pixbuf = gdk_pixbuf_new_from_data (g_memdup (temp_buf_get_data (temp_buf),
                                                    width * height * bytes),
                                          GDK_COLORSPACE_RGB,
                                          (bytes == 4),
@@ -793,7 +793,7 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
   buf = temp_buf_new (width, height, bpp, 0, 0, NULL);
 
   src  = gdk_pixbuf_get_pixels (pixbuf);
-  dest = temp_buf_data (buf);
+  dest = temp_buf_get_data (buf);
 
   while (height--)
     {

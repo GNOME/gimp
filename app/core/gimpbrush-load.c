@@ -290,7 +290,7 @@ gimp_brush_load_brush (gint          fd,
 
   brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
 
-  mask = temp_buf_data (brush->mask);
+  mask = temp_buf_get_data (brush->mask);
   size = header.width * header.height * header.bytes;
 
   switch (header.bytes)
@@ -344,7 +344,7 @@ gimp_brush_load_brush (gint          fd,
 
         brush->pixmap = temp_buf_new (header.width, header.height,
                                       3, 0, 0, NULL);
-        pixmap = temp_buf_data (brush->pixmap);
+        pixmap = temp_buf_get_data (brush->pixmap);
 
         for (i = 0; success && i < size;)
           {
@@ -647,7 +647,7 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
         brush->y_axis.y = height / 2.0;
         brush->mask     = temp_buf_new (width, height, 1, 0, 0, NULL);
 
-        mask = temp_buf_data (brush->mask);
+        mask = temp_buf_get_data (brush->mask);
         size = width * height * bytes;
 
         compress = abr_read_char (file);
@@ -753,7 +753,7 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
   brush->y_axis.y = height / 2.0;
   brush->mask     = temp_buf_new (width, height, 1, 0, 0, NULL);
 
-  mask = temp_buf_data (brush->mask);
+  mask = temp_buf_get_data (brush->mask);
 
   /* data decoding */
   if (! compress)

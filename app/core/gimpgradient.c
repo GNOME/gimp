@@ -210,7 +210,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 
   temp_buf = temp_buf_new (width, height, 4, 0, 0, NULL);
 
-  buf = temp_buf_data (temp_buf);
+  buf = temp_buf_get_data (temp_buf);
 
   for (y = 0; y < height; y++)
     memcpy (buf + (width * y * 4), row, width * 4);

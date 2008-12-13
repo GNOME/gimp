@@ -2312,8 +2312,8 @@ gimp_image_transform_temp_buf (const GimpImage *dest_image,
       ret_buf = temp_buf_new (temp_buf->width, temp_buf->height,
                               out_bytes, 0, 0, NULL);
 
-      src  = temp_buf_data (temp_buf);
-      dest = temp_buf_data (ret_buf);
+      src  = temp_buf_get_data (temp_buf);
+      dest = temp_buf_get_data (ret_buf);
 
       size = temp_buf->width * temp_buf->height;
 

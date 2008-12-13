@@ -154,7 +154,7 @@ gimp_pattern_load (const gchar  *filename,
 
   pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
                                 0, 0, NULL);
-  if (read (fd, temp_buf_data (pattern->mask),
+  if (read (fd, temp_buf_get_data (pattern->mask),
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
     {
@@ -224,7 +224,7 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
   pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
   pat_data = gdk_pixbuf_get_pixels (pixbuf);
-  buf_data = temp_buf_data (pattern->mask);
+  buf_data = temp_buf_get_data (pattern->mask);
 
   for (i = 0; i < height; i++)
     {

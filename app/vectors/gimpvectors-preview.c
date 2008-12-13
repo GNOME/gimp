@@ -58,7 +58,7 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   yscale = ((gdouble) height) / gimp_image_get_height (item->image);
 
   temp_buf = temp_buf_new (width, height, 1, 0, 0, white);
-  data = temp_buf_data (temp_buf);
+  data = temp_buf_get_data (temp_buf);
 
   for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        cur_stroke;

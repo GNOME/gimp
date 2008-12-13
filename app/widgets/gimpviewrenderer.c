@@ -986,7 +986,7 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
   x2 = CLAMP (temp_buf->x + temp_buf->width,  0, dest_width);
   y2 = CLAMP (temp_buf->y + temp_buf->height, 0, dest_height);
 
-  src = temp_buf_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
+  src = temp_buf_get_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
                                     (x1 - temp_buf->x) * temp_buf->bytes);
 
   for (i = 0; i < dest_height; i++)

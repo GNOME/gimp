@@ -390,7 +390,7 @@ gimp_heal_region (PixelRegion *tempPR,
 {
   gdouble *i_1  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
   gdouble *i_2  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
-  guchar  *mask = temp_buf_data (mask_buf);
+  guchar  *mask = temp_buf_get_data (mask_buf);
 
   /* substitute 0's for 1's for the division and multiplication operations that
    * come later

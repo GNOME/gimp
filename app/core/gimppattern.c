@@ -192,7 +192,7 @@ gimp_pattern_new (const gchar *name)
 
   pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
 
-  data = temp_buf_data (pattern->mask);
+  data = temp_buf_get_data (pattern->mask);
 
   for (row = 0; row < pattern->mask->height; row++)
     for (col = 0; col < pattern->mask->width; col++)

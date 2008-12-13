@@ -218,7 +218,7 @@ brushes_get_brush_data_invoker (GimpProcedure      *procedure,
           width       = brush->mask->width;
           height      = brush->mask->height;
           length      = brush->mask->height * brush->mask->width;
-          mask_data   = g_memdup (temp_buf_data (brush->mask), length);
+          mask_data   = g_memdup (temp_buf_get_data (brush->mask), length);
         }
       else
         success = FALSE;

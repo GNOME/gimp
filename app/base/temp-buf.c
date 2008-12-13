@@ -144,7 +144,7 @@ temp_buf_new_check (gint           width,
   gimp_checks_get_shades (check_type, &check_light, &check_dark);
 
   new = temp_buf_new (width, height, 3, 0, 0, NULL);
-  data = temp_buf_data (new);
+  data = temp_buf_get_data (new);
 
   for (y = 0; y < height; y++)
     {
@@ -194,8 +194,8 @@ temp_buf_copy (TempBuf *src,
     }
   else
     {
-      memcpy (temp_buf_data (dest),
-              temp_buf_data (src),
+      memcpy (temp_buf_get_data (dest),
+              temp_buf_get_data (src),
               src->width * src->height * src->bytes);
     }
 
@@ -256,8 +256,8 @@ temp_buf_scale (TempBuf *src,
                        src->bytes,
                        0, 0, NULL);
 
-  src_data  = temp_buf_data (src);
-  dest_data = temp_buf_data (dest);
+  src_data  = temp_buf_get_data (src);
+  dest_data = temp_buf_get_data (dest);
 
   x_ratio = (gdouble) src->width  / (gdouble) new_width;
   y_ratio = (gdouble) src->height / (gdouble) new_height;
@@ -364,7 +364,7 @@ temp_buf_demultiply (TempBuf *buf)
       break;
 
     case 2:
-      data = temp_buf_data (buf);
+      data = temp_buf_get_data (buf);
       pixels = buf->width * buf->height;
       while (pixels--)
         {
@@ -378,7 +378,7 @@ temp_buf_demultiply (TempBuf *buf)
       break;
 
     case 4:
-      data = temp_buf_data (buf);
+      data = temp_buf_get_data (buf);
       pixels = buf->width * buf->height;
       while (pixels--)
         {
@@ -408,7 +408,7 @@ temp_buf_free (TempBuf *buf)
 }
 
 guchar *
-temp_buf_data (TempBuf *buf)
+temp_buf_get_data (TempBuf *buf)
 {
   return buf->data;
 }
@@ -441,8 +441,8 @@ temp_buf_to_color (TempBuf *src_buf,
   guchar *dest;
   glong   num_pixels;
 
-  src  = temp_buf_data (src_buf);
-  dest = temp_buf_data (dest_buf);
+  src  = temp_buf_get_data (src_buf);
+  dest = temp_buf_get_data (dest_buf);
 
   num_pixels = src_buf->width * src_buf->height;
 
@@ -488,8 +488,8 @@ temp_buf_to_gray (TempBuf *src_buf,
   guchar       *dest;
   glong         num_pixels;
 
-  src  = temp_buf_data (src_buf);
-  dest = temp_buf_data (dest_buf);
+  src  = temp_buf_get_data (src_buf);
+  dest = temp_buf_get_data (dest_buf);
 
   num_pixels = src_buf->width * src_buf->height;
 

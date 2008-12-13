@@ -112,7 +112,7 @@ gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
   GimpArray   *array;
   GValueArray *return_vals;
 
-  array = gimp_array_new (temp_buf_data (pattern->mask),
+  array = gimp_array_new (temp_buf_get_data (pattern->mask),
                           pattern->mask->width *
                           pattern->mask->height *
                           pattern->mask->bytes,

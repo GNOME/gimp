@@ -210,7 +210,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   columns = width  / cell_size;
   rows    = height / cell_size;
 
-  buf = temp_buf_data (temp_buf);
+  buf = temp_buf_get_data (temp_buf);
   b   = g_new (guchar, width * 3);
 
   list = palette->colors;

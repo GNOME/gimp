@@ -280,12 +280,12 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
   return_buf = temp_buf_new (mask_width, mask_height, 4, 0, 0, transp);
 
-  mask = temp_buf_data (mask_buf);
-  buf  = temp_buf_data (return_buf);
+  mask = temp_buf_get_data (mask_buf);
+  buf  = temp_buf_get_data (return_buf);
 
   if (pixmap_buf)
     {
-      guchar *pixmap = temp_buf_data (pixmap_buf);
+      guchar *pixmap = temp_buf_get_data (pixmap_buf);
 
       for (y = 0; y < mask_height; y++)
         {

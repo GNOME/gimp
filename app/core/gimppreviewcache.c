@@ -244,8 +244,8 @@ gimp_preview_cache_get (GSList **plist,
       else
         y_ratio = 0.0;
 
-      src_data  = temp_buf_data (pn.buf);
-      dest_data = temp_buf_data (preview);
+      src_data  = temp_buf_get_data (pn.buf);
+      dest_data = temp_buf_get_data (preview);
 
       for (loop1 = 0 ; loop1 < height ; loop1++)
         for (loop2 = 0 ; loop2 < width ; loop2++)
