@@ -1,3 +1,8 @@
+2008-12-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp.c: reverted last change as it is totally bogus and
+	the old code was correct.
+
 2008-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimp.c: We shall unref in dispose() and free in

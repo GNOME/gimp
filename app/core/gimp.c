@@ -272,6 +272,29 @@ gimp_dispose (GObject *object)
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
+  if (gimp->brush_factory)
+    gimp_data_factory_data_free (gimp->brush_factory);
+
+  if (gimp->pattern_factory)
+    gimp_data_factory_data_free (gimp->pattern_factory);
+
+  if (gimp->gradient_factory)
+    gimp_data_factory_data_free (gimp->gradient_factory);
+
+  if (gimp->palette_factory)
+    gimp_data_factory_data_free (gimp->palette_factory);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_finalize (GObject *object)
+{
+  Gimp *gimp = GIMP (object);
+
+  if (gimp->be_verbose)
+    g_print ("EXIT: %s\n", G_STRFUNC);
+
   gimp_contexts_exit (gimp);
 
   if (gimp->image_new_last_template)
@@ -408,29 +431,6 @@ gimp_dispose (GObject *object)
       g_list_free (gimp->context_list);
       gimp->context_list = NULL;
     }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_finalize (GObject *object)
-{
-  Gimp *gimp = GIMP (object);
-
-  if (gimp->be_verbose)
-    g_print ("EXIT: %s\n", G_STRFUNC);
-
-  if (gimp->brush_factory)
-    gimp_data_factory_data_free (gimp->brush_factory);
-
-  if (gimp->pattern_factory)
-    gimp_data_factory_data_free (gimp->pattern_factory);
-
-  if (gimp->gradient_factory)
-    gimp_data_factory_data_free (gimp->gradient_factory);
-
-  if (gimp->palette_factory)
-    gimp_data_factory_data_free (gimp->palette_factory);
 
   gimp_units_exit (gimp);
 
