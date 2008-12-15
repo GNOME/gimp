@@ -1,3 +1,13 @@
+2008-12-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/pattern.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/patterns.pdb: need to do the change to
+	temp_buf_get_data() here for the generated PDB code.
+
 2008-12-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp.c: reverted last change as it is totally bogus and
