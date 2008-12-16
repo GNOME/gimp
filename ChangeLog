@@ -1,5 +1,13 @@
 2008-12-16  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb: improved docs for
+	gimp-plugin-help-register.
+
+	* app/pdb/plug-in-cmds.c
+	* libgimp/gimpplugin_pdb.c: regenerated.
+
+2008-12-16  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_blacklisted):
 	removed 'gegl:stress' from the blacklist. It was put here on wrong
 	assumptions.
