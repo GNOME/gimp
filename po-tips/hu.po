@@ -1,18 +1,17 @@
-# translation of gimp-tips.HEAD.po to Hungarian
 # Hungarian translation of gimp-tips.
-# Copyright (C) 2004, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-tips package.
 #
-# Arpad Biro <biro_arpad@yahoo.com>, 2004, 2007.
-# Gabor Kelemen <kelemeng@gnome.hu>, 2006, 2007.
+# Arpad Biro <biro arpad gmail>, 2004, 2007.
+# Gabor Kelemen <kelemeng@gnome.hu>, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-03 11:07+0100\n"
-"PO-Revision-Date: 2007-09-04 11:45+0200\n"
-"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian\n"
+"POT-Creation-Date: 2008-11-07 12:03+0100\n"
+"PO-Revision-Date: 2008-12-15 00:08+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
+"Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,10 +19,6 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Üdvözli a GIMP!</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -36,7 +31,7 @@ msgstr ""
 "beállítani, akkor a <tt>Ctrl</tt> billentyűt lenyomva tartva végezze a "
 "kattintást."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -48,7 +43,7 @@ msgstr ""
 "Rétegek párbeszédablakban az <tt>Alt</tt> billentyűt lenyomva tartva "
 "kattintson a rétegmaszk előnézetére."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -56,7 +51,7 @@ msgstr ""
 "Az elforgatási szög korlátozása 15 fokos lépcsőkben a Forgatás eszköz "
 "használatakor: húzás közben tartsa nyomva a <tt>Ctrl</tt> billentyűt."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -66,7 +61,7 @@ msgstr ""
 "bejegyzésénél a Rétegek párbeszédablakban. Az összes réteg megjelenítéséhez "
 "ismételje meg a Shift+kattintás műveletet."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -78,7 +73,7 @@ msgstr ""
 "végrehajtható a Rétegek párbeszédablakban az &quot;Új réteg&quot; illetve a "
 "&quot;Réteg rögzítése&quot; gomb használatával vagy a menükkel."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -98,27 +93,19 @@ msgstr ""
 "gyorsbillentyűk használata&quot; lehetőséget, hogy a gyorsbillentyűk ne "
 "legyenek véletlenül módosítva."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"Segédvonal felvételéhez kattintson az egyik vonalzóra - ezt követően "
+"Segédvonal felvételéhez kattintson az egyik vonalzóra – ezt követően "
 "húzással helyezheti az új segédvonalat a képre. A húzással áthelyezett "
 "kijelölések a segédvonalakra fognak illeszkedni. Egy segédvonal "
 "eltávolításához helyezze azt (húzással) a képen kívülre az Áthelyezés "
 "eszközzel."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"A GIMP lehetővé teszi a legtöbb képművelet visszavonását, tehát nyugodtan "
-"kísérletezhet a programmal."
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -126,10 +113,10 @@ msgid ""
 msgstr ""
 "A GIMP-pel automatikus tömörítés is végezhető. Egyszerűen csak fűzzön egy "
 "<tt>.gz</tt> végződést (vagy <tt>.bz2</tt> végződést, ha telepítve van a "
-"bzip2) a fájlnévhez - ennek hatására a kép tömörítve lesz elmentve. "
+"bzip2) a fájlnévhez – ennek hatására a kép tömörítve lesz elmentve. "
 "Természetesen a tömörített képek közvetlen betöltését is támogatja a program."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -139,7 +126,7 @@ msgstr ""
 "Ezek elképzelhetők például úgy, mint egymásra helyezett fóliák illetve "
 "szűrők, amelyek tartalma összeadódva alkot egy képet."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -149,7 +136,7 @@ msgstr ""
 "akkor a réteg nem rendelkezik alfa-csatornával. A Réteg→Átlátszóság→Alfa-"
 "csatorna hozzáadása menüpont segítségével adhat hozzá alfa-csatornát."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -161,37 +148,37 @@ msgstr ""
 "gombjával. Ha a színek aránya nem megfelelő, akkor a Görbék eszközzel "
 "(Színek→Görbék menüpont) végezhető el a javítás."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Egy útvonal körberajzoltatásakor (\"Szerkesztés→Útvonal körberajzolása\" "
+"Egy útvonal körberajzoltatásakor („Szerkesztés→Útvonal körberajzolása” "
 "menüpont) a festőeszközök az aktuális beállításaik szerint használhatók. "
 "Használhatja az Ecset eszközt például színátmenet-módban, vagy akár a Radír "
 "vagy a Maszatolás eszközt is."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
 "Ha zsúfolt a képernyő, akkor nyomja le a <tt>Tab</tt> billentyűt egy "
-"képablakban - ezzel a módszerrel váltogatni lehet az eszköztár és egyéb "
+"képablakban – ezzel a módszerrel váltogatni lehet az eszköztár és egyéb "
 "párbeszédablakok elrejtése és megjelenítése között."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
 "A legtöbb bővítmény az aktuális kép aktuális rétegén végez műveletet. "
-"Bizonyos esetekben össze kell fésülni az összes réteget (\"Kép→Egy réteggé "
-"lapítás\" menüpont) ahhoz, hogy a bővítmény a teljes képet feldolgozza."
+"Bizonyos esetekben össze kell fésülni az összes réteget („Kép→Egy réteggé "
+"lapítás” menüpont) ahhoz, hogy a bővítmény a teljes képet feldolgozza."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -201,11 +188,11 @@ msgstr ""
 "A kép típusától függően elképzelhető, hogy nem minden effektus alkalmazható "
 "arra. Ha nem alkalmazható, azt a megfelelő menübejegyzés szürkítése (inaktív "
 "állapota) jelzi. Ilyenkor szükség lehet a kép módjának RGB-re való "
-"módosítására (\"Kép→Mód→RGB\" menüpont), alfa-csatorna felvételére "
-"(\"Réteg→Átlátszóság→Alfa-csatorna hozzáadása\" menüpont) vagy a kép "
-"lapítására (\"Kép→Egy réteggé lapítás\" menüpont)."
+"módosítására („Kép→Mód→RGB” menüpont), alfa-csatorna felvételére "
+"(„Réteg→Átlátszóság→Alfa-csatorna hozzáadása” menüpont) vagy a kép "
+"lapítására („Kép→Egy réteggé lapítás” menüpont)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -216,21 +203,7 @@ msgstr ""
 "<tt>Ctrl</tt> billentyűvel teszi, akkor kivonás történik a korábbi "
 "kijelölésből."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"Kör alakú terület kijelöléséhez tartsa nyomva a <tt>Shift</tt> billentyűt, "
-"miközben ellipsziskijelölést végez. Kör alakú kijelölés pontos elvégzéséhez "
-"vegyen fel a kijelölendő kört érintő vízszintes és függőleges "
-"segédvonalakat, majd kijelölés közben vigye a kurzort a segédvonalak "
-"metszéspontjához, így a keletkező kijelölés érinteni fogja a segédvonalakat."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -240,10 +213,10 @@ msgstr ""
 "Ha egy elmentendő képen a későbbiekben is szeretne majd módosításokat "
 "végezni, akkor használja az XCF formátumot, amely a GIMP saját fájlformátuma "
 "(használja ehhez a <tt>.xcf</tt> végződést a fájlnévben). Ez a formátum "
-"megőrzi a kép összes tulajdonságát - például a rétegeket. Amikor a kép "
+"megőrzi a kép összes tulajdonságát – például a rétegeket. Amikor a kép "
 "elkészült, elmentheti JPEG, PNG, GIF, stb. formátumban."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -252,13 +225,12 @@ msgid ""
 msgstr ""
 "Kijelölés átalakítása és áthelyezése az <tt>Alt</tt> billentyű nyomva "
 "tartásával végzett húzással lehetséges. Ha ez a kombináció az ablakot "
-"mozdítja el, akkor az ablakkezelő már használja ezt a kombinációt. A "
-"legtöbb ablakkezelő beállítható úgy, hogy figyelmen kívül hagyja az "
-"<tt>Alt</tt> billentyűt vagy pedig a <tt>Super</tt> billentyűt "
-"(bizonyos billentyűzeteken ez a \"Windows\"-emblémás billentyű) "
-"használja helyette."
+"mozdítja el, akkor az ablakkezelő már használja ezt a kombinációt. A legtöbb "
+"ablakkezelő beállítható úgy, hogy figyelmen kívül hagyja az <tt>Alt</tt> "
+"billentyűt vagy pedig a <tt>Super</tt> billentyűt (bizonyos billentyűzeteken "
+"ez a „Windows”-emblémás billentyű) használja helyette."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -268,7 +240,7 @@ msgstr ""
 "Az Útvonalak párbeszédablakban lehetőség van több útvonal kezelésére illetve "
 "azok kijelöléssé való alakítására."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -276,7 +248,7 @@ msgstr ""
 "Ha a Rétegek párbeszédablakból áthúz egy réteget az eszköztárra, akkor "
 "létrejön egy új kép, amely csak a szóban forgó réteget fogja tartalmazni."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -286,18 +258,18 @@ msgstr ""
 "az eszköztárról vagy egy színpalettáról egy képre, akkor a kijelölés "
 "kitöltésre kerül azzal a színnel."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"Egyszerű négyzeteket és köröket rajzolhat a \"Szerkesztés→Kijelölés "
-"körberajzolása\" menüponttal. Ez a funkció megrajzolja az aktuális kijelölés "
+"Egyszerű négyzeteket és köröket rajzolhat a „Szerkesztés→Kijelölés "
+"körberajzolása” menüponttal. Ez a funkció megrajzolja az aktuális kijelölés "
 "határvonalait. A bonyolultabb alakzatok elkészíthetők az útvonaleszközzel "
-"vagy a \"Szűrők→Megjelenítés→GFig\" menüponttal."
+"vagy a „Szűrők→Megjelenítés→GFig” menüponttal."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -305,7 +277,7 @@ msgstr ""
 "A GIMP legtöbb funkciójáról környezetérzékeny segítség kérhető az F1 "
 "billentyű lenyomásával. Ez a menükön belül is működik."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -314,19 +286,19 @@ msgstr ""
 "párbeszédablakban levő bejegyzésére jobb gombbal kattintva előbukkanó "
 "menüvel."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Elmenthet egy kijelölést csatornába (\"Kijelölés→Mentés csatornába\" "
+"Elmenthet egy kijelölést csatornába („Kijelölés→Mentés csatornába” "
 "menüpont), majd módosíthatja a csatornát bármely festőeszközzel. A Csatornák "
 "párbeszédablak gombjainak segítségével átkapcsolhatja az új csatorna "
 "láthatóságát, vagy kijelöléssé alakíthatja a csatornát."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -335,7 +307,7 @@ msgstr ""
 "tt> billentyűkombináció, amennyiben az ablakkezelő nem használja a "
 "kombinációt más célra."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -343,7 +315,7 @@ msgstr ""
 "A képben való mozgásra használható a középső egérgomb (vagy az egér "
 "mozgatása közben a <tt>Szóköz</tt> billentyű lenyomva tartása)."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -352,6 +324,6 @@ msgid ""
 msgstr ""
 "A kijelölés módosítható a festőeszközökkel. Kattintson a képablak bal alsó "
 "sarkában levő &quot;Gyorsmaszk be-ki&quot; gombra, majd módosítsa a "
-"kijelölést a képre való rajzolással, ez után kattintson ismét a gombra - "
+"kijelölést a képre való rajzolással, ez után kattintson ismét a gombra – "
 "ezzel a rajz vissza lesz alakítva normál kijelöléssé."
 
