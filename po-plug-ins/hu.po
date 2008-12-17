@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 12:04+0100\n"
-"PO-Revision-Date: 2008-12-15 01:39+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&amp;component=general\n"
+"POT-Creation-Date: 2008-12-15 00:41+0000\n"
+"PO-Revision-Date: 2008-12-17 01:23+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -3110,7 +3110,7 @@ msgstr "Át_látszatlanság:"
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
-msgstr "Munkaasztali link"
+msgstr "Asztali link"
 
 #: ../plug-ins/common/file-desktop-link.c:173
 #, c-format
@@ -3739,7 +3739,7 @@ msgstr "%s-%s"
 #: ../plug-ins/common/file-pdf.c:622 ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
-msgstr "%s-lapok"
+msgstr "%s-oldalak"
 
 #: ../plug-ins/common/file-pdf.c:808
 msgid "Import from PDF"
@@ -3901,9 +3901,8 @@ msgid "Image height is larger than GIMP can handle."
 msgstr "A képmagasság nagyobb, mint amekkorát a GIMP kezelni tud."
 
 #: ../plug-ins/common/file-pnm.c:575
-#, fuzzy
 msgid "Unsupported maximum value."
-msgstr "Érvénytelen maximumérték."
+msgstr "Nem támogatott maximumérték."
 
 #: ../plug-ins/common/file-pnm.c:780
 msgid "Error reading file."
@@ -3994,7 +3993,7 @@ msgstr "Oldalak:"
 
 #: ../plug-ins/common/file-ps.c:3200
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Betöltendő lapok (például: 1-4 vagy 1,3,5-7)"
+msgstr "Betöltendő oldalak (például: 1-4 vagy 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3204 ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
@@ -4398,7 +4397,7 @@ msgid "Cannot read extension from '%s'"
 msgstr "Nem sikerült beolvasni a kiterjesztést ebből: „%s”"
 
 #: ../plug-ins/common/file-tga.c:485
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Nem sikerült beolvasni a fejlécet innen: „%s”"
 
@@ -4412,19 +4411,16 @@ msgid "_RLE compression"
 msgstr "_RLE tömörítés"
 
 #: ../plug-ins/common/file-tga.c:1405
-#, fuzzy
 msgid "Or_igin:"
-msgstr "Eredeti:"
+msgstr "Or_igó:"
 
 #: ../plug-ins/common/file-tga.c:1409
-#, fuzzy
 msgid "Bottom left"
-msgstr "_Alsó-bal"
+msgstr "Bal alsó sarok"
 
 #: ../plug-ins/common/file-tga.c:1410
-#, fuzzy
 msgid "Top left"
-msgstr "_Balra"
+msgstr "Bal felső sarok"
 
 #: ../plug-ins/common/file-tiff-load.c:240
 #: ../plug-ins/common/file-tiff-save.c:182
@@ -4442,9 +4438,9 @@ msgid "Import from TIFF"
 msgstr "Importálás TIFF-ből"
 
 #: ../plug-ins/common/file-tiff-load.c:780
-#, fuzzy, c-format
+#, c-format
 msgid "%s-%d-of-%d-pages"
-msgstr "%s-lapok"
+msgstr "%s-%d-/-%d-oldal"
 
 #: ../plug-ins/common/file-tiff-load.c:1015
 msgid "TIFF Channel"
@@ -4667,8 +4663,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"A(z) „%s” XWD-fájl formátuma „%d”, mélysége „%d”, képpontonkénti "
-"bitszáma „%d”. Jelenleg ez nem támogatott."
+"A(z) „%s” XWD-fájl formátuma „%d”, mélysége „%d”, képpontonkénti bitszáma „%"
+"d”. Jelenleg ez nem támogatott."
 
 #: ../plug-ins/common/file-xwd.c:593
 msgid "Cannot save images with alpha channels."
@@ -7427,7 +7423,8 @@ msgid ""
 msgstr ""
 "Ez a mező a numerikus beviteli mezők számára nyújt információt. Megadja, "
 "hogy hány, tízes számrendszerbeli számjegynek kell szerepelni a beviteli "
-"mezőben ahhoz, hogy az nagyjából akkora pontosságot adjon, amekkorát egy „hüvelyk” beviteli mező ad két, tízes számrendszerbeli számjeggyel."
+"mezőben ahhoz, hogy az nagyjából akkora pontosságot adjon, amekkorát egy "
+"„hüvelyk” beviteli mező ad két, tízes számrendszerbeli számjeggyel."
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -7957,24 +7954,26 @@ msgstr ""
 "Adjon meg egyet a Beállításoknál."
 
 #: ../plug-ins/common/web-browser.c:228
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not parse the web browser command specified in the Preferences "
 "dialog:\n"
 "\n"
 "%s"
 msgstr ""
-"A megadott webböngésző-parancs nem értelmezhető:\n"
+"A beállításoknál megadott webböngésző-parancs nem értelmezhető:\n"
+"\n"
 "%s"
 
 #: ../plug-ins/common/web-browser.c:246
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not execute the web browser specified in the Preferences dialog:\n"
 "\n"
 "%s"
 msgstr ""
-"A megadott webböngésző nem indítható:\n"
+"A beállításoknál megadott webböngésző nem indítható:\n"
+"\n"
 "%s"
 
 #: ../plug-ins/common/whirl-pinch.c:138
@@ -8427,64 +8426,64 @@ msgstr "Exportálási előnézet"
 
 #: ../plug-ins/file-psd/psd-load.c:215
 #: ../plug-ins/file-psd/psd-thumb-load.c:131
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading PSD file: %s"
-msgstr "Hiba a PNG-fájl betöltésekor: %s"
+msgstr "Hiba a PSD-fájl betöltésekor: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:270
 #, c-format
 msgid "Not a valid photoshop document file"
-msgstr ""
+msgstr "Nem érvényes Photoshop-dokumentum"
 
 #: ../plug-ins/file-psd/psd-load.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported file format version: %d"
-msgstr "Nem támogatott vagy érvénytelen képmagasság: %d"
+msgstr "Nem támogatott fájlformátum-verzió: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "Too many channels in file: %d"
-msgstr "Forráscsatorna a fájlban:"
+msgstr "Túl sok csatorna a fájlban: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported color mode: %s"
-msgstr "Nem támogatott bitmélység (%d)"
+msgstr "Nem támogatott színmód: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported bit depth: %d"
-msgstr "Nem támogatott bitmélység (%d)"
+msgstr "Nem támogatott bitmélység: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:375 ../plug-ins/file-psd/psd-load.c:385
 #: ../plug-ins/file-psd/psd-load.c:604 ../plug-ins/file-psd/psd-load.c:785
 #, c-format
 msgid "The file is corrupt!"
-msgstr ""
+msgstr "A fájl sérült."
 
 #: ../plug-ins/file-psd/psd-load.c:545
-#, fuzzy, c-format
+#, c-format
 msgid "Too many channels in layer: %d"
-msgstr "Forráscsatorna a fájlban:"
+msgstr "Túl sok csatorna a rétegben: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid layer height: %d"
-msgstr "Nem támogatott vagy érvénytelen képmagasság: %d"
+msgstr "Nem támogatott vagy érvénytelen rétegmagasság: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:559
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid layer width: %d"
-msgstr "Nem támogatott vagy érvénytelen képszélesség: %d"
+msgstr "Nem támogatott vagy érvénytelen rétegszélesség: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:1153 ../plug-ins/file-psd/psd-load.c:1502
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported compression mode: %d"
-msgstr "Nem támogatott vagy érvénytelen képszélesség: %d"
+msgstr "Nem támogatott tömörítési mód: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:1595
 msgid "Extra"
-msgstr ""
+msgstr "Extra"
 
 #: ../plug-ins/file-psd/psd-save.c:228 ../plug-ins/file-psd/psd.c:114
 #: ../plug-ins/file-psd/psd.c:153
@@ -8505,28 +8504,27 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Hiba: a GIMP alap-képtípusa nem alakítható át PSD módra"
 
 #: ../plug-ins/file-psd/psd-save.c:1605
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"„%s” mentése nem lehetséges. A psd fájlformátum nem tud olyan képeket "
-"eltárolni, amelyek szélessége vagy magassága 30000 képpontnál nagyobb."
+"„%s” mentése nem lehetséges. A PSD fájlformátum nem tud olyan képeket "
+"eltárolni, amelyek szélessége vagy magassága 30 000 képpontnál nagyobb."
 
 #: ../plug-ins/file-psd/psd-save.c:1620
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"„%s” mentése nem lehetséges. A psd fájlformátum nem tud olyan képeket "
-"eltárolni, amelyek valamely rétegének szélessége vagy magassága 30000 "
+"„%s” mentése nem lehetséges. A PSD fájlformátum nem tud olyan képeket "
+"eltárolni, amelyek valamely rétegének szélessége vagy magassága 30 000 "
 "képpontnál nagyobb."
 
 #: ../plug-ins/file-psd/psd-util.c:51
-#, fuzzy
 msgid "Unexpected end of file"
-msgstr "Túl korai fájlvég."
+msgstr "Túl korai fájlvég"
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -8567,45 +8565,40 @@ msgstr ""
 "(az SGI nem támogatja)"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:448
-#, fuzzy
 msgid "Co_nnect"
-msgstr "Összegyűjtés"
+msgstr "Ka_pcsolódás"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:492
 msgid "Connect _anonymously"
-msgstr ""
+msgstr "Kapcsolódás né_vtelenül"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:501
-#, fuzzy
 msgid "Connect as u_ser:"
-msgstr "Kapcsolódás a kiszolgálóhoz"
+msgstr "_Felhasználónév a kapcsolódáshoz:"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:538
-#, fuzzy
 msgid "_Username:"
-msgstr "Fájl_név:"
+msgstr "Fel_használónév:"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:542
-#, fuzzy
 msgid "_Domain:"
-msgstr "_Fő:"
+msgstr "_Tartomány:"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:547
 msgid "_Password:"
-msgstr ""
+msgstr "_Jelszó:"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:562
 msgid "_Forget password immediately"
-msgstr ""
+msgstr "Jelszó a_zonnali elfelejtése"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:570
 msgid "_Remember password until you logout"
-msgstr ""
+msgstr "Jelszó megjegyzése k_ijelentkezésig"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:578
-#, fuzzy
 msgid "_Remember forever"
-msgstr "Végtele_n ismétlés"
+msgstr "Megjegyzés kor_látlan időre"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:129
@@ -8623,9 +8616,9 @@ msgid "Downloaded %s of image data"
 msgstr "%s képadat letöltve"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading %s of image data"
-msgstr "%s képadat feltöltése…"
+msgstr "%s képadat feltöltése"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:183
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:230
@@ -8651,14 +8644,14 @@ msgid "Failed to write %s to '%s': %s"
 msgstr "Nem sikerült írni %s mennyiséget ide: „%s”: %s"
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading image (%s of %s)"
-msgstr "%s képadat letöltése"
+msgstr "Kép letöltése (%s / %s)"
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:204
 #, c-format
 msgid "Uploading image (%s of %s)"
-msgstr ""
+msgstr "Kép feltöltése (%s / %s)"
 
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:60
 msgid "Could not initialize libcurl"
@@ -8818,6 +8811,7 @@ msgid "_Randomize"
 msgstr "Véle_tlenszerű"
 
 #: ../plug-ins/flame/flame.c:746
+# http://electricsheep.wikispaces.com/Variations
 msgid "Same"
 msgstr "Azonos"
 
@@ -8844,25 +8838,23 @@ msgstr "Hajlított"
 
 #: ../plug-ins/flame/flame.c:755
 msgid "Handkerchief"
-msgstr ""
+msgstr "Zsebkendő"
 
 #: ../plug-ins/flame/flame.c:756
-#, fuzzy
 msgid "Heart"
-msgstr "Elkenés"
+msgstr "Szív"
 
 #: ../plug-ins/flame/flame.c:757
-#, fuzzy
 msgid "Disc"
-msgstr "Elmozdítás"
+msgstr "Korong"
 
 #: ../plug-ins/flame/flame.c:759
 msgid "Hyperbolic"
-msgstr ""
+msgstr "Hiperbolikus"
 
 #: ../plug-ins/flame/flame.c:761
 msgid "Ex"
-msgstr ""
+msgstr "Ex"
 
 #: ../plug-ins/flame/flame.c:762
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
@@ -8871,21 +8863,20 @@ msgstr "Julia"
 
 #: ../plug-ins/flame/flame.c:764
 msgid "Fisheye"
-msgstr ""
+msgstr "Halszem"
 
 #: ../plug-ins/flame/flame.c:765
 msgid "Popcorn"
-msgstr ""
+msgstr "Pattogatott kukorica"
 
 #: ../plug-ins/flame/flame.c:766
-#, fuzzy
 msgid "Exponential"
-msgstr "_Kitevő:"
+msgstr "Exponenciális"
 
 #: ../plug-ins/flame/flame.c:767
-#, fuzzy
+# http://electricsheep.wikispaces.com/Variations
 msgid "Power"
-msgstr "Lassabban"
+msgstr "Hatvány"
 
 #: ../plug-ins/flame/flame.c:768
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
@@ -8895,36 +8886,32 @@ msgid "Cosine"
 msgstr "Koszinusz"
 
 #: ../plug-ins/flame/flame.c:769
-#, fuzzy
 msgid "Rings"
-msgstr "Radián"
+msgstr "Gyűrűk"
 
 #: ../plug-ins/flame/flame.c:770
 msgid "Fan"
-msgstr ""
+msgstr "Ventilátor"
 
 #: ../plug-ins/flame/flame.c:771
 msgid "Eyefish"
-msgstr ""
+msgstr "Szemhal"
 
 #: ../plug-ins/flame/flame.c:772
-#, fuzzy
 msgid "Bubble"
-msgstr "Kék"
+msgstr "Buborék"
 
 #: ../plug-ins/flame/flame.c:773 ../plug-ins/map-object/map-object-ui.c:491
 msgid "Cylinder"
 msgstr "Henger"
 
 #: ../plug-ins/flame/flame.c:775
-#, fuzzy
 msgid "Blur"
-msgstr "_Elmosás"
+msgstr "Homály"
 
 #: ../plug-ins/flame/flame.c:776
-#, fuzzy
 msgid "Gaussian"
-msgstr "Gauss-elmosás"
+msgstr "Gauss"
 
 #: ../plug-ins/flame/flame.c:789
 msgid "_Variation:"
@@ -9376,7 +9363,6 @@ msgstr "Kép megjelenítése"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#, fuzzy
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Rácshoz illesztés"
@@ -9668,9 +9654,7 @@ msgstr ""
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr ""
-"Hiba a(z) „%s” átmeneti fájl élősködő-betöltés számára való megnyitásakor: "
-"%s"
+msgstr "Hiba a(z) „%s” átmeneti fájl élősködő-betöltés számára való megnyitásakor: %s"
 
 #: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
@@ -10582,91 +10566,82 @@ msgstr "GIMP-súgóböngésző"
 
 #: ../plug-ins/help-browser/dialog.c:566
 msgid "Go back one page"
-msgstr "Vissza egy lappal"
+msgstr "Vissza egy oldallal"
 
 #: ../plug-ins/help-browser/dialog.c:571
 msgid "Go forward one page"
-msgstr "Előre egy lappal"
+msgstr "Előre egy oldallal"
 
 #: ../plug-ins/help-browser/dialog.c:576
-#, fuzzy
 msgid "_Reload"
-msgstr "_Vörös:"
+msgstr "Új_ratöltés"
 
 #: ../plug-ins/help-browser/dialog.c:576
 msgid "Reload current page"
-msgstr ""
+msgstr "Jelenlegi oldal újratöltése"
 
 #: ../plug-ins/help-browser/dialog.c:581
-#, fuzzy
 msgid "_Stop"
-msgstr "_Léptetés"
+msgstr "_Leállítás"
 
 #: ../plug-ins/help-browser/dialog.c:581
 msgid "Stop loading this page"
-msgstr ""
+msgstr "Az oldal betöltésének megszakítása"
 
 #: ../plug-ins/help-browser/dialog.c:586
 msgid "Go to the index page"
-msgstr "Ugrás az indexlapra"
+msgstr "Ugrás az indexoldalra"
 
 #: ../plug-ins/help-browser/dialog.c:591
-#, fuzzy
 msgid "C_opy location"
-msgstr "A felhajlítás helye"
+msgstr "_Hely másolása"
 
 #: ../plug-ins/help-browser/dialog.c:592
-#, fuzzy
 msgid "Copy the location of this page to the clipboard"
-msgstr "Az aktív görbe másolása a másik szegélyhez"
+msgstr "Az oldal helyének másolása a vágólapra"
 
 #: ../plug-ins/help-browser/dialog.c:612
 msgid "Find text in current page"
-msgstr ""
+msgstr "Szöveg keresése a jelenlegi oldalon"
 
 #: ../plug-ins/help-browser/dialog.c:617
-#, fuzzy
 msgid "Find _Again"
-msgstr "XY-gradiens keresése"
+msgstr "Követke_ző keresése"
 
 #: ../plug-ins/help-browser/dialog.c:636
-#, fuzzy
 msgid "S_how Index"
-msgstr "Rács megjelenítése"
+msgstr "_Index megjelenítése"
 
 #: ../plug-ins/help-browser/dialog.c:637
 msgid "Toggle the visibility of the sidebar"
-msgstr ""
+msgstr "Az oldalsáv bekapcsolása vagy kikapcsolása"
 
 #: ../plug-ins/help-browser/dialog.c:658
 msgid "Visit the GIMP documentation website"
 msgstr "A GIMP dokumentációs weboldalának megtekintése"
 
 #: ../plug-ins/help-browser/dialog.c:1175
-#, fuzzy
 msgid "Find:"
-msgstr "Szél"
+msgstr "Keresés:"
 
 #: ../plug-ins/help-browser/dialog.c:1192
-#, fuzzy
 msgctxt "search"
 msgid "_Previous"
-msgstr "Elő_nézet"
+msgstr "_Előző"
 
 #: ../plug-ins/help-browser/dialog.c:1204
-#, fuzzy
 msgctxt "search"
 msgid "_Next"
-msgstr "He_xa"
+msgstr "_Következő"
 
 #: ../plug-ins/help/gimphelpdomain.c:181
 #, c-format
 msgid "The help pages for '%s' are not available."
-msgstr ""
+msgstr "„%s” súgóoldalai nem elérhetők."
 
 #: ../plug-ins/help/gimphelpdomain.c:187
 msgid "The GIMP user manual is not available."
-msgstr ""
+msgstr "A GIMP felhasználói kézikönyve nem elérhető."
 
 #: ../plug-ins/help/gimphelpdomain.c:188
 msgid ""
@@ -10678,7 +10653,7 @@ msgstr ""
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
-msgstr ""
+msgstr "Lehetséges, hogy hiányoznak a GIO-háttérmodulok és telepíteni kell a GVFS-t."
 
 #: ../plug-ins/help/gimphelpdomain.c:216
 #, c-format
@@ -10686,9 +10661,9 @@ msgid "Help ID '%s' unknown"
 msgstr "Ismeretlen súgóazonosító: „%s”"
 
 #: ../plug-ins/help/gimphelplocale.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "Loading index from '%s'"
-msgstr "Hiba a BMP-fájlfejléc innen való beolvasásakor: „%s”"
+msgstr "Index betöltése innen: „%s”"
 
 #: ../plug-ins/help/gimphelplocale.c:267
 #, c-format
@@ -12464,7 +12439,7 @@ msgstr "Díszítésekkel"
 
 #: ../plug-ins/win-snap/winsnap.c:989
 msgid "Capture a window or desktop image"
-msgstr "Ablak vagy munkaasztal képének lefotózása"
+msgstr "Ablak vagy asztal képének lefotózása"
 
 #: ../plug-ins/win-snap/winsnap.c:994
 msgid "_Screen Shot..."
