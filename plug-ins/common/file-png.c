@@ -977,8 +977,6 @@ load_image (const gchar  *filename,
   for (i = 0; i < tile_height; i++)
     pixels[i] = pixel + info->width * info->channels * i;
 
-  gimp_tile_cache_ntiles (1 + drawable->width / gimp_tile_width ());
-
   /* Install our own error handler to handle incomplete PNG files better */
   error_data.drawable    = drawable;
   error_data.pixel       = pixel;
@@ -1488,8 +1486,6 @@ save_image (const gchar  *filename,
   tile_height = gimp_tile_height ();
   pixel = g_new (guchar, tile_height * drawable->width * bpp);
   pixels = g_new (guchar *, tile_height);
-
-  gimp_tile_cache_ntiles (1 + drawable->width / gimp_tile_width ());
 
   for (i = 0; i < tile_height; i++)
     pixels[i] = pixel + drawable->width * bpp * i;

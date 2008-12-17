@@ -1,5 +1,9 @@
 2008-12-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/file-png.c: reverted last change, it was bogus.
+
+2008-12-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/file-png.c (load_image) (save_image): use a tile
 	cache to optimize pixel access.
 
