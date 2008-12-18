@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&amp;component=general\n"
 "POT-Creation-Date: 2008-12-15 00:41+0000\n"
-"PO-Revision-Date: 2008-12-17 01:23+0100\n"
+"PO-Revision-Date: 2008-12-18 09:55+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -12415,15 +12415,15 @@ msgstr "Adatok átvitele a lapolvasóról/kameráról"
 
 #: ../plug-ins/win-snap/winsnap.c:865
 msgid "Grab"
-msgstr "Elkapás"
+msgstr "Képkészítés"
 
 #: ../plug-ins/win-snap/winsnap.c:881
 msgid "Grab a single window"
-msgstr "Egy ablak elkapása"
+msgstr "Képkészítés egyetlen ablakról"
 
 #: ../plug-ins/win-snap/winsnap.c:895
 msgid "Grab the whole screen"
-msgstr "Az egész képernyő elkapása"
+msgstr "Képkészítés az egész képernyőről"
 
 #: ../plug-ins/win-snap/winsnap.c:911
 msgid "after"
