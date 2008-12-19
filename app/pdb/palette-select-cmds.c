@@ -55,7 +55,7 @@ palettes_popup_invoker (GimpProcedure      *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp->palette_factory->container,
+                                 gimp_data_factory_get_container (gimp->palette_factory),
                                  popup_title, palette_callback, initial_palette,
                                  NULL))
         success = FALSE;
@@ -82,7 +82,7 @@ palettes_close_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp->palette_factory->container,
+          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->palette_factory),
                                    palette_callback))
         success = FALSE;
     }
@@ -110,7 +110,7 @@ palettes_set_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp->palette_factory->container,
+          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->palette_factory),
                                  palette_callback, palette_name,
                                  NULL))
         success = FALSE;

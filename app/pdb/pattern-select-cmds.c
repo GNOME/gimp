@@ -55,7 +55,7 @@ patterns_popup_invoker (GimpProcedure      *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp->pattern_factory->container,
+                                 gimp_data_factory_get_container (gimp->pattern_factory),
                                  popup_title, pattern_callback, initial_pattern,
                                  NULL))
         success = FALSE;
@@ -82,7 +82,7 @@ patterns_close_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp->pattern_factory->container,
+          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
                                    pattern_callback))
         success = FALSE;
     }
@@ -110,7 +110,7 @@ patterns_set_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp->pattern_factory->container,
+          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->pattern_factory),
                                  pattern_callback, pattern_name,
                                  NULL))
         success = FALSE;

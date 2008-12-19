@@ -335,7 +335,7 @@ convert_dialog_palette_box (IndexedDialog *dialog)
   gboolean     default_found = FALSE;
 
   /* We can't dither to > 256 colors */
-  dialog->container = gimp_container_filter (gimp->palette_factory->container,
+  dialog->container = gimp_container_filter (gimp_data_factory_get_container (gimp->palette_factory),
                                              convert_dialog_palette_filter,
                                              NULL);
 

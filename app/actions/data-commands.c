@@ -82,7 +82,7 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (view->factory->container));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
 
   if (data && data->filename)
     {
@@ -122,7 +122,7 @@ data_new_cmd_callback (GtkAction *action,
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
-  if (view->factory->data_new_func)
+  if (gimp_data_factory_has_data_new_func (view->factory))
     {
       GimpContext *context;
       GimpData    *data;
@@ -135,7 +135,7 @@ data_new_cmd_callback (GtkAction *action,
       if (data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (view->factory->container),
+                                    gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)),
                                     GIMP_OBJECT (data));
 
           gtk_button_clicked (GTK_BUTTON (view->edit_button));
@@ -155,9 +155,9 @@ data_duplicate_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (view->factory->container));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
 
-  if (data && gimp_container_have (view->factory->container,
+  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
                                    GIMP_OBJECT (data)))
     {
       GimpData *new_data;
@@ -167,7 +167,7 @@ data_duplicate_cmd_callback (GtkAction *action,
       if (new_data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (view->factory->container),
+                                    gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)),
                                     GIMP_OBJECT (new_data));
 
           gtk_button_clicked (GTK_BUTTON (view->edit_button));
@@ -187,7 +187,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (view->factory->container));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
 
   if (data && data->filename && *data->filename)
     {
@@ -214,9 +214,9 @@ data_delete_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (view->factory->container));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
 
-  if (data && data->deletable && gimp_container_have (view->factory->container,
+  if (data && data->deletable && gimp_container_have (gimp_data_factory_get_container (view->factory),
                                                       GIMP_OBJECT (data)))
     {
       GimpDataDeleteData *delete_data;
@@ -288,9 +288,9 @@ data_edit_cmd_callback (GtkAction   *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (view->factory->container));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
 
-  if (data && gimp_container_have (view->factory->container,
+  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
                                    GIMP_OBJECT (data)))
     {
       GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
@@ -321,13 +321,13 @@ data_delete_confirm_response (GtkWidget          *dialog,
       GimpObject      *new_active;
       GError          *error      = NULL;
 
-      new_active = gimp_container_get_neighbor_of_active (factory->container,
+      new_active = gimp_container_get_neighbor_of_active (gimp_data_factory_get_container (factory),
                                                           delete_data->context,
                                                           GIMP_OBJECT (data));
 
       if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
         {
-          gimp_message (factory->gimp,
+          gimp_message (gimp_data_factory_get_gimp (factory),
                         G_OBJECT (delete_data->view), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
           g_clear_error (&error);
@@ -335,7 +335,7 @@ data_delete_confirm_response (GtkWidget          *dialog,
 
       if (new_active)
         gimp_context_set_by_type (delete_data->context,
-                                  gimp_container_get_children_type (factory->container),
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)),
                                   new_active);
     }
 

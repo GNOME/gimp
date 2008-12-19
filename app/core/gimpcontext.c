@@ -742,31 +742,31 @@ gimp_context_constructor (GType                  type,
                            G_CALLBACK (gimp_context_paint_info_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp->brush_factory->container, "remove",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->brush_factory), "remove",
                            G_CALLBACK (gimp_context_brush_removed),
                            object, 0);
-  g_signal_connect_object (gimp->brush_factory->container, "thaw",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->brush_factory), "thaw",
                            G_CALLBACK (gimp_context_brush_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp->pattern_factory->container, "remove",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->pattern_factory), "remove",
                            G_CALLBACK (gimp_context_pattern_removed),
                            object, 0);
-  g_signal_connect_object (gimp->pattern_factory->container, "thaw",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->pattern_factory), "thaw",
                            G_CALLBACK (gimp_context_pattern_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp->gradient_factory->container, "remove",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->gradient_factory), "remove",
                            G_CALLBACK (gimp_context_gradient_removed),
                            object, 0);
-  g_signal_connect_object (gimp->gradient_factory->container, "thaw",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->gradient_factory), "thaw",
                            G_CALLBACK (gimp_context_gradient_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp->palette_factory->container, "remove",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->palette_factory), "remove",
                            G_CALLBACK (gimp_context_palette_removed),
                            object, 0);
-  g_signal_connect_object (gimp->palette_factory->container, "thaw",
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->palette_factory), "thaw",
                            G_CALLBACK (gimp_context_palette_list_thaw),
                            object, 0);
 
@@ -1185,25 +1185,25 @@ gimp_context_deserialize_property (GimpConfig *object,
       break;
 
     case GIMP_CONTEXT_PROP_BRUSH:
-      container = context->gimp->brush_factory->container;
+      container = gimp_data_factory_get_container (context->gimp->brush_factory);
       current   = (GimpObject *) context->brush;
       name_loc  = &context->brush_name;
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
-      container = context->gimp->pattern_factory->container;
+      container = gimp_data_factory_get_container (context->gimp->pattern_factory);
       current   = (GimpObject *) context->pattern;
       name_loc  = &context->pattern_name;
       break;
 
     case GIMP_CONTEXT_PROP_GRADIENT:
-      container = context->gimp->gradient_factory->container;
+      container = gimp_data_factory_get_container (context->gimp->gradient_factory);
       current   = (GimpObject *) context->gradient;
       name_loc  = &context->gradient_name;
       break;
 
     case GIMP_CONTEXT_PROP_PALETTE:
-      container = context->gimp->palette_factory->container;
+      container = gimp_data_factory_get_container (context->gimp->palette_factory);
       current   = (GimpObject *) context->palette;
       name_loc  = &context->palette_name;
       break;

@@ -604,7 +604,7 @@ gimp_real_initialize (Gimp               *gimp,
   clipboard_brush = gimp_brush_clipboard_new (gimp);
   gimp_data_make_internal (GIMP_DATA (clipboard_brush),
                            "gimp-brush-clipboard");
-  gimp_container_add (gimp->brush_factory->container,
+  gimp_container_add (gimp_data_factory_get_container (gimp->brush_factory),
                       GIMP_OBJECT (clipboard_brush));
   g_object_unref (clipboard_brush);
 
@@ -612,7 +612,7 @@ gimp_real_initialize (Gimp               *gimp,
   clipboard_pattern = gimp_pattern_clipboard_new (gimp);
   gimp_data_make_internal (GIMP_DATA (clipboard_pattern),
                            "gimp-pattern-clipboard");
-  gimp_container_add (gimp->pattern_factory->container,
+  gimp_container_add (gimp_data_factory_get_container (gimp->pattern_factory),
                       GIMP_OBJECT (clipboard_pattern));
   g_object_unref (clipboard_pattern);
 

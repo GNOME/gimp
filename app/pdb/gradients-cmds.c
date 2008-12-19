@@ -70,7 +70,7 @@ gradients_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container,
+      gradient_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->gradient_factory),
                                                               filter, &num_gradients);
     }
 

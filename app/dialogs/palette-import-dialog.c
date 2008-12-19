@@ -275,7 +275,7 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  The gradient menu  */
   dialog->gradient_combo =
-    gimp_container_combo_box_new (context->gimp->gradient_factory->container,
+    gimp_container_combo_box_new (gimp_data_factory_get_container (context->gimp->gradient_factory),
                                   dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              NULL, 0.0, 0.5, dialog->gradient_combo, 1, FALSE);
@@ -458,7 +458,7 @@ palette_import_response (GtkWidget    *widget,
           if (name && *name)
             gimp_object_set_name (GIMP_OBJECT (dialog->palette), name);
 
-          gimp_container_add (gimp->palette_factory->container,
+          gimp_container_add (gimp_data_factory_get_container (gimp->palette_factory),
                               GIMP_OBJECT (dialog->palette));
         }
     }

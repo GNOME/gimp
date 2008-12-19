@@ -524,7 +524,7 @@ gimp_selection_data_get_brush (GtkSelectionData *selection,
 
   return (GimpBrush *)
     gimp_selection_data_get_object (selection,
-                                    gimp->brush_factory->container,
+                                    gimp_data_factory_get_container (gimp->brush_factory),
                                     GIMP_OBJECT (gimp_brush_get_standard ()));
 }
 
@@ -537,7 +537,7 @@ gimp_selection_data_get_pattern (GtkSelectionData *selection,
 
   return (GimpPattern *)
     gimp_selection_data_get_object (selection,
-                                    gimp->pattern_factory->container,
+                                    gimp_data_factory_get_container (gimp->pattern_factory),
                                     GIMP_OBJECT (gimp_pattern_get_standard ()));
 }
 
@@ -550,7 +550,7 @@ gimp_selection_data_get_gradient (GtkSelectionData *selection,
 
   return (GimpGradient *)
     gimp_selection_data_get_object (selection,
-                                    gimp->gradient_factory->container,
+                                    gimp_data_factory_get_container (gimp->gradient_factory),
                                     GIMP_OBJECT (gimp_gradient_get_standard ()));
 }
 
@@ -563,7 +563,7 @@ gimp_selection_data_get_palette (GtkSelectionData *selection,
 
   return (GimpPalette *)
     gimp_selection_data_get_object (selection,
-                                    gimp->palette_factory->container,
+                                    gimp_data_factory_get_container (gimp->palette_factory),
                                     GIMP_OBJECT (gimp_palette_get_standard ()));
 }
 

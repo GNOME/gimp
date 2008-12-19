@@ -72,7 +72,7 @@ brush_box_new (GimpContainer *container,
                GimpViewSize   view_size)
 {
   if (! container)
-    container = context->gimp->brush_factory->container;
+    container = gimp_data_factory_get_container (context->gimp->brush_factory);
 
   return gimp_viewable_box_new (container, context, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
@@ -129,7 +129,7 @@ pattern_box_new (GimpContainer *container,
                  GimpViewSize   view_size)
 {
   if (! container)
-    container = context->gimp->pattern_factory->container;
+    container = gimp_data_factory_get_container (context->gimp->pattern_factory);
 
   return gimp_viewable_box_new (container, context, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
@@ -191,7 +191,7 @@ gradient_box_new (GimpContainer *container,
   GtkWidget *button;
 
   if (! container)
-    container = context->gimp->gradient_factory->container;
+    container = gimp_data_factory_get_container (context->gimp->gradient_factory);
 
   hbox = gtk_hbox_new (FALSE, spacing);
 
@@ -297,7 +297,7 @@ palette_box_new (GimpContainer *container,
                  GimpViewSize   view_size)
 {
   if (! container)
-    container = context->gimp->palette_factory->container;
+    container = gimp_data_factory_get_container (context->gimp->palette_factory);
 
   return gimp_viewable_box_new (container, context, spacing,
                                 view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,

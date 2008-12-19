@@ -1,3 +1,46 @@
+2008-12-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpdatafactory.[ch]: Make instance members private and
+	add getters for required members.
+
+	(gimp_data_factory_get_container)
+	(gimp_data_factory_get_gimp)
+	(gimp_data_factory_has_data_new_func): The new getters.
+
+	* app/actions/context-commands.c
+	* app/actions/data-commands.c
+	* app/core/gimp-gradients.c
+	* app/core/gimp.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdatafactory.h
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/pdb/gimppdb-utils.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpselectiondata.c
+	* app/widgets/gimpviewablebox.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb: Use the getters.
+
+
+	* app/pdb/brush-select-cmds.c
+	* app/pdb/brushes-cmds.c
+	* app/pdb/gradient-select-cmds.c
+	* app/pdb/gradients-cmds.c
+	* app/pdb/palette-select-cmds.c
+	* app/pdb/palettes-cmds.c
+	* app/pdb/pattern-select-cmds.c
+	* app/pdb/patterns-cmds.c: Regenerated.
+
 2008-12-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-png.c: reverted last change, it was bogus.

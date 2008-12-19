@@ -159,7 +159,7 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                     FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
-    gimp_container_add_handler (factory->container, "spacing-changed",
+    gimp_container_add_handler (gimp_data_factory_get_container (factory), "spacing-changed",
                                 G_CALLBACK (gimp_brush_factory_view_spacing_changed),
                                 factory_view);
 

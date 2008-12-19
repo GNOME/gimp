@@ -71,7 +71,7 @@ brushes_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container,
+      brush_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->brush_factory),
                                                            filter, &num_brushes);
     }
 

@@ -93,7 +93,7 @@ gimp_gradients_add_gradient (Gimp        *gimp,
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
 
-  gimp_container_add (gimp->gradient_factory->container,
+  gimp_container_add (gimp_data_factory_get_container (gimp->gradient_factory),
                       GIMP_OBJECT (gradient));
   g_object_unref (gradient);
 

@@ -142,7 +142,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
-                                         factory->container, context,
+                                         gimp_data_factory_get_container (factory), context,
                                          view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
@@ -169,7 +169,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                    str, NULL);
   g_free (str);
 
-  if (factory_view->factory->data_new_func)
+  if (gimp_data_factory_has_data_new_func (factory_view->factory))
     {
       str = g_strdup_printf ("%s-new", action_group);
       factory_view->new_button =
@@ -198,13 +198,13 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->edit_button),
-                                  gimp_container_get_children_type (factory->container));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->duplicate_button),
-                                  gimp_container_get_children_type (factory->container));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->delete_button),
-                                  gimp_container_get_children_type (factory->container));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
@@ -221,7 +221,7 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  if (data && gimp_container_have (view->factory->container,
+  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
                                    GIMP_OBJECT (data)))
     {
       if (view->edit_button && GTK_WIDGET_SENSITIVE (view->edit_button))

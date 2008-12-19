@@ -71,7 +71,7 @@ patterns_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container,
+      pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
                                                              filter, &num_patterns);
     }
 

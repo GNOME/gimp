@@ -61,7 +61,7 @@ gimp_pdb_get_brush (Gimp         *gimp,
     }
 
   brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->brush_factory), name);
 
   if (! brush)
     {
@@ -122,7 +122,7 @@ gimp_pdb_get_pattern (Gimp         *gimp,
     }
 
   pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->pattern_factory), name);
 
   if (! pattern)
     {
@@ -152,7 +152,7 @@ gimp_pdb_get_gradient (Gimp         *gimp,
     }
 
   gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->gradient_factory), name);
 
   if (! gradient)
     {
@@ -188,7 +188,7 @@ gimp_pdb_get_palette (Gimp         *gimp,
     }
 
   palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->palette_factory), name);
 
   if (! palette)
     {

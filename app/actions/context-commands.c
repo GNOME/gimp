@@ -421,7 +421,7 @@ context_brush_select_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
 
   context_select_object ((GimpActionSelectType) value,
-                         context, context->gimp->brush_factory->container);
+                         context, gimp_data_factory_get_container (context->gimp->brush_factory));
 }
 
 void
@@ -433,7 +433,7 @@ context_pattern_select_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
 
   context_select_object ((GimpActionSelectType) value,
-                         context, context->gimp->pattern_factory->container);
+                         context, gimp_data_factory_get_container (context->gimp->pattern_factory));
 }
 
 void
@@ -445,7 +445,7 @@ context_palette_select_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
 
   context_select_object ((GimpActionSelectType) value,
-                         context, context->gimp->palette_factory->container);
+                         context, gimp_data_factory_get_container (context->gimp->palette_factory));
 }
 
 void
@@ -457,7 +457,7 @@ context_gradient_select_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
 
   context_select_object ((GimpActionSelectType) value,
-                         context, context->gimp->gradient_factory->container);
+                         context, gimp_data_factory_get_container (context->gimp->gradient_factory));
 }
 
 void

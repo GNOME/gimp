@@ -72,7 +72,7 @@ palettes_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container,
+      palette_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->palette_factory),
                                                              filter, &num_palettes);
     }
 

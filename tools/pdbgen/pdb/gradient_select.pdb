@@ -44,7 +44,7 @@ sub gradients_popup {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
-                             gimp->gradient_factory->container,
+                             gimp_data_factory_get_container (gimp->gradient_factory),
                              popup_title, gradient_callback, initial_gradient,
                              "sample-size", sample_size,
                              NULL))
@@ -70,7 +70,7 @@ sub gradients_close_popup {
 {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_close (gimp, gimp->gradient_factory->container,
+      ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
                                gradient_callback))
     success = FALSE;
 }
@@ -96,7 +96,7 @@ sub gradients_set_popup {
 {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_set (gimp, gimp->gradient_factory->container,
+      ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
                              gradient_callback, gradient_name,
                              NULL))
     success = FALSE;

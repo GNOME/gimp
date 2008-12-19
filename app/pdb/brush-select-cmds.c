@@ -61,7 +61,7 @@ brushes_popup_invoker (GimpProcedure      *procedure,
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp->brush_factory->container,
+                                 gimp_data_factory_get_container (gimp->brush_factory),
                                  popup_title, brush_callback, initial_brush,
                                  "opacity",    opacity / 100.0,
                                  "paint-mode", paint_mode,
@@ -91,7 +91,7 @@ brushes_close_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp->brush_factory->container,
+          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->brush_factory),
                                    brush_callback))
         success = FALSE;
     }
@@ -125,7 +125,7 @@ brushes_set_popup_invoker (GimpProcedure      *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp->brush_factory->container,
+          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->brush_factory),
                                  brush_callback, brush_name,
                                  "opacity",    opacity / 100.0,
                                  "paint-mode", paint_mode,
