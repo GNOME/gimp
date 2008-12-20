@@ -50,6 +50,18 @@
 #include "gimp-intl.h"
 
 
+struct _GimpDataFactoryViewPriv
+{
+  GimpDataFactory *factory;
+
+  GtkWidget       *edit_button;
+  GtkWidget       *new_button;
+  GtkWidget       *duplicate_button;
+  GtkWidget       *delete_button;
+  GtkWidget       *refresh_button;
+};
+
+
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
 static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
@@ -70,16 +82,21 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   editor_class->activate_item = gimp_data_factory_view_activate_item;
+
+  g_type_class_add_private (klass, sizeof (GimpDataFactoryViewPriv));
 }
 
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
-  view->edit_button      = NULL;
-  view->new_button       = NULL;
-  view->duplicate_button = NULL;
-  view->delete_button    = NULL;
-  view->refresh_button   = NULL;
+  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
+                                            GIMP_TYPE_DATA_FACTORY_VIEW,
+                                            GimpDataFactoryViewPriv);
+  view->priv->edit_button      = NULL;
+  view->priv->new_button       = NULL;
+  view->priv->duplicate_button = NULL;
+  view->priv->delete_button    = NULL;
+  view->priv->refresh_button   = NULL;
 }
 
 GtkWidget *
@@ -115,6 +132,30 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   return GTK_WIDGET (factory_view);
 }
 
+GtkWidget       *
+gimp_data_factory_view_get_edit_button (GimpDataFactoryView *factory_view)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), NULL);
+
+  return factory_view->priv->edit_button;
+}
+
+GtkWidget       *
+gimp_data_factory_view_get_duplicate_button (GimpDataFactoryView *factory_view)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), NULL);
+
+  return factory_view->priv->duplicate_button;
+}
+
+GimpDataFactory *
+gimp_data_factory_view_get_data_factory (GimpDataFactoryView *factory_view)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), NULL);
+
+  return factory_view->priv->factory;
+}
+
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GimpViewType         view_type,
@@ -138,7 +179,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
 
-  factory_view->factory = factory;
+  factory_view->priv->factory = factory;
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
@@ -164,46 +205,46 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
     }
 
   str = g_strdup_printf ("%s-edit", action_group);
-  factory_view->edit_button =
+  factory_view->priv->edit_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
   g_free (str);
 
-  if (gimp_data_factory_has_data_new_func (factory_view->factory))
+  if (gimp_data_factory_has_data_new_func (factory_view->priv->factory))
     {
       str = g_strdup_printf ("%s-new", action_group);
-      factory_view->new_button =
+      factory_view->priv->new_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                        str, NULL);
       g_free (str);
     }
 
   str = g_strdup_printf ("%s-duplicate", action_group);
-  factory_view->duplicate_button =
+  factory_view->priv->duplicate_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
   g_free (str);
 
   str = g_strdup_printf ("%s-delete", action_group);
-  factory_view->delete_button =
+  factory_view->priv->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
   g_free (str);
 
   str = g_strdup_printf ("%s-refresh", action_group);
-  factory_view->refresh_button =
+  factory_view->priv->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
   g_free (str);
 
   gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (factory_view->edit_button),
+                                  GTK_BUTTON (factory_view->priv->edit_button),
                                   gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
   gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (factory_view->duplicate_button),
+                                  GTK_BUTTON (factory_view->priv->duplicate_button),
                                   gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
   gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (factory_view->delete_button),
+                                  GTK_BUTTON (factory_view->priv->delete_button),
                                   gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
@@ -221,11 +262,11 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
+  if (data && gimp_container_have (gimp_data_factory_get_container (view->priv->factory),
                                    GIMP_OBJECT (data)))
     {
-      if (view->edit_button && GTK_WIDGET_SENSITIVE (view->edit_button))
-        gtk_button_clicked (GTK_BUTTON (view->edit_button));
+      if (view->priv->edit_button && GTK_WIDGET_SENSITIVE (view->priv->edit_button))
+        gtk_button_clicked (GTK_BUTTON (view->priv->edit_button));
     }
 }
 

@@ -82,7 +82,7 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
 
   if (data && data->filename)
     {
@@ -122,7 +122,7 @@ data_new_cmd_callback (GtkAction *action,
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
-  if (gimp_data_factory_has_data_new_func (view->factory))
+  if (gimp_data_factory_has_data_new_func (gimp_data_factory_view_get_data_factory (view)))
     {
       GimpContext *context;
       GimpData    *data;
@@ -130,15 +130,15 @@ data_new_cmd_callback (GtkAction *action,
       context =
         gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
-      data = gimp_data_factory_data_new (view->factory, _("Untitled"));
+      data = gimp_data_factory_data_new (gimp_data_factory_view_get_data_factory (view), _("Untitled"));
 
       if (data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)),
+                                    gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))),
                                     GIMP_OBJECT (data));
 
-          gtk_button_clicked (GTK_BUTTON (view->edit_button));
+          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
         }
     }
 }
@@ -155,22 +155,22 @@ data_duplicate_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
 
-  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
+                              if (data && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
                                    GIMP_OBJECT (data)))
     {
       GimpData *new_data;
 
-      new_data = gimp_data_factory_data_duplicate (view->factory, data);
+      new_data = gimp_data_factory_data_duplicate (gimp_data_factory_view_get_data_factory (view), data);
 
       if (new_data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)),
+                                    gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))),
                                     GIMP_OBJECT (new_data));
 
-          gtk_button_clicked (GTK_BUTTON (view->edit_button));
+          gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
         }
     }
 }
@@ -187,7 +187,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
 
   if (data && data->filename && *data->filename)
     {
@@ -214,9 +214,9 @@ data_delete_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
 
-  if (data && data->deletable && gimp_container_have (gimp_data_factory_get_container (view->factory),
+                              if (data && data->deletable && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
                                                       GIMP_OBJECT (data)))
     {
       GimpDataDeleteData *delete_data;
@@ -271,7 +271,7 @@ data_refresh_cmd_callback (GtkAction *action,
   return_if_no_gimp (gimp, user_data);
 
   gimp_set_busy (gimp);
-  gimp_data_factory_data_refresh (view->factory);
+  gimp_data_factory_data_refresh (gimp_data_factory_view_get_data_factory (view));
   gimp_unset_busy (gimp);
 }
 
@@ -288,9 +288,9 @@ data_edit_cmd_callback (GtkAction   *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (view->factory)));
+                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
 
-  if (data && gimp_container_have (gimp_data_factory_get_container (view->factory),
+  if (data && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
                                    GIMP_OBJECT (data)))
     {
       GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
@@ -316,7 +316,7 @@ data_delete_confirm_response (GtkWidget          *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpDataFactory *factory    = delete_data->view->factory;
+      GimpDataFactory *factory    = gimp_data_factory_view_get_data_factory (delete_data->view);
       GimpData        *data       = delete_data->data;
       GimpObject      *new_active;
       GError          *error      = NULL;

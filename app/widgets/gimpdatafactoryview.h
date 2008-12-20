@@ -35,18 +35,13 @@
 
 
 typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
+typedef struct _GimpDataFactoryViewPriv   GimpDataFactoryViewPriv;
 
 struct _GimpDataFactoryView
 {
-  GimpContainerEditor  parent_instance;
+  GimpContainerEditor      parent_instance;
 
-  GimpDataFactory     *factory;
-
-  GtkWidget           *edit_button;
-  GtkWidget           *new_button;
-  GtkWidget           *duplicate_button;
-  GtkWidget           *delete_button;
-  GtkWidget           *refresh_button;
+  GimpDataFactoryViewPriv *priv;
 };
 
 struct _GimpDataFactoryViewClass
@@ -55,31 +50,35 @@ struct _GimpDataFactoryViewClass
 };
 
 
-GType       gimp_data_factory_view_get_type  (void) G_GNUC_CONST;
+GType             gimp_data_factory_view_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
-                                              GimpDataFactory  *factory,
-                                              GimpContext      *context,
-                                              gint              view_size,
-                                              gint              view_border_width,
-                                              GimpMenuFactory  *menu_factory,
-                                              const gchar      *menu_identifier,
-                                              const gchar      *ui_identifier,
-                                              const gchar      *action_group);
+GtkWidget *       gimp_data_factory_view_new                  (GimpViewType      view_type,
+                                                               GimpDataFactory  *factory,
+                                                               GimpContext      *context,
+                                                               gint              view_size,
+                                                               gint              view_border_width,
+                                                               GimpMenuFactory  *menu_factory,
+                                                               const gchar      *menu_identifier,
+                                                               const gchar      *ui_identifier,
+                                                               const gchar      *action_group);
+
+GtkWidget       * gimp_data_factory_view_get_edit_button      (GimpDataFactoryView *factory_view);
+GtkWidget       * gimp_data_factory_view_get_duplicate_button (GimpDataFactoryView *factory_view);
+GimpDataFactory * gimp_data_factory_view_get_data_factory     (GimpDataFactoryView *factory_view);
 
 
 /*  protected  */
 
-gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-                                              GimpViewType         view_type,
-                                              GimpDataFactory     *factory,
-                                              GimpContext         *context,
-                                              gint                 view_size,
-                                              gint                 view_border_width,
-                                              GimpMenuFactory     *menu_factory,
-                                              const gchar         *menu_identifier,
-                                              const gchar         *ui_identifier,
-                                              const gchar         *action_group);
+gboolean          gimp_data_factory_view_construct            (GimpDataFactoryView *factory_view,
+                                                               GimpViewType         view_type,
+                                                               GimpDataFactory     *factory,
+                                                               GimpContext         *context,
+                                                               gint                 view_size,
+                                                               gint                 view_border_width,
+                                                               GimpMenuFactory     *menu_factory,
+                                                               const gchar         *menu_identifier,
+                                                               const gchar         *ui_identifier,
+                                                               const gchar         *action_group);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */
