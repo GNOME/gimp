@@ -82,7 +82,7 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
+                              gimp_data_factory_view_get_children_type (view));
 
   if (data && data->filename)
     {
@@ -122,7 +122,7 @@ data_new_cmd_callback (GtkAction *action,
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
-  if (gimp_data_factory_has_data_new_func (gimp_data_factory_view_get_data_factory (view)))
+  if (gimp_data_factory_view_has_data_new_func (view))
     {
       GimpContext *context;
       GimpData    *data;
@@ -135,7 +135,7 @@ data_new_cmd_callback (GtkAction *action,
       if (data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))),
+                                    gimp_data_factory_view_get_children_type (view),
                                     GIMP_OBJECT (data));
 
           gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
@@ -155,10 +155,10 @@ data_duplicate_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
+                              gimp_data_factory_view_get_children_type (view));
 
-                              if (data && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
-                                   GIMP_OBJECT (data)))
+  if (data && gimp_data_factory_view_have (view,
+                                           GIMP_OBJECT (data)))
     {
       GimpData *new_data;
 
@@ -167,7 +167,7 @@ data_duplicate_cmd_callback (GtkAction *action,
       if (new_data)
         {
           gimp_context_set_by_type (context,
-                                    gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))),
+                                    gimp_data_factory_view_get_children_type (view),
                                     GIMP_OBJECT (new_data));
 
           gtk_button_clicked (GTK_BUTTON (gimp_data_factory_view_get_edit_button (view)));
@@ -187,7 +187,7 @@ data_copy_location_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
+                              gimp_data_factory_view_get_children_type (view));
 
   if (data && data->filename && *data->filename)
     {
@@ -214,10 +214,12 @@ data_delete_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
+                              gimp_data_factory_view_get_children_type (view));
 
-                              if (data && data->deletable && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
-                                                      GIMP_OBJECT (data)))
+  if (data &&
+      data->deletable &&
+      gimp_data_factory_view_have (view,
+                                   GIMP_OBJECT (data)))
     {
       GimpDataDeleteData *delete_data;
       GtkWidget          *dialog;
@@ -288,10 +290,10 @@ data_edit_cmd_callback (GtkAction   *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-                              gimp_container_get_children_type (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view))));
+                              gimp_data_factory_view_get_children_type (view));
 
-  if (data && gimp_container_have (gimp_data_factory_get_container (gimp_data_factory_view_get_data_factory (view)),
-                                   GIMP_OBJECT (data)))
+  if (data && gimp_data_factory_view_have (view,
+                                           GIMP_OBJECT (data)))
     {
       GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
       GtkWidget *dockable;

@@ -65,6 +65,10 @@ GtkWidget *       gimp_data_factory_view_new                  (GimpViewType     
 GtkWidget       * gimp_data_factory_view_get_edit_button      (GimpDataFactoryView *factory_view);
 GtkWidget       * gimp_data_factory_view_get_duplicate_button (GimpDataFactoryView *factory_view);
 GimpDataFactory * gimp_data_factory_view_get_data_factory     (GimpDataFactoryView *factory_view);
+GType             gimp_data_factory_view_get_children_type    (GimpDataFactoryView *factory_view);
+gboolean          gimp_data_factory_view_has_data_new_func    (GimpDataFactoryView *factory_view);
+gboolean          gimp_data_factory_view_have                 (GimpDataFactoryView *factory_view,
+                                                               GimpObject          *object);
 
 
 /*  protected  */

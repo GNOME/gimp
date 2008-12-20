@@ -1,5 +1,15 @@
 2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimpdatafactoryview.[ch]
+	(gimp_data_factory_view_have)
+	(gimp_data_factory_view_get_children_type)
+	(gimp_data_factory_view_has_data_new_func): New helper functions
+	to lesser level of indirection in client code.
+
+	* app/actions/data-commands.c: Use them.
+
+2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpdatafactoryview.[ch]: Make instance members
 	private and add getters for accessed members.
 

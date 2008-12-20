@@ -156,6 +156,32 @@ gimp_data_factory_view_get_data_factory (GimpDataFactoryView *factory_view)
   return factory_view->priv->factory;
 }
 
+GType
+gimp_data_factory_view_get_children_type (GimpDataFactoryView *factory_view)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), G_TYPE_NONE);
+
+  return gimp_container_get_children_type (gimp_data_factory_get_container (factory_view->priv->factory));
+}
+
+gboolean
+gimp_data_factory_view_has_data_new_func (GimpDataFactoryView *factory_view)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
+
+  return gimp_data_factory_has_data_new_func (factory_view->priv->factory);
+}
+
+gboolean
+gimp_data_factory_view_have (GimpDataFactoryView *factory_view,
+                             GimpObject          *object)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
+
+  return gimp_container_have (gimp_data_factory_get_container (factory_view->priv->factory),
+                              object);
+}
+
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GimpViewType         view_type,
@@ -210,7 +236,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                    str, NULL);
   g_free (str);
 
-  if (gimp_data_factory_has_data_new_func (factory_view->priv->factory))
+  if (gimp_data_factory_view_has_data_new_func (factory_view))
     {
       str = g_strdup_printf ("%s-new", action_group);
       factory_view->priv->new_button =
@@ -262,8 +288,8 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  if (data && gimp_container_have (gimp_data_factory_get_container (view->priv->factory),
-                                   GIMP_OBJECT (data)))
+  if (data && gimp_data_factory_view_have (view,
+                                           GIMP_OBJECT (data)))
     {
       if (view->priv->edit_button && GTK_WIDGET_SENSITIVE (view->priv->edit_button))
         gtk_button_clicked (GTK_BUTTON (view->priv->edit_button));
