@@ -1,10 +1,21 @@
 2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
+	Partial merge of code from Aurimas Juška.
+
+	* app/widgets/gimpbrushfactoryview.c: Use the same method for
+	getting the GimpContainer both when adding and when removing the
+	spacing-changed handler. It was just a coincidence that the
+	previously different methods retured the same GimpContainer.
+
+2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpdatafactoryview.[ch]
 	(gimp_data_factory_view_have)
 	(gimp_data_factory_view_get_children_type)
 	(gimp_data_factory_view_has_data_new_func): New helper functions
-	to lesser level of indirection in client code.
+	to lessen level of indirection in client code.
 
 	* app/actions/data-commands.c: Use them.
 

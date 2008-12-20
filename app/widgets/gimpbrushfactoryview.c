@@ -102,9 +102,11 @@ gimp_brush_factory_view_destroy (GtkObject *object)
 
   if (view->spacing_changed_handler_id)
     {
-      GimpContainer *container;
+      GimpDataFactory *factory;
+      GimpContainer   *container;
 
-      container = gimp_container_view_get_container (editor->view);
+      factory   = gimp_data_factory_view_get_data_factory (GIMP_DATA_FACTORY_VIEW (editor));
+      container = gimp_data_factory_get_container (factory);
 
       gimp_container_remove_handler (container,
                                      view->spacing_changed_handler_id);
