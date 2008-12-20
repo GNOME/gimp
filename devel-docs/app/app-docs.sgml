@@ -336,6 +336,13 @@
       <xi:include href="xml/gimpsamplepointundo.xml" />
     </chapter>
 
+    <chapter id="app-core-tagging">
+        <title>The Resource Tagging System</title>
+        <xi:include href="xml/gimptag.xml" />
+        <xi:include href="xml/gimptagcache.xml" />
+        <xi:include href="xml/gimpfilteredcontainer.xml" />
+    </chapter>
+
     <chapter id="app-core-misc-objects">
       <title>Misc. Objects</title>
       <xi:include href="xml/gimpbuffer.xml" />
@@ -857,6 +864,13 @@
       <xi:include href="xml/gimpcontainerpopup.xml" />
       <xi:include href="xml/gimpviewablebutton.xml" />
       <xi:include href="xml/gimpviewablebox.xml" />
+    </chapter>
+
+    <chapter id="app-widgets-resource-tagging">
+      <title>Resource Tagging Widgets</title>
+      <xi:include href="xml/gimptagentry.xml" />
+      <xi:include href="xml/gimpcombotagentry.xml" />
+      <xi:include href="xml/gimptagpopup.xml" />
     </chapter>
 
     <chapter id="app-widgets-container-editors">

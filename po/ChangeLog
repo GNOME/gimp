@@ -1,3 +1,7 @@
+2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* POTFILES.in: Add gimptagentry.c.
+
 2008-12-16  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* hu.po: Translation updated by Arpad Biro.

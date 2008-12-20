@@ -22,10 +22,14 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <string.h>
 
 #include "core-types.h"
 
 #include "gimptag.h"
+
+
+#define GIMP_TAG_INTERNAL_PREFIX "gimp:"
 
 
 G_DEFINE_TYPE (GimpTag, gimp_tag, G_TYPE_OBJECT)
@@ -41,6 +45,133 @@ gimp_tag_class_init (GimpTagClass *klass)
 static void
 gimp_tag_init (GimpTag *tag)
 {
+  tag->tag         = 0;
+  tag->collate_key = 0;
+}
+
+/**
+ * gimp_tag_new:
+ * @tag_string: a tag name.
+ *
+ * If given tag name is not valid, an attempt will be made to fix it.
+ *
+ * Return value: a new #GimpTag object, or NULL if tag string is invalid and
+ * cannot be fixed.
+ **/
+GimpTag *
+gimp_tag_new (const char *tag_string)
+{
+  GimpTag      *tag;
+  gchar        *tag_name;
+  gchar        *case_folded;
+  gchar        *collate_key;
+
+  g_return_val_if_fail (tag_string != NULL, NULL);
+
+  tag_name = gimp_tag_string_make_valid (tag_string);
+  if (! tag_name)
+    {
+      return NULL;
+    }
+
+  tag = g_object_new (GIMP_TYPE_TAG, NULL);
+
+  tag->tag = g_quark_from_string (tag_name);
+
+  case_folded = g_utf8_casefold (tag_name, -1);
+  collate_key = g_utf8_collate_key (case_folded, -1);
+  tag->collate_key = g_quark_from_string (collate_key);
+  g_free (collate_key);
+  g_free (case_folded);
+  g_free (tag_name);
+
+  return tag;
+}
+
+/**
+ * gimp_tag_try_new:
+ * @tag_string: a tag name.
+ *
+ * Similar to gimp_tag_new(), but returns NULL if tag is surely not equal
+ * to any of currently created tags. It is useful for tag querying to avoid
+ * unneeded comparisons. If tag is created, however, it does not mean that
+ * it would necessarily match with some other tag.
+ *
+ * Return value: new #GimpTag object, or NULL if tag will not match with any
+ * other #GimpTag.
+ **/
+GimpTag *
+gimp_tag_try_new (const char *tag_string)
+{
+  GimpTag      *tag;
+  gchar        *tag_name;
+  gchar        *case_folded;
+  gchar        *collate_key;
+  GQuark        tag_quark;
+  GQuark        collate_key_quark;
+
+  tag_name = gimp_tag_string_make_valid (tag_string);
+  if (! tag_name)
+    {
+      return NULL;
+    }
+
+  case_folded = g_utf8_casefold (tag_name, -1);
+  collate_key = g_utf8_collate_key (case_folded, -1);
+  collate_key_quark = g_quark_try_string (collate_key);
+  g_free (collate_key);
+  g_free (case_folded);
+
+  if (! collate_key_quark)
+    {
+      g_free (tag_name);
+      return NULL;
+    }
+
+  tag_quark = g_quark_from_string (tag_name);
+  g_free (tag_name);
+  if (! tag_quark)
+    {
+      return NULL;
+    }
+
+  tag = g_object_new (GIMP_TYPE_TAG, NULL);
+  tag->tag = tag_quark;
+  tag->collate_key = collate_key_quark;
+  return tag;
+}
+
+/**
+ * gimp_tag_get_name:
+ * @tag: a gimp tag.
+ *
+ * Retrieve name of the tag.
+ *
+ * Return value: name of tag.
+ **/
+const gchar *
+gimp_tag_get_name (GimpTag           *tag)
+{
+  g_return_val_if_fail (GIMP_IS_TAG (tag), NULL);
+
+  return g_quark_to_string (tag->tag);
+}
+
+/**
+ * gimp_tag_get_hash:
+ * @tag: a gimp tag.
+ *
+ * Hashing function which is useful, for example, to store #GimpTag in
+ * a #GHashTable.
+ *
+ * Return value: hash value for tag.
+ **/
+guint
+gimp_tag_get_hash (GimpTag       *tag)
+{
+  g_return_val_if_fail (GIMP_IS_TAG (tag), -1);
+
+  return tag->collate_key;
 }
 
 /**
@@ -59,5 +190,156 @@ gimp_tag_equals (const GimpTag *tag,
   g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
   g_return_val_if_fail (GIMP_IS_TAG (other), FALSE);
 
-  return FALSE;
+  return tag->collate_key == other->collate_key;
+}
+
+/**
+ * gimp_tag_compare_func:
+ * @p1: pointer to left-hand #GimpTag object.
+ * @p2: pointer to right-hand #GimpTag object.
+ *
+ * Compares tags according to tag comparison rules. Useful for sorting
+ * functions.
+ *
+ * Return value: meaning of return value is the same as in strcmp().
+ **/
+int
+gimp_tag_compare_func (const void         *p1,
+                       const void         *p2)
+{
+  GimpTag      *t1 = GIMP_TAG (p1);
+  GimpTag      *t2 = GIMP_TAG (p2);
+
+  return g_strcmp0 (g_quark_to_string (t1->collate_key),
+                    g_quark_to_string (t2->collate_key));
+}
+
+/**
+ * gimp_tag_compare_with_string:
+ * @tag:        a #GimpTag object.
+ * @tag_string: pointer to right-hand #GimpTag object.
+ *
+ * Compares tag and a string according to tag comparison rules. Similar to
+ * gimp_tag_compare_func(), but can be used without creating temporary tag
+ * object.
+ *
+ * Return value: meaning of return value is the same as in strcmp().
+ **/
+gint
+gimp_tag_compare_with_string (GimpTag          *tag,
+                              const char       *tag_string)
+{
+  gchar        *case_folded;
+  const gchar  *collate_key;
+  gchar        *collate_key2;
+  gint          result;
+
+  g_return_val_if_fail (GIMP_IS_TAG (tag), 0);
+  g_return_val_if_fail (tag_string != NULL, 0);
+
+  collate_key = g_quark_to_string (tag->collate_key);
+  case_folded = g_utf8_casefold (tag_string, -1);
+  collate_key2 = g_utf8_collate_key (case_folded, -1);
+  result = g_strcmp0 (collate_key, collate_key2);
+  g_free (collate_key2);
+  g_free (case_folded);
+
+  return result;
+}
+
+/**
+ * gimp_tag_string_make_valid:
+ * @tag_string: a text string.
+ *
+ * Tries to create a valid tag string from given @tag_string.
+ *
+ * Return value: a newly allocated tag string in case given @tag_string was
+ * valid or could be fixed, otherwise NULL. Allocated value should be freed
+ * using g_free().
+ **/
+gchar *
+gimp_tag_string_make_valid (const gchar      *tag_string)
+{
+  gchar        *tag;
+  GString      *buffer;
+  gchar        *tag_cursor;
+  gunichar      c;
+
+  g_return_val_if_fail (tag_string, NULL);
+
+  tag = g_utf8_normalize (tag_string, -1, G_NORMALIZE_ALL);
+  if (! tag)
+    {
+      return NULL;
+    }
+
+  tag = g_strstrip (tag);
+  if (! *tag)
+    {
+      g_free (tag);
+      return NULL;
+    }
+
+  buffer = g_string_new ("");
+  tag_cursor = tag;
+  if (g_str_has_prefix (tag_cursor, GIMP_TAG_INTERNAL_PREFIX))
+    {
+      tag_cursor += strlen (GIMP_TAG_INTERNAL_PREFIX);
+    }
+  do
+    {
+      c = g_utf8_get_char (tag_cursor);
+      tag_cursor = g_utf8_next_char (tag_cursor);
+      if (g_unichar_isprint (c)
+          && ! gimp_tag_is_tag_separator (c))
+        {
+          g_string_append_unichar (buffer, c);
+        }
+    } while (c);
+
+  g_free (tag);
+  tag = g_string_free (buffer, FALSE);
+  tag = g_strstrip (tag);
+
+  if (! *tag)
+    {
+      g_free (tag);
+      return NULL;
+    }
+
+  return tag;
+}
+
+/**
+ * gimp_tag_is_tag_separator:
+ * @c: Unicode character.
+ *
+ * Defines a set of characters that are considered tag separators. The
+ * tag separators are hand-picked from the set of characters with the
+ * Terminal_Punctuation property as specified in the version 5.1.0 of
+ * the Unicode Standard.
+ *
+ * Return value: %TRUE if the character is a tag separator.
+ */
+gboolean
+gimp_tag_is_tag_separator (gunichar c)
+{
+  switch (c)
+    {
+    case 0x002C: /* COMMA */
+    case 0x060C: /* ARABIC COMMA */
+    case 0x07F8: /* NKO COMMA */
+    case 0x1363: /* ETHIOPIC COMMA */
+    case 0x1802: /* MONGOLIAN COMMA */
+    case 0x1808: /* MONGOLIAN MANCHU COMMA */
+    case 0x3001: /* IDEOGRAPHIC COMMA */
+    case 0xA60D: /* VAI COMMA */
+    case 0xFE50: /* SMALL COMMA */
+    case 0xFF0C: /* FULLWIDTH COMMA */
+    case 0xFF64: /* HALFWIDTH IDEOGRAPHIC COMMA */
+      return TRUE;
+
+    default:
+      return FALSE;
+    }
 }

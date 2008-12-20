@@ -1,0 +1,148 @@
+=============================================================
+How resource tagging in Gimp works?
+=============================================================
+
+
+GimpTagged
+
+Tagging is not limited to a concrete class hierarchy, but any class
+implementing GimpTagged interface can be tagged. In addition to
+methods for adding/removing/enumerating tags it also requires
+GimpTagged objects to identify themselves:
+
+* gimp_tagged_get_identifier: used to get a unique identifier of
+GimpTagged object. For objects which are stored in a file it will
+usually be a filename.
+
+* gimp_tagged_get_checksum: identifier mentioned above has a problem
+that it can change during sessions (for example, user moves or renames
+a resource file). Therefore, there needs to be a way to get other
+identifier from data of the tagged object, so that tags stored between
+session could be properly remapped.
+
+
+GimpTag
+
+Tags are represented by GimpTag object. There are no limitations for
+tags names except they cannot contain a selected set of terminal
+punctuations characters (used to separate tags), no whitespace at the
+end or front and cannot begin with a reserved prefix for internal tags
+('gimp:'). These conditions are ensured when creating tag object from
+tag string. The only reason for tag creation to fail is when there are
+no characters left after applying trying to fix a tag according to the
+rules above. Tag names are displayed as user typed them (case
+sensitive), but tag comparing is done case insensitively.
+
+Tags are immutable, ie. when tag is created with one name string, it
+cannot be changed, but new tag has to be created instead.
+
+There are methods provided for convenient use with GLib: compare
+function which can be used to sort tag list and functions for storing
+tags in GHashTable.
+
+
+GimpTagCache
+
+Between sessions tags assigned to objects are stored in a cache
+file. Cache file is a simple XML file, which lists all resources and
+tags which are added to them. Resources which have no tags assigned
+are listed here too, so that when we check the cache we know that they
+have no tags assigned instead trying to find out if the resource file
+has been renamed.
+
+When session ends, list or all resources and tags they have assigned
+is constructed. Resources which were not loaded during this session,
+but had tags assigned are also added to the list (they are saved
+because they could be useful in the next session, for example, when
+temporarily disconnected network directory is reconnected). The list
+is then written to a tag cache file in user home directory.
+
+When session starts, previously saved resource and tag mapping has to
+be loaded and assigned to GimpTagged objects.  First tag cache is
+loaded from file, and then containers are added (GimpContainer objects
+where contained items implement GimpTagged interface). After that,
+loaded resources are assigned tags:
+
+  If resource identifier matches identifier in cache,
+    corresponding tags are assigned to GimpTagged object.
+  Else, if the identifier is not found in tag cache,
+    attempt is made to check if resource file has been
+    moved/renamed. In such case checksum is used to match the
+    GimpTagged object with all of the records in tag cache.
+    If match is found,
+      identifier is updated in tag cache.
+    Otherwise,
+      loaded GimpTagged object is considered to be a newly
+      added resource.
+
+
+GimpFilteredContainer
+
+GimpFilteredContainer is a "view" (representation) of
+GimpContainer. What relates it to tagging, is that it can be used to
+filter GimpContainer to contain only GimpTagged objects which have
+certain tags assigned. It is automatically updated with any changes in
+GimpContainer it wraps. However, items should not be added or removed
+from this container manually as changes do not affect original
+container and would be lost when GimpFilteredContainer is
+updated. Instead, the contents should be changed by setting tag list
+which would be used to filter GimpTagged objects containing all of the
+given GimpTags.
+
+GimpFilteredContainer can use any GimpContainer as source
+container. Therefore, it is possible to use decorator design pattern
+to implement additional container views, such as view combining items
+from multiple containers.
+
+
+GimpTagEntry widget
+
+GimpTagEntry widget extends GtkEntry and is used to either assign or
+query tags depending on selected mode. The widget support various
+usability features:
+
+ * jellybeans. When tag is entered and confirmed by either separator,
+   pressing return or otherwise, it becomes a jellybean, i.e. a single
+   unit, not a bunch of characters. Navigating in GimpTagEntry,
+   deleting tags, etc can be performed much quicker. However, when tag
+   is just beeing entered (not yet confirmed), all actions operate on
+   characters as usual.
+
+ * custom auto completion is implemented in GimpTagEntry widget which
+   allows to complete tags in the middle of tag list, doesn't offer
+   already completed tags, tab cycles all possible completions, etc.
+
+ * when GimpTagEntry is empty and unused it displays description for
+   user regarding it's purpose.
+
+When operating in tag assignment mode, tags are assigned only when
+user hits return key.
+
+When operating in tag query mode, given GimpFilteredContainer is
+filtered as user types. GimpTagEntry also remembers recently used
+configurations, which can be cycled using up and down arrow keys.
+
+
+GimpComboTagEntry widget
+
+GimpComboTagEntry widget extends GimpTagEntry and adds ability to pick
+tags from a menu like list (GimpTagPopup widget).
+
+
+GimpTagPopup widget
+
+GimpTagPopup widget is used as a tag list menu from GimpComboTagEntry
+widget. It is not designed to be used with any other widget.
+
+GimpTagPopup has many visual and behavioral similarities to GtkMenu.
+In particular, it uses menu-like scrolling.
+
+GimpTagPopup implements various usability features, some of which are:
+
+ * tags which would result in empty selection of resource are made
+   insensitive.
+
+ * closing with either keyboard or pressing outside the popup area.
+
+ * underline highlighted (hovered) tags.
+

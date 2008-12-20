@@ -2138,19 +2138,93 @@ GIMP_SIZE_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimptag</FILE>
+<TITLE>GimpTag</TITLE>
+gimp_tag_new
+gimp_tag_try_new
+gimp_tag_get_name
+gimp_tag_get_hash
+gimp_tag_equals
+gimp_tag_compare_func
+gimp_tag_compare_with_string
+gimp_tag_string_make_valid
+<SUBSECTION Standard>
+GimpTagClass
+GIMP_TAG
+GIMP_IS_TAG
+GIMP_TYPE_TAG
+gimp_tag_get_type
+GIMP_TAG_CLASS
+GIMP_IS_TAG_CLASS
+GIMP_TAG_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptagcache</FILE>
+<TITLE>GimpTagCache</TITLE>
+gimp_tag_cache_new
+gimp_tag_cache_load
+gimp_tag_cache_save
+gimp_tag_cache_add_container
+<SUBSECTION Standard>
+GimpTagCacheClass
+GIMP_TAG_CACHE
+GIMP_IS_TAG_CACHE
+GIMP_TYPE_TAG_CACHE
+gimp_tag_cache_get_type
+GIMP_TAG_CACHE_CLASS
+GIMP_IS_TAG_CACHE_CLASS
+GIMP_TAG_CACHE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptagentry</FILE>
+<TITLE>GimpTagEntry</TITLE>
+gimp_tag_entry_new
+gimp_tag_entry_set_selected_items
+gimp_tag_entry_parse_tags
+gimp_tag_entry_set_tag_string
+gimp_tag_entry_get_separator
+<SUBSECTION Standard>
+GimpTagEntryClass
+GIMP_TAG_ENTRY
+GIMP_IS_TAG_ENTRY
+GIMP_TYPE_TAG_ENTRY
+gimp_tag_entry_get_type
+GIMP_TAG_ENTRY_CLASS
+GIMP_IS_TAG_ENTRY_CLASS
+GIMP_TAG_ENTRY_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimptagged</FILE>
 <TITLE>GimpTagged</TITLE>
 GimpTagged
 GimpTaggedInterface
 gimp_tagged_add_tag
 gimp_tagged_remove_tag
-gimp_tagged_get_get_tags
+gimp_tagged_get_tags
 <SUBSECTION Standard>
 GIMP_TAGGED
 GIMP_IS_TAGGED
 GIMP_TYPE_TAGGED
 gimp_tagged_interface_get_type
 GIMP_TAGGED_GET_INTERFACE
+</SECTION>
+
+<SECTION>
+<FILE>gimptagpopup</FILE>
+<TITLE>GimpTagPopup</TITLE>
+gimp_tag_popup_new
+<SUBSECTION Standard>
+GimpTagPopupClass
+GIMP_TAG_POPUP
+GIMP_IS_TAG_POPUP
+GIMP_TYPE_TAG_POPUP
+gimp_tag_popup_get_type
+GIMP_TAG_POPUP_CLASS
+GIMP_IS_TAG_POPUP_CLASS
+GIMP_TAG_POPUP_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -2646,6 +2720,21 @@ gimp_canvas_get_type
 GIMP_CANVAS_CLASS
 GIMP_IS_CANVAS_CLASS
 GIMP_CANVAS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcombotagentry</FILE>
+<TITLE>GimpComboTagEntry</TITLE>
+gimp_combo_tag_entry_new
+<SUBSECTION Standard>
+GimpComboTagEntryClass
+GIMP_COMBO_TAG_ENTRY
+GIMP_IS_COMBO_TAG_ENTRY
+GIMP_TYPE_COMBO_TAG_ENTRY
+gimp_combo_tag_entry_get_type
+GIMP_COMBO_TAG_ENTRY_CLASS
+GIMP_IS_COMBO_TAG_ENTRY_CLASS
+GIMP_COMBO_TAG_ENTRY_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -3535,6 +3624,24 @@ GIMP_SMUDGE_OPTIONS_GET_CLASS
 gimp_fonts_init
 gimp_fonts_load
 gimp_fonts_reset
+</SECTION>
+
+<SECTION>
+<FILE>gimpfilteredcontainer</FILE>
+<TITLE>GimpFilteredContainer</TITLE>
+gimp_filtered_container_new
+gimp_filtered_container_get_filter
+gimp_filtered_container_set_filter
+gimp_filtered_container_get_tag_count
+<SUBSECTION Standard>
+GimpFilteredContainerClass
+GIMP_FILTERED_CONTAINER
+GIMP_IS_FILTERED_CONTAINER
+GIMP_TYPE_FILTERED_CONTAINER
+gimp_filtered_container_get_type
+GIMP_FILTERED_CONTAINER_CLASS
+GIMP_IS_FILTERED_CONTAINER_CLASS
+GIMP_FILTERED_CONTAINER_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -8512,9 +8619,6 @@ GIMP_COORDS_MAX_WHEEL
 GIMP_COORDS_DEFAULT_WHEEL
 GIMP_COORDS_DEFAULT_VALUES
 GimpTattoo
-GimpTag
-gimp_tag_get_name
-gimp_tag_new
 GimpInitStatusFunc
 GimpObjectFilterFunc
 GimpMemsizeFunc

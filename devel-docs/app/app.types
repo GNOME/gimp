@@ -132,6 +132,7 @@ gimp_fg_bg_editor_get_type
 gimp_fg_bg_view_get_type
 gimp_file_dialog_get_type
 gimp_file_proc_view_get_type
+gimp_filtered_container_get_type
 gimp_flip_options_get_type
 gimp_flip_tool_get_type
 gimp_floating_sel_undo_get_type
@@ -299,6 +300,11 @@ gimp_stroke_editor_get_type
 gimp_stroke_get_type
 gimp_stroke_options_get_type
 gimp_sub_progress_get_type
+gimp_tag_get_type
+gimp_tag_cache_get_type
+gimp_combo_tag_entry_get_type
+gimp_tag_entry_get_type
+gimp_tag_popup_get_type
 gimp_tagged_interface_get_type
 gimp_template_editor_get_type
 gimp_template_get_type

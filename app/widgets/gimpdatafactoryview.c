@@ -36,13 +36,17 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpfilteredcontainer.h"
+#include "core/gimplist.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpcombotagentry.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpdnd.h"
+#include "gimptagentry.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
@@ -54,6 +58,11 @@ struct _GimpDataFactoryViewPriv
 {
   GimpDataFactory *factory;
 
+  GimpContainer   *tag_filtered_container;
+  GtkWidget       *query_tag_entry;
+  GtkWidget       *assign_tag_entry;
+  GList           *selected_items;
+
   GtkWidget       *edit_button;
   GtkWidget       *new_button;
   GtkWidget       *duplicate_button;
@@ -63,6 +72,8 @@ struct _GimpDataFactoryViewPriv
 
 
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
+                                                     GimpViewable        *viewable);
+static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
 static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
                                                      const gchar         *path,
@@ -81,6 +92,7 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
+  editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
 
   g_type_class_add_private (klass, sizeof (GimpDataFactoryViewPriv));
@@ -92,11 +104,16 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             GIMP_TYPE_DATA_FACTORY_VIEW,
                                             GimpDataFactoryViewPriv);
-  view->priv->edit_button      = NULL;
-  view->priv->new_button       = NULL;
-  view->priv->duplicate_button = NULL;
-  view->priv->delete_button    = NULL;
-  view->priv->refresh_button   = NULL;
+
+  view->priv->tag_filtered_container = NULL;
+  view->priv->query_tag_entry        = NULL;
+  view->priv->assign_tag_entry       = NULL;
+  view->priv->selected_items         = NULL;
+  view->priv->edit_button            = NULL;
+  view->priv->new_button             = NULL;
+  view->priv->duplicate_button       = NULL;
+  view->priv->delete_button          = NULL;
+  view->priv->refresh_button         = NULL;
 }
 
 GtkWidget *
@@ -207,9 +224,13 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->priv->factory = factory;
 
+  factory_view->priv->tag_filtered_container =
+    gimp_filtered_container_new (gimp_data_factory_get_container (factory),
+                                 (GCompareFunc) gimp_data_compare);
+
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
-                                         gimp_data_factory_get_container (factory), context,
+                                         factory_view->priv->tag_filtered_container, context,
                                          view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
@@ -263,6 +284,30 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                    str, NULL);
   g_free (str);
 
+  /* Query tag entry */
+  factory_view->priv->query_tag_entry =
+      gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+                                GIMP_TAG_ENTRY_MODE_QUERY);
+  gtk_widget_show (factory_view->priv->query_tag_entry);
+  gtk_box_pack_start (GTK_BOX (editor->view),
+                      factory_view->priv->query_tag_entry,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (editor->view),
+                         factory_view->priv->query_tag_entry, 0);
+
+  /* Assign tag entry */
+  factory_view->priv->assign_tag_entry =
+      gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+                                GIMP_TAG_ENTRY_MODE_ASSIGN);
+  gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (factory_view->priv->assign_tag_entry),
+                                     factory_view->priv->selected_items);
+  g_list_free (factory_view->priv->selected_items);
+  factory_view->priv->selected_items = NULL;
+  gtk_widget_show (factory_view->priv->assign_tag_entry);
+  gtk_box_pack_start (GTK_BOX (editor->view),
+                      factory_view->priv->assign_tag_entry,
+                      FALSE, FALSE, 0);
+
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->priv->edit_button),
                                   gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
@@ -276,6 +321,33 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return TRUE;
+}
+
+static void
+gimp_data_factory_view_select_item (GimpContainerEditor *editor,
+                                    GimpViewable        *viewable)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (editor);
+
+  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
+    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  if (view->priv->assign_tag_entry)
+    {
+      GList    *active_items = NULL;
+
+      if (viewable)
+        {
+          active_items = g_list_append (active_items, viewable);
+        }
+      gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (view->priv->assign_tag_entry),
+                                         active_items);
+      g_list_free (active_items);
+    }
+  else
+    {
+      view->priv->selected_items = g_list_append (view->priv->selected_items, viewable);
+    }
 }
 
 static void

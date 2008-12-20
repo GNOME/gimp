@@ -65,6 +65,8 @@ libappwidgets_a_sources = \
 	gimpcolorpanel.h		\
 	gimpcolorselectorpalette.c	\
 	gimpcolorselectorpalette.h	\
+	gimpcombotagentry.c		\
+	gimpcombotagentry.h		\
 	gimpcomponenteditor.c		\
 	gimpcomponenteditor.h		\
 	gimpcontainerbox.c		\
@@ -265,6 +267,10 @@ libappwidgets_a_sources = \
 	gimpstringaction.h		\
 	gimpstrokeeditor.c		\
 	gimpstrokeeditor.h		\
+	gimptagentry.c			\
+	gimptagentry.h			\
+	gimptagpopup.c			\
+	gimptagpopup.h			\
 	gimptemplateeditor.c		\
 	gimptemplateeditor.h		\
 	gimptemplateview.c		\

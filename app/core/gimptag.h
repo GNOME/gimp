@@ -39,6 +39,9 @@ typedef struct _GimpTagClass    GimpTagClass;
 struct _GimpTag
 {
   GObject parent_instance;
+
+  GQuark  tag;
+  GQuark  collate_key;
 };
 
 struct _GimpTagClass
@@ -46,12 +49,21 @@ struct _GimpTagClass
   GObjectClass parent_class;
 };
 
+GType         gimp_tag_get_type            (void) G_GNUC_CONST;
 
-GType    gimp_tag_get_type (void) G_GNUC_CONST;
+GimpTag     * gimp_tag_new                 (const gchar    *tag_string);
+GimpTag     * gimp_tag_try_new             (const gchar    *tag_string);
 
-gboolean gimp_tag_equals   (const GimpTag *tag,
-                            const GimpTag *other);
+const gchar * gimp_tag_get_name            (GimpTag        *tag);
+guint         gimp_tag_get_hash            (GimpTag        *tag);
+gboolean      gimp_tag_equals              (const GimpTag  *tag,
+                                            const GimpTag  *other);
+gint          gimp_tag_compare_func        (const void     *p1,
+                                            const void     *p2);
+gint          gimp_tag_compare_with_string (GimpTag        *tag,
+                                            const gchar    *tag_string);
+gchar       * gimp_tag_string_make_valid   (const gchar    *tag_string);
+gboolean      gimp_tag_is_tag_separator    (gunichar        c);
 
 
 #endif /* __GIMP_TAG_H__ */
-

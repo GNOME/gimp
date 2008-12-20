@@ -168,6 +168,8 @@ libappcore_a_sources = \
 	gimperror.h				\
 	gimpfilloptions.c			\
 	gimpfilloptions.h			\
+	gimpfilteredcontainer.c			\
+	gimpfilteredcontainer.h			\
 	gimpfloatingselundo.c			\
 	gimpfloatingselundo.h			\
 	gimpgradient.c				\
@@ -325,6 +327,8 @@ libappcore_a_sources = \
 	gimpsubprogress.h			\
 	gimptag.c				\
 	gimptag.h				\
+	gimptagcache.c				\
+	gimptagcache.h				\
 	gimptagged.c				\
 	gimptagged.h				\
 	gimptemplate.c				\

@@ -67,12 +67,13 @@ typedef struct _GimpImage           GimpImage;
 
 /*  containers  */
 
-typedef struct _GimpContainer       GimpContainer;
-typedef struct _GimpDocumentList    GimpDocumentList;
-typedef struct _GimpDrawableStack   GimpDrawableStack;
-typedef struct _GimpItemStack       GimpItemStack;
-typedef struct _GimpList            GimpList;
-typedef struct _GimpToolPresets     GimpToolPresets;
+typedef struct _GimpContainer         GimpContainer;
+typedef struct _GimpDocumentList      GimpDocumentList;
+typedef struct _GimpDrawableStack     GimpDrawableStack;
+typedef struct _GimpFilteredContainer GimpFilteredContainer;
+typedef struct _GimpItemStack         GimpItemStack;
+typedef struct _GimpList              GimpList;
+typedef struct _GimpToolPresets       GimpToolPresets;
 
 
 /*  context objects  */
@@ -102,6 +103,7 @@ typedef struct _GimpGradient         GimpGradient;
 typedef struct _GimpPalette          GimpPalette;
 typedef struct _GimpPattern          GimpPattern;
 typedef struct _GimpPatternClipboard GimpPatternClipboard;
+typedef struct _GimpTagCache         GimpTagCache;
 
 
 /*  drawable objects  */

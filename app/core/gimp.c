@@ -58,6 +58,7 @@
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
+#include "gimptagcache.h"
 #include "gimpdocumentlist.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient.h"
@@ -242,6 +243,8 @@ gimp_init (Gimp *gimp)
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
 
+  gimp->tag_cache           = NULL;
+
   gimp->pdb                 = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
@@ -353,6 +356,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->palette_factory);
       gimp->palette_factory = NULL;
+    }
+
+  if (gimp->tag_cache)
+    {
+      g_object_unref (gimp->tag_cache);
+      gimp->tag_cache = NULL;
     }
 
   if (gimp->fonts)
@@ -477,6 +486,9 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
                                       gui_size);
 
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tag_cache),
+                                      gui_size);
+
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pdb), gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
@@ -588,6 +600,8 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
                                "palette factory");
 
+  gimp->tag_cache = gimp_tag_cache_new ();
+
   gimp_paint_init (gimp);
 
   /* Set the last values used to default values. */
@@ -648,6 +662,8 @@ gimp_real_exit (Gimp     *gimp,
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);
+
+  gimp_tag_cache_save (gimp->tag_cache);
 
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
@@ -864,6 +880,18 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the module list  */
   status_callback (NULL, _("Modules"), 0.7);
   gimp_modules_load (gimp);
+
+  /* update tag cache */
+  status_callback (NULL, _("Updating tag cache"), 0.8);
+  gimp_tag_cache_load (gimp->tag_cache);
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->brush_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->pattern_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->gradient_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->palette_factory));
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }

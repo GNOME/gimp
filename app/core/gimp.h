@@ -95,6 +95,8 @@ struct _Gimp
   GimpDataFactory        *gradient_factory;
   GimpDataFactory        *palette_factory;
 
+  GimpTagCache           *tag_cache;
+
   GimpPDB                *pdb;
 
   GimpContainer          *tool_info_list;

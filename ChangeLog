@@ -2,6 +2,46 @@
 
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
 
+	Merge the rest of the tagging code developed on the tagging branch
+	by Aurimas Juška. Development will now continue in trunk.
+
+	* app/core/gimptag.[ch]: New files (not strictly true but almost)
+	implementing the represention of a tag.
+
+	* app/core/gimptagcache.[ch]: New files implementing functionality
+	for loading and saving tags to tags.xml, and assigning loaded tags
+	to tagged objects.
+
+	* app/core/gimpfilteredcontainer.[ch]: New files implementing a
+	tag filtered GimpContainer.
+
+	* app/widgets/gimptagentry.[ch]: New files implementing a
+	GtkEntry-like widget for entering tags.
+
+	* app/widgets/gimpcombotagentry.[ch]: New files implementing a
+	combobox-like widget for selecting tags.
+
+	* app/widgets/gimptagpopup.[ch]: New files implementing a popup of
+	all available tags that can be selected and combined in a
+	checkbox-like way.
+
+	* app/core/gimp.[ch]: Add a GimpTagCache member and manage tag
+	assignment and saving and loading to/from tags.xml.
+
+	* app/widgets/gimpdatafactoryview.c: Add the tag query and tag
+	assignment widgets to the UI and show the tag filtered items
+	instead of all items.
+
+	* app/core/Makefile.am
+	* app/widgets/Makefile.am: Add new files.
+
+	* app/core/core-types.h
+	* app/widgets/widgets-types.h: Add new types.
+
+2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
+
 	Partial merge of code from Aurimas Juška.
 
 	* app/widgets/gimpbrushfactoryview.c: Use the same method for

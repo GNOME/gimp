@@ -1,3 +1,11 @@
+2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* tagging.txt: New file describing how tagging is implemented.
+
+	* app/app.types
+	* app/app-docs.sgml
+	* app/app-sections.txt: Update.
+
 2008-12-10  Sven Neumann  <sven@gimp.org>
 
 	* README.gtkdoc: added a link to http://www.gtk.org/gtk-doc/
