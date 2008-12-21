@@ -1,3 +1,10 @@
+2008-12-21  Sven Neumann  <sven@gimp.org>
+
+	Bug 565138 – python-fu-foggify does not check if image is in rgb mode
+
+	* plug-ins/pygimp/plug-ins/foggify.py (foggify): fixed handling of
+	grayscale images.
+
 2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 555954 – Merge Tagging of Gimp Resources GSoC Project
