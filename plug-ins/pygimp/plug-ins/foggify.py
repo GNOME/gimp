@@ -27,8 +27,12 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     gimp.context_push()
     img.undo_group_start()
 
-    fog = gimp.Layer(img, name, layer.width, layer.height, RGBA_IMAGE,
-                     opacity, NORMAL_MODE)
+    if img.base_type is RGB:
+        type = RGBA_IMAGE
+    else:
+        type = GRAYA_IMAGE
+    fog = gimp.Layer(img, name,
+                     layer.width, layer.height, type, opacity, NORMAL_MODE)
     fog.fill(TRANSPARENT_FILL)
     img.add_layer(fog, 0)
 
