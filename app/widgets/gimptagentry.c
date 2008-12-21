@@ -475,8 +475,10 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
   gboolean      is_tag[2];
   gint          i;
   gint          insert_pos = *position;
+  glong         num_chars;
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (editable));
+  num_chars = g_utf8_strlen (new_text, text_length);
 
   if (! tag_entry->internal_operation)
     {
@@ -494,7 +496,7 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
     {
       g_signal_stop_emission_by_name (editable, "insert_text");
     }
-  else if (text_length > 0)
+  else if (num_chars > 0)
     {
       gunichar  c = g_utf8_get_char (new_text);
 
@@ -522,7 +524,7 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
           g_signal_stop_emission_by_name (editable, "insert_text");
         }
       else if (! tag_entry->internal_operation
-               && text_length == 1
+               && num_chars == 1
                && *position < tag_entry->mask->len
                && tag_entry->mask->str[*position] == 't'
                && ! g_unichar_isspace (c))
@@ -549,7 +551,7 @@ gimp_tag_entry_insert_text     (GtkEditable       *editable,
 
       if (! tag_entry->suppress_mask_update)
         {
-          for (i = 0; i < text_length; i++)
+          for (i = 0; i < num_chars; i++)
             {
               g_string_insert_c (tag_entry->mask, insert_pos + i, 'u');
             }
@@ -1082,13 +1084,21 @@ gimp_tag_entry_get_completion_string (GimpTagEntry             *tag_entry,
   gchar        *completion;
   gchar        *completion_end;
   gint          completion_length;
+  gchar        *normalized_prefix;
 
   if (! candidates)
     {
       return NULL;
     }
 
-  prefix_length = strlen (prefix);
+  normalized_prefix = g_utf8_normalize (prefix, -1, G_NORMALIZE_ALL);
+  if (! normalized_prefix)
+    {
+      return NULL;
+    }
+  prefix_length = strlen (normalized_prefix);
+  g_free (normalized_prefix);
+
   length = g_list_length (candidates);
   if (length < 2)
     {
@@ -1160,7 +1170,10 @@ gimp_tag_entry_focus_out       (GtkWidget         *widget,
   GimpTagEntry  *tag_entry = GIMP_TAG_ENTRY (widget);
 
   gimp_tag_entry_commit_tags (tag_entry);
-  gimp_tag_entry_assign_tags (GIMP_TAG_ENTRY (widget));
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
+    {
+      gimp_tag_entry_assign_tags (GIMP_TAG_ENTRY (widget));
+    }
 
   gimp_tag_entry_add_to_recent (tag_entry,
                                 gtk_entry_get_text (GTK_ENTRY (widget)),
@@ -1820,6 +1833,7 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
   gint          position;
   gboolean      found_region;
   gint          cursor_position;
+  glong         length_before;
 
   cursor_position = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
 
@@ -1858,6 +1872,7 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
           tags_string = gtk_editable_get_chars (GTK_EDITABLE (tag_entry), region_start, region_end);
           tags = g_string_new (tags_string);
           g_free (tags_string);
+          length_before = region_end - region_start;
 
           mask = g_string_new_len (tag_entry->mask->str + region_start, region_end - region_start);
 
@@ -1885,14 +1900,14 @@ gimp_tag_entry_commit_tags     (GimpTagEntry         *tag_entry)
 
           if (cursor_position >= region_start)
             {
-              cursor_position += mask->len - (region_end - region_start);
+              cursor_position += g_utf8_strlen (tags->str, tags->len) - length_before;
             }
 
           tag_entry->internal_operation++;
           tag_entry->suppress_mask_update++;
           gtk_editable_delete_text (GTK_EDITABLE (tag_entry), region_start, region_end);
           position = region_start;
-          gtk_editable_insert_text (GTK_EDITABLE (tag_entry), tags->str, mask->len, &position);
+          gtk_editable_insert_text (GTK_EDITABLE (tag_entry), tags->str, tags->len, &position);
           tag_entry->suppress_mask_update--;
           tag_entry->internal_operation--;
 

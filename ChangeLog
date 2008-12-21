@@ -1,3 +1,8 @@
+2008-12-21  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/widgets/gimptagentry.c: fixed handling of tags which contain
+	non-ASCII characters.
+
 2008-12-21  Sven Neumann  <sven@gimp.org>
 
 	Bug 564869 – GIMP crashes on selecting Tools->GEGL operation
