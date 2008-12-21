@@ -446,8 +446,12 @@ gimp_tool_initialize (GimpTool    *tool,
 
   if (! GIMP_TOOL_GET_CLASS (tool)->initialize (tool, display, &error))
     {
-      gimp_tool_message_literal (tool, display, error->message);
-      g_clear_error (&error);
+      if (error)
+        {
+          gimp_tool_message_literal (tool, display, error->message);
+          g_clear_error (&error);
+        }
+
       return FALSE;
     }
 

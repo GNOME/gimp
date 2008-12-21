@@ -1,5 +1,12 @@
 2008-12-21  Sven Neumann  <sven@gimp.org>
 
+	Bug 564869 – GIMP crashes on selecting Tools->GEGL operation
+
+	* app/tools/gimptool.c (gimp_tool_initialize): check if the tool
+	has set an error.
+
+2008-12-21  Sven Neumann  <sven@gimp.org>
+
 	Bug 565138 – python-fu-foggify does not check if image is in rgb mode
 
 	* plug-ins/pygimp/plug-ins/foggify.py (foggify): fixed handling of
