@@ -3,16 +3,17 @@
 #
 # This file is distributed under the same license as the gimp package.
 #
-# Maintainer: Branko Ivanović <popeye@one.ekof.bg.ac.yu>
+# Maintainer: Miloš Popović <gpopac@gmail.com>
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 12:54+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&amp;component=general\n"
+"POT-Creation-Date: 2008-12-21 16:41+0000\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
-"Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
+"Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,7 +141,7 @@ msgstr "Dnevnik servera:"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
-msgstr "Pokreće upitnu konzola za razvoj skripti"
+msgstr "Pokreće interaktivnu konzola za razvoj skripti"
 
 #: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
@@ -679,8 +680,7 @@ msgstr "Širina pukotina"
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr ""
-"Dodaje efekat preliva, pozadinu i baca senku na izabranu oblast (ili alfu)"
+msgstr "Dodaje efekat preliva, pozadinu i senku na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
@@ -783,50 +783,50 @@ msgstr "Širina"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "Stapanje za animaciju zahteva bar tri izvorna sloja"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
+"Pravi među-slojeve za postepenog spajanje dva ili više sloja sa pozadinom u "
+"animaciju"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
-#, fuzzy
 msgid "Intermediate frames"
-msgstr "Centriraj Okvire"
+msgstr "Središlji kadrovi"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Looped"
-msgstr "Petlja"
+msgstr "Ponavljanje"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
-#, fuzzy
 msgid "Max. blur radius"
-msgstr "Maks. Poluprečnik Zamućenja"
+msgstr "Maks. poluprečnik zamućenja"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr ""
+msgstr "_Stopi..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
+"Dodaje stopljene pozadine, odsjaje i senke na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr ""
+msgstr "S_topljeno..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
-#, fuzzy
 msgid "Blend mode"
-msgstr "Režim Stapanja"
+msgstr "Režim stapanja"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "Pravi logo sa stopljenom pozadinom, odsjajem i senkama"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -834,15 +834,15 @@ msgstr "Proizvoljni preliv"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
-msgstr "FG-BG-HSV"
+msgstr "BČ-BP-HSV"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-BG-RGB"
-msgstr "FG-BG-RGB"
+msgstr "BČ-BP-RGB"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
-msgstr "Providna boja četke"
+msgstr "Providna boja četkice"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
@@ -860,30 +860,29 @@ msgstr "Preliv"
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient reverse"
 msgstr "Obrnuti preliv"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
-msgstr "Odstupanje (tačaka)"
+msgstr "Odstupanje (piksela)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje „kravlje mrlje“ na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "Background Color"
-msgstr "Boja Pozadine"
+msgstr "Boja pozadine"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
-msgstr ""
+msgstr "Kra_vlje mrlje..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr ""
+msgstr "Pravi logo sa tekstom u vidu „kravljih mrlja“"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -903,10 +902,9 @@ msgstr "Izmeni sjaj"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
-msgstr ""
+msgstr "_Upali..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-#, fuzzy
 msgid "Corona width"
 msgstr "Širina vela"
 
@@ -915,15 +913,15 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
+"Pravi među-slojeve za efekat blagog „upaljenog“ prelaza između dva sloja"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "Nestajanje"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
-#, fuzzy
 msgid "Fadeout width"
-msgstr "Širina ivice ka nestajanju"
+msgstr "Širina izbleđivanja"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
@@ -931,13 +929,15 @@ msgstr "Pripremi za GIF"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
-msgstr "Brzina (tačaka/slici)"
+msgstr "Brzina (piksela/kadrovima)"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
+"Potreban su dva sloja kako bi koristili skriptu za upaljivanje (prednji "
+"providan sloj i pozadinski sloj)"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -953,7 +953,7 @@ msgstr "Boja 3"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:4
 msgid "Create an image filled with a camouflage pattern"
-msgstr ""
+msgstr "Pravi sliku u kamuflažnim bojama"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -962,98 +962,94 @@ msgstr "Zrnovitost"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:7
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
-#, fuzzy
 msgid "Image size"
 msgstr "Veličina slike"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:8
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
-msgstr "Ugladi"
+msgstr "Uglađivanje"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
-msgstr ""
+msgstr "_Kamuflaža..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "Carve white areas"
 msgstr "Izrezbari bela područja"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
-#, fuzzy
 msgid "Image to carve"
 msgstr "Slika za rezbarenje"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Stencil C_arve..."
-msgstr ""
+msgstr "Iz_rezbarena slika..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
 msgstr "Slika u pozadini"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
 msgid "Carve raised text"
 msgstr "Izrezbari istaknuti tekst"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carved..."
-msgstr ""
+msgstr "Izrezbareno..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
+"Pravi logo sa tekstom istaknutim iznad ili izrezbaren unutar pozadinske slike"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
 msgid "Padding around text"
-msgstr "Podloga oko teksta"
+msgstr "Popuna oko teksta"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:2
-#, fuzzy
 msgid "Chalk color"
 msgstr "Boja krede"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr ""
+msgstr "Pravi efekat crtanja kredom za izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr ""
+msgstr "Pravi logo koji podseća na pisanje kredom po tabli"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
-msgstr ""
+msgstr "Iscrtaj _kredom..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
+"Dodaje efekat opiljaka izrezbarenog drveta na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
 msgstr "Količina zamućenja"
 
+# Nisam baš siguran oko ovoga (miloš)... iverje, strugotina...
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
-msgstr ""
+msgstr "Drveni opiljci..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
-#, fuzzy
 msgid "Chip amount"
-msgstr "Vrednost chip"
+msgstr "Vrednost opiljaka"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr ""
+msgstr "Pravi logo nalik na opiljke izrezbarenog drvo"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
-msgstr "Baci senku"
+msgstr "Dodaj senku"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
@@ -1072,81 +1068,75 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
+"Dodaje efekat hromiranja na izabranu oblast (ili alfu) na osnovu izabranog "
+"(crno-belog) crteža"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
-#, fuzzy
 msgid "Chrome balance"
-msgstr "Ravnoteža hromiranja"
+msgstr "Ravnoteža"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-#, fuzzy
 msgid "Chrome factor"
-msgstr "Činilac hromiranja"
+msgstr "Činilac"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-#, fuzzy
 msgid "Chrome lightness"
-msgstr "Osvetljenje hromiranja"
+msgstr "Svetlina"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-#, fuzzy
 msgid "Chrome saturation"
-msgstr "Zasićenje hromiranja"
+msgstr "Zasićenost"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#, fuzzy
 msgid "Chrome white areas"
 msgstr "Hromiraj bela područja"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#, fuzzy
 msgid "Environment map"
 msgstr "Mapa okruženja"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
-msgstr "Balans osvetljenja"
+msgstr "Balans za svetlo"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
 msgid "Stencil C_hrome..."
-msgstr "Traži..."
+msgstr "_Hromiraj..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje prost efekat hromiranja na izabranu oblast (ili alfuu)"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
-#, fuzzy
 msgid "C_hrome..."
-msgstr "Traži..."
+msgstr "_Hrom..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr ""
+msgstr "Pravi prost ali lep hromirani logo"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
 msgstr "Odstupanja (tačke * 2)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:1
-#, fuzzy
 msgid "Circuit seed"
-msgstr "Stvori krug"
+msgstr "Štampano kolo"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
+"Popunjava izabranu oblast (ili alfu) ptagovima sličnim kao na štampanim "
+"pločama"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1156,12 +1146,10 @@ msgid "Keep selection"
 msgstr "Zadrži izbor"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
-#, fuzzy
 msgid "No background (only for separate layer)"
 msgstr "Nema pozadine (samo za odvojeni sloj)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-#, fuzzy
 msgid "Oilify mask size"
 msgstr "Veličina uljane maske"
 
@@ -1172,13 +1160,12 @@ msgid "Separate layer"
 msgstr "Odvojeni sloj"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
-#, fuzzy
 msgid "_Circuit..."
-msgstr "Stvori krug"
+msgstr "_Štampano kolo..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje teksturu platna na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1187,11 +1174,11 @@ msgstr "Azimut"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
-msgstr "Zamućenje X"
+msgstr "X zamućenje"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
-msgstr "zamućenje Y"
+msgstr "Y zamućenje"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:5
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
@@ -1205,11 +1192,11 @@ msgstr "Nagib"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr ""
+msgstr "Dodaj p_latno..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+msgstr "Dodaje mrlje od kafe na sliku"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only"
@@ -1217,7 +1204,7 @@ msgstr "Samo tamno"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
-msgstr "Fleke"
+msgstr "Mrlje"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
@@ -1228,38 +1215,41 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
+"Pravi efekat stripa na izabranu oblast (ili alfu) dodavanjem ivica i "
+"popunjavanjem sa prelivima"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
-msgstr ""
+msgstr "_Efekat stripa..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr ""
+msgstr "Pravi logo u vidu stripa dodavanjem ivica i popunjavanjem sa prelivima"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
-msgstr ""
+msgstr "Boja ivica"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:11
-#, fuzzy
 msgid "Outline size"
-msgstr "Veličina spoljne linije"
+msgstr "Veličina ivice"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
+"Pravi efekat metala na izabranu oblast (ili alfu) koristeći refleksije i "
+"persprektivne senke"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
-msgstr ""
+msgstr "_Hladan metal..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr ""
+msgstr "Pravi metalni logo pomoću refleksija i perspektivnih senki"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1274,19 +1264,19 @@ msgstr "Pozadinska slika"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
+msgstr "Pravi logo sa kristalnim/gel efektom razmeštajući osnovne delove slike"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
-msgstr ""
+msgstr "Kristal..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr ""
+msgstr "Oblaci..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Jednobojni šum primenjen na sloj u režimu „Razlika“"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1318,7 +1308,7 @@ msgstr "_Izobliči..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje senku ispod izabrane oblasti (ili alfe)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1343,12 +1333,12 @@ msgstr "Boja"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
-msgstr "Odstupanje X"
+msgstr "X pomeraj"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
-msgstr "Odstupanje Y"
+msgstr "Y pomeraj"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
@@ -1357,7 +1347,7 @@ msgstr "Neprovidnost"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop Shadow..."
-msgstr "_Baci senku..."
+msgstr "_Dodaj senku..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -1401,11 +1391,11 @@ msgstr "Redova/kolona"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
-msgstr "Izbriši svaki drugi red..."
+msgstr "I_zbriši svaki drugi red..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
+msgstr "Pravi sliku ispunjenu zemljanim šablonom"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1430,20 +1420,20 @@ msgstr "Nasumično seme"
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:6
 #: ../plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
-msgstr "Razmera x"
+msgstr "X razmera"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:7
 #: ../plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
-msgstr "Razmera x"
+msgstr "Y razmera"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
-msgstr ""
+msgstr "_Ravna zemlja..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
-msgstr "Tekuće boja"
+msgstr "Tekuće boje"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Black on white"
@@ -1453,6 +1443,7 @@ msgstr "Crno na belom"
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
+"Pravi sliku ispunjeni pregledima fontova koji se poklapaju sa zadatim filterom"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1460,7 +1451,7 @@ msgstr "_Veličina fonta (u pikselima)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Render _Font Map..."
-msgstr ""
+msgstr "Iscrtaj mapu _fontova..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
@@ -1490,11 +1481,11 @@ msgstr "_Tekst"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
+msgstr "Dodaje efekat mraza na izabranu oblast (ili alfu) koristeći senku"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
-msgstr ""
+msgstr "Pravi zamrznuti logo pomoću senke"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
@@ -1502,7 +1493,7 @@ msgstr "_Zamrzni..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr ""
+msgstr "Dodaje nepravilnu, nazubljenu ivicu na sliku"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1528,19 +1519,19 @@ msgstr "Težina senke (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr ""
+msgstr "_Nepravilan okvir..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
-msgstr "Automatsko sečenje"
+msgstr "Sam iseci"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Pravi sliku za veliko zaglavlje veb stranica kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Pravi sliku za malo zaglavlje veb stranica kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1588,47 +1579,47 @@ msgstr "_Malo zaglavlje..."
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
-msgstr ""
+msgstr "Pravi sliku za dugme sa natpisom za zaglavlje stranica kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
+msgstr "Pravi sliku za dugme sa natpisom kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Pravi sliku za dugme sa natpisom drugog nivoa kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Pravi sliku za dugme sa natpisom trećeg nivoa kao na gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "Dugme sa natpisom _2. nivoa..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "Dugme sa natpisom _3. nivoa..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
-msgstr ""
+msgstr "_Glavno dugme sa natpisom..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
-msgstr ""
+msgstr "_Dugme sa natpisom..."
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "Obeleživač za Gimpovu veb stranicu"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Obeleživač do uputstva za korisnike"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
 msgid "Create and Use _Selections"
@@ -1640,49 +1631,50 @@ msgstr "Napravi, otvori i sačuvaj _datoteke"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr ""
+msgstr "Iscrtaj _proste objekte"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr ""
+msgstr "Prozorčići „_Kako se koristi“"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
 msgid "Plug-in _Registry"
-msgstr ""
+msgstr "_Registar dodataka"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
 msgid "Using _Paths"
-msgstr ""
+msgstr "_Upotreba putanja"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "_Osnovni koncepti"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
 msgid "_Developer Web Site"
-msgstr ""
+msgstr "_Veb stranica razvojnog tima"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
 msgid "_Main Web Site"
-msgstr ""
+msgstr "_Glavna veb stranica"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr ""
+msgstr "S_premam slike za veb"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
 msgid "_User Manual Web Site"
-msgstr ""
+msgstr "V_eb stranica za uputstvom za korisnike"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "Rad sa _fotografijama iz digitalnih aparata"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
+"Dodaje prelive, mustre, senke i brdovit teren na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1694,15 +1686,15 @@ msgstr "Stopi preliv (tekst)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr ""
+msgstr "Pravi logo sa prelivima, mustrama, senkama i brdovitim terenom"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
-msgstr ""
+msgstr "_Blistanje..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
-msgstr ""
+msgstr "Obrnuti preliv konture"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
@@ -1721,40 +1713,36 @@ msgid "Shadow"
 msgstr "Senka"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:19
-#, fuzzy
 msgid "Text gradient reverse"
-msgstr "Obrnuti tekstulani preliv"
+msgstr "Obrnuti preliv teksta"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
-#, fuzzy
 msgid "Use pattern for outline instead of gradient"
-msgstr "Koristi mustru za crtež umesto preliva"
+msgstr "Koristi mustru za ivice umesto preliva"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:21
-#, fuzzy
 msgid "Use pattern for text instead of gradient"
 msgstr "Koristi mustru za tekst umesto preliva"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
-#, fuzzy
 msgid "Use pattern overlay"
-msgstr "Koristi prekrivanje mustrom"
+msgstr "Prekrij mustrom"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje sjajni efekat vrućeg metala na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
-msgstr ""
+msgstr "Pravi logo nalik na sjajni vruć metal"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr ""
+msgstr "Vru_ć sjaj..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje sjajkasto ispupčenje na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1768,49 +1756,48 @@ msgstr "Veličina ivice (u pikselima)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr ""
+msgstr "Pravi logo sjajkastog izgleda sa ispupčenim ivicama"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr ""
+msgstr "Ispupčenje prelivom..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Pravi sliku ispunjenu ispunjenu uzorkom tekućeg preliva"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#, fuzzy
 msgid "Custom _Gradient..."
-msgstr "Proizvoljni preliv"
+msgstr "Proizvoljni pre_liv..."
 
+# ne znam šta je ovo... (miloš)
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
+"Iscrtava mrežu kako je određeno listama X i Y mesta pomoću tekuće četkice"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
-#, fuzzy
 msgid "X divisions"
 msgstr "X odeljci"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-#, fuzzy
 msgid "Y divisions"
 msgstr "Y odeljci"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
 msgid "_Grid..."
-msgstr ""
+msgstr "_Mreža..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Nove vo_đice iz izbora"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr ""
+msgstr "Dodaje vođice na procentima zadatu vrednost od veličine slike"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1824,12 +1811,12 @@ msgstr "Horizontalno"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Nova vođica (po pro_centu)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
 msgid "Position (in %)"
-msgstr ""
+msgstr "Mesto (u %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
@@ -1838,27 +1825,27 @@ msgstr "Vertikalno"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr ""
+msgstr "Dodaje vođicu na određeno mesto zadato u pikselima"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
-msgstr ""
+msgstr "Nova _vođica..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
-msgstr ""
+msgstr "Mesto"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr ""
+msgstr "Ukloni sve horizontalne i vertikalne vođice"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "U_kloni sve vođice"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr ""
+msgstr "Pravi dvobojni logo sa naškrabanim tekstom"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -1870,11 +1857,11 @@ msgstr "Veličina okvira"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
-msgstr ""
+msgstr "Imigre-_26..."
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
-msgstr ""
+msgstr "Pravi sliku ispunjenu šablonom u vidu topografske karte"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
@@ -1890,7 +1877,7 @@ msgstr "_Zemlja..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "Popunjava tekući izbor lavom"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1907,16 +1894,16 @@ msgstr "Koristi tekući preliv"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr ""
+msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
-msgstr ""
+msgstr "Popunjava sloj zracima u boji pozadine koji izbijaju iz centra"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr ""
+msgstr "_Zraci..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
@@ -1936,27 +1923,27 @@ msgstr "Izoštravanje (stepeni)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "Napravi pravougaonu četkicu"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Napravi pravougaonu četkicu sa umekšanim ivicama"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Napravi okruglu četkicu"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Napravi okruglu četkicu sa umekšanim ivicama"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "O_krugla, umekšana..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
-msgstr "Pokrivanje"
+msgstr "Umekšavanje"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
@@ -1964,7 +1951,7 @@ msgstr "Naziv"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "Pravou_gaona, umekšana..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
@@ -1974,19 +1961,19 @@ msgstr "Razmak"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
-msgstr ""
+msgstr "_Okrugla..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "_Rectangular..."
-msgstr ""
+msgstr "_Pravougaona..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr ""
+msgstr "Pretvara izabranu oblast (ili alfu) u objekat sa neonskim osvetljenjem"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
-msgstr ""
+msgstr "Pravi logo sa efektom neonskog osvetljenja"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
@@ -1994,7 +1981,7 @@ msgstr "Napravi senku"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr ""
+msgstr "_Neon..."
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
 msgid "Cell size (pixels)"
@@ -2002,7 +1989,7 @@ msgstr "Veličina ćelije (u pikselima)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
-msgstr ""
+msgstr "Pravi logo sa efektom novinske štampe"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2012,7 +1999,7 @@ msgstr "Gustina (%)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
 msgid "Newsprint Te_xt..."
-msgstr ""
+msgstr "Novinski _tekst..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
@@ -2020,19 +2007,19 @@ msgstr "Defokusiraj"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "Pravi staru fotografiju od željene slike"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
-msgstr "Išaran"
+msgstr "Istačkana"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
-msgstr "Crvenosmeđa"
+msgstr "Sepia"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
-msgstr ""
+msgstr "Stara _fotografija..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2044,7 +2031,7 @@ msgstr "Ime četkice"
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "File name"
-msgstr "Naziv datoteke"
+msgstr "Ime datoteke"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
 msgid "New _Brush..."
@@ -2052,12 +2039,12 @@ msgstr "Nova _četkica..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Ubaci isečak iz ostave u novu četkicu"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Ne postoji isečak sa slikom u ostavi."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2065,16 +2052,16 @@ msgstr "Nova _mustra..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Ubaci isečak iz ostave u novu mustru"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
-msgstr "Naziv mustre"
+msgstr "Ime mustre"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje senku u perspektivi na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2094,11 +2081,11 @@ msgstr "Relativna dužina senke"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
-msgstr ""
+msgstr "Pe_rspektivna senka..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje efekat predatora na izabranu oblasti (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2114,44 +2101,39 @@ msgstr "Istačkaj"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
-msgstr ""
+msgstr "Pred_ator..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
-msgstr ""
+msgstr "Pravi slike od kojih svaka sadrži ovalne slike dugmića"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower color"
 msgstr "Niža boja"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
-#, fuzzy
 msgid "Lower color (active)"
 msgstr "Niža boja (tekuća)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
-#, fuzzy
 msgid "Not pressed"
-msgstr "Nije stisnuto"
+msgstr "Nije pritisnuto"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
-#, fuzzy
 msgid "Not pressed (active)"
-msgstr "Nije stisnuto (tekuće)"
+msgstr "Nije pritisnuto (tekuće)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding X"
-msgstr "Podloga X"
+msgstr "X podloga"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Padding Y"
-msgstr "Podloga Y"
+msgstr "Y podloga"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#, fuzzy
 msgid "Round ratio"
-msgstr "Zaokruživanje"
+msgstr "Razmera kruga"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text color (active)"
@@ -2167,7 +2149,7 @@ msgstr "Gornja boja (tekuća)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
-msgstr ""
+msgstr "Okr_uglo dugme..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "Behavior"
@@ -2175,7 +2157,7 @@ msgstr "Ponašanje"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr ""
+msgstr "Pravi sliku ispunjenu mustrom nalik Zemlji"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2183,7 +2165,7 @@ msgstr "Detalj u sredini"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
-msgstr ""
+msgstr "Iscrtaj ma_pu..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
@@ -2191,11 +2173,11 @@ msgstr "Delić"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
 msgid "Reverse Layer Order"
-msgstr ""
+msgstr "Obrni redosled slojeva"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "Obrće redosled slojeva na slici"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
@@ -2204,7 +2186,7 @@ msgstr "Crna"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
+msgstr "Pravi sliku sa više slojeva dodajući efekat talasanja na tekuću sliku"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2216,9 +2198,8 @@ msgid "Number of frames"
 msgstr "Broj okvira"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-#, fuzzy
 msgid "Rippling strength"
-msgstr "Jačina mreškanja"
+msgstr "Jačina talasanja"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
@@ -2230,7 +2211,7 @@ msgstr "Umotaj"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr ""
+msgstr "_Talasanje..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
@@ -2238,7 +2219,7 @@ msgstr "Dodaj pozadinu"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
 msgid "Add drop-shadow"
-msgstr "Baci senke"
+msgstr "Dodaj senku"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 msgid "Edge radius"
@@ -2255,7 +2236,7 @@ msgstr "_Zaobli ćoškove..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
+msgstr "Menja mapu boja slike na boje u željenoj paleti."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2263,11 +2244,11 @@ msgstr "Paleta"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "_Postavi map boja..."
+msgstr "_Postavi mapu boja..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
-msgstr ""
+msgstr "Prevodi izabranu oblast u četkicu"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
@@ -2275,7 +2256,7 @@ msgstr "U _četkicu..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "Prevodi izabranu oblast u sliku"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
@@ -2283,7 +2264,7 @@ msgstr "U _sliku..."
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "Prevodi izabranu oblast u mustru"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
@@ -2291,7 +2272,7 @@ msgstr "U _mustru..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
-msgstr ""
+msgstr "Konkavno"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
 #, no-c-format
@@ -2308,7 +2289,7 @@ msgstr "_Zaobljeni pravougaonik..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "Dodaje okvir kao na slajdovima, rupice sa strane i natpise na sliku"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2320,27 +2301,27 @@ msgstr "Broj"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
-msgstr ""
+msgstr "_Slajd..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr ""
+msgstr "Pravi hromirani logo „najsvremenijim metodama“ (eng. State Of The Art)"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr ""
+msgstr "SOTA Hromiranje..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr ""
+msgstr "Pravi logo sa natpisom koji je izobličen pokretom"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr ""
+msgstr "_Brzi tekst..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "Pravi animaciju mapiranjem tekuće slike u globus koji se okreće"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2356,15 +2337,12 @@ msgstr "Okreni sa leva na desno"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr ""
+msgstr "Animirani _globus..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Iscrtaj spirografe, epitrohoide i Lisažosove krive. Više podataka na http://"
-"netword.com/*spyrogimp"
+msgstr "Iscrtaj spirografe, epitrohoide i Lisažosove krive na tekući sloj"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2372,14 +2350,13 @@ msgstr "Sprej"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr "Četka"
+msgstr "Četkica"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "Krug"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-#, fuzzy
 msgid "Color method"
 msgstr "Metoda boje"
 
@@ -2413,7 +2390,7 @@ msgstr "Unutrašnji zubi"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
-msgstr "Lisažos"
+msgstr "Lisaž"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
@@ -2449,7 +2426,7 @@ msgstr "Poligon: 9 strana"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "Iscrtavam spirograf"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2486,11 +2463,11 @@ msgstr "Tip"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr "_Spirograf..."
+msgstr "_Spirogimp..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr ""
+msgstr "Pravi logo upotrebom teksture od kamena, nova sjaja i senke"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
@@ -2498,11 +2475,11 @@ msgstr "_Zvezdani pejzaž..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Create an image filled with a swirled tile effect"
-msgstr ""
+msgstr "Pravi sliku ispunjenu pločicama sa vrtlogom"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
-msgstr ""
+msgstr "Popločaj _vrtlogom..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
@@ -2510,7 +2487,7 @@ msgstr "Vrednost zavijanja"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Create an image filled with a swirly pattern"
-msgstr ""
+msgstr "Pravi sliku ispunjenu vrtložnom mustrom"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
@@ -2526,11 +2503,11 @@ msgstr "Ugao zavijanja"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
-msgstr ""
+msgstr "Napravi ko_vitlac..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje trag od čestica na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2538,7 +2515,7 @@ msgstr "Osnovna boja"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr ""
+msgstr "Pravi logo sa efektom tragova čestica"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2549,13 +2526,12 @@ msgid "Edge width"
 msgstr "Širina ivice"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-#, fuzzy
 msgid "Hit rate"
 msgstr "Vrednost pogotka"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
-msgstr ""
+msgstr "Trag _čestica..."
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
@@ -2564,7 +2540,7 @@ msgstr "Umekšavanje ivica"
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
+msgstr "Pravi logo izcrtavanjem izabranog teksta uz ivicu kruga"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2577,7 +2553,7 @@ msgstr "_Krug za tekst..."
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid ""
 "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
+msgstr "Pravi logo sa teksturom, sjajem, senkom i mozaičnom pozadinom"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2588,15 +2564,16 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
+"Izpunjava izabranu oblast (ili alfu) teksturom dodaje sjaj, senke i "
+"mozaičnu pozadinu"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
 msgstr "Haksagoni"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
-#, fuzzy
 msgid "Mosaic tile type"
-msgstr "Tipovi delova mozaika"
+msgstr "Tipovi delića"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
@@ -2616,7 +2593,7 @@ msgstr "Mustra za tekst"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
-msgstr ""
+msgstr "_Tekstura..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
@@ -2624,7 +2601,7 @@ msgstr "Horizontalno zamućenje"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
+msgstr "Zamućuje ivice slike tako da nastanu pločice bez ivica"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2648,15 +2625,15 @@ msgstr "Pl_očasto zamućenje..."
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
-msgstr ""
+msgstr "Pravi dekorativno zaglavlje sa naslovom za veb stranice"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
-msgstr ""
+msgstr "Zaglavlje veb stranice..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
-msgstr ""
+msgstr "Pravi sliku ispunjenu mustrom od linija"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
@@ -2664,7 +2641,7 @@ msgstr "Boja četkice"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
-msgstr ""
+msgstr "_Linije..."
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
@@ -2683,6 +2660,7 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
+"Pravi višeslojnnu sliku sa efektom kao da je kamen bačen na tekuću sliku"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2690,7 +2668,7 @@ msgstr "Suprotni smer"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
-msgstr "Talasna duljina"
+msgstr "Talasna dužina"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
@@ -2701,6 +2679,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
+"Pravi novi sloj ispunjen talasnim efektom koji se izcrtava u režimu „Preklopi“ "
+"ili kao brdovit teren"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2732,50 +2712,44 @@ msgstr "Dužina niti"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr ""
+msgstr "_Talas..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Dodaje prefinjeni poluprovidan 3D efekat na izabranu oblast (ili alfu)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
-msgstr "X odstupanje senke"
+msgstr "X pomeraj senke"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
-msgstr "Y odstupanje senke"
+msgstr "Y pomeraj senke"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
-#, fuzzy
 msgid "Drop shadow blur radius"
-msgstr "Poluprečnik Zamućenja Senke"
+msgstr "Poluprečnik zamućenja senke"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
-#, fuzzy
 msgid "Drop shadow color"
-msgstr "Boja bačene senke"
+msgstr "Boja senke"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
-#, fuzzy
 msgid "Drop shadow opacity"
-msgstr "Neprovidnost bačene senke"
+msgstr "Neprovidnost senke"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight X offset"
-msgstr "X odstupanje osvetljenosti"
+msgstr "X pomeraj sjaja"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
-#, fuzzy
 msgid "Highlight Y offset"
-msgstr "Y odstupanje osvetljenosti"
+msgstr "Y pomeraj sjaja"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
-#, fuzzy
 msgid "Highlight opacity"
-msgstr "Neprovidnost osvetljenog"
+msgstr "Neprovidnost sjaja"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
-msgstr ""
+msgstr "_Izdigni..."

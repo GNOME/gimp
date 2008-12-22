@@ -9,8 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 12:52+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&amp;component=general\n"
+"POT-Creation-Date: 2008-12-21 16:41+0000\n"
 "PO-Revision-Date: 2008-10-20 12:59+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -69,7 +70,7 @@ msgstr "До:"
 
 #
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:419
-#: ../plug-ins/common/file-ps.c:3231 ../plug-ins/imagemap/imap_menu.c:214
+#: ../plug-ins/common/file-ps.c:3228 ../plug-ins/imagemap/imap_menu.c:214
 msgid "Gray"
 msgstr "Сива"
 
@@ -307,8 +308,8 @@ msgstr "Поравнај видљиве слојеве"
 
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3247
-#: ../plug-ins/common/file-ps.c:3259 ../plug-ins/common/file-psp.c:661
+#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3244
+#: ../plug-ins/common/file-ps.c:3256 ../plug-ins/common/file-psp.c:661
 #: ../plug-ins/file-fits/fits.c:1045
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:999
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1040
@@ -585,7 +586,7 @@ msgstr "Симулира слику нацртану на прозорским �
 
 #: ../plug-ins/common/blinds.c:121
 msgid "_Blinds..."
-msgstr "_Застор..."
+msgstr "За_стори..."
 
 #: ../plug-ins/common/blinds.c:188
 msgid "Adding blinds"
@@ -616,7 +617,7 @@ msgstr "_Вертикално"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
+#: ../plug-ins/common/file-gif-load.c:927 ../plug-ins/common/file-pcx.c:412
 #: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
@@ -667,7 +668,7 @@ msgstr "Селективно Гауссиан замућење"
 #: ../plug-ins/common/edge-dog.c:267 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1701
+#: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1699
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Не могу да применим на индексираним сликама."
@@ -920,7 +921,7 @@ msgstr "_Азимут:"
 msgid "_Elevation:"
 msgstr "_Елевација:"
 
-#: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3398
+#: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3395
 msgid "_X offset:"
 msgstr "X _померај:"
 
@@ -930,7 +931,7 @@ msgid ""
 "button."
 msgstr "Можете подесити померај вучењем приказа средњим тастером миша."
 
-#: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3407
+#: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3404
 msgid "_Y offset:"
 msgstr "Y п_омерај:"
 
@@ -1047,12 +1048,12 @@ msgstr "Учитај подешавања за мешање канала"
 #: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-compressor.c:498
 #: ../plug-ins/common/file-compressor.c:666
 #: ../plug-ins/common/file-dicom.c:325 ../plug-ins/common/file-gbr.c:361
-#: ../plug-ins/common/file-gif-load.c:340 ../plug-ins/common/file-gih.c:662
+#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:662
 #: ../plug-ins/common/file-mng.c:1073 ../plug-ins/common/file-pat.c:330
-#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
+#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:551
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
-#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
-#: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1751
+#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1038
+#: ../plug-ins/common/file-ps.c:3045 ../plug-ins/common/file-psp.c:1751
 #: ../plug-ins/common/file-raw.c:249 ../plug-ins/common/file-raw.c:666
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:718 ../plug-ins/common/file-tga.c:442
@@ -1066,7 +1067,7 @@ msgstr "Учитај подешавања за мешање канала"
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:272
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:190
-#: ../plug-ins/file-xjt/xjt.c:2560 ../plug-ins/file-xjt/xjt.c:2568
+#: ../plug-ins/file-xjt/xjt.c:2541 ../plug-ins/file-xjt/xjt.c:2549
 #: ../plug-ins/flame/flame.c:412
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:929
@@ -1093,7 +1094,7 @@ msgstr "Сачувај подешавања мешања канала"
 #: ../plug-ins/common/file-mng.c:575 ../plug-ins/common/file-mng.c:909
 #: ../plug-ins/common/file-pat.c:462 ../plug-ins/common/file-pcx.c:666
 #: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
-#: ../plug-ins/common/file-pnm.c:973 ../plug-ins/common/file-ps.c:1213
+#: ../plug-ins/common/file-pnm.c:973 ../plug-ins/common/file-ps.c:1215
 #: ../plug-ins/common/file-raw.c:546 ../plug-ins/common/file-raw.c:574
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
@@ -1103,7 +1104,7 @@ msgstr "Сачувај подешавања мешања канала"
 #: ../plug-ins/file-jpeg/jpeg-save.c:330 ../plug-ins/file-psd/psd-save.c:1638
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
-#: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
+#: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1727
 #: ../plug-ins/flame/flame.c:443
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2375
@@ -2759,7 +2760,7 @@ msgid "Destripe"
 msgstr "Уклањање трака"
 
 #: ../plug-ins/common/destripe.c:473 ../plug-ins/common/file-html-table.c:595
-#: ../plug-ins/common/file-ps.c:3171 ../plug-ins/common/file-ps.c:3380
+#: ../plug-ins/common/file-ps.c:3168 ../plug-ins/common/file-ps.c:3377
 #: ../plug-ins/common/file-raw.c:1056 ../plug-ins/common/smooth-palette.c:436
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
@@ -3016,7 +3017,7 @@ msgstr "Користи неколико простих начина за нал�
 #
 #: ../plug-ins/common/edge.c:157
 msgid "_Edge..."
-msgstr "_Налажење ивица..."
+msgstr "Н_алажење ивица..."
 
 #
 #: ../plug-ins/common/edge.c:229
@@ -3095,7 +3096,7 @@ msgstr "Симулира античко резбарење"
 #
 #: ../plug-ins/common/engrave.c:106
 msgid "En_grave..."
-msgstr "Ре_забрење..."
+msgstr "Из_резбари..."
 
 #
 #: ../plug-ins/common/engrave.c:180
@@ -3108,7 +3109,7 @@ msgid "Engrave"
 msgstr "Резбарење"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:611
-#: ../plug-ins/common/file-ps.c:3181 ../plug-ins/common/file-ps.c:3389
+#: ../plug-ins/common/file-ps.c:3178 ../plug-ins/common/file-ps.c:3386
 #: ../plug-ins/common/file-raw.c:1069 ../plug-ins/common/film.c:1003
 #: ../plug-ins/common/smooth-palette.c:441 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
@@ -3147,11 +3148,11 @@ msgstr "Учитај KISS палету"
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:330
-#: ../plug-ins/common/file-gbr.c:366 ../plug-ins/common/file-gif-load.c:345
+#: ../plug-ins/common/file-gbr.c:366 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:667 ../plug-ins/common/file-pat.c:335
-#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:586
+#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:596
 #: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:728
-#: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1042
+#: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1044
 #: ../plug-ins/common/file-raw.c:671 ../plug-ins/common/file-sunras.c:486
 #: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:603
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:741
@@ -3159,7 +3160,7 @@ msgstr "Учитај KISS палету"
 #: ../plug-ins/file-bmp/bmp-read.c:159 ../plug-ins/file-faxg3/faxg3.c:217
 #: ../plug-ins/file-fli/fli-gimp.c:502 ../plug-ins/file-ico/ico-load.c:646
 #: ../plug-ins/file-jpeg/jpeg-load.c:115 ../plug-ins/file-psd/psd-load.c:136
-#: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3363
+#: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
 msgstr "Отварам „%s“"
@@ -3181,14 +3182,14 @@ msgstr "Неподржана дубина битова (%d)!"
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:467
 #: ../plug-ins/common/file-pcx.c:627 ../plug-ins/common/file-pix.c:529
 #: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:978
-#: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
+#: ../plug-ins/common/file-ps.c:1220 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:287
 #: ../plug-ins/file-psd/psd-save.c:1643 ../plug-ins/file-sgi/sgi.c:554
-#: ../plug-ins/file-xjt/xjt.c:1710
+#: ../plug-ins/file-xjt/xjt.c:1708
 #, c-format
 msgid "Saving '%s'"
 msgstr "Чувам „%s“"
@@ -3271,7 +3272,7 @@ msgstr "_Непровидност:"
 msgid "Desktop Link"
 msgstr "Веза на радној површи"
 
-#: ../plug-ins/common/file-desktop-link.c:173
+#: ../plug-ins/common/file-desktop-link.c:175
 #, c-format
 msgid "Error loading desktop file '%s': %s"
 msgstr "Грешка при учитавању десктоп датотеке „%s“: %s"
@@ -3295,9 +3296,9 @@ msgstr "%s: није ваљана DICOM датотека"
 msgid "Cannot save images with alpha channel."
 msgstr "Не могу да сачувам слику са алфа каналом."
 
-#: ../plug-ins/common/file-dicom.c:784 ../plug-ins/common/file-ps.c:1203
+#: ../plug-ins/common/file-dicom.c:784 ../plug-ins/common/file-ps.c:1205
 #: ../plug-ins/common/file-xwd.c:604 ../plug-ins/file-fits/fits.c:466
-#: ../plug-ins/file-xjt/xjt.c:1705
+#: ../plug-ins/file-xjt/xjt.c:1703
 msgid "Cannot operate on unknown image types."
 msgstr "Не могу да радим са непознатим типовима слика."
 
@@ -3347,41 +3348,41 @@ msgid "Description:"
 msgstr "Опис:"
 
 #
-#: ../plug-ins/common/file-gif-load.c:142
+#: ../plug-ins/common/file-gif-load.c:148
 #: ../plug-ins/common/file-gif-save.c:168
 msgid "GIF image"
 msgstr "GIF слика"
 
-#: ../plug-ins/common/file-gif-load.c:357
+#: ../plug-ins/common/file-gif-load.c:372
 msgid "This is not a GIF file"
 msgstr "Ово није GIF датотека."
 
-#: ../plug-ins/common/file-gif-load.c:396
+#: ../plug-ins/common/file-gif-load.c:411
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Не-квадратне тачке.  Слика може изгледати стешњено."
 
-#: ../plug-ins/common/file-gif-load.c:913
+#: ../plug-ins/common/file-gif-load.c:929
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Позадина (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:936
+#: ../plug-ins/common/file-gif-load.c:952
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Отварам „%s“ (кадар %d)"
 
-#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:794
+#: ../plug-ins/common/file-gif-load.c:981 ../plug-ins/common/iwarp.c:794
 #: ../plug-ins/common/iwarp.c:829
 #, c-format
 msgid "Frame %d"
 msgstr "Кадар %d"
 
-#: ../plug-ins/common/file-gif-load.c:967
+#: ../plug-ins/common/file-gif-load.c:983
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Кадар %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:998
+#: ../plug-ins/common/file-gif-load.c:1014
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3916,42 +3917,42 @@ msgstr "Доња ивица је изван оквира (мора бити < %d
 msgid "Writing to file '%s' failed: %s"
 msgstr "Неуспео упис у датотеку „%s“: %s"
 
-#: ../plug-ins/common/file-pdf.c:288
+#: ../plug-ins/common/file-pdf.c:290
 msgid "Portable Document Format"
 msgstr "Портабилна врста документа"
 
-#: ../plug-ins/common/file-pdf.c:620
+#: ../plug-ins/common/file-pdf.c:630
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:622 ../plug-ins/common/file-ps.c:1125
+#: ../plug-ins/common/file-pdf.c:632 ../plug-ins/common/file-ps.c:1127
 #, c-format
 msgid "%s-pages"
 msgstr "%s-страница"
 
-#: ../plug-ins/common/file-pdf.c:808
+#: ../plug-ins/common/file-pdf.c:818
 msgid "Import from PDF"
 msgstr "Увези из ПДФ—а"
 
-#: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf.c:823 ../plug-ins/common/file-ps.c:3097
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Увези"
 
-#: ../plug-ins/common/file-pdf.c:879
+#: ../plug-ins/common/file-pdf.c:889
 msgid "_Width (pixels):"
 msgstr "_Ширина (пиксела):"
 
-#: ../plug-ins/common/file-pdf.c:880
+#: ../plug-ins/common/file-pdf.c:890
 msgid "_Height (pixels):"
 msgstr "_Висина (пиксела):"
 
-#: ../plug-ins/common/file-pdf.c:882
+#: ../plug-ins/common/file-pdf.c:892
 msgid "_Resolution:"
 msgstr "Резолуција:"
 
-#: ../plug-ins/common/file-pdf.c:1156
+#: ../plug-ins/common/file-pdf.c:1166
 #, c-format
 msgid "pixels/%s"
 msgstr "пиксела/%s"
@@ -4128,29 +4129,29 @@ msgstr "Раw"
 msgid "Ascii"
 msgstr "Ascii"
 
-#: ../plug-ins/common/file-ps.c:599 ../plug-ins/common/file-ps.c:691
+#: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
 msgid "PostScript document"
 msgstr "Постскрипт документ"
 
-#: ../plug-ins/common/file-ps.c:618 ../plug-ins/common/file-ps.c:707
+#: ../plug-ins/common/file-ps.c:620 ../plug-ins/common/file-ps.c:709
 msgid "Encapsulated PostScript image"
 msgstr "Енкапсулирана постскрипт слика"
 
-#: ../plug-ins/common/file-ps.c:638
+#: ../plug-ins/common/file-ps.c:640
 msgid "PDF document"
 msgstr "ПДФ документ"
 
-#: ../plug-ins/common/file-ps.c:1050
+#: ../plug-ins/common/file-ps.c:1052
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
 msgstr "Нe могу да преведем постскрипт датотеку „%s“"
 
-#: ../plug-ins/common/file-ps.c:1192
+#: ../plug-ins/common/file-ps.c:1194
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Постскрипт чување не ради на сликама са алфа каналима"
 
-#: ../plug-ins/common/file-ps.c:1730 ../plug-ins/common/file-ps.c:1763
+#: ../plug-ins/common/file-ps.c:1732 ../plug-ins/common/file-ps.c:1765
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
@@ -4163,117 +4164,117 @@ msgstr ""
 "Гимпу где се она налази.\n"
 "(%s)"
 
-#: ../plug-ins/common/file-ps.c:1930 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1932 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "Страна %d"
 
-#: ../plug-ins/common/file-ps.c:2600 ../plug-ins/common/file-ps.c:2733
-#: ../plug-ins/common/file-ps.c:2885 ../plug-ins/common/file-ps.c:3011
+#: ../plug-ins/common/file-ps.c:2601 ../plug-ins/common/file-ps.c:2733
+#: ../plug-ins/common/file-ps.c:2883 ../plug-ins/common/file-ps.c:3008
 #: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1612
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:974
 msgid "Write error occurred"
 msgstr "Грешка при упису"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:3092
 msgid "Import from PostScript"
 msgstr "Увези из постскрипта"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3138
+#: ../plug-ins/common/file-ps.c:3135
 msgid "Rendering"
 msgstr "Исцртавам"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3154 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-ps.c:3151 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Резолуција:"
 
-#: ../plug-ins/common/file-ps.c:3193
+#: ../plug-ins/common/file-ps.c:3190
 msgid "Pages:"
 msgstr "Странице:"
 
-#: ../plug-ins/common/file-ps.c:3200
+#: ../plug-ins/common/file-ps.c:3197
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Број страна за учитавање (нпр.: 1-4 или 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3204 ../plug-ins/common/sphere-designer.c:2643
+#: ../plug-ins/common/file-ps.c:3201 ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
 msgstr "Слојеви"
 
 #
-#: ../plug-ins/common/file-ps.c:3206
+#: ../plug-ins/common/file-ps.c:3203
 msgid "Images"
 msgstr "Слике"
 
-#: ../plug-ins/common/file-ps.c:3209
+#: ../plug-ins/common/file-ps.c:3206
 msgid "Open as"
 msgstr "Отвори као"
 
 #
-#: ../plug-ins/common/file-ps.c:3213
+#: ../plug-ins/common/file-ps.c:3210
 msgid "Try Bounding Box"
 msgstr "Покушај помоћу оквира"
 
 #
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3226
+#: ../plug-ins/common/file-ps.c:3223
 msgid "Coloring"
 msgstr "Бојење"
 
 #
-#: ../plug-ins/common/file-ps.c:3230
+#: ../plug-ins/common/file-ps.c:3227
 msgid "B/W"
 msgstr "B/W"
 
-#: ../plug-ins/common/file-ps.c:3232 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3229 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:66
 #: ../plug-ins/gimpressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "Боја"
 
-#: ../plug-ins/common/file-ps.c:3233 ../plug-ins/file-fits/fits.c:1033
+#: ../plug-ins/common/file-ps.c:3230 ../plug-ins/file-fits/fits.c:1033
 msgid "Automatic"
 msgstr "Аутоматски"
 
 #
-#: ../plug-ins/common/file-ps.c:3243
+#: ../plug-ins/common/file-ps.c:3240
 msgid "Text antialiasing"
 msgstr "Омекшавање текста"
 
 #
-#: ../plug-ins/common/file-ps.c:3248 ../plug-ins/common/file-ps.c:3260
+#: ../plug-ins/common/file-ps.c:3245 ../plug-ins/common/file-ps.c:3257
 msgid "Weak"
 msgstr "Слабо"
 
 #
-#: ../plug-ins/common/file-ps.c:3249 ../plug-ins/common/file-ps.c:3261
+#: ../plug-ins/common/file-ps.c:3246 ../plug-ins/common/file-ps.c:3258
 msgid "Strong"
 msgstr "Јако"
 
 #
-#: ../plug-ins/common/file-ps.c:3255
+#: ../plug-ins/common/file-ps.c:3252
 msgid "Graphic antialiasing"
 msgstr "Омекшавање графике"
 
 #
-#: ../plug-ins/common/file-ps.c:3333
+#: ../plug-ins/common/file-ps.c:3330
 msgid "Save as PostScript"
 msgstr "Сачувај као постскрипт"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3364
+#: ../plug-ins/common/file-ps.c:3361
 msgid "Image Size"
 msgstr "Величина слике"
 
 #
-#: ../plug-ins/common/file-ps.c:3413
+#: ../plug-ins/common/file-ps.c:3410
 msgid "_Keep aspect ratio"
 msgstr "_Задржи размеру"
 
-#: ../plug-ins/common/file-ps.c:3419
+#: ../plug-ins/common/file-ps.c:3416
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4282,43 +4283,43 @@ msgstr ""
 "њене размере."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3429
+#: ../plug-ins/common/file-ps.c:3426
 msgid "Unit"
 msgstr "Јединица"
 
-#: ../plug-ins/common/file-ps.c:3433
+#: ../plug-ins/common/file-ps.c:3430
 msgid "_Inch"
 msgstr "_Инч"
 
-#: ../plug-ins/common/file-ps.c:3434
+#: ../plug-ins/common/file-ps.c:3431
 msgid "_Millimeter"
 msgstr "_Милиметар"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3445
+#: ../plug-ins/common/file-ps.c:3442
 #: ../plug-ins/map-object/map-object-ui.c:1035
 msgid "Rotation"
 msgstr "Ротација"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3460
+#: ../plug-ins/common/file-ps.c:3457
 msgid "Output"
 msgstr "Излаз"
 
-#: ../plug-ins/common/file-ps.c:3466
+#: ../plug-ins/common/file-ps.c:3463
 msgid "_PostScript level 2"
 msgstr "_Постскрипт ниво 2"
 
-#: ../plug-ins/common/file-ps.c:3475
+#: ../plug-ins/common/file-ps.c:3472
 msgid "_Encapsulated PostScript"
 msgstr "_Енкапсулирани Постскрипт"
 
-#: ../plug-ins/common/file-ps.c:3484
+#: ../plug-ins/common/file-ps.c:3481
 msgid "P_review"
 msgstr "_Преглед"
 
 #
-#: ../plug-ins/common/file-ps.c:3505
+#: ../plug-ins/common/file-ps.c:3502
 msgid "Preview _size:"
 msgstr "_Величина прегледа:"
 
@@ -5429,7 +5430,7 @@ msgstr "Придодаје много измењених копија слике
 #
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
-msgstr "_Илузија..."
+msgstr "И_лузија..."
 
 #: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:350
 msgid "Illusion"
@@ -5457,7 +5458,7 @@ msgstr "Користи миша за изобличавање делова сл�
 #
 #: ../plug-ins/common/iwarp.c:270
 msgid "_IWarp..."
-msgstr "_Изобличавање..."
+msgstr "Изобли_чи..."
 
 #
 #: ../plug-ins/common/iwarp.c:700
@@ -5884,7 +5885,7 @@ msgstr "Додаје ефекат одсјаја сочива"
 #
 #: ../plug-ins/common/lens-flare.c:195
 msgid "Lens _Flare..."
-msgstr "_Одсјај сочива..."
+msgstr "О_дсјај сочива..."
 
 #
 #: ../plug-ins/common/lens-flare.c:270
@@ -6388,7 +6389,6 @@ msgstr "X _величина:"
 
 #
 #: ../plug-ins/common/noise-solid.c:667
-#, fuzzy
 msgid "_Y size:"
 msgstr "Y в_еличина:"
 
@@ -7078,7 +7078,7 @@ msgstr "Помера сваки ред пиксела за насумичну в
 #
 #: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
-msgstr "_Помицање..."
+msgstr "_Помакни..."
 
 #
 #: ../plug-ins/common/shift.c:189
@@ -7282,7 +7282,7 @@ msgstr "Симулира сјај тако што истиче и прави н�
 #
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr "_Пригушени сјај..."
+msgstr "П_ригушени сјај..."
 
 #: ../plug-ins/common/softglow.c:632
 msgid "Softglow"
@@ -7295,7 +7295,7 @@ msgstr "_Полупречник замућења:"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr "Претвара светле тачне у звездолике искре"
+msgstr "Претвара светле тачке у звездасте искре"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -7643,7 +7643,7 @@ msgstr "Праг:"
 
 #: ../plug-ins/common/tile-glass.c:124
 msgid "Simulate distortion caused by square glass tiles"
-msgstr "Симулира изобличења настала квадратним делићима стакла"
+msgstr "Симулира изобличења настала изломљеним делићима стакла"
 
 #: ../plug-ins/common/tile-glass.c:130
 msgid "_Glass Tile..."
@@ -7830,7 +7830,7 @@ msgstr "Прави низ од копија оригиналне слике"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
-msgstr "_Поплочај..."
+msgstr "Попло_чај..."
 
 #: ../plug-ins/common/tile.c:401
 msgid "Tile"
@@ -7897,11 +7897,11 @@ msgstr "Симбол"
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid ""
-"The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
+"The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
-"Симбол мерне јединице (нпр. „'“ за инче). Скраћеницу се употребљава ако нема "
-"симбола."
+"Симбол мерне јединице уколико он постоји (нпр. „\"“ за инче). Скраћеница се "
+"употребљава ако нема симбола."
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -8266,7 +8266,7 @@ msgstr "Уврће и размазује слику на много начина
 #
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
-msgstr "_Изобличи..."
+msgstr "И_зобличи..."
 
 #: ../plug-ins/common/warp.c:376
 msgid "Warp"
@@ -8777,9 +8777,9 @@ msgstr "JPEG преглед"
 
 #
 #: ../plug-ins/file-jpeg/jpeg-save.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "File size: %s"
-msgstr "_Величина делића:"
+msgstr "Величина датотеке: %s"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:687
 msgid "Calculating file size..."
@@ -9254,17 +9254,17 @@ msgstr "Квалитет:"
 msgid "Smoothing:"
 msgstr "Углађивање:"
 
-#: ../plug-ins/file-xjt/xjt.c:1719 ../plug-ins/file-xjt/xjt.c:3373
+#: ../plug-ins/file-xjt/xjt.c:1717 ../plug-ins/file-xjt/xjt.c:3354
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Не могу да направим радни директоријум „%s“: %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3239
+#: ../plug-ins/file-xjt/xjt.c:3220
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Грешка: Не могу прочитати XЈТ датотеку „%s“"
 
-#: ../plug-ins/file-xjt/xjt.c:3246
+#: ../plug-ins/file-xjt/xjt.c:3227
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Грешка: XЈТ датотека %s је празна"
@@ -12919,7 +12919,7 @@ msgstr "Савија један од ћошкова папира"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
-msgstr "_Магареће уши..."
+msgstr "Магаре_ће уши..."
 
 #: ../plug-ins/pagecurl/pagecurl.c:440
 msgid "Pagecurl Effect"

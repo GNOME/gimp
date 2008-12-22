@@ -9,8 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 12:53+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&amp;component=general\n"
+"POT-Creation-Date: 2008-12-21 16:41+0000\n"
 "PO-Revision-Date: 2008-10-09 06:13+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -268,7 +269,6 @@ msgstr ""
 "прозорчету са слојевима."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
-#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
