@@ -1,6 +1,8 @@
 2008-12-23  Sven Neumann  <sven@gimp.org>
 
-	* tools/gimptool.c: declared function usage() as G_GNUC_NORETURN.
+	* app/batch.c
+	* tools/gimptool.c: declared functions calling exit() as
+	G_GNUC_NORETURN.
 
 2008-12-21  Aurimas Juška  <aurisj@svn.gnome.org>
 

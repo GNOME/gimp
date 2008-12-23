@@ -41,12 +41,13 @@
 #define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
-static gboolean  batch_exit_after_callback (Gimp          *gimp);
-static void      batch_run_cmd             (Gimp          *gimp,
-                                            const gchar   *proc_name,
-                                            GimpProcedure *procedure,
-                                            GimpRunMode    run_mode,
-                                            const gchar   *cmd);
+static void  batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
+
+static void  batch_run_cmd             (Gimp          *gimp,
+                                        const gchar   *proc_name,
+                                        GimpProcedure *procedure,
+                                        GimpRunMode    run_mode,
+                                        const gchar   *cmd);
 
 
 void
@@ -123,7 +124,7 @@ batch_run (Gimp         *gimp,
  * message "batch command experienced an execution error" would appear
  * and gimp would hang forever.
  */
-static gboolean
+static void
 batch_exit_after_callback (Gimp *gimp)
 {
   if (gimp->be_verbose)
@@ -135,8 +136,6 @@ batch_exit_after_callback (Gimp *gimp)
   tile_swap_exit ();
 
   exit (EXIT_SUCCESS);
-
-  return TRUE;
 }
 
 static void
