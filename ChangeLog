@@ -1,5 +1,10 @@
 2008-12-23  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: if supported, add -Wformat-security and
+	-Wformat-non-literal to the compiler flags.
+
+2008-12-23  Sven Neumann  <sven@gimp.org>
+
 	* app/batch.c
 	* tools/gimptool.c: declared functions calling exit() as
 	G_GNUC_NORETURN.
