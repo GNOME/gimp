@@ -95,6 +95,10 @@ static struct {
   { "gimpdatadir",    GIMPDATADIR    }
 };
 
+
+static void  usage (int exit_status) G_GNUC_NORETURN;
+
+
 #ifdef G_OS_WIN32
 
 static gchar *
