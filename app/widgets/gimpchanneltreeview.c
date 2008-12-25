@@ -48,6 +48,14 @@
 #include "gimp-intl.h"
 
 
+struct _GimpChannelTreeViewPriv
+{
+  GtkWidget            *component_editor;
+
+  GtkWidget            *toselection_button;
+};
+
+
 static void  gimp_channel_tree_view_view_iface_init   (GimpContainerViewInterface *iface);
 
 static GObject * gimp_channel_tree_view_constructor   (GType              type,
@@ -118,6 +126,8 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->duplicate_action    = "channels-duplicate";
   iv_class->delete_action       = "channels-delete";
   iv_class->reorder_desc        = _("Reorder Channel");
+
+  g_type_class_add_private (klass, sizeof (GimpChannelTreeViewPriv));
 }
 
 static void
@@ -132,6 +142,12 @@ gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
 static void
 gimp_channel_tree_view_init (GimpChannelTreeView *view)
 {
+  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
+                                            GIMP_TYPE_CHANNEL_TREE_VIEW,
+                                            GimpChannelTreeViewPriv);
+
+  view->priv->component_editor   = NULL;
+  view->priv->toselection_button = NULL;
 }
 
 static GObject *
@@ -157,7 +173,7 @@ gimp_channel_tree_view_constructor (GType                  type,
   gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
-  view->toselection_button =
+  view->priv->toselection_button =
     gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",
                                    "channels-selection-replace",
                                    "channels-selection-add",
@@ -168,10 +184,10 @@ gimp_channel_tree_view_constructor (GType                  type,
                                    GDK_SHIFT_MASK | GDK_CONTROL_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
-                                  GTK_BUTTON (view->toselection_button),
+                                  GTK_BUTTON (view->priv->toselection_button),
                                   GIMP_TYPE_CHANNEL);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
-                         view->toselection_button, 5);
+                         view->priv->toselection_button, 5);
 
   return object;
 }
@@ -276,34 +292,34 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 {
   GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (item_view);
 
-  if (! channel_view->component_editor)
+  if (! channel_view->priv->component_editor)
     {
       GimpContainerView *view = GIMP_CONTAINER_VIEW (item_view);
       gint               view_size;
 
       view_size = gimp_container_view_get_view_size (view, NULL);
 
-      channel_view->component_editor =
+      channel_view->priv->component_editor =
         gimp_component_editor_new (view_size,
                                    GIMP_EDITOR (item_view)->menu_factory);
-      gimp_docked_set_context (GIMP_DOCKED (channel_view->component_editor),
+      gimp_docked_set_context (GIMP_DOCKED (channel_view->priv->component_editor),
                                gimp_container_view_get_context (view));
-      gtk_box_pack_start (GTK_BOX (item_view), channel_view->component_editor,
+      gtk_box_pack_start (GTK_BOX (item_view), channel_view->priv->component_editor,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (item_view),
-                             channel_view->component_editor, 0);
+                             channel_view->priv->component_editor, 0);
     }
 
   if (! image)
-    gtk_widget_hide (channel_view->component_editor);
+    gtk_widget_hide (channel_view->priv->component_editor);
 
-  gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (channel_view->component_editor),
+  gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (channel_view->priv->component_editor),
                                image);
 
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (item_view, image);
 
   if (gimp_item_tree_view_get_image (item_view))
-    gtk_widget_show (channel_view->component_editor);
+    gtk_widget_show (channel_view->priv->component_editor);
 }
 
 static GimpItem *
@@ -340,8 +356,8 @@ gimp_channel_tree_view_set_context (GimpContainerView *view,
 
   parent_view_iface->set_context (view, context);
 
-  if (channel_view->component_editor)
-    gimp_docked_set_context (GIMP_DOCKED (channel_view->component_editor),
+  if (channel_view->priv->component_editor)
+    gimp_docked_set_context (GIMP_DOCKED (channel_view->priv->component_editor),
                              context);
 }
 
@@ -355,7 +371,7 @@ gimp_channel_tree_view_set_view_size (GimpContainerView *view)
 
   view_size = gimp_container_view_get_view_size (view, NULL);
 
-  if (channel_view->component_editor)
-    gimp_component_editor_set_view_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
+  if (channel_view->priv->component_editor)
+    gimp_component_editor_set_view_size (GIMP_COMPONENT_EDITOR (channel_view->priv->component_editor),
                                          view_size);
 }

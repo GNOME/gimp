@@ -35,14 +35,13 @@
 
 
 typedef struct _GimpChannelTreeViewClass  GimpChannelTreeViewClass;
+typedef struct _GimpChannelTreeViewPriv   GimpChannelTreeViewPriv;
 
 struct _GimpChannelTreeView
 {
-  GimpDrawableTreeView  parent_instance;
+  GimpDrawableTreeView     parent_instance;
 
-  GtkWidget            *component_editor;
-
-  GtkWidget            *toselection_button;
+  GimpChannelTreeViewPriv *priv;
 };
 
 struct _GimpChannelTreeViewClass
