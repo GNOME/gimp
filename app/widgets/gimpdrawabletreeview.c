@@ -146,10 +146,10 @@ gimp_drawable_tree_view_constructor (GType                  type,
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   item_view = GIMP_ITEM_TREE_VIEW (object);
 
-  gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
+  gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view), GIMP_TYPE_PATTERN,
                               gimp_drawable_tree_view_new_pattern_dropped,
                               item_view);
-  gimp_dnd_color_dest_add (item_view->new_button,
+  gimp_dnd_color_dest_add (gimp_item_tree_view_get_new_button (item_view),
                            gimp_drawable_tree_view_new_color_dropped,
                            item_view);
 
@@ -172,10 +172,10 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   gboolean          success   = TRUE;
 
-  if (item_view->image)
+  if (gimp_item_tree_view_get_image (item_view))
     {
       GimpLayer *floating_sel =
-        gimp_image_get_floating_selection (item_view->image);
+        gimp_image_get_floating_selection (gimp_item_tree_view_get_image (item_view));
 
       success = (item         == NULL ||
                  floating_sel == NULL ||
@@ -246,7 +246,7 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
                                       0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       NULL, GIMP_PATTERN (src_viewable));
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
+      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
       return;
     }
 
@@ -273,7 +273,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                       0.0, FALSE,        /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, NULL);
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
+      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
     }
 }
 
@@ -284,15 +284,15 @@ static void
 gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
                                    GimpImage        *image)
 {
-  if (view->image)
-    g_signal_handlers_disconnect_by_func (view->image,
+  if (gimp_item_tree_view_get_image (view))
+    g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
                                           gimp_drawable_tree_view_floating_selection_changed,
                                           view);
 
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
 
-  if (view->image)
-    g_signal_connect (view->image,
+  if (gimp_item_tree_view_get_image (view))
+    g_signal_connect (gimp_item_tree_view_get_image (view),
                       "floating-selection-changed",
                       G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
                       view);
@@ -324,16 +324,16 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 {
   GimpItem *item;
 
-  gimp_image_undo_group_start (view->image, GIMP_UNDO_GROUP_EDIT_PASTE,
+  gimp_image_undo_group_start (gimp_item_tree_view_get_image (view), GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (view->image);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (gimp_item_tree_view_get_image (view));
 
   if (item)
     {
       /*  Get the bucket fill context  */
       GimpContext  *context;
-      GimpToolInfo *tool_info = gimp_get_tool_info (view->image->gimp,
+      GimpToolInfo *tool_info = gimp_get_tool_info (gimp_item_tree_view_get_image (view)->gimp,
                                                     "gimp-bucket-fill-tool");
 
       if (tool_info && tool_info->tool_options)
@@ -352,9 +352,9 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                       color, pattern);
     }
 
-  gimp_image_undo_group_end (view->image);
+  gimp_image_undo_group_end (gimp_item_tree_view_get_image (view));
 
-  gimp_image_flush (view->image);
+  gimp_image_flush (gimp_item_tree_view_get_image (view));
 }
 
 static void

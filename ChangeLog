@@ -1,3 +1,17 @@
+2008-12-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpitemtreeview.[ch]: Make instance member private
+	and add getter that didn't already exist.
+
+	(gimp_item_tree_view_get_new_button)
+	(gimp_item_tree_view_get_edit_button): New getters.
+
+	* app/actions/actions.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpchanneltreeview.c: Use new getters.
+
 2008-12-23  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: if supported, add -Wformat-security and
@@ -62,11 +76,11 @@
 	assignment widgets to the UI and show the tag filtered items
 	instead of all items.
 
-	* app/core/Makefile.am
-	* app/widgets/Makefile.am: Add new files.
-
 	* app/core/core-types.h
 	* app/widgets/widgets-types.h: Add new types.
+
+	* app/core/Makefile.am
+	* app/widgets/Makefile.am: Add new files.
 
 2008-12-20  Martin Nordholts  <martinn@svn.gnome.org>
 

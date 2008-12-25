@@ -386,7 +386,7 @@ gimp_layer_tree_view_constructor (GType                  type,
                                NULL, tree_view);
 
   /*  hide basically useless edit button  */
-  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
+  gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (layer_view)));
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
@@ -573,7 +573,7 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 
       if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
         {
-          gtk_widget_set_sensitive (item_view->edit_button,  FALSE);
+          gtk_widget_set_sensitive (gimp_item_tree_view_get_edit_button (item_view),  FALSE);
         }
     }
 
@@ -640,7 +640,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
        src_type == GIMP_DND_TYPE_PIXBUF       ||
        GIMP_IS_DRAWABLE (src_viewable))
     {
-      GimpImage *dest_image = GIMP_ITEM_TREE_VIEW (tree_view)->image;
+      GimpImage *dest_image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (tree_view));
 
       if (gimp_image_get_floating_selection (dest_image))
         return FALSE;
@@ -666,7 +666,7 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
       gimp_text_layer_set (GIMP_TEXT_LAYER (dest_viewable), NULL,
                            "color", color,
                            NULL);
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
+      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
       return;
     }
 
@@ -683,7 +683,7 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
 {
   GimpItemTreeView  *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpContainerView *cont_view = GIMP_CONTAINER_VIEW (view);
-  GimpImage         *image     = item_view->image;
+  GimpImage         *image     = gimp_item_tree_view_get_image (item_view);
   gint               index     = -1;
   GList             *list;
 
@@ -752,7 +752,7 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   if (dest_viewable)
     {
-      index = gimp_image_get_layer_index (item_view->image,
+      index = gimp_image_get_layer_index (gimp_item_tree_view_get_image (item_view),
                                           GIMP_LAYER (dest_viewable));
 
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
@@ -761,7 +761,7 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   channel = gimp_channel_new_from_component (src_image, component, NULL, NULL);
 
-  new_item = gimp_item_convert (GIMP_ITEM (channel), item_view->image,
+  new_item = gimp_item_convert (GIMP_ITEM (channel), gimp_item_tree_view_get_image (item_view),
                                 GIMP_TYPE_LAYER);
 
   g_object_unref (channel);
@@ -771,8 +771,8 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   gimp_object_take_name (GIMP_OBJECT (new_item),
                          g_strdup_printf (_("%s Channel Copy"), desc));
 
-  gimp_image_add_layer (item_view->image, GIMP_LAYER (new_item), index, TRUE);
-  gimp_image_flush (item_view->image);
+  gimp_image_add_layer (gimp_item_tree_view_get_image (item_view), GIMP_LAYER (new_item), index, TRUE);
+  gimp_image_flush (gimp_item_tree_view_get_image (item_view));
 }
 
 static void
@@ -782,7 +782,7 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
                                   GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image     = item_view->image;
+  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
   GimpLayer        *new_layer;
   gint              index     = -1;
 
@@ -811,15 +811,15 @@ static void
 gimp_layer_tree_view_set_image (GimpItemTreeView *view,
                                 GimpImage        *image)
 {
-  if (view->image)
-    g_signal_handlers_disconnect_by_func (view->image,
+  if (gimp_item_tree_view_get_image (view))
+    g_signal_handlers_disconnect_by_func (gimp_item_tree_view_get_image (view),
                                           gimp_layer_tree_view_floating_selection_changed,
                                           view);
 
   GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
 
-  if (view->image)
-    g_signal_connect (view->image,
+  if (gimp_item_tree_view_get_image (view))
+    g_signal_connect (gimp_item_tree_view_get_image (view),
                       "floating-selection-changed",
                       G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
                       view);
@@ -911,7 +911,7 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
   GimpImage *image;
   GimpLayer *layer = NULL;
 
-  image = GIMP_ITEM_TREE_VIEW (view)->image;
+  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
   if (image)
     layer = (GimpLayer *)
@@ -954,7 +954,7 @@ gimp_layer_tree_view_lock_alpha_button_toggled (GtkWidget         *widget,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = GIMP_ITEM_TREE_VIEW (view)->image;
+  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
   layer = (GimpLayer *)
     GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
@@ -993,7 +993,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = GIMP_ITEM_TREE_VIEW (view)->image;
+  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
 
   layer = (GimpLayer *)
     GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
@@ -1038,7 +1038,7 @@ gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
   GimpLayer        *active_layer;
 
   active_layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (item_view->image);
+    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimp_item_tree_view_get_image (item_view));
 
   if (active_layer == layer)
     gimp_layer_tree_view_update_options (view, layer);
@@ -1395,7 +1395,7 @@ gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
       gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 
       /*  update button states  */
-      if (gimp_image_get_active_layer (item_view->image) == layer)
+      if (gimp_image_get_active_layer (gimp_item_tree_view_get_image (item_view)) == layer)
         gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
                                          GIMP_VIEWABLE (layer));
     }

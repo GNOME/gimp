@@ -141,7 +141,7 @@ gimp_vectors_tree_view_constructor (GType                  type,
   view      = GIMP_VECTORS_TREE_VIEW (object);
 
   /*  hide basically useless edit button  */
-  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
+  gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (view)));
 
   view->toselection_button =
     gimp_editor_add_action_button (editor, "vectors",
@@ -217,7 +217,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                  GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image = view->image;
+  GimpImage        *image = gimp_item_tree_view_get_image (view);
   gint              index = -1;
   GError           *error = NULL;
 
@@ -265,7 +265,7 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
                                  gpointer   data)
 {
   GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (data);
-  GimpImage        *image = view->image;
+  GimpImage        *image = gimp_item_tree_view_get_image (view);
   GimpItem         *item;
   gchar            *svg_data = NULL;
 

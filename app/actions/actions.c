@@ -324,7 +324,7 @@ action_data_get_image (gpointer data)
   else if (GIMP_IS_DOCK (data))
     context = ((GimpDock *) data)->context;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
-    return ((GimpItemTreeView *) data)->image;
+    return gimp_item_tree_view_get_image ((GimpItemTreeView *) data);
   else if (GIMP_IS_IMAGE_EDITOR (data))
     return ((GimpImageEditor *) data)->image;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))

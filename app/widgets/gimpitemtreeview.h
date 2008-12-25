@@ -55,28 +55,13 @@ typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage       *image);
 
 
 typedef struct _GimpItemTreeViewClass  GimpItemTreeViewClass;
+typedef struct _GimpItemTreeViewPriv   GimpItemTreeViewPriv;
 
 struct _GimpItemTreeView
 {
   GimpContainerTreeView  parent_instance;
 
-  GimpImage             *image;
-
-  GtkWidget             *edit_button;
-  GtkWidget             *new_button;
-  GtkWidget             *raise_button;
-  GtkWidget             *lower_button;
-  GtkWidget             *duplicate_button;
-  GtkWidget             *delete_button;
-
-  gint                   model_column_visible;
-  gint                   model_column_linked;
-  GtkCellRenderer       *eye_cell;
-  GtkCellRenderer       *chain_cell;
-
-  /*< private >*/
-  GQuark                 visible_changed_handler_id;
-  GQuark                 linked_changed_handler_id;
+  GimpItemTreeViewPriv  *priv;
 };
 
 struct _GimpItemTreeViewClass
@@ -117,19 +102,21 @@ struct _GimpItemTreeViewClass
 };
 
 
-GType       gimp_item_tree_view_get_type  (void) G_GNUC_CONST;
-
-GtkWidget * gimp_item_tree_view_new       (GType             view_type,
-                                           gint              view_size,
-                                           gint              view_border_width,
-                                           GimpImage        *image,
-                                           GimpMenuFactory  *menu_facotry,
-                                           const gchar      *menu_identifier,
-                                           const gchar      *ui_identifier);
-
-void        gimp_item_tree_view_set_image (GimpItemTreeView *view,
-                                           GimpImage        *image);
-GimpImage * gimp_item_tree_view_get_image (GimpItemTreeView *view);
+GType       gimp_item_tree_view_get_type        (void) G_GNUC_CONST;
+                                                
+GtkWidget * gimp_item_tree_view_new             (GType             view_type,
+                                                 gint              view_size,
+                                                 gint              view_border_width,
+                                                 GimpImage        *image,
+                                                 GimpMenuFactory  *menu_facotry,
+                                                 const gchar      *menu_identifier,
+                                                 const gchar      *ui_identifier);
+                                                
+void        gimp_item_tree_view_set_image       (GimpItemTreeView *view,
+                                                 GimpImage        *image);
+GimpImage * gimp_item_tree_view_get_image       (GimpItemTreeView *view);
+GtkWidget * gimp_item_tree_view_get_new_button  (GimpItemTreeView *view);
+GtkWidget * gimp_item_tree_view_get_edit_button (GimpItemTreeView *view);
 
 
 #endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */
