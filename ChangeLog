@@ -1,7 +1,7 @@
 2008-12-25  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/widgets/gimpitemtreeview.[ch]: Make instance member private
-	and add getter that didn't already exist.
+	* app/widgets/gimpitemtreeview.[ch]: Make instance members private
+	and add getters that didn't already exist.
 
 	(gimp_item_tree_view_get_new_button)
 	(gimp_item_tree_view_get_edit_button): New getters.
