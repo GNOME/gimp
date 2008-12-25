@@ -35,30 +35,13 @@
 
 
 typedef struct _GimpLayerTreeViewClass  GimpLayerTreeViewClass;
+typedef struct _GimpLayerTreeViewPriv   GimpLayerTreeViewPriv;
 
 struct _GimpLayerTreeView
 {
-  GimpDrawableTreeView  parent_instance;
+  GimpDrawableTreeView   parent_instance;
 
-  GtkWidget            *options_box;
-  GtkWidget            *paint_mode_menu;
-  GtkAdjustment        *opacity_adjustment;
-  GtkWidget            *lock_alpha_toggle;
-
-  gint                  model_column_mask;
-  gint                  model_column_mask_visible;
-
-  GtkCellRenderer      *mask_cell;
-
-  PangoAttrList        *italic_attrs;
-  PangoAttrList        *bold_attrs;
-
-  /*< private >*/
-  GQuark                mode_changed_handler_id;
-  GQuark                opacity_changed_handler_id;
-  GQuark                lock_alpha_changed_handler_id;
-  GQuark                mask_changed_handler_id;
-  GQuark                alpha_changed_handler_id;
+  GimpLayerTreeViewPriv *priv;
 };
 
 struct _GimpLayerTreeViewClass

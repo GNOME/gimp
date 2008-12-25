@@ -1,5 +1,10 @@
 2008-12-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimplayertreeview.[ch]: Make instance members
+	private (they were not accessed from the outside).
+
+2008-12-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpchanneltreeview.[ch]: Make instance members
 	private (they were not accessed from the outside).
 
