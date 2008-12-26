@@ -1,3 +1,13 @@
+2008-12-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/file-gbr.c: let the save procedure accept a
+	grayscale layer with alpha channel, as we do in the GIH save
+	procedure.
+
+	* plug-ins/common/file-gih.c: when loading a brush mask pipe,
+	create grayscale layers without an alpha channel. Changed the save
+	procedure to also accept layers without alpha channel.
+
 2008-12-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimplayertreeview.[ch]: Make instance members

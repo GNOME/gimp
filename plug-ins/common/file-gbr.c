@@ -173,7 +173,7 @@ query (void)
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2000",
                           N_("GIMP brush"),
-                          "RGB, RGBA, GRAY",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -547,10 +547,12 @@ load_image (const gchar  *filename,
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
       break;
+
     case 4:
       base_type = GIMP_RGB;
       image_type = GIMP_RGBA_IMAGE;
       break;
+
     default:
       g_message ("Unsupported brush depth: %d\n"
                  "GIMP Brushes must be GRAY or RGBA\n",
@@ -614,6 +616,7 @@ save_image (const gchar  *filename,
       break;
 
     case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       bpp = 1;
       break;
 
@@ -679,6 +682,12 @@ save_image (const gchar  *filename,
             buffer[x] = 255 - buffer[x];
           break;
 
+        case 2:
+          /*  invert and drop alpha channel  */
+          for (x = 0; x < drawable->width; x++)
+            buffer[x] = 255 - buffer[2 * x];
+          break;
+
         case 3:
           /*  add alpha channel  */
           for (x = drawable->width - 1; x >= 0; x--)
@@ -702,6 +711,9 @@ save_image (const gchar  *filename,
     }
 
   g_free (buffer);
+
+  gimp_drawable_detach (drawable);
+
   close (fd);
 
   return TRUE;

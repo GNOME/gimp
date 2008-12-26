@@ -97,7 +97,7 @@ static struct
 };
 
 
-static gint num_useable_layers;
+static gint num_layers = 0;
 
 static const gchar *selection_modes[] = { "incremental",
                                           "angular",
@@ -147,7 +147,7 @@ static gboolean  gih_load_one_brush  (gint           fd,
 static gboolean  gih_save_dialog     (gint32         image_ID);
 static gboolean  gih_save_one_brush  (gint           fd,
                                       GimpPixelRgn  *pixel_rgn,
-                                      gchar         *name);
+                                      const gchar   *name);
 static gboolean  gih_save_image      (const gchar   *filename,
                                       gint32         image_ID,
                                       gint32         orig_image_ID,
@@ -223,12 +223,12 @@ query (void)
 
   gimp_install_procedure (SAVE_PROC,
                           "saves images in GIMP brush pipe format",
-                          "This plug-in saves an image in the GIMP brush pipe format. The image must have an alpha chnannel and can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
+                          "This plug-in saves an image in the GIMP brush pipe format. For a colored brush pipe, RGBA layers are used, otherwise the layers should be grayscale masks. The image can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
                           N_("GIMP brush (animated)"),
-                          "RGBA, GRAYA",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (gih_save_args), 0,
                           gih_save_args, NULL);
@@ -255,9 +255,6 @@ run (const gchar      *name,
   gint32             image_ID;
   gint32             orig_image_ID;
   gint32             drawable_ID;
-  gint32            *layer_ID;
-  gint               nlayers, layer;
-  gchar             *layer_name;
   gint               i;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
@@ -299,11 +296,10 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, "GIH",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB    |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY   |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                                      GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                                      GIMP_EXPORT_NEEDS_ALPHA);
+                                      GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -314,19 +310,7 @@ run (const gchar      *name,
           break;
         }
 
-      layer_ID = gimp_image_get_layers (image_ID, &nlayers);
-      num_useable_layers = 0;
-      for (layer = 0; layer < nlayers; layer++)
-        {
-          if (!gimp_drawable_has_alpha (layer_ID[layer]))
-            {
-              layer_name = gimp_drawable_get_name (layer_ID[layer]);
-              g_message (_("Layer %s doesn't have an alpha channel, skipped"),
-                         layer_name);
-              g_free (layer_name);
-            }
-          num_useable_layers++;
-        }
+      g_free (gimp_image_get_layers (image_ID, &num_layers));
 
       switch (run_mode)
         {
@@ -340,8 +324,7 @@ run (const gchar      *name,
           if (gihparams.rows < 1) gihparams.rows = 1;
           if (gihparams.cols < 1) gihparams.cols = 1;
 
-          gihparams.ncells = (num_useable_layers *
-                              gihparams.rows * gihparams.cols);
+          gihparams.ncells = (num_layers * gihparams.rows * gihparams.cols);
 
           if (gihparams.cellwidth == 1 && gihparams.cellheight == 1)
             {
@@ -448,7 +431,6 @@ static gboolean
 gih_load_one_brush (gint   fd,
                     gint32 image_ID)
 {
-  static gint    num_layers = 0;
   gchar         *name       = NULL;
   BrushHeader    bh;
   guchar        *brush_buf  = NULL;
@@ -591,7 +573,8 @@ gih_load_one_brush (gint   fd,
       break;
 
     default:
-      g_message ("Unsupported brush depth: %d\nGIMP Brushes must be GRAY or RGBA\n",
+      g_message ("Unsupported brush depth: %d\n"
+                 "GIMP Brushes must be GRAY or RGBA\n",
                  bh.bytes);
       return FALSE;
     }
@@ -631,7 +614,6 @@ gih_load_one_brush (gint   fd,
       if (image_type == GIMP_GRAY_IMAGE)
         {
           gimp_invert (layer_ID);
-          gimp_layer_add_alpha (layer_ID);
         }
     }
 
@@ -1141,9 +1123,8 @@ gih_save_dialog (gint32 image_ID)
         gihparams.selection[i] = g_strdup (gihparams.selection[i]);
 
       /* Fix up bogus values */
-      gihparams.ncells =
-        MIN (gihparams.ncells,
-             num_useable_layers * gihparams.rows * gihparams.cols);
+      gihparams.ncells = MIN (gihparams.ncells,
+                              num_layers * gihparams.rows * gihparams.cols);
     }
 
   gtk_widget_destroy (dialog);
@@ -1159,65 +1140,50 @@ gih_save_dialog (gint32 image_ID)
 static gboolean
 gih_save_one_brush (gint          fd,
                     GimpPixelRgn *pixel_rgn,
-                    gchar        *name)
+                    const gchar  *name)
 {
   BrushHeader  header;
-  guint        x;
-  guint        y;
   guchar      *buffer;
+  guint        y;
 
   g_return_val_if_fail (fd != -1, FALSE);
   g_return_val_if_fail (pixel_rgn != NULL, FALSE);
 
-  if (!name)
-    name = g_strdup (_("Unnamed"));
-
-  if (pixel_rgn->bpp != 2 && pixel_rgn->bpp != 4)
-    {
-      g_free (name);
-      return FALSE;
-    }
-
   if (pixel_rgn->w < 1 || pixel_rgn->h < 1)
-    {
-      g_free (name);
-      return FALSE;
-    }
+    return FALSE;
 
-  header.header_size  =
-    g_htonl (sizeof (header) + strlen (name) + 1);
+  if (! name)
+    name = _("Unnamed");
+
+  header.header_size  = g_htonl (sizeof (header) + strlen (name) + 1);
   header.version      = g_htonl (2);
   header.width        = g_htonl (pixel_rgn->w);
   header.height       = g_htonl (pixel_rgn->h);
-  header.bytes        = g_htonl (pixel_rgn->bpp == 2 ? 1 : 4);
+  header.bytes        = g_htonl (pixel_rgn->bpp > 2 ? 4 : 1);
   header.magic_number = g_htonl (GBRUSH_MAGIC);
   header.spacing      = g_htonl (info.spacing);
 
   if (write (fd, &header, sizeof (header)) != sizeof (header))
     return FALSE;
 
-  if (write (fd, name, strlen (name) + 1) !=
-      strlen (name) + 1)
-    {
-      g_free (name);
-      return FALSE;
-    }
-
-  g_free (name);
+  if (write (fd, name, strlen (name) + 1) != strlen (name) + 1)
+    return FALSE;
 
   buffer = g_malloc (pixel_rgn->w * pixel_rgn->bpp);
 
   for (y = 0; y < pixel_rgn->h; y++)
     {
-      gimp_pixel_rgn_get_row (pixel_rgn, buffer,
-                              0 + pixel_rgn->x, y + pixel_rgn->y,
-                              pixel_rgn->w);
+      guint x;
 
-      if (pixel_rgn->bpp == 2) /* GRAYA */
+      gimp_pixel_rgn_get_row (pixel_rgn, buffer,
+                              0 + pixel_rgn->x, y + pixel_rgn->y, pixel_rgn->w);
+
+      switch (pixel_rgn->bpp)
         {
+        case 1: /* GRAY */
           for (x = 0; x < pixel_rgn->w; x++)
             {
-              guchar value = 255 - buffer[2 * x];
+              const guchar value = 255 - buffer[x];
 
               if (write (fd, &value, 1) != 1)
                 {
@@ -1225,15 +1191,51 @@ gih_save_one_brush (gint          fd,
                   return FALSE;
                 }
             }
-        }
-      else if (pixel_rgn->bpp == 4) /* RGBA */
-        {
+          break;
+
+        case 2: /* GRAYA, alpha channel is ignored */
+          for (x = 0; x < pixel_rgn->w; x++)
+            {
+              const guchar value = 255 - buffer[2 * x];
+
+              if (write (fd, &value, 1) != 1)
+                {
+                  g_free (buffer);
+                  return FALSE;
+                }
+            }
+          break;
+
+        case 3: /* RGB, alpha channel is added */
+          for (x = 0; x < pixel_rgn->w; x++)
+            {
+              guchar value[4];
+
+              value[0] = buffer[3 * x + 0];
+              value[1] = buffer[3 * x + 1];
+              value[2] = buffer[3 * x + 2];
+              value[3] = 255;
+
+              if (write (fd, value, 4) != 4)
+                {
+                  g_free (buffer);
+                  return FALSE;
+                }
+            }
+          break;
+
+        case 4: /* RGBA */
           if (write (fd, buffer, pixel_rgn->w * pixel_rgn->bpp) !=
               pixel_rgn->w * pixel_rgn->bpp)
             {
               g_free (buffer);
               return FALSE;
             }
+          break;
+
+        default:
+          g_assert_not_reached ();
+          break;
         }
     }
 
@@ -1249,16 +1251,16 @@ gih_save_image (const gchar  *filename,
                 gint32        drawable_ID,
                 GError      **error)
 {
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
   GimpParasite *pipe_parasite;
-  gchar  *header;
-  gchar  *parstring;
-  gint32 *layer_ID;
-  gint    fd;
-  gint    nlayers, layer, row, col;
-  gint    imagew, imageh, offsetx, offsety;
-  gint    k, x, y, thisx, thisy, xnext, ynext, thisw, thish;
+  gchar        *header;
+  gchar        *parstring;
+  gint32       *layer_ID;
+  gint          fd;
+  gint          nlayers, layer;
+  gint          row, col;
+  gint          imagew, imageh;
+  gint          offsetx, offsety;
+  gint          k;
 
   if (gihparams.ncells < 1)
     return FALSE;
@@ -1287,8 +1289,8 @@ gih_save_image (const gchar  *filename,
 
   if (write (fd, header, strlen (header)) != strlen (header))
     {
-      g_free (header);
       g_free (parstring);
+      g_free (header);
       close (fd);
       return FALSE;
     }
@@ -1305,19 +1307,21 @@ gih_save_image (const gchar  *filename,
 
   layer_ID = gimp_image_get_layers (image_ID, &nlayers);
 
-  k = 0;
-  for (layer = 0; layer < nlayers; layer++)
+  for (layer = 0, k = 0; layer < nlayers; layer++)
     {
-      if (!gimp_drawable_has_alpha (layer_ID[layer]))
-        continue;
+      GimpDrawable *drawable = gimp_drawable_get (layer_ID[layer]);
+      gchar        *name     = gimp_drawable_get_name (drawable->drawable_id);
 
-      drawable = gimp_drawable_get (layer_ID[layer]);
-      gimp_drawable_offsets (layer_ID[layer], &offsetx, &offsety);
+      gimp_drawable_offsets (drawable->drawable_id, &offsetx, &offsety);
 
       for (row = 0; row < gihparams.rows; row++)
         {
-          y = (row * imageh) / gihparams.rows ;
+          gint y, ynext;
+          gint thisy, thish;
+
+          y = (row * imageh) / gihparams.rows;
           ynext = ((row + 1) * imageh / gihparams.rows);
+
           /* Assume layer is offset to positive direction in x and y.
            * That's reasonable, as otherwise all of the layer
            * won't be visible.
@@ -1329,16 +1333,20 @@ gih_save_image (const gchar  *filename,
 
           for (col = 0; col < gihparams.cols; col++)
             {
+              GimpPixelRgn  pixel_rgn;
+              gint          x, xnext;
+              gint          thisx, thisw;
+
               x = (col * imagew / gihparams.cols);
               xnext = ((col + 1) * imagew / gihparams.cols);
               thisx = MAX (0, x - offsetx);
               thisw = (xnext - offsetx) - thisx;
               thisw = MIN (thisw, drawable->width - thisx);
+
               gimp_pixel_rgn_init (&pixel_rgn, drawable, thisx, thisy,
                                    thisw, thish, FALSE, FALSE);
 
-              if (! gih_save_one_brush (fd, &pixel_rgn,
-                                        gimp_drawable_get_name (layer_ID[layer])))
+              if (! gih_save_one_brush (fd, &pixel_rgn, name))
                 {
                   close (fd);
                   return FALSE;
@@ -1349,9 +1357,13 @@ gih_save_image (const gchar  *filename,
             }
         }
 
+      g_free (name);
+      gimp_drawable_detach (drawable);
     }
 
   gimp_progress_update (1.0);
+
+  g_free (layer_ID);
 
   close (fd);
 
