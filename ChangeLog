@@ -2,6 +2,16 @@
 
 	Merged from trunk:
 
+	Bug 564087 – Using clone tool on a layer with a part out of canvas
+	causes crashes
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_paste): intersect the
+	rectangle with the extents of the saved projection.
+
+2008-12-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 564593 – crash when the drawable is changed while a color
 	tools is active
 

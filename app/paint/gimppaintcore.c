@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "paint-types.h"
 
 #include "base/pixel-region.h"
@@ -799,15 +801,24 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       GimpProjection *projection = gimp_image_get_projection (image);
       gint            off_x;
       gint            off_y;
+      gint            x, y;
+      gint            w, h;
 
       gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      gimp_paint_core_validate_saved_proj_tiles (core,
-                                                 GIMP_PICKABLE (projection),
-                                                 core->canvas_buf->x + off_x,
-                                                 core->canvas_buf->y + off_y,
-                                                 core->canvas_buf->width,
-                                                 core->canvas_buf->height);
+      if (gimp_rectangle_intersect (core->canvas_buf->x + off_x,
+                                    core->canvas_buf->y + off_y,
+                                    core->canvas_buf->width,
+                                    core->canvas_buf->height,
+                                    0, 0,
+                                    tile_manager_width (core->saved_proj_tiles),
+                                    tile_manager_height (core->saved_proj_tiles),
+                                    &x, &y, &w, &h))
+        {
+          gimp_paint_core_validate_saved_proj_tiles (core,
+                                                     GIMP_PICKABLE (projection),
+                                                     x, y, w, h);
+        }
     }
 
   /*  If the mode is CONSTANT:
