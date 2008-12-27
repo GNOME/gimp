@@ -89,14 +89,16 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
    */
   if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      PixelRegion shadowPR;
+      TileManager *tiles = tile_manager_ref (drawable->shadow);
+      PixelRegion  shadowPR;
 
-      pixel_region_init (&shadowPR, drawable->shadow,
-                         x, y, width, height, FALSE);
+      pixel_region_init (&shadowPR, tiles, x, y, width, height, FALSE);
 
       gimp_drawable_apply_region (drawable, &shadowPR,
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                                   NULL, x, y);
+
+      tile_manager_unref (tiles);
     }
 }
