@@ -1,3 +1,12 @@
+2008-12-27  Sven Neumann  <sven@gimp.org>
+
+	Bug 564593 – crash when the drawable is changed while a color
+	tools is active
+
+	* app/core/gimpdrawable-shadow.c (gimp_drawable_merge_shadow_tiles):
+	keep a reference to the shadow tiles because it might otherwise be
+	free'd under our feet.
+
 2008-12-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-gbr.c: let the save procedure accept a
