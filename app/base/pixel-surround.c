@@ -32,20 +32,20 @@
 
 struct _PixelSurround
 {
-  TileManager *mgr;        /*  tile manager to access tiles from    */
-  gint         xmax;       /*  largest x coordinate in tile manager */
-  gint         ymax;       /*  largest y coordinate in tile manager */
-  gint         bpp;        /*  bytes per pixel in tile manager      */
-  gint         w;          /*  width of pixel surround area         */
-  gint         h;          /*  height of pixel surround area        */
-  Tile        *tile;       /*  locked tile (may be NULL)            */
-  gint         tile_x;     /*  origin of locked tile                */
-  gint         tile_y;     /*  origin of locked tile                */
-  gint         tile_w;     /*  width of locked tile                 */
-  gint         tile_h;     /*  height of locked tile                */
-  gint         rowstride;  /*  rowstride of buffers                 */
-  guchar      *bg;         /*  buffer filled with background color  */
-  guchar      *buf;        /*  buffer used for combining tile data  */
+  TileManager       *mgr;        /*  tile manager to access tiles from    */
+  gint               xmax;       /*  largest x coordinate in tile manager */
+  gint               ymax;       /*  largest y coordinate in tile manager */
+  gint               bpp;        /*  bytes per pixel in tile manager      */
+  gint               w;          /*  width of pixel surround area         */
+  gint               h;          /*  height of pixel surround area        */
+  Tile              *tile;       /*  locked tile (may be NULL)            */
+  gint               tile_x;     /*  origin of locked tile                */
+  gint               tile_y;     /*  origin of locked tile                */
+  gint               tile_w;     /*  width of locked tile                 */
+  gint               tile_h;     /*  height of locked tile                */
+  gint               rowstride;  /*  rowstride of buffers                 */
+  guchar            *bg;         /*  buffer filled with background color  */
+  guchar            *buf;        /*  buffer used for combining tile data  */
   PixelSurroundMode  mode;
 };
 

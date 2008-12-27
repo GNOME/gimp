@@ -1,5 +1,9 @@
 2008-12-27  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.c (struct _PixelSurround): formatting.
+
+2008-12-27  Sven Neumann  <sven@gimp.org>
+
 	Bug 564593 – crash when the drawable is changed while a color
 	tools is active
 
