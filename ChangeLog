@@ -1,5 +1,13 @@
 2008-12-27  Sven Neumann  <sven@gimp.org>
 
+	Bug 564087 – Using clone tool on a layer with a part out of canvas
+	causes crashes
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_paste): intersect the
+	rectangle with the extents of the saved projection.
+
+2008-12-27  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-surround.c (struct _PixelSurround): formatting.
 
 2008-12-27  Sven Neumann  <sven@gimp.org>
