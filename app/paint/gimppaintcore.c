@@ -1099,17 +1099,7 @@ gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
                 tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
                                        j, i, TRUE, FALSE);
 
-              /* copy the pixels instead of mapping the tile because
-               * copy-on-write from the projection is broken
-               */
-              dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
-                                                 j, i, TRUE, TRUE);
-
-              memcpy (tile_data_pointer (dest_tile, 0, 0),
-                      tile_data_pointer (src_tile, 0, 0),
-                      tile_size (src_tile));
-
-              tile_release (dest_tile, TRUE);
+              tile_manager_map_tile (core->saved_proj_tiles, j, i, src_tile);
               tile_release (src_tile, FALSE);
             }
         }

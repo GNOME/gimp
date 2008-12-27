@@ -1,5 +1,11 @@
 2008-12-27  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.c
+	(gimp_paint_core_validate_saved_proj_tiles): copy-on-write from
+	the projection is not any longer broken, so use it here.
+
+2008-12-27  Sven Neumann  <sven@gimp.org>
+
 	Bug 564087 – Using clone tool on a layer with a part out of canvas
 	causes crashes
 
