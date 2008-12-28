@@ -790,6 +790,22 @@ gimp_item_set_offset (GimpItem *item,
   g_object_thaw_notify (G_OBJECT (item));
 }
 
+gint
+gimp_item_get_offset_x (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
+
+  return item->offset_x;
+}
+
+gint
+gimp_item_get_offset_y (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
+
+  return item->offset_y;
+}
+
 /**
  * gimp_item_translate:
  * @item:      The #GimpItem to move.

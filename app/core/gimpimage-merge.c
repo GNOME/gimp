@@ -432,8 +432,7 @@ gimp_image_merge_layers (GimpImage     *image,
           return NULL;
         }
 
-      GIMP_ITEM (merge_layer)->offset_x = x1;
-      GIMP_ITEM (merge_layer)->offset_y = y1;
+      gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
 
       /*  get the background for compositing  */
       gimp_image_get_background (image, context,
@@ -470,8 +469,7 @@ gimp_image_merge_layers (GimpImage     *image,
           return NULL;
         }
 
-      GIMP_ITEM (merge_layer)->offset_x = x1;
-      GIMP_ITEM (merge_layer)->offset_y = y1;
+      gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
 
       /*  clear the layer  */
       pixel_region_init (&src1PR,

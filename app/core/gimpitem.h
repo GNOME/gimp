@@ -166,6 +166,8 @@ void            gimp_item_get_offset       (const GimpItem     *item,
 void            gimp_item_set_offset       (GimpItem           *item,
                                             gint                offset_x,
                                             gint                offset_y);
+gint            gimp_item_get_offset_x     (GimpItem           *item);
+gint            gimp_item_get_offset_y     (GimpItem           *item);
 
 void            gimp_item_translate        (GimpItem           *item,
                                             gint                offset_x,

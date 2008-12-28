@@ -251,10 +251,10 @@ gimp_image_resize_to_layers (GimpImage    *image,
 
   /* figure out starting values */
   item = list->data;
-  min_x = item->offset_x;
-  min_y = item->offset_y;
-  max_x = item->offset_x + gimp_item_get_width  (item);
-  max_y = item->offset_y + gimp_item_get_height (item);
+  min_x = gimp_item_get_offset_x (item);
+  min_y = gimp_item_get_offset_y (item);
+  max_x = gimp_item_get_offset_x (item) + gimp_item_get_width  (item);
+  max_y = gimp_item_get_offset_y (item) + gimp_item_get_height (item);
 
   /*  Respect all layers  */
   for (list = g_list_next (list);
@@ -263,10 +263,10 @@ gimp_image_resize_to_layers (GimpImage    *image,
     {
       item = list->data;
 
-      min_x = MIN (min_x, item->offset_x);
-      min_y = MIN (min_y, item->offset_y);
-      max_x = MAX (max_x, item->offset_x + gimp_item_get_width  (item));
-      max_y = MAX (max_y, item->offset_y + gimp_item_get_height (item));
+      min_x = MIN (min_x, gimp_item_get_offset_x (item));
+      min_y = MIN (min_y, gimp_item_get_offset_y (item));
+      max_x = MAX (max_x, gimp_item_get_offset_x (item) + gimp_item_get_width  (item));
+      max_y = MAX (max_y, gimp_item_get_offset_y (item) + gimp_item_get_height (item));
     }
 
   gimp_image_resize (image, context,

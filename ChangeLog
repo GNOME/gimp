@@ -1,3 +1,17 @@
+2008-12-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpitem.c
+	(gimp_item_get_offset_x)
+	(gimp_item_get_offset_y): New offset getters for inline use.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-resize.c
+	* app/tools/gimptexttool.c: Don't access GimpItem offset members
+	directly, use gimp_item_set_offset() and
+	gimp_item_get_offset_[xy]() instead.
+
 2008-12-28  Sven Neumann  <sven@gimp.org>
 
 	Bug 563985 – jpg save dialog: "cancel" is treated like "commit"

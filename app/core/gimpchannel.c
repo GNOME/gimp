@@ -465,8 +465,8 @@ gimp_channel_convert (GimpItem  *item,
 
       gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
                                     new_tiles, GIMP_GRAY_IMAGE,
-                                    item->offset_x,
-                                    item->offset_y);
+                                    gimp_item_get_offset_x (item),
+                                    gimp_item_get_offset_y (item));
       tile_manager_unref (new_tiles);
     }
 

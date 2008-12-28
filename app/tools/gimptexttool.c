@@ -452,8 +452,8 @@ gimp_text_tool_button_press (GimpTool         *tool,
       GIMP_RECTANGLE_TOOL_CREATING)
     {
       GimpItem *item = GIMP_ITEM (text_tool->layer);
-      gdouble   x    = coords->x - item->offset_x;
-      gdouble   y    = coords->y - item->offset_y;
+      gdouble   x    = coords->x - gimp_item_get_offset_x (item);
+      gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
       if (x < 0 || x > item->width ||
           y < 0 || y > item->height)
@@ -472,8 +472,8 @@ gimp_text_tool_button_press (GimpTool         *tool,
   if (GIMP_IS_LAYER (drawable))
     {
       GimpItem *item = GIMP_ITEM (drawable);
-      gdouble   x    = coords->x - item->offset_x;
-      gdouble   y    = coords->y - item->offset_y;
+      gdouble   x    = coords->x - gimp_item_get_offset_x (item);
+      gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
       if (x > 0 && x < gimp_item_get_width (item) &&
           y > 0 && y < gimp_item_get_height (item))
@@ -600,8 +600,8 @@ gimp_text_tool_button_release (GimpTool              *tool,
           if (text_tool->layout && text_tool->text_cursor_changing)
             {
               GimpItem   *item = GIMP_ITEM (text_tool->layer);
-              gdouble     x    = coords->x - item->offset_x;
-              gdouble     y    = coords->y - item->offset_y;
+              gdouble     x    = coords->x - gimp_item_get_offset_x (item);
+              gdouble     y    = coords->y - gimp_item_get_offset_y (item);
               GtkTextIter cursor;
               gint        offset;
 
@@ -656,8 +656,8 @@ gimp_text_tool_motion (GimpTool         *tool,
       if (text_tool->layout)
         {
           GimpItem    *item = GIMP_ITEM (text_tool->layer);
-          gdouble      x    = coords->x - item->offset_x;
-          gdouble      y    = coords->y - item->offset_y;
+          gdouble      x    = coords->x - gimp_item_get_offset_x (item);
+          gdouble      y    = coords->y - gimp_item_get_offset_y (item);
           GtkTextIter  cursor;
           GtkTextIter  old_selection_bound;
           GtkTextMark *selection_mark;
@@ -1361,8 +1361,8 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
                                    _("Reshape Text Layer"));
 
       gimp_item_translate (item,
-                           x1 - item->offset_x,
-                           y1 - item->offset_y,
+                           x1 - gimp_item_get_offset_x (item),
+                           y1 - gimp_item_get_offset_y (item),
                            TRUE);
       gimp_text_tool_apply (text_tool);
 
@@ -1767,8 +1767,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                 "y2", &y2,
                 NULL);
 
-  GIMP_ITEM (layer)->offset_x = x1;
-  GIMP_ITEM (layer)->offset_y = y1;
+  gimp_item_set_offset (GIMP_ITEM (layer), x1, y1);
 
   gimp_image_add_layer (image, layer, -1, TRUE);
 
@@ -1782,8 +1781,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
       gimp_item_translate (item,
-                           x1 - item->offset_x,
-                           y1 - item->offset_y,
+                           x1 - gimp_item_get_offset_x (item),
+                           y1 - gimp_item_get_offset_y (item),
                            TRUE);
     }
   else
