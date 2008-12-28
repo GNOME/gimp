@@ -498,28 +498,31 @@ run (const gchar      *name,
             gimp_display_delete (display_ID);
           else
             gimp_image_delete (image_ID);
-        }
+       }
 
-      /* pw - now we need to change the defaults to be whatever
-       * was used to save this image.  Dump the old parasites
-       * and add new ones. */
-
-      gimp_image_parasite_detach (orig_image_ID, "gimp-comment");
-      if (image_comment && strlen (image_comment))
+      if (status == GIMP_PDB_SUCCESS)
         {
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (image_comment) + 1,
-                                        image_comment);
+          /* pw - now we need to change the defaults to be whatever
+           * was used to save this image.  Dump the old parasites
+           * and add new ones. */
+
+          gimp_image_parasite_detach (orig_image_ID, "gimp-comment");
+          if (image_comment && strlen (image_comment))
+            {
+              parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (image_comment) + 1,
+                                            image_comment);
+              gimp_image_parasite_attach (orig_image_ID, parasite);
+              gimp_parasite_free (parasite);
+            }
+          gimp_image_parasite_detach (orig_image_ID, "jpeg-save-options");
+
+          parasite = gimp_parasite_new ("jpeg-save-options",
+                                    0, sizeof (jsvals), &jsvals);
           gimp_image_parasite_attach (orig_image_ID, parasite);
           gimp_parasite_free (parasite);
         }
-      gimp_image_parasite_detach (orig_image_ID, "jpeg-save-options");
-
-      parasite = gimp_parasite_new ("jpeg-save-options",
-                                    0, sizeof (jsvals), &jsvals);
-      gimp_image_parasite_attach (orig_image_ID, parasite);
-      gimp_parasite_free (parasite);
     }
   else
     {

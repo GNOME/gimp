@@ -1,5 +1,13 @@
 2008-12-28  Sven Neumann  <sven@gimp.org>
 
+	Bug 563985 – jpg save dialog: "cancel" is treated like "commit"
+	for settings
+
+	* plug-ins/file-jpeg/jpeg.c (run): only attach the comment and
+	settings to the image if the save was successful.
+
+2008-12-28  Sven Neumann  <sven@gimp.org>
+
 	Bug 565362 – the previously opened file is not suggested if gimp
 	was started from command line
 
