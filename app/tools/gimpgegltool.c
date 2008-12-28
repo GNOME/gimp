@@ -446,7 +446,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
 
-#if ((GEGL_MAGOR_VERSION == 0) && \
+#if ((GEGL_MAJOR_VERSION == 0) && \
      (GEGL_MINOR_VERSION == 0) && \
      (GEGL_MICRO_VERSION >= 21))
       if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))

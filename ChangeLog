@@ -1,5 +1,10 @@
 2008-12-28  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate): fixed typo
+	in GEGL version number check.
+
+2008-12-28  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
 	Bug 563985 – jpg save dialog: "cancel" is treated like "commit"
