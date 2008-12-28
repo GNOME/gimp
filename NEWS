@@ -12,33 +12,35 @@ Overview of Changes from GIMP 2.6.3 to GIMP 2.6.4
 
 * Bugs fixed:
 
-  564087 – Using clone tool on a layer with a part out of canvas
-           causes crashes
-  564593 – crash when the drawable is changed while a color tool
-           is active
-  564869 – GIMP crashes on selecting Tools->GEGL operation
-  565138 – python-fu-foggify does not check if image is in rgb mode
-  563130 – Hue selection mode does not cross the 0-360 degrees line
-  563179 – Scrollbars not resized when we extend the canvas size
-  562459 – PF_PALETTE: 'TypeError' when used in a plugin that is
-           registered in <Image>
-  562427 – Compilation with --as-needed
-  562386 – PF_SLIDER and PF_SPINNER 'Step' values do not change
-           consistently...
-  562366 – Default image dimensions are not correctly
-           transferred in the file/new dialog box
-  561899 – GIMP can't save to mounted filesystem if file exists
+ 563985 – jpg save dialog: "cancel" is treated like "commit"
+          for settings
+ 564087 – Using clone tool on a layer with a part out of canvas
+          causes crashes
+ 564593 – crash when the drawable is changed while a color tool
+          is active
+ 564869 – GIMP crashes on selecting Tools->GEGL operation
+ 565138 – python-fu-foggify does not check if image is in rgb mode
+ 563130 – Hue selection mode does not cross the 0-360 degrees line
+ 563179 – Scrollbars not resized when we extend the canvas size
+ 562459 – PF_PALETTE: 'TypeError' when used in a plugin that is
+          registered in <Image>
+ 562427 – Compilation with --as-needed
+ 562386 – PF_SLIDER and PF_SPINNER 'Step' values do not change
+          consistently...
+ 562366 – Default image dimensions are not correctly
+          transferred in the file/new dialog box
+ 561899 – GIMP can't save to mounted filesystem if file exists
 
 * Updated translations:
 
-  Greek (el)
-  Hungarian (hu)
-  Japanese (ja)
-  Korean (ko)
-  Slovenian (sl)
-  Swedish (sv)
-  Tamil (ta)
-  Simplified Chinese (zh_CN)
+ Greek (el)
+ Hungarian (hu)
+ Japanese (ja)
+ Korean (ko)
+ Slovenian (sl)
+ Swedish (sv)
+ Tamil (ta)
+ Simplified Chinese (zh_CN)
 
 
 
