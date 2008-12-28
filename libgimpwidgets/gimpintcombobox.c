@@ -125,7 +125,7 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
   priv->pixbuf_renderer = cell = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "stock_id", GIMP_INT_STORE_STOCK_ID,
+                                  "stock-id", GIMP_INT_STORE_STOCK_ID,
                                   "pixbuf",   GIMP_INT_STORE_PIXBUF,
                                   NULL);
 
