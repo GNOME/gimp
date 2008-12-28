@@ -1,3 +1,11 @@
+2008-12-28  Sven Neumann  <sven@gimp.org>
+
+	Bug 565362 – the previously opened file is not suggested if gimp
+	was started from command line
+
+	* app/file/file-open.c (file_open_from_command_line): remember the
+	opened image just as if it was opened using the file-open dialog.
+
 2008-12-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Use gimp_item_set/get_image() instead of accessing the instance

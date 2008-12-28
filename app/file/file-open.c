@@ -543,6 +543,9 @@ file_open_from_command_line (Gimp        *gimp,
       if (image)
         {
           success = TRUE;
+
+          g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-last-uri",
+                                  uri, (GDestroyNotify) g_free);
         }
       else if (status != GIMP_PDB_CANCEL)
         {
@@ -554,9 +557,8 @@ file_open_from_command_line (Gimp        *gimp,
           g_clear_error (&error);
 
           g_free (filename);
+          g_free (uri);
         }
-
-      g_free (uri);
     }
   else
     {
