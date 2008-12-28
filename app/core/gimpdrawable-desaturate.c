@@ -49,7 +49,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
       GeglNode *desaturate;
       GObject  *config;

@@ -56,7 +56,7 @@ gimp_drawable_posterize (GimpDrawable *drawable,
                          "levels", levels,
                          NULL);
 
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
       GeglNode *node;
 

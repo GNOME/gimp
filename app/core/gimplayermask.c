@@ -121,9 +121,9 @@ gimp_layer_mask_is_attached (GimpItem *item)
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
 
-  return (GIMP_IS_IMAGE (item->image)         &&
-          GIMP_IS_LAYER (layer)               &&
-          gimp_layer_get_mask (layer) == mask &&
+  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
+          GIMP_IS_LAYER (layer)                      &&
+          gimp_layer_get_mask (layer) == mask        &&
           gimp_item_is_attached (GIMP_ITEM (layer)));
 }
 
@@ -233,7 +233,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 
   if (layer_mask->apply_mask != apply)
     {
-      GimpImage *image = GIMP_ITEM (layer_mask)->image;
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
         gimp_image_undo_push_layer_mask_apply (image, _("Apply Layer Mask"),
@@ -288,7 +288,7 @@ gimp_layer_mask_get_edit (const GimpLayerMask *layer_mask)
 static void
 gimp_layer_mask_real_edit_changed (GimpLayerMask *layer_mask)
 {
-  gimp_image_selection_control (GIMP_ITEM (layer_mask)->image,
+  gimp_image_selection_control (gimp_item_get_image (GIMP_ITEM (layer_mask)),
                                 GIMP_SELECTION_LAYER_ON);
 }
 
@@ -301,7 +301,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 
   if (layer_mask->show_mask != show)
     {
-      GimpImage *image = GIMP_ITEM (layer_mask)->image;
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
         gimp_image_undo_push_layer_mask_show (image, _("Show Layer Mask"),

@@ -139,7 +139,7 @@ gimp_drawable_levels_internal (GimpDrawable     *drawable,
                                GimpProgress     *progress,
                                GimpLevelsConfig *config)
 {
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
       GeglNode *levels;
 

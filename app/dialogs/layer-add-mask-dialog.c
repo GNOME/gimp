@@ -118,7 +118,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  combo = gimp_container_combo_box_new (GIMP_ITEM (layer)->image->channels,
+  combo = gimp_container_combo_box_new (gimp_item_get_image (GIMP_ITEM (layer))->channels,
                                         context,
                                         GIMP_VIEW_SIZE_SMALL, 1);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), combo,
@@ -129,10 +129,10 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                     G_CALLBACK (layer_add_mask_dialog_channel_selected),
                     dialog);
 
-  channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
+  channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
 
   if (! channel)
-    channel = GIMP_CHANNEL (gimp_container_get_first_child (GIMP_ITEM (layer)->image->channels));
+    channel = GIMP_CHANNEL (gimp_container_get_first_child (gimp_item_get_image (GIMP_ITEM (layer))->channels));
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                    GIMP_VIEWABLE (channel));

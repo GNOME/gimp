@@ -2127,7 +2127,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
       context = gimp_get_user_context (tool->tool_info->gimp);
       display = gimp_context_get_display (context);
 
-      if (! display || display->image != item->image)
+      if (! display || display->image != gimp_item_get_image (item))
         {
           GList *list;
 
@@ -2139,7 +2139,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
             {
               display = list->data;
 
-              if (display->image == item->image)
+              if (display->image == gimp_item_get_image (item))
                 {
                   gimp_context_set_display (context, display);
                   break;

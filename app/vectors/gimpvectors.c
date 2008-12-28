@@ -266,8 +266,8 @@ gimp_vectors_get_memsize (GimpObject *object,
 static gboolean
 gimp_vectors_is_attached (GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (item->image) &&
-          gimp_container_have (item->image->vectors, GIMP_OBJECT (item)));
+  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
+          gimp_container_have (gimp_item_get_image (item)->vectors, GIMP_OBJECT (item)));
 }
 
 static GimpItem *

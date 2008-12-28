@@ -720,7 +720,7 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (display != NULL);
-  g_return_if_fail (display->image == item->image);
+  g_return_if_fail (display->image == gimp_item_get_image (item));
 
   width  = gimp_item_get_width  (item);
   height = gimp_item_get_height (item);

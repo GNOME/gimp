@@ -192,12 +192,15 @@ gimp_text_layer_from_layer (GimpLayer *layer,
                         gimp_object_get_name (GIMP_OBJECT (layer)));
 
   item->ID    = gimp_item_get_ID (GIMP_ITEM (layer));
-  item->image = gimp_item_get_image (GIMP_ITEM (layer));
 
+  /* Set image before tatoo so that the explicitly set tatoo overrides
+   * the one implicitly set when setting the image
+   */
+  gimp_item_set_image (item, gimp_item_get_image (GIMP_ITEM (layer)));
   gimp_item_set_tattoo (item, gimp_item_get_tattoo (GIMP_ITEM (layer)));
 
   gimp_item_set_image (GIMP_ITEM (layer), NULL);
-  g_hash_table_replace (item->image->gimp->item_table,
+  g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
                         GINT_TO_POINTER (gimp_item_get_ID (item)),
                         item);
 

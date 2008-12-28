@@ -185,8 +185,8 @@ gimp_selection_init (GimpSelection *selection)
 static gboolean
 gimp_selection_is_attached (GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (item->image) &&
-          gimp_image_get_mask (item->image) == GIMP_CHANNEL (item));
+  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
+          gimp_image_get_mask (gimp_item_get_image (item)) == GIMP_CHANNEL (item));
 }
 
 static void

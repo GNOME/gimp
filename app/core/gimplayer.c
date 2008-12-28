@@ -539,8 +539,8 @@ gimp_layer_removed (GimpItem *item)
 static gboolean
 gimp_layer_is_attached (GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (item->image) &&
-          gimp_container_have (item->image->layers, GIMP_OBJECT (item)));
+  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
+          gimp_container_have (gimp_item_get_image (item)->layers, GIMP_OBJECT (item)));
 }
 
 static GimpItem *

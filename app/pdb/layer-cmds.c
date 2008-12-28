@@ -510,7 +510,7 @@ layer_create_mask_invoker (GimpProcedure      *procedure,
 
       if (mask_type == GIMP_ADD_CHANNEL_MASK)
         {
-          channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
+          channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
 
           if (! channel)
             success = FALSE;

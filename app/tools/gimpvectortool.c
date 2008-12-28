@@ -1552,7 +1552,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
   gimp_draw_tool_pause (draw_tool);
 
   if (gimp_draw_tool_is_active (draw_tool) &&
-      (! vectors || draw_tool->display->image != item->image))
+      (! vectors || draw_tool->display->image != gimp_item_get_image (item)))
     {
       gimp_draw_tool_stop (draw_tool);
     }
@@ -1618,7 +1618,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   g_object_ref (vectors);
 
-  g_signal_connect_object (item->image, "active-vectors-changed",
+  g_signal_connect_object (gimp_item_get_image (item), "active-vectors-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_changed),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "removed",
@@ -1655,7 +1655,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   if (! gimp_draw_tool_is_active (draw_tool))
     {
-      if (tool->display && tool->display->image == item->image)
+      if (tool->display && tool->display->image == gimp_item_get_image (item))
         {
           gimp_draw_tool_start (draw_tool, tool->display);
         }
@@ -1667,19 +1667,19 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
           context = gimp_get_user_context (tool->tool_info->gimp);
           display = gimp_context_get_display (context);
 
-          if (! display || display->image != item->image)
+          if (! display || display->image != gimp_item_get_image (item))
             {
               GList *list;
 
               display = NULL;
 
-              for (list = gimp_get_display_iter (item->image->gimp);
+              for (list = gimp_get_display_iter (gimp_item_get_image (item)->gimp);
                    list;
                    list = g_list_next (list))
                 {
                   display = list->data;
 
-                  if (display->image == item->image)
+                  if (display->image == gimp_item_get_image (item))
                     {
                       gimp_context_set_display (context, display);
                       break;
@@ -1872,7 +1872,7 @@ gimp_vector_tool_undo_push (GimpVectorTool *vector_tool,
   if (vector_tool->have_undo)
     return;
 
-  gimp_image_undo_push_vectors_mod (GIMP_ITEM (vector_tool->vectors)->image,
+  gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vector_tool->vectors)),
                                     desc, vector_tool->vectors);
   vector_tool->have_undo = TRUE;
 }

@@ -66,7 +66,7 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
                 "yellow-blue",   yellow_blue   / 100.0,
                 NULL);
 
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
       GeglNode *node;
 

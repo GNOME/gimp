@@ -59,7 +59,7 @@ gimp_drawable_colorize (GimpDrawable *drawable,
                          "lightness",  lightness  / 100.0,
                          NULL);
 
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
       GeglNode *node;
 
