@@ -1,5 +1,9 @@
 2008-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpitemtreeview.h: deleted trailing whitespace.
+
+2008-12-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.[ch]
 	* plug-ins/print/print-draw-page.c
 	* plug-ins/print/print-page-layout.c
