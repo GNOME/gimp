@@ -1,3 +1,8 @@
+2008-12-30  Marco Ciampa  <ciampix@libero.it>
+
+	* app/actions/error-console-actions.c
+	* po/it.po: updated italian translation and small typo fix.
+
 2008-12-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpitem.c

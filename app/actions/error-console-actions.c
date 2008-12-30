@@ -57,7 +57,7 @@ static const GimpEnumActionEntry error_console_save_actions[] =
 {
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
     NC_("error-console-action", "_Save Error Log to File..."), "",
-    NC_("error-console-action", "Write all error mesaages to a file"),
+    NC_("error-console-action", "Write all error messages to a file"),
     FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
