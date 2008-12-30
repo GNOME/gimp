@@ -1,3 +1,10 @@
+2008-12-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.[ch]
+	* plug-ins/print/print-draw-page.c
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print-settings.c: optionally draw crop-marks.
+
 2008-12-30  Marco Ciampa  <ciampix@libero.it>
 
 	* app/actions/error-console-actions.c: small typo fix.

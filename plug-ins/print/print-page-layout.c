@@ -89,6 +89,8 @@ static void        print_size_info_set_resolution     (PrintSizeInfo *info,
 
 static void        print_size_info_set_page_setup     (PrintSizeInfo *info);
 
+static void        print_draw_crop_marks_toggled      (GtkWidget     *widget);
+
 
 static PrintSizeInfo  info;
 
@@ -152,6 +154,17 @@ print_page_layout_gui (PrintData   *data,
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (print_size_info_use_full_page_toggled),
+                    NULL);
+  gtk_widget_show (button);
+
+  /* crop marks toggle */
+  button = gtk_check_button_new_with_mnemonic (_("_Draw Crop Marks"));
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                data->draw_crop_marks);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (print_draw_crop_marks_toggled),
                     NULL);
   gtk_widget_show (button);
 
@@ -715,7 +728,7 @@ print_size_info_resolution_changed (GtkWidget *widget)
 static void
 print_size_info_use_full_page_toggled (GtkWidget *widget)
 {
-  gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+  gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   info.data->use_full_page = active;
 
@@ -874,3 +887,12 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
                                          y, GIMP_MAX_RESOLUTION);
 }
+
+static void
+print_draw_crop_marks_toggled (GtkWidget *widget)
+{
+  gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+  info.data->draw_crop_marks = active;
+}
+

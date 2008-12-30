@@ -98,6 +98,8 @@ print_settings_save (PrintData *data)
                               "center-mode", data->center);
       g_key_file_set_boolean (key_file, "image-setup",
                               "use-full-page", data->use_full_page);
+      g_key_file_set_boolean (key_file, "image-setup",
+                              "crop-marks", data->draw_crop_marks);
 
       print_utils_key_file_save_as_parasite (key_file,
                                              data->image_id,
@@ -223,38 +225,44 @@ print_settings_load_from_key_file (PrintData *data,
 
   if (g_key_file_has_key (key_file, "image-setup", "unit", NULL))
     {
-      data->unit = g_key_file_get_integer (key_file,
-                                           "image-setup", "unit", NULL);
+      data->unit = g_key_file_get_integer (key_file, "image-setup",
+                                           "unit", NULL);
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "x-resolution", NULL) &&
       g_key_file_has_key (key_file, "image-setup", "y-resolution", NULL))
     {
-      data->xres = g_key_file_get_double (key_file,
-                                          "image-setup", "x-resolution", NULL);
-      data->yres = g_key_file_get_double (key_file,
-                                          "image-setup", "y-resolution", NULL);
+      data->xres = g_key_file_get_double (key_file, "image-setup",
+                                          "x-resolution", NULL);
+      data->yres = g_key_file_get_double (key_file, "image-setup",
+                                          "y-resolution", NULL);
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "x-offset", NULL) &&
       g_key_file_has_key (key_file, "image-setup", "y-offset", NULL))
     {
-      data->offset_x = g_key_file_get_double (key_file,
-                                              "image-setup", "x-offset", NULL);
-      data->offset_y = g_key_file_get_double (key_file,
-                                              "image-setup", "y-offset", NULL);
+      data->offset_x = g_key_file_get_double (key_file, "image-setup",
+                                              "x-offset", NULL);
+      data->offset_y = g_key_file_get_double (key_file, "image-setup",
+                                              "y-offset", NULL);
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "center-mode", NULL))
     {
-      data->center = g_key_file_get_integer (key_file,
-                                             "image-setup", "center-mode", NULL);
+      data->center = g_key_file_get_integer (key_file, "image-setup",
+                                             "center-mode", NULL);
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "use-full-page", NULL))
     {
-      data->use_full_page = g_key_file_get_boolean (key_file,
-                                                    "image-setup", "use-full-page", NULL);
+      data->use_full_page = g_key_file_get_boolean (key_file, "image-setup",
+                                                    "use-full-page", NULL);
+    }
+
+  if (g_key_file_has_key (key_file, "image-setup", "crop-marks", NULL))
+    {
+      data->draw_crop_marks = g_key_file_get_boolean (key_file, "image-setup",
+                                                      "crop-marks", NULL);
     }
 
   gtk_print_operation_set_print_settings (operation, settings);

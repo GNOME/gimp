@@ -103,7 +103,7 @@ query (void)
                           "Print the image using the GTK+ Print API.",
                           "Bill Skaggs, Sven Neumann, Stefan Röllin",
                           "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                          "2006, 2007",
+                          "2006 - 2008",
                           N_("_Print..."),
                           "*",
                           GIMP_PLUGIN,
@@ -220,15 +220,16 @@ print_image (gint32     image_ID,
   print_page_setup_load (operation, image_ID);
 
   /* fill in the PrintData struct */
-  data.image_id      = image_ID;
-  data.drawable_id   = layer;
-  data.unit          = gimp_get_default_unit ();
-  data.image_unit    = gimp_image_get_unit (image_ID);
-  data.offset_x      = 0;
-  data.offset_y      = 0;
-  data.center        = CENTER_BOTH;
-  data.use_full_page = FALSE;
-  data.operation     = operation;
+  data.image_id        = image_ID;
+  data.drawable_id     = layer;
+  data.unit            = gimp_get_default_unit ();
+  data.image_unit      = gimp_image_get_unit (image_ID);
+  data.offset_x        = 0;
+  data.offset_y        = 0;
+  data.center          = CENTER_BOTH;
+  data.use_full_page   = FALSE;
+  data.draw_crop_marks = FALSE;
+  data.operation       = operation;
 
   gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
 

@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+
 typedef enum
 {
   CENTER_NONE         = 0,
@@ -36,6 +37,6 @@ typedef struct
   gdouble             offset_y;
   PrintCenterMode     center;
   gboolean            use_full_page;
+  gboolean            draw_crop_marks;
   GtkPrintOperation  *operation;
 } PrintData;
-
