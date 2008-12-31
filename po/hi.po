@@ -1,20 +1,21 @@
-# translation of gimp.gimp-2-6.po to Hindi
+# translation of hi.po to Hindi
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Rajesh Ranjan <rranjan@redhat.com>, 2005, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.gimp-2-6\n"
+"Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-10 08:08+0000\n"
-"PO-Revision-Date: 2008-12-29 17:42+0530\n"
+"PO-Revision-Date: 2008-12-30 17:45+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
 "Language-Team: Hindi <hindi.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -436,7 +437,7 @@ msgstr "नया ब्रश (_N)"
 
 #: ../app/actions/brushes-actions.c:54
 msgid "New brush"
-msgstr ""
+msgstr "नया ब्रश"
 
 #: ../app/actions/brushes-actions.c:59
 msgid "D_uplicate Brush"
@@ -444,7 +445,7 @@ msgstr "नकली ब्रश (_u)"
 
 #: ../app/actions/brushes-actions.c:60
 msgid "Duplicate brush"
-msgstr ""
+msgstr "नकली ब्रश"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
@@ -460,7 +461,7 @@ msgstr "ब्रश मिटाएँ (_D)"
 
 #: ../app/actions/brushes-actions.c:72
 msgid "Delete brush"
-msgstr ""
+msgstr "ब्रश मिटाएं"
 
 #: ../app/actions/brushes-actions.c:77
 msgid "_Refresh Brushes"
@@ -476,7 +477,7 @@ msgstr "ब्रश संपादित करें (_E)..."
 
 #: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
-msgstr ""
+msgstr "ब्रश संपादित करें"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
@@ -504,7 +505,7 @@ msgstr "नए रूप में बफ़र चिपकाएँ (_N)"
 
 #: ../app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
-msgstr ""
+msgstr "नए चित्र के रूप में चुना बफर चिपकाएं"
 
 #: ../app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
@@ -686,7 +687,7 @@ msgstr "रंग संपादित करें (_E)..."
 #: ../app/actions/colormap-actions.c:49
 #: ../app/actions/palette-editor-actions.c:49
 msgid "Edit color"
-msgstr ""
+msgstr "रंग संपादित करें"
 
 #: ../app/actions/colormap-actions.c:57
 msgid "_Add Color from FG"
@@ -1135,7 +1136,7 @@ msgstr "संवाद मेन्यू"
 
 #: ../app/actions/dockable-actions.c:53
 msgid "_Add Tab"
-msgstr ""
+msgstr "टैब जोड़ें (_A)"
 
 #: ../app/actions/dockable-actions.c:54
 msgid "_Preview Size"
@@ -1143,11 +1144,11 @@ msgstr "पूर्वदृश्य"
 
 #: ../app/actions/dockable-actions.c:55
 msgid "_Tab Style"
-msgstr ""
+msgstr "टैब शैली (_T)"
 
 #: ../app/actions/dockable-actions.c:58
 msgid "_Close Tab"
-msgstr ""
+msgstr "टैब बंद करें (_C)"
 
 #: ../app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
@@ -1155,11 +1156,11 @@ msgstr "टैब अलग करें (_D)"
 
 #: ../app/actions/dockable-actions.c:81
 msgid "_Tiny"
-msgstr ""
+msgstr "छोटा (_T)"
 
 #: ../app/actions/dockable-actions.c:82
 msgid "E_xtra Small"
-msgstr ""
+msgstr "अतिरिक्त छोटा (_x)"
 
 #: ../app/actions/dockable-actions.c:83
 msgid "_Small"
@@ -1175,27 +1176,27 @@ msgstr "विशाल (_L)"
 
 #: ../app/actions/dockable-actions.c:86
 msgid "Ex_tra Large"
-msgstr ""
+msgstr "अतिरिक्त बड़ा (_t)"
 
 #: ../app/actions/dockable-actions.c:87
 msgid "_Huge"
-msgstr ""
+msgstr "विशाल (_H)"
 
 #: ../app/actions/dockable-actions.c:88
 msgid "_Enormous"
-msgstr ""
+msgstr "विशालकाय (_E)"
 
 #: ../app/actions/dockable-actions.c:89
 msgid "_Gigantic"
-msgstr ""
+msgstr "भीमकाय (_G)"
 
 #: ../app/actions/dockable-actions.c:94
 msgid "_Icon"
-msgstr ""
+msgstr "प्रतीक (_I)"
 
 #: ../app/actions/dockable-actions.c:95
 msgid "Current _Status"
-msgstr ""
+msgstr "मौजूदा स्थिति (_S)"
 
 #: ../app/actions/dockable-actions.c:96
 msgid "_Text"
@@ -1203,11 +1204,11 @@ msgstr "पाठ (_T)"
 
 #: ../app/actions/dockable-actions.c:97
 msgid "I_con & Text"
-msgstr ""
+msgstr "प्रतीक व पाठ (_c)"
 
 #: ../app/actions/dockable-actions.c:98
 msgid "St_atus & Text"
-msgstr ""
+msgstr "स्थिति व पाठ (_a)"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
@@ -1227,35 +1228,35 @@ msgstr "सूची रूप में देखें (_L)"
 
 #: ../app/actions/dockable-actions.c:129
 msgid "View as _Grid"
-msgstr ""
+msgstr "जाल के रूप में देखें (_G)"
 
 #: ../app/actions/documents-actions.c:42
 msgid "Documents Menu"
-msgstr ""
+msgstr "दस्तावेज मेन्यू"
 
 #: ../app/actions/documents-actions.c:46
 msgid "_Open Image"
-msgstr ""
+msgstr "चित्र खोलें (_O)"
 
 #: ../app/actions/documents-actions.c:47
 msgid "Open the selected entry"
-msgstr ""
+msgstr "चयनित प्रविष्टि खोलें"
 
 #: ../app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
-msgstr ""
+msgstr "उठाएं या खोलें चित्र (_R)"
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr ""
+msgstr "उठाएं विंडो यदि पहले से खुला है"
 
 #: ../app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
-msgstr ""
+msgstr "फाइल खुला संवाद (_D)"
 
 #: ../app/actions/documents-actions.c:59
 msgid "Open image dialog"
-msgstr ""
+msgstr "चित्र संवाद खोलें"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
@@ -1267,11 +1268,11 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
-msgstr ""
+msgstr "प्रविष्टि हटाएं (_E)"
 
 #: ../app/actions/documents-actions.c:71
 msgid "Remove the selected entry"
-msgstr ""
+msgstr "चयनित प्रविष्टि हटाएं"
 
 #: ../app/actions/documents-actions.c:76
 msgid "_Clear History"
@@ -1283,27 +1284,27 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:82
 msgid "Recreate _Preview"
-msgstr ""
+msgstr "पूर्वावलोकन फिर बनाएं (_P)"
 
 #: ../app/actions/documents-actions.c:83
 msgid "Recreate preview"
-msgstr ""
+msgstr "पूर्वावलोकन फिर बनाएं"
 
 #: ../app/actions/documents-actions.c:88
 msgid "Reload _all Previews"
-msgstr ""
+msgstr "सभी पूर्वावलोकन लोड करें (_a)"
 
 #: ../app/actions/documents-actions.c:89
 msgid "Reload all previews"
-msgstr ""
+msgstr "सभी पूर्वावलोकन लोड करें"
 
 #: ../app/actions/documents-actions.c:94
 msgid "Remove Dangling E_ntries"
-msgstr ""
+msgstr "झूलता प्रविष्टि हटाएं (_n)"
 
 #: ../app/actions/documents-actions.c:95
 msgid "Remove dangling entries"
-msgstr ""
+msgstr "झूलता प्रविष्टि हटाएं"
 
 #: ../app/actions/documents-commands.c:198
 msgid "Clear Document History"
@@ -1311,7 +1312,7 @@ msgstr ""
 
 #: ../app/actions/documents-commands.c:221
 msgid "Clear the Recent Documents list?"
-msgstr ""
+msgstr "हाल ही में प्रयुक्त दस्तावेज़ साफ करें?"
 
 #: ../app/actions/documents-commands.c:224
 msgid ""
@@ -1321,7 +1322,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Equalize"
-msgstr ""
+msgstr "बराबर करें (_E)"
 
 #: ../app/actions/drawable-actions.c:46
 msgid "Automatic contrast enhancement"
@@ -1329,16 +1330,15 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:51
 msgid "In_vert"
-msgstr ""
+msgstr "उलटें (_v)"
 
 #: ../app/actions/drawable-actions.c:52
-#, fuzzy
 msgid "Invert the colors"
-msgstr "रंग मिटाओ"
+msgstr "रंग उलटें"
 
 #: ../app/actions/drawable-actions.c:57
 msgid "_White Balance"
-msgstr ""
+msgstr "सफेद संतुलन (_W)"
 
 #: ../app/actions/drawable-actions.c:58
 msgid "Automatic white balance correction"
@@ -1346,7 +1346,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:63
 msgid "_Offset..."
-msgstr ""
+msgstr "ऑफसेट (_O)..."
 
 #: ../app/actions/drawable-actions.c:64
 msgid "Shift the pixels, optionally wrapping them at the borders"
@@ -1354,7 +1354,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:72 ../app/actions/vectors-actions.c:153
 msgid "_Linked"
-msgstr ""
+msgstr "लिंक (_L)"
 
 #: ../app/actions/drawable-actions.c:73
 msgid "Toggle the linked state"
@@ -1370,21 +1370,19 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
 msgid "Flip _Horizontally"
-msgstr ""
+msgstr "क्षैतिज पलटें (_H)"
 
 #: ../app/actions/drawable-actions.c:90
-#, fuzzy
 msgid "Flip horizontally"
-msgstr "समतल"
+msgstr "आड़ा पलटें"
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Vertically"
-msgstr ""
+msgstr "लंबवत पलटें (_V)"
 
 #: ../app/actions/drawable-actions.c:96
-#, fuzzy
 msgid "Flip vertically"
-msgstr "लम्ब"
+msgstr "खड़ा पलटें"
 
 #: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
@@ -1395,13 +1393,12 @@ msgid "Rotate 90 degrees to the right"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
-#, fuzzy
 msgid "Rotate _180°"
-msgstr "घुमाएँ"
+msgstr "घुमाएँ _180°"
 
 #: ../app/actions/drawable-actions.c:111
 msgid "Turn upside-down"
-msgstr ""
+msgstr "ऊपर से नीचे करें"
 
 #: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate 90° counter-clock_wise"
@@ -1413,28 +1410,27 @@ msgstr ""
 
 #: ../app/actions/drawable-commands.c:62
 msgid "Equalize does not operate on indexed layers."
-msgstr ""
+msgstr "बराबर करना सूचीबद्ध स्तर पर काम नहीं करता है."
 
 #: ../app/actions/drawable-commands.c:85
 msgid "Invert does not operate on indexed layers."
-msgstr ""
+msgstr "उलटना सूचीबद्ध स्तर पर काम नहीं करता है."
 
 #: ../app/actions/drawable-commands.c:108
 msgid "White Balance operates only on RGB color layers."
-msgstr ""
+msgstr "सफेद संतुलन सिर्फ RGB रंग परतों पर कार्य करता है."
 
 #: ../app/actions/edit-actions.c:63
 msgid "_Edit"
 msgstr "संपादन (_E)"
 
 #: ../app/actions/edit-actions.c:64
-#, fuzzy
 msgid "_Paste as"
-msgstr "चिपकाएँ (_P)"
+msgstr "ऐसे चिपकाएँ (_P)"
 
 #: ../app/actions/edit-actions.c:65
 msgid "_Buffer"
-msgstr ""
+msgstr "बफर (_B)"
 
 #: ../app/actions/edit-actions.c:68
 msgid "Undo History Menu"
@@ -1474,16 +1470,15 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:96
 msgid "_Clear Undo History"
-msgstr ""
+msgstr "इतिहास वापसी साफ करें (_C)"
 
 #: ../app/actions/edit-actions.c:97
 msgid "Remove all operations from the undo history"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
-#, fuzzy
 msgid "_Fade..."
-msgstr "नया (_N)..."
+msgstr "धुंधला (_F)..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
@@ -1508,7 +1503,7 @@ msgstr ""
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
 msgid "Copy _Visible"
-msgstr ""
+msgstr "दृश्य कॉपी करें (_V)"
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy what is visible in the selected region"
@@ -1524,30 +1519,27 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:132
 msgid "Paste _Into"
-msgstr ""
+msgstr "इसमें चिपकाएं (_I)"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:138
-#, fuzzy
 msgid "From _Clipboard"
-msgstr "क्लिपबोर्ड"
+msgstr "क्लिपबोर्ड से (_C)"
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
 msgid "Create a new image from the content of the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:144
-#, fuzzy
 msgid "_New Image"
-msgstr "छवि (_I)"
+msgstr "नई छवि (_N)"
 
 #: ../app/actions/edit-actions.c:150
-#, fuzzy
 msgid "New _Layer"
-msgstr "लेयर"
+msgstr "नया लेयर (_L)"
 
 #: ../app/actions/edit-actions.c:151
 msgid "Create a new layer from the content of the clipboard"
@@ -1555,7 +1547,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:156
 msgid "Cu_t Named..."
-msgstr ""
+msgstr "नामित काटें (_t)..."
 
 #: ../app/actions/edit-actions.c:157
 msgid "Move the selected pixels to a named buffer"
@@ -1563,7 +1555,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:162
 msgid "_Copy Named..."
-msgstr ""
+msgstr "नामित कॉपी करें (_C)..."
 
 #: ../app/actions/edit-actions.c:163
 msgid "Copy the selected pixels to a named buffer"
@@ -1580,7 +1572,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:174
 msgid "_Paste Named..."
-msgstr ""
+msgstr "नामित चिपकाएं (_P)..."
 
 #: ../app/actions/edit-actions.c:175
 msgid "Paste the content of a named buffer"
@@ -1596,7 +1588,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with _FG Color"
-msgstr ""
+msgstr "_FG रंग के साथ भरें"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the foreground color"
@@ -1604,7 +1596,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with B_G Color"
-msgstr ""
+msgstr "B_G रंग के साथ भरें"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the background color"
@@ -1612,7 +1604,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:201
 msgid "Fill with P_attern"
-msgstr ""
+msgstr "प्रारूप के साथ भरें (_a)"
 
 #: ../app/actions/edit-actions.c:202
 msgid "Fill the selection using the active pattern"
@@ -1621,25 +1613,25 @@ msgstr ""
 #: ../app/actions/edit-actions.c:279
 #, c-format
 msgid "_Undo %s"
-msgstr ""
+msgstr "पहले जैसा %s (_U)"
 
 #: ../app/actions/edit-actions.c:286
 #, c-format
 msgid "_Redo %s"
-msgstr ""
+msgstr "फिर करें (_R) %s"
 
 #: ../app/actions/edit-actions.c:301
-#, fuzzy, c-format
+#, c-format
 msgid "_Fade %s..."
-msgstr "इस रूप में सहेजें... (_A)"
+msgstr "धुंधला (_F) %s..."
 
 #: ../app/actions/edit-commands.c:134
 msgid "Clear Undo History"
-msgstr ""
+msgstr "पहले जैसा किया इतिहास साफ करें"
 
 #: ../app/actions/edit-commands.c:160
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "वाकई छवि का पहले जैसे करने का इतिहास साफ करना चाहते हैं?"
 
 #: ../app/actions/edit-commands.c:172
 #, c-format
@@ -1666,16 +1658,16 @@ msgstr "क्लिपबोर्ड"
 
 #: ../app/actions/edit-commands.c:363
 msgid "Cut Named"
-msgstr ""
+msgstr "नामित काटें"
 
 #: ../app/actions/edit-commands.c:366 ../app/actions/edit-commands.c:407
 #: ../app/actions/edit-commands.c:427
 msgid "Enter a name for this buffer"
-msgstr ""
+msgstr "इस बफर के लिए नाम दें"
 
 #: ../app/actions/edit-commands.c:404
 msgid "Copy Named"
-msgstr ""
+msgstr "नामित कॉपी करें"
 
 #: ../app/actions/edit-commands.c:424
 msgid "Copy Visible Named "
@@ -1683,39 +1675,36 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:542
 msgid "There is no active layer or channel to cut from."
-msgstr ""
+msgstr "इससे काटने के लिए कोई सक्रिय स्तर या चैनल नहीं है."
 
 #: ../app/actions/edit-commands.c:547 ../app/actions/edit-commands.c:579
 #: ../app/actions/edit-commands.c:603
 msgid "(Unnamed Buffer)"
-msgstr ""
+msgstr "(बेनामी बफर)"
 
 #: ../app/actions/edit-commands.c:574
 msgid "There is no active layer or channel to copy from."
-msgstr ""
+msgstr "कोई सक्रिय स्तर या चैनल कॉपी करने के लिए नहीं है."
 
 #: ../app/actions/error-console-actions.c:40
 msgid "Error Console Menu"
-msgstr ""
+msgstr "त्रुटि कंसोल मेन्यू"
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear"
-msgstr "खाली"
+msgstr "साफ़ करें (_C)"
 
 #: ../app/actions/error-console-actions.c:45
 msgid "Clear error console"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgid "Select _All"
-msgstr "सभी चुनें"
+msgstr "सभी चुनें (_A)"
 
 #: ../app/actions/error-console-actions.c:51
-#, fuzzy
 msgid "Select all errors"
-msgstr "सबको चुनें"
+msgstr "सभी त्रुटि चुनें"
 
 #: ../app/actions/error-console-actions.c:59
 msgid "_Save Error Log to File..."
@@ -1731,15 +1720,15 @@ msgstr ""
 
 #: ../app/actions/error-console-actions.c:66
 msgid "Save selection"
-msgstr ""
+msgstr "चयन सहेजें"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
-msgstr ""
+msgstr "सहेज नहीं सकता है. कुछ नहीं चुना जाता है."
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
-msgstr ""
+msgstr "फाइल में त्रुटि लॉग सहेजें"
 
 #: ../app/actions/error-console-commands.c:156
 #, c-format
@@ -1747,19 +1736,20 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
+"'%s' फाइल में लिखने में त्रुटि:\n"
+"%s"
 
 #: ../app/actions/file-actions.c:66
 msgid "_File"
 msgstr "फ़ाइल (_F)"
 
 #: ../app/actions/file-actions.c:67
-#, fuzzy
 msgid "Create"
-msgstr "बीच में"
+msgstr "बनाएँ"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
-msgstr ""
+msgstr "हाल का खोलें (_R)"
 
 #: ../app/actions/file-actions.c:71
 msgid "_Open..."
@@ -1770,9 +1760,8 @@ msgid "Open an image file"
 msgstr ""
 
 #: ../app/actions/file-actions.c:77
-#, fuzzy
 msgid "Op_en as Layers..."
-msgstr "परत को पुनः नाम दो"
+msgstr "बतौर स्तर खोलें (_e)..."
 
 #: ../app/actions/file-actions.c:78
 msgid "Open an image file as layers"
@@ -1788,7 +1777,7 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:89
 msgid "Save as _Template..."
-msgstr ""
+msgstr "बतौर नमूना सहेजें (_T)..."
 
 #: ../app/actions/file-actions.c:90
 msgid "Create a new template from this image"
@@ -1803,14 +1792,12 @@ msgid "Reload the image file from disk"
 msgstr ""
 
 #: ../app/actions/file-actions.c:101
-#, fuzzy
 msgid "Close all"
-msgstr "सभी टैब्स बन्द करें?"
+msgstr "सभी बन्द करें?"
 
 #: ../app/actions/file-actions.c:102
-#, fuzzy
 msgid "Close all opened images"
-msgstr "सभी टैब्स बन्द करें?"
+msgstr "सभी खुली छवि बन्द करें?"
 
 #: ../app/actions/file-actions.c:107
 msgid "_Quit"
@@ -1825,9 +1812,8 @@ msgid "_Save"
 msgstr "सहेजें (_S)"
 
 #: ../app/actions/file-actions.c:117
-#, fuzzy
 msgid "Save this image"
-msgstr "छवि सहेजें"
+msgstr "यह छवि सहेजें"
 
 #: ../app/actions/file-actions.c:122
 msgid "Save _As..."
