@@ -134,6 +134,17 @@ typedef enum
 } GimpTabStyle;
 
 
+#define GIMP_TYPE_TAG_ENTRY_MODE       (gimp_tag_entry_mode_get_type ())
+
+GType gimp_tag_entry_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TAG_ENTRY_MODE_QUERY,
+  GIMP_TAG_ENTRY_MODE_ASSIGN,
+} GimpTagEntryMode;
+
+
 #define GIMP_TYPE_WINDOW_HINT (gimp_window_hint_get_type ())
 
 GType gimp_window_hint_get_type (void) G_GNUC_CONST;

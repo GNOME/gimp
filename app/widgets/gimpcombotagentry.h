@@ -36,27 +36,27 @@ typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;
 
 struct _GimpComboTagEntry
 {
-  GimpTagEntry                  parent_instance;
+  GimpTagEntry    parent_instance;
 
-  GtkWidget                    *popup;
-  GimpFilteredContainer        *filtered_container;
-  gint                          focus_width;
-  PangoAttrList                *normal_item_attr;
-  PangoAttrList                *selected_item_attr;
-  PangoAttrList                *insensitive_item_attr;
-  GdkColor                      selected_item_color;
-  gboolean                      interior_focus;
+  GtkWidget      *popup;
+  gint            focus_width;
+  PangoAttrList  *normal_item_attr;
+  PangoAttrList  *selected_item_attr;
+  PangoAttrList  *insensitive_item_attr;
+  GdkColor        selected_item_color;
+  gboolean        interior_focus;
 };
 
 struct _GimpComboTagEntryClass
 {
-  GimpTagEntryClass             parent_class;
+  GimpTagEntryClass  parent_class;
 };
 
 
-GType       gimp_combo_tag_entry_get_type       (void) G_GNUC_CONST;
+GType       gimp_combo_tag_entry_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_combo_tag_entry_new            (GimpFilteredContainer *filtered_container,
-                                                 GimpTagEntryMode       mode);
+GtkWidget * gimp_combo_tag_entry_new      (GimpFilteredContainer *container,
+                                           GimpTagEntryMode       mode);
+
 
 #endif  /*  __GIMP_COMBO_TAG_ENTRY_H__  */

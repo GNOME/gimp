@@ -1,3 +1,14 @@
+2008-12-31  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-enums.[ch]: added GimpTagEntryMode.
+
+	* app/widgets/gimptagentry.[ch]: removed it here. Also did some
+	code cleanup, mostly formatting.
+
+	* app/widgets/gimpcombotagentry.[ch]
+	* app/widgets/gimptagpopup.[ch]: some code cleanup, mostly
+	formatting.
+
 2008-12-30  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpitemtreeview.h: deleted trailing whitespace.

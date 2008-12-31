@@ -32,49 +32,46 @@
 
 typedef struct _GimpTagPopupClass  GimpTagPopupClass;
 
-typedef struct
-{
-  GimpTag              *tag;
-  GdkRectangle          bounds;
-  GtkStateType          state;
-} PopupTagData;
+typedef struct _PopupTagData PopupTagData;
 
 struct _GimpTagPopup
 {
-  GtkWindow             parent_instance;
-  GimpComboTagEntry    *combo_entry;
-  GtkWidget            *alignment;
-  GtkWidget            *drawing_area;
-  PangoContext         *context;
-  PangoLayout          *layout;
-  PopupTagData         *tag_data;
-  PopupTagData         *prelight;
-  gint                  tag_count;
-  GList                *close_rectangles;
-  guint                 timeout_id;
-  gint                  scroll_height;
-  gint                  scroll_y;
-  gint                  scroll_step;
-  gint                  scroll_arrow_height;
-  gboolean              scroll_fast;
-  gboolean              arrows_visible;
-  gboolean              ignore_button_release;
-  gboolean              upper_arrow_prelight;
-  gboolean              lower_arrow_prelight;
-  gboolean              single_select_disabled;
-  GtkStateType          upper_arrow_state;
-  GtkStateType          lower_arrow_state;
+  GtkWindow          parent_instance;
+  GimpComboTagEntry *combo_entry;
+  GtkWidget         *alignment;
+  GtkWidget         *drawing_area;
+  PangoContext      *context;
+  PangoLayout       *layout;
+  PopupTagData      *tag_data;
+  PopupTagData      *prelight;
+  gint               tag_count;
+  GList             *close_rectangles;
+  guint              timeout_id;
+  gint               scroll_height;
+  gint               scroll_y;
+  gint               scroll_step;
+  gint               scroll_arrow_height;
+  gboolean           scroll_fast;
+  gboolean           arrows_visible;
+  gboolean           ignore_button_release;
+  gboolean           upper_arrow_prelight;
+  gboolean           lower_arrow_prelight;
+  gboolean           single_select_disabled;
+  GtkStateType       upper_arrow_state;
+  GtkStateType       lower_arrow_state;
 };
 
 struct _GimpTagPopupClass
 {
-  GtkWindowClass        parent_class;
+  GtkWindowClass  parent_class;
 };
 
 
-GType       gimp_tag_popup_get_type       (void) G_GNUC_CONST;
+GType       gimp_tag_popup_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tag_popup_new            (GimpComboTagEntry             *combo_entry);
-void        gimp_tag_popup_show           (GimpTagPopup                  *popup);
+GtkWidget * gimp_tag_popup_new      (GimpComboTagEntry *entry);
+
+void        gimp_tag_popup_show     (GimpTagPopup      *popup);
+
 
 #endif  /*  __GIMP_TAG_POPUP_H__  */
