@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-04 11:28+0100\n"
-"PO-Revision-Date: 2008-12-04 11:28+0100\n"
+"POT-Creation-Date: 2008-12-31 01:01+0100\n"
+"PO-Revision-Date: 2008-12-31 01:03+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -87,13 +87,13 @@ msgstr ""
 "die Zugriffsrechte des Auslagerungsverzeichnisses das in Ihren Einstellungen "
 "angegeben ist .(derzeit »%s«)."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
 "Kein Interpreter angegeben, es wird der Standardinterpreter »%s« verwendet.\n"
 
-#: ../app/batch.c:93 ../app/batch.c:111
+#: ../app/batch.c:94 ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -271,7 +271,7 @@ msgid "Brush Editor"
 msgstr "Pinseleditor"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:106 ../app/core/gimp.c:838
+#: ../app/actions/actions.c:106 ../app/core/gimp.c:856
 #: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2744
 msgid "Brushes"
 msgstr "Pinsel"
@@ -350,7 +350,7 @@ msgid "Gradient Editor"
 msgstr "Farbverlaufseditor"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:160 ../app/core/gimp.c:850
+#: ../app/actions/actions.c:160 ../app/core/gimp.c:868
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradients"
 msgstr "Farbverläufe"
@@ -379,13 +379,13 @@ msgid "Palette Editor"
 msgstr "Paletteneditor"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:178 ../app/core/gimp.c:846
+#: ../app/actions/actions.c:178 ../app/core/gimp.c:864
 #: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2752
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:181 ../app/core/gimp.c:842
+#: ../app/actions/actions.c:181 ../app/core/gimp.c:860
 #: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2748
 msgid "Patterns"
 msgstr "Muster"
@@ -394,7 +394,7 @@ msgstr "Muster"
 msgid "Plug-Ins"
 msgstr "Plugins"
 
-#: ../app/actions/actions.c:187 ../app/core/gimpchannel.c:376
+#: ../app/actions/actions.c:187 ../app/core/gimpchannel.c:369
 msgid "Quick Mask"
 msgstr "Schnellmaske"
 
@@ -407,7 +407,7 @@ msgid "Select"
 msgstr "Auswählen"
 
 #. initialize the template list
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:859
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:877
 #: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "Vorlagen"
@@ -729,7 +729,7 @@ msgstr "_Deckkraft:"
 #: ../app/actions/channels-commands.c:118
 #: ../app/actions/channels-commands.c:160
 #: ../app/actions/channels-commands.c:164
-#: ../app/widgets/gimpchanneltreeview.c:318
+#: ../app/widgets/gimpchanneltreeview.c:334
 msgid "New Channel"
 msgstr "Neuer Kanal"
 
@@ -743,8 +743,8 @@ msgstr "Farbe für neuen Kanal"
 
 #: ../app/actions/channels-commands.c:244
 #: ../app/display/gimpdisplayshell-dnd.c:585
-#: ../app/widgets/gimpchanneltreeview.c:250
-#: ../app/widgets/gimplayertreeview.c:772 ../app/widgets/gimptoolbox-dnd.c:314
+#: ../app/widgets/gimpchanneltreeview.c:266
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:314
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s (Kopie)"
@@ -930,7 +930,7 @@ msgstr "Das Ergebnis der Komposition aller sichtbaren Ebenen verwenden"
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:538
-#: ../app/widgets/gimplayertreeview.c:729 ../app/widgets/gimptoolbox-dnd.c:159
+#: ../app/widgets/gimplayertreeview.c:758 ../app/widgets/gimptoolbox-dnd.c:159
 #: ../app/widgets/gimptoolbox.c:978
 #, c-format
 msgid ""
@@ -943,23 +943,23 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1419
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1412
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:772
+#: ../app/core/gimppalette.c:379 ../app/dialogs/palette-import-dialog.c:772
 #: ../app/pdb/image-cmds.c:2198 ../app/widgets/gimpdnd-xds.c:93
 msgid "Untitled"
 msgstr "Unbenannt"
 
-#: ../app/actions/data-commands.c:231
+#: ../app/actions/data-commands.c:233
 msgid "Delete Object"
 msgstr "Objekt löschen"
 
-#: ../app/actions/data-commands.c:254
+#: ../app/actions/data-commands.c:256
 #, c-format
 msgid "Delete '%s'?"
 msgstr "»%s« löschen?"
 
-#: ../app/actions/data-commands.c:257
+#: ../app/actions/data-commands.c:259
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
@@ -2043,7 +2043,7 @@ msgstr "Fehlerprotokoll in Datei _speichern …"
 
 #: ../app/actions/error-console-actions.c:60
 msgctxt "error-console-action"
-msgid "Write all error mesaages to a file"
+msgid "Write all error messages to a file"
 msgstr "Alle Fehlermeldungen in eine Datei schreiben"
 
 #: ../app/actions/error-console-actions.c:65
@@ -3600,7 +3600,7 @@ msgstr "Ebeneneigenschaften bearbeiten"
 #: ../app/actions/layers-commands.c:251 ../app/actions/layers-commands.c:253
 #: ../app/actions/layers-commands.c:321 ../app/actions/layers-commands.c:325
 #: ../app/widgets/gimpdrawabletreeview.c:328
-#: ../app/widgets/gimplayertreeview.c:834
+#: ../app/widgets/gimplayertreeview.c:863
 msgid "New Layer"
 msgstr "Neue Ebene"
 
@@ -3616,7 +3616,7 @@ msgstr "Sichtbar"
 msgid "Set Layer Boundary Size"
 msgstr "Ebenengröße festlegen"
 
-#: ../app/actions/layers-commands.c:610 ../app/core/gimplayer.c:266
+#: ../app/actions/layers-commands.c:610 ../app/core/gimplayer.c:253
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
@@ -3632,7 +3632,7 @@ msgstr "Auswahl aus Ebenenmaske"
 msgid "Please select a channel first"
 msgstr "Bitte wählen Sie zunächst einen Kanal aus"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1324
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1311
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
@@ -7059,33 +7059,38 @@ msgstr "Ordner »%s« wird angelegt …"
 msgid "Cannot create folder '%s': %s"
 msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
-#: ../app/core/gimp.c:543
+#: ../app/core/gimp.c:555
 msgid "Initialization"
 msgstr "Startvorgang"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:618
+#: ../app/core/gimp.c:634
 msgid "Internal Procedures"
 msgstr "Interne Prozeduren"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:834
+#: ../app/core/gimp.c:852
 msgid "Looking for data files"
 msgstr "Es wird nach Arbeitsdaten gesucht"
 
-#: ../app/core/gimp.c:834
+#: ../app/core/gimp.c:852
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:854
+#: ../app/core/gimp.c:872
 msgid "Fonts (this may take a while)"
 msgstr "Schriften (dies kann einen Augenblick dauern)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2772
+#: ../app/core/gimp.c:881 ../app/dialogs/preferences-dialog.c:2772
 msgid "Modules"
 msgstr "Module"
+
+#. update tag cache
+#: ../app/core/gimp.c:885
+msgid "Updating tag cache"
+msgstr "Tagdatenbank wird aufgefrischt"
 
 #: ../app/core/gimpbrush-load.c:177
 #, c-format
@@ -7254,97 +7259,97 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Nach Farbe auswählen"
 
-#: ../app/core/gimpchannel.c:270
+#: ../app/core/gimpchannel.c:263
 msgid "Channel"
 msgstr "Kanal"
 
-#: ../app/core/gimpchannel.c:271
+#: ../app/core/gimpchannel.c:264
 msgid "Rename Channel"
 msgstr "Kanal umbenennen"
 
-#: ../app/core/gimpchannel.c:272
+#: ../app/core/gimpchannel.c:265
 msgid "Move Channel"
 msgstr "Kanal verschieben"
 
-#: ../app/core/gimpchannel.c:273
+#: ../app/core/gimpchannel.c:266
 msgid "Scale Channel"
 msgstr "Kanal skalieren"
 
-#: ../app/core/gimpchannel.c:274
+#: ../app/core/gimpchannel.c:267
 msgid "Resize Channel"
 msgstr "Kanalgröße ändern"
 
-#: ../app/core/gimpchannel.c:275
+#: ../app/core/gimpchannel.c:268
 msgid "Flip Channel"
 msgstr "Kanal spiegeln"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:269
 msgid "Rotate Channel"
 msgstr "Kanal drehen"
 
-#: ../app/core/gimpchannel.c:277 ../app/core/gimpdrawable-transform.c:843
+#: ../app/core/gimpchannel.c:270 ../app/core/gimpdrawable-transform.c:843
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:271
 msgid "Stroke Channel"
 msgstr "Kanal nachzeichnen"
 
-#: ../app/core/gimpchannel.c:300
+#: ../app/core/gimpchannel.c:293
 msgid "Feather Channel"
 msgstr "Kanal ausblenden"
 
-#: ../app/core/gimpchannel.c:301
+#: ../app/core/gimpchannel.c:294
 msgid "Sharpen Channel"
 msgstr "Kanal schärfen"
 
-#: ../app/core/gimpchannel.c:302
+#: ../app/core/gimpchannel.c:295
 msgid "Clear Channel"
 msgstr "Kanal löschen"
 
-#: ../app/core/gimpchannel.c:303
+#: ../app/core/gimpchannel.c:296
 msgid "Fill Channel"
 msgstr "Kanal füllen"
 
-#: ../app/core/gimpchannel.c:304
+#: ../app/core/gimpchannel.c:297
 msgid "Invert Channel"
 msgstr "Kanal umkehren"
 
-#: ../app/core/gimpchannel.c:305
+#: ../app/core/gimpchannel.c:298
 msgid "Border Channel"
 msgstr "Kanal umranden"
 
-#: ../app/core/gimpchannel.c:306
+#: ../app/core/gimpchannel.c:299
 msgid "Grow Channel"
 msgstr "Kanal vergrößern"
 
-#: ../app/core/gimpchannel.c:307
+#: ../app/core/gimpchannel.c:300
 msgid "Shrink Channel"
 msgstr "Kanal verkleinern"
 
-#: ../app/core/gimpchannel.c:720
+#: ../app/core/gimpchannel.c:713
 msgid "Cannot stroke empty channel."
 msgstr "Leere Kanäle können nicht nachgezogen werden."
 
-#: ../app/core/gimpchannel.c:1706
+#: ../app/core/gimpchannel.c:1699
 msgid "Set Channel Color"
 msgstr "Farbe für Kanal setzen"
 
-#: ../app/core/gimpchannel.c:1772
+#: ../app/core/gimpchannel.c:1765
 msgid "Set Channel Opacity"
 msgstr "Kanaldeckkraft setzen"
 
-#: ../app/core/gimpchannel.c:1880 ../app/core/gimpselection.c:523
+#: ../app/core/gimpchannel.c:1873 ../app/core/gimpselection.c:523
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
-#: ../app/core/gimpdata.c:526 ../app/core/gimptoolpresets.c:279
+#: ../app/core/gimpdata.c:570 ../app/core/gimptoolpresets.c:279
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "»%s« konnte nicht gelöscht werden: %s"
 
-#: ../app/core/gimpdatafactory.c:415 ../app/core/gimpdatafactory.c:575
-#: ../app/core/gimpdatafactory.c:595
+#: ../app/core/gimpdatafactory.c:437 ../app/core/gimpdatafactory.c:597
+#: ../app/core/gimpdatafactory.c:617
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7355,21 +7360,21 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:494 ../app/core/gimpdatafactory.c:497
+#: ../app/core/gimpdatafactory.c:516 ../app/core/gimpdatafactory.c:519
 #: ../app/core/gimpitem.c:388 ../app/core/gimpitem.c:391
 msgid "copy"
 msgstr "Kopie"
 
-#: ../app/core/gimpdatafactory.c:506 ../app/core/gimpitem.c:400
+#: ../app/core/gimpdatafactory.c:528 ../app/core/gimpitem.c:400
 #, c-format
 msgid "%s copy"
 msgstr "%s-Kopie"
 
-#: ../app/core/gimpdatafactory.c:576
+#: ../app/core/gimpdatafactory.c:598
 msgid "You don't have a writable data folder configured."
 msgstr "Sie haben keinen beschreibbaren Datenordner eingestellt."
 
-#: ../app/core/gimpdatafactory.c:751
+#: ../app/core/gimpdatafactory.c:797
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7482,7 +7487,7 @@ msgctxt "command"
 msgid "Rotate"
 msgstr "Drehen"
 
-#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:270
+#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:257
 msgid "Transform Layer"
 msgstr "Ebene transformieren"
 
@@ -7708,119 +7713,119 @@ msgstr "Prüfpunkt verschieben"
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
 
-#: ../app/core/gimpimage.c:1521
+#: ../app/core/gimpimage.c:1514
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: ../app/core/gimpimage.c:1565
+#: ../app/core/gimpimage.c:1558
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: ../app/core/gimpimage.c:2407
+#: ../app/core/gimpimage.c:2400
 msgid "Attach Parasite to Image"
 msgstr "Parasit an Bild zuweisen"
 
-#: ../app/core/gimpimage.c:2445
+#: ../app/core/gimpimage.c:2438
 msgid "Remove Parasite from Image"
 msgstr "Parasit von Bild entfernen"
 
-#: ../app/core/gimpimage.c:2951
+#: ../app/core/gimpimage.c:2944
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:3016 ../app/core/gimpimage.c:3043
+#: ../app/core/gimpimage.c:3009 ../app/core/gimpimage.c:3036
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3032
+#: ../app/core/gimpimage.c:3025
 msgid "Remove Floating Selection"
 msgstr "Schwebende Auswahl entfernen"
 
-#: ../app/core/gimpimage.c:3193
+#: ../app/core/gimpimage.c:3186
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3198
+#: ../app/core/gimpimage.c:3191
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3218
+#: ../app/core/gimpimage.c:3211
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3223
+#: ../app/core/gimpimage.c:3216
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3234
+#: ../app/core/gimpimage.c:3227
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3249
+#: ../app/core/gimpimage.c:3242
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3302
+#: ../app/core/gimpimage.c:3295
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3352 ../app/core/gimpimage.c:3365
+#: ../app/core/gimpimage.c:3345 ../app/core/gimpimage.c:3358
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3424
+#: ../app/core/gimpimage.c:3417
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3429
+#: ../app/core/gimpimage.c:3422
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: ../app/core/gimpimage.c:3440
+#: ../app/core/gimpimage.c:3433
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3461
+#: ../app/core/gimpimage.c:3454
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3466
+#: ../app/core/gimpimage.c:3459
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3481
+#: ../app/core/gimpimage.c:3474
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3535
+#: ../app/core/gimpimage.c:3528
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3579
+#: ../app/core/gimpimage.c:3572
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3632
+#: ../app/core/gimpimage.c:3625
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3637
+#: ../app/core/gimpimage.c:3630
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3648
+#: ../app/core/gimpimage.c:3641
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3668
+#: ../app/core/gimpimage.c:3661
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3673
+#: ../app/core/gimpimage.c:3666
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3688
+#: ../app/core/gimpimage.c:3681
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -7877,15 +7882,15 @@ msgstr[1] "%d Ebenen"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Vorschaudatei »%s« konnte nicht geöffnet werden: %s"
 
-#: ../app/core/gimpitem.c:1334
+#: ../app/core/gimpitem.c:1350
 msgid "Attach Parasite"
 msgstr "Parasit zuweisen"
 
-#: ../app/core/gimpitem.c:1344
+#: ../app/core/gimpitem.c:1360
 msgid "Attach Parasite to Item"
 msgstr "Parasit an Objekt zuweisen"
 
-#: ../app/core/gimpitem.c:1386 ../app/core/gimpitem.c:1393
+#: ../app/core/gimpitem.c:1402 ../app/core/gimpitem.c:1409
 msgid "Remove Parasite from Item"
 msgstr "Parasit von Objekt entfernen"
 
@@ -7893,7 +7898,7 @@ msgstr "Parasit von Objekt entfernen"
 msgid "Anchor Floating Selection"
 msgstr "Schwebende Auswahl verankern"
 
-#: ../app/core/gimplayer-floating-sel.c:132 ../app/core/gimplayer.c:688
+#: ../app/core/gimplayer-floating-sel.c:132 ../app/core/gimplayer.c:675
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -7905,38 +7910,38 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Schwebende Auswahl in Ebene"
 
-#: ../app/core/gimplayer.c:263
+#: ../app/core/gimplayer.c:250
 msgid "Layer"
 msgstr "Ebene"
 
-#: ../app/core/gimplayer.c:264
+#: ../app/core/gimplayer.c:251
 msgid "Rename Layer"
 msgstr "Ebene umbenennen"
 
-#: ../app/core/gimplayer.c:265 ../app/pdb/layer-cmds.c:434
+#: ../app/core/gimplayer.c:252 ../app/pdb/layer-cmds.c:434
 #: ../app/pdb/layer-cmds.c:472
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
-#: ../app/core/gimplayer.c:267
+#: ../app/core/gimplayer.c:254
 msgid "Resize Layer"
 msgstr "Ebenengröße ändern"
 
-#: ../app/core/gimplayer.c:268
+#: ../app/core/gimplayer.c:255
 msgid "Flip Layer"
 msgstr "Ebene spiegeln"
 
-#: ../app/core/gimplayer.c:269
+#: ../app/core/gimplayer.c:256
 msgid "Rotate Layer"
 msgstr "Ebene drehen"
 
-#: ../app/core/gimplayer.c:426 ../app/core/gimplayer.c:1383
+#: ../app/core/gimplayer.c:413 ../app/core/gimplayer.c:1370
 #: ../app/core/gimplayermask.c:212
 #, c-format
 msgid "%s mask"
 msgstr "%s Maske"
 
-#: ../app/core/gimplayer.c:466
+#: ../app/core/gimplayer.c:453
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -7945,39 +7950,39 @@ msgstr ""
 "Schwebende Auswahl\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1307
+#: ../app/core/gimplayer.c:1294
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, da diese Ebene bereits eine "
 "Maske hat."
 
-#: ../app/core/gimplayer.c:1318
+#: ../app/core/gimplayer.c:1305
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1438
+#: ../app/core/gimplayer.c:1425
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: ../app/core/gimplayer.c:1613 ../app/core/gimplayermask.c:239
+#: ../app/core/gimplayer.c:1600 ../app/core/gimplayermask.c:239
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: ../app/core/gimplayer.c:1614
+#: ../app/core/gimplayer.c:1601
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: ../app/core/gimplayer.c:1733
+#: ../app/core/gimplayer.c:1720
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: ../app/core/gimplayer.c:1787
+#: ../app/core/gimplayer.c:1774
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: ../app/core/gimplayer.c:1807
+#: ../app/core/gimplayer.c:1794
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
@@ -10004,12 +10009,12 @@ msgid "Drop New Path"
 msgstr "Neuen Pfad ablegen"
 
 #: ../app/display/gimpdisplayshell-dnd.c:498
-#: ../app/widgets/gimplayertreeview.c:718
+#: ../app/widgets/gimplayertreeview.c:747
 msgid "Drop layers"
 msgstr "Ebenen ablegen"
 
 #: ../app/display/gimpdisplayshell-dnd.c:649
-#: ../app/widgets/gimplayertreeview.c:800 ../app/widgets/gimptoolbox-dnd.c:362
+#: ../app/widgets/gimplayertreeview.c:829 ../app/widgets/gimptoolbox-dnd.c:362
 msgid "Dropped Buffer"
 msgstr "Importierte Ablage"
 
@@ -10104,12 +10109,12 @@ msgstr "Das Plugin %s konnte das Bild nicht öffnen"
 msgid "Image doesn't contain any layers"
 msgstr "Das Bild enthält keine Ebenen"
 
-#: ../app/file/file-open.c:552
+#: ../app/file/file-open.c:555
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "»%s« konnte nicht geöffnet werden: %s"
 
-#: ../app/file/file-open.c:659
+#: ../app/file/file-open.c:661
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10121,7 +10126,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Unbekannter Dateityp"
 
-#: ../app/file/file-save.c:192
+#: ../app/file/file-save.c:194
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Das Plugin %s konnte das Bild nicht speichern"
@@ -10200,7 +10205,7 @@ msgstr "Tinte"
 msgid "Paintbrush"
 msgstr "Pinsel"
 
-#: ../app/paint/gimppaintcore.c:135
+#: ../app/paint/gimppaintcore.c:137
 msgid "Paint"
 msgstr "Zeichnen"
 
@@ -11720,12 +11725,12 @@ msgstr "_GEGL-Operationen …"
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "GEGL-Operationen funktionieren nicht mit indizierten Ebenen."
 
-#: ../app/tools/gimpgegltool.c:335
+#: ../app/tools/gimpgegltool.c:334
 msgid "_Operation:"
 msgstr "_Operation:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:408
+#: ../app/tools/gimpgegltool.c:407
 msgid "Operation Settings"
 msgstr "Operationseinstellungen"
 
@@ -12133,13 +12138,13 @@ msgstr "_Pinsel"
 
 #: ../app/tools/gimppaintoptions-gui.c:112
 #: ../app/tools/gimpselectionoptions.c:211
-#: ../app/widgets/gimpbrushselect.c:191 ../app/widgets/gimplayertreeview.c:268
+#: ../app/widgets/gimpbrushselect.c:191 ../app/widgets/gimplayertreeview.c:297
 msgid "Mode:"
 msgstr "Modus:"
 
 #: ../app/tools/gimppaintoptions-gui.c:127
 #: ../app/tools/gimptransformoptions.c:348
-#: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:283
+#: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:312
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
@@ -12564,19 +12569,19 @@ msgstr "Te_xt"
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
-#: ../app/tools/gimptexttool.c:1827
+#: ../app/tools/gimptexttool.c:1826
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
-#: ../app/tools/gimptexttool.c:1956 ../app/tools/gimptexttool.c:1959
+#: ../app/tools/gimptexttool.c:1955 ../app/tools/gimptexttool.c:1958
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1963
+#: ../app/tools/gimptexttool.c:1962
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1987
+#: ../app/tools/gimptexttool.c:1986
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13086,11 +13091,11 @@ msgstr "Prozentsatz der Pinselbreite"
 msgid "(None)"
 msgstr "(Keine)"
 
-#: ../app/widgets/gimpchanneltreeview.c:120
+#: ../app/widgets/gimpchanneltreeview.c:128
 msgid "Reorder Channel"
 msgstr "Kanalreihenfolge ändern"
 
-#: ../app/widgets/gimpchanneltreeview.c:323
+#: ../app/widgets/gimpchanneltreeview.c:339
 msgid "Empty Channel"
 msgstr "Leerer Kanal"
 
@@ -13841,27 +13846,27 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "Farben"
 
-#: ../app/widgets/gimpitemtreeview.c:981
+#: ../app/widgets/gimpitemtreeview.c:1024
 msgid "Set Item Exclusive Visible"
 msgstr "Objekt exklusiv anzeigen"
 
-#: ../app/widgets/gimpitemtreeview.c:989
+#: ../app/widgets/gimpitemtreeview.c:1032
 msgid "Set Item Exclusive Linked"
 msgstr "Objekt exklusiv verknüpfen"
 
-#: ../app/widgets/gimplayertreeview.c:217
+#: ../app/widgets/gimplayertreeview.c:240
 msgid "Reorder Layer"
 msgstr "Ebenenreihenfolge ändern"
 
-#: ../app/widgets/gimplayertreeview.c:305
+#: ../app/widgets/gimplayertreeview.c:334
 msgid "Lock alpha channel"
 msgstr "Alphakanal sperren"
 
-#: ../app/widgets/gimplayertreeview.c:317
+#: ../app/widgets/gimplayertreeview.c:346
 msgid "Lock:"
 msgstr "Sperre:"
 
-#: ../app/widgets/gimplayertreeview.c:840
+#: ../app/widgets/gimplayertreeview.c:869
 msgid "Empty Layer"
 msgstr "Leere Ebene"
 
@@ -14003,6 +14008,22 @@ msgstr "Strichmuster:"
 #: ../app/widgets/gimpstrokeeditor.c:300
 msgid "Dash _preset:"
 msgstr "_Vordefinierter Strich:"
+
+#: ../app/widgets/gimptagentry.c:44
+msgid "filter"
+msgstr ""
+
+#: ../app/widgets/gimptagentry.c:45
+msgid "enter tags"
+msgstr ""
+
+#. Seperator for tags
+#. * IMPORTANT: use only one of Unicode terminal punctuation chars.
+#. * http://unicode.org/review/pr-23.html
+#.
+#: ../app/widgets/gimptagentry.c:1669
+msgid ","
+msgstr ","
 
 #: ../app/widgets/gimptemplateeditor.c:180
 #, c-format
@@ -14350,17 +14371,17 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status und Beschreibung"
 
-#: ../app/widgets/widgets-enums.c:307
+#: ../app/widgets/widgets-enums.c:336
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Normales Fenster"
 
-#: ../app/widgets/widgets-enums.c:308
+#: ../app/widgets/widgets-enums.c:337
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "Werkzeugfenster"
 
-#: ../app/widgets/widgets-enums.c:309
+#: ../app/widgets/widgets-enums.c:338
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Zuoberst behalten"
@@ -14466,21 +14487,3 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "Remove dangling entries"
-#~ msgstr "Hängende Einträge entfernen"
-
-#~ msgid "Save error log"
-#~ msgstr "Fehlerprotokoll speichern"
-
-#~ msgid "Save selection"
-#~ msgstr "Auswahl speichern"
-
-#~ msgid "Rescan font list"
-#~ msgstr "Schriftenliste neu einlesen"
-
-#~ msgid "Delete this color"
-#~ msgstr "Diese Farbe löschen"
-
-#~ msgid "Raise tool"
-#~ msgstr "Werkzeug anheben"
