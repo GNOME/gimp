@@ -159,9 +159,8 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
                                                         ("Filtered container"),
                                                         ("The Filtered container"),
                                                         GIMP_TYPE_FILTERED_CONTAINER,
-                                                        G_PARAM_CONSTRUCT_ONLY
-                                                        | G_PARAM_WRITABLE
-                                                        | G_PARAM_READABLE));
+                                                        G_PARAM_CONSTRUCT_ONLY |
+                                                        G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_MODE,
@@ -170,21 +169,20 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
                                                       ("Mode in which to work."),
                                                       GIMP_TYPE_TAG_ENTRY_MODE,
                                                       GIMP_TAG_ENTRY_MODE_QUERY,
-                                                      G_PARAM_CONSTRUCT_ONLY
-                                                      | G_PARAM_WRITABLE
-                                                      | G_PARAM_READABLE));
+                                                      G_PARAM_CONSTRUCT_ONLY |
+                                                      G_PARAM_READWRITE));
 }
 
 static void
 gimp_tag_entry_init (GimpTagEntry *entry)
 {
-  entry->container    = NULL;
-  entry->selected_items        = NULL;
-  entry->tab_completion_index  = -1;
-  entry->mode                  = GIMP_TAG_ENTRY_MODE_QUERY;
-  entry->description_shown     = FALSE;
-  entry->has_invalid_tags      = FALSE;
-  entry->mask                  = g_string_new ("");
+  entry->container            = NULL;
+  entry->selected_items       = NULL;
+  entry->tab_completion_index = -1;
+  entry->mode                 = GIMP_TAG_ENTRY_MODE_QUERY;
+  entry->description_shown    = FALSE;
+  entry->has_invalid_tags     = FALSE;
+  entry->mask                 = g_string_new ("");
 
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_tag_entry_activate),
@@ -259,9 +257,7 @@ gimp_tag_entry_set_property (GObject      *object,
   switch (property_id)
     {
       case PROP_CONTAINER:
-        entry->container = g_value_get_object (value);
-        g_assert (GIMP_IS_FILTERED_CONTAINER (entry->container));
-        g_object_ref (entry->container);
+        entry->container = g_value_dup_object (value);
         g_signal_connect (entry->container, "add",
                           G_CALLBACK (gimp_tag_entry_container_changed),
                           entry);
