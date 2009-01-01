@@ -1,5 +1,12 @@
 2009-01-01  Sven Neumann  <sven@gimp.org>
 
+	Bug 565112 – code duplication in app/core/gimpimage-snap.c
+
+	* app/core/gimpimage-snap.c: based on a patch from Daniel Hornung,
+	add the utility function gimp_image_snap_distance().
+
+2009-01-01  Sven Neumann  <sven@gimp.org>
+
 	* app/about.h (GIMP_COPYRIGHT): Happy New Year!
 
 2009-01-01  Sven Neumann  <sven@gimp.org>
