@@ -105,8 +105,8 @@ static void  gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                             GimpProgress      *progress);
 
 static inline void  untransform_coords     (const GimpMatrix3 *m,
-                                            gint               x,
-                                            gint               y,
+                                            const gint         x,
+                                            const gint         y,
                                             gdouble           *tu,
                                             gdouble           *tv,
                                             gdouble           *tw);
@@ -126,21 +126,22 @@ static inline gboolean supersample_dtest   (const gdouble u0,
                                             const gdouble u3,
                                             const gdouble v3);
 
-static void     sample_adapt      (PixelSurround *surround,
-                                   const gdouble  uc,
-                                   const gdouble  vc,
-                                   const gdouble  u0,
-                                   const gdouble  v0,
-                                   const gdouble  u1,
-                                   const gdouble  v1,
-                                   const gdouble  u2,
-                                   const gdouble  v2,
-                                   const gdouble  u3,
-                                   const gdouble  v3,
-                                   const  gint    level,
+static void     sample_adapt      (TileManager   *tm,
+                                   const gdouble  xc,
+                                   const gdouble  yc,
+                                   const gdouble  x0,
+                                   const gdouble  y0,
+                                   const gdouble  x1,
+                                   const gdouble  y1,
+                                   const gdouble  x2,
+                                   const gdouble  y2,
+                                   const gdouble  x3,
+                                   const gdouble  y3,
+                                   const gint     level,
                                    guchar        *color,
-                                   const gint     bpp,
-                                   const gint     alpha);
+                                   const guchar  *bg_color,
+                                   gint           bpp,
+                                   gint           alpha);
 
 static void     sample_linear     (PixelSurround *surround,
                                    const gdouble  u,
@@ -431,14 +432,14 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
               if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
-                  sample_adapt (surround,
+                  sample_adapt (orig_tiles,
                                 u[0] - u1, v[0] - v1,
                                 u[1] - u1, v[1] - v1,
                                 u[2] - u1, v[2] - v1,
                                 u[3] - u1, v[3] - v1,
                                 u[4] - u1, v[4] - v1,
                                 recursion_level,
-                                d, destPR->bytes, alpha);
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
@@ -533,14 +534,14 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
               if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
-                  sample_adapt (surround,
+                  sample_adapt (orig_tiles,
                                 u[0] - u1, v[0] - v1,
                                 u[1] - u1, v[1] - v1,
                                 u[2] - u1, v[2] - v1,
                                 u[3] - u1, v[3] - v1,
                                 u[4] - u1, v[4] - v1,
                                 recursion_level,
-                                d, destPR->bytes, alpha);
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
@@ -641,14 +642,14 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
               if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
-                  sample_adapt (surround,
+                  sample_adapt (orig_tiles,
                                 u[0] - u1, v[0] - v1,
                                 u[1] - u1, v[1] - v1,
                                 u[2] - u1, v[2] - v1,
                                 u[3] - u1, v[3] - v1,
                                 u[4] - u1, v[4] - v1,
                                 recursion_level,
-                                d, destPR->bytes, alpha);
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
@@ -838,42 +839,49 @@ sample_linear (PixelSurround *surround,
     bilinear interpolation of a fixed point pixel
 */
 static void
-sample_bi (PixelSurround *surround,
-           const gint     x,
-           const gint     y,
-           guchar        *color,
-           const gint     bpp,
-           const gint     alpha)
+sample_bi (TileManager  *tm,
+           const gint    x,
+           const gint    y,
+           guchar       *color,
+           const guchar *bg_color,
+           const gint    bpp,
+           const gint    alpha)
 {
-  const gint    xscale = x & (FIXED_UNIT - 1);
-  const gint    yscale = y & (FIXED_UNIT - 1);
-  const gint    x0     = x >> FIXED_SHIFT;
-  const gint    y0     = y >> FIXED_SHIFT;
-  gint          rowstride;
-  const guchar *src    = pixel_surround_lock (surround, x0, y0, &rowstride);
-  const guchar *s0     = src;
-  const guchar *s1     = src + bpp;
-  const guchar *s2     = src + rowstride;
-  const guchar *s3     = src + rowstride + bpp;
-  gint          i;
+  const gint xscale = (x & (FIXED_UNIT-1));
+  const gint yscale = (y & (FIXED_UNIT-1));
+  const gint x0 = x >> FIXED_SHIFT;
+  const gint y0 = y >> FIXED_SHIFT;
+  const gint x1 = x0 + 1;
+  const gint y1 = y0 + 1;
+  guchar     C[4][4];
+  gint       i;
+
+  /*  fill the color with default values, since read_pixel_data_1
+   *  does nothing, when accesses are out of bounds.
+   */
+  for (i = 0; i < 4; i++)
+    *(guint*) (&C[i]) = *(guint*) (bg_color);
+
+  read_pixel_data_1 (tm, x0, y0, C[0]);
+  read_pixel_data_1 (tm, x1, y0, C[2]);
+  read_pixel_data_1 (tm, x0, y1, C[1]);
+  read_pixel_data_1 (tm, x1, y1, C[3]);
 
 #define lerp(v1, v2, r) \
         (((guint)(v1) * (FIXED_UNIT - (guint)(r)) + \
           (guint)(v2) * (guint)(r)) >> FIXED_SHIFT)
 
-  color[alpha]= lerp (lerp (s0[alpha], s1[alpha], yscale),
-                      lerp (s2[alpha], s3[alpha], yscale), xscale);
+  color[alpha]= lerp (lerp (C[0][alpha], C[1][alpha], yscale),
+                      lerp (C[2][alpha], C[3][alpha], yscale), xscale);
 
   if (color[alpha])
     {
       /* to avoid problems, calculate with premultiplied alpha */
       for (i = 0; i < alpha; i++)
-        {
-          color[i] = lerp (lerp (s0[i] * s0[alpha] / 255,
-                                 s1[i] * s1[alpha] / 255, yscale),
-                           lerp (s2[i] * s2[alpha] / 255,
-                                 s3[i] * s3[alpha] / 255, yscale), xscale);
-        }
+        color[i] = lerp (lerp (C[0][i] * C[0][alpha] / 255,
+                               C[1][i] * C[1][alpha] / 255, yscale),
+                         lerp (C[2][i] * C[2][alpha] / 255,
+                               C[3][i] * C[3][alpha] / 255, yscale), xscale);
     }
   else
     {
@@ -936,29 +944,30 @@ supersample_dtest (const gdouble x0, const gdouble y0,
     0..3 is a cycle around the quad
 */
 static void
-get_sample (PixelSurround *surround,
-            const gint     xc,
-            const gint     yc,
-            const gint     x0,
-            const gint     y0,
-            const gint     x1,
-            const gint     y1,
-            const gint     x2,
-            const gint     y2,
-            const gint     x3,
-            const gint     y3,
-            gint          *cc,
-            const gint     level,
-            guint         *color,
-            const gint     bpp,
-            const gint     alpha)
+get_sample (TileManager  *tm,
+            const gint    xc,
+            const gint    yc,
+            const gint    x0,
+            const gint    y0,
+            const gint    x1,
+            const gint    y1,
+            const gint    x2,
+            const gint    y2,
+            const gint    x3,
+            const gint    y3,
+            gint         *cc,
+            const gint    level,
+            guint        *color,
+            const guchar *bg_color,
+            const gint    bpp,
+            const gint    alpha)
 {
   if (!level || !supersample_test (x0, y0, x1, y1, x2, y2, x3, y3))
     {
       gint   i;
       guchar C[4];
 
-      sample_bi (surround, xc, yc, C, bpp, alpha);
+      sample_bi (tm, xc, yc, C, bg_color, bpp, alpha);
 
       for (i = 0; i < bpp; i++)
         color[i]+= C[i];
@@ -992,30 +1001,30 @@ get_sample (PixelSurround *surround,
       bry = (y2 + yc) / 2;
       by  = (y3 + y2) / 2;
 
-      get_sample (surround,
+      get_sample (tm,
                   tlx,tly,
                   x0,y0, tx,ty, xc,yc, lx,ly,
-                  cc, level-1, color, bpp, alpha);
+                  cc, level-1, color, bg_color, bpp, alpha);
 
-      get_sample (surround,
+      get_sample (tm,
                   trx,try,
                   tx,ty, x1,y1, rx,ry, xc,yc,
-                  cc, level-1, color, bpp, alpha);
+                  cc, level-1, color, bg_color, bpp, alpha);
 
-      get_sample (surround,
+      get_sample (tm,
                   brx,bry,
                   xc,yc, rx,ry, x2,y2, bx,by,
-                  cc, level-1, color, bpp, alpha);
+                  cc, level-1, color, bg_color, bpp, alpha);
 
-      get_sample (surround,
+      get_sample (tm,
                   blx,bly,
                   lx,ly, xc,yc, bx,by, x3,y3,
-                  cc, level-1, color, bpp, alpha);
+                  cc, level-1, color, bg_color, bpp, alpha);
     }
 }
 
 static void
-sample_adapt (PixelSurround *surround,
+sample_adapt (TileManager   *tm,
               const gdouble  xc,
               const gdouble  yc,
               const gdouble  x0,
@@ -1028,6 +1037,7 @@ sample_adapt (PixelSurround *surround,
               const gdouble  y3,
               const gint     level,
               guchar        *color,
+              const guchar  *bg_color,
               const gint     bpp,
               const gint     alpha)
 {
@@ -1037,13 +1047,13 @@ sample_adapt (PixelSurround *surround,
 
     C[0] = C[1] = C[2] = C[3] = 0;
 
-    get_sample (surround,
+    get_sample (tm,
                 DOUBLE2FIXED (xc), DOUBLE2FIXED (yc),
                 DOUBLE2FIXED (x0), DOUBLE2FIXED (y0),
                 DOUBLE2FIXED (x1), DOUBLE2FIXED (y1),
                 DOUBLE2FIXED (x2), DOUBLE2FIXED (y2),
                 DOUBLE2FIXED (x3), DOUBLE2FIXED (y3),
-                &cc, level, C, bpp, alpha);
+                &cc, level, C, bg_color, bpp, alpha);
 
     if (!cc)
       cc=1;
@@ -1124,8 +1134,8 @@ sample_cubic (PixelSurround *surround,
   gint          i;
   const gint    iu = floor(u);
   const gint    iv = floor(v);
-  gdouble       du, dv;
   gint          rowstride;
+  gdouble       du, dv;
   const guchar *data;
 
   /* lock the pixel surround */

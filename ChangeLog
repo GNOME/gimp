@@ -1,3 +1,10 @@
+2009-01-01  Sven Neumann  <sven@gimp.org>
+
+	Bug 565223 – Perspective transformation jagged edges / comb effect
+
+	* app/core/gimp-transform-region.c: reverted the code change, but
+	not the cleanups, from commit r26786.
+
 2008-12-31  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/widgets-enums.[ch]: added GimpTagEntryMode.
