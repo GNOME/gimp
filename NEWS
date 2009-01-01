@@ -12,6 +12,7 @@ Overview of Changes from GIMP 2.6.3 to GIMP 2.6.4
 
 * Bugs fixed:
 
+ 565223 – Perspective transformation jagged edges / comb effect
  563985 – jpg save dialog: "cancel" is treated like "commit"
           for settings
  564087 – Using clone tool on a layer with a part out of canvas
