@@ -54,7 +54,6 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
-#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 

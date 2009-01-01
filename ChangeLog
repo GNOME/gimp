@@ -1,5 +1,9 @@
 2009-01-01  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c: removed unused include.
+
+2009-01-01  Sven Neumann  <sven@gimp.org>
+
 	Bug 565112 – code duplication in app/core/gimpimage-snap.c
 
 	* app/core/gimpimage-snap.c: based on a patch from Daniel Hornung,
