@@ -2,19 +2,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
-# Rajesh Ranjan <rranjan@redhat.com>, 2005, 2008.
+# Rajesh Ranjan <rranjan@redhat.com>, 2005, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-10 08:08+0000\n"
-"PO-Revision-Date: 2008-12-30 17:45+0530\n"
+"PO-Revision-Date: 2009-01-02 17:37+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
 "Language-Team: Hindi <hindi.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
+"\n"
+"\n"
 "\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
@@ -1825,16 +1828,15 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:128
 msgid "Save a Cop_y..."
-msgstr ""
+msgstr "एक कॉपी सहेजें (_y)..."
 
 #: ../app/actions/file-actions.c:129
 msgid "Save this image with a different name, but keep its current name"
 msgstr ""
 
 #: ../app/actions/file-actions.c:134
-#, fuzzy
 msgid "Save and Close..."
-msgstr "इस रूप में सहेजें... (_A)"
+msgstr "सहेजें व बंद करें..."
 
 #: ../app/actions/file-actions.c:135
 msgid "Save this image and close its window"
@@ -1843,12 +1845,11 @@ msgstr ""
 #: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
-msgstr ""
+msgstr "छवि खोलें"
 
 #: ../app/actions/file-commands.c:125
-#, fuzzy
 msgid "Open Image as Layers"
-msgstr "परत को पुनः नाम दो"
+msgstr "परत को बतौर छवि खोलें"
 
 #: ../app/actions/file-commands.c:266
 msgid "Saving canceled"
@@ -1862,10 +1863,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"'%s' सहेजना विफल:\n"
+"\n"
+"%s"
 
 #: ../app/actions/file-commands.c:300
 msgid "No changes need to be saved"
-msgstr ""
+msgstr "सहेजे जाने के लिए कोई परिवर्तन की जरूरत नहीं"
 
 #: ../app/actions/file-commands.c:307 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
@@ -1873,38 +1877,38 @@ msgstr "छवि सहेजें"
 
 #: ../app/actions/file-commands.c:313
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "छवि की कॉपी एक सहेजें"
 
 #: ../app/actions/file-commands.c:333
 msgid "Create New Template"
-msgstr ""
+msgstr "नया नमूना बनाएँ"
 
 #: ../app/actions/file-commands.c:337
 msgid "Enter a name for this template"
-msgstr ""
+msgstr "इस नमूना के लिए नाम दें"
 
 #: ../app/actions/file-commands.c:363
 msgid "Revert failed. No file name associated with this image."
-msgstr ""
+msgstr "उलटना विफल. इस छवि से कोई फाइलनाम जुड़ा नहीं है."
 
 #: ../app/actions/file-commands.c:376
 msgid "Revert Image"
-msgstr ""
+msgstr "छवि उलटें"
 
 #: ../app/actions/file-commands.c:402
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr ""
+msgstr "'%s' को '%s' में उलटें?"
 
 #: ../app/actions/file-commands.c:408
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
-msgstr ""
+msgstr "डिस्क पर सहेजे स्थिति में छवि को बदलने के लिए, आपके सभी बदलाव नष्ट हो जायेंगे, सभी अनावृत्ति सूचना के साथ."
 
 #: ../app/actions/file-commands.c:563
 msgid "(Unnamed Template)"
-msgstr ""
+msgstr "(बेनामी नमूना)"
 
 #: ../app/actions/file-commands.c:611
 #, c-format
@@ -1913,35 +1917,37 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"'%s' में उलटना विफल:\n"
+"\n"
+"%s"
 
 #: ../app/actions/fonts-actions.c:44
 msgid "Fonts Menu"
-msgstr ""
+msgstr "फ़ॉन्ट मेन्यू"
 
 #: ../app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
-msgstr ""
+msgstr "फॉन्ट सूची फिर स्कैन करें (_R)"
 
 #: ../app/actions/fonts-actions.c:49
 msgid "Rescan font list"
-msgstr ""
+msgstr "फ़ॉन्ट सूची फिर स्कैन करें"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
-msgstr ""
+msgstr "ढाल संपादक मेन्यू"
 
 #: ../app/actions/gradient-editor-actions.c:50
-#, fuzzy
 msgid "Left Color Type"
-msgstr "पाठ रंग"
+msgstr "बायाँ रंग प्रकार"
 
 #: ../app/actions/gradient-editor-actions.c:52
 msgid "_Load Left Color From"
-msgstr ""
+msgstr "बाएँ रंग को इससे लोड करें (_L)"
 
 #: ../app/actions/gradient-editor-actions.c:54
 msgid "_Save Left Color To"
-msgstr ""
+msgstr "इसमें बाएँ रंग को सहेजें (_S)"
 
 #: ../app/actions/gradient-editor-actions.c:57
 msgid "Right Color Type"
@@ -1949,27 +1955,27 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:59
 msgid "Load Right Color Fr_om"
-msgstr ""
+msgstr "इससे दाहिने रंग को लोड करें (_o)"
 
 #: ../app/actions/gradient-editor-actions.c:61
 msgid "Sa_ve Right Color To"
-msgstr ""
+msgstr "इसमें दाहिने रंग को सहेजें (_v)"
 
 #: ../app/actions/gradient-editor-actions.c:67
 msgid "L_eft Endpoint's Color..."
-msgstr ""
+msgstr "बायाँ अंतबिंदु रंग (_e)..."
 
 #: ../app/actions/gradient-editor-actions.c:72
 msgid "R_ight Endpoint's Color..."
-msgstr ""
+msgstr "दाहिना अंतबिंदु रंग (_i)..."
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgid "Ble_nd Endpoints' Colors"
-msgstr ""
+msgstr "मिश्रित अंतबिंदु रंग (_n)"
 
 #: ../app/actions/gradient-editor-actions.c:117
 msgid "Blend Endpoints' Opacit_y"
-msgstr ""
+msgstr "मिश्रित अंतबिंदु अपारदर्शिता (_y)"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
@@ -1977,82 +1983,76 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:156
 msgid "_Left Neighbor's Right Endpoint"
-msgstr ""
+msgstr "बायाँ पड़ोसी दाहिना अंतबिंदु (_L)"
 
 #: ../app/actions/gradient-editor-actions.c:161
 msgid "_Right Endpoint"
-msgstr ""
+msgstr "दाहिना अंतबिंदु (_R)"
 
 #: ../app/actions/gradient-editor-actions.c:166
 #: ../app/actions/gradient-editor-actions.c:214
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "अग्रभूमि का रंग"
+msgstr "अग्रभूमि रंग (_F)"
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:301
-#, fuzzy
 msgid "_Background Color"
-msgstr "पृष्ठभूमि रंग: (_B)"
+msgstr "पृष्ठभूमि रंग (_B)"
 
 #: ../app/actions/gradient-editor-actions.c:204
 msgid "_Right Neighbor's Left Endpoint"
-msgstr ""
+msgstr "दाहिना पड़ोसी का बायाँ अंतबिंदु (_R)"
 
 #: ../app/actions/gradient-editor-actions.c:209
 msgid "_Left Endpoint"
-msgstr ""
+msgstr "बायाँ अंतबिंदु (_L)"
 
 #: ../app/actions/gradient-editor-actions.c:258
 #: ../app/actions/gradient-editor-actions.c:286
-#, fuzzy
 msgid "_Fixed"
-msgstr "फ़ाइल (_F)"
+msgstr "स्थिर (_F)"
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
-#, fuzzy
 msgid "F_oreground Color"
-msgstr "अग्रभूमि का रंग"
+msgstr "अग्रभूमि का रंग (_o)"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
-#, fuzzy
 msgid "Fo_reground Color (Transparent)"
-msgstr "अग्रभूमि का रंग"
+msgstr "अग्रभूमि का रंग (_r) (पारदर्शी)"
 
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
-#, fuzzy
 msgid "B_ackground Color (Transparent)"
-msgstr "पृष्ठभूमि रंग"
+msgstr "पृष्ठभूमि का रंग (_a) (पारदर्शी)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
-msgstr ""
+msgstr "रैखिक (_L)"
 
 #: ../app/actions/gradient-editor-actions.c:319
 msgid "_Curved"
-msgstr ""
+msgstr "वक्र (_C)"
 
 #: ../app/actions/gradient-editor-actions.c:324
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "साइनोस्वाइडल (_S)"
 
 #: ../app/actions/gradient-editor-actions.c:329
 msgid "Spherical (i_ncreasing)"
-msgstr ""
+msgstr "गोलाकार (बढ रहा है (_n))"
 
 #: ../app/actions/gradient-editor-actions.c:334
 msgid "Spherical (_decreasing)"
-msgstr ""
+msgstr "गोलाकार (घट रहा है (_d))"
 
 #: ../app/actions/gradient-editor-actions.c:339
 #: ../app/actions/gradient-editor-actions.c:362
 msgid "(Varies)"
-msgstr ""
+msgstr "(बदलता है)"
 
 #: ../app/actions/gradient-editor-actions.c:347
 #: ../app/actions/image-actions.c:141
@@ -2061,11 +2061,11 @@ msgstr "आरजीबी  (_R)"
 
 #: ../app/actions/gradient-editor-actions.c:352
 msgid "HSV (_counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (वामावर्त वर्ण (_c))"
 
 #: ../app/actions/gradient-editor-actions.c:357
 msgid "HSV (clockwise _hue)"
-msgstr ""
+msgstr "HSV (दक्षिणावर्त वर्ण (_h))"
 
 #: ../app/actions/gradient-editor-actions.c:370
 #: ../app/actions/view-actions.c:273
@@ -2096,143 +2096,147 @@ msgstr "सभी ज़ूम"
 #: ../app/actions/gradient-editor-actions.c:383
 #: ../app/actions/palette-editor-actions.c:100
 msgid "Zoom all"
-msgstr ""
+msgstr "सभी जूम करें"
 
 #: ../app/actions/gradient-editor-actions.c:773
 msgid "_Blending Function for Segment"
-msgstr ""
+msgstr "खंड के लिए मिश्रण कार्य (_B)"
 
 #: ../app/actions/gradient-editor-actions.c:775
 msgid "Coloring _Type for Segment"
-msgstr ""
+msgstr "खंड के लिए रंग प्रकार (_T)"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "_Flip Segment"
-msgstr ""
+msgstr "खंड पलटें (_F)"
 
 #: ../app/actions/gradient-editor-actions.c:780
 msgid "_Replicate Segment..."
-msgstr ""
+msgstr "खंड नकल करें (_R)..."
 
 #: ../app/actions/gradient-editor-actions.c:782
 msgid "Split Segment at _Midpoint"
-msgstr ""
+msgstr "मध्यबिंदु पर खंड बाँटें (_M)"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "Split Segment _Uniformly..."
-msgstr ""
+msgstr "खंड समरूप ढंग से बांटें (_U)..."
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "_Delete Segment"
-msgstr ""
+msgstr "खंड मिटाएँ (_D)"
 
 #: ../app/actions/gradient-editor-actions.c:788
 msgid "Re-_center Segment's Midpoint"
-msgstr ""
+msgstr "खंड के मध्यबिंदु को पुनर्केंद्रित करें (_c)"
 
 #: ../app/actions/gradient-editor-actions.c:790
 msgid "Re-distribute _Handles in Segment"
-msgstr ""
+msgstr "खंड में नियंत्रण पुनर्वितरित करें (_H)"
 
 #: ../app/actions/gradient-editor-actions.c:795
 msgid "_Blending Function for Selection"
-msgstr ""
+msgstr "चयन के लिए मिश्रण कार्य (_B)"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "Coloring _Type for Selection"
-msgstr ""
+msgstr "चयन के लिए रंग प्रकार (_T)"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "_Flip Selection"
-msgstr ""
+msgstr "चयन पलटें (_F)"
 
 #: ../app/actions/gradient-editor-actions.c:802
 msgid "_Replicate Selection..."
-msgstr ""
+msgstr "चयन नकल करें (_R)..."
 
 #: ../app/actions/gradient-editor-actions.c:804
 msgid "Split Segments at _Midpoints"
-msgstr ""
+msgstr "मध्यबिंदु पर खंड बांटें (_M)"
 
 #: ../app/actions/gradient-editor-actions.c:806
 msgid "Split Segments _Uniformly..."
-msgstr ""
+msgstr "खंड समरूप ढंग से बांटें (_U)..."
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "_Delete Selection"
-msgstr ""
+msgstr "चयन मिटाएँ (_D)"
 
 #: ../app/actions/gradient-editor-actions.c:810
 msgid "Re-_center Midpoints in Selection"
-msgstr ""
+msgstr "चयन में मध्यबिंदु पुनर्केंद्रित करें (_c)"
 
 #: ../app/actions/gradient-editor-actions.c:812
 msgid "Re-distribute _Handles in Selection"
-msgstr ""
+msgstr "चयन में नियंत्रण पुनर्वितरित करें (_H)"
 
 #: ../app/actions/gradient-editor-commands.c:86
 msgid "Left Endpoint Color"
-msgstr ""
+msgstr "बायां अंतबिंदु रंग"
 
 #: ../app/actions/gradient-editor-commands.c:88
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr ""
+msgstr "ढाल खंड का बायाँ अंतबिंदु रंग"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
-msgstr ""
+msgstr "दाहिना अंतबिंदु रंग"
 
 #: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr ""
+msgstr "ढाल खंड का दाहिना अंतबिंदु रंग"
 
 #: ../app/actions/gradient-editor-commands.c:453
 msgid "Replicate Segment"
-msgstr ""
+msgstr "खंड दुहराएँ"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr ""
+msgstr "ढाल खंड दुहराएँ"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
-msgstr ""
+msgstr "चयन दुहराएँ"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
-msgstr ""
+msgstr "ढाल चयन दुहराएँ"
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
-msgstr ""
+msgstr "दुहराएँ"
 
 #: ../app/actions/gradient-editor-commands.c:492
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"चयनित खंड को दुहराने के लिए\n"
+"आवृत्ति संख्या चुनें."
 
 #: ../app/actions/gradient-editor-commands.c:495
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"चयन को दुहराने के लिए\n"
+"आवृत्ति संख्या चुनें."
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
-msgstr ""
+msgstr "खंड को समरूप ढंग से बांटें"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr ""
+msgstr "ढाल खंड समरूप तरह से बांटें"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
-msgstr ""
+msgstr "खंड को समरूप ढंग से बांटें"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr ""
+msgstr "ढाल खंड समरूप तरह से बाँटें"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2243,37 +2247,40 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr ""
+"समरूप हिस्से की संख्या चुनें\n"
+"जिसमें चयनित खंड को बाँटा जाना है."
 
 #: ../app/actions/gradient-editor-commands.c:597
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
+"समरूप हिस्से की संख्या चुनें\n"
+"जिसमें चयन में खंड को बाँटा जाना है."
 
 #: ../app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
-msgstr ""
+msgstr "ढाल मेन्यू"
 
 #: ../app/actions/gradients-actions.c:48
 msgid "_New Gradient"
-msgstr ""
+msgstr "नया ढाल (_N)"
 
 #: ../app/actions/gradients-actions.c:49
 msgid "New gradient"
-msgstr ""
+msgstr "नया ढाल"
 
 #: ../app/actions/gradients-actions.c:54
 msgid "D_uplicate Gradient"
-msgstr ""
+msgstr "नकली ढाल (_u)"
 
 #: ../app/actions/gradients-actions.c:55
 msgid "Duplicate gradient"
-msgstr ""
+msgstr "नकली ढाल"
 
 #: ../app/actions/gradients-actions.c:60
-#, fuzzy
 msgid "Copy Gradient _Location"
-msgstr "स्थान खोलें"
+msgstr "ढाल स्थान की नक़ल लें (_L)"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
@@ -2281,11 +2288,11 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
-msgstr ""
+msgstr "_POV-किरण रूप में सहेजें..."
 
 #: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
-msgstr ""
+msgstr "ढाल को बतौर POV-किरण सहेजें"
 
 #: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
@@ -2297,24 +2304,24 @@ msgstr "ग्रेडिऐन्ट् मिटाओ"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
-msgstr ""
+msgstr "ढाल ताजा करें (_R)"
 
 #: ../app/actions/gradients-actions.c:79
 msgid "Refresh gradients"
-msgstr ""
+msgstr "ढाल ताजा करें"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr ""
+msgstr "ढाल संपादित करें (_E)..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr ""
+msgstr "ढाल संपादित करें"
 
 #: ../app/actions/gradients-commands.c:66
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr ""
+msgstr "'%s' को बतौर POV-किरण सहेजें"
 
 #: ../app/actions/help-actions.c:38 ../app/actions/help-actions.c:41
 msgid "_Help"
@@ -2326,7 +2333,7 @@ msgstr ""
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
-msgstr ""
+msgstr "संदर्भ मदद (_C)"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
@@ -2334,29 +2341,27 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:47 ../app/actions/image-actions.c:51
 msgid "Image Menu"
-msgstr ""
+msgstr "छवि मेन्यू"
 
 #: ../app/actions/image-actions.c:54
 msgid "_Image"
 msgstr "छवि (_I)"
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgid "_Mode"
-msgstr "मोड"
+msgstr "मोड (_M)"
 
 #: ../app/actions/image-actions.c:56 ../app/actions/layers-actions.c:56
 msgid "_Transform"
-msgstr ""
+msgstr "रूपांतरित करें (_T)"
 
 #: ../app/actions/image-actions.c:57
 msgid "_Guides"
-msgstr ""
+msgstr "गाइड (_G)"
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 msgid "I_nfo"
-msgstr "पूर्ववत् करें (_U)"
+msgstr "सूचना (_n)"
 
 #: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
@@ -2365,12 +2370,11 @@ msgstr "स्वचालितः (_A)"
 
 #: ../app/actions/image-actions.c:62 ../app/actions/plug-in-actions.c:95
 msgid "_Map"
-msgstr ""
+msgstr "मानचित्र (_M)"
 
 #: ../app/actions/image-actions.c:63
-#, fuzzy
 msgid "C_omponents"
-msgstr "दस्तावेज़"
+msgstr "घटक (_o)"
 
 #: ../app/actions/image-actions.c:66
 msgid "_New..."
@@ -2382,7 +2386,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:72
 msgid "Can_vas Size..."
-msgstr ""
+msgstr "कैनवास आकार (_v)..."
 
 #: ../app/actions/image-actions.c:73
 msgid "Adjust the image dimensions"
@@ -2390,16 +2394,15 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:78
 msgid "F_it Canvas to Layers"
-msgstr ""
+msgstr "परत में कैनवास को फिट करें (_i)"
 
 #: ../app/actions/image-actions.c:79
 msgid "Resize the image to enclose all layers"
 msgstr ""
 
 #: ../app/actions/image-actions.c:84
-#, fuzzy
 msgid "F_it Canvas to Selection"
-msgstr "चयन पलटें"
+msgstr "चयन में कैनवास फिट करें (_i)"
 
 #: ../app/actions/image-actions.c:85
 msgid "Resize the image to the extents of the selection"
@@ -2407,7 +2410,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:90
 msgid "_Print Size..."
-msgstr ""
+msgstr "छपाई आकार (_P)..."
 
 #: ../app/actions/image-actions.c:91
 msgid "Adjust the print resolution"
@@ -2415,16 +2418,15 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:96
 msgid "_Scale Image..."
-msgstr ""
+msgstr "छवि मापें (_S)..."
 
 #: ../app/actions/image-actions.c:97
 msgid "Change the size of the image content"
 msgstr ""
 
 #: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:188
-#, fuzzy
 msgid "_Crop to Selection"
-msgstr "चयन पलटें"
+msgstr "चयन में काटें (_C)"
 
 #: ../app/actions/image-actions.c:103
 msgid "Crop the image to the extents of the selection"
@@ -2432,7 +2434,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:108
 msgid "_Duplicate"
-msgstr ""
+msgstr "नकली (_D)"
 
 #: ../app/actions/image-actions.c:109
 msgid "Create a duplicate of this image"
@@ -2440,7 +2442,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:114
 msgid "Merge Visible _Layers..."
-msgstr ""
+msgstr "दृश्य परत मिलाएँ (_L)..."
 
 #: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:141
 msgid "Merge all visible layers into one layer"
@@ -2448,7 +2450,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:146
 msgid "_Flatten Image"
-msgstr ""
+msgstr "छवि चपटा करें (_F)"
 
 #: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:147
 msgid "Merge all layers into one and remove transparency"
@@ -2456,16 +2458,15 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:126
 msgid "Configure G_rid..."
-msgstr ""
+msgstr "जाल विन्यस्त करें (_r)..."
 
 #: ../app/actions/image-actions.c:127
 msgid "Configure the grid for this image"
 msgstr ""
 
 #: ../app/actions/image-actions.c:132
-#, fuzzy
 msgid "Image Pr_operties"
-msgstr "गुण (_P)"
+msgstr "छवि गुण (_o)"
 
 #: ../app/actions/image-actions.c:133
 msgid "Display information about this image"
@@ -2485,7 +2486,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:151
 msgid "_Indexed..."
-msgstr ""
+msgstr "सूचीबद्ध (_I)..."
 
 #: ../app/actions/image-actions.c:152
 msgid "Convert the image to indexed colors"
@@ -2513,40 +2514,37 @@ msgstr ""
 
 #: ../app/actions/image-commands.c:235
 msgid "Set Image Canvas Size"
-msgstr ""
+msgstr "छवि कैनवास आकार सेट करें"
 
 #: ../app/actions/image-commands.c:261 ../app/actions/image-commands.c:282
 #: ../app/actions/image-commands.c:559
-#, fuzzy
 msgid "Resizing"
-msgstr "आकार बदलें"
+msgstr "आकार बदल रहा है"
 
 #: ../app/actions/image-commands.c:306
 msgid "Set Image Print Resolution"
-msgstr ""
+msgstr "छवि का छपाई विभेदन सेट करें"
 
 #: ../app/actions/image-commands.c:362
 #: ../app/pdb/drawable-transform-cmds.c:148
 #: ../app/pdb/drawable-transform-cmds.c:223
-#, fuzzy
 msgid "Flipping"
-msgstr "प्लिप करो"
+msgstr "पलट रहा है"
 
 #: ../app/actions/image-commands.c:383
 #: ../app/pdb/drawable-transform-cmds.c:525
 #: ../app/pdb/drawable-transform-cmds.c:604 ../app/pdb/image-cmds.c:533
 #: ../app/pdb/transform-tools-cmds.c:215 ../app/tools/gimprotatetool.c:122
-#, fuzzy
 msgid "Rotating"
-msgstr "घूमती हुई..."
+msgstr "घूम रहा है"
 
 #: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
+msgstr "काट नहीं सकता है क्योंकि मौजूदा चयन रिक्त है."
 
 #: ../app/actions/image-commands.c:606
 msgid "Change Print Size"
-msgstr ""
+msgstr "छपाई आकार बदलें"
 
 #: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
@@ -2565,56 +2563,55 @@ msgstr "स्केलिंग"
 
 #: ../app/actions/images-actions.c:43
 msgid "Images Menu"
-msgstr ""
+msgstr "छवि मेन्यू"
 
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
-msgstr ""
+msgstr "दृश्य उठाएँ (_R)"
 
 #: ../app/actions/images-actions.c:48
 msgid "Raise this image's displays"
-msgstr ""
+msgstr "इस छवि का प्रदर्शन उठाएँ"
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
 msgid "_New View"
-msgstr ""
+msgstr "नया दृश्य (_N)"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr ""
+msgstr "इस छवि के लिए नया प्रदर्शन बनाएँ"
 
 #: ../app/actions/images-actions.c:59
 msgid "_Delete Image"
-msgstr ""
+msgstr "छवि मिटाएँ (_D)"
 
 #: ../app/actions/images-actions.c:60
 msgid "Delete this image"
-msgstr ""
+msgstr "इस छवि को मिटाएँ"
 
 #: ../app/actions/layers-actions.c:48
 msgid "Layers Menu"
-msgstr ""
+msgstr "परत मेन्यू"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr ""
+msgstr "परत (_L)"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
-msgstr ""
+msgstr "स्टैक (_k)"
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgid "Te_xt to Selection"
-msgstr "चयन पलटें"
+msgstr "चयन में पाठ (_x)"
 
 #: ../app/actions/layers-actions.c:54
 msgid "_Mask"
-msgstr ""
+msgstr "मुखौटा (_M)"
 
 #: ../app/actions/layers-actions.c:55
 msgid "Tr_ansparency"
-msgstr ""
+msgstr "पारदर्शिता (_a)"
 
 #: ../app/actions/layers-actions.c:57
 msgid "_Properties"
@@ -2622,11 +2619,11 @@ msgstr "गुण (_P)"
 
 #: ../app/actions/layers-actions.c:59
 msgid "Layer _Mode"
-msgstr ""
+msgstr "परत मोड (_M)"
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
-msgstr ""
+msgstr "पाठ औजार (_x)"
 
 #: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
@@ -2634,7 +2631,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
-msgstr ""
+msgstr "परत गुण संपादित करें (_E)..."
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
@@ -2642,7 +2639,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:74
 msgid "_New Layer..."
-msgstr ""
+msgstr "नई परत (_N)..."
 
 #: ../app/actions/layers-actions.c:75
 msgid "Create a new layer and add it to the image"
@@ -2650,16 +2647,15 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:80
 msgid "_New Layer"
-msgstr ""
+msgstr "नई परत (_N)"
 
 #: ../app/actions/layers-actions.c:81
 msgid "Create a new layer with last used values"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:86
-#, fuzzy
 msgid "New from _Visible"
-msgstr "देखने योग्य (_V)"
+msgstr "दृश्य से नया (_V)"
 
 #: ../app/actions/layers-actions.c:87
 msgid "Create a new layer from what is visible in this image"
@@ -2667,7 +2663,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:92
 msgid "D_uplicate Layer"
-msgstr ""
+msgstr "नक़ली परत (_u)"
 
 #: ../app/actions/layers-actions.c:93
 msgid "Create a duplicate of the layer and add it to the image"
@@ -2675,16 +2671,15 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:98
 msgid "_Delete Layer"
-msgstr ""
+msgstr "परत मिटाएँ (_D)"
 
 #: ../app/actions/layers-actions.c:99
-#, fuzzy
 msgid "Delete this layer"
-msgstr "परत मिटाओ"
+msgstr "यह परत मिटाएँ"
 
 #: ../app/actions/layers-actions.c:104
 msgid "_Raise Layer"
-msgstr ""
+msgstr "परत उठाएँ (_R)"
 
 #: ../app/actions/layers-actions.c:105
 msgid "Raise this layer one step in the layer stack"
@@ -2692,7 +2687,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:110
 msgid "Layer to _Top"
-msgstr ""
+msgstr "शीर्ष में परत (_T)"
 
 #: ../app/actions/layers-actions.c:111
 msgid "Move this layer to the top of the layer stack"
@@ -2700,7 +2695,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:116
 msgid "_Lower Layer"
-msgstr ""
+msgstr "निचली परत (_L)"
 
 #: ../app/actions/layers-actions.c:117
 msgid "Lower this layer one step in the layer stack"
@@ -2708,7 +2703,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:122
 msgid "Layer to _Bottom"
-msgstr ""
+msgstr "तल में परत (_B)"
 
 #: ../app/actions/layers-actions.c:123
 msgid "Move this layer to the bottom of the layer stack"
@@ -2716,7 +2711,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:128
 msgid "_Anchor Layer"
-msgstr ""
+msgstr "एंकर परत (_A)"
 
 #: ../app/actions/layers-actions.c:129
 msgid "Anchor the floating layer"
@@ -2724,7 +2719,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:134
 msgid "Merge Do_wn"
-msgstr ""
+msgstr "नीचे मिलाएँ (_w)"
 
 #: ../app/actions/layers-actions.c:135
 msgid "Merge this layer with the one below it"
@@ -2732,11 +2727,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:140
 msgid "Merge _Visible Layers..."
-msgstr ""
+msgstr "दृश्य परत मिलाएँ (_V)..."
 
 #: ../app/actions/layers-actions.c:152
 msgid "_Discard Text Information"
-msgstr ""
+msgstr "पाठ सूचना त्यागें (_D)"
 
 #: ../app/actions/layers-actions.c:153
 msgid "Turn this text layer into a normal layer"
@@ -2760,7 +2755,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:170
 msgid "Layer B_oundary Size..."
-msgstr ""
+msgstr "परत सीमा आकार (_o)..."
 
 #: ../app/actions/layers-actions.c:171
 msgid "Adjust the layer dimensions"
@@ -2768,7 +2763,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:176
 msgid "Layer to _Image Size"
-msgstr ""
+msgstr "छवि आकार में परत (_I)"
 
 #: ../app/actions/layers-actions.c:177
 msgid "Resize the layer to the size of the image"
@@ -2776,7 +2771,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:182
 msgid "_Scale Layer..."
-msgstr ""
+msgstr "परत मापें (_S)..."
 
 #: ../app/actions/layers-actions.c:183
 msgid "Change the size of the layer content"
@@ -2788,7 +2783,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:194
 msgid "Add La_yer Mask..."
-msgstr ""
+msgstr "परत मुखौटा जोड़ें (_y)..."
 
 #: ../app/actions/layers-actions.c:195
 msgid "Add a mask that allows non-destructive editing of transparency"
@@ -2796,7 +2791,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:200
 msgid "Add Alpha C_hannel"
-msgstr ""
+msgstr "अल्फा चैनल जोड़ें (_h)"
 
 #: ../app/actions/layers-actions.c:201
 msgid "Add transparency information to the layer"
@@ -2840,7 +2835,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:245
 msgid "Apply Layer _Mask"
-msgstr ""
+msgstr "परत मुखौटा लागू करें (_M)"
 
 #: ../app/actions/layers-actions.c:246
 msgid "Apply the effect of the layer mask and remove it"
@@ -2848,7 +2843,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:251
 msgid "Delete Layer Mas_k"
-msgstr ""
+msgstr "परत मुखौटा मिटाएँ (_k)"
 
 #: ../app/actions/layers-actions.c:252
 msgid "Remove the layer mask and its effect"
@@ -2856,7 +2851,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:260
 msgid "_Mask to Selection"
-msgstr ""
+msgstr "चयन में मुखौटा (_M)"
 
 #: ../app/actions/layers-actions.c:261
 msgid "Replace the selection with the layer mask"
@@ -2876,7 +2871,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:287
 msgid "Al_pha to Selection"
-msgstr ""
+msgstr "चयन में अल्फा (_p)"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Replace the selection with the layer's alpha channel"
@@ -2884,7 +2879,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
 msgid "A_dd to Selection"
-msgstr ""
+msgstr "चयन में जोडें (_d)"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Add the layer's alpha channel to the current selection"
@@ -2899,9 +2894,8 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
 msgid "_Text to Selection"
-msgstr "चयन पलटें"
+msgstr "चयन में पाठ (_T)"
 
 #: ../app/actions/layers-actions.c:315
 msgid "Replace the selection with the text layer's outline"
@@ -2921,16 +2915,15 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:341
 msgid "Select _Top Layer"
-msgstr ""
+msgstr "शीर्ष परत चुनें (_T)"
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgid "Select the topmost layer"
-msgstr "परत मिटाओ"
+msgstr "सबसे ऊपर की परत चुनें"
 
 #: ../app/actions/layers-actions.c:347
 msgid "Select _Bottom Layer"
-msgstr ""
+msgstr "तल परत चुनें (_B)"
 
 #: ../app/actions/layers-actions.c:348
 msgid "Select the bottommost layer"
@@ -2938,7 +2931,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:353
 msgid "Select _Previous Layer"
-msgstr ""
+msgstr "पिछला परत चुनें (_P)"
 
 #: ../app/actions/layers-actions.c:354
 msgid "Select the layer above the current layer"
@@ -2946,7 +2939,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:359
 msgid "Select _Next Layer"
-msgstr ""
+msgstr "अलगा परत चुनें (_N)"
 
 #: ../app/actions/layers-actions.c:360
 msgid "Select the layer below the current layer"
@@ -2954,47 +2947,46 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:368
 msgid "Set Opacity"
-msgstr ""
+msgstr "अपारदर्शिता सेट करें"
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
-msgstr ""
+msgstr "परत गुण"
 
 #: ../app/actions/layers-commands.c:206
 msgid "Edit Layer Attributes"
-msgstr ""
+msgstr "परत गुण संपादित करें"
 
 #: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
 #: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
-msgstr ""
+msgstr "नई परत"
 
 #: ../app/actions/layers-commands.c:254
 msgid "Create a New Layer"
-msgstr ""
+msgstr "नई परत बनाएँ"
 
 #: ../app/actions/layers-commands.c:352
-#, fuzzy
 msgid "Visible"
-msgstr "देखने योग्य (_V)"
+msgstr "दृष्टिगोचर"
 
 #: ../app/actions/layers-commands.c:571
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "परत सीमा आकार सेट करें"
 
 #: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
-msgstr ""
+msgstr "परत मापें"
 
 #: ../app/actions/layers-commands.c:649
 msgid "Crop Layer"
-msgstr ""
+msgstr "परत काटें"
 
 #: ../app/actions/layers-commands.c:788
 msgid "Layer Mask to Selection"
-msgstr ""
+msgstr "चयन में परत मुखौटा"
 
 #: ../app/actions/layers-commands.c:1036
 msgid "Please select a channel first"
@@ -3003,42 +2995,39 @@ msgstr ""
 #: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
-msgstr ""
+msgstr "परत मुखौटा जोड़ें"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgid "Palette Editor Menu"
-msgstr ""
+msgstr "रंग-पट्टिका संपादक मेन्यू"
 
 #: ../app/actions/palette-editor-actions.c:54
 msgid "_Delete Color"
-msgstr ""
+msgstr "रंग मिटाएँ (_D)"
 
 #: ../app/actions/palette-editor-actions.c:55
 msgid "Delete color"
 msgstr "रंग मिटाओ"
 
 #: ../app/actions/palette-editor-actions.c:63
-#, fuzzy
 msgid "Edit Active Palette"
-msgstr "सक्रिय फ़िल्टर्स"
+msgstr "सक्रिय रंग पट्टिका संपादित करें"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgid "New Color from _FG"
-msgstr ""
+msgstr "_FG से नया रंग"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgid "New color from foreground color"
-msgstr "अग्रभूमि का रंग"
+msgstr "अग्रभूमि के रंग से नया रंग"
 
 #: ../app/actions/palette-editor-actions.c:78
 msgid "New Color from _BG"
-msgstr ""
+msgstr "_BG से नया रंग"
 
 #: ../app/actions/palette-editor-actions.c:79
-#, fuzzy
 msgid "New color from background color"
-msgstr "पृष्ठभूमि रंग"
+msgstr "पृष्ठभूमि रंग से नया रंग"
 
 #: ../app/actions/palette-editor-actions.c:87
 #: ../app/actions/view-actions.c:261
@@ -3052,56 +3041,55 @@ msgstr "छोटा आकार (_O)"
 
 #: ../app/actions/palette-editor-actions.c:99
 msgid "Zoom _All"
-msgstr ""
+msgstr "सभी जूम करें (_A)"
 
 #: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
-msgstr ""
+msgstr "रंगपट्टिका रंग संपादित करें"
 
 #: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
-msgstr ""
+msgstr "रंगपट्टिका प्रविष्टि संपादित करें"
 
 #: ../app/actions/palettes-actions.c:44
 msgid "Palettes Menu"
-msgstr ""
+msgstr "रंग-पट्टिका मेन्यू"
 
 #: ../app/actions/palettes-actions.c:48
 msgid "_New Palette"
-msgstr ""
+msgstr "नयी रंग-पट्टिका (_N)"
 
 #: ../app/actions/palettes-actions.c:49
 msgid "New palette"
-msgstr ""
+msgstr "नयी रंग पट्टिका"
 
 #: ../app/actions/palettes-actions.c:54
 msgid "_Import Palette..."
-msgstr ""
+msgstr "रंग पट्टिका आयात करें (_I)..."
 
 #: ../app/actions/palettes-actions.c:55
 msgid "Import palette"
-msgstr ""
+msgstr "रंग पट्टिका आयात करें"
 
 #: ../app/actions/palettes-actions.c:60
 msgid "D_uplicate Palette"
-msgstr ""
+msgstr "नक़ली रंग पट्टिका (_u)"
 
 #: ../app/actions/palettes-actions.c:61
 msgid "Duplicate palette"
-msgstr ""
+msgstr "नक़ली रंग पट्टिका"
 
 #: ../app/actions/palettes-actions.c:66
 msgid "_Merge Palettes..."
-msgstr ""
+msgstr "रंग पट्टिका मिलाएँ (_M)..."
 
 #: ../app/actions/palettes-actions.c:67
 msgid "Merge palettes"
-msgstr ""
+msgstr "रंग पट्टिका मिलाएँ"
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "Copy Palette _Location"
-msgstr "स्थान खोलें"
+msgstr "रंगपट्टिका स्थान खोलें (_L)"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
@@ -3109,39 +3097,39 @@ msgstr ""
 
 #: ../app/actions/palettes-actions.c:78
 msgid "_Delete Palette"
-msgstr ""
+msgstr "रंग पट्टिका मिटाएँ (_D)"
 
 #: ../app/actions/palettes-actions.c:79
 msgid "Delete palette"
-msgstr ""
+msgstr "रंग पट्टिका मिटाएँ"
 
 #: ../app/actions/palettes-actions.c:84
 msgid "_Refresh Palettes"
-msgstr ""
+msgstr "रंग पट्टिका ताजा करें (_R)"
 
 #: ../app/actions/palettes-actions.c:85
 msgid "Refresh palettes"
-msgstr ""
+msgstr "रंग पट्टिका ताज़ा करें"
 
 #: ../app/actions/palettes-actions.c:93
 msgid "_Edit Palette..."
-msgstr ""
+msgstr "रंग पट्टिका संपादित करें (_E)..."
 
 #: ../app/actions/palettes-actions.c:94
 msgid "Edit palette"
-msgstr ""
+msgstr "रंग पट्टिका संपादित करें"
 
 #: ../app/actions/palettes-commands.c:74
 msgid "Merge Palette"
-msgstr ""
+msgstr "रंग पट्टिका मिलाएँ"
 
 #: ../app/actions/palettes-commands.c:78
 msgid "Enter a name for the merged palette"
-msgstr ""
+msgstr "मिलाए गए रंग पट्टिका के लिए नाम दें"
 
 #: ../app/actions/patterns-actions.c:43
 msgid "Patterns Menu"
-msgstr ""
+msgstr "नमूना मेन्यू"
 
 #: ../app/actions/patterns-actions.c:47
 msgid "_Open Pattern as Image"
@@ -3153,24 +3141,23 @@ msgstr ""
 
 #: ../app/actions/patterns-actions.c:53
 msgid "_New Pattern"
-msgstr ""
+msgstr "नया प्रारूप (_N)"
 
 #: ../app/actions/patterns-actions.c:54
 msgid "New pattern"
-msgstr ""
+msgstr "नया प्रारूप"
 
 #: ../app/actions/patterns-actions.c:59
 msgid "D_uplicate Pattern"
-msgstr ""
+msgstr "नक़ली प्रारूप (_u)"
 
 #: ../app/actions/patterns-actions.c:60
 msgid "Duplicate pattern"
-msgstr ""
+msgstr "नक़ली प्रारूप"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "Copy Pattern _Location"
-msgstr "स्थान खोलें"
+msgstr "प्रारूप स्थान की नक़ल लें (_L)"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
@@ -3182,56 +3169,55 @@ msgstr ""
 
 #: ../app/actions/patterns-actions.c:72
 msgid "Delete pattern"
-msgstr ""
+msgstr "प्रारूप मिटाएँ"
 
 #: ../app/actions/patterns-actions.c:77
 msgid "_Refresh Patterns"
-msgstr ""
+msgstr "प्रारूप ताज़ा करें (_R)"
 
 #: ../app/actions/patterns-actions.c:78
 msgid "Refresh patterns"
-msgstr ""
+msgstr "प्रारूप ताज़ा करें"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr ""
+msgstr "प्रारूप संपादित करें (_E)..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr ""
+msgstr "प्रारूप संपादित करें"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
-msgstr ""
+msgstr "फिल्टर (_r)"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
-msgstr ""
+msgstr "हाल में प्रयुक्त"
 
 #: ../app/actions/plug-in-actions.c:85
 msgid "_Blur"
-msgstr ""
+msgstr "धुंधला बनाएँ (_B)"
 
 #: ../app/actions/plug-in-actions.c:86
 msgid "_Noise"
-msgstr ""
+msgstr "ध्वनि (_N)"
 
 #: ../app/actions/plug-in-actions.c:87
 msgid "Edge-De_tect"
-msgstr ""
+msgstr "किनारा जांच (_t)"
 
 #: ../app/actions/plug-in-actions.c:88
 msgid "En_hance"
-msgstr ""
+msgstr "बढाएँ (_h)"
 
 #: ../app/actions/plug-in-actions.c:89
 msgid "C_ombine"
-msgstr ""
+msgstr "जोड़ें (_o)"
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgid "_Generic"
-msgstr "सामान्य"
+msgstr "सामान्य (_G)"
 
 #: ../app/actions/plug-in-actions.c:91
 msgid "_Light and Shadow"
@@ -3239,11 +3225,11 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:92
 msgid "_Distorts"
-msgstr ""
+msgstr "विरूपित करता है (_D)"
 
 #: ../app/actions/plug-in-actions.c:93
 msgid "_Artistic"
-msgstr ""
+msgstr "कलात्मक (_A)"
 
 #: ../app/actions/plug-in-actions.c:94
 msgid "_Decor"
@@ -3251,23 +3237,23 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
-msgstr ""
+msgstr "रेंडर करें (_R)"
 
 #: ../app/actions/plug-in-actions.c:97
 msgid "_Clouds"
-msgstr ""
+msgstr "बादल (_C)"
 
 #: ../app/actions/plug-in-actions.c:98
 msgid "_Nature"
-msgstr ""
+msgstr "प्रकृति (_N)"
 
 #: ../app/actions/plug-in-actions.c:100
 msgid "_Web"
-msgstr ""
+msgstr "वेब (_W)"
 
 #: ../app/actions/plug-in-actions.c:101
 msgid "An_imation"
-msgstr ""
+msgstr "संजीवन (_i)"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all _Filters"
@@ -3296,7 +3282,7 @@ msgstr ""
 #: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr ""
+msgstr "दुहराएँ (_p) \"%s\""
 
 #: ../app/actions/plug-in-actions.c:504
 #, c-format
@@ -3305,56 +3291,56 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:520
 msgid "Repeat Last"
-msgstr ""
+msgstr "अंतिम दुहराएँ"
 
 #: ../app/actions/plug-in-actions.c:522
 msgid "Re-Show Last"
-msgstr ""
+msgstr "अंतिम फिर दिखाएँ"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
-msgstr ""
+msgstr "सभी फिल्टर फिर सेट करें"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
-msgstr ""
+msgstr "तयशुदा मानों में क्या आप सभी फिल्टर को रिसेट करना चाहते हैं?"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
-msgstr ""
+msgstr "तेज मुखौटा मेन्यू"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
-msgstr ""
+msgstr "रंग और अपारदर्शिता विन्यस्त करें (_C)..."
 
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
-msgstr ""
+msgstr "तेज मुखौटा टॉगल करें (_Q)"
 
 #: ../app/actions/quick-mask-actions.c:54
 #: ../app/display/gimpdisplayshell.c:1158
 msgid "Toggle Quick Mask"
-msgstr ""
+msgstr "तेज मुखौटा टॉगल करें"
 
 #: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
-msgstr ""
+msgstr "मुखौटा चयनित क्षेत्र (_S)"
 
 #: ../app/actions/quick-mask-actions.c:68
 msgid "Mask _Unselected Areas"
-msgstr ""
+msgstr "मुखौटा विचयनित क्षेत्र (_U)"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
-msgstr ""
+msgstr "तेज मुखौटा गुण"
 
 #: ../app/actions/quick-mask-commands.c:108
 msgid "Edit Quick Mask Attributes"
-msgstr ""
+msgstr "तेज मुखौटा गुण संपादित करें"
 
 #: ../app/actions/quick-mask-commands.c:110
 msgid "Edit Quick Mask Color"
-msgstr ""
+msgstr "तेज मुखौटा रंग संपादित करें"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
@@ -3366,24 +3352,21 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
-msgstr ""
+msgstr "चयन संपादक मेन्यू"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
 msgstr "चुनें (_S)"
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgid "select|_All"
-msgstr "सभी चुनें"
+msgstr "select| सभी (_A)"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgid "Select everything"
-msgstr "चुनाव"
+msgstr "सभी चुनें"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgid "select|_None"
 msgstr "कुछ नहीं चुनें"
 
@@ -3396,13 +3379,12 @@ msgid "_Invert"
 msgstr "उलटें (_I)"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgid "Invert the selection"
 msgstr "चयन पलटें"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
-msgstr ""
+msgstr "प्लावित करें (_F)"
 
 #: ../app/actions/select-actions.c:69
 msgid "Create a floating selection"
@@ -3410,7 +3392,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:74
 msgid "Fea_ther..."
-msgstr ""
+msgstr "पंख (_t)..."
 
 #: ../app/actions/select-actions.c:75
 msgid "Blur the selection border so that it fades out smoothly"
@@ -3418,7 +3400,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
-msgstr ""
+msgstr "तीक्ष्ण करें (_S)"
 
 #: ../app/actions/select-actions.c:81
 msgid "Remove fuzzyness from the selection"
@@ -3426,25 +3408,23 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
-msgstr ""
+msgstr "सिकोड़ें (_h)..."
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgid "Contract the selection"
-msgstr "चयन पलटें"
+msgstr "चयन सिकोड़ें"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
-msgstr ""
+msgstr "बढाएँ (_G)..."
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgid "Enlarge the selection"
-msgstr "चयन पलटें"
+msgstr "चयन बड़ा करें"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
-msgstr ""
+msgstr "किनारा (_r)..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
@@ -3452,7 +3432,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
-msgstr ""
+msgstr "चैनल में सहेजें (_C)"
 
 #: ../app/actions/select-actions.c:105
 msgid "Save the selection to a channel"
@@ -3460,7 +3440,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr ""
+msgstr "स्ट्रोक चयन (_S)..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
@@ -3468,7 +3448,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
-msgstr ""
+msgstr "स्ट्रोक चयन (_S)"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
@@ -3476,19 +3456,19 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:153 ../app/core/gimpselection.c:167
 msgid "Feather Selection"
-msgstr ""
+msgstr "पंख चयन"
 
 #: ../app/actions/select-commands.c:157
 msgid "Feather selection by"
-msgstr ""
+msgstr "इसके द्वारा पंख चुनाव"
 
 #: ../app/actions/select-commands.c:191 ../app/core/gimpselection.c:174
 msgid "Shrink Selection"
-msgstr ""
+msgstr "चयन सिकोड़ें"
 
 #: ../app/actions/select-commands.c:195
 msgid "Shrink selection by"
-msgstr ""
+msgstr "इसके द्वारा चयन सिकोड़ें"
 
 #: ../app/actions/select-commands.c:203
 msgid "_Shrink from image border"
@@ -3496,19 +3476,19 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:228 ../app/core/gimpselection.c:173
 msgid "Grow Selection"
-msgstr ""
+msgstr "चयन बढाएँ"
 
 #: ../app/actions/select-commands.c:232
 msgid "Grow selection by"
-msgstr ""
+msgstr "इसके द्वारा चयन बढाएँ"
 
 #: ../app/actions/select-commands.c:255 ../app/core/gimpselection.c:172
 msgid "Border Selection"
-msgstr ""
+msgstr "सीमा चयन"
 
 #: ../app/actions/select-commands.c:259
 msgid "Border selection by"
-msgstr ""
+msgstr "इसके द्वारा सीमा चयन"
 
 #. Feather button
 #: ../app/actions/select-commands.c:268
@@ -3524,15 +3504,15 @@ msgstr ""
 #: ../app/actions/vectors-commands.c:379 ../app/actions/vectors-commands.c:412
 #: ../app/dialogs/stroke-dialog.c:299
 msgid "There is no active layer or channel to stroke to."
-msgstr ""
+msgstr "कोई सक्रिय स्तर या चैनल नहीं है जिसमें स्ट्रोक किया जाए."
 
 #: ../app/actions/select-commands.c:336 ../app/core/gimpselection.c:151
 msgid "Stroke Selection"
-msgstr ""
+msgstr "स्ट्रोक चयन"
 
 #: ../app/actions/templates-actions.c:42
 msgid "Templates Menu"
-msgstr ""
+msgstr "नमूना मेन्यू"
 
 #: ../app/actions/templates-actions.c:46
 msgid "_Create Image from Template"
@@ -3540,23 +3520,23 @@ msgstr ""
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
-msgstr ""
+msgstr "चयनित नमूने से नया छवि बनाएँ"
 
 #: ../app/actions/templates-actions.c:52
 msgid "_New Template..."
-msgstr ""
+msgstr "नया नमूना (_N)..."
 
 #: ../app/actions/templates-actions.c:53
 msgid "Create a new template"
-msgstr ""
+msgstr "नया नमूना बनाएँ"
 
 #: ../app/actions/templates-actions.c:58
 msgid "D_uplicate Template..."
-msgstr ""
+msgstr "नक़ली नमूना (_u)..."
 
 #: ../app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
-msgstr ""
+msgstr "चयनित नमूना की नकल लें"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
