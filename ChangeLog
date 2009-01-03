@@ -1,3 +1,8 @@
+2009-01-03  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpcontainertreeview.c: Format static function
+	prototypes.
+
 2009-01-01  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: removed unused include.

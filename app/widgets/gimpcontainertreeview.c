@@ -44,61 +44,60 @@
 #include "gimpwidgets-utils.h"
 
 
-static void  gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface);
+static void          gimp_container_tree_view_view_iface_init   (GimpContainerViewInterface  *iface);
 
-static GObject *gimp_container_tree_view_constructor  (GType                   type,
-                                                       guint                   n_params,
-                                                       GObjectConstructParam  *params);
+static GObject *     gimp_container_tree_view_constructor       (GType                        type,
+                                                                 guint                        n_params,
+                                                                 GObjectConstructParam       *params);
 
-static void    gimp_container_tree_view_finalize      (GObject                *object);
-static void    gimp_container_tree_view_unmap         (GtkWidget              *widget);
-static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *widget);
+static void          gimp_container_tree_view_finalize          (GObject                     *object);
+static void          gimp_container_tree_view_unmap             (GtkWidget                   *widget);
+static gboolean      gimp_container_tree_view_popup_menu        (GtkWidget                   *widget);
 
-static void    gimp_container_tree_view_set_container (GimpContainerView      *view,
-                                                       GimpContainer          *container);
-static void    gimp_container_tree_view_set_context   (GimpContainerView      *view,
-                                                       GimpContext            *context);
-static gpointer gimp_container_tree_view_insert_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gint                    index);
-static void     gimp_container_tree_view_remove_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gpointer                insert_data);
-static void     gimp_container_tree_view_reorder_item (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gint                    new_index,
-                                                       gpointer                insert_data);
-static void     gimp_container_tree_view_rename_item  (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gpointer                insert_data);
-static gboolean  gimp_container_tree_view_select_item (GimpContainerView      *view,
-                                                       GimpViewable           *viewable,
-                                                       gpointer                insert_data);
-static void     gimp_container_tree_view_clear_items  (GimpContainerView      *view);
-static void    gimp_container_tree_view_set_view_size (GimpContainerView      *view);
+static void          gimp_container_tree_view_set_container     (GimpContainerView           *view,
+                                                                 GimpContainer               *container);
+static void          gimp_container_tree_view_set_context       (GimpContainerView           *view,
+                                                                 GimpContext                 *context);
+static gpointer      gimp_container_tree_view_insert_item       (GimpContainerView           *view,
+                                                                 GimpViewable                *viewable,
+                                                                 gint                         index);
+static void          gimp_container_tree_view_remove_item       (GimpContainerView           *view,
+                                                                 GimpViewable                *viewable,
+                                                                 gpointer                     insert_data);
+static void          gimp_container_tree_view_reorder_item      (GimpContainerView           *view,
+                                                                 GimpViewable                *viewable,
+                                                                 gint                         new_index,
+                                                                 gpointer                     insert_data);
+static void          gimp_container_tree_view_rename_item       (GimpContainerView           *view,
+                                                                 GimpViewable                *viewable,
+                                                                 gpointer                     insert_data);
+static gboolean      gimp_container_tree_view_select_item       (GimpContainerView           *view,
+                                                                 GimpViewable                *viewable,
+                                                                 gpointer                     insert_data);
+static void          gimp_container_tree_view_clear_items       (GimpContainerView           *view);
+static void          gimp_container_tree_view_set_view_size     (GimpContainerView           *view);
 
-static void gimp_container_tree_view_name_canceled    (GtkCellRendererText    *cell,
-                                                       GimpContainerTreeView  *tree_view);
+static void          gimp_container_tree_view_name_canceled     (GtkCellRendererText         *cell,
+                                                                 GimpContainerTreeView       *tree_view);
 
-static void gimp_container_tree_view_selection_changed (GtkTreeSelection      *sel,
-                                                        GimpContainerTreeView *tree_view);
-static gboolean gimp_container_tree_view_button_press (GtkWidget              *widget,
-                                                       GdkEventButton         *bevent,
-                                                       GimpContainerTreeView  *tree_view);
-static gboolean  gimp_container_tree_view_tooltip     (GtkWidget              *widget,
-                                                       gint                    x,
-                                                       gint                    y,
-                                                       gboolean                keyboard_tip,
-                                                       GtkTooltip             *tooltip,
-                                                       GimpContainerTreeView  *tree_view);
-static void gimp_container_tree_view_renderer_update  (GimpViewRenderer       *renderer,
-                                                       GimpContainerTreeView  *tree_view);
-
-static GimpViewable * gimp_container_tree_view_drag_viewable (GtkWidget       *widget,
-                                                              GimpContext    **context,
-                                                              gpointer         data);
-static GdkPixbuf    * gimp_container_tree_view_drag_pixbuf   (GtkWidget       *widget,
-                                                              gpointer         data);
+static void          gimp_container_tree_view_selection_changed (GtkTreeSelection            *sel,
+                                                                 GimpContainerTreeView       *tree_view);
+static gboolean      gimp_container_tree_view_button_press      (GtkWidget                   *widget,
+                                                                 GdkEventButton              *bevent,
+                                                                 GimpContainerTreeView       *tree_view);
+static gboolean      gimp_container_tree_view_tooltip           (GtkWidget                   *widget,
+                                                                 gint                         x,
+                                                                 gint                         y,
+                                                                 gboolean                     keyboard_tip,
+                                                                 GtkTooltip                  *tooltip,
+                                                                 GimpContainerTreeView       *tree_view);
+static void          gimp_container_tree_view_renderer_update   (GimpViewRenderer            *renderer,
+                                                                 GimpContainerTreeView       *tree_view);
+static GimpViewable *gimp_container_tree_view_drag_viewable     (GtkWidget                   *widget,
+                                                                 GimpContext                **context,
+                                                                 gpointer                     data);
+static GdkPixbuf    *gimp_container_tree_view_drag_pixbuf       (GtkWidget                   *widget,
+                                                                 gpointer                     data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
