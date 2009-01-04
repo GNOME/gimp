@@ -1,5 +1,14 @@
 2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 562818 – First image opened in GIMP offset
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	Only rely on disp_width/height for border calculation if they are
+	larger than 1. If not, special-case the calculation so we don't
+	get a severly mispositioned image.
+
+2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
 	Rename border_x to border_width and border_y to border_height.
 
