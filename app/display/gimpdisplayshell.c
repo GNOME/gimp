@@ -1856,7 +1856,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
   gint          disp_width, disp_height;
   gint          width, height;
   gint          max_auto_width, max_auto_height;
-  gint          border_x, border_y;
+  gint          border_width, border_height;
   gboolean      resize = FALSE;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -1876,20 +1876,20 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
   disp_width  = shell->disp_width;
   disp_height = shell->disp_height;
 
-  border_x = widget->allocation.width  - disp_width;
-  border_y = widget->allocation.height - disp_height;
+  border_width  = widget->allocation.width  - disp_width;
+  border_height = widget->allocation.height - disp_height;
 
-  max_auto_width  = (rect.width  - border_x) * 0.75;
-  max_auto_height = (rect.height - border_y) * 0.75;
+  max_auto_width  = (rect.width  - border_width)  * 0.75;
+  max_auto_height = (rect.height - border_height) * 0.75;
 
   /* If one of the display dimensions has changed and one of the
    * dimensions fits inside the screen
    */
-  if (((width + border_x) < rect.width || (height + border_y) < rect.height) &&
+  if (((width + border_width) < rect.width || (height + border_height) < rect.height) &&
       (width != disp_width || height != disp_height))
     {
-      width  = ((width  + border_x) < rect.width)  ? width  : max_auto_width;
-      height = ((height + border_y) < rect.height) ? height : max_auto_height;
+      width  = ((width  + border_width)  < rect.width)  ? width  : max_auto_width;
+      height = ((height + border_height) < rect.height) ? height : max_auto_height;
 
       resize = TRUE;
     }
@@ -1911,8 +1911,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
       if (width < shell->statusbar->requisition.width)
         width = shell->statusbar->requisition.width;
 
-      width  = width  + border_x;
-      height = height + border_y;
+      width  = width  + border_width;
+      height = height + border_height;
 
       if (grow_only)
         {
