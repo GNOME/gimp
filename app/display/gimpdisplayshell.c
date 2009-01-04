@@ -1860,8 +1860,25 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
   disp_width  = shell->disp_width;
   disp_height = shell->disp_height;
 
-  border_x = widget->allocation.width  - disp_width;
-  border_y = widget->allocation.height - disp_height;
+
+  /* As long as the disp_width/disp_heightheight is larger than 1 we
+   * can reliably depend on it to calculate the
+   * border_width/border_height because that means there is enough
+   * room in the top-level for the canvas as well as the rulers and
+   * scrollbars. If it is 1 or smaller it is likely that the rulers
+   * and scrollbars are overlapping each other and thus we cannot use
+   * the normal approach to border size, so special case that.
+   */
+  if (disp_width > 1 || !shell->vsb)
+    border_width = widget->allocation.width - disp_width;
+  else
+    border_width = widget->allocation.width - disp_width + shell->vsb->allocation.width;
+
+  if (disp_height > 1 || !shell->hsb)
+    border_height = widget->allocation.height - disp_height;
+  else
+    border_height = widget->allocation.height - disp_height + shell->hsb->allocation.height;
+
 
   max_auto_width  = (rect.width  - border_x) * 0.75;
   max_auto_height = (rect.height - border_y) * 0.75;
