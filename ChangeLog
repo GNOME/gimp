@@ -1,3 +1,13 @@
+2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	Bug 562213 – Align Tool doesn't work properly if it is the active
+	tool at startup
+
+	* app/tools/gimpaligntool.c: Perform NULL-pointer dodging to avoid
+	crashing.
+
 2009-01-01  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.6.5 (interface age 5).
