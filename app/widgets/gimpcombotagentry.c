@@ -122,7 +122,7 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
                     NULL);
 }
 
-static GObject*
+static GObject *
 gimp_combo_tag_entry_constructor (GType                  type,
                                   guint                  n_params,
                                   GObjectConstructParam *params)
@@ -136,10 +136,10 @@ gimp_combo_tag_entry_constructor (GType                  type,
 
   entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  g_signal_connect (GIMP_TAG_ENTRY (entry)->container,
-                    "tag-count-changed",
-                    G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
-                    entry);
+  g_signal_connect_object (GIMP_TAG_ENTRY (entry)->container,
+                           "tag-count-changed",
+                           G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
+                           entry, 0);
 
   return object;
 }

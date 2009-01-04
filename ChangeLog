@@ -1,3 +1,10 @@
+2009-01-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcombotagentry.c
+	(gimp_combo_tag_entry_constructor): connect to entry->container's
+	signals with g_signal_connect_object() so the entry can be
+	destroyed without warning/crashing.
+
 2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 562818 – First image opened in GIMP offset
