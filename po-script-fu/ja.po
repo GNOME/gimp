@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-13 18:45+0900\n"
-"PO-Revision-Date: 2008-10-12 19:41+0900\n"
+"POT-Creation-Date: 2009-01-04 19:55+0900\n"
+"PO-Revision-Date: 2008-12-30 23:26+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -203,6 +203,8 @@ msgstr "ベベルパターン(_B)"
 msgid "_Classic.Gimp.Org"
 msgstr "クラシック Gimp.Org(_C)"
 
+# これまでは「透明度をロゴに(_L)」
+# この表記では機能が連想しにくいと感じたため「ロゴ効果(_L)」に変更した
 #: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
 msgstr "ロゴ効果(_L)"
@@ -328,8 +330,8 @@ msgstr "輪郭ぼかし半径"
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
-"3D アウトラインロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【3D アウトラ"
-"イン】）と同じ効果を選択範囲（または不透明部分）に適用します。"
+"3D アウトラインロゴ（[ファイル] → [画像の生成] → [ロゴ] → [3D アウトライン]）"
+"と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -644,8 +646,8 @@ msgstr "文字色"
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
 msgstr ""
-"エイリアン発光ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【エイリアン発"
-"光】）と同じ効果を選択範囲（または不透明部分）に適用します。"
+"エイリアン発光ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [エイリアン発光]）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
@@ -662,9 +664,8 @@ msgstr "発光サイズ (ピクセル * 4)"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
 msgstr ""
-"エイリアンネオン・ロゴ（画像ウィンドウのメニュー【ファイル】→【画像の生成】→"
-"【ロゴ】→【エイリアンネオン】）と同じ効果を選択範囲（または不透明部分）に適用"
-"します。"
+"エイリアンネオン・ロゴ（[ファイル]→[画像の生成]→[ロゴ]→[エイリアンネオン]）と"
+"同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
@@ -696,8 +697,8 @@ msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
 msgstr ""
-"基本 I ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【基本 I】）と同じ効"
-"果を選択範囲（または不透明部分）に適用します。"
+"基本 I ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [基本 I]）と同じ効果を選択"
+"範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
@@ -714,8 +715,8 @@ msgstr "基本 I (_B)..."
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
 msgstr ""
-"基本 II ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 > 【基本 II】）と同じ"
-"効果を選択範囲（または不透明部分）に適用します。"
+"基本 II ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [基本 II]）と同じ効果を選"
+"択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -839,8 +840,8 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"ブレンドロゴ (【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ブレンド】) と同じ"
-"効果を選択範囲（または不透明部分）に適用します。"
+"ブレンドロゴ ([ファイル] → [画像の生成] → [ロゴ] → [ブレンド]) と同じ効果を選"
+"択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -896,8 +897,8 @@ msgstr "オフセット（ピクセル）"
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
 msgstr ""
-"牛模様ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【牛模様】）と同じ効果"
-"を選択範囲（または不透明部分）に適用します。"
+"牛模様ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [牛模様]）と同じ効果を選択範"
+"囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
@@ -1042,8 +1043,8 @@ msgstr "チョークの色"
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
 msgstr ""
-"チョークロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【チョーク】）と同じ"
-"効果を選択範囲（または不透明部分）に適用します。"
+"チョークロゴ（[ファイル] → [画像の生成] → [ロゴ] → [チョーク]）と同じ効果を選"
+"択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
@@ -1056,8 +1057,8 @@ msgstr "チョーク(_C)..."
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
-"かじり取りロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【かじり取り】）と"
-"同じ効果を選択範囲（または不透明部分）に適用します。"
+"かじり取りロゴ（[ファイル] → [画像の生成] → [ロゴ] → [かじり取り]）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1142,8 +1143,8 @@ msgstr "ステンシルクローム(_H)..."
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
 msgstr ""
-"クロームロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【クローム】）と同じ"
-"効果を選択範囲（または不透明部分）に適用します。"
+"クロームロゴ（[ファイル] → [画像の生成] → [ロゴ] → [クローム]）と同じ効果を選"
+"択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
@@ -1246,8 +1247,8 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
-"コミック本ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【コミック本】）と"
-"同じ効果を選択範囲（または不透明部分）に適用します。"
+"コミック本ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [コミック本]）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1273,8 +1274,8 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"冷たい金属ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【冷たい金属】）と"
-"同じ効果を選択範囲（または不透明部分）に適用します。"
+"冷たい金属ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [冷たい金属]）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1520,8 +1521,8 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
-"霜ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【霜】）と同じ効果を選択範"
-"囲（または不透明部分）に適用します。"
+"霜ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [霜]）と同じ効果を選択範囲（また"
+"は不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1660,13 +1661,69 @@ msgstr "チューブボタンラベル(汎用) (_G)..."
 msgid "_Tube Button Label..."
 msgstr "チューブボタンラベル(大) (_T)..."
 
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "GIMP ウェブサイトへのブックマーク"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "ユーザーマニュアルへのブックマーク"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "選択範囲の作成と使用 (英語) (_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "ファイルを開く・作成・保存 (英語) (_F)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "シンプルなオブジェクトを描く (英語) (_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "ダイアログの使い方 (英語) (_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "プラグインレジストリ (英語) (_R)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "パスを使う (英語) (_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "基本コンセプト (英語) (_B)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "開発者用ウェブサイト (英語) (_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "メインのウェブサイト (英語) (_M)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "ウェブ用画像を作成するには (英語) (_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "ユーザーマニュアル (英語) (_U)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "デジカメ画像を修正する (英語) (_W)"
+
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"光沢ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【光沢】）と同じ効果を選"
-"択範囲（または不透明部分）に適用します。"
+"光沢ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [光沢]）と同じ効果を選択範囲"
+"（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1725,8 +1782,8 @@ msgstr "パターンをオーバーレイで使う"
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 msgstr ""
-"白熱の輝きロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【白熱の輝き】）と"
-"同じ効果を選択範囲（または不透明部分）に適用します。"
+"白熱の輝きロゴ（[ファイル] → [画像の生成] → [ロゴ] → [白熱の輝き]）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
@@ -1739,8 +1796,8 @@ msgstr "白熱の輝き(_W)..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"グラデーションベベル・ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【グラ"
-"デーションベベル】）と同じ効果を選択範囲（または不透明部分）に適用します。"
+"グラデーションベベル・ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [グラデー"
+"ションベベル]）と同じ効果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1968,8 +2025,8 @@ msgstr "矩形(_R)..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
 msgstr ""
-"ネオンロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【ネオン】）と同じ効果"
-"を選択範囲（または不透明部分）の境界部分に適用します。"
+"ネオンロゴ（[ファイル] → [画像の生成] → [ロゴ] → [ネオン]）と同じ効果を選択範"
+"囲（または不透明部分）の境界部分に適用します。"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -2520,8 +2577,8 @@ msgstr "渦巻(_S)..."
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
 msgstr ""
-"粒子の軌跡ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【粒子の軌跡】）と"
-"同じ効果を選択範囲（または不透明部分）に適用します。"
+"粒子の軌跡ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [粒子の軌跡]）と同じ効果"
+"を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2580,8 +2637,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"テクスチャ・ロゴ（【ファイル】 → 【画像の生成】 → 【ロゴ】 → 【テクスチャ】）"
-"と同じ効果を選択範囲（または不透明部分）に適用します。"
+"テクスチャ・ロゴ（[ファイル] → [画像の生成] → [ロゴ] → [テクスチャ]）と同じ効"
+"果を選択範囲（または不透明部分）に適用します。"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2730,62 +2787,6 @@ msgstr "糸の長さ"
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "織物(_W)..."
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP ウェブサイトへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "ユーザーマニュアルへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用 (英語) (_S)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "ファイルを開く・作成・保存 (英語) (_F)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く (英語) (_S)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方 (英語) (_D)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "プラグインレジストリ (英語) (_R)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "パスを使う (英語) (_P)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "基本コンセプト (英語) (_B)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト (英語) (_D)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "メインのウェブサイト (英語) (_M)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには (英語) (_P)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル (英語) (_U)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ画像を修正する (英語) (_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
