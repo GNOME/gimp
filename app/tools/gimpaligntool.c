@@ -199,12 +199,19 @@ gimp_align_tool_constructor (GType                  type,
   align_tool = GIMP_ALIGN_TOOL (object);
   options    = G_OBJECT (gimp_tool_get_options (tool));
 
+  /* This line of code is evil because it relies on that the 'options'
+   * object is fully constructed before we get here, which is not
+   * guaranteed
+   */
   container = GTK_CONTAINER (g_object_get_data (options,
                                                 "controls-container"));
 
-  align_tool->controls = gimp_align_tool_controls (align_tool);
-  gtk_container_add (container, align_tool->controls);
-  gtk_widget_show (align_tool->controls);
+  if (container)
+    {
+      align_tool->controls = gimp_align_tool_controls (align_tool);
+      gtk_container_add (container, align_tool->controls);
+      gtk_widget_show (align_tool->controls);
+    }
 
   return object;
 }
@@ -427,8 +434,13 @@ gimp_align_tool_button_release (GimpTool              *tool,
     }
 
   for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
-    gtk_widget_set_sensitive (align_tool->button[i],
-                              (align_tool->selected_objects != NULL));
+    {
+      if (align_tool->button[i])
+        {
+          gtk_widget_set_sensitive (align_tool->button[i],
+                                    (align_tool->selected_objects != NULL));
+        }
+    }
 
   align_tool->x1 = align_tool->x0;
   align_tool->y1 = align_tool->y0;

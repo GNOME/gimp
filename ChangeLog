@@ -1,5 +1,13 @@
 2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Bug 562213 – Align Tool doesn't work properly if it is the active
+	tool at startup
+
+	* app/tools/gimpaligntool.c: Perform NULL-pointer dodging to avoid
+	crashing.
+
+2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimpdock.[ch]: Make instance members private.
 
 	(gimp_dock_get_context)
