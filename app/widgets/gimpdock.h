@@ -88,7 +88,7 @@ void                gimp_dock_add_book           (GimpDock       *dock,
                                                   GimpDockbook   *dockbook,
                                                   gint            index);
 void                gimp_dock_remove_book        (GimpDock       *dock,
-                                                 GimpDockbook   *dockbook);
+                                                  GimpDockbook   *dockbook);
 
 
 #endif /* __GIMP_DOCK_H__ */
