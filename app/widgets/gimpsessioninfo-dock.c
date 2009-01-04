@@ -133,7 +133,7 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  for (list = dock->dockbooks; list; list = g_list_next (list))
+  for (list = gimp_dock_get_dockbooks (dock); list; list = g_list_next (list))
     {
       GimpSessionInfoBook *book;
 

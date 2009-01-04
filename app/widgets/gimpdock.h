@@ -35,20 +35,13 @@
 
 
 typedef struct _GimpDockClass GimpDockClass;
+typedef struct _GimpDockPriv  GimpDockPriv;
 
 struct _GimpDock
 {
-  GimpWindow         parent_instance;
+  GimpWindow    parent_instance;
 
-  GimpDialogFactory *dialog_factory;
-  GimpContext       *context;
-
-  GtkWidget         *main_vbox;
-  GtkWidget         *vbox;
-
-  GList             *dockbooks;
-
-  gint               ID; /* for themeing */
+  GimpDockPriv *priv;
 };
 
 struct _GimpDockClass
@@ -70,26 +63,32 @@ struct _GimpDockClass
 };
 
 
-GType   gimp_dock_get_type     (void) G_GNUC_CONST;
+GType               gimp_dock_get_type           (void) G_GNUC_CONST;
 
-void    gimp_dock_setup        (GimpDock       *dock,
-                                const GimpDock *template);
-void    gimp_dock_set_aux_info (GimpDock       *dock,
-                                GList          *aux_info);
-GList * gimp_dock_get_aux_info (GimpDock       *dock);
+void                gimp_dock_setup              (GimpDock       *dock,
+                                                  const GimpDock *template);
+void                gimp_dock_set_aux_info       (GimpDock       *dock,
+                                                  GList          *aux_info);
+GList             * gimp_dock_get_aux_info       (GimpDock       *dock);
+GimpContext       * gimp_dock_get_context        (GimpDock       *dock);
+GimpDialogFactory * gimp_dock_get_dialog_factory (GimpDock       *dock);
+GList             * gimp_dock_get_dockbooks      (GimpDock       *dock);
+GtkWidget         * gimp_dock_get_main_vbox      (GimpDock       *dock);
+GtkWidget         * gimp_dock_get_vbox           (GimpDock       *dock);
+gint                gimp_dock_get_id             (GimpDock       *dock);
 
-void    gimp_dock_add          (GimpDock       *dock,
-                                GimpDockable   *dockable,
-                                gint            book,
-                                gint            index);
-void    gimp_dock_remove       (GimpDock       *dock,
-                                GimpDockable   *dockable);
+void                gimp_dock_add                (GimpDock       *dock,
+                                                  GimpDockable   *dockable,
+                                                  gint            book,
+                                                  gint            index);
+void                gimp_dock_remove             (GimpDock       *dock,
+                                                  GimpDockable   *dockable);
 
-void    gimp_dock_add_book     (GimpDock       *dock,
-                                GimpDockbook   *dockbook,
-                                gint            index);
-void    gimp_dock_remove_book  (GimpDock       *dock,
-                                GimpDockbook   *dockbook);
+void                gimp_dock_add_book           (GimpDock       *dock,
+                                                  GimpDockbook   *dockbook,
+                                                  gint            index);
+void                gimp_dock_remove_book        (GimpDock       *dock,
+                                                 GimpDockbook   *dockbook);
 
 
 #endif /* __GIMP_DOCK_H__ */

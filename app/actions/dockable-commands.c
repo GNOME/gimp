@@ -66,7 +66,7 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
         *p = '\0';
 
       dockable =
-        gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
+        gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dockbook->dock),
                                           dockbook->dock,
                                           identifier, -1);
 
@@ -180,7 +180,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
 
 
               new_dockable =
-                gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
+                gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dockbook->dock),
                                                   dockbook->dock,
                                                   identifier,
                                                   view_size);

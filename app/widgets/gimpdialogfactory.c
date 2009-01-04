@@ -480,7 +480,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                        view_size);
       else if (dock)
         dialog = factory->constructor (factory, entry,
-                                       GIMP_DOCK (dock)->context,
+                                       gimp_dock_get_context (GIMP_DOCK (dock)),
                                        view_size);
       else
         dialog = factory->constructor (factory, entry,
@@ -706,7 +706,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   gtk_widget_get_screen (GTK_WIDGET (dock)),
-                                                  dock->context,
+                                                  gimp_dock_get_context (dock),
                                                   identifier,
                                                   view_size,
                                                   FALSE,

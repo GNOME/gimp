@@ -96,33 +96,33 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
                               gimp_toolbox_drop_uri_list,
-                              dock->context);
+                              gimp_dock_get_context (dock));
   gimp_dnd_uri_list_dest_add (toolbox->vbox,
                               gimp_toolbox_drop_uri_list,
-                              dock->context);
+                              gimp_dock_get_context (dock));
 
   gimp_dnd_viewable_dest_add (toolbox->vbox, GIMP_TYPE_LAYER,
                               gimp_toolbox_drop_drawable,
-                              dock->context);
+                              gimp_dock_get_context (dock));
   gimp_dnd_viewable_dest_add (toolbox->vbox, GIMP_TYPE_LAYER_MASK,
                               gimp_toolbox_drop_drawable,
-                              dock->context);
+                              gimp_dock_get_context (dock));
   gimp_dnd_viewable_dest_add (toolbox->vbox, GIMP_TYPE_CHANNEL,
                               gimp_toolbox_drop_drawable,
-                              dock->context);
+                              gimp_dock_get_context (dock));
   gimp_dnd_viewable_dest_add (toolbox->vbox, GIMP_TYPE_TOOL_INFO,
                               gimp_toolbox_drop_tool,
-                              dock->context);
+                              gimp_dock_get_context (dock));
   gimp_dnd_viewable_dest_add (toolbox->vbox, GIMP_TYPE_BUFFER,
                               gimp_toolbox_drop_buffer,
-                              dock->context);
+                              gimp_dock_get_context (dock));
 
   gimp_dnd_component_dest_add (toolbox->vbox,
                                gimp_toolbox_drop_component,
-                               dock->context);
+                               gimp_dock_get_context (dock));
   gimp_dnd_pixbuf_dest_add    (toolbox->vbox,
                                gimp_toolbox_drop_pixbuf,
-                               dock->context);
+                               gimp_dock_get_context (dock));
 }
 
 

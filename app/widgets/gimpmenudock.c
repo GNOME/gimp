@@ -140,9 +140,9 @@ gimp_menu_dock_init (GimpMenuDock *dock)
   dock->update_title_idle_id = 0;
 
   hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (GIMP_DOCK (dock)->main_vbox), hbox,
+  gtk_box_pack_start (GTK_BOX (gimp_dock_get_main_vbox (GIMP_DOCK (dock))), hbox,
                       FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (GIMP_DOCK (dock)->main_vbox), hbox, 0);
+  gtk_box_reorder_child (GTK_BOX (gimp_dock_get_main_vbox (GIMP_DOCK (dock))), hbox, 0);
 
   if (dock->show_image_menu)
     gtk_widget_show (hbox);
@@ -202,12 +202,12 @@ gimp_menu_dock_destroy (GtkObject *object)
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
    */
-  if (GIMP_DOCK (dock)->main_vbox && dock->image_combo)
+  if (gimp_dock_get_main_vbox (GIMP_DOCK (dock)) && dock->image_combo)
     {
       GtkWidget *parent = gtk_widget_get_parent (dock->image_combo);
 
       if (parent)
-        gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
+        gtk_container_remove (GTK_CONTAINER (gimp_dock_get_main_vbox (GIMP_DOCK (dock))),
                               parent);
     }
 
@@ -486,7 +486,7 @@ gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
 
   title = g_string_new (NULL);
 
-  for (list = GIMP_DOCK (menu_dock)->dockbooks;
+  for (list = gimp_dock_get_dockbooks (GIMP_DOCK (menu_dock));
        list;
        list = g_list_next (list))
     {
@@ -540,7 +540,7 @@ gimp_menu_dock_factory_display_changed (GimpContext *context,
   GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
   if (display && menu_dock->auto_follow_active)
-    gimp_context_set_display (dock->context, display);
+    gimp_context_set_display (gimp_dock_get_context (dock), display);
 }
 
 static void
@@ -552,7 +552,7 @@ gimp_menu_dock_factory_image_changed (GimpContext *context,
 
   /*  won't do anything if we already set the display above  */
   if (image && menu_dock->auto_follow_active)
-    gimp_context_set_image (dock->context, image);
+    gimp_context_set_image (gimp_dock_get_context (dock), image);
 }
 
 static void
@@ -645,8 +645,8 @@ gimp_menu_dock_auto_clicked (GtkWidget *widget,
 
   if (menu_dock->auto_follow_active)
     {
-      gimp_context_copy_properties (dock->dialog_factory->context,
-                                    dock->context,
+      gimp_context_copy_properties (gimp_dock_get_dialog_factory (dock)->context,
+                                    gimp_dock_get_context (dock),
                                     GIMP_CONTEXT_DISPLAY_MASK |
                                     GIMP_CONTEXT_IMAGE_MASK);
     }

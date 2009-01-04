@@ -246,12 +246,12 @@ dockable_actions_update (GimpActionGroup *group,
       if (substring)
         {
           memcpy (substring, "list", 4);
-          if (gimp_dialog_factory_find_entry (dockbook->dock->dialog_factory,
+          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dockbook->dock),
                                               identifier))
             list_view_available = TRUE;
 
           memcpy (substring, "grid", 4);
-          if (gimp_dialog_factory_find_entry (dockbook->dock->dialog_factory,
+          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dockbook->dock),
                                               identifier))
             grid_view_available = TRUE;
         }
@@ -267,7 +267,7 @@ dockable_actions_update (GimpActionGroup *group,
   tab_style = dockable->tab_style;
 
   n_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
-  n_books = g_list_length (dockbook->dock->dockbooks);
+  n_books = g_list_length (gimp_dock_get_dockbooks (dockbook->dock));
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active) != 0)

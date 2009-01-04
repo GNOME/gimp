@@ -286,7 +286,7 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
    *  because it may be different from the dialog factory
    *  the dock was created from.
    */
-  dockable = gimp_dialog_factory_dockable_new (dock->dialog_factory,
+  dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
                                                dock,
                                                info->identifier,
                                                info->view_size);

@@ -52,7 +52,7 @@ brush_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
                        GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-brush-grid|gimp-brush-list", -1);
 }
@@ -74,7 +74,7 @@ pattern_preview_clicked (GtkWidget       *widget,
                          GdkModifierType  state,
                          GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-pattern-grid|gimp-pattern-list", -1);
 }
@@ -96,7 +96,7 @@ gradient_preview_clicked (GtkWidget       *widget,
                           GdkModifierType  state,
                           GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-gradient-list|gimp-gradient-grid", -1);
 }
@@ -127,7 +127,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
-  context = GIMP_DOCK (toolbox)->context;
+  context = gimp_dock_get_context (GIMP_DOCK (toolbox));
 
   indicator_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_SPACING);

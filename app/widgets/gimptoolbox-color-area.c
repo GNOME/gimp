@@ -68,7 +68,7 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
-  context = GIMP_DOCK (toolbox)->context;
+  context = gimp_dock_get_context (GIMP_DOCK (toolbox));
 
   color_area = gimp_fg_bg_editor_new (context);
   gtk_widget_set_size_request (color_area, width, height);

@@ -197,12 +197,12 @@ gimp_toolbox_constructor (GType                  type,
 
   toolbox = GIMP_TOOLBOX (object);
 
-  context = GIMP_DOCK (toolbox)->context;
+  context = gimp_dock_get_context (GIMP_DOCK (toolbox));
   config  = GIMP_GUI_CONFIG (context->gimp->config);
 
   gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
 
-  main_vbox = GIMP_DOCK (toolbox)->main_vbox;
+  main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
   toolbox->vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->vbox, FALSE, FALSE, 0);
@@ -341,10 +341,10 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (! GIMP_DOCK (widget)->context)
+  if (! gimp_dock_get_context (GIMP_DOCK (widget)))
     return;
 
-  gimp = GIMP_DOCK (widget)->context->gimp;
+  gimp = gimp_dock_get_context (GIMP_DOCK (widget))->gimp;
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -442,10 +442,10 @@ gimp_toolbox_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
 
-  if (! GIMP_DOCK (widget)->context)
+  if (! gimp_dock_get_context (GIMP_DOCK (widget)))
     return;
 
-  gimp = GIMP_DOCK (widget)->context->gimp;
+  gimp = gimp_dock_get_context (GIMP_DOCK (widget))->gimp;
 
   gtk_widget_style_get (widget,
                         "tool-icon-size", &tool_icon_size,
@@ -490,7 +490,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
       clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
       gtk_clipboard_request_text (clipboard,
                                   toolbox_paste_received,
-                                  g_object_ref (GIMP_DOCK (widget)->context));
+                                  g_object_ref (gimp_dock_get_context (GIMP_DOCK (widget))));
 
       return TRUE;
     }
@@ -554,7 +554,7 @@ static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
 {
-  if (g_list_length (dock->dockbooks) == 1)
+  if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
       gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
@@ -565,7 +565,7 @@ static void
 gimp_toolbox_book_removed (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
-  if (g_list_length (dock->dockbooks) == 0 &&
+  if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
       gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
@@ -580,14 +580,14 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
   GimpToolInfo *tool_info;
   GtkWidget    *tool_button;
 
-  gimp = GIMP_DOCK (toolbox)->context->gimp;
+  gimp = gimp_dock_get_context (GIMP_DOCK (toolbox))->gimp;
 
   tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
     {
-      GtkWidget      *main_vbox = GIMP_DOCK (toolbox)->main_vbox;
+      GtkWidget      *main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
       GtkRequisition  button_requisition;
       gint            border_width;
       GdkGeometry     geometry;
@@ -605,7 +605,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
                              2 * button_requisition.width);
       geometry.min_height = -1;
       geometry.width_inc  = button_requisition.width;
-      geometry.height_inc = (GIMP_DOCK (toolbox)->dockbooks ?
+      geometry.height_inc = (gimp_dock_get_dockbooks (GIMP_DOCK (toolbox)) ?
                              1 : button_requisition.height);
 
       gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
@@ -645,11 +645,11 @@ toolbox_separator_expand (GimpToolbox *toolbox)
   GList     *children;
   GtkWidget *separator;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+  children = gtk_container_get_children (GTK_CONTAINER (gimp_dock_get_vbox (dock)));
   separator = children->data;
   g_list_free (children);
 
-  gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+  gtk_box_set_child_packing (GTK_BOX (gimp_dock_get_vbox (dock)), separator,
                              TRUE, TRUE, 0, GTK_PACK_START);
   gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), TRUE);
 }
@@ -661,11 +661,11 @@ toolbox_separator_collapse (GimpToolbox *toolbox)
   GList     *children;
   GtkWidget *separator;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+  children = gtk_container_get_children (GTK_CONTAINER (gimp_dock_get_vbox (dock)));
   separator = children->data;
   g_list_free (children);
 
-  gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+  gtk_box_set_child_packing (GTK_BOX (gimp_dock_get_vbox (dock)), separator,
                              FALSE, FALSE, 0, GTK_PACK_START);
   gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), FALSE);
 }
@@ -913,7 +913,7 @@ toolbox_tool_button_toggled (GtkWidget    *widget,
   GtkWidget *toolbox = gtk_widget_get_toplevel (widget);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    gimp_context_set_tool (GIMP_DOCK (toolbox)->context, tool_info);
+    gimp_context_set_tool (gimp_dock_get_context (GIMP_DOCK (toolbox)), tool_info);
 }
 
 static gboolean
@@ -923,7 +923,7 @@ toolbox_tool_button_press (GtkWidget      *widget,
 {
   if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
     {
-      gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+      gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                         gtk_widget_get_screen (widget),
                                         "gimp-tool-options",
                                         -1);

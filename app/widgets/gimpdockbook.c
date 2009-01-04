@@ -348,7 +348,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
 
   menu_widget = gimp_dockable_get_tab_widget (dockable,
-                                              dockbook->dock->context,
+                                              gimp_dock_get_context (dockbook->dock),
                                               GIMP_TAB_STYLE_ICON_BLURB,
                                               MENU_WIDGET_ICON_SIZE);
 
@@ -374,7 +374,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   dockable->dockbook = dockbook;
 
-  gimp_dockable_set_context (dockable, dockbook->dock->context);
+  gimp_dockable_set_context (dockable, gimp_dock_get_context (dockbook->dock));
 
   g_signal_connect (dockable, "notify::locked",
                     G_CALLBACK (gimp_dockbook_tab_locked_notify),
@@ -433,7 +433,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                         NULL);
 
   tab_widget = gimp_dockable_get_tab_widget (dockable,
-                                             dockbook->dock->context,
+                                             gimp_dock_get_context (dockbook->dock),
                                              dockable->tab_style,
                                              tab_size);
 

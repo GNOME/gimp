@@ -256,10 +256,10 @@ windows_menu_dock_added (GimpDialogFactory *factory,
 
   ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
 
-  action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+  action_name = g_strdup_printf ("windows-dock-%04d", gimp_dock_get_id (dock));
   action_path = g_strdup_printf ("%s/Windows/Docks", ui_path);
 
-  merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", dock->ID);
+  merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", gimp_dock_get_id (dock));
   merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
 
   g_object_set_data (G_OBJECT (manager), merge_key,
@@ -280,7 +280,7 @@ windows_menu_dock_removed (GimpDialogFactory *factory,
                            GimpDock          *dock,
                            GimpUIManager     *manager)
 {
-  gchar *merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", dock->ID);
+  gchar *merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", gimp_dock_get_id (dock));
   guint  merge_id;
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),

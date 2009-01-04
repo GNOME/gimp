@@ -1,3 +1,36 @@
+2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimpdock.[ch]: Make instance members private.
+
+	(gimp_dock_get_context)
+	(gimp_dock_get_dialog_factory)
+	(gimp_dock_get_dockbooks)
+	(gimp_dock_get_main_vbox)
+	(gimp_dock_get_vbox)
+	(gimp_dock_get_id): New getters.
+
+	* app/actions/actions.c
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.c
+	* app/actions/windows-actions.c
+	* app/menus/windows-menu.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdock.h
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdockseparator.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimpsessioninfo-book.c
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpsessioninfo-dockable.c
+	* app/widgets/gimptoolbox-color-area.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimptoolbox-image-area.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptoolbox.c: Use new getters.
+
 2009-01-03  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpcontainertreeview.c: Format static function

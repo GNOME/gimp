@@ -215,7 +215,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
               gint   n_books;
               gint   n_dockables;
 
-              n_books = g_list_length (dock->dockbooks);
+              n_books = g_list_length (gimp_dock_get_dockbooks (dock));
 
               children =
                 gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
@@ -230,7 +230,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
           gimp_dockbook_remove (dockable->dockbook, dockable);
 
-          dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
+          dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
           gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
 
           gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);

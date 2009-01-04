@@ -94,10 +94,10 @@ gimp_image_dock_constructor (GType                  type,
 
   dock = GIMP_IMAGE_DOCK (object);
 
-  config = GIMP_GUI_CONFIG (GIMP_DOCK (dock)->context->gimp->config);
+  config = GIMP_GUI_CONFIG (gimp_dock_get_context (GIMP_DOCK (dock))->gimp->config);
 
   dock->ui_manager =
-    gimp_menu_factory_manager_new (GIMP_DOCK (dock)->dialog_factory->menu_factory,
+    gimp_menu_factory_manager_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory,
                                    GIMP_IMAGE_DOCK_GET_CLASS (dock)->ui_manager_name,
                                    dock,
                                    config->tearoff_menus);
@@ -108,15 +108,15 @@ gimp_image_dock_constructor (GType                  type,
   gtk_window_add_accel_group (GTK_WINDOW (object), accel_group);
 
   dock->image_flush_handler_id =
-    gimp_container_add_handler (GIMP_DOCK (dock)->context->gimp->images, "flush",
+    gimp_container_add_handler (gimp_dock_get_context (GIMP_DOCK (dock))->gimp->images, "flush",
                                 G_CALLBACK (gimp_image_dock_image_flush),
                                 dock);
 
-  g_signal_connect_object (GIMP_DOCK (dock)->context, "display-changed",
+  g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock)), "display-changed",
                            G_CALLBACK (gimp_image_dock_display_changed),
                            dock, 0);
 
-  g_signal_connect_object (GIMP_DOCK (dock)->context->gimp->config,
+  g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock))->gimp->config,
                            "notify::transient-docks",
                            G_CALLBACK (gimp_image_dock_notify_transient),
                            dock, 0);
@@ -131,7 +131,7 @@ gimp_image_dock_destroy (GtkObject *object)
 
   if (dock->image_flush_handler_id)
     {
-      gimp_container_remove_handler (GIMP_DOCK (dock)->context->gimp->images,
+      gimp_container_remove_handler (gimp_dock_get_context (GIMP_DOCK (dock))->gimp->images,
                                      dock->image_flush_handler_id);
       dock->image_flush_handler_id = 0;
     }
@@ -171,9 +171,9 @@ gimp_image_dock_image_flush (GimpImage     *image,
                              gboolean       invalidate_preview,
                              GimpImageDock *dock)
 {
-  if (image == gimp_context_get_image (GIMP_DOCK (dock)->context))
+  if (image == gimp_context_get_image (gimp_dock_get_context (GIMP_DOCK (dock))))
     {
-      GimpObject *display = gimp_context_get_display (GIMP_DOCK (dock)->context);
+      GimpObject *display = gimp_context_get_display (gimp_dock_get_context (GIMP_DOCK (dock)));
 
       if (display)
         gimp_ui_manager_update (dock->ui_manager, display);
@@ -187,8 +187,8 @@ gimp_image_dock_notify_transient (GimpConfig *config,
 {
   if (GIMP_GUI_CONFIG (config)->transient_docks)
     {
-      gimp_image_dock_display_changed (dock->context,
-                                       gimp_context_get_display (dock->context),
+      gimp_image_dock_display_changed (gimp_dock_get_context (dock),
+                                       gimp_context_get_display (gimp_dock_get_context (dock)),
                                        GIMP_IMAGE_DOCK (dock));
     }
   else

@@ -273,7 +273,7 @@ windows_actions_dock_added (GimpDialogFactory *factory,
   GtkAction       *action;
   GimpActionEntry  entry;
   gchar           *action_name = g_strdup_printf ("windows-dock-%04d",
-                                                  dock->ID);
+                                                  gimp_dock_get_id (dock));
 
   entry.name        = action_name;
   entry.stock_id    = NULL;
@@ -310,7 +310,7 @@ windows_actions_dock_removed (GimpDialogFactory *factory,
                               GimpActionGroup   *group)
 {
   GtkAction *action;
-  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", gimp_dock_get_id (dock));
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
@@ -328,7 +328,7 @@ windows_actions_dock_notify (GimpDock         *dock,
   GtkAction *action;
   gchar     *action_name;
 
-  action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+  action_name = g_strdup_printf ("windows-dock-%04d", gimp_dock_get_id (dock));
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
   g_free (action_name);
 
