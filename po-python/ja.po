@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-13 18:44+0900\n"
+"POT-Creation-Date: 2009-01-04 19:54+0900\n"
 "PO-Revision-Date: 2008-08-24 18:56+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -20,37 +20,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:385
+#: ../plug-ins/pygimp/gimpfu.py:386
 msgid "Missing exception information"
 msgstr "例外情報はありません"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 #, python-format
 msgid "An error occured running %s"
 msgstr "%s 実行中にエラーが発生しました"
 
-#: ../plug-ins/pygimp/gimpfu.py:405
+#: ../plug-ins/pygimp/gimpfu.py:406
 msgid "_More Information"
 msgstr "詳細な情報(_M)"
 
-#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
-#: ../plug-ins/pygimp/gimpfu.py:529
+#: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
+#: ../plug-ins/pygimp/gimpfu.py:536
 msgid "No"
 msgstr "しない"
 
-#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
 msgid "Yes"
 msgstr "する"
 
-#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
+#: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu ファイル選択"
 
-#: ../plug-ins/pygimp/gimpfu.py:591
+#: ../plug-ins/pygimp/gimpfu.py:598
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu フォルダ選択"
 
-#: ../plug-ins/pygimp/gimpfu.py:682
+#: ../plug-ins/pygimp/gimpfu.py:689
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "'%s' に対して無効な入力がありました"
@@ -101,31 +101,31 @@ msgstr "フォントサイズ(ピクセル) (_N)"
 msgid "_Write a separate CSS file"
 msgstr "独立した CSS(ファイル)を記述(_W)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:53
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "Add a layer of fog"
 msgstr "霧が描かれたレイヤーを追加します"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:58
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog..."
 msgstr "霧(_F)..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Layer name"
 msgstr "レイヤー名(_L)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "Clouds"
 msgstr "霧模様"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Fog color"
 msgstr "霧の色(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "_Turbulence"
 msgstr "霧の深さ"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pygimp/plug-ins/foggify.py:70
 msgid "Op_acity"
 msgstr "不透明度(_A)"
 
@@ -210,51 +210,53 @@ msgstr "パレットをグラデーションに(_G)"
 msgid "Slice"
 msgstr "画像分割"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "ガイドに沿って分割された画像のエクスポートと、それらを1つの画像として表示する"
 "ためのHTMLドキュメントの生成をおこないます"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
 msgid "_Slice..."
 msgstr "画像分割(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Path for HTML export"
 msgstr "HTMLドキュメントを生成する場所"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Filename for export"
 msgstr "HTMLドキュメント名"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Image name prefix"
 msgstr "画像ファイル名のプレフィクス"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Image format"
 msgstr "エクスポートの画像形式"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Separate image folder"
 msgstr "画像を別フォルダにエクスポート"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Folder for image export"
 msgstr "エクスポートするフォルダ名"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Space between table elements"
 msgstr "テーブル要素間の間隔"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Javascript for onmouseover and clicked"
 msgstr ""
 "'onmouseover' と 'clicked' の\n"
 " Javasccript を記述"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Skip animation for table caps"
 msgstr "'<A>, </A>' の記述を省略"
 
