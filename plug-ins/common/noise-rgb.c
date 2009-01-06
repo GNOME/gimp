@@ -308,15 +308,15 @@ noisify_func (const guchar *src,
               gint          bpp,
               gpointer      data)
 {
-  GRand *gr    = data;
-  gint   noise = 0;
-  gint   b;
+  GRand   *gr    = data;
+  gdouble  noise = 0;
+  gint     b;
 
   for (b = 0; b < bpp; b++)
     {
       if (b == 0 || nvals.independent ||
           (b == 1 && bpp == 2) || (b == 3 && bpp == 4))
-        noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
+        noise = nvals.noise[b] * gauss (gr) * 127;
 
       if (nvals.noise[b] > 0.0)
         {
@@ -324,12 +324,13 @@ noisify_func (const guchar *src,
 
           if (nvals.correlated)
             {
-              p = (gint) (src[b] + (src[b] * (noise / 127.0)));
+              p = (gint) (src[b] + (src[b] * (noise / 127.0)) + 0.5);
             }
           else
             {
-              p = src[b] + noise;
+              p = (gint) (src[b] + noise + 0.5);
             }
+
           dest[b] = CLAMP0255 (p);
         }
       else

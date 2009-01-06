@@ -226,11 +226,12 @@ randomize_value (gint     now,
                  gboolean wraps_around,
                  gint     rand_max)
 {
-  gint    flag, new, steps, index;
-  gdouble rand_val;
+  gint    flag, steps, index;
+  gdouble rand_val, new;
 
   steps = max - min + 1;
   rand_val = g_random_double ();
+
   for (index = 1; index < VALS.holdness; index++)
     {
       double tmp = g_random_double ();
@@ -243,7 +244,7 @@ randomize_value (gint     now,
   else
     flag = 1;
 
-  new = now + flag * ((int) (rand_max * rand_val) % steps);
+  new = now + flag * fmod (rand_max * rand_val, steps);
 
   if (new < min)
     {
@@ -252,6 +253,7 @@ randomize_value (gint     now,
       else
         new = min;
     }
+
   if (max < new)
     {
       if (wraps_around)
@@ -259,7 +261,8 @@ randomize_value (gint     now,
       else
         new = max;
     }
-  return new;
+
+  return (gint) (new + 0.5);
 }
 
 static void
