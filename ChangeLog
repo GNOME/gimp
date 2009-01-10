@@ -1,3 +1,9 @@
+2009-01-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/config/gimpdisplayconfig.c: Allow marching ant speeds as
+	slow as one step per 10 seconds since for some remote sessions the
+	minimum of 1 step per second is too fast.
+
 2009-01-10  Sven Neumann  <sven@gimp.org>
 
 	Bug 471344 – Circular brush strokes are not smooth and have corners
