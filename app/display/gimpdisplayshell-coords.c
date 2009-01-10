@@ -27,8 +27,15 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-coords.h"
 
+#include "core/gimpcoords-interpolate.h"
+
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
 #define VELOCITY_UNIT 3.0
+
+#define EVENT_FILL_PRECISION 6.0
+
+static void gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
+                                                   GimpCoords       *coords);
 
 /*  public functions  */
 
@@ -210,13 +217,14 @@ gimp_display_shell_get_device_state (GimpDisplayShell *shell,
 gboolean
 gimp_display_shell_eval_event (GimpDisplayShell *shell,
                                GimpCoords       *coords,
-			       gdouble           inertia_factor,
-			       guint32           time)
+                               gdouble           inertia_factor,
+                               guint32           time)
 {
-  gdouble delta_time = 0.001;
-  gdouble delta_x    = 0.0;
-  gdouble delta_y    = 0.0;
-  gdouble distance   = 1.0;
+  gdouble  delta_time = 0.001;
+  gdouble  delta_x    = 0.0;
+  gdouble  delta_y    = 0.0;
+  gdouble  distance   = 1.0;
+  gboolean event_fill = (inertia_factor > 0);
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -340,18 +348,48 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           distance = sqrt (SQR (delta_x) + SQR (delta_y));
         }
 
+        /* do event fill for devices that do not provide enough events*/
+
+        if (distance >= EVENT_FILL_PRECISION &&
+            event_fill                       &&
+            shell->event_history->len >= 2)
+          {
+            if (shell->event_delay)
+              {
+                gimp_display_shell_interpolate_stroke (shell,
+                                                       coords);
+              }
+            else
+              {
+                shell->event_delay = TRUE;
+
+              }
+          }
+        else
+          {
+            if (shell->event_delay)
+              {
+                shell->event_delay = FALSE;
+
+              }
+              gimp_display_shell_push_event_history (shell, coords);
+
+
+          }
+
 #ifdef VERBOSE
       g_printerr ("DIST: %f, DT:%f, Vel:%f, Press:%f,smooth_dd:%f, sf %f\n",
                   distance,
                   delta_time,
                   shell->last_coords.velocity,
                   coords->pressure,
-                  coords->distance - dist,
+                  distance - dist,
                   inertia_factor);
 #endif
     }
 
   shell->last_coords            = *coords;
+  g_array_append_val (shell->event_queue, *coords);
 
   shell->last_motion_time       = time;
   shell->last_motion_delta_time = delta_time;
@@ -360,4 +398,52 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   shell->last_motion_distance   = distance;
 
   return TRUE;
+}
+
+
+/* Helper function fo managing event history */
+void
+gimp_display_shell_push_event_history (GimpDisplayShell *shell,
+                                       GimpCoords       *coords)
+{
+   if (shell->event_history->len == 4)
+     g_array_remove_index (shell->event_history, 0);
+   g_array_append_val (shell->event_history, *coords);
+}
+
+static void
+gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
+                                       GimpCoords       *coords)
+{
+  GArray     *ret_coords;
+  gint       i = shell->event_history->len - 1;
+
+  /* Note that there must be exactly one event in buffer or bad things
+   * can happen. This should never get called under other circumstances.
+   */
+  ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+
+  gimp_coords_interpolate_catmull (g_array_index (shell->event_history,
+                                                  GimpCoords, i - 1),
+                                   g_array_index (shell->event_history,
+                                                  GimpCoords, i),
+                                   g_array_index (shell->event_queue,
+                                                  GimpCoords, 0),
+                                   *coords,
+                                   EVENT_FILL_PRECISION / 2,
+                                   &ret_coords,
+                                   NULL);
+
+  /* Push the last actual event in history */
+  gimp_display_shell_push_event_history (shell,
+                                         &g_array_index (shell->event_queue,
+                                                         GimpCoords, 0));
+
+  g_array_set_size(shell->event_queue, 0);
+
+  g_array_append_vals (shell->event_queue,
+                       &g_array_index (ret_coords, GimpCoords, 0),
+                       ret_coords->len);
+
+  g_array_free(ret_coords, TRUE);
 }

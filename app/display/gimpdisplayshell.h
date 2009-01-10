@@ -206,6 +206,14 @@ struct _GimpDisplayShell
   GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
   GimpChannelType    mask_color;
+
+  GArray            *event_history;
+  GArray            *event_queue;
+  gboolean           event_delay;      /* TRUE if theres an unsent event in
+                                          the history buffer                  */
+
+  gint               event_delay_timeout;
+  GdkModifierType    last_active_state;
 };
 
 struct _GimpDisplayShellClass

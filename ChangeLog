@@ -1,3 +1,26 @@
+2009-01-10  Sven Neumann  <sven@gimp.org>
+
+	Bug 471344 – Circular brush strokes are not smooth and have corners
+
+	Bug 127785 – stroking with size linked to pressure sensitivity
+	should scale the spacing
+
+	* app/core/gimpcoords-interpolate.[ch]
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-callbacks.[ch]
+	* app/display/gimpdisplayshell-coords.[ch]: applied patch from
+	Alexia Death that introduces a Catmul-Rom splines based event
+	interpolation and also adapts the brush spacing to brush size.
+
+2009-01-06  Sven Neumann  <sven@gimp.org>
+
+	Bug 565046 – Point snapping to guides does not work outside the
+	canvas
+
+	* app/core/gimpimage-snap.c: applied patch from Daniel Hornung
+	that introduces the utility function gimp_image_snap_grid() to
+	clean up and fix guide snapping.
+
 2009-01-06  Sven Neumann  <sven@gimp.org>
 
 	Bug 566498 – Noise distribution error in RGB Noise and HSV Noise

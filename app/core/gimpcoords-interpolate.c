@@ -29,6 +29,7 @@
 #include "gimpcoords.h"
 #include "gimpcoords-interpolate.h"
 
+
 /* Local helper functions declarations*/
 static void     gimp_coords_interpolate_bezier_internal (const GimpCoords  bezier_pt1,
                                                          const GimpCoords  bezier_pt2,
@@ -40,6 +41,11 @@ static void     gimp_coords_interpolate_bezier_internal (const GimpCoords  bezie
                                                          GArray          **ret_coords,
                                                          GArray          **ret_params,
                                                          gint              depth);
+static gdouble  gimp_coords_get_catmull_spline_point    (gdouble           t,
+                                                         gdouble           p0,
+                                                         gdouble           p1,
+                                                         gdouble           p2,
+                                                         gdouble           p3);
 
 /* Functions for bezier subdivision */
 
@@ -190,7 +196,7 @@ gimp_coords_bezier_is_straight (const GimpCoords bezier_pt1,
                                 const GimpCoords bezier_pt2,
                                 const GimpCoords bezier_pt3,
                                 const GimpCoords bezier_pt4,
-                                gdouble           precision)
+                                gdouble          precision)
 {
   GimpCoords pt1, pt2;
 
@@ -207,4 +213,117 @@ gimp_coords_bezier_is_straight (const GimpCoords bezier_pt1,
 
   return (gimp_coords_manhattan_dist (&bezier_pt2, &pt1) < precision &&
           gimp_coords_manhattan_dist (&bezier_pt3, &pt2) < precision);
+}
+
+
+/* Functions for camull-rom interpolation */
+
+void
+gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
+                                 const GimpCoords   catmul_pt2,
+                                 const GimpCoords   catmul_pt3,
+                                 const GimpCoords   catmul_pt4,
+                                 gdouble            precision,
+                                 GArray           **ret_coords,
+                                 GArray           **ret_params)
+{
+  gdouble        delta_x, delta_y;
+  gdouble        distance;
+  gint           num_points;
+  gint           n;
+
+  GimpCoords     past_coords;
+  GimpCoords     start_coords;
+  GimpCoords     end_coords;
+  GimpCoords     future_coords;
+
+  delta_x        = catmul_pt3.x - catmul_pt2.x;
+  delta_y        = catmul_pt3.y - catmul_pt2.y;
+
+  /* Catmull-Rom interpolation requires 4 points.
+   * Two endpoints plus one more at each end.
+   */
+
+  past_coords   = catmul_pt1;
+  start_coords  = catmul_pt2;
+  end_coords    = catmul_pt3;
+  future_coords = catmul_pt4;
+
+  distance  = sqrt (SQR (delta_x) + SQR (delta_y));
+
+  num_points = distance / precision;
+
+  for (n = 1; n <=num_points; n++)
+    {
+      GimpCoords res_coords;
+      gdouble    velocity;
+      gdouble    p = (gdouble) n / num_points;
+
+      res_coords.x =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.x,
+                                              start_coords.x,
+                                              end_coords.x,
+                                              future_coords.x);
+
+      res_coords.y =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.y,
+                                              start_coords.y,
+                                              end_coords.y,
+                                              future_coords.y);
+
+      res_coords.pressure =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.pressure,
+                                              start_coords.pressure,
+                                              end_coords.pressure,
+                                              future_coords.pressure);
+
+      res_coords.xtilt =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.xtilt,
+                                              start_coords.xtilt,
+                                              end_coords.xtilt,
+                                              future_coords.xtilt);
+      res_coords.ytilt =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.ytilt,
+                                              start_coords.ytilt,
+                                              end_coords.ytilt,
+                                              future_coords.ytilt);
+
+      res_coords.wheel =
+        gimp_coords_get_catmull_spline_point (p,
+                                              past_coords.wheel,
+                                              start_coords.wheel,
+                                              end_coords.wheel,
+                                              future_coords.wheel);
+
+      velocity = gimp_coords_get_catmull_spline_point (p,
+                                                       past_coords.velocity,
+                                                       start_coords.velocity,
+                                                       end_coords.velocity,
+                                                       future_coords.velocity);
+      res_coords.velocity = CLAMP (velocity, 0.0, 1.0);
+
+      g_array_append_val (*ret_coords, res_coords);
+
+      if (ret_params)
+        g_array_append_val (*ret_params, p);
+    }
+}
+
+static gdouble
+gimp_coords_get_catmull_spline_point (gdouble  t,
+                                      gdouble  p0,
+                                      gdouble  p1,
+                                      gdouble  p2,
+                                      gdouble  p3)
+{
+
+  return ((((-t + 2.0) * t - 1.0) * t / 2.0)        * p0 +
+          ((((3.0 * t - 5.0) * t) * t + 2.0) / 2.0) * p1 +
+          (((-3.0 * t + 4.0) * t + 1.0) * t / 2.0)  * p2 +
+          (((t - 1) * t * t) / 2.0)                 * p3);
 }

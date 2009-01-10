@@ -82,7 +82,6 @@
 
 #include "gimp-intl.h"
 
-
 enum
 {
   PROP_0,
@@ -356,6 +355,17 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->highlight              = NULL;
   shell->mask                   = NULL;
 
+  shell->event_history          = g_array_new (FALSE, FALSE,
+                                               sizeof (GimpCoords));
+  shell->event_queue            = g_array_new (FALSE, FALSE,
+                                               sizeof (GimpCoords));
+  shell->event_delay            = FALSE;
+
+  shell->event_delay_timeout    = 0;
+
+  shell->last_active_state      = 0;
+
+
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
@@ -496,6 +506,18 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_object_unref (shell->mask);
       shell->mask = NULL;
+    }
+
+  if (shell->event_history)
+    {
+      g_array_free (shell->event_history, TRUE);
+      shell->event_history = NULL;
+    }
+
+  if (shell->event_queue)
+    {
+      g_array_free (shell->event_queue, TRUE);
+      shell->event_queue = NULL;
     }
 
   if (shell->title_idle_id)
