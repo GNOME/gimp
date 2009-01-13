@@ -1,3 +1,10 @@
+2009-01-13  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* autogen.sh
+	* configure.in: require intltool >= 0.40.1. Looks like that was
+	the first version with support for the NC_ keyword.
+
 2009-01-13  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* app/tools/gimpforegroundselecttool.c: Corrected spelling error

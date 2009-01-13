@@ -422,7 +422,7 @@ fi
 # Internationalisation
 ######################
 
-IT_PROG_INTLTOOL(0.35.5)
+IT_PROG_INTLTOOL(0.40.1)
 AM_GLIB_GNU_GETTEXT
 
 
