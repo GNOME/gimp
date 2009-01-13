@@ -325,7 +325,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
       switch (GIMP_SELECTION_TOOL (tool)->function)
         {
         case SELECTION_SELECT:
-          status = _("Rougly outline the object to extract");
+          status = _("Roughly outline the object to extract");
           break;
         default:
           break;

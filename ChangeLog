@@ -1,3 +1,8 @@
+2009-01-13  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* app/tools/gimpforegroundselecttool.c: Corrected spelling error
+	spotted by David Gowers.
+
 2009-01-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/config/gimpdisplayconfig.c: Allow marching ant speeds as
