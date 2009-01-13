@@ -30,7 +30,7 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need intltool (at least 0.35.5, but preferably a newer version).
+  2. You need intltool (at least 0.36.3, but preferably a newer version).
      Intltool can be downloaded from
      http://ftp.gnome.org/pub/gnome/sources/intltool/  
 
