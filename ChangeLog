@@ -1,3 +1,10 @@
+2009-01-13  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* autogen.sh
+	* configure.in: looks like we need intltool >= 0.36.3 (and we
+	recommend using an even newer version).
+
 2009-01-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Merged from trunk:
