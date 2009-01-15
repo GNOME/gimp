@@ -30,7 +30,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "GNU छवि मैनिपुलेशन प्रोग्राम"
+msgstr "GNU छवि निर्माण प्रोग्राम"
 
 #: ../app/about.h:30
 msgid ""
@@ -258,7 +258,7 @@ msgstr "बफ़र"
 
 #: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:182
 msgid "Channels"
-msgstr "चैनल्स"
+msgstr "चैनल"
 
 #: ../app/actions/actions.c:113 ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:190
@@ -271,7 +271,7 @@ msgstr "विन्यास"
 
 #: ../app/actions/actions.c:119
 msgid "Context"
-msgstr "कॉन्टेक्स्ट"
+msgstr "संदर्भ"
 
 #: ../app/actions/actions.c:122 ../app/dialogs/dialogs.c:150
 msgid "Pointer Information"
@@ -365,7 +365,7 @@ msgstr "रंगपट्टिका"
 #: ../app/actions/actions.c:179 ../app/core/gimp.c:842
 #: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2742
 msgid "Patterns"
-msgstr "पैटर्न"
+msgstr "प्रारूप"
 
 #: ../app/actions/actions.c:182 ../app/dialogs/preferences-dialog.c:2758
 msgid "Plug-Ins"
@@ -518,7 +518,7 @@ msgstr "बफ़र मिटाएँ (_D)"
 
 #: ../app/actions/buffers-actions.c:65
 msgid "Delete the selected buffer"
-msgstr "चुना गया बफ़र मिटाएँ"
+msgstr "चुने बफ़र मिटाएँ"
 
 #: ../app/actions/channels-actions.c:44
 msgid "Channels Menu"
@@ -1237,7 +1237,7 @@ msgstr "जाल के रूप में देखें (_G)"
 
 #: ../app/actions/documents-actions.c:42
 msgid "Documents Menu"
-msgstr "दस्तावेज मेन्यू"
+msgstr "दस्तावेज़ मेन्यू"
 
 #: ../app/actions/documents-actions.c:46
 msgid "_Open Image"
@@ -1249,15 +1249,15 @@ msgstr "चयनित प्रविष्टि खोलें"
 
 #: ../app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
-msgstr "उठाएं या खोलें छवि (_R)"
+msgstr "उठाएँ या खोलें छवि (_R)"
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr "उठाएं विंडो यदि पहले से खुला है"
+msgstr "उठाएँ विंडो यदि पहले से खुला है"
 
 #: ../app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
-msgstr "फाइल खुला संवाद (_D)"
+msgstr "फ़ाइल खुला संवाद (_D)"
 
 #: ../app/actions/documents-actions.c:59
 msgid "Open image dialog"
@@ -1443,7 +1443,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
 msgid "_Undo"
-msgstr "पूर्ववत् करें (_U)"
+msgstr "पहले जैसा (_U)"
 
 #: ../app/actions/edit-actions.c:73
 msgid "Undo the last operation"
@@ -1733,7 +1733,7 @@ msgstr "सहेज नहीं सकता है. कुछ नहीं �
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
-msgstr "फाइल में त्रुटि लॉग सहेजें"
+msgstr "फ़ाइल में त्रुटि लॉग सहेजें"
 
 #: ../app/actions/error-console-commands.c:156
 #, c-format
@@ -1741,7 +1741,7 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
-"'%s' फाइल में लिखने में त्रुटि:\n"
+"'%s' फ़ाइल में लिखने में त्रुटि:\n"
 "%s"
 
 #: ../app/actions/file-actions.c:66
@@ -1822,7 +1822,7 @@ msgstr "यह छवि सहेजें"
 
 #: ../app/actions/file-actions.c:122
 msgid "Save _As..."
-msgstr "इस रूप में सहेजें... (_A)"
+msgstr "ऐसे सहेजें... (_A)"
 
 #: ../app/actions/file-actions.c:123
 msgid "Save this image with a different name"
@@ -1891,7 +1891,7 @@ msgstr "इस नमूना के लिए नाम दें"
 
 #: ../app/actions/file-commands.c:363
 msgid "Revert failed. No file name associated with this image."
-msgstr "उलटना विफल. इस छवि से कोई फाइलनाम जुड़ा नहीं है."
+msgstr "उलटना विफल. इस छवि से कोई फ़ाइलनाम जुड़ा नहीं है."
 
 #: ../app/actions/file-commands.c:376
 msgid "Revert Image"
@@ -2072,7 +2072,7 @@ msgstr "HSV (दक्षिणावर्त वर्ण (_h))"
 #: ../app/actions/gradient-editor-actions.c:370
 #: ../app/actions/view-actions.c:273
 msgid "Zoom In"
-msgstr "ज़ूम इन"
+msgstr "बड़ा-छोटा इन"
 
 #: ../app/actions/gradient-editor-actions.c:371
 #: ../app/actions/palette-editor-actions.c:88
@@ -2083,7 +2083,7 @@ msgstr "बडे रूप में दिखाएँ"
 #: ../app/actions/gradient-editor-actions.c:376
 #: ../app/actions/view-actions.c:267
 msgid "Zoom Out"
-msgstr "ज़ूम आउट"
+msgstr "बड़ा-छोटा आउट"
 
 #: ../app/actions/gradient-editor-actions.c:377
 #: ../app/actions/palette-editor-actions.c:94
@@ -2093,12 +2093,12 @@ msgstr "छोटे रूप में दिखाएँ"
 
 #: ../app/actions/gradient-editor-actions.c:382
 msgid "Zoom All"
-msgstr "सभी ज़ूम"
+msgstr "सभी बड़ा-छोटा"
 
 #: ../app/actions/gradient-editor-actions.c:383
 #: ../app/actions/palette-editor-actions.c:100
 msgid "Zoom all"
-msgstr "सभी जूम करें"
+msgstr "सभी बड़ा-छोटा करें"
 
 #: ../app/actions/gradient-editor-actions.c:773
 msgid "_Blending Function for Segment"
@@ -2302,7 +2302,7 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
-msgstr "ग्रेडिऐन्ट् मिटाओ"
+msgstr "ढाल मिटाएँ"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
@@ -3009,7 +3009,7 @@ msgstr "रंग मिटाएँ (_D)"
 
 #: ../app/actions/palette-editor-actions.c:55
 msgid "Delete color"
-msgstr "रंग मिटाओ"
+msgstr "रंग मिटाएँ"
 
 #: ../app/actions/palette-editor-actions.c:63
 msgid "Edit Active Palette"
@@ -3043,7 +3043,7 @@ msgstr "छोटा आकार (_O)"
 
 #: ../app/actions/palette-editor-actions.c:99
 msgid "Zoom _All"
-msgstr "सभी जूम करें (_A)"
+msgstr "सभी बड़ा-छोटा करें (_A)"
 
 #: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
@@ -3584,7 +3584,7 @@ msgstr "खोलें"
 
 #: ../app/actions/text-editor-actions.c:45
 msgid "Load text from file"
-msgstr "फाइल से पाठ लोड करें"
+msgstr "फ़ाइल से पाठ लोड करें"
 
 #: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:445
 msgid "Clear"
@@ -3612,7 +3612,7 @@ msgstr "दाहिने से बायें"
 
 #: ../app/actions/text-editor-commands.c:63
 msgid "Open Text File (UTF-8)"
-msgstr "पाठ फाइल खोलें (UTF-8)"
+msgstr "पाठ फ़ाइल खोलें (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:144
 #: ../app/config/gimpconfig-file.c:59 ../app/core/gimpbrush-load.c:140
@@ -3975,7 +3975,7 @@ msgstr "देखें (_V)"
 
 #: ../app/actions/view-actions.c:68
 msgid "_Zoom"
-msgstr "ज़ूम (_Z)"
+msgstr "बड़ा-छोटा (_Z)"
 
 #: ../app/actions/view-actions.c:69
 msgid "_Padding Color"
@@ -4015,7 +4015,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:579
 msgid "Re_vert Zoom"
-msgstr "ज़ूम पलटें (_v)"
+msgstr "बड़ा-छोटा पलटें (_v)"
 
 #: ../app/actions/view-actions.c:100
 msgid "Restore the previous zoom level"
@@ -4171,7 +4171,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:293
 msgid "Zoom 16:1"
-msgstr "जूम 16:1"
+msgstr "बड़ा-छोटा 16:1"
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
@@ -4179,7 +4179,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:299
 msgid "Zoom 8:1"
-msgstr "ज़ूम 8:1"
+msgstr "बड़ा-छोटा 8:1"
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
@@ -4187,7 +4187,7 @@ msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:305
 msgid "Zoom 4:1"
-msgstr "ज़ूम 4:1"
+msgstr "बड़ा-छोटा 4:1"
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
@@ -4195,7 +4195,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:311
 msgid "Zoom 2:1"
-msgstr "ज़ूम 2:1"
+msgstr "बड़ा-छोटा 2:1"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
@@ -4203,7 +4203,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:317
 msgid "Zoom 1:1"
-msgstr "ज़ूम 1:1"
+msgstr "बड़ा-छोटा 1:1"
 
 #: ../app/actions/view-actions.c:322
 msgid "1:_2  (50%)"
@@ -4211,7 +4211,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:323
 msgid "Zoom 1:2"
-msgstr "ज़ूम 1:2"
+msgstr "बड़ा-छोटा 1:2"
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
@@ -4219,7 +4219,7 @@ msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:329
 msgid "Zoom 1:4"
-msgstr "ज़ूम 1:4"
+msgstr "बड़ा-छोटा 1:4"
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
@@ -4227,7 +4227,7 @@ msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:335
 msgid "Zoom 1:8"
-msgstr "ज़ूम 1:8"
+msgstr "बड़ा-छोटा 1:8"
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
@@ -4235,7 +4235,7 @@ msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:341
 msgid "Zoom 1:16"
-msgstr "ज़ूम 1:16"
+msgstr "बड़ा-छोटा 1:16"
 
 #: ../app/actions/view-actions.c:346
 msgid "Othe_r..."
@@ -4298,7 +4298,7 @@ msgstr "अन्य (_r) (%s)..."
 #: ../app/actions/view-actions.c:717
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "जूम (_Z) (%s)"
+msgstr "बड़ा-छोटा (_Z) (%s)"
 
 #: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
@@ -4512,7 +4512,7 @@ msgstr ""
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "आपकी '%s' फाइल के विश्लेषण में त्रुटि थी. तयशुदा मान का प्रयोग किया जा सकेगा. आपके विन्यास का बैकअप को '%s' पर बनाया गया है."
+msgstr "आपकी '%s' फ़ाइल के विश्लेषण में त्रुटि थी. तयशुदा मान का प्रयोग किया जा सकेगा. आपके विन्यास का बैकअप को '%s' पर बनाया गया है."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -4610,7 +4610,7 @@ msgstr "छवि विंडो शीर्षक में प्रकट �
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "जब सक्रिय किया गया, यह सुनिश्चित करेगा कि फाइल के खुलने के बाद पूरा छवि दृश्य है या नहीं, अन्यथा इसे 1:1 के मापक पर दिखाया जाएगा."
+msgstr "जब सक्रिय किया गया, यह सुनिश्चित करेगा कि फ़ाइल के खुलने के बाद पूरा छवि दृश्य है या नहीं, अन्यथा इसे 1:1 के मापक पर दिखाया जाएगा."
 
 #: ../app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
@@ -4622,7 +4622,7 @@ msgstr "मापन व अन्य रूपांतरण के लिए 
 
 #: ../app/config/gimprc-blurbs.h:174
 msgid "How many recently opened image filenames to keep on the File menu."
-msgstr "फाइल मेन्यू पर हाल में खोले कितने छवि फाइल नामों को रखना है."
+msgstr "फ़ाइल मेन्यू पर हाल में खोले कितने छवि फ़ाइल नामों को रखना है."
 
 #: ../app/config/gimprc-blurbs.h:177
 msgid ""
@@ -4716,7 +4716,7 @@ msgstr "GIMP को अपने अंतिम सहेजे सत्र �
 
 #: ../app/config/gimprc-blurbs.h:265
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "मौजूदा औजार, प्रारूप, रंग, व ब्रश को जिंप सत्र पर याद रखें."
+msgstr "मौजूदा औज़ार, प्रारूप, रंग, व ब्रश को जिंप सत्र पर याद रखें."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid ""
@@ -4864,7 +4864,7 @@ msgstr ""
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
-msgstr "खुले संवाद में लघुछवि स्वतः अद्यतन किया जाएगा यदि पूर्वावलोकन किया गया फाइल यहां सेट किए आकार से छोटा है."
+msgstr "खुले संवाद में लघुछवि स्वतः अद्यतन किया जाएगा यदि पूर्वावलोकन किया गया फ़ाइल यहां सेट किए आकार से छोटा है."
 
 #: ../app/config/gimprc-blurbs.h:384
 msgid ""
@@ -5375,7 +5375,7 @@ msgstr "नई परत"
 
 #: ../app/core/core-enums.c:904
 msgid "Delete layer"
-msgstr "परत मिटाओ"
+msgstr "परत मिटाएँ"
 
 #: ../app/core/core-enums.c:905
 msgid "Reposition layer"
@@ -5554,7 +5554,7 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:309
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "फाइल '%s' को '%s' से नक़ल कर रहा है..."
+msgstr "फ़ाइल '%s' को '%s' से नक़ल कर रहा है..."
 
 #: ../app/core/gimp-user-install.c:324 ../app/core/gimp-user-install.c:350
 #, c-format
@@ -5578,7 +5578,7 @@ msgstr "आंतरिक प्रक्रिया"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:834
 msgid "Looking for data files"
-msgstr "आंकड़ा फाइल के लिए देख रहा है"
+msgstr "आंकड़ा फ़ाइल के लिए देख रहा है"
 
 #: ../app/core/gimp.c:834
 msgid "Parasites"
@@ -5602,39 +5602,39 @@ msgstr "%d बाइट '%s' से नहीं पढ़ सका: %s"
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: चौड़ाई = 0."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: चौड़ाई = 0."
 
 #: ../app/core/gimpbrush-load.c:206
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: ऊंचाई = 0."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: ऊंचाई = 0."
 
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: बाइट = 0."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: बाइट = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात गहराई %d."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात गहराई %d."
 
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात संस्करण %d."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात संस्करण %d."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
 #: ../app/core/gimpbrush-load.c:720
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: फाइल कटा हुआ दिखता है."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: फ़ाइल कटा हुआ दिखता है."
 
 #: ../app/core/gimpbrush-load.c:276 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "अवैध UTF-8 स्ट्रिंग '%s' ब्रश फाइल में."
+msgstr "अवैध UTF-8 स्ट्रिंग '%s' ब्रश फ़ाइल में."
 
 #: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:505
 #: ../app/core/gimppattern-load.c:146
@@ -5649,7 +5649,7 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: असमर्थित ब्रश गहराई %d\n"
+"ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: असमर्थित ब्रश गहराई %d\n"
 "जिम्प ब्रश को जरूर ग्रे या RGBA होना चाहिए."
 
 #: ../app/core/gimpbrush-load.c:448
@@ -5665,7 +5665,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: जिम्प ब्रश फाइल नहीं है."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: जिम्प ब्रश फ़ाइल नहीं है."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
@@ -5690,13 +5690,13 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "त्रुटि ब्रश फाइल '%s' को पढ़ने के दौरान: %s"
+msgstr "त्रुटि ब्रश फ़ाइल '%s' को पढ़ने के दौरान: %s"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
 #: ../app/core/gimpbrushpipe-load.c:223
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "ब्रश फाइल '%s' में गंभीर विश्लेषण त्रुटि: फाइल खराब है."
+msgstr "ब्रश फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: फ़ाइल खराब है."
 
 #: ../app/core/gimpchannel-select.c:60
 msgctxt "command"
@@ -5970,12 +5970,12 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "ढाल फाइल '%s' में गंभीर विश्लेषण त्रुटि: जिम्प ढाल फाइल नहीं."
+msgstr "ढाल फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: जिम्प ढाल फ़ाइल नहीं."
 
 #: ../app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "ढाल फाइल '%s' में अवैध UTF-8 स्ट्रिंग."
+msgstr "ढाल फ़ाइल '%s' में अवैध UTF-8 स्ट्रिंग."
 
 #: ../app/core/gimpgradient-load.c:136
 #, c-format
@@ -5990,7 +5990,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "ढाल फाइल '%s' खराब है: खंड परिसर 0-1 से तक नहीं फैला है."
+msgstr "ढाल फ़ाइल '%s' खराब है: खंड परिसर 0-1 से तक नहीं फैला है."
 
 #: ../app/core/gimpgradient-load.c:334
 #, c-format
@@ -6276,7 +6276,7 @@ msgstr "फ़ोल्डर"
 
 #: ../app/core/gimpimagefile.c:533
 msgid "Special File"
-msgstr "विशेष फाइल"
+msgstr "विशेष फ़ाइल"
 
 #: ../app/core/gimpimagefile.c:549
 msgid "Remote File"
@@ -6457,29 +6457,29 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:236
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr "रंग पट्टी फाइल '%s' में गंभीर विश्लेषण त्रुटि: %d पंक्ति में पठन त्रुटि."
+msgstr "रंग पट्टी फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: %d पंक्ति में पठन त्रुटि."
 
 #: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "रंग पट्टी फाइल '%s' में गंभीर विश्लेषण त्रुटि: अनुपस्थित मैजिक हेडर."
+msgstr "रंग पट्टी फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: अनुपस्थित मैजिक हेडर."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "रंग पट्टी फाइल '%s' में अवैध UTF-8 स्ट्रिंग "
+msgstr "रंग पट्टी फ़ाइल '%s' में अवैध UTF-8 स्ट्रिंग "
 
 #: ../app/core/gimppalette-load.c:147
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr "रंग पट्टी फाइल '%s' पढ रहा है: पंक्ति %d में कालम की अवैध संख्या. तयशुदा मान प्रयोग कर रहा है."
+msgstr "रंग पट्टी फ़ाइल '%s' पढ रहा है: पंक्ति %d में कालम की अवैध संख्या. तयशुदा मान प्रयोग कर रहा है."
 
 #: ../app/core/gimppalette-load.c:183
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: %d में अनुपस्थित लाल घटक."
+msgstr "रंग पट्टी फ़ाइल '%s' पढ़ रहा है: %d में अनुपस्थित लाल घटक."
 
 #: ../app/core/gimppalette-load.c:191
 #, c-format
@@ -6489,12 +6489,12 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:199
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: %d पंक्ति में अनुपस्थित नीला घटक."
+msgstr "रंग पट्टी फ़ाइल '%s' पढ़ रहा है: %d पंक्ति में अनुपस्थित नीला घटक."
 
 #: ../app/core/gimppalette-load.c:209
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: RGB मान पंक्ति %d में परिसर के बाहर है."
+msgstr "रंग पट्टी फ़ाइल '%s' पढ़ रहा है: RGB मान पंक्ति %d में परिसर के बाहर है."
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -6505,7 +6505,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "प्रारूप फाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात प्रारूप संरूप संस्करण %d."
+msgstr "प्रारूप फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात प्रारूप संरूप संस्करण %d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -6513,13 +6513,13 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"प्रारूप फाइल '%s' में गंभीर विश्लेषण त्रुटि: असमर्थित प्रारूप गहराई %d.\n"
+"प्रारूप फ़ाइल '%s' में गंभीर विश्लेषण त्रुटि: असमर्थित प्रारूप गहराई %d.\n"
 "जिम्प नमूना धूसर या लाल होना चाहिए."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "'%s' प्रारूप फाइल में अवैध UTF-8 स्ट्रिंग."
+msgstr "'%s' प्रारूप फ़ाइल में अवैध UTF-8 स्ट्रिंग."
 
 #: ../app/core/gimppdbprogress.c:288 ../app/widgets/gimppdbdialog.c:352
 #, c-format
@@ -6905,7 +6905,7 @@ msgstr "गुण"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr "रंग प्रोफाइल"
+msgstr "रंग प्रोफ़ाइल"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
@@ -7106,7 +7106,7 @@ msgstr "केवल चयनित पिक्सेल (_S)"
 
 #: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
-msgstr "रंग-पट्टी फाइल (_f)"
+msgstr "रंग-पट्टी फ़ाइल (_f)"
 
 #. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:294
@@ -7283,7 +7283,7 @@ msgstr "लघुछवि आकार (_t):"
 
 #: ../app/dialogs/preferences-dialog.c:1575
 msgid "Maximum _filesize for thumbnailing:"
-msgstr "लघुचित्रण के लिए अधिकतम फाइलआकार (_f):"
+msgstr "लघुचित्रण के लिए अधिकतम फ़ाइलआकार (_f):"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1579
@@ -7518,11 +7518,11 @@ msgstr "कदमताल करती चीटियों की गति (
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2086
 msgid "Zoom & Resize Behavior"
-msgstr "जूम करें व आचरण को पुनः आकार दें"
+msgstr "बड़ा-छोटा करें व आचरण को पुनः आकार दें"
 
 #: ../app/dialogs/preferences-dialog.c:2090
 msgid "Resize window on _zoom"
-msgstr "जूम पर पुनः आकार दें (_z)"
+msgstr "बड़ा-छोटा पर पुनः आकार दें (_z)"
 
 #: ../app/dialogs/preferences-dialog.c:2093
 msgid "Resize window on image _size change"
@@ -7534,7 +7534,7 @@ msgstr "विंडो में सटीक"
 
 #: ../app/dialogs/preferences-dialog.c:2101
 msgid "Initial zoom _ratio:"
-msgstr "आरंभिक जूम अनुपात (_r):"
+msgstr "आरंभिक बड़ा-छोटा अनुपात (_r):"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2105
@@ -7596,11 +7596,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2191
 msgid "Show zoom percentage"
-msgstr "जूम प्रतिशत दिखाएँ"
+msgstr "बड़ा-छोटा प्रतिशत दिखाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:2192
 msgid "Show zoom ratio"
-msgstr "जूम अनुपात दिखाएँ"
+msgstr "बड़ा-छोटा अनुपात दिखाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:2193
 msgid "Show image size"
@@ -8112,7 +8112,7 @@ msgstr ""
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:132
 msgid "All files (*.*)"
-msgstr "सभी फाइलें (*.*)"
+msgstr "सभी फ़ाइलें (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
@@ -8381,7 +8381,7 @@ msgstr ""
 #: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
-msgstr "GIMP वक्र फाइल नहीं"
+msgstr "GIMP वक्र फ़ाइल नहीं"
 
 #: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
@@ -8391,7 +8391,7 @@ msgstr ""
 #: ../app/gegl/gimplevelsconfig.c:664
 #, c-format
 msgid "not a GIMP Levels file"
-msgstr "GIMP स्तर फाइल नहीं"
+msgstr "GIMP स्तर फ़ाइल नहीं"
 
 #. initialize the document history
 #: ../app/gui/gui.c:420
@@ -10169,7 +10169,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifytool.c:86
 msgid "Zoom"
-msgstr "ज़ूम"
+msgstr "बड़ा-छोटा"
 
 #: ../app/tools/gimpmagnifytool.c:87
 msgid "Zoom Tool: Adjust the zoom level"
