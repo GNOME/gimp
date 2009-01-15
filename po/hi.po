@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-10 08:08+0000\n"
-"PO-Revision-Date: 2009-01-15 15:57+0530\n"
+"PO-Revision-Date: 2009-01-15 16:15+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
 "Language-Team: Hindi <hindi.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -6321,38 +6321,38 @@ msgstr[1] "%d स्तर"
 #: ../app/core/gimpimagefile.c:675
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr ""
+msgstr "'%s' लघुछवि को खोल नहीं सका: %s"
 
 #: ../app/core/gimpitem.c:1138
 msgid "Attach Parasite"
-msgstr ""
+msgstr "परजीवी जोड़ें"
 
 #: ../app/core/gimpitem.c:1148
 msgid "Attach Parasite to Item"
-msgstr ""
+msgstr "मद में परजीवी जोड़ें"
 
 #: ../app/core/gimpitem.c:1190 ../app/core/gimpitem.c:1197
 msgid "Remove Parasite from Item"
-msgstr ""
+msgstr "मद से परजीवी हटाएँ"
 
 #: ../app/core/gimplayer-floating-sel.c:99
 msgid "Remove Floating Selection"
-msgstr ""
+msgstr "प्लावित चयन हटाएँ"
 
 #: ../app/core/gimplayer-floating-sel.c:130
 msgid "Anchor Floating Selection"
-msgstr ""
+msgstr "प्लावित चयन एंकर कर रहा है"
 
 #: ../app/core/gimplayer-floating-sel.c:205 ../app/core/gimplayer.c:643
 #, c-format
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
-msgstr ""
+msgstr "प्लावित चयन से नयी परत नहीं बना सकता है क्योंकि यह परत मुखौटा या चैनल का अवयव है."
 
 #: ../app/core/gimplayer-floating-sel.c:211
 msgid "Floating Selection to Layer"
-msgstr ""
+msgstr "परत में प्लावित चयन"
 
 #: ../app/core/gimplayer.c:248 ../app/tools/tools-enums.c:209
 msgid "Layer"
@@ -6365,25 +6365,25 @@ msgstr "परत को पुनः नाम दो"
 #: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
 #: ../app/pdb/layer-cmds.c:470
 msgid "Move Layer"
-msgstr ""
+msgstr "परत खिसकाएँ"
 
 #: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
-msgstr ""
+msgstr "परत को पुनः आकार दें"
 
 #: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
-msgstr ""
+msgstr "परत पलटें"
 
 #: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
-msgstr ""
+msgstr "परत घुमाएँ"
 
 #: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
-msgstr ""
+msgstr "%s मुखौटा"
 
 #: ../app/core/gimplayer.c:446
 #, c-format
@@ -6391,32 +6391,34 @@ msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr ""
+"प्लावित चयन\n"
+"(%s)"
 
 #: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
+msgstr "परत मुखौटा जोड़ने में असमर्थ क्योंकि परत के पास एक पहले से है."
 
 #: ../app/core/gimplayer.c:1276
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr ""
+msgstr "अपेक्षाकृत निर्दिष्ट स्तर के भिन्न आयाम के परत मुखौटे को जोड़ नहीं सकता है."
 
 #: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
-msgstr ""
+msgstr "अल्फा को मुखौटे में हस्तांतरित करें"
 
 #: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
-msgstr ""
+msgstr "परत मुखौटा लागू करें"
 
 #: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
-msgstr ""
+msgstr "परत मुखौटा मिटाएँ"
 
 #: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "अल्फा चैनल जोड़ें"
 
 #: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
@@ -6424,11 +6426,11 @@ msgstr ""
 
 #: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
-msgstr ""
+msgstr "छवि आकार में परत"
 
 #: ../app/core/gimplayermask.c:105
 msgid "Move Layer Mask"
-msgstr ""
+msgstr "परत मुखौटा खिसकाएँ"
 
 #. reject renaming, layer masks are always named "<layer name> mask"
 #: ../app/core/gimplayermask.c:160
@@ -6438,7 +6440,7 @@ msgstr ""
 
 #: ../app/core/gimplayermask.c:303
 msgid "Show Layer Mask"
-msgstr ""
+msgstr "परत मुखौटा दिखाएँ"
 
 #: ../app/core/gimppalette-import.c:428
 #, c-format
@@ -6455,29 +6457,29 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:236
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' में गंभीर विश्लेषण त्रुटि: %d पंक्ति में पठन त्रुटि."
 
 #: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' में गंभीर विश्लेषण त्रुटि: अनुपस्थित मैजिक हेडर."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' में अवैध UTF-8 स्ट्रिंग "
 
 #: ../app/core/gimppalette-load.c:147
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' पढ रहा है: पंक्ति %d में कालम की अवैध संख्या. तयशुदा मान प्रयोग कर रहा है."
 
 #: ../app/core/gimppalette-load.c:183
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: %d में अनुपस्थित लाल घटक."
 
 #: ../app/core/gimppalette-load.c:191
 #, c-format
@@ -6487,12 +6489,12 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:199
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: %d पंक्ति में अनुपस्थित नीला घटक."
 
 #: ../app/core/gimppalette-load.c:209
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
+msgstr "रंग पट्टी फाइल '%s' पढ़ रहा है: RGB मान पंक्ति %d में परिसर के बाहर है."
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -6503,7 +6505,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
+msgstr "प्रारूप फाइल '%s' में गंभीर विश्लेषण त्रुटि: अज्ञात प्रारूप संरूप संस्करण %d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -6511,16 +6513,18 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
+"प्रारूप फाइल '%s' में गंभीर विश्लेषण त्रुटि: असमर्थित प्रारूप गहराई %d.\n"
+"जिम्प नमूना धूसर या लाल होना चाहिए."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "'%s' प्रारूप फाइल में अवैध UTF-8 स्ट्रिंग."
 
 #: ../app/core/gimppdbprogress.c:288 ../app/widgets/gimppdbdialog.c:352
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
-msgstr ""
+msgstr "%s कालबैक चलाने में असमर्थ. तदनुरूपी प्लगिन क्रैश हो सकता है."
 
 #: ../app/core/gimpprogress.c:107 ../app/core/gimpprogress.c:154
 msgid "Please wait"
@@ -6528,11 +6532,11 @@ msgstr "कृपया इंतजार करें..."
 
 #: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
-msgstr ""
+msgstr "चयन खिसकाएँ"
 
 #: ../app/core/gimpselection.c:168
 msgid "Sharpen Selection"
-msgstr ""
+msgstr "चयन तीक्ष्ण करें"
 
 #: ../app/core/gimpselection.c:169
 msgid "Select None"
@@ -6554,20 +6558,20 @@ msgstr ""
 #: ../app/core/gimpselection.c:640
 #, c-format
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
+msgstr "काटने या नक़ल करने में असमर्थ क्योंकि चयनित क्षेत्र रिक्त है."
 
 #: ../app/core/gimpselection.c:814
 #, c-format
 msgid "Cannot float selection because the selected region is empty."
-msgstr ""
+msgstr "चयन प्लावित नहीं कर सकता है क्योंकि चयनित क्षेत्र रिक्त है."
 
 #: ../app/core/gimpselection.c:821
 msgid "Float Selection"
-msgstr ""
+msgstr "चयन प्लावित करें"
 
 #: ../app/core/gimpselection.c:837
 msgid "Floated Layer"
-msgstr ""
+msgstr "प्लावित परत"
 
 #: ../app/core/gimpstrokeoptions.c:119
 msgid ""
@@ -6577,15 +6581,15 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:106
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr ""
+msgstr "निर्देशांक डिसप्ले के लिए प्रयुक्त ईकाई जब डाट फॉर डाट मोड में नहीं है."
 
 #: ../app/core/gimptemplate.c:113
 msgid "The horizontal image resolution."
-msgstr ""
+msgstr "क्षैतिज छवि विभेदन."
 
 #: ../app/core/gimptemplate.c:119
 msgid "The vertical image resolution."
-msgstr ""
+msgstr "लंबवत छवि विभेदन."
 
 #: ../app/core/gimptemplate.c:405 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -6613,11 +6617,11 @@ msgstr "इंचेस"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
-msgstr ""
+msgstr "मिलीमीटर"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeters"
-msgstr ""
+msgstr "मिलीमीटर"
 
 #. professional units
 #: ../app/core/gimpunit.c:63
@@ -6626,15 +6630,15 @@ msgstr "पाइंट"
 
 #: ../app/core/gimpunit.c:63
 msgid "points"
-msgstr ""
+msgstr "बिंदु"
 
 #: ../app/core/gimpunit.c:64
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: ../app/core/gimpunit.c:64
 msgid "picas"
-msgstr ""
+msgstr "picas"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
@@ -6673,11 +6677,11 @@ msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "सूचीबद्ध रंग रूपांतरण"
 
 #: ../app/dialogs/convert-dialog.c:128
 msgid "Convert Image to Indexed Colors"
-msgstr ""
+msgstr "सूचीबद्ध रंग में छवि बदलें"
 
 #: ../app/dialogs/convert-dialog.c:138
 msgid "C_onvert"
@@ -6685,7 +6689,7 @@ msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:189
 msgid "_Maximum number of colors:"
-msgstr ""
+msgstr "रंग की अधिकतम संख्या (_M):"
 
 #: ../app/dialogs/convert-dialog.c:216
 msgid "_Remove unused colors from colormap"
@@ -6698,11 +6702,11 @@ msgstr "डिथरिंग"
 
 #: ../app/dialogs/convert-dialog.c:244
 msgid "Color _dithering:"
-msgstr ""
+msgstr "रंग डाइथरिंग (_d):"
 
 #: ../app/dialogs/convert-dialog.c:259
 msgid "Enable dithering of _transparency"
-msgstr ""
+msgstr "पारदर्शिता के डाइथरिंग को सक्रिय करें (_t)"
 
 #: ../app/dialogs/convert-dialog.c:286
 msgid "Converting to indexed colors"
@@ -6711,12 +6715,12 @@ msgstr ""
 #: ../app/dialogs/convert-dialog.c:414 ../app/pdb/convert-cmds.c:150
 #, c-format
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "रंग पट्टी में 256 रंग से अधिक के साथ बदल नहीं सकता है."
 
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:158
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
-msgstr ""
+msgstr "जिम्प संदेश"
 
 #: ../app/dialogs/dialogs.c:142
 msgid "Devices"
@@ -6724,7 +6728,7 @@ msgstr "उपकरण"
 
 #: ../app/dialogs/dialogs.c:142
 msgid "Device Status"
-msgstr ""
+msgstr "युक्ति स्थिति"
 
 #: ../app/dialogs/dialogs.c:146
 msgid "Errors"
@@ -6736,7 +6740,7 @@ msgstr "इतिहास"
 
 #: ../app/dialogs/dialogs.c:173
 msgid "Image Templates"
-msgstr ""
+msgstr "छवि नमूना"
 
 #: ../app/dialogs/dialogs.c:194
 msgid "Histogram"
@@ -6744,7 +6748,7 @@ msgstr "हिस्टोग्राम"
 
 #: ../app/dialogs/dialogs.c:198
 msgid "Selection Editor"
-msgstr ""
+msgstr "चयन संपादक"
 
 #: ../app/dialogs/dialogs.c:202
 msgid "Undo"
@@ -6752,7 +6756,7 @@ msgstr "अनावृत्ति"
 
 #: ../app/dialogs/dialogs.c:202
 msgid "Undo History"
-msgstr ""
+msgstr "इतिहास वापस करें"
 
 #: ../app/dialogs/dialogs.c:212
 msgid "Navigation"
@@ -6760,15 +6764,15 @@ msgstr "नेविगेशन"
 
 #: ../app/dialogs/dialogs.c:212
 msgid "Display Navigation"
-msgstr ""
+msgstr "संचरण दिखाएँ"
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG"
-msgstr ""
+msgstr "FG/BG"
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG Color"
-msgstr ""
+msgstr "FG/BG रंग"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
@@ -6785,7 +6789,7 @@ msgstr "मोड (_M):"
 
 #: ../app/dialogs/fade-dialog.c:163
 msgid "_Opacity:"
-msgstr ""
+msgstr "अपारदर्शिता (_O):"
 
 #: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
@@ -6797,7 +6801,7 @@ msgstr "स्थान खोलें"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "स्थान दें (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:302 ../app/dialogs/file-save-dialog.c:338
 msgid ""
@@ -6830,15 +6834,15 @@ msgstr ""
 
 #: ../app/dialogs/grid-dialog.c:86
 msgid "Configure Image Grid"
-msgstr ""
+msgstr "छवि जाल विन्यस्त करें"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
-msgstr ""
+msgstr "परत मिलाएँ"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:66
 msgid "Layers Merge Options"
-msgstr ""
+msgstr "परत मिलान विकल्प"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
@@ -6846,19 +6850,19 @@ msgstr ""
 
 #: ../app/dialogs/image-merge-layers-dialog.c:91
 msgid "Final, Merged Layer should be:"
-msgstr ""
+msgstr "अंतिम, मिलान स्तर होना चाहिए:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "यथा जरूरी विस्तारित"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:98
 msgid "Clipped to image"
-msgstr ""
+msgstr "छवि में क्लिप किया"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "तल परत में क्लिप किया"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:109
 msgid "_Discard invisible layers"
@@ -6866,22 +6870,22 @@ msgstr ""
 
 #: ../app/dialogs/image-new-dialog.c:96
 msgid "Create a New Image"
-msgstr ""
+msgstr "नया छवि बनाएँ"
 
 #: ../app/dialogs/image-new-dialog.c:144
 #: ../app/dialogs/preferences-dialog.c:2015
 msgid "_Template:"
-msgstr ""
+msgstr "नमूना (_T):"
 
 #: ../app/dialogs/image-new-dialog.c:295
 msgid "Confirm Image Size"
-msgstr ""
+msgstr "छवि आकार संपुष्ट करें"
 
 #: ../app/dialogs/image-new-dialog.c:317
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "आप %s के आकार के छवि को बनाने की कोशिश कर रहे हैं."
 
 #: ../app/dialogs/image-new-dialog.c:324
 #, c-format
@@ -6893,7 +6897,7 @@ msgstr ""
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
 msgid "Image Properties"
-msgstr ""
+msgstr "छवि गुण"
 
 #: ../app/dialogs/image-properties-dialog.c:84
 msgid "Properties"
@@ -6914,7 +6918,7 @@ msgstr "छवि मापें"
 
 #: ../app/dialogs/image-scale-dialog.c:205
 msgid "Confirm Scaling"
-msgstr ""
+msgstr "मापन संपुष्ट करें"
 
 #: ../app/dialogs/image-scale-dialog.c:245
 #, c-format
@@ -6930,11 +6934,11 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "क्या यह है जो आप करना चाहते हैं?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
-msgstr ""
+msgstr "कुंजीपटल शॉर्टकट विन्यस्त करें"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid ""
@@ -6950,11 +6954,11 @@ msgstr "निकास पर कुंजीपटल शार्टकट �
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
-msgstr ""
+msgstr "परत में मुखौटा जोड़ें"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:110
 msgid "Initialize Layer Mask to:"
-msgstr ""
+msgstr "परत मुखौटा को आरंभ करें:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:138
 msgid "In_vert mask"
@@ -6977,7 +6981,7 @@ msgstr "ऊँचाईः"
 
 #: ../app/dialogs/layer-options-dialog.c:202
 msgid "Layer Fill Type"
-msgstr ""
+msgstr "परत भरण प्रकार"
 
 #: ../app/dialogs/layer-options-dialog.c:217
 msgid "Set name from _text"
@@ -6985,7 +6989,7 @@ msgstr ""
 
 #: ../app/dialogs/module-dialog.c:127
 msgid "Module Manager"
-msgstr ""
+msgstr "मॉड्यूल प्रबंधक"
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
@@ -6997,11 +7001,11 @@ msgstr "मॉड्यूल्स"
 
 #: ../app/dialogs/module-dialog.c:464
 msgid "Only in memory"
-msgstr ""
+msgstr "सिर्फ स्मृति में"
 
 #: ../app/dialogs/module-dialog.c:469
 msgid "No longer available"
-msgstr ""
+msgstr "अब उपलब्ध नहीं"
 
 #: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
@@ -7025,15 +7029,15 @@ msgstr "स्थानः"
 
 #: ../app/dialogs/offset-dialog.c:108
 msgid "Offset Layer"
-msgstr ""
+msgstr "ऑफसेट स्तर"
 
 #: ../app/dialogs/offset-dialog.c:110
 msgid "Offset Layer Mask"
-msgstr ""
+msgstr "ऑफसेट परत मुखौटा"
 
 #: ../app/dialogs/offset-dialog.c:112
 msgid "Offset Channel"
-msgstr ""
+msgstr "ऑफसेट चैनल"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
@@ -7048,15 +7052,15 @@ msgstr ""
 
 #: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:226
 msgid "_X:"
-msgstr ""
+msgstr "_X:"
 
 #: ../app/dialogs/offset-dialog.c:186 ../app/dialogs/resize-dialog.c:227
 msgid "_Y:"
-msgstr ""
+msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
-msgstr ""
+msgstr "x/_2, y/2 के द्वारा ऑफसेट"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:222
@@ -7069,15 +7073,15 @@ msgstr "व्रेप अराउंड (_W)"
 
 #: ../app/dialogs/offset-dialog.c:229
 msgid "Fill with _background color"
-msgstr ""
+msgstr "पृष्ठभूमि रंग से भरें (_b)"
 
 #: ../app/dialogs/offset-dialog.c:232
 msgid "Make _transparent"
-msgstr ""
+msgstr "पारदर्शी बनाएँ (_t)"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
-msgstr ""
+msgstr "नयी रंगपट्टी आयात करें"
 
 #: ../app/dialogs/palette-import-dialog.c:166
 msgid "_Import"
@@ -7090,7 +7094,7 @@ msgstr "स्रोत चुनें"
 
 #: ../app/dialogs/palette-import-dialog.c:227
 msgid "I_mage"
-msgstr ""
+msgstr "छवि (_m)"
 
 #: ../app/dialogs/palette-import-dialog.c:241
 msgid "Sample _Merged"
@@ -7102,7 +7106,7 @@ msgstr "केवल चयनित पिक्सेल (_S)"
 
 #: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
-msgstr ""
+msgstr "रंग-पट्टी फाइल (_f)"
 
 #. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:294
@@ -7112,11 +7116,11 @@ msgstr ""
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:305
 msgid "Import Options"
-msgstr ""
+msgstr "आयात विकल्प"
 
 #: ../app/dialogs/palette-import-dialog.c:319
 msgid "New import"
-msgstr ""
+msgstr "नया आयात"
 
 #: ../app/dialogs/palette-import-dialog.c:321
 msgid "Palette _name:"
@@ -7124,15 +7128,15 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:327
 msgid "N_umber of colors:"
-msgstr ""
+msgstr "रंग की संख्या (_u):"
 
 #: ../app/dialogs/palette-import-dialog.c:340
 msgid "C_olumns:"
-msgstr ""
+msgstr "कॉलम (_o):"
 
 #: ../app/dialogs/palette-import-dialog.c:352
 msgid "I_nterval:"
-msgstr ""
+msgstr "अंतराल (_n):"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:363
@@ -7153,7 +7157,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:355
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
+msgstr "आपको GIMP को निम्न बदलाव को लाने के लिए फिर आरंभ किया जाएगा:"
 
 #: ../app/dialogs/preferences-dialog.c:494
 msgid "Configure Input Devices"
@@ -7163,7 +7167,7 @@ msgstr ""
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "आपका कुंजीपटल शॉर्टकट तयशुदा मानों पर रिसेट किया जाएगा अगली बार जब आप GIMP आरंभ करते हैं."
 
 #: ../app/dialogs/preferences-dialog.c:582
 msgid "Remove all Keyboard Shortcuts"
@@ -7177,13 +7181,13 @@ msgstr ""
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
+msgstr "अगली बार जब आप GIMP आरंभ करेंगे आपका विंडो सेटअप तयशुदा मान पर सेट किया जाएगा."
 
 #: ../app/dialogs/preferences-dialog.c:680
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "अगली बार जब आप GIMP आरंभ करेंगे आपका इनपुट युक्ति जमावट तयशुदा मान पर सेट किया जाएगा."
 
 #: ../app/dialogs/preferences-dialog.c:715
 msgid ""
@@ -7197,39 +7201,39 @@ msgstr "मेनू-पट्टी दिखाएँ (_m)"
 
 #: ../app/dialogs/preferences-dialog.c:1287
 msgid "Show _rulers"
-msgstr ""
+msgstr "मापक दिखाएँ (_r)"
 
 #: ../app/dialogs/preferences-dialog.c:1290
 msgid "Show scroll_bars"
-msgstr ""
+msgstr "स्क्रॉलबार दिखाएँ (_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show s_tatusbar"
-msgstr ""
+msgstr "स्थितिबार दिखाएँ (_t)"
 
 #: ../app/dialogs/preferences-dialog.c:1301
 msgid "Show s_election"
-msgstr ""
+msgstr "चयन दिखाएँ (_e)"
 
 #: ../app/dialogs/preferences-dialog.c:1304
 msgid "Show _layer boundary"
-msgstr ""
+msgstr "परत सीमा दिखाएँ (_l)"
 
 #: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _guides"
-msgstr ""
+msgstr "गाइड दिखाएँ (_g)"
 
 #: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show gri_d"
-msgstr ""
+msgstr "जाल दिखाएँ (_d)"
 
 #: ../app/dialogs/preferences-dialog.c:1316
 msgid "Canvas _padding mode:"
-msgstr ""
+msgstr "कैनवास पैडिंग मोड (_p):"
 
 #: ../app/dialogs/preferences-dialog.c:1321
 msgid "Custom p_adding color:"
-msgstr ""
+msgstr "पसंदीदा पैडिंग रंग (_a):"
 
 #: ../app/dialogs/preferences-dialog.c:1322
 msgid "Select Custom Canvas Padding Color"
@@ -7246,49 +7250,49 @@ msgstr "वातावरण"
 
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Resource Consumption"
-msgstr ""
+msgstr "संसाधन खपत"
 
 #: ../app/dialogs/preferences-dialog.c:1547
 msgid "Minimal number of _undo levels:"
-msgstr ""
+msgstr "अनावृति स्तर की न्यूनतम संख्या (_u):"
 
 #: ../app/dialogs/preferences-dialog.c:1550
 msgid "Maximum undo _memory:"
-msgstr ""
+msgstr "पहले जैसी स्मृति की अधिकतम संख्या (_m):"
 
 #: ../app/dialogs/preferences-dialog.c:1553
 msgid "Tile cache _size:"
-msgstr ""
+msgstr "टाइल कैश आकार (_s):"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Maximum _new image size:"
-msgstr ""
+msgstr "अधिकतम नया छवि आकार (_n):"
 
 #: ../app/dialogs/preferences-dialog.c:1561
 msgid "Number of _processors to use:"
-msgstr ""
+msgstr "प्रयोग के लिए प्रोसेसर की संख्या (_p):"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1566
 msgid "Image Thumbnails"
-msgstr ""
+msgstr "छवि लघुचित्र"
 
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "Size of _thumbnails:"
-msgstr ""
+msgstr "लघुछवि आकार (_t):"
 
 #: ../app/dialogs/preferences-dialog.c:1575
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "लघुचित्रण के लिए अधिकतम फाइलआकार (_f):"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1579
 msgid "Saving Images"
-msgstr ""
+msgstr "छवि सहेज रहा है"
 
 #: ../app/dialogs/preferences-dialog.c:1582
 msgid "Confirm closing of unsa_ved images"
-msgstr ""
+msgstr "बिना सहेजे चित्रों के बंद करने को संपुष्ट करें (_v)"
 
 #: ../app/dialogs/preferences-dialog.c:1592
 msgid "Keep record of used files in the Recent Documents list"
@@ -7305,11 +7309,11 @@ msgstr "इंटरफेस"
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1611
 msgid "Previews"
-msgstr ""
+msgstr "पूर्वावलोकन"
 
 #: ../app/dialogs/preferences-dialog.c:1614
 msgid "_Enable layer & channel previews"
-msgstr ""
+msgstr "परत व चैनल पूर्वावलोकन सक्रिय करें (_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1620
 msgid "_Default layer & channel preview size:"
@@ -7317,7 +7321,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1623
 msgid "Na_vigation preview size:"
-msgstr ""
+msgstr "संचरण पूर्वावलोकन आकार (_v):"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1627
@@ -7334,15 +7338,15 @@ msgstr "गतिशील कुंजीपटल शार्टकट का
 
 #: ../app/dialogs/preferences-dialog.c:1638
 msgid "Configure _Keyboard Shortcuts..."
-msgstr ""
+msgstr "कुंजीपटल शॉर्टकट विन्यस्त करें (_K)..."
 
 #: ../app/dialogs/preferences-dialog.c:1645
 msgid "_Save keyboard shortcuts on exit"
-msgstr ""
+msgstr "निकास पर कुंजीपटल शॉर्टकट सहेजें (_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1649
 msgid "Save Keyboard Shortcuts _Now"
-msgstr ""
+msgstr "अब कुंजीपटल शॉर्टकट सहेजें (_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1656
 msgid "_Reset Keyboard Shortcuts to Default Values"
@@ -7359,15 +7363,15 @@ msgstr "प्रसंग"
 
 #: ../app/dialogs/preferences-dialog.c:1686
 msgid "Select Theme"
-msgstr ""
+msgstr "प्रसंग चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:1768
 msgid "Reload C_urrent Theme"
-msgstr ""
+msgstr "मौजूदा प्रसंग फिर लोड करें (_u)"
 
 #: ../app/dialogs/preferences-dialog.c:1780
 msgid "Help System"
-msgstr ""
+msgstr "मदद सिस्टम"
 
 #. General
 #: ../app/dialogs/preferences-dialog.c:1792
@@ -7383,7 +7387,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1798
 msgid "Show help _buttons"
-msgstr ""
+msgstr "मदद बटन दिखाएँ (_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1811
 msgid "Use the online version"
@@ -7412,7 +7416,7 @@ msgstr "मदद ब्राउज़र"
 
 #: ../app/dialogs/preferences-dialog.c:1852
 msgid "H_elp browser to use:"
-msgstr ""
+msgstr "प्रयोग के लिए मदद ब्राउज़र (_e):"
 
 #: ../app/dialogs/preferences-dialog.c:1857
 msgid "Web Browser"
@@ -7420,7 +7424,7 @@ msgstr "वेब ब्राउज़र"
 
 #: ../app/dialogs/preferences-dialog.c:1861
 msgid "_Web browser to use:"
-msgstr ""
+msgstr "प्रयोग के लिए वेब ब्राउज़र (_W):"
 
 #: ../app/dialogs/preferences-dialog.c:1889
 msgid "_Save tool options on exit"
@@ -7441,20 +7445,20 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1915
 msgid "_Snap distance:"
-msgstr ""
+msgstr "दूरी स्नैप करें (_S):"
 
 #: ../app/dialogs/preferences-dialog.c:1923
 msgid "Default _interpolation:"
-msgstr ""
+msgstr "तयशुदा अंतर्वेशन (_i):"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1930
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "औज़ारों के बीच साझा पेंट विकल्प"
 
 #: ../app/dialogs/preferences-dialog.c:1943
 msgid "Move Tool"
-msgstr ""
+msgstr "औज़ार खिसकाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:1947
 msgid "Set layer or path as active"
@@ -7462,7 +7466,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1960 ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
-msgstr ""
+msgstr "औज़ार पेटी"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1972
@@ -7473,15 +7477,15 @@ msgstr "रूप"
 
 #: ../app/dialogs/preferences-dialog.c:1976
 msgid "Show _foreground & background color"
-msgstr ""
+msgstr "अग्रभूमि व पृष्ठभूमि रंग दिखाएँ (_f)"
 
 #: ../app/dialogs/preferences-dialog.c:1980
 msgid "Show active _brush, pattern & gradient"
-msgstr ""
+msgstr "सक्रिय ब्रश, प्रारूप, व ढाल दिखाएँ (_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1984
 msgid "Show active _image"
-msgstr ""
+msgstr "सक्रिय छवि दिखाएँ (_i)"
 
 #: ../app/dialogs/preferences-dialog.c:1997
 msgid "Default New Image"
@@ -7493,44 +7497,44 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2037
 msgid "Default Image Grid"
-msgstr ""
+msgstr "तयशुदा छवि जाल"
 
 #: ../app/dialogs/preferences-dialog.c:2040
 msgid "Default Grid"
-msgstr ""
+msgstr "तयशुदा जाल"
 
 #: ../app/dialogs/preferences-dialog.c:2061
 msgid "Image Windows"
-msgstr ""
+msgstr "छवि विंडो"
 
 #: ../app/dialogs/preferences-dialog.c:2076
 msgid "Use \"_Dot for dot\" by default"
-msgstr ""
+msgstr "तयशुदा रूप से \"_Dot for dot\" का प्रयोग करें"
 
 #: ../app/dialogs/preferences-dialog.c:2082
 msgid "Marching _ants speed:"
-msgstr ""
+msgstr "कदमताल करती चीटियों की गति (_a):"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2086
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "जूम करें व आचरण को पुनः आकार दें"
 
 #: ../app/dialogs/preferences-dialog.c:2090
 msgid "Resize window on _zoom"
-msgstr ""
+msgstr "जूम पर पुनः आकार दें (_z)"
 
 #: ../app/dialogs/preferences-dialog.c:2093
 msgid "Resize window on image _size change"
-msgstr ""
+msgstr "छवि आकार बदलाव पर विंडो फिर आकार दें (_s)"
 
 #: ../app/dialogs/preferences-dialog.c:2099
 msgid "Fit to window"
-msgstr ""
+msgstr "विंडो में सटीक"
 
 #: ../app/dialogs/preferences-dialog.c:2101
 msgid "Initial zoom _ratio:"
-msgstr ""
+msgstr "आरंभिक जूम अनुपात (_r):"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2105
@@ -7548,7 +7552,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2119
 msgid "Show _brush outline"
-msgstr ""
+msgstr "ब्रश आउटलाइन दिखाएँ (_b)"
 
 #: ../app/dialogs/preferences-dialog.c:2122
 msgid "Show pointer for paint _tools"
@@ -7564,23 +7568,23 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2143
 msgid "Image Window Appearance"
-msgstr ""
+msgstr "छवि विंडो प्रकटन"
 
 #: ../app/dialogs/preferences-dialog.c:2154
 msgid "Default Appearance in Normal Mode"
-msgstr ""
+msgstr "सामान्य मोड में तयशुदा प्रकटन"
 
 #: ../app/dialogs/preferences-dialog.c:2159
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "पूर्ण स्क्रीन मोड में तयशुदा प्रकटन"
 
 #: ../app/dialogs/preferences-dialog.c:2168
 msgid "Image Title & Statusbar Format"
-msgstr ""
+msgstr "छवि शीर्षक व स्थितिबार प्रारूप"
 
 #: ../app/dialogs/preferences-dialog.c:2171
 msgid "Title & Status"
-msgstr ""
+msgstr "शीर्षक व स्थिति"
 
 #: ../app/dialogs/preferences-dialog.c:2189
 msgid "Current format"
@@ -7592,23 +7596,23 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2191
 msgid "Show zoom percentage"
-msgstr ""
+msgstr "जूम प्रतिशत दिखाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:2192
 msgid "Show zoom ratio"
-msgstr ""
+msgstr "जूम अनुपात दिखाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:2193
 msgid "Show image size"
-msgstr ""
+msgstr "छवि आकार दिखाएँ"
 
 #: ../app/dialogs/preferences-dialog.c:2206
 msgid "Image Title Format"
-msgstr ""
+msgstr "शीर्षक प्रारूप चित्र"
 
 #: ../app/dialogs/preferences-dialog.c:2208
 msgid "Image Statusbar Format"
-msgstr ""
+msgstr "छवि स्थितिबार प्रारूप"
 
 #: ../app/dialogs/preferences-dialog.c:2293
 msgid "Display"
@@ -7620,7 +7624,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2312
 msgid "Check _size:"
-msgstr ""
+msgstr "आकार जांचें (_s):"
 
 #: ../app/dialogs/preferences-dialog.c:2315
 msgid "Monitor Resolution"
@@ -7648,11 +7652,11 @@ msgstr "दस्ती दाखिल करें (_E)"
 
 #: ../app/dialogs/preferences-dialog.c:2392
 msgid "C_alibrate..."
-msgstr ""
+msgstr "अंशांकित करें (_a)..."
 
 #: ../app/dialogs/preferences-dialog.c:2415
 msgid "Color Management"
-msgstr ""
+msgstr "रंग प्रबंधन"
 
 #: ../app/dialogs/preferences-dialog.c:2435
 msgid "_RGB profile:"
@@ -7721,31 +7725,31 @@ msgstr "आगत युक्तियां"
 #. Extended Input Devices
 #: ../app/dialogs/preferences-dialog.c:2555
 msgid "Extended Input Devices"
-msgstr ""
+msgstr "विस्तारित इनपुट युक्ति"
 
 #: ../app/dialogs/preferences-dialog.c:2559
 msgid "Configure E_xtended Input Devices..."
-msgstr ""
+msgstr "विस्तारित इनपुट युक्ति विन्यस्त करें (_x)..."
 
 #: ../app/dialogs/preferences-dialog.c:2566
 msgid "_Save input device settings on exit"
-msgstr ""
+msgstr "निकास पर इनपुट जमावट सहेजें (_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2570
 msgid "Save Input Device Settings _Now"
-msgstr ""
+msgstr "अब इनपुट युक्ति जमावट सहेजें (_N)"
 
 #: ../app/dialogs/preferences-dialog.c:2577
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr ""
+msgstr "तयशुदा मानों में इनपुट युक्ति जमावट फिर सेट करें (_R)"
 
 #: ../app/dialogs/preferences-dialog.c:2592
 msgid "Additional Input Controllers"
-msgstr ""
+msgstr "अतिरिक्त इनपुट नियंत्रक"
 
 #: ../app/dialogs/preferences-dialog.c:2595
 msgid "Input Controllers"
-msgstr ""
+msgstr "इनपुट नियंत्रक"
 
 #: ../app/dialogs/preferences-dialog.c:2611
 msgid "Window Management"
@@ -7753,11 +7757,11 @@ msgstr "विंडो प्रबंधन"
 
 #: ../app/dialogs/preferences-dialog.c:2620
 msgid "Window Manager Hints"
-msgstr ""
+msgstr "विंडो प्रबंधक संकेत"
 
 #: ../app/dialogs/preferences-dialog.c:2626
 msgid "Hint for the _toolbox:"
-msgstr ""
+msgstr "औज़ारपेटी के लिए संकेत (_t):"
 
 #: ../app/dialogs/preferences-dialog.c:2630
 msgid "Hint for other _docks:"
@@ -7773,24 +7777,24 @@ msgstr "फ़ोकस"
 
 #: ../app/dialogs/preferences-dialog.c:2644
 msgid "Activate the _focused image"
-msgstr ""
+msgstr "फोकस किए छवि सक्रिय करें (_f)"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2648
 msgid "Window Positions"
-msgstr ""
+msgstr "विंडो स्थिति"
 
 #: ../app/dialogs/preferences-dialog.c:2651
 msgid "_Save window positions on exit"
-msgstr ""
+msgstr "निकास पर विंडो स्थिति सहेजें (_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2655
 msgid "Save Window Positions _Now"
-msgstr ""
+msgstr "अब विंडो स्थिति सहेजें (_N)"
 
 #: ../app/dialogs/preferences-dialog.c:2662
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr ""
+msgstr "सहेजे विंडो स्थिति को तयशुदा मानों में फिर सेट करें (_R)"
 
 #: ../app/dialogs/preferences-dialog.c:2677
 msgid "Folders"
@@ -7806,59 +7810,59 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2702
 msgid "Swap folder:"
-msgstr ""
+msgstr "स्वैप फोल्डर:"
 
 #: ../app/dialogs/preferences-dialog.c:2703
 msgid "Select Swap Folder"
-msgstr ""
+msgstr "स्वैप फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2738
 msgid "Brush Folders"
-msgstr ""
+msgstr "ब्रश फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2740
 msgid "Select Brush Folders"
-msgstr ""
+msgstr "ब्रश फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Pattern Folders"
-msgstr ""
+msgstr "प्रारूप फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Pattern Folders"
-msgstr ""
+msgstr "प्रारूप फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2746
 msgid "Palette Folders"
-msgstr ""
+msgstr "रंगपट्टी फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Palette Folders"
-msgstr ""
+msgstr "रंगपट्टी फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Gradient Folders"
-msgstr ""
+msgstr "ढाल फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Gradient Folders"
-msgstr ""
+msgstr "ढाल फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Font Folders"
-msgstr ""
+msgstr "फ़ॉन्ट फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Font Folders"
-msgstr ""
+msgstr "फ़ॉन्ट फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Plug-In Folders"
-msgstr ""
+msgstr "प्लगिन फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Plug-In Folders"
-msgstr ""
+msgstr "प्लगिन फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Scripts"
@@ -7866,19 +7870,19 @@ msgstr "स्क्रिप्ट्स"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Script-Fu Folders"
-msgstr ""
+msgstr "स्क्रिप्ट-Fu फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "स्क्रिप्ट-Fu फोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2766
 msgid "Module Folders"
-msgstr ""
+msgstr "मॉड्यूल फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Module Folders"
-msgstr ""
+msgstr "मॉड्यूल फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2770
 msgid "Interpreters"
@@ -7894,11 +7898,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2774
 msgid "Environment Folders"
-msgstr ""
+msgstr "वातावरण फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Environment Folders"
-msgstr ""
+msgstr "वातावरण फ़ोल्डर चुनें"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Themes"
@@ -7906,11 +7910,11 @@ msgstr "प्रसंग"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Theme Folders"
-msgstr ""
+msgstr "प्रसंग फोल्डर"
 
 #: ../app/dialogs/preferences-dialog.c:2780
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "प्रसंग फ़ोल्डर चुनें"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -7931,18 +7935,18 @@ msgstr "ऊँचाई (_e):"
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:264
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
-msgstr ""
+msgstr "_X विभेदन:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:267
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
-msgstr ""
+msgstr "_Y विभेदन:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:308
 #, c-format
 msgid "pixels/%a"
-msgstr ""
+msgstr "पिक्सेल/%a"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
@@ -7954,7 +7958,7 @@ msgstr "सभी छवियाँ बंद करें"
 
 #: ../app/dialogs/quit-dialog.c:165
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr ""
+msgstr "यदि आप जिम्प छोड़ते हैं ये बदलाव नष्ट हो जायेंगे."
 
 #: ../app/dialogs/quit-dialog.c:168
 msgid "If you close these images now, changes will be lost."
