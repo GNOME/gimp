@@ -1,4 +1,4 @@
-# translation of hi.po to Hindi
+# translation of hi.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-10 08:08+0000\n"
-"PO-Revision-Date: 2009-01-15 16:15+0530\n"
-"Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
-"Language-Team: Hindi <hindi.sf.net>\n"
+"PO-Revision-Date: 2009-01-16 17:30+0530\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -6830,7 +6831,7 @@ msgstr ""
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
-msgstr ""
+msgstr "जाल विन्यस्त करें"
 
 #: ../app/dialogs/grid-dialog.c:86
 msgid "Configure Image Grid"
@@ -7330,7 +7331,7 @@ msgstr "कुंजीपटल शार्टकट"
 
 #: ../app/dialogs/preferences-dialog.c:1631
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "मेनू नेमोनिक्स दिखाएँ (_m) (अभिगम कुंजी)"
 
 #: ../app/dialogs/preferences-dialog.c:1634
 msgid "_Use dynamic keyboard shortcuts"
@@ -7968,8 +7969,8 @@ msgstr ""
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "बिना सहेजे बदलावों के साथ %d छवि है:"
+msgstr[1] "बिना सहेजे बदलावों के साथ %d छवि है:"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -7977,11 +7978,11 @@ msgstr "परिवर्तनों को छोड़ें (_D)"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
-msgstr ""
+msgstr "कैनवास आकार"
 
 #: ../app/dialogs/resize-dialog.c:130 ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
-msgstr ""
+msgstr "परत आकार"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
@@ -7989,11 +7990,11 @@ msgstr ""
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
-msgstr ""
+msgstr "मॉनिटर रिजाल्यूशन अंशांकित करें"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
-msgstr ""
+msgstr "मापक मापें और उनकी लंबाई दाखिल करें:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
@@ -8014,7 +8015,7 @@ msgstr "गुण"
 
 #: ../app/dialogs/scale-dialog.c:187
 msgid "I_nterpolation:"
-msgstr ""
+msgstr "अंतर्वेशन (_n):"
 
 #: ../app/dialogs/scale-dialog.c:206
 msgid ""
@@ -8024,7 +8025,7 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:102
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "स्ट्रोक शैली चुनें"
 
 #: ../app/dialogs/stroke-dialog.c:225
 msgid "Paint tool:"
@@ -8045,7 +8046,7 @@ msgstr ""
 #: ../app/dialogs/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
+msgstr "'%s' नामक फाइल को होना चाहिए. अपने संस्थापन को कृपया जाँचें."
 
 #: ../app/dialogs/tips-dialog.c:101
 msgid "The GIMP tips file could not be parsed!"
@@ -8053,7 +8054,7 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "जिम्प दिन का सुझाव"
 
 #: ../app/dialogs/tips-dialog.c:135
 msgid "_Previous Tip"
@@ -8075,11 +8076,11 @@ msgstr ""
 #.
 #: ../app/dialogs/tips-parser.c:188
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:hi_IN"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
-msgstr ""
+msgstr "जिम्प प्रयोक्ता संस्थापन"
 
 #: ../app/dialogs/user-install-dialog.c:94
 msgid "User installation failed!"
@@ -8095,19 +8096,19 @@ msgstr "संस्थापन लॉग"
 
 #: ../app/dialogs/vectors-export-dialog.c:55
 msgid "Export Path to SVG"
-msgstr ""
+msgstr "पथ को SVG में निर्यात करें"
 
 #: ../app/dialogs/vectors-export-dialog.c:90
 msgid "Export the active path"
-msgstr ""
+msgstr "सक्रिय पथ निर्यात करें"
 
 #: ../app/dialogs/vectors-export-dialog.c:91
 msgid "Export all paths from this image"
-msgstr ""
+msgstr "इस छवि से सभी पथ निर्यात करें"
 
 #: ../app/dialogs/vectors-import-dialog.c:58
 msgid "Import Paths from SVG"
-msgstr ""
+msgstr "SVG से पथ आयात करें"
 
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:132
@@ -8116,15 +8117,15 @@ msgstr "सभी फ़ाइलें (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
-msgstr ""
+msgstr "मापयोग्य SVG छवि (*.svg)"
 
 #: ../app/dialogs/vectors-import-dialog.c:108
 msgid "_Merge imported paths"
-msgstr ""
+msgstr "आयातित पथ मिलाएँ (_M)"
 
 #: ../app/dialogs/vectors-import-dialog.c:118
 msgid "_Scale imported paths to fit image"
-msgstr ""
+msgstr "छवि में सटीक बैठने के लिए आयातित पथ मापें (_S)"
 
 #: ../app/dialogs/vectors-options-dialog.c:121
 msgid "Path name:"
@@ -8132,31 +8133,31 @@ msgstr ""
 
 #: ../app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr ""
+msgstr "औज़ार प्रतीक"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
-msgstr ""
+msgstr "क्रॉसहेयर औज़ार प्रतीक"
 
 #: ../app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr ""
+msgstr "सिर्फ क्रासहेयर"
 
 #: ../app/display/display-enums.c:85
 msgid "From theme"
-msgstr ""
+msgstr "प्रसंग से"
 
 #: ../app/display/display-enums.c:86
 msgid "Light check color"
-msgstr ""
+msgstr "प्रकाश चेक रंग"
 
 #: ../app/display/display-enums.c:87
 msgid "Dark check color"
-msgstr ""
+msgstr "गहरा चेक रंग"
 
 #: ../app/display/display-enums.c:88
 msgid "Custom color"
-msgstr ""
+msgstr "पसंदीदा रंग"
 
 #: ../app/display/display-enums.c:116
 msgid "No action"
@@ -8189,7 +8190,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell.c:1129
 msgid "Zoom image when window size changes"
-msgstr ""
+msgstr "छवि जूम करें जब विंडो आकार बदलता है"
 
 #: ../app/display/gimpdisplayshell.c:1179
 msgid "Navigate the image display"
@@ -8204,7 +8205,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:224
 #, c-format
 msgid "Close %s"
-msgstr ""
+msgstr "%s बंद करें"
 
 #: ../app/display/gimpdisplayshell-close.c:159
 msgid "Do_n't Save"
@@ -8213,7 +8214,7 @@ msgstr "संग्रहित नहीं करें (_n)"
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr ""
+msgstr "बंद करने से पहले छवि '%s' के परिवर्तन को सहेजें?"
 
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
@@ -8244,11 +8245,11 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-dnd.c:587
 #: ../app/display/gimpdisplayshell-dnd.c:658
 msgid "Drop New Layer"
-msgstr ""
+msgstr "नई परत छोड़ें"
 
 #: ../app/display/gimpdisplayshell-dnd.c:301
 msgid "Drop New Path"
-msgstr ""
+msgstr "नया पथ छोड़ें"
 
 #: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimplayertreeview.c:719
@@ -8262,23 +8263,23 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:75
 msgid "Color Display Filters"
-msgstr ""
+msgstr "रंग प्रदर्शन फिल्टर"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:78
 msgid "Configure Color Display Filters"
-msgstr ""
+msgstr "रंग प्रदर्शन फिल्टर विन्यस्त करें"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
-msgstr ""
+msgstr "परत चयन"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:114
 msgid "Zoom Ratio"
-msgstr ""
+msgstr "जूम अनुपात"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:116
 msgid "Select Zoom Ratio"
-msgstr ""
+msgstr "जूम अनुपात चुनें"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:159
 msgid "Zoom ratio:"
@@ -8290,31 +8291,31 @@ msgstr "ज़ूमः"
 
 #: ../app/display/gimpdisplayshell-title.c:233
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-खाली"
 
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale-empty"
-msgstr ""
+msgstr "ग्रेस्केल-खाली"
 
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale"
-msgstr ""
+msgstr "ग्रेस्केल"
 
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed-empty"
-msgstr ""
+msgstr "सूचीबद्ध-खाली"
 
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed"
-msgstr ""
+msgstr "सूचीबद्ध"
 
 #: ../app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
-msgstr ""
+msgstr "(रूपांतरित)"
 
 #: ../app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
-msgstr ""
+msgstr "(साफ)"
 
 #: ../app/display/gimpdisplayshell-title.c:346
 #: ../app/display/gimpdisplayshell-title.c:359
@@ -8350,7 +8351,7 @@ msgstr ""
 #: ../app/file/file-open.c:505
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr ""
+msgstr "'%s' खोलना विफल: %s"
 
 #: ../app/file/file-open.c:613
 msgid ""
@@ -8361,7 +8362,7 @@ msgstr ""
 #: ../app/file/file-procedure.c:200
 #, c-format
 msgid "Unknown file type"
-msgstr ""
+msgstr "अज्ञात फाइल प्रकार"
 
 #: ../app/file/file-save.c:192
 #, c-format
@@ -8376,7 +8377,7 @@ msgstr ""
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
 #, c-format
 msgid "Invalid character sequence in URI"
-msgstr ""
+msgstr "URI में अवैध संप्रतीक श्रृंखला"
 
 #: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
@@ -8400,20 +8401,20 @@ msgstr "दस्तावेज़़"
 
 #: ../app/gui/splash.c:116
 msgid "GIMP Startup"
-msgstr ""
+msgstr "जिम्प आरंभन"
 
 #: ../app/paint/gimpairbrush.c:69 ../app/tools/gimpairbrushtool.c:54
 msgid "Airbrush"
-msgstr ""
+msgstr "एयर ब्रश"
 
 #: ../app/paint/gimpbrushcore.c:353
 #, c-format
 msgid "No brushes available for use with this tool."
-msgstr ""
+msgstr "इस औज़ार के साथ प्रयोग के लिए कोई ब्रश उपलब्ध नहीं है."
 
 #: ../app/paint/gimpclone.c:99 ../app/tools/gimpclonetool.c:61
 msgid "Clone"
-msgstr ""
+msgstr "क्लोन"
 
 #: ../app/paint/gimpclone.c:140
 #, c-format
@@ -8422,15 +8423,15 @@ msgstr ""
 
 #: ../app/paint/gimpconvolve.c:77
 msgid "Convolve"
-msgstr ""
+msgstr "संवलित करें"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr ""
+msgstr "डोज/लिखें"
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
-msgstr ""
+msgstr "रबर"
 
 #: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
@@ -8443,7 +8444,7 @@ msgstr ""
 
 #: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
-msgstr ""
+msgstr "पेंटब्रश"
 
 #: ../app/paint/gimppaintcore-stroke.c:332
 #, c-format
@@ -8452,7 +8453,7 @@ msgstr ""
 
 #: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
-msgstr ""
+msgstr "पेंसिल"
 
 #: ../app/paint/gimpperspectiveclone.c:97 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:126
@@ -8466,7 +8467,7 @@ msgstr ""
 
 #: ../app/paint/gimpsmudge.c:78 ../app/tools/gimpsmudgetool.c:53
 msgid "Smudge"
-msgstr ""
+msgstr "धब्बेदार बनाएँ"
 
 #: ../app/paint/gimpsourcecore.c:227
 #, c-format
@@ -8479,11 +8480,11 @@ msgstr "परिदृश्य सुधारें"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
-msgstr ""
+msgstr "संरेखित"
 
 #: ../app/paint/paint-enums.c:83
 msgid "Registered"
-msgstr ""
+msgstr "पंजीकृत"
 
 #: ../app/paint/paint-enums.c:84
 msgid "Fixed"
@@ -8491,7 +8492,7 @@ msgstr "सही"
 
 #: ../app/paint/paint-enums.c:111
 msgid "Blur"
-msgstr ""
+msgstr "धुंधला करें"
 
 #: ../app/paint/paint-enums.c:112
 msgid "Sharpen"
@@ -8536,7 +8537,7 @@ msgstr ""
 #: ../app/pdb/floating-sel-cmds.c:95
 #, c-format
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr ""
+msgstr "इस परत को एंकर नहीं कर सकता है क्योंकि यह प्लावित चुनाव नहीं है."
 
 #: ../app/pdb/floating-sel-cmds.c:127
 #, c-format
@@ -8757,7 +8758,7 @@ msgstr ""
 #: ../app/pdb/image-cmds.c:2268
 #, c-format
 msgid "Image resolution is out of bounds, using the default resolution instead."
-msgstr ""
+msgstr "छवि विभेदन बाउंड के बाहर है, बदले में तयशुदा विभेदन का प्रयोग कर रहा है."
 
 #: ../app/pdb/selection-tools-cmds.c:218 ../app/tools/gimpfreeselecttool.c:197
 msgid "Free Select"
@@ -8781,12 +8782,12 @@ msgstr ""
 #: ../app/plug-in/gimpenvirontable.c:282
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr ""
+msgstr "वातावरण फाइल %s में चर नाम खाली"
 
 #: ../app/plug-in/gimpenvirontable.c:300
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr ""
+msgstr "वातावरण फाइल %s में चर नाम खाली: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:264
 #, c-format
@@ -8839,19 +8840,19 @@ msgstr ""
 
 #: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
-msgstr ""
+msgstr "संसाधन विन्यास"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
-msgstr ""
+msgstr "नये प्लगिन को प्रश्नगत कर रहा है"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
-msgstr ""
+msgstr "प्लगिन आरंभीकृत कर रहा है"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
-msgstr ""
+msgstr "विस्तार आऱंभ कर रहा है"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
@@ -8859,7 +8860,7 @@ msgstr ""
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr ""
+msgstr "प्लगिन वातावरण"
 
 #: ../app/plug-in/gimppluginprocedure.c:989
 #, c-format
@@ -8892,17 +8893,17 @@ msgstr ""
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr ""
+msgstr "'%s' छोड़ रहा है: गलत जिम्प प्रोटोकॉल संस्करण."
 
 #: ../app/plug-in/plug-in-rc.c:479
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr ""
+msgstr "प्रतीक प्रकार के लिए '%s' अवैध मान"
 
 #: ../app/plug-in/plug-in-rc.c:494
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr ""
+msgstr "प्रतीक प्रकार के लिए '%ld' अवैध मान"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -8911,54 +8912,56 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
+"मेरे बाक्स को \n"
+"पांच दर्जन शराब जग से पैक करें."
 
 #: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:877
 msgid "Add Text Layer"
-msgstr ""
+msgstr "पाठ स्तर जोड़ें"
 
 #: ../app/text/gimptextlayer.c:138
 msgid "Text Layer"
-msgstr ""
+msgstr "पाठ स्तर"
 
 #: ../app/text/gimptextlayer.c:139
 msgid "Rename Text Layer"
-msgstr ""
+msgstr "पाठ स्तर का पुनः नाम दें"
 
 #: ../app/text/gimptextlayer.c:140
 msgid "Move Text Layer"
-msgstr ""
+msgstr "पाठ स्तर खिसकाएँ"
 
 #: ../app/text/gimptextlayer.c:141
 msgid "Scale Text Layer"
-msgstr ""
+msgstr "पाठ स्तर मापें"
 
 #: ../app/text/gimptextlayer.c:142
 msgid "Resize Text Layer"
-msgstr ""
+msgstr "पाठ स्तर को पुनः आकार दें"
 
 #: ../app/text/gimptextlayer.c:143
 msgid "Flip Text Layer"
-msgstr ""
+msgstr "पाठ स्तर पलटें"
 
 #: ../app/text/gimptextlayer.c:144
 msgid "Rotate Text Layer"
-msgstr ""
+msgstr "पाठ स्तर घुमाएँ"
 
 #: ../app/text/gimptextlayer.c:145
 msgid "Transform Text Layer"
-msgstr ""
+msgstr "पाठ स्तर रूपांतरित करें"
 
 #: ../app/text/gimptextlayer.c:492
 msgid "Discard Text Information"
-msgstr ""
+msgstr "पाठ सूचना त्यागें"
 
 #: ../app/text/gimptextlayer.c:543
 msgid "Due to lack of any fonts, text functionality is not available."
-msgstr ""
+msgstr "किसी फ़ॉन्ट के कमी के कारण, पाठ कार्यशीलता उपलब्ध नहीं है."
 
 #: ../app/text/gimptextlayer.c:579
 msgid "Empty Text Layer"
-msgstr ""
+msgstr "खाली पाठ स्तर"
 
 #: ../app/text/gimptextlayer-xcf.c:75
 #, c-format
@@ -8969,6 +8972,10 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
+"परत '%s' के लिए पाठ परजीवी के विश्लेषण में समस्या:\n"
+"%s\n"
+"\n"
+"कुछ पाठ गुण गलत हो सकते हैं. जबतक आप पाठ परत को संपादित करने की इच्छा नहीं रखते हैं, आपको इसके बारे में चिंता करने की जरूरत नहीं है."
 
 #: ../app/tools/gimp-tools.c:327
 msgid ""
@@ -8982,12 +8989,12 @@ msgstr ""
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
-msgstr ""
+msgstr "एयरब्रश (_A)"
 
 #: ../app/tools/gimpairbrushtool.c:92 ../app/tools/gimpconvolvetool.c:217
 #: ../app/tools/gimpsmudgetool.c:97
 msgid "Rate:"
-msgstr ""
+msgstr "दर:"
 
 #: ../app/tools/gimpairbrushtool.c:98 ../app/tools/gimppaintoptions-gui.c:198
 msgid "Pressure:"
@@ -9107,7 +9114,7 @@ msgstr "दोहराएँ:"
 
 #: ../app/tools/gimpblendoptions.c:257
 msgid "Adaptive supersampling"
-msgstr ""
+msgstr "अनुकूली सुपरसैंपलिंग"
 
 #: ../app/tools/gimpblendoptions.c:265
 msgid "Max depth:"
@@ -9125,7 +9132,7 @@ msgstr ""
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blen_d"
-msgstr ""
+msgstr "मिलाएँ (_d)"
 
 #: ../app/tools/gimpblendtool.c:162
 #, c-format
@@ -9144,7 +9151,7 @@ msgstr ""
 
 #: ../app/tools/gimpblendtool.c:405
 msgid "Blend: "
-msgstr ""
+msgstr "मिलाएँ: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:112
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
@@ -9152,11 +9159,11 @@ msgstr ""
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:113
 msgid "B_rightness-Contrast..."
-msgstr ""
+msgstr "चमकीलापन- विरोधी (_r)..."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:133
 msgid "Adjust Brightness and Contrast"
-msgstr ""
+msgstr "चमकीलापन व विरोधी समायोजित करें"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:135
 msgid "Import Brightness-Contrast settings"
@@ -9169,7 +9176,7 @@ msgstr ""
 #: ../app/tools/gimpbrightnesscontrasttool.c:184
 #, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
-msgstr ""
+msgstr "चमकीलापन-विरोधी सूचीबद्ध स्तर पर काम नहीं करता है."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:325
 msgid "_Brightness:"
@@ -9177,7 +9184,7 @@ msgstr "चमकीलापन:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:340
 msgid "Con_trast:"
-msgstr ""
+msgstr "विरोधी (_t):"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
@@ -9185,16 +9192,16 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
-msgstr ""
+msgstr "पूर्ण पारदर्शी क्षेत्रों को भरे जाने की अनुमति दें"
 
 #: ../app/tools/gimpbucketfilloptions.c:106
 msgid "Base filled area on all visible layers"
-msgstr ""
+msgstr "सभी दृश्य परतों पर बेस भरा क्षेत्र"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
 #: ../app/tools/gimpregionselectoptions.c:96
 msgid "Maximum color difference"
-msgstr ""
+msgstr "अधिकतम रंग अंतर"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:226
@@ -9210,26 +9217,26 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
-msgstr ""
+msgstr "समग्र चुनाव भरें"
 
 #: ../app/tools/gimpbucketfilloptions.c:244
 msgid "Fill similar colors"
-msgstr ""
+msgstr "समान रंग भरें"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
 msgid "Finding Similar Colors"
-msgstr ""
+msgstr "समान रंग ढूंढ रहा है"
 
 #: ../app/tools/gimpbucketfilloptions.c:269
 msgid "Fill transparent areas"
-msgstr ""
+msgstr "पारदर्शी क्षेत्र भरें"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:151 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:941
 #: ../app/tools/gimpregionselectoptions.c:208
 msgid "Sample merged"
-msgstr ""
+msgstr "नमूना मिला दिया गया"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
 msgid "Fill by:"
@@ -9245,7 +9252,7 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilltool.c:83
 msgid "_Bucket Fill"
-msgstr ""
+msgstr "बाल्टी भरा हुआ (_B)"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -9257,7 +9264,7 @@ msgstr ""
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
-msgstr ""
+msgstr "रंग चयन के द्वारा (_B)"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -9265,7 +9272,7 @@ msgstr ""
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
-msgstr ""
+msgstr "क्लोन करें (_C)"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
 msgid "Click to clone"
@@ -9296,11 +9303,11 @@ msgstr ""
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
-msgstr ""
+msgstr "रंग संतुलन (_B)..."
 
 #: ../app/tools/gimpcolorbalancetool.c:113
 msgid "Adjust Color Balance"
-msgstr ""
+msgstr "रंग संतुलन समायोजित करें"
 
 #: ../app/tools/gimpcolorbalancetool.c:115
 msgid "Import Color Balance Settings"
@@ -9321,7 +9328,7 @@ msgstr ""
 
 #: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
-msgstr ""
+msgstr "रंग परत समायोजित करें"
 
 #: ../app/tools/gimpcolorbalancetool.c:296
 #: ../app/tools/gimphuesaturationtool.c:255
@@ -9344,7 +9351,7 @@ msgstr ""
 
 #: ../app/tools/gimpcolorbalancetool.c:334
 msgid "Preserve _luminosity"
-msgstr ""
+msgstr "दीप्ति संरक्षित करें (_l)"
 
 #: ../app/tools/gimpcolorizetool.c:91
 msgid "Colorize Tool: Colorize the image"
@@ -9352,11 +9359,11 @@ msgstr ""
 
 #: ../app/tools/gimpcolorizetool.c:92
 msgid "Colori_ze..."
-msgstr ""
+msgstr "रंगीन बनाएँ (_s)..."
 
 #: ../app/tools/gimpcolorizetool.c:109
 msgid "Colorize the Image"
-msgstr ""
+msgstr "छवि रंगीन बनाएँ"
 
 #: ../app/tools/gimpcolorizetool.c:111
 msgid "Import Colorize Settings"
@@ -9369,7 +9376,7 @@ msgstr ""
 #: ../app/tools/gimpcolorizetool.c:156
 #, c-format
 msgid "Colorize operates only on RGB color layers."
-msgstr ""
+msgstr "रंगीन करना सिर्फ RGB रंग परत पर काम करता है."
 
 #: ../app/tools/gimpcolorizetool.c:221
 msgid "Select Color"
@@ -9383,16 +9390,16 @@ msgstr "रंगशेड (_H):"
 #: ../app/tools/gimpcolorizetool.c:253
 #: ../app/tools/gimphuesaturationtool.c:426
 msgid "_Saturation:"
-msgstr ""
+msgstr "संतृप्ति (_S):"
 
 #: ../app/tools/gimpcolorizetool.c:268
 #: ../app/tools/gimphuesaturationtool.c:407
 msgid "_Lightness:"
-msgstr ""
+msgstr "हल्कापन (_L):"
 
 #: ../app/tools/gimpcoloroptions.c:161
 msgid "Sample average"
-msgstr ""
+msgstr "नमूना औसत"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:176
@@ -9423,7 +9430,7 @@ msgstr ""
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
-msgstr ""
+msgstr "रंग चयनक (_o)"
 
 #: ../app/tools/gimpcolorpickertool.c:242
 msgid "Click in any image to view its color"
@@ -9444,7 +9451,7 @@ msgstr ""
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
 msgid "Color Picker Information"
-msgstr ""
+msgstr "रंग चयनक सूचना"
 
 #: ../app/tools/gimpcolortool.c:258 ../app/tools/gimpcolortool.c:437
 msgid "Move Sample Point: "
@@ -9504,7 +9511,7 @@ msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:161
 msgid "Current layer only"
-msgstr ""
+msgstr "मौजूदा स्तर सिर्फ"
 
 #: ../app/tools/gimpcropoptions.c:167
 msgid "Allow growing"
@@ -9532,11 +9539,11 @@ msgstr ""
 
 #: ../app/tools/gimpcurvestool.c:142
 msgid "_Curves..."
-msgstr ""
+msgstr "वक्र (_C)..."
 
 #: ../app/tools/gimpcurvestool.c:168
 msgid "Adjust Color Curves"
-msgstr ""
+msgstr "रंग वक्र समायोजित करें"
 
 #: ../app/tools/gimpcurvestool.c:170
 msgid "Import Curves"
@@ -9657,12 +9664,12 @@ msgstr "एक्सपोज़रः"
 #: ../app/tools/gimpeditselectiontool.c:246
 #: ../app/tools/gimpeditselectiontool.c:1231
 msgid "Move Floating Selection"
-msgstr ""
+msgstr "प्लावित चयन खिसकाएँ"
 
 #: ../app/tools/gimpeditselectiontool.c:459
 #: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
-msgstr ""
+msgstr "खिसकाएँ: "
 
 #: ../app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
@@ -9674,7 +9681,7 @@ msgstr ""
 
 #: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
-msgstr ""
+msgstr "दीर्घवृत्तीय चयन (_E)"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "Eraser Tool: Erase to background or transparency using a brush"
@@ -9682,7 +9689,7 @@ msgstr ""
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
-msgstr ""
+msgstr "रबर (_E)"
 
 #: ../app/tools/gimperasertool.c:97
 msgid "Click to erase"
@@ -9705,7 +9712,7 @@ msgstr ""
 
 #: ../app/tools/gimpflipoptions.c:130
 msgid "Affect:"
-msgstr ""
+msgstr "प्रभाव:"
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:139
@@ -9723,12 +9730,12 @@ msgstr ""
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "_Flip"
-msgstr ""
+msgstr "पलटें (_F)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:79
 msgid "Smooth edges"
-msgstr ""
+msgstr "चिकना किनारा"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
@@ -9831,7 +9838,7 @@ msgstr ""
 
 #: ../app/tools/gimpfreeselecttool.c:199
 msgid "_Free Select"
-msgstr ""
+msgstr "मुक्त चयन (_F)"
 
 #: ../app/tools/gimpfreeselecttool.c:1116
 msgid "Click to complete selection"
@@ -9864,7 +9871,7 @@ msgstr ""
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
-msgstr ""
+msgstr "फजी चयन (_z)"
 
 #: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
@@ -9915,7 +9922,7 @@ msgstr ""
 
 #: ../app/tools/gimphistogramoptions.c:127
 msgid "Histogram Scale"
-msgstr ""
+msgstr "आयतछवि स्केल"
 
 #: ../app/tools/gimphuesaturationtool.c:103
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
@@ -9923,7 +9930,7 @@ msgstr ""
 
 #: ../app/tools/gimphuesaturationtool.c:104
 msgid "Hue-_Saturation..."
-msgstr ""
+msgstr "वर्ण संतृप्ति (_S)..."
 
 #: ../app/tools/gimphuesaturationtool.c:121
 msgid "Adjust Hue / Lightness / Saturation"
@@ -9940,11 +9947,11 @@ msgstr ""
 #: ../app/tools/gimphuesaturationtool.c:171
 #, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr ""
+msgstr "वर्ण संतृप्ति सिर्फ RGB रंग परत पर काम करता है."
 
 #: ../app/tools/gimphuesaturationtool.c:251
 msgid "M_aster"
-msgstr ""
+msgstr "प्रधान (_a)"
 
 #: ../app/tools/gimphuesaturationtool.c:251
 msgid "Adjust all colors"
@@ -9952,27 +9959,27 @@ msgstr ""
 
 #: ../app/tools/gimphuesaturationtool.c:252
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: ../app/tools/gimphuesaturationtool.c:253
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: ../app/tools/gimphuesaturationtool.c:254
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: ../app/tools/gimphuesaturationtool.c:255
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../app/tools/gimphuesaturationtool.c:256
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: ../app/tools/gimphuesaturationtool.c:257
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:262
 msgid "Select Primary Color to Adjust"
@@ -10006,7 +10013,7 @@ msgstr "पूर्वदृश्य"
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
 msgid "Adjustment"
-msgstr ""
+msgstr "समायोजन"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
 #: ../app/tools/gimprectangleoptions.c:973 ../app/tools/gimptextoptions.c:452
@@ -10025,7 +10032,7 @@ msgstr "संवेदनशीलता"
 
 #: ../app/tools/gimpinkoptions-gui.c:100
 msgid "Tilt:"
-msgstr ""
+msgstr "झुकाव:"
 
 #: ../app/tools/gimpinkoptions-gui.c:107
 msgid "Speed:"
@@ -10046,7 +10053,7 @@ msgstr ""
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
-msgstr ""
+msgstr "स्याही (_k)"
 
 #: ../app/tools/gimpiscissorsoptions.c:126
 msgid "Interactive boundary"
@@ -10054,7 +10061,7 @@ msgstr ""
 
 #: ../app/tools/gimpiscissorstool.c:278
 msgid "Scissors"
-msgstr ""
+msgstr "कैंची"
 
 #: ../app/tools/gimpiscissorstool.c:279
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
@@ -10062,7 +10069,7 @@ msgstr ""
 
 #: ../app/tools/gimpiscissorstool.c:280
 msgid "Intelligent _Scissors"
-msgstr ""
+msgstr "मेधावी कैंची (_S)"
 
 #: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpmeasuretool.c:606
 msgid "Click-Drag to move this point"
@@ -10099,7 +10106,7 @@ msgstr ""
 
 #: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
-msgstr ""
+msgstr "परत (_L)..."
 
 #: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
@@ -10116,20 +10123,20 @@ msgstr "सूचीबद्ध स्तर पर स्तर काम न�
 
 #: ../app/tools/gimplevelstool.c:310
 msgid "Pick black point"
-msgstr ""
+msgstr "काली बिंदु लें"
 
 #: ../app/tools/gimplevelstool.c:314
 msgid "Pick gray point"
-msgstr ""
+msgstr "ग्रे बिंदु लें"
 
 #: ../app/tools/gimplevelstool.c:318
 msgid "Pick white point"
-msgstr ""
+msgstr "सफेद बिंदु लें"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
-msgstr ""
+msgstr "इनपुट स्तर"
 
 #: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
@@ -10138,7 +10145,7 @@ msgstr "गामा"
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
-msgstr ""
+msgstr "आउटपुट स्तर"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:641
@@ -10147,7 +10154,7 @@ msgstr "सभी चैनल"
 
 #: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
-msgstr ""
+msgstr "स्तर को स्वतः समायोजित करें"
 
 #: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
@@ -10159,7 +10166,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
-msgstr ""
+msgstr "विंडो स्वचालित फिर आकार दें"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:188
@@ -10181,11 +10188,11 @@ msgstr "_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:124
 msgid "Use info window"
-msgstr ""
+msgstr "सूचना विंडो का प्रयोग करें"
 
 #: ../app/tools/gimpmeasuretool.c:121
 msgid "Measure"
-msgstr ""
+msgstr "माप"
 
 #: ../app/tools/gimpmeasuretool.c:122
 msgid "Measure Tool: Measure distances and angles"
@@ -10193,11 +10200,11 @@ msgstr ""
 
 #: ../app/tools/gimpmeasuretool.c:123
 msgid "_Measure"
-msgstr ""
+msgstr "माप (_M)"
 
 #: ../app/tools/gimpmeasuretool.c:238
 msgid "Add Guides"
-msgstr ""
+msgstr "गाइड जोड़ें"
 
 #: ../app/tools/gimpmeasuretool.c:558
 msgid "Click to place vertical and horizontal guides"
@@ -10222,7 +10229,7 @@ msgstr ""
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:986
 msgid "Measure Distances and Angles"
-msgstr ""
+msgstr "दूरी और कोण मापें"
 
 #: ../app/tools/gimpmeasuretool.c:1006
 msgid "Distance:"
@@ -10230,7 +10237,7 @@ msgstr "दूरीः"
 
 #: ../app/tools/gimpmoveoptions.c:140
 msgid "Pick a layer or guide"
-msgstr ""
+msgstr "स्तर या गाइड चुनें"
 
 #: ../app/tools/gimpmoveoptions.c:141
 msgid "Move the active layer"
@@ -10238,11 +10245,11 @@ msgstr "सक्रिय स्तर खिसकाएँ"
 
 #: ../app/tools/gimpmoveoptions.c:145
 msgid "Move selection"
-msgstr ""
+msgstr "चयन खिसकाएँ"
 
 #: ../app/tools/gimpmoveoptions.c:149
 msgid "Pick a path"
-msgstr ""
+msgstr "एक पथ चुनें"
 
 #: ../app/tools/gimpmoveoptions.c:150
 msgid "Move the active path"
@@ -10267,15 +10274,15 @@ msgstr "खिसकाएँ (_M)"
 
 #: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:570
 msgid "Move Guide: "
-msgstr ""
+msgstr "गाइड खिसकाएँ: "
 
 #: ../app/tools/gimpmovetool.c:564
 msgid "Cancel Guide"
-msgstr ""
+msgstr "गाइड रद्द करें"
 
 #: ../app/tools/gimpmovetool.c:570
 msgid "Add Guide: "
-msgstr ""
+msgstr "गाइड जोड़ें: "
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -10283,7 +10290,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
-msgstr ""
+msgstr "पेंटब्रश (_P)"
 
 #: ../app/tools/gimppaintoptions-gui.c:112
 #: ../app/tools/gimpselectionoptions.c:211
@@ -10295,11 +10302,11 @@ msgstr "मोडः"
 #: ../app/tools/gimptransformoptions.c:348
 #: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
-msgstr ""
+msgstr "अपारदर्शिता:"
 
 #: ../app/tools/gimppaintoptions-gui.c:137
 msgid "Brush:"
-msgstr ""
+msgstr "ब्रश:"
 
 #: ../app/tools/gimppaintoptions-gui.c:142
 msgid "Scale:"
@@ -10307,11 +10314,11 @@ msgstr "स्केल:"
 
 #: ../app/tools/gimppaintoptions-gui.c:150
 msgid "Opacity"
-msgstr ""
+msgstr "अपारदर्शिता"
 
 #: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Hardness"
-msgstr ""
+msgstr "कड़ापन"
 
 #: ../app/tools/gimppaintoptions-gui.c:162
 msgid "Rate"
@@ -10335,15 +10342,15 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:264
 msgid "Incremental"
-msgstr ""
+msgstr "संवर्द्धनीय"
 
 #: ../app/tools/gimppaintoptions-gui.c:280
 msgid "Hard edge"
-msgstr ""
+msgstr "कड़ा किनारा"
 
 #: ../app/tools/gimppaintoptions-gui.c:565
 msgid "Fade out"
-msgstr ""
+msgstr "फीका हो गया"
 
 #: ../app/tools/gimppaintoptions-gui.c:574
 #: ../app/tools/gimppaintoptions-gui.c:657
@@ -10360,7 +10367,7 @@ msgstr "गणनाः"
 
 #: ../app/tools/gimppaintoptions-gui.c:631
 msgid "Use color from gradient"
-msgstr ""
+msgstr "ढाल से रंग का प्रयोग करें"
 
 #: ../app/tools/gimppainttool.c:136
 msgid "Click to paint"
@@ -10386,7 +10393,7 @@ msgstr ""
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
-msgstr ""
+msgstr "पेंसिल (_n)"
 
 #: ../app/tools/gimpperspectiveclonetool.c:127
 msgid ""
@@ -10408,7 +10415,7 @@ msgstr ""
 
 #: ../app/tools/gimpperspectivetool.c:72
 msgid "_Perspective"
-msgstr ""
+msgstr "परिप्रेक्ष्य (_P)"
 
 #: ../app/tools/gimpperspectivetool.c:99
 msgctxt "command"
@@ -10429,24 +10436,24 @@ msgstr ""
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
-msgstr ""
+msgstr "पोस्टराइज (_P)..."
 
 #: ../app/tools/gimpposterizetool.c:103
 msgid "Posterize (Reduce Number of Colors)"
-msgstr ""
+msgstr "पोस्टराइज (रंग संख्या घटाएँ)"
 
 #: ../app/tools/gimpposterizetool.c:151
 #, c-format
 msgid "Posterize does not operate on indexed layers."
-msgstr ""
+msgstr "सूचीबद्ध परत पर पोस्टराइज काम नहीं करता है."
 
 #: ../app/tools/gimpposterizetool.c:226
 msgid "Posterize _levels:"
-msgstr ""
+msgstr "पोस्टराइज स्तर (_l):"
 
 #: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
+msgstr "चयन के सिकोड़ने के दौरान सभी दृश्य परतों का प्रयोग करें"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:729
@@ -10500,7 +10507,7 @@ msgstr ""
 
 #: ../app/tools/gimpregionselectoptions.c:83
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
+msgstr "चयन किए जाने के लिए पूरी तरह से पारदर्शी क्षेत्र को अनुमति दें"
 
 #: ../app/tools/gimpregionselectoptions.c:90
 msgid "Base region_select on all visible layers"
@@ -10508,7 +10515,7 @@ msgstr ""
 
 #: ../app/tools/gimpregionselectoptions.c:202
 msgid "Select transparent areas"
-msgstr ""
+msgstr "पारदर्शी क्षेत्र चुनें"
 
 #: ../app/tools/gimpregionselectoptions.c:227
 msgid "Select by:"
@@ -10528,7 +10535,7 @@ msgstr ""
 
 #: ../app/tools/gimprotatetool.c:92
 msgid "_Rotate"
-msgstr ""
+msgstr "घुमाएँ (_R)"
 
 #: ../app/tools/gimprotatetool.c:188
 msgid "_Angle:"
@@ -10565,7 +10572,7 @@ msgstr "एन्टीअलियासिंग"
 
 #: ../app/tools/gimpselectionoptions.c:273
 msgid "Feather edges"
-msgstr ""
+msgstr "पंख किनारा"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -10613,7 +10620,7 @@ msgstr ""
 
 #: ../app/tools/gimpsheartool.c:84
 msgid "S_hear"
-msgstr ""
+msgstr "कतरें (_h)"
 
 #: ../app/tools/gimpsheartool.c:110
 msgctxt "command"
@@ -10634,7 +10641,7 @@ msgstr ""
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
-msgstr ""
+msgstr "धब्बेदार बनाएँ (_S)"
 
 #: ../app/tools/gimpsmudgetool.c:74
 msgid "Click to smudge"
@@ -10646,17 +10653,17 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:127
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr ""
+msgstr "हिंटिंग फ़ॉन्ट ऑउटलाइन को छोटे आकार पर क्रिस्प बिटमैप को उत्पन्न करने के लिए बदल देता है"
 
 #: ../app/tools/gimptextoptions.c:134
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr ""
+msgstr "यदि उपलब्ध है, फ़ॉन्ट से संकेत प्रयोग किया जाता है लेकिन आप हमेशा स्वचालित हिंटर के प्रयोग को वरीयता दे सकते हैं"
 
 #: ../app/tools/gimptextoptions.c:159
 msgid "Indentation of the first line"
-msgstr ""
+msgstr "पहली पंक्ति का दंतुरण"
 
 #: ../app/tools/gimptextoptions.c:165
 msgid "Adjust line spacing"
@@ -10672,11 +10679,11 @@ msgstr "फ़ॉन्टः"
 
 #: ../app/tools/gimptextoptions.c:461
 msgid "Hinting"
-msgstr ""
+msgstr "हिंटिंग"
 
 #: ../app/tools/gimptextoptions.c:466
 msgid "Force auto-hinter"
-msgstr ""
+msgstr "ऑटो हिंटर बाध्य करें"
 
 #: ../app/tools/gimptextoptions.c:487
 msgid "Text Color"
@@ -10688,7 +10695,7 @@ msgstr "रंगः"
 
 #: ../app/tools/gimptextoptions.c:498
 msgid "Justify:"
-msgstr ""
+msgstr "समायोजित करें:"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:520
@@ -10709,11 +10716,11 @@ msgstr "पाठ (_x)"
 
 #: ../app/tools/gimptexttool.c:954
 msgid "GIMP Text Editor"
-msgstr ""
+msgstr "जिम्प पाठ संपादक"
 
 #: ../app/tools/gimptexttool.c:1070 ../app/tools/gimptexttool.c:1073
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "पाठ संपादन संपुष्ट करें"
 
 #: ../app/tools/gimptexttool.c:1077
 msgid "Create _New Layer"
@@ -10727,6 +10734,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"परत जिसे आपने चुना है पाठ परत है लेकिन इसे अन्य औज़ारों के प्रयोग से बदला जा रहा है. पाठ औज़ार की मदद से इस परत का संपादन इन रूपांतरणों को छोड़ देगा.\n"
+"\n"
+"आप परत को संपादित कर सकते हैं या नयी परत इसके पाठ गुणों की बदौलत बना सकते हैं."
 
 #: ../app/tools/gimptexttool.c:1313
 msgid "Reshape Text Layer"
@@ -10738,11 +10748,11 @@ msgstr ""
 
 #: ../app/tools/gimpthresholdtool.c:92
 msgid "_Threshold..."
-msgstr ""
+msgstr "दहलीज (_T)..."
 
 #: ../app/tools/gimpthresholdtool.c:109
 msgid "Apply Threshold"
-msgstr ""
+msgstr "दहलीज लागू करें"
 
 #: ../app/tools/gimpthresholdtool.c:111
 msgid "Import Threshold Settings"
@@ -10755,7 +10765,7 @@ msgstr ""
 #: ../app/tools/gimpthresholdtool.c:161
 #, c-format
 msgid "Threshold does not operate on indexed layers."
-msgstr ""
+msgstr "दहलीज सूचीबद्ध परतों पर काम नहीं करता है."
 
 #: ../app/tools/gimpthresholdtool.c:266
 msgid "Automatically adjust to optimal binarization threshold"
@@ -10763,7 +10773,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:273
 msgid "Transform:"
-msgstr ""
+msgstr "बदलें:"
 
 #: ../app/tools/gimptransformoptions.c:282
 msgid "Direction"
@@ -10806,7 +10816,7 @@ msgstr ""
 
 #: ../app/tools/gimpvectoroptions.c:77
 msgid "Restrict editing to polygons"
-msgstr ""
+msgstr "बहुभुज में संपादन सीमित करें"
 
 #: ../app/tools/gimpvectoroptions.c:156
 msgid "Edit Mode"
@@ -10814,7 +10824,7 @@ msgstr "संपादन मोड"
 
 #: ../app/tools/gimpvectoroptions.c:174
 msgid "Polygonal"
-msgstr ""
+msgstr "बहुभुजीय"
 
 #: ../app/tools/gimpvectoroptions.c:178
 #, c-format
@@ -10824,6 +10834,10 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
+"चयन में पथ\n"
+"%s  जोड़ें\n"
+"%s  घटाएं\n"
+"%s  प्रतिच्छेद करें"
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
@@ -10840,43 +10854,43 @@ msgstr "पथ (h)"
 
 #: ../app/tools/gimpvectortool.c:322
 msgid "Add Stroke"
-msgstr ""
+msgstr "स्ट्रोक जोड़ें"
 
 #: ../app/tools/gimpvectortool.c:345
 msgid "Add Anchor"
-msgstr ""
+msgstr "एंकर जोड़ें"
 
 #: ../app/tools/gimpvectortool.c:370
 msgid "Insert Anchor"
-msgstr ""
+msgstr "एंकर प्रविष्ट करें"
 
 #: ../app/tools/gimpvectortool.c:400
 msgid "Drag Handle"
-msgstr ""
+msgstr "नियंत्रण खीचें"
 
 #: ../app/tools/gimpvectortool.c:429
 msgid "Drag Anchor"
-msgstr ""
+msgstr "एंकर खीचें"
 
 #: ../app/tools/gimpvectortool.c:446
 msgid "Drag Anchors"
-msgstr ""
+msgstr "एंकर खीचें"
 
 #: ../app/tools/gimpvectortool.c:468
 msgid "Drag Curve"
-msgstr ""
+msgstr "वक्र खीचें"
 
 #: ../app/tools/gimpvectortool.c:496
 msgid "Connect Strokes"
-msgstr ""
+msgstr "स्ट्रोक जोड़ें"
 
 #: ../app/tools/gimpvectortool.c:527
 msgid "Drag Path"
-msgstr ""
+msgstr "पथ खीचें"
 
 #: ../app/tools/gimpvectortool.c:537
 msgid "Convert Edge"
-msgstr ""
+msgstr "किनारा परिवर्तित करें"
 
 #: ../app/tools/gimpvectortool.c:567
 msgid "Delete Anchor"
@@ -10884,11 +10898,11 @@ msgstr "एंकर मिटाएँ"
 
 #: ../app/tools/gimpvectortool.c:589
 msgid "Delete Segment"
-msgstr ""
+msgstr "खंड मिटाएँ"
 
 #: ../app/tools/gimpvectortool.c:807
 msgid "Move Anchors"
-msgstr ""
+msgstr "एंकर खिसकाएँ"
 
 #: ../app/tools/gimpvectortool.c:1167
 msgid "Click to pick path to edit"
@@ -10957,11 +10971,11 @@ msgstr ""
 
 #: ../app/tools/gimpvectortool.c:1766
 msgid "Delete Anchors"
-msgstr ""
+msgstr "एंकर मिटाएँ"
 
 #: ../app/tools/gimpvectortool.c:1939
 msgid "There is no active layer or channel to stroke to"
-msgstr ""
+msgstr "कोई सक्रिय स्तर या चैनल स्ट्रोक करने के लिए नहीं है"
 
 #: ../app/tools/tools-enums.c:58
 msgid "No guides"
@@ -10995,7 +11009,7 @@ msgstr "ऊँचाई"
 
 #: ../app/tools/tools-enums.c:179
 msgid "Free select"
-msgstr ""
+msgstr "मुक्त चयन"
 
 #: ../app/tools/tools-enums.c:180
 msgid "Fixed size"
@@ -11003,7 +11017,7 @@ msgstr "निश्चित आकार"
 
 #: ../app/tools/tools-enums.c:181
 msgid "Fixed aspect ratio"
-msgstr ""
+msgstr "निश्चित पहलू अनुपात"
 
 #: ../app/tools/tools-enums.c:211 ../app/vectors/gimpvectors.c:192
 msgid "Path"
@@ -11015,19 +11029,19 @@ msgstr "बाहरी रूपरेखा"
 
 #: ../app/tools/tools-enums.c:243
 msgid "Image + Grid"
-msgstr ""
+msgstr "छवि + जाल"
 
 #: ../app/tools/tools-enums.c:270
 msgid "Number of grid lines"
-msgstr ""
+msgstr "जाल रेखा की संख्या"
 
 #: ../app/tools/tools-enums.c:271
 msgid "Grid line spacing"
-msgstr ""
+msgstr "जाल पंक्ति अंतरण"
 
 #: ../app/tools/tools-enums.c:299
 msgid "Design"
-msgstr ""
+msgstr "डिजायन"
 
 #: ../app/tools/tools-enums.c:301
 msgid "Move"
@@ -11035,68 +11049,68 @@ msgstr "खिसकाएँ"
 
 #: ../app/vectors/gimpvectors.c:193
 msgid "Rename Path"
-msgstr ""
+msgstr "पथ का पुनः नाम दें"
 
 #: ../app/vectors/gimpvectors.c:194 ../app/vectors/gimpvectors.c:316
 msgid "Move Path"
-msgstr ""
+msgstr "पथ खिसकाएँ"
 
 #: ../app/vectors/gimpvectors.c:195
 msgid "Scale Path"
-msgstr ""
+msgstr "पथ मापें"
 
 #: ../app/vectors/gimpvectors.c:196
 msgid "Resize Path"
-msgstr ""
+msgstr "पथ को पुनः आकार दें"
 
 #: ../app/vectors/gimpvectors.c:197 ../app/vectors/gimpvectors.c:415
 msgid "Flip Path"
-msgstr ""
+msgstr "पथ पलटें"
 
 #: ../app/vectors/gimpvectors.c:198 ../app/vectors/gimpvectors.c:446
 msgid "Rotate Path"
-msgstr ""
+msgstr "पथ घुमाएँ"
 
 #: ../app/vectors/gimpvectors.c:199 ../app/vectors/gimpvectors.c:476
 msgid "Transform Path"
-msgstr ""
+msgstr "पथ रूपांतरित करें"
 
 #: ../app/vectors/gimpvectors-export.c:96
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr ""
+msgstr "त्रुटि '%s' लिखने के दौरान: %s"
 
 #: ../app/vectors/gimpvectors-import.c:296
 msgid "Import Paths"
-msgstr ""
+msgstr "पथ आयात करें"
 
 #: ../app/vectors/gimpvectors-import.c:307
 msgid "Imported Path"
-msgstr ""
+msgstr "आयातित पथ"
 
 #: ../app/vectors/gimpvectors-import.c:336
 #, c-format
 msgid "No paths found in '%s'"
-msgstr ""
+msgstr "'%s' में कोई पथ नहीं मिला"
 
 #: ../app/vectors/gimpvectors-import.c:339
 #, c-format
 msgid "No paths found in the buffer"
-msgstr ""
+msgstr "बफर में कोई पथ नहीं मिला"
 
 #: ../app/vectors/gimpvectors-import.c:349
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr ""
+msgstr "'%s' से पथ आयात करने में विफल: %s"
 
 #: ../app/widgets/gimpactioneditor.c:71
 msgid "_Search:"
-msgstr ""
+msgstr "खोजें (_S):"
 
 #: ../app/widgets/gimpactiongroup.c:802
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:346
 #: ../app/widgets/gimpcontrollereditor.c:348
@@ -11113,41 +11127,41 @@ msgstr "नाम"
 
 #: ../app/widgets/gimpactionview.c:641 ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
-msgstr ""
+msgstr "शॉर्टकट बदलाव विफल."
 
 #: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
-msgstr ""
+msgstr "शॉर्टकट विरोध"
 
 #: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
-msgstr ""
+msgstr "शॉर्टकट फिर नियत करें (_R)"
 
 #: ../app/widgets/gimpactionview.c:704
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
+msgstr "शॉर्टकट \"%s\" \"%s\" के द्वारा पहले से \"%s\" समूह के द्वारा लिया गया है."
 
 #: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
+msgstr "शॉर्टकट को फिर नियत करना इसे \"%s\" से हटाये जाने का कारण बनेगा."
 
 #: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
-msgstr ""
+msgstr "अवैध शॉर्टकट."
 
 #: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
-msgstr ""
+msgstr "शॉर्टकट का हटाया जाना विफल रहा."
 
 #: ../app/widgets/gimpbrusheditor.c:169
 msgid "Spikes:"
-msgstr ""
+msgstr "स्पाइक:"
 
 #: ../app/widgets/gimpbrusheditor.c:182
 msgid "Hardness:"
-msgstr ""
+msgstr "कड़ापन:"
 
 #: ../app/widgets/gimpbrusheditor.c:195
 msgid "Aspect ratio:"
@@ -11156,12 +11170,12 @@ msgstr "आस्पेक्ट रेशो:"
 #: ../app/widgets/gimpbrusheditor.c:221
 #: ../app/widgets/gimpbrushfactoryview.c:82
 msgid "Spacing:"
-msgstr ""
+msgstr "अंतरण:"
 
 #: ../app/widgets/gimpbrusheditor.c:224
 #: ../app/widgets/gimpbrushfactoryview.c:85
 msgid "Percentage of width of brush"
-msgstr ""
+msgstr "ब्रश की चौड़ाई का प्रतिशतता"
 
 #: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
 #: ../app/widgets/gimpeditor.c:754
@@ -11170,15 +11184,15 @@ msgstr "(कुछ नहीं)"
 
 #: ../app/widgets/gimpchanneltreeview.c:119
 msgid "Reorder Channel"
-msgstr ""
+msgstr "चैनल को फिर क्रम दें"
 
 #: ../app/widgets/gimpchanneltreeview.c:321
 msgid "Empty Channel"
-msgstr ""
+msgstr "खाली चैनल"
 
 #: ../app/widgets/gimpcolordialog.c:150
 msgid "Add the current color to the color history"
-msgstr ""
+msgstr "मौजूदा रंग को रंग इतिहास में जोड़ें"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:152
 msgid "Available Filters"
@@ -11186,11 +11200,11 @@ msgstr "उपलब्ध फ़िल्टर्स"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:213
 msgid "Move the selected filter up"
-msgstr ""
+msgstr "चयनित फिल्टर को ऊपर खिसकाएँ"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:222
 msgid "Move the selected filter down"
-msgstr ""
+msgstr "चयनित फिल्टर को नीचे खिसकाएँ"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:268
 msgid "Active Filters"
@@ -11198,7 +11212,7 @@ msgstr "सक्रिय फ़िल्टर्स"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:319
 msgid "Reset the selected filter to default values"
-msgstr ""
+msgstr "तयशुदा मान में चयनित फिल्टर को फिर सेट करें"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:493
 #, c-format
@@ -11212,7 +11226,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcolordisplayeditor.c:561
 msgid "No filter selected"
-msgstr ""
+msgstr "कोई फिल्टर चयनित नहीं"
 
 #: ../app/widgets/gimpcoloreditor.c:263
 msgid ""
@@ -11242,7 +11256,7 @@ msgstr "मूल्यः"
 
 #: ../app/widgets/gimpcolorframe.c:553
 msgid "Hex:"
-msgstr ""
+msgstr "हेक्स:"
 
 #: ../app/widgets/gimpcolorframe.c:560
 msgid "Hue:"
@@ -11250,7 +11264,7 @@ msgstr "वर्ण:"
 
 #: ../app/widgets/gimpcolorframe.c:561
 msgid "Sat.:"
-msgstr ""
+msgstr "Sat.:"
 
 #: ../app/widgets/gimpcolorframe.c:579
 msgid "Cyan:"
@@ -11270,7 +11284,7 @@ msgstr "कालाः"
 
 #: ../app/widgets/gimpcolorframe.c:602
 msgid "Alpha:"
-msgstr ""
+msgstr "अल्फा:"
 
 #: ../app/widgets/gimpcolorframe.c:623 ../app/widgets/gimpcursorview.c:134
 #: ../app/widgets/gimpcursorview.c:140 ../app/widgets/gimpcursorview.c:156
@@ -11282,11 +11296,11 @@ msgstr "n/a"
 
 #: ../app/widgets/gimpcolormapeditor.c:225
 msgid "Color index:"
-msgstr ""
+msgstr "रंग सूची:"
 
 #: ../app/widgets/gimpcolormapeditor.c:235
 msgid "HTML notation:"
-msgstr ""
+msgstr "HTML संकेत:"
 
 #: ../app/widgets/gimpcolormapeditor.c:492
 msgid "Only indexed images have a colormap."
@@ -11298,11 +11312,11 @@ msgstr "रंग पट्टिका"
 
 #: ../app/widgets/gimpcontainerpopup.c:540
 msgid "Smaller Previews"
-msgstr ""
+msgstr "छोटा पूर्वावलोकन"
 
 #: ../app/widgets/gimpcontainerpopup.c:545
 msgid "Larger Previews"
-msgstr ""
+msgstr "बड़ा पूर्वावलोकन"
 
 #: ../app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
@@ -11349,7 +11363,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcontrollereditor.c:666
 msgid "Select Controller Event Action"
-msgstr ""
+msgstr "नियंत्रक घटना क्रिया चुनें"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -11360,7 +11374,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerkeyboard.c:88
 #: ../app/widgets/gimpcontrollerkeyboard.c:91
 msgid "Cursor Up"
-msgstr ""
+msgstr "संकेतक ऊपर"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:95
 #: ../app/widgets/gimpcontrollerkeyboard.c:98
@@ -11401,7 +11415,7 @@ msgstr "कुंजीपट"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:222
 msgid "Keyboard Events"
-msgstr ""
+msgstr "कुंजीपटल घटना"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:223
 #: ../app/widgets/gimpcontrollerwheel.c:225
@@ -11533,7 +11547,7 @@ msgstr "माउस व्हील"
 
 #: ../app/widgets/gimpcontrollerwheel.c:224
 msgid "Mouse Wheel Events"
-msgstr ""
+msgstr "माउस ह्वील घटना"
 
 #: ../app/widgets/gimpcursorview.c:137 ../app/widgets/gimpcursorview.c:159
 msgid "X"
@@ -11562,17 +11576,17 @@ msgstr ""
 
 #: ../app/widgets/gimpdevicestatus.c:138
 msgid "Save device status"
-msgstr ""
+msgstr "युक्ति स्थिति सहेजें"
 
 #: ../app/widgets/gimpdevicestatus.c:448
 #, c-format
 msgid "Foreground: %d, %d, %d"
-msgstr ""
+msgstr "अग्रभूमि: %d, %d, %d"
 
 #: ../app/widgets/gimpdevicestatus.c:453
 #, c-format
 msgid "Background: %d, %d, %d"
-msgstr ""
+msgstr "पृष्ठभूमि: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:190
 msgid "The given filename does not have any known file extension."
