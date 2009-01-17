@@ -61,8 +61,7 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static void      blur_line           (const gdouble  *ctable,
-                                      const gdouble  *cmatrix,
+static void      blur_line           (const gdouble  *cmatrix,
                                       const gint      cmatrix_length,
                                       const guchar   *src,
                                       guchar         *dest,
@@ -70,8 +69,6 @@ static void      blur_line           (const gdouble  *ctable,
                                       const gint      bytes);
 static gint      gen_convolve_matrix (gdouble         std_dev,
                                       gdouble       **cmatrix);
-static gdouble * gen_lookup_table    (const gdouble  *cmatrix,
-                                      gint            cmatrix_length);
 static void      unsharp_region      (GimpPixelRgn   *srcPTR,
                                       GimpPixelRgn   *dstPTR,
                                       gint            bytes,
@@ -243,8 +240,7 @@ run (const gchar      *name,
  * in the processing of the lines, at least to the blur_line function.
  */
 static void
-blur_line (const gdouble *ctable,
-           const gdouble *cmatrix,
+blur_line (const gdouble *cmatrix,
            const gint     cmatrix_length,
            const guchar  *src,
            guchar        *dest,
@@ -252,7 +248,6 @@ blur_line (const gdouble *ctable,
            const gint     bytes)
 {
   const gdouble *cmatrix_p;
-  const gdouble *ctable_p;
   const guchar  *src_p;
   const guchar  *src_p1;
   const gint     cmatrix_middle = cmatrix_length / 2;
@@ -339,13 +334,11 @@ blur_line (const gdouble *ctable,
 
               cmatrix_p = cmatrix;
               src_p1 = src_p;
-              ctable_p = ctable;
 
               for (j = 0; j < cmatrix_length; j++)
                 {
                   sum += cmatrix[j] * *src_p1;
                   src_p1 += bytes;
-                  ctable_p += 256;
                 }
 
               src_p++;
@@ -431,7 +424,6 @@ unsharp_region (GimpPixelRgn *srcPR,
   gint     height  = y2 - y1;
   gdouble *cmatrix = NULL;
   gint     cmatrix_length;
-  gdouble *ctable;
   gint     row, col;
   gint     threshold = unsharp_params.threshold;
 
@@ -442,9 +434,6 @@ unsharp_region (GimpPixelRgn *srcPR,
      and make sure it's smaller than each dimension */
   cmatrix_length = gen_convolve_matrix (radius, &cmatrix);
 
-  /* generate lookup table */
-  ctable = gen_lookup_table (cmatrix, cmatrix_length);
-
   /* allocate buffers */
   src  = g_new (guchar, MAX (width, height) * bytes);
   dest = g_new (guchar, MAX (width, height) * bytes);
@@ -453,7 +442,7 @@ unsharp_region (GimpPixelRgn *srcPR,
   for (row = 0; row < height; row++)
     {
       gimp_pixel_rgn_get_row (srcPR, src, x1, y1 + row, width);
-      blur_line (ctable, cmatrix, cmatrix_length, src, dest, width, bytes);
+      blur_line (cmatrix, cmatrix_length, src, dest, width, bytes);
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
       if (show_progress && row % 16 == 0)
@@ -464,7 +453,7 @@ unsharp_region (GimpPixelRgn *srcPR,
   for (col = 0; col < width; col++)
     {
       gimp_pixel_rgn_get_col (destPR, src, x1 + col, y1, height);
-      blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
+      blur_line (cmatrix, cmatrix_length, src, dest, height, bytes);
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
       if (show_progress && col % 16 == 0)
@@ -516,7 +505,6 @@ unsharp_region (GimpPixelRgn *srcPR,
 
   g_free (dest);
   g_free (src);
-  g_free (ctable);
   g_free (cmatrix);
 }
 
@@ -601,32 +589,6 @@ gen_convolve_matrix (gdouble   radius,
     cmatrix[i] = cmatrix[i] / sum;
 
   return matrix_length;
-}
-
-/* ----------------------- gen_lookup_table ----------------------- */
-/* generates a lookup table for every possible product of 0-255 and
-   each value in the convolution matrix.  The returned array is
-   indexed first by matrix position, then by input multiplicand (?)
-   value.
-*/
-static gdouble *
-gen_lookup_table (const gdouble *cmatrix,
-                  gint           cmatrix_length)
-{
-  gdouble       *lookup_table   = g_new (gdouble, cmatrix_length * 256);
-  gdouble       *lookup_table_p = lookup_table;
-  const gdouble *cmatrix_p      = cmatrix;
-  gint           i, j;
-
-  for (i = 0; i < cmatrix_length; i++)
-    {
-      for (j = 0; j < 256; j++)
-        *(lookup_table_p++) = *cmatrix_p * (gdouble) j;
-
-      cmatrix_p++;
-    }
-
-  return lookup_table;
 }
 
 static gboolean
