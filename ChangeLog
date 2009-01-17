@@ -1,3 +1,11 @@
+2009-01-17  Sven Neumann  <sven@gimp.org>
+
+	Bug 568095 – Patch to improve unsharp mask performance
+
+	* plug-ins/common/unsharp-mask.c (unsharp_region): applied patch
+	from Winston Chang that improves performance for larger radii by
+	approximating the gaussian blur with a three-pass box blur.
+
 2009-01-17  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Adapt to new babl API, s/babl_format/babl_format_from_name/
