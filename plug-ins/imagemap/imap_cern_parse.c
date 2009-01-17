@@ -7,7 +7,7 @@
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
+   the Free Software Foundation; either version 3, or (at your option)
    any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -111,9 +111,9 @@
  *
  * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -122,8 +122,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -169,14 +168,14 @@ static Object_t *current_object;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 47 "imap_cern.y"
+#line 46 "imap_cern.y"
 {
    int val;
    double value;
    char *id;
 }
 /* Line 187 of yacc.c.  */
-#line 180 "y.tab.c"
+#line 179 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -189,7 +188,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 193 "y.tab.c"
+#line 192 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -480,9 +479,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    60,    60,    63,    64,    67,    68,    69,    70,    71,
-      74,    83,    96,   108,   108,   116,   117,   122,   131,   132,
-     133,   136,   142,   150
+       0,    59,    59,    62,    63,    66,    67,    68,    69,    70,
+      73,    82,    95,   107,   107,   115,   116,   121,   130,   131,
+     132,   135,   141,   149
 };
 #endif
 
@@ -1165,7 +1164,7 @@ yyparse ()
 #endif
 #endif
 {
-
+  
   int yystate;
   int yyn;
   int yyresult;
@@ -1410,7 +1409,7 @@ yyreduce:
   switch (yyn)
     {
         case 10:
-#line 75 "imap_cern.y"
+#line 74 "imap_cern.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->default_url, (yyvsp[(2) - (2)].id));
@@ -1419,7 +1418,7 @@ yyreduce:
     break;
 
   case 11:
-#line 84 "imap_cern.y"
+#line 83 "imap_cern.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (12)].value);
 		   gint y = (gint) (yyvsp[(5) - (12)].value);
@@ -1433,7 +1432,7 @@ yyreduce:
     break;
 
   case 12:
-#line 97 "imap_cern.y"
+#line 96 "imap_cern.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (8)].value);
 		   gint y = (gint) (yyvsp[(5) - (8)].value);
@@ -1446,12 +1445,12 @@ yyreduce:
     break;
 
   case 13:
-#line 108 "imap_cern.y"
+#line 107 "imap_cern.y"
     {current_object = create_polygon(NULL);}
     break;
 
   case 14:
-#line 109 "imap_cern.y"
+#line 108 "imap_cern.y"
     {
 		   object_set_url(current_object, (yyvsp[(4) - (4)].id));
 		   add_shape(current_object);
@@ -1460,30 +1459,30 @@ yyreduce:
     break;
 
   case 16:
-#line 118 "imap_cern.y"
+#line 117 "imap_cern.y"
     {
 		}
     break;
 
   case 17:
-#line 123 "imap_cern.y"
+#line 122 "imap_cern.y"
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(2) - (5)].value), (gint) (yyvsp[(4) - (5)].value));
-		   polygon->points = g_list_append(polygon->points,
+		   polygon->points = g_list_append(polygon->points, 
 						   (gpointer) point);
 		}
     break;
 
   case 21:
-#line 137 "imap_cern.y"
+#line 136 "imap_cern.y"
     {
 		  g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 22:
-#line 143 "imap_cern.y"
+#line 142 "imap_cern.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->author, (yyvsp[(2) - (2)].id));
@@ -1492,12 +1491,12 @@ yyreduce:
     break;
 
   case 23:
-#line 151 "imap_cern.y"
+#line 150 "imap_cern.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
 
-		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n",
+		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
 					     NULL);
 		   g_strreplace(&info->description, description);
 		   g_free ((yyvsp[(2) - (2)].id));
@@ -1506,7 +1505,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1510 "y.tab.c"
+#line 1509 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1720,10 +1719,10 @@ yyreturn:
 }
 
 
-#line 163 "imap_cern.y"
+#line 162 "imap_cern.y"
 
 
-static void
+static void 
 cern_error(char* s)
 {
    extern FILE *cern_in;

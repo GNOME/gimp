@@ -4,7 +4,7 @@
 #   Copyright (C) 2004-2006 by Yevgen Muntyan <muntyan@math.tamu.edu>
 #   Portions of code by Geoffrey French.
 #
-#   This program is free software; you can redistribute it and/or modify
+#   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Lesser General Public version 2.1 as
 #   published by the Free Software Foundation.
 #

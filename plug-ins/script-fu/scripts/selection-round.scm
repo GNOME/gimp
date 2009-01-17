@@ -1,37 +1,36 @@
-;; selection-rounded-rectangle.scm -*-scheme-*-
+; selection-rounded-rectangle.scm -*-scheme-*-
 
-;; GIMP - The GNU Image Manipulation Program
-;; Copyright (C) 1995 Spencer Kimball and Peter Mattis
-;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2 of the License, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+; GIMP - The GNU Image Manipulation Program
+; Copyright (C) 1995 Spencer Kimball and Peter Mattis
+;
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 3 of the License, or
+; (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;; CHANGE-LOG:
-;; 1.00 - initial release
-;; 1.01 - some code cleanup, no real changes
-;; 1.02 - made script undoable
+; CHANGE-LOG:
+; 1.00 - initial release
+; 1.01 - some code cleanup, no real changes
+; 1.02 - made script undoable
 
-;; 2.00 - ALAN's Branch.  changed name, menu, location, and description
-;; 2.01 - fixed to work if there was no current selection.
-;; 2.02 - changed scale to percentages, usability tweaking.
-;; 2.10 - added concave round edges, updated description.
-;; 2.11 - tweeked description, changed comments, relinquished any rights.
+; 2.00 - ALAN's Branch.  changed name, menu, location, and description
+; 2.01 - fixed to work if there was no current selection.
+; 2.02 - changed scale to percentages, usability tweaking.
+; 2.10 - added concave round edges, updated description.
+; 2.11 - tweeked description, changed comments, relinquished any rights.
 
-;; Copyright (C) 1997, 1998, Sven Neumann
-;; Copyright (C) 2004, Alan Horkan.
-;; Alan Horkan relinquishes all rights to his changes,
-;; full ownership of this script belongs to Sven Neumann.
+; Copyright (C) 1997, 1998, Sven Neumann
+; Copyright (C) 2004, Alan Horkan.
+; Alan Horkan relinquishes all rights to his changes,
+; full ownership of this script belongs to Sven Neumann.
 
 (define (script-fu-selection-rounded-rectangle image drawable radius concave)
   (gimp-image-undo-group-start image)

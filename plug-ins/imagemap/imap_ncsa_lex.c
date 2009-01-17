@@ -27,7 +27,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 33
+#define YY_FLEX_SUBMINOR_VERSION 35
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -49,10 +49,10 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if __STDC_VERSION__ >= 199901L
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
- * if you want the limit (max/min) macros for int types.
+ * if you want the limit (max/min) macros for int types. 
  */
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS 1
@@ -69,10 +69,9 @@ typedef uint32_t flex_uint32_t;
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
 typedef int flex_int32_t;
-typedef unsigned char flex_uint8_t;
+typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -103,6 +102,8 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#endif /* ! C99 */
+
 #endif /* ! FLEXINT_H */
 
 #ifdef __cplusplus
@@ -112,11 +113,12 @@ typedef unsigned int flex_uint32_t;
 
 #else	/* ! __cplusplus */
 
-#if __STDC__
+/* C99 requires __STDC__ to be defined as 1. */
+#if defined (__STDC__)
 
 #define YY_USE_CONST
 
-#endif	/* __STDC__ */
+#endif	/* defined (__STDC__) */
 #endif	/* ! __cplusplus */
 
 #ifdef YY_USE_CONST
@@ -158,7 +160,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -179,7 +189,7 @@ extern FILE *ncsa_in, *ncsa_out;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
-
+    
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
 	do \
@@ -196,14 +206,9 @@ extern FILE *ncsa_in, *ncsa_out;
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
-/* The following is because we cannot portably get our hands on size_t
- * (without autoconf's help, which isn't available because we want
- * flex-generated scanners to compile on their own).
- */
-
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef unsigned int yy_size_t;
+typedef size_t yy_size_t;
 #endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -246,7 +251,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-
+    
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -417,11 +422,11 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,   12,    1,   13,   14,   15,   16,
         1,   17,   18,    1,    1,   19,    1,   20,   21,   22,
         1,   23,   24,   25,   26,    1,    1,    1,   27,    1,
-        1,    1,    1,    1,    1,    1,   12,    1,   13,   14,
+        1,    1,    1,    1,    1,    1,   28,    1,   29,   30,
 
-       15,   16,    1,   17,   18,    1,    1,   19,    1,   20,
-       21,   22,    1,   23,   24,   25,   26,    1,    1,    1,
-       27,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       31,   32,    1,   33,   34,    1,    1,   35,    1,   36,
+       37,   38,    1,   39,   40,   41,   42,    1,    1,    1,
+       43,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -438,75 +443,95 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[28] =
+static yyconst flex_int32_t yy_meta[44] =
     {   0,
         1,    2,    3,    1,    1,    1,    2,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1
-    } ;
-
-static yyconst flex_int16_t yy_base[80] =
-    {   0,
-        0,    0,   26,   28,  114,  113,  115,  118,   34,   36,
-      109,   31,   32,   34,   95,   97,   42,   90,   95,    0,
-      118,    0,   51,   20,   41,   48,   54,   51,   86,   92,
-       97,   96,   86,   91,    0,    0,   77,   87,   83,   87,
-       87,   71,   72,   71,   71,   69,   74,   66,  118,  118,
-       74,   77,   70,   73,   68,   65,   62,   69,  118,   58,
-       59,   63,   69,  118,   68,   56,  118,  118,   52,   58,
-       54,   45,   48,  118,  118,   66,   69,   54,   72
-    } ;
-
-static yyconst flex_int16_t yy_def[80] =
-    {   0,
-       75,    1,   76,   76,   77,   77,   75,   75,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   78,
-       75,   79,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   78,   79,   75,   75,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,    0,   75,   75,   75,   75
-    } ;
-
-static yyconst flex_int16_t yy_nxt[146] =
-    {   0,
-        8,    9,   10,   11,    8,    8,    8,   12,   13,   14,
-        8,    8,   15,   16,   17,    8,    8,    8,    8,    8,
-        8,   18,   19,    8,    8,    8,    8,   21,   21,   21,
-       21,   37,   21,   38,   21,   23,   23,   23,   23,   25,
-       26,   28,   25,   26,   39,   27,   27,   31,   27,   31,
-       28,   32,   23,   23,   35,   27,   25,   26,   74,   31,
-       28,   31,   27,   32,   73,   27,   20,   20,   20,   22,
-       22,   22,   36,   36,   72,   71,   70,   69,   68,   67,
-       66,   65,   64,   63,   62,   61,   60,   59,   58,   57,
-       56,   55,   54,   53,   52,   51,   50,   49,   48,   47,
-
-       46,   45,   44,   43,   42,   32,   32,   41,   40,   34,
-       33,   30,   29,   24,   75,   21,   21,    7,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   75
-    } ;
-
-static yyconst flex_int16_t yy_chk[146] =
-    {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    3,    3,    4,
-        4,   24,    3,   24,    4,    9,    9,   10,   10,   12,
-       12,   13,   14,   14,   24,   12,   13,   17,   14,   17,
-       25,   17,   23,   23,   78,   25,   26,   26,   73,   27,
-       28,   27,   26,   27,   72,   28,   76,   76,   76,   77,
-       77,   77,   79,   79,   71,   70,   69,   66,   65,   63,
-       62,   61,   60,   58,   57,   56,   55,   54,   53,   52,
-       51,   48,   47,   46,   45,   44,   43,   42,   41,   40,
+        1,    1,    1
+    } ;
 
-       39,   38,   37,   34,   33,   32,   31,   30,   29,   19,
-       18,   16,   15,   11,    7,    6,    5,   75,   75,   75,
+static yyconst flex_int16_t yy_base[81] =
+    {   0,
+        0,   38,    4,   14,   62,   61,   58,  178,   16,   22,
+       49,   18,   35,   47,    2,   28,   64,   34,   48,    0,
+      178,    0,   32,   61,   70,   72,   82,   83,   60,   68,
+       34,   27,   75,   82,    0,    0,   70,   82,   86,   92,
+       94,   80,   83,   84,   91,   91,   98,   92,  178,  178,
+      102,  113,  108,  113,  110,  109,  113,  122,  178,  113,
+      116,  122,   21,  178,   15,  119,  178,  178,  122,  130,
+      128,  130,    1,  178,  178,  166,  169,  172,    0,  175
+    } ;
+
+static yyconst flex_int16_t yy_def[81] =
+    {   0,
+       76,   76,   77,   77,   78,   78,   75,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   79,
+       75,   80,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,   79,   80,   75,   75,   75,   75,
        75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
        75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
-       75,   75,   75,   75,   75
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,    0,   75,   75,   75,   75,   75
+    } ;
+
+static yyconst flex_int16_t yy_nxt[222] =
+    {   0,
+       35,    9,   10,   11,   75,   21,   21,   12,   13,   14,
+       21,   74,   15,   16,   17,   21,   21,   23,   23,   29,
+       21,   18,   19,   23,   23,   68,   25,   26,   15,   16,
+       17,   67,   27,   23,   23,   29,   32,   18,   19,    9,
+       10,   11,   30,   32,   28,   12,   13,   14,   27,   27,
+       15,   16,   17,   24,   33,   25,   26,   75,   30,   18,
+       19,   27,   34,   21,   21,   27,   15,   16,   17,   31,
+       33,   31,   37,   32,   38,   18,   19,   27,   34,   28,
+       25,   26,   40,   41,   27,   39,   27,   31,   37,   31,
+       38,   32,   28,   42,   43,   44,   45,   27,   40,   41,
+
+       27,   39,   27,   46,   47,   48,   49,   50,   51,   42,
+       43,   44,   45,   27,   52,   53,   54,   55,   56,   46,
+       47,   48,   49,   50,   51,   57,   58,   59,   60,   61,
+       52,   53,   54,   55,   56,   62,   63,   64,   65,   66,
+       69,   57,   58,   59,   60,   61,   70,   71,   72,   73,
+       75,   62,   63,   64,   65,   66,   69,   75,   75,   75,
+       75,   75,   70,   71,   72,   73,    8,    8,    8,   20,
+       20,   20,   22,   22,   22,   36,   36,    7,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75
+    } ;
+
+static yyconst flex_int16_t yy_chk[222] =
+    {   0,
+       79,    1,    1,    1,    0,    3,    3,    1,    1,    1,
+        3,   73,    1,    1,    1,    4,    4,    9,    9,   15,
+        4,    1,    1,   10,   10,   65,   12,   12,    1,    1,
+        1,   63,   12,   23,   23,   15,   32,    1,    1,    2,
+        2,    2,   16,   31,   13,    2,    2,    2,   12,   13,
+        2,    2,    2,   11,   18,   14,   14,    7,   16,    2,
+        2,   14,   19,    6,    5,   13,    2,    2,    2,   17,
+       18,   17,   24,   17,   24,    2,    2,   14,   19,   25,
+       26,   26,   29,   30,   25,   24,   26,   27,   24,   27,
+       24,   27,   28,   33,   34,   37,   38,   28,   29,   30,
+
+       25,   24,   26,   39,   40,   41,   42,   43,   44,   33,
+       34,   37,   38,   28,   45,   46,   47,   48,   51,   39,
+       40,   41,   42,   43,   44,   52,   53,   54,   55,   56,
+       45,   46,   47,   48,   51,   57,   58,   60,   61,   62,
+       66,   52,   53,   54,   55,   56,   69,   70,   71,   72,
+        0,   57,   58,   60,   61,   62,   66,    0,    0,    0,
+        0,    0,   69,   70,   71,   72,   76,   76,   76,   77,
+       77,   77,   78,   78,   78,   80,   80,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75,   75,   75,   75,   75,   75,   75,   75,   75,   75,
+       75
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -532,9 +557,9 @@ char *ncsa_text;
  *
  * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -543,8 +568,7 @@ char *ncsa_text;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -560,7 +584,7 @@ char *ncsa_text;
 
 
 
-#line 564 "<stdout>"
+#line 588 "<stdout>"
 
 #define INITIAL 0
 #define imap_link 1
@@ -580,6 +604,35 @@ char *ncsa_text;
 
 static int yy_init_globals (void );
 
+/* Accessor methods to globals.
+   These are made visible to non-reentrant scanners for convenience. */
+
+int ncsa_lex_destroy (void );
+
+int ncsa_get_debug (void );
+
+void ncsa_set_debug (int debug_flag  );
+
+YY_EXTRA_TYPE ncsa_get_extra (void );
+
+void ncsa_set_extra (YY_EXTRA_TYPE user_defined  );
+
+FILE *ncsa_get_in (void );
+
+void ncsa_set_in  (FILE * in_str  );
+
+FILE *ncsa_get_out (void );
+
+void ncsa_set_out  (FILE * out_str  );
+
+int ncsa_get_leng (void );
+
+char *ncsa_get_text (void );
+
+int ncsa_get_lineno (void );
+
+void ncsa_set_lineno (int line_number  );
+
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
  */
@@ -593,7 +646,7 @@ extern int ncsa_wrap (void );
 #endif
 
     static void yyunput (int c,char *buf_ptr  );
-
+    
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
@@ -614,7 +667,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -622,7 +680,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO (void) fwrite( ncsa_text, ncsa_leng, 1, ncsa_out )
+#define ECHO do { if (fwrite( ncsa_text, ncsa_leng, 1, ncsa_out )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -714,11 +772,11 @@ YY_DECL
 	register yy_state_type yy_current_state;
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
+    
+#line 45 "imap_ncsa.l"
 
-#line 46 "imap_ncsa.l"
 
-
-#line 722 "<stdout>"
+#line 780 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -777,7 +835,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 118 );
+		while ( yy_base[yy_current_state] != 178 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -803,7 +861,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 48 "imap_ncsa.l"
+#line 47 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -811,7 +869,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 53 "imap_ncsa.l"
+#line 52 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return TITLE;
@@ -819,7 +877,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 58 "imap_ncsa.l"
+#line 57 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return DESCRIPTION;
@@ -827,7 +885,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 63 "imap_ncsa.l"
+#line 62 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return BEGIN_COMMENT;
@@ -835,7 +893,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 68 "imap_ncsa.l"
+#line 67 "imap_ncsa.l"
 {
 				   BEGIN(INITIAL);
    				   ncsa_lval.id = g_strndup (ncsa_text, ncsa_leng);
@@ -844,7 +902,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 74 "imap_ncsa.l"
+#line 73 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
    				   return RECTANGLE;
@@ -852,7 +910,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 79 "imap_ncsa.l"
+#line 78 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return CIRCLE;
@@ -860,7 +918,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 84 "imap_ncsa.l"
+#line 83 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return POLYGON;
@@ -868,7 +926,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 89 "imap_ncsa.l"
+#line 88 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return DEFAULT;
@@ -876,7 +934,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 94 "imap_ncsa.l"
+#line 93 "imap_ncsa.l"
 {
    				   BEGIN(INITIAL);
    				   ncsa_lval.id = g_strndup (ncsa_text, ncsa_leng);
@@ -885,7 +943,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 100 "imap_ncsa.l"
+#line 99 "imap_ncsa.l"
 {
                                    ncsa_lval.value = g_ascii_strtod (ncsa_text, NULL);
 				   return FLOAT;
@@ -894,20 +952,20 @@ YY_RULE_SETUP
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 105 "imap_ncsa.l"
+#line 104 "imap_ncsa.l"
 ; /* Eat white space */
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 107 "imap_ncsa.l"
+#line 106 "imap_ncsa.l"
 return *ncsa_text;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 109 "imap_ncsa.l"
+#line 108 "imap_ncsa.l"
 ECHO;
 	YY_BREAK
-#line 911 "<stdout>"
+#line 969 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(imap_link):
 case YY_STATE_EOF(comment):
@@ -1140,7 +1198,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), num_to_read );
+			(yy_n_chars), (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1164,6 +1222,14 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+		/* Extend the array by 50%, plus the number we really need. */
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) ncsa_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
+	}
+
 	(yy_n_chars) += number_to_move;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
@@ -1179,7 +1245,7 @@ static int yy_get_next_buffer (void)
 {
 	register yy_state_type yy_current_state;
 	register char *yy_cp;
-
+    
 	yy_current_state = (yy_start);
 
 	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
@@ -1233,7 +1299,7 @@ static int yy_get_next_buffer (void)
     static void yyunput (int c, register char * yy_bp )
 {
 	register char *yy_cp;
-
+    
     yy_cp = (yy_c_buf_p);
 
 	/* undo effects of setting up ncsa_text */
@@ -1276,7 +1342,7 @@ static int yy_get_next_buffer (void)
 
 {
 	int c;
-
+    
 	*(yy_c_buf_p) = (yy_hold_char);
 
 	if ( *(yy_c_buf_p) == YY_END_OF_BUFFER_CHAR )
@@ -1343,12 +1409,12 @@ static int yy_get_next_buffer (void)
 
 /** Immediately switch to a different input stream.
  * @param input_file A readable stream.
- *
+ * 
  * @note This function does not reset the start condition to @c INITIAL .
  */
     void ncsa_restart  (FILE * input_file )
 {
-
+    
 	if ( ! YY_CURRENT_BUFFER ){
         ncsa_ensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
@@ -1361,11 +1427,11 @@ static int yy_get_next_buffer (void)
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
- *
+ * 
  */
     void ncsa__switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
-
+    
 	/* TODO. We should be able to replace this entire function body
 	 * with
 	 *		ncsa_pop_buffer_state();
@@ -1405,13 +1471,13 @@ static void ncsa__load_buffer_state  (void)
 /** Allocate and initialize an input buffer state.
  * @param file A readable stream.
  * @param size The character buffer size in bytes. When in doubt, use @c YY_BUF_SIZE.
- *
+ * 
  * @return the allocated buffer state.
  */
     YY_BUFFER_STATE ncsa__create_buffer  (FILE * file, int  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	b = (YY_BUFFER_STATE) ncsa_alloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in ncsa__create_buffer()" );
@@ -1434,11 +1500,11 @@ static void ncsa__load_buffer_state  (void)
 
 /** Destroy the buffer.
  * @param b a buffer created with ncsa__create_buffer()
- *
+ * 
  */
     void ncsa__delete_buffer (YY_BUFFER_STATE  b )
 {
-
+    
 	if ( ! b )
 		return;
 
@@ -1454,7 +1520,7 @@ static void ncsa__load_buffer_state  (void)
 #ifndef __cplusplus
 extern int isatty (int );
 #endif /* __cplusplus */
-
+    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a ncsa_restart() or at EOF.
@@ -1463,7 +1529,7 @@ extern int isatty (int );
 
 {
 	int oerrno = errno;
-
+    
 	ncsa__flush_buffer(b );
 
 	b->yy_input_file = file;
@@ -1479,13 +1545,13 @@ extern int isatty (int );
     }
 
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
-
+    
 	errno = oerrno;
 }
 
 /** Discard all buffered characters. On the next scan, YY_INPUT will be called.
  * @param b the buffer state to be flushed, usually @c YY_CURRENT_BUFFER.
- *
+ * 
  */
     void ncsa__flush_buffer (YY_BUFFER_STATE  b )
 {
@@ -1514,7 +1580,7 @@ extern int isatty (int );
  *  the current state. This function will allocate the stack
  *  if necessary.
  *  @param new_buffer The new state.
- *
+ *  
  */
 void ncsa_push_buffer_state (YY_BUFFER_STATE new_buffer )
 {
@@ -1544,7 +1610,7 @@ void ncsa_push_buffer_state (YY_BUFFER_STATE new_buffer )
 
 /** Removes and deletes the top of the stack, if present.
  *  The next element becomes the new top.
- *
+ *  
  */
 void ncsa_pop_buffer_state (void)
 {
@@ -1568,7 +1634,7 @@ void ncsa_pop_buffer_state (void)
 static void ncsa_ensure_buffer_stack (void)
 {
 	int num_to_alloc;
-
+    
 	if (!(yy_buffer_stack)) {
 
 		/* First allocation is just for 2 elements, since we don't know if this
@@ -1579,9 +1645,11 @@ static void ncsa_ensure_buffer_stack (void)
 		(yy_buffer_stack) = (struct yy_buffer_state**)ncsa_alloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
-
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in ncsa_ensure_buffer_stack()" );
+								  
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-
+				
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -1597,6 +1665,8 @@ static void ncsa_ensure_buffer_stack (void)
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in ncsa_ensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -1607,13 +1677,13 @@ static void ncsa_ensure_buffer_stack (void)
 /** Setup the input buffer state to scan directly from a user-specified character buffer.
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
- *
- * @return the newly allocated buffer state object.
+ * 
+ * @return the newly allocated buffer state object. 
  */
 YY_BUFFER_STATE ncsa__scan_buffer  (char * base, yy_size_t  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	if ( size < 2 ||
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
@@ -1641,23 +1711,23 @@ YY_BUFFER_STATE ncsa__scan_buffer  (char * base, yy_size_t  size )
 
 /** Setup the input buffer state to scan a string. The next call to ncsa_lex() will
  * scan from a @e copy of @a str.
- * @param str a NUL-terminated string to scan
- *
+ * @param yystr a NUL-terminated string to scan
+ * 
  * @return the newly allocated buffer state object.
  * @note If you want to scan bytes that may contain NUL values, then use
  *       ncsa__scan_bytes() instead.
  */
 YY_BUFFER_STATE ncsa__scan_string (yyconst char * yystr )
 {
-
+    
 	return ncsa__scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to ncsa_lex() will
  * scan from a @e copy of @a bytes.
- * @param bytes the byte buffer to scan
- * @param len the number of bytes in the buffer pointed to by @a bytes.
- *
+ * @param yybytes the byte buffer to scan
+ * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
+ * 
  * @return the newly allocated buffer state object.
  */
 YY_BUFFER_STATE ncsa__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
@@ -1666,7 +1736,7 @@ YY_BUFFER_STATE ncsa__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	char *buf;
 	yy_size_t n;
 	int i;
-
+    
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
 	buf = (char *) ncsa_alloc(n  );
@@ -1720,16 +1790,16 @@ static void yy_fatal_error (yyconst char* msg )
 /* Accessor  methods (get/set functions) to struct members. */
 
 /** Get the current line number.
- *
+ * 
  */
 int ncsa_get_lineno  (void)
 {
-
+        
     return ncsa_lineno;
 }
 
 /** Get the input stream.
- *
+ * 
  */
 FILE *ncsa_get_in  (void)
 {
@@ -1737,7 +1807,7 @@ FILE *ncsa_get_in  (void)
 }
 
 /** Get the output stream.
- *
+ * 
  */
 FILE *ncsa_get_out  (void)
 {
@@ -1745,7 +1815,7 @@ FILE *ncsa_get_out  (void)
 }
 
 /** Get the length of the current token.
- *
+ * 
  */
 int ncsa_get_leng  (void)
 {
@@ -1753,7 +1823,7 @@ int ncsa_get_leng  (void)
 }
 
 /** Get the current token.
- *
+ * 
  */
 
 char *ncsa_get_text  (void)
@@ -1763,18 +1833,18 @@ char *ncsa_get_text  (void)
 
 /** Set the current line number.
  * @param line_number
- *
+ * 
  */
 void ncsa_set_lineno (int  line_number )
 {
-
+    
     ncsa_lineno = line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
  * @param in_str A readable stream.
- *
+ * 
  * @see ncsa__switch_to_buffer
  */
 void ncsa_set_in (FILE *  in_str )
@@ -1828,7 +1898,7 @@ static int yy_init_globals (void)
 /* ncsa_lex_destroy is for both reentrant and non-reentrant scanners. */
 int ncsa_lex_destroy  (void)
 {
-
+    
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
 		ncsa__delete_buffer(YY_CURRENT_BUFFER  );
@@ -1895,7 +1965,7 @@ void ncsa_free (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 109 "imap_ncsa.l"
+#line 108 "imap_ncsa.l"
 
 
 

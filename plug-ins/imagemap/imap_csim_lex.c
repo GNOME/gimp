@@ -27,7 +27,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 33
+#define YY_FLEX_SUBMINOR_VERSION 35
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -49,10 +49,10 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if __STDC_VERSION__ >= 199901L
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
- * if you want the limit (max/min) macros for int types.
+ * if you want the limit (max/min) macros for int types. 
  */
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS 1
@@ -69,10 +69,9 @@ typedef uint32_t flex_uint32_t;
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
 typedef int flex_int32_t;
-typedef unsigned char flex_uint8_t;
+typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -103,6 +102,8 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#endif /* ! C99 */
+
 #endif /* ! FLEXINT_H */
 
 #ifdef __cplusplus
@@ -112,11 +113,12 @@ typedef unsigned int flex_uint32_t;
 
 #else	/* ! __cplusplus */
 
-#if __STDC__
+/* C99 requires __STDC__ to be defined as 1. */
+#if defined (__STDC__)
 
 #define YY_USE_CONST
 
-#endif	/* __STDC__ */
+#endif	/* defined (__STDC__) */
 #endif	/* ! __cplusplus */
 
 #ifdef YY_USE_CONST
@@ -158,7 +160,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -179,7 +189,7 @@ extern FILE *csim_in, *csim_out;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
-
+    
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
 	do \
@@ -196,14 +206,9 @@ extern FILE *csim_in, *csim_out;
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
-/* The following is because we cannot portably get our hands on size_t
- * (without autoconf's help, which isn't available because we want
- * flex-generated scanners to compile on their own).
- */
-
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef unsigned int yy_size_t;
+typedef size_t yy_size_t;
 #endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -246,7 +251,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-
+    
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -426,10 +431,10 @@ static yyconst flex_int32_t yy_ec[256] =
         1,   16,    1,    1,   17,   18,   19,   20,   21,   22,
        23,   24,   25,    1,    1,   26,   27,   28,   29,   30,
         1,   31,   32,   33,   34,   35,   36,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,   17,   18,   19,   20,
+        1,    1,    1,    1,    1,    1,   37,   38,   39,   40,
 
-       21,   22,   23,   24,   25,    1,    1,   26,   27,   28,
-       29,   30,    1,   31,   32,   33,   34,   35,   36,    1,
+       41,   42,   43,   44,   45,    1,    1,   46,   47,   48,
+       49,   50,    1,   51,   52,   53,   54,   55,   56,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -447,9 +452,11 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[37] =
+static yyconst flex_int32_t yy_meta[57] =
     {   0,
         1,    1,    2,    1,    1,    3,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1
@@ -457,23 +464,23 @@ static yyconst flex_int32_t yy_meta[37] =
 
 static yyconst flex_int16_t yy_base[158] =
     {   0,
-        0,    0,  193,  192,   34,   35,  197,  200,   37,   44,
-      200,   38,   29,  169,   41,  190,   27,  165,  164,   47,
-       34,  165,  174,   44,  162,   39,  172,  156,  162,    0,
-      200,  176,  200,  175,   64,   51,   58,   65,   63,  167,
-      173,  149,  160,  149,  150,  165,  164,  151,  154,  151,
-      143,  145,  147,   59,  153,  150,  137,  146,  146,    0,
-      155,  154,   72,  133,  152,  200,  144,  140,  128,  135,
-      135,  200,  200,  135,  124,  128,  124,  123,  121,  200,
-      127,  122,  115,   73,  137,  200,  142,  200,  124,  124,
-      119,  200,  200,  121,  107,  121,  105,  117,  116,  119,
+        0,    0,  315,  314,   54,   55,  318,  322,   57,   64,
+      322,   58,   49,   36,   61,  301,   47,   46,   47,   71,
+       56,   58,   69,   71,   61,   70,   74,   60,   78,    0,
+      322,  295,  322,  294,  113,   97,  111,  116,  106,   96,
+      293,   95,  109,  100,  105,  289,  288,  110,  115,  114,
+      109,  113,  117,  131,  125,  124,  113,  124,  126,    0,
+      290,  289,  158,  137,  287,  322,  153,  151,  141,  152,
+      154,  322,  322,  156,  148,  154,  152,  153,  153,  322,
+      161,  158,  153,  178,  286,  322,  291,  322,  168,  173,
+      174,  322,  322,  186,  174,  191,  177,  191,  193,  198,
 
-      111,  124,  126,  101,   99,   97,  107,   97,   93,   94,
-      200,   92,   94,  200,  115,  200,  200,  200,  200,  200,
-       90,  100,  200,  200,   70,  200,   91,   85,   97,   57,
-       84,   84,   82,   93,   89,   93,  200,   80,   81,   78,
-      200,   77,   82,   92,   75,  200,   71,   77,   56,   52,
-       29,  200,  200,   92,   95,   98,  100
+      192,  284,  285,  186,  187,  187,  199,  191,  189,  192,
+      322,  192,  196,  322,  283,  322,  322,  322,  322,  322,
+      197,  212,  322,  322,  230,  322,  209,  214,  230,  220,
+      219,  224,  224,  238,  236,  242,  322,  231,  234,  233,
+      322,  234,  241,  276,  239,  322,  240,  253,  258,  260,
+       90,  322,  322,  308,  311,  314,  316
     } ;
 
 static yyconst flex_int16_t yy_def[158] =
@@ -497,64 +504,94 @@ static yyconst flex_int16_t yy_def[158] =
       153,  153,    0,  153,  153,  153,  153
     } ;
 
-static yyconst flex_int16_t yy_nxt[237] =
+static yyconst flex_int16_t yy_nxt[379] =
     {   0,
         8,    9,   10,    9,    8,   11,    8,    8,    8,   12,
        13,   14,   15,    8,   16,    8,   17,   18,   19,    8,
        20,    8,    8,   21,   22,    8,   23,   24,   25,    8,
+        8,   26,   27,   28,    8,   29,   17,   18,   19,    8,
+       20,    8,    8,   21,   22,    8,   23,   24,   25,    8,
         8,   26,   27,   28,    8,   29,   33,   33,   35,   35,
-       35,   39,  152,   34,   34,   35,   35,   35,   36,   38,
-       37,   36,   42,   37,   48,   46,   46,   43,   38,   47,
-       52,   38,   55,   39,   49,   35,   35,   35,   36,   56,
-       37,   38,   53,   46,   46,   39,   76,   47,   38,  151,
-       77,   84,   84,   38,  150,   78,  128,   85,  102,  129,
-      133,  134,   30,   30,   30,   32,   32,   32,   60,   60,
+       35,   39,   40,   34,   34,   35,   35,   35,   36,   38,
+       37,   36,   42,   37,   44,   45,   48,   43,   38,   46,
+       46,   38,   40,   47,   50,   51,   49,   52,   54,   38,
+       57,   58,   42,   55,   44,   45,   48,   43,   38,   53,
 
-       61,  149,   61,  148,  147,  146,  145,  144,  143,  142,
-      141,  140,  139,  138,  137,  136,  135,  132,  131,  130,
-      127,  126,  125,  124,  123,  122,  121,  120,  119,  118,
-      117,  116,  115,   62,  114,  113,  112,  111,  110,  109,
-      108,  107,  106,  105,  104,  103,   62,  101,  100,   99,
-       98,   97,   96,   95,   94,   93,   92,   91,   90,   89,
-       88,   87,   86,   84,   62,   83,   82,   81,   80,   79,
-       75,   74,   73,   72,   71,   70,   47,   47,   69,   68,
-       67,   66,   65,   64,   63,   62,   59,   58,   57,   54,
-       51,   50,   45,   44,   41,   40,  153,   31,   31,    7,
+       56,   38,   59,  152,   50,   51,   49,   52,   54,   39,
+       57,   58,   64,   55,   35,   35,   35,   38,   39,   53,
+       56,   36,   59,   37,   46,   46,   38,   66,   47,   67,
+       68,   38,   64,   69,   70,   71,   72,   38,   73,   74,
+       75,   79,   80,   81,   82,   83,   38,   66,   76,   67,
+       68,   38,   77,   69,   70,   71,   72,   78,   73,   74,
+       75,   79,   80,   81,   82,   83,   86,   84,   76,   88,
+       89,   90,   77,   85,   91,   92,   93,   78,   94,   95,
+       96,   97,   98,   99,  100,  101,   86,   84,  104,   88,
+       89,   90,  105,  102,   91,   92,   93,  106,   94,   95,
 
+       96,   97,   98,   99,  100,  101,  107,  108,  104,  109,
+      110,  111,  105,  112,  113,  114,  116,  106,  117,  118,
+      119,  120,  121,  122,  123,  124,  107,  108,  126,  109,
+      110,  111,  127,  112,  113,  114,  116,  130,  117,  118,
+      119,  120,  121,  122,  123,  124,  128,  131,  126,  129,
+      132,  135,  127,  133,  134,  136,  137,  130,  138,  139,
+      140,  141,  142,  143,  144,  145,  128,  131,  147,  129,
+      132,  135,  148,  133,  134,  136,  137,  149,  138,  139,
+      140,  141,  142,  143,  144,  145,  150,  151,  147,  146,
+      125,  115,  148,   62,  103,   62,   87,  149,   84,   62,
+
+       47,   47,   65,   63,   62,   41,  150,  151,   30,   30,
+       30,   32,   32,   32,   60,   60,   61,  153,   61,   31,
+       31,    7,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
-      153,  153,  153,  153,  153,  153
+      153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
+      153,  153,  153,  153,  153,  153,  153,  153
     } ;
 
-static yyconst flex_int16_t yy_chk[237] =
+static yyconst flex_int16_t yy_chk[379] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    5,    6,    9,    9,
-        9,   13,  151,    5,    6,   10,   10,   10,   12,   13,
-       12,   15,   17,   15,   21,   20,   20,   17,   12,   20,
-       24,   15,   26,   36,   21,   35,   35,   35,   37,   26,
-       37,   36,   24,   38,   38,   39,   54,   38,   37,  150,
-       54,   63,   84,   39,  149,   54,  125,   63,   84,  125,
-      130,  130,  154,  154,  154,  155,  155,  155,  156,  156,
+        9,   13,   14,    5,    6,   10,   10,   10,   12,   13,
+       12,   15,   17,   15,   18,   19,   21,   17,   12,   20,
+       20,   15,   14,   20,   22,   23,   21,   24,   25,   13,
+       27,   28,   17,   26,   18,   19,   21,   17,   12,   24,
 
-      157,  148,  157,  147,  145,  144,  143,  142,  140,  139,
-      138,  136,  135,  134,  133,  132,  131,  129,  128,  127,
-      122,  121,  115,  113,  112,  110,  109,  108,  107,  106,
-      105,  104,  103,  102,  101,  100,   99,   98,   97,   96,
-       95,   94,   91,   90,   89,   87,   85,   83,   82,   81,
-       79,   78,   77,   76,   75,   74,   71,   70,   69,   68,
-       67,   65,   64,   62,   61,   59,   58,   57,   56,   55,
-       53,   52,   51,   50,   49,   48,   47,   46,   45,   44,
-       43,   42,   41,   40,   34,   32,   29,   28,   27,   25,
-       23,   22,   19,   18,   16,   14,    7,    4,    3,  153,
+       26,   15,   29,  151,   22,   23,   21,   24,   25,   36,
+       27,   28,   40,   26,   35,   35,   35,   36,   39,   24,
+       26,   37,   29,   37,   38,   38,   39,   42,   38,   43,
+       44,   37,   40,   45,   48,   49,   50,   36,   51,   52,
+       53,   55,   56,   57,   58,   59,   39,   42,   54,   43,
+       44,   37,   54,   45,   48,   49,   50,   54,   51,   52,
+       53,   55,   56,   57,   58,   59,   64,   63,   54,   67,
+       68,   69,   54,   63,   70,   71,   74,   54,   75,   76,
+       77,   78,   79,   81,   82,   83,   64,   84,   89,   67,
+       68,   69,   90,   84,   70,   71,   74,   91,   75,   76,
 
+       77,   78,   79,   81,   82,   83,   94,   95,   89,   96,
+       97,   98,   90,   99,  100,  101,  104,   91,  105,  106,
+      107,  108,  109,  110,  112,  113,   94,   95,  121,   96,
+       97,   98,  122,   99,  100,  101,  104,  127,  105,  106,
+      107,  108,  109,  110,  112,  113,  125,  128,  121,  125,
+      129,  131,  122,  130,  130,  132,  133,  127,  134,  135,
+      136,  138,  139,  140,  142,  143,  125,  128,  145,  125,
+      129,  131,  147,  130,  130,  132,  133,  148,  134,  135,
+      136,  138,  139,  140,  142,  143,  149,  150,  145,  144,
+      115,  103,  147,  102,   87,   85,   65,  148,   62,   61,
+
+       47,   46,   41,   34,   32,   16,  149,  150,  154,  154,
+      154,  155,  155,  155,  156,  156,  157,    7,  157,    4,
+        3,  153,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
       153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
-      153,  153,  153,  153,  153,  153
+      153,  153,  153,  153,  153,  153,  153,  153,  153,  153,
+      153,  153,  153,  153,  153,  153,  153,  153
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -580,9 +617,9 @@ char *csim_text;
  *
  * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -591,8 +628,7 @@ char *csim_text;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -608,7 +644,7 @@ char *csim_text;
 
 
 
-#line 612 "<stdout>"
+#line 648 "<stdout>"
 
 #define INITIAL 0
 #define quoted_string 1
@@ -628,6 +664,35 @@ char *csim_text;
 
 static int yy_init_globals (void );
 
+/* Accessor methods to globals.
+   These are made visible to non-reentrant scanners for convenience. */
+
+int csim_lex_destroy (void );
+
+int csim_get_debug (void );
+
+void csim_set_debug (int debug_flag  );
+
+YY_EXTRA_TYPE csim_get_extra (void );
+
+void csim_set_extra (YY_EXTRA_TYPE user_defined  );
+
+FILE *csim_get_in (void );
+
+void csim_set_in  (FILE * in_str  );
+
+FILE *csim_get_out (void );
+
+void csim_set_out  (FILE * out_str  );
+
+int csim_get_leng (void );
+
+char *csim_get_text (void );
+
+int csim_get_lineno (void );
+
+void csim_set_lineno (int line_number  );
+
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
  */
@@ -641,7 +706,7 @@ extern int csim_wrap (void );
 #endif
 
     static void yyunput (int c,char *buf_ptr  );
-
+    
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
@@ -662,7 +727,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -670,7 +740,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO (void) fwrite( csim_text, csim_leng, 1, csim_out )
+#define ECHO do { if (fwrite( csim_text, csim_leng, 1, csim_out )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -762,11 +832,11 @@ YY_DECL
 	register yy_state_type yy_current_state;
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
+    
+#line 45 "imap_csim.l"
 
-#line 46 "imap_csim.l"
 
-
-#line 770 "<stdout>"
+#line 840 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -825,7 +895,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 200 );
+		while ( yy_base[yy_current_state] != 322 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -851,7 +921,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 48 "imap_csim.l"
+#line 47 "imap_csim.l"
 {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -859,7 +929,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 53 "imap_csim.l"
+#line 52 "imap_csim.l"
 {
 				   BEGIN(comment);
 				   return DESCRIPTION;
@@ -867,7 +937,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 58 "imap_csim.l"
+#line 57 "imap_csim.l"
 {
 				   BEGIN(comment);
 				   return BEGIN_COMMENT;
@@ -875,7 +945,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 63 "imap_csim.l"
+#line 62 "imap_csim.l"
 {
 				   BEGIN(INITIAL);
 				   return END_COMMENT;
@@ -886,7 +956,7 @@ case 5:
 (yy_c_buf_p) = yy_cp -= 3;
 YY_DO_BEFORE_ACTION; /* set up csim_text again */
 YY_RULE_SETUP
-#line 68 "imap_csim.l"
+#line 67 "imap_csim.l"
 {
 				   csim_lval.id = g_strndup (csim_text, csim_leng);
    				   return STRING;
@@ -894,114 +964,114 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 73 "imap_csim.l"
+#line 72 "imap_csim.l"
 return IMG;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 75 "imap_csim.l"
+#line 74 "imap_csim.l"
 return SRC;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 77 "imap_csim.l"
+#line 76 "imap_csim.l"
 return WIDTH;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 79 "imap_csim.l"
+#line 78 "imap_csim.l"
 return HEIGHT;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 81 "imap_csim.l"
+#line 80 "imap_csim.l"
 return BORDER;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 83 "imap_csim.l"
+#line 82 "imap_csim.l"
 return USEMAP;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 85 "imap_csim.l"
+#line 84 "imap_csim.l"
 return START_MAP;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 87 "imap_csim.l"
+#line 86 "imap_csim.l"
 return END_MAP;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 89 "imap_csim.l"
+#line 88 "imap_csim.l"
 return NAME;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 91 "imap_csim.l"
+#line 90 "imap_csim.l"
 return AREA;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 93 "imap_csim.l"
+#line 92 "imap_csim.l"
 return SHAPE;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 95 "imap_csim.l"
+#line 94 "imap_csim.l"
 return COORDS;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 97 "imap_csim.l"
+#line 96 "imap_csim.l"
 return TARGET;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 99 "imap_csim.l"
+#line 98 "imap_csim.l"
 return ONMOUSEOVER;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 101 "imap_csim.l"
+#line 100 "imap_csim.l"
 return ONMOUSEOUT;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 103 "imap_csim.l"
+#line 102 "imap_csim.l"
 return ONFOCUS;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 105 "imap_csim.l"
+#line 104 "imap_csim.l"
 return ONBLUR;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 107 "imap_csim.l"
+#line 106 "imap_csim.l"
 return ALT;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 109 "imap_csim.l"
+#line 108 "imap_csim.l"
 return HREF;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 111 "imap_csim.l"
+#line 110 "imap_csim.l"
 return NOHREF;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 113 "imap_csim.l"
+#line 112 "imap_csim.l"
 {
 				   BEGIN(quoted_string);
 				}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 117 "imap_csim.l"
+#line 116 "imap_csim.l"
 {
 				   BEGIN(INITIAL);
 				   return STRING;
@@ -1010,14 +1080,14 @@ YY_RULE_SETUP
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 122 "imap_csim.l"
+#line 121 "imap_csim.l"
 {
 				  csim_lval.id = g_strndup (csim_text, csim_leng);
 				}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 126 "imap_csim.l"
+#line 125 "imap_csim.l"
 {
                                    csim_lval.value = g_ascii_strtod (csim_text, NULL);
 				   return FLOAT;
@@ -1026,20 +1096,20 @@ YY_RULE_SETUP
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 131 "imap_csim.l"
+#line 130 "imap_csim.l"
 ; /* Eat white space */
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 133 "imap_csim.l"
+#line 132 "imap_csim.l"
 return *csim_text;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 135 "imap_csim.l"
+#line 134 "imap_csim.l"
 ECHO;
 	YY_BREAK
-#line 1043 "<stdout>"
+#line 1113 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(quoted_string):
 case YY_STATE_EOF(comment):
@@ -1272,7 +1342,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), num_to_read );
+			(yy_n_chars), (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1296,6 +1366,14 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+		/* Extend the array by 50%, plus the number we really need. */
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) csim_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
+	}
+
 	(yy_n_chars) += number_to_move;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
@@ -1311,7 +1389,7 @@ static int yy_get_next_buffer (void)
 {
 	register yy_state_type yy_current_state;
 	register char *yy_cp;
-
+    
 	yy_current_state = (yy_start);
 
 	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
@@ -1365,7 +1443,7 @@ static int yy_get_next_buffer (void)
     static void yyunput (int c, register char * yy_bp )
 {
 	register char *yy_cp;
-
+    
     yy_cp = (yy_c_buf_p);
 
 	/* undo effects of setting up csim_text */
@@ -1408,7 +1486,7 @@ static int yy_get_next_buffer (void)
 
 {
 	int c;
-
+    
 	*(yy_c_buf_p) = (yy_hold_char);
 
 	if ( *(yy_c_buf_p) == YY_END_OF_BUFFER_CHAR )
@@ -1475,12 +1553,12 @@ static int yy_get_next_buffer (void)
 
 /** Immediately switch to a different input stream.
  * @param input_file A readable stream.
- *
+ * 
  * @note This function does not reset the start condition to @c INITIAL .
  */
     void csim_restart  (FILE * input_file )
 {
-
+    
 	if ( ! YY_CURRENT_BUFFER ){
         csim_ensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
@@ -1493,11 +1571,11 @@ static int yy_get_next_buffer (void)
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
- *
+ * 
  */
     void csim__switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
-
+    
 	/* TODO. We should be able to replace this entire function body
 	 * with
 	 *		csim_pop_buffer_state();
@@ -1537,13 +1615,13 @@ static void csim__load_buffer_state  (void)
 /** Allocate and initialize an input buffer state.
  * @param file A readable stream.
  * @param size The character buffer size in bytes. When in doubt, use @c YY_BUF_SIZE.
- *
+ * 
  * @return the allocated buffer state.
  */
     YY_BUFFER_STATE csim__create_buffer  (FILE * file, int  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	b = (YY_BUFFER_STATE) csim_alloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in csim__create_buffer()" );
@@ -1566,11 +1644,11 @@ static void csim__load_buffer_state  (void)
 
 /** Destroy the buffer.
  * @param b a buffer created with csim__create_buffer()
- *
+ * 
  */
     void csim__delete_buffer (YY_BUFFER_STATE  b )
 {
-
+    
 	if ( ! b )
 		return;
 
@@ -1586,7 +1664,7 @@ static void csim__load_buffer_state  (void)
 #ifndef __cplusplus
 extern int isatty (int );
 #endif /* __cplusplus */
-
+    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a csim_restart() or at EOF.
@@ -1595,7 +1673,7 @@ extern int isatty (int );
 
 {
 	int oerrno = errno;
-
+    
 	csim__flush_buffer(b );
 
 	b->yy_input_file = file;
@@ -1611,13 +1689,13 @@ extern int isatty (int );
     }
 
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
-
+    
 	errno = oerrno;
 }
 
 /** Discard all buffered characters. On the next scan, YY_INPUT will be called.
  * @param b the buffer state to be flushed, usually @c YY_CURRENT_BUFFER.
- *
+ * 
  */
     void csim__flush_buffer (YY_BUFFER_STATE  b )
 {
@@ -1646,7 +1724,7 @@ extern int isatty (int );
  *  the current state. This function will allocate the stack
  *  if necessary.
  *  @param new_buffer The new state.
- *
+ *  
  */
 void csim_push_buffer_state (YY_BUFFER_STATE new_buffer )
 {
@@ -1676,7 +1754,7 @@ void csim_push_buffer_state (YY_BUFFER_STATE new_buffer )
 
 /** Removes and deletes the top of the stack, if present.
  *  The next element becomes the new top.
- *
+ *  
  */
 void csim_pop_buffer_state (void)
 {
@@ -1700,7 +1778,7 @@ void csim_pop_buffer_state (void)
 static void csim_ensure_buffer_stack (void)
 {
 	int num_to_alloc;
-
+    
 	if (!(yy_buffer_stack)) {
 
 		/* First allocation is just for 2 elements, since we don't know if this
@@ -1711,9 +1789,11 @@ static void csim_ensure_buffer_stack (void)
 		(yy_buffer_stack) = (struct yy_buffer_state**)csim_alloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
-
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
+								  
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-
+				
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -1729,6 +1809,8 @@ static void csim_ensure_buffer_stack (void)
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -1739,13 +1821,13 @@ static void csim_ensure_buffer_stack (void)
 /** Setup the input buffer state to scan directly from a user-specified character buffer.
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
- *
- * @return the newly allocated buffer state object.
+ * 
+ * @return the newly allocated buffer state object. 
  */
 YY_BUFFER_STATE csim__scan_buffer  (char * base, yy_size_t  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	if ( size < 2 ||
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
@@ -1773,23 +1855,23 @@ YY_BUFFER_STATE csim__scan_buffer  (char * base, yy_size_t  size )
 
 /** Setup the input buffer state to scan a string. The next call to csim_lex() will
  * scan from a @e copy of @a str.
- * @param str a NUL-terminated string to scan
- *
+ * @param yystr a NUL-terminated string to scan
+ * 
  * @return the newly allocated buffer state object.
  * @note If you want to scan bytes that may contain NUL values, then use
  *       csim__scan_bytes() instead.
  */
 YY_BUFFER_STATE csim__scan_string (yyconst char * yystr )
 {
-
+    
 	return csim__scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to csim_lex() will
  * scan from a @e copy of @a bytes.
- * @param bytes the byte buffer to scan
- * @param len the number of bytes in the buffer pointed to by @a bytes.
- *
+ * @param yybytes the byte buffer to scan
+ * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
+ * 
  * @return the newly allocated buffer state object.
  */
 YY_BUFFER_STATE csim__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
@@ -1798,7 +1880,7 @@ YY_BUFFER_STATE csim__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	char *buf;
 	yy_size_t n;
 	int i;
-
+    
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
 	buf = (char *) csim_alloc(n  );
@@ -1852,16 +1934,16 @@ static void yy_fatal_error (yyconst char* msg )
 /* Accessor  methods (get/set functions) to struct members. */
 
 /** Get the current line number.
- *
+ * 
  */
 int csim_get_lineno  (void)
 {
-
+        
     return csim_lineno;
 }
 
 /** Get the input stream.
- *
+ * 
  */
 FILE *csim_get_in  (void)
 {
@@ -1869,7 +1951,7 @@ FILE *csim_get_in  (void)
 }
 
 /** Get the output stream.
- *
+ * 
  */
 FILE *csim_get_out  (void)
 {
@@ -1877,7 +1959,7 @@ FILE *csim_get_out  (void)
 }
 
 /** Get the length of the current token.
- *
+ * 
  */
 int csim_get_leng  (void)
 {
@@ -1885,7 +1967,7 @@ int csim_get_leng  (void)
 }
 
 /** Get the current token.
- *
+ * 
  */
 
 char *csim_get_text  (void)
@@ -1895,18 +1977,18 @@ char *csim_get_text  (void)
 
 /** Set the current line number.
  * @param line_number
- *
+ * 
  */
 void csim_set_lineno (int  line_number )
 {
-
+    
     csim_lineno = line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
  * @param in_str A readable stream.
- *
+ * 
  * @see csim__switch_to_buffer
  */
 void csim_set_in (FILE *  in_str )
@@ -1960,7 +2042,7 @@ static int yy_init_globals (void)
 /* csim_lex_destroy is for both reentrant and non-reentrant scanners. */
 int csim_lex_destroy  (void)
 {
-
+    
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
 		csim__delete_buffer(YY_CURRENT_BUFFER  );
@@ -2027,7 +2109,7 @@ void csim_free (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 135 "imap_csim.l"
+#line 134 "imap_csim.l"
 
 
 

@@ -7,7 +7,7 @@
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
+   the Free Software Foundation; either version 3, or (at your option)
    any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -143,9 +143,9 @@
  *
  * Copyright (C) 1998-2005 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -154,8 +154,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -203,14 +202,14 @@ static MapInfo_t *_map_info;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 49 "imap_csim.y"
+#line 48 "imap_csim.y"
 {
   int val;
   double value;
   char *id;
 }
 /* Line 187 of yacc.c.  */
-#line 214 "y.tab.c"
+#line 213 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -223,7 +222,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 227 "y.tab.c"
+#line 226 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -528,12 +527,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    66,    66,    69,    76,    77,    80,    81,    82,    83,
-      84,    87,    93,    99,   103,   110,   117,   118,   121,   122,
-     123,   126,   132,   139,   150,   151,   154,   161,   162,   165,
-     166,   169,   170,   171,   172,   173,   174,   175,   176,   177,
-     178,   181,   199,   259,   270,   275,   276,   282,   289,   296,
-     303,   310,   317,   324
+       0,    65,    65,    68,    75,    76,    79,    80,    81,    82,
+      83,    86,    92,    98,   102,   109,   116,   117,   120,   121,
+     122,   125,   131,   138,   149,   150,   153,   160,   161,   164,
+     165,   168,   169,   170,   171,   172,   173,   174,   175,   176,
+     177,   180,   198,   258,   269,   274,   275,   281,   288,   295,
+     302,   309,   316,   323
 };
 #endif
 
@@ -1260,7 +1259,7 @@ yyparse ()
 #endif
 #endif
 {
-
+  
   int yystate;
   int yyn;
   int yyresult;
@@ -1505,7 +1504,7 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 70 "imap_csim.y"
+#line 69 "imap_csim.y"
     {
 		   g_strreplace(&_map_info->image_name, (yyvsp[(5) - (7)].id));
 		   g_free ((yyvsp[(5) - (7)].id));
@@ -1513,43 +1512,43 @@ yyreduce:
     break;
 
   case 8:
-#line 82 "imap_csim.y"
+#line 81 "imap_csim.y"
     {}
     break;
 
   case 9:
-#line 83 "imap_csim.y"
+#line 82 "imap_csim.y"
     { g_free ((yyvsp[(3) - (3)].id)); }
     break;
 
   case 10:
-#line 84 "imap_csim.y"
+#line 83 "imap_csim.y"
     { g_free ((yyvsp[(3) - (3)].id)); }
     break;
 
   case 11:
-#line 88 "imap_csim.y"
+#line 87 "imap_csim.y"
     {
 		   _map_info->old_image_width = (yyvsp[(3) - (3)].val);
 		}
     break;
 
   case 12:
-#line 94 "imap_csim.y"
+#line 93 "imap_csim.y"
     {
 		   _map_info->old_image_height = (yyvsp[(3) - (3)].val);
 		}
     break;
 
   case 13:
-#line 100 "imap_csim.y"
+#line 99 "imap_csim.y"
     {
 		  (yyval.val) = (gint) (yyvsp[(1) - (1)].value);
 		}
     break;
 
   case 14:
-#line 104 "imap_csim.y"
+#line 103 "imap_csim.y"
     {
 		  (yyval.val) = (gint) g_ascii_strtod ((yyvsp[(1) - (1)].id), NULL);
 		  g_free ((yyvsp[(1) - (1)].id));
@@ -1557,7 +1556,7 @@ yyreduce:
     break;
 
   case 15:
-#line 111 "imap_csim.y"
+#line 110 "imap_csim.y"
     {
 		   g_strreplace(&_map_info->title, (yyvsp[(5) - (6)].id));
 		   g_free ((yyvsp[(5) - (6)].id));
@@ -1565,14 +1564,14 @@ yyreduce:
     break;
 
   case 21:
-#line 127 "imap_csim.y"
+#line 126 "imap_csim.y"
     {
 		  g_free ((yyvsp[(2) - (3)].id));
 		}
     break;
 
   case 22:
-#line 133 "imap_csim.y"
+#line 132 "imap_csim.y"
     {
 		   g_strreplace(&_map_info->author, (yyvsp[(2) - (3)].id));
 		   g_free ((yyvsp[(2) - (3)].id));
@@ -1580,7 +1579,7 @@ yyreduce:
     break;
 
   case 23:
-#line 140 "imap_csim.y"
+#line 139 "imap_csim.y"
     {
 		   gchar *description;
 
@@ -1592,7 +1591,7 @@ yyreduce:
     break;
 
   case 26:
-#line 155 "imap_csim.y"
+#line 154 "imap_csim.y"
     {
 		   if (current_type != UNDEFINED)
 		      add_shape(current_object);
@@ -1600,7 +1599,7 @@ yyreduce:
     break;
 
   case 41:
-#line 182 "imap_csim.y"
+#line 181 "imap_csim.y"
     {
 		   if (!g_ascii_strcasecmp((yyvsp[(3) - (3)].id), "RECT")) {
 		      current_object = create_rectangle(0, 0, 0, 0);
@@ -1619,7 +1618,7 @@ yyreduce:
     break;
 
   case 42:
-#line 200 "imap_csim.y"
+#line 199 "imap_csim.y"
     {
 		   char *p;
 		   if (current_type == RECTANGLE) {
@@ -1680,7 +1679,7 @@ yyreduce:
     break;
 
   case 43:
-#line 260 "imap_csim.y"
+#line 259 "imap_csim.y"
     {
 		   if (current_type == UNDEFINED) {
 		      g_strreplace(&_map_info->default_url, (yyvsp[(3) - (3)].id));
@@ -1692,20 +1691,20 @@ yyreduce:
     break;
 
   case 44:
-#line 271 "imap_csim.y"
+#line 270 "imap_csim.y"
     {
 		}
     break;
 
   case 46:
-#line 277 "imap_csim.y"
+#line 276 "imap_csim.y"
     {
 		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 47:
-#line 283 "imap_csim.y"
+#line 282 "imap_csim.y"
     {
 		   object_set_comment(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1713,7 +1712,7 @@ yyreduce:
     break;
 
   case 48:
-#line 290 "imap_csim.y"
+#line 289 "imap_csim.y"
     {
 		   object_set_target(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1721,7 +1720,7 @@ yyreduce:
     break;
 
   case 49:
-#line 297 "imap_csim.y"
+#line 296 "imap_csim.y"
     {
 		   object_set_mouse_over(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1729,7 +1728,7 @@ yyreduce:
     break;
 
   case 50:
-#line 304 "imap_csim.y"
+#line 303 "imap_csim.y"
     {
 		   object_set_mouse_out(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1737,7 +1736,7 @@ yyreduce:
     break;
 
   case 51:
-#line 311 "imap_csim.y"
+#line 310 "imap_csim.y"
     {
 		   object_set_focus(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1745,7 +1744,7 @@ yyreduce:
     break;
 
   case 52:
-#line 318 "imap_csim.y"
+#line 317 "imap_csim.y"
     {
 		   object_set_blur(current_object, (yyvsp[(3) - (3)].id));
 		   g_free ((yyvsp[(3) - (3)].id));
@@ -1754,7 +1753,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1758 "y.tab.c"
+#line 1757 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1968,7 +1967,7 @@ yyreturn:
 }
 
 
-#line 327 "imap_csim.y"
+#line 326 "imap_csim.y"
 
 
 static void

@@ -27,7 +27,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 33
+#define YY_FLEX_SUBMINOR_VERSION 35
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -49,10 +49,10 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if __STDC_VERSION__ >= 199901L
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
- * if you want the limit (max/min) macros for int types.
+ * if you want the limit (max/min) macros for int types. 
  */
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS 1
@@ -69,10 +69,9 @@ typedef uint32_t flex_uint32_t;
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
 typedef int flex_int32_t;
-typedef unsigned char flex_uint8_t;
+typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -103,6 +102,8 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#endif /* ! C99 */
+
 #endif /* ! FLEXINT_H */
 
 #ifdef __cplusplus
@@ -112,11 +113,12 @@ typedef unsigned int flex_uint32_t;
 
 #else	/* ! __cplusplus */
 
-#if __STDC__
+/* C99 requires __STDC__ to be defined as 1. */
+#if defined (__STDC__)
 
 #define YY_USE_CONST
 
-#endif	/* __STDC__ */
+#endif	/* defined (__STDC__) */
 #endif	/* ! __cplusplus */
 
 #ifdef YY_USE_CONST
@@ -158,7 +160,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -179,7 +189,7 @@ extern FILE *cern_in, *cern_out;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
-
+    
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
 	do \
@@ -196,14 +206,9 @@ extern FILE *cern_in, *cern_out;
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
-/* The following is because we cannot portably get our hands on size_t
- * (without autoconf's help, which isn't available because we want
- * flex-generated scanners to compile on their own).
- */
-
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef unsigned int yy_size_t;
+typedef size_t yy_size_t;
 #endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -246,7 +251,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-
+    
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -420,11 +425,11 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,   18,    1,   19,   20,   21,   22,
         1,   23,   24,    1,    1,   25,    1,   26,   27,   28,
         1,   29,   30,   31,   32,    1,    1,    1,   33,    1,
-        1,    1,    1,    1,    1,    1,   18,    1,   19,   20,
+        1,    1,    1,    1,    1,    1,   34,    1,   35,   36,
 
-       21,   22,    1,   23,   24,    1,    1,   25,    1,   26,
-       27,   28,    1,   29,   30,   31,   32,    1,    1,    1,
-       33,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       37,   38,    1,   39,   40,    1,    1,   41,    1,   42,
+       43,   44,    1,   45,   46,   47,   48,    1,    1,    1,
+       49,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -441,34 +446,35 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[34] =
+static yyconst flex_int32_t yy_meta[50] =
     {   0,
         1,    2,    3,    1,    1,    1,    1,    1,    2,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1
     } ;
 
 static yyconst flex_int16_t yy_base[98] =
     {   0,
-        0,    0,  200,  199,  201,  197,   32,   34,  204,   35,
-       46,    0,   39,   49,   68,   37,   51,  196,  204,  195,
-      204,   41,   74,    0,    0,   80,   36,   52,   58,   59,
-       50,   94,  194,  204,   95,   97,   70,   74,  193,   76,
-      192,   99,   96,  104,  114,  101,  180,  190,  180,  175,
-      175,  180,  174,  175,  170,  170,  177,  109,  116,  169,
-      170,  165,  165,  164,  152,  151,  142,  142,  146,  148,
-      146,  119,  121,  105,  122,  123,  125,  124,  126,  129,
-      130,  131,  127,  132,  134,   41,  136,  140,  138,  142,
-      144,   37,  204,  168,  171,  174,  177
+        0,    0,  276,  275,  277,  270,   48,   50,  309,   51,
+       86,  121,   52,   53,  156,   54,   56,  269,  309,  268,
+      309,   58,  170,  205,  240,  254,   65,   81,  101,  115,
+       55,   76,  262,  309,  103,  122,   72,  143,  261,  109,
+      260,   67,  136,   80,  141,  145,  248,  258,  235,  230,
+      230,  235,  224,  224,  218,  217,  223,  106,  147,  213,
+      199,  189,  187,  184,  161,  151,  139,  111,  113,   83,
+       81,  147,  161,  156,  141,  163,  150,  183,  194,  185,
+      195,  196,  199,   74,  205,   69,  227,  211,  233,  255,
+      197,   67,  309,  297,  300,  303,  306
 
     } ;
 
 static yyconst flex_int16_t yy_def[98] =
     {   0,
        93,    1,   94,   94,   93,   95,   93,   93,   93,   95,
-       10,   10,   95,   95,   95,   95,   95,   96,   93,   95,
-       93,   93,   10,   10,   15,   10,   95,   95,   15,   15,
+       95,   95,   95,   95,   95,   95,   95,   96,   93,   95,
+       93,   93,   95,   95,   95,   95,   95,   95,   95,   95,
        95,   95,   96,   93,   95,   95,   95,   95,   95,   95,
        95,   95,   95,   93,   93,   95,   93,   95,   93,   93,
        93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
@@ -479,64 +485,90 @@ static yyconst flex_int16_t yy_def[98] =
 
     } ;
 
-static yyconst flex_int16_t yy_nxt[238] =
+static yyconst flex_int16_t yy_nxt[359] =
     {   0,
         6,    7,    8,    6,    6,    6,    6,    6,    9,   10,
        11,   12,   12,   12,   12,   12,    6,    6,   13,   14,
        15,    6,    6,    6,    6,    6,    6,   16,   17,    6,
-        6,    6,    6,   22,   22,   22,   22,   21,   21,   21,
-       72,   21,   22,   22,   72,   23,   24,   24,   24,   24,
-       24,   21,   21,   21,   21,   25,   20,   26,   26,   26,
-       26,   26,   27,   31,   35,   20,   20,   20,   20,   28,
-       21,   32,   21,   36,   37,   29,   21,   29,   21,   30,
-       30,   30,   30,   30,   20,   26,   26,   26,   26,   26,
-       20,   26,   26,   26,   26,   26,   21,   21,   21,   21,
+        6,    6,    6,    6,   13,   14,   15,    6,    6,    6,
+        6,    6,    6,   16,   17,    6,    6,    6,    6,   22,
+       22,   22,   22,   21,   21,   21,   21,   21,   21,   22,
+       22,   23,   24,   24,   24,   24,   24,   21,   44,   45,
+       72,   25,   72,   28,   21,   27,   32,   72,   21,   37,
+       31,   44,   44,   21,   72,   47,   72,   25,   21,   28,
+       86,   27,   32,   35,   38,   37,   31,   26,   26,   26,
 
-       44,   45,   41,   21,   42,   44,   44,   43,   72,   47,
-       59,   59,   38,   39,   40,   44,   44,   59,   59,   47,
-       46,   60,   72,   73,   72,   72,   72,   72,   72,   72,
-       72,   48,   72,   72,   72,   72,   76,   72,   74,   72,
-       75,   72,   77,   72,   81,   72,   80,   72,   86,   72,
-       85,   72,   70,   78,   79,   82,   69,   68,   83,   84,
-       92,   87,   67,   89,   90,   66,   88,   91,   18,   18,
-       18,   20,   65,   20,   33,   33,   33,   71,   71,   64,
-       63,   62,   61,   58,   57,   56,   55,   54,   53,   52,
-       51,   50,   21,   49,   21,   21,   34,   21,   34,   21,
+       26,   26,   36,   21,   41,   21,   25,   59,   59,   35,
+       38,   21,   30,   30,   30,   30,   30,   21,   36,   70,
+       41,   39,   25,   21,   21,   69,   30,   30,   30,   30,
+       30,   23,   24,   24,   24,   24,   24,   39,   21,   40,
+       43,   25,   44,   44,   72,   21,   47,   21,   59,   59,
+       72,   73,   60,   72,   68,   40,   43,   25,   21,   72,
+       46,   77,   67,   29,   72,   29,   72,   30,   30,   30,
+       30,   30,   21,   42,   66,   48,   46,   77,   74,   79,
+       75,   26,   26,   26,   26,   26,   72,   76,   72,   42,
+       25,   48,   65,   78,   74,   79,   75,   72,   72,   72,
 
-       93,   19,   19,    5,   93,   93,   93,   93,   93,   93,
+       72,   64,   72,   76,   63,   80,   25,   21,   72,   78,
+       62,   82,   81,   92,   72,   23,   24,   24,   24,   24,
+       24,   80,   85,   83,   84,   25,   61,   82,   81,   58,
+       72,   57,   87,   56,   89,   55,   72,   54,   85,   83,
+       84,   25,   21,   53,   52,   51,   50,   29,   87,   29,
+       89,   30,   30,   30,   30,   30,   21,   88,   72,   90,
+       21,   49,   21,   21,   34,   26,   26,   26,   26,   26,
+       21,   34,   21,   88,   25,   90,   93,   19,   19,   93,
+       91,   93,   93,   93,   93,   93,   93,   93,   93,   93,
+       25,   93,   93,   93,   93,   93,   91,   18,   18,   18,
+
+       20,   93,   20,   33,   33,   33,   71,   71,    5,   93,
        93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
        93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93
+       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
+       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
+       93,   93,   93,   93,   93,   93,   93,   93
     } ;
 
-static yyconst flex_int16_t yy_chk[238] =
+static yyconst flex_int16_t yy_chk[359] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    7,    7,    8,    8,   10,   27,   16,
-       92,   13,   22,   22,   86,   10,   10,   10,   10,   10,
-       10,   14,   31,   17,   28,   10,   11,   11,   11,   11,
-       11,   11,   13,   16,   27,   29,   30,   29,   30,   14,
-       15,   17,   37,   28,   31,   15,   38,   15,   40,   15,
-       15,   15,   15,   15,   23,   23,   23,   23,   23,   23,
-       26,   26,   26,   26,   26,   26,   32,   35,   43,   36,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    7,
+        7,    8,    8,   10,   13,   14,   16,   31,   17,   22,
+       22,   10,   10,   10,   10,   10,   10,   27,   42,   42,
+       92,   10,   86,   14,   37,   13,   17,   84,   32,   31,
+       16,   44,   44,   28,   71,   44,   70,   10,   11,   14,
+       84,   13,   17,   27,   32,   31,   16,   11,   11,   11,
 
-       42,   42,   37,   46,   38,   44,   44,   40,   74,   44,
-       58,   58,   32,   35,   36,   45,   45,   59,   59,   45,
-       43,   59,   72,   72,   73,   75,   76,   78,   77,   79,
-       83,   46,   80,   81,   82,   84,   74,   85,   73,   87,
-       73,   89,   75,   88,   79,   90,   78,   91,   84,   71,
-       83,   70,   69,   76,   77,   80,   68,   67,   81,   82,
-       91,   85,   66,   88,   89,   65,   87,   90,   94,   94,
-       94,   95,   64,   95,   96,   96,   96,   97,   97,   63,
-       62,   61,   60,   57,   56,   55,   54,   53,   52,   51,
-       50,   49,   48,   47,   41,   39,   33,   20,   18,    6,
+       11,   11,   28,   29,   37,   35,   11,   58,   58,   27,
+       32,   40,   29,   29,   29,   29,   29,   30,   28,   69,
+       37,   35,   11,   12,   36,   68,   30,   30,   30,   30,
+       30,   12,   12,   12,   12,   12,   12,   35,   43,   36,
+       40,   12,   45,   45,   75,   38,   45,   46,   59,   59,
+       72,   72,   59,   77,   67,   36,   40,   12,   15,   74,
+       43,   75,   66,   15,   73,   15,   76,   15,   15,   15,
+       15,   15,   23,   38,   65,   46,   43,   75,   73,   77,
+       73,   23,   23,   23,   23,   23,   78,   74,   80,   38,
+       23,   46,   64,   76,   73,   77,   73,   79,   81,   82,
 
-        5,    4,    3,   93,   93,   93,   93,   93,   93,   93,
+       91,   63,   83,   74,   62,   78,   23,   24,   85,   76,
+       61,   80,   79,   91,   88,   24,   24,   24,   24,   24,
+       24,   78,   83,   81,   82,   24,   60,   80,   79,   57,
+       87,   56,   85,   55,   88,   54,   89,   53,   83,   81,
+       82,   24,   25,   52,   51,   50,   49,   25,   85,   25,
+       88,   25,   25,   25,   25,   25,   26,   87,   90,   89,
+       48,   47,   41,   39,   33,   26,   26,   26,   26,   26,
+       20,   18,    6,   87,   26,   89,    5,    4,    3,    0,
+       90,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+       26,    0,    0,    0,    0,    0,   90,   94,   94,   94,
+
+       95,    0,   95,   96,   96,   96,   97,   97,   93,   93,
        93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
        93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93
+       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
+       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
+       93,   93,   93,   93,   93,   93,   93,   93
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -562,9 +594,9 @@ char *cern_text;
  *
  * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -573,8 +605,7 @@ char *cern_text;
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -589,7 +620,7 @@ char *cern_text;
 #endif /* FLEX_SCANNER */
 
 
-#line 593 "<stdout>"
+#line 624 "<stdout>"
 
 #define INITIAL 0
 #define comment 1
@@ -608,6 +639,35 @@ char *cern_text;
 
 static int yy_init_globals (void );
 
+/* Accessor methods to globals.
+   These are made visible to non-reentrant scanners for convenience. */
+
+int cern_lex_destroy (void );
+
+int cern_get_debug (void );
+
+void cern_set_debug (int debug_flag  );
+
+YY_EXTRA_TYPE cern_get_extra (void );
+
+void cern_set_extra (YY_EXTRA_TYPE user_defined  );
+
+FILE *cern_get_in (void );
+
+void cern_set_in  (FILE * in_str  );
+
+FILE *cern_get_out (void );
+
+void cern_set_out  (FILE * out_str  );
+
+int cern_get_leng (void );
+
+char *cern_get_text (void );
+
+int cern_get_lineno (void );
+
+void cern_set_lineno (int line_number  );
+
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
  */
@@ -621,7 +681,7 @@ extern int cern_wrap (void );
 #endif
 
     static void yyunput (int c,char *buf_ptr  );
-
+    
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
@@ -642,7 +702,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -650,7 +715,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO (void) fwrite( cern_text, cern_leng, 1, cern_out )
+#define ECHO do { if (fwrite( cern_text, cern_leng, 1, cern_out )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -742,11 +807,11 @@ YY_DECL
 	register yy_state_type yy_current_state;
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
+    
+#line 44 "imap_cern.l"
 
-#line 45 "imap_cern.l"
 
-
-#line 750 "<stdout>"
+#line 815 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -805,7 +870,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 204 );
+		while ( yy_base[yy_current_state] != 309 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -832,7 +897,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 47 "imap_cern.l"
+#line 46 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -841,7 +906,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 52 "imap_cern.l"
+#line 51 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return DESCRIPTION;
@@ -850,7 +915,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 57 "imap_cern.l"
+#line 56 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return BEGIN_COMMENT;
@@ -861,7 +926,7 @@ case 4:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up cern_text again */
 YY_RULE_SETUP
-#line 62 "imap_cern.l"
+#line 61 "imap_cern.l"
 {
 				   BEGIN(INITIAL);
    				   cern_lval.id = g_strndup (cern_text, cern_leng);
@@ -870,22 +935,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 68 "imap_cern.l"
+#line 67 "imap_cern.l"
 return RECTANGLE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 70 "imap_cern.l"
+#line 69 "imap_cern.l"
 return CIRCLE;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 72 "imap_cern.l"
+#line 71 "imap_cern.l"
 return POLYGON;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 74 "imap_cern.l"
+#line 73 "imap_cern.l"
 return DEFAULT;
 	YY_BREAK
 case 9:
@@ -893,7 +958,7 @@ case 9:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up cern_text again */
 YY_RULE_SETUP
-#line 76 "imap_cern.l"
+#line 75 "imap_cern.l"
 {
    				   cern_lval.id = g_strndup (cern_text, cern_leng);
 				   return LINK;
@@ -901,7 +966,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 81 "imap_cern.l"
+#line 80 "imap_cern.l"
 {
                                    cern_lval.value = g_ascii_strtod (cern_text, NULL);
 				   return FLOAT;
@@ -910,20 +975,20 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 86 "imap_cern.l"
+#line 85 "imap_cern.l"
 ; /* Eat white space */
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 88 "imap_cern.l"
+#line 87 "imap_cern.l"
 return *cern_text;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 90 "imap_cern.l"
+#line 89 "imap_cern.l"
 ECHO;
 	YY_BREAK
-#line 927 "<stdout>"
+#line 992 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
 	yyterminate();
@@ -1155,7 +1220,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), num_to_read );
+			(yy_n_chars), (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1179,6 +1244,14 @@ static int yy_get_next_buffer (void)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+		/* Extend the array by 50%, plus the number we really need. */
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) cern_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
+	}
+
 	(yy_n_chars) += number_to_move;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
@@ -1194,7 +1267,7 @@ static int yy_get_next_buffer (void)
 {
 	register yy_state_type yy_current_state;
 	register char *yy_cp;
-
+    
 	yy_current_state = (yy_start);
 
 	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
@@ -1248,7 +1321,7 @@ static int yy_get_next_buffer (void)
     static void yyunput (int c, register char * yy_bp )
 {
 	register char *yy_cp;
-
+    
     yy_cp = (yy_c_buf_p);
 
 	/* undo effects of setting up cern_text */
@@ -1291,7 +1364,7 @@ static int yy_get_next_buffer (void)
 
 {
 	int c;
-
+    
 	*(yy_c_buf_p) = (yy_hold_char);
 
 	if ( *(yy_c_buf_p) == YY_END_OF_BUFFER_CHAR )
@@ -1358,12 +1431,12 @@ static int yy_get_next_buffer (void)
 
 /** Immediately switch to a different input stream.
  * @param input_file A readable stream.
- *
+ * 
  * @note This function does not reset the start condition to @c INITIAL .
  */
     void cern_restart  (FILE * input_file )
 {
-
+    
 	if ( ! YY_CURRENT_BUFFER ){
         cern_ensure_buffer_stack ();
 		YY_CURRENT_BUFFER_LVALUE =
@@ -1376,11 +1449,11 @@ static int yy_get_next_buffer (void)
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
- *
+ * 
  */
     void cern__switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
-
+    
 	/* TODO. We should be able to replace this entire function body
 	 * with
 	 *		cern_pop_buffer_state();
@@ -1420,13 +1493,13 @@ static void cern__load_buffer_state  (void)
 /** Allocate and initialize an input buffer state.
  * @param file A readable stream.
  * @param size The character buffer size in bytes. When in doubt, use @c YY_BUF_SIZE.
- *
+ * 
  * @return the allocated buffer state.
  */
     YY_BUFFER_STATE cern__create_buffer  (FILE * file, int  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	b = (YY_BUFFER_STATE) cern_alloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in cern__create_buffer()" );
@@ -1449,11 +1522,11 @@ static void cern__load_buffer_state  (void)
 
 /** Destroy the buffer.
  * @param b a buffer created with cern__create_buffer()
- *
+ * 
  */
     void cern__delete_buffer (YY_BUFFER_STATE  b )
 {
-
+    
 	if ( ! b )
 		return;
 
@@ -1469,7 +1542,7 @@ static void cern__load_buffer_state  (void)
 #ifndef __cplusplus
 extern int isatty (int );
 #endif /* __cplusplus */
-
+    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a cern_restart() or at EOF.
@@ -1478,7 +1551,7 @@ extern int isatty (int );
 
 {
 	int oerrno = errno;
-
+    
 	cern__flush_buffer(b );
 
 	b->yy_input_file = file;
@@ -1494,13 +1567,13 @@ extern int isatty (int );
     }
 
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
-
+    
 	errno = oerrno;
 }
 
 /** Discard all buffered characters. On the next scan, YY_INPUT will be called.
  * @param b the buffer state to be flushed, usually @c YY_CURRENT_BUFFER.
- *
+ * 
  */
     void cern__flush_buffer (YY_BUFFER_STATE  b )
 {
@@ -1529,7 +1602,7 @@ extern int isatty (int );
  *  the current state. This function will allocate the stack
  *  if necessary.
  *  @param new_buffer The new state.
- *
+ *  
  */
 void cern_push_buffer_state (YY_BUFFER_STATE new_buffer )
 {
@@ -1559,7 +1632,7 @@ void cern_push_buffer_state (YY_BUFFER_STATE new_buffer )
 
 /** Removes and deletes the top of the stack, if present.
  *  The next element becomes the new top.
- *
+ *  
  */
 void cern_pop_buffer_state (void)
 {
@@ -1583,7 +1656,7 @@ void cern_pop_buffer_state (void)
 static void cern_ensure_buffer_stack (void)
 {
 	int num_to_alloc;
-
+    
 	if (!(yy_buffer_stack)) {
 
 		/* First allocation is just for 2 elements, since we don't know if this
@@ -1594,9 +1667,11 @@ static void cern_ensure_buffer_stack (void)
 		(yy_buffer_stack) = (struct yy_buffer_state**)cern_alloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
-
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in cern_ensure_buffer_stack()" );
+								  
 		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-
+				
 		(yy_buffer_stack_max) = num_to_alloc;
 		(yy_buffer_stack_top) = 0;
 		return;
@@ -1612,6 +1687,8 @@ static void cern_ensure_buffer_stack (void)
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in cern_ensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -1622,13 +1699,13 @@ static void cern_ensure_buffer_stack (void)
 /** Setup the input buffer state to scan directly from a user-specified character buffer.
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
- *
- * @return the newly allocated buffer state object.
+ * 
+ * @return the newly allocated buffer state object. 
  */
 YY_BUFFER_STATE cern__scan_buffer  (char * base, yy_size_t  size )
 {
 	YY_BUFFER_STATE b;
-
+    
 	if ( size < 2 ||
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
@@ -1656,23 +1733,23 @@ YY_BUFFER_STATE cern__scan_buffer  (char * base, yy_size_t  size )
 
 /** Setup the input buffer state to scan a string. The next call to cern_lex() will
  * scan from a @e copy of @a str.
- * @param str a NUL-terminated string to scan
- *
+ * @param yystr a NUL-terminated string to scan
+ * 
  * @return the newly allocated buffer state object.
  * @note If you want to scan bytes that may contain NUL values, then use
  *       cern__scan_bytes() instead.
  */
 YY_BUFFER_STATE cern__scan_string (yyconst char * yystr )
 {
-
+    
 	return cern__scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to cern_lex() will
  * scan from a @e copy of @a bytes.
- * @param bytes the byte buffer to scan
- * @param len the number of bytes in the buffer pointed to by @a bytes.
- *
+ * @param yybytes the byte buffer to scan
+ * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
+ * 
  * @return the newly allocated buffer state object.
  */
 YY_BUFFER_STATE cern__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
@@ -1681,7 +1758,7 @@ YY_BUFFER_STATE cern__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 	char *buf;
 	yy_size_t n;
 	int i;
-
+    
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
 	buf = (char *) cern_alloc(n  );
@@ -1735,16 +1812,16 @@ static void yy_fatal_error (yyconst char* msg )
 /* Accessor  methods (get/set functions) to struct members. */
 
 /** Get the current line number.
- *
+ * 
  */
 int cern_get_lineno  (void)
 {
-
+        
     return cern_lineno;
 }
 
 /** Get the input stream.
- *
+ * 
  */
 FILE *cern_get_in  (void)
 {
@@ -1752,7 +1829,7 @@ FILE *cern_get_in  (void)
 }
 
 /** Get the output stream.
- *
+ * 
  */
 FILE *cern_get_out  (void)
 {
@@ -1760,7 +1837,7 @@ FILE *cern_get_out  (void)
 }
 
 /** Get the length of the current token.
- *
+ * 
  */
 int cern_get_leng  (void)
 {
@@ -1768,7 +1845,7 @@ int cern_get_leng  (void)
 }
 
 /** Get the current token.
- *
+ * 
  */
 
 char *cern_get_text  (void)
@@ -1778,18 +1855,18 @@ char *cern_get_text  (void)
 
 /** Set the current line number.
  * @param line_number
- *
+ * 
  */
 void cern_set_lineno (int  line_number )
 {
-
+    
     cern_lineno = line_number;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
  * @param in_str A readable stream.
- *
+ * 
  * @see cern__switch_to_buffer
  */
 void cern_set_in (FILE *  in_str )
@@ -1843,7 +1920,7 @@ static int yy_init_globals (void)
 /* cern_lex_destroy is for both reentrant and non-reentrant scanners. */
 int cern_lex_destroy  (void)
 {
-
+    
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
 		cern__delete_buffer(YY_CURRENT_BUFFER  );
@@ -1910,7 +1987,7 @@ void cern_free (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 90 "imap_cern.l"
+#line 89 "imap_cern.l"
 
 
 

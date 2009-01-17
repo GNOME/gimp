@@ -1,3 +1,12 @@
+2009-01-17  Michael Natterer  <mitch@gimp.org>
+
+	* all files with a GPL header and all COPYING files:
+
+	Change licence to GPLv3 (and to LGPLv3 for libgimp).
+
+	Cleaned up some copyright headers and regenerated the parsers in
+	the ImageMap plugin.
+
 2009-01-17  Sven Neumann  <sven@gimp.org>
 
 	Bug 568095 – Patch to improve unsharp mask performance
