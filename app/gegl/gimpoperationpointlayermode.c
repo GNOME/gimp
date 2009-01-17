@@ -187,7 +187,7 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
 static void
 gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
 {
-  Babl *format = babl_format ("RaGaBaA float");
+  Babl *format = babl_format_from_name ("RaGaBaA float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);

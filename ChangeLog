@@ -1,3 +1,11 @@
+2009-01-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Adapt to new babl API, s/babl_format/babl_format_from_name/
+
+	* app/gegl/gimp-gegl-utils.c
+	* app/gegl/gimpoperationpointlayermode.c
+	* app/gegl/gimpoperationtilesource.c
+
 2009-01-17  Sven Neumann  <sven@gimp.org>
 
 	Bug 568021 – Unused code in unsharp-mask.c

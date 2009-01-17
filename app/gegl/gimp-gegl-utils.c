@@ -49,13 +49,13 @@ gimp_bpp_to_babl_format (guint    bpp,
       switch (bpp)
         {
         case 1:
-          return babl_format ("Y u8");
+          return babl_format_from_name ("Y u8");
         case 2:
-          return babl_format ("YA u8");
+          return babl_format_from_name ("YA u8");
         case 3:
-          return babl_format ("RGB u8");
+          return babl_format_from_name ("RGB u8");
         case 4:
-          return babl_format ("RGBA u8");
+          return babl_format_from_name ("RGBA u8");
         }
     }
   else
@@ -63,13 +63,13 @@ gimp_bpp_to_babl_format (guint    bpp,
       switch (bpp)
         {
         case 1:
-          return babl_format ("Y' u8");
+          return babl_format_from_name ("Y' u8");
         case 2:
-          return babl_format ("Y'A u8");
+          return babl_format_from_name ("Y'A u8");
         case 3:
-          return babl_format ("R'G'B' u8");
+          return babl_format_from_name ("R'G'B' u8");
         case 4:
-          return babl_format ("R'G'B'A u8");
+          return babl_format_from_name ("R'G'B'A u8");
         }
     }
 
