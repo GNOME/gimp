@@ -1,3 +1,11 @@
+2009-01-17  Sven Neumann  <sven@gimp.org>
+
+	Bug 568016 – Black pullout parameter of plug-in-newsprint has
+	no effect
+
+	* plug-ins/common/newsprint.c: fixed the documentation of the
+	colorspace parameter.
+
 2009-01-13  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL

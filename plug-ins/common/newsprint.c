@@ -498,7 +498,7 @@ query (void)
 
     { GIMP_PDB_INT32,    "cell-width", "screen cell width, in pixels" },
 
-    { GIMP_PDB_INT32,    "colorspace", "separate to 0:RGB, 1:CMYK, 2:Luminance" },
+    { GIMP_PDB_INT32,    "colorspace", "separate to 0:Grayscale, 1:RGB, 2:CMYK, 3:Luminance" },
     { GIMP_PDB_INT32,    "k-pullout",  "Percentage of black to pullout (CMYK only)" },
 
     { GIMP_PDB_FLOAT,    "gry-ang",    "Grey/black screen angle (degrees)" },
