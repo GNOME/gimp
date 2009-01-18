@@ -852,15 +852,8 @@ gimp_number_pair_entry_events (GtkWidget *widget,
           {
           case PARSE_VALID:
             {
-              gdouble default_left_value;
-              gdouble default_right_value;
-
-              gimp_number_pair_entry_get_default_values (entry,
-                                                         &default_left_value,
-                                                         &default_right_value);
-
-              if (default_left_value  != left_value  ||
-                  default_right_value != right_value ||
+              if (priv->left_number  != left_value  ||
+                  priv->right_number != right_value ||
                   force_user_override)
                 {
                   gimp_number_pair_entry_set_values (entry,
