@@ -1,5 +1,9 @@
 2009-01-18  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: depend on babl >= 0.0.23 and GEGL >= 0.0.22.
+
+2009-01-18  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (CPPFLAGS): added -DBABL_DISABLE_DEPRECATED.
 
 	* plug-ins/common/unsharp-mask.c: formatting.
