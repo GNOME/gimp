@@ -1,3 +1,9 @@
+2009-01-18  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (CPPFLAGS): added -DBABL_DISABLE_DEPRECATED.
+
+	* plug-ins/common/unsharp-mask.c: formatting.
+
 2009-01-18  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Bug 563337 – Rectangle Select Tool does not allow 1:1 fixed ratio

@@ -136,7 +136,7 @@ query (void)
                           "filter.",
                           "Winston Chang <winstonc@cs.wisc.edu>",
                           "Winston Chang",
-                          "1999",
+                          "1999-2009",
                           N_("_Unsharp Mask..."),
                           "GRAY*, RGB*",
                           GIMP_PLUGIN,
@@ -245,20 +245,20 @@ run (const gchar      *name,
  * in the processing of the lines, at least to the blur_line function.
  */
 static void
-box_blur_line (const gint   box_width,  /* Width of the kernel */
-               const gint   even_offset,/* If even width,
-                                           offset to left or right */
-               const guchar *src,       /* Pointer to source buffer */
-               guchar       *dest,      /* Pointer to destination buffer */
-               const gint    len,       /* Length of buffer, in pixels */
-               const gint    bpp)       /* Bytes per pixel */
+box_blur_line (const gint    box_width,   /* Width of the kernel           */
+               const gint    even_offset, /* If even width,
+                                             offset to left or right       */
+               const guchar *src,         /* Pointer to source buffer      */
+               guchar       *dest,        /* Pointer to destination buffer */
+               const gint    len,         /* Length of buffer, in pixels   */
+               const gint    bpp)         /* Bytes per pixel               */
 {
   gint  i;
-  gint  lead;    /* This marks the leading edge of the kernel */
-  gint  output;  /* This marks the center of ther kernel      */
+  gint  lead;    /* This marks the leading edge of the kernel              */
+  gint  output;  /* This marks the center of ther kernel                   */
   gint  trail;   /* This marks the pixel BEHIND the last 1 in the
                     kernel; it's the pixel to remove from the accumulator. */
-  gint  ac[bpp]; /* Accumulator for each channel */
+  gint  ac[bpp]; /* Accumulator for each channel                           */
 
 
   /* The algorithm differs for even and odd-sized kernels.
@@ -520,17 +520,16 @@ unsharp_region (GimpPixelRgn *srcPR,
                 gint          y2,
                 gboolean      show_progress)
 {
-  guchar     *src;        /* Temporary copy of source row/col      */
-  guchar     *dest;       /* Temporary copy of destination row/col */
+  guchar     *src;                /* Temporary copy of source row/col      */
+  guchar     *dest;               /* Temporary copy of destination row/col */
   const gint  width   = x2 - x1;
   const gint  height  = y2 - y1;
-  gdouble    *cmatrix = NULL;       /* Convolution matrix (for gaussian) */
+  gdouble    *cmatrix = NULL;     /* Convolution matrix (for gaussian)     */
   gint        cmatrix_length = 0;
-  gint        row, col;             /* Row,column counter */
+  gint        row, col;           /* Row, column counters                  */
   const gint  threshold = unsharp_params.threshold;
-  gboolean    box_blur;   /* If we want to use a three pass box blur
-                           * instead of a gaussian blur
-                           */
+  gboolean    box_blur;           /* If we want to use a three pass box
+                                     blur instead of a gaussian blur       */
   gint        box_width = 0;
 
   if (show_progress)
@@ -747,8 +746,10 @@ gen_convolve_matrix (gdouble   radius,
   for (i = 0; i <= matrix_length / 2; i++)
     cmatrix[i] = cmatrix[matrix_length - 1 - i];
 
-  /* find center val -- calculate an odd number of quanta to make it symmetric,
-   * even if the center point is weighted slightly higher than others. */
+  /* find center val -- calculate an odd number of quanta to make it
+   * symmetric, even if the center point is weighted slightly higher
+   * than others.
+   */
   sum = 0;
   for (j = 0; j <= 50; j++)
     sum += exp (- SQR (- 0.5 + 0.02 * j) / (2 * SQR (std_dev)));
