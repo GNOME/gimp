@@ -302,6 +302,8 @@ box_blur_line (const gint    box_width,   /* Width of the kernel           */
   for (i = 0; i < bpp; i++)
     ac[i] = 0;
 
+  /* As the kernel moves across the image, it has a leading edge and a
+   * trailing edge, and the output is in the middle. */
   while (output < len)
     {
       /* The number of pixels that are both in the image and
@@ -309,6 +311,11 @@ box_blur_line (const gint    box_width,   /* Width of the kernel           */
        * handle edge cases. */
       guint coverage = (lead < len ? lead : len-1) - (trail >=0 ? trail : -1);
 
+#ifdef READABLE_BOXBLUR_CODE
+/* The code here does the same as the code below, but the code below
+ * has been optimized by moving the if statements out of the tight for
+ * loop, and is harder to understand.
+ * Don't use both this code and the code below. */
       for (i = 0; i < bpp; i++)
         {
           /* If the leading edge of the kernel is still on the image,
@@ -328,6 +335,46 @@ box_blur_line (const gint    box_width,   /* Width of the kernel           */
            * of the image. */
           if (output >= 0)
             dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
+        }
+#endif
+
+      /* If the leading edge of the kernel is still on the image... */
+      if (lead < len)
+        {
+          /* If the trailing edge of the kernel is on the image. (Since
+           * the output is in between the lead and trail, it must be on
+           * the image. */
+          if (trail >= 0)
+            for (i = 0; i < bpp; i++)
+              {
+                ac[i] += src[bpp * lead + i];
+                ac[i] -= src[bpp * trail + i];
+                dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
+              }
+          /* If the output is on the image, but the trailing edge isn't yet
+           * on the image. */
+          else if (output >= 0)
+            for (i = 0; i < bpp; i++)
+              {
+                ac[i] += src[bpp * lead + i];
+                dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
+              }
+          /* If leading edge is on the image, but the output and trailing
+           * edge aren't yet on the image. */
+          else
+            for (i = 0; i < bpp; i++)
+              ac[i] += src[bpp * lead + i];
+        }
+      /* If the leading edge has gone off the image, but the output and
+       * trailing edge are on the image. (The big loop exits when the
+       * output goes off the image. */
+      else
+        {
+          for (i = 0; i < bpp; i++)
+            {
+              ac[i] -= src[bpp * trail + i];
+              dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
+            }
         }
 
       lead++;
@@ -596,7 +643,7 @@ unsharp_region (GimpPixelRgn *srcPR,
 
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
-      if (show_progress && row % 16 == 0)
+      if (show_progress && row % 64 == 0)
         gimp_progress_update ((gdouble) row / (3 * height));
     }
 
@@ -630,7 +677,7 @@ unsharp_region (GimpPixelRgn *srcPR,
 
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
-      if (show_progress && col % 16 == 0)
+      if (show_progress && col % 64 == 0)
         gimp_progress_update ((gdouble) col / (3 * width) + 0.33);
     }
 
@@ -668,7 +715,7 @@ unsharp_region (GimpPixelRgn *srcPR,
             }
         }
 
-      if (show_progress && row % 16 == 0)
+      if (show_progress && row % 64 == 0)
         gimp_progress_update ((gdouble) row / (3 * height) + 0.67);
 
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);

@@ -1,5 +1,12 @@
 2009-01-18  Sven Neumann  <sven@gimp.org>
 
+	Bug 568095 – Patch to improve unsharp mask performance
+
+	* plug-ins/common/unsharp-mask.c (box_blur_line): applied another
+	patch from Winston Chang with further performance improvements.
+
+2009-01-18  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: depend on babl >= 0.0.23 and GEGL >= 0.0.22.
 
 2009-01-18  Sven Neumann  <sven@gimp.org>
