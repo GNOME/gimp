@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-05 09:22+0100\n"
-"PO-Revision-Date: 2008-11-22 14:38+0800\n"
+"PO-Revision-Date: 2009-01-18 18:25+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -40,11 +40,11 @@ msgstr "%s 插件无法处理图层位移、大小或不透明度"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s 插件只能以动画的帧的方式处理图层"
+msgstr "%s 插件只能以动画的帧方式处理图层"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
-msgstr "以动画储存"
+msgstr "保存为动画"
 
 #: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
@@ -91,7 +91,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"使用默认的设置转换到索引\n"
+"使用默认的设置转换到索引图像\n"
 "(如需调节请手动转换)"
 
 #: ../libgimp/gimpexport.c:308
@@ -103,7 +103,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"使用默认的位图设置转换到索引\n"
+"使用默认的位图设置转换到索引图像\n"
 "(如需调节请手动转换)"
 
 #: ../libgimp/gimpexport.c:318
@@ -121,7 +121,7 @@ msgstr "%s 插件只能处理灰度或索引图像"
 
 #: ../libgimp/gimpexport.c:348
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s 插件需要一个 alpha 通道"
+msgstr "%s 插件需要一个 Alpha 通道"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -133,7 +133,7 @@ msgstr "确认保存"
 
 #: ../libgimp/gimpexport.c:389
 msgid "Confirm"
-msgstr "确认"
+msgstr "确定"
 
 #: ../libgimp/gimpexport.c:464
 msgid "Export File"
@@ -166,7 +166,7 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"您将要把图层蒙板保存为 %s。\n"
+"您将要把图层蒙板保存为 %s 。\n"
 "这将不会保存可见的图层。"
 
 #: ../libgimp/gimpexport.c:679
@@ -175,7 +175,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"您将要把通道(已保存的选区)保存为 %s。\n"
+"您将要把通道(已保存的选区)保存为 %s 。\n"
 "这将不会保存可见的图层。"
 
 #: ../libgimp/gimpfontselectbutton.c:130
@@ -279,7 +279,7 @@ msgstr "您的查询有 %d 个过程匹配"
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
-msgstr "无匹配"
+msgstr "无匹配项"
 
 #: ../libgimp/gimpprocview.c:143
 msgid "Parameters"
@@ -307,7 +307,7 @@ msgstr "版权："
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
-msgstr "百分点"
+msgstr "百分比"
 
 #: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
@@ -319,11 +319,11 @@ msgstr "黑色(全透明)(_B)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
 msgid "Layer's _alpha channel"
-msgstr "图层的 Alpha 通道(_A)"
+msgstr "图层的 alpha 通道(_A)"
 
 #: ../libgimpbase/gimpbaseenums.c:30
 msgid "_Transfer layer's alpha channel"
-msgstr "转移图层的 Alpha 通道(_T)"
+msgstr "转移图层的 alpha 通道(_T)"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
@@ -593,7 +593,7 @@ msgstr "立方"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -601,7 +601,7 @@ msgstr "常量"
 
 #: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
-msgstr "增值"
+msgstr "增量"
 
 #: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
@@ -804,6 +804,7 @@ msgid "Print simulation"
 msgstr "打印模拟"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
+#, fuzzy
 msgid "Perceptual"
 msgstr "感官"
 
@@ -1407,7 +1408,7 @@ msgstr "青(_C)"
 #: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 #, fuzzy
 msgid "_M"
-msgstr "品红(_M)"
+msgstr "红(_M)"
 
 #. Yellow
 #: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
