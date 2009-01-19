@@ -137,7 +137,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run-mode", "Interactive" }
+    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

@@ -1,3 +1,40 @@
+2009-01-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/*.c
+	* plug-ins/color-rotate/color-rotate.c
+	* plug-ins/file-bmp/bmp.c
+	* plug-ins/file-faxg3/faxg3.c
+	* plug-ins/file-fits/fits.c
+	* plug-ins/file-fli/fli-gimp.c
+	* plug-ins/file-ico/ico.c
+	* plug-ins/file-jpeg/jpeg.c
+	* plug-ins/file-psd/psd-save.c
+	* plug-ins/file-psd/psd.c
+	* plug-ins/file-sgi/sgi.c
+	* plug-ins/file-uri/uri.c
+	* plug-ins/file-xjt/xjt.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fractal-explorer/fractal-explorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gradient-flare/gradient-flare.c
+	* plug-ins/help-browser/help-browser.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/lighting/lighting-main.c
+	* plug-ins/map-object/map-object-main.c
+	* plug-ins/maze/maze.c
+	* plug-ins/metadata/metadata.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print.c
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/script-fu/script-fu-script.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/selection-to-path/selection-to-path.c
+	* plug-ins/twain/twain.c
+	* plug-ins/win-snap/winsnap.c: document the "run-mode" parameter
+	as we document enums for core procedures.
+
 2009-01-18  Sven Neumann  <sven@gimp.org>
 
 	Bug 568095 – Patch to improve unsharp mask performance

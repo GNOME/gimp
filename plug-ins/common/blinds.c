@@ -102,10 +102,10 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",       "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
-    { GIMP_PDB_INT32,    "angle-dsp",      "Angle of Displacement " },
+    { GIMP_PDB_INT32,    "angle-dsp",      "Angle of Displacement" },
     { GIMP_PDB_INT32,    "num-segments",   "Number of segments in blinds" },
     { GIMP_PDB_INT32,    "orientation",    "orientation; 0 = Horizontal, 1 = Vertical" },
     { GIMP_PDB_INT32,    "bg-transparent", "background transparent; FALSE,TRUE" }
@@ -154,7 +154,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &bvals);
-      if (! blinds_dialog(drawable))
+      if (! blinds_dialog (drawable))
         {
           gimp_drawable_detach (drawable);
           return;
@@ -184,7 +184,7 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_progress_init ( _("Adding blinds"));
+      gimp_progress_init (_("Adding blinds"));
 
       apply_blinds (drawable);
 

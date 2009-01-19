@@ -299,7 +299,7 @@ def _query():
         params = make_params(params)
         # add the run mode argument ...
         params.insert(0, (PDB_INT32, "run-mode",
-                                     "Interactive, Non-Interactive"))
+                                     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"))
 
         results = make_params(results)
 

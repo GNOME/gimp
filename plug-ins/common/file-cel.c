@@ -81,7 +81,7 @@ query (void)
 {
   static const GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode",         "Interactive, non-interactive"  },
+    { GIMP_PDB_INT32,  "run-mode",         "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"  },
     { GIMP_PDB_STRING, "filename",         "Filename to load image from"   },
     { GIMP_PDB_STRING, "raw-filename",     "Name entered"                  },
     { GIMP_PDB_STRING, "palette-filename", "Filename to load palette from" }
@@ -93,7 +93,7 @@ query (void)
 
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",         "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",         "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",            "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable",         "Drawable to save"             },
     { GIMP_PDB_STRING,   "filename",         "Filename to save image to"    },

@@ -186,7 +186,7 @@ script_fu_script_install_proc (SFScript    *script,
 
   args[0].type        = GIMP_PDB_INT32;
   args[0].name        = "run-mode";
-  args[0].description = "Interactive, non-interactive";
+  args[0].description = "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }";
 
   for (i = 0; i < script->n_args; i++)
     {

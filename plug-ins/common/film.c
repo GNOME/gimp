@@ -193,7 +193,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,      "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,      "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,      "image",        "Input image (only used as default image in interactive mode)" },
     { GIMP_PDB_DRAWABLE,   "drawable",     "Input drawable (not used)" },
     { GIMP_PDB_INT32,      "film-height",  "Height of film (0: fit to images)" },

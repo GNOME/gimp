@@ -343,7 +343,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable (not used)" },
     { GIMP_PDB_IMAGE,    "image2",       "Second input image" },
@@ -359,7 +359,7 @@ query (void)
 
   static GimpParamDef drw_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable1",    "First input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable2",    "Second input drawable" },
@@ -375,7 +375,7 @@ query (void)
 
   static const GimpParamDef recompose_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",    "Image to recompose from" },
     { GIMP_PDB_DRAWABLE, "drawable", "Not used" },
   };

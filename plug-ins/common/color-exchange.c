@@ -103,7 +103,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",        "Interactive"        },
+    { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",           "Input image"        },
     { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable"     },
     { GIMP_PDB_INT8,     "from-red",        "Red value (from)"   },

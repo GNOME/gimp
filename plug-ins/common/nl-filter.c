@@ -103,7 +103,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "img",      "The Image to Filter" },
     { GIMP_PDB_DRAWABLE, "drw",      "The Drawable" },
     { GIMP_PDB_FLOAT,    "alpha",    "The amount of the filter to apply" },

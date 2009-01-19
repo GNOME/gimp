@@ -72,25 +72,25 @@ script_fu_query (void)
 {
   static const GimpParamDef console_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
   };
 
   static const GimpParamDef textconsole_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
   };
 
   static const GimpParamDef eval_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode", "[Interactive], non-interactive" },
-    { GIMP_PDB_STRING, "code",     "The code to evaluate" }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "code",     "The code to evaluate"                    }
   };
 
   static const GimpParamDef server_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode", "[Interactive], non-interactive" },
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }"  },
     { GIMP_PDB_INT32,  "port",     "The port on which to listen for requests" },
-    { GIMP_PDB_STRING, "logfile",  "The file to log server activity to" }
+    { GIMP_PDB_STRING, "logfile",  "The file to log server activity to"       }
   };
 
   gimp_plugin_domain_register (GETTEXT_PACKAGE "-script-fu", NULL);

@@ -99,15 +99,15 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "interactive / non-interactive"    },
-    { GIMP_PDB_IMAGE,    "image",        "input image (not used)"           },
-    { GIMP_PDB_DRAWABLE, "drawable",     "input drawable"                   },
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)"             },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"                   },
     { GIMP_PDB_FLOAT,    "xmin",         "xmin fractal image delimiter"     },
     { GIMP_PDB_FLOAT,    "xmax",         "xmax fractal image delimiter"     },
     { GIMP_PDB_FLOAT,    "ymin",         "ymin fractal image delimiter"     },
     { GIMP_PDB_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
-    { GIMP_PDB_INT32,    "depth",        "trace depth"                      },
-    { GIMP_PDB_INT32,    "outside-type", "outside type"
+    { GIMP_PDB_INT32,    "depth",        "Trace depth"                      },
+    { GIMP_PDB_INT32,    "outside-type", "Outside type"
                                          "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
 

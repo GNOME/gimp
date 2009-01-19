@@ -444,7 +444,7 @@ query (void)
 {
   static const GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32,    "ru-_mode",           "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,    "ru-_mode",           "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",              "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable",           "Input drawable"  },
     { GIMP_PDB_STRING,   "parameter-filename", "The name of parameter file. CML_explorer makes an image with its settings." }

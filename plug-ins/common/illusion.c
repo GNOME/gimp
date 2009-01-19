@@ -79,11 +79,11 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",  "interactive / non-interactive"    },
-    { GIMP_PDB_IMAGE,    "image",     "input image"                      },
-    { GIMP_PDB_DRAWABLE, "drawable",  "input drawable"                   },
-    { GIMP_PDB_INT32,    "division",  "the number of divisions"          },
-    { GIMP_PDB_INT32,    "type",      "illusion type (0=type1, 1=type2)" }
+    { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image"                      },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                   },
+    { GIMP_PDB_INT32,    "division",  "The number of divisions"          },
+    { GIMP_PDB_INT32,    "type",      "Illusion type (0=type1, 1=type2)" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

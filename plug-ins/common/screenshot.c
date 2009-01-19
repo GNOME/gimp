@@ -221,7 +221,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run-mode",  "Interactive, non-interactive"     },
+    { GIMP_PDB_INT32, "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
     { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }"      },
     { GIMP_PDB_INT32, "window-id", "Window id"                        },
     { GIMP_PDB_INT32, "x1",        "(optional) Region left x coord"   },

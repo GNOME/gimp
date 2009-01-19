@@ -150,18 +150,18 @@ static GimpPDBStatusType  lcms_dialog            (GimpColorConfig *config,
 
 static const GimpParamDef set_args[] =
 {
-  { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"     },
+  { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
   { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
   { GIMP_PDB_STRING, "profile",      "Filename of an ICC color profile" }
 };
 static const GimpParamDef set_rgb_args[] =
 {
-  { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"     },
+  { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
   { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
 };
 static const GimpParamDef apply_args[] =
 {
-  { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"     },
+  { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
   { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
   { GIMP_PDB_STRING, "profile",      "Filename of an ICC color profile" },
   { GIMP_PDB_INT32,  "intent",       "Rendering intent (enum GimpColorRenderingIntent)" },
@@ -169,7 +169,7 @@ static const GimpParamDef apply_args[] =
 };
 static const GimpParamDef apply_rgb_args[] =
 {
-  { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive"     },
+  { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
   { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
   { GIMP_PDB_INT32,  "intent",       "Rendering intent (enum GimpColorRenderingIntent)" },
   { GIMP_PDB_INT32,  "bpc",          "Black point compensation"         }

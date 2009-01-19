@@ -122,9 +122,9 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "Must be interactive (1)" },
-    { GIMP_PDB_IMAGE,    "image",    "Input Image"             },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"          }
+    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0) }" },
+    { GIMP_PDB_IMAGE,    "image",    "Input Image"                          },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"                       }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

@@ -479,7 +479,7 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,      "run-mode", "Interactive, non-interactive"},
+    { GIMP_PDB_INT32,      "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"},
     { GIMP_PDB_IMAGE,      "image", "Input image" },
     { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (must be a layer without layermask)"},
     { GIMP_PDB_FLOAT,      "rotation", "Direction {angle 0 to 360 degree } of the bend effect"},
@@ -508,7 +508,7 @@ query (void)
 
   static const GimpParamDef args_iter[] =
   {
-    { GIMP_PDB_INT32, "run-mode", "non-interactive" },
+    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_INT32, "total-steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
     { GIMP_PDB_FLOAT, "current-step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
     { GIMP_PDB_INT32, "len-struct", "length of stored data structure with id is equal to the plug_in  proc_name" },

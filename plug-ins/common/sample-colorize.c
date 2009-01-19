@@ -244,7 +244,7 @@ query (void)
 {
   static const GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32, "run-mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "dst-drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
     { GIMP_PDB_DRAWABLE, "sample-drawable", "Sample drawable (should be of Type RGB or RGBA)" },
