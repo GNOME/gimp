@@ -185,7 +185,7 @@ gimp_operation_tile_source_prepare (GeglOperation *operation)
   if (self->tile_manager)
     {
 
-      gegl_operation_set_format (operation, "output", babl_format_from_name("RaGaBaA float"));
+      gegl_operation_set_format (operation, "output", babl_format("RaGaBaA float"));
     }
 }
 
