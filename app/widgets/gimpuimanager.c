@@ -736,8 +736,8 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
                             "%s\n\n%s\n\n%s",
                             _("Your GIMP installation is incomplete:"),
                             error->message,
-                            _("Plase make sure the menu XML files are correctly "
-                              "installed."));
+                            _("Please make sure the menu XML files are "
+                              "correctly installed."));
             }
           else
             {

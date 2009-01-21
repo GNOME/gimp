@@ -1,3 +1,9 @@
+2009-01-21  Sven Neumann  <sven@gimp.org>
+
+	Bug 568617 – "Plase" misspelled
+
+	* app/widgets/gimpuimanager.c: fixed typo.
+
 2009-01-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Adjust to babl API adjustment by doing
