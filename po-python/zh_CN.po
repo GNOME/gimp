@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 05:20+0000\n"
-"PO-Revision-Date: 2008-10-11 16:32+0800\n"
+"PO-Revision-Date: 2009-01-23 01:00+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -80,11 +80,11 @@ msgstr "文本文件"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
-msgstr "输入框"
+msgstr "项目框"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr "读入的文件或使用的字符(_F)"
+msgstr "读入文件或使用字符(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
@@ -96,15 +96,15 @@ msgstr "写入单独的 CSS 文件(_W)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
-msgstr "添加一个烟雾图层"
+msgstr "添加一个雾化图层"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
-msgstr "烟雾(_F)..."
+msgstr "雾化(_F)..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
-msgstr "图层名(_L)"
+msgstr "图层名称(_L)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
@@ -112,7 +112,7 @@ msgstr "云"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
-msgstr "雾色(_F)"
+msgstr "雾化颜色(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
@@ -128,7 +128,7 @@ msgstr "补偿调色板中的颜色"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr "补偿调色板(_O)..."
+msgstr "调色板补偿(_O)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
@@ -139,7 +139,7 @@ msgstr "调色板"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
-msgstr "补偿"
+msgstr "补偿(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -151,7 +151,7 @@ msgstr "排序调色板(_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
-msgstr "色彩模型(_M)"
+msgstr "色彩模式(_M)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -203,7 +203,7 @@ msgstr "切片"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "沿参考线切分图像，创建图像和 HTML 表格片段"
+msgstr "沿参考线切分图像，创建图像和 HTML 表格片断"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -235,11 +235,11 @@ msgstr "用于图像导出的文件夹"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
-msgstr "表格元素间的间距"
+msgstr "表格元素间距"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
-msgstr "鼠标悬停及点击的 javascript"
+msgstr "鼠标悬停及点击时的 Javascript"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
@@ -273,15 +273,15 @@ msgstr "保存 Python-Fu 控制台输出"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:217
 msgid "Interactive GIMP Python interpreter"
-msgstr "交互式 Gimp-Python 解释器"
+msgstr "交互式 Gimp Python 解释器"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:222
 msgid "_Console"
-msgstr "控制台（_C）"
+msgstr "控制台(_C)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "添加投影到图层，并可选择地柔边"
+msgstr "添加投影到图层，并可选择地进行柔边处理"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
