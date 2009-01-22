@@ -1,3 +1,12 @@
+2009-01-22  Tor Lillqvist  <tml@iki.fi>
+
+	Bug 559408 - Brushes dragged to the image window look strange 
+
+	* app/widgets/gimppixbuf.c (gimp_pixbuf_format_compare): Drop
+	Windows-specific code to prefer BMP. The BMP format written by
+	gdk-pixbuf doesn't support alpha. PNG is better. Note that the
+	same bug report also takes up a different problem.
+
 2009-01-21  Sven Neumann  <sven@gimp.org>
 
 	Bug 568617 – "Plase" misspelled
