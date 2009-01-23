@@ -219,7 +219,7 @@ msgstr ""
 #: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr "使用%s版本(以%s为基础编译)"
+msgstr "使用%s版本 %s (以%s为基础编译)"
 
 #: ../app/version.c:127
 #: ../tools/gimp-remote.c:95
@@ -8769,7 +8769,7 @@ msgstr "矢量对象'%d'不包括ID为'%d'的笔画"
 #: ../app/pdb/gimppdb.c:411
 #, c-format
 msgid "Procedure '%s' has been called with a wrong type for argument #%d. Expected %s, got %s."
-msgstr "调用过程“%s”使用了错误的值类型用于参数“%s”(#%d)。需要 %s，但获得 %s。"
+msgstr "调用过程“%s”使用了错误的值类型用于参数 #%d。需要 %s，但获得 %s。"
 
 #: ../app/pdb/gimpprocedure.c:361
 #: ../app/plug-in/gimppluginprocframe.c:209
