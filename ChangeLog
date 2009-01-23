@@ -3,7 +3,14 @@
 	Merged from trunk:
 
 	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
-	to fix colour values for slategray and slategray. Fixes bug #568839.
+	to fix more RGB colour values. Fixes bug #568909.
+
+2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	Merged from trunk:
+
+	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
+	to fix colour values for slategray and slategrey. Fixes bug #568839.
 
 2009-01-22  Tor Lillqvist  <tml@iki.fi>
 
