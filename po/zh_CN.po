@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&amp;component=general\n"
 "POT-Creation-Date: 2008-12-06 08:53+0000\n"
-"PO-Revision-Date: 2009-01-21 21:35+0800\n"
+"PO-Revision-Date: 2009-01-23 20:21+0800\n"
 "Last-Translator: Shawn Syu <shawn@msn.cn>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgstr ""
 #: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "使用%s版本(以%s为基础编译)"
 
 #: ../app/version.c:127
 #: ../tools/gimp-remote.c:95
@@ -1258,7 +1258,7 @@ msgstr "状态和文字(_A)"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
-msgstr ""
+msgstr "将标签锁定到停靠(_k)"
 
 #: ../app/actions/dockable-actions.c:109
 msgid "Protect this tab from being dragged with the mouse pointer"
@@ -3312,7 +3312,7 @@ msgstr "艺术(_A)"
 
 #: ../app/actions/plug-in-actions.c:94
 msgid "_Decor"
-msgstr ""
+msgstr "装饰"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
@@ -8394,7 +8394,7 @@ msgstr "(无)"
 #: ../app/display/gimpstatusbar.c:346
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr ""
+msgstr "取消 <i>%s</i>"
 
 #: ../app/file/file-open.c:131
 #: ../app/file/file-save.c:111
@@ -8523,7 +8523,7 @@ msgstr "画笔"
 #: ../app/paint/gimppaintcore-stroke.c:332
 #, c-format
 msgid "Not enough points to stroke"
-msgstr ""
+msgstr "不足够的笔画点"
 
 #: ../app/paint/gimppencil.c:42
 #: ../app/tools/gimppenciltool.c:51
@@ -8767,15 +8767,15 @@ msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "矢量对象'%d'不包括ID为'%d'的笔画"
 
 #: ../app/pdb/gimppdb.c:411
-#, fuzzy, c-format
+#, c-format
 msgid "Procedure '%s' has been called with a wrong type for argument #%d. Expected %s, got %s."
 msgstr "调用过程“%s”使用了错误的值类型用于参数“%s”(#%d)。需要 %s，但获得 %s。"
 
 #: ../app/pdb/gimpprocedure.c:361
 #: ../app/plug-in/gimppluginprocframe.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "过程“%s”返回了错误的值类型用于返回值“%s”(#%d)。需要 %s，但获得 %s。"
+msgstr "'%s'过程无返回值"
 
 #: ../app/pdb/gimpprocedure.c:585
 #, c-format
@@ -8869,13 +8869,13 @@ msgid "Bad binary format string in interpreter file %s"
 msgstr "解释器文件 %s 中的错误的二进制格式串"
 
 #: ../app/plug-in/gimpplugin-message.c:423
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"PDB 调用错误：\n"
-"过程“%s”没有找到"
+"流程错误: '%s':\n"
+"%s"
 
 #: ../app/plug-in/gimpplugin-message.c:432
 #, c-format
@@ -8883,6 +8883,8 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
+"执行错误发生在过程'%s':\n"
+"%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:330
 msgid "Cancelled"
@@ -8904,9 +8906,9 @@ msgstr ""
 #: ../app/plug-in/gimppluginmanager-call.c:173
 #: ../app/plug-in/gimppluginmanager-call.c:223
 #: ../app/plug-in/gimppluginmanager-call.c:321
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr "调整交换文件大小失败：%s"
+msgstr "插件\"%s\"启用失败"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
@@ -8937,11 +8939,13 @@ msgid "Plug-In Environment"
 msgstr "插件环境"
 
 #: ../app/plug-in/gimppluginprocedure.c:989
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Calling error for '%s':\n"
 "%s"
-msgstr "无法创建文件夹“%s”：%s"
+msgstr ""
+"错误: '%s':\n"
+"%s"
 
 #: ../app/plug-in/gimppluginprocedure.c:1001
 #, c-format
@@ -9274,7 +9278,7 @@ msgstr "对比度(_T)："
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
-msgstr ""
+msgstr "将此设置作为色阶编辑"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
@@ -9683,7 +9687,7 @@ msgstr "无法从“%s”中读取头：%s"
 
 #: ../app/tools/gimpcurvestool.c:705
 msgid "Use _old curves file format"
-msgstr ""
+msgstr "使用旧曲线文件格式(_o)"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -9946,7 +9950,7 @@ msgstr "点击并拖动可移动组件"
 
 #: ../app/tools/gimpfreeselecttool.c:1125
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr ""
+msgstr "回车以确认，Esc以取消，Backspace以移除最后片段"
 
 #: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
@@ -9976,17 +9980,16 @@ msgstr "GEGL操作"
 
 #: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr ""
+msgstr "GEGL工具：使用无基准的GEGL操作"
 
 #: ../app/tools/gimpgegltool.c:94
-#, fuzzy
 msgid "_GEGL Operation..."
-msgstr "打开位置(_L)..."
+msgstr "GEGL操作(_G)..."
 
 #: ../app/tools/gimpgegltool.c:158
-#, fuzzy, c-format
+#, c-format
 msgid "GEGL operations do not operate on indexed layers."
-msgstr "不能对索引图层进行复原操作。"
+msgstr "不能对索引图层进行GEGL操作。"
 
 #: ../app/tools/gimpgegltool.c:338
 msgid "_Operation:"
@@ -10263,11 +10266,11 @@ msgstr "自动调整色阶"
 
 #: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
-msgstr ""
+msgstr "将此设置作为曲线编辑"
 
 #: ../app/tools/gimplevelstool.c:825
 msgid "Use _old levels file format"
-msgstr ""
+msgstr "使用旧色阶文件格式(_o)"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -10846,9 +10849,8 @@ msgstr ""
 "您可以编辑此图层或者从它的文字属性创建新的文字图层。"
 
 #: ../app/tools/gimptexttool.c:1313
-#, fuzzy
 msgid "Reshape Text Layer"
-msgstr "重命名文字图层"
+msgstr "反栅格化文字图层"
 
 #: ../app/tools/gimpthresholdtool.c:91
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
@@ -11097,11 +11099,11 @@ msgstr "中线"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
-msgstr ""
+msgstr "三分构图法"
 
 #: ../app/tools/tools-enums.c:61
 msgid "Golden sections"
-msgstr ""
+msgstr "黄金分割"
 
 #: ../app/tools/tools-enums.c:148
 msgid "Aspect ratio"
@@ -11913,9 +11915,8 @@ msgid "The GIMP help browser is not available."
 msgstr "GIMP 帮助浏览器不可用。"
 
 #: ../app/widgets/gimphelp.c:278
-#, fuzzy
 msgid "The GIMP help browser plug-in appears to be missing from your installation. You may instead use the web browser for reading the help pages."
-msgstr "您的安装中似乎没有 GIMP 帮助浏览器插件。"
+msgstr "您似乎没有安装GIMP帮助浏览器插件。您可以使用网页浏览器以浏览GIMP帮助文件。"
 
 #: ../app/widgets/gimphelp.c:319
 msgid "Help browser doesn't start"
@@ -12121,61 +12122,52 @@ msgid "Invalid UTF-8"
 msgstr "无效的 UTF-8"
 
 #: ../app/widgets/gimpsettingsbox.c:239
-#, fuzzy
 msgid "Pick a setting from the list"
-msgstr "点击可将此图层添加到列表"
+msgstr "从列表中选择设置"
 
 #: ../app/widgets/gimpsettingsbox.c:260
-#, fuzzy
 msgid "Add settings to favorites"
-msgstr "将曲线设置保存到文件"
+msgstr "将设置添加到收藏"
 
 #: ../app/widgets/gimpsettingsbox.c:288
-#, fuzzy
 msgid "_Import Settings from File..."
-msgstr "从文件中载入曲线设置"
+msgstr "从文件导入设置(_I)..."
 
 #: ../app/widgets/gimpsettingsbox.c:294
 msgid "_Export Settings to File..."
 msgstr "将出错记录保存到文件(_E)..."
 
 #: ../app/widgets/gimpsettingsbox.c:301
-#, fuzzy
 msgid "_Manage Settings..."
-msgstr "合并色板(_M)..."
+msgstr "管理设置(_M)"
 
 #: ../app/widgets/gimpsettingsbox.c:588
 msgid "Add Settings to Favorites"
 msgstr "添加选项到收藏夹"
 
 #: ../app/widgets/gimpsettingsbox.c:591
-#, fuzzy
 msgid "Enter a name for the settings"
-msgstr "给已保存的选项输入一个名字"
+msgstr "为设置命名"
 
 #: ../app/widgets/gimpsettingsbox.c:592
 msgid "Saved Settings"
 msgstr "已保存的选项"
 
 #: ../app/widgets/gimpsettingsbox.c:627
-#, fuzzy
 msgid "Manage Saved Settings"
-msgstr "重命名已保存的选项(_N)"
+msgstr "管理已保存设置"
 
 #: ../app/widgets/gimpsettingseditor.c:174
-#, fuzzy
 msgid "Import settings from a file"
-msgstr "从文件中载入曲线设置"
+msgstr "从文件导入设置"
 
 #: ../app/widgets/gimpsettingseditor.c:183
-#, fuzzy
 msgid "Export the selected settings to a file"
-msgstr "将色阶设置保存到文件"
+msgstr "导出设置到文件"
 
 #: ../app/widgets/gimpsettingseditor.c:192
-#, fuzzy
 msgid "Delete the selected settings"
-msgstr "删除选中的模板"
+msgstr "删除选中的设置"
 
 #: ../app/widgets/gimpsizebox.c:464
 #, c-format
