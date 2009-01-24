@@ -1,3 +1,13 @@
+2009-01-24  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	Bug 568890 – don't rely on GtkAction implementation details
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_menu_item_select):
+	use gtk_widget_get_action() instead of g_object_get_data(),
+	which relies on the name of the data key.
+
 2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	Merged from trunk:

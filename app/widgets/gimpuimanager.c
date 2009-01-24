@@ -909,7 +909,7 @@ static void
 gimp_ui_manager_menu_item_select (GtkWidget     *widget,
                                   GimpUIManager *manager)
 {
-  GtkAction *action = g_object_get_data (G_OBJECT (widget), "gtk-action");
+  GtkAction *action = gtk_widget_get_action (widget);
 
   if (action)
     {
