@@ -1,5 +1,14 @@
 2009-01-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpparamspecs-duplicate.[ch]: new files implementing
+	gimp_param_spec_duplicate() which is supposed to duplicate any
+	gimp or gegl GParamSpec (but doesn't do this yet).
+
+	* app/tools/gimpgegltool.c: remove the code form here.
+
+2009-01-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate):
 	gegl_color_get_rgba() takes pointers to doubles now, not floats.
 
