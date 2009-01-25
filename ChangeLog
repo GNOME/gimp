@@ -1,5 +1,15 @@
 2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimpimage.[ch] (gimp_image_get_type_string): New method
+	to get a string representation of the image type.
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): Ask the GimpImage for an image
+	type string instead of making assumptions about its
+	implementation.
+
+2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/base/temp-buf.c (temp_buf_copy): Bail out if we fail to
 	create a dest buffer.
 

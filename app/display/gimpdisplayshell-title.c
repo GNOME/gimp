@@ -218,28 +218,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 't': /* type */
-              {
-                const gchar *image_type_str = NULL;
-                gboolean     empty          = gimp_image_is_empty (image);
-
-                switch (gimp_image_base_type (image))
-                  {
-                  case GIMP_RGB:
-                    image_type_str = empty ? _("RGB-empty") : _("RGB");
-                    break;
-                  case GIMP_GRAY:
-                    image_type_str = empty ? _("grayscale-empty") : _("grayscale");
-                    break;
-                  case GIMP_INDEXED:
-                    image_type_str = empty ? _("indexed-empty") : _("indexed");
-                    break;
-                  default:
-                    g_assert_not_reached ();
-                    break;
-                  }
-
-                i += print (title, title_len, i, "%s", image_type_str);
-              }
+              i += print (title, title_len, i, "%s", gimp_image_get_type_string (image));
               break;
 
             case 's': /* user source zoom factor */
