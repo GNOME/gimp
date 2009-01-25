@@ -1,3 +1,8 @@
+2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/base/temp-buf.c (temp_buf_copy): Bail out if we fail to
+	create a dest buffer.
+
 2009-01-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

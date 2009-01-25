@@ -178,6 +178,9 @@ temp_buf_copy (TempBuf *src,
   if (! dest)
     dest = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
 
+  if (! dest)
+    return NULL;
+
   if (src->bytes != dest->bytes)
     {
       if (src->bytes == 4 && dest->bytes == 2)       /* RGBA  -> GRAYA */
