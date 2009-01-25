@@ -3720,15 +3720,10 @@ gimp_image_get_type_string (GimpImage *image)
 
   switch (gimp_image_base_type (image))
     {
-    case GIMP_RGB:
-      return empty ? _("RGB-empty") : _("RGB");
-    case GIMP_GRAY:
-      return empty ? _("grayscale-empty") : _("grayscale");
-    case GIMP_INDEXED:
-      return empty ? _("indexed-empty") : _("indexed");
-    default:
-      return "unkown";
-      break;
+    case GIMP_RGB:     return empty ? _("RGB-empty")       : _("RGB");
+    case GIMP_GRAY:    return empty ? _("grayscale-empty") : _("grayscale");
+    case GIMP_INDEXED: return empty ? _("indexed-empty")   : _("indexed");
+    default:           return "unkown";
     }
 }
 
