@@ -546,10 +546,10 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     {
       GeglColor *gegl_color;
       GimpRGB    gimp_color;
-      gfloat     r = 0.0;
-      gfloat     g = 0.0;
-      gfloat     b = 0.0;
-      gfloat     a = 1.0;
+      gdouble    r = 0.0;
+      gdouble    g = 0.0;
+      gdouble    b = 0.0;
+      gdouble    a = 1.0;
       GValue     value = { 0, };
 
       g_value_init (&value, GEGL_TYPE_COLOR);

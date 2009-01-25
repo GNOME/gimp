@@ -1,3 +1,8 @@
+2009-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate):
+	gegl_color_get_rgba() takes pointers to doubles now, not floats.
+
 2009-01-24  Michael Natterer  <mitch@gimp.org>
 
 	Bug 568890 – don't rely on GtkAction implementation details
