@@ -1,5 +1,7 @@
 2009-01-25  Sven Neumann  <sven@gimp.org>
 
+	Bug 569043 – GEGL tool - missing Operation Settings for all sub-tools
+
 	Merged from trunk:
 
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_get_config): 
