@@ -1,5 +1,11 @@
 2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_create_override): New
+	helper function that creates a new GimpProcedure that can be used
+	to override an existing procedure.
+
+2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpimage.[ch] (gimp_image_get_type_string): New method
 	to get a string representation of the image type.
 

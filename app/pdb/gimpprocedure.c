@@ -529,6 +529,38 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   procedure->num_values++;
 }
 
+/**
+ * gimp_procedure_create_override:
+ * @procedure:
+ * @new_marshal_func:
+ *
+ * Creates a new GimpProcedure that can be used to override the
+ * existing @procedure.
+ *
+ * Returns: The new #GimpProcedure.
+ **/
+GimpProcedure *
+gimp_procedure_create_override (GimpProcedure   *procedure,
+                                GimpMarshalFunc  new_marshal_func)
+{
+  GimpProcedure *new_procedure = NULL;
+  const gchar   *name          = NULL;
+  int            i             = 0;
+
+  new_procedure = gimp_procedure_new (new_marshal_func);
+  name          = gimp_object_get_name (GIMP_OBJECT (procedure));
+
+  gimp_object_set_static_name (GIMP_OBJECT (new_procedure), name);
+
+  for (i = 0; i < procedure->num_args; i++)
+    gimp_procedure_add_argument (new_procedure, procedure->args[i]);
+
+  for (i = 0; i < procedure->num_values; i++)
+    gimp_procedure_add_return_value (new_procedure, procedure->values[i]);
+
+  return new_procedure;
+}
+
 
 /*  private functions  */
 

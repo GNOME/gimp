@@ -123,6 +123,9 @@ GValueArray   * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
                                                    gboolean          success,
                                                    const GError     *error);
 
+GimpProcedure * gimp_procedure_create_override    (GimpProcedure    *procedure,
+                                                   GimpMarshalFunc   new_marshal_func);
+
 GValueArray   * gimp_procedure_execute            (GimpProcedure    *procedure,
                                                    Gimp             *gimp,
                                                    GimpContext      *context,
