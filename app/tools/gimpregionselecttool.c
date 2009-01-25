@@ -188,8 +188,6 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      gint off_x, off_y;
-
       if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_ANCHOR)
         {
           if (gimp_image_get_floating_selection (display->image))
@@ -208,12 +206,10 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
         }
       else if (region_sel->region_mask)
         {
-          if (options->sample_merged)
-            {
-              off_x = 0;
-              off_y = 0;
-            }
-          else
+          gint off_x = 0;
+          gint off_y = 0;
+
+          if (! options->sample_merged)
             {
               GimpDrawable *drawable;
 

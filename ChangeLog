@@ -1,3 +1,9 @@
+2009-01-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpregionselecttool.c
+	(gimp_region_select_tool_button_release): move variables to local
+	scope.
+
 2009-01-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/pdb/gimpprocedure.[ch] (gimp_procedure_create_override): New
