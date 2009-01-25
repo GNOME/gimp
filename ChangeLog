@@ -1,3 +1,11 @@
+2009-01-25  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_get_config): 
+	(gimp_gegl_tool_get_config): canonicalize the type name of the
+	created config class.
+
 2009-01-24  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
