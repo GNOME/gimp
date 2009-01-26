@@ -889,7 +889,13 @@ p_load_pointfile (BenderDialog *cd,
   l_pi = 0;
   l_ci = 0;
 
-  fgets (l_buff, 2000 - 1, l_fp);
+  if (! fgets (l_buff, 2000 - 1, l_fp))
+    {
+      g_message (_("Error while reading '%s': %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return -1;
+    }
+
   if (strncmp(l_buff, KEY_POINTFILE, strlen(KEY_POINTFILE)) == 0)
   {
      while (NULL != fgets (l_buff, 2000-1, l_fp))
