@@ -14,6 +14,8 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
 
  569043 – GEGL tool - missing Operation Settings for all sub-tools
  568890 – don't rely on GtkAction implementation details
+ 568909 – wrong RGB values for color names in libgimpcolor/gimprgb-parse.c
+ 568839 – wrong hex RGB value for the color names slategrey and slategray
  559408 - Brushes dragged to the image window look strange
  563337 – Rectangle Select Tool does not allow 1:1 fixed ratio
  568016 – Black pullout parameter of plug-in-newsprint has no effect

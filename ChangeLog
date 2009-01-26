@@ -20,17 +20,23 @@
 
 2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
 
+	Bug 568909 – wrong RGB values for color names in
+	libgimpcolor/gimprgb-parse.c
+
 	Merged from trunk:
 
-	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
-	to fix more RGB colour values. Fixes bug #568909.
+	* libgimpcolor/gimprgb-parse.c: applied patch from Andreas Turtschan
+	to fix more RGB colour values.
 
 2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
 
+	Bug 568839 – wrong hex RGB value for the color names slategrey and
+	slategray
+
 	Merged from trunk:
 
-	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
-	to fix colour values for slategray and slategrey. Fixes bug #568839.
+	* libgimpcolor/gimprgb-parse.c: applied patch from Andreas Turtschan
+	to fix colour values for slategray and slategrey.
 
 2009-01-22  Tor Lillqvist  <tml@iki.fi>
 
