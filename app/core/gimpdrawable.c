@@ -339,7 +339,9 @@ gimp_drawable_visibility_changed (GimpItem *item)
       input  = gegl_node_get_input_proxy  (node, "input");
       output = gegl_node_get_output_proxy (node, "output");
 
-      if (gimp_item_get_visible (item))
+      if (gimp_item_get_visible (item) &&
+          ! (GIMP_IS_LAYER (item) &&
+             gimp_layer_is_floating_sel (GIMP_LAYER (item))))
         {
           gegl_node_connect_to (input,               "output",
                                 drawable->mode_node, "input");
@@ -349,7 +351,15 @@ gimp_drawable_visibility_changed (GimpItem *item)
       else
         {
           gegl_node_disconnect (drawable->mode_node, "input");
+
+          gegl_node_connect_to (input,  "output",
+                                output, "input");
         }
+
+#ifdef __GNUC__
+#warning FIXME: chain up again when above floating sel special case is gone
+#endif
+      return;
     }
 
   GIMP_ITEM_CLASS (parent_class)->visibility_changed (item);

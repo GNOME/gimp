@@ -1,5 +1,14 @@
 2009-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_visibility_changed):
+	don't show the floating selection layer in the image graph, it
+	will be shown by the drawable it is attached to. This is a temp
+	special case hack, but better fits here than into the newly
+	created and clean GimpDrawableStack. The floating selection will
+	see the end of its days as layer soon enough anyway.
+
+2009-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpbutton.c (gimp_button_clicked): chain up if a
 	parent impl exists to be safe against future gtk versions doing
 	something in GtkButton::clicked() (as happened in GTK+ trunk).
