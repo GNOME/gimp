@@ -132,4 +132,8 @@ gimp_button_clicked (GtkButton *button)
       gimp_button_extended_clicked (GIMP_BUTTON (button),
                                     GIMP_BUTTON (button)->press_state);
     }
+  else if (GTK_BUTTON_CLASS (parent_class)->clicked)
+    {
+      GTK_BUTTON_CLASS (parent_class)->clicked (button);
+    }
 }
