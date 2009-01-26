@@ -470,7 +470,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"文件“%s”已损坏。\n"
+"文件 '%s' 已损坏。\n"
 "第 %d 行选项部分错误"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1007
@@ -627,7 +627,7 @@ msgstr "位置"
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1227
 #: ../plug-ins/gflare/gflare.c:2679
 msgid "_X:"
-msgstr "X(_X)："
+msgstr "_X："
 
 #: ../plug-ins/Lighting/lighting_ui.c:480
 #: ../plug-ins/MapObject/mapobject_ui.c:695
@@ -639,7 +639,7 @@ msgstr "光源在 XYZ 空间的 X 坐标位置"
 #: ../plug-ins/common/papertile.c:291 ../plug-ins/flame/flame.c:1241
 #: ../plug-ins/gflare/gflare.c:2683
 msgid "_Y:"
-msgstr "Y(_Y)："
+msgstr "_Y："
 
 #: ../plug-ins/Lighting/lighting_ui.c:493
 #: ../plug-ins/MapObject/mapobject_ui.c:709
@@ -648,7 +648,7 @@ msgstr "光源在 XYZ 空间的 Y 坐标位置"
 
 #: ../plug-ins/Lighting/lighting_ui.c:500
 msgid "_Z:"
-msgstr "Z(_Z)："
+msgstr "_Z："
 
 #: ../plug-ins/Lighting/lighting_ui.c:506
 #: ../plug-ins/MapObject/mapobject_ui.c:723
@@ -924,7 +924,7 @@ msgstr "方盒"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:492
 msgid "Cylinder"
-msgstr "圆柱体"
+msgstr "圆柱"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:507
 msgid "Type of object to map to"
@@ -1029,7 +1029,7 @@ msgstr "反光："
 
 #: ../plug-ins/MapObject/mapobject_ui.c:951
 msgid "Highlight:"
-msgstr "高光："
+msgstr "高亮："
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1012
 msgid "Object X position in XYZ space"
@@ -12112,7 +12112,7 @@ msgstr "32 bpp，8 位 alpha，无调色板"
 
 #: ../plug-ins/winicon/icodialog.c:196
 msgid "Compressed (PNG)"
-msgstr "压缩(PNG)"
+msgstr "压缩 (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/winicon/icoload.c:616
