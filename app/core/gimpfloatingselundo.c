@@ -114,11 +114,14 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
 
           /*  clear the selection  */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));
+
+          gimp_drawable_attach_floating_sel (floating_layer->fs.drawable,
+                                             floating_layer);
         }
       else
         {
-          /*  Update the preview for the underlying drawable  */
-          gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
+          gimp_drawable_detach_floating_sel (floating_layer->fs.drawable,
+                                             floating_layer);
 
           /*  clear the selection  */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));

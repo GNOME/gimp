@@ -40,6 +40,10 @@ struct _GimpDrawable
   TileManager   *shadow;             /* shadow buffer tiles            */
 
   GeglNode      *source_node;
+  GeglNode      *tile_source_node;
+  GeglNode      *fs_opacity_node;
+  GeglNode      *fs_offset_node;
+  GeglNode      *fs_mode_node;
 
   GeglNode      *mode_node;
 
@@ -247,6 +251,11 @@ gint            gimp_drawable_bytes_without_alpha(const GimpDrawable *drawable);
 gboolean        gimp_drawable_has_floating_sel   (const GimpDrawable *drawable);
 
 const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
+
+void           gimp_drawable_attach_floating_sel (GimpDrawable       *drawable,
+                                                  GimpLayer          *floating_sel);
+void           gimp_drawable_detach_floating_sel (GimpDrawable       *drawable,
+                                                  GimpLayer          *floating_sel);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

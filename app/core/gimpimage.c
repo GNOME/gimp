@@ -2969,7 +2969,11 @@ gimp_image_add_layer (GimpImage *image,
 
   /*  If the layer is a floating selection, set the fs pointer  */
   if (gimp_layer_is_floating_sel (layer))
-    gimp_image_set_floating_selection (image, layer);
+    {
+      gimp_image_set_floating_selection (image, layer);
+
+      gimp_drawable_attach_floating_sel (layer->fs.drawable, layer);
+    }
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     image->flush_accum.alpha_changed = TRUE;
@@ -3019,16 +3023,11 @@ gimp_image_remove_layer (GimpImage *image,
 
   old_has_alpha = gimp_image_has_alpha (image);
 
-  if (gimp_image_get_floating_selection (image) == layer)
+  if (gimp_layer_is_floating_sel (layer))
     {
       undo_desc = _("Remove Floating Selection");
 
-      /*  Invalidate the preview of the obscured drawable.  We do this here
-       *  because it will not be done until the floating selection is removed,
-       *  at which point the obscured drawable's preview will not be declared
-       *  invalid.
-       */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+      gimp_drawable_detach_floating_sel (layer->fs.drawable, layer);
     }
   else
     {

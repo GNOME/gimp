@@ -1,5 +1,32 @@
 2009-01-26  Michael Natterer  <mitch@gimp.org>
 
+	The GEGL projection does floating selections now:
+
+	* app/core/gimpdrawable.[ch] (struct GimpDrawable): add a couple
+	of GeglNodes which are used to create a sub-graph for this
+	drawable's floating selection.
+
+	(gimp_drawable_detach_floating_sel)
+	(gimp_drawable_attach_floating_sel): new functions to call
+	whenever a floating selection gets attached or detached.
+
+	Change the role of the drawable's "source_node": it's no longer a
+	direct tile source but an arbitrary graph. Add new internal
+	function gimp_drawable_sync_source_node() which creates a
+	sub-graph for the floating selection within the source node, and
+	uses the new "tile_source_node" directly otherwise. Connect to
+	"notify" of the floating selection and reconfigure its sub-graph
+	when its properties change. This is also one more refactoring in
+	the direction of layer trees.
+
+	* app/core/gimpfloatingselundo.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c: call the new attach/detach
+	API whenever a floating selection is attached or detached from a
+	drawable. This will need more refactoring i guess...
+
+2009-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.c (gimp_drawable_visibility_changed):
 	don't show the floating selection layer in the image graph, it
 	will be shown by the drawable it is attached to. This is a temp

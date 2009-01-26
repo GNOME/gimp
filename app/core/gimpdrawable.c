@@ -150,6 +150,12 @@ static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
+static void       gimp_drawable_sync_source_node   (GimpDrawable      *drawable,
+                                                    gboolean           detach_fs);
+static void       gimp_drawable_fs_notify          (GimpLayer         *fs,
+                                                    const GParamSpec  *pspec,
+                                                    GimpDrawable      *drawable);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
@@ -249,6 +255,9 @@ static void
 gimp_drawable_finalize (GObject *object)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
+
+  if (drawable->fs_opacity_node)
+    gimp_drawable_sync_source_node (drawable, TRUE);
 
   if (drawable->tiles)
     {
@@ -672,12 +681,12 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  if (drawable->source_node)
+  if (drawable->tile_source_node)
     {
       GObject       *operation;
       GeglRectangle  rect;
 
-      g_object_get (drawable->source_node,
+      g_object_get (drawable->tile_source_node,
                     "gegl-operation", &operation,
                     NULL);
 
@@ -757,8 +766,8 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
 
-  if (drawable->source_node)
-    gegl_node_set (drawable->source_node,
+  if (drawable->tile_source_node)
+    gegl_node_set (drawable->tile_source_node,
                    "tile-manager", drawable->tiles,
                    NULL);
 }
@@ -888,6 +897,133 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   gimp_drawable_update (drawable, x, y, width, height);
 }
 
+static void
+gimp_drawable_sync_source_node (GimpDrawable *drawable,
+                                gboolean      detach_fs)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpLayer *fs    = gimp_image_get_floating_selection (image);
+  GeglNode  *output;
+
+  if (! drawable->source_node)
+    return;
+
+  output = gegl_node_get_output_proxy (drawable->source_node, "output");
+
+  if (gimp_drawable_has_floating_sel (drawable) && ! detach_fs)
+    {
+      gint off_x, off_y;
+      gint fs_off_x, fs_off_y;
+
+      if (! drawable->fs_opacity_node)
+        {
+          GeglNode *fs_source;
+
+          fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+          gegl_node_add_child (drawable->source_node, fs_source);
+
+          drawable->fs_opacity_node =
+            gegl_node_new_child (drawable->source_node,
+                                 "operation", "gegl:opacity",
+                                 NULL);
+
+          gegl_node_connect_to (fs_source,                 "output",
+                                drawable->fs_opacity_node, "input");
+
+          drawable->fs_offset_node =
+            gegl_node_new_child (drawable->source_node,
+                                 "operation", "gegl:translate",
+                                 NULL);
+
+          gegl_node_connect_to (drawable->fs_opacity_node, "output",
+                                drawable->fs_offset_node,  "input");
+
+          drawable->fs_mode_node =
+            gegl_node_new_child (drawable->source_node,
+                                 "operation", "gimp:point-layer-mode",
+                                 NULL);
+
+          gegl_node_connect_to (drawable->tile_source_node, "output",
+                                drawable->fs_mode_node,     "input");
+          gegl_node_connect_to (drawable->fs_offset_node,   "output",
+                                drawable->fs_mode_node,     "aux");
+
+          gegl_node_connect_to (drawable->fs_mode_node, "output",
+                                output,                 "input");
+
+          g_signal_connect (fs, "notify",
+                            G_CALLBACK (gimp_drawable_fs_notify),
+                            drawable);
+        }
+
+      gegl_node_set (drawable->fs_opacity_node,
+                     "value", gimp_layer_get_opacity (fs),
+                     NULL);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
+
+      gegl_node_set (drawable->fs_offset_node,
+                     "x", (gdouble) (fs_off_x - off_x),
+                     "y", (gdouble) (fs_off_y - off_y),
+                     NULL);
+
+      gegl_node_set (drawable->fs_mode_node,
+                     "blend-mode", gimp_layer_get_mode (fs),
+                     NULL);
+    }
+  else
+    {
+      if (drawable->fs_opacity_node)
+        {
+          GeglNode *fs_source;
+
+          gegl_node_disconnect (drawable->fs_opacity_node, "input");
+          gegl_node_disconnect (drawable->fs_offset_node, "input");
+          gegl_node_disconnect (drawable->fs_mode_node, "input");
+          gegl_node_disconnect (drawable->fs_mode_node, "aux");
+
+          fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+          gegl_node_remove_child (drawable->source_node,
+                                  fs_source);
+
+          gegl_node_remove_child (drawable->source_node,
+                                  drawable->fs_opacity_node);
+          drawable->fs_opacity_node = NULL;
+
+          gegl_node_remove_child (drawable->source_node,
+                                  drawable->fs_offset_node);
+          drawable->fs_offset_node = NULL;
+
+          gegl_node_remove_child (drawable->source_node,
+                                  drawable->fs_mode_node);
+          drawable->fs_mode_node = NULL;
+
+          g_signal_handlers_disconnect_by_func (fs,
+                                                gimp_drawable_fs_notify,
+                                                drawable);
+        }
+
+      gegl_node_connect_to (drawable->tile_source_node, "output",
+                            output,                     "input");
+    }
+}
+
+static void
+gimp_drawable_fs_notify (GimpLayer        *fs,
+                         const GParamSpec *pspec,
+                         GimpDrawable     *drawable)
+{
+  if (! strcmp (pspec->name, "offset-x") ||
+      ! strcmp (pspec->name, "offset-y") ||
+      ! strcmp (pspec->name, "visible")  ||
+      ! strcmp (pspec->name, "mode")     ||
+      ! strcmp (pspec->name, "opacity"))
+    {
+      gimp_drawable_sync_source_node (drawable, FALSE);
+    }
+}
+
 
 /*  public functions  */
 
@@ -932,8 +1068,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
 
-  if (drawable->source_node)
-    gegl_node_set (drawable->source_node,
+  if (drawable->tile_source_node)
+    gegl_node_set (drawable->tile_source_node,
                    "tile-manager", drawable->tiles,
                    NULL);
 }
@@ -1239,13 +1375,16 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
   if (drawable->source_node)
     return drawable->source_node;
 
-  drawable->source_node = g_object_new (GEGL_TYPE_NODE,
-                                        "operation", "gimp:tilemanager-source",
-                                        NULL);
-  gegl_node_set (drawable->source_node,
-                 "tile-manager", drawable->tiles,
-                 "linear",       TRUE,
-                 NULL);
+  drawable->source_node = gegl_node_new ();
+
+  drawable->tile_source_node =
+    gegl_node_new_child (drawable->source_node,
+                         "operation",    "gimp:tilemanager-source",
+                         "tile-manager", drawable->tiles,
+                         "linear",       TRUE,
+                         NULL);
+
+  gimp_drawable_sync_source_node (drawable, FALSE);
 
   return drawable->source_node;
 }
@@ -1653,4 +1792,45 @@ gimp_drawable_get_colormap (const GimpDrawable *drawable)
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   return image ? gimp_image_get_colormap (image) : NULL;
+}
+
+void
+gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
+                                   GimpLayer    *floating_sel)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_LAYER (floating_sel));
+
+  g_printerr ("%s\n", G_STRFUNC);
+
+  gimp_drawable_sync_source_node (drawable, FALSE);
+
+#ifdef __GNUC__
+#warning FIXME: remove this hack when the floating sel is no layer any longer
+#endif
+  g_signal_emit_by_name (floating_sel, "visibility-changed");
+}
+
+void
+gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
+                                   GimpLayer    *floating_sel)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_LAYER (floating_sel));
+
+  g_printerr ("%s\n", G_STRFUNC);
+
+  gimp_drawable_sync_source_node (drawable, TRUE);
+
+#ifdef __GNUC__
+#warning FIXME: remove this hack when the floating sel is no layer any longer
+#endif
+  g_signal_emit_by_name (floating_sel, "visibility-changed");
+
+  /*  Invalidate the preview of the obscured drawable.  We do this here
+   *  because it will not be done until the floating selection is removed,
+   *  at which point the obscured drawable's preview will not be declared
+   *  invalid.
+   */
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_sel));
 }
