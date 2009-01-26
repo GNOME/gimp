@@ -1,3 +1,11 @@
+2009-01-26  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* libgimpwidgets/gimpbutton.c (gimp_button_clicked): chain up if a
+	parent impl exists to be safe against future gtk versions doing
+	something in GtkButton::clicked() (as happened in GTK+ trunk).
+
 2009-01-25  Sven Neumann  <sven@gimp.org>
 
 	Bug 569043 – GEGL tool - missing Operation Settings for all sub-tools
