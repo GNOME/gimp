@@ -668,7 +668,7 @@ gimp_layer_rename (GimpItem     *item,
 
   if (floating_sel)
     {
-      if (GIMP_IS_CHANNEL (layer->fs.drawable))
+      if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("Cannot create a new layer from the floating "
@@ -1823,7 +1823,7 @@ gimp_layer_boundary (GimpLayer *layer,
   /*  if the layer is a floating selection  */
   if (gimp_layer_is_floating_sel (layer))
     {
-      if (GIMP_IS_CHANNEL (layer->fs.drawable))
+      if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
         {
           /*  if the owner drawable is a channel, just return nothing  */
 
@@ -1835,7 +1835,7 @@ gimp_layer_boundary (GimpLayer *layer,
         {
           /*  otherwise, set the layer to the owner drawable  */
 
-          layer = GIMP_LAYER (layer->fs.drawable);
+          layer = GIMP_LAYER (gimp_layer_get_floating_sel_drawable (layer));
         }
     }
 
@@ -1880,6 +1880,14 @@ gimp_layer_get_mask (const GimpLayer *layer)
   return layer->mask;
 }
 
+GimpDrawable *
+gimp_layer_get_floating_sel_drawable (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  return layer->fs.drawable;
+}
+
 void
 gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
                                       GimpDrawable *drawable)
@@ -1907,7 +1915,7 @@ gimp_layer_is_floating_sel (const GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  return (layer->fs.drawable != NULL);
+  return (gimp_layer_get_floating_sel_drawable (layer) != NULL);
 }
 
 void

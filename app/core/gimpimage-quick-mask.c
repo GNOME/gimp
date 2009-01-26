@@ -133,7 +133,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           if (image->quick_mask_inverted)
             gimp_channel_invert (mask, TRUE);
 
-          if (floating_sel && floating_sel->fs.drawable == GIMP_DRAWABLE (mask))
+          if (floating_sel &&
+              gimp_layer_get_floating_sel_drawable (floating_sel) == GIMP_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
 
           gimp_selection_load (GIMP_SELECTION (gimp_image_get_mask (image)),

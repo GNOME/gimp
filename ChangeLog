@@ -1,5 +1,24 @@
 2009-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.[ch]: add new accessor
+	gimp_layer_get_floating_sel_drawable() which returns the drawable
+	the floating layer is attached to.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpfloatingselundo.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/core/gimplayer-floating-sel.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/image.pdb: use it instead of accessing
+	layer->fs.drawable directly.
+
+	* app/pdb/image-cmds.c: regenerated.
+
+2009-01-26  Michael Natterer  <mitch@gimp.org>
+
 	The GEGL projection does floating selections now:
 
 	* app/core/gimpdrawable.[ch] (struct GimpDrawable): add a couple

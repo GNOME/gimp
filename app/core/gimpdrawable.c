@@ -1779,7 +1779,8 @@ gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
 
   floating_sel = gimp_image_get_floating_selection (image);
 
-  return (floating_sel && floating_sel->fs.drawable == drawable);
+  return (floating_sel &&
+          gimp_layer_get_floating_sel_drawable (floating_sel) == drawable);
 }
 
 const guchar *

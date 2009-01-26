@@ -125,7 +125,7 @@ floating_sel_to_layer (GimpLayer  *layer,
   image = gimp_item_get_image (item);
 
   /*  Check if the floating layer belongs to a channel...  */
-  if (GIMP_IS_CHANNEL (layer->fs.drawable))
+  if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Cannot create a new layer from the floating "
@@ -139,7 +139,8 @@ floating_sel_to_layer (GimpLayer  *layer,
 
   gimp_image_undo_push_fs_to_layer (image, NULL, layer);
 
-  gimp_drawable_detach_floating_sel (layer->fs.drawable, layer);
+  gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
+                                     layer);
 
   /*  Set pointers  */
   gimp_layer_set_floating_sel_drawable (layer, NULL);
@@ -163,27 +164,30 @@ floating_sel_to_layer (GimpLayer  *layer,
 void
 floating_sel_activate_drawable (GimpLayer *layer)
 {
-  GimpImage *image;
+  GimpImage    *image;
+  GimpDrawable *drawable;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
+  drawable = gimp_layer_get_floating_sel_drawable (layer);
+
   /*  set the underlying drawable to active  */
-  if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
+  if (GIMP_IS_LAYER_MASK (drawable))
     {
-      GimpLayerMask *mask = GIMP_LAYER_MASK (layer->fs.drawable);
+      GimpLayerMask *mask = GIMP_LAYER_MASK (drawable);
 
       gimp_image_set_active_layer (image, gimp_layer_mask_get_layer (mask));
     }
-  else if (GIMP_IS_CHANNEL (layer->fs.drawable))
+  else if (GIMP_IS_CHANNEL (drawable))
     {
-      gimp_image_set_active_channel (image, GIMP_CHANNEL (layer->fs.drawable));
+      gimp_image_set_active_channel (image, GIMP_CHANNEL (drawable));
     }
   else
     {
-      gimp_image_set_active_layer (image, GIMP_LAYER (layer->fs.drawable));
+      gimp_image_set_active_layer (image, GIMP_LAYER (drawable));
     }
 }
 
@@ -275,7 +279,7 @@ floating_sel_invalidate (GimpLayer *layer)
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
   /*  Invalidate the attached-to drawable's preview  */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->fs.drawable));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimp_layer_get_floating_sel_drawable (layer)));
 
   /*  Invalidate the boundary  */
   layer->fs.boundary_known = FALSE;
@@ -296,7 +300,7 @@ floating_sel_composite (GimpLayer *layer)
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
-  drawable = layer->fs.drawable;
+  drawable = gimp_layer_get_floating_sel_drawable (layer);
 
   gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
   gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);

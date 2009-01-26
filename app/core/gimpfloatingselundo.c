@@ -79,7 +79,7 @@ gimp_floating_sel_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_FS_TO_LAYER:
-      floating_sel_undo->drawable = layer->fs.drawable;
+      floating_sel_undo->drawable = gimp_layer_get_floating_sel_drawable (layer);
       break;
 
     default:
@@ -115,12 +115,12 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           /*  clear the selection  */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_layer));
 
-          gimp_drawable_attach_floating_sel (floating_layer->fs.drawable,
+          gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer),
                                              floating_layer);
         }
       else
         {
-          gimp_drawable_detach_floating_sel (floating_layer->fs.drawable,
+          gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer),
                                              floating_layer);
 
           /*  clear the selection  */

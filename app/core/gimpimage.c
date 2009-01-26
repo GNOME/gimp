@@ -2972,7 +2972,8 @@ gimp_image_add_layer (GimpImage *image,
     {
       gimp_image_set_floating_selection (image, layer);
 
-      gimp_drawable_attach_floating_sel (layer->fs.drawable, layer);
+      gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
+                                         layer);
     }
 
   if (old_has_alpha != gimp_image_has_alpha (image))
@@ -3027,7 +3028,8 @@ gimp_image_remove_layer (GimpImage *image,
     {
       undo_desc = _("Remove Floating Selection");
 
-      gimp_drawable_detach_floating_sel (layer->fs.drawable, layer);
+      gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
+                                         layer);
     }
   else
     {

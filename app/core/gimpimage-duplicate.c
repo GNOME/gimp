@@ -216,7 +216,7 @@ gimp_image_duplicate_layers (GimpImage     *image,
 
   if (floating_selection)
     {
-      *floating_sel_drawable = floating_selection->fs.drawable;
+      *floating_sel_drawable = gimp_layer_get_floating_sel_drawable (floating_selection);
     }
 
   for (list = gimp_image_get_layer_iter (image), count = 0;

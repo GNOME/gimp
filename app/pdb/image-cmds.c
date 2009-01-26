@@ -776,7 +776,7 @@ image_floating_sel_attached_to_invoker (GimpProcedure      *procedure,
       GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
       if (floating_sel)
-        drawable = floating_sel->fs.drawable;
+        drawable = gimp_layer_get_floating_sel_drawable (floating_sel);
       else
         drawable = NULL;
     }
