@@ -334,8 +334,10 @@ gimp_procedure_execute (GimpProcedure  *procedure,
 
   if (return_vals)
     {
-      if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
+      switch (g_value_get_enum (&return_vals->values[0]))
         {
+        case GIMP_PDB_CALLING_ERROR:
+        case GIMP_PDB_EXECUTION_ERROR:
           /*  If the error has not already been set, construct one
            *  from the error message that is optionally passed with
            *  the return values.
@@ -349,6 +351,10 @@ gimp_procedure_execute (GimpProcedure  *procedure,
 				       g_value_get_string (&return_vals->values[1]));
                 }
             }
+          break;
+
+        default:
+          break;
         }
     }
   else

@@ -1,3 +1,8 @@
+2009-01-28  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_execute): don't set an
+	error if the procedure was cancelled.
+
 2009-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.[ch]: add new accessor
