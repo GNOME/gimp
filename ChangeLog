@@ -1,3 +1,9 @@
+2009-01-28  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate): if
+	compiling for GEGL >= 0.0.23, use double parameters with
+	gegl_color_get_rgba().
+
 2009-01-26  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
