@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-18 15:34+0100\n"
-"PO-Revision-Date: 2009-01-18 15:39+0100\n"
+"POT-Creation-Date: 2009-01-29 22:45+0100\n"
+"PO-Revision-Date: 2009-01-29 22:46+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,11 +58,19 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"GIMP ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation herausgegeben, weitergeben und/oder modifizieren, entweder unter Version 3 der Lizenz oder (wenn Sie es wünschen) jeder späteren Version.\n"
+"GIMP ist freie Software. Sie können es unter den Bedingungen der GNU General "
+"Public License, wie von der Free Software Foundation herausgegeben, "
+"weitergeben und/oder modifizieren, entweder unter Version 3 der Lizenz oder "
+"(wenn Sie es wünschen) jeder späteren Version.\n"
 "\n"
-"Die Veröffentlichung von GIMP erfolgt in der Hoffnung, dass es Ihnen von Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne die implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n"
+"Die Veröffentlichung von GIMP erfolgt in der Hoffnung, dass es Ihnen von "
+"Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne die implizite "
+"Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. "
+"Details finden Sie in der GNU General Public License.\n"
 "\n"
-"Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP erhalten haben. Falls nicht, finden Sie sie unter <http://www.gnu.org/licenses/>."
+"Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP "
+"erhalten haben. Falls nicht, finden Sie sie unter <http://www.gnu.org/"
+"licenses/>."
 
 #: ../app/app.c:213
 #, c-format
@@ -720,7 +728,7 @@ msgstr "_Deckkraft:"
 #: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:159
 #: ../app/actions/channels-commands.c:163
-#: ../app/widgets/gimpchanneltreeview.c:344
+#: ../app/widgets/gimpchanneltreeview.c:333
 msgid "New Channel"
 msgstr "Neuer Kanal"
 
@@ -734,7 +742,7 @@ msgstr "Farbe für neuen Kanal"
 
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:584
-#: ../app/widgets/gimpchanneltreeview.c:276
+#: ../app/widgets/gimpchanneltreeview.c:265
 #: ../app/widgets/gimplayertreeview.c:800 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
@@ -7724,99 +7732,99 @@ msgstr "Parasit von Bild entfernen"
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:3012 ../app/core/gimpimage.c:3034
+#: ../app/core/gimpimage.c:3013 ../app/core/gimpimage.c:3036
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:3028
+#: ../app/core/gimpimage.c:3029
 msgid "Remove Floating Selection"
 msgstr "Schwebende Auswahl entfernen"
 
-#: ../app/core/gimpimage.c:3184
+#: ../app/core/gimpimage.c:3186
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3189
+#: ../app/core/gimpimage.c:3191
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: ../app/core/gimpimage.c:3209
+#: ../app/core/gimpimage.c:3211
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3216
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: ../app/core/gimpimage.c:3225
+#: ../app/core/gimpimage.c:3227
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: ../app/core/gimpimage.c:3240
+#: ../app/core/gimpimage.c:3242
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: ../app/core/gimpimage.c:3293
+#: ../app/core/gimpimage.c:3295
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:3343 ../app/core/gimpimage.c:3356
+#: ../app/core/gimpimage.c:3345 ../app/core/gimpimage.c:3358
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:3415
+#: ../app/core/gimpimage.c:3417
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3420
+#: ../app/core/gimpimage.c:3422
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: ../app/core/gimpimage.c:3431
+#: ../app/core/gimpimage.c:3433
 msgid "Raise Channel to Top"
 msgstr "Kanal nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3452
+#: ../app/core/gimpimage.c:3454
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3457
+#: ../app/core/gimpimage.c:3459
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: ../app/core/gimpimage.c:3472
+#: ../app/core/gimpimage.c:3474
 msgid "Lower Channel to Bottom"
 msgstr "Kanal nach ganz unten absenken"
 
-#: ../app/core/gimpimage.c:3526
+#: ../app/core/gimpimage.c:3528
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:3570
+#: ../app/core/gimpimage.c:3572
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: ../app/core/gimpimage.c:3623
+#: ../app/core/gimpimage.c:3625
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: ../app/core/gimpimage.c:3628
+#: ../app/core/gimpimage.c:3630
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: ../app/core/gimpimage.c:3639
+#: ../app/core/gimpimage.c:3641
 msgid "Raise Path to Top"
 msgstr "Pfad nach ganz oben anheben"
 
-#: ../app/core/gimpimage.c:3659
+#: ../app/core/gimpimage.c:3661
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: ../app/core/gimpimage.c:3664
+#: ../app/core/gimpimage.c:3666
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: ../app/core/gimpimage.c:3679
+#: ../app/core/gimpimage.c:3681
 msgid "Lower Path to Bottom"
 msgstr "Pfad nach ganz unten absenken"
 
@@ -7861,7 +7869,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d Pixel"
 msgstr[1] "%d × %d Pixel"
 
-#: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:320
+#: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:310
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -10037,40 +10045,16 @@ msgstr "Skalierung:"
 msgid "Zoom:"
 msgstr "Maßstab:"
 
-#: ../app/display/gimpdisplayshell-title.c:228
-msgid "RGB-empty"
-msgstr "RGB leer"
-
-#: ../app/display/gimpdisplayshell-title.c:228
-msgid "RGB"
-msgstr "RGB"
-
-#: ../app/display/gimpdisplayshell-title.c:231
-msgid "grayscale-empty"
-msgstr "Graustufen leer"
-
-#: ../app/display/gimpdisplayshell-title.c:231
-msgid "grayscale"
-msgstr "Graustufen"
-
-#: ../app/display/gimpdisplayshell-title.c:234
-msgid "indexed-empty"
-msgstr "indiziert leer"
-
-#: ../app/display/gimpdisplayshell-title.c:234
-msgid "indexed"
-msgstr "indiziert"
-
-#: ../app/display/gimpdisplayshell-title.c:288
+#: ../app/display/gimpdisplayshell-title.c:278
 msgid "(modified)"
 msgstr "(verändert)"
 
-#: ../app/display/gimpdisplayshell-title.c:293
+#: ../app/display/gimpdisplayshell-title.c:283
 msgid "(clean)"
 msgstr "(bereinigt)"
 
-#: ../app/display/gimpdisplayshell-title.c:341
-#: ../app/display/gimpdisplayshell-title.c:354
+#: ../app/display/gimpdisplayshell-title.c:331
+#: ../app/display/gimpdisplayshell-title.c:344
 #: ../app/widgets/gimpactiongroup.c:888
 msgid "(none)"
 msgstr "(kein)"
@@ -10458,12 +10442,12 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument Nr. %d "
 "aufgerufen. %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:359 ../app/plug-in/gimppluginprocframe.c:208
+#: ../app/pdb/gimpprocedure.c:365 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Prozedur »%s« hat sich ohne Rückgabewerte beendet"
 
-#: ../app/pdb/gimpprocedure.c:583
+#: ../app/pdb/gimpprocedure.c:621
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -10472,7 +10456,7 @@ msgstr ""
 "Prozedur »%s« lieferte einen falschen Wertetyp für den Rückgabewert »%s« (Nr. %"
 "d). %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:595
+#: ../app/pdb/gimpprocedure.c:633
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -10481,7 +10465,7 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. %d) "
 "aufgerufen. %s erwartet, %s erhalten."
 
-#: ../app/pdb/gimpprocedure.c:627
+#: ../app/pdb/gimpprocedure.c:665
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -10491,7 +10475,7 @@ msgstr ""
 "Sehr wahrscheinlich versucht das Plugin eine Ebene zu bearbeiten, die nicht "
 "mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:639
+#: ../app/pdb/gimpprocedure.c:677
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -10501,7 +10485,7 @@ msgstr ""
 "aufgerufen. Sehr wahrscheinlich versucht das Plugin eine Ebene zu "
 "bearbeiten, die nicht mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:655
+#: ../app/pdb/gimpprocedure.c:693
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -10511,7 +10495,7 @@ msgstr ""
 "Sehr wahrscheinlich versucht ein Plugin ein Bild zu bearbeiten, das nicht "
 "mehr existiert."
 
-#: ../app/pdb/gimpprocedure.c:667
+#: ../app/pdb/gimpprocedure.c:705
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -10521,7 +10505,7 @@ msgstr ""
 "aufgerufen. Wahrscheinlich versucht das Plugin mit einem Bild zu arbeiten, "
 "welches nicht länger existiert."
 
-#: ../app/pdb/gimpprocedure.c:687
+#: ../app/pdb/gimpprocedure.c:725
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -10530,7 +10514,7 @@ msgstr ""
 "Die Prozedur »%s« hat »%s« als Rückgabewert »%s« (Nr. %d, Typ %s) "
 "zurückgegeben. Dieser liegt außerhalb des Wertebereiches."
 
-#: ../app/pdb/gimpprocedure.c:700
+#: ../app/pdb/gimpprocedure.c:738
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -12615,6 +12599,10 @@ msgstr "Schwellwert funktioniert nicht mit indizierten Ebenen."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Den optimalen Grenzwert für die Binarisierung automatisch anpassen"
 
+#: ../app/tools/gimptool.c:850
+msgid "Can't work on an empty image, add a layer first"
+msgstr ""
+
 #: ../app/tools/gimptransformoptions.c:272
 msgid "Transform:"
 msgstr "Transformation:"
@@ -13082,11 +13070,11 @@ msgstr "Prozentsatz der Pinselbreite"
 msgid "(None)"
 msgstr "(Keine)"
 
-#: ../app/widgets/gimpchanneltreeview.c:134
+#: ../app/widgets/gimpchanneltreeview.c:127
 msgid "Reorder Channel"
 msgstr "Kanalreihenfolge ändern"
 
-#: ../app/widgets/gimpchanneltreeview.c:349
+#: ../app/widgets/gimpchanneltreeview.c:338
 msgid "Empty Channel"
 msgstr "Leerer Kanal"
 
@@ -14170,7 +14158,7 @@ msgid "Your GIMP installation is incomplete:"
 msgstr "Ihre Installation von GIMP ist unvollständig:"
 
 #: ../app/widgets/gimpuimanager.c:739
-msgid "Plase make sure the menu XML files are correctly installed."
+msgid "Please make sure the menu XML files are correctly installed."
 msgstr ""
 "Bitte stellen Sie sicher, dass die XML-Menüdateien korrekt installiert sind."
 
@@ -14184,11 +14172,11 @@ msgstr ""
 msgid "[ Base Image ]"
 msgstr "[Basisbild]"
 
-#: ../app/widgets/gimpvectorstreeview.c:116
+#: ../app/widgets/gimpvectorstreeview.c:110
 msgid "Reorder path"
 msgstr "Pfadreihenfolge ändern"
 
-#: ../app/widgets/gimpvectorstreeview.c:264
+#: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Empty Path"
 msgstr "Leerer Pfad"
 
