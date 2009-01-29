@@ -1,3 +1,9 @@
+2009-01-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse_rect):
+	fixed incorrect optimization that caused glitches in the rounded
+	corners on the left side of rectangular selections.
+
 2009-01-28  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimpprocedure.c (gimp_procedure_execute): don't set an
