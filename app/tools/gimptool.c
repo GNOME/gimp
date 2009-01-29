@@ -38,6 +38,7 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-log.h"
+#include "gimp-intl.h"
 
 
 enum
@@ -840,6 +841,15 @@ gimp_tool_oper_update (GimpTool         *tool,
 
   GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, proximity,
                                            display);
+
+  if (G_UNLIKELY (gimp_image_is_empty (display->image) &&
+                  ! gimp_tool_control_get_handle_empty_image (tool->control)))
+    {
+      gimp_tool_replace_status (tool, display,
+                                "%s",
+                                _("Can't work on an empty image, "
+                                  "add a layer first"));
+    }
 }
 
 void

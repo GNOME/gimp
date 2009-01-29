@@ -1,5 +1,18 @@
 2009-01-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: removed gimp_image_get_type_string()
+	again.
+	
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): use the GimpImageBaseType enum
+	instead.
+
+	* app/tools/gimptool.c (gimp_tool_oper_update): if the image is
+	empty and the tool can't handle that, display a message in the
+	statusbar telling the user about this.
+
+2009-01-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse_rect):
 	fixed incorrect optimization that caused glitches in the rounded
 	corners on the left side of rectangular selections.

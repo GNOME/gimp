@@ -121,6 +121,16 @@ gimp_display_shell_update_title_idle (gpointer data)
   return FALSE;
 }
 
+static const gchar *
+gimp_display_shell_title_image_type (GimpImage *image)
+{
+  const gchar *name = "";
+
+  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
+                       gimp_image_base_type (image), NULL, NULL, &name, NULL);
+
+  return name;
+}
 
 static gint print (gchar       *buf,
                    gint         len,
@@ -218,7 +228,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 't': /* type */
-              i += print (title, title_len, i, "%s", gimp_image_get_type_string (image));
+              i += print (title, title_len, i, "%s",
+                          gimp_display_shell_title_image_type (image));
               break;
 
             case 's': /* user source zoom factor */

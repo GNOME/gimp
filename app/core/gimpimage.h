@@ -544,8 +544,6 @@ gboolean        gimp_image_position_vectors      (GimpImage          *image,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
-const gchar   * gimp_image_get_type_string       (GimpImage          *image);
-
 gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
                                                   BoundSeg          **segs,
                                                   gint               *n_segs);
