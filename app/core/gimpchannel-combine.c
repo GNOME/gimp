@@ -394,16 +394,17 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
               xj =  ABS (cur_x + 0.5 - ellipse_center_x);
 
               if (yi < b)
-                xdist = xj - a * sqrt (1 - yi * yi / b_sqr);
+                xdist = xj - a * sqrt (1 - SQR (yi) / b_sqr);
               else
-                xdist = 100.0;  /* anything large will work */
+                xdist = 1000.0;  /* anything large will work */
 
               if (xj < a)
-                ydist = yi - b * sqrt (1 - xj * xj / a_sqr);
+                ydist = yi - b * sqrt (1 - SQR (xj) / a_sqr);
               else
-                ydist = 100.0;  /* anything large will work */
+                ydist = 1000.0;  /* anything large will work */
 
               r = hypot (xdist, ydist);
+
               if (r < 0.001)
                 dist = 0.;
               else
@@ -430,19 +431,21 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                 {
                   x_start = cur_x;
                   last_val = val;
+                }
 
-                  /*  because we are symetric accross the y axis we can
-                   *  skip ahead a bit if we are inside. Do this if we
-                   *  have reached a value of 255 OR if we have passed
-                   *  the center of the leftmost ellipse.
-                   */
-                  if ((val == 255 || cur_x >= x + a) && cur_x < x + w / 2)
-                    {
-                      last_val = val = 255;
-                      cur_x = (ellipse_center_x +
-                               (ellipse_center_x - cur_x) - 1 +
-                               floor (straight_width));
-                    }
+              /*  because we are symetric accross the y axis we can
+               *  skip ahead a bit if we are inside. Do this if we
+               *  have reached a value of 255 OR if we have passed
+               *  the center of the leftmost ellipse.
+               */
+              if ((val == 255 || cur_x >= x + a) && cur_x < x + w / 2)
+                {
+                  x_start = cur_x;
+                  last_val = val = 255;
+
+                  cur_x = (ellipse_center_x +
+                           (ellipse_center_x - cur_x) - 1 +
+                           floor (straight_width));
                 }
 
               /* Time to change center? */
@@ -450,7 +453,6 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                 {
                   ellipse_center_x = x + a + straight_width;
                 }
-
             }
 
           gimp_channel_combine_segment (mask, op, x_start,
