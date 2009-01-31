@@ -1,0 +1,12 @@
+/Makefile
+/Makefile.in
+/makefile.mingw
+/*.lo
+/_libs
+/.libs
+/.deps
+/*.la
+/gimpenums.c
+/gimpenums.c.tail
+/gimpuimarshal.h
+/gimpuimarshal.c

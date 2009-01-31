@@ -1,0 +1,12 @@
+/Makefile
+/Makefile.in
+/makefile.mingw
+/*.lo
+/_libs
+/.libs
+/.deps
+/*.la
+/gimpwidgetsmarshal.h
+/gimpwidgetsmarshal.c
+/gimp-wilber-pixbufs.h
+/test-preview-area

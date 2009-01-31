@@ -1,0 +1,11 @@
+/*.gmo
+/*.mo
+/*.pot
+/.intltool-merge-cache
+/Makefile
+/Makefile.in
+/POTFILES
+/messages
+/missing
+/po2tbl.sed.in
+/stamp-it

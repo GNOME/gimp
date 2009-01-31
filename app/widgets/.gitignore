@@ -1,0 +1,7 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/*.lo
+/libappwidgets.a
+/libappwidgets.la

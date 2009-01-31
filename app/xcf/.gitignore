@@ -1,0 +1,7 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/*.lo
+/libappxcf.a
+/libappxcf.la

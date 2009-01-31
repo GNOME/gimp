@@ -1,0 +1,12 @@
+/Makefile
+/Makefile.in
+/makefile.mingw
+/*.lo
+/_libs
+/.libs
+/.deps
+/*.la
+/gimpversion.h
+/*.lib
+/*.exp
+/test-cpu-accel

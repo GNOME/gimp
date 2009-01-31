@@ -1,0 +1,8 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/*.lo
+/libapppdb.a
+/libapppdb.la
+/libappinternal-procs.a

@@ -1,0 +1,8 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/kernelgen
+/gimp-remote-2.7
+/gimptool-2.0
+/test-clipboard

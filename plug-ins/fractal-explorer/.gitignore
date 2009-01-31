@@ -1,0 +1,6 @@
+/Makefile.in
+/Makefile
+/.deps
+/.libs
+/*.o
+/fractal-explorer
