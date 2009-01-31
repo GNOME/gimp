@@ -1,0 +1,12 @@
+/Makefile
+/Makefile.in
+/makefile.mingw
+/gimpthumb-enums.c
+/*.lo
+/_libs
+/.libs
+/.deps
+/*.la
+/*.lib
+/*.exp
+/gimp-thumbnail-list

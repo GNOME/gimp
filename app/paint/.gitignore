@@ -1,0 +1,7 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/*.lo
+/libapppaint.a
+/libapppaint.la

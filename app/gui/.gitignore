@@ -1,0 +1,8 @@
+/Makefile
+/Makefile.in
+/.deps
+/.libs
+/*.lo
+/gimpdbusservice-glue.h
+/libappgui.a
+/libappgui.la
