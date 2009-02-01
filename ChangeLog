@@ -1,3 +1,8 @@
+2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimplayer.[ch]: Add const qualifier to
+	gimp_layer_get_floating_sel_drawable().
+
 2009-01-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.[ch]: removed gimp_image_get_type_string()

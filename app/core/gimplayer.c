@@ -1881,7 +1881,7 @@ gimp_layer_get_mask (const GimpLayer *layer)
 }
 
 GimpDrawable *
-gimp_layer_get_floating_sel_drawable (GimpLayer *layer)
+gimp_layer_get_floating_sel_drawable (const GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
