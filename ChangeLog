@@ -1,5 +1,21 @@
 2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Applied patch from Alexia Death that prepares brushes for
+	arbitrary transforms by renaming stuff with 'scale' to
+	'transform'. Takes us one step closer to fixing bug #520078.
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.c
+	* app/paint/gimpbrushcore.[ch]
+	* app/paint/gimpsmudge.c
+
+	* app/core/gimpbrush-transform.[ch]: New names of
+	* app/core/gimpbrush-scale.[ch]
+
+	* app/core/Makefile.am: Update.
+
+2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimplayer.[ch]: Add const qualifier to
 	gimp_layer_get_floating_sel_drawable().
 

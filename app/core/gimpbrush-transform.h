@@ -23,14 +23,14 @@
 
 /*  virtual functions of GimpBrush, don't call directly  */
 
-void      gimp_brush_real_scale_size   (GimpBrush *brush,
-                                        gdouble    scale,
-                                        gint      *scaled_width,
-                                        gint      *scaled_height);
-TempBuf * gimp_brush_real_scale_mask   (GimpBrush *brush,
-                                        gdouble    scale);
-TempBuf * gimp_brush_real_scale_pixmap (GimpBrush *brush,
-                                        gdouble    scale);
+void      gimp_brush_real_transform_size   (GimpBrush *brush,
+                                            gdouble    scale,
+                                            gint      *scaled_width,
+                                            gint      *scaled_height);
+TempBuf * gimp_brush_real_transform_mask   (GimpBrush *brush,
+                                            gdouble    scale);
+TempBuf * gimp_brush_real_transform_pixmap (GimpBrush *brush,
+                                            gdouble    scale);
 
 
 #endif  /*  __GIMP_BRUSH_SCALE_H__  */

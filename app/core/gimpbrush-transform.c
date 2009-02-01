@@ -24,7 +24,7 @@
 #include "core-types.h"
 
 #include "gimpbrush.h"
-#include "gimpbrush-scale.h"
+#include "gimpbrush-transform.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -48,30 +48,30 @@ static TempBuf * gimp_brush_scale_pixmap_down (TempBuf *pixmap,
 /*  public functions  */
 
 void
-gimp_brush_real_scale_size (GimpBrush *brush,
-                            gdouble    scale,
-                            gint      *width,
-                            gint      *height)
+gimp_brush_real_transform_size (GimpBrush *brush,
+                                gdouble    scale,
+                                gint      *width,
+                                gint      *height)
 {
   *width  = (gint) (brush->mask->width  * scale + 0.5);
   *height = (gint) (brush->mask->height * scale + 0.5);
 }
 
 TempBuf *
-gimp_brush_real_scale_mask (GimpBrush *brush,
-                            gdouble    scale)
+gimp_brush_real_transform_mask (GimpBrush *brush,
+                                gdouble    scale)
 {
   gint dest_width;
   gint dest_height;
 
-  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
+  gimp_brush_transform_size (brush, scale, &dest_width, &dest_height);
 
   if (dest_width <= 0 || dest_height <= 0)
     return NULL;
 
   if (scale <= 1.0)
     {
-      /*  Downscaling with brush_scale_mask is much faster than with
+      /*  Downscaling with brush_transform_mask is much faster than with
        *  gimp_brush_scale_buf.
        */
       return gimp_brush_scale_mask_down (brush->mask,
@@ -82,13 +82,13 @@ gimp_brush_real_scale_mask (GimpBrush *brush,
 }
 
 TempBuf *
-gimp_brush_real_scale_pixmap (GimpBrush *brush,
-                              gdouble    scale)
+gimp_brush_real_transform_pixmap (GimpBrush *brush,
+                                  gdouble    scale)
 {
   gint dest_width;
   gint dest_height;
 
-  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
+  gimp_brush_transform_size (brush, scale, &dest_width, &dest_height);
 
   if (dest_width <= 0 || dest_height <= 0)
     return NULL;

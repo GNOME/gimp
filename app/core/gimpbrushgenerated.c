@@ -63,11 +63,11 @@ static void          gimp_brush_generated_dirty         (GimpData     *data);
 static const gchar * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData    * gimp_brush_generated_duplicate     (GimpData     *data);
 
-static void          gimp_brush_generated_scale_size    (GimpBrush    *gbrush,
+static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
                                                          gdouble       scale,
                                                          gint         *width,
                                                          gint         *height);
-static TempBuf     * gimp_brush_generated_scale_mask    (GimpBrush    *gbrush,
+static TempBuf     * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
                                                          gdouble       scale);
 
 static TempBuf     * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
@@ -106,16 +106,16 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   GimpDataClass  *data_class   = GIMP_DATA_CLASS (klass);
   GimpBrushClass *brush_class  = GIMP_BRUSH_CLASS (klass);
 
-  object_class->set_property = gimp_brush_generated_set_property;
-  object_class->get_property = gimp_brush_generated_get_property;
+  object_class->set_property  = gimp_brush_generated_set_property;
+  object_class->get_property  = gimp_brush_generated_get_property;
 
-  data_class->save           = gimp_brush_generated_save;
-  data_class->dirty          = gimp_brush_generated_dirty;
-  data_class->get_extension  = gimp_brush_generated_get_extension;
-  data_class->duplicate      = gimp_brush_generated_duplicate;
+  data_class->save            = gimp_brush_generated_save;
+  data_class->dirty           = gimp_brush_generated_dirty;
+  data_class->get_extension   = gimp_brush_generated_get_extension;
+  data_class->duplicate       = gimp_brush_generated_duplicate;
 
-  brush_class->scale_size    = gimp_brush_generated_scale_size;
-  brush_class->scale_mask    = gimp_brush_generated_scale_mask;
+  brush_class->transform_size = gimp_brush_generated_transform_size;
+  brush_class->transform_mask = gimp_brush_generated_transform_mask;
 
   g_object_class_install_property (object_class, PROP_SHAPE,
                                    g_param_spec_enum ("shape", NULL, NULL,
@@ -277,10 +277,10 @@ gimp_brush_generated_duplicate (GimpData *data)
 }
 
 static void
-gimp_brush_generated_scale_size (GimpBrush *gbrush,
-                                 gdouble    scale,
-                                 gint      *width,
-                                 gint      *height)
+gimp_brush_generated_transform_size (GimpBrush *gbrush,
+                                     gdouble    scale,
+                                     gint      *width,
+                                     gint      *height)
 {
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
   gint                half_width;
@@ -301,8 +301,8 @@ gimp_brush_generated_scale_size (GimpBrush *gbrush,
 }
 
 static TempBuf *
-gimp_brush_generated_scale_mask (GimpBrush *gbrush,
-                                 gdouble    scale)
+gimp_brush_generated_transform_mask (GimpBrush *gbrush,
+                                     gdouble    scale)
 {
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
 
@@ -498,7 +498,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   return mask;
 }
 
-/* This function is shared between gimp_brush_generated_scale_size and
+/* This function is shared between gimp_brush_generated_transform_size and
  * gimp_brush_generated_calc, therefore we provide a bunch of optional
  * pointers for returnvalues.
  */

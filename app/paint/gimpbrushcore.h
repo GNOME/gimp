@@ -53,16 +53,16 @@ struct _GimpBrushCore
   TempBuf       *last_solid_brush;
   gboolean       solid_cache_invalid;
 
-  TempBuf       *scale_brush;
-  TempBuf       *last_scale_brush;
-  gint           last_scale_width;
-  gint           last_scale_height;
+  TempBuf       *transform_brush;
+  TempBuf       *last_transform_brush;
+  gint           last_transform_width;
+  gint           last_transform_height;
   gdouble        last_scale;
 
-  TempBuf       *scale_pixmap;
-  TempBuf       *last_scale_pixmap;
-  gint           last_scale_pixmap_width;
-  gint           last_scale_pixmap_height;
+  TempBuf       *transform_pixmap;
+  TempBuf       *last_transform_pixmap;
+  gint           last_transform_pixmap_width;
+  gint           last_transform_pixmap_height;
 
   TempBuf       *kernel_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
 

@@ -101,9 +101,9 @@ static TempBuf * gimp_brush_core_solidify_mask     (GimpBrushCore    *core,
                                                     gdouble           y);
 static gdouble   gimp_brush_core_clamp_brush_scale (GimpBrushCore    *core,
                                                     gdouble           scale);
-static TempBuf * gimp_brush_core_scale_mask        (GimpBrushCore    *core,
+static TempBuf * gimp_brush_core_transform_mask    (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
-static TempBuf * gimp_brush_core_scale_pixmap      (GimpBrushCore    *core,
+static TempBuf * gimp_brush_core_transform_pixmap  (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
 
 static void      gimp_brush_core_invalidate_cache  (GimpBrush        *brush,
@@ -164,30 +164,44 @@ gimp_brush_core_init (GimpBrushCore *core)
 {
   gint i, j;
 
-  core->main_brush               = NULL;
-  core->brush                    = NULL;
-  core->spacing                  = 1.0;
-  core->scale                    = 1.0;
+  core->main_brush                   = NULL;
+  core->brush                        = NULL;
+  core->spacing                      = 1.0;
+  core->scale                        = 1.0;
 
-  core->pressure_brush           = NULL;
+  core->pressure_brush               = NULL;
+
+  core->last_solid_brush             = NULL;
+  core->solid_cache_invalid          = FALSE;
+
+  core->transform_brush              = NULL;
+  core->last_transform_brush         = NULL;
+  core->last_transform_width         = 0;
+  core->last_transform_height        = 0;
+  core->last_scale                   = 1.0;
+
+  core->transform_pixmap             = NULL;
+  core->last_transform_pixmap        = NULL;
+  core->last_transform_pixmap_width  = 0;
+  core->last_transform_pixmap_height = 0;
+
+  core->last_brush_mask              = NULL;
+  core->cache_invalid                = FALSE;
+
+  core->rand                         = g_rand_new ();
+
+  core->brush_bound_segs             = NULL;
+  core->n_brush_bound_segs           = 0;
+  core->brush_bound_width            = 0;
+  core->brush_bound_height           = 0;
 
   for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
-    for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
-      core->solid_brushes[i][j] = NULL;
-
-  core->last_solid_brush         = NULL;
-  core->solid_cache_invalid      = FALSE;
-
-  core->scale_brush              = NULL;
-  core->last_scale_brush         = NULL;
-  core->last_scale_width         = 0;
-  core->last_scale_height        = 0;
-  core->last_scale               = 1.0;
-
-  core->scale_pixmap             = NULL;
-  core->last_scale_pixmap        = NULL;
-  core->last_scale_pixmap_width  = 0;
-  core->last_scale_pixmap_height = 0;
+    {
+      for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
+        {
+          core->solid_brushes[i][j] = NULL;
+        }
+    }
 
   for (i = 0; i < BRUSH_CORE_JITTER_LUTSIZE - 1; ++i)
     {
@@ -200,18 +214,13 @@ gimp_brush_core_init (GimpBrushCore *core)
   g_assert (BRUSH_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
-    for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-      core->kernel_brushes[i][j] = NULL;
+    {
+      for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
+        {
+          core->kernel_brushes[i][j] = NULL;
+        }
+    }
 
-  core->last_brush_mask          = NULL;
-  core->cache_invalid            = FALSE;
-
-  core->rand                     = g_rand_new ();
-
-  core->brush_bound_segs         = NULL;
-  core->n_brush_bound_segs       = 0;
-  core->brush_bound_width        = 0;
-  core->brush_bound_height       = 0;
 }
 
 static void
@@ -234,16 +243,16 @@ gimp_brush_core_finalize (GObject *object)
           core->solid_brushes[i][j] = NULL;
         }
 
-  if (core->scale_brush)
+  if (core->transform_brush)
     {
-      temp_buf_free (core->scale_brush);
-      core->scale_brush = NULL;
+      temp_buf_free (core->transform_brush);
+      core->transform_brush = NULL;
     }
 
-  if (core->scale_pixmap)
+  if (core->transform_pixmap)
     {
-      temp_buf_free (core->scale_pixmap);
-      core->scale_pixmap = NULL;
+      temp_buf_free (core->transform_pixmap);
+      core->transform_pixmap = NULL;
     }
 
   if (core->rand)
@@ -694,7 +703,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
 
-  gimp_brush_scale_size (core->brush, core->scale, &brush_width, &brush_height);
+  gimp_brush_transform_size (core->brush, core->scale, &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
@@ -785,7 +794,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      mask = gimp_brush_scale_mask (core->main_brush, scale);
+      mask = gimp_brush_transform_mask (core->main_brush, scale);
     }
 
   if (mask)
@@ -1278,8 +1287,8 @@ gimp_brush_core_clamp_brush_scale (GimpBrushCore *core,
 }
 
 static TempBuf *
-gimp_brush_core_scale_mask (GimpBrushCore *core,
-                            GimpBrush     *brush)
+gimp_brush_core_transform_mask (GimpBrushCore *core,
+                                GimpBrush     *brush)
 {
   gint width;
   gint height;
@@ -1290,36 +1299,36 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   if (core->scale == 1.0)
     return brush->mask;
 
-  gimp_brush_scale_size (brush, core->scale, &width, &height);
+  gimp_brush_transform_size (brush, core->scale, &width, &height);
 
-  if (! core->cache_invalid                  &&
-      core->scale_brush                      &&
-      brush->mask == core->last_scale_brush  &&
-      width       == core->last_scale_width  &&
-      height      == core->last_scale_height &&
+  if (! core->cache_invalid                      &&
+      core->transform_brush                      &&
+      brush->mask == core->last_transform_brush  &&
+      width       == core->last_transform_width  &&
+      height      == core->last_transform_height &&
       core->scale == core->last_scale)
     {
-      return core->scale_brush;
+      return core->transform_brush;
     }
 
-  core->last_scale_brush  = brush->mask;
-  core->last_scale_width  = width;
-  core->last_scale_height = height;
+  core->last_transform_brush  = brush->mask;
+  core->last_transform_width  = width;
+  core->last_transform_height = height;
   core->last_scale        = core->scale;
 
-  if (core->scale_brush)
-    temp_buf_free (core->scale_brush);
+  if (core->transform_brush)
+    temp_buf_free (core->transform_brush);
 
-  core->scale_brush = gimp_brush_scale_mask (brush, core->scale);
+  core->transform_brush = gimp_brush_transform_mask (brush, core->scale);
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
 
-  return core->scale_brush;
+  return core->transform_brush;
 }
 
 static TempBuf *
-gimp_brush_core_scale_pixmap (GimpBrushCore *core,
+gimp_brush_core_transform_pixmap (GimpBrushCore *core,
                               GimpBrush     *brush)
 {
   gint width;
@@ -1331,29 +1340,29 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   if (core->scale == 1.0)
     return brush->pixmap;
 
-  gimp_brush_scale_size (brush, core->scale, &width, &height);
+  gimp_brush_transform_size (brush, core->scale, &width, &height);
 
-  if (! core->cache_invalid                          &&
-      core->scale_pixmap                             &&
-      brush->pixmap == core->last_scale_pixmap       &&
-      width         == core->last_scale_pixmap_width &&
-      height        == core->last_scale_pixmap_height)
+  if (! core->cache_invalid                              &&
+      core->transform_pixmap                             &&
+      brush->pixmap == core->last_transform_pixmap       &&
+      width         == core->last_transform_pixmap_width &&
+      height        == core->last_transform_pixmap_height)
     {
-      return core->scale_pixmap;
+      return core->transform_pixmap;
     }
 
-  core->last_scale_pixmap        = brush->pixmap;
-  core->last_scale_pixmap_width  = width;
-  core->last_scale_pixmap_height = height;
+  core->last_transform_pixmap        = brush->pixmap;
+  core->last_transform_pixmap_width  = width;
+  core->last_transform_pixmap_height = height;
 
-  if (core->scale_pixmap)
-    temp_buf_free (core->scale_pixmap);
+  if (core->transform_pixmap)
+    temp_buf_free (core->transform_pixmap);
 
-  core->scale_pixmap = gimp_brush_scale_pixmap (brush, core->scale);
+  core->transform_pixmap = gimp_brush_transform_pixmap (brush, core->scale);
 
   core->cache_invalid = TRUE;
 
-  return core->scale_pixmap;
+  return core->transform_pixmap;
 }
 
 TempBuf *
@@ -1364,7 +1373,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
   TempBuf       *mask;
 
-  mask = gimp_brush_core_scale_mask (core, core->brush);
+  mask = gimp_brush_core_transform_mask (core, core->brush);
 
   if (! mask)
     return NULL;
@@ -1429,13 +1438,13 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  scale the brushes  */
-  pixmap_mask = gimp_brush_core_scale_pixmap (core, core->brush);
+  pixmap_mask = gimp_brush_core_transform_pixmap (core, core->brush);
 
   if (! pixmap_mask)
     return;
 
   if (mode != GIMP_BRUSH_HARD)
-    brush_mask = gimp_brush_core_scale_mask (core, core->brush);
+    brush_mask = gimp_brush_core_transform_mask (core, core->brush);
   else
     brush_mask = NULL;
 
