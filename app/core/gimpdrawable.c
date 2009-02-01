@@ -723,12 +723,9 @@ gimp_drawable_update_tile_source_node (GimpDrawable *drawable)
   if (! drawable->tile_source_node)
     return;
 
-  if (drawable->tiles)
-    {
-      gegl_node_set (drawable->tile_source_node,
-                     "tile-manager", drawable->tiles,
-                     NULL);
-    }
+  gegl_node_set (drawable->tile_source_node,
+                 "tile-manager", drawable->tiles,
+                 NULL);
 }
 
 static void
