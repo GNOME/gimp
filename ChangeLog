@@ -1,5 +1,11 @@
 2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-title.c: Use the dedicated image
+	type strings for the image window title, the enum value strings
+	are too verbose.
+
+2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpdrawable.c: Collect logic to update the
 	tile_source_node in a new helper function
 	gimp_drawable_update_tile_source_node().

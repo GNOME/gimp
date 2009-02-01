@@ -124,12 +124,13 @@ gimp_display_shell_update_title_idle (gpointer data)
 static const gchar *
 gimp_display_shell_title_image_type (GimpImage *image)
 {
-  const gchar *name = "";
-
-  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
-                       gimp_image_base_type (image), NULL, NULL, &name, NULL);
-
-  return name;
+  switch (gimp_image_base_type (image))
+    {
+    case GIMP_RGB:     return _("RGB");
+    case GIMP_GRAY:    return _("grayscale");
+    case GIMP_INDEXED: return _("indexed");
+    default:           return "unknown";
+    }
 }
 
 static gint print (gchar       *buf,
