@@ -1,5 +1,11 @@
 2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimpdrawable.c: Collect logic to update the
+	tile_source_node in a new helper function
+	gimp_drawable_update_tile_source_node().
+
+2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Applied patch from Alexia Death that prepares brushes for
 	arbitrary transforms by renaming stuff with 'scale' to
 	'transform'. Takes us one step closer to fixing bug #520078.
