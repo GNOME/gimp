@@ -1,3 +1,9 @@
+2009-02-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-title.c: reverted last change. It's
+	not helpful to use different strings for the same information and
+	space is not crucial in the window title.
+
 2009-02-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-title.c: Use the dedicated image
