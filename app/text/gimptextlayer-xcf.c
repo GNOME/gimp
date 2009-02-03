@@ -25,6 +25,7 @@
 #include "text-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdrawable-private.h" /* eek */
 #include "core/gimpimage.h"
 #include "core/gimpparasitelist.h"
 
@@ -190,7 +191,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   gimp_object_set_name (GIMP_OBJECT (text_layer),
                         gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  item->ID    = gimp_item_get_ID (GIMP_ITEM (layer));
+  item->ID = gimp_item_get_ID (GIMP_ITEM (layer));
 
   /* Set image before tatoo so that the explicitly set tatoo overrides
    * the one implicitly set when setting the image
@@ -215,8 +216,8 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
   gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);
 
-  drawable->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
-  GIMP_DRAWABLE (layer)->tiles = NULL;
+  drawable->private->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
+  GIMP_DRAWABLE (layer)->private->tiles = NULL;
 
   drawable->bytes     = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
   drawable->type      = gimp_drawable_type (GIMP_DRAWABLE (layer));

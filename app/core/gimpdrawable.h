@@ -30,22 +30,12 @@
 #define GIMP_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
 
 
-typedef struct _GimpDrawableClass GimpDrawableClass;
+typedef struct _GimpDrawablePrivate GimpDrawablePrivate;
+typedef struct _GimpDrawableClass   GimpDrawableClass;
 
 struct _GimpDrawable
 {
   GimpItem       parent_instance;
-
-  TileManager   *tiles;              /* tiles for drawable data        */
-  TileManager   *shadow;             /* shadow buffer tiles            */
-
-  GeglNode      *source_node;
-  GeglNode      *tile_source_node;
-  GeglNode      *fs_opacity_node;
-  GeglNode      *fs_offset_node;
-  GeglNode      *fs_mode_node;
-
-  GeglNode      *mode_node;
 
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
@@ -54,6 +44,8 @@ struct _GimpDrawable
   /*  Preview variables  */
   GSList        *preview_cache;      /* preview caches of the channel  */
   gboolean       preview_valid;      /* is the preview valid?          */
+
+  GimpDrawablePrivate *private;
 };
 
 struct _GimpDrawableClass

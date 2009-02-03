@@ -25,6 +25,7 @@
 #include "base/tile-manager.h"
 
 #include "gimpdrawable.h"
+#include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
 
 
@@ -37,25 +38,25 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
 
   item = GIMP_ITEM (drawable);
 
-  if (drawable->shadow)
+  if (drawable->private->shadow)
     {
-      if ((gimp_item_get_width  (item) != tile_manager_width  (drawable->shadow)) ||
-          (gimp_item_get_height (item) != tile_manager_height (drawable->shadow)) ||
-          (drawable->bytes         != tile_manager_bpp    (drawable->shadow)))
+      if ((gimp_item_get_width  (item) != tile_manager_width  (drawable->private->shadow)) ||
+          (gimp_item_get_height (item) != tile_manager_height (drawable->private->shadow)) ||
+          (drawable->bytes             != tile_manager_bpp    (drawable->private->shadow)))
         {
           gimp_drawable_free_shadow_tiles (drawable);
         }
       else
         {
-          return drawable->shadow;
+          return drawable->private->shadow;
         }
     }
 
-  drawable->shadow = tile_manager_new (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
-                                       drawable->bytes);
+  drawable->private->shadow = tile_manager_new (gimp_item_get_width  (item),
+                                                gimp_item_get_height (item),
+                                                drawable->bytes);
 
-  return drawable->shadow;
+  return drawable->private->shadow;
 }
 
 void
@@ -63,10 +64,10 @@ gimp_drawable_free_shadow_tiles (GimpDrawable *drawable)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (drawable->shadow)
+  if (drawable->private->shadow)
     {
-      tile_manager_unref (drawable->shadow);
-      drawable->shadow = NULL;
+      tile_manager_unref (drawable->private->shadow);
+      drawable->private->shadow = NULL;
     }
 }
 
@@ -80,7 +81,7 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (drawable->shadow != NULL);
+  g_return_if_fail (drawable->private->shadow != NULL);
 
   /*  A useful optimization here is to limit the update to the
    *  extents of the selection mask, as it cannot extend beyond
@@ -88,7 +89,7 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
    */
   if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      TileManager *tiles = tile_manager_ref (drawable->shadow);
+      TileManager *tiles = tile_manager_ref (drawable->private->shadow);
       PixelRegion  shadowPR;
 
       pixel_region_init (&shadowPR, tiles, x, y, width, height, FALSE);

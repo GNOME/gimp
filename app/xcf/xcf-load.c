@@ -35,7 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-private.h" /* eek */
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
@@ -801,10 +801,10 @@ xcf_load_channel_props (XcfInfo      *info,
                                   gimp_item_get_height (GIMP_ITEM (*channel)));
             g_object_ref_sink (mask);
 
-            tile_manager_unref (GIMP_DRAWABLE (mask)->tiles);
-            GIMP_DRAWABLE (mask)->tiles =
-              GIMP_DRAWABLE (*channel)->tiles;
-            GIMP_DRAWABLE (*channel)->tiles = NULL;
+            tile_manager_unref (GIMP_DRAWABLE (mask)->private->tiles);
+            GIMP_DRAWABLE (mask)->private->tiles =
+              GIMP_DRAWABLE (*channel)->private->tiles;
+            GIMP_DRAWABLE (*channel)->private->tiles = NULL;
             g_object_unref (*channel);
             *channel = mask;
             (*channel)->boundary_known = FALSE;

@@ -36,6 +36,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
 #include "gimpdrawable-preview.h"
+#include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
@@ -225,13 +226,17 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
+
+  g_type_class_add_private (klass, sizeof (GimpDrawablePrivate));
 }
 
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->tiles         = NULL;
-  drawable->shadow        = NULL;
+  drawable->private       = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
+                                                         GIMP_TYPE_DRAWABLE,
+                                                         GimpDrawablePrivate);
+
   drawable->bytes         = 0;
   drawable->type          = -1;
   drawable->has_alpha     = FALSE;
@@ -256,21 +261,21 @@ gimp_drawable_finalize (GObject *object)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
 
-  if (drawable->fs_opacity_node)
+  if (drawable->private->fs_opacity_node)
     gimp_drawable_sync_source_node (drawable, TRUE);
 
-  if (drawable->tiles)
+  if (drawable->private->tiles)
     {
-      tile_manager_unref (drawable->tiles);
-      drawable->tiles = NULL;
+      tile_manager_unref (drawable->private->tiles);
+      drawable->private->tiles = NULL;
     }
 
   gimp_drawable_free_shadow_tiles (drawable);
 
-  if (drawable->source_node)
+  if (drawable->private->source_node)
     {
-      g_object_unref (drawable->source_node);
-      drawable->source_node = NULL;
+      g_object_unref (drawable->private->source_node);
+      drawable->private->source_node = NULL;
     }
 
   if (drawable->preview_cache)
@@ -288,7 +293,7 @@ gimp_drawable_get_memsize (GimpObject *object,
 
   memsize += tile_manager_get_memsize (gimp_drawable_get_tiles (drawable),
                                        FALSE);
-  memsize += tile_manager_get_memsize (drawable->shadow, FALSE);
+  memsize += tile_manager_get_memsize (drawable->private->shadow, FALSE);
 
   *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);
 
@@ -352,14 +357,14 @@ gimp_drawable_visibility_changed (GimpItem *item)
           ! (GIMP_IS_LAYER (item) &&
              gimp_layer_is_floating_sel (GIMP_LAYER (item))))
         {
-          gegl_node_connect_to (input,               "output",
-                                drawable->mode_node, "input");
-          gegl_node_connect_to (drawable->mode_node, "output",
-                                output,              "input");
+          gegl_node_connect_to (input,                        "output",
+                                drawable->private->mode_node, "input");
+          gegl_node_connect_to (drawable->private->mode_node, "output",
+                                output,                       "input");
         }
       else
         {
-          gegl_node_disconnect (drawable->mode_node, "input");
+          gegl_node_disconnect (drawable->private->mode_node, "input");
 
           gegl_node_connect_to (input,  "output",
                                 output, "input");
@@ -681,12 +686,12 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  if (drawable->tile_source_node)
+  if (drawable->private->tile_source_node)
     {
       GObject       *operation;
       GeglRectangle  rect;
 
-      g_object_get (drawable->tile_source_node,
+      g_object_get (drawable->private->tile_source_node,
                     "gegl-operation", &operation,
                     NULL);
 
@@ -714,17 +719,17 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
 static TileManager *
 gimp_drawable_real_get_tiles (GimpDrawable *drawable)
 {
-  return drawable->tiles;
+  return drawable->private->tiles;
 }
 
 static void
 gimp_drawable_update_tile_source_node (GimpDrawable *drawable)
 {
-  if (! drawable->tile_source_node)
+  if (! drawable->private->tile_source_node)
     return;
 
-  gegl_node_set (drawable->tile_source_node,
-                 "tile-manager", drawable->tiles,
+  gegl_node_set (drawable->private->tile_source_node,
+                 "tile-manager", drawable->private->tiles,
                  NULL);
 }
 
@@ -755,13 +760,13 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   /*  ref new before unrefing old, they might be the same  */
   tile_manager_ref (tiles);
 
-  if (drawable->tiles)
-    tile_manager_unref (drawable->tiles);
+  if (drawable->private->tiles)
+    tile_manager_unref (drawable->private->tiles);
 
-  drawable->tiles     = tiles;
-  drawable->type      = type;
-  drawable->bytes     = tile_manager_bpp (tiles);
-  drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+  drawable->private->tiles = tiles;
+  drawable->type           = type;
+  drawable->bytes          = tile_manager_bpp (tiles);
+  drawable->has_alpha      = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   gimp_item_set_offset (item, offset_x, offset_y);
 
@@ -790,19 +795,21 @@ gimp_drawable_get_node (GimpItem *item)
 
   node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
-  drawable->mode_node = gegl_node_new_child (node,
-                                             "operation", "gegl:normal",
-                                             NULL);
+  drawable->private->mode_node = gegl_node_new_child (node,
+                                                      "operation", "gegl:normal",
+                                                      NULL);
 
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
+  if (gimp_item_get_visible (GIMP_ITEM (drawable)) &&
+      ! (GIMP_IS_LAYER (drawable) &&
+         gimp_layer_is_floating_sel (GIMP_LAYER (drawable))))
     {
-      gegl_node_connect_to (input,               "output",
-                            drawable->mode_node, "input");
-      gegl_node_connect_to (drawable->mode_node, "output",
-                            output,              "input");
+      gegl_node_connect_to (input,                        "output",
+                            drawable->private->mode_node, "input");
+      gegl_node_connect_to (drawable->private->mode_node, "output",
+                            output,                       "input");
     }
   else
     {
@@ -913,107 +920,107 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
   GimpLayer *fs    = gimp_image_get_floating_selection (image);
   GeglNode  *output;
 
-  if (! drawable->source_node)
+  if (! drawable->private->source_node)
     return;
 
-  output = gegl_node_get_output_proxy (drawable->source_node, "output");
+  output = gegl_node_get_output_proxy (drawable->private->source_node, "output");
 
   if (gimp_drawable_has_floating_sel (drawable) && ! detach_fs)
     {
       gint off_x, off_y;
       gint fs_off_x, fs_off_y;
 
-      if (! drawable->fs_opacity_node)
+      if (! drawable->private->fs_opacity_node)
         {
           GeglNode *fs_source;
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
-          gegl_node_add_child (drawable->source_node, fs_source);
+          gegl_node_add_child (drawable->private->source_node, fs_source);
 
-          drawable->fs_opacity_node =
-            gegl_node_new_child (drawable->source_node,
+          drawable->private->fs_opacity_node =
+            gegl_node_new_child (drawable->private->source_node,
                                  "operation", "gegl:opacity",
                                  NULL);
 
-          gegl_node_connect_to (fs_source,                 "output",
-                                drawable->fs_opacity_node, "input");
+          gegl_node_connect_to (fs_source,                          "output",
+                                drawable->private->fs_opacity_node, "input");
 
-          drawable->fs_offset_node =
-            gegl_node_new_child (drawable->source_node,
+          drawable->private->fs_offset_node =
+            gegl_node_new_child (drawable->private->source_node,
                                  "operation", "gegl:translate",
                                  NULL);
 
-          gegl_node_connect_to (drawable->fs_opacity_node, "output",
-                                drawable->fs_offset_node,  "input");
+          gegl_node_connect_to (drawable->private->fs_opacity_node, "output",
+                                drawable->private->fs_offset_node,  "input");
 
-          drawable->fs_mode_node =
-            gegl_node_new_child (drawable->source_node,
+          drawable->private->fs_mode_node =
+            gegl_node_new_child (drawable->private->source_node,
                                  "operation", "gimp:point-layer-mode",
                                  NULL);
 
-          gegl_node_connect_to (drawable->tile_source_node, "output",
-                                drawable->fs_mode_node,     "input");
-          gegl_node_connect_to (drawable->fs_offset_node,   "output",
-                                drawable->fs_mode_node,     "aux");
+          gegl_node_connect_to (drawable->private->tile_source_node, "output",
+                                drawable->private->fs_mode_node,     "input");
+          gegl_node_connect_to (drawable->private->fs_offset_node,   "output",
+                                drawable->private->fs_mode_node,     "aux");
 
-          gegl_node_connect_to (drawable->fs_mode_node, "output",
-                                output,                 "input");
+          gegl_node_connect_to (drawable->private->fs_mode_node, "output",
+                                output,                          "input");
 
           g_signal_connect (fs, "notify",
                             G_CALLBACK (gimp_drawable_fs_notify),
                             drawable);
         }
 
-      gegl_node_set (drawable->fs_opacity_node,
+      gegl_node_set (drawable->private->fs_opacity_node,
                      "value", gimp_layer_get_opacity (fs),
                      NULL);
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
-      gegl_node_set (drawable->fs_offset_node,
+      gegl_node_set (drawable->private->fs_offset_node,
                      "x", (gdouble) (fs_off_x - off_x),
                      "y", (gdouble) (fs_off_y - off_y),
                      NULL);
 
-      gegl_node_set (drawable->fs_mode_node,
+      gegl_node_set (drawable->private->fs_mode_node,
                      "blend-mode", gimp_layer_get_mode (fs),
                      NULL);
     }
   else
     {
-      if (drawable->fs_opacity_node)
+      if (drawable->private->fs_opacity_node)
         {
           GeglNode *fs_source;
 
-          gegl_node_disconnect (drawable->fs_opacity_node, "input");
-          gegl_node_disconnect (drawable->fs_offset_node, "input");
-          gegl_node_disconnect (drawable->fs_mode_node, "input");
-          gegl_node_disconnect (drawable->fs_mode_node, "aux");
+          gegl_node_disconnect (drawable->private->fs_opacity_node, "input");
+          gegl_node_disconnect (drawable->private->fs_offset_node, "input");
+          gegl_node_disconnect (drawable->private->fs_mode_node, "input");
+          gegl_node_disconnect (drawable->private->fs_mode_node, "aux");
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
-          gegl_node_remove_child (drawable->source_node,
+          gegl_node_remove_child (drawable->private->source_node,
                                   fs_source);
 
-          gegl_node_remove_child (drawable->source_node,
-                                  drawable->fs_opacity_node);
-          drawable->fs_opacity_node = NULL;
+          gegl_node_remove_child (drawable->private->source_node,
+                                  drawable->private->fs_opacity_node);
+          drawable->private->fs_opacity_node = NULL;
 
-          gegl_node_remove_child (drawable->source_node,
-                                  drawable->fs_offset_node);
-          drawable->fs_offset_node = NULL;
+          gegl_node_remove_child (drawable->private->source_node,
+                                  drawable->private->fs_offset_node);
+          drawable->private->fs_offset_node = NULL;
 
-          gegl_node_remove_child (drawable->source_node,
-                                  drawable->fs_mode_node);
-          drawable->fs_mode_node = NULL;
+          gegl_node_remove_child (drawable->private->source_node,
+                                  drawable->private->fs_mode_node);
+          drawable->private->fs_mode_node = NULL;
 
           g_signal_handlers_disconnect_by_func (fs,
                                                 gimp_drawable_fs_notify,
                                                 drawable);
         }
 
-      gegl_node_connect_to (drawable->tile_source_node, "output",
-                            output,                     "input");
+      gegl_node_connect_to (drawable->private->tile_source_node, "output",
+                            output,                              "input");
     }
 }
 
@@ -1067,10 +1074,10 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
-  if (drawable->tiles)
-    tile_manager_unref (drawable->tiles);
+  if (drawable->private->tiles)
+    tile_manager_unref (drawable->private->tiles);
 
-  drawable->tiles = tile_manager_new (width, height, drawable->bytes);
+  drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
 
   /*  preview variables  */
   drawable->preview_cache = NULL;
@@ -1377,21 +1384,21 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (drawable->source_node)
-    return drawable->source_node;
+  if (drawable->private->source_node)
+    return drawable->private->source_node;
 
-  drawable->source_node = gegl_node_new ();
+  drawable->private->source_node = gegl_node_new ();
 
-  drawable->tile_source_node =
-    gegl_node_new_child (drawable->source_node,
+  drawable->private->tile_source_node =
+    gegl_node_new_child (drawable->private->source_node,
                          "operation",    "gimp:tilemanager-source",
-                         "tile-manager", drawable->tiles,
+                         "tile-manager", drawable->private->tiles,
                          "linear",       TRUE,
                          NULL);
 
   gimp_drawable_sync_source_node (drawable, FALSE);
 
-  return drawable->source_node;
+  return drawable->private->source_node;
 }
 
 GeglNode *
@@ -1399,10 +1406,10 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (! drawable->mode_node)
+  if (! drawable->private->mode_node)
     gimp_drawable_get_node (GIMP_ITEM (drawable));
 
-  return drawable->mode_node;
+  return drawable->private->mode_node;
 }
 
 void

@@ -1,3 +1,16 @@
+2009-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-private.h: new file which contains struct
+	GimpDrawablePrivate. Move some stuff from GimpDrawable here.
+
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpdrawable-shadow.c: changed accordingly.
+
+	* app/text/gimptextlayer-xcf.c
+	* app/xcf/xcf-load.c: include the private struct for these ugly
+	corner cases.
+
 2009-02-02  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-title.c: reverted last change. It's
