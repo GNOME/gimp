@@ -1,3 +1,7 @@
+2009-02-05  Stanislav Brabec  <sbrabec@hammer.suse.cz>
+
+	* zh_CN.po: Fixed invalid charset tag.
+
 2009-01-23  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
 	* ru.po: updated and improved Russian translation.
