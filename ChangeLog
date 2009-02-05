@@ -1,5 +1,15 @@
 2009-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.h
+	* app/core/gimpdrawable-preview.c: move the preview related
+	members to the private struct.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpdrawable-private.h
+	* app/core/gimpselection.c: changed accordingly.
+
+2009-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: sort the types by inheritence again, but
 	keep the alphabetic ordering within one level.
 

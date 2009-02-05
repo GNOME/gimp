@@ -31,6 +31,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-private.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -311,7 +312,7 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
                           gimp_item_get_height (GIMP_ITEM (layer)));
 
   /*  invalidate the preview  */
-  drawable->preview_valid = FALSE;
+  drawable->private->preview_valid = FALSE;
 }
 
 static gboolean

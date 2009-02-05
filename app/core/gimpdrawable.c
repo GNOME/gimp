@@ -233,15 +233,13 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->private       = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
-                                                         GIMP_TYPE_DRAWABLE,
-                                                         GimpDrawablePrivate);
+  drawable->private   = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
+                                                     GIMP_TYPE_DRAWABLE,
+                                                     GimpDrawablePrivate);
 
-  drawable->bytes         = 0;
-  drawable->type          = -1;
-  drawable->has_alpha     = FALSE;
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
+  drawable->bytes     = 0;
+  drawable->type      = -1;
+  drawable->has_alpha = FALSE;
 }
 
 /* sorry for the evil casts */
@@ -278,8 +276,8 @@ gimp_drawable_finalize (GObject *object)
       drawable->private->source_node = NULL;
     }
 
-  if (drawable->preview_cache)
-    gimp_preview_cache_invalidate (&drawable->preview_cache);
+  if (drawable->private->preview_cache)
+    gimp_preview_cache_invalidate (&drawable->private->preview_cache);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -295,7 +293,7 @@ gimp_drawable_get_memsize (GimpObject *object,
                                        FALSE);
   memsize += tile_manager_get_memsize (drawable->private->shadow, FALSE);
 
-  *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);
+  *gui_size += gimp_preview_cache_get_memsize (drawable->private->preview_cache);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -322,10 +320,10 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
-  drawable->preview_valid = FALSE;
+  drawable->private->preview_valid = FALSE;
 
-  if (drawable->preview_cache)
-    gimp_preview_cache_invalidate (&drawable->preview_cache);
+  if (drawable->private->preview_cache)
+    gimp_preview_cache_invalidate (&drawable->private->preview_cache);
 }
 
 static void
@@ -1080,8 +1078,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
 
   /*  preview variables  */
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
+  drawable->private->preview_cache = NULL;
+  drawable->private->preview_valid = FALSE;
 
   gimp_drawable_update_tile_source_node (drawable);
 }

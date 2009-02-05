@@ -37,6 +37,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable-preview.h"
+#include "gimpdrawable-private.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
 
@@ -74,7 +75,7 @@ gimp_drawable_get_preview (GimpViewable *viewable,
     return NULL;
 
   /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! drawable->preview_valid                                 &&
+  if (! drawable->private->preview_valid                        &&
       width  <= PREVIEW_CACHE_PRIME_WIDTH                       &&
       height <= PREVIEW_CACHE_PRIME_HEIGHT                      &&
       image                                                     &&
@@ -171,8 +172,8 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 {
   TempBuf *ret_buf;
 
-  if (! drawable->preview_valid ||
-      ! (ret_buf = gimp_preview_cache_get (&drawable->preview_cache,
+  if (! drawable->private->preview_valid ||
+      ! (ret_buf = gimp_preview_cache_get (&drawable->private->preview_cache,
                                            width, height)))
     {
       GimpItem *item = GIMP_ITEM (drawable);
@@ -184,12 +185,12 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
                                                width,
                                                height);
 
-      if (! drawable->preview_valid)
-        gimp_preview_cache_invalidate (&drawable->preview_cache);
+      if (! drawable->private->preview_valid)
+        gimp_preview_cache_invalidate (&drawable->private->preview_cache);
 
-      drawable->preview_valid = TRUE;
+      drawable->private->preview_valid = TRUE;
 
-      gimp_preview_cache_add (&drawable->preview_cache, ret_buf);
+      gimp_preview_cache_add (&drawable->private->preview_cache, ret_buf);
     }
 
   return ret_buf;

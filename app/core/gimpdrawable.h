@@ -41,10 +41,6 @@ struct _GimpDrawable
   GimpImageType  type;               /* type of drawable               */
   gboolean       has_alpha;          /* drawable has alpha             */
 
-  /*  Preview variables  */
-  GSList        *preview_cache;      /* preview caches of the channel  */
-  gboolean       preview_valid;      /* is the preview valid?          */
-
   GimpDrawablePrivate *private;
 };
 
