@@ -69,7 +69,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
   object_class->get_property = gimp_ink_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
-                                   "size", NULL,
+                                   "size", _("Ink Blob Size"),
                                    0.0, 200.0, 16.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
@@ -96,11 +96,11 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                                  GIMP_INK_BLOB_TYPE_ELLIPSE,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
-                                   "blob-aspect", NULL,
+                                   "blob-aspect", _("Ink Blob Aspect"),
                                    1.0, 10.0, 1.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
-                                   "blob-angle", NULL,
+                                   "blob-angle", _("Ink Blob Angle"),
                                    -90.0, 90.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }

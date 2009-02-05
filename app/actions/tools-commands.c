@@ -268,6 +268,7 @@ tools_color_average_radius_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_COLOR_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "average-radius",
                               1.0, 1.0, 10.0, FALSE);
@@ -288,6 +289,7 @@ tools_paint_brush_scale_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-scale",
                               0.01, 0.1, 1.0, FALSE);
@@ -328,6 +330,7 @@ tools_ink_blob_size_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "size",
                               1.0, 1.0, 10.0, FALSE);
@@ -348,6 +351,7 @@ tools_ink_blob_aspect_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-aspect",
                               1.0, 0.1, 1.0, FALSE);
@@ -368,6 +372,7 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-angle",
                               1.0, 1.0, 15.0, TRUE);
@@ -388,6 +393,7 @@ tools_fg_select_brush_size_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_FOREGROUND_SELECT_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "stroke-width",
                               1.0, 4.0, 16.0, FALSE);
@@ -408,6 +414,7 @@ tools_transform_preview_opacity_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_TRANSFORM_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "preview-opacity",
                               0.01, 0.1, 0.5, FALSE);

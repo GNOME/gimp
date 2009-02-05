@@ -42,6 +42,7 @@ gdouble       action_select_value     (GimpActionSelectType  select_type,
                                        gdouble               delta_factor,
                                        gboolean              wrap);
 void          action_select_property  (GimpActionSelectType  select_type,
+                                       GimpDisplay          *display,
                                        GObject              *object,
                                        const gchar          *property_name,
                                        gdouble               small_inc,

@@ -30,6 +30,8 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimptooloptions.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpactionfactory.h"
 #include "widgets/gimpactiongroup.h"
@@ -43,6 +45,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpnavigationeditor.h"
+#include "display/gimpstatusbar.h"
 
 #include "dialogs/dialogs.h"
 
@@ -379,6 +382,30 @@ action_data_get_widget (gpointer data)
   return dialogs_get_toolbox ();
 }
 
+static void
+action_message (GimpDisplay *display,
+                GObject     *object,
+                gchar       *format,
+                ...)
+{
+  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
+  const gchar      *stock_id = NULL;
+  va_list           args;
+
+  if (GIMP_IS_TOOL_OPTIONS (object))
+    {
+      GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+    }
+
+  va_start (args, format);
+  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
+                                   GIMP_MESSAGE_INFO, stock_id,
+                                   format, args);
+  va_end (args);
+}
+
 gdouble
 action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,
@@ -465,6 +492,7 @@ action_select_value (GimpActionSelectType  select_type,
 
 void
 action_select_property (GimpActionSelectType  select_type,
+                        GimpDisplay          *display,
                         GObject              *object,
                         const gchar          *property_name,
                         gdouble               small_inc,
@@ -474,6 +502,7 @@ action_select_property (GimpActionSelectType  select_type,
 {
   GParamSpec *pspec;
 
+  g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (property_name != NULL);
 
@@ -494,6 +523,14 @@ action_select_property (GimpActionSelectType  select_type,
                                    small_inc, inc, skip_inc, 0, wrap);
 
       g_object_set (object, property_name, value, NULL);
+
+      if (display)
+        {
+          const gchar *blurb = g_param_spec_get_blurb (pspec);
+
+          if (blurb)
+            action_message (display, object, "%s: %.2f", blurb, value);
+        }
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
@@ -509,6 +546,14 @@ action_select_property (GimpActionSelectType  select_type,
                                    small_inc, inc, skip_inc, 0, wrap);
 
       g_object_set (object, property_name, value, NULL);
+
+      if (display)
+        {
+          const gchar *blurb = g_param_spec_get_blurb (pspec);
+
+          if (blurb)
+            action_message (display, object, "%s: %d", blurb, value);
+        }
     }
   else
     {

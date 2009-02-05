@@ -1,3 +1,22 @@
+2009-02-06  Michael Natterer  <mitch@gimp.org>
+
+	Bug 471681 – Keyboard shortcuts for brush size/params need
+	feedback
+
+	Applied patch from Sven Neumann which addresses above bug:
+
+	* app/actions/actions.[ch]: add new function action_message()
+	which pushes a temp message to a display's statusbar.
+
+	(action_select_property): add GimpDisplay* parameter and call
+	action_message() for int and double property changes.
+
+	* app/actions/tools-commands.c: pass the display to
+	action_select_property().
+
+	* app/paint/gimpinkoptions.c: add some blurbs to make it work
+	for the ink blob properties.
+
 2009-02-05  Sven Neumann  <sven@gimp.org>
 
 	Bug 520078 – Rotate brushes
