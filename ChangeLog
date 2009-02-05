@@ -1,3 +1,8 @@
+2009-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: sort the types by inheritence again, but
+	keep the alphabetic ordering within one level.
+
 2009-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

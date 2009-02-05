@@ -56,9 +56,9 @@
 
 /*  base classes  */
 
-typedef struct _GimpItem            GimpItem;
 typedef struct _GimpObject          GimpObject;
 typedef struct _GimpViewable        GimpViewable;
+typedef struct _GimpItem            GimpItem;
 
 typedef struct _Gimp                Gimp;
 typedef struct _GimpImage           GimpImage;
@@ -67,11 +67,11 @@ typedef struct _GimpImage           GimpImage;
 /*  containers  */
 
 typedef struct _GimpContainer         GimpContainer;
+typedef struct _GimpList              GimpList;
 typedef struct _GimpDocumentList      GimpDocumentList;
 typedef struct _GimpDrawableStack     GimpDrawableStack;
 typedef struct _GimpFilteredContainer GimpFilteredContainer;
 typedef struct _GimpItemStack         GimpItemStack;
-typedef struct _GimpList              GimpList;
 typedef struct _GimpToolPresets       GimpToolPresets;
 
 
@@ -91,13 +91,13 @@ typedef struct _GimpToolInfo        GimpToolInfo;
 
 /*  data objects  */
 
+typedef struct _GimpDataFactory      GimpDataFactory;
+typedef struct _GimpData             GimpData;
 typedef struct _GimpBrush            GimpBrush;
 typedef struct _GimpBrushClipboard   GimpBrushClipboard;
 typedef struct _GimpBrushGenerated   GimpBrushGenerated;
 typedef struct _GimpBrushPipe        GimpBrushPipe;
 typedef struct _GimpCurve            GimpCurve;
-typedef struct _GimpData             GimpData;
-typedef struct _GimpDataFactory      GimpDataFactory;
 typedef struct _GimpGradient         GimpGradient;
 typedef struct _GimpPalette          GimpPalette;
 typedef struct _GimpPattern          GimpPattern;
@@ -107,33 +107,33 @@ typedef struct _GimpTagCache         GimpTagCache;
 
 /*  drawable objects  */
 
-typedef struct _GimpChannel         GimpChannel;
 typedef struct _GimpDrawable        GimpDrawable;
-typedef struct _GimpLayer           GimpLayer;
+typedef struct _GimpChannel         GimpChannel;
 typedef struct _GimpLayerMask       GimpLayerMask;
 typedef struct _GimpSelection       GimpSelection;
+typedef struct _GimpLayer           GimpLayer;
 
 
 /*  undo objects  */
 
-typedef struct _GimpChannelPropUndo   GimpChannelPropUndo;
-typedef struct _GimpChannelUndo       GimpChannelUndo;
-typedef struct _GimpDrawableModUndo   GimpDrawableModUndo;
-typedef struct _GimpDrawableUndo      GimpDrawableUndo;
-typedef struct _GimpFloatingSelUndo   GimpFloatingSelUndo;
-typedef struct _GimpGuideUndo         GimpGuideUndo;
-typedef struct _GimpImageUndo         GimpImageUndo;
-typedef struct _GimpItemPropUndo      GimpItemPropUndo;
-typedef struct _GimpItemUndo          GimpItemUndo;
-typedef struct _GimpLayerMaskPropUndo GimpLayerMaskPropUndo;
-typedef struct _GimpLayerMaskUndo     GimpLayerMaskUndo;
-typedef struct _GimpLayerPropUndo     GimpLayerPropUndo;
-typedef struct _GimpLayerUndo         GimpLayerUndo;
-typedef struct _GimpMaskUndo          GimpMaskUndo;
-typedef struct _GimpSamplePointUndo   GimpSamplePointUndo;
 typedef struct _GimpUndo              GimpUndo;
-typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
+typedef struct _GimpImageUndo         GimpImageUndo;
+typedef struct _GimpItemUndo          GimpItemUndo;
+typedef struct _GimpItemPropUndo      GimpItemPropUndo;
+typedef struct _GimpChannelUndo       GimpChannelUndo;
+typedef struct _GimpChannelPropUndo   GimpChannelPropUndo;
+typedef struct _GimpDrawableUndo      GimpDrawableUndo;
+typedef struct _GimpDrawableModUndo   GimpDrawableModUndo;
+typedef struct _GimpLayerMaskUndo     GimpLayerMaskUndo;
+typedef struct _GimpLayerMaskPropUndo GimpLayerMaskPropUndo;
+typedef struct _GimpLayerUndo         GimpLayerUndo;
+typedef struct _GimpLayerPropUndo     GimpLayerPropUndo;
+typedef struct _GimpMaskUndo          GimpMaskUndo;
+typedef struct _GimpGuideUndo         GimpGuideUndo;
+typedef struct _GimpSamplePointUndo   GimpSamplePointUndo;
+typedef struct _GimpFloatingSelUndo   GimpFloatingSelUndo;
 typedef struct _GimpUndoStack         GimpUndoStack;
+typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
 
 
 /*  misc objects  */
