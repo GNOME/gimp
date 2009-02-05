@@ -45,6 +45,7 @@ struct _GimpBrushCore
   GimpBrush     *brush;
   gdouble        spacing;
   gdouble        scale;
+  gdouble        angle;
 
   /*  brush buffers  */
   TempBuf       *pressure_brush;
@@ -58,6 +59,7 @@ struct _GimpBrushCore
   gint           last_transform_width;
   gint           last_transform_height;
   gdouble        last_scale;
+  gdouble        last_angle;
 
   TempBuf       *transform_pixmap;
   TempBuf       *last_transform_pixmap;
@@ -90,7 +92,8 @@ struct _GimpBrushCoreClass
   gboolean            handles_changing_brush;
 
   /*  Set for tools that don't mind if the brush scales while painting  */
-  gboolean            handles_scaling_brush;
+
+  gboolean            handles_transforming_brush;
 
   void (* set_brush) (GimpBrushCore *core,
                       GimpBrush     *brush);

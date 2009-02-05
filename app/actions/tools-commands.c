@@ -295,6 +295,26 @@ tools_paint_brush_scale_cmd_callback (GtkAction *action,
 }
 
 void
+tools_paint_brush_angle_cmd_callback (GtkAction *action,
+                                      gint       value,
+                                      gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              G_OBJECT (tool_info->tool_options),
+                              "brush-angle",
+                              0.01, 0.1, 1.0, FALSE);
+    }
+}
+
+void
 tools_ink_blob_size_cmd_callback (GtkAction *action,
                                   gint       value,
                                   gpointer   data)

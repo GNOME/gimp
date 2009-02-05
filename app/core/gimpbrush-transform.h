@@ -25,12 +25,15 @@
 
 void      gimp_brush_real_transform_size   (GimpBrush *brush,
                                             gdouble    scale,
+                                            gdouble    angle,
                                             gint      *scaled_width,
                                             gint      *scaled_height);
 TempBuf * gimp_brush_real_transform_mask   (GimpBrush *brush,
-                                            gdouble    scale);
+                                            gdouble    scale,
+                                            gdouble    angle);
 TempBuf * gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                            gdouble    scale);
+                                            gdouble    scale,
+                                            gdouble    angle);
 
 
 #endif  /*  __GIMP_BRUSH_SCALE_H__  */

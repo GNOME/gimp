@@ -58,12 +58,15 @@ struct _GimpBrushClass
                                     GimpCoords *cur_coords);
   void        (* transform_size)   (GimpBrush  *brush,
                                     gdouble     scale,
+                                    gdouble     angle,
                                     gint       *width,
                                     gint       *height);
   TempBuf   * (* transform_mask)   (GimpBrush  *brush,
-                                    gdouble     scale);
+                                    gdouble     scale,
+                                    gdouble     angle);
   TempBuf   * (* transform_pixmap) (GimpBrush  *brush,
-                                    gdouble     scale);
+                                    gdouble     scale,
+                                    gdouble     angle);
 
   /*  signals  */
   void        (* spacing_changed)  (GimpBrush  *brush);
@@ -85,12 +88,15 @@ gboolean    gimp_brush_want_null_motion (GimpBrush        *brush,
 /* Gets width and height of a transformed mask of the brush, for provided parameters. */
 void        gimp_brush_transform_size   (GimpBrush        *brush,
                                          gdouble           scale,
+                                         gdouble           angle,
                                          gint             *width,
                                          gint             *height);
 TempBuf   * gimp_brush_transform_mask   (GimpBrush        *brush,
-                                         gdouble           scale);
+                                         gdouble           scale,
+                                         gdouble           angle);
 TempBuf   * gimp_brush_transform_pixmap (GimpBrush        *brush,
-                                         gdouble           scale);
+                                         gdouble           scale,
+                                         gdouble           angle);
 
 TempBuf   * gimp_brush_get_mask         (const GimpBrush  *brush);
 TempBuf   * gimp_brush_get_pixmap       (const GimpBrush  *brush);

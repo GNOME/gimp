@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-scale.c
+ * gimpbrush-transform.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,26 +23,26 @@
 
 #include "core-types.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpbrush.h"
 #include "gimpbrush-transform.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
-
-#include "paint-funcs/scale-region.h"
 
 
 /*  local function prototypes  */
 
-static TempBuf * gimp_brush_scale_buf_up      (TempBuf *brush_buf,
-                                               gint     dest_width,
-                                               gint     dest_height);
-static TempBuf * gimp_brush_scale_mask_down   (TempBuf *brush_mask,
-                                               gint     dest_width,
-                                               gint     dest_height);
-static TempBuf * gimp_brush_scale_pixmap_down (TempBuf *pixmap,
-                                               gint     dest_width,
-                                               gint     dest_height);
+static void  gimp_brush_transform_matrix       (GimpBrush         *brush,
+                                                gdouble            scale,
+                                                gdouble            angle,
+                                                GimpMatrix3       *matrix);
+static void  gimp_brush_transform_bounding_box (GimpBrush         *brush,
+                                                const GimpMatrix3 *matrix,
+                                                gint              *x,
+                                                gint              *y,
+                                                gint              *width,
+                                                gint              *height);
 
 
 /*  public functions  */
@@ -50,421 +50,187 @@ static TempBuf * gimp_brush_scale_pixmap_down (TempBuf *pixmap,
 void
 gimp_brush_real_transform_size (GimpBrush *brush,
                                 gdouble    scale,
+                                gdouble    angle,
                                 gint      *width,
                                 gint      *height)
 {
-  *width  = (gint) (brush->mask->width  * scale + 0.5);
-  *height = (gint) (brush->mask->height * scale + 0.5);
+  GimpMatrix3 matrix;
+  gint        x, y;
+
+  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
+  gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
 
 TempBuf *
 gimp_brush_real_transform_mask (GimpBrush *brush,
-                                gdouble    scale)
+                                gdouble    scale,
+                                gdouble    angle)
 {
-  gint dest_width;
-  gint dest_height;
+  TempBuf      *result;
+  guchar       *dest;
+  const guchar *src;
+  GimpMatrix3   matrix;
+  gint          src_width;
+  gint          src_height;
+  gint          dest_width;
+  gint          dest_height;
+  gint          x, y;
 
-  gimp_brush_transform_size (brush, scale, &dest_width, &dest_height);
+  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
 
-  if (dest_width <= 0 || dest_height <= 0)
-    return NULL;
+  if (gimp_matrix3_is_identity (&matrix))
+    return temp_buf_copy (brush->mask, NULL);
 
-  if (scale <= 1.0)
+  src_width  = brush->mask->width;
+  src_height = brush->mask->height;
+
+  gimp_brush_transform_bounding_box (brush, &matrix,
+                                     &x, &y, &dest_width, &dest_height);
+  gimp_matrix3_translate (&matrix, -x, -y);
+  gimp_matrix3_invert (&matrix);
+
+  result = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL);
+
+  dest = temp_buf_get_data (result);
+  src  = temp_buf_get_data (brush->mask);
+
+  for (y = 0; y < dest_height; y++)
     {
-      /*  Downscaling with brush_transform_mask is much faster than with
-       *  gimp_brush_scale_buf.
-       */
-      return gimp_brush_scale_mask_down (brush->mask,
-                                         dest_width, dest_height);
+      for (x = 0; x < dest_width; x++)
+        {
+          gdouble dx, dy;
+          gint    ix, iy;
+
+          gimp_matrix3_transform_point (&matrix, x, y, &dx, &dy);
+
+          ix = ROUND (dx);
+          iy = ROUND (dy);
+
+          if (ix > 0 && ix < src_width &&
+              iy > 0 && iy < src_height)
+            {
+              *dest = src[iy * src_width + ix];
+            }
+          else
+            {
+              *dest = 0;
+            }
+
+          dest++;
+        }
     }
 
-  return gimp_brush_scale_buf_up (brush->mask, dest_width, dest_height);
+  return result;
 }
 
 TempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                  gdouble    scale)
+                                  gdouble    scale,
+                                  gdouble    angle)
 {
-  gint dest_width;
-  gint dest_height;
+  TempBuf      *result;
+  guchar       *dest;
+  const guchar *src;
+  GimpMatrix3   matrix;
+  gint          src_width;
+  gint          src_height;
+  gint          dest_width;
+  gint          dest_height;
+  gint          x, y;
 
-  gimp_brush_transform_size (brush, scale, &dest_width, &dest_height);
+  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
 
-  if (dest_width <= 0 || dest_height <= 0)
-    return NULL;
+  if (gimp_matrix3_is_identity (&matrix))
+    return temp_buf_copy (brush->pixmap, NULL);
 
-  if (scale <= 1.0)
+  src_width  = brush->pixmap->width;
+  src_height = brush->pixmap->height;
+
+  gimp_brush_transform_bounding_box (brush, &matrix,
+                                     &x, &y, &dest_width, &dest_height);
+  gimp_matrix3_translate (&matrix, -x, -y);
+  gimp_matrix3_invert (&matrix);
+
+  result = temp_buf_new (dest_width, dest_height, 3, 0, 0, NULL);
+
+  dest = temp_buf_get_data (result);
+  src  = temp_buf_get_data (brush->pixmap);
+
+  for (y = 0; y < dest_height; y++)
     {
-      /*  Downscaling with brush_scale_pixmap is much faster than with
-       *  gimp_brush_scale_buf.
-       */
-      return gimp_brush_scale_pixmap_down (brush->pixmap,
-                                           dest_width, dest_height);
+      for (x = 0; x < dest_width; x++)
+        {
+          gdouble dx, dy;
+          gint    ix, iy;
+
+          gimp_matrix3_transform_point (&matrix, x, y, &dx, &dy);
+
+          ix = ROUND (dx);
+          iy = ROUND (dy);
+
+          if (ix > 0 && ix < src_width &&
+              iy > 0 && iy < src_height)
+            {
+              const guchar *s = src + 3 * (iy * src_width + ix);
+
+              dest[0] = s[0];
+              dest[1] = s[1];
+              dest[2] = s[2];
+            }
+          else
+            {
+              dest[0] = 0;
+              dest[1] = 0;
+              dest[2] = 0;
+            }
+
+          dest += 3;
+        }
     }
 
-  return gimp_brush_scale_buf_up (brush->pixmap, dest_width, dest_height);
+  return result;
 }
 
 
 /*  private functions  */
 
-static TempBuf *
-gimp_brush_scale_buf_up (TempBuf *brush_buf,
-                         gint     dest_width,
-                         gint     dest_height)
+static void
+gimp_brush_transform_matrix (GimpBrush   *brush,
+                             gdouble      scale,
+                             gdouble      angle,
+                             GimpMatrix3 *matrix)
 {
-  PixelRegion  source_region;
-  PixelRegion  dest_region;
-  TempBuf     *dest_brush_buf;
+  const gdouble center_x = brush->mask->width  / 2;
+  const gdouble center_y = brush->mask->height / 2;
 
-  pixel_region_init_temp_buf (&source_region, brush_buf,
-                              0, 0, brush_buf->width, brush_buf->height);
-
-  dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes,
-                                 0, 0, NULL);
-
-  pixel_region_init_temp_buf (&dest_region, dest_brush_buf,
-                              0, 0, dest_width, dest_height);
-
-  scale_region (&source_region, &dest_region,
-                GIMP_INTERPOLATION_LINEAR, NULL, NULL);
-
-  return dest_brush_buf;
+  gimp_matrix3_identity (matrix);
+  gimp_matrix3_translate (matrix, - center_x, - center_x);
+  gimp_matrix3_rotate (matrix, 2 * G_PI * angle);
+  gimp_matrix3_translate (matrix, center_x, center_y);
+  gimp_matrix3_scale (matrix, scale, scale);
 }
 
-static TempBuf *
-gimp_brush_scale_mask_down (TempBuf *brush_mask,
-                            gint     dest_width,
-                            gint     dest_height)
+static void
+gimp_brush_transform_bounding_box (GimpBrush         *brush,
+                                   const GimpMatrix3 *matrix,
+                                   gint              *x,
+                                   gint              *y,
+                                   gint              *width,
+                                   gint              *height)
 {
-  TempBuf *scale_brush;
-  gint     src_width;
-  gint     src_height;
-  gint     value;
-  gint     area;
-  gint     i, j;
-  gint     x, x0, y, y0;
-  gint     dx, dx0, dy, dy0;
-  gint     fx, fx0, fy, fy0;
-  guchar  *src, *dest;
+  const gdouble  w = brush->mask->width;
+  const gdouble  h = brush->mask->height;
+  gdouble        x1, x2, x3, x4;
+  gdouble        y1, y2, y3, y4;
 
-  g_return_val_if_fail (brush_mask != NULL &&
-                        dest_width != 0 && dest_height != 0, NULL);
+  gimp_matrix3_transform_point (matrix, 0, 0, &x1, &y1);
+  gimp_matrix3_transform_point (matrix, w, 0, &x2, &y2);
+  gimp_matrix3_transform_point (matrix, 0, h, &x3, &y3);
+  gimp_matrix3_transform_point (matrix, w, h, &x4, &y4);
 
-  src_width  = brush_mask->width;
-  src_height = brush_mask->height;
+  *x = floor (MIN (MIN (x1, x2), MIN (x3, x4)));
+  *y = floor (MIN (MIN (y1, y2), MIN (y3, y4)));
 
-  scale_brush = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL);
-  g_return_val_if_fail (scale_brush != NULL, NULL);
-
-  /*  get the data  */
-  dest = temp_buf_get_data (scale_brush);
-  src  = temp_buf_get_data (brush_mask);
-
-  fx = fx0 = (src_width << 8) / dest_width;
-  fy = fy0 = (src_height << 8) / dest_height;
-
-  area = (fx0 * fy0) >> 8;
-
-  x = x0 = 0;
-  y = y0 = 0;
-  dx = dx0 = 0;
-  dy = dy0 = 0;
-
-  for (i = 0; i < dest_height; i++)
-    {
-      for (j = 0; j < dest_width; j++)
-        {
-          value  = 0;
-
-          fy = fy0;
-          y  = y0;
-          dy = dy0;
-
-          if (dy)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  value += (dx * dy * src[x + src_width * y]) >> 8;
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  value += dy * src[x + src_width * y];
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  value += fx * dy * src[x + src_width * y] >> 8;
-                  dx = 256 - fx;
-                }
-
-              y++;
-              fy -= dy;
-              dy = 0;
-            }
-
-          while (fy >= 256)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  value += dx * src[x + src_width * y];
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  value += 256 * src[x + src_width * y];
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  value += fx * src[x + src_width * y];
-                  dx = 256 - fx;
-                }
-
-              y++;
-              fy -= 256;
-            }
-
-          if (fy)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  value += (dx * fy * src[x + src_width * y]) >> 8;
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  value += fy * src[x + src_width * y];
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  value += (fx * fy * src[x + src_width * y]) >> 8;
-                  dx = 256 - fx;
-                }
-
-              dy = 256 - fy;
-            }
-
-          value /= area;
-          *dest++ = MIN (value, 255);
-
-          x0  = x;
-          dx0 = dx;
-        }
-
-      x0  = 0;
-      dx0 = 0;
-      y0  = y;
-      dy0 = dy;
-    }
-
-  return scale_brush;
+  *width  = (gint) (ceil  (MAX (MAX (x1, x2), MAX (x3, x4))) - *x);
+  *height = (gint) (ceil  (MAX (MAX (y1, y2), MAX (y3, y4))) - *y);
 }
-
-
-#define ADD_RGB(dest, factor, src) \
-  dest[0] += factor * src[0]; \
-  dest[1] += factor * src[1]; \
-  dest[2] += factor * src[2];
-
-static TempBuf *
-gimp_brush_scale_pixmap_down (TempBuf *pixmap,
-                              gint     dest_width,
-                              gint     dest_height)
-{
-  TempBuf *scale_brush;
-  gint     src_width;
-  gint     src_height;
-  gint     value[3];
-  gint     factor;
-  gint     area;
-  gint     i, j;
-  gint     x, x0, y, y0;
-  gint     dx, dx0, dy, dy0;
-  gint     fx, fx0, fy, fy0;
-  guchar  *src, *src_ptr, *dest;
-
-  g_return_val_if_fail (pixmap != NULL && pixmap->bytes == 3 &&
-                        dest_width != 0 && dest_height != 0, NULL);
-
-  src_width  = pixmap->width;
-  src_height = pixmap->height;
-
-  scale_brush = temp_buf_new (dest_width, dest_height, 3, 0, 0, NULL);
-  g_return_val_if_fail (scale_brush != NULL, NULL);
-
-  /*  get the data  */
-  dest = temp_buf_get_data (scale_brush);
-  src  = temp_buf_get_data (pixmap);
-
-  fx = fx0 = (src_width << 8) / dest_width;
-  fy = fy0 = (src_height << 8) / dest_height;
-  area = (fx0 * fy0) >> 8;
-
-  x = x0 = 0;
-  y = y0 = 0;
-  dx = dx0 = 0;
-  dy = dy0 = 0;
-
-  for (i = 0; i < dest_height; i++)
-    {
-      for (j=0; j<dest_width; j++)
-        {
-          value[0] = 0;
-          value[1] = 0;
-          value[2] = 0;
-
-          fy = fy0;
-          y  = y0;
-          dy = dy0;
-
-          if (dy)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  factor = (dx * dy) >> 8;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  factor = dy;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  factor = (fx * dy) >> 8;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  dx = 256 - fx;
-                }
-
-              y++;
-              fy -= dy;
-              dy = 0;
-            }
-
-          while (fy >= 256)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  factor = dx;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  factor = 256;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  factor = fx;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  dx = 256 - fx;
-                }
-
-              y++;
-              fy -= 256;
-            }
-
-          if (fy)
-            {
-              fx = fx0;
-              x  = x0;
-              dx = dx0;
-
-              if (dx)
-                {
-                  factor = (dx * fy) >> 8;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= dx;
-                  dx = 0;
-                }
-              while (fx >= 256)
-                {
-                  factor = fy;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  x++;
-                  fx -= 256;
-                }
-              if (fx)
-                {
-                  factor = (fx * fy) >> 8;
-                  src_ptr = src + 3 * (x + y * src_width);
-                  ADD_RGB (value, factor, src_ptr);
-                  dx = 256 - fx;
-                }
-
-              dy = 256 - fy;
-            }
-
-          value[0] /= area;
-          value[1] /= area;
-          value[2] /= area;
-
-          *dest++ = MIN (value[0], 255);
-          *dest++ = MIN (value[1], 255);
-          *dest++ = MIN (value[2], 255);
-
-          x0  = x;
-          dx0 = dx;
-        }
-
-      x0  = 0;
-      dx0 = 0;
-      y0  = y;
-      dy0 = dy;
-    }
-
-  return scale_brush;
-}
-
-#undef ADD_RGB

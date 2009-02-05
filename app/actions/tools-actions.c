@@ -181,6 +181,42 @@ static const GimpEnumActionEntry tools_paint_brush_scale_actions[] =
     NULL },
 };
 
+static const GimpEnumActionEntry tools_paint_brush_angle_actions[] =
+{
+  { "tools-paint-brush-angle-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-paint-brush-angle-set-to-default", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Angle To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-minimum", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Minimize Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-maximum", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Maximize Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-decrease", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-increase", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-decrease-skip", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Angle More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-angle-increase-skip", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Angle More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
 static const GimpEnumActionEntry tools_ink_blob_size_actions[] =
 {
   { "tools-ink-blob-size-set", GIMP_STOCK_TOOL_INK,
@@ -588,6 +624,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_paint_brush_scale_actions,
                                       G_N_ELEMENTS (tools_paint_brush_scale_actions),
                                       G_CALLBACK (tools_paint_brush_scale_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_paint_brush_angle_actions,
+                                      G_N_ELEMENTS (tools_paint_brush_angle_actions),
+                                      G_CALLBACK (tools_paint_brush_angle_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_size_actions,

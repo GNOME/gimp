@@ -62,21 +62,21 @@ static void   gimp_brush_tool_cursor_update  (GimpTool            *tool,
 
 static void   gimp_brush_tool_draw           (GimpDrawTool        *draw_tool);
 
-static void   gimp_brush_tool_brush_changed  (GimpContext         *context,
-                                              GimpBrush           *brush,
-                                              GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_brush_scaled   (GimpPaintOptions    *options,
-                                              GParamSpec          *pspec,
-                                              GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_set_brush      (GimpBrushCore       *brush_core,
-                                              GimpBrush           *brush,
-                                              GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_set_brush_after(GimpBrushCore       *brush_core,
-                                              GimpBrush           *brush,
-                                              GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_notify_brush   (GimpDisplayConfig   *config,
-                                              GParamSpec          *pspec,
-                                              GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_brush_changed     (GimpContext         *context,
+                                                 GimpBrush           *brush,
+                                                 GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_brush_transformed (GimpPaintOptions    *options,
+                                                 GParamSpec          *pspec,
+                                                 GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_set_brush         (GimpBrushCore       *brush_core,
+                                                 GimpBrush           *brush,
+                                                 GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_set_brush_after   (GimpBrushCore       *brush_core,
+                                                 GimpBrush           *brush,
+                                                 GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_notify_brush      (GimpDisplayConfig   *config,
+                                                 GParamSpec          *pspec,
+                                                 GimpBrushTool       *brush_tool);
 
 
 G_DEFINE_TYPE (GimpBrushTool, gimp_brush_tool, GIMP_TYPE_PAINT_TOOL)
@@ -155,7 +155,11 @@ gimp_brush_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_brush_tool_brush_changed),
                            brush_tool, 0);
   g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-scale",
-                           G_CALLBACK (gimp_brush_tool_brush_scaled),
+                           G_CALLBACK (gimp_brush_tool_brush_transformed),
+                           brush_tool, 0);
+
+  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-angle",
+                           G_CALLBACK (gimp_brush_tool_brush_transformed),
                            brush_tool, 0);
 
   g_signal_connect (paint_tool->core, "set-brush",
@@ -345,9 +349,9 @@ gimp_brush_tool_brush_changed (GimpContext   *context,
 }
 
 static void
-gimp_brush_tool_brush_scaled (GimpPaintOptions *options,
-                              GParamSpec       *pspec,
-                              GimpBrushTool    *brush_tool)
+gimp_brush_tool_brush_transformed  (GimpPaintOptions *options,
+                                    GParamSpec       *pspec,
+                                    GimpBrushTool    *brush_tool)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (brush_tool);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);

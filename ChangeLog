@@ -1,3 +1,30 @@
+2009-02-05  Sven Neumann  <sven@gimp.org>
+
+	Bug 520078 – Rotate brushes
+
+	Applied patch from Alexia Death:
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrush-transform.[ch]: affine transformations for
+	brushes. So far only scaling and rotation is supported. The
+	transformation is done using nearest-neighbour. This is a
+	regression and we need to add back interpolation before the next
+	release.
+
+	* app/paint/gimpsmudge.c
+	* app/paint/gimppaintoptions.[ch]
+	* app/paint/gimpbrushcore.[ch]: allow to control the brush
+	rotation angle.
+
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpbrushtool.c: added UI for controlling the
+	brush rotation angle.
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: add actions for controlling the
+	brush rotation angle.
+
 2009-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.h

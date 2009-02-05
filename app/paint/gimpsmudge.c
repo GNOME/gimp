@@ -89,7 +89,7 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 
   paint_core_class->paint = gimp_smudge_paint;
 
-  brush_core_class->handles_scaling_brush = FALSE;
+  brush_core_class->handles_transforming_brush = FALSE;
 }
 
 static void
@@ -329,7 +329,7 @@ gimp_smudge_brush_coords (GimpPaintCore *paint_core,
   gint           height;
 
   gimp_brush_transform_size (brush_core->brush, brush_core->scale,
-                             &width, &height);
+                             brush_core->angle, &width, &height);
 
   /* Note: these are the brush mask size plus a border of 1 pixel */
   *x = (gint) paint_core->cur_coords.x - width  / 2 - 1;

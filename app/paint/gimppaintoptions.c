@@ -34,6 +34,8 @@
 
 
 #define DEFAULT_BRUSH_SCALE           1.0
+#define DEFAULT_BRUSH_ANGLE           0.0
+
 #define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                  FALSE
 
@@ -45,6 +47,7 @@
 #define DEFAULT_PRESSURE_SIZE         FALSE
 #define DEFAULT_PRESSURE_INVERSE_SIZE FALSE
 #define DEFAULT_PRESSURE_COLOR        FALSE
+#define DEFAULT_PRESSURE_ANGLE        FALSE
 #define DEFAULT_PRESSURE_PRESCALE     1.0
 
 #define DEFAULT_VELOCITY_OPACITY      FALSE
@@ -53,6 +56,7 @@
 #define DEFAULT_VELOCITY_SIZE         FALSE
 #define DEFAULT_VELOCITY_INVERSE_SIZE FALSE
 #define DEFAULT_VELOCITY_COLOR        FALSE
+#define DEFAULT_VELOCITY_ANGLE        FALSE
 #define DEFAULT_VELOCITY_PRESCALE     1.0
 
 #define DEFAULT_RANDOM_OPACITY        FALSE
@@ -61,6 +65,7 @@
 #define DEFAULT_RANDOM_SIZE           FALSE
 #define DEFAULT_RANDOM_INVERSE_SIZE   FALSE
 #define DEFAULT_RANDOM_COLOR          FALSE
+#define DEFAULT_RANDOM_ANGLE          FALSE
 #define DEFAULT_RANDOM_PRESCALE       1.0
 
 #define DEFAULT_USE_FADE              FALSE
@@ -82,7 +87,10 @@ enum
   PROP_0,
 
   PROP_PAINT_INFO,
+
   PROP_BRUSH_SCALE,
+  PROP_BRUSH_ANGLE,
+
   PROP_APPLICATION_MODE,
   PROP_HARD,
 
@@ -94,6 +102,7 @@ enum
   PROP_PRESSURE_SIZE,
   PROP_PRESSURE_INVERSE_SIZE,
   PROP_PRESSURE_COLOR,
+  PROP_PRESSURE_ANGLE,
   PROP_PRESSURE_PRESCALE,
 
   PROP_VELOCITY_OPACITY,
@@ -102,6 +111,7 @@ enum
   PROP_VELOCITY_SIZE,
   PROP_VELOCITY_INVERSE_SIZE,
   PROP_VELOCITY_COLOR,
+  PROP_VELOCITY_ANGLE,
   PROP_VELOCITY_PRESCALE,
 
   PROP_RANDOM_OPACITY,
@@ -110,6 +120,7 @@ enum
   PROP_RANDOM_SIZE,
   PROP_RANDOM_INVERSE_SIZE,
   PROP_RANDOM_COLOR,
+  PROP_RANDOM_ANGLE,
   PROP_RANDOM_PRESCALE,
 
   PROP_USE_FADE,
@@ -180,6 +191,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "brush-scale", NULL,
                                    0.01, 10.0, DEFAULT_BRUSH_SCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
+                                   "brush-angle", NULL,
+                                   -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", NULL,
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
@@ -215,6 +231,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "pressure-color", NULL,
                                     DEFAULT_PRESSURE_COLOR,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_ANGLE,
+                                    "pressure-angle", NULL,
+                                    DEFAULT_PRESSURE_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVERSE_SIZE,
                                     "pressure-inverse-size", NULL,
                                     DEFAULT_PRESSURE_INVERSE_SIZE,
@@ -244,6 +264,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "velocity-color", NULL,
                                     DEFAULT_VELOCITY_COLOR,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_ANGLE,
+                                    "velocity-angle", NULL,
+                                    DEFAULT_VELOCITY_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_INVERSE_SIZE,
                                     "velocity-inverse-size", NULL,
                                     DEFAULT_VELOCITY_INVERSE_SIZE,
@@ -271,6 +295,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_COLOR,
                                     "random-color", NULL,
+                                    DEFAULT_RANDOM_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ANGLE,
+                                    "random-angle", NULL,
                                     DEFAULT_RANDOM_COLOR,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_INVERSE_SIZE,
@@ -418,6 +446,10 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_scale = g_value_get_double (value);
       break;
 
+    case PROP_BRUSH_ANGLE:
+      options->brush_angle = g_value_get_double (value) / 360.0;
+      break;
+
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
@@ -454,6 +486,10 @@ gimp_paint_options_set_property (GObject      *object,
       pressure_options->color = g_value_get_boolean (value);
       break;
 
+    case PROP_PRESSURE_ANGLE:
+      pressure_options->angle = g_value_get_boolean (value);
+      break;
+
     case PROP_PRESSURE_PRESCALE:
       pressure_options->prescale = g_value_get_double (value);
       break;
@@ -482,6 +518,10 @@ gimp_paint_options_set_property (GObject      *object,
       velocity_options->color = g_value_get_boolean (value);
       break;
 
+    case PROP_VELOCITY_ANGLE:
+      velocity_options->angle = g_value_get_boolean (value);
+      break;
+
     case PROP_VELOCITY_PRESCALE:
       velocity_options->prescale = g_value_get_double (value);
       break;
@@ -508,6 +548,10 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_RANDOM_COLOR:
       random_options->color = g_value_get_boolean (value);
+      break;
+
+    case PROP_RANDOM_ANGLE:
+      random_options->angle = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_PRESCALE:
@@ -608,6 +652,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, options->brush_scale);
       break;
 
+    case PROP_BRUSH_ANGLE:
+      g_value_set_double (value, options->brush_angle * 360.0);
+      break;
+
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;
@@ -644,6 +692,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, pressure_options->color);
       break;
 
+    case PROP_PRESSURE_ANGLE:
+      g_value_set_boolean (value, pressure_options->angle);
+      break;
+
     case PROP_PRESSURE_PRESCALE:
       g_value_set_double (value, pressure_options->prescale);
       break;
@@ -672,6 +724,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, velocity_options->color);
       break;
 
+    case PROP_VELOCITY_ANGLE:
+      g_value_set_boolean (value, velocity_options->angle);
+      break;
+
     case PROP_VELOCITY_PRESCALE:
       g_value_set_double (value, velocity_options->prescale);
       break;
@@ -698,6 +754,10 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_RANDOM_COLOR:
       g_value_set_boolean (value, random_options->color);
+      break;
+
+    case PROP_RANDOM_ANGLE:
+      g_value_set_boolean (value, random_options->angle);
       break;
 
     case PROP_RANDOM_PRESCALE:
@@ -1243,4 +1303,41 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
     }
 
   return hardness;
+}
+
+gdouble
+gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
+                                      const GimpCoords *coords)
+{
+  gdouble angle = 1.0;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
+  g_return_val_if_fail (coords != NULL, 1.0);
+
+  if (paint_options->pressure_options->angle ||
+      paint_options->velocity_options->angle ||
+      paint_options->random_options->angle)
+    {
+      gdouble pressure = -1.0;
+      gdouble velocity = -1.0;
+      gdouble random   = -1.0;
+
+      if (paint_options->pressure_options->angle)
+        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+
+      if (paint_options->velocity_options->angle)
+        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+
+      if (paint_options->random_options->angle)
+        random = g_random_double_range (0.0, 1.0);
+
+      angle = gimp_paint_options_get_dynamics_mix (pressure,
+                                                  paint_options->pressure_options->prescale,
+                                                  velocity,
+                                                  paint_options->velocity_options->prescale,
+                                                  random,
+                                                  paint_options->random_options->prescale);
+    }
+
+  return angle + paint_options->brush_angle;
 }

@@ -52,6 +52,7 @@ static gboolean    tool_has_hardness_dynamics (GType       tool_type);
 static gboolean    tool_has_rate_dynamics     (GType       tool_type);
 static gboolean    tool_has_size_dynamics     (GType       tool_type);
 static gboolean    tool_has_color_dynamics    (GType       tool_type);
+static gboolean    tool_has_angle_dynamics    (GType       tool_type);
 
 static void        pressure_options_gui (GimpPaintOptions *paint_options,
                                          GType             tool_type,
@@ -128,7 +129,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
-      GtkObject *adj;
+      GtkObject *adj_scale;
+      GtkObject *adj_angle;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
@@ -136,12 +138,20 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      adj = gimp_prop_scale_entry_new (config, "brush-scale",
-                                       GTK_TABLE (table), 0, table_row++,
-                                       _("Scale:"),
-                                       0.01, 0.1, 2,
-                                       FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj, TRUE);
+      adj_scale = gimp_prop_scale_entry_new (config, "brush-scale",
+                                             GTK_TABLE (table), 0, table_row++,
+                                             _("Scale:"),
+                                             0.01, 0.1, 2,
+                                             FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
+
+      adj_angle = gimp_prop_scale_entry_new (config, "brush-angle",
+                                             GTK_TABLE (table), 0, table_row++,
+                                             _("Angle:"),
+                                             1.0, 5.0, 2,
+                                             FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj_angle, FALSE);
+
     }
 
   if (tool_has_opacity_dynamics (tool_type))
@@ -165,6 +175,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_labels[n_dynamics] = gtk_label_new (_("Size"));
+      n_dynamics++;
+    }
+
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Angle"));
       n_dynamics++;
     }
 
@@ -340,6 +356,12 @@ tool_has_size_dynamics (GType tool_type)
 }
 
 static gboolean
+tool_has_angle_dynamics (GType tool_type)
+{
+  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
+}
+
+static gboolean
 tool_has_color_dynamics (GType tool_type)
 {
   return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
@@ -439,6 +461,16 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      button = dynamics_check_button_new (config, "pressure-angle",
+                                          table, column, row);
+      g_signal_connect (button, "size-allocate",
+                        G_CALLBACK (dynamics_check_button_size_allocate),
+                        labels[column - 1]);
+      column++;
+    }
+
   if (tool_has_color_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-color",
@@ -489,6 +521,12 @@ velocity_options_gui (GimpPaintOptions *paint_options,
                                  table, column++, row);
     }
 
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "velocity-angle",
+                                 table, column++, row);
+    }
+
   if (tool_has_color_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-color",
@@ -532,6 +570,12 @@ random_options_gui (GimpPaintOptions *paint_options,
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "random-angle",
                                  table, column++, row);
     }
 

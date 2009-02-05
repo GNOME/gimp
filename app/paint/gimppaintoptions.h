@@ -42,6 +42,7 @@ struct _GimpDynamicOptions
   gboolean  size;
   gboolean  inverse_size;
   gboolean  color;
+  gboolean  angle;
   gdouble   prescale;
 };
 
@@ -87,6 +88,7 @@ struct _GimpPaintOptions
   GimpPaintInfo            *paint_info;
 
   gdouble                   brush_scale;
+  gdouble                   brush_angle;
 
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
@@ -148,6 +150,9 @@ gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_color   (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords);
+
+gdouble gimp_paint_options_get_dynamic_angle   (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_hardness(GimpPaintOptions *paint_options,
