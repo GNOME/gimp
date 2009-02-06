@@ -1,5 +1,14 @@
 2009-02-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/tools-commands.c
+	(tools_paint_brush_angle_cmd_callback): let the brush angle wrap.
+
+2009-02-06  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tools-commands.c:
+
+2009-02-06  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/actions.c (action_select_property): mark strings for
 	translation and add translator comments for them.
 
@@ -132,7 +141,7 @@
 
 	* app/core/gimpimage.[ch]: removed gimp_image_get_type_string()
 	again.
-	
+
 	* app/display/gimpdisplayshell-title.c
 	(gimp_display_shell_format_title): use the GimpImageBaseType enum
 	instead.
@@ -279,7 +288,7 @@
 
 2009-01-22  Tor Lillqvist  <tml@iki.fi>
 
-	Bug 559408 - Brushes dragged to the image window look strange 
+	Bug 559408 - Brushes dragged to the image window look strange
 
 	* app/widgets/gimppixbuf.c (gimp_pixbuf_format_compare): Drop
 	Windows-specific code to prefer BMP. The BMP format written by
@@ -890,7 +899,7 @@
 	* app/core/gimpdata.c: Implement GimpTagged::get_identifier() and
 	GimpTagged::get_checksum().
 
-	* app/core/gimpbrush.c: 
+	* app/core/gimpbrush.c:
 	* app/core/gimpgradient.c
 	* app/core/gimppalette.c
 	* app/core/gimppattern.c: Implement GimpTagged::get_checksum().
@@ -1090,7 +1099,7 @@
 	* app/actions/*.c: added a translation context to all action
 	labels. Also unified and improved the labels and tooltips in a few
 	places.
-	
+
 2008-12-03  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactiongroup.c: check that the action name is
@@ -1479,7 +1488,7 @@
 	here instead of exposing them through silly class instance
 	members.
 
-	* app/widgets/gimpcontainertreeview.[ch]: 
+	* app/widgets/gimpcontainertreeview.[ch]:
 	* app/widgets/gimpcontainertreeview-dnd.c
 	* app/widgets/gimpdatafactoryview.c
 	* app/widgets/gimpitemtreeview.c
@@ -1658,7 +1667,7 @@
 	Bug 559292 – SOTA Chrome cannot accept different textures
 
 	* app/pdb/gimppdb-utils.c (gimp_pdb_image_is_base_type)
-	(gimp_pdb_image_is_not_base_type): gimp_object_get_name() may 
+	(gimp_pdb_image_is_not_base_type): gimp_object_get_name() may
 	return NULL for images. Use gimp_image_get_uri() instead.
 
 2008-11-12  Øyvind Kolås  <pippin@gimp.org>
@@ -1772,7 +1781,7 @@
 
 	Bug 560300 – Document History did not clear when "Keep record of
 	used files" was unchecked
-	
+
 	* app/actions/documents-commands.c (documents_clear_cmd_callback):
 	don't purge the entire GtkRecentManager, but only clear items
 	added by GIMP. Do this regardless of the "save-document-history"
@@ -1895,7 +1904,7 @@
 2008-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-foreground-extract.c
-	* app/core/gimpdrawable-preview.c 
+	* app/core/gimpdrawable-preview.c
 	* app/core/gimplayer-project.c: use gimp_drawable_get_colormap()
 	instead of gimp_image_get_colormap().
 
