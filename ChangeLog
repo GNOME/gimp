@@ -3,7 +3,8 @@
 	Bug 471681 – Keyboard shortcuts for brush size/params need
 	feedback
 
-	Applied patch from Sven Neumann which addresses above bug:
+	Applied patch from Stephen G. and Sven Neumann which addresses
+	above bug:
 
 	* app/actions/actions.[ch]: add new function action_message()
 	which pushes a temp message to a display's statusbar.
