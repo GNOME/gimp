@@ -1,5 +1,10 @@
 2009-02-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/actions.c (action_select_property): mark strings for
+	translation and add translator comments for them.
+
+2009-02-06  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/actions.c: prototype action_message() with format
 	function attribute and move it to the bottom of the file.
 

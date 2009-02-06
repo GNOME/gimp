@@ -511,7 +511,10 @@ action_select_property (GimpActionSelectType  select_type,
           const gchar *blurb = g_param_spec_get_blurb (pspec);
 
           if (blurb)
-            action_message (display, object, "%s: %.2f", blurb, value);
+            {
+              /*  value description and new value shown in the status bar  */
+              action_message (display, object, _("%s: %.2f"), blurb, value);
+            }
         }
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
@@ -534,7 +537,10 @@ action_select_property (GimpActionSelectType  select_type,
           const gchar *blurb = g_param_spec_get_blurb (pspec);
 
           if (blurb)
-            action_message (display, object, "%s: %d", blurb, value);
+            {
+              /*  value description and new value shown in the status bar  */
+              action_message (display, object, _("%s: %d"), blurb, value);
+            }
         }
     }
   else
