@@ -1,5 +1,10 @@
 2009-02-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/actions.c: prototype action_message() with format
+	function attribute and move it to the bottom of the file.
+
+2009-02-06  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/tools-commands.c
 	(tools_paint_brush_angle_cmd_callback): fixed parameters passed to
 	action_select_property().

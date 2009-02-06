@@ -93,6 +93,12 @@
 #include "gimp-intl.h"
 
 
+static void  action_message (GimpDisplay *display,
+                             GObject     *object,
+                             const gchar *format,
+                             ...) G_GNUC_PRINTF(3,4);
+
+
 /*  global variables  */
 
 GimpActionFactory *global_action_factory = NULL;
@@ -382,30 +388,6 @@ action_data_get_widget (gpointer data)
   return dialogs_get_toolbox ();
 }
 
-static void
-action_message (GimpDisplay *display,
-                GObject     *object,
-                gchar       *format,
-                ...)
-{
-  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
-  const gchar      *stock_id = NULL;
-  va_list           args;
-
-  if (GIMP_IS_TOOL_OPTIONS (object))
-    {
-      GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-    }
-
-  va_start (args, format);
-  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
-                                   GIMP_MESSAGE_INFO, stock_id,
-                                   format, args);
-  va_end (args);
-}
-
 gdouble
 action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,
@@ -617,4 +599,31 @@ action_select_object (GimpActionSelectType  select_type,
   select_index = CLAMP (select_index, 0, n_children - 1);
 
   return gimp_container_get_child_by_index (container, select_index);
+}
+
+
+/*  private functions  */
+
+static void
+action_message (GimpDisplay *display,
+                GObject     *object,
+                const gchar *format,
+                ...)
+{
+  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
+  const gchar      *stock_id = NULL;
+  va_list           args;
+
+  if (GIMP_IS_TOOL_OPTIONS (object))
+    {
+      GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+    }
+
+  va_start (args, format);
+  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
+                                   GIMP_MESSAGE_INFO, stock_id,
+                                   format, args);
+  va_end (args);
 }
