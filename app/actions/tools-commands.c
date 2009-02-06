@@ -310,6 +310,7 @@ tools_paint_brush_angle_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-angle",
                               0.01, 0.1, 1.0, FALSE);

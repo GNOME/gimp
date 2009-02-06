@@ -1,3 +1,9 @@
+2009-02-06  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tools-commands.c
+	(tools_paint_brush_angle_cmd_callback): fixed parameters passed to
+	action_select_property().
+
 2009-02-06  Michael Natterer  <mitch@gimp.org>
 
 	Bug 471681 – Keyboard shortcuts for brush size/params need
