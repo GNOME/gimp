@@ -95,6 +95,9 @@ static gboolean        gimp_image_map_get_pixel_at   (GimpPickable        *picka
                                                       gint                 y,
                                                       guchar              *pixel);
 
+static void            gimp_image_map_update_undo_tiles
+                                                     (GimpImageMap        *image_map,
+                                                      const GeglRectangle *rect);
 static gboolean        gimp_image_map_do             (GimpImageMap        *image_map);
 static void            gimp_image_map_data_written   (GObject             *operation,
                                                       const GeglRectangle *extent,
@@ -340,10 +343,6 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                       const GeglRectangle *visible)
 {
   GeglRectangle rect;
-  gint          undo_offset_x;
-  gint          undo_offset_y;
-  gint          undo_width;
-  gint          undo_height;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
@@ -361,62 +360,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     return;
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
-  if (image_map->undo_tiles)
-    {
-      undo_offset_x = image_map->undo_offset_x;
-      undo_offset_y = image_map->undo_offset_y;
-      undo_width    = tile_manager_width  (image_map->undo_tiles);
-      undo_height   = tile_manager_height (image_map->undo_tiles);
-    }
-  else
-    {
-      undo_offset_x = 0;
-      undo_offset_y = 0;
-      undo_width    = 0;
-      undo_height   = 0;
-    }
-
-  if (! image_map->undo_tiles     ||
-      undo_offset_x != rect.x     ||
-      undo_offset_y != rect.y     ||
-      undo_width    != rect.width ||
-      undo_height   != rect.height)
-    {
-      /* If either the extents changed or the tiles don't exist,
-       * allocate new
-       */
-      if (! image_map->undo_tiles   ||
-          undo_width  != rect.width ||
-          undo_height != rect.height)
-        {
-          /*  Destroy old tiles  */
-          if (image_map->undo_tiles)
-            tile_manager_unref (image_map->undo_tiles);
-
-          /*  Allocate new tiles  */
-          image_map->undo_tiles =
-            tile_manager_new (rect.width, rect.height,
-                              gimp_drawable_bytes (image_map->drawable));
-        }
-
-      /*  Copy from the image to the new tiles  */
-      pixel_region_init (&image_map->srcPR,
-                         gimp_drawable_get_tiles (image_map->drawable),
-                         rect.x, rect.y,
-                         rect.width, rect.height,
-                         FALSE);
-      pixel_region_init (&image_map->destPR,
-                         image_map->undo_tiles,
-                         0, 0,
-                         rect.width, rect.height,
-                         TRUE);
-
-      copy_region (&image_map->srcPR, &image_map->destPR);
-
-      /*  Set the offsets  */
-      image_map->undo_offset_x = rect.x;
-      image_map->undo_offset_y = rect.y;
-    }
+  gimp_image_map_update_undo_tiles (image_map,
+                                    &rect);
 
   if (image_map->operation)
     {
@@ -652,6 +597,73 @@ gimp_image_map_abort (GimpImageMap *image_map)
 
 
 /*  private functions  */
+
+static void
+gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
+                                  const GeglRectangle *rect)
+{
+  gint undo_offset_x;
+  gint undo_offset_y;
+  gint undo_width;
+  gint undo_height;
+
+  if (image_map->undo_tiles)
+    {
+      undo_offset_x = image_map->undo_offset_x;
+      undo_offset_y = image_map->undo_offset_y;
+      undo_width    = tile_manager_width  (image_map->undo_tiles);
+      undo_height   = tile_manager_height (image_map->undo_tiles);
+    }
+  else
+    {
+      undo_offset_x = 0;
+      undo_offset_y = 0;
+      undo_width    = 0;
+      undo_height   = 0;
+    }
+
+  if (! image_map->undo_tiles     ||
+      undo_offset_x != rect->x     ||
+      undo_offset_y != rect->y     ||
+      undo_width    != rect->width ||
+      undo_height   != rect->height)
+    {
+      /* If either the extents changed or the tiles don't exist,
+       * allocate new
+       */
+      if (! image_map->undo_tiles   ||
+          undo_width  != rect->width ||
+          undo_height != rect->height)
+        {
+          /*  Destroy old tiles  */
+          if (image_map->undo_tiles)
+            tile_manager_unref (image_map->undo_tiles);
+
+          /*  Allocate new tiles  */
+          image_map->undo_tiles =
+            tile_manager_new (rect->width, rect->height,
+                              gimp_drawable_bytes (image_map->drawable));
+        }
+
+      /*  Copy from the image to the new tiles  */
+      pixel_region_init (&image_map->srcPR,
+                         gimp_drawable_get_tiles (image_map->drawable),
+                         rect->x, rect->y,
+                         rect->width, rect->height,
+                         FALSE);
+      pixel_region_init (&image_map->destPR,
+                         image_map->undo_tiles,
+                         0, 0,
+                         rect->width, rect->height,
+                         TRUE);
+
+      copy_region (&image_map->srcPR, &image_map->destPR);
+
+      /*  Set the offsets  */
+      image_map->undo_offset_x = rect->x;
+      image_map->undo_offset_y = rect->y;
+    }
+}
 
 static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
