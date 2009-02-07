@@ -1814,6 +1814,9 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
 
   g_printerr ("%s\n", G_STRFUNC);
 
+  /*  clear the selection  */
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
+
   gimp_drawable_sync_source_node (drawable, FALSE);
 
 #ifdef __GNUC__
@@ -1844,4 +1847,7 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
    *  invalid.
    */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_sel));
+
+  /*  clear the selection  */
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
 }

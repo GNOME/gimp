@@ -1,3 +1,16 @@
+2009-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.c
+	(gimp_drawable_attach_floating_sel)
+	(gimp_drawable_detach_floating_sel): call
+	gimp_drawable_invalidate_boundary(floating_sel). Fixes missing
+	selection update after turning a floating selection into a
+	layer. It's called redundantly now when adding or deleting a
+	floating selection, but that doesn't hurt much.
+
+	* app/core/gimpfloatingselundo.c (gimp_floating_sel_undo_pop):
+	don't call it here because we already call above functions.
+
 2009-02-07  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpimagemap.c: Move undo tiles updating into a helper
