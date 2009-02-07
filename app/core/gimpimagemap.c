@@ -101,6 +101,8 @@ static void            gimp_image_map_data_written   (GObject             *opera
                                                       GimpImageMap        *image_map);
 static void            gimp_image_map_cancel_any_idle_jobs
                                                      (GimpImageMap        *image_map);
+static void            gimp_image_map_kill_any_idle_processors
+                                                     (GimpImageMap        *image_map);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
@@ -658,17 +660,7 @@ gimp_image_map_do (GimpImageMap *image_map)
     {
       image_map->idle_id = 0;
 
-      if (image_map->processor)
-        {
-          g_object_unref (image_map->processor);
-          image_map->processor = NULL;
-        }
-
-      if (image_map->PRI)
-        {
-          pixel_regions_process_stop (image_map->PRI);
-          image_map->PRI = NULL;
-        }
+      gimp_image_map_kill_any_idle_processors (image_map);
 
       return FALSE;
     }
@@ -843,16 +835,22 @@ gimp_image_map_cancel_any_idle_jobs (GimpImageMap *image_map)
       g_source_remove (image_map->idle_id);
       image_map->idle_id = 0;
 
-      if (image_map->processor)
-        {
-          g_object_unref (image_map->processor);
-          image_map->processor = NULL;
-        }
+      gimp_image_map_kill_any_idle_processors (image_map);
+    }
+}
 
-      if (image_map->PRI)
-        {
-          pixel_regions_process_stop (image_map->PRI);
-          image_map->PRI = NULL;
-        }
+static void
+gimp_image_map_kill_any_idle_processors (GimpImageMap *image_map)
+{
+  if (image_map->processor)
+    {
+      g_object_unref (image_map->processor);
+      image_map->processor = NULL;
+    }
+
+  if (image_map->PRI)
+    {
+      pixel_regions_process_stop (image_map->PRI);
+      image_map->PRI = NULL;
     }
 }
