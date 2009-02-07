@@ -1,3 +1,25 @@
+2009-02-07  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimagemap.c: Move undo tiles updating into a helper
+	function gimp_image_map_update_undo_tiles() so the logic of
+	gimp_image_map_apply() becomes clearer.
+
+2009-02-07  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimagemap.c: Introduce and use a local helper
+	function gimp_image_map_kill_any_idle_processors() to get a rid of
+	some code duplication.
+
+2009-02-07  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimagemap.c: Introduce and use a local helper
+	function gimp_image_map_cancel_any_idle_jobs() to get a rid of
+	some code duplication.
+
+2009-02-07  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimagemap.c: Fix misindented return statement.
+
 2009-02-06  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/tools-commands.c
