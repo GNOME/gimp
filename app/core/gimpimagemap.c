@@ -732,7 +732,7 @@ gimp_image_map_do (GimpImageMap *image_map)
           image_map->PRI = NULL;
         }
 
-     return FALSE;
+      return FALSE;
     }
 
   if (image_map->gegl)
