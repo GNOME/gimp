@@ -142,9 +142,7 @@ floating_sel_to_layer (GimpLayer  *layer,
   gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
                                      layer);
 
-  /*  Set pointers  */
   gimp_layer_set_floating_sel_drawable (layer, NULL);
-  gimp_image_set_floating_selection (image, NULL);
 
   gimp_item_set_visible (item, TRUE, TRUE);
   gimp_layer_set_lock_alpha (layer, FALSE, TRUE);

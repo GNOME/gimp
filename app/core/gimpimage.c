@@ -2967,14 +2967,10 @@ gimp_image_add_layer (GimpImage *image,
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (image, layer);
 
-  /*  If the layer is a floating selection, set the fs pointer  */
+  /*  If the layer is a floating selection, attach it to the drawable  */
   if (gimp_layer_is_floating_sel (layer))
-    {
-      gimp_image_set_floating_selection (image, layer);
-
-      gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
-                                         layer);
-    }
+    gimp_drawable_attach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
+                                       layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     image->flush_accum.alpha_changed = TRUE;
@@ -3049,13 +3045,10 @@ gimp_image_remove_layer (GimpImage *image,
   gimp_container_remove (image->layers, GIMP_OBJECT (layer));
   image->layer_stack = g_slist_remove (image->layer_stack, layer);
 
-  if (gimp_image_get_floating_selection (image) == layer)
+  if (gimp_layer_is_floating_sel (layer))
     {
-      /*  If this was the floating selection, reset the fs pointer
-       *  and activate the underlying drawable
+      /*  If this was the floating selection, activate the underlying drawable
        */
-      gimp_image_set_floating_selection (image, NULL);
-
       floating_sel_activate_drawable (layer);
     }
   else if (layer == active_layer)

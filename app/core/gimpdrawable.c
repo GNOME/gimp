@@ -1809,10 +1809,17 @@ void
 gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
                                    GimpLayer    *floating_sel)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_LAYER (floating_sel));
 
   g_printerr ("%s\n", G_STRFUNC);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_image_set_floating_selection (image, floating_sel);
 
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
@@ -1829,10 +1836,14 @@ void
 gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
                                    GimpLayer    *floating_sel)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_LAYER (floating_sel));
 
   g_printerr ("%s\n", G_STRFUNC);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   gimp_drawable_sync_source_node (drawable, TRUE);
 
@@ -1850,4 +1861,6 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
 
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
+
+  gimp_image_set_floating_selection (image, NULL);
 }

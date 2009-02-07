@@ -1,5 +1,19 @@
 2009-02-07  Michael Natterer  <mitch@gimp.org>
 
+	Simplify floating selection handling a bit more:
+
+	* app/core/gimpdrawable.c
+	(gimp_drawable_attach_floating_sel)
+	(gimp_drawable_detach_floating_sel): call
+	gimp_image_set_floating_selection() from these functions.
+
+	* app/core/gimpfloatingselundo.c (gimp_floating_sel_undo_pop)
+	* app/core/gimpimage.c (gimp_image_add,remove_layer)
+	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer): don't
+	call it here because we already call above functions.
+
+2009-02-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.c
 	(gimp_drawable_attach_floating_sel)
 	(gimp_drawable_detach_floating_sel): call
