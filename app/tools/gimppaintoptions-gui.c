@@ -96,7 +96,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
   gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[5];
+  GtkWidget        *dynamics_labels[6];
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
@@ -191,6 +191,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       dynamics_labels[n_dynamics] = gtk_label_new (_("Color"));
       n_dynamics++;
     }
+
+  /* NB: When adding new dynamics, increase size of the
+   * dynamics_labels[] array
+   */
+
 
   if (n_dynamics > 0)
     {
