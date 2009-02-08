@@ -1,3 +1,32 @@
+2009-02-08  Michael Natterer  <mitch@gimp.org>
+
+	Bug 520078 – Rotate brushes
+
+	Applied a slightly modified patch from Alexia Death:
+
+	* app/core/core-types.h (struct GimpCoords): add "direction" member.
+
+	* app/core/gimpcoords.c: take direction into account in mix(),
+	scalarprod(), length_squared(), manhattan_dist() and equal().
+
+	* app/core/gimpcoords-interpolate.c
+	(gimp_coords_interpolate_catmull): same here.
+	* app/display/gimpdisplayshell-coords.c
+
+	(gimp_display_shell_eval_event): same here.
+
+	* app/paint/gimppaintoptions.[ch]: add properties for direction
+	dynamics and adapt dynamics mixing accordingly.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate):
+	"interpolate" direction too (in fact, just copy it from
+	last_coords since it doesn't change along a straight line).
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_emulate_dynamics): emulate direction too.
+
+	* app/tools/gimppaintoptions-gui.c: add GUI for direction dynamics.
+
 2009-02-07  Michael Natterer  <mitch@gimp.org>
 
 	Simplify floating selection handling a bit more:

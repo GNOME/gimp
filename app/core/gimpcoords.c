@@ -43,23 +43,25 @@ gimp_coords_mix (const gdouble     amul,
 {
   if (b)
     {
-      ret_val->x        = amul * a->x        + bmul * b->x;
-      ret_val->y        = amul * a->y        + bmul * b->y;
-      ret_val->pressure = amul * a->pressure + bmul * b->pressure;
-      ret_val->xtilt    = amul * a->xtilt    + bmul * b->xtilt;
-      ret_val->ytilt    = amul * a->ytilt    + bmul * b->ytilt;
-      ret_val->wheel    = amul * a->wheel    + bmul * b->wheel;
-      ret_val->velocity = amul * a->velocity + bmul * b->velocity;
+      ret_val->x         = amul * a->x         + bmul * b->x;
+      ret_val->y         = amul * a->y         + bmul * b->y;
+      ret_val->pressure  = amul * a->pressure  + bmul * b->pressure;
+      ret_val->xtilt     = amul * a->xtilt     + bmul * b->xtilt;
+      ret_val->ytilt     = amul * a->ytilt     + bmul * b->ytilt;
+      ret_val->wheel     = amul * a->wheel     + bmul * b->wheel;
+      ret_val->velocity  = amul * a->velocity  + bmul * b->velocity;
+      ret_val->direction = amul * a->direction + bmul * b->direction;
     }
   else
     {
-      ret_val->x        = amul * a->x;
-      ret_val->y        = amul * a->y;
-      ret_val->pressure = amul * a->pressure;
-      ret_val->xtilt    = amul * a->xtilt;
-      ret_val->ytilt    = amul * a->ytilt;
-      ret_val->wheel    = amul * a->wheel;
-      ret_val->velocity = amul * a->velocity;
+      ret_val->x         = amul * a->x;
+      ret_val->y         = amul * a->y;
+      ret_val->pressure  = amul * a->pressure;
+      ret_val->xtilt     = amul * a->xtilt;
+      ret_val->ytilt     = amul * a->ytilt;
+      ret_val->wheel     = amul * a->wheel;
+      ret_val->velocity  = amul * a->velocity;
+      ret_val->direction = amul * a->direction;
     }
 }
 
@@ -114,13 +116,14 @@ gdouble
 gimp_coords_scalarprod (const GimpCoords *a,
                         const GimpCoords *b)
 {
-  return (a->x        * b->x        +
-          a->y        * b->y        +
-          a->pressure * b->pressure +
-          a->xtilt    * b->xtilt    +
-          a->ytilt    * b->ytilt    +
-          a->wheel    * b->wheel    +
-          a->velocity * a->velocity);
+  return (a->x         * b->x        +
+          a->y         * b->y        +
+          a->pressure  * b->pressure +
+          a->xtilt     * b->xtilt    +
+          a->ytilt     * b->ytilt    +
+          a->wheel     * b->wheel    +
+          a->velocity  * b->velocity +
+          a->direction * b->direction);
 }
 
 
@@ -135,13 +138,14 @@ gimp_coords_length_squared (const GimpCoords *a)
 {
   GimpCoords upscaled_a;
 
-  upscaled_a.x        = a->x;
-  upscaled_a.y        = a->y;
-  upscaled_a.pressure = a->pressure * INPUT_RESOLUTION;
-  upscaled_a.xtilt    = a->xtilt    * INPUT_RESOLUTION;
-  upscaled_a.ytilt    = a->ytilt    * INPUT_RESOLUTION;
-  upscaled_a.wheel    = a->wheel    * INPUT_RESOLUTION;
-  upscaled_a.velocity = a->velocity * INPUT_RESOLUTION;
+  upscaled_a.x         = a->x;
+  upscaled_a.y         = a->y;
+  upscaled_a.pressure  = a->pressure  * INPUT_RESOLUTION;
+  upscaled_a.xtilt     = a->xtilt     * INPUT_RESOLUTION;
+  upscaled_a.ytilt     = a->ytilt     * INPUT_RESOLUTION;
+  upscaled_a.wheel     = a->wheel     * INPUT_RESOLUTION;
+  upscaled_a.velocity  = a->velocity  * INPUT_RESOLUTION;
+  upscaled_a.direction = a->direction * INPUT_RESOLUTION;
 
   return gimp_coords_scalarprod (&upscaled_a, &upscaled_a);
 }
@@ -169,6 +173,7 @@ gimp_coords_manhattan_dist (const GimpCoords *a,
   dist += ABS (a->ytilt - b->ytilt);
   dist += ABS (a->wheel - b->wheel);
   dist += ABS (a->velocity - b->velocity);
+  dist += ABS (a->direction - b->direction);
 
   dist *= INPUT_RESOLUTION;
 
@@ -182,11 +187,12 @@ gboolean
 gimp_coords_equal (const GimpCoords *a,
                    const GimpCoords *b)
 {
-  return (       a->x == b->x        &&
-                 a->y == b->y        &&
-          a->pressure == b->pressure &&
-             a->xtilt == b->xtilt    &&
-             a->ytilt == b->ytilt    &&
-             a->wheel == b->wheel    &&
-          a->velocity == b->velocity);
+  return (a->x         == b->x        &&
+          a->y         == b->y        &&
+          a->pressure  == b->pressure &&
+          a->xtilt     == b->xtilt    &&
+          a->ytilt     == b->ytilt    &&
+          a->wheel     == b->wheel    &&
+          a->velocity  == b->velocity &&
+          a->direction == b->direction);
 }

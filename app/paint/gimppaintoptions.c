@@ -33,53 +33,62 @@
 #include "gimppaintoptions.h"
 
 
-#define DEFAULT_BRUSH_SCALE           1.0
-#define DEFAULT_BRUSH_ANGLE           0.0
+#define DEFAULT_BRUSH_SCALE            1.0
+#define DEFAULT_BRUSH_ANGLE            0.0
 
-#define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
-#define DEFAULT_HARD                  FALSE
+#define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
+#define DEFAULT_HARD                   FALSE
 
-#define DEFAULT_DYNAMICS_EXPANDED     FALSE
+#define DEFAULT_DYNAMICS_EXPANDED      FALSE
 
-#define DEFAULT_PRESSURE_OPACITY      TRUE
-#define DEFAULT_PRESSURE_HARDNESS     FALSE
-#define DEFAULT_PRESSURE_RATE         FALSE
-#define DEFAULT_PRESSURE_SIZE         FALSE
-#define DEFAULT_PRESSURE_INVERSE_SIZE FALSE
-#define DEFAULT_PRESSURE_COLOR        FALSE
-#define DEFAULT_PRESSURE_ANGLE        FALSE
-#define DEFAULT_PRESSURE_PRESCALE     1.0
+#define DEFAULT_PRESSURE_OPACITY       TRUE
+#define DEFAULT_PRESSURE_HARDNESS      FALSE
+#define DEFAULT_PRESSURE_RATE          FALSE
+#define DEFAULT_PRESSURE_SIZE          FALSE
+#define DEFAULT_PRESSURE_INVERSE_SIZE  FALSE
+#define DEFAULT_PRESSURE_COLOR         FALSE
+#define DEFAULT_PRESSURE_ANGLE         FALSE
+#define DEFAULT_PRESSURE_PRESCALE      1.0
 
-#define DEFAULT_VELOCITY_OPACITY      FALSE
-#define DEFAULT_VELOCITY_HARDNESS     FALSE
-#define DEFAULT_VELOCITY_RATE         FALSE
-#define DEFAULT_VELOCITY_SIZE         FALSE
-#define DEFAULT_VELOCITY_INVERSE_SIZE FALSE
-#define DEFAULT_VELOCITY_COLOR        FALSE
-#define DEFAULT_VELOCITY_ANGLE        FALSE
-#define DEFAULT_VELOCITY_PRESCALE     1.0
+#define DEFAULT_VELOCITY_OPACITY       FALSE
+#define DEFAULT_VELOCITY_HARDNESS      FALSE
+#define DEFAULT_VELOCITY_RATE          FALSE
+#define DEFAULT_VELOCITY_SIZE          FALSE
+#define DEFAULT_VELOCITY_INVERSE_SIZE  FALSE
+#define DEFAULT_VELOCITY_COLOR         FALSE
+#define DEFAULT_VELOCITY_ANGLE         FALSE
+#define DEFAULT_VELOCITY_PRESCALE      1.0
 
-#define DEFAULT_RANDOM_OPACITY        FALSE
-#define DEFAULT_RANDOM_HARDNESS       FALSE
-#define DEFAULT_RANDOM_RATE           FALSE
-#define DEFAULT_RANDOM_SIZE           FALSE
-#define DEFAULT_RANDOM_INVERSE_SIZE   FALSE
-#define DEFAULT_RANDOM_COLOR          FALSE
-#define DEFAULT_RANDOM_ANGLE          FALSE
-#define DEFAULT_RANDOM_PRESCALE       1.0
+#define DEFAULT_DIRECTION_OPACITY      FALSE
+#define DEFAULT_DIRECTION_HARDNESS     FALSE
+#define DEFAULT_DIRECTION_RATE         FALSE
+#define DEFAULT_DIRECTION_SIZE         FALSE
+#define DEFAULT_DIRECTION_INVERSE_SIZE FALSE
+#define DEFAULT_DIRECTION_COLOR        FALSE
+#define DEFAULT_DIRECTION_ANGLE        FALSE
+#define DEFAULT_DIRECTION_PRESCALE     1.0
 
-#define DEFAULT_USE_FADE              FALSE
-#define DEFAULT_FADE_LENGTH           100.0
-#define DEFAULT_FADE_UNIT             GIMP_UNIT_PIXEL
+#define DEFAULT_RANDOM_OPACITY         FALSE
+#define DEFAULT_RANDOM_HARDNESS        FALSE
+#define DEFAULT_RANDOM_RATE            FALSE
+#define DEFAULT_RANDOM_SIZE            FALSE
+#define DEFAULT_RANDOM_INVERSE_SIZE    FALSE
+#define DEFAULT_RANDOM_COLOR           FALSE
+#define DEFAULT_RANDOM_ANGLE           FALSE
+#define DEFAULT_RANDOM_PRESCALE        1.0
 
-#define DEFAULT_USE_JITTER            FALSE
-#define DEFAULT_JITTER_AMOUNT         0.2
+#define DEFAULT_USE_FADE               FALSE
+#define DEFAULT_FADE_LENGTH            100.0
+#define DEFAULT_FADE_UNIT              GIMP_UNIT_PIXEL
 
-#define DEFAULT_USE_GRADIENT          FALSE
-#define DEFAULT_GRADIENT_REVERSE      FALSE
-#define DEFAULT_GRADIENT_REPEAT       GIMP_REPEAT_TRIANGULAR
-#define DEFAULT_GRADIENT_LENGTH       100.0
-#define DEFAULT_GRADIENT_UNIT         GIMP_UNIT_PIXEL
+#define DEFAULT_USE_JITTER             FALSE
+#define DEFAULT_JITTER_AMOUNT          0.2
+
+#define DEFAULT_USE_GRADIENT           FALSE
+#define DEFAULT_GRADIENT_REVERSE       FALSE
+#define DEFAULT_GRADIENT_REPEAT        GIMP_REPEAT_TRIANGULAR
+#define DEFAULT_GRADIENT_LENGTH        100.0
+#define DEFAULT_GRADIENT_UNIT          GIMP_UNIT_PIXEL
 
 
 enum
@@ -113,6 +122,15 @@ enum
   PROP_VELOCITY_COLOR,
   PROP_VELOCITY_ANGLE,
   PROP_VELOCITY_PRESCALE,
+
+  PROP_DIRECTION_OPACITY,
+  PROP_DIRECTION_HARDNESS,
+  PROP_DIRECTION_RATE,
+  PROP_DIRECTION_SIZE,
+  PROP_DIRECTION_INVERSE_SIZE,
+  PROP_DIRECTION_COLOR,
+  PROP_DIRECTION_ANGLE,
+  PROP_DIRECTION_PRESCALE,
 
   PROP_RANDOM_OPACITY,
   PROP_RANDOM_HARDNESS,
@@ -162,7 +180,9 @@ static gdouble gimp_paint_options_get_dynamics_mix (gdouble       mix1,
                                                     gdouble       mix2,
                                                     gdouble       mix2_scale,
                                                     gdouble       mix3,
-                                                    gdouble       mix3_scale);
+                                                    gdouble       mix3_scale,
+                                                    gdouble       mix4,
+                                                    gdouble       mix4_scale);
 
 
 G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -277,6 +297,39 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    0.0, 1.0, DEFAULT_VELOCITY_PRESCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_OPACITY,
+                                    "direction-opacity", NULL,
+                                    DEFAULT_DIRECTION_OPACITY,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_HARDNESS,
+                                    "direction-hardness", NULL,
+                                    DEFAULT_DIRECTION_HARDNESS,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_RATE,
+                                    "direction-rate", NULL,
+                                    DEFAULT_DIRECTION_RATE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_SIZE,
+                                    "direction-size", NULL,
+                                    DEFAULT_DIRECTION_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_COLOR,
+                                    "direction-color", NULL,
+                                    DEFAULT_DIRECTION_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_ANGLE,
+                                    "direction-angle", NULL,
+                                    DEFAULT_DIRECTION_ANGLE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_INVERSE_SIZE,
+                                    "direction-inverse-size", NULL,
+                                    DEFAULT_DIRECTION_INVERSE_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DIRECTION_PRESCALE,
+                                   "direction-prescale", NULL,
+                                   0.0, 1.0, DEFAULT_DIRECTION_PRESCALE,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_OPACITY,
                                     "random-opacity", NULL,
                                     DEFAULT_RANDOM_OPACITY,
@@ -299,7 +352,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ANGLE,
                                     "random-angle", NULL,
-                                    DEFAULT_RANDOM_COLOR,
+                                    DEFAULT_RANDOM_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_INVERSE_SIZE,
                                     "random-inverse-size", NULL,
@@ -396,12 +449,13 @@ gimp_paint_options_init (GimpPaintOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->pressure_options = g_slice_new0 (GimpDynamicOptions);
-  options->velocity_options = g_slice_new0 (GimpDynamicOptions);
-  options->random_options   = g_slice_new0 (GimpDynamicOptions);
-  options->fade_options     = g_slice_new0 (GimpFadeOptions);
-  options->jitter_options   = g_slice_new0 (GimpJitterOptions);
-  options->gradient_options = g_slice_new0 (GimpGradientOptions);
+  options->pressure_options  = g_slice_new0 (GimpDynamicOptions);
+  options->velocity_options  = g_slice_new0 (GimpDynamicOptions);
+  options->direction_options = g_slice_new0 (GimpDynamicOptions);
+  options->random_options    = g_slice_new0 (GimpDynamicOptions);
+  options->fade_options      = g_slice_new0 (GimpFadeOptions);
+  options->jitter_options    = g_slice_new0 (GimpJitterOptions);
+  options->gradient_options  = g_slice_new0 (GimpGradientOptions);
 }
 
 static void
@@ -414,6 +468,7 @@ gimp_paint_options_finalize (GObject *object)
 
   g_slice_free (GimpDynamicOptions,  options->pressure_options);
   g_slice_free (GimpDynamicOptions,  options->velocity_options);
+  g_slice_free (GimpDynamicOptions,  options->direction_options);
   g_slice_free (GimpDynamicOptions,  options->random_options);
   g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
@@ -428,13 +483,14 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
-  GimpDynamicOptions  *pressure_options = options->pressure_options;
-  GimpDynamicOptions  *velocity_options = options->velocity_options;
-  GimpDynamicOptions  *random_options   = options->random_options;
-  GimpFadeOptions     *fade_options     = options->fade_options;
-  GimpJitterOptions   *jitter_options   = options->jitter_options;
-  GimpGradientOptions *gradient_options = options->gradient_options;
+  GimpPaintOptions    *options           = GIMP_PAINT_OPTIONS (object);
+  GimpDynamicOptions  *pressure_options  = options->pressure_options;
+  GimpDynamicOptions  *velocity_options  = options->velocity_options;
+  GimpDynamicOptions  *direction_options = options->direction_options;
+  GimpDynamicOptions  *random_options    = options->random_options;
+  GimpFadeOptions     *fade_options      = options->fade_options;
+  GimpJitterOptions   *jitter_options    = options->jitter_options;
+  GimpGradientOptions *gradient_options  = options->gradient_options;
 
   switch (property_id)
     {
@@ -524,6 +580,38 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_VELOCITY_PRESCALE:
       velocity_options->prescale = g_value_get_double (value);
+      break;
+
+    case PROP_DIRECTION_OPACITY:
+      direction_options->opacity = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_HARDNESS:
+      direction_options->hardness = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_RATE:
+      direction_options->rate = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_SIZE:
+      direction_options->size = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_INVERSE_SIZE:
+      direction_options->inverse_size = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_COLOR:
+      direction_options->color = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_ANGLE:
+      direction_options->angle = g_value_get_boolean (value);
+      break;
+
+    case PROP_DIRECTION_PRESCALE:
+      direction_options->prescale = g_value_get_double (value);
       break;
 
     case PROP_RANDOM_OPACITY:
@@ -634,13 +722,14 @@ gimp_paint_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
-  GimpDynamicOptions  *pressure_options = options->pressure_options;
-  GimpDynamicOptions  *velocity_options = options->velocity_options;
-  GimpDynamicOptions  *random_options   = options->random_options;
-  GimpFadeOptions     *fade_options     = options->fade_options;
-  GimpJitterOptions   *jitter_options   = options->jitter_options;
-  GimpGradientOptions *gradient_options = options->gradient_options;
+  GimpPaintOptions    *options           = GIMP_PAINT_OPTIONS (object);
+  GimpDynamicOptions  *pressure_options  = options->pressure_options;
+  GimpDynamicOptions  *velocity_options  = options->velocity_options;
+  GimpDynamicOptions  *direction_options = options->direction_options;
+  GimpDynamicOptions  *random_options    = options->random_options;
+  GimpFadeOptions     *fade_options      = options->fade_options;
+  GimpJitterOptions   *jitter_options    = options->jitter_options;
+  GimpGradientOptions *gradient_options  = options->gradient_options;
 
   switch (property_id)
     {
@@ -730,6 +819,38 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_VELOCITY_PRESCALE:
       g_value_set_double (value, velocity_options->prescale);
+      break;
+
+    case PROP_DIRECTION_OPACITY:
+      g_value_set_boolean (value, direction_options->opacity);
+      break;
+
+    case PROP_DIRECTION_HARDNESS:
+      g_value_set_boolean (value, direction_options->hardness);
+      break;
+
+    case PROP_DIRECTION_RATE:
+      g_value_set_boolean (value, direction_options->rate);
+      break;
+
+    case PROP_DIRECTION_SIZE:
+      g_value_set_boolean (value, direction_options->size);
+      break;
+
+    case PROP_DIRECTION_INVERSE_SIZE:
+      g_value_set_boolean (value, direction_options->inverse_size);
+      break;
+
+    case PROP_DIRECTION_COLOR:
+      g_value_set_boolean (value, direction_options->color);
+      break;
+
+    case PROP_DIRECTION_ANGLE:
+      g_value_set_boolean (value, direction_options->angle);
+      break;
+
+    case PROP_DIRECTION_PRESCALE:
+      g_value_set_double (value, direction_options->prescale);
       break;
 
     case PROP_RANDOM_OPACITY:
@@ -968,8 +1089,9 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
 
-  if (paint_options->pressure_options->color ||
-      paint_options->velocity_options->color ||
+  if (paint_options->pressure_options->color  ||
+      paint_options->velocity_options->color  ||
+      paint_options->direction_options->color ||
       paint_options->random_options->color)
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
@@ -1061,34 +1183,43 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
                                      gdouble mix2,
                                      gdouble mix2_scale,
                                      gdouble mix3,
-                                     gdouble mix3_scale)
+                                     gdouble mix3_scale,
+                                     gdouble mix4,
+                                     gdouble mix4_scale)
 {
   gdouble scale_sum = 0.0;
   gdouble result    = 1.0;
 
-  if (mix1 >= 0.0)
+  if (mix1 > -1.0)
     {
       scale_sum += fabs (mix1_scale);
     }
   else mix1 = 0.0;
 
-  if (mix2 >= 0.0)
+  if (mix2 > -1.0)
     {
       scale_sum += fabs (mix2_scale);
     }
   else mix2 = 0.0;
 
-  if (mix3 >= 0.0)
+  if (mix3 > -1.0)
     {
       scale_sum += fabs (mix3_scale);
     }
   else mix3 = 0.0;
 
+  if (mix4 > -1.0)
+    {
+      scale_sum += fabs (mix4_scale);
+    }
+  else mix4 = 0.0;
+
   if (scale_sum > 0.0)
     {
       result = (mix1 * mix1_scale) / scale_sum +
                (mix2 * mix2_scale) / scale_sum +
-               (mix3 * mix3_scale) / scale_sum;
+               (mix3 * mix3_scale) / scale_sum +
+               (mix4 * mix4_scale) / scale_sum;
     }
 
   if (result < 0.0)
@@ -1106,13 +1237,15 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->opacity ||
-      paint_options->velocity_options->opacity ||
+  if (paint_options->pressure_options->opacity  ||
+      paint_options->velocity_options->opacity  ||
+      paint_options->direction_options->opacity ||
       paint_options->random_options->opacity)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->opacity)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1123,12 +1256,17 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
       if (paint_options->random_options->opacity)
         random = g_random_double_range (0.0, 1.0);
 
+      if (paint_options->direction_options->opacity)
+        direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
       opacity = gimp_paint_options_get_dynamics_mix (pressure,
                                                      paint_options->pressure_options->prescale,
                                                      velocity,
                                                      paint_options->velocity_options->prescale,
                                                      random,
-                                                     paint_options->random_options->prescale);
+                                                     paint_options->random_options->prescale,
+                                                     direction,
+                                                     paint_options->direction_options->prescale);
     }
 
   return opacity;
@@ -1143,9 +1281,10 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
   if (use_dynamics)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->size)
         {
@@ -1174,12 +1313,17 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
           random = g_random_double_range (0.0, 1.0);
         }
 
+      if (paint_options->direction_options->size)
+         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
       scale = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
                                                    velocity,
                                                    paint_options->velocity_options->prescale,
                                                    random,
-                                                   paint_options->random_options->prescale);
+                                                   paint_options->random_options->prescale,
+                                                   direction,
+                                                   paint_options->direction_options->prescale);
 
       if (scale < 1 / 64.0)
         scale = 1 / 8.0;
@@ -1202,13 +1346,15 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->rate ||
-      paint_options->velocity_options->rate ||
+  if (paint_options->pressure_options->rate  ||
+      paint_options->velocity_options->rate  ||
+      paint_options->direction_options->rate ||
       paint_options->random_options->rate)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->rate)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1219,12 +1365,17 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       if (paint_options->random_options->rate)
         random = g_random_double_range (0.0, 1.0);
 
+      if (paint_options->direction_options->rate)
+        direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
       rate = gimp_paint_options_get_dynamics_mix (pressure,
                                                   paint_options->pressure_options->prescale,
                                                   velocity,
                                                   paint_options->velocity_options->prescale,
                                                   random,
-                                                  paint_options->random_options->prescale);
+                                                  paint_options->random_options->prescale,
+                                                  direction,
+                                                  paint_options->direction_options->prescale);
     }
 
   return rate;
@@ -1240,13 +1391,15 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->color ||
-      paint_options->velocity_options->color ||
+  if (paint_options->pressure_options->color  ||
+      paint_options->velocity_options->color  ||
+      paint_options->direction_options->color ||
       paint_options->random_options->color)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->color)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1257,12 +1410,17 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       if (paint_options->random_options->color)
         random = g_random_double_range (0.0, 1.0);
 
+      if (paint_options->direction_options->color)
+        direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
       color = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
                                                    velocity,
                                                    paint_options->velocity_options->prescale,
                                                    random,
-                                                   paint_options->random_options->prescale);
+                                                   paint_options->random_options->prescale,
+                                                   direction,
+                                                   paint_options->direction_options->prescale);
     }
 
   return color;
@@ -1277,13 +1435,15 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->hardness ||
-      paint_options->velocity_options->hardness ||
+  if (paint_options->pressure_options->hardness  ||
+      paint_options->velocity_options->hardness  ||
+      paint_options->direction_options->hardness ||
       paint_options->random_options->hardness)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->hardness)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1294,12 +1454,17 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
       if (paint_options->random_options->hardness)
         random = g_random_double_range (0.0, 1.0);
 
+      if (paint_options->direction_options->hardness)
+        direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
       hardness = gimp_paint_options_get_dynamics_mix (pressure,
                                                       paint_options->pressure_options->prescale,
                                                       velocity,
                                                       paint_options->velocity_options->prescale,
                                                       random,
-                                                      paint_options->random_options->prescale);
+                                                      paint_options->random_options->prescale,
+                                                      direction,
+                                                      paint_options->direction_options->prescale);
     }
 
   return hardness;
@@ -1314,13 +1479,15 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
   g_return_val_if_fail (coords != NULL, 1.0);
 
-  if (paint_options->pressure_options->angle ||
-      paint_options->velocity_options->angle ||
+  if (paint_options->pressure_options->angle  ||
+      paint_options->velocity_options->angle  ||
+      paint_options->direction_options->angle ||
       paint_options->random_options->angle)
     {
-      gdouble pressure = -1.0;
-      gdouble velocity = -1.0;
-      gdouble random   = -1.0;
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble random    = -1.0;
 
       if (paint_options->pressure_options->angle)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1331,12 +1498,19 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
       if (paint_options->random_options->angle)
         random = g_random_double_range (0.0, 1.0);
 
+      if (paint_options->direction_options->angle)
+        direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
+
+
       angle = gimp_paint_options_get_dynamics_mix (pressure,
-                                                  paint_options->pressure_options->prescale,
-                                                  velocity,
-                                                  paint_options->velocity_options->prescale,
-                                                  random,
-                                                  paint_options->random_options->prescale);
+                                                   paint_options->pressure_options->prescale,
+                                                   velocity,
+                                                   paint_options->velocity_options->prescale,
+                                                   random,
+                                                   paint_options->random_options->prescale,
+                                                   direction,
+                                                   paint_options->direction_options->prescale);
+      angle = angle - 0.5;
     }
 
   return angle + paint_options->brush_angle;

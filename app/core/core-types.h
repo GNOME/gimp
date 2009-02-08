@@ -199,6 +199,7 @@ struct _GimpCoords
   gdouble ytilt;
   gdouble wheel;
   gdouble velocity;
+  gdouble direction;
 };
 
 

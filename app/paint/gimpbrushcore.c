@@ -421,6 +421,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        delta_xtilt, delta_ytilt;
   gdouble        delta_wheel;
   gdouble        delta_velocity;
+  gdouble        temp_direction;
   GimpVector2    temp_vec;
   gint           n, num_points;
   gdouble        t0, dt, tn;
@@ -447,6 +448,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   delta_ytilt    = paint_core->cur_coords.ytilt    - paint_core->last_coords.ytilt;
   delta_wheel    = paint_core->cur_coords.wheel    - paint_core->last_coords.wheel;
   delta_velocity = paint_core->cur_coords.velocity - paint_core->last_coords.velocity;
+  temp_direction = paint_core->cur_coords.direction;
 
   /*  return if there has been no motion  */
   if (! delta_vec.x    &&
@@ -636,20 +638,21 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       gdouble t = t0 + n * dt;
       gdouble p = (gdouble) n / num_points;
 
-      paint_core->cur_coords.x        = (paint_core->last_coords.x +
-                                         t * delta_vec.x);
-      paint_core->cur_coords.y        = (paint_core->last_coords.y +
-                                         t * delta_vec.y);
-      paint_core->cur_coords.pressure = (paint_core->last_coords.pressure +
-                                         p * delta_pressure);
-      paint_core->cur_coords.xtilt    = (paint_core->last_coords.xtilt +
-                                         p * delta_xtilt);
-      paint_core->cur_coords.ytilt    = (paint_core->last_coords.ytilt +
-                                         p * delta_ytilt);
-      paint_core->cur_coords.wheel    = (paint_core->last_coords.wheel +
-                                         p * delta_wheel);
-      paint_core->cur_coords.velocity = (paint_core->last_coords.velocity +
-                                         p * delta_velocity);
+      paint_core->cur_coords.x         = (paint_core->last_coords.x +
+                                          t * delta_vec.x);
+      paint_core->cur_coords.y         = (paint_core->last_coords.y +
+                                          t * delta_vec.y);
+      paint_core->cur_coords.pressure  = (paint_core->last_coords.pressure +
+                                          p * delta_pressure);
+      paint_core->cur_coords.xtilt     = (paint_core->last_coords.xtilt +
+                                          p * delta_xtilt);
+      paint_core->cur_coords.ytilt     = (paint_core->last_coords.ytilt +
+                                          p * delta_ytilt);
+      paint_core->cur_coords.wheel     = (paint_core->last_coords.wheel +
+                                          p * delta_wheel);
+      paint_core->cur_coords.velocity  = (paint_core->last_coords.velocity +
+                                          p * delta_velocity);
+      paint_core->cur_coords.direction = temp_direction;
 
       if (core->jitter > 0.0)
         {

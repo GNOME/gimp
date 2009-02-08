@@ -54,26 +54,30 @@ static gboolean    tool_has_size_dynamics     (GType       tool_type);
 static gboolean    tool_has_color_dynamics    (GType       tool_type);
 static gboolean    tool_has_angle_dynamics    (GType       tool_type);
 
-static void        pressure_options_gui (GimpPaintOptions *paint_options,
-                                         GType             tool_type,
-                                         GtkTable         *table,
-                                         gint              row,
-                                         GtkWidget        *labels[]);
-static void        velocity_options_gui (GimpPaintOptions *paint_options,
-                                         GType             tool_type,
-                                         GtkTable         *table,
-                                         gint              row);
-static void        random_options_gui   (GimpPaintOptions *paint_options,
-                                         GType             tool_type,
-                                         GtkTable         *table,
-                                         gint              row);
-static GtkWidget * fade_options_gui     (GimpPaintOptions *paint_options,
-                                         GType             tool_type);
-static GtkWidget * gradient_options_gui (GimpPaintOptions *paint_options,
-                                         GType             tool_type,
-                                         GtkWidget        *incremental_toggle);
-static GtkWidget * jitter_options_gui   (GimpPaintOptions *paint_options,
-                                         GType             tool_type);
+static void        pressure_options_gui  (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row,
+                                          GtkWidget        *labels[]);
+static void        velocity_options_gui  (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row);
+static void        direction_options_gui (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row);
+static void        random_options_gui    (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row);
+static GtkWidget * fade_options_gui      (GimpPaintOptions *paint_options,
+                                          GType             tool_type);
+static GtkWidget * gradient_options_gui  (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkWidget        *incremental_toggle);
+static GtkWidget * jitter_options_gui    (GimpPaintOptions *paint_options,
+                                          GType             tool_type);
 
 
 /*  public functions  */
@@ -150,8 +154,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                              _("Angle:"),
                                              1.0, 5.0, 2,
                                              FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj_angle, FALSE);
-
     }
 
   if (tool_has_opacity_dynamics (tool_type))
@@ -206,7 +208,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), inner_frame);
       gtk_widget_show (inner_frame);
 
-      table = gtk_table_new (4, n_dynamics + 2, FALSE);
+      table = gtk_table_new (5, n_dynamics + 2, FALSE);
       gtk_container_add (GTK_CONTAINER (inner_frame), table);
       gtk_widget_show (table);
 
@@ -222,9 +224,15 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Random:"));
+      label = gtk_label_new (_("Direction:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Random:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
@@ -235,8 +243,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       velocity_options_gui (options, tool_type,
                             GTK_TABLE (table), 2);
 
+      direction_options_gui (options, tool_type,
+                             GTK_TABLE (table), 3);
+
       random_options_gui (options, tool_type,
-                          GTK_TABLE (table), 3);
+                          GTK_TABLE (table), 4);
 
       /* EEK: pack the fixed *after* the buttons so the table calls
        * size-allocates on it *before* it places the toggles. Fixes
@@ -534,6 +545,58 @@ velocity_options_gui (GimpPaintOptions *paint_options,
     }
 
   scalebutton = gimp_prop_scale_button_new (config, "velocity-prescale");
+  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (scalebutton);
+}
+
+static void
+direction_options_gui (GimpPaintOptions *paint_options,
+                       GType             tool_type,
+                       GtkTable         *table,
+                       gint              row)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+  if (tool_has_opacity_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-opacity",
+                                 table, column++, row);
+    }
+
+  if (tool_has_hardness_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-hardness",
+                                 table, column++, row);
+    }
+
+  if (tool_has_rate_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-rate",
+                                 table, column++, row);
+    }
+
+  if (tool_has_size_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-angle",
+                                 table, column++, row);
+    }
+
+  if (tool_has_color_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-color",
+                                 table, column++, row);
+    }
+
+  scalebutton = gimp_prop_scale_button_new (config, "direction-prescale");
   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (scalebutton);

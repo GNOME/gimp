@@ -255,7 +255,10 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
   for (n = 1; n <=num_points; n++)
     {
       GimpCoords res_coords;
+      GimpCoords last_coords;
       gdouble    velocity;
+      gdouble    delta_x;
+      gdouble    delta_y;
       gdouble    p = (gdouble) n / num_points;
 
       res_coords.x =
@@ -305,6 +308,26 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
                                                        end_coords.velocity,
                                                        future_coords.velocity);
       res_coords.velocity = CLAMP (velocity, 0.0, 1.0);
+
+      if (n > 1)
+        last_coords = g_array_index (*ret_coords, GimpCoords, n - 2);
+      else
+        last_coords = start_coords;
+
+      delta_x = last_coords.x - res_coords.x;
+      delta_y = last_coords.y - res_coords.y;
+
+      if (delta_x == 0)
+        {
+          res_coords.direction = last_coords.direction;
+        }
+      else
+        {
+          res_coords.direction = atan (delta_y / delta_x) / (2 * G_PI);
+
+          if (delta_x > 0.0)
+            res_coords.direction = res_coords.direction + 0.5;
+        }
 
       g_array_append_val (*ret_coords, res_coords);
 
