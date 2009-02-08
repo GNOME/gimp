@@ -150,6 +150,9 @@ N_("Sets the browser used by the help system.")
 "colon-separated list of language identifiers with decreasing priority. " \
 "If empty, the language is taken from the user's locale setting."
 
+#define IMAGE_MAP_TOOL_MAX_RECENT_BLURB \
+"How many recent settings to keep around in color correction tools"
+
 #define IMAGE_STATUS_FORMAT_BLURB \
 N_("Sets the text to appear in image window status bars.")
 

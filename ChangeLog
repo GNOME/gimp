@@ -1,3 +1,20 @@
+2009-02-09  Michael Natterer  <mitch@gimp.org>
+
+	Bug 569470 – pls, introduce an option 'how many latest presets for
+	color curves should be saved'
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpguiconfig.[ch]: add integer property
+	"image-map-tool-max-recent" which defaults to ten. Adding a GUI
+	for this IMO needs discussion, the value of ten seems appropriate.
+
+	* app/widgets/gimpsettingsbox.[ch]
+	(gimp_settings_box_add_current): add "gint max_recent" parameter
+	and limit the number of recent settings to this number.
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_response):
+	pass the new settings property to above function.
+
 2009-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_key_press): if the

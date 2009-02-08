@@ -41,6 +41,7 @@ struct _GimpGuiConfig
 
   gint                 default_threshold;
   gboolean             move_tool_changes_active;
+  gint                 image_map_tool_max_recent;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             save_session_info;

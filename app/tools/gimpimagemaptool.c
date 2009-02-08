@@ -29,6 +29,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -563,7 +565,8 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_image_flush (tool->display->image);
 
           if (image_map_tool->config)
-            gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box));
+            gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box),
+                                           GIMP_GUI_CONFIG (tool->tool_info->gimp->config)->image_map_tool_max_recent);
         }
 
       tool->display  = NULL;

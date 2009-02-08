@@ -53,6 +53,7 @@ enum
   PROP_0,
   PROP_DEFAULT_THRESHOLD,
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
+  PROP_IMAGE_MAP_TOOL_MAX_RECENT,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
   PROP_SAVE_SESSION_INFO,
@@ -126,6 +127,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     MOVE_TOOL_CHANGES_ACTIVE_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_IMAGE_MAP_TOOL_MAX_RECENT,
+                                "image-map-tool-max-recent",
+                                IMAGE_MAP_TOOL_MAX_RECENT_BLURB,
+                                0, 255, 10,
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
@@ -327,6 +333,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
+    case PROP_IMAGE_MAP_TOOL_MAX_RECENT:
+      gui_config->image_map_tool_max_recent = g_value_get_int (value);
+      break;
     case PROP_TRUST_DIRTY_FLAG:
       gui_config->trust_dirty_flag = g_value_get_boolean (value);
       break;
@@ -450,6 +459,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
+      break;
+    case PROP_IMAGE_MAP_TOOL_MAX_RECENT:
+      g_value_set_int (value, gui_config->image_map_tool_max_recent);
       break;
     case PROP_TRUST_DIRTY_FLAG:
       g_value_set_boolean (value, gui_config->trust_dirty_flag);

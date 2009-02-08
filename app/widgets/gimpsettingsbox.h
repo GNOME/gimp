@@ -81,7 +81,8 @@ GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            const gchar     *default_folder,
                                            const gchar     *last_filename);
 
-void        gimp_settings_box_add_current (GimpSettingsBox *box);
+void        gimp_settings_box_add_current (GimpSettingsBox *box,
+                                           gint             max_recent);
 
 
 #endif  /*  __GIMP_SETTINGS_BOX_H__  */

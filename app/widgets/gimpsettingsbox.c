@@ -113,6 +113,8 @@ static void  gimp_settings_box_manage_response   (GtkWidget         *widget,
                                                   GimpSettingsBox   *box);
 static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
                                                   GtkWidget         *dialog);
+static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
+                                                  gint               max_recent);
 
 
 G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_HBOX)
@@ -828,6 +830,39 @@ gimp_settings_box_toplevel_unmap (GtkWidget *toplevel,
   gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_DELETE_EVENT);
 }
 
+static void
+gimp_settings_box_truncate_list (GimpSettingsBox *box,
+                                 gint             max_recent)
+{
+  GList *list;
+  gint   n_recent = 0;
+
+  list = GIMP_LIST (box->container)->list;
+  while (list)
+    {
+      GimpConfig *config = list->data;
+      guint       t;
+
+      list = g_list_next (list);
+
+      g_object_get (config,
+                    "time", &t,
+                    NULL);
+
+      if (t > 0)
+        {
+          n_recent++;
+
+          if (n_recent > max_recent)
+            gimp_container_remove (box->container, GIMP_OBJECT (config));
+        }
+      else
+        {
+          break;
+        }
+    }
+}
+
 
 /*  public functions  */
 
@@ -866,7 +901,8 @@ gimp_settings_box_new (Gimp          *gimp,
 }
 
 void
-gimp_settings_box_add_current (GimpSettingsBox *box)
+gimp_settings_box_add_current (GimpSettingsBox *box,
+                               gint             max_recent)
 {
   GimpConfig *config = NULL;
   GList      *list;
@@ -902,6 +938,8 @@ gimp_settings_box_add_current (GimpSettingsBox *box)
       gimp_container_insert (box->container, GIMP_OBJECT (config), 0);
       g_object_unref (config);
     }
+
+  gimp_settings_box_truncate_list (box, max_recent);
 
   gimp_settings_box_serialize (box);
 }
