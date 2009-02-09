@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-01 23:14+0000\n"
-"PO-Revision-Date: 2008-10-15 11:50+0200\n"
+"PO-Revision-Date: 2008-12-02 00:36+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Selecție de fișier Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:591
 msgid "Python-Fu Folder Selection"
-msgstr "Selecție de folder Python-Fu"
+msgstr "Selecție de dosar Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:682
 #, python-format

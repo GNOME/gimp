@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-01 23:13+0000\n"
-"PO-Revision-Date: 2008-10-27 23:28+0200\n"
+"PO-Revision-Date: 2009-02-09 11:36+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr "Selecție de model Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
-msgstr ""
+msgstr "Selecție degrade Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
@@ -457,7 +457,7 @@ msgstr "Grosime"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Adaugă o bordură teșită..."
+msgstr "Adaugă o bordură t_eșită..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
@@ -1151,7 +1151,7 @@ msgstr "Scalează stratul"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
-msgstr ""
+msgstr "_Circuit..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -1160,7 +1160,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
-msgstr ""
+msgstr "Azimut"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 #, fuzzy
@@ -1204,7 +1204,7 @@ msgstr "Saturare"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "Pată de _cafea..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
@@ -1758,7 +1758,7 @@ msgstr "Orizontal"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr "Ghidaj nou (după procent)..."
+msgstr "Ghidaj nou (după _procent)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
@@ -2173,7 +2173,7 @@ msgstr "Mâzgălește"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Întoarce la capăt"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 #, fuzzy
