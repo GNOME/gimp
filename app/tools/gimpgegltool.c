@@ -353,15 +353,13 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 	  const gchar *stock_id;
 	  const gchar *label;
 
+	  if (g_str_has_prefix (opclass->name, "gimp:"))
+	    continue;
+
 	  if (g_str_has_prefix (opclass->name, "gegl:"))
 	    {
 	      label    = opclass->name + strlen ("gegl:");
 	      stock_id = GIMP_STOCK_GEGL;
-	    }
-	  else if (g_str_has_prefix (opclass->name, "gimp:"))
-	    {
-	      label    = opclass->name + strlen ("gimp:");
-	      stock_id = GIMP_STOCK_WILBER;
 	    }
 	  else
 	    {

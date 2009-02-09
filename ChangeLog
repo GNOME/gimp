@@ -1,3 +1,10 @@
+2009-02-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): seems
+	pointless to include the GIMP-specific GEGL operations as they
+	can't be reasonably controlled by the generic GEGL tool user
+	interface.
+
 2009-02-09  Michael Natterer  <mitch@gimp.org>
 
 	Bug 569470 – pls, introduce an option 'how many latest presets for
