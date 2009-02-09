@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-01 23:14+0000\n"
-"PO-Revision-Date: 2008-11-11 19:19+0200\n"
+"PO-Revision-Date: 2009-02-09 11:35+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -264,7 +264,7 @@ msgstr "Alterează culorile în "
 
 #: ../plug-ins/common/alien-map.c:188
 msgid "_Alien Map..."
-msgstr "Hartă străină..."
+msgstr "H_artă străină..."
 
 #: ../plug-ins/common/alien-map.c:320
 msgid "Alien Map: Transforming"
@@ -446,7 +446,7 @@ msgstr ""
 # hm ?
 #: ../plug-ins/common/animation-optimize.c:178
 msgid "_Unoptimize"
-msgstr "De-optimizează"
+msgstr "_De-optimizează"
 
 #: ../plug-ins/common/animation-optimize.c:198
 #, fuzzy
@@ -540,7 +540,7 @@ msgstr ""
 
 #: ../plug-ins/common/animation-play.c:584
 msgid "Animation Playback:"
-msgstr ""
+msgstr "Redare animație:"
 
 #: ../plug-ins/common/animation-play.c:663
 msgid "Playback speed"
@@ -1410,11 +1410,11 @@ msgstr "Standard"
 
 #: ../plug-ins/common/cml-explorer.c:201
 msgid "Use average value"
-msgstr ""
+msgstr "Folosește valoarea medie"
 
 #: ../plug-ins/common/cml-explorer.c:202
 msgid "Use reverse value"
-msgstr ""
+msgstr "Folosește valoarea inversă"
 
 #: ../plug-ins/common/cml-explorer.c:203
 msgid "With random power (0,10)"
@@ -1446,15 +1446,15 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:223
 msgid "All black"
-msgstr ""
+msgstr "Totul negru"
 
 #: ../plug-ins/common/cml-explorer.c:224
 msgid "All gray"
-msgstr ""
+msgstr "Totul gri"
 
 #: ../plug-ins/common/cml-explorer.c:225
 msgid "All white"
-msgstr ""
+msgstr "Totul alb"
 
 #: ../plug-ins/common/cml-explorer.c:226
 #, fuzzy
@@ -1646,7 +1646,7 @@ msgstr "Tip de interpolare:"
 
 #: ../plug-ins/common/cml-explorer.c:1573
 msgid "Composition:"
-msgstr ""
+msgstr "Compoziție:"
 
 #: ../plug-ins/common/cml-explorer.c:1587
 msgid "Misc arrange:"
@@ -2146,9 +2146,10 @@ msgstr "strat plutitor"
 msgid "Image is not a gray image (bpp=%d)"
 msgstr ""
 
+# hm ? sau recompune ?
 #: ../plug-ins/common/compose.c:824
 msgid "Unable to recompose, source layer not found"
-msgstr ""
+msgstr "Nu se poate reconstitui, stratul sursă nu a fost găsit"
 
 #: ../plug-ins/common/compose.c:1488
 msgid "Compose"
@@ -2336,7 +2337,7 @@ msgstr "Matrice"
 
 #: ../plug-ins/common/convolution-matrix.c:982
 msgid "D_ivisor:"
-msgstr ""
+msgstr "D_ivizor:"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768
@@ -3230,7 +3231,7 @@ msgstr "Stampar_e..."
 #: ../plug-ins/common/emboss.c:384
 #: ../plug-ins/common/emboss.c:446
 msgid "Emboss"
-msgstr "Stampează"
+msgstr "Stampare"
 
 #: ../plug-ins/common/emboss.c:474
 msgid "Function"
@@ -3243,7 +3244,7 @@ msgstr "Inversează"
 
 #: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
-msgstr "Stampează"
+msgstr "_Stampează"
 
 #: ../plug-ins/common/emboss.c:511
 #, fuzzy
@@ -3610,7 +3611,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:950
 msgid "The image you are trying to save as a GIF contains layers which extend beyond the actual borders of the image."
-msgstr ""
+msgstr "Imaginea pe care încercați să o salvați ca GIF conține straturi care se extind dincolo de bordurile actuale ale imaginii."
 
 #: ../plug-ins/common/file-gif-save.c:967
 msgid "The GIF file format does not allow this.  You may choose whether to crop all of the layers to the image borders, or cancel this save."
@@ -3644,7 +3645,7 @@ msgstr "Buc_lă infinită"
 
 #: ../plug-ins/common/file-gif-save.c:1129
 msgid "_Delay between frames where unspecified:"
-msgstr ""
+msgstr "Întârziere între ca_dre acolo unde nu este specificat:"
 
 #: ../plug-ins/common/file-gif-save.c:1144
 #: ../plug-ins/common/file-mng.c:1474
@@ -3653,7 +3654,7 @@ msgstr "milisecunde"
 
 #: ../plug-ins/common/file-gif-save.c:1154
 msgid "_Frame disposal where unspecified:"
-msgstr ""
+msgstr "Dispunerea cadrului acolo unde nu este speci_ficat:"
 
 #: ../plug-ins/common/file-gif-save.c:1158
 msgid "I don't care"
@@ -3670,11 +3671,11 @@ msgstr ""
 #. The "Always use default values" toggles
 #: ../plug-ins/common/file-gif-save.c:1178
 msgid "_Use delay entered above for all frames"
-msgstr ""
+msgstr "Folosește întârzierea introd_usă mai sus pentru toate cadrele"
 
 #: ../plug-ins/common/file-gif-save.c:1188
 msgid "U_se disposal entered above for all frames"
-msgstr ""
+msgstr "Folo_sește dispunerea introdusă mai sus pentru toate cadrele"
 
 #: ../plug-ins/common/file-gif-save.c:2341
 #, fuzzy
@@ -3997,9 +3998,8 @@ msgid "Default frame delay:"
 msgstr "Tipul implicit de imagine:"
 
 #: ../plug-ins/common/file-mng.c:1531
-#, fuzzy
 msgid "MNG animation"
-msgstr "Opțiuni:\n"
+msgstr "Animație MNG"
 
 #: ../plug-ins/common/file-pat.c:123
 #: ../plug-ins/common/file-pat.c:145
@@ -4118,9 +4118,9 @@ msgid "_Resolution:"
 msgstr "_Rezoluție:"
 
 #: ../plug-ins/common/file-pdf.c:1156
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%s"
-msgstr "puncte ecran/%a"
+msgstr "pixeli/%s"
 
 #: ../plug-ins/common/file-pix.c:142
 #: ../plug-ins/common/file-pix.c:159
@@ -4264,9 +4264,8 @@ msgid "Image height is larger than GIMP can handle."
 msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:575
-#, fuzzy
 msgid "Unsupported maximum value."
-msgstr "Valoarea maximă nu este validă."
+msgstr "Valoare maximă nesuportată."
 
 #: ../plug-ins/common/file-pnm.c:780
 msgid "Error reading file."
@@ -4278,9 +4277,8 @@ msgstr "Salvare ca PNM"
 
 #. file save type
 #: ../plug-ins/common/file-pnm.c:1165
-#, fuzzy
 msgid "Data formatting"
-msgstr "Transformare"
+msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:1169
 msgid "Raw"
@@ -4305,9 +4303,9 @@ msgid "PDF document"
 msgstr "Document PDF"
 
 #: ../plug-ins/common/file-ps.c:1050
-#, fuzzy, c-format
+#, c-format
 msgid "Could not interpret Postscript file '%s'"
-msgstr "Nu am putut redeschide %s\n"
+msgstr "Nu s-a putut interpreta fișierul PostScript „%s”"
 
 #: ../plug-ins/common/file-ps.c:1192
 #, c-format
@@ -4321,6 +4319,8 @@ msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n"
 "(%s)"
 msgstr ""
+"Eroare la pornirea Ghostscript. Asigurați-vă că Ghostscript este instalat și – dacă este necesar – folosiți variabila de mediu GS_PROG pentru a informa GIMP despre amplasarea sa.\n"
+"(%s)"
 
 #: ../plug-ins/common/file-ps.c:1930
 #: ../plug-ins/common/file-tiff-load.c:999
@@ -4336,13 +4336,12 @@ msgstr "Pagina %d"
 #: ../plug-ins/common/file-sunras.c:1612
 #: ../plug-ins/file-fits/fits.c:850
 #: ../plug-ins/file-fits/fits.c:974
-#, fuzzy
 msgid "Write error occurred"
-msgstr "Scrie toate erorile în fișier..."
+msgstr "A apărut o eroare de scriere"
 
 #: ../plug-ins/common/file-ps.c:3095
 msgid "Import from PostScript"
-msgstr ""
+msgstr "Import din PostScript"
 
 #. Rendering
 #: ../plug-ins/common/file-ps.c:3138
@@ -4362,7 +4361,7 @@ msgstr "Pagini:"
 
 #: ../plug-ins/common/file-ps.c:3200
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "Pagini de încărcat (ex.: 1-4 sau 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3204
 #: ../plug-ins/common/sphere-designer.c:2643
@@ -4388,7 +4387,7 @@ msgstr "Colorare"
 
 #: ../plug-ins/common/file-ps.c:3230
 msgid "B/W"
-msgstr ""
+msgstr "Alb-negru"
 
 #: ../plug-ins/common/file-ps.c:3232
 #: ../plug-ins/common/file-xpm.c:479
@@ -4410,7 +4409,7 @@ msgstr "Anticrenelare de text"
 #: ../plug-ins/common/file-ps.c:3248
 #: ../plug-ins/common/file-ps.c:3260
 msgid "Weak"
-msgstr ""
+msgstr "Slab"
 
 #: ../plug-ins/common/file-ps.c:3249
 #: ../plug-ins/common/file-ps.c:3261
@@ -4423,7 +4422,7 @@ msgstr "Anticrenelare de grafică"
 
 #: ../plug-ins/common/file-ps.c:3333
 msgid "Save as PostScript"
-msgstr ""
+msgstr "Salvează ca PostScript"
 
 #. Image Size
 #: ../plug-ins/common/file-ps.c:3364
@@ -4765,7 +4764,7 @@ msgstr "pixeli/%a"
 #. Path Import
 #: ../plug-ins/common/file-svg.c:942
 msgid "Import _paths"
-msgstr "Im_portă căi"
+msgstr "Im_portă căile"
 
 #: ../plug-ins/common/file-svg.c:948
 msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
@@ -4773,7 +4772,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-svg.c:961
 msgid "Merge imported paths"
-msgstr "Combină căile importate"
+msgstr "_Combină căile importate"
 
 #: ../plug-ins/common/file-tga.c:245
 #: ../plug-ins/common/file-tga.c:264
@@ -8024,9 +8023,10 @@ msgstr ""
 msgid "Symbol"
 msgstr "Simbol"
 
+# greșeală la simbol, deocamdată corectată doar în HEAD
 #: ../plug-ins/common/unit-editor.c:104
 msgid "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's abbreviation is used if doesn't have a symbol."
-msgstr ""
+msgstr "Simbolul unității, dacă are vreunul (de exemplu \" pentru țoli). Dacă unitatea nu are un simbol, este folosită abrevierea unității."
 
 #: ../plug-ins/common/unit-editor.c:107
 #, fuzzy
@@ -8035,7 +8035,7 @@ msgstr "Rotire"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "Abrevierea unității (de exemplu „cm” pentru centimetri)."
 
 #: ../plug-ins/common/unit-editor.c:109
 #, fuzzy
@@ -8044,7 +8044,7 @@ msgstr "Undă triunghiulara"
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "The unit's singular form."
-msgstr ""
+msgstr "Forma unității la singular."
 
 #: ../plug-ins/common/unit-editor.c:110
 #, fuzzy
@@ -8053,7 +8053,7 @@ msgstr "Claritate"
 
 #: ../plug-ins/common/unit-editor.c:110
 msgid "The unit's plural form."
-msgstr ""
+msgstr "Forma unității la plural."
 
 #: ../plug-ins/common/unit-editor.c:121
 #, fuzzy
@@ -8111,7 +8111,7 @@ msgstr "Intrare incompletă"
 
 #: ../plug-ins/common/unit-editor.c:352
 msgid "Please fill in all text fields."
-msgstr ""
+msgstr "Completați toate câmpurile textului."
 
 #: ../plug-ins/common/unit-editor.c:409
 #, fuzzy
@@ -8286,7 +8286,7 @@ msgstr ""
 
 #: ../plug-ins/common/van-gogh-lic.c:696
 msgid "_With white noise"
-msgstr ""
+msgstr "Cu _zgomot alb"
 
 #: ../plug-ins/common/van-gogh-lic.c:697
 #, fuzzy
@@ -8439,7 +8439,7 @@ msgstr "Pe margini:"
 
 #: ../plug-ins/common/warp.c:471
 msgid "Wrap"
-msgstr ""
+msgstr "Întoarce la capăt"
 
 #: ../plug-ins/common/warp.c:486
 msgid "Smear"
@@ -8477,7 +8477,7 @@ msgstr "Rotire"
 
 #: ../plug-ins/common/warp.c:578
 msgid "Substeps:"
-msgstr ""
+msgstr "Trepte intermediare:"
 
 #. Magnitude map menu
 #: ../plug-ins/common/warp.c:587
@@ -8503,7 +8503,7 @@ msgstr "Scală degrade:"
 
 #: ../plug-ins/common/warp.c:658
 msgid "Gradient map selection menu"
-msgstr ""
+msgstr "Meniu de selecție hartă degrade"
 
 #: ../plug-ins/common/warp.c:668
 #, fuzzy
@@ -8864,7 +8864,7 @@ msgstr "Salvează ca format Windows Icon"
 
 #: ../plug-ins/file-ico/ico-dialog.c:86
 msgid "Icon Details"
-msgstr "Detalii iconiță"
+msgstr "Detalii pictogramă"
 
 #: ../plug-ins/file-ico/ico-dialog.c:106
 msgid "Large icons and compression are not supported by all programs. Older applications may not open this file correctly."
@@ -8910,7 +8910,7 @@ msgstr "Deschidere imagine miniatură pentru „%s”"
 #: ../plug-ins/file-ico/ico.c:103
 #: ../plug-ins/file-ico/ico.c:137
 msgid "Microsoft Windows icon"
-msgstr "iconiță Microsoft Windows"
+msgstr "Pictogramă Microsoft Windows"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:293
 msgid "Rotate Image?"
@@ -9206,7 +9206,7 @@ msgstr ""
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:501
 msgid "Connect as u_ser:"
-msgstr "Conectare ca utilizator:"
+msgstr "_Conectare ca utilizator:"
 
 #: ../plug-ins/file-uri/gimpmountoperation.c:538
 msgid "_Username:"
@@ -10051,7 +10051,7 @@ msgstr "An_ulează"
 
 #: ../plug-ins/gfig/gfig-dialog.c:874
 msgid "_Clear"
-msgstr "Șter_ge"
+msgstr "_Curăță"
 
 #: ../plug-ins/gfig/gfig-dialog.c:878
 #: ../plug-ins/imagemap/imap_menu.c:209
@@ -10340,9 +10340,8 @@ msgid "Can only save drawables!"
 msgstr "Nuanța-Saturare funcționează numai pe imaginii RGB."
 
 #: ../plug-ins/gimpressionist/brush.c:252
-#, fuzzy
 msgid "Save Brush"
-msgstr "Salvează curbe"
+msgstr "Salvează penelul"
 
 #: ../plug-ins/gimpressionist/brush.c:507
 msgid "_Brush"
@@ -10357,14 +10356,12 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:570
-#, fuzzy
 msgid "Select:"
-msgstr "Selectează"
+msgstr "Selectează:"
 
 #: ../plug-ins/gimpressionist/brush.c:599
-#, fuzzy
 msgid "Aspect ratio:"
-msgstr "Raportul de aspect:"
+msgstr "Raport de aspect:"
 
 #: ../plug-ins/gimpressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
@@ -10401,9 +10398,8 @@ msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:94
-#, fuzzy
 msgid "Color _noise:"
-msgstr "Selector de culori"
+msgstr "_Zgomot de culoare:"
 
 #: ../plug-ins/gimpressionist/color.c:98
 msgid "Adds random noise to the color"
@@ -10517,9 +10513,8 @@ msgid "_GIMPressionist..."
 msgstr "Sesiune"
 
 #: ../plug-ins/gimpressionist/gimp.c:371
-#, fuzzy
 msgid "Painting"
-msgstr "Rotesc..."
+msgstr ""
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:139
 msgid "GIMPressionist"
@@ -10538,18 +10533,17 @@ msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/orientation.c:118
-#, fuzzy
 msgid "Start angle:"
-msgstr "Stare:"
+msgstr "Unghi de pornire:"
 
 #: ../plug-ins/gimpressionist/orientation.c:122
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
+# hm ?
 #: ../plug-ins/gimpressionist/orientation.c:130
-#, fuzzy
 msgid "Angle span:"
-msgstr "Unghi:"
+msgstr "Deschidere unghi:"
 
 #: ../plug-ins/gimpressionist/orientation.c:134
 msgid "The angle span of the first brush to create"
@@ -10654,14 +10648,12 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:626
 #: ../plug-ins/gimpressionist/sizemap.c:497
-#, fuzzy
 msgid "_Kill"
-msgstr "Triunghi"
+msgstr "_Omoară"
 
 #: ../plug-ins/gimpressionist/orientmap.c:630
-#, fuzzy
 msgid "Delete selected vector"
-msgstr "Elimină selecția"
+msgstr "Șterge vectorul selectat"
 
 #: ../plug-ins/gimpressionist/orientmap.c:641
 msgid "Type"
@@ -11052,11 +11044,11 @@ msgstr "Rotire de _nuanță:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2795
 msgid "Vector _angle:"
-msgstr "Unghi vector:"
+msgstr "_Unghi vector:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2807
 msgid "Vector _length:"
-msgstr "Lungime vector"
+msgstr "_Lungime vector"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2828
 msgid "A_daptive supersampling"
@@ -12747,7 +12739,7 @@ msgstr "Imagine nouă"
 
 #: ../plug-ins/map-object/map-object-ui.c:549
 msgid "Enable _antialiasing"
-msgstr "Activează anticrenelarea"
+msgstr "Activează _anticrenelarea"
 
 #: ../plug-ins/map-object/map-object-ui.c:560
 msgid "Enable/disable jagged edges removal (antialiasing)"
