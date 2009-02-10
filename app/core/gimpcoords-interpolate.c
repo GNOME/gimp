@@ -40,11 +40,11 @@ static void     gimp_coords_interpolate_bezier_internal (const GimpCoords  bezie
                                                          GArray          **ret_coords,
                                                          GArray          **ret_params,
                                                          gint              depth);
-static gdouble  gimp_coords_get_catmull_spline_point    (gdouble           t,
-                                                         gdouble           p0,
-                                                         gdouble           p1,
-                                                         gdouble           p2,
-                                                         gdouble           p3);
+static gdouble  gimp_coords_get_catmull_spline_point    (const gdouble     t,
+                                                         const gdouble     p0,
+                                                         const gdouble     p1,
+                                                         const gdouble     p2,
+                                                         const gdouble     p3);
 
 /* Functions for bezier subdivision */
 
@@ -226,15 +226,15 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
                                  GArray           **ret_coords,
                                  GArray           **ret_params)
 {
-  gdouble        delta_x, delta_y;
-  gdouble        distance;
-  gint           num_points;
-  gint           n;
+  gdouble     delta_x, delta_y;
+  gdouble     distance;
+  gint        num_points;
+  gint        n;
 
-  GimpCoords     past_coords;
-  GimpCoords     start_coords;
-  GimpCoords     end_coords;
-  GimpCoords     future_coords;
+  GimpCoords  past_coords;
+  GimpCoords  start_coords;
+  GimpCoords  end_coords;
+  GimpCoords  future_coords;
 
   delta_x        = catmul_pt3.x - catmul_pt2.x;
   delta_y        = catmul_pt3.y - catmul_pt2.y;
@@ -323,7 +323,7 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
         }
       else
         {
-          res_coords.direction = atan (delta_y / delta_x) / (2 * G_PI);
+          res_coords.direction = atan ((- delta_y) / delta_x) / (2 * G_PI);
 
           if (delta_x > 0.0)
             res_coords.direction = res_coords.direction + 0.5;
@@ -337,11 +337,11 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
 }
 
 static gdouble
-gimp_coords_get_catmull_spline_point (gdouble  t,
-                                      gdouble  p0,
-                                      gdouble  p1,
-                                      gdouble  p2,
-                                      gdouble  p3)
+gimp_coords_get_catmull_spline_point (const gdouble  t,
+                                      const gdouble  p0,
+                                      const gdouble  p1,
+                                      const gdouble  p2,
+                                      const gdouble  p3)
 {
 
   return ((((-t + 2.0) * t - 1.0) * t / 2.0)        * p0 +

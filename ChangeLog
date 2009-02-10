@@ -1,5 +1,13 @@
 2009-02-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcoords-interpolate.c
+	* app/core/gimpbrush-transform.c
+	* app/paint/gimppaintoptions.c
+	* app/display/gimpdisplayshell-coords.c: applied patch from Alexia
+	Death that fixes the direction of brush rotation (bug #520078).
+
+2009-02-10  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-coords.c
 	(gimp_display_shell_eval_event): applied patch from Alexia Death
 	that introduces smoothing for the stroke direction (bug #520078).

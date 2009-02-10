@@ -205,7 +205,7 @@ gimp_brush_transform_matrix (GimpBrush   *brush,
 
   gimp_matrix3_identity (matrix);
   gimp_matrix3_translate (matrix, - center_x, - center_x);
-  gimp_matrix3_rotate (matrix, 2 * G_PI * angle);
+  gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
   gimp_matrix3_translate (matrix, center_x, center_y);
   gimp_matrix3_scale (matrix, scale, scale);
 }

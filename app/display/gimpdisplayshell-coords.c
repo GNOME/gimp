@@ -298,12 +298,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
       else
         {
-          coords->direction = atan (delta_y / delta_x) / (2 * G_PI);
-          if (delta_x > 0.0)
+          coords->direction = atan ((- 1.0 * delta_y) / delta_x) / (2 * G_PI);
+          if (delta_x < 0.0)
             coords->direction = coords->direction + 0.5;
         }
 
        delta_dir = coords->direction - shell->last_coords.direction;
+
        if ((fabs (delta_dir) > 0.5) && (delta_dir < 0.0))
          coords->direction = 0.3 * coords->direction + 0.7 * (shell->last_coords.direction - 1.0);
        else if ((fabs (delta_dir) > 0.5) && (delta_dir > 0.0))

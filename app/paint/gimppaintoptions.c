@@ -503,7 +503,7 @@ gimp_paint_options_set_property (GObject      *object,
       break;
 
     case PROP_BRUSH_ANGLE:
-      options->brush_angle = g_value_get_double (value) / 360.0;
+      options->brush_angle = - 1.0 * g_value_get_double (value) / 360.0; /* let's make the angle mathematically correct */
       break;
 
     case PROP_APPLICATION_MODE:
@@ -742,7 +742,7 @@ gimp_paint_options_get_property (GObject    *object,
       break;
 
     case PROP_BRUSH_ANGLE:
-      g_value_set_double (value, options->brush_angle * 360.0);
+      g_value_set_double (value, - 1.0 * options->brush_angle * 360.0); /* mathematically correct -> intuitively correct */
       break;
 
     case PROP_APPLICATION_MODE:
