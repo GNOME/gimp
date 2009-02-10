@@ -1,3 +1,9 @@
+2009-02-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): applied patch from Alexia Death
+	that introduces smoothing for the stroke direction (bug #520078).
+
 2009-02-09  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/tools-commands.c (tools_paint_brush_angle_cmd_callback):

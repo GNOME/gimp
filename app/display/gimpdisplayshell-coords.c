@@ -224,7 +224,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   gdouble  delta_y    = 0.0;
   gdouble  distance   = 1.0;
   gboolean event_fill = (inertia_factor > 0);
-  gint     i;
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -245,6 +244,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
     {
       gdouble filter;
       gdouble dist;
+      gdouble delta_dir;
 
       delta_x = shell->last_coords.x - coords->x;
       delta_y = shell->last_coords.y - coords->y;
@@ -292,7 +292,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if (delta_x == 0)
+      if (delta_x == 0.0)
         {
           coords->direction = shell->last_coords.direction;
         }
@@ -302,6 +302,14 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           if (delta_x > 0.0)
             coords->direction = coords->direction + 0.5;
         }
+
+       delta_dir = coords->direction - shell->last_coords.direction;
+       if ((fabs (delta_dir) > 0.5) && (delta_dir < 0.0))
+         coords->direction = 0.3 * coords->direction + 0.7 * (shell->last_coords.direction - 1.0);
+       else if ((fabs (delta_dir) > 0.5) && (delta_dir > 0.0))
+         coords->direction = 0.3 * coords->direction + 0.7 * (shell->last_coords.direction + 1.0);
+       else
+         coords->direction = 0.3 * coords->direction + 0.7 * shell->last_coords.direction;
 
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);
