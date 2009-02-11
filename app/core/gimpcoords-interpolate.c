@@ -325,7 +325,7 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
         {
           res_coords.direction = atan ((- delta_y) / delta_x) / (2 * G_PI);
 
-          if (delta_x > 0.0)
+          if (delta_x < 0.0)
             res_coords.direction = res_coords.direction + 0.5;
         }
 

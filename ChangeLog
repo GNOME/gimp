@@ -1,3 +1,9 @@
+2009-02-11  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcoords-interpolate.c
+	(gimp_coords_interpolate_catmull): applied patch from Alexia Death
+	that fixes a bug that was introduced by the last commit.
+
 2009-02-10  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcoords-interpolate.c
