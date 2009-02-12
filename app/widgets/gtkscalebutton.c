@@ -159,7 +159,38 @@ static GtkWidget *gtk_scale_button_scale_box_new(GtkScaleButton      *button);
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GtkScaleButton, gimp_gtk_scale_button, GTK_TYPE_BUTTON)
+static void gimp_gtk_scale_button_class_init (GtkScaleButtonClass *klass);
+static void gimp_gtk_scale_button_init       (GtkScaleButton *button);
+
+static gpointer gimp_gtk_scale_button_parent_class = NULL;
+
+GType
+gimp_gtk_scale_button_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GtkScaleButtonClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_gtk_scale_button_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GtkScaleButton),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_gtk_scale_button_init,
+      };
+
+      type = g_type_register_static (GTK_TYPE_BUTTON,
+                                     "GimpGtkScaleButton",
+                                     &info, 0);
+    }
+
+  return type;
+}
 
 static guint
 gimp_gtk_binding_signal_new (const gchar        *signal_name,
@@ -196,6 +227,8 @@ gimp_gtk_scale_button_class_init (GtkScaleButtonClass *klass)
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet *binding_set;
+
+  gimp_gtk_scale_button_parent_class = g_type_class_peek_parent (klass);
 
   g_type_class_add_private (klass, sizeof (GtkScaleButtonPrivate));
 

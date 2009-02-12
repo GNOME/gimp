@@ -1,3 +1,24 @@
+2009-02-12  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/file-faxg3/Makefile.am
+	* plug-ins/help/Makefile.am
+	* plug-ins/metadata/Makefile.am: add $(libgimpconfig) to LDADD
+	where it was missing. Libgimp pulls in libgimpconfig and these
+	plug-ins were linking against the installed libgimpconfig under
+	some #$&%*#%&%$& .la file circumstances.
+
+2009-02-12  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	Bug 567840 – GIMP's GtkScaleButton conflicts with GTK's
+
+	* app/widgets/gtkscalebutton.c: rename the type to
+	"GimpGtkScaleButton" so we don't crash if the real
+	GtkScaleButton type is registered too.
+
 2009-01-29  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
