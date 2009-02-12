@@ -1,3 +1,11 @@
+2009-02-12  Michael Natterer  <mitch@gimp.org>
+
+	Bug 567840 – GIMP's GtkScaleButton conflicts with GTK's
+
+	* app/widgets/gtkscalebutton.c: rename the type to
+	"GimpGtkScaleButton" so we don't crash if the real
+	GtkScaleButton type is registered too.
+
 2009-02-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcoords-interpolate.c
