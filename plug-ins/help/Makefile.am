@@ -2,6 +2,7 @@
 
 libgimphelp = libgimphelp.a
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
@@ -42,13 +43,14 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimphelp)	\
-	$(libgimp)	\
-	$(libgimpcolor)	\
-	$(libgimpbase)	\
-	$(libgimpmath)	\
-	$(GIO_LIBS)	\
-	$(RT_LIBS)	\
+	$(libgimphelp)		\
+	$(libgimp)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(libgimpmath)		\
+	$(GIO_LIBS)		\
+	$(RT_LIBS)		\
 	$(INTLLIBS)
 
 

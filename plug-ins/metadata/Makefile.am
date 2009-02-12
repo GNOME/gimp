@@ -3,6 +3,7 @@
 libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
@@ -54,12 +55,13 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimp)	\
-	$(libgimpcolor)	\
-	$(libgimpbase)	\
-	$(libgimpmath)	\
-	$(GTK_LIBS)	\
-	$(RT_LIBS)	\
+	$(libgimp)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(libgimpmath)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
 	$(INTLLIBS)
 
 # test program, not built by default
