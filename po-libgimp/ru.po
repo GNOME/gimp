@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-23 14:31+0300\n"
-"PO-Revision-Date: 2009-01-23 14:34+0300\n"
+"POT-Creation-Date: 2009-02-12 23:20+0300\n"
+"PO-Revision-Date: 2009-02-12 23:21+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -207,7 +207,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить маску слоя как %s.\n"
+"Вы собираетесь сохранить маску слоя\n"
+" в файл формата %s.\n"
 "Видимые слои не будут сохранены."
 
 #: ../libgimp/gimpexport.c:705
@@ -216,7 +217,9 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить канал (сохраненное выделение) как %s.\n"
+"Вы собираетесь сохранить канал\n"
+"(сохраненное выделение)\n"
+"в файл формата %s.\n"
 "Видимые слои не будут сохранены."
 
 #: ../libgimp/gimpfontselectbutton.c:129
@@ -281,7 +284,7 @@ msgstr "Совпадений нет"
 
 #: ../libgimp/gimpprocbrowserdialog.c:385
 msgid "Search term invalid or incomplete"
-msgstr ""
+msgstr "Искомое слово введено неправильно или неполностью"
 
 #: ../libgimp/gimpprocbrowserdialog.c:394
 msgid "Searching"

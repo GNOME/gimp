@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-23 14:31+0300\n"
-"PO-Revision-Date: 2009-01-10 01:24+0300\n"
+"POT-Creation-Date: 2009-02-12 23:20+0300\n"
+"PO-Revision-Date: 2009-02-07 05:15+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2209,15 +2209,20 @@ msgstr "Невозможно использовать в слоях с маск�
 msgid "Cannot operate on empty selections."
 msgstr "Невозможно выполнить действия с пустым выделением"
 
+#: ../plug-ins/common/curve-bend.c:894
+#, c-format
+msgid "Error while reading '%s': %s"
+msgstr "Ошибка при чтении '%s'. %s"
+
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1210 ../plug-ins/common/curve-bend.c:2931
+#: ../plug-ins/common/curve-bend.c:1216 ../plug-ins/common/curve-bend.c:2937
 msgid "Curve Bend"
 msgstr "Изгиб по кривой"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1246
+#: ../plug-ins/common/curve-bend.c:1252
 #: ../plug-ins/gimpressionist/orientmap.c:591
 #: ../plug-ins/gimpressionist/sizemap.c:460
 #: ../plug-ins/print/print-page-layout.c:171
@@ -2225,116 +2230,116 @@ msgid "Preview"
 msgstr "Просмотр"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1275
+#: ../plug-ins/common/curve-bend.c:1281
 msgid "_Preview Once"
 msgstr "_Просмотреть"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1284
+#: ../plug-ins/common/curve-bend.c:1290
 msgid "Automatic pre_view"
 msgstr "_Автообновление просмотра"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1294 ../plug-ins/common/ripple.c:504
+#: ../plug-ins/common/curve-bend.c:1300 ../plug-ins/common/ripple.c:504
 #: ../plug-ins/gfig/gfig-dialog.c:1206
 msgid "Options"
 msgstr "Параметры"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1308
+#: ../plug-ins/common/curve-bend.c:1314
 msgid "Rotat_e:"
 msgstr "_Вращение:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1327
+#: ../plug-ins/common/curve-bend.c:1333
 msgid "Smoo_thing"
 msgstr "С_глаживание изображения"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1337 ../plug-ins/common/mosaic.c:726
+#: ../plug-ins/common/curve-bend.c:1343 ../plug-ins/common/mosaic.c:726
 #: ../plug-ins/common/qbist.c:852 ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr "Сглаживание _края"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1347
+#: ../plug-ins/common/curve-bend.c:1353
 msgid "Work on cop_y"
 msgstr "_Работать с копией"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1357
+#: ../plug-ins/common/curve-bend.c:1363
 msgid "Modify Curves"
 msgstr "Корректирующие кривые"
 
-#: ../plug-ins/common/curve-bend.c:1385
+#: ../plug-ins/common/curve-bend.c:1391
 msgid "Curve for Border"
 msgstr "Кривая для края:"
 
-#: ../plug-ins/common/curve-bend.c:1389
+#: ../plug-ins/common/curve-bend.c:1395
 msgid "_Upper"
 msgstr "В_ерхнего"
 
-#: ../plug-ins/common/curve-bend.c:1390
+#: ../plug-ins/common/curve-bend.c:1396
 msgid "_Lower"
 msgstr "_Нижнего"
 
-#: ../plug-ins/common/curve-bend.c:1400
+#: ../plug-ins/common/curve-bend.c:1406
 msgid "Curve Type"
 msgstr "Тип кривой:"
 
-#: ../plug-ins/common/curve-bend.c:1404
+#: ../plug-ins/common/curve-bend.c:1410
 msgid "Smoot_h"
 msgstr "Гл_адкая"
 
-#: ../plug-ins/common/curve-bend.c:1405
+#: ../plug-ins/common/curve-bend.c:1411
 msgid "_Free"
 msgstr "_Свободная"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1420
+#: ../plug-ins/common/curve-bend.c:1426
 msgid "_Copy"
 msgstr "Ско_пировать"
 
-#: ../plug-ins/common/curve-bend.c:1425
+#: ../plug-ins/common/curve-bend.c:1431
 msgid "Copy the active curve to the other border"
 msgstr "Скопировать активную кривую на другой край"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1432
+#: ../plug-ins/common/curve-bend.c:1438
 msgid "_Mirror"
 msgstr "Отра_зить"
 
-#: ../plug-ins/common/curve-bend.c:1437
+#: ../plug-ins/common/curve-bend.c:1443
 msgid "Mirror the active curve to the other border"
 msgstr "Зеркально отразить активную кривую на другой край"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1445
+#: ../plug-ins/common/curve-bend.c:1451
 msgid "S_wap"
 msgstr "Перестав_ить"
 
-#: ../plug-ins/common/curve-bend.c:1450
+#: ../plug-ins/common/curve-bend.c:1456
 msgid "Swap the two curves"
 msgstr "Переставить две кривые"
 
-#: ../plug-ins/common/curve-bend.c:1462
+#: ../plug-ins/common/curve-bend.c:1468
 msgid "Reset the active curve"
 msgstr "Сбросить активную кривую"
 
-#: ../plug-ins/common/curve-bend.c:1479
+#: ../plug-ins/common/curve-bend.c:1485
 msgid "Load the curves from a file"
 msgstr "Загрузить кривые из файла"
 
-#: ../plug-ins/common/curve-bend.c:1491
+#: ../plug-ins/common/curve-bend.c:1497
 msgid "Save the curves to a file"
 msgstr "Сохранить кривые в файле"
 
-#: ../plug-ins/common/curve-bend.c:2029
+#: ../plug-ins/common/curve-bend.c:2035
 msgid "Load Curve Points from File"
 msgstr "Загрузить точки кривой из файла"
 
-#: ../plug-ins/common/curve-bend.c:2064
+#: ../plug-ins/common/curve-bend.c:2070
 msgid "Save Curve Points to File"
 msgstr "Сохранить точки кривой в файле"
 
@@ -4465,10 +4470,11 @@ msgid ""
 "this conversion."
 msgstr ""
 "Предупреждение:\n"
-"Изображение, которое вы собираетесь загрузить имеет 16 бит на канал.\n"
-"GIMP поддерживает только 8 разрядов на канал, так что изображение будет\n"
-"преобразовано. В процессе преобразования информация изображения\n"
-"будет утеряна."
+"Изображение, которое вы собираетесь загрузить,\n"
+"сохранено в режиме 16 разрядов на цветовой канал.\n"
+"GIMP поддерживает только 8 разрядов на канал, \n"
+"так что изображение будет преобразовано. В процессе\n"
+"преобразования информация изображения будет утеряна."
 
 #: ../plug-ins/common/file-tiff-save.c:887
 msgid ""
