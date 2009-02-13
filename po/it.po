@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-29 15:32+0100\n"
-"PO-Revision-Date: 2008-12-29 15:35+0100\n"
+"POT-Creation-Date: 2009-02-13 16:09+0100\n"
+"PO-Revision-Date: 2009-02-13 16:10+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4372,11 +4372,11 @@ msgstr "_Finestre"
 
 #: ../app/actions/windows-actions.c:80
 msgid "_Recently Closed Docks"
-msgstr "Pannelli _recentemente chiusi"
+msgstr "Pannelli chiusi _recentemente"
 
 #: ../app/actions/windows-actions.c:81
 msgid "_Dockable Dialogs"
-msgstr "Finestre _agganciabili"
+msgstr "Pannelli _agganciabili"
 
 #: ../app/actions/windows-actions.c:84
 msgid "Tool_box"
@@ -9377,7 +9377,7 @@ msgstr "Ammontare:"
 msgid "Pressure:"
 msgstr "Pressione:"
 
-#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:754
+#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:766
 msgid "Align"
 msgstr "Allinea"
 
@@ -9389,93 +9389,93 @@ msgstr "Strumento allinea: allinea o dispone i livelli ed altri oggetti"
 msgid "_Align"
 msgstr "_Allinea"
 
-#: ../app/tools/gimpaligntool.c:587
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 "Fare clic su un livello, tracciato o guida oppure trascinare per prelevare "
 "più livelli"
 
-#: ../app/tools/gimpaligntool.c:596
+#: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
 msgstr "Fare clic per prendere questo livello come prima voce"
 
-#: ../app/tools/gimpaligntool.c:604
+#: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
 msgstr "Fare clic per aggiungere questo livello alla lista"
 
-#: ../app/tools/gimpaligntool.c:608
+#: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this guide as first item"
 msgstr "Fare clic per prendere questa guida come prima voce"
 
-#: ../app/tools/gimpaligntool.c:616
+#: ../app/tools/gimpaligntool.c:628
 msgid "Click to add this guide to the list"
 msgstr "Fare clic per aggiungere questa guida alla lista"
 
-#: ../app/tools/gimpaligntool.c:620
+#: ../app/tools/gimpaligntool.c:632
 msgid "Click to pick this path as first item"
 msgstr "Fare clic per prendere questo tracciato come prima voce"
 
-#: ../app/tools/gimpaligntool.c:628
+#: ../app/tools/gimpaligntool.c:640
 msgid "Click to add this path to the list"
 msgstr "Fare clic per aggiungere questo tracciato alla lista"
 
-#: ../app/tools/gimpaligntool.c:766
+#: ../app/tools/gimpaligntool.c:778
 msgid "Relative to:"
 msgstr "Relativo a:"
 
-#: ../app/tools/gimpaligntool.c:784
+#: ../app/tools/gimpaligntool.c:796
 msgid "Align left edge of target"
 msgstr "Allinea al bordo sinistro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:790
+#: ../app/tools/gimpaligntool.c:802
 msgid "Align center of target"
 msgstr "Allinea al centro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:796
+#: ../app/tools/gimpaligntool.c:808
 msgid "Align right edge of target"
 msgstr "Allinea al bordo destro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpaligntool.c:818
 msgid "Align top edge of target"
 msgstr "Allinea alla cima dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:812
+#: ../app/tools/gimpaligntool.c:824
 msgid "Align middle of target"
 msgstr "Allinea alla mediana dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:818
+#: ../app/tools/gimpaligntool.c:830
 msgid "Align bottom of target"
 msgstr "Allinea al fondo dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute"
 msgstr "Distribuisci"
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute left edges of targets"
 msgstr "Distribuisci i bordi sinistri degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:843
+#: ../app/tools/gimpaligntool.c:855
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuisci i centri orizzontali degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:862
 msgid "Distribute right edges of targets"
 msgstr "Distribuisci i bordi destri degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:860
+#: ../app/tools/gimpaligntool.c:872
 msgid "Distribute top edges of targets"
 msgstr "Distribuisci i bordi in cima degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:867
+#: ../app/tools/gimpaligntool.c:879
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuisci i centri verticali degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:873
+#: ../app/tools/gimpaligntool.c:885
 msgid "Distribute bottoms of targets"
 msgstr "Distribuisci i fondi degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:881 ../app/tools/gimpblendoptions.c:222
+#: ../app/tools/gimpaligntool.c:893 ../app/tools/gimpblendoptions.c:222
 msgid "Offset:"
 msgstr "Scostamento:"
 
