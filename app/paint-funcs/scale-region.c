@@ -856,7 +856,7 @@ pixel_average2 (const guchar *p1,
             break;
 
           case 510: /* all opaque */
-            p[0] = (p1[0]  + p2[0] + 1) >> 2;
+            p[0] = (p1[0]  + p2[0] + 1) >> 1;
             p[1] = 255;
             break;
 

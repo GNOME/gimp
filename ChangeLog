@@ -1,3 +1,12 @@
+2009-02-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	Bug 571628 – Scaling image to 25% turn background from white to grey
+
+	* app/paint-funcs/scale-region.c (pixel_average2): fixed right-shift
+	for GRAYA pixels.
+
 2009-02-12  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
