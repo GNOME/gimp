@@ -341,15 +341,17 @@ static void
 gimp_drawable_visibility_changed (GimpItem *item)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglNode     *node     = gimp_item_get_node (item);
 
-  if (node)
+  /*  don't use gimp_item_get_node() because that would create
+   *  the node.
+   */
+  if (item->node)
     {
       GeglNode *input;
       GeglNode *output;
 
-      input  = gegl_node_get_input_proxy  (node, "input");
-      output = gegl_node_get_output_proxy (node, "output");
+      input  = gegl_node_get_input_proxy  (item->node, "input");
+      output = gegl_node_get_output_proxy (item->node, "output");
 
       if (gimp_item_get_visible (item) &&
           ! (GIMP_IS_LAYER (item) &&
@@ -928,19 +930,36 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
       gint off_x, off_y;
       gint fs_off_x, fs_off_y;
 
-      if (! drawable->private->fs_opacity_node)
+      if (! drawable->private->fs_crop_node)
         {
           GeglNode *fs_source;
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+
+          /* rip the fs' source node out of its graph */
+          if (fs->opacity_node)
+            {
+              gegl_node_disconnect (fs->opacity_node, "input");
+              gegl_node_remove_child (gimp_item_get_node (GIMP_ITEM (fs)),
+                                      fs_source);
+            }
+
           gegl_node_add_child (drawable->private->source_node, fs_source);
+
+          drawable->private->fs_crop_node =
+            gegl_node_new_child (drawable->private->source_node,
+                                 "operation", "gegl:crop",
+                                 NULL);
+
+          gegl_node_connect_to (fs_source,                       "output",
+                                drawable->private->fs_crop_node, "input");
 
           drawable->private->fs_opacity_node =
             gegl_node_new_child (drawable->private->source_node,
                                  "operation", "gegl:opacity",
                                  NULL);
 
-          gegl_node_connect_to (fs_source,                          "output",
+          gegl_node_connect_to (drawable->private->fs_crop_node,    "output",
                                 drawable->private->fs_opacity_node, "input");
 
           drawable->private->fs_offset_node =
@@ -976,6 +995,13 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
+      gegl_node_set (drawable->private->fs_crop_node,
+                     "x",      (gdouble) (off_x - fs_off_x),
+                     "y",      (gdouble) (off_y - fs_off_y),
+                     "width",  (gdouble) gimp_item_get_width  (GIMP_ITEM (drawable)),
+                     "height", (gdouble) gimp_item_get_height (GIMP_ITEM (drawable)),
+                     NULL);
+
       gegl_node_set (drawable->private->fs_offset_node,
                      "x", (gdouble) (fs_off_x - off_x),
                      "y", (gdouble) (fs_off_y - off_y),
@@ -987,10 +1013,11 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
     }
   else
     {
-      if (drawable->private->fs_opacity_node)
+      if (drawable->private->fs_crop_node)
         {
           GeglNode *fs_source;
 
+          gegl_node_disconnect (drawable->private->fs_crop_node, "input");
           gegl_node_disconnect (drawable->private->fs_opacity_node, "input");
           gegl_node_disconnect (drawable->private->fs_offset_node, "input");
           gegl_node_disconnect (drawable->private->fs_mode_node, "input");
@@ -999,6 +1026,19 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
           gegl_node_remove_child (drawable->private->source_node,
                                   fs_source);
+
+          /* plug the fs' source node back into its graph */
+          if (fs->opacity_node)
+            {
+              gegl_node_add_child (gimp_item_get_node (GIMP_ITEM (fs)),
+                                   fs_source);
+              gegl_node_connect_to (fs_source,        "output",
+                                    fs->opacity_node, "input");
+            }
+
+          gegl_node_remove_child (drawable->private->source_node,
+                                  drawable->private->fs_crop_node);
+          drawable->private->fs_crop_node = NULL;
 
           gegl_node_remove_child (drawable->private->source_node,
                                   drawable->private->fs_opacity_node);

@@ -1,3 +1,22 @@
+2009-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.c (gimp_drawable_sync_source_node): need
+	to rip the floating selection's source node out of its layer's
+	graph before using it in the floating selection sub-graph, and
+	need to plug it back there when it's not a floating selection any
+	longer.
+
+	Unrelated:
+
+	Also introduce a "fs_crop_node" that makes sure the floating
+	selection stops at the drawable's boundaries.
+
+	(gimp_drawable_visibility_changed): use item->node instead of
+	gimp_item_get_node() because the latter creates the node on
+	demand.
+
+	* app/core/gimpdrawable-private.h: add fs_crop_node member.
+
 2009-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/file-faxg3/Makefile.am
