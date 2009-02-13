@@ -12,6 +12,7 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
 
 * Bugs fixed:
 
+ 567840 – GIMP's GtkScaleButton conflicts with GTK's
  569043 – GEGL tool - missing Operation Settings for all sub-tools
  568890 – don't rely on GtkAction implementation details
  568909 – wrong RGB values for color names in libgimpcolor/gimprgb-parse.c
@@ -28,6 +29,7 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
  Spanish (es)
  Estonian (et)
  Hindi (hi)
+ Italian (it)
  Romanian (ro)
  Russian (ru)
  Tamil (ta)
