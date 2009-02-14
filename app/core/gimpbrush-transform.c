@@ -34,7 +34,8 @@
 /*  local function prototypes  */
 
 static void  gimp_brush_transform_matrix       (GimpBrush         *brush,
-                                                gdouble            scale,
+                                                gdouble            scale_x,
+                                                gdouble            scale_y,
                                                 gdouble            angle,
                                                 GimpMatrix3       *matrix);
 static void  gimp_brush_transform_bounding_box (GimpBrush         *brush,
@@ -49,7 +50,8 @@ static void  gimp_brush_transform_bounding_box (GimpBrush         *brush,
 
 void
 gimp_brush_real_transform_size (GimpBrush *brush,
-                                gdouble    scale,
+                                gdouble    scale_x,
+                                gdouble    scale_y,
                                 gdouble    angle,
                                 gint      *width,
                                 gint      *height)
@@ -57,13 +59,14 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   GimpMatrix3 matrix;
   gint        x, y;
 
-  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
+  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
 
 TempBuf *
 gimp_brush_real_transform_mask (GimpBrush *brush,
-                                gdouble    scale,
+                                gdouble    scale_x,
+                                gdouble    scale_y,
                                 gdouble    angle)
 {
   TempBuf      *result;
@@ -76,7 +79,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gint          dest_height;
   gint          x, y;
 
-  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
+  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->mask, NULL);
@@ -125,7 +128,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
 TempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                  gdouble    scale,
+                                  gdouble    scale_x,
+                                  gdouble    scale_y,
                                   gdouble    angle)
 {
   TempBuf      *result;
@@ -138,7 +142,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          dest_height;
   gint          x, y;
 
-  gimp_brush_transform_matrix (brush, scale, angle, &matrix);
+  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->pixmap, NULL);
@@ -196,7 +200,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
 static void
 gimp_brush_transform_matrix (GimpBrush   *brush,
-                             gdouble      scale,
+                             gdouble      scale_x,
+                             gdouble      scale_y,
                              gdouble      angle,
                              GimpMatrix3 *matrix)
 {
@@ -207,7 +212,7 @@ gimp_brush_transform_matrix (GimpBrush   *brush,
   gimp_matrix3_translate (matrix, - center_x, - center_x);
   gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
   gimp_matrix3_translate (matrix, center_x, center_y);
-  gimp_matrix3_scale (matrix, scale, scale);
+  gimp_matrix3_scale (matrix, scale_x, scale_y);
 }
 
 static void

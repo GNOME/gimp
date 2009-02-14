@@ -328,8 +328,10 @@ gimp_smudge_brush_coords (GimpPaintCore *paint_core,
   gint           width;
   gint           height;
 
-  gimp_brush_transform_size (brush_core->brush, brush_core->scale,
-                             brush_core->angle, &width, &height);
+  gimp_brush_transform_size (brush_core->brush,
+                             brush_core->scale, brush_core->scale,
+                             brush_core->angle,
+                             &width, &height);
 
   /* Note: these are the brush mask size plus a border of 1 pixel */
   *x = (gint) paint_core->cur_coords.x - width  / 2 - 1;

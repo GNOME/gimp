@@ -1,3 +1,14 @@
+2009-02-14  Sven Neumann  <sven@gimp.org>
+
+	Bug 99457 – Support for dynamics on tilt
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrush-transform.[ch]
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpsmudge.c: applied patch from Alexia Death,
+	separates brush scaling for x and y.
+
 2009-02-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpdrawable.c: Remove

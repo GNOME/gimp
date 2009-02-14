@@ -57,15 +57,18 @@ struct _GimpBrushClass
                                     GimpCoords *last_coords,
                                     GimpCoords *cur_coords);
   void        (* transform_size)   (GimpBrush  *brush,
-                                    gdouble     scale,
+                                    gdouble     scale_x,
+                                    gdouble     scale_y,
                                     gdouble     angle,
                                     gint       *width,
                                     gint       *height);
   TempBuf   * (* transform_mask)   (GimpBrush  *brush,
-                                    gdouble     scale,
+                                    gdouble     scale_x,
+                                    gdouble     scale_y,
                                     gdouble     angle);
   TempBuf   * (* transform_pixmap) (GimpBrush  *brush,
-                                    gdouble     scale,
+                                    gdouble     scale_x,
+                                    gdouble     scale_y,
                                     gdouble     angle);
 
   /*  signals  */
@@ -87,15 +90,18 @@ gboolean    gimp_brush_want_null_motion (GimpBrush        *brush,
 
 /* Gets width and height of a transformed mask of the brush, for provided parameters. */
 void        gimp_brush_transform_size   (GimpBrush        *brush,
-                                         gdouble           scale,
+                                         gdouble           scale_x,
+                                         gdouble           scale_y,
                                          gdouble           angle,
                                          gint             *width,
                                          gint             *height);
 TempBuf   * gimp_brush_transform_mask   (GimpBrush        *brush,
-                                         gdouble           scale,
+                                         gdouble           scale_x,
+                                         gdouble           scale_y,
                                          gdouble           angle);
 TempBuf   * gimp_brush_transform_pixmap (GimpBrush        *brush,
-                                         gdouble           scale,
+                                         gdouble           scale_x,
+                                         gdouble           scale_y,
                                          gdouble           angle);
 
 TempBuf   * gimp_brush_get_mask         (const GimpBrush  *brush);

@@ -716,7 +716,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
 
-  gimp_brush_transform_size (core->brush, core->scale, core->angle, &brush_width, &brush_height);
+  gimp_brush_transform_size (core->brush, core->scale, core->scale, core->angle, &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
@@ -809,7 +809,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      mask = gimp_brush_transform_mask (core->main_brush, scale, angle);
+      mask = gimp_brush_transform_mask (core->main_brush, scale, scale, angle);
     }
 
   if (mask)
@@ -1314,7 +1314,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if ((core->scale == 1.0) && (core->angle == 0.0))
     return brush->mask;
 
-  gimp_brush_transform_size (brush, core->scale, core->angle, &width, &height);
+  gimp_brush_transform_size (brush, core->scale, core->scale, core->angle, &width, &height);
 
     if (! core->cache_invalid                      &&
       core->transform_brush                      &&
@@ -1337,7 +1337,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if (core->transform_brush)
     temp_buf_free (core->transform_brush);
 
-  core->transform_brush = gimp_brush_transform_mask (brush, core->scale, core->angle);
+  core->transform_brush = gimp_brush_transform_mask (brush, core->scale, core->scale, core->angle);
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
@@ -1358,7 +1358,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   if ((core->scale == 1.0) && (core->angle == 0.0))
     return brush->pixmap;
 
-  gimp_brush_transform_size (brush, core->scale, core->angle, &width, &height);
+  gimp_brush_transform_size (brush, core->scale, core->scale, core->angle, &width, &height);
 
 
   if (! core->cache_invalid                              &&
@@ -1380,7 +1380,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
     temp_buf_free (core->transform_pixmap);
 
 
-  core->transform_pixmap = gimp_brush_transform_pixmap (brush, core->scale, core->angle);
+  core->transform_pixmap = gimp_brush_transform_pixmap (brush, core->scale, core->scale, core->angle);
 
   core->cache_invalid = TRUE;
 
