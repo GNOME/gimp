@@ -1,3 +1,11 @@
+2009-02-14  Sven Neumann  <sven@gimp.org>
+
+	Bug 472644 – Rotate with clipping crops the whole layer
+
+	* app/core/gimp-transform-resize.c: applied patch as attached to
+	bug #472644. Supposedly fixes the problem of the disappearing
+	image.
+
 2009-02-13  Sven Neumann  <sven@gimp.org>
 
 	Bug 571628 – Scaling image to 25% turn background from white to grey
