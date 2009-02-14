@@ -219,11 +219,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                                gdouble           inertia_factor,
                                guint32           time)
 {
-  gdouble  delta_time = 0.001;
-  gdouble  delta_x    = 0.0;
-  gdouble  delta_y    = 0.0;
-  gdouble  distance   = 1.0;
-  gboolean event_fill = (inertia_factor > 0);
+  gdouble  delta_time  = 0.001;
+  gdouble  delta_x     = 0.0;
+  gdouble  delta_y     = 0.0;
+  gdouble  dir_delta_x = 0.0;
+  gdouble  dir_delta_y = 0.0;
+  gdouble  distance    = 1.0;
+  gboolean event_fill  = (inertia_factor > 0);
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -291,26 +293,74 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }
-
-      if (delta_x == 0.0)
+      if ((fabs (delta_x) > 1.5) && (fabs (delta_y) > 1.5))
         {
-          coords->direction = shell->last_coords.direction;
+          dir_delta_x = delta_x;
+          dir_delta_y = delta_y;
         }
       else
         {
-          coords->direction = atan ((- 1.0 * delta_y) / delta_x) / (2 * G_PI);
-          if (delta_x < 0.0)
+          gint x = 3;
+
+          while (((fabs (dir_delta_x) < 1.5) ||
+                  (fabs (dir_delta_y) < 1.5)) && (x >= 0))
+            {
+              const GimpCoords old_event = g_array_index (shell->event_history,
+                                                          GimpCoords, x);
+
+              dir_delta_x = old_event.x - coords->x;
+              dir_delta_y = old_event.y - coords->y;
+
+              x--;
+            }
+        }
+
+      if (dir_delta_x == 0.0)
+        {
+          if (dir_delta_y >= 0.0)
+            coords->direction = 0.5;
+          else if (dir_delta_y < 0.0)
+            coords->direction = 0.0;
+          else coords->direction = shell->last_coords.direction;
+        }
+      else
+        {
+          coords->direction = atan ((- 1.0 * dir_delta_y) /
+                                    dir_delta_x) / (2 * G_PI);
+
+          if (dir_delta_x > 0.0)
             coords->direction = coords->direction + 0.5;
         }
 
-       delta_dir = coords->direction - shell->last_coords.direction;
+      while (coords->direction > 1.0)
+        coords->direction -= 1.0;
 
-       if ((fabs (delta_dir) > 0.5) && (delta_dir < 0.0))
-         coords->direction = 0.3 * coords->direction + 0.7 * (shell->last_coords.direction - 1.0);
-       else if ((fabs (delta_dir) > 0.5) && (delta_dir > 0.0))
-         coords->direction = 0.3 * coords->direction + 0.7 * (shell->last_coords.direction + 1.0);
-       else
-         coords->direction = 0.3 * coords->direction + 0.7 * shell->last_coords.direction;
+      while (coords->direction < 0.0)
+        coords->direction += 1.0;
+
+      delta_dir = coords->direction - shell->last_coords.direction;
+
+      if ((fabs (delta_dir) > 0.5) && (delta_dir < 0.0))
+        {
+          coords->direction = (0.5 * coords->direction +
+                               0.5 * (shell->last_coords.direction - 1.0));
+        }
+      else if ((fabs (delta_dir) > 0.5) && (delta_dir > 0.0))
+        {
+          coords->direction = (0.5 * coords->direction +
+                               0.5 * (shell->last_coords.direction + 1.0));
+        }
+      else
+        {
+          coords->direction = (0.5 * coords->direction +
+                               0.5 * shell->last_coords.direction);
+        }
+
+      while (coords->direction > 1.0)
+        coords->direction -= 1.0;
+
+      while (coords->direction < 0.0)
+        coords->direction += 1.0;
 
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);

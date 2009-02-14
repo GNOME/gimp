@@ -1,5 +1,12 @@
 2009-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcoords-interpolate.c
+	* app/display/gimpdisplayshell-coords.c: applied patch from Alexia
+	Death that fixes issues with the new stroke direction code
+	(bug #520078).
+
+2009-02-14  Sven Neumann  <sven@gimp.org>
+
 	Bug 472644 – Rotate with clipping crops the whole layer
 
 	* app/core/gimp-transform-resize.c: applied patch as attached to

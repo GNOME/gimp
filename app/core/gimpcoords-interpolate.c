@@ -228,6 +228,8 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
 {
   gdouble     delta_x, delta_y;
   gdouble     distance;
+  gdouble     dir_step;
+  gdouble     delta_dir;
   gint        num_points;
   gint        n;
 
@@ -236,8 +238,8 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
   GimpCoords  end_coords;
   GimpCoords  future_coords;
 
-  delta_x        = catmul_pt3.x - catmul_pt2.x;
-  delta_y        = catmul_pt3.y - catmul_pt2.y;
+  delta_x = catmul_pt3.x - catmul_pt2.x;
+  delta_y = catmul_pt3.y - catmul_pt2.y;
 
   /* Catmull-Rom interpolation requires 4 points.
    * Two endpoints plus one more at each end.
@@ -252,50 +254,56 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
 
   num_points = distance / precision;
 
-  for (n = 1; n <=num_points; n++)
+  delta_dir = end_coords.direction - start_coords.direction;
+
+  if (delta_dir <= -0.5)
+    delta_dir += 1.0;
+  else if (delta_dir >= 0.5)
+    delta_dir -= 1.0;
+
+  dir_step =  delta_dir / num_points;
+
+  for (n = 1; n <= num_points; n++)
     {
-      GimpCoords res_coords;
-      GimpCoords last_coords;
+      GimpCoords coords;
       gdouble    velocity;
-      gdouble    delta_x;
-      gdouble    delta_y;
       gdouble    p = (gdouble) n / num_points;
 
-      res_coords.x =
+      coords.x =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.x,
                                               start_coords.x,
                                               end_coords.x,
                                               future_coords.x);
 
-      res_coords.y =
+      coords.y =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.y,
                                               start_coords.y,
                                               end_coords.y,
                                               future_coords.y);
 
-      res_coords.pressure =
+      coords.pressure =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.pressure,
                                               start_coords.pressure,
                                               end_coords.pressure,
                                               future_coords.pressure);
 
-      res_coords.xtilt =
+      coords.xtilt =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.xtilt,
                                               start_coords.xtilt,
                                               end_coords.xtilt,
                                               future_coords.xtilt);
-      res_coords.ytilt =
+      coords.ytilt =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.ytilt,
                                               start_coords.ytilt,
                                               end_coords.ytilt,
                                               future_coords.ytilt);
 
-      res_coords.wheel =
+      coords.wheel =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.wheel,
                                               start_coords.wheel,
@@ -307,29 +315,14 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
                                                        start_coords.velocity,
                                                        end_coords.velocity,
                                                        future_coords.velocity);
-      res_coords.velocity = CLAMP (velocity, 0.0, 1.0);
+      coords.velocity = CLAMP (velocity, 0.0, 1.0);
 
-      if (n > 1)
-        last_coords = g_array_index (*ret_coords, GimpCoords, n - 2);
-      else
-        last_coords = start_coords;
+      coords.direction = start_coords.direction + dir_step * n;
 
-      delta_x = last_coords.x - res_coords.x;
-      delta_y = last_coords.y - res_coords.y;
+      while (coords.direction > 1.0)
+        coords.direction -= 1.0;
 
-      if (delta_x == 0)
-        {
-          res_coords.direction = last_coords.direction;
-        }
-      else
-        {
-          res_coords.direction = atan ((- delta_y) / delta_x) / (2 * G_PI);
-
-          if (delta_x < 0.0)
-            res_coords.direction = res_coords.direction + 0.5;
-        }
-
-      g_array_append_val (*ret_coords, res_coords);
+      g_array_append_val (*ret_coords, coords);
 
       if (ret_params)
         g_array_append_val (*ret_params, p);
