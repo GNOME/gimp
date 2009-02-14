@@ -12,6 +12,7 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
 
 * Bugs fixed:
 
+ 571628 – Scaling image to 25% turn background from white to grey
  567840 – GIMP's GtkScaleButton conflicts with GTK's
  569043 – GEGL tool - missing Operation Settings for all sub-tools
  568890 – don't rely on GtkAction implementation details
@@ -32,6 +33,7 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
  Italian (it)
  Romanian (ro)
  Russian (ru)
+ Serbian (sr)
  Tamil (ta)
  Simplified Chinese (zh_CN)
 
