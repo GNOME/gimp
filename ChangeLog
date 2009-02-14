@@ -1,3 +1,8 @@
+2009-02-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpdrawable.c: Remove
+	gimp_drawable_update_tile_source_node(), it was not useful.
+
 2009-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcoords-interpolate.c

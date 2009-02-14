@@ -723,17 +723,6 @@ gimp_drawable_real_get_tiles (GimpDrawable *drawable)
 }
 
 static void
-gimp_drawable_update_tile_source_node (GimpDrawable *drawable)
-{
-  if (! drawable->private->tile_source_node)
-    return;
-
-  gegl_node_set (drawable->private->tile_source_node,
-                 "tile-manager", drawable->private->tiles,
-                 NULL);
-}
-
-static void
 gimp_drawable_real_set_tiles (GimpDrawable *drawable,
                               gboolean      push_undo,
                               const gchar  *undo_desc,
@@ -782,7 +771,10 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
 
-  gimp_drawable_update_tile_source_node (drawable);
+  if (drawable->private->tile_source_node)
+    gegl_node_set (drawable->private->tile_source_node,
+                   "tile-manager", drawable->private->tiles,
+                   NULL);
 }
 
 static GeglNode *
@@ -1121,7 +1113,10 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   drawable->private->preview_cache = NULL;
   drawable->private->preview_valid = FALSE;
 
-  gimp_drawable_update_tile_source_node (drawable);
+  if (drawable->private->tile_source_node)
+    gegl_node_set (drawable->private->tile_source_node,
+                   "tile-manager", drawable->private->tiles,
+                   NULL);
 }
 
 void
