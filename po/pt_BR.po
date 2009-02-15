@@ -9234,7 +9234,8 @@ msgstr ""
 "Márcia Norie Nakaza\n"
 "Alexandre Folle de Menezes\n"
 "Guilherme de S. Pastore\n"
-"João S. O. Bueno"
+"João S. O. Bueno\n"
+"Og Maciel"
 
 #: ../app/dialogs/about-dialog.c:532
 msgid "GIMP is brought to you by"
