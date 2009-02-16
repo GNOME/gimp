@@ -1850,9 +1850,11 @@ gimp_tag_entry_commit_tags (GimpTagEntry *entry)
 
           entry->internal_operation++;
           entry->suppress_mask_update++;
+          entry->suppress_tag_query++;
           gtk_editable_delete_text (GTK_EDITABLE (entry), region_start, region_end);
           position = region_start;
           gtk_editable_insert_text (GTK_EDITABLE (entry), tags->str, tags->len, &position);
+          entry->suppress_tag_query--;
           entry->suppress_mask_update--;
           entry->internal_operation--;
 
@@ -2040,6 +2042,9 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
 
   position = gtk_editable_get_position (GTK_EDITABLE (entry));
 
+  entry->internal_operation++;
+  entry->suppress_tag_query++;
+
   /* strip whitespace in front */
   while (entry->mask->len > 0
          && entry->mask->str[0] == 'w')
@@ -2085,6 +2090,9 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
     }
 
   gtk_editable_set_position (GTK_EDITABLE (entry), position);
+
+  entry->suppress_tag_query--;
+  entry->internal_operation--;
 
   return FALSE;
 }
