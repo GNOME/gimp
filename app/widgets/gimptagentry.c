@@ -376,14 +376,20 @@ gimp_tag_entry_set_tag_string (GimpTagEntry *entry,
   g_return_if_fail (GIMP_IS_TAG_ENTRY (entry));
 
   entry->internal_operation++;
+  entry->suppress_tag_query++;
   gtk_entry_set_text (GTK_ENTRY (entry), tag_string);
   gtk_editable_set_position (GTK_EDITABLE (entry), -1);
+  entry->suppress_tag_query--;
   entry->internal_operation--;
   gimp_tag_entry_commit_tags (entry);
 
   if (entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
       gimp_tag_entry_assign_tags (entry);
+    }
+  else if (entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
+    {
+      gimp_tag_entry_query_tag (entry);
     }
 }
 
