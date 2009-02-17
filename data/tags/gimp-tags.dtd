@@ -1,8 +1,8 @@
-<!-- Simple DTD for GIMP tips -->
+<!-- Simple DTD for GIMP tags -->
 
 <!ELEMENT tags (resource+)>
 
-<!ELEMENT resource (tag+)>
+<!ELEMENT resource (tag*)>
 <!ATTLIST resource identifier CDATA #REQUIRED>
 <!ATTLIST resource checksum CDATA #IMPLIED>
 
