@@ -457,6 +457,8 @@ app/xcf/xcf-write.c
 app/xcf/xcf-seek.c
 app/xcf/xcf.c
 
+data/tags/gimp-tags-default.xml.in
+
 desktop/gimp.desktop.in.in
 
 tools/gimp-remote.c

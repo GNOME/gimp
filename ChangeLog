@@ -1,3 +1,10 @@
+2009-02-17  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* po-tags/*: got rid of extra message domain.
+
+	* configure.in:
+	* data/tags/Makefile.am: changed accordingly.
+
 2009-02-16  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/Makefile.am:
