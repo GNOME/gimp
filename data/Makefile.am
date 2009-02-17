@@ -8,7 +8,8 @@ SUBDIRS = \
 	interpreters	\
 	palettes	\
 	patterns	\
-	tips
+	tips		\
+	tags
 
 fontdir = $(gimpdatadir)/fonts
 

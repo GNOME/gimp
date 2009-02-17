@@ -33,6 +33,8 @@ libappcore_a_sources = \
 	gimp-modules.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
+	gimp-tags.c				\
+	gimp-tags.h				\
 	gimp-templates.c			\
 	gimp-templates.h			\
 	gimp-transform-region.c			\

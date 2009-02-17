@@ -2063,6 +2063,7 @@ data/images/Makefile
 data/interpreters/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
+data/tags/Makefile
 data/tips/Makefile
 desktop/Makefile
 desktop/gimp.desktop.in
@@ -2073,6 +2074,7 @@ po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-python/Makefile.in
 po-script-fu/Makefile.in
+po-tags/Makefile.in
 po-tips/Makefile.in
 gimp-zip
 Makefile
@@ -2094,6 +2096,7 @@ AC_CONFIG_COMMANDS([sed-po-makefiles],
 sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile && touch po-python/stamp-it
 sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile && touch po-plug-ins/stamp-it
 sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile && touch po-script-fu/stamp-it
+sed -e "/POTFILES =/r po-tags/POTFILES" po-tags/Makefile.in > po-tags/Makefile && touch po-tags/stamp-it
 sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it])
 
 AC_OUTPUT

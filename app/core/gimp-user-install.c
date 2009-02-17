@@ -46,6 +46,7 @@
 #include "config/gimprc.h"
 
 #include "gimp-templates.h"
+#include "gimp-tags.h"
 #include "gimp-user-install.h"
 
 #include "gimp-intl.h"
@@ -465,6 +466,11 @@ user_install_create_files (GimpUserInstall *install)
         }
     }
 
+  if (! gimp_tags_user_install ())
+    {
+      return FALSE;
+    }
+
   return TRUE;
 }
 
@@ -542,6 +548,18 @@ user_install_migrate_files (GimpUserInstall *install)
   gimp_rc_migrate (gimprc);
   gimp_rc_save (gimprc);
   g_object_unref (gimprc);
+
+  g_snprintf (dest, sizeof (dest), "%s%c%s",
+              gimp_directory (), G_DIR_SEPARATOR, "tags.xml");
+  if (! g_file_test (dest, G_FILE_TEST_IS_REGULAR))
+    {
+      /* if there was no tags.xml,
+       * install it with default tag set.*/
+      if (! gimp_tags_user_install ())
+        {
+          return FALSE;
+        }
+    }
 
   return TRUE;
 }

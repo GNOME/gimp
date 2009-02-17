@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE tags SYSTEM "gimp-tags.dtd">
+
+<!-- This is a list of default tags for GIMP resources.                    -->
+<!--                                                                       -->
+<!-- Please do not use separator characters, such as comma, in tags.       -->
+
+<tags>
+
+  <resource identifier="gimp-brush-clipboard" checksum="157dcef48665ab465439cfaf10d6feeb">
+    <tag>
+      <_thetag>test1</_thetag>
+    </tag>
+    <tag>
+      <_thetag>test2</_thetag>
+    </tag>
+    <tag>
+      <_thetag>test3</_thetag>
+    </tag>
+  </resource>
+
+  <resource identifier="/home/auris/gimp/trunk/build/share/gimp/2.0/brushes/confetti.gih" checksum="d136b60fdd9cf41693a485a329b32e95">
+    <tag>
+      <_thetag>test4</_thetag>
+    </tag>
+    <tag>
+      <_thetag>test5</_thetag>
+    </tag>
+    <tag>
+      <_thetag>test3</_thetag>
+    </tag>
+  </resource>
+
+</tags>

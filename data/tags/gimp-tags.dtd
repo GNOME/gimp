@@ -1,0 +1,12 @@
+<!-- Simple DTD for GIMP tips -->
+
+<!ELEMENT tags (resource+)>
+
+<!ELEMENT resource (tag+)>
+<!ATTLIST resource identifier CDATA #REQUIRED>
+<!ATTLIST resource checksum CDATA #IMPLIED>
+
+<!ELEMENT tag (thetag+)>
+
+<!ELEMENT thetag (#PCDATA)>
+<!ATTLIST thetag xml:lang CDATA #IMPLIED>

@@ -1,0 +1,9 @@
+2009-02-16  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* LINGUAS:
+	* Makefile.in.in:
+	* POTFILES.in:
+	* POTFILES.skip:
+	* lt.po: added support for internationalization of tags for default
+	Gimp resources.
+
