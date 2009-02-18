@@ -1,3 +1,13 @@
+2009-02-18  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	Bug 472644 – Rotate with clipping crops the whole layer
+
+	* app/core/gimp-transform-resize.c: applied patch as attached to
+	bug #472644. Supposedly fixes the problem of the disappearing
+	image.
+
 2009-02-15  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.6.6 (interface age 6).

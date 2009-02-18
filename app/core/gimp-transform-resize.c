@@ -235,38 +235,38 @@ gimp_transform_resize_crop (gdouble  dx1,
 {
   Point     points[4];
   Rectangle r;
-  gint      ax, ay, tx, ty;
+  Point     t,a;
   gint      i, j;
   gint      min;
 
   /*  fill in the points array  */
-  points[0].x = floor (dx1);
-  points[0].y = floor (dy1);
-  points[1].x = floor (dx2);
-  points[1].y = floor (dy2);
-  points[2].x = floor (dx3);
-  points[2].y = floor (dy3);
-  points[3].x = floor (dx4);
-  points[3].y = floor (dy4);
+  points[0].x = dx1;
+  points[0].y = dy1;
+  points[1].x = dx2;
+  points[1].y = dy2;
+  points[2].x = dx3;
+  points[2].y = dy3;
+  points[3].x = dx4;
+  points[3].y = dy4;
 
   /*  first, translate the vertices into the first quadrant */
 
-  ax = 0;
-  ay = 0;
+  a.x = 0;
+  a.y = 0;
 
   for (i = 0; i < 4; i++)
     {
-      if (points[i].x < ax)
-        ax = points[i].x;
+      if (points[i].x < a.x)
+        a.x = points[i].x;
 
-      if (points[i].y < ay)
-        ay = points[i].y;
+      if (points[i].y < a.y)
+        a.y = points[i].y;
     }
 
   for (i = 0; i < 4; i++)
     {
-      points[i].x += (-ax) * 2;
-      points[i].y += (-ay) * 2;
+      points[i].x += (-a.x) * 2;
+      points[i].y += (-a.y) * 2;
     }
 
 
@@ -281,14 +281,9 @@ gimp_transform_resize_crop (gdouble  dx1,
         min = i;
     }
 
-  tx = points[0].x;
-  ty = points[0].y;
-
-  points[0].x = points[min].x;
-  points[0].y = points[min].y;
-
-  points[min].x = tx;
-  points[min].y = ty;
+  t = points[0];
+  points[0] = points[min];
+  points[min] = t;
 
   for (i = 1; i < 4; i++)
     {
@@ -314,35 +309,22 @@ gimp_transform_resize_crop (gdouble  dx1,
 
       theta_v = theta_m;
 
-      tx = points[i].x;
-      ty = points[i].y;
-
-      points[i].x = points[min].x;
-      points[i].y = points[min].y;
-
-      points[min].x = tx;
-      points[min].y = ty;
+      t = points[i];
+      points[i] = points[min];
+      points[min] = t;
     }
 
   /* reverse the order of points */
 
-  tx = points[0].x;
-  ty = points[0].y;
+  t = points[0];
+  points[0] = points[3];
+  points[3] = t;
 
-  points[0].x = points[3].x;
-  points[0].y = points[3].y;
-  points[3].x = tx;
-  points[3].y = ty;
+  t = points[1];
+  points[1] = points[2];
+  points[2] = t;
 
-  tx = points[1].x;
-  ty = points[1].y;
-
-  points[1].x = points[2].x;
-  points[1].y = points[2].y;
-  points[2].x = tx;
-  points[2].y = ty;
-
-  r.a.x = r.a.y = r.b.x = r.b.y = r.c.x = r.c.x = r.d.x = r.d.x = r.area = 0;
+  r.a.x = r.a.y = r.b.x = r.b.y = r.c.x = r.c.y = r.d.x = r.d.y = r.area = 0;
   r.aspect = aspect;
 
   if (aspect != 0)
@@ -366,10 +348,10 @@ gimp_transform_resize_crop (gdouble  dx1,
   *x2 = ceil  (r.c.x - 0.5);
   *y2 = ceil  (r.c.y - 0.5);
 
-  *x1 = *x1 - ((-ax) * 2);
-  *y1 = *y1 - ((-ay) * 2);
-  *x2 = *x2 - ((-ax) * 2);
-  *y2 = *y2 - ((-ay) * 2);
+  *x1 = *x1 - ((-a.x) * 2);
+  *y1 = *y1 - ((-a.y) * 2);
+  *x2 = *x2 - ((-a.x) * 2);
+  *y2 = *y2 - ((-a.y) * 2);
 
 }
 
@@ -380,31 +362,31 @@ find_three_point_rectangle (Rectangle *r,
 {
   Point a = points[p       % 4];  /* 0 1 2 3 */
   Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
-  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
-  Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 1 */
+  Point d = points[(p + 3) % 4];  /* 3 0 1 2 */
   Point i1;                       /* intersection point */
   Point i2;                       /* intersection point */
   Point i3;                       /* intersection point */
 
-  if (intersect_x (b, c,  a,  &i1) &&
-      intersect_y (c, d,  i1, &i2) &&
-      intersect_x (d, a,  i2, &i3))
+  if (intersect_x (b, c, a,  &i1) &&
+      intersect_y (c, d, i1, &i2) &&
+      intersect_x (d, a, i2, &i3))
     add_rectangle (points, r, i3, i3, i1, i1);
 
-  if (intersect_y (b, c,  a,  &i1) &&
-      intersect_x (c, d,  i1, &i2) &&
-      intersect_y (a, i1, i2, &i3))
-    add_rectangle (points, r, i3, i3, i1, i2);
+  if (intersect_y (b, c, a,  &i1) &&
+      intersect_x (c, d, i1, &i2) &&
+      intersect_y (d, a, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i1);
 
-  if (intersect_x (c, d,  a,  &i1) &&
-      intersect_y (b, c,  i1, &i2) &&
-      intersect_x (a, i1, i2, &i3))
-    add_rectangle (points, r, i3, i3, i1, i2);
+  if (intersect_x (d, c, a,  &i1) &&
+      intersect_y (c, b, i1, &i2) &&
+      intersect_x (b, a, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i1);
 
-  if (intersect_y (c, d,  a,  &i1) &&
-      intersect_x (b, c,  i1, &i2) &&
-      intersect_y (a, i1, i2, &i3))
-    add_rectangle (points, r, i3, i3, i1, i2);
+  if (intersect_y (d, c, a,  &i1) &&
+      intersect_x (c, b, i1, &i2) &&
+      intersect_y (b, a, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i1);
 }
 
 static void
