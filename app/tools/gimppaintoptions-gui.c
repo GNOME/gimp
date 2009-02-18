@@ -67,6 +67,10 @@ static void        direction_options_gui (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
                                           gint              row);
+static void        tilt_options_gui      (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row);
 static void        random_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
@@ -235,9 +239,15 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Random:"));
+      label = gtk_label_new (_("Tilt:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Random:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
@@ -251,8 +261,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       direction_options_gui (options, tool_type,
                              GTK_TABLE (table), 3);
 
+      tilt_options_gui (options, tool_type,
+                        GTK_TABLE (table), 4);
+
       random_options_gui (options, tool_type,
-                          GTK_TABLE (table), 4);
+                          GTK_TABLE (table), 5);
 
       /* EEK: pack the fixed *after* the buttons so the table calls
        * size-allocates on it *before* it places the toggles. Fixes
@@ -602,6 +615,59 @@ direction_options_gui (GimpPaintOptions *paint_options,
     }
 
   scalebutton = gimp_prop_scale_button_new (config, "direction-prescale");
+  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (scalebutton);
+}
+
+
+static void
+tilt_options_gui (GimpPaintOptions *paint_options,
+                       GType             tool_type,
+                       GtkTable         *table,
+                       gint              row)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+  if (tool_has_opacity_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-opacity",
+                                 table, column++, row);
+    }
+
+  if (tool_has_hardness_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-hardness",
+                                 table, column++, row);
+    }
+
+  if (tool_has_rate_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-rate",
+                                 table, column++, row);
+    }
+
+  if (tool_has_size_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-angle",
+                                 table, column++, row);
+    }
+
+  if (tool_has_color_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-color",
+                                 table, column++, row);
+    }
+
+  scalebutton = gimp_prop_scale_button_new (config, "tilt-prescale");
   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (scalebutton);

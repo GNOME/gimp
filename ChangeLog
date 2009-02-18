@@ -1,3 +1,11 @@
+2009-02-18  Sven Neumann  <sven@gimp.org>
+
+	Bug 99457 – Support for dynamics on tilt
+
+	* app/tools/gimppaintoptions-gui.c
+	* app/paint/gimppaintoptions.[ch]: applied patch from Alexia Death
+	that allows to map tilt to the dynamic brush parameters.
+
 2009-02-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* data/tags/gimp-tags-default.xml.in: default to empty tag set.

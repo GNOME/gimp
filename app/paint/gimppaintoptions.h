@@ -99,6 +99,7 @@ struct _GimpPaintOptions
   GimpDynamicOptions       *pressure_options;
   GimpDynamicOptions       *velocity_options;
   GimpDynamicOptions       *direction_options;
+  GimpDynamicOptions       *tilt_options;
   GimpDynamicOptions       *random_options;
 
   GimpFadeOptions          *fade_options;
