@@ -1,3 +1,8 @@
+2009-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): no need to
+	g_strdup_printf() a simple string, use g_strdup() instead.
+
 2009-02-18  Sven Neumann  <sven@gimp.org>
 
 	Bug 99457 – Support for dynamics on tilt
