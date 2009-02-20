@@ -285,6 +285,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
   gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
+  gimp_tool_control_set_precision            (tool->control,
+                                              GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor          (tool->control,
                                               GIMP_TOOL_CURSOR_TEXT);
   gimp_tool_control_set_action_object_1      (tool->control,

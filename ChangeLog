@@ -1,3 +1,24 @@
+2009-02-20  Michael Natterer  <mitch@gimp.org>
+
+	Bug 572156 – top left pixel position/coordinate is not 0,0 but 1,1
+
+	* app/display/gimpstatusbar.c
+	(gimp_statusbar_push_coords)
+	(gimp_statusbar_update_cursor): fix braino for
+	GIMP_CURSOR_PRECISION_PIXEL_CENTER: going to the pixel's
+	center doesn't need any rounding, it simply needs clipping
+	the coordinates' fractional parts, gah...
+
+	Review all tools' cursor precision:
+
+	* app/tools/gimpblendtool.c (gimp_blend_tool_init): set cursor
+	precision to SUBPIXEL.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_init)
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_init)
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_init):
+	set cursor precision to PIXEL_BORDER.
+
 2009-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): no need to
