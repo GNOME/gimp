@@ -817,8 +817,8 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
   switch (precision)
     {
     case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
-      x = RINT (x + 0.5);
-      y = RINT (y + 0.5);
+      x = (gint) x;
+      y = (gint) y;
       break;
 
     case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
@@ -1192,8 +1192,8 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
   switch (precision)
     {
     case GIMP_CURSOR_PRECISION_PIXEL_CENTER:
-      x = RINT (x + 0.5);
-      y = RINT (y + 0.5);
+      x = (gint) x;
+      y = (gint) y;
       break;
 
     case GIMP_CURSOR_PRECISION_PIXEL_BORDER:
