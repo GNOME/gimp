@@ -25,7 +25,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"

@@ -1,3 +1,35 @@
+2009-02-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Rename gegl-types.h to gimp-gegl-types.h as gegl-types.h invades
+	on the GEGL namespace
+
+	* app/core/core-types.h
+	* app/gegl/Makefile.am
+	* app/gegl/gimp-gegl-types.h   (renamed from app/gegl/gegl-types.h)
+	* app/gegl/gimp-gegl-utils.c
+	* app/gegl/gimp-gegl.c
+	* app/gegl/gimpbrightnesscontrastconfig.c
+	* app/gegl/gimpcolorbalanceconfig.c
+	* app/gegl/gimpcolorizeconfig.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimpdesaturateconfig.c
+	* app/gegl/gimphuesaturationconfig.c
+	* app/gegl/gimplevelsconfig.c
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationcurves.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationpointfilter.c
+	* app/gegl/gimpoperationpointlayermode.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c
+	* app/gegl/gimpposterizeconfig.c
+	* app/gegl/gimpthresholdconfig.c
+
 2009-02-20  Michael Natterer  <mitch@gimp.org>
 
 	Bug 572156 – top left pixel position/coordinate is not 0,0 but 1,1

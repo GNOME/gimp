@@ -25,7 +25,7 @@
 #include <gegl.h>
 #include <gegl-buffer.h>
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "base/base-types.h"
 #include "base/tile-manager.h"

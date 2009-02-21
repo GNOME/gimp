@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gegl-types.h
+ * gimp-gegl-types.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GEGL_TYPES_H__
-#define __GEGL_TYPES_H__
-
+#ifndef __GIMP_GEGL_TYPES_H__
+#define __GIMP_GEGL_TYPES_H__
 
 #include "core/core-types.h"
 
@@ -55,4 +54,4 @@ typedef struct _GimpPosterizeConfig           GimpPosterizeConfig;
 typedef struct _GimpThresholdConfig           GimpThresholdConfig;
 
 
-#endif /* __GEGL_TYPES_H__ */
+#endif /* __GIMP_GEGL_TYPES_H__ */

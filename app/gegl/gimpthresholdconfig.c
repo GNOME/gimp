@@ -24,7 +24,7 @@
 
 #include "libgimpconfig/gimpconfig.h"
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 /*  temp cruft  */
 #include "base/threshold.h"

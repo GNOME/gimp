@@ -22,7 +22,7 @@
 
 #include <gegl.h>
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "gimpoperationpointfilter.h"
 

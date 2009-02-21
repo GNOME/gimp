@@ -30,7 +30,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "base/gimphistogram.h"
 
