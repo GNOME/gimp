@@ -1,3 +1,9 @@
+2009-02-22  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c: reverted last change. No changes in
+	the stable branch without commit approval. And definitely no
+	string changes.
+
 2009-02-22  Marco Ciampa  <ciampix@libero.it>
 
 	* app/actions/image-actions.c: fixed duplicated keyboard shortcut
