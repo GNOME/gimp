@@ -8,7 +8,7 @@
 #
 # brush = pennello
 # brush pipe = pennello animato
-# canvas = area disegnabile
+# canvas = superficie (non molto preciso ma entrato nel gergo convenzionale grafico italiano)
 # emboss = rilievo
 # feather = sfumata
 # gradients = gradiente
@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-22 17:40+0100\n"
-"PO-Revision-Date: 2009-02-22 17:41+0100\n"
+"PO-Revision-Date: 2009-02-22 19:31+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2435,7 +2435,7 @@ msgstr "Regola le dimensioni dell'immagine"
 
 #: ../app/actions/image-actions.c:78
 msgid "Fit Canvas to L_ayers"
-msgstr "Impost_a l'area disegnabile ai livelli"
+msgstr "Impost_a la superficie ai livelli"
 
 #: ../app/actions/image-actions.c:79
 msgid "Resize the image to enclose all layers"
@@ -2443,7 +2443,7 @@ msgstr "Ridimensiona l'immagine per contenere tutti i livelli"
 
 #: ../app/actions/image-actions.c:84
 msgid "F_it Canvas to Selection"
-msgstr "_Imposta l'area disegnabile alla selezione"
+msgstr "_Imposta la superficie alla selezione"
 
 #: ../app/actions/image-actions.c:85
 msgid "Resize the image to the extents of the selection"
@@ -4158,11 +4158,11 @@ msgstr "Griglia magnetica per gli strumenti"
 
 #: ../app/actions/view-actions.c:188
 msgid "Snap to _Canvas Edges"
-msgstr "Bordi delle tavole mag_netici"
+msgstr "Bordi della superficie mag_netici"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
-msgstr "Bordi dell'area disegnabile magnetica"
+msgstr "Bordi della superficie magnetici per gli strumenti"
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
@@ -4350,11 +4350,11 @@ msgstr "_Zoom (%s)"
 
 #: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
-msgstr "Seleziona colore personalizzato di riempimento tela"
+msgstr "Seleziona il colore di riempimento della superficie"
 
 #: ../app/actions/view-commands.c:615
 msgid "Set Custom Canvas Padding Color"
-msgstr "Imposta colore personalizzato di riempimento tela"
+msgstr "Imposta il colore personalizzato di riempimento della superficie"
 
 #: ../app/actions/window-actions.c:168
 #, c-format
@@ -4587,9 +4587,7 @@ msgstr ""
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr ""
-"Imposta il colore di riempimento della tela se la modalità riempimento è "
-"impostata su colore personalizzato."
+msgstr "Imposta il colore di riempimento della superficie se la modalità riempimento è impostata su colore personalizzato."
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
@@ -7528,7 +7526,7 @@ msgstr "Mostra la grig_lia"
 
 #: ../app/dialogs/preferences-dialog.c:1322
 msgid "Canvas _padding mode:"
-msgstr "Modalità riempimento tel_a:"
+msgstr "Modalità riempimento su_perficie:"
 
 #: ../app/dialogs/preferences-dialog.c:1327
 msgid "Custom p_adding color:"
@@ -7536,7 +7534,7 @@ msgstr "Colore person_alizzato di riempimento:"
 
 #: ../app/dialogs/preferences-dialog.c:1328
 msgid "Select Custom Canvas Padding Color"
-msgstr "Imposta colore personalizzato di riempimento tela"
+msgstr "Imposta colore personalizzato di riempimento superficie"
 
 #: ../app/dialogs/preferences-dialog.c:1417
 msgid "Preferences"
