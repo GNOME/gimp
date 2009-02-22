@@ -1,3 +1,7 @@
+2009-02-22  Marco Ciampa  <ciampix@libero.it>
+
+        * app/actions/image-actions.c: fixed duplicated keyboard shortcut
+
 2009-02-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Rename gegl-types.h to gimp-gegl-types.h as gegl-types.h invades

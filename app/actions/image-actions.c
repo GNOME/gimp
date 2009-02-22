@@ -75,7 +75,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_RESIZE },
 
   { "image-resize-to-layers", NULL,
-    NC_("image-action", "F_it Canvas to Layers"), NULL,
+    NC_("image-action", "Fit Canvas to L_ayers"), NULL,
     NC_("image-action", "Resize the image to enclose all layers"),
     G_CALLBACK (image_resize_to_layers_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
