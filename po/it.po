@@ -1,14 +1,14 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2008
+# Marco Ciampa <ciampix@libero.it>, 2003-2009
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per Gimp:
 #
 # brush = pennello
 # brush pipe = pennello animato
-# canvas = tele
+# canvas = area disegnabile
 # emboss = rilievo
 # feather = sfumata
 # gradients = gradiente
@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 16:09+0100\n"
-"PO-Revision-Date: 2009-02-13 16:10+0100\n"
+"POT-Creation-Date: 2009-02-22 17:40+0100\n"
+"PO-Revision-Date: 2009-02-22 17:41+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2434,8 +2434,8 @@ msgid "Adjust the image dimensions"
 msgstr "Regola le dimensioni dell'immagine"
 
 #: ../app/actions/image-actions.c:78
-msgid "F_it Canvas to Layers"
-msgstr "Adatta la superf_icie ai livelli"
+msgid "Fit Canvas to L_ayers"
+msgstr "Impost_a l'area disegnabile ai livelli"
 
 #: ../app/actions/image-actions.c:79
 msgid "Resize the image to enclose all layers"
@@ -2443,7 +2443,7 @@ msgstr "Ridimensiona l'immagine per contenere tutti i livelli"
 
 #: ../app/actions/image-actions.c:84
 msgid "F_it Canvas to Selection"
-msgstr "_Imposta area disegnabile alla selezione"
+msgstr "_Imposta l'area disegnabile alla selezione"
 
 #: ../app/actions/image-actions.c:85
 msgid "Resize the image to the extents of the selection"
@@ -6797,7 +6797,7 @@ msgstr ""
 msgid "Please wait"
 msgstr "Attendere"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:242
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "Sposta selezione"
 
@@ -6874,9 +6874,9 @@ msgstr "Sfondo"
 msgid "pixel"
 msgstr "pixel"
 
-#: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:874
-#: ../app/tools/gimpmeasuretool.c:1017 ../app/tools/gimpmeasuretool.c:1073
-#: ../app/tools/gimpmeasuretool.c:1101 ../app/tools/gimppainttool.c:615
+#: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:877
+#: ../app/tools/gimpmeasuretool.c:1020 ../app/tools/gimpmeasuretool.c:1076
+#: ../app/tools/gimpmeasuretool.c:1104 ../app/tools/gimppainttool.c:615
 msgid "pixels"
 msgstr "pixel"
 
@@ -7260,12 +7260,12 @@ msgstr "_Nome livello:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1062
+#: ../app/tools/gimpmeasuretool.c:1065
 msgid "Width:"
 msgstr "Larghezza:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1090
+#: ../app/tools/gimpmeasuretool.c:1093
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -8846,7 +8846,7 @@ msgstr "Trasformazione 2D"
 msgid "2D Transforming"
 msgstr "Trasformazione 2D in corso"
 
-#: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:223
+#: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:225
 msgid "Blending"
 msgstr "Sfumatura in corso"
 
@@ -9286,7 +9286,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:877
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -9514,22 +9514,22 @@ msgstr ""
 msgid "Blen_d"
 msgstr "S_fumatura"
 
-#: ../app/tools/gimpblendtool.c:162
+#: ../app/tools/gimpblendtool.c:164
 #, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Sfumatura non agisce su livelli indicizzati."
 
-#: ../app/tools/gimpblendtool.c:400 ../app/tools/gimppainttool.c:606
+#: ../app/tools/gimpblendtool.c:402 ../app/tools/gimppainttool.c:606
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
 
-#: ../app/tools/gimpblendtool.c:401
+#: ../app/tools/gimpblendtool.c:403
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s per spostare l'intera riga"
 
-#: ../app/tools/gimpblendtool.c:405
+#: ../app/tools/gimpblendtool.c:407
 msgid "Blend: "
 msgstr "Sfumatura:"
 
@@ -10049,13 +10049,13 @@ msgstr "Campo"
 msgid "Exposure:"
 msgstr "Esposizione:"
 
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1231
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1229
 msgid "Move Floating Selection"
 msgstr "Sposta selezione fluttuante"
 
-#: ../app/tools/gimpeditselectiontool.c:459
-#: ../app/tools/gimpeditselectiontool.c:728
+#: ../app/tools/gimpeditselectiontool.c:457
+#: ../app/tools/gimpeditselectiontool.c:726
 msgid "Move: "
 msgstr "Sposta: "
 
@@ -10424,7 +10424,7 @@ msgstr "Regolazione"
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:1034
+#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:1037
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Angolo:"
@@ -10477,7 +10477,7 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Forbici _intelligenti"
 
-#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpmeasuretool.c:606
+#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpmeasuretool.c:609
 msgid "Click-Drag to move this point"
 msgstr "Fare clic e trascinare per spostare questo punto"
 
@@ -10608,36 +10608,36 @@ msgstr "Strumento misurino: misura distanze ed angoli"
 msgid "_Measure"
 msgstr "_Misurino"
 
-#: ../app/tools/gimpmeasuretool.c:238
+#: ../app/tools/gimpmeasuretool.c:241
 msgid "Add Guides"
 msgstr "Aggiungi righelli"
 
-#: ../app/tools/gimpmeasuretool.c:558
+#: ../app/tools/gimpmeasuretool.c:561
 msgid "Click to place vertical and horizontal guides"
 msgstr "Fare clic per piazzare delle guide verticali o orizzontali"
 
-#: ../app/tools/gimpmeasuretool.c:567
+#: ../app/tools/gimpmeasuretool.c:570
 msgid "Click to place a horizontal guide"
 msgstr "Fare clic per piazzare una guida orizzontale"
 
-#: ../app/tools/gimpmeasuretool.c:581
+#: ../app/tools/gimpmeasuretool.c:584
 msgid "Click to place a vertical guide"
 msgstr "Fare clic per piazzare una guida verticale"
 
-#: ../app/tools/gimpmeasuretool.c:595
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "Fare clic e trascinare per aggiungere un nuovo punto"
 
-#: ../app/tools/gimpmeasuretool.c:625
+#: ../app/tools/gimpmeasuretool.c:628
 msgid "Click-Drag to move all points"
 msgstr "Fare clic e trascinare per spostare tutti i punti"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:986
+#: ../app/tools/gimpmeasuretool.c:989
 msgid "Measure Distances and Angles"
 msgstr "Misura distanze e angoli"
 
-#: ../app/tools/gimpmeasuretool.c:1006
+#: ../app/tools/gimpmeasuretool.c:1009
 msgid "Distance:"
 msgstr "Distanza:"
 
@@ -11130,19 +11130,19 @@ msgstr "Strumento testo: crea o modifica livelli di testo"
 msgid "Te_xt"
 msgstr "_Testo"
 
-#: ../app/tools/gimptexttool.c:954
+#: ../app/tools/gimptexttool.c:956
 msgid "GIMP Text Editor"
 msgstr "Editor di testi di GIMP"
 
-#: ../app/tools/gimptexttool.c:1070 ../app/tools/gimptexttool.c:1073
+#: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1077
+#: ../app/tools/gimptexttool.c:1079
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1101
+#: ../app/tools/gimptexttool.c:1103
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11157,7 +11157,7 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimptexttool.c:1313
+#: ../app/tools/gimptexttool.c:1315
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
