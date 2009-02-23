@@ -1,3 +1,19 @@
+2009-02-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Add a Show Image Graph item to the Debug menu that creates a new image
+	showing the GEGL graph for the image. Would benefit from an enhanced
+	gegl:introspect op with a clearer graph, but still quite interesting
+	in its current shape.
+
+        * app/actions/debug-actions.c
+        * app/actions/debug-commands.[ch]
+        * menus/image-menu.xml.in
+
+2009-02-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+        * app/gegl/gimp-gegl-utils.[ch]: Add a GEGL utility function
+	gimp_buffer_to_tiles()
+
 2009-02-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py (register): warn if a script uses the
