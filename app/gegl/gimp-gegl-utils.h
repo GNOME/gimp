@@ -25,5 +25,7 @@
 const Babl  * gimp_bpp_to_babl_format           (guint                bpp,
                                                  gboolean             linear) G_GNUC_CONST;
 
+TileManager * gimp_buffer_to_tiles              (GeglBuffer          *buffer);
+
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

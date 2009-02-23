@@ -24,6 +24,8 @@
 
 #include "gimp-gegl-types.h"
 
+#include "base/tile-manager.h"
+
 #include "gimp-gegl-utils.h"
 
 
@@ -73,4 +75,42 @@ gimp_bpp_to_babl_format (guint    bpp,
     }
 
   return NULL;
+}
+
+static gint
+gimp_babl_format_to_legacy_bpp (const Babl *format)
+{
+  return babl_format_get_n_components (format);
+}
+
+TileManager *
+gimp_buffer_to_tiles (GeglBuffer *buffer)
+{
+  const Babl    *format     = gegl_buffer_get_format (buffer);
+  TileManager   *new_tiles  = NULL;
+  GeglNode      *source     = NULL;
+  GeglNode      *sink       = NULL;
+
+  g_return_val_if_fail (buffer != NULL, NULL);
+
+  /* Setup and process the graph */
+  new_tiles = tile_manager_new (gegl_buffer_get_width (buffer),
+                                gegl_buffer_get_height (buffer),
+                                gimp_babl_format_to_legacy_bpp (format));
+  source = gegl_node_new_child (NULL,
+                                "operation", "gegl:buffer-source",
+                                "buffer",    buffer,
+                                NULL);
+  sink = gegl_node_new_child (NULL,
+                              "operation",    "gimp:tilemanager-sink",
+                              "tile-manager", new_tiles,
+                              NULL);
+  gegl_node_link_many (source, sink, NULL);
+  gegl_node_process (sink);
+
+  /* Clenaup */
+  g_object_unref (sink);
+  g_object_unref (source);
+
+  return new_tiles;
 }
