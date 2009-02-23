@@ -16,19 +16,20 @@
 
 '''Simple interface to writing GIMP plug-ins in Python.
 
-Instead of worrying about all the user interaction, saving last used values
-and everything, the gimpfu module can take care of it for you.  It provides
-a simple register() function that will register your plug-in if needed, and
-cause your plug-in function to be called when needed.
+Instead of worrying about all the user interaction, saving last used
+values and everything, the gimpfu module can take care of it for you.
+It provides a simple register() function that will register your
+plug-in if needed, and cause your plug-in function to be called when
+needed.
 
-Gimpfu will also handle showing a user interface for editing plug-in parameters
-if the plug-in is called interactively, and will also save the last used
-parameters, so the RUN_WITH_LAST_VALUES run_type will work correctly.  It
-will also make sure that the displays are flushed on completion if the plug-in
-was run interactively.
+Gimpfu will also handle showing a user interface for editing plug-in
+parameters if the plug-in is called interactively, and will also save
+the last used parameters, so the RUN_WITH_LAST_VALUES run_type will
+work correctly.  It will also make sure that the displays are flushed
+on completion if the plug-in was run interactively.
 
-When registering the plug-in, you do not need to worry about specifying
-the run_type parameter.
+When registering the plug-in, you do not need to worry about
+specifying the run_type parameter.
 
 A typical gimpfu plug-in would look like this:
   from gimpfu import *
@@ -53,20 +54,21 @@ A typical gimpfu plug-in would look like this:
               plugin_func, menu="<Image>/Somewhere")
   main()
 
-The call to "from gimpfu import *" will import all the gimp constants into
-the plug-in namespace, and also import the symbols gimp, pdb, register and
-main.  This should be just about all any plug-in needs.
+The call to "from gimpfu import *" will import all the gimp constants
+into the plug-in namespace, and also import the symbols gimp, pdb,
+register and main.  This should be just about all any plug-in needs.
 
 You can use any of the PF_* constants below as parameter types, and an
-appropriate user interface element will be displayed when the plug-in is
-run in interactive mode.  Note that the the PF_SPINNER and PF_SLIDER types
-expect a fifth element in their description tuple -- a 3-tuple of the form
-(lower,upper,step), which defines the limits for the slider or spinner.
+appropriate user interface element will be displayed when the plug-in
+is run in interactive mode.  Note that the the PF_SPINNER and
+PF_SLIDER types expect a fifth element in their description tuple -- a
+3-tuple of the form (lower,upper,step), which defines the limits for
+the slider or spinner.
 
-If want to localize your plug-in, add an optional domain parameter to the
-register call. It can be the name of the translation domain or a tuple that
-consists of the translation domain and the directory where the translations
-are installed.
+If want to localize your plug-in, add an optional domain parameter to
+the register call. It can be the name of the translation domain or a
+tuple that consists of the translation domain and the directory where
+the translations are installed.
 '''
 
 import string as _string
@@ -263,6 +265,10 @@ def register(proc_name, blurb, help, author, copyright, date, label,
             label = fields.pop()
             menu = '/'.join(fields)
             need_compat_params = True
+
+            import warnings
+            message = '%s: passing the full menu path for the menu label is deprecated, use the \'menu\' parameter instead' % (proc_name)
+            warnings.warn(message, DeprecationWarning, 3)
 
         if need_compat_params and plugin_type == PLUGIN:
             file_params = [(PDB_STRING, "filename", "The name of the file", ""),
