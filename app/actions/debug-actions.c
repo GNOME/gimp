@@ -49,6 +49,12 @@ static const GimpActionEntry debug_actions[] =
     G_CALLBACK (debug_benchmark_projection_cmd_callback),
     NULL },
 
+  { "debug-show-image-graph", NULL,
+    "Show Image _Graph", NULL,
+    "Creates a new image showing the GEGL graph of this image",
+    G_CALLBACK (debug_show_image_graph_cmd_callback),
+    NULL },
+
   { "debug-dump-items", NULL,
     "_Dump Items", NULL, NULL,
     G_CALLBACK (debug_dump_menus_cmd_callback),

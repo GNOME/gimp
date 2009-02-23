@@ -27,6 +27,7 @@
       <menu action="debug-menu" name="Debug">
         <menuitem action="debug-mem-profile" />
         <menuitem action="debug-benchmark-projection" />
+        <menuitem action="debug-show-image-graph" />
         <separator />
         <menuitem action="debug-dump-items" />
         <menuitem action="debug-dump-managers" />

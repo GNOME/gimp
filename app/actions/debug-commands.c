@@ -32,8 +32,12 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimppickable.h"
+#include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -49,6 +53,7 @@
 /*  local function prototypes  */
 
 static gboolean  debug_benchmark_projection    (GimpImage  *image);
+static gboolean  debug_show_image_graph        (GimpImage  *source_image);
 
 static void      debug_dump_menus_recurse_menu (GtkWidget  *menu,
                                                 gint        depth,
@@ -85,6 +90,16 @@ debug_benchmark_projection_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
 
   g_idle_add ((GSourceFunc) debug_benchmark_projection, g_object_ref (image));
+}
+
+void
+debug_show_image_graph_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage *source_image = NULL;
+  return_if_no_image (source_image, data);
+
+  g_idle_add ((GSourceFunc) debug_show_image_graph, g_object_ref (source_image));
 }
 
 void
@@ -204,6 +219,64 @@ debug_benchmark_projection (GimpImage *image)
   g_timer_destroy (timer);
 
   g_object_unref (image);
+
+  return FALSE;
+}
+
+static gboolean
+debug_show_image_graph (GimpImage *source_image)
+{
+  Gimp            *gimp        = source_image->gimp;
+  GimpProjectable *projectable = GIMP_PROJECTABLE (source_image);
+  GeglNode        *image_graph = gimp_projectable_get_graph (projectable);
+  GimpImage       *new_image   = NULL;
+  TileManager     *tiles       = NULL;
+  GimpLayer       *layer       = NULL;
+  GeglNode        *introspect  = NULL;
+  GeglNode        *sink        = NULL;
+  GeglBuffer      *buffer      = NULL;
+  gchar           *new_name    = NULL;
+
+  /* Setup and process the introspection graph */
+  introspect = gegl_node_new_child (NULL,
+                                    "operation", "gegl:introspect",
+                                    "node",      image_graph,
+                                    NULL);
+  sink = gegl_node_new_child (NULL,
+                              "operation", "gegl:buffer-sink",
+                              "buffer",    &buffer,
+                              NULL);
+  gegl_node_link_many (introspect, sink, NULL);
+  gegl_node_process (sink);
+
+  /* Create a new image of the result */
+  tiles = gimp_buffer_to_tiles (buffer);
+  new_name = g_strdup_printf ("%s GEGL graph",
+                              gimp_object_get_name (GIMP_OBJECT (source_image)));
+  new_image = gimp_create_image (gimp,
+                                 tile_manager_width (tiles),
+                                 tile_manager_height (tiles),
+                                 GIMP_RGB,
+                                 FALSE);
+  gimp_object_set_name (GIMP_OBJECT (new_image),
+                        new_name);
+  layer = gimp_layer_new_from_tiles (tiles,
+                                     new_image,
+                                     GIMP_RGBA_IMAGE,
+                                     new_name,
+                                     1.0,
+                                     GIMP_NORMAL_MODE);
+  gimp_image_add_layer (new_image, layer, 0, FALSE);
+  gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+
+  /* Cleanup */
+  g_object_unref (new_image);
+  g_free (new_name);
+  tile_manager_unref (tiles);
+  g_object_unref (buffer);
+  g_object_unref (sink);
+  g_object_unref (introspect);
+  g_object_unref (source_image);
 
   return FALSE;
 }
