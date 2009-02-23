@@ -8,7 +8,7 @@
 #
 # brush = pennello
 # brush pipe = pennello animato
-# canvas = superficie (non molto preciso ma entrato nel gergo convenzionale grafico italiano)
+# canvas = superficie (impreciso ma entrato nel gergo convenzionale grafico italiano)
 # emboss = rilievo
 # feather = sfumata
 # gradients = gradiente
@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-22 17:40+0100\n"
-"PO-Revision-Date: 2009-02-22 19:31+0100\n"
+"POT-Creation-Date: 2009-02-23 08:09+0100\n"
+"PO-Revision-Date: 2009-02-23 08:10+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2434,7 +2434,7 @@ msgid "Adjust the image dimensions"
 msgstr "Regola le dimensioni dell'immagine"
 
 #: ../app/actions/image-actions.c:78
-msgid "Fit Canvas to L_ayers"
+msgid "F_it Canvas to Layers"
 msgstr "Impost_a la superficie ai livelli"
 
 #: ../app/actions/image-actions.c:79
@@ -4587,7 +4587,9 @@ msgstr ""
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr "Imposta il colore di riempimento della superficie se la modalità riempimento è impostata su colore personalizzato."
+msgstr ""
+"Imposta il colore di riempimento della superficie se la modalità riempimento "
+"è impostata su colore personalizzato."
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
