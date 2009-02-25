@@ -80,13 +80,13 @@ static gint   save_image (const gchar      *filename,
 static void   save_8     (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer);
+                          const guchar     *buffer);
 static void   save_24    (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer);
+                          const guchar     *buffer);
 static void   writeline  (FILE             *fp,
-                          guchar           *buffer,
+                          const guchar     *buffer,
                           gint              bytes);
 
 
@@ -268,7 +268,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
+static const guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
 
 static struct
 {
@@ -291,23 +291,23 @@ static struct
 static struct {
   size_t   size;
   gpointer address;
-} pcx_header_buf_xlate[] = {
+} const pcx_header_buf_xlate[] = {
   { 1,  &pcx_header.manufacturer },
-  { 1,  &pcx_header.version },
-  { 1,  &pcx_header.compression },
-  { 1,  &pcx_header.bpp },
-  { 2,  &pcx_header.x1 },
-  { 2,  &pcx_header.y1 },
-  { 2,  &pcx_header.x2 },
-  { 2,  &pcx_header.y2 },
-  { 2,  &pcx_header.hdpi },
-  { 2,  &pcx_header.vdpi },
-  { 48, &pcx_header.colormap },
-  { 1,  &pcx_header.reserved },
-  { 1,  &pcx_header.planes },
+  { 1,  &pcx_header.version      },
+  { 1,  &pcx_header.compression  },
+  { 1,  &pcx_header.bpp          },
+  { 2,  &pcx_header.x1           },
+  { 2,  &pcx_header.y1           },
+  { 2,  &pcx_header.x2           },
+  { 2,  &pcx_header.y2           },
+  { 2,  &pcx_header.hdpi         },
+  { 2,  &pcx_header.vdpi         },
+  { 48, &pcx_header.colormap     },
+  { 1,  &pcx_header.reserved     },
+  { 1,  &pcx_header.planes       },
   { 2,  &pcx_header.bytesperline },
-  { 2,  &pcx_header.color },
-  { 58, &pcx_header.filler },
+  { 2,  &pcx_header.color        },
+  { 58, &pcx_header.filler       },
   { 0,  NULL }
 };
 
@@ -383,10 +383,10 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  offset_x = GUINT16_FROM_LE (pcx_header.x1);
-  offset_y = GUINT16_FROM_LE (pcx_header.y1);
-  width = GUINT16_FROM_LE (pcx_header.x2) - offset_x + 1;
-  height = GUINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
+  offset_x     = GUINT16_FROM_LE (pcx_header.x1);
+  offset_y     = GUINT16_FROM_LE (pcx_header.y1);
+  width        = GUINT16_FROM_LE (pcx_header.x2) - offset_x + 1;
+  height       = GUINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
   bytesperline = GUINT16_FROM_LE (pcx_header.bytesperline);
 
   if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
@@ -424,19 +424,19 @@ load_image (const gchar  *filename,
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
-      dest = (guchar *) g_malloc (width * height);
+      dest = g_new (guchar, width * height);
       load_1 (fd, width, height, dest, bytesperline);
       gimp_image_set_colormap (image, mono, 2);
     }
   else if (pcx_header.planes == 4 && pcx_header.bpp == 1)
     {
-      dest = (guchar *) g_malloc (width * height);
+      dest = g_new (guchar, width * height);
       load_4 (fd, width, height, dest, bytesperline);
       gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.planes == 1 && pcx_header.bpp == 8)
     {
-      dest = (guchar *) g_malloc (width * height);
+      dest = g_new (guchar, width * height);
       load_8 (fd, width, height, dest, bytesperline);
       fseek (fd, -768L, SEEK_END);
       fread (cmap, 768, 1, fd);
@@ -444,7 +444,7 @@ load_image (const gchar  *filename,
     }
   else if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
-      dest = (guchar *) g_malloc (width * height * 3);
+      dest = g_new (guchar, width * height * 3);
       load_24 (fd, width, height, dest, bytesperline);
     }
   else
@@ -757,10 +757,10 @@ save_image (const gchar  *filename,
 }
 
 static void
-save_8 (FILE   *fp,
-        gint    width,
-        gint    height,
-        guchar *buffer)
+save_8 (FILE         *fp,
+        gint          width,
+        gint          height,
+        const guchar *buffer)
 {
   int row;
 
@@ -773,10 +773,10 @@ save_8 (FILE   *fp,
 }
 
 static void
-save_24 (FILE   *fp,
-         gint    width,
-         gint    height,
-         guchar *buffer)
+save_24 (FILE         *fp,
+         gint          width,
+         gint          height,
+         const guchar *buffer)
 {
   int     x, y, c;
   guchar *line;
@@ -800,12 +800,13 @@ save_24 (FILE   *fp,
 }
 
 static void
-writeline (FILE   *fp,
-           guchar *buffer,
-           gint    bytes)
+writeline (FILE         *fp,
+           const guchar *buffer,
+           gint          bytes)
 {
-  guchar  value, count;
-  guchar *finish = buffer + bytes;
+  const guchar *finish = buffer + bytes;
+  guchar        value;
+  guchar        count;
 
   while (buffer < finish)
     {

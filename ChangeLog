@@ -1,3 +1,7 @@
+2009-02-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/file-pcx.c: sprinkled with const qualifiers.
+
 2009-02-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Add a Show Image Graph item to the Debug menu that creates a new image
