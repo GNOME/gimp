@@ -4,6 +4,9 @@
 	"user-manual-online" gimprc property and kill the gimp-help
 	plug-in as it caches the location of the help pages.
 
+	* app/widgets/gimphelp.[ch]: added gimp_help_user_manual_changed()
+	for this purpose.
+
 2009-02-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/file-pcx.c: sprinkled with const qualifiers.
