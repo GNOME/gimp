@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-19 22:14+0100\n"
-"PO-Revision-Date: 2009-02-19 22:15+0100\n"
+"POT-Creation-Date: 2009-02-27 12:02+0100\n"
+"PO-Revision-Date: 2009-02-27 12:01+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -296,11 +296,11 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/lighting/lighting-ui.c:416
 #: ../plug-ins/print/print-page-layout.c:449
 msgid "None"
-msgstr "Nessuna"
+msgstr "Nessuno"
 
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
-msgstr "Seleziona"
+msgstr "Raggruppa"
 
 #: ../plug-ins/common/align-layers.c:426
 msgid "Fill (left to right)"
