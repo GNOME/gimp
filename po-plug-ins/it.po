@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-19 22:34+0100\n"
-"PO-Revision-Date: 2009-02-19 22:39+0100\n"
+"POT-Creation-Date: 2009-02-27 12:03+0100\n"
+"PO-Revision-Date: 2009-02-27 12:03+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -296,11 +296,11 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/lighting/lighting-ui.c:415
 #: ../plug-ins/print/print-page-layout.c:461
 msgid "None"
-msgstr "Nessuna"
+msgstr "Nessuno"
 
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 msgid "Collect"
-msgstr "Seleziona"
+msgstr "Raggruppa"
 
 #: ../plug-ins/common/align-layers.c:425
 msgid "Fill (left to right)"
@@ -7447,7 +7447,9 @@ msgstr "Simbolo"
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr "Il simbolo di unità se esiste (es. \" per i pollici). In mancanza di un simbolo viene usata l'abbreviazione dell'unità."
+msgstr ""
+"Il simbolo di unità se esiste (es. \" per i pollici). In mancanza di un "
+"simbolo viene usata l'abbreviazione dell'unità."
 
 #: ../plug-ins/common/unit-editor.c:106
 msgid "Abbreviation"
