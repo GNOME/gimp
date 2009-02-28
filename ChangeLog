@@ -1,3 +1,10 @@
+2009-02-28  Sven Neumann  <sven@gimp.org>
+
+	Bug 520078 – Rotate brushes
+
+	* app/core/gimpbrush-transform.c: applied patch from Tal that
+	implements bilinear interpolation for the brush transformations.
+
 2009-02-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/actions/debug-commands.c: Properly show name of image graph
