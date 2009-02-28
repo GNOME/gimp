@@ -288,9 +288,9 @@ ripple_vertical (gint x,
   /* Smear out the edges of the image by repeating pixels. */
   else if (rvals.edges == SMEAR)
     {
-      needy= CLAMP (needy   , 0, height - 1);
-      yi   = CLAMP (yi      , 0, height - 1);
-      yi_a = CLAMP (yi_a + 1, 0, height - 1);
+      needy = CLAMP (needy, 0, height - 1);
+      yi    = CLAMP (yi,    0, height - 1);
+      yi_a  = CLAMP (yi_a,  0, height - 1);
     }
 
   if (rvals.antialias)
