@@ -246,37 +246,36 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-typedef struct {
-  GimpPixelFetcher      *pft;
-  gint                   width;
-  gint                   height;
-  gboolean               has_alpha;
+typedef struct
+{
+  GimpPixelFetcher *pft;
+  gint              width;
+  gint              height;
+  gboolean          has_alpha;
 } RippleParam_t;
 
 static void
-ripple_vertical (gint x,
-                 gint y,
-                 guchar *dest,
-                 gint bpp,
-                 gpointer data)
+ripple_vertical (gint      x,
+                 gint      y,
+                 guchar   *dest,
+                 gint      bpp,
+                 gpointer  data)
 {
-  RippleParam_t    *param = data;
-  GimpPixelFetcher *pft;
-  guchar   pixel[2][4];
-  gdouble  needy;
-  gint     yi, yi_a, height;
+  RippleParam_t    *param  = data;
+  GimpPixelFetcher *pft    = param->pft;
+  const gint        height = param->height;
+  guchar            pixel[2][4];
+  gdouble           needy;
+  gint              yi, yi_a;
 
-  pft = param->pft;
-  height = param->height;
-
-  needy = y + displace_amount(x);
+  needy = y + displace_amount (x);
   yi = floor (needy);
   yi_a = yi + 1;
 
   /* Tile the image. */
   if (rvals.edges == WRAP)
     {
-      needy = fmod(needy, height);
+      needy = fmod (needy, height);
 
       if (needy < 0.0)
         needy += height;
@@ -292,17 +291,18 @@ ripple_vertical (gint x,
   else if (rvals.edges == SMEAR)
     {
       needy = CLAMP (needy, 0, height - 1);
-      yi    = CLAMP (yi   , 0, height - 1);
-      yi_a  = CLAMP (yi_a , 0, height - 1);
+      yi    = CLAMP (yi,    0, height - 1);
+      yi_a  = CLAMP (yi_a,  0, height - 1);
     }
 
   if (rvals.antialias)
     {
-      if (yi >=0 && yi < height)
+      if (yi >= 0 && yi < height)
         gimp_pixel_fetcher_get_pixel (pft, x, yi  , pixel[0]);
       else
-        memset(pixel[0], 0, 4);
-      if (yi_a >=0 && yi_a < height)
+        memset (pixel[0], 0, 4);
+
+      if (yi_a >= 0 && yi_a < height)
         gimp_pixel_fetcher_get_pixel (pft, x, yi_a, pixel[1]);
       else
         memset (pixel[1], 0, 4);
@@ -319,41 +319,44 @@ ripple_vertical (gint x,
 }
 
 static void
-ripple_horizontal (gint x,
-                 gint y,
-                 guchar *dest,
-                 gint bpp,
-                 gpointer data)
+ripple_horizontal (gint      x,
+                   gint      y,
+                   guchar   *dest,
+                   gint      bpp,
+                   gpointer  data)
 {
-  RippleParam_t *param = (RippleParam_t*) data;
-  GimpPixelFetcher *pft;
-  guchar   pixel[2][4];
-  gdouble  needx;
-  gint     xi, xi_a, width;
+  RippleParam_t    *param = data;
+  GimpPixelFetcher *pft   = param->pft;;
+  const gint        width = param->width;
+  guchar            pixel[2][4];
+  gdouble           needx;
+  gint              xi, xi_a;
 
-  pft = param->pft;
-  width = param->width;
-
-  needx = x + displace_amount(y);
+  needx = x + displace_amount (y);
   xi = floor (needx);
-  xi_a = xi+1;
+  xi_a = xi + 1;
+
   /* Tile the image. */
   if (rvals.edges == WRAP)
     {
-      needx = fmod((needx), width);
+      needx = fmod (needx, width);
+
       while (needx < 0.0)
         needx += width;
+
       xi = (xi % width);
+
       while (xi < 0)
         xi += width;
+
       xi_a = (xi+1) % width;
     }
   /* Smear out the edges of the image by repeating pixels. */
   else if (rvals.edges == SMEAR)
     {
-      needx = CLAMP(needx , 0, width - 1);
-      xi    = CLAMP(xi    , 0, width - 1);
-      xi_a  = CLAMP(xi + 1, 0, width - 1);
+      needx = CLAMP (needx, 0, width - 1);
+      xi    = CLAMP (xi,    0, width - 1);
+      xi_a  = CLAMP (xi_a,  0, width - 1);
     }
 
   if (rvals.antialias)
@@ -361,21 +364,21 @@ ripple_horizontal (gint x,
       if (xi >= 0 && xi < width)
         gimp_pixel_fetcher_get_pixel (pft, xi,   y, pixel[0]);
       else
-        memset(pixel[0], 0, 4);
+        memset (pixel[0], 0, 4);
       if (xi_a >= 0 && xi_a < width)
         gimp_pixel_fetcher_get_pixel (pft, xi_a, y, pixel[1]);
       else
-        memset(pixel[1], 0, 4);
+        memset (pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needx - xi, bpp, param->has_alpha);
     } /* antialias */
 
   else
     {
-      if (xi >=0 && xi < width)
+      if (xi >= 0 && xi < width)
         gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
       else
-        memset(dest, 0, bpp);
+        memset (dest, 0, bpp);
     }
 }
 
@@ -435,8 +438,11 @@ ripple (GimpDrawable *drawable,
       GimpRgnIterator *iter;
 
       iter = gimp_rgn_iterator_new (drawable, 0);
-      gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
-                              ? ripple_vertical : ripple_horizontal, &param);
+      gimp_rgn_iterator_dest (iter,
+                              rvals.orientation == VERTICAL ?
+                              ripple_vertical :
+                              ripple_horizontal,
+                              &param);
       gimp_rgn_iterator_free (iter);
     }
 
@@ -699,8 +705,8 @@ average_two_pixels (guchar   *dest,
 static gdouble
 displace_amount (gint location)
 {
-  gdouble phi     = rvals.phase_shift / 360.0;
-  gdouble lambda;
+  const gdouble phi = rvals.phase_shift / 360.0;
+  gdouble       lambda;
 
   switch (rvals.waveform)
     {

@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <glib.h>
 
 #include "gimp.h"
@@ -172,7 +170,7 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator    *iter,
 
       area_so_far += srcPR.w * srcPR.h;
 
-      if ((count % 8) == 0)
+      if ((count % 16) == 0)
         gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 
@@ -255,7 +253,7 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
 
       area_so_far += srcPR.w * srcPR.h;
 
-      if ((count % 8) == 0)
+      if ((count % 16) == 0)
         gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 }
@@ -297,7 +295,7 @@ gimp_rgn_iterate2 (GimpDrawable *drawable,
 
       area_so_far += srcPR.w * srcPR.h;
 
-      if ((count % 8) == 0)
+      if ((count % 16) == 0)
         gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 
@@ -344,7 +342,7 @@ gimp_rgn_iterator_iter_single (GimpRgnIterator *iter,
 
       area_so_far += srcPR->w * srcPR->h;
 
-      if ((count % 8) == 0)
+      if ((count % 16) == 0)
         gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
     }
 }
