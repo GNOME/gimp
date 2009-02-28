@@ -308,6 +308,8 @@ run (const gchar      *name,
       values[1].data.d_string = error->message;
     }
 
+  g_printerr ("%s status: %d\n", G_STRFUNC, status);
+
   values[0].data.d_status = status;
 }
 

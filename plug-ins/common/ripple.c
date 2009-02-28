@@ -260,7 +260,7 @@ ripple_vertical (gint x,
                  gint bpp,
                  gpointer data)
 {
-  RippleParam_t *param = (RippleParam_t*) data;
+  RippleParam_t    *param = data;
   GimpPixelFetcher *pft;
   guchar   pixel[2][4];
   gdouble  needy;
@@ -270,26 +270,30 @@ ripple_vertical (gint x,
   height = param->height;
 
   needy = y + displace_amount(x);
-  yi = floor(needy);
-  yi_a = yi+1;
+  yi = floor (needy);
+  yi_a = yi + 1;
 
   /* Tile the image. */
   if (rvals.edges == WRAP)
     {
       needy = fmod(needy, height);
+
       if (needy < 0.0)
         needy += height;
-      yi = (yi % height);
+
+      yi = yi % height;
+
       if (yi < 0)
         yi += height;
-      yi_a = (yi+1) % height;
+
+      yi_a = yi_a % height;
     }
   /* Smear out the edges of the image by repeating pixels. */
   else if (rvals.edges == SMEAR)
     {
-      needy= CLAMP (needy   , 0, height - 1);
-      yi   = CLAMP (yi      , 0, height - 1);
-      yi_a = CLAMP (yi_a + 1, 0, height - 1);
+      needy = CLAMP (needy, 0, height - 1);
+      yi    = CLAMP (yi   , 0, height - 1);
+      yi_a  = CLAMP (yi_a , 0, height - 1);
     }
 
   if (rvals.antialias)
@@ -301,16 +305,16 @@ ripple_vertical (gint x,
       if (yi_a >=0 && yi_a < height)
         gimp_pixel_fetcher_get_pixel (pft, x, yi_a, pixel[1]);
       else
-        memset(pixel[1], 0, 4);
+        memset (pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needy - yi, bpp, param->has_alpha);
     } /* antialias */
   else
     {
-      if (yi >=0 && yi < height)
+      if (yi >= 0 && yi < height)
         gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
       else
-        memset(dest, 0, bpp);
+        memset (dest, 0, bpp);
     }
 }
 

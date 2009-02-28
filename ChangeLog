@@ -1,5 +1,12 @@
 2009-02-28  Sven Neumann  <sven@gimp.org>
 
+	Bug 573488 – Small bug in Filter>Distorts>Ripple
+
+	* plug-ins/common/ripple.c (ripple_vertical): fixed bug spotted in
+	SMEAR mode, pointed out by Andreas Groth.
+
+2009-02-28  Sven Neumann  <sven@gimp.org>
+
 	Bug 520078 – Rotate brushes
 
 	* app/core/gimpbrush-transform.c: applied patch from Tal that
