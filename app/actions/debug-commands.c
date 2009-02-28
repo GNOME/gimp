@@ -37,6 +37,8 @@
 #include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"
 
+#include "file/file-utils.h"
+
 #include "gegl/gimp-gegl-utils.h"
 
 #include "widgets/gimpmenufactory.h"
@@ -252,7 +254,7 @@ debug_show_image_graph (GimpImage *source_image)
   /* Create a new image of the result */
   tiles = gimp_buffer_to_tiles (buffer);
   new_name = g_strdup_printf ("%s GEGL graph",
-                              gimp_object_get_name (GIMP_OBJECT (source_image)));
+                              file_utils_uri_display_name (gimp_image_get_uri (source_image)));
   new_image = gimp_create_image (gimp,
                                  tile_manager_width (tiles),
                                  tile_manager_height (tiles),

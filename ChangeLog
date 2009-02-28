@@ -1,3 +1,8 @@
+2009-02-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/debug-commands.c: Properly show name of image graph
+	source image
+
 2009-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_restore_callback): connect to changes of the
