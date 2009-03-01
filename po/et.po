@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-02-01 19:50+0000\n"
-"PO-Revision-Date: 2009-02-03 00:49+0300\n"
+"PO-Revision-Date: 2009-03-01 09:47+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -5180,7 +5180,7 @@ msgstr "Sellele aknale näidatakse joonlaudu"
 #: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "Kerimisri_bade"
+msgstr "Kerimisri_bad"
 
 #: ../app/actions/view-actions.c:218
 msgctxt "view-action"
@@ -13031,7 +13031,7 @@ msgstr "Sisendkontrolleri häälestamine"
 #: ../app/widgets/gimpcontrollerwheel.c:89
 #: ../app/widgets/gimpcontrollerwheel.c:92
 msgid "Scroll Up"
-msgstr "Keri üles"
+msgstr "Üles kerimine"
 
 #: ../app/widgets/gimpcontrollerwheel.c:96
 #: ../app/widgets/gimpcontrollerwheel.c:99
@@ -13042,7 +13042,7 @@ msgstr "Keri üles"
 #: ../app/widgets/gimpcontrollerwheel.c:114
 #: ../app/widgets/gimpcontrollerwheel.c:117
 msgid "Scroll Down"
-msgstr "Keri alla"
+msgstr "Alla kerimine"
 
 #: ../app/widgets/gimpcontrollerwheel.c:121
 #: ../app/widgets/gimpcontrollerwheel.c:124
@@ -13053,7 +13053,7 @@ msgstr "Keri alla"
 #: ../app/widgets/gimpcontrollerwheel.c:139
 #: ../app/widgets/gimpcontrollerwheel.c:142
 msgid "Scroll Left"
-msgstr "Keri vasakule"
+msgstr "Vasakule kerimine"
 
 #: ../app/widgets/gimpcontrollerwheel.c:146
 #: ../app/widgets/gimpcontrollerwheel.c:149
@@ -13064,7 +13064,7 @@ msgstr "Keri vasakule"
 #: ../app/widgets/gimpcontrollerwheel.c:164
 #: ../app/widgets/gimpcontrollerwheel.c:167
 msgid "Scroll Right"
-msgstr "Keri paremale"
+msgstr "Paremale kerimine"
 
 #: ../app/widgets/gimpcontrollerwheel.c:179
 msgid "Mouse Wheel"
