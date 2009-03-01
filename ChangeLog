@@ -1,3 +1,9 @@
+2009-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/ripple.c: use enum GimpOrientationType instead
+	of local #defines for HORIZONTAL and VERTICAL with identical
+	values. Some indentation and formatting fixups.
+
 2009-02-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpregioniterator.c: update the progress less often.

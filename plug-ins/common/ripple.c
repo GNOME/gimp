@@ -22,10 +22,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 #include <string.h>
 
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -37,9 +37,6 @@
 #define SCALE_WIDTH     200
 #define TILE_CACHE_SIZE  16
 
-#define HORIZONTAL 0
-#define VERTICAL   1
-
 #define SMEAR 0
 #define WRAP  1
 #define BLANK 2
@@ -49,37 +46,37 @@
 
 typedef struct
 {
-  gint     period;
-  gint     amplitude;
-  gint     orientation;
-  gint     edges;
-  gint     waveform;
-  gboolean antialias;
-  gboolean tile;
-  gint     phase_shift;
+  gint                 period;
+  gint                 amplitude;
+  GimpOrientationType  orientation;
+  gint                 edges;
+  gint                 waveform;
+  gboolean             antialias;
+  gboolean             tile;
+  gint                 phase_shift;
 } RippleValues;
 
 
 /* Declare local functions.
  */
-static void    query  (void);
-static void    run    (const gchar      *name,
-                       gint              nparams,
-                       const GimpParam  *param,
-                       gint             *nreturn_vals,
-                       GimpParam       **return_vals);
+static void      query              (void);
+static void      run                (const gchar      *name,
+                                     gint              nparams,
+                                     const GimpParam  *param,
+                                     gint             *nreturn_vals,
+                                     GimpParam       **return_vals);
 
-static void      ripple              (GimpDrawable *drawable,
-                                      GimpPreview  *preview);
+static void      ripple             (GimpDrawable     *drawable,
+                                     GimpPreview      *preview);
 
-static gboolean  ripple_dialog       (GimpDrawable *drawable);
+static gboolean  ripple_dialog      (GimpDrawable     *drawable);
 
-static gdouble   displace_amount     (gint      location);
-static void      average_two_pixels  (guchar   *dest,
-                                      guchar    pixels[4][4],
-                                      gdouble   x,
-                                      gint      bpp,
-                                      gboolean  has_alpha);
+static gdouble   displace_amount    (gint              location);
+static void      average_two_pixels (guchar           *dest,
+                                     guchar            pixels[4][4],
+                                     gdouble           x,
+                                     gint              bpp,
+                                     gboolean          has_alpha);
 
 /***** Local vars *****/
 
@@ -93,14 +90,14 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static RippleValues rvals =
 {
-  20,         /* period      */
-  5,          /* amplitude   */
-  HORIZONTAL, /* orientation */
-  WRAP,       /* edges       */
-  SINE,       /* waveform    */
-  TRUE,       /* antialias   */
-  FALSE,      /* tile        */
-  0           /* phase shift */
+  20,                          /* period      */
+  5,                           /* amplitude   */
+  GIMP_ORIENTATION_HORIZONTAL, /* orientation */
+  WRAP,                        /* edges       */
+  SINE,                        /* waveform    */
+  TRUE,                        /* antialias   */
+  FALSE,                       /* tile        */
+  0                            /* phase shift */
 };
 
 /***** Functions *****/
@@ -115,10 +112,10 @@ query (void)
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
-    { GIMP_PDB_INT32,    "period",      "period; number of pixels for one wave to complete" },
-    { GIMP_PDB_INT32,    "amplitude",   "amplitude; maximum displacement of wave" },
-    { GIMP_PDB_INT32,    "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
-    { GIMP_PDB_INT32,    "edges",       "edges; 0 = smear, 1 =  wrap, 2 = blank" },
+    { GIMP_PDB_INT32,    "period",      "Period; number of pixels for one wave to complete" },
+    { GIMP_PDB_INT32,    "amplitude",   "Amplitude; maximum displacement of wave" },
+    { GIMP_PDB_INT32,    "orientation", "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }" },
+    { GIMP_PDB_INT32,    "edges",       "Edges; 0 = smear, 1 =  wrap, 2 = blank" },
     { GIMP_PDB_INT32,    "waveform",    "0 = sawtooth, 1 = sine wave" },
     { GIMP_PDB_INT32,    "antialias",   "antialias; True or False" },
     { GIMP_PDB_INT32,    "tile",        "tile; if this is true, the image will retain it's tilability" }
@@ -188,13 +185,13 @@ run (const gchar      *name,
         }
       else
         {
-          rvals.period = param[3].data.d_int32;
-          rvals.amplitude = param[4].data.d_int32;
-          rvals.orientation = (param[5].data.d_int32) ? VERTICAL : HORIZONTAL;
-          rvals.edges = (param[6].data.d_int32);
-          rvals.waveform = param[7].data.d_int32;
-          rvals.antialias = (param[8].data.d_int32) ? TRUE : FALSE;
-          rvals.tile = (param[9].data.d_int32) ? TRUE : FALSE;
+          rvals.period      = param[3].data.d_int32;
+          rvals.amplitude   = param[4].data.d_int32;
+          rvals.orientation = (param[5].data.d_int32) ? GIMP_ORIENTATION_VERTICAL : GIMP_ORIENTATION_HORIZONTAL;
+          rvals.edges       = param[6].data.d_int32;
+          rvals.waveform    = param[7].data.d_int32;
+          rvals.antialias   = (param[8].data.d_int32) ? TRUE : FALSE;
+          rvals.tile        = (param[9].data.d_int32) ? TRUE : FALSE;
 
           if (rvals.period < 1)
             {
@@ -272,9 +269,10 @@ ripple_vertical (gint      x,
   yi = floor (needy);
   yi_a = yi + 1;
 
-  /* Tile the image. */
   if (rvals.edges == WRAP)
     {
+      /* Tile the image. */
+
       needy = fmod (needy, height);
 
       if (needy < 0.0)
@@ -287,9 +285,10 @@ ripple_vertical (gint      x,
 
       yi_a = yi_a % height;
     }
-  /* Smear out the edges of the image by repeating pixels. */
   else if (rvals.edges == SMEAR)
     {
+      /* Smear out the edges of the image by repeating pixels. */
+
       needy = CLAMP (needy, 0, height - 1);
       yi    = CLAMP (yi,    0, height - 1);
       yi_a  = CLAMP (yi_a,  0, height - 1);
@@ -308,7 +307,7 @@ ripple_vertical (gint      x,
         memset (pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needy - yi, bpp, param->has_alpha);
-    } /* antialias */
+    }
   else
     {
       if (yi >= 0 && yi < height)
@@ -336,9 +335,10 @@ ripple_horizontal (gint      x,
   xi = floor (needx);
   xi_a = xi + 1;
 
-  /* Tile the image. */
   if (rvals.edges == WRAP)
     {
+      /* Tile the image. */
+
       needx = fmod (needx, width);
 
       while (needx < 0.0)
@@ -351,9 +351,10 @@ ripple_horizontal (gint      x,
 
       xi_a = (xi+1) % width;
     }
-  /* Smear out the edges of the image by repeating pixels. */
   else if (rvals.edges == SMEAR)
     {
+      /* Smear out the edges of the image by repeating pixels. */
+
       needx = CLAMP (needx, 0, width - 1);
       xi    = CLAMP (xi,    0, width - 1);
       xi_a  = CLAMP (xi_a,  0, width - 1);
@@ -365,13 +366,14 @@ ripple_horizontal (gint      x,
         gimp_pixel_fetcher_get_pixel (pft, xi,   y, pixel[0]);
       else
         memset (pixel[0], 0, 4);
+
       if (xi_a >= 0 && xi_a < width)
         gimp_pixel_fetcher_get_pixel (pft, xi_a, y, pixel[1]);
       else
         memset (pixel[1], 0, 4);
 
       average_two_pixels (dest, pixel, needx - xi, bpp, param->has_alpha);
-    } /* antialias */
+    }
 
   else
     {
@@ -402,9 +404,9 @@ ripple (GimpDrawable *drawable,
     {
       rvals.edges = WRAP;
       rvals.period = (param.width / (param.width / rvals.period) *
-                      (rvals.orientation == HORIZONTAL) +
+                      (rvals.orientation == GIMP_ORIENTATION_HORIZONTAL) +
                       param.height / (param.height / rvals.period) *
-                      (rvals.orientation == VERTICAL));
+                      (rvals.orientation == GIMP_ORIENTATION_VERTICAL));
     }
 
   if (preview)
@@ -423,11 +425,12 @@ ripple (GimpDrawable *drawable,
       for (y = 0; y < height ; y++)
         for (x = 0; x < width ; x++)
           {
-             if (rvals.orientation == VERTICAL)
-               ripple_vertical (x1 + x, y1 + y, d, bpp, &param);
-             else
-               ripple_horizontal (x1 + x, y1 + y, d, bpp, &param);
-             d += bpp;
+            if (rvals.orientation == GIMP_ORIENTATION_VERTICAL)
+              ripple_vertical (x1 + x, y1 + y, d, bpp, &param);
+            else
+              ripple_horizontal (x1 + x, y1 + y, d, bpp, &param);
+
+            d += bpp;
           }
 
       gimp_preview_draw_buffer (preview, buffer, width * bpp);
@@ -438,11 +441,13 @@ ripple (GimpDrawable *drawable,
       GimpRgnIterator *iter;
 
       iter = gimp_rgn_iterator_new (drawable, 0);
+
       gimp_rgn_iterator_dest (iter,
-                              rvals.orientation == VERTICAL ?
+                              rvals.orientation == GIMP_ORIENTATION_VERTICAL ?
                               ripple_vertical :
                               ripple_horizontal,
                               &param);
+
       gimp_rgn_iterator_free (iter);
     }
 
@@ -549,8 +554,11 @@ ripple_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &rvals.orientation, rvals.orientation,
 
-                                    _("_Horizontal"), HORIZONTAL, &horizontal,
-                                    _("_Vertical"),   VERTICAL,   &vertical,
+                                    _("_Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
+                                    &horizontal,
+
+                                    _("_Vertical"),   GIMP_ORIENTATION_VERTICAL,
+                                    &vertical,
 
                                     NULL);
 
