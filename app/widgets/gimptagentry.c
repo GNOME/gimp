@@ -1288,9 +1288,22 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
   switch (event->keyval)
     {
     case GDK_Tab:
-      entry->tab_completion_index++;
-      entry->suppress_tag_query++;
-      g_idle_add ((GSourceFunc) gimp_tag_entry_auto_complete, entry);
+    case GDK_KP_Tab:
+    case GDK_ISO_Left_Tab:
+      /*  allow to leave the widget with Ctrl+Tab  */
+      if (! (event->state & GDK_CONTROL_MASK))
+        {
+          entry->tab_completion_index++;
+          entry->suppress_tag_query++;
+          g_idle_add ((GSourceFunc) gimp_tag_entry_auto_complete, entry);
+        }
+      else
+        {
+          gimp_tag_entry_commit_tags (entry);
+          g_signal_emit_by_name (widget, "move-focus",
+                                 (event->state & GDK_SHIFT_MASK) ?
+                                 GTK_DIR_TAB_BACKWARD : GTK_DIR_TAB_FORWARD);
+        }
       return TRUE;
 
     case GDK_Return:

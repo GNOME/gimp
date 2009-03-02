@@ -1,5 +1,11 @@
 2009-03-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptagentry.c (gimp_tag_entry_key_press): allow to
+	leave the widget with Ctrl+Tab. Handle GDK_KP_Tab and
+	GDK_ISO_Left_Tab.
+
+2009-03-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptagged.[ch]: add gimp_tagged_set_tags() which
 	takes a GList of tags.
 
