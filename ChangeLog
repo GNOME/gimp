@@ -1,3 +1,10 @@
+2009-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpfilteredcontainer.[ch]
+	* app/core/gimptag.c
+	* app/core/gimptagcache.[ch]: codingstylize. Call iterator GList*
+	variables simply "list" just as we call integers simply "i".
+
 2009-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptagentry.c (gimp_tag_entry_expose): use

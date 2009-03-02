@@ -24,6 +24,7 @@
 
 #include "gimpobject.h"
 
+
 #define GIMP_TYPE_TAG_CACHE            (gimp_tag_cache_get_type ())
 #define GIMP_TAG_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCache))
 #define GIMP_TAG_CACHE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_CACHE, GimpTagCacheClass))
@@ -37,14 +38,14 @@ typedef struct _GimpTagCachePriv   GimpTagCachePriv;
 
 struct _GimpTagCache
 {
-  GimpObject            parent_instance;
+  GimpObject        parent_instance;
 
-  GimpTagCachePriv     *priv;
+  GimpTagCachePriv *priv;
 };
 
 struct _GimpTagCacheClass
 {
-  GimpObjectClass       parent_class;
+  GimpObjectClass  parent_class;
 };
 
 
@@ -52,10 +53,11 @@ GType           gimp_tag_cache_get_type      (void) G_GNUC_CONST;
 
 GimpTagCache *  gimp_tag_cache_new           (void);
 
-void            gimp_tag_cache_save          (GimpTagCache     *cache);
-void            gimp_tag_cache_load          (GimpTagCache     *cache);
+void            gimp_tag_cache_save          (GimpTagCache  *cache);
+void            gimp_tag_cache_load          (GimpTagCache  *cache);
 
-void            gimp_tag_cache_add_container (GimpTagCache     *cache,
-                                              GimpContainer    *container);
+void            gimp_tag_cache_add_container (GimpTagCache  *cache,
+                                              GimpContainer *container);
+
 
 #endif  /*  __GIMP_TAG_CACHE_H__  */

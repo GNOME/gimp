@@ -60,18 +60,16 @@ gimp_tag_init (GimpTag *tag)
 GimpTag *
 gimp_tag_new (const char *tag_string)
 {
-  GimpTag      *tag;
-  gchar        *tag_name;
-  gchar        *case_folded;
-  gchar        *collate_key;
+  GimpTag *tag;
+  gchar   *tag_name;
+  gchar   *case_folded;
+  gchar   *collate_key;
 
   g_return_val_if_fail (tag_string != NULL, NULL);
 
   tag_name = gimp_tag_string_make_valid (tag_string);
   if (! tag_name)
-    {
-      return NULL;
-    }
+    return NULL;
 
   tag = g_object_new (GIMP_TYPE_TAG, NULL);
 
@@ -102,18 +100,16 @@ gimp_tag_new (const char *tag_string)
 GimpTag *
 gimp_tag_try_new (const char *tag_string)
 {
-  GimpTag      *tag;
-  gchar        *tag_name;
-  gchar        *case_folded;
-  gchar        *collate_key;
-  GQuark        tag_quark;
-  GQuark        collate_key_quark;
+  GimpTag *tag;
+  gchar   *tag_name;
+  gchar   *case_folded;
+  gchar   *collate_key;
+  GQuark   tag_quark;
+  GQuark   collate_key_quark;
 
   tag_name = gimp_tag_string_make_valid (tag_string);
   if (! tag_name)
-    {
-      return NULL;
-    }
+    return NULL;
 
   case_folded = g_utf8_casefold (tag_name, -1);
   collate_key = g_utf8_collate_key (case_folded, -1);
@@ -130,13 +126,12 @@ gimp_tag_try_new (const char *tag_string)
   tag_quark = g_quark_from_string (tag_name);
   g_free (tag_name);
   if (! tag_quark)
-    {
-      return NULL;
-    }
+    return NULL;
 
   tag = g_object_new (GIMP_TYPE_TAG, NULL);
   tag->tag = tag_quark;
   tag->collate_key = collate_key_quark;
+
   return tag;
 }
 
@@ -149,7 +144,7 @@ gimp_tag_try_new (const char *tag_string)
  * Return value: name of tag.
  **/
 const gchar *
-gimp_tag_get_name (GimpTag           *tag)
+gimp_tag_get_name (GimpTag *tag)
 {
   g_return_val_if_fail (GIMP_IS_TAG (tag), NULL);
 
@@ -166,7 +161,7 @@ gimp_tag_get_name (GimpTag           *tag)
  * Return value: hash value for tag.
  **/
 guint
-gimp_tag_get_hash (GimpTag       *tag)
+gimp_tag_get_hash (GimpTag *tag)
 {
   g_return_val_if_fail (GIMP_IS_TAG (tag), -1);
 
@@ -203,8 +198,8 @@ gimp_tag_equals (const GimpTag *tag,
  * Return value: meaning of return value is the same as in strcmp().
  **/
 int
-gimp_tag_compare_func (const void         *p1,
-                       const void         *p2)
+gimp_tag_compare_func (const void *p1,
+                       const void *p2)
 {
   GimpTag      *t1 = GIMP_TAG (p1);
   GimpTag      *t2 = GIMP_TAG (p2);
@@ -225,8 +220,8 @@ gimp_tag_compare_func (const void         *p1,
  * Return value: meaning of return value is the same as in strcmp().
  **/
 gint
-gimp_tag_compare_with_string (GimpTag          *tag,
-                              const char       *tag_string)
+gimp_tag_compare_with_string (GimpTag     *tag,
+                              const gchar *tag_string)
 {
   gchar        *case_folded;
   const gchar  *collate_key;
@@ -257,20 +252,18 @@ gimp_tag_compare_with_string (GimpTag          *tag,
  * using g_free().
  **/
 gchar *
-gimp_tag_string_make_valid (const gchar      *tag_string)
+gimp_tag_string_make_valid (const gchar *tag_string)
 {
-  gchar        *tag;
-  GString      *buffer;
-  gchar        *tag_cursor;
-  gunichar      c;
+  gchar    *tag;
+  GString  *buffer;
+  gchar    *tag_cursor;
+  gunichar  c;
 
   g_return_val_if_fail (tag_string, NULL);
 
   tag = g_utf8_normalize (tag_string, -1, G_NORMALIZE_ALL);
   if (! tag)
-    {
-      return NULL;
-    }
+    return NULL;
 
   tag = g_strstrip (tag);
   if (! *tag)

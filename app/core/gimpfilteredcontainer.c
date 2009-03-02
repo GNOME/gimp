@@ -43,10 +43,11 @@ enum
 enum
 {
   PROP_0,
-  PROP_SRC_CONTAINER,
+  PROP_SRC_CONTAINER
 };
 
-typedef struct MatchParams_
+
+typedef struct _MatchParams
 {
   GimpFilteredContainer  *filtered_container;
   GList                  *items_to_add;
@@ -54,50 +55,50 @@ typedef struct MatchParams_
 } MatchParams;
 
 
-static GObject*     gimp_filtered_container_constructor        (GType                   type,
-                                                                guint                   n_construct_params,
-                                                                GObjectConstructParam  *construct_params);
+static GObject * gimp_filtered_container_constructor        (GType                  type,
+                                                             guint                  n_construct_params,
+                                                             GObjectConstructParam *construct_params);
 
-static void         gimp_filtered_container_dispose            (GObject               *object);
-static void         gimp_filtered_container_set_property       (GObject               *object,
-                                                                guint                  property_id,
-                                                                const GValue          *value,
-                                                                GParamSpec            *pspec);
-static void         gimp_filtered_container_get_property       (GObject               *object,
-                                                                guint                  property_id,
-                                                                GValue                *value,
-                                                                GParamSpec            *pspec);
+static void      gimp_filtered_container_dispose            (GObject               *object);
+static void      gimp_filtered_container_set_property       (GObject               *object,
+                                                             guint                  property_id,
+                                                             const GValue          *value,
+                                                             GParamSpec            *pspec);
+static void      gimp_filtered_container_get_property       (GObject               *object,
+                                                             guint                  property_id,
+                                                             GValue                *value,
+                                                             GParamSpec            *pspec);
 
-static gint64       gimp_filtered_container_get_memsize        (GimpObject            *object,
-                                                                gint64                *gui_size);
+static gint64    gimp_filtered_container_get_memsize        (GimpObject            *object,
+                                                             gint64                *gui_size);
 
-static gboolean     gimp_filtered_container_object_matches     (GimpFilteredContainer *filtered_container,
-                                                                GimpObject            *object);
+static gboolean  gimp_filtered_container_object_matches     (GimpFilteredContainer *filtered_container,
+                                                             GimpObject            *object);
 
-static void         gimp_filtered_container_filter             (GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_filter             (GimpFilteredContainer *filtered_container);
 
-static void         gimp_filtered_container_src_add            (GimpContainer         *src_container,
-                                                                GimpObject            *obj,
-                                                                GimpFilteredContainer *filtered_container);
-static void         gimp_filtered_container_src_remove         (GimpContainer         *src_container,
-                                                                GimpObject            *obj,
-                                                                GimpFilteredContainer *filtered_container);
-static void         gimp_filtered_container_src_freeze         (GimpContainer         *src_container,
-                                                                GimpFilteredContainer *filtered_container);
-static void         gimp_filtered_container_src_thaw           (GimpContainer         *src_container,
-                                                                GimpFilteredContainer *filtered_container);
-static void         gimp_filtered_container_tag_added          (GimpTagged            *tagged,
-                                                                GimpTag               *tag,
-                                                                GimpFilteredContainer  *filtered_container);
-static void         gimp_filtered_container_tag_removed        (GimpTagged            *tagged,
-                                                                GimpTag               *tag,
-                                                                GimpFilteredContainer  *filtered_container);
-static void         gimp_filtered_container_tagged_item_added  (GimpTagged             *tagged,
-                                                                GimpFilteredContainer  *filtered_container);
-static void         gimp_filtered_container_tagged_item_removed(GimpTagged             *tagged,
-                                                                GimpFilteredContainer  *filtered_container);
-static void         gimp_filtered_container_tag_count_changed  (GimpFilteredContainer  *filtered_container,
-                                                                gint                    tag_count);
+static void      gimp_filtered_container_src_add            (GimpContainer         *src_container,
+                                                             GimpObject            *obj,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_src_remove         (GimpContainer         *src_container,
+                                                             GimpObject            *obj,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_src_freeze         (GimpContainer         *src_container,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_src_thaw           (GimpContainer         *src_container,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_tag_added          (GimpTagged            *tagged,
+                                                             GimpTag               *tag,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_tag_removed        (GimpTagged            *tagged,
+                                                             GimpTag               *tag,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_tagged_item_added  (GimpTagged            *tagged,
+                                                             GimpFilteredContainer  *filtered_container);
+static void      gimp_filtered_container_tagged_item_removed(GimpTagged            *tagged,
+                                                             GimpFilteredContainer *filtered_container);
+static void      gimp_filtered_container_tag_count_changed  (GimpFilteredContainer *filtered_container,
+                                                             gint                   tag_count);
 
 
 G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
@@ -123,14 +124,14 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
   klass->tag_count_changed       = gimp_filtered_container_tag_count_changed;
 
   gimp_filtered_container_signals[TAG_COUNT_CHANGED] =
-      g_signal_new ("tag-count-changed",
-                    GIMP_TYPE_FILTERED_CONTAINER,
-                    G_SIGNAL_RUN_LAST,
-                    G_STRUCT_OFFSET (GimpFilteredContainerClass, tag_count_changed),
-                    NULL, NULL,
-                    gimp_marshal_VOID__INT,
-                    G_TYPE_NONE, 1,
-                    G_TYPE_INT);
+    g_signal_new ("tag-count-changed",
+                  GIMP_TYPE_FILTERED_CONTAINER,
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpFilteredContainerClass, tag_count_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   g_object_class_install_property (g_object_class, PROP_SRC_CONTAINER,
                                    g_param_spec_object ("src-container", NULL, NULL,
@@ -142,10 +143,10 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
 static void
 gimp_filtered_container_init (GimpFilteredContainer *filtered_container)
 {
-  filtered_container->src_container             = NULL;
-  filtered_container->filter                    = NULL;
-  filtered_container->tag_ref_counts            = NULL;
-  filtered_container->tag_count                 = 0;
+  filtered_container->src_container  = NULL;
+  filtered_container->filter         = NULL;
+  filtered_container->tag_ref_counts = NULL;
+  filtered_container->tag_count      = 0;
 }
 
 static GObject*
@@ -161,9 +162,10 @@ gimp_filtered_container_constructor (GType                   type,
                                                        construct_params);
 
   filtered_container = GIMP_FILTERED_CONTAINER (object);
+
   filtered_container->tag_ref_counts =
-      g_hash_table_new ((GHashFunc)gimp_tag_get_hash,
-                        (GEqualFunc)gimp_tag_equals);
+    g_hash_table_new ((GHashFunc) gimp_tag_get_hash,
+                      (GEqualFunc) gimp_tag_equals);
 
   gimp_container_foreach (filtered_container->src_container,
                           (GFunc) gimp_filtered_container_tagged_item_added,
@@ -174,9 +176,9 @@ gimp_filtered_container_constructor (GType                   type,
 }
 
 static void
-gimp_filtered_container_dispose (GObject     *object)
+gimp_filtered_container_dispose (GObject *object)
 {
-  GimpFilteredContainer        *filtered_container = GIMP_FILTERED_CONTAINER (object);
+  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
   if (filtered_container->src_container)
     {
@@ -192,6 +194,7 @@ gimp_filtered_container_dispose (GObject     *object)
       g_signal_handlers_disconnect_by_func (filtered_container->src_container,
                                             gimp_filtered_container_src_thaw,
                                             filtered_container);
+
       g_object_unref (filtered_container->src_container);
       filtered_container->src_container = NULL;
     }
@@ -209,49 +212,47 @@ gimp_filtered_container_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_SRC_CONTAINER:
-         {
-           filtered_container->src_container = g_value_get_object (value);
-           g_object_ref (filtered_container->src_container);
+    case PROP_SRC_CONTAINER:
+      filtered_container->src_container = g_value_get_object (value);
+      g_object_ref (filtered_container->src_container);
 
-           g_signal_connect (filtered_container->src_container, "add",
-                             G_CALLBACK (gimp_filtered_container_src_add),
-                             filtered_container);
-           g_signal_connect (filtered_container->src_container, "remove",
-                             G_CALLBACK (gimp_filtered_container_src_remove),
-                             filtered_container);
-           g_signal_connect (filtered_container->src_container, "freeze",
-                             G_CALLBACK (gimp_filtered_container_src_freeze),
-                             filtered_container);
-           g_signal_connect (filtered_container->src_container, "thaw",
-                             G_CALLBACK (gimp_filtered_container_src_thaw),
-                             filtered_container);
-         }
-       break;
+      g_signal_connect (filtered_container->src_container, "add",
+                        G_CALLBACK (gimp_filtered_container_src_add),
+                        filtered_container);
+      g_signal_connect (filtered_container->src_container, "remove",
+                        G_CALLBACK (gimp_filtered_container_src_remove),
+                        filtered_container);
+      g_signal_connect (filtered_container->src_container, "freeze",
+                        G_CALLBACK (gimp_filtered_container_src_freeze),
+                        filtered_container);
+      g_signal_connect (filtered_container->src_container, "thaw",
+                        G_CALLBACK (gimp_filtered_container_src_thaw),
+                        filtered_container);
+      break;
 
-      default:
-       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-       break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
 static void
-gimp_filtered_container_get_property (GObject        *object,
-                                      guint           property_id,
-                                      GValue         *value,
-                                      GParamSpec     *pspec)
+gimp_filtered_container_get_property (GObject    *object,
+                                      guint       property_id,
+                                      GValue     *value,
+                                      GParamSpec *pspec)
 {
   GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
   switch (property_id)
     {
-      case PROP_SRC_CONTAINER:
-        g_value_set_object (value, filtered_container->src_container);
-        break;
+    case PROP_SRC_CONTAINER:
+      g_value_set_object (value, filtered_container->src_container);
+      break;
 
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
@@ -259,8 +260,8 @@ static gint64
 gimp_filtered_container_get_memsize (GimpObject *object,
                                      gint64     *gui_size)
 {
-  GimpFilteredContainer *filtered_container    = GIMP_FILTERED_CONTAINER (object);
-  gint64    memsize = 0;
+  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
+  gint64                 memsize            = 0;
 
   memsize += (gimp_container_get_n_children (GIMP_CONTAINER (filtered_container)) *
               sizeof (GList));
@@ -281,11 +282,11 @@ gimp_filtered_container_get_memsize (GimpObject *object,
  * Return value: a new #GimpFilteredContainer object.
  **/
 GimpContainer *
-gimp_filtered_container_new (GimpContainer     *src_container,
-                             GCompareFunc       sort_func)
+gimp_filtered_container_new (GimpContainer *src_container,
+                             GCompareFunc   sort_func)
 {
-  GimpFilteredContainer        *filtered_container;
-  GType                         children_type;
+  GimpFilteredContainer *filtered_container;
+  GType                  children_type;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (src_container), NULL);
 
@@ -311,8 +312,8 @@ gimp_filtered_container_new (GimpContainer     *src_container,
  * the tags assigned match filtering criteria.
  **/
 void
-gimp_filtered_container_set_filter (GimpFilteredContainer              *filtered_container,
-                                    GList                              *tags)
+gimp_filtered_container_set_filter (GimpFilteredContainer *filtered_container,
+                                    GList                 *tags)
 {
   g_return_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container));
 
@@ -334,18 +335,19 @@ gimp_filtered_container_set_filter (GimpFilteredContainer              *filtered
  * not be modified or freed.
  **/
 const GList *
-gimp_filtered_container_get_filter (GimpFilteredContainer              *filtered_container)
+gimp_filtered_container_get_filter (GimpFilteredContainer *filtered_container)
 {
   g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (filtered_container), NULL);
+
   return filtered_container->filter;
 }
 
 static gboolean
-gimp_filtered_container_object_matches (GimpFilteredContainer          *filtered_container,
-                                        GimpObject                     *object)
+gimp_filtered_container_object_matches (GimpFilteredContainer *filtered_container,
+                                        GimpObject            *object)
 {
-  GList        *filter_tag;
-  GList        *object_tag;
+  GList *filter_tag;
+  GList *object_tag;
 
   filter_tag = filtered_container->filter;
   while (filter_tag)
@@ -382,8 +384,8 @@ gimp_filtered_container_object_matches (GimpFilteredContainer          *filtered
 }
 
 static void
-gimp_filtered_container_check_needs_remove (GimpObject    *object,
-                                            MatchParams   *match_params)
+gimp_filtered_container_check_needs_remove (GimpObject  *object,
+                                            MatchParams *match_params)
 {
   if (! gimp_filtered_container_object_matches (match_params->filtered_container,
                                                 object))
@@ -394,10 +396,11 @@ gimp_filtered_container_check_needs_remove (GimpObject    *object,
 }
 
 static void
-gimp_filtered_container_check_needs_add (GimpObject    *object,
-                                         MatchParams   *match_params)
+gimp_filtered_container_check_needs_add (GimpObject  *object,
+                                         MatchParams *match_params)
 {
-  if (gimp_filtered_container_object_matches (match_params->filtered_container, object)
+  if (gimp_filtered_container_object_matches (match_params->filtered_container,
+                                              object)
       && !gimp_container_have (GIMP_CONTAINER (match_params->filtered_container),
                                object))
     {
@@ -407,10 +410,10 @@ gimp_filtered_container_check_needs_add (GimpObject    *object,
 }
 
 static void
-gimp_filtered_container_filter (GimpFilteredContainer   *filtered_container)
+gimp_filtered_container_filter (GimpFilteredContainer *filtered_container)
 {
-  MatchParams   match_params;
-  GList        *iterator;
+  MatchParams  match_params;
+  GList       *list;
 
   match_params.filtered_container = filtered_container;
   match_params.items_to_add       = NULL;
@@ -423,18 +426,16 @@ gimp_filtered_container_filter (GimpFilteredContainer   *filtered_container)
                           (GFunc) gimp_filtered_container_check_needs_add,
                           &match_params);
 
-  for (iterator = match_params.items_to_remove; iterator;
-       iterator = g_list_next (iterator))
+  for (list = match_params.items_to_remove; list; list = g_list_next (list))
     {
       gimp_container_remove (GIMP_CONTAINER (filtered_container),
-                             GIMP_OBJECT (iterator->data));
+                             GIMP_OBJECT (list->data));
     }
 
-  for (iterator = match_params.items_to_add; iterator;
-       iterator = g_list_next (iterator))
+  for (list = match_params.items_to_add; list; list = g_list_next (list))
     {
       gimp_container_add (GIMP_CONTAINER (filtered_container),
-                          GIMP_OBJECT (iterator->data));
+                          GIMP_OBJECT (list->data));
     }
 
   g_list_free (match_params.items_to_add);
@@ -471,32 +472,31 @@ gimp_filtered_container_src_remove (GimpContainer         *src_container,
 }
 
 static void
-gimp_filtered_container_src_freeze (GimpContainer              *src_container,
-                                    GimpFilteredContainer      *filtered_container)
+gimp_filtered_container_src_freeze (GimpContainer         *src_container,
+                                    GimpFilteredContainer *filtered_container)
 {
   gimp_container_freeze (GIMP_CONTAINER (filtered_container));
   gimp_container_clear (GIMP_CONTAINER (filtered_container));
 }
 
 static void
-gimp_filtered_container_src_thaw (GimpContainer                *src_container,
-                                  GimpFilteredContainer        *filtered_container)
+gimp_filtered_container_src_thaw (GimpContainer         *src_container,
+                                  GimpFilteredContainer *filtered_container)
 {
   gimp_filtered_container_filter (filtered_container);
   gimp_container_thaw (GIMP_CONTAINER (filtered_container));
 }
 
 static void
-gimp_filtered_container_tagged_item_added (GimpTagged                  *tagged,
-                                           GimpFilteredContainer       *filtered_container)
+gimp_filtered_container_tagged_item_added (GimpTagged            *tagged,
+                                           GimpFilteredContainer *filtered_container)
 {
-  GList        *tag_iterator;
+  GList *list;
 
-  for (tag_iterator = gimp_tagged_get_tags (tagged); tag_iterator;
-       tag_iterator = g_list_next (tag_iterator))
+  for (list = gimp_tagged_get_tags (tagged); list; list = g_list_next (list))
     {
       gimp_filtered_container_tag_added (tagged,
-                                         GIMP_TAG (tag_iterator->data),
+                                         list->data,
                                          filtered_container);
     }
 
@@ -509,10 +509,10 @@ gimp_filtered_container_tagged_item_added (GimpTagged                  *tagged,
 }
 
 static void
-gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
-                                             GimpFilteredContainer     *filtered_container)
+gimp_filtered_container_tagged_item_removed (GimpTagged            *tagged,
+                                             GimpFilteredContainer *filtered_container)
 {
-  GList        *tag_iterator;
+  GList *list;
 
   g_signal_handlers_disconnect_by_func (tagged,
                                         G_CALLBACK (gimp_filtered_container_tag_added),
@@ -521,11 +521,10 @@ gimp_filtered_container_tagged_item_removed (GimpTagged                *tagged,
                                         G_CALLBACK (gimp_filtered_container_tag_removed),
                                         filtered_container);
 
-  for (tag_iterator = gimp_tagged_get_tags (tagged); tag_iterator;
-       tag_iterator = g_list_next (tag_iterator))
+  for (list = gimp_tagged_get_tags (tagged); list; list = g_list_next (list))
     {
       gimp_filtered_container_tag_removed (tagged,
-                                           GIMP_TAG (tag_iterator->data),
+                                           GIMP_TAG (list->data),
                                            filtered_container);
     }
 
@@ -536,7 +535,7 @@ gimp_filtered_container_tag_added (GimpTagged            *tagged,
                                    GimpTag               *tag,
                                    GimpFilteredContainer *filtered_container)
 {
-  gint                  ref_count;
+  gint ref_count;
 
   ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
                                                     tag));
@@ -547,17 +546,17 @@ gimp_filtered_container_tag_added (GimpTagged            *tagged,
     {
       filtered_container->tag_count++;
       g_signal_emit (filtered_container,
-                     gimp_filtered_container_signals[TAG_COUNT_CHANGED],
-                     0, filtered_container->tag_count);
+                     gimp_filtered_container_signals[TAG_COUNT_CHANGED], 0,
+                     filtered_container->tag_count);
     }
 }
 
 static void
-gimp_filtered_container_tag_removed (GimpTagged                  *tagged,
-                                     GimpTag                     *tag,
-                                     GimpFilteredContainer       *filtered_container)
+gimp_filtered_container_tag_removed (GimpTagged            *tagged,
+                                     GimpTag               *tag,
+                                     GimpFilteredContainer *filtered_container)
 {
-  gint                  ref_count;
+  gint ref_count;
 
   ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
                                                     tag));
@@ -573,15 +572,15 @@ gimp_filtered_container_tag_removed (GimpTagged                  *tagged,
         {
           filtered_container->tag_count--;
           g_signal_emit (filtered_container,
-                         gimp_filtered_container_signals[TAG_COUNT_CHANGED],
-                         0, filtered_container->tag_count);
+                         gimp_filtered_container_signals[TAG_COUNT_CHANGED], 0,
+                         filtered_container->tag_count);
         }
     }
 }
 
 static void
-gimp_filtered_container_tag_count_changed (GimpFilteredContainer       *container,
-                                           gint                         tag_count)
+gimp_filtered_container_tag_count_changed (GimpFilteredContainer *container,
+                                           gint                   tag_count)
 {
 }
 
@@ -603,4 +602,3 @@ gimp_filtered_container_get_tag_count  (GimpFilteredContainer  *container)
 
   return container->tag_count;
 }
-

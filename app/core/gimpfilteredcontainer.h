@@ -36,33 +36,33 @@ typedef struct _GimpFilteredContainerClass GimpFilteredContainerClass;
 
 struct _GimpFilteredContainer
 {
-  GimpList              parent_instance;
+  GimpList       parent_instance;
 
-  GimpContainer        *src_container;
-  GList                *filter;
-  GHashTable           *tag_ref_counts;
-  gint                  tag_count;
+  GimpContainer *src_container;
+  GList         *filter;
+  GHashTable    *tag_ref_counts;
+  gint           tag_count;
 };
 
 struct _GimpFilteredContainerClass
 {
   GimpContainerClass  parent_class;
 
-  void      (* tag_count_changed)     (GimpFilteredContainer  *container,
-                                       gint                    count);
+  void (* tag_count_changed) (GimpFilteredContainer *container,
+                              gint                   count);
 };
 
 
 GType           gimp_filtered_container_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_filtered_container_new           (GimpContainer           *src_container,
-                                                       GCompareFunc             sort_func);
+GimpContainer * gimp_filtered_container_new           (GimpContainer         *src_container,
+                                                       GCompareFunc           sort_func);
 
-void            gimp_filtered_container_set_filter    (GimpFilteredContainer   *filtered_container,
-                                                       GList                   *tags);
+void            gimp_filtered_container_set_filter    (GimpFilteredContainer *filtered_container,
+                                                       GList                 *tags);
+const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer *filtered_container);
 
-const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer   *filtered_container);
+gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer *container);
 
-gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer   *container);
 
 #endif  /* __GIMP_FILTERED_CONTAINER_H__ */
