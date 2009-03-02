@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GEGL_TYPES_H__
-#define __GEGL_TYPES_H__
+#ifndef __GIMP_GEGL_TYPES_H__
+#define __GIMP_GEGL_TYPES_H__
 
 
 #include "core/core-types.h"
@@ -53,4 +53,4 @@ typedef struct _GimpPosterizeConfig          GimpPosterizeConfig;
 typedef struct _GimpThresholdConfig          GimpThresholdConfig;
 
 
-#endif /* __GEGL_TYPES_H__ */
+#endif /* __GIMP_GEGL_TYPES_H__ */

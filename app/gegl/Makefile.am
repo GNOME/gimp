@@ -15,7 +15,7 @@ INCLUDES = \
 noinst_LIBRARIES = libappgegl.a
 
 libappgegl_a_SOURCES = \
-	gegl-types.h			\
+	gimp-gegl-types.h		\
 	gimp-gegl.c			\
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\

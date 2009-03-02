@@ -206,7 +206,7 @@ struct _GimpCoords
 };
 
 
-#include "gegl/gegl-types.h"
+#include "gegl/gimp-gegl-types.h"
 #include "paint/paint-types.h"
 #include "text/text-types.h"
 #include "vectors/vectors-types.h"

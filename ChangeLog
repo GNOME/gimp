@@ -1,3 +1,13 @@
+2009-03-02  Sven Neumann  <sven@gimp.org>
+
+	Fix compilation with GEGL from trunk:
+	
+	* app/gegl/Makefile.am
+	* app/geg/gegl-types.h: renamed to app/gegl/gimp-gegl-types.h
+
+	* app/core/core-types.h
+	* app/gegl/*.c: changed accordingly.
+
 2009-02-28  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

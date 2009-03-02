@@ -25,7 +25,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "gimpoperationthreshold.h"
 #include "gimpthresholdconfig.h"

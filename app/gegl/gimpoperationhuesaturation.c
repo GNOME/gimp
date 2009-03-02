@@ -26,7 +26,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "gegl-types.h"
+#include "gimp-gegl-types.h"
 
 #include "gimphuesaturationconfig.h"
 #include "gimpoperationhuesaturation.h"
