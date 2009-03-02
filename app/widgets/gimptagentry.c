@@ -1201,11 +1201,9 @@ gimp_tag_entry_expose (GtkWidget      *widget,
                        GdkEventExpose *event)
 {
   GimpTagEntry   *tag_entry = GIMP_TAG_ENTRY (widget);
-  PangoContext   *context;
   PangoLayout    *layout;
   PangoAttrList  *attr_list;
   PangoAttribute *attribute;
-  PangoRenderer  *renderer;
   gint            layout_width;
   gint            layout_height;
   gint            window_width;
@@ -1233,8 +1231,7 @@ gimp_tag_entry_expose (GtkWidget      *widget,
       display_text = GIMP_TAG_ENTRY_ASSIGN_DESC;
     }
 
-  context = gtk_widget_create_pango_context (GTK_WIDGET (widget));
-  layout = pango_layout_new (context);
+  layout = gtk_widget_create_pango_layout (widget, display_text);
 
   attr_list = pango_attr_list_new ();
   attribute = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -1243,30 +1240,26 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   pango_layout_set_attributes (layout, attr_list);
   pango_attr_list_unref (attr_list);
 
-  renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
-  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), event->window);
-  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
-                             widget->style->text_gc[GTK_STATE_INSENSITIVE]);
-  pango_layout_set_text (layout, display_text, -1);
   gdk_drawable_get_size (GDK_DRAWABLE (event->window),
                          &window_width, &window_height);
   pango_layout_get_size (layout,
                          &layout_width, &layout_height);
-  offset = (window_height * PANGO_SCALE - layout_height) / 2;
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    {
-      pango_renderer_draw_layout (renderer, layout,
-                                  window_width * PANGO_SCALE - layout_width - offset,
-                                  offset);
-    }
-  else
-    {
-      pango_renderer_draw_layout (renderer, layout, offset, offset);
-    }
-  gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
-  gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), NULL);
+  offset = (window_height - PANGO_PIXELS (layout_height)) / 2;
+
+  gtk_paint_layout (widget->style,
+                    event->window,
+                    GTK_STATE_INSENSITIVE,
+                    TRUE,
+                    &event->area,
+                    widget,
+                    NULL,
+                    (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+                    window_width - PANGO_PIXELS (layout_width) - offset :
+                    offset,
+                    offset,
+                    layout);
+
   g_object_unref (layout);
-  g_object_unref (context);
 
   return FALSE;
 }
