@@ -57,81 +57,82 @@ enum
 {
   PROP_0,
   PROP_CONTAINER,
-  PROP_MODE,
+  PROP_MODE
 };
 
-static void     gimp_tag_entry_set_property              (GObject              *object,
-                                                          guint                 property_id,
-                                                          const GValue         *value,
-                                                          GParamSpec           *pspec);
-static void     gimp_tag_entry_get_property              (GObject              *object,
-                                                          guint                 property_id,
-                                                          GValue               *value,
-                                                          GParamSpec           *pspec);
-static void     gimp_tag_entry_dispose                   (GObject              *object);
-static void     gimp_tag_entry_activate                  (GtkEntry             *entry);
-static void     gimp_tag_entry_changed                   (GtkEntry             *entry);
-static void     gimp_tag_entry_insert_text               (GtkEditable          *editable,
-                                                          gchar                *new_text,
-                                                          gint                  text_length,
-                                                          gint                 *position);
-static void     gimp_tag_entry_delete_text               (GtkEditable          *editable,
-                                                          gint                  start_pos,
-                                                          gint                  end_pos);
-static gboolean gimp_tag_entry_focus_in                  (GtkWidget            *widget,
-                                                          GdkEventFocus        *event);
-static gboolean gimp_tag_entry_focus_out                 (GtkWidget            *widget,
-                                                          GdkEventFocus        *event);
-static void     gimp_tag_entry_container_changed         (GimpContainer        *container,
-                                                          GimpObject           *object,
-                                                          GimpTagEntry         *entry);
-static gboolean gimp_tag_entry_button_release            (GtkWidget            *widget,
-                                                          GdkEventButton       *event);
-static gboolean gimp_tag_entry_key_press                 (GtkWidget            *widget,
-                                                          GdkEventKey          *event);
-static gboolean gimp_tag_entry_query_tag                 (GimpTagEntry         *entry);
 
-static void     gimp_tag_entry_assign_tags               (GimpTagEntry         *entry);
-static void     gimp_tag_entry_item_set_tags             (GimpTagged           *entry,
-                                                          GList                *tags);
-static void     gimp_tag_entry_load_selection            (GimpTagEntry         *entry,
-                                                          gboolean              sort);
+static void     gimp_tag_entry_dispose                   (GObject          *object);
+static void     gimp_tag_entry_set_property              (GObject          *object,
+                                                          guint             property_id,
+                                                          const GValue     *value,
+                                                          GParamSpec       *pspec);
+static void     gimp_tag_entry_get_property              (GObject          *object,
+                                                          guint             property_id,
+                                                          GValue           *value,
+                                                          GParamSpec       *pspec);
+static void     gimp_tag_entry_activate                  (GtkEntry         *entry);
+static void     gimp_tag_entry_changed                   (GtkEntry         *entry);
+static void     gimp_tag_entry_insert_text               (GtkEditable      *editable,
+                                                          gchar            *new_text,
+                                                          gint              text_length,
+                                                          gint             *position);
+static void     gimp_tag_entry_delete_text               (GtkEditable      *editable,
+                                                          gint              start_pos,
+                                                          gint              end_pos);
+static gboolean gimp_tag_entry_focus_in                  (GtkWidget        *widget,
+                                                          GdkEventFocus    *event);
+static gboolean gimp_tag_entry_focus_out                 (GtkWidget        *widget,
+                                                          GdkEventFocus    *event);
+static void     gimp_tag_entry_container_changed         (GimpContainer    *container,
+                                                          GimpObject       *object,
+                                                          GimpTagEntry     *entry);
+static gboolean gimp_tag_entry_button_release            (GtkWidget        *widget,
+                                                          GdkEventButton   *event);
+static gboolean gimp_tag_entry_key_press                 (GtkWidget        *widget,
+                                                          GdkEventKey      *event);
+static gboolean gimp_tag_entry_query_tag                 (GimpTagEntry     *entry);
 
-static gchar*   gimp_tag_entry_get_completion_prefix     (GimpTagEntry         *entry);
-static GList *  gimp_tag_entry_get_completion_candidates (GimpTagEntry         *entry,
-                                                          gchar               **used_tags,
-                                                          gchar                *prefix);
-static gchar *  gimp_tag_entry_get_completion_string     (GimpTagEntry         *entry,
-                                                          GList                *candidates,
-                                                          gchar                *prefix);
-static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry         *entry);
+static void     gimp_tag_entry_assign_tags               (GimpTagEntry     *entry);
+static void     gimp_tag_entry_item_set_tags             (GimpTagged       *entry,
+                                                          GList            *tags);
+static void     gimp_tag_entry_load_selection            (GimpTagEntry     *entry,
+                                                          gboolean          sort);
 
-static void     gimp_tag_entry_toggle_desc               (GimpTagEntry         *widget,
-                                                          gboolean              show);
-static gboolean gimp_tag_entry_expose                    (GtkWidget            *widget,
-                                                          GdkEventExpose       *event);
-static void     gimp_tag_entry_commit_region             (GString              *tags,
-                                                          GString              *mask);
-static void     gimp_tag_entry_commit_tags               (GimpTagEntry         *entry);
-static gboolean gimp_tag_entry_commit_source_func        (GimpTagEntry         *entry);
-static gboolean gimp_tag_entry_select_jellybean          (GimpTagEntry         *entry,
-                                                          gint                  selection_start,
-                                                          gint                  selection_end,
-                                                          GimpTagSearchDir      search_dir);
-static gboolean gimp_tag_entry_try_select_jellybean      (GimpTagEntry         *entry);
+static gchar*   gimp_tag_entry_get_completion_prefix     (GimpTagEntry     *entry);
+static GList *  gimp_tag_entry_get_completion_candidates (GimpTagEntry     *entry,
+                                                          gchar           **used_tags,
+                                                          gchar            *prefix);
+static gchar *  gimp_tag_entry_get_completion_string     (GimpTagEntry     *entry,
+                                                          GList            *candidates,
+                                                          gchar            *prefix);
+static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry     *entry);
 
-static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry         *entry,
-                                                          const gchar          *tags_string,
-                                                          gboolean              to_front);
+static void     gimp_tag_entry_toggle_desc               (GimpTagEntry     *widget,
+                                                          gboolean          show);
+static gboolean gimp_tag_entry_expose                    (GtkWidget        *widget,
+                                                          GdkEventExpose   *event);
+static void     gimp_tag_entry_commit_region             (GString          *tags,
+                                                          GString          *mask);
+static void     gimp_tag_entry_commit_tags               (GimpTagEntry     *entry);
+static gboolean gimp_tag_entry_commit_source_func        (GimpTagEntry     *entry);
+static gboolean gimp_tag_entry_select_jellybean          (GimpTagEntry     *entry,
+                                                          gint              selection_start,
+                                                          gint              selection_end,
+                                                          GimpTagSearchDir  search_dir);
+static gboolean gimp_tag_entry_try_select_jellybean      (GimpTagEntry     *entry);
 
-static void     gimp_tag_entry_next_tag                  (GimpTagEntry         *entry,
-                                                          gboolean              select);
-static void     gimp_tag_entry_previous_tag              (GimpTagEntry         *entry,
-                                                          gboolean              select);
+static gboolean gimp_tag_entry_add_to_recent             (GimpTagEntry     *entry,
+                                                          const gchar      *tags_string,
+                                                          gboolean          to_front);
 
-static void     gimp_tag_entry_select_for_deletion       (GimpTagEntry         *entry,
-                                                          GimpTagSearchDir      search_dir);
-static gboolean gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry         *entry);
+static void     gimp_tag_entry_next_tag                  (GimpTagEntry     *entry,
+                                                          gboolean          select);
+static void     gimp_tag_entry_previous_tag              (GimpTagEntry     *entry,
+                                                          gboolean          select);
+
+static void     gimp_tag_entry_select_for_deletion       (GimpTagEntry     *entry,
+                                                          GimpTagSearchDir  search_dir);
+static gboolean gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry     *entry);
 
 
 
@@ -155,8 +156,8 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_CONTAINER,
                                    g_param_spec_object ("container",
-                                                        ("Filtered container"),
-                                                        ("The Filtered container"),
+                                                        "Filtered container",
+                                                        "The Filtered container",
                                                         GIMP_TYPE_FILTERED_CONTAINER,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         G_PARAM_READWRITE));
@@ -164,8 +165,8 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_MODE,
                                    g_param_spec_enum ("mode",
-                                                      ("Working mode"),
-                                                      ("Mode in which to work."),
+                                                      "Working mode",
+                                                      "Mode in which to work.",
                                                       GIMP_TYPE_TAG_ENTRY_MODE,
                                                       GIMP_TAG_ENTRY_MODE_QUERY,
                                                       G_PARAM_CONSTRUCT_ONLY |
@@ -205,8 +206,8 @@ gimp_tag_entry_init (GimpTagEntry *entry)
                     G_CALLBACK (gimp_tag_entry_focus_out),
                     NULL);
   g_signal_connect_after (entry, "expose-event",
-                    G_CALLBACK (gimp_tag_entry_expose),
-                    NULL);
+                          G_CALLBACK (gimp_tag_entry_expose),
+                          NULL);
 }
 
 static void
@@ -255,24 +256,24 @@ gimp_tag_entry_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_CONTAINER:
-        entry->container = g_value_dup_object (value);
-        g_signal_connect (entry->container, "add",
-                          G_CALLBACK (gimp_tag_entry_container_changed),
-                          entry);
-        g_signal_connect (entry->container, "remove",
-                          G_CALLBACK (gimp_tag_entry_container_changed),
-                          entry);
-        break;
+    case PROP_CONTAINER:
+      entry->container = g_value_dup_object (value);
+      g_signal_connect (entry->container, "add",
+                        G_CALLBACK (gimp_tag_entry_container_changed),
+                        entry);
+      g_signal_connect (entry->container, "remove",
+                        G_CALLBACK (gimp_tag_entry_container_changed),
+                        entry);
+      break;
 
-      case PROP_MODE:
-        entry->mode = g_value_get_enum (value);
-        gimp_tag_entry_toggle_desc (entry, TRUE);
-        break;
+    case PROP_MODE:
+      entry->mode = g_value_get_enum (value);
+      gimp_tag_entry_toggle_desc (entry, TRUE);
+      break;
 
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
@@ -286,17 +287,17 @@ gimp_tag_entry_get_property (GObject    *object,
 
   switch (property_id)
     {
-      case PROP_CONTAINER:
-        g_value_set_object (value, entry->container);
-        break;
+    case PROP_CONTAINER:
+      g_value_set_object (value, entry->container);
+      break;
 
-      case PROP_MODE:
-        g_value_set_enum (value, entry->mode);
-        break;
+    case PROP_MODE:
+      g_value_set_enum (value, entry->mode);
+      break;
 
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
@@ -342,11 +343,12 @@ gimp_tag_entry_activate (GtkEntry *entry)
                                   selection_end, selection_end);
     }
 
-  for (iterator = tag_entry->selected_items; iterator;
+  for (iterator = tag_entry->selected_items;
+       iterator;
        iterator = g_list_next (iterator))
     {
       if (gimp_container_have (GIMP_CONTAINER (tag_entry->container),
-                               GIMP_OBJECT(iterator->data)))
+                               GIMP_OBJECT (iterator->data)))
         {
           break;
         }
@@ -448,10 +450,12 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
     {
       is_tag[0] = (entry->mask->str[*position - 1] == 't' || entry->mask->str[*position - 1] == 's');
     }
+
   is_tag[1] = (entry->mask->str[*position] == 't' || entry->mask->str[*position] == 's');
+
   if (is_tag[0] && is_tag[1])
     {
-      g_signal_stop_emission_by_name (editable, "insert_text");
+      g_signal_stop_emission_by_name (editable, "insert-text");
     }
   else if (num_chars > 0)
     {
@@ -478,7 +482,7 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
                                              G_CALLBACK (gimp_tag_entry_insert_text),
                                              NULL);
 
-          g_signal_stop_emission_by_name (editable, "insert_text");
+          g_signal_stop_emission_by_name (editable, "insert-text");
         }
       else if (! entry->internal_operation
                && num_chars == 1
@@ -503,7 +507,7 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
                                              G_CALLBACK (gimp_tag_entry_insert_text),
                                              NULL);
 
-          g_signal_stop_emission_by_name (editable, "insert_text");
+          g_signal_stop_emission_by_name (editable, "insert-text");
         }
 
       if (! entry->suppress_mask_update)
@@ -556,7 +560,7 @@ gimp_tag_entry_delete_text (GtkEditable *editable,
                                          gimp_tag_entry_delete_text,
                                          NULL);
 
-      g_signal_stop_emission_by_name (editable, "delete_text");
+      g_signal_stop_emission_by_name (editable, "delete-text");
     }
   else
     {
@@ -611,6 +615,7 @@ gimp_tag_entry_query_tag (GimpTagEntry *entry)
     }
 
   entry->tag_query_pending = FALSE;
+
   return FALSE;
 }
 
@@ -644,7 +649,8 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
       tag_entry->internal_operation--;
     }
 
-  gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry), &start_position, &end_position);
+  gtk_editable_get_selection_bounds (GTK_EDITABLE (tag_entry),
+                                     &start_position, &end_position);
   if (start_position != end_position)
     {
       /* only autocomplete what user types,
@@ -653,12 +659,12 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
     }
 
   completion_prefix =
-      gimp_tag_entry_get_completion_prefix (GIMP_TAG_ENTRY (entry));
+    gimp_tag_entry_get_completion_prefix (GIMP_TAG_ENTRY (entry));
   tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (entry));
   completion_candidates =
-      gimp_tag_entry_get_completion_candidates (GIMP_TAG_ENTRY (entry),
-                                                tags,
-                                                completion_prefix);
+    gimp_tag_entry_get_completion_candidates (GIMP_TAG_ENTRY (entry),
+                                              tags,
+                                              completion_prefix);
   completion_candidates = g_list_sort (completion_candidates,
                                        gimp_tag_compare_func);
 
@@ -734,7 +740,8 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
     }
   g_strfreev (parsed_tags);
 
-  for (selected_iterator = tag_entry->selected_items; selected_iterator;
+  for (selected_iterator = tag_entry->selected_items;
+       selected_iterator;
        selected_iterator = g_list_next (selected_iterator))
     {
       selected_item = GIMP_TAGGED (selected_iterator->data);
@@ -751,17 +758,19 @@ gimp_tag_entry_item_set_tags (GimpTagged *tagged,
   GList *tags_iterator;
 
   old_tags = g_list_copy (gimp_tagged_get_tags (tagged));
-  for (tags_iterator = old_tags; tags_iterator;
+  for (tags_iterator = old_tags;
+       tags_iterator;
        tags_iterator = g_list_next (tags_iterator))
     {
-      gimp_tagged_remove_tag (tagged, GIMP_TAG (tags_iterator->data));
+      gimp_tagged_remove_tag (tagged, tags_iterator->data);
     }
   g_list_free (old_tags);
 
-  for (tags_iterator = tags; tags_iterator;
+  for (tags_iterator = tags;
+       tags_iterator;
        tags_iterator = g_list_next (tags_iterator))
     {
-      gimp_tagged_add_tag (tagged, GIMP_TAG (tags_iterator->data));
+      gimp_tagged_add_tag (tagged, tags_iterator->data);
     }
 }
 
@@ -855,7 +864,8 @@ gimp_tag_entry_set_selected_items (GimpTagEntry *tag_entry,
 
   tag_entry->selected_items = g_list_copy (items);
 
-  for (iterator = tag_entry->selected_items; iterator;
+  for (iterator = tag_entry->selected_items;
+       iterator;
        iterator = g_list_next (iterator))
     {
       if (gimp_tagged_get_tags (GIMP_TAGGED (iterator->data))
@@ -911,7 +921,8 @@ gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
     {
       tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
     }
-  for (tag_iterator = tag_list; tag_iterator;
+  for (tag_iterator = tag_list;
+       tag_iterator;
        tag_iterator = g_list_next (tag_iterator))
     {
       tag = GIMP_TAG (tag_iterator->data);
@@ -993,7 +1004,8 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry  *tag_entry,
 
   all_tags = g_hash_table_get_keys (tag_entry->container->tag_ref_counts);
   length = g_strv_length (used_tags);
-  for (tag_iterator = all_tags; tag_iterator;
+  for (tag_iterator = all_tags;
+       tag_iterator;
        tag_iterator = g_list_next (tag_iterator))
     {
       tag = GIMP_TAG (tag_iterator->data);
@@ -1142,9 +1154,10 @@ gimp_tag_entry_container_changed (GimpContainer *container,
 {
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
-      GList        *selected_iterator = tag_entry->selected_items;
+      GList *selected_iterator = tag_entry->selected_items;
 
-      for (selected_iterator = tag_entry->selected_items; selected_iterator;
+      for (selected_iterator = tag_entry->selected_items;
+           selected_iterator;
            selected_iterator = g_list_next (selected_iterator))
         {
           if (gimp_tagged_get_tags (GIMP_TAGGED (selected_iterator->data))
@@ -1248,11 +1261,14 @@ gimp_tag_entry_expose (GtkWidget      *widget,
 
   context = gtk_widget_create_pango_context (GTK_WIDGET (widget));
   layout = pango_layout_new (context);
+
   attr_list = pango_attr_list_new ();
   attribute = pango_attr_style_new (PANGO_STYLE_ITALIC);
   pango_attr_list_insert (attr_list, attribute);
+
   pango_layout_set_attributes (layout, attr_list);
-  GTK_IS_WIDGET (widget);
+  pango_attr_list_unref (attr_list);
+
   renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), event->window);
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
@@ -1297,108 +1313,106 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
 
   switch (event->keyval)
     {
-      case GDK_Tab:
-            {
-              entry->tab_completion_index++;
-              entry->suppress_tag_query++;
-              g_idle_add ((GSourceFunc) gimp_tag_entry_auto_complete, entry);
-            }
-          return TRUE;
+    case GDK_Tab:
+      entry->tab_completion_index++;
+      entry->suppress_tag_query++;
+      g_idle_add ((GSourceFunc) gimp_tag_entry_auto_complete, entry);
+      return TRUE;
 
-      case GDK_Return:
-          gimp_tag_entry_commit_tags (entry);
-          break;
+    case GDK_Return:
+      gimp_tag_entry_commit_tags (entry);
+      break;
 
-      case GDK_Left:
-          gimp_tag_entry_previous_tag (entry,
-                                       (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
-          return TRUE;
-
-      case GDK_Right:
-          gimp_tag_entry_next_tag (entry,
+    case GDK_Left:
+      gimp_tag_entry_previous_tag (entry,
                                    (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
-          return TRUE;
+      return TRUE;
 
-      case GDK_BackSpace:
+    case GDK_Right:
+      gimp_tag_entry_next_tag (entry,
+                               (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
+      return TRUE;
+
+    case GDK_BackSpace:
+      {
+        gint selection_start;
+        gint selection_end;
+
+        gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
+                                           &selection_start, &selection_end);
+        if (gimp_tag_entry_select_jellybean (entry,
+                                             selection_start, selection_end,
+                                             TAG_SEARCH_LEFT))
+          {
+            return TRUE;
+          }
+        else
+          {
+            gimp_tag_entry_select_for_deletion (entry, TAG_SEARCH_LEFT);
+            /* FIXME: need to remove idle handler in dispose */
+            g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
+                        entry);
+          }
+      }
+      break;
+
+    case GDK_Delete:
+      {
+        gint selection_start;
+        gint selection_end;
+
+        gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
+                                           &selection_start, &selection_end);
+        if (gimp_tag_entry_select_jellybean (entry,
+                                             selection_start, selection_end,
+                                             TAG_SEARCH_RIGHT))
+          {
+            return TRUE;
+          }
+        else
+          {
+            gimp_tag_entry_select_for_deletion (entry, TAG_SEARCH_RIGHT);
+            /* FIXME: need to remove idle handler in dispose */
+            g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
+                        entry);
+          }
+      }
+      break;
+
+    case GDK_Up:
+    case GDK_Down:
+      if (entry->recent_list != NULL)
+        {
+          gchar *recent_item;
+          gchar *very_recent_item;
+
+          very_recent_item = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+          gimp_tag_entry_add_to_recent (entry, very_recent_item, TRUE);
+          g_free (very_recent_item);
+
+          if (event->keyval == GDK_Up)
             {
-              gint selection_start;
-              gint selection_end;
-
-              gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
-                                                 &selection_start, &selection_end);
-              if (gimp_tag_entry_select_jellybean (entry,
-                                                   selection_start, selection_end,
-                                                   TAG_SEARCH_LEFT))
-                {
-                  return TRUE;
-                }
-              else
-                {
-                  gimp_tag_entry_select_for_deletion (entry, TAG_SEARCH_LEFT);
-                  /* FIXME: need to remove idle handler in dispose */
-                  g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
-                              entry);
-                }
-            }
-          break;
-
-      case GDK_Delete:
-            {
-              gint selection_start;
-              gint selection_end;
-
-              gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
-                                                 &selection_start, &selection_end);
-              if (gimp_tag_entry_select_jellybean (entry,
-                                                   selection_start, selection_end,
-                                                   TAG_SEARCH_RIGHT))
-                {
-                  return TRUE;
-                }
-              else
-                {
-                  gimp_tag_entry_select_for_deletion (entry, TAG_SEARCH_RIGHT);
-                  /* FIXME: need to remove idle handler in dispose */
-                  g_idle_add ((GSourceFunc) gimp_tag_entry_strip_extra_whitespace,
-                              entry);
-                }
-            }
-          break;
-
-      case GDK_Up:
-      case GDK_Down:
-          if (entry->recent_list != NULL)
-            {
-              gchar *recent_item;
-              gchar *very_recent_item;
-
-              very_recent_item = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
-              gimp_tag_entry_add_to_recent (entry, very_recent_item, TRUE);
-              g_free (very_recent_item);
-
-              if (event->keyval == GDK_Up)
-                {
-                  recent_item = (gchar *) g_list_first (entry->recent_list)->data;
-                  entry->recent_list = g_list_remove (entry->recent_list, recent_item);
-                  entry->recent_list = g_list_append (entry->recent_list, recent_item);
-                }
-              else
-                {
-                  recent_item = (gchar *) g_list_last (entry->recent_list)->data;
-                  entry->recent_list = g_list_remove (entry->recent_list, recent_item);
-                  entry->recent_list = g_list_prepend (entry->recent_list, recent_item);
-                }
-
               recent_item = (gchar *) g_list_first (entry->recent_list)->data;
-              entry->internal_operation++;
-              gtk_entry_set_text (GTK_ENTRY (entry), recent_item);
-              gtk_editable_set_position (GTK_EDITABLE (entry), -1);
-              entry->internal_operation--;
+              entry->recent_list = g_list_remove (entry->recent_list, recent_item);
+              entry->recent_list = g_list_append (entry->recent_list, recent_item);
             }
-          return TRUE;
+          else
+            {
+              recent_item = (gchar *) g_list_last (entry->recent_list)->data;
+              entry->recent_list = g_list_remove (entry->recent_list, recent_item);
+              entry->recent_list = g_list_prepend (entry->recent_list, recent_item);
+            }
 
-      default:
-          break;
+          recent_item = (gchar *) g_list_first (entry->recent_list)->data;
+          entry->internal_operation++;
+          gtk_entry_set_text (GTK_ENTRY (entry), recent_item);
+          gtk_editable_set_position (GTK_EDITABLE (entry), -1);
+          entry->internal_operation--;
+        }
+      return TRUE;
+
+    default:
+      break;
     }
 
   return FALSE;
@@ -1463,70 +1477,68 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
 
   switch (search_dir)
     {
-      case TAG_SEARCH_NONE:
-            {
-              if (selection_start > 0
-                  && entry->mask->str[selection_start] == 's')
-                {
-                  selection_start--;
-                }
+    case TAG_SEARCH_NONE:
+      if (selection_start > 0
+          && entry->mask->str[selection_start] == 's')
+        {
+          selection_start--;
+        }
 
-              if (selection_start > 0
-                  && (entry->mask->str[selection_start - 1] == 'w')
-                  && (entry->mask->str[selection_start] == 't'))
-                {
-                  /* between whitespace and tag,
-                   * should allow to select tag. */
-                  selection_start--;
-                }
+      if (selection_start > 0
+          && (entry->mask->str[selection_start - 1] == 'w')
+          && (entry->mask->str[selection_start] == 't'))
+        {
+          /* between whitespace and tag,
+           * should allow to select tag.
+           */
+          selection_start--;
+        }
+      break;
+
+    case TAG_SEARCH_LEFT:
+      if (selection_start == selection_end)
+        {
+          if (selection_start > 0
+              && entry->mask->str[selection_start] == 't'
+              && entry->mask->str[selection_start - 1] == 'w')
+            {
+              selection_start--;
             }
-          break;
 
-      case TAG_SEARCH_LEFT:
+          if ((entry->mask->str[selection_start] == 'w'
+               || entry->mask->str[selection_start] == 's')
+              && selection_start > 0)
             {
-              if (selection_start == selection_end)
-                {
-                  if (selection_start > 0
-                      && entry->mask->str[selection_start] == 't'
-                      && entry->mask->str[selection_start - 1] == 'w')
-                    {
-                      selection_start--;
-                    }
-                  if ((entry->mask->str[selection_start] == 'w'
-                       || entry->mask->str[selection_start] == 's')
-                      && selection_start > 0)
-                    {
-                      while ((entry->mask->str[selection_start] == 'w'
-                              || entry->mask->str[selection_start] == 's')
-                             && selection_start > 0)
-                        {
-                          selection_start--;
-                        }
-                      selection_end = selection_start + 1;
-                    }
-                }
-            }
-          break;
-
-      case TAG_SEARCH_RIGHT:
-            {
-              if (selection_start == selection_end)
-                {
-                  if ((entry->mask->str[selection_start] == 'w'
+              while ((entry->mask->str[selection_start] == 'w'
                       || entry->mask->str[selection_start] == 's')
-                      && selection_start < entry->mask->len - 1)
-                        {
-                          while ((entry->mask->str[selection_start] == 'w'
-                                  || entry->mask->str[selection_start] == 's')
-                                 && selection_start < entry->mask->len - 1)
-                            {
-                              selection_start++;
-                            }
-                          selection_end = selection_start + 1;
-                        }
+                     && selection_start > 0)
+                {
+                  selection_start--;
                 }
+
+              selection_end = selection_start + 1;
             }
-          break;
+        }
+      break;
+
+    case TAG_SEARCH_RIGHT:
+      if (selection_start == selection_end)
+        {
+          if ((entry->mask->str[selection_start] == 'w'
+               || entry->mask->str[selection_start] == 's')
+              && selection_start < entry->mask->len - 1)
+            {
+              while ((entry->mask->str[selection_start] == 'w'
+                      || entry->mask->str[selection_start] == 's')
+                     && selection_start < entry->mask->len - 1)
+                {
+                  selection_start++;
+                }
+
+              selection_end = selection_start + 1;
+            }
+        }
+      break;
     }
 
   if (selection_start < entry->mask->len
@@ -1624,7 +1636,8 @@ gimp_tag_entry_add_to_recent (GimpTagEntry *entry,
       g_free (last_item);
     }
 
-  for (tags_iterator = entry->recent_list; tags_iterator;
+  for (tags_iterator = entry->recent_list;
+       tags_iterator;
        tags_iterator = g_list_next (tags_iterator))
     {
       if (! strcmp (tags_string, tags_iterator->data))
@@ -2102,4 +2115,3 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
 
   return FALSE;
 }
-

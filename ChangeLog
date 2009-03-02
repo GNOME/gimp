@@ -1,3 +1,11 @@
+2009-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcombotagentry.c
+	* app/widgets/gimptagentry.c: indentation, spacing, some general
+	formatting cleanup.
+
+	(gimp_tag_entry_expose): don't leak the PangoAttrList.
+
 2009-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/ripple.c: use enum GimpOrientationType instead

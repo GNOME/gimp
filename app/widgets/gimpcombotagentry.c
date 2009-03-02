@@ -71,13 +71,13 @@ G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GIMP_TYPE_TAG_ENTRY);
 static void
 gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
 {
-  GObjectClass         *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass       *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor     = gimp_combo_tag_entry_constructor;
-  object_class->dispose         = gimp_combo_tag_entry_dispose;
+  object_class->constructor = gimp_combo_tag_entry_constructor;
+  object_class->dispose     = gimp_combo_tag_entry_dispose;
 
-  widget_class->style_set       = gimp_combo_tag_entry_style_set;
+  widget_class->style_set   = gimp_combo_tag_entry_style_set;
 }
 
 static void
@@ -108,7 +108,6 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
   border.top    = 2;
   border.bottom = 2;
   gtk_entry_set_inner_border (GTK_ENTRY (entry), &border);
-
 
   g_signal_connect_after (entry, "expose-event",
                           G_CALLBACK (gimp_combo_tag_entry_expose_event),
@@ -251,12 +250,11 @@ gimp_combo_tag_entry_event (GtkWidget *widget,
 
   if (event->type == GDK_BUTTON_PRESS)
     {
-      GdkEventButton   *button_event;
+      GdkEventButton   *button_event = (GdkEventButton *) event;
       gint              x;
       gint              y;
       GdkRectangle      arrow_rect;
 
-      button_event = (GdkEventButton *) event;
       x = button_event->x;
       y = button_event->y;
 
@@ -393,4 +391,3 @@ gimp_combo_tag_entry_get_arrow_rect (GimpComboTagEntry *entry,
   arrow_rect->width = 12;
   arrow_rect->height = widget->allocation.height - widget->style->ythickness * 2;
 }
-
