@@ -1,3 +1,8 @@
+2009-03-02  Danishka Navin  <danishka@gmail.com>
+
+	* si.po: Added Sinhala translation
+	* si.po: Translation updated by Srishanu Loupathirage
+
 2009-03-01  Priit Laes  <plaes at svn dot gnome dot org>
 
 	* et.po: Translation updated by Mattias Põldaru
@@ -371,7 +376,7 @@
 
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
-	* LINGUAS: added missing languages: am, az, hi, ka, lv, ml, th, zh_HK.
+	* LINGUAS: ed missing languages: am, az, hi, ka, lv, ml, th, zh_HK.
 
 2008-09-02  Sven Neumann  <sven@gimp.org>
 
