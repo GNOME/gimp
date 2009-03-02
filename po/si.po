@@ -1,20 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Danishka Navin <danishka@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: si\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-01 21:51+0000\n"
-"PO-Revision-Date: 2009-03-02 23:47+0530\n"
-"Last-Translator: \n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2009-03-03 00:01+0530\n"
+"Last-Translator: Danishka Navin <danishka@gmail.com>\n"
+"Language-Team: Sinhalese <danishka@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 0.3\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -7919,7 +7919,7 @@ msgstr ""
 #: ../app/dialogs/about-dialog.c:113
 #: ../app/gui/gui.c:478
 msgid "About GIMP"
-msgstr ""
+msgstr "GIMP පිළිබඳ"
 
 #: ../app/dialogs/about-dialog.c:122
 msgid "Visit the GIMP website"
@@ -13970,4 +13970,5 @@ msgstr ""
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr ""
+
 
