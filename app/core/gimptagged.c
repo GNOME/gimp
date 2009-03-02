@@ -36,6 +36,7 @@ enum
   LAST_SIGNAL
 };
 
+
 static void  gimp_tagged_base_init (gpointer klass);
 
 static guint gimp_tagged_signals[LAST_SIGNAL] = { 0, };
@@ -80,6 +81,7 @@ gimp_tagged_base_init (gpointer klass)
                       g_cclosure_marshal_VOID__OBJECT,
                       G_TYPE_NONE, 1,
                       GIMP_TYPE_TAG);
+
       gimp_tagged_signals[TAG_REMOVED] =
         g_signal_new ("tag-removed",
                       GIMP_TYPE_TAGGED,
@@ -104,8 +106,8 @@ gimp_tagged_base_init (gpointer klass)
  * object.
  **/
 void
-gimp_tagged_add_tag (GimpTagged    *tagged,
-                     GimpTag       *tag)
+gimp_tagged_add_tag (GimpTagged *tagged,
+                     GimpTag    *tag)
 {
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
 
@@ -133,6 +135,40 @@ gimp_tagged_remove_tag (GimpTagged *tagged,
   if (GIMP_TAGGED_GET_INTERFACE (tagged)->remove_tag (tagged, tag))
     {
       g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0, tag);
+    }
+}
+
+/**
+ * gimp_tagged_set_tags:
+ * @tagged: an object that implements the %GimpTagged interface
+ * @tags: a list of tags
+ *
+ * Sets the list of tags assigned to this object. The passed list of
+ * tags is copied and should be freed by the caller.
+ **/
+void
+gimp_tagged_set_tags (GimpTagged *tagged,
+                      GList      *tags)
+{
+  GList *old_tags;
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TAGGED (tagged));
+
+  old_tags = g_list_copy (gimp_tagged_get_tags (tagged));
+
+  for (list = old_tags; list; list = g_list_next (list))
+    {
+      gimp_tagged_remove_tag (tagged, list->data);
+    }
+
+  g_list_free (old_tags);
+
+  for (list = tags; list; list = g_list_next (list))
+    {
+      g_return_if_fail (GIMP_IS_TAG (list->data));
+
+      gimp_tagged_add_tag (tagged, list->data);
     }
 }
 

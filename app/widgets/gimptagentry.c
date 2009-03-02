@@ -93,8 +93,6 @@ static gboolean gimp_tag_entry_key_press                 (GtkWidget        *widg
 static gboolean gimp_tag_entry_query_tag                 (GimpTagEntry     *entry);
 
 static void     gimp_tag_entry_assign_tags               (GimpTagEntry     *entry);
-static void     gimp_tag_entry_item_set_tags             (GimpTagged       *entry,
-                                                          GList            *tags);
 static void     gimp_tag_entry_load_selection            (GimpTagEntry     *entry,
                                                           gboolean          sort);
 
@@ -720,15 +718,15 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
 static void
 gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
 {
-  GList       *selected_iterator = NULL;
-  GimpTagged  *selected_item;
-  gchar      **parsed_tags;
-  gint         count;
-  gint         i;
-  GimpTag     *tag;
-  GList       *tag_list = NULL;
+  GList    *selected_iterator = NULL;
+  gchar   **parsed_tags;
+  gint      count;
+  gint      i;
+  GimpTag  *tag;
+  GList    *tag_list = NULL;
 
   parsed_tags = gimp_tag_entry_parse_tags (tag_entry);
+
   count = g_strv_length (parsed_tags);
   for (i = 0; i < count; i++)
     {
@@ -744,34 +742,10 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
        selected_iterator;
        selected_iterator = g_list_next (selected_iterator))
     {
-      selected_item = GIMP_TAGGED (selected_iterator->data);
-      gimp_tag_entry_item_set_tags (selected_item, tag_list);
+      gimp_tagged_set_tags (selected_iterator->data, tag_list);
     }
+
   g_list_free (tag_list);
-}
-
-static void
-gimp_tag_entry_item_set_tags (GimpTagged *tagged,
-                              GList      *tags)
-{
-  GList *old_tags;
-  GList *tags_iterator;
-
-  old_tags = g_list_copy (gimp_tagged_get_tags (tagged));
-  for (tags_iterator = old_tags;
-       tags_iterator;
-       tags_iterator = g_list_next (tags_iterator))
-    {
-      gimp_tagged_remove_tag (tagged, tags_iterator->data);
-    }
-  g_list_free (old_tags);
-
-  for (tags_iterator = tags;
-       tags_iterator;
-       tags_iterator = g_list_next (tags_iterator))
-    {
-      gimp_tagged_add_tag (tagged, tags_iterator->data);
-    }
 }
 
 /**

@@ -1,5 +1,14 @@
 2009-03-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimptagged.[ch]: add gimp_tagged_set_tags() which
+	takes a GList of tags.
+
+	* app/widgets/gimptagentry.c (gimp_tag_entry_assign_tags): use it.
+
+	(gimp_tag_entry_item_set_tags): remove.
+
+2009-03-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcombotagentry.c
 	* app/widgets/gimptagentry.c: indentation, spacing, some general
 	formatting cleanup.
