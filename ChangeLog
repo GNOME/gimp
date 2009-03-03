@@ -1,3 +1,11 @@
+2009-03-03  Sven Neumann  <sven@gimp.org>
+
+	Bug 520078 – Rotate brushes
+
+	* app/core/gimpbrush-transform.c: applied patch from Tal that
+	improves bilinear interpolation for the brush transformations and
+	fixes a bug in the calculation of the transformation matrix.
+
 2009-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpfilteredcontainer.[ch]

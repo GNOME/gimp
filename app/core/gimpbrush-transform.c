@@ -126,7 +126,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    * tl, tr etc are used because it is easier to visualize top left, top right etc
    * corners of the forward transformed source image rectangle.
    */
-  const gint fraction_bits = 8;
+  const gint fraction_bits = 12;
   const gint int_multiple  = pow(2,fraction_bits);
 
   /* In inner loop's bilinear calculation, two numbers that were each previously multiplied by
@@ -165,10 +165,18 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL); //3 instead of 1
+  result = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL);
 
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (brush->mask);
+
+  /* prevent disappearance of 1x1 pixel brush at some rotations when scaling < 1 */
+  /*
+  if (src_width == 1 && src_height == 1 && scale_x < 1 && scale_y < 1 )
+    {
+      *dest = src[0];
+      return result;
+    }*/
 
   gimp_matrix3_transform_point (&matrix, 0,          0,           &tlx, &tly);
   gimp_matrix3_transform_point (&matrix, dest_width, 0,           &trx, &try);
@@ -220,9 +228,6 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
               /* no corresponding pixel in source space */
             {
               *dest = 0;
-           /* dest[0] = 0;
-              dest[1] = 0;
-              dest[2] = 0;*/
             }
           else /* reverse transformed point hits source pixel */
             {
@@ -361,7 +366,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
    * tl, tr etc are used because it is easier to visualize top left, top right etc
    * corners of the forward transformed source image rectangle.
    */
-  const gint fraction_bits = 8;
+  const gint fraction_bits = 12;
   const gint int_multiple  = pow(2,fraction_bits);
 
   /* In inner loop's bilinear calculation, two numbers that were each previously multiplied by
@@ -550,7 +555,7 @@ gimp_brush_transform_matrix (GimpBrush   *brush,
   const gdouble center_y = brush->mask->height / 2;
 
   gimp_matrix3_identity (matrix);
-  gimp_matrix3_translate (matrix, - center_x, - center_x);
+  gimp_matrix3_translate (matrix, - center_x, - center_y);
   gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
   gimp_matrix3_translate (matrix, center_x, center_y);
   gimp_matrix3_scale (matrix, scale_x, scale_y);
