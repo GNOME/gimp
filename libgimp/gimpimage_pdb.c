@@ -2349,7 +2349,8 @@ gimp_image_set_component_visible (gint32          image_ID,
  *
  * This procedure returns the specified image's filename in the
  * filesystem encoding. The image has a filename only if it was loaded
- * or has since been saved. Otherwise, this function returns %NULL.
+ * from a local filesystem or has since been saved locally. Otherwise,
+ * this function returns %NULL.
  *
  * Returns: The filename.
  */

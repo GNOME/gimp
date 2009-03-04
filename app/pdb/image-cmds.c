@@ -4623,7 +4623,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-filename",
                                      "Returns the specified image's filename.",
-                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded or has since been saved. Otherwise, this function returns %NULL.",
+                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded from a local filesystem or has since been saved locally. Otherwise, this function returns %NULL.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

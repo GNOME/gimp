@@ -1,5 +1,13 @@
 2009-03-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (image_get_filename): improved docs
+	for gimp-image-get-filename.
+
+	* app/pdb/image-cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+2009-03-04  Sven Neumann  <sven@gimp.org>
+
 	Bug 574149 – Can't get name/filename of files loaded from URI
 
 	* tools/pdbgen/pdb/image.pdb (image_get_name_invoker): use
