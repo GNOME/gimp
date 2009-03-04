@@ -534,7 +534,7 @@ image_rotate_invoker (GimpProcedure      *procedure,
       gimp_image_rotate (image, context, rotate_type, progress);
 
       if (progress)
-        gimp_progress_end (progress);  
+        gimp_progress_end (progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2189,12 +2189,7 @@ image_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gchar *filename = gimp_image_get_filename (image);
-
-      if (filename)
-        name = g_filename_display_basename (filename);
-      else
-        name = g_strdup (_("Untitled"));
+      name = g_strdup (gimp_image_get_display_name (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -4688,7 +4683,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-name",
                                      "Returns the specified image's name.",
-                                     "This procedure returns the specified image's name.",
+                                     "This procedure returns the image's name. If the image has a filename, then this is the base name (the last component of the path).",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

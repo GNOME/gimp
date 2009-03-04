@@ -428,7 +428,7 @@ sub image_rotate {
   gimp_image_rotate (image, context, rotate_type, progress);
 
   if (progress)
-    gimp_progress_end (progress);  
+    gimp_progress_end (progress);
 }
 CODE
     );
@@ -2212,7 +2212,10 @@ CODE
 
 sub image_get_name {
     $blurb = "Returns the specified image's name.";
-    $help  = "This procedure returns the specified image's name.";
+    $help  =  <<'HELP';
+This procedure returns the image's name. If the image has a filename,
+then this is the base name (the last component of the path).
+HELP
 
     &std_pdb_misc;
 
@@ -2229,12 +2232,7 @@ sub image_get_name {
     %invoke = (
 	code => <<'CODE'
 {
-  gchar *filename = gimp_image_get_filename (image);
-
-  if (filename)
-    name = g_filename_display_basename (filename);
-  else
-    name = g_strdup (_("Untitled"));
+  name = g_strdup (gimp_image_get_display_name (image));
 }
 CODE
     );
@@ -2244,7 +2242,7 @@ sub image_get_resolution {
     $blurb = "Returns the specified image's resolution.";
 
     $help = <<'HELP';
-This procedure returns the specified image's resolution in dots per inch. 
+This procedure returns the specified image's resolution in dots per inch.
 This value is independent of any of the layers in this image.
 HELP
 
@@ -2275,7 +2273,7 @@ sub image_set_resolution {
     $blurb = "Sets the specified image's resolution.";
 
     $help = <<'HELP';
-This procedure sets the specified image's resolution in dots per inch. 
+This procedure sets the specified image's resolution in dots per inch.
 This value is independent of any of the layers in this image.
 No scaling or resizing is performed.
 HELP

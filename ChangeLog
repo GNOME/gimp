@@ -1,3 +1,13 @@
+2009-03-04  Sven Neumann  <sven@gimp.org>
+
+	Bug 574149 – Can't get name/filename of files loaded from URI
+
+	* tools/pdbgen/pdb/image.pdb (image_get_name_invoker): use
+	gimp_image_get_display_name().
+
+	* app/pdb/image-cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2009-03-03  Sven Neumann  <sven@gimp.org>
 
 	Bug 520078 – Rotate brushes
