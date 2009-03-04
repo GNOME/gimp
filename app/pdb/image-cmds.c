@@ -2173,6 +2173,35 @@ image_set_filename_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+image_get_uri_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  gchar *uri = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
+      uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (image)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], uri);
+
+  return return_vals;
+}
+
+static GValueArray *
 image_get_name_invoker (GimpProcedure      *procedure,
                         Gimp               *gimp,
                         GimpContext        *context,
@@ -4623,7 +4652,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-filename",
                                      "Returns the specified image's filename.",
-                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded from a local filesystem or has since been saved locally. Otherwise, this function returns %NULL.",
+                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded from a local filesystem or has since been saved locally. Otherwise, this function returns %NULL. See also 'gimp-image-get-uri'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -4675,6 +4704,36 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-get-uri
+   */
+  procedure = gimp_procedure_new (image_get_uri_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-uri");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-uri",
+                                     "Returns the URI for the specified image.",
+                                     "This procedure returns the URI associated with the specified image. The image has an URI only if it was loaded from a file or has since been saved. Otherwise, this function returns %NULL.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("uri",
+                                                           "uri",
+                                                           "The URI",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-get-name
    */
   procedure = gimp_procedure_new (image_get_name_invoker);
@@ -4683,7 +4742,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-name",
                                      "Returns the specified image's name.",
-                                     "This procedure returns the image's name. If the image has a filename, then this is the base name (the last component of the path).",
+                                     "This procedure returns the image's name. If the image has a filename or an URI, then this is the base name (the last component of the path). Otherwise it is the translated string \"Untitled\".",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

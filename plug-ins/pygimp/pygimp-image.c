@@ -1100,6 +1100,23 @@ img_set_filename(PyGimpImage *self, PyObject *value, void *closure)
 }
 
 static PyObject *
+img_get_uri(PyGimpImage *self, void *closure)
+{
+    gchar *uri;
+
+    uri = gimp_image_get_uri(self->ID);
+
+    if (uri) {
+	PyObject *ret = PyString_FromString(uri);
+	g_free(uri);
+	return ret;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 img_get_floating_selection(PyGimpImage *self, void *closure)
 {
     gint32 id;
@@ -1311,6 +1328,7 @@ static PyGetSetDef img_getsets[] = {
     { "tattoo_state", (getter)img_get_tattoo_state,
       (setter)img_set_tattoo_state },
     { "unit", (getter)img_get_unit, (setter)img_set_unit },
+    { "uri", (getter)img_get_uri, (setter)0 },
     { "vectors", (getter)img_get_vectors, (setter)0 },
     { "width", (getter)img_get_width, (setter)0 },
     { NULL, (getter)0, (setter)0 }

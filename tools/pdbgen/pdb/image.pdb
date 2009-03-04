@@ -2143,7 +2143,7 @@ sub image_get_filename {
 This procedure returns the specified image's filename in the
 filesystem encoding. The image has a filename only if it was loaded
 from a local filesystem or has since been saved locally. Otherwise,
-this function returns %NULL.
+this function returns %NULL. See also gimp_image_get_uri().
 HELP
 
     &std_pdb_misc;
@@ -2211,11 +2211,42 @@ CODE
     );
 }
 
+sub image_get_uri {
+    $blurb = "Returns the URI for the specified image.";
+
+    $help = <<'HELP';
+This procedure returns the URI associated with the specified image.
+The image has an URI only if it was loaded from a file or has since
+been saved. Otherwise, this function returns %NULL.
+HELP
+
+    &neo_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'uri', type => 'string',
+	  desc => 'The URI' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (image)));
+}
+CODE
+    );
+}
+
 sub image_get_name {
     $blurb = "Returns the specified image's name.";
     $help  =  <<'HELP';
-This procedure returns the image's name. If the image has a filename,
-then this is the base name (the last component of the path).
+This procedure returns the image's name. If the image has a filename or
+an URI, then this is the base name (the last component of the path).
+Otherwise it is the translated string "Untitled".
 HELP
 
     &std_pdb_misc;
@@ -2666,7 +2697,8 @@ CODE
 	    image_get_component_active image_set_component_active
 	    image_get_component_visible image_set_component_visible
 	    image_get_filename image_set_filename
-	    image_get_name
+	    image_get_uri
+            image_get_name
 	    image_get_resolution image_set_resolution
 	    image_get_unit image_set_unit
 	    image_get_tattoo_state image_set_tattoo_state
@@ -2674,7 +2706,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..46,49..76]]);
+%exports = (app => [@procs], lib => [@procs[0..46,49..77]]);
 
 $desc = 'Image';
 
