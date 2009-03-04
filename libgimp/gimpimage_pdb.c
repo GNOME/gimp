@@ -2413,9 +2413,7 @@ gimp_image_set_filename (gint32       image_ID,
  *
  * Returns the specified image's name.
  *
- * This procedure returns the image's name. If the image has a
- * filename, then this is the base name (the last component of the
- * path).
+ * This procedure returns the specified image's name.
  *
  * Returns: The name.
  */

@@ -1,15 +1,3 @@
-2009-03-04  Sven Neumann  <sven@gimp.org>
-
-	Merged from trunk:
-
-	Bug 574149 – Can't get name/filename of files loaded from URI
-
-	* tools/pdbgen/pdb/image.pdb (image_get_name_invoker): use
-	gimp_image_get_display_name().
-
-	* app/pdb/image-cmds.c
-	* libgimp/gimpimage_pdb.c: regenerated.
-
 2009-03-02  Sven Neumann  <sven@gimp.org>
 
 	Fix compilation with GEGL from trunk:
