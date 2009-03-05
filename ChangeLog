@@ -1,3 +1,7 @@
+2009-03-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/file-pnm.c: 
+
 2009-03-04  Sven Neumann  <sven@gimp.org>
 
 	Bug 574149 – Can't get name/filename of files loaded from URI
