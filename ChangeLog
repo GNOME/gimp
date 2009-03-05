@@ -1,5 +1,13 @@
 2009-03-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/file-uri/Makefile.am
+	* plug-ins/file-uri/gimpmountoperation.[ch]: removed these files.
+
+	* plug-ins/file-uri/uri-backend-gvfs.c: use GtkMountOperation
+	instead of our copy of this widget.
+
+2009-03-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: depend on GTK+ >= 2.14.4.
 
 	* INSTALL: changed accordingly.

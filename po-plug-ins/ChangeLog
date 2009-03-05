@@ -1,6 +1,10 @@
+2009-03-05  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed plug-ins/file-uri/gimpmountoperation.c.
+
 2009-02-27  Marco Ciampa  <ciampix@libero.it>
 
-<------>* it.po: small fix in italian translation.
+	* it.po: small fix in italian translation.
 
 2009-02-19  Marco Ciampa <ciampix@libero.it>
 

@@ -19,7 +19,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = file-uri
 
 if HAVE_GVFS
-backend_sources = gimpmountoperation.c gimpmountoperation.h uri-backend-gvfs.c
+backend_sources = uri-backend-gvfs.c
 backend_cflags = $(GIO_CFLAGS)
 backend_libs = $(GIO_LIBS)
 else

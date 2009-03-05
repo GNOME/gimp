@@ -27,7 +27,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpmountoperation.h"
 #include "uri-backend.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -254,7 +253,7 @@ static gboolean
 mount_enclosing_volume (GFile   *file,
                         GError **error)
 {
-  GMountOperation *operation = gimp_mount_operation_new (NULL);
+  GMountOperation *operation = gtk_mount_operation_new (NULL);
 
   g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
                                  operation,
