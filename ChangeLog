@@ -1,3 +1,7 @@
+2009-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpuimanager.c: formatting.
+
 2009-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/blinds.c: use enum GimpOrientationType instead

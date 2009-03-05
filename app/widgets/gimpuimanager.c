@@ -297,9 +297,11 @@ gimp_ui_manager_set_property (GObject      *object,
       g_free (manager->name);
       manager->name = g_value_dup_string (value);
       break;
+
     case PROP_GIMP:
       manager->gimp = g_value_get_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -319,9 +321,11 @@ gimp_ui_manager_get_property (GObject    *object,
     case PROP_NAME:
       g_value_set_string (value, manager->name);
       break;
+
     case PROP_GIMP:
       g_value_set_object (value, manager->gimp);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -334,8 +338,7 @@ gimp_ui_manager_connect_proxy (GtkUIManager *manager,
                                GtkWidget    *proxy)
 {
   g_object_set_qdata (G_OBJECT (proxy), GIMP_HELP_ID,
-                      g_object_get_qdata (G_OBJECT (action),
-                                          GIMP_HELP_ID));
+                      g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID));
 
   if (GTK_IS_MENU_ITEM (proxy))
     {
@@ -918,8 +921,7 @@ gimp_ui_manager_menu_item_select (GtkWidget     *widget,
 
       if (tooltip)
         {
-          g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0,
-                         tooltip);
+          g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0, tooltip);
           g_free (tooltip);
         }
     }
