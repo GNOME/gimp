@@ -1,5 +1,5 @@
 # French translation of gimp-libgimp.
-# Copyright (C) 1998-2008 Free Software Foundation, Inc.
+# Copyright (C) 1998-2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
@@ -12,6 +12,7 @@
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
 # Laurent Monin <gimp@norz.org>, 2007.
 # Claude Paroz <claude@2xlibre.net>, 2008.
+# Julien Hardelin <jm.hard@wanadoo.fr>, 2009
 #
 # Au sujet de "événement" contre "évènement", c'est ce dernier qui a été
 # retenu car préconisé par l'Académie française.
@@ -19,11 +20,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
+"Project-Id-Version: gimp-po-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-13 17:25+0200\n"
-"PO-Revision-Date: 2008-09-13 17:33+0200\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"PO-Revision-Date: 2009-03-01 07:50+0100\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -700,11 +700,11 @@ msgstr "Tons clairs"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
-msgstr "Normal (en avant)"
+msgstr "Normale (en avant)"
 
 #: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
-msgstr "Correctif (en arrière)"
+msgstr "Corrective (en arrière)"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
@@ -716,11 +716,11 @@ msgstr "Rogner"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop to result"
-msgstr "Découper suivant le résultat"
+msgstr "Rogner suivant le résultat"
 
 #: ../libgimpbase/gimpbaseenums.c:779
 msgid "Crop with aspect"
-msgstr "Découper avec le même rapport"
+msgstr "Rogner selon le même rapport"
 
 #: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
@@ -1152,7 +1152,7 @@ msgstr[1] "Ce champ de texte est limité à %d caractères."
 
 #: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
-msgstr "Ancre"
+msgstr "Ancrer"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
@@ -1341,7 +1341,7 @@ msgstr ""
 
 #: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
-msgstr "Vision des couleurs déficientes"
+msgstr "Vision des couleurs déficiente"
 
 #: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
