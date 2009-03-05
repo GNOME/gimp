@@ -1,5 +1,12 @@
 2009-03-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_get_icon)
+	* plug-ins/print/print.c (query): removed GTK+ version checks that
+	have become obsolete.
+
+2009-03-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-uri/Makefile.am
 	* plug-ins/file-uri/gimpmountoperation.[ch]: removed these files.
 

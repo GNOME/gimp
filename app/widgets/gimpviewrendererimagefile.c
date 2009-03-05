@@ -163,7 +163,6 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
   if (! gimp_object_get_name (GIMP_OBJECT (imagefile)))
     return NULL;
 
-#if GTK_CHECK_VERSION (2, 13, 4)
   if (! pixbuf)
     {
       GFile       *file;
@@ -175,9 +174,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
       if (file_info)
         {
-          GIcon *icon;
-
-          icon = g_file_info_get_icon (file_info);
+          GIcon *icon = g_file_info_get_icon (file_info);
 
           info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
           pixbuf = gtk_icon_info_load_icon (info, NULL);
@@ -187,7 +184,6 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
       g_object_unref (file);
     }
-#endif
 
   if (! pixbuf && imagefile->thumbnail->image_mimetype)
     {

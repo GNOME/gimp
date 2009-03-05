@@ -127,11 +127,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
-
-#if GTK_CHECK_VERSION(2,13,0)
   gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GTK_STOCK_PAGE_SETUP);
-#endif
 }
 
 static void
