@@ -41,7 +41,7 @@ header files installed.
        http://svn.gnome.org/svn/babl/trunk
        http://svn.gnome.org/svn/gegl/trunk
 
-  4. You need to have installed GTK+ version 2.12.5 or newer.  GIMP
+  4. You need to have installed GTK+ version 2.14.4 or newer.  GIMP
      also need a recent versions of GLib (>= 2.18.0) and Pango (>= 1.20.1).
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
 

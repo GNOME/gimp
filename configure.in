@@ -43,7 +43,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 m4_define([babl_required_version], [0.0.23])
 m4_define([gegl_required_version], [0.0.22])
 m4_define([glib_required_version], [2.18.0])
-m4_define([gtk_required_version], [2.12.5])
+m4_define([gtk_required_version], [2.14.4])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.6.0])
 m4_define([pangocairo_required_version], [1.20.1])
@@ -485,8 +485,8 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.17.0 or newer])
-if $PKG_CONFIG --atleast-version=2.17.0 gtk+-2.0; then
+AC_MSG_CHECKING([if GTK+ is version 2.15.0 or newer])
+if $PKG_CONFIG --atleast-version=2.15.0 gtk+-2.0; then
   have_gtk_2_15=yes
 else
   have_gtk_2_15=no
