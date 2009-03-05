@@ -47,15 +47,12 @@
 
 #define MAX_FANS       100
 
-#define HORIZONTAL       0
-#define VERTICAL         1
-
 /* Variables set in dialog box */
 typedef struct data
 {
-  gint     angledsp;
-  gint     numsegs;
-  gint     orientation;
+  gint                 angledsp;
+  gint                 numsegs;
+  GimpOrientationType  orientation;
   gboolean bg_trans;
 } BlindVals;
 
@@ -91,7 +88,7 @@ static BlindVals bvals =
 {
   30,
   3,
-  HORIZONTAL, /* orientation */
+  GIMP_ORIENTATION_HORIZONTAL,
   FALSE
 };
 
@@ -107,8 +104,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
     { GIMP_PDB_INT32,    "angle-dsp",      "Angle of Displacement" },
     { GIMP_PDB_INT32,    "num-segments",   "Number of segments in blinds" },
-    { GIMP_PDB_INT32,    "orientation",    "orientation; 0 = Horizontal, 1 = Vertical" },
-    { GIMP_PDB_INT32,    "bg-transparent", "background transparent; FALSE,TRUE" }
+    { GIMP_PDB_INT32,    "orientation",    "The orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }" },
+    { GIMP_PDB_INT32,    "bg-transparent", "Background transparent { FALSE, TRUE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -166,10 +163,10 @@ run (const gchar      *name,
         status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
         {
-          bvals.angledsp = param[3].data.d_int32;
-          bvals.numsegs = param[4].data.d_int32;
+          bvals.angledsp    = param[3].data.d_int32;
+          bvals.numsegs     = param[4].data.d_int32;
           bvals.orientation = param[5].data.d_int32;
-          bvals.bg_trans = param[6].data.d_int32;
+          bvals.bg_trans    = param[6].data.d_int32;
         }
       break;
 
@@ -260,8 +257,11 @@ blinds_dialog (GimpDrawable *drawable)
                               G_CALLBACK (gimp_radio_button_update),
                               &bvals.orientation, bvals.orientation,
 
-                              _("_Horizontal"), HORIZONTAL, &horizontal,
-                              _("_Vertical"),   VERTICAL,   &vertical,
+                              _("_Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
+                              &horizontal,
+
+                              _("_Vertical"),   GIMP_ORIENTATION_VERTICAL,
+                              &vertical,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
@@ -466,7 +466,7 @@ dialog_update_preview (GimpDrawable *drawable,
 
   buffer = g_new (guchar, width * height * bpp);
 
-  if (bvals.orientation)
+  if (bvals.orientation == GIMP_ORIENTATION_VERTICAL)
     {
       for (y = 0; y < height; y++)
         {
@@ -581,7 +581,7 @@ apply_blinds (GimpDrawable *drawable)
   src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
   des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
 
-  if (bvals.orientation)
+  if (bvals.orientation == GIMP_ORIENTATION_VERTICAL)
     {
       for (y = 0; y < sel_height; y += STEP)
         {
