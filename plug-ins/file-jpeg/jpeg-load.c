@@ -462,7 +462,10 @@ load_image (const gchar  *filename,
   /* Detach from the drawable and add it to the image.
    */
   if (! preview)
-    gimp_drawable_detach (drawable);
+    {
+      gimp_progress_update (1.0);
+      gimp_drawable_detach (drawable);
+    }
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
 

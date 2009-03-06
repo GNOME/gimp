@@ -1,3 +1,9 @@
+2009-03-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-jpeg/jpeg-load.c (load_image)
+	* plug-ins/file-jpeg/jpeg-save.c (save_image): need to finish the
+	progress update.
+
 2009-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpuimanager.c: formatting.

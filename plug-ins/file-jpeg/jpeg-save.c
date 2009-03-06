@@ -282,7 +282,7 @@ save_image (const gchar  *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  if (!preview)
+  if (! preview)
     gimp_progress_init_printf (_("Saving '%s'"),
                                gimp_filename_to_utf8 (filename));
 
@@ -733,12 +733,13 @@ save_image (const gchar  *filename,
 
   /* This is an important step since it will release a good deal of memory. */
   jpeg_destroy_compress (&cinfo);
+
   /* free the temporary buffer */
   g_free (temp);
   g_free (data);
 
   /* And we're done! */
-  /*gimp_do_progress (1, 1);*/
+  gimp_progress_update (1.0);
 
   gimp_drawable_detach (drawable);
 
