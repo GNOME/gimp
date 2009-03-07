@@ -1,3 +1,7 @@
+2009-03-07  Claude Paroz  <claude@2xlibre.net>
+
+	* fr.po: Updated French translation by Julien Hardelin and Claude Paroz.
+
 2009-03-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed plug-ins/file-uri/gimpmountoperation.c.
