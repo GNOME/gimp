@@ -503,9 +503,6 @@ gimp_container_combo_box_changed (GtkComboBox       *combo_box,
 {
   GtkTreeIter iter;
 
-  if (GTK_COMBO_BOX_CLASS (parent_class)->changed)
-    GTK_COMBO_BOX_CLASS (parent_class)->changed (combo_box);
-
   if (gtk_combo_box_get_active_iter (combo_box, &iter))
     {
       GimpViewRenderer *renderer;

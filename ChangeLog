@@ -1,5 +1,11 @@
 2009-03-07  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainercombobox.c
+	(gimp_container_combo_box_changed): do not attempt to chain up in
+	a signal callback.
+
+2009-03-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-jpeg/jpeg-load.c (load_image)
 	* plug-ins/file-jpeg/jpeg-save.c (save_image): need to finish the
 	progress update.
