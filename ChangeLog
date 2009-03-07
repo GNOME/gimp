@@ -1,5 +1,11 @@
 2009-03-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/stroke-dialog.c (stroke_dialog_response): disconnect
+	from the "paint-info" combo-box before destroying the dialog. The
+	GimpContainerView emits "select-item" from its dispose handler.
+
+2009-03-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.c
 	(gimp_container_combo_box_changed): do not attempt to chain up in
 	a signal callback.

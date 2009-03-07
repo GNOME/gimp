@@ -262,20 +262,21 @@ stroke_dialog_response (GtkWidget  *widget,
   GimpItem          *item;
   GimpImage         *image;
   GimpContext       *context;
+  GtkWidget         *combo;
 
-  item = g_object_get_data (G_OBJECT (dialog), "gimp-item");
+  item    = g_object_get_data (G_OBJECT (dialog), "gimp-item");
   options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
+  combo   = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");;
 
   image   = gimp_item_get_image (item);
   context = GIMP_VIEWABLE_DIALOG (dialog)->context;
+
 
   switch (response_id)
     {
     case RESPONSE_RESET:
       {
         GimpToolInfo *tool_info = gimp_context_get_tool (context);
-        GtkWidget    *combo     = g_object_get_data (G_OBJECT (dialog),
-                                                     "gimp-tool-menu");;
 
         gimp_config_reset (GIMP_CONFIG (options));
 
@@ -331,6 +332,10 @@ stroke_dialog_response (GtkWidget  *widget,
       /* fallthrough */
 
     default:
+      g_signal_handlers_disconnect_by_func (combo,
+                                            G_CALLBACK (stroke_dialog_paint_info_selected),
+                                            options);
+
       gtk_widget_destroy (dialog);
       break;
     }
