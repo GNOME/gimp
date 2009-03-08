@@ -1,3 +1,8 @@
+2009-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainerview.c
+	(gimp_container_view_item_selected): formatting.
+
 2009-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/stroke-dialog.c (stroke_dialog_response): disconnect
