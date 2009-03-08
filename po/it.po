@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-23 08:09+0100\n"
-"PO-Revision-Date: 2009-02-23 08:10+0100\n"
+"POT-Creation-Date: 2009-03-08 12:43+0100\n"
+"PO-Revision-Date: 2009-03-08 12:44+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -11742,11 +11742,11 @@ msgstr "Anteprime più grandi"
 
 #: ../app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
-msgstr "Esegui il _dump degli eventi da questo controller"
+msgstr "Esegui il _dump degli eventi da questo controllore"
 
 #: ../app/widgets/gimpcontrollereditor.c:207
 msgid "_Enable this controller"
-msgstr "Abilita qu_esto controller"
+msgstr "Abilita qu_esto controllore"
 
 #: ../app/widgets/gimpcontrollereditor.c:228
 msgid "Name:"
@@ -11766,7 +11766,7 @@ msgstr "_Cattura evento"
 
 #: ../app/widgets/gimpcontrollereditor.c:377
 msgid "Select the next event arriving from the controller"
-msgstr "Seleziona il prossimo evento proveniente dal controller"
+msgstr "Seleziona il prossimo evento proveniente dal controllore"
 
 #: ../app/widgets/gimpcontrollereditor.c:535
 #, c-format
