@@ -1197,9 +1197,9 @@ sub image_add_channel {
     $blurb = 'Add the specified channel to the image.';
 
     $help = <<'HELP';
-This procedure adds the specified channel to the image. The position channel is
-not currently used, so the channel is always inserted at the top of the channel
-stack.
+This procedure adds the specified channel to the image at the given position.
+If the position is specified as -1, then the channel is inserted above the
+active channel or, if no channel is active, at the top of the channel stack.
 HELP
 
     &std_pdb_misc;

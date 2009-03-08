@@ -3567,7 +3567,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-channel",
                                      "Add the specified channel to the image.",
-                                     "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
+                                     "This procedure adds the specified channel to the image at the given position. If the position is specified as -1, then the channel is inserted above the active channel or, if no channel is active, at the top of the channel stack.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

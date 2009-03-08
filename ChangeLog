@@ -1,5 +1,13 @@
 2009-03-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (image_add_channel): corrected
+	documentation of the position parameter.
+
+	* app/pdb/image-cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+2009-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainerview.c
 	(gimp_container_view_item_selected): formatting.
 

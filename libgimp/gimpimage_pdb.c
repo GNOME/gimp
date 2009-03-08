@@ -1214,8 +1214,9 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
  *
  * Add the specified channel to the image.
  *
- * This procedure adds the specified channel to the image. The position
- * channel is not currently used, so the channel is always inserted at
+ * This procedure adds the specified channel to the image at the given
+ * position. If the position is specified as -1, then the channel is
+ * inserted above the active channel or, if no channel is active, at
  * the top of the channel stack.
  *
  * Returns: TRUE on success.
