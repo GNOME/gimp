@@ -1,3 +1,9 @@
+2009-03-09  Alexia Death  <alexiadeath@gmail.com>
+
+	* app/paint/gimpsmudge.c
+	(gimp_smudge_class_init): enable scaling for smudge tool
+	(gimp_smudge_motion): correct comment.
+
 2009-03-08  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_add_channel): corrected

@@ -89,7 +89,7 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 
   paint_core_class->paint = gimp_smudge_paint;
 
-  brush_core_class->handles_transforming_brush = FALSE;
+  brush_core_class->handles_transforming_brush = TRUE;
 }
 
 static void
@@ -249,7 +249,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  /*  Get the paint area (Smudge won't scale!)  */
+  /*  Get the paint area */
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
   if (! area)
     return;
