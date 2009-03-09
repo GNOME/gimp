@@ -1,22 +1,21 @@
 # translation of de.po to Deutsch
 # This is the German catalog for GIMP Script-Fu.
 # Copyright (C) 1999, 2006 Free Software Foundation, Inc.
-# Sven Neumann <sven@gimp.org>
 # Felix Natter <fnatter@gmx.net>
 # Jens Seidel <jseidel@cvs.gnome.org>
 # Roman Joost <romanofski@gimp.org>, 2004-2005.
 # Sven Neumann <sven@gimp.org>, 2004-2008.
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2008.
-# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007-2008.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007-2009.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 13:19+0200\n"
-"PO-Revision-Date: 2008-09-17 13:20+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2009-03-09 18:28+0100\n"
+"PO-Revision-Date: 2009-03-09 18:30+0100\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,60 +57,61 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Der Skript-Fu-Auswertungsmodus ermöglicht nur nicht-interaktive Aufrufe."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:195
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Skript-Fu kann nicht zwei Skripte gleichzeitig abarbeiten."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:197
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Sie haben das Skript »%s« bereits gestartet."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:244
+#: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:306
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:354
+#: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu-Farbauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu-Dateiauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu-Ordnerauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu-Schriftauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:489
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu-Palettenauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:498
+#: ../plug-ins/script-fu/script-fu-interface.c:478
 msgid "Script-Fu Pattern Selection"
 msgstr "Skript-Fu-Musterauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:507
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu-Farbverlaufsauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:516
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu-Pinselauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:918
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fehler beim Ausführen von %s:"
@@ -120,7 +120,7 @@ msgstr "Fehler beim Ausführen von %s:"
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Zu wenig Argumente für Aufruf von »script-fu-register«"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:709
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fehler beim Laden von %s:"
@@ -2630,6 +2630,7 @@ msgstr ""
 "Die Bildkanten so verwischen, dass die erzeugten Kacheln nahtlos aneinander "
 "passen"
 
+# cf. Bewegungsunschärfe-Filter (plug-ins/common/blur-motion.c)
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
 msgstr "Art des Weichzeichners"
