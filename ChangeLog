@@ -1,3 +1,7 @@
+2009-03-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-jpeg/jpeg.h (PLUG_IN_BINARY): fixed typo.
+
 2009-03-09  Alexia Death  <alexiadeath@gmail.com>
 
 	* app/paint/gimpsmudge.c
