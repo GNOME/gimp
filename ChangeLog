@@ -1,3 +1,9 @@
+2009-03-11  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/file-jpeg/jpeg.h (PLUG_IN_BINARY): fixed typo.
+
 2009-03-10  Sven Neumann  <sven@gimp.org>
 
 	Bug 572403 – gimp-2.6 crashed with SIGSEGV in IA__g_object_get()
