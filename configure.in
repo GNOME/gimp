@@ -473,8 +473,8 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.17.0 or newer])
-if $PKG_CONFIG --atleast-version=2.17.0 gtk+-2.0; then
+AC_MSG_CHECKING([if GTK+ is version 2.15.0 or newer])
+if $PKG_CONFIG --atleast-version=2.15.0 gtk+-2.0; then
   have_gtk_2_15=yes
 else
   have_gtk_2_15=no
