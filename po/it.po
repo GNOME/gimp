@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-08 12:29+0100\n"
-"PO-Revision-Date: 2009-03-08 12:31+0100\n"
+"POT-Creation-Date: 2009-03-11 16:05+0100\n"
+"PO-Revision-Date: 2009-03-11 16:07+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -760,7 +760,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/widgets/gimplayertreeview.c:800 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s copia canale"
+msgstr "Copia canale %s"
 
 #: ../app/actions/channels-commands.c:307 ../app/core/gimpselection.c:574
 #: ../app/pdb/selection-cmds.c:453 ../app/pdb/selection-cmds.c:520
@@ -2000,7 +2000,7 @@ msgstr "Copia con nome"
 
 #: ../app/actions/edit-commands.c:433
 msgid "Copy Visible Named "
-msgstr "Copia _visibile con nome "
+msgstr "Copia visibile con nome "
 
 #: ../app/actions/edit-commands.c:551
 msgid "There is no active layer or channel to cut from."
@@ -7339,7 +7339,7 @@ msgstr "copia"
 #: ../app/core/gimpdatafactory.c:527 ../app/core/gimpitem.c:399
 #, c-format
 msgid "%s copy"
-msgstr "%s copia"
+msgstr "%s - copia"
 
 #: ../app/core/gimpdatafactory.c:597
 msgid "You don't have a writable data folder configured."
