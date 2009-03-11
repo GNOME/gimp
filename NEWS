@@ -7,6 +7,28 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.5 to GIMP 2.6.6
+=================================================
+
+* Bugs fixed:
+
+ 572403 – gimp-2.6 crashed with SIGSEGV in IA__g_object_get()
+ 573695 – 1-bit white background saved as PBM becomes all black
+ 573488 – Small bug in Filter>Distorts>Ripple
+ 572156 – top left pixel position/coordinate is not 0,0 but 1,1
+ 472644 – Rotate with clipping crops the whole layer
+
+* Updated translations:
+
+ German (de)
+ Spanish (es)
+ Estonian (et)
+ French (fr)
+ Italian (it)
+ Brazilian (pt)
+ Simplified Chinese (zh_CN)
+
+
 Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
 =================================================
 
@@ -37,7 +59,6 @@ Overview of Changes from GIMP 2.6.4 to GIMP 2.6.5
  Serbian (sr)
  Tamil (ta)
  Simplified Chinese (zh_CN)
-
 
 
 Overview of Changes from GIMP 2.6.3 to GIMP 2.6.4
@@ -79,7 +100,6 @@ Overview of Changes from GIMP 2.6.3 to GIMP 2.6.4
  Simplified Chinese (zh_CN)
 
 
-
 Overview of Changes from GIMP 2.6.2 to GIMP 2.6.3
 =================================================
 
@@ -115,7 +135,6 @@ Overview of Changes from GIMP 2.6.2 to GIMP 2.6.3
  Romanian (ro)
 
 
-
 Overview of Changes from GIMP 2.6.1 to GIMP 2.6.2
 =================================================
 
@@ -148,7 +167,6 @@ Overview of Changes from GIMP 2.6.1 to GIMP 2.6.2
  Brazilian Portuguese (pt_BR)
  Swedish (sv)
  Simplified Chinese (zh_CN)
-
 
 
 Overview of Changes from GIMP 2.6.0 to GIMP 2.6.1
