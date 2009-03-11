@@ -1,5 +1,10 @@
 2009-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpscanconvert.c (gimp_scan_convert_render_full):
+	formatting.
+
+2009-03-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-jpeg/jpeg.h (PLUG_IN_BINARY): fixed typo.
 
 2009-03-09  Alexia Death  <alexiadeath@gmail.com>

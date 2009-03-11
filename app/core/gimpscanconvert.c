@@ -437,26 +437,24 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 {
   PixelRegion      maskPR;
   gpointer         pr;
-  gint             x, y;
-  gint             width, height;
-
   cairo_t         *cr;
   cairo_surface_t *surface;
   cairo_path_t     path;
+  gint             x, y;
+  gint             width, height;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  x = 0;
-  y = 0;
+  x      = 0;
+  y      = 0;
   width  = tile_manager_width (tile_manager);
   height = tile_manager_height (tile_manager);
 
-  if (sc->clip &&
-      ! gimp_rectangle_intersect (x, y, width, height,
-                                  sc->clip_x, sc->clip_y,
-                                  sc->clip_w, sc->clip_h,
-                                  &x, &y, &width, &height))
+  if (sc->clip && ! gimp_rectangle_intersect (x, y, width, height,
+                                              sc->clip_x, sc->clip_y,
+                                              sc->clip_w, sc->clip_h,
+                                              &x, &y, &width, &height))
     return;
 
   pixel_region_init (&maskPR, tile_manager, x, y, width, height, TRUE);
@@ -471,21 +469,21 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      guchar *tmp_buf = NULL;
-      gint    stride;
-
-      stride = cairo_format_stride_for_width (CAIRO_FORMAT_A8, maskPR.w);
+      guchar     *tmp_buf = NULL;
+      const gint stride   = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
+                                                           maskPR.w);
 
       if (maskPR.rowstride != stride)
         {
           const guchar *src = maskPR.data;
           guchar       *dest;
-          gint          i;
 
           dest = tmp_buf = g_alloca (stride * maskPR.h);
 
           if (!replace)
             {
+              gint i;
+
               for (i = 0; i < maskPR.h; i++)
                 {
                   memcpy (dest, src, maskPR.w);
@@ -507,31 +505,38 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                        -off_y - maskPR.y);
       cr = cairo_create (surface);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+
       if (replace)
         {
           cairo_set_source_rgba (cr, 0, 0, 0, 0);
           cairo_paint (cr);
         }
+
       cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
       cairo_append_path (cr, &path);
       cairo_set_antialias (cr, antialias ?
                            CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       cairo_set_miter_limit (cr, sc->miter);
+
       if (sc->do_stroke)
         {
-          cairo_set_line_cap (cr, sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
-                                  sc->cap == GIMP_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
-                                  CAIRO_LINE_CAP_SQUARE);
-          cairo_set_line_join (cr, sc->join == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
-                                   sc->join == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
-                                   CAIRO_LINE_JOIN_BEVEL);
+          cairo_set_line_cap (cr,
+                              sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
+                              sc->cap == GIMP_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
+                              CAIRO_LINE_CAP_SQUARE);
+          cairo_set_line_join (cr,
+                               sc->join == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
+                               sc->join == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
+                               CAIRO_LINE_JOIN_BEVEL);
 
           cairo_set_line_width (cr, sc->width);
+
           if (sc->dash_info)
             cairo_set_dash (cr,
                             (double *) sc->dash_info->data,
                             sc->dash_info->len,
                             sc->dash_offset);
+
           cairo_scale (cr, 1.0, sc->ratio_xy);
           cairo_stroke (cr);
         }
