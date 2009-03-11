@@ -480,7 +480,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
           dest = tmp_buf = g_alloca (stride * maskPR.h);
 
-          if (!replace)
+          if (! replace)
             {
               gint i;
 
@@ -514,6 +514,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
       cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
       cairo_append_path (cr, &path);
+
       cairo_set_antialias (cr, antialias ?
                            CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       cairo_set_miter_limit (cr, sc->miter);
