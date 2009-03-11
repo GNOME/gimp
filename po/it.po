@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-08 12:43+0100\n"
-"PO-Revision-Date: 2009-03-08 12:44+0100\n"
+"POT-Creation-Date: 2009-03-11 16:03+0100\n"
+"PO-Revision-Date: 2009-03-11 16:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -700,7 +700,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s copia canale"
+msgstr "Copia canale %s"
 
 #: ../app/actions/channels-commands.c:307 ../app/core/gimpselection.c:549
 #: ../app/pdb/selection-cmds.c:454 ../app/pdb/selection-cmds.c:521
@@ -6066,7 +6066,7 @@ msgstr "copia"
 #: ../app/core/gimpdatafactory.c:506 ../app/core/gimpitem.c:324
 #, c-format
 msgid "%s copy"
-msgstr "%s copia"
+msgstr "%s-copia"
 
 #: ../app/core/gimpdatafactory.c:576
 msgid "You don't have a writable data folder configured."
