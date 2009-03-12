@@ -213,7 +213,7 @@ blur_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  y = CLAMP (y, 0, pixel_rgn->h - 1);
+  y = CLAMP (y, 0, (gint)pixel_rgn->h - 1);
 
   gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
 

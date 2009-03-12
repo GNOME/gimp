@@ -1,3 +1,10 @@
+2009-03-12  Sven Neumann  <sven@gimp.org>
+
+	Bug 573542 – blur plugin: bug in the first line
+
+	* plug-ins/common/blur.c (blur_prepare_row): cast GimpPixelRgn.h
+	to a signed integer.
+
 2009-03-11  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
