@@ -41,7 +41,9 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager-help-domain.h"
+#include "plug-in/gimptemporaryprocedure.h"
 
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
@@ -185,6 +187,22 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
   g_free (basedir);
 
   return found;
+}
+
+void
+gimp_help_user_manual_changed (Gimp *gimp)
+{
+  GimpProcedure *procedure;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  /*  Check if a help parser is running  */
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
+
+  if (GIMP_IS_TEMPORARY_PROCEDURE (procedure))
+    {
+      gimp_plug_in_close (GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in, TRUE);
+    }
 }
 
 

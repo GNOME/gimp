@@ -37,5 +37,10 @@ void       gimp_help_show (Gimp         *gimp,
  */
 gboolean   gimp_help_user_manual_is_installed (Gimp *gimp);
 
+/*  the configuration changed with respect to the location
+ *  of the user manual, invalidate the cached information
+ */
+void       gimp_help_user_manual_changed      (Gimp *gimp);
+
 
 #endif /* __GIMP_HELP_H__ */

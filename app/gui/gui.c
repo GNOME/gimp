@@ -112,6 +112,9 @@ static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
 static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  Gimp               *gimp);
+static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
+                                                 GParamSpec         *pspec,
+                                                 Gimp               *gimp);
 static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
@@ -369,6 +372,9 @@ gui_restore_callback (Gimp               *gimp,
   g_signal_connect (gui_config, "notify::use-help",
                     G_CALLBACK (gui_show_help_button_notify),
                     gimp);
+  g_signal_connect (gui_config, "notify::user-manual-online",
+                    G_CALLBACK (gui_user_manual_notify),
+                    gimp);
   g_signal_connect (gui_config, "notify::show-help-button",
                     G_CALLBACK (gui_show_help_button_notify),
                     gimp);
@@ -588,6 +594,9 @@ gui_exit_after_callback (Gimp     *gimp,
                                         gui_show_help_button_notify,
                                         gimp);
   g_signal_handlers_disconnect_by_func (gimp->config,
+                                        gui_user_manual_notify,
+                                        gimp);
+  g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_tooltips_notify,
                                         gimp);
 
@@ -634,6 +643,14 @@ gui_show_help_button_notify (GimpGuiConfig *gui_config,
 {
   gimp_dialogs_show_help_button (gui_config->use_help &&
                                  gui_config->show_help_button);
+}
+
+static void
+gui_user_manual_notify (GimpGuiConfig *gui_config,
+                        GParamSpec    *param_spec,
+                        Gimp          *gimp)
+{
+  gimp_help_user_manual_changed (gimp);
 }
 
 static void

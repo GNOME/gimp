@@ -2,6 +2,19 @@
 
 	Merged from trunk:
 
+	Bug 575154 – changing the help browser preference may not work
+
+	* app/gui/gui.c (gui_restore_callback): connect to changes of the
+	"user-manual-online" gimprc property and kill the gimp-help
+	plug-in as it caches the location of the help pages.
+
+	* app/widgets/gimphelp.[ch]: added gimp_help_user_manual_changed()
+	for this purpose.
+
+2009-03-12  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	Bug 573695 – 1-bit white background saved as PBM becomes all black
 
 	* plug-ins/common/file-pnm.c: look at the colormap and test which
