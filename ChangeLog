@@ -1,6 +1,9 @@
 2009-03-12  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/file-pnm.c: 
+	Bug 573695 – 1-bit white background saved as PBM becomes all black
+
+	* plug-ins/common/file-pnm.c: look at the colormap and test which
+	of the two colors is black and which is white.
 
 2009-03-12  Sven Neumann  <sven@gimp.org>
 
