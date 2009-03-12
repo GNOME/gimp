@@ -1,5 +1,9 @@
 2009-03-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/file-pnm.c: 
+
+2009-03-12  Sven Neumann  <sven@gimp.org>
+
 	Bug 573070 – crash when working with 1x3200 pixel image
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_scale_changed):

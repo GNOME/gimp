@@ -93,14 +93,14 @@ typedef struct _PNMInfo
 /* Contains the information needed to write out PNM rows */
 typedef struct _PNMRowInfo
 {
-  gint      fd;           /* File descriptor */
-  gchar    *rowbuf;       /* Buffer for writing out rows */
-  gint      xres;         /* X resolution */
-  gint      np;           /* Number of planes */
-  guchar   *red;          /* Colormap red */
-  guchar   *grn;          /* Colormap green */
-  guchar   *blu;          /* Colormap blue */
-  gboolean  solid_white;  /* image is all white (pbm only) */
+  gint      fd;            /* File descriptor             */
+  gchar    *rowbuf;        /* Buffer for writing out rows */
+  gint      xres;          /* X resolution                */
+  gint      np;            /* Number of planes            */
+  guchar   *red;           /* Colormap red                */
+  guchar   *grn;           /* Colormap green              */
+  guchar   *blu;           /* Colormap blue               */
+  gboolean  zero_is_black; /* index zero is black (PBM only) */
 } PNMRowInfo;
 
 /* Save info  */
@@ -818,15 +818,12 @@ pnmsaverow_raw_pbm (PNMRowInfo   *ri,
 
       rbcur[b] = 0;
 
-      if (ri->solid_white)
-        continue;
-
       for (i = 0; i < 8; i++) /* each bit in this byte */
         {
           if (p >= ri->xres)
             break;
 
-          if (data[p] == 0)
+          if (data[p] != ri->zero_is_black)
             rbcur[b] |= (char) (1 << (7 - i));
 
           p++;
@@ -856,7 +853,7 @@ pnmsaverow_ascii_pbm (PNMRowInfo   *ri,
           rbcur++;
         }
 
-      if (ri->solid_white || data[i] != 0)
+      if (data[i] == ri->zero_is_black)
         rbcur[i] = '0';
       else
         rbcur[i] = '1';
@@ -1069,31 +1066,45 @@ save_image (const gchar  *filename,
         }
     }
 
-  rowinfo.solid_white = FALSE;
+  rowinfo.zero_is_black = FALSE;
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     {
       guchar *cmap;
-      gint    colors;
+      gint    num_colors;
 
-      cmap = gimp_image_get_colormap (image_ID, &colors);
+      cmap = gimp_image_get_colormap (image_ID, &num_colors);
 
       if (pbm)
         {
-          /*  If we are dealing with an all-white image, then the colormap
-           *  has one entry only and we can't assume that the first entry
-           *  is black and the second is white.
-           */
-          if (colors == 1 && cmap[0])
+          /*  Test which of the two colors is white and which is black  */
+          switch (num_colors)
             {
-              rowinfo.solid_white = TRUE;
+            case 1:
+              rowinfo.zero_is_black = (GIMP_RGB_LUMINANCE (cmap[0],
+                                                           cmap[1],
+                                                           cmap[2]) < 128);
+              break;
+
+            case 2:
+              rowinfo.zero_is_black = (GIMP_RGB_LUMINANCE (cmap[0],
+                                                           cmap[1],
+                                                           cmap[2]) <
+                                       GIMP_RGB_LUMINANCE (cmap[3],
+                                                           cmap[4],
+                                                           cmap[5]));
+              break;
+
+            default:
+              g_warning ("images saved as PBM should be black/white");
+              break;
             }
         }
       else
         {
           gint i;
 
-          for (i = 0; i < colors; i++)
+          for (i = 0; i < num_colors; i++)
             {
               red[i] = *cmap++;
               grn[i] = *cmap++;
