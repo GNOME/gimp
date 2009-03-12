@@ -1459,6 +1459,12 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
       shell->y_dest_inc = gimp_image_get_height (image);
       shell->x_src_dec  = SCALEX (shell, gimp_image_get_width  (image));
       shell->y_src_dec  = SCALEY (shell, gimp_image_get_height (image));
+
+      if (shell->x_src_dec < 1)
+        shell->x_src_dec = 1;
+
+      if (shell->y_src_dec < 1)
+        shell->y_src_dec = 1;
     }
   else
     {

@@ -1,5 +1,14 @@
 2009-03-12  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	Bug 573070 – crash when working with 1x3200 pixel image
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_scale_changed):
+	make sure that x_src_dec and y_src_dec never become zero.
+
+2009-03-12  Sven Neumann  <sven@gimp.org>
+
 	Bug 573542 – blur plugin: bug in the first line
 
 	* plug-ins/common/blur.c (blur_prepare_row): cast GimpPixelRgn.h
