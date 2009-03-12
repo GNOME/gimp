@@ -12,6 +12,8 @@ Overview of Changes from GIMP 2.6.5 to GIMP 2.6.6
 
 * Bugs fixed:
 
+ 575154 – changing the help browser preference may not work
+ 573542 – blur plugin: bug in the first line
  572403 – gimp-2.6 crashed with SIGSEGV in IA__g_object_get()
  573695 – 1-bit white background saved as PBM becomes all black
  573488 – Small bug in Filter>Distorts>Ripple
