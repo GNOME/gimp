@@ -1,5 +1,13 @@
 2009-03-13  Sven Neumann  <sven@gimp.org>
 
+	Bug 574427 – Stroke path with paint tool error
+
+	* app/dialogs/stroke-dialog.c: construct the combo-box that
+	selects the paint-info object with the GimpStrokeOptions as
+	context. Makes the code much easier and fixes bug #574427.
+
+2009-03-13  Sven Neumann  <sven@gimp.org>
+
 	Bug 571117 – lcms plug-in crashes on broken profile
 
 	* plug-ins/common/lcms.c: don't abort on lcms errors.

@@ -49,13 +49,9 @@
 
 /*  local functions  */
 
-static void  stroke_dialog_response            (GtkWidget         *widget,
-                                                gint               response_id,
-                                                GtkWidget         *dialog);
-static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
-                                                GimpViewable      *viewable,
-                                                gpointer           insert_data,
-                                                GimpStrokeOptions *options);
+static void  stroke_dialog_response (GtkWidget *widget,
+                                     gint       response_id,
+                                     GtkWidget *dialog);
 
 
 /*  public function  */
@@ -227,16 +223,10 @@ stroke_dialog_new (GimpItem    *item,
     gtk_widget_show (label);
 
     combo = gimp_container_combo_box_new (image->gimp->paint_info_list,
-                                          context,
+                                          GIMP_CONTEXT (options),
                                           16, 0);
-    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
-                                     GIMP_VIEWABLE (GIMP_CONTEXT (options)->paint_info));
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
-
-    g_signal_connect (combo, "select-item",
-                      G_CALLBACK (stroke_dialog_paint_info_selected),
-                      options);
 
     g_object_set_data (G_OBJECT (dialog), "gimp-tool-menu", combo);
 
@@ -270,7 +260,6 @@ stroke_dialog_response (GtkWidget  *widget,
 
   image   = gimp_item_get_image (item);
   context = GIMP_VIEWABLE_DIALOG (dialog)->context;
-
 
   switch (response_id)
     {
@@ -332,20 +321,7 @@ stroke_dialog_response (GtkWidget  *widget,
       /* fallthrough */
 
     default:
-      g_signal_handlers_disconnect_by_func (combo,
-                                            G_CALLBACK (stroke_dialog_paint_info_selected),
-                                            options);
-
       gtk_widget_destroy (dialog);
       break;
     }
-}
-
-static void
-stroke_dialog_paint_info_selected (GimpContainerView *view,
-                                   GimpViewable      *viewable,
-                                   gpointer           insert_data,
-                                   GimpStrokeOptions *options)
-{
-  g_object_set (options, "paint-info", viewable, NULL);
 }
