@@ -1,5 +1,11 @@
 2009-03-13  Sven Neumann  <sven@gimp.org>
 
+	Bug 571117 – lcms plug-in crashes on broken profile
+
+	* plug-ins/common/lcms.c: don't abort on lcms errors.
+
+2009-03-13  Sven Neumann  <sven@gimp.org>
+
 	Bug 575006 – Add preferences for snapping
 
 	* app/config/gimpdisplayconfig.[ch]

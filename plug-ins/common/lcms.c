@@ -427,6 +427,8 @@ run (const gchar      *name,
         }
     }
 
+  cmsErrorAction (LCMS_ERROR_SHOW);
+
   switch (proc)
     {
     case PROC_SET:
