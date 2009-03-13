@@ -889,6 +889,11 @@ gimp_display_shell_new (GimpDisplay       *display,
   gimp_config_sync (G_OBJECT (display->config->default_fullscreen_view),
                     G_OBJECT (shell->fullscreen_options), 0);
 
+  shell->snap_to_guides  = display->config->default_snap_to_guides;
+  shell->snap_to_grid    = display->config->default_snap_to_grid;
+  shell->snap_to_canvas  = display->config->default_snap_to_canvas;
+  shell->snap_to_vectors = display->config->default_snap_to_path;
+
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
 
   if (display->config->monitor_res_from_gdk)

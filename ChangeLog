@@ -1,3 +1,15 @@
+2009-03-13  Sven Neumann  <sven@gimp.org>
+
+	Bug 575006 – Add preferences for snapping
+
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/display/gimpdisplayshell.c: applied part of a patch from
+	Akkana Peck. This adds gimprc properties for the default values
+	used for snapping in new image windows. It also changes the
+	default value for "Snap to Canvas Edges" to TRUE. Let's test this
+	for a while...
+
 2009-03-12  Sven Neumann  <sven@gimp.org>
 
 	Bug 573695 – 1-bit white background saved as PBM becomes all black

@@ -75,6 +75,18 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 N_("This is the distance in pixels where Guide and Grid snapping " \
    "activates.")
 
+#define DEFAULT_SNAP_TO_GUIDES_BLURB \
+"Snap to guides by default in new image windows."
+
+#define DEFAULT_SNAP_TO_GRID_BLURB \
+"Snap to the grid by default in new image windows."
+
+#define DEFAULT_SNAP_TO_CANVAS_BLURB \
+"Snap to the canvas edge by default in new image windows."
+
+#define DEFAULT_SNAP_TO_PATH_BLURB \
+"Snap to the active path by default in new image windows."
+
 #define DEFAULT_THRESHOLD_BLURB \
 N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
    "seed-fill algorithm.  The seed fill starts at the initially selected " \

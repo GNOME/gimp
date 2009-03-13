@@ -65,6 +65,10 @@ struct _GimpDisplayConfig
   GimpViewSize        nav_preview_size;
   GimpDisplayOptions *default_view;
   GimpDisplayOptions *default_fullscreen_view;
+  gboolean            default_snap_to_guides;
+  gboolean            default_snap_to_grid;
+  gboolean            default_snap_to_canvas;
+  gboolean            default_snap_to_path;
   gboolean            activate_on_focus;
   GimpSpaceBarAction  space_bar_action;
   GimpRGB             xor_color;
