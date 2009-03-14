@@ -44,7 +44,8 @@ typedef enum
   GIMP_RECTANGLE_GUIDE_NONE,          /*< desc="No guides"       >*/
   GIMP_RECTANGLE_GUIDE_CENTER_LINES,  /*< desc="Center lines"    >*/
   GIMP_RECTANGLE_GUIDE_THIRDS,        /*< desc="Rule of thirds"  >*/
-  GIMP_RECTANGLE_GUIDE_GOLDEN         /*< desc="Golden sections" >*/
+  GIMP_RECTANGLE_GUIDE_GOLDEN,        /*< desc="Golden sections" >*/
+  GIMP_RECTANGLE_GUIDE_DIAGONALS      /*< desc="Diagonal lines"  >*/
 } GimpRectangleGuide;
 
 

@@ -1,3 +1,13 @@
+2009-03-14  Sven Neumann  <sven@gimp.org>
+
+	Bug 566443 – diagonal method guidelines for crop tool
+
+	* app/tools/tools-enums.[ch]
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw_guides):
+	applied a slightly modified patch from Lukasz Hladowski, based on
+	a patch from Tim Jedlicka. This adds diagonal guidelines as
+	described by Edwin Westhoff to the rectangle tools.
+
 2009-03-13  Sven Neumann  <sven@gimp.org>
 
 	Bug 574427 – Stroke path with paint tool error
