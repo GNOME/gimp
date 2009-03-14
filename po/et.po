@@ -5980,7 +5980,7 @@ msgstr "Määrab välise veebisirvija, mida kasutada. See võib olla kogu failit
 #: ../app/gui/session.c:205
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
-msgstr "saatuslik parsimise viga"
+msgstr "ületamatu parsimise viga"
 
 #: ../app/config/gimprc-deserialize.c:162
 #, c-format
@@ -6853,34 +6853,34 @@ msgstr "Pole võimalik lugeda %d baiti failist '%s': %s"
 #: ../app/core/gimpbrush-load.c:196
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': laius = 0."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': laius = 0."
 
 #: ../app/core/gimpbrush-load.c:205
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': kõrgus = 0."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': kõrgus = 0."
 
 #: ../app/core/gimpbrush-load.c:214
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': baite = 0."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': baite = 0."
 
 #: ../app/core/gimpbrush-load.c:238
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': tundmatu sügavus %d."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': tundmatu sügavus %d."
 
 #: ../app/core/gimpbrush-load.c:251
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': tundmatu versioon %d."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': tundmatu versioon %d."
 
 #: ../app/core/gimpbrush-load.c:267
 #: ../app/core/gimpbrush-load.c:387
 #: ../app/core/gimpbrush-load.c:719
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': tundub, et faili lõpust on jupp puudu."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': tundub, et faili lõpust on jupp puudu."
 
 #: ../app/core/gimpbrush-load.c:275
 #: ../app/core/gimpbrushgenerated-load.c:127
@@ -6903,33 +6903,33 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Saatuslik parsimisviga pintslifailis '%s': mittetoetatud pintsli sügavus %d\n"
+"Ületamatu parsimisviga pintslifailis '%s': mittetoetatud pintsli sügavus %d\n"
 "GIMP-i pintslite värvid peavad olema GRAY või RGBA."
 
 #: ../app/core/gimpbrush-load.c:447
 #, c-format
 msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': abr vormingu versiooni %d pole võimalik dekodeerida."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': abr vormingu versiooni %d pole võimalik dekodeerida."
 
 #: ../app/core/gimpbrush-load.c:614
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': laiad pintslid pole toetatud."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': laiad pintslid pole toetatud."
 
 #: ../app/core/gimpbrushgenerated-load.c:86
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': see ei ole GIMP-i pintslifail."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': see ei ole GIMP-i pintslifail."
 
 #: ../app/core/gimpbrushgenerated-load.c:103
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': tundmatu GIMP-i pintsliversioon real %d."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': tundmatu GIMP-i pintsliversioon real %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:149
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': tundmatu GIMP-i pintslikuju real %d."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': tundmatu GIMP-i pintslikuju real %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:225
 #, c-format
@@ -6951,7 +6951,7 @@ msgstr "Viga pintslifaili '%s' lugemisel: %s"
 #: ../app/core/gimpbrushpipe-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': fail on vigane."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': fail on vigane."
 
 #: ../app/core/gimpchannel-select.c:59
 msgctxt "command"
@@ -7248,12 +7248,12 @@ msgstr "Muundamine"
 #: ../app/core/gimpgradient-load.c:167
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr "Saatuslik parsimisviga värvisulanduse failis '%s': Lugemise viga real %d."
+msgstr "Ületamatu parsimisviga värvisulanduse failis '%s': Lugemise viga real %d."
 
 #: ../app/core/gimpgradient-load.c:80
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Saatuslik parsimisviga värvisulanduse failis '%s': See pole GIMP-i värvisulanduse fail."
+msgstr "Ületamatu parsimisviga värvisulanduse failis '%s': See pole GIMP-i värvisulanduse fail."
 
 #: ../app/core/gimpgradient-load.c:108
 #, c-format
@@ -7263,13 +7263,13 @@ msgstr "Vigane UTF-8 tekstilõik värvisulanduse failis '%s'."
 #: ../app/core/gimpgradient-load.c:135
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-msgstr "Saatuslik parsimisviga värvisulanduse failis '%s': Fail on vigane real %d."
+msgstr "Ületamatu parsimisviga värvisulanduse failis '%s': Fail on vigane real %d."
 
 #: ../app/core/gimpgradient-load.c:217
 #: ../app/core/gimpgradient-load.c:228
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr "Saatuslik parsimisviga värvisulanduse failis '%s': Vigane segment %d real %d."
+msgstr "Ületamatu parsimisviga värvisulanduse failis '%s': Vigane segment %d real %d."
 
 #: ../app/core/gimpgradient-load.c:240
 #: ../app/core/gimpgradient-load.c:254
@@ -7761,7 +7761,7 @@ msgstr "Ületamatu parsimisviga värvipaleti failis '%s': Lugemisviga real %d."
 #: ../app/core/gimppalette-load.c:94
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Saatuslik parsimisviga värvipaleti failis '%s': Puudub päis."
+msgstr "Ületamatu parsimisviga värvipaleti failis '%s': Puudub päis."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
@@ -7802,26 +7802,26 @@ msgstr "Paletifaili '%s' päist pole võimalik lugeda"
 #: ../app/core/gimppalette-load.c:583
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr "Saatuslik töötlusviga paletifailis '%s'"
+msgstr "Ületamatu töötlusviga paletifailis '%s'"
 
 #: ../app/core/gimppattern-load.c:84
 #: ../app/core/gimppattern-load.c:130
 #: ../app/core/gimppattern-load.c:161
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "Saatuslik parsimisviga pintslifailis '%s': Tundub, et faili lõpust on jupp puudu."
+msgstr "Ületamatu parsimisviga pintslifailis '%s': Tundub, et faili lõpust on jupp puudu."
 
 #: ../app/core/gimppattern-load.c:103
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "Saatuslik parsimisviga mustrifailis '%s': Tundmatu mustriformaadi versioon %d."
+msgstr "Ületamatu parsimisviga mustrifailis '%s': Tundmatu mustriformaadi versioon %d."
 
 #: ../app/core/gimppattern-load.c:113
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
-msgstr "Saatuslik parsimisviga mustrifailis '%s': %d värvisügavus pole toetatud. Toetatud on RGBA ja GRAY ."
+msgstr "Ületamatu parsimisviga mustrifailis '%s': %d värvisügavus pole toetatud. Toetatud on RGBA ja GRAY ."
 
 #: ../app/core/gimppattern-load.c:138
 #, c-format
