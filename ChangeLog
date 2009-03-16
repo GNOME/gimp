@@ -1,5 +1,9 @@
 2009-03-16  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped GLib version for deprecated symbols.
+
+2009-03-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbrush-transform.c (gimp_brush_real_transform_mask):
 	gimp_brush_real_transform_pixmap): don't mix variable declarations
 	and code. Added missing const qualifiers.

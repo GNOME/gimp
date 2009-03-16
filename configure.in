@@ -460,13 +460,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.19.0 or newer])
-if $PKG_CONFIG --atleast-version=2.19.0 glib-2.0; then
-  have_glib_2_19=yes
+AC_MSG_CHECKING([if GLib is version 2.21.0 or newer])
+if $PKG_CONFIG --atleast-version=2.21.0 glib-2.0; then
+  have_glib_2_21=yes
 else
-  have_glib_2_19=no
+  have_glib_2_21=no
 fi
-AC_MSG_RESULT($have_glib_2_19)
+AC_MSG_RESULT($have_glib_2_21)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -1865,7 +1865,7 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED"
 
-if test "x$have_glib_2_19" != "xyes"; then
+if test "x$have_glib_2_21" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
