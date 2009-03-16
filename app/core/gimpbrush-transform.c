@@ -67,20 +67,22 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  * Transforms the brush mask with bilinear interpolation.
  *
  * Rather than calculating the inverse transform for each point in the
- * transformed image, this algorithm uses the inverse transformed corner
- * points of the destination image to work out the starting position in the
- * source image and the U and V deltas in the source image space.
- * It then uses a scan-line approach, looping through rows and colummns
- * in the transformed (destination) image while walking along the corresponding
- * rows and columns (named U and V) in the source image.
+ * transformed image, this algorithm uses the inverse transformed
+ * corner points of the destination image to work out the starting
+ * position in the source image and the U and V deltas in the source
+ * image space.  It then uses a scan-line approach, looping through
+ * rows and colummns in the transformed (destination) image while
+ * walking along the corresponding rows and columns (named U and V) in
+ * the source image.
  *
- * The horizontal in destination space (transform result) is reverse transformed
- * into source image space to get U.
- * The vertical in destination space (transform result) is reverse transformed
- * into source image space to get V.
+ * The horizontal in destination space (transform result) is reverse
+ * transformed into source image space to get U.  The vertical in
+ * destination space (transform result) is reverse transformed into
+ * source image space to get V.
  *
- * The strength of this particular algorithm is that calculation work should
- * depend more upon the final transformed brush size rather than the input brush size.
+ * The strength of this particular algorithm is that calculation work
+ * should depend more upon the final transformed brush size rather
+ * than the input brush size.
  *
  * There are no floating point calculations in the inner loop for speed.
  */
@@ -125,17 +127,18 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gint          src_widthm1_times_int_multiple;
 
   /*
-   * tl, tr etc are used because it is easier to visualize top left, top right etc
-   * corners of the forward transformed source image rectangle.
+   * tl, tr etc are used because it is easier to visualize top left,
+   * top right etc corners of the forward transformed source image
+   * rectangle.
    */
   const gint fraction_bits = 12;
   const gint int_multiple  = pow(2,fraction_bits);
 
-  /* In inner loop's bilinear calculation, two numbers that were each previously multiplied by
-   * int_multiple are multiplied together.
+  /* In inner loop's bilinear calculation, two numbers that were each
+   * previously multiplied by int_multiple are multiplied together.
    * To get back the right result, the multiplication result must be
-   * divided *twice* by 2^fraction_bits, equivalent to
-   * bit shift right by 2 * fraction_bits
+   * divided *twice* by 2^fraction_bits, equivalent to bit shift right
+   * by 2 * fraction_bits
    */
   const gint recovery_bits = 2 * fraction_bits;
 
@@ -371,17 +374,18 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          src_widthm1_times_int_multiple;
 
   /*
-   * tl, tr etc are used because it is easier to visualize top left, top right etc
-   * corners of the forward transformed source image rectangle.
+   * tl, tr etc are used because it is easier to visualize top left,
+   * top right etc corners of the forward transformed source image
+   * rectangle.
    */
   const gint fraction_bits = 12;
   const gint int_multiple  = pow(2,fraction_bits);
 
-  /* In inner loop's bilinear calculation, two numbers that were each previously multiplied by
-   * int_multiple are multiplied together.
+  /* In inner loop's bilinear calculation, two numbers that were each
+   * previously multiplied by int_multiple are multiplied together.
    * To get back the right result, the multiplication result must be
-   * divided *twice* by 2^fraction_bits, equivalent to
-   * bit shift right by 2 * fraction_bits
+   * divided *twice* by 2^fraction_bits, equivalent to bit shift right
+   * by 2 * fraction_bits
    */
   const gint recovery_bits = 2 * fraction_bits;
 
