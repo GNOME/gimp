@@ -134,12 +134,15 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   GClosure       *closure;
   GSource        *source;
   gchar          *title;
+  const gchar    *uri;
 
   if (shell->close_dialog)
     {
       gtk_window_present (GTK_WINDOW (shell->close_dialog));
       return;
     }
+
+  uri = gimp_object_get_name (GIMP_OBJECT (image));
 
   title = g_strdup_printf (_("Close %s"), gimp_image_get_display_name (image));
 
@@ -151,15 +154,12 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                       NULL);
   g_free (title);
 
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("Do_n't Save"), GTK_RESPONSE_CLOSE);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_stock (GTK_STOCK_DELETE,
-                                                  GTK_ICON_SIZE_BUTTON));
-
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_SAVE,   RESPONSE_SAVE,
+                          _("Close _without Saving"), GTK_RESPONSE_CLOSE,
+                          GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
+                          (uri ?
+                           GTK_STOCK_SAVE :
+                           GTK_STOCK_SAVE_AS),        RESPONSE_SAVE,
                           NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);

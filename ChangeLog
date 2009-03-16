@@ -1,3 +1,9 @@
+2009-03-16  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): adapt button labels to the
+	latest GNOME HIG.
+
 2009-03-16  Tor Lillqvist  <tml@iki.fi>
 
 	* app/version.c (gimp_show_library_version): The build-time and
