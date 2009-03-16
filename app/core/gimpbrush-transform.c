@@ -113,14 +113,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gint          src_space_cur_pos_y;
   gint          src_space_row_start_x;
   gint          src_space_row_start_y;
-  guchar       *src_walker;
-  guchar       *pixel_next;
-  guchar       *pixel_below;
-  guchar       *pixel_below_next;
+  const guchar *src_walker;
+  const guchar *pixel_next;
+  const guchar *pixel_below;
+  const guchar *pixel_below_next;
   gint          opposite_x, distance_from_true_x;
   gint          opposite_y, distance_from_true_y;
   gint          src_height_times_int_multiple;
   gint          src_width_times_int_multiple;
+  gint          src_heightm1_times_int_multiple;
+  gint          src_widthm1_times_int_multiple;
 
   /*
    * tl, tr etc are used because it is easier to visualize top left, top right etc
@@ -170,7 +172,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (brush->mask);
 
-  /* prevent disappearance of 1x1 pixel brush at some rotations when scaling < 1 */
+  /* prevent disappearance of 1x1 pixel brush at some rotations when
+     scaling < 1 */
   /*
   if (src_width == 1 && src_height == 1 && scale_x < 1 && scale_y < 1 )
     {
@@ -214,8 +217,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   src_height_times_int_multiple = src_height << fraction_bits; /* mult by int_multiple */
   src_width_times_int_multiple  = src_width  << fraction_bits; /* mult by int_multiple */
-  const gint src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
-  const gint src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
+
+  src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
+  src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
 
   for (y = 0; y < dest_height; y++)
     {
@@ -242,8 +246,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
               if (src_space_cur_pos_y > (src_heightm1_times_int_multiple) &&
                   src_space_cur_pos_x > (src_widthm1_times_int_multiple) )
                 {
-                  pixel_next  = src_walker;
-                  pixel_below = src_walker;
+                  pixel_next       = src_walker;
+                  pixel_below      = src_walker;
                   pixel_below_next = src_walker;
                 }
 
@@ -251,8 +255,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                * no pixel below, reuse current pixel instead  */
               else if (src_space_cur_pos_y > (src_heightm1_times_int_multiple))
                 {
-                  pixel_next  = src_walker + 1;
-                  pixel_below = src_walker;
+                  pixel_next       = src_walker + 1;
+                  pixel_below      = src_walker;
                   pixel_below_next = src_walker + 1;
                 }
 
@@ -260,16 +264,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                * no next pixel to the right so reuse current pixel instead */
               else if (src_space_cur_pos_x > (src_widthm1_times_int_multiple))
                 {
-                  pixel_next  = src_walker;
-                  pixel_below = src_walker + src_width;
+                  pixel_next       = src_walker;
+                  pixel_below      = src_walker + src_width;
                   pixel_below_next = pixel_below;
                 }
 
               /* neither on bottom edge nor on right edge */
               else
                 {
-                  pixel_next  = src_walker + 1;
-                  pixel_below = src_walker + src_width;
+                  pixel_next       = src_walker + 1;
+                  pixel_below      = src_walker + src_width;
                   pixel_below_next = pixel_below + 1;
                 }
 
@@ -278,16 +282,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
               opposite_x =  int_multiple - distance_from_true_x;
               opposite_y =  int_multiple - distance_from_true_y;
 
-              *dest= ( (src_walker[0] * opposite_x + pixel_next[0] * distance_from_true_x) * opposite_y +
+              *dest = ((src_walker[0] * opposite_x + pixel_next[0] * distance_from_true_x) * opposite_y +
                        (pixel_below[0] * opposite_x + pixel_below_next[0] *distance_from_true_x) * distance_from_true_y
-                     ) >> recovery_bits;
-
+                       ) >> recovery_bits;
             }
 
           src_space_cur_pos_x+=src_walk_ux;
           src_space_cur_pos_y+=src_walk_uy;
           dest ++;
         } /* end for x */
+
         src_space_row_start_x +=src_walk_vx;
         src_space_row_start_y +=src_walk_vy;
         src_space_cur_pos_x = src_space_row_start_x;
@@ -300,35 +304,37 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
 
 /*
- * Transforms the brush pixemap with bilinear interpolation.
+ * Transforms the brush pixmap with bilinear interpolation.
  *
  * The algorithm used is exactly the same as for the brush mask
  * (gimp_brush_real_transform_mask) except it accounts for 3 color channels
  *  instead of 1 greyscale channel.
  *
  * Rather than calculating the inverse transform for each point in the
- * transformed image, this algorithm uses the inverse transformed corner
- * points of the destination image to work out the starting position in the
- * source image and the U and V deltas in the source image space.
- * It then uses a scan-line approach, looping through rows and colummns
- * in the transformed (destination) image while walking along the corresponding
- * rows and columns (named U and V) in the source image.
+ * transformed image, this algorithm uses the inverse transformed
+ * corner points of the destination image to work out the starting
+ * position in the source image and the U and V deltas in the source
+ * image space.  It then uses a scan-line approach, looping through
+ * rows and colummns in the transformed (destination) image while
+ * walking along the corresponding rows and columns (named U and V) in
+ * the source image.
  *
- * The horizontal in destination space (transform result) is reverse transformed
- * into source image space to get U.
- * The vertical in destination space (transform result) is reverse transformed
- * into source image space to get V.
+ * The horizontal in destination space (transform result) is reverse
+ * transformed into source image space to get U.  The vertical in
+ * destination space (transform result) is reverse transformed into
+ * source image space to get V.
  *
- * The strength of this particular algorithm is that calculation work should
- * depend more upon the final transformed brush size rather than the input brush size.
+ * The strength of this particular algorithm is that calculation work
+ * should depend more upon the final transformed brush size rather
+ * than the input brush size.
  *
  * There are no floating point calculations in the inner loop for speed.
  */
 TempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                           gdouble    scale_x,
-                                           gdouble    scale_y,
-                                           gdouble    angle)
+                                  gdouble    scale_x,
+                                  gdouble    scale_y,
+                                  gdouble    angle)
 {
   TempBuf      *result;
   guchar       *dest;
@@ -353,14 +359,16 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          src_space_cur_pos_y;
   gint          src_space_row_start_x;
   gint          src_space_row_start_y;
-  guchar       *src_walker;
-  guchar       *pixel_next;
-  guchar       *pixel_below;
-  guchar       *pixel_below_next;
+  const guchar *src_walker;
+  const guchar *pixel_next;
+  const guchar *pixel_below;
+  const guchar *pixel_below_next;
   gint          opposite_x, distance_from_true_x;
   gint          opposite_y, distance_from_true_y;
   gint          src_height_times_int_multiple;
   gint          src_width_times_int_multiple;
+  gint          src_heightm1_times_int_multiple;
+  gint          src_widthm1_times_int_multiple;
 
   /*
    * tl, tr etc are used because it is easier to visualize top left, top right etc
@@ -446,8 +454,9 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   src_height_times_int_multiple = src_height << fraction_bits; /* mult by int_multiple */
   src_width_times_int_multiple  = src_width  << fraction_bits; /* mult by int_multiple */
-  const gint src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
-  const gint src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
+
+  src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
+  src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
 
   for (y = 0; y < dest_height; y++)
     {

@@ -325,7 +325,7 @@ ripple_horizontal (gint      x,
                    gpointer  data)
 {
   RippleParam_t    *param = data;
-  GimpPixelFetcher *pft   = param->pft;;
+  GimpPixelFetcher *pft   = param->pft;
   const gint        width = param->width;
   guchar            pixel[2][4];
   gdouble           needx;

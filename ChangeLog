@@ -1,5 +1,14 @@
 2009-03-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrush-transform.c (gimp_brush_real_transform_mask):
+	gimp_brush_real_transform_pixmap): don't mix variable declarations
+	and code. Added missing const qualifiers.
+
+	* plug-ins/common/ripple.c (ripple_horizontal): removed stray
+	semicolon.
+
+2009-03-16  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c
 	(gimp_display_shell_close_dialog): adapt button labels to the
 	latest GNOME HIG.
