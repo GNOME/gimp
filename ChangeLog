@@ -1,5 +1,9 @@
 2009-03-16  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.6.7 (interface age 7).
+
+2009-03-16  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.6.6 release.
 
 2009-03-16  Tor Lillqvist  <tml@iki.fi>
