@@ -1,3 +1,8 @@
+2009-03-16  Tor Lillqvist  <tml@iki.fi>
+
+	* app/version.c (gimp_show_library_version): The build-time and
+	run-time versions were swapped in the output.
+
 2009-03-14  Sven Neumann  <sven@gimp.org>
 
 	Bug 566443 – diagonal method guidelines for crop tool
