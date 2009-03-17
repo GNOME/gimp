@@ -700,11 +700,6 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 
   if (writer->tmpname)
     {
-#ifdef G_OS_WIN32
-      /* win32 rename can't overwrite */
-      g_unlink (writer->filename);
-#endif
-
       if (g_rename (writer->tmpname, writer->filename) == -1)
         {
           g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
