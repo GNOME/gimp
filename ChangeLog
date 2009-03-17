@@ -1,4 +1,4 @@
-2009-03-17  Sven Neumann  <sven@sven>
+2009-03-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for fsync().
 
