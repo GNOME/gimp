@@ -1,5 +1,11 @@
 2009-03-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): Drop Windows
+	code to remove target file before renaming. g_rename() nowadays
+	takes care of allowing replacing existing files on Windows.
+
+2009-03-17  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: check for fsync().
 
 	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_close_file):

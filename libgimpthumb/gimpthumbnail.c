@@ -886,19 +886,12 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
       g_printerr ("thumbnail saved to temporary file %s\n", tmpname);
 #endif
 
-#ifdef G_OS_WIN32
-      /* win32 rename can't overwrite */
-      g_unlink (filename);
-#endif
+      success = (g_rename (tmpname, filename) == 0);
 
-      if (g_rename (tmpname, filename) == -1)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not create thumbnail for %s: %s"),
-                       thumbnail->image_uri, g_strerror (errno));
-
-          success = FALSE;
-        }
+      if (! success)
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not create thumbnail for %s: %s"),
+                     thumbnail->image_uri, g_strerror (errno));
     }
 
   if (success)
