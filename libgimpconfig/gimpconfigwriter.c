@@ -664,6 +664,31 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
       return FALSE;
     }
 
+#ifdef HAVE_FSYNC
+  /* If the final destination exists, we want to sync the newly written
+   * file to ensure the data is on disk when we rename over the destination.
+   * otherwise if we get a system crash we can lose both the new and the
+   * old file on some filesystems. (I.E. those that don't guarantee the
+   * data is written to the disk before the metadata.)
+   */
+  if (writer->tmpname && g_file_test (writer->filename, G_FILE_TEST_EXISTS))
+    {
+      if (fsync (writer->fd) != 0)
+        {
+          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                       _("Error writing to temporary file for '%s': %s\n"
+                         "The original file has not been touched."),
+                       gimp_filename_to_utf8 (writer->filename),
+                       g_strerror (errno));
+
+          close (writer->fd);
+          g_unlink (writer->tmpname);
+
+          return FALSE;
+        }
+    }
+#endif
+
   if (close (writer->fd) != 0)
     {
       if (writer->tmpname)
