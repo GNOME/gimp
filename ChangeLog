@@ -1,3 +1,10 @@
+2009-03-17  Sven Neumann  <sven@sven>
+
+	* configure.in: check for fsync().
+
+	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_close_file):
+	fsync temporary file if destination file exists.
+
 2009-03-17  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimpconfig/gimpconfigwriter.c

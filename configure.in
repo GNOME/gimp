@@ -401,7 +401,9 @@ AC_FUNC_VPRINTF
 AC_FUNC_ALLOCA
 
 # check some more funcs
+AC_CHECK_FUNCS(fsync)
 AC_CHECK_FUNCS(difftime mmap)
+
 
 AM_BINRELOC
 
