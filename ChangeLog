@@ -2,8 +2,8 @@
 
 	* libgimpconfig/gimpconfigwriter.c
 	(gimp_config_writer_close_file): Drop Windows code to remove
-	target file before renaming. g_rename() nowadays takes of allowing
-	replacing existing files on Windows.
+	target file before renaming. g_rename() nowadays takes care of
+	allowing replacing existing files on Windows.
 
 2009-03-16  Sven Neumann  <sven@gimp.org>
 
