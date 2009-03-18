@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2007
+# Marco Ciampa <ciampix@libero.it>, 2003-2009
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 12:02+0100\n"
-"PO-Revision-Date: 2009-02-27 12:01+0100\n"
+"POT-Creation-Date: 2009-03-18 14:50+0100\n"
+"PO-Revision-Date: 2009-03-18 14:52+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -596,14 +596,14 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
 #: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
 #: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:584
+#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:267
 #: ../plug-ins/file-bmp/bmp-read.c:590 ../plug-ins/file-faxg3/faxg3.c:478
 #: ../plug-ins/file-fits/fits.c:530 ../plug-ins/file-jpeg/jpeg-load.c:249
-#: ../plug-ins/file-jpeg/jpeg-load.c:758
+#: ../plug-ins/file-jpeg/jpeg-load.c:761
 #: ../plug-ins/file-psd/psd-image-res-load.c:995
 #: ../plug-ins/file-psd/psd-load.c:1526 ../plug-ins/file-sgi/sgi.c:384
 #: ../plug-ins/gfig/gfig-dialog.c:1284
@@ -1010,7 +1010,7 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-mng.c:1073 ../plug-ins/common/file-pat.c:330
 #: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
-#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
+#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1751
 #: ../plug-ins/common/file-raw.c:249 ../plug-ins/common/file-raw.c:666
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
@@ -1021,7 +1021,7 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:460
 #: ../plug-ins/file-fli/fli-gimp.c:497 ../plug-ins/file-ico/ico-load.c:653
 #: ../plug-ins/file-ico/ico-load.c:732 ../plug-ins/file-jpeg/jpeg-load.c:109
-#: ../plug-ins/file-jpeg/jpeg-load.c:828 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/file-jpeg/jpeg-load.c:831 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:272
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:190
@@ -1052,7 +1052,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-mng.c:575 ../plug-ins/common/file-mng.c:909
 #: ../plug-ins/common/file-pat.c:462 ../plug-ins/common/file-pcx.c:666
 #: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
-#: ../plug-ins/common/file-pnm.c:973 ../plug-ins/common/file-ps.c:1213
+#: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:546 ../plug-ins/common/file-raw.c:574
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
@@ -3002,7 +3002,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/common/file-gih.c:667 ../plug-ins/common/file-pat.c:335
 #: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:586
 #: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:728
-#: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1042
+#: ../plug-ins/common/file-pnm.c:499 ../plug-ins/common/file-ps.c:1042
 #: ../plug-ins/common/file-raw.c:671 ../plug-ins/common/file-sunras.c:486
 #: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:603
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:741
@@ -3030,7 +3030,7 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:467
 #: ../plug-ins/common/file-pcx.c:627 ../plug-ins/common/file-pix.c:529
-#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:978
+#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
@@ -3134,7 +3134,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
 #: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:659
-#: ../plug-ins/common/file-pnm.c:963
+#: ../plug-ins/common/file-pnm.c:967
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
@@ -3843,7 +3843,7 @@ msgstr "Salva valori _colore dai punti trasparenti"
 msgid "Co_mpression level:"
 msgstr "Livello di co_mpressione:"
 
-#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1185
+#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1186
 msgid "_Load Defaults"
 msgstr "Carica i va_lori predefiniti"
 
@@ -3851,78 +3851,78 @@ msgstr "Carica i va_lori predefiniti"
 msgid "S_ave Defaults"
 msgstr "S_alva i valori predefiniti"
 
-#: ../plug-ins/common/file-pnm.c:247
+#: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:267
+#: ../plug-ins/common/file-pnm.c:268
 msgid "PNM image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:279
+#: ../plug-ins/common/file-pnm.c:280
 msgid "PBM image"
 msgstr "Immagine PBM"
 
-#: ../plug-ins/common/file-pnm.c:291
+#: ../plug-ins/common/file-pnm.c:292
 msgid "PGM image"
 msgstr "Immagine PGM"
 
-#: ../plug-ins/common/file-pnm.c:303
+#: ../plug-ins/common/file-pnm.c:304
 msgid "PPM image"
 msgstr "Immagine PPM"
 
-#: ../plug-ins/common/file-pnm.c:527 ../plug-ins/common/file-pnm.c:549
-#: ../plug-ins/common/file-pnm.c:558 ../plug-ins/common/file-pnm.c:569
-#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:727
+#: ../plug-ins/common/file-pnm.c:528 ../plug-ins/common/file-pnm.c:550
+#: ../plug-ins/common/file-pnm.c:559 ../plug-ins/common/file-pnm.c:570
+#: ../plug-ins/common/file-pnm.c:658 ../plug-ins/common/file-pnm.c:728
 msgid "Premature end of file."
 msgstr "Fine del file prematura."
 
-#: ../plug-ins/common/file-pnm.c:529
+#: ../plug-ins/common/file-pnm.c:530
 msgid "Invalid file."
 msgstr "File non valido."
 
-#: ../plug-ins/common/file-pnm.c:543
+#: ../plug-ins/common/file-pnm.c:544
 msgid "File not in a supported format."
 msgstr "File in formato non supportato."
 
-#: ../plug-ins/common/file-pnm.c:552
+#: ../plug-ins/common/file-pnm.c:553
 msgid "Invalid X resolution."
 msgstr "Risoluzione X non valida."
 
-#: ../plug-ins/common/file-pnm.c:554
+#: ../plug-ins/common/file-pnm.c:555
 msgid "Image width is larger than GIMP can handle."
 msgstr "La larghezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:561
+#: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Risoluzione Y non valida."
 
-#: ../plug-ins/common/file-pnm.c:563
+#: ../plug-ins/common/file-pnm.c:564
 msgid "Image height is larger than GIMP can handle."
 msgstr "L'altezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:575
+#: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
 msgstr "Valore massimo non supportato"
 
-#: ../plug-ins/common/file-pnm.c:780
+#: ../plug-ins/common/file-pnm.c:781
 msgid "Error reading file."
 msgstr "Errore nella lettura del file"
 
-#: ../plug-ins/common/file-pnm.c:1148
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "Save as PNM"
 msgstr "Salva come PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1165
+#: ../plug-ins/common/file-pnm.c:1202
 msgid "Data formatting"
 msgstr "Formattazione dati"
 
-#: ../plug-ins/common/file-pnm.c:1169
+#: ../plug-ins/common/file-pnm.c:1206
 msgid "Raw"
 msgstr "Raw"
 
-#: ../plug-ins/common/file-pnm.c:1170
+#: ../plug-ins/common/file-pnm.c:1207
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -5388,114 +5388,114 @@ msgstr "Informazioni sul profilo di colore dell'immagine"
 msgid "Color Profile Information"
 msgstr "Informazioni sul profilo di colore"
 
-#: ../plug-ins/common/lcms.c:570
+#: ../plug-ins/common/lcms.c:572
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
 
-#: ../plug-ins/common/lcms.c:677
+#: ../plug-ins/common/lcms.c:679
 msgid "Default RGB working space"
 msgstr "Spazio di lavoro RGB predefinito"
 
-#: ../plug-ins/common/lcms.c:773
+#: ../plug-ins/common/lcms.c:775
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "I dati allegati come \"icc-profile\" non sembrano essere un profilo di "
 "colore ICC"
 
-#: ../plug-ins/common/lcms.c:823
+#: ../plug-ins/common/lcms.c:825
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:883
+#: ../plug-ins/common/lcms.c:885
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversione da \"%s\" a \"%s\""
 
-#: ../plug-ins/common/lcms.c:1127
+#: ../plug-ins/common/lcms.c:1129
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Impossibile caricare il profilo ICC da \"%s\""
 
-#: ../plug-ins/common/lcms.c:1149
+#: ../plug-ins/common/lcms.c:1151
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'immagine \"%s\" possiede un profilo di colore incorporato:"
 
-#: ../plug-ins/common/lcms.c:1193
+#: ../plug-ins/common/lcms.c:1195
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1224
+#: ../plug-ins/common/lcms.c:1226
 msgid "Convert to RGB working space?"
 msgstr "Conversione nello spazio di lavoro RGB?"
 
-#: ../plug-ins/common/lcms.c:1229
+#: ../plug-ins/common/lcms.c:1231
 msgid "_Keep"
 msgstr "_Mantieni"
 
-#: ../plug-ins/common/lcms.c:1234
+#: ../plug-ins/common/lcms.c:1236
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:1261 ../plug-ins/file-jpeg/jpeg-exif.c:377
+#: ../plug-ins/common/lcms.c:1263 ../plug-ins/file-jpeg/jpeg-exif.c:377
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
-#: ../plug-ins/common/lcms.c:1325
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "Seleziona profilo di destinazione"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: ../plug-ins/common/lcms.c:1357
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo di colore ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1400
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Spazio di lavoro RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "Converti il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1451
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "Assegna il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1459
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "_Assegna"
 
-#: ../plug-ins/common/lcms.c:1476
+#: ../plug-ins/common/lcms.c:1478
 msgid "Current Color Profile"
 msgstr "Profilo di colore corrente"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Convert to"
 msgstr "Converti a"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Assign"
 msgstr "Assegna"
 
-#: ../plug-ins/common/lcms.c:1515
+#: ../plug-ins/common/lcms.c:1517
 msgid "_Rendering Intent:"
 msgstr "Scopo del _rendering:"
 
-#: ../plug-ins/common/lcms.c:1531
+#: ../plug-ins/common/lcms.c:1533
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
-#: ../plug-ins/common/lcms.c:1573
+#: ../plug-ins/common/lcms.c:1575
 msgid "Destination profile is not for RGB color space."
 msgstr "Il profilo di destinazione non è adatto allo spazio colore RGB."
 
@@ -7663,7 +7663,7 @@ msgstr "Propagazione canale _alfa"
 
 #: ../plug-ins/common/value-propagate.c:1229
 msgid "Propagating value channel"
-msgstr "Propagazione valore canale"
+msgstr "Propagazione canale valore"
 
 #: ../plug-ins/common/van-gogh-lic.c:566 ../plug-ins/common/van-gogh-lic.c:641
 msgid "Van Gogh (LIC)"
@@ -8142,7 +8142,7 @@ msgstr "Salva come BMP"
 msgid "_Run-Length Encoded"
 msgstr "Codifica _RLE"
 
-#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:899
+#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "_Advanced Options"
 msgstr "Opzioni avanzate"
 
@@ -8275,7 +8275,7 @@ msgstr "Compresso (PNG)"
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:725 ../plug-ins/file-jpeg/jpeg-load.c:630
+#: ../plug-ins/file-ico/ico-load.c:725 ../plug-ins/file-jpeg/jpeg-load.c:633
 #: ../plug-ins/file-psd/psd-thumb-load.c:85
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8314,67 +8314,67 @@ msgstr "Dimensione: %02.01f kB"
 msgid "Calculating file size..."
 msgstr "Calcolo dimensione del file..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:773 ../plug-ins/file-jpeg/jpeg-save.c:875
+#: ../plug-ins/file-jpeg/jpeg-save.c:774 ../plug-ins/file-jpeg/jpeg-save.c:876
 msgid "File size: unknown"
 msgstr "Dimensione: sconosciuta"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:826
+#: ../plug-ins/file-jpeg/jpeg-save.c:827
 msgid "Save as JPEG"
 msgstr "Salva come JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:861
+#: ../plug-ins/file-jpeg/jpeg-save.c:862
 msgid "_Quality:"
 msgstr "Qualità:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:865
+#: ../plug-ins/file-jpeg/jpeg-save.c:866
 msgid "JPEG quality parameter"
 msgstr "Parametri JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:884
+#: ../plug-ins/file-jpeg/jpeg-save.c:885
 msgid "Enable preview to obtain the file size."
 msgstr "Attivare l'anteprima per ottenere la dimensione del file."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:887
+#: ../plug-ins/file-jpeg/jpeg-save.c:888
 msgid "Sho_w preview in image window"
 msgstr "M_ostra l'anteprima nella finestra immagine"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:928
+#: ../plug-ins/file-jpeg/jpeg-save.c:929
 msgid "S_moothing:"
 msgstr "S_mussamento:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:941
+#: ../plug-ins/file-jpeg/jpeg-save.c:942
 msgid "Frequency (rows):"
 msgstr "Frequenza (righe):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:957
+#: ../plug-ins/file-jpeg/jpeg-save.c:958
 msgid "Use _restart markers"
 msgstr "Usa il _riavvio marcatori"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:973
+#: ../plug-ins/file-jpeg/jpeg-save.c:974
 msgid "_Optimize"
 msgstr "_Ottimizza"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:987
+#: ../plug-ins/file-jpeg/jpeg-save.c:988
 msgid "_Progressive"
 msgstr "_Progressiva"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1003
+#: ../plug-ins/file-jpeg/jpeg-save.c:1004
 msgid "Save _EXIF data"
 msgstr "Salva dati _EXIF"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1020
+#: ../plug-ins/file-jpeg/jpeg-save.c:1021
 msgid "Save _thumbnail"
 msgstr "Salva minia_tura"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1037
+#: ../plug-ins/file-jpeg/jpeg-save.c:1038
 msgid "Save _XMP data"
 msgstr "Salva dati _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1052
+#: ../plug-ins/file-jpeg/jpeg-save.c:1053
 msgid "_Use quality settings from original image"
 msgstr "_Usa le impostazioni di qualità dell'immagine originale"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1059
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8386,48 +8386,48 @@ msgstr ""
 "del file."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1082
+#: ../plug-ins/file-jpeg/jpeg-save.c:1083
 msgid "Su_bsampling:"
 msgstr "So_ttocampionatura:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1089
+#: ../plug-ins/file-jpeg/jpeg-save.c:1090
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1, 1x1, 1x1 (migliore qualità)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1091
+#: ../plug-ins/file-jpeg/jpeg-save.c:1092
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1, 1x1, 1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "1x2,1x1,1x1"
 msgstr "1x2, 1x1, 1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2, 1x1, 1x1 (file più piccolo)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1125
+#: ../plug-ins/file-jpeg/jpeg-save.c:1126
 msgid "_DCT method:"
 msgstr "Metodo _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1132
 msgid "Fast Integer"
 msgstr "Interi veloci"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1132
+#: ../plug-ins/file-jpeg/jpeg-save.c:1133
 msgid "Integer"
 msgstr "Interi"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1133
+#: ../plug-ins/file-jpeg/jpeg-save.c:1134
 msgid "Floating-Point"
 msgstr "Virgola mobile"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1149
+#: ../plug-ins/file-jpeg/jpeg-save.c:1150
 msgid "Comment"
 msgstr "Commento"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1194
+#: ../plug-ins/file-jpeg/jpeg-save.c:1195
 msgid "Sa_ve Defaults"
 msgstr "Sal_va i valori predefiniti"
 
