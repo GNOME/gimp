@@ -6,60 +6,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-20 10:42+0200\n"
-"PO-Revision-Date: 2008-09-20 10:43+0200\n"
+"POT-Creation-Date: 2009-03-18 09:21+0100\n"
+"PO-Revision-Date: 2009-03-18 09:21+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Benvenuti a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Sviluppo interattivo in Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Scorri..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:62
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
 "interattive"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu non può elaborare due o più script contemporaneamente."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Lo script \"%s\" è già in esecuzione."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -67,44 +67,44 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:823
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Errore durante l'esecuzione di %s:"
@@ -118,95 +118,95 @@ msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 msgid "Error while loading %s:"
 msgstr "Errore durante il caricamento di: %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "Avvia il _server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Porta del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Console interattiva per sviluppo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Server per le operazioni Script-Fu remote"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "Avvia _server..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "Manuale _utente"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "P_ulsanti"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "_Motivi"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "Temi per pagine _web"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Bagliore _alieno"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Motivo in _bassorilievo"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classico gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Rileggere tutti gli Script-Fu disponibili"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -833,7 +833,7 @@ msgstr "Sfuma_to..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
-msgstr "Modalità sfumata"
+msgstr "Modalità sfumatura"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
@@ -1651,6 +1651,62 @@ msgstr "Etichette a tubo _generiche..."
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
 msgstr "Etichetta pulsante a _tubo..."
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Segnalibro al sito web di GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Segnalibro al manuale utente"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Crea e utilizza le _selezioni"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Crea, apri e salva i _file"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Disegno di oggetti _semplici"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Come usare le finestre di dialogo"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "_Registro dei plug-in"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "Uso dei _tracciati"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Concetti _base"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "Sito web _degli sviluppatori"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "Sito web _principale"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Preparazione delle immagini per Internet"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "Sito web manuale _utente"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "Al la_voro con le foto digitali"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
@@ -2725,62 +2781,6 @@ msgstr "Lunghezza filo"
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "_Onda..."
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Segnalibro al sito web di GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Segnalibro al manuale utente"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Crea e utilizza le _selezioni"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Crea, apri e salva i _file"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Disegno di oggetti _semplici"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Come usare le finestre di dialogo"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "_Registro dei plug-in"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "Uso dei _tracciati"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "Concetti _base"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "Sito web _degli sviluppatori"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "Sito web _principale"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Preparazione delle immagini per Internet"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "Sito web manuale _utente"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "Al la_voro con le foto digitali"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
