@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2008
+# Marco Ciampa <ciampix@libero.it>, 2003-2009
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-20 10:42+0200\n"
-"PO-Revision-Date: 2008-09-20 10:43+0200\n"
+"POT-Creation-Date: 2009-03-18 09:13+0100\n"
+"PO-Revision-Date: 2009-03-18 09:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -109,11 +109,11 @@ msgstr "Selezione pennello Script-Fu"
 msgid "Error while executing %s:"
 msgstr "Errore durante l'esecuzione di %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Errore durante il caricamento di: %s"
@@ -833,7 +833,7 @@ msgstr "Sfuma_to..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
-msgstr "Modalità sfumata"
+msgstr "Modalità sfumatura"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
