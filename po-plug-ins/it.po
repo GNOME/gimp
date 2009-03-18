@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2007
+# Marco Ciampa <ciampix@libero.it>, 2003-2009
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 12:03+0100\n"
-"PO-Revision-Date: 2009-02-27 12:03+0100\n"
+"POT-Creation-Date: 2009-03-18 14:46+0100\n"
+"PO-Revision-Date: 2009-03-18 14:48+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -557,33 +557,33 @@ msgstr "In basso a dest_ra"
 msgid "_Depth:"
 msgstr "Profon_dità:"
 
-#: ../plug-ins/common/blinds.c:115
+#: ../plug-ins/common/blinds.c:112
 msgid "Simulate an image painted on window blinds"
 msgstr "Simula un'immagine dipinta su veneziane"
 
-#: ../plug-ins/common/blinds.c:120
+#: ../plug-ins/common/blinds.c:117
 msgid "_Blinds..."
 msgstr "_Strisce..."
 
-#: ../plug-ins/common/blinds.c:187
+#: ../plug-ins/common/blinds.c:184
 msgid "Adding blinds"
 msgstr "Aggiunta strisce"
 
-#: ../plug-ins/common/blinds.c:225
+#: ../plug-ins/common/blinds.c:222
 msgid "Blinds"
 msgstr "Strisce"
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:538
+#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:553
 msgid "Orientation"
 msgstr "Orientamento"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:557
 #: ../plug-ins/common/tile-small.c:425 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Horizontal"
 msgstr "_Orizzontale"
 
-#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:560
 #: ../plug-ins/common/tile-small.c:435 ../plug-ins/pagecurl/pagecurl.c:532
 msgid "_Vertical"
 msgstr "_Verticale"
@@ -596,14 +596,14 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
 #: ../plug-ins/common/file-gif-load.c:927 ../plug-ins/common/file-pcx.c:411
 #: ../plug-ins/common/file-pcx.c:417 ../plug-ins/common/file-pix.c:381
-#: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:711 ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:256 ../plug-ins/common/tile.c:266
 #: ../plug-ins/file-bmp/bmp-read.c:589 ../plug-ins/file-faxg3/faxg3.c:477
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:248
-#: ../plug-ins/file-jpeg/jpeg-load.c:757
+#: ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
 #: ../plug-ins/file-psd/psd-load.c:1525 ../plug-ins/file-sgi/sgi.c:383
 #: ../plug-ins/gfig/gfig-dialog.c:1283
@@ -1010,7 +1010,7 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-mng.c:1072 ../plug-ins/common/file-pat.c:329
 #: ../plug-ins/common/file-pcx.c:360 ../plug-ins/common/file-pdf.c:550
 #: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
-#: ../plug-ins/common/file-pnm.c:492 ../plug-ins/common/file-ps.c:1037
+#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3044 ../plug-ins/common/file-psp.c:1750
 #: ../plug-ins/common/file-raw.c:248 ../plug-ins/common/file-raw.c:665
 #: ../plug-ins/common/file-sunras.c:390 ../plug-ins/common/file-svg.c:332
@@ -1021,7 +1021,7 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:652
 #: ../plug-ins/file-ico/ico-load.c:731 ../plug-ins/file-jpeg/jpeg-load.c:108
-#: ../plug-ins/file-jpeg/jpeg-load.c:827 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-jpeg/jpeg-load.c:830 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:189
@@ -1052,7 +1052,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-mng.c:574 ../plug-ins/common/file-mng.c:908
 #: ../plug-ins/common/file-pat.c:461 ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
-#: ../plug-ins/common/file-pnm.c:972 ../plug-ins/common/file-ps.c:1214
+#: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1214
 #: ../plug-ins/common/file-raw.c:545 ../plug-ins/common/file-raw.c:573
 #: ../plug-ins/common/file-sunras.c:562 ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
@@ -2062,7 +2062,7 @@ msgstr "_Estendi"
 
 #: ../plug-ins/common/convolution-matrix.c:73
 #: ../plug-ins/common/displace.c:471 ../plug-ins/common/edge.c:708
-#: ../plug-ins/common/fractal-trace.c:735 ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/fractal-trace.c:735 ../plug-ins/common/ripple.c:581
 msgid "_Wrap"
 msgstr "_Avvolgi"
 
@@ -2237,7 +2237,7 @@ msgstr "Anteprima a_utomatica"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1300 ../plug-ins/common/ripple.c:504
+#: ../plug-ins/common/curve-bend.c:1300 ../plug-ins/common/ripple.c:519
 #: ../plug-ins/gfig/gfig-dialog.c:1206
 msgid "Options"
 msgstr "Opzioni"
@@ -2254,7 +2254,7 @@ msgstr "Smussamen_to"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1343 ../plug-ins/common/mosaic.c:726
-#: ../plug-ins/common/qbist.c:852 ../plug-ins/common/ripple.c:513
+#: ../plug-ins/common/qbist.c:852 ../plug-ins/common/ripple.c:528
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -2774,7 +2774,7 @@ msgid "Edge Behavior"
 msgstr "Comportamento contorni"
 
 #: ../plug-ins/common/displace.c:473 ../plug-ins/common/edge.c:721
-#: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:281
+#: ../plug-ins/common/ripple.c:582 ../plug-ins/common/waves.c:281
 msgid "_Smear"
 msgstr "_Macchia"
 
@@ -3007,7 +3007,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/common/file-gih.c:648 ../plug-ins/common/file-pat.c:334
 #: ../plug-ins/common/file-pcx.c:365 ../plug-ins/common/file-pdf.c:595
 #: ../plug-ins/common/file-pix.c:347 ../plug-ins/common/file-png.c:727
-#: ../plug-ins/common/file-pnm.c:497 ../plug-ins/common/file-ps.c:1043
+#: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1043
 #: ../plug-ins/common/file-raw.c:670 ../plug-ins/common/file-sunras.c:485
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-tiff-load.c:603
 #: ../plug-ins/common/file-wmf.c:993 ../plug-ins/common/file-xbm.c:741
@@ -3035,7 +3035,7 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1281
 #: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:466
 #: ../plug-ins/common/file-pcx.c:626 ../plug-ins/common/file-pix.c:528
-#: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:977
+#: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1219 ../plug-ins/common/file-sunras.c:567
 #: ../plug-ins/common/file-tga.c:1174 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:636
@@ -3139,7 +3139,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
 #: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:658
-#: ../plug-ins/common/file-pnm.c:962
+#: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
@@ -3843,7 +3843,7 @@ msgstr "Salva valori _colore dai punti trasparenti"
 msgid "Co_mpression level:"
 msgstr "Livello di co_mpressione:"
 
-#: ../plug-ins/common/file-png.c:1921 ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/common/file-png.c:1921 ../plug-ins/file-jpeg/jpeg-save.c:1190
 msgid "_Load Defaults"
 msgstr "Carica i va_lori predefiniti"
 
@@ -3851,78 +3851,78 @@ msgstr "Carica i va_lori predefiniti"
 msgid "S_ave Defaults"
 msgstr "S_alva i valori predefiniti"
 
-#: ../plug-ins/common/file-pnm.c:246
+#: ../plug-ins/common/file-pnm.c:247
 msgid "PNM Image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:266
+#: ../plug-ins/common/file-pnm.c:267
 msgid "PNM image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:278
+#: ../plug-ins/common/file-pnm.c:279
 msgid "PBM image"
 msgstr "Immagine PBM"
 
-#: ../plug-ins/common/file-pnm.c:290
+#: ../plug-ins/common/file-pnm.c:291
 msgid "PGM image"
 msgstr "Immagine PGM"
 
-#: ../plug-ins/common/file-pnm.c:302
+#: ../plug-ins/common/file-pnm.c:303
 msgid "PPM image"
 msgstr "Immagine PPM"
 
-#: ../plug-ins/common/file-pnm.c:526 ../plug-ins/common/file-pnm.c:548
-#: ../plug-ins/common/file-pnm.c:557 ../plug-ins/common/file-pnm.c:568
-#: ../plug-ins/common/file-pnm.c:656 ../plug-ins/common/file-pnm.c:726
+#: ../plug-ins/common/file-pnm.c:527 ../plug-ins/common/file-pnm.c:549
+#: ../plug-ins/common/file-pnm.c:558 ../plug-ins/common/file-pnm.c:569
+#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:727
 msgid "Premature end of file."
 msgstr "Fine del file prematura."
 
-#: ../plug-ins/common/file-pnm.c:528
+#: ../plug-ins/common/file-pnm.c:529
 msgid "Invalid file."
 msgstr "File non valido."
 
-#: ../plug-ins/common/file-pnm.c:542
+#: ../plug-ins/common/file-pnm.c:543
 msgid "File not in a supported format."
 msgstr "File in formato non supportato."
 
-#: ../plug-ins/common/file-pnm.c:551
+#: ../plug-ins/common/file-pnm.c:552
 msgid "Invalid X resolution."
 msgstr "Risoluzione X non valida."
 
-#: ../plug-ins/common/file-pnm.c:553
+#: ../plug-ins/common/file-pnm.c:554
 msgid "Image width is larger than GIMP can handle."
 msgstr "La larghezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:560
+#: ../plug-ins/common/file-pnm.c:561
 msgid "Invalid Y resolution."
 msgstr "Risoluzione Y non valida."
 
-#: ../plug-ins/common/file-pnm.c:562
+#: ../plug-ins/common/file-pnm.c:563
 msgid "Image height is larger than GIMP can handle."
 msgstr "L'altezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:574
+#: ../plug-ins/common/file-pnm.c:575
 msgid "Unsupported maximum value."
 msgstr "Valore massimo non supportato"
 
-#: ../plug-ins/common/file-pnm.c:779
+#: ../plug-ins/common/file-pnm.c:780
 msgid "Error reading file."
 msgstr "Errore nella lettura del file"
 
-#: ../plug-ins/common/file-pnm.c:1147
+#: ../plug-ins/common/file-pnm.c:1184
 msgid "Save as PNM"
 msgstr "Salva come PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1164
+#: ../plug-ins/common/file-pnm.c:1201
 msgid "Data formatting"
 msgstr "Formattazione dati"
 
-#: ../plug-ins/common/file-pnm.c:1168
+#: ../plug-ins/common/file-pnm.c:1205
 msgid "Raw"
 msgstr "Raw"
 
-#: ../plug-ins/common/file-pnm.c:1169
+#: ../plug-ins/common/file-pnm.c:1206
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -5388,114 +5388,114 @@ msgstr "Informazioni sul profilo di colore dell'immagine"
 msgid "Color Profile Information"
 msgstr "Informazioni sul profilo di colore"
 
-#: ../plug-ins/common/lcms.c:569
+#: ../plug-ins/common/lcms.c:571
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
 
-#: ../plug-ins/common/lcms.c:676
+#: ../plug-ins/common/lcms.c:678
 msgid "Default RGB working space"
 msgstr "Spazio di lavoro RGB predefinito"
 
-#: ../plug-ins/common/lcms.c:772
+#: ../plug-ins/common/lcms.c:774
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "I dati allegati come \"icc-profile\" non sembrano essere un profilo di "
 "colore ICC"
 
-#: ../plug-ins/common/lcms.c:822
+#: ../plug-ins/common/lcms.c:824
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:882
+#: ../plug-ins/common/lcms.c:884
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversione da \"%s\" a \"%s\""
 
-#: ../plug-ins/common/lcms.c:1126
+#: ../plug-ins/common/lcms.c:1128
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Impossibile caricare il profilo ICC da \"%s\""
 
-#: ../plug-ins/common/lcms.c:1148
+#: ../plug-ins/common/lcms.c:1150
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'immagine \"%s\" possiede un profilo di colore incorporato:"
 
-#: ../plug-ins/common/lcms.c:1192
+#: ../plug-ins/common/lcms.c:1194
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1223
+#: ../plug-ins/common/lcms.c:1225
 msgid "Convert to RGB working space?"
 msgstr "Conversione nello spazio di lavoro RGB?"
 
-#: ../plug-ins/common/lcms.c:1228
+#: ../plug-ins/common/lcms.c:1230
 msgid "_Keep"
 msgstr "_Mantieni"
 
-#: ../plug-ins/common/lcms.c:1233
+#: ../plug-ins/common/lcms.c:1235
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:1260 ../plug-ins/file-jpeg/jpeg-exif.c:376
+#: ../plug-ins/common/lcms.c:1262 ../plug-ins/file-jpeg/jpeg-exif.c:376
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
-#: ../plug-ins/common/lcms.c:1324
+#: ../plug-ins/common/lcms.c:1326
 msgid "Select destination profile"
 msgstr "Seleziona profilo di destinazione"
 
-#: ../plug-ins/common/lcms.c:1351
+#: ../plug-ins/common/lcms.c:1353
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: ../plug-ins/common/lcms.c:1356
+#: ../plug-ins/common/lcms.c:1358
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo di colore ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1399
+#: ../plug-ins/common/lcms.c:1401
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Spazio di lavoro RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1449
+#: ../plug-ins/common/lcms.c:1451
 msgid "Convert to ICC Color Profile"
 msgstr "Converti il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1452
 msgid "Assign ICC Color Profile"
 msgstr "Assegna il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1458
+#: ../plug-ins/common/lcms.c:1460
 msgid "_Assign"
 msgstr "_Assegna"
 
-#: ../plug-ins/common/lcms.c:1475
+#: ../plug-ins/common/lcms.c:1477
 msgid "Current Color Profile"
 msgstr "Profilo di colore corrente"
 
-#: ../plug-ins/common/lcms.c:1490
+#: ../plug-ins/common/lcms.c:1492
 msgid "Convert to"
 msgstr "Converti a"
 
-#: ../plug-ins/common/lcms.c:1490
+#: ../plug-ins/common/lcms.c:1492
 msgid "Assign"
 msgstr "Assegna"
 
-#: ../plug-ins/common/lcms.c:1514
+#: ../plug-ins/common/lcms.c:1516
 msgid "_Rendering Intent:"
 msgstr "Scopo del _rendering:"
 
-#: ../plug-ins/common/lcms.c:1530
+#: ../plug-ins/common/lcms.c:1532
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
-#: ../plug-ins/common/lcms.c:1572
+#: ../plug-ins/common/lcms.c:1574
 msgid "Destination profile is not for RGB color space."
 msgstr "Il profilo di destinazione non è adatto allo spazio colore RGB."
 
@@ -6408,57 +6408,57 @@ msgstr "La selezione manuale degli occhi può migliorare il risultato."
 msgid "Removing red eye"
 msgstr "Rimozione occhi rossi"
 
-#: ../plug-ins/common/ripple.c:128
+#: ../plug-ins/common/ripple.c:125
 msgid "Displace pixels in a ripple pattern"
 msgstr "Distribuisce i pixel con un motivo a onde"
 
-#: ../plug-ins/common/ripple.c:135
+#: ../plug-ins/common/ripple.c:132
 msgid "_Ripple..."
 msgstr "Inc_respature..."
 
-#: ../plug-ins/common/ripple.c:225
+#: ../plug-ins/common/ripple.c:222
 msgid "Rippling"
 msgstr "Increspature"
 
-#: ../plug-ins/common/ripple.c:467
+#: ../plug-ins/common/ripple.c:482
 msgid "Ripple"
 msgstr "Increspature"
 
-#: ../plug-ins/common/ripple.c:525
+#: ../plug-ins/common/ripple.c:540
 msgid "_Retain tilability"
 msgstr "_Mantieni affiancabilità"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:559
+#: ../plug-ins/common/ripple.c:577
 msgid "Edges"
 msgstr "Contorni"
 
-#: ../plug-ins/common/ripple.c:565
+#: ../plug-ins/common/ripple.c:583
 msgid "_Blank"
 msgstr "_Vuoto"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:587
+#: ../plug-ins/common/ripple.c:605
 msgid "Wave Type"
 msgstr "Tipo di onde"
 
-#: ../plug-ins/common/ripple.c:591
+#: ../plug-ins/common/ripple.c:609
 msgid "Saw_tooth"
 msgstr "Den_te di sega"
 
-#: ../plug-ins/common/ripple.c:592
+#: ../plug-ins/common/ripple.c:610
 msgid "S_ine"
 msgstr "S_eno"
 
-#: ../plug-ins/common/ripple.c:615
+#: ../plug-ins/common/ripple.c:633
 msgid "_Period:"
 msgstr "_Periodo:"
 
-#: ../plug-ins/common/ripple.c:628
+#: ../plug-ins/common/ripple.c:646
 msgid "A_mplitude:"
 msgstr "A_mpiezza:"
 
-#: ../plug-ins/common/ripple.c:641
+#: ../plug-ins/common/ripple.c:659
 msgid "Phase _shift:"
 msgstr "_Spostamento di fase:"
 
@@ -7663,7 +7663,7 @@ msgstr "Propagazione canale _alfa"
 
 #: ../plug-ins/common/value-propagate.c:1228
 msgid "Propagating value channel"
-msgstr "Propagazione valore canale"
+msgstr "Propagazione canale valore"
 
 #: ../plug-ins/common/van-gogh-lic.c:565 ../plug-ins/common/van-gogh-lic.c:640
 msgid "Van Gogh (LIC)"
@@ -8142,7 +8142,7 @@ msgstr "Salva come BMP"
 msgid "_Run-Length Encoded"
 msgstr "Codifica _RLE"
 
-#: ../plug-ins/file-bmp/bmp-write.c:827 ../plug-ins/file-jpeg/jpeg-save.c:903
+#: ../plug-ins/file-bmp/bmp-write.c:827 ../plug-ins/file-jpeg/jpeg-save.c:904
 msgid "_Advanced Options"
 msgstr "Opzioni avanzate"
 
@@ -8275,7 +8275,7 @@ msgstr "Compresso (PNG)"
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:724 ../plug-ins/file-jpeg/jpeg-load.c:629
+#: ../plug-ins/file-ico/ico-load.c:724 ../plug-ins/file-jpeg/jpeg-load.c:632
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8314,67 +8314,67 @@ msgstr "Dimensione file: %s"
 msgid "Calculating file size..."
 msgstr "Calcolo dimensione del file..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:777 ../plug-ins/file-jpeg/jpeg-save.c:879
+#: ../plug-ins/file-jpeg/jpeg-save.c:778 ../plug-ins/file-jpeg/jpeg-save.c:880
 msgid "File size: unknown"
 msgstr "Dimensione: sconosciuta"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:830
+#: ../plug-ins/file-jpeg/jpeg-save.c:831
 msgid "Save as JPEG"
 msgstr "Salva come JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:865
+#: ../plug-ins/file-jpeg/jpeg-save.c:866
 msgid "_Quality:"
 msgstr "Qualità:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:869
+#: ../plug-ins/file-jpeg/jpeg-save.c:870
 msgid "JPEG quality parameter"
 msgstr "Parametri JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:888
+#: ../plug-ins/file-jpeg/jpeg-save.c:889
 msgid "Enable preview to obtain the file size."
 msgstr "Attivare l'anteprima per ottenere la dimensione del file."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:891
+#: ../plug-ins/file-jpeg/jpeg-save.c:892
 msgid "Sho_w preview in image window"
 msgstr "M_ostra l'anteprima nella finestra immagine"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:932
+#: ../plug-ins/file-jpeg/jpeg-save.c:933
 msgid "S_moothing:"
 msgstr "S_mussamento:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:945
+#: ../plug-ins/file-jpeg/jpeg-save.c:946
 msgid "Frequency (rows):"
 msgstr "Frequenza (righe):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:961
+#: ../plug-ins/file-jpeg/jpeg-save.c:962
 msgid "Use _restart markers"
 msgstr "Usa il _riavvio marcatori"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:977
+#: ../plug-ins/file-jpeg/jpeg-save.c:978
 msgid "_Optimize"
 msgstr "_Ottimizza"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:991
+#: ../plug-ins/file-jpeg/jpeg-save.c:992
 msgid "_Progressive"
 msgstr "_Progressiva"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1007
+#: ../plug-ins/file-jpeg/jpeg-save.c:1008
 msgid "Save _EXIF data"
 msgstr "Salva dati _EXIF"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1024
+#: ../plug-ins/file-jpeg/jpeg-save.c:1025
 msgid "Save _thumbnail"
 msgstr "Salva minia_tura"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1041
+#: ../plug-ins/file-jpeg/jpeg-save.c:1042
 msgid "Save _XMP data"
 msgstr "Salva dati _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1056
+#: ../plug-ins/file-jpeg/jpeg-save.c:1057
 msgid "_Use quality settings from original image"
 msgstr "_Usa le impostazioni di qualità dell'immagine originale"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1062
+#: ../plug-ins/file-jpeg/jpeg-save.c:1063
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8386,48 +8386,48 @@ msgstr ""
 "del file."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1086
+#: ../plug-ins/file-jpeg/jpeg-save.c:1087
 msgid "Su_bsampling:"
 msgstr "So_ttocampionatura:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1, 1x1, 1x1 (migliore qualità)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1, 1x1, 1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1097
+#: ../plug-ins/file-jpeg/jpeg-save.c:1098
 msgid "1x2,1x1,1x1"
 msgstr "1x2, 1x1, 1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1099
+#: ../plug-ins/file-jpeg/jpeg-save.c:1100
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2, 1x1, 1x1 (file più piccolo)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1129
+#: ../plug-ins/file-jpeg/jpeg-save.c:1130
 msgid "_DCT method:"
 msgstr "Metodo _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1135
+#: ../plug-ins/file-jpeg/jpeg-save.c:1136
 msgid "Fast Integer"
 msgstr "Interi veloci"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1136
+#: ../plug-ins/file-jpeg/jpeg-save.c:1137
 msgid "Integer"
 msgstr "Interi"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1137
+#: ../plug-ins/file-jpeg/jpeg-save.c:1138
 msgid "Floating-Point"
 msgstr "Virgola mobile"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1153
+#: ../plug-ins/file-jpeg/jpeg-save.c:1154
 msgid "Comment"
 msgstr "Commento"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1198
+#: ../plug-ins/file-jpeg/jpeg-save.c:1199
 msgid "Sa_ve Defaults"
 msgstr "Sal_va i valori predefiniti"
 
@@ -8580,42 +8580,6 @@ msgstr ""
 "RLE aggressiva\n"
 "(non supportata da SGI)"
 
-#: ../plug-ins/file-uri/gimpmountoperation.c:447
-msgid "Co_nnect"
-msgstr "Co_nnessione"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:491
-msgid "Connect _anonymously"
-msgstr "Connessione _anonima"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:500
-msgid "Connect as u_ser:"
-msgstr "Conne_ssione come utente:"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:537
-msgid "_Username:"
-msgstr "Nome _utente:"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:541
-msgid "_Domain:"
-msgstr "_Dominio:"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:546
-msgid "_Password:"
-msgstr "_Password:"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:561
-msgid "_Forget password immediately"
-msgstr "_Scorda la password immediatamente"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:569
-msgid "_Remember password until you logout"
-msgstr "_Ricorda la password fino alla disconnessione"
-
-#: ../plug-ins/file-uri/gimpmountoperation.c:577
-msgid "_Remember forever"
-msgstr "_Ricorda per sempre"
-
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:128
 #: ../plug-ins/file-uri/uri-backend-wget.c:302
@@ -8624,7 +8588,7 @@ msgid "Downloading %s of image data"
 msgstr "Scaricamento %s di dati immagine"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:225
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:224
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:135
 #: ../plug-ins/file-uri/uri-backend-wget.c:345
 #, c-format
@@ -8637,13 +8601,13 @@ msgid "Uploading %s of image data"
 msgstr "Caricamento %s di dati immagine"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:182
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:229
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:228
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Caricato %s di dati immagine"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:252
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:296
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:295
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:157
 #: ../plug-ins/file-uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -8659,12 +8623,12 @@ msgstr "Fallita la lettura di %s da '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Fallita la scrittura di %s su '%s': %s"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:199
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:198
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Scaricamento immagine (%s di %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:203
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:202
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Caricamento immagine (%s di %s)"
@@ -12409,15 +12373,15 @@ msgstr "Imposta la dimensione e l'orientamento pagina per la stampa"
 msgid "Page Set_up"
 msgstr "_Impostazione pagina"
 
-#: ../plug-ins/print/print.c:265
+#: ../plug-ins/print/print.c:262
 msgid "Image Settings"
 msgstr "Impostazioni immagine"
 
-#: ../plug-ins/print/print.c:349
+#: ../plug-ins/print/print.c:346
 msgid "An error occurred while trying to print:"
 msgstr "Errore durante la stampa:"
 
-#: ../plug-ins/print/print.c:376
+#: ../plug-ins/print/print.c:373
 msgid "Printing"
 msgstr "Stampa in corso"
 
