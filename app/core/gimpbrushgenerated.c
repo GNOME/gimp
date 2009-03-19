@@ -32,6 +32,8 @@
 #include "gimpbrushgenerated-load.h"
 #include "gimpbrushgenerated-save.h"
 
+#include "gimp-intl.h"
+
 
 #define OVERSAMPLING 4
 
@@ -122,39 +124,45 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   brush_class->transform_mask = gimp_brush_generated_transform_mask;
 
   g_object_class_install_property (object_class, PROP_SHAPE,
-                                   g_param_spec_enum ("shape", NULL, NULL,
+                                   g_param_spec_enum ("shape", NULL,
+                                                      _("Brush Shape"),
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RADIUS,
-                                   g_param_spec_double ("radius", NULL, NULL,
+                                   g_param_spec_double ("radius", NULL,
+                                                        _("Brush Radius"),
                                                         0.1, 4000.0, 5.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SPIKES,
-                                   g_param_spec_int    ("spikes", NULL, NULL,
+                                   g_param_spec_int    ("spikes", NULL,
+                                                        _("Brush Spikes"),
                                                         2, 20, 2,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HARDNESS,
-                                   g_param_spec_double ("hardness", NULL, NULL,
+                                   g_param_spec_double ("hardness", NULL,
+                                                        _("Brush Hardness"),
                                                         0.0, 1.0, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
                                    g_param_spec_double ("aspect-ratio",
-                                                        NULL, NULL,
+                                                        NULL,
+                                                        _("Brush Aspect Ratio"),
                                                         1.0, 20.0, 1.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE,
-                                   g_param_spec_double ("angle", NULL, NULL,
+                                   g_param_spec_double ("angle", NULL,
+                                                        _("Brush Angle"),
                                                         0.0, 180.0, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));

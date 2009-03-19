@@ -89,6 +89,7 @@ app/core/gimp-edit.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
 app/core/gimp-modules.c
+app/core/gimp-tags.c
 app/core/gimp-units.c
 app/core/gimp-user-install.c
 app/core/gimp.c
@@ -239,9 +240,11 @@ app/paint/gimpdodgeburn.c
 app/paint/gimperaser.c
 app/paint/gimpheal.c
 app/paint/gimpink.c
+app/paint/gimpinkoptions.c
 app/paint/gimppaintbrush.c
-app/paint/gimppaintcore.c
 app/paint/gimppaintcore-stroke.c
+app/paint/gimppaintcore.c
+app/paint/gimppaintoptions.c
 app/paint/gimppencil.c
 app/paint/gimpperspectiveclone.c
 app/paint/gimpsmudge.c

@@ -1,3 +1,12 @@
+2009-03-19  Sven Neumann  <sven@gimp.org>
+
+	Bug 471681 – Keyboard shortcuts for brush size/params need feedback
+
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpcontext.c
+	* app/paint/gimppaintoptions.c: applied patch from Stephen G. that
+	marks some strings for translation.
+
 2009-03-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): Drop Windows
@@ -680,7 +689,7 @@
 	above bug:
 
 	* app/actions/actions.[ch]: add new function action_message()
-	which pushes a temp message to a display's statusbar.
+	which pushes a temp message to a display's statusbar.h
 
 	(action_select_property): add GimpDisplay* parameter and call
 	action_message() for int and double property changes.

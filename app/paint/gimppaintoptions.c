@@ -32,6 +32,8 @@
 
 #include "gimppaintoptions.h"
 
+#include "gimp-intl.h"
+
 
 #define DEFAULT_BRUSH_SCALE            1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
@@ -228,11 +230,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SCALE,
-                                   "brush-scale", NULL,
+                                   "brush-scale", _("Brush Scale"),
                                    0.01, 10.0, DEFAULT_BRUSH_SCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
-                                   "brush-angle", NULL,
+                                   "brush-angle", _("Brush Angle"),
                                    -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
                                    GIMP_PARAM_STATIC_STRINGS);
 

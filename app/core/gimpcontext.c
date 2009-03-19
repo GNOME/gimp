@@ -590,7 +590,7 @@ gimp_context_class_init (GimpContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
-                                   NULL,
+                                   _("Opacity"),
                                    GIMP_OPACITY_TRANSPARENT,
                                    GIMP_OPACITY_OPAQUE,
                                    GIMP_OPACITY_OPAQUE,
@@ -598,7 +598,7 @@ gimp_context_class_init (GimpContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, GIMP_CONTEXT_PROP_PAINT_MODE,
                                  gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
-                                 NULL,
+                                 _("Paint Mode"),
                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                  GIMP_NORMAL_MODE,
                                  GIMP_PARAM_STATIC_STRINGS);
