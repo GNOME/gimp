@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-16 23:13+0300\n"
-"PO-Revision-Date: 2009-03-16 23:13+0300\n"
+"POT-Creation-Date: 2009-03-20 00:58+0300\n"
+"PO-Revision-Date: 2009-03-20 02:16+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6795,6 +6795,16 @@ msgstr "Основной в фоновый (HSV по часовой )"
 msgid "FG to Transparent"
 msgstr "Основной в прозрачный"
 
+#. This is a special string to specify the language identifier to
+#. look for in the gimp-tags-default.xml file. Please translate the
+#. C in it according to the name of the po file used for
+#. gimp-tags-default.xml. E.g. lithuanian for the translation,
+#. that would be "tags-locale:lt".
+#.
+#: ../app/core/gimp-tags.c:88
+msgid "tags-locale:C"
+msgstr "tips-locale:ru"
+
 #: ../app/core/gimp-user-install.c:153
 #, c-format
 msgid "It seems you have used GIMP %s before.  GIMP will now migrate your user settings to '%s'."
@@ -6957,6 +6967,31 @@ msgstr "Файл обрезан в строке %d"
 msgid "Error while reading brush file '%s': %s"
 msgstr "Ошибка при чтении файла кисти '%s': %s"
 
+#: ../app/core/gimpbrushgenerated.c:128
+msgid "Brush Shape"
+msgstr "Форма кисти"
+
+#: ../app/core/gimpbrushgenerated.c:136
+msgid "Brush Radius"
+msgstr "Радиус кисти"
+
+#: ../app/core/gimpbrushgenerated.c:143
+msgid "Brush Spikes"
+msgstr "Лучи кисти"
+
+#: ../app/core/gimpbrushgenerated.c:150
+msgid "Brush Hardness"
+msgstr "Жесткость кисти"
+
+#: ../app/core/gimpbrushgenerated.c:158
+msgid "Brush Aspect Ratio"
+msgstr "Соотношение сторон кисти"
+
+#: ../app/core/gimpbrushgenerated.c:165
+#: ../app/paint/gimppaintoptions.c:237
+msgid "Brush Angle"
+msgstr "Угол кисти"
+
 #: ../app/core/gimpbrushpipe-load.c:112
 #: ../app/core/gimpbrushpipe-load.c:132
 #: ../app/core/gimpbrushpipe-load.c:222
@@ -7085,6 +7120,15 @@ msgstr "Установить непрозрачность канала"
 #: ../app/core/gimpselection.c:523
 msgid "Selection Mask"
 msgstr "Маска выделенной области"
+
+#: ../app/core/gimpcontext.c:593
+#: ../app/tools/gimppaintoptions-gui.c:165
+msgid "Opacity"
+msgstr "Непрозрачность"
+
+#: ../app/core/gimpcontext.c:601
+msgid "Paint Mode"
+msgstr "Режим рисования"
 
 #: ../app/core/gimpdata.c:569
 #: ../app/core/gimptoolpresets.c:278
@@ -9869,18 +9913,34 @@ msgstr "Выравнивание не действует на индексиро
 msgid "Ink"
 msgstr "Перо"
 
+#: ../app/paint/gimpinkoptions.c:72
+msgid "Ink Blob Size"
+msgstr "Размер капли Пера"
+
+#: ../app/paint/gimpinkoptions.c:99
+msgid "Ink Blob Aspect"
+msgstr "Соотношение сторон капли Пера"
+
+#: ../app/paint/gimpinkoptions.c:103
+msgid "Ink Blob Angle"
+msgstr "Угол Пера"
+
 #: ../app/paint/gimppaintbrush.c:62
 #: ../app/tools/gimppaintbrushtool.c:50
 msgid "Paintbrush"
 msgstr "Кисть"
 
+#: ../app/paint/gimppaintcore-stroke.c:337
+msgid "Not enough points to stroke"
+msgstr "Недостаточно точек для обводки"
+
 #: ../app/paint/gimppaintcore.c:136
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/paint/gimppaintcore-stroke.c:337
-msgid "Not enough points to stroke"
-msgstr "Недостаточно точек для обводки"
+#: ../app/paint/gimppaintoptions.c:233
+msgid "Brush Scale"
+msgstr "Масштаб кисти"
 
 #: ../app/paint/gimppencil.c:41
 #: ../app/tools/gimppenciltool.c:50
@@ -11805,10 +11865,6 @@ msgstr "Кисть:"
 #: ../app/tools/gimppaintoptions-gui.c:151
 msgid "Scale:"
 msgstr "Масштаб:"
-
-#: ../app/tools/gimppaintoptions-gui.c:165
-msgid "Opacity"
-msgstr "Непрозрачность"
 
 #: ../app/tools/gimppaintoptions-gui.c:171
 msgid "Hardness"
