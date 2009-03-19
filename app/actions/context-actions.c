@@ -72,7 +72,7 @@ static const GimpActionEntry context_actions[] =
   { "context-brush-hardness-menu", NULL,                  NC_("context-action",
                                                               "_Hardness")   },
   { "context-brush-aspect-menu",   NULL,                  NC_("context-action",
-                                                              "_Aspect")     },
+                                                              "_Aspect Ratio")},
   { "context-brush-angle-menu",    NULL,                  NC_("context-action",
                                                               "A_ngle")      },
 

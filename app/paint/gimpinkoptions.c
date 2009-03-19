@@ -96,7 +96,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                                  GIMP_INK_BLOB_TYPE_ELLIPSE,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
-                                   "blob-aspect", _("Ink Blob Aspect"),
+                                   "blob-aspect", _("Ink Blob Aspect Ratio"),
                                    1.0, 10.0, 1.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,

@@ -1,5 +1,10 @@
 2009-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/context-actions.c (context_actions): 
+	* app/paint/gimpinkoptions.c: changed "Aspect" to "Aspect Ratio".
+
+2009-03-19  Sven Neumann  <sven@gimp.org>
+
 	Bug 471681 – Keyboard shortcuts for brush size/params need feedback
 
 	* app/core/gimpbrushgenerated.c
