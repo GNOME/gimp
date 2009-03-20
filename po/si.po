@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: si\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-01 21:51+0000\n"
-"PO-Revision-Date: 2009-03-03 00:01+0530\n"
+"PO-Revision-Date: 2009-03-20 17:47+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhalese <danishka@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -8001,11 +8001,11 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:141
 msgid "Device Status"
-msgstr ""
+msgstr "මෙවලම් තත්ත්වය"
 
 #: ../app/dialogs/dialogs.c:145
 msgid "Errors"
-msgstr ""
+msgstr "දෝෂ"
 
 #: ../app/dialogs/dialogs.c:149
 msgid "Pointer"
@@ -8013,7 +8013,7 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:170
 msgid "History"
-msgstr ""
+msgstr "අතීතය"
 
 #: ../app/dialogs/dialogs.c:172
 msgid "Image Templates"
@@ -8025,7 +8025,7 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:197
 msgid "Selection"
-msgstr ""
+msgstr "තේරීම"
 
 #: ../app/dialogs/dialogs.c:197
 msgid "Selection Editor"
@@ -8049,24 +8049,24 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:217
 msgid "FG/BG"
-msgstr ""
+msgstr "FG/BG"
 
 #: ../app/dialogs/dialogs.c:217
 msgid "FG/BG Color"
-msgstr ""
+msgstr "FG/BG වර්‍ණය"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr ""
+msgstr "%s විවර්ණ කිරීම"
 
 #: ../app/dialogs/fade-dialog.c:123
 msgid "_Fade"
-msgstr ""
+msgstr "විවර්ණ (_F)"
 
 #: ../app/dialogs/fade-dialog.c:157
 msgid "_Mode:"
-msgstr ""
+msgstr "ආකාරය (_M):"
 
 #: ../app/dialogs/fade-dialog.c:163
 msgid "_Opacity:"
@@ -8078,7 +8078,7 @@ msgstr ""
 
 #: ../app/dialogs/file-open-location-dialog.c:71
 msgid "Open Location"
-msgstr ""
+msgstr "පිහිටුම විවෘත කරන්න"
 
 #: ../app/dialogs/file-open-location-dialog.c:109
 msgid "Enter location (URI):"
@@ -8172,28 +8172,28 @@ msgstr ""
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
 msgid "Image Properties"
-msgstr ""
+msgstr "පිංතූර වත්කම්"
 
 #: ../app/dialogs/image-properties-dialog.c:84
 msgid "Properties"
-msgstr ""
+msgstr "වත්කම්"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr ""
+msgstr "වර්‍ණ පැතිකඩ"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
-msgstr ""
+msgstr "සටහන"
 
 #: ../app/dialogs/image-scale-dialog.c:111
 msgctxt "dialog-title"
 msgid "Scale Image"
-msgstr ""
+msgstr "පිංතූර පරිමාණය"
 
 #: ../app/dialogs/image-scale-dialog.c:205
 msgid "Confirm Scaling"
-msgstr ""
+msgstr "පරිමාණය තහවුරු කිරීම"
 
 #: ../app/dialogs/image-scale-dialog.c:245
 #, c-format
@@ -8234,18 +8234,18 @@ msgstr ""
 
 #: ../app/dialogs/layer-options-dialog.c:125
 msgid "Layer _name:"
-msgstr ""
+msgstr "ස්තරය නාමය (_n):"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
 #: ../app/tools/gimpmeasuretool.c:1067
 msgid "Width:"
-msgstr ""
+msgstr "පළල:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
 #: ../app/tools/gimpmeasuretool.c:1095
 msgid "Height:"
-msgstr ""
+msgstr "උස:"
 
 #: ../app/dialogs/layer-options-dialog.c:202
 msgid "Layer Fill Type"
@@ -8257,7 +8257,7 @@ msgstr ""
 
 #: ../app/dialogs/module-dialog.c:126
 msgid "Module Manager"
-msgstr ""
+msgstr "මොඩියුලර් කාළමනාකරු"
 
 #: ../app/dialogs/module-dialog.c:149
 msgid "You will have to restart GIMP for the changes to take effect."
@@ -8265,35 +8265,35 @@ msgstr ""
 
 #: ../app/dialogs/module-dialog.c:190
 msgid "Module"
-msgstr ""
+msgstr "මොඩියුලර්"
 
 #: ../app/dialogs/module-dialog.c:463
 msgid "Only in memory"
-msgstr ""
+msgstr "මතකය තුළ පමණයි"
 
 #: ../app/dialogs/module-dialog.c:468
 msgid "No longer available"
-msgstr ""
+msgstr "තවදුරටත් භාවිතයට නැත"
 
 #: ../app/dialogs/module-dialog.c:497
 msgid "Author:"
-msgstr ""
+msgstr "කේත රචකයා:"
 
 #: ../app/dialogs/module-dialog.c:498
 msgid "Version:"
-msgstr ""
+msgstr "වෙළුම:"
 
 #: ../app/dialogs/module-dialog.c:499
 msgid "Date:"
-msgstr ""
+msgstr "දිනය:"
 
 #: ../app/dialogs/module-dialog.c:500
 msgid "Copyright:"
-msgstr ""
+msgstr "ප්‍රකාශන අයිතිය:"
 
 #: ../app/dialogs/module-dialog.c:501
 msgid "Location:"
-msgstr ""
+msgstr "පිහිටුම:"
 
 #: ../app/dialogs/offset-dialog.c:108
 msgid "Offset Layer"
@@ -8323,12 +8323,12 @@ msgstr ""
 #: ../app/dialogs/offset-dialog.c:184
 #: ../app/dialogs/resize-dialog.c:226
 msgid "_X:"
-msgstr ""
+msgstr "_X:"
 
 #: ../app/dialogs/offset-dialog.c:186
 #: ../app/dialogs/resize-dialog.c:227
 msgid "_Y:"
-msgstr ""
+msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
@@ -8357,12 +8357,12 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:164
 msgid "_Import"
-msgstr ""
+msgstr "ආයාත (_I)"
 
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:203
 msgid "Select Source"
-msgstr ""
+msgstr "මූලය තෝරන්න"
 
 #: ../app/dialogs/palette-import-dialog.c:214
 #: ../app/dialogs/preferences-dialog.c:1945
@@ -8371,7 +8371,7 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:225
 msgid "I_mage"
-msgstr ""
+msgstr "පිංතූරය (_m)"
 
 #: ../app/dialogs/palette-import-dialog.c:239
 msgid "Sample _Merged"
@@ -8393,11 +8393,11 @@ msgstr ""
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:303
 msgid "Import Options"
-msgstr ""
+msgstr "ආයාත විකල්ප"
 
 #: ../app/dialogs/palette-import-dialog.c:317
 msgid "New import"
-msgstr ""
+msgstr "නව ආයාතය"
 
 #: ../app/dialogs/palette-import-dialog.c:319
 msgid "Palette _name:"
@@ -8409,7 +8409,7 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
-msgstr ""
+msgstr "තීරු (_o):"
 
 #: ../app/dialogs/palette-import-dialog.c:350
 msgid "I_nterval:"
@@ -8418,7 +8418,7 @@ msgstr ""
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
 msgid "Preview"
-msgstr ""
+msgstr "පූර්‍වදසුන"
 
 #: ../app/dialogs/palette-import-dialog.c:382
 msgid "The selected source contains no colors."
@@ -8510,12 +8510,12 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1416
 msgid "Preferences"
-msgstr ""
+msgstr "අභිප්‍රේත"
 
 #: ../app/dialogs/preferences-dialog.c:1528
 #: ../app/dialogs/preferences-dialog.c:2779
 msgid "Environment"
-msgstr ""
+msgstr "පරිසරතය"
 
 #: ../app/dialogs/preferences-dialog.c:1542
 msgid "Resource Consumption"
@@ -8544,7 +8544,7 @@ msgstr ""
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "Image Thumbnails"
-msgstr ""
+msgstr "පිංතූර සිඟිතිරූ"
 
 #: ../app/dialogs/preferences-dialog.c:1576
 msgid "Size of _thumbnails:"
@@ -8557,7 +8557,7 @@ msgstr ""
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1584
 msgid "Saving Images"
-msgstr ""
+msgstr "පිංතූර සුරකිමින්"
 
 #: ../app/dialogs/preferences-dialog.c:1587
 msgid "Confirm closing of unsa_ved images"
@@ -8569,16 +8569,16 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1606
 msgid "User Interface"
-msgstr ""
+msgstr "පරිශීලක මුහුණත"
 
 #: ../app/dialogs/preferences-dialog.c:1609
 msgid "Interface"
-msgstr ""
+msgstr "අතුරුමුහුණත"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1616
 msgid "Previews"
-msgstr ""
+msgstr "පූර්‍වදසුන"
 
 #: ../app/dialogs/preferences-dialog.c:1619
 msgid "_Enable layer & channel previews"
@@ -8628,11 +8628,11 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1682
 #: ../app/dialogs/preferences-dialog.c:1721
 msgid "Theme"
-msgstr ""
+msgstr "තේමාව"
 
 #: ../app/dialogs/preferences-dialog.c:1691
 msgid "Select Theme"
-msgstr ""
+msgstr "තේමාව තෝරන්න"
 
 #: ../app/dialogs/preferences-dialog.c:1773
 msgid "Reload C_urrent Theme"
@@ -8640,7 +8640,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1785
 msgid "Help System"
-msgstr ""
+msgstr "පද්ධති සහාය"
 
 #. General
 #: ../app/dialogs/preferences-dialog.c:1797
@@ -8648,7 +8648,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:2078
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
-msgstr ""
+msgstr "සාමාන්‍ය"
 
 #: ../app/dialogs/preferences-dialog.c:1800
 msgid "Show _tooltips"
@@ -8668,7 +8668,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1818
 msgid "User manual:"
-msgstr ""
+msgstr "පරිශීලක 	අත් පොත"
 
 #: ../app/dialogs/preferences-dialog.c:1825
 msgid "There's a local installation of the user manual."
@@ -8681,7 +8681,7 @@ msgstr ""
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1853
 msgid "Help Browser"
-msgstr ""
+msgstr "උදව් දර්ශනය"
 
 #: ../app/dialogs/preferences-dialog.c:1857
 msgid "H_elp browser to use:"
@@ -8689,11 +8689,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1862
 msgid "Web Browser"
-msgstr ""
+msgstr "වෙබ් ගවේශනය"
 
 #: ../app/dialogs/preferences-dialog.c:1866
 msgid "_Web browser to use:"
-msgstr ""
+msgstr "භාවිතා කළ යුතු වෙබ් ගවේශකය (_W):"
 
 #: ../app/dialogs/preferences-dialog.c:1894
 msgid "_Save tool options on exit"
@@ -8731,11 +8731,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1942
 msgid "_Pattern"
-msgstr ""
+msgstr "රටාව (_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1948
 msgid "Move Tool"
-msgstr ""
+msgstr "මෙවලම ගෙනියන්න"
 
 #: ../app/dialogs/preferences-dialog.c:1952
 msgid "Set layer or path as active"
@@ -8744,14 +8744,14 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1965
 #: ../app/widgets/gimptoolbox.c:629
 msgid "Toolbox"
-msgstr ""
+msgstr "මෙවලම් පෙට්ටිය"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1977
 #: ../app/dialogs/preferences-dialog.c:2151
 #: ../app/widgets/gimpgrideditor.c:203
 msgid "Appearance"
-msgstr ""
+msgstr "පෙනුම"
 
 #: ../app/dialogs/preferences-dialog.c:1981
 msgid "Show _foreground & background color"
@@ -8771,19 +8771,19 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2005
 msgid "Default Image"
-msgstr ""
+msgstr "පෙරනිමි පිංතූරය"
 
 #: ../app/dialogs/preferences-dialog.c:2042
 msgid "Default Image Grid"
-msgstr ""
+msgstr "පෙරනිමි පිංතූරය දැල"
 
 #: ../app/dialogs/preferences-dialog.c:2045
 msgid "Default Grid"
-msgstr ""
+msgstr "පෙරනිමි දැල"
 
 #: ../app/dialogs/preferences-dialog.c:2066
 msgid "Image Windows"
-msgstr ""
+msgstr "පිංතූර කවුළුව"
 
 #: ../app/dialogs/preferences-dialog.c:2081
 msgid "Use \"_Dot for dot\" by default"
@@ -8894,12 +8894,12 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2298
 msgid "Display"
-msgstr ""
+msgstr "සංදර්ශනය"
 
 #. Transparency
 #: ../app/dialogs/preferences-dialog.c:2310
 msgid "Transparency"
-msgstr ""
+msgstr "පාරදෘෂ්‍යතාව"
 
 #: ../app/dialogs/preferences-dialog.c:2314
 msgid "_Check style:"
@@ -8919,20 +8919,20 @@ msgstr ""
 #: ../app/widgets/gimpgrideditor.c:268
 #: ../app/widgets/gimpgrideditor.c:300
 msgid "Pixels"
-msgstr ""
+msgstr "පික්සල"
 
 #: ../app/dialogs/preferences-dialog.c:2342
 msgid "Horizontal"
-msgstr ""
+msgstr "තිරස්"
 
 #: ../app/dialogs/preferences-dialog.c:2344
 msgid "Vertical"
-msgstr ""
+msgstr "සිරස්"
 
 #: ../app/dialogs/preferences-dialog.c:2346
 #: ../app/widgets/gimpimagepropview.c:476
 msgid "ppi"
-msgstr ""
+msgstr "ppi"
 
 #: ../app/dialogs/preferences-dialog.c:2362
 #, c-format
@@ -8949,11 +8949,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2420
 msgid "Color Management"
-msgstr ""
+msgstr "වර්‍ණ කළමනාකරණය"
 
 #: ../app/dialogs/preferences-dialog.c:2440
 msgid "_RGB profile:"
-msgstr ""
+msgstr "_RGB පැතිකඩ:"
 
 #: ../app/dialogs/preferences-dialog.c:2441
 msgid "Select RGB Color Profile"
@@ -8961,7 +8961,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "_CMYK profile:"
-msgstr ""
+msgstr "_CMYK පැතිකඩ:"
 
 #: ../app/dialogs/preferences-dialog.c:2443
 msgid "Select CMYK Color Profile"
@@ -8969,7 +8969,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2444
 msgid "_Monitor profile:"
-msgstr ""
+msgstr "මොනිටරයේ පැතිකඩ (_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2445
 msgid "Select Monitor Color Profile"
@@ -8985,7 +8985,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2458
 msgid "_Mode of operation:"
-msgstr ""
+msgstr "මෙහෙයුම් ආකාරය (_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2488
 msgid "_Try to use the system monitor profile"
@@ -9013,7 +9013,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2550
 msgid "Input Devices"
-msgstr ""
+msgstr "ප්‍රධාන මෙවලම්"
 
 #. Extended Input Devices
 #: ../app/dialogs/preferences-dialog.c:2560
@@ -9042,11 +9042,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2600
 msgid "Input Controllers"
-msgstr ""
+msgstr "ප්‍රධාන පාලකයන්"
 
 #: ../app/dialogs/preferences-dialog.c:2616
 msgid "Window Management"
-msgstr ""
+msgstr "කවුළු කළමනාකරණය"
 
 #: ../app/dialogs/preferences-dialog.c:2625
 msgid "Window Manager Hints"
@@ -9091,7 +9091,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2682
 msgid "Folders"
-msgstr ""
+msgstr "බහලුම"
 
 #: ../app/dialogs/preferences-dialog.c:2702
 msgid "Temporary folder:"
@@ -9143,7 +9143,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2759
 msgid "Font Folders"
-msgstr ""
+msgstr "අකුරු බහලුම"
 
 #: ../app/dialogs/preferences-dialog.c:2761
 msgid "Select Font Folders"
@@ -9159,7 +9159,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2767
 msgid "Scripts"
-msgstr ""
+msgstr "ස්ක්‍රිප්ට්"
 
 #: ../app/dialogs/preferences-dialog.c:2767
 msgid "Script-Fu Folders"
@@ -9199,45 +9199,45 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2783
 msgid "Themes"
-msgstr ""
+msgstr "තේමා"
 
 #: ../app/dialogs/preferences-dialog.c:2783
 msgid "Theme Folders"
-msgstr ""
+msgstr "තේමා බහලුම්"
 
 #: ../app/dialogs/preferences-dialog.c:2785
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "තේමා බහලුම තෝරන්න"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
-msgstr ""
+msgstr "මුද්‍රණ ප්‍රමාණය"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:165
 #: ../app/widgets/gimpsizebox.c:201
 #: ../app/widgets/gimptemplateeditor.c:160
 msgid "_Width:"
-msgstr ""
+msgstr "පළල (_W):"
 
 #: ../app/dialogs/print-size-dialog.c:172
 #: ../app/widgets/gimpsizebox.c:205
 #: ../app/widgets/gimptemplateeditor.c:167
 msgid "H_eight:"
-msgstr ""
+msgstr "උස (_e):"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:222
 #: ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:287
 msgid "_X resolution:"
-msgstr ""
+msgstr "_X විභේදනය:"
 
 #: ../app/dialogs/print-size-dialog.c:229
 #: ../app/widgets/gimpsizebox.c:266
 #: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Y resolution:"
-msgstr ""
+msgstr "_Y විභේදනය:"
 
 #: ../app/dialogs/print-size-dialog.c:240
 #: ../app/widgets/gimpsizebox.c:259
@@ -9248,11 +9248,11 @@ msgstr ""
 
 #: ../app/dialogs/quit-dialog.c:105
 msgid "Quit GIMP"
-msgstr ""
+msgstr "GIMP වෙතින් ඉවත් වීම"
 
 #: ../app/dialogs/quit-dialog.c:105
 msgid "Close All Images"
-msgstr ""
+msgstr "සියලු පිංතූර වසන්න"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "If you quit GIMP now, these changes will be lost."
@@ -9280,7 +9280,7 @@ msgstr ""
 #: ../app/dialogs/resize-dialog.c:130
 #: ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
-msgstr ""
+msgstr "ස්තරයේ ප්‍රමාණය"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
@@ -9296,21 +9296,21 @@ msgstr ""
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:152
 msgid "_Horizontal:"
-msgstr ""
+msgstr "තිරස් (_H):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:157
 msgid "_Vertical:"
-msgstr ""
+msgstr "සිරස් (_V):"
 
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:98
 #: ../app/widgets/gimptemplateeditor.c:138
 msgid "Image Size"
-msgstr ""
+msgstr "පිංතූරයේ ප්‍රමාණය"
 
 #: ../app/dialogs/scale-dialog.c:175
 msgid "Quality"
-msgstr ""
+msgstr "තත්ත්වය"
 
 #: ../app/dialogs/scale-dialog.c:187
 msgid "I_nterpolation:"
@@ -9326,7 +9326,7 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:225
 msgid "Paint tool:"
-msgstr ""
+msgstr "පින්තාරු මෙවලම:"
 
 #: ../app/dialogs/stroke-dialog.c:245
 msgid "_Emulate brush dynamics"
@@ -9351,20 +9351,20 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:128
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "දවසේ GIMP ඉඟිය"
 
 #: ../app/dialogs/tips-dialog.c:134
 msgid "_Previous Tip"
-msgstr ""
+msgstr "පෙර ඉඟි (_P)"
 
 #: ../app/dialogs/tips-dialog.c:140
 msgid "_Next Tip"
-msgstr ""
+msgstr "මීළඟ ඉඟිය (_N)"
 
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:193
 msgid "Learn more"
-msgstr ""
+msgstr "තවත් ඉගෙන ගන්න"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -9373,15 +9373,15 @@ msgstr ""
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:C"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"
-msgstr ""
+msgstr "GIMP පරිශීලක ස්ථාපනය"
 
 #: ../app/dialogs/user-install-dialog.c:93
 msgid "User installation failed!"
-msgstr ""
+msgstr "පරිශීලක ස්ථාපනය අසමත් විය!"
 
 #: ../app/dialogs/user-install-dialog.c:95
 msgid "The GIMP user installation failed; see the log for details."
@@ -9389,7 +9389,7 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:98
 msgid "Installation Log"
-msgstr ""
+msgstr "ස්ථාපන සටහන"
 
 #: ../app/dialogs/vectors-export-dialog.c:55
 msgid "Export Path to SVG"
@@ -9410,7 +9410,7 @@ msgstr ""
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:131
 msgid "All files (*.*)"
-msgstr ""
+msgstr "සියලු ගොනු (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
@@ -9426,12 +9426,12 @@ msgstr ""
 
 #: ../app/dialogs/vectors-options-dialog.c:121
 msgid "Path name:"
-msgstr ""
+msgstr "මාර්‍ග නාමය:"
 
 #: ../app/display/display-enums.c:24
 msgctxt "cursor-mode"
 msgid "Tool icon"
-msgstr ""
+msgstr "මෙවලම් අයිකනය"
 
 #: ../app/display/display-enums.c:25
 msgctxt "cursor-mode"
@@ -9446,7 +9446,7 @@ msgstr ""
 #: ../app/display/display-enums.c:87
 msgctxt "canvas-padding-mode"
 msgid "From theme"
-msgstr ""
+msgstr "තේමාවෙන්"
 
 #: ../app/display/display-enums.c:88
 msgctxt "canvas-padding-mode"
@@ -9466,12 +9466,12 @@ msgstr ""
 #: ../app/display/display-enums.c:119
 msgctxt "space-bar-action"
 msgid "No action"
-msgstr ""
+msgstr "ක්‍රියාවක් නැත"
 
 #: ../app/display/display-enums.c:120
 msgctxt "space-bar-action"
 msgid "Pan view"
-msgstr ""
+msgstr "පුවරු දසුන"
 
 #: ../app/display/display-enums.c:121
 msgctxt "space-bar-action"
@@ -9481,12 +9481,12 @@ msgstr ""
 #: ../app/display/display-enums.c:149
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "අඩු"
 
 #: ../app/display/display-enums.c:150
 msgctxt "zoom-quality"
 msgid "High"
-msgstr ""
+msgstr "වැඩි"
 
 #: ../app/display/gimpcursorview.c:212
 #: ../app/display/gimpcursorview.c:218
@@ -9506,24 +9506,24 @@ msgstr ""
 #: ../app/display/gimpcursorview.c:791
 #: ../app/widgets/gimpcolorframe.c:623
 msgid "n/a"
-msgstr ""
+msgstr "අදාල නැත"
 
 #: ../app/display/gimpcursorview.c:215
 #: ../app/display/gimpcursorview.c:240
 #: ../app/display/gimpcursorview.c:265
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: ../app/display/gimpcursorview.c:221
 #: ../app/display/gimpcursorview.c:246
 #: ../app/display/gimpcursorview.c:271
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #. Units
 #: ../app/display/gimpcursorview.c:227
 msgid "Units"
-msgstr ""
+msgstr "ඒකක"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:252
@@ -9533,12 +9533,12 @@ msgstr ""
 #. Width
 #: ../app/display/gimpcursorview.c:288
 msgid "W"
-msgstr ""
+msgstr "3"
 
 #. Height
 #: ../app/display/gimpcursorview.c:295
 msgid "H"
-msgstr ""
+msgstr "3"
 
 #: ../app/display/gimpcursorview.c:322
 msgid "_Sample Merged"
@@ -9575,11 +9575,11 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:217
 #, c-format
 msgid "Close %s"
-msgstr ""
+msgstr "%s වසන්න"
 
 #: ../app/display/gimpdisplayshell-close.c:155
 msgid "Do_n't Save"
-msgstr ""
+msgstr "සුරකින්න එපා (_n)"
 
 #: ../app/display/gimpdisplayshell-close.c:225
 #, c-format
@@ -9642,38 +9642,38 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:113
 msgid "Zoom Ratio"
-msgstr ""
+msgstr "විශාලණ අනුපාතය"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:115
 msgid "Select Zoom Ratio"
-msgstr ""
+msgstr "විශාලණ අනුපාතය තෝරන්න"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:158
 msgid "Zoom ratio:"
-msgstr ""
+msgstr "විශාලණ අනුපාතය:"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:183
 msgid "Zoom:"
-msgstr ""
+msgstr "විශාලණය:"
 
 #: ../app/display/gimpdisplayshell-title.c:278
 msgid "(modified)"
-msgstr ""
+msgstr "(වෙනස්කළ)"
 
 #: ../app/display/gimpdisplayshell-title.c:283
 msgid "(clean)"
-msgstr ""
+msgstr "(මකන්න)"
 
 #: ../app/display/gimpdisplayshell-title.c:331
 #: ../app/display/gimpdisplayshell-title.c:344
 #: ../app/widgets/gimpactiongroup.c:888
 msgid "(none)"
-msgstr ""
+msgstr "(කිසිවක් නැත)"
 
 #: ../app/display/gimpstatusbar.c:346
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr ""
+msgstr "<i>%s</i> අහෝසි කරන්න"
 
 #: ../app/file/file-open.c:131
 #: ../app/file/file-save.c:110
@@ -9738,11 +9738,11 @@ msgstr ""
 #. initialize the document history
 #: ../app/gui/gui.c:425
 msgid "Documents"
-msgstr ""
+msgstr "ලේඛනය"
 
 #: ../app/gui/splash.c:115
 msgid "GIMP Startup"
-msgstr ""
+msgstr "GIMP ඇරඹුම"
 
 #: ../app/paint/gimpairbrush.c:68
 #: ../app/tools/gimpairbrushtool.c:53
@@ -11323,27 +11323,27 @@ msgstr ""
 
 #: ../app/tools/gimphuesaturationtool.c:252
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: ../app/tools/gimphuesaturationtool.c:253
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: ../app/tools/gimphuesaturationtool.c:254
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: ../app/tools/gimphuesaturationtool.c:255
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../app/tools/gimphuesaturationtool.c:256
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: ../app/tools/gimphuesaturationtool.c:257
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:262
 msgid "Select Primary Color to Adjust"
@@ -11377,14 +11377,14 @@ msgstr ""
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:55
 msgid "Adjustment"
-msgstr ""
+msgstr "ගැළපීම"
 
 #: ../app/tools/gimpinkoptions-gui.c:67
 #: ../app/tools/gimpinkoptions-gui.c:92
 #: ../app/tools/gimprectangleoptions.c:972
 #: ../app/tools/gimptextoptions.c:452
 msgid "Size:"
-msgstr ""
+msgstr "ප්‍රමාණය:"
 
 #: ../app/tools/gimpinkoptions-gui.c:75
 #: ../app/tools/gimpmeasuretool.c:1039
@@ -11409,12 +11409,12 @@ msgstr ""
 
 #: ../app/tools/gimpinkoptions-gui.c:117
 msgid "Type"
-msgstr ""
+msgstr "වර්‍ගය"
 
 #. Blob shape widget
 #: ../app/tools/gimpinkoptions-gui.c:148
 msgid "Shape"
-msgstr ""
+msgstr "හැඩය"
 
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink Tool: Calligraphy-style painting"
@@ -11552,7 +11552,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifytool.c:86
 msgid "Zoom"
-msgstr ""
+msgstr "විශාලණය"
 
 #: ../app/tools/gimpmagnifytool.c:87
 msgid "Zoom Tool: Adjust the zoom level"
@@ -11608,7 +11608,7 @@ msgstr ""
 #: ../app/tools/gimpmeasuretool.c:1106
 #: ../app/tools/gimppainttool.c:615
 msgid "pixels"
-msgstr ""
+msgstr "පික්සෙල"
 
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:991
@@ -11641,12 +11641,12 @@ msgstr ""
 
 #: ../app/tools/gimpmoveoptions.c:178
 msgid "Move:"
-msgstr ""
+msgstr "ගෙනයන්න:"
 
 #: ../app/tools/gimpmovetool.c:127
 msgctxt "tool"
 msgid "Move"
-msgstr ""
+msgstr "ගෙනයන්න"
 
 #: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
@@ -11654,7 +11654,7 @@ msgstr ""
 
 #: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
-msgstr ""
+msgstr "ගෙනයන්න (_M)"
 
 #: ../app/tools/gimpmovetool.c:276
 #: ../app/tools/gimpmovetool.c:572
@@ -11682,7 +11682,7 @@ msgstr ""
 #: ../app/widgets/gimpbrushselect.c:190
 #: ../app/widgets/gimplayertreeview.c:296
 msgid "Mode:"
-msgstr ""
+msgstr "ආකාරය:"
 
 #: ../app/tools/gimppaintoptions-gui.c:135
 #: ../app/tools/gimptransformoptions.c:347
@@ -11701,11 +11701,11 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:165
 msgid "Opacity"
-msgstr ""
+msgstr "පාරාන්ධතාව"
 
 #: ../app/tools/gimppaintoptions-gui.c:171
 msgid "Hardness"
-msgstr ""
+msgstr "දැඩිබව"
 
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Rate"
@@ -11713,7 +11713,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:183
 msgid "Size"
-msgstr ""
+msgstr "ප්‍රමාණය"
 
 #: ../app/tools/gimppaintoptions-gui.c:189
 msgid "Angle"
@@ -11956,12 +11956,12 @@ msgstr ""
 
 #: ../app/tools/gimpscaletool.c:80
 msgid "_Scale"
-msgstr ""
+msgstr "පරිමාණය (_S)"
 
 #: ../app/tools/gimpscaletool.c:106
 msgctxt "command"
 msgid "Scale"
-msgstr ""
+msgstr "පරිමාණය"
 
 #: ../app/tools/gimpselectionoptions.c:257
 #: ../app/tools/gimptextoptions.c:465
@@ -12071,11 +12071,11 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:445
 msgid "Font:"
-msgstr ""
+msgstr "අකුරු:"
 
 #: ../app/tools/gimptextoptions.c:461
 msgid "Use editor"
-msgstr ""
+msgstr "සැකසුම භාවිත කරන්න"
 
 #: ../app/tools/gimptextoptions.c:481
 msgid "Hinting:"
@@ -12083,11 +12083,11 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:485
 msgid "Text Color"
-msgstr ""
+msgstr "පෙළ වර්‍ණය:"
 
 #: ../app/tools/gimptextoptions.c:490
 msgid "Color:"
-msgstr ""
+msgstr "වර්‍ණය:"
 
 #: ../app/tools/gimptextoptions.c:496
 msgid "Justify:"
@@ -12095,7 +12095,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:208
 msgid "Text"
-msgstr ""
+msgstr "පෙළ"
 
 #: ../app/tools/gimptexttool.c:209
 msgid "Text Tool: Create or edit text layers"
@@ -12103,7 +12103,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:210
 msgid "Te_xt"
-msgstr ""
+msgstr "පෙළ (_x)"
 
 #: ../app/tools/gimptexttool.c:1361
 msgid "Reshape Text Layer"
@@ -12111,7 +12111,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:1826
 msgid "GIMP Text Editor"
-msgstr ""
+msgstr "GIMP පෙළ සැකසුම"
 
 #: ../app/tools/gimptexttool.c:1955
 #: ../app/tools/gimptexttool.c:1958
@@ -12397,17 +12397,17 @@ msgstr ""
 #: ../app/tools/tools-enums.c:153
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
-msgstr ""
+msgstr "පළල"
 
 #: ../app/tools/tools-enums.c:154
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
-msgstr ""
+msgstr "උස"
 
 #: ../app/tools/tools-enums.c:155
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
-msgstr ""
+msgstr "ප්‍රමාණය"
 
 #: ../app/tools/tools-enums.c:184
 msgctxt "rect-select-mode"
@@ -12427,12 +12427,12 @@ msgstr ""
 #: ../app/tools/tools-enums.c:215
 msgctxt "transform-type"
 msgid "Layer"
-msgstr ""
+msgstr "ස්තරය"
 
 #: ../app/tools/tools-enums.c:216
 msgctxt "transform-type"
 msgid "Selection"
-msgstr ""
+msgstr "තේරීම"
 
 #: ../app/tools/tools-enums.c:217
 msgctxt "transform-type"
@@ -12472,7 +12472,7 @@ msgstr ""
 #: ../app/tools/tools-enums.c:308
 msgctxt "vector-mode"
 msgid "Design"
-msgstr ""
+msgstr "සැලැස්ම"
 
 #: ../app/tools/tools-enums.c:309
 msgctxt "vector-mode"
@@ -12482,7 +12482,7 @@ msgstr ""
 #: ../app/tools/tools-enums.c:310
 msgctxt "vector-mode"
 msgid "Move"
-msgstr ""
+msgstr "ගෙනයන්න"
 
 #: ../app/vectors/gimpvectors.c:192
 msgid "Path"
@@ -12549,25 +12549,25 @@ msgstr ""
 
 #: ../app/widgets/gimpactioneditor.c:70
 msgid "_Search:"
-msgstr ""
+msgstr "සොයන්න (_S):"
 
 #: ../app/widgets/gimpactiongroup.c:885
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:345
 #: ../app/widgets/gimpcontrollereditor.c:347
 msgid "Action"
-msgstr ""
+msgstr "ක්‍රියාව"
 
 #: ../app/widgets/gimpactionview.c:374
 msgid "Shortcut"
-msgstr ""
+msgstr "කෙටිමඟ"
 
 #: ../app/widgets/gimpactionview.c:400
 msgid "Name"
-msgstr ""
+msgstr "නම"
 
 #: ../app/widgets/gimpactionview.c:640
 #: ../app/widgets/gimpactionview.c:845
@@ -12626,7 +12626,7 @@ msgstr ""
 #: ../app/widgets/gimpbufferview.c:257
 #: ../app/widgets/gimpeditor.c:753
 msgid "(None)"
-msgstr ""
+msgstr "(කිසිවක් නැත)"
 
 #: ../app/widgets/gimpchanneltreeview.c:127
 msgid "Reorder Channel"
@@ -12680,27 +12680,27 @@ msgstr ""
 
 #: ../app/widgets/gimpcolorframe.c:501
 msgid "Index:"
-msgstr ""
+msgstr "පටුන:"
 
 #: ../app/widgets/gimpcolorframe.c:514
 #: ../app/widgets/gimpcolorframe.c:540
 msgid "Red:"
-msgstr ""
+msgstr "රතු:"
 
 #: ../app/widgets/gimpcolorframe.c:515
 #: ../app/widgets/gimpcolorframe.c:541
 msgid "Green:"
-msgstr ""
+msgstr "කොල:"
 
 #: ../app/widgets/gimpcolorframe.c:516
 #: ../app/widgets/gimpcolorframe.c:542
 msgid "Blue:"
-msgstr ""
+msgstr "නිල්: "
 
 #: ../app/widgets/gimpcolorframe.c:529
 #: ../app/widgets/gimpcolorframe.c:562
 msgid "Value:"
-msgstr ""
+msgstr "අගය:"
 
 #: ../app/widgets/gimpcolorframe.c:553
 msgid "Hex:"
@@ -12724,11 +12724,11 @@ msgstr ""
 
 #: ../app/widgets/gimpcolorframe.c:581
 msgid "Yellow:"
-msgstr ""
+msgstr "කහ:"
 
 #: ../app/widgets/gimpcolorframe.c:582
 msgid "Black:"
-msgstr ""
+msgstr "කලු:"
 
 #: ../app/widgets/gimpcolorframe.c:602
 msgid "Alpha:"
@@ -13354,7 +13354,7 @@ msgstr ""
 #: ../app/widgets/gimpimagepropview.c:473
 #, c-format
 msgid "%g × %g %s"
-msgstr ""
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:494
 msgid "colors"
@@ -13386,7 +13386,7 @@ msgstr ""
 
 #: ../app/widgets/gimpmenudock.c:159
 msgid "Auto"
-msgstr ""
+msgstr "ස්වයංක්‍රීය"
 
 #: ../app/widgets/gimpmenudock.c:170
 msgid "When enabled the dialog automatically follows the image you are working on."
@@ -13530,12 +13530,12 @@ msgstr ""
 #.
 #: ../app/widgets/gimptagentry.c:1670
 msgid ","
-msgstr ""
+msgstr ","
 
 #: ../app/widgets/gimptemplateeditor.c:179
 #, c-format
 msgid "%p"
-msgstr ""
+msgstr "%p"
 
 #: ../app/widgets/gimptemplateeditor.c:254
 msgid "_Advanced Options"
@@ -13555,25 +13555,25 @@ msgstr ""
 
 #: ../app/widgets/gimptemplateeditor.c:529
 msgid "_Name:"
-msgstr ""
+msgstr "නම (_N):"
 
 #: ../app/widgets/gimptemplateeditor.c:542
 msgid "_Icon:"
-msgstr ""
+msgstr "අයිකනය (_I):"
 
 #: ../app/widgets/gimptemplateeditor.c:670
 #, c-format
 msgid "%d × %d ppi, %s"
-msgstr ""
+msgstr "%d × %d ppi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:672
 #, c-format
 msgid "%d ppi, %s"
-msgstr ""
+msgstr "%d ppi, %s"
 
 #: ../app/widgets/gimptexteditor.c:191
 msgid "_Language:"
-msgstr ""
+msgstr "භාෂාව (_L):"
 
 #: ../app/widgets/gimptexteditor.c:231
 msgid "_Use selected font"
@@ -13760,17 +13760,17 @@ msgstr ""
 #: ../app/widgets/widgets-enums.c:86
 msgctxt "color-frame-mode"
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../app/widgets/widgets-enums.c:87
 msgctxt "color-frame-mode"
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:88
 msgctxt "color-frame-mode"
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
 msgctxt "color-pick-mode"
@@ -13810,7 +13810,7 @@ msgstr ""
 #: ../app/widgets/widgets-enums.c:208
 msgctxt "help-browser-type"
 msgid "Web browser"
-msgstr ""
+msgstr "වෙබ් ගවේෂණය"
 
 #: ../app/widgets/widgets-enums.c:236
 msgctxt "histogram-scale"
@@ -13825,37 +13825,37 @@ msgstr ""
 #: ../app/widgets/widgets-enums.c:271
 msgctxt "tab-style"
 msgid "Icon"
-msgstr ""
+msgstr "අයිකනය"
 
 #: ../app/widgets/widgets-enums.c:272
 msgctxt "tab-style"
 msgid "Current status"
-msgstr ""
+msgstr "දැනට ඇති තත්ත්වය"
 
 #: ../app/widgets/widgets-enums.c:273
 msgctxt "tab-style"
 msgid "Text"
-msgstr ""
+msgstr "පෙළ"
 
 #: ../app/widgets/widgets-enums.c:274
 msgctxt "tab-style"
 msgid "Description"
-msgstr ""
+msgstr "විස්තරය"
 
 #: ../app/widgets/widgets-enums.c:275
 msgctxt "tab-style"
 msgid "Icon & text"
-msgstr ""
+msgstr "අයිකනය සහ පෙළ"
 
 #: ../app/widgets/widgets-enums.c:276
 msgctxt "tab-style"
 msgid "Icon & desc"
-msgstr ""
+msgstr "අයිකනය සහ විස්තරය"
 
 #: ../app/widgets/widgets-enums.c:277
 msgctxt "tab-style"
 msgid "Status & text"
-msgstr ""
+msgstr "තත්ත්වය සහ පෙළ"
 
 #: ../app/widgets/widgets-enums.c:278
 msgctxt "tab-style"
