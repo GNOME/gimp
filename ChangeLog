@@ -1,3 +1,10 @@
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpzoompreview.c: use GtkAdjustment's accessors.
+
+	* libgimp/gimpprocbrowserdialog.c: use accessors instead of
+	dialog->vbox and widget->parent.
+
 2009-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c (batch_run_cmd): added a newline to the output in

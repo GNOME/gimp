@@ -133,6 +133,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkWidget        *scrolled_window;
   GtkCellRenderer  *renderer;
   GtkTreeSelection *selection;
+  GtkWidget        *parent;
 
   dialog->browser = gimp_browser_new ();
   gimp_browser_add_search_types (GIMP_BROWSER (dialog->browser),
@@ -145,7 +146,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                                  _("by type"),        SEARCH_TYPE_PROC_TYPE,
                                  NULL);
   gtk_container_set_border_width (GTK_CONTAINER (dialog->browser), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                      dialog->browser);
   gtk_widget_show (dialog->browser);
 
@@ -192,8 +193,10 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                     G_CALLBACK (browser_selection_changed),
                     dialog);
 
-  gtk_widget_set_size_request (GIMP_BROWSER (dialog->browser)->right_vbox->parent->parent,
-                               DBL_WIDTH - DBL_LIST_WIDTH, -1);
+  parent = gtk_widget_get_parent (GIMP_BROWSER (dialog->browser)->right_vbox);
+  parent = gtk_widget_get_parent (parent);
+
+    gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
 }
 
 

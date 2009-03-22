@@ -337,28 +337,24 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
   ratio = new_factor / old_factor;
 
   adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->hscr));
-  adj->lower          = 0;
-  adj->page_size      = width;
-  adj->upper          = width * new_factor;
-  adj->step_increment = new_factor;
-  adj->page_increment = MAX (width / 2.0, adj->step_increment);
-  adj->value          = CLAMP ((adj->value + width / 2.0) * ratio
-                               - width / 2.0,
-                               adj->lower, adj->upper - width);
-  gtk_adjustment_changed (adj);
-  gtk_adjustment_value_changed (adj);
+  gtk_adjustment_configure (adj,
+                            (gtk_adjustment_get_value (adj) + width / 2.0) * ratio
+                            - width / 2.0,
+                            0,
+                            width * new_factor,
+                            new_factor,
+                            MAX (width / 2.0, new_factor),
+                            width);
 
   adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
-  adj->lower          = 0;
-  adj->page_size      = height;
-  adj->upper          = height * new_factor;
-  adj->step_increment = new_factor;
-  adj->page_increment = MAX (height / 2.0, adj->step_increment);
-  adj->value          = CLAMP ((adj->value + height / 2.0) * ratio
-                               - height / 2.0,
-                               adj->lower, adj->upper - height);
-  gtk_adjustment_changed (adj);
-  gtk_adjustment_value_changed (adj);
+  gtk_adjustment_configure (adj,
+                            (gtk_adjustment_get_value (adj) + height / 2.0) * ratio
+                            - height / 2.0,
+                            0,
+                            height * new_factor,
+                            new_factor,
+                            MAX (height / 2.0, new_factor),
+                            height);
 
   gimp_scrolled_preview_thaw (scrolled_preview);
 }
