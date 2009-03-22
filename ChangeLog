@@ -1,5 +1,14 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gtkscalebutton.[ch]: remove this evil hack.
+
+	* app/widgets/gimpscalebutton.[ch]
+	* app/widgets/gimppropwidgets.c: minor adjustments so the widget
+	from GTK+ gets used.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpblobeditor.c
 	* app/widgets/gimpbrushselect.c
 	* app/widgets/gimpcolorbar.c

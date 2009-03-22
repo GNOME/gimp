@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#define __GTK_SCALE_BUTTON_H__
-#define __GTK_VOLUME_BUTTON_H__
-
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -93,7 +90,7 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
   gdouble        lower;
   gdouble        upper;
 
-  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   value = gtk_adjustment_get_value (adj);
   lower = gtk_adjustment_get_lower (adj);
@@ -123,7 +120,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   steps = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
-  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   if (steps < 1)
     return TRUE;
