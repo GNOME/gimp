@@ -1,16 +1,16 @@
 # gimp ro translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 23:36+0200\n"
-"PO-Revision-Date: 2009-03-17 09:48+0200\n"
+"POT-Creation-Date: 2009-03-22 23:39+0200\n"
+"PO-Revision-Date: 2009-03-18 21:58+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
-"Language-Team: Română <ro@li.org>\n"
+"Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -189,7 +189,7 @@ msgstr "Strălucire exterio_ară"
 
 #: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Beveled Pattern"
-msgstr "_Model în relief"
+msgstr "_Model ieșit în relief"
 
 #: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
@@ -464,11 +464,11 @@ msgstr "Grosime"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Adaugă o bordură t_eșită..."
+msgstr "Bordură t_eșită..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
-msgstr "Adaugă o bordură ieșită în relief la o imagine"
+msgstr "Adaugă la imagine o bordură teșită"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
@@ -482,15 +482,15 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/slide.scm.h:6
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on copy"
-msgstr "Lucrează pe copie"
+msgstr "Lucrează pe o copie"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Adaugă o _bordură..."
+msgstr "_Bordură..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
-msgstr ""
+msgstr "Adaugă o bordură în jurul imaginii"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
@@ -714,7 +714,7 @@ msgstr "Creează o siglă simplă cu o umbră și o parte luminoasă"
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
-msgstr "Lățime relief"
+msgstr "Lățime teșitură"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
@@ -1222,7 +1222,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+msgstr "Adaugă la imagine un aspect realist de pete de cafea"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 #, fuzzy
@@ -1527,7 +1527,7 @@ msgstr "Afișare informații de ajutor"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr ""
+msgstr "Adaugă la imagine o bordură zdrențuită și difuză"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1547,13 +1547,13 @@ msgid "Granularity (1 is Low)"
 msgstr "Granularitate (1 este scăzut)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Shadow weight (%)"
-msgstr "Tărie umbră (%)"
+msgstr "Încărcare umbră (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr "_Bordură imprecisă..."
+msgstr "Bordură di_fuză..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
@@ -1734,7 +1734,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
-msgstr "Înălțime relief (claritate)"
+msgstr "Înălțime teșitură (claritate)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -1745,11 +1745,12 @@ msgstr "Margine:"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr "Creează o siglă simplă cu o alură strălucitoare și margini în relief"
+msgstr "Creează o siglă simplă cu o alură strălucitoare și margini teșite"
 
+# hm ? sau în degrade ?
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr ""
+msgstr "Teșitură gradua_lă..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
@@ -2003,12 +2004,11 @@ msgstr "Defocalizează"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr "Determină o imagine să arate ca o fotografice veche"
+msgstr "Face ca imaginea să arate ca o fotografie veche"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
-#, fuzzy
 msgid "Mottle"
-msgstr "Rotire"
+msgstr "Marmorat"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
@@ -2200,7 +2200,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
-msgstr "Comportament mergine"
+msgstr "Comportament margine"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -2243,12 +2243,12 @@ msgstr "Rază:"
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
-"Rotunjește colțurile unei imagini și opțional adaugă o umbră de perspectivă "
-"și fundal"
+"Rotunjește colțurile imaginii și adaugă opțional o umbră de perspectivă și "
+"de fundal"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr "_Rotunjește colțurile..."
+msgstr "_Rotunjire colțuri..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -2307,6 +2307,8 @@ msgstr "Dr_eptunghi rotunjit..."
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
+"Adaugă la imagine un cadru asemănător cu pelicula foto, cu perforații și "
+"inscripționări pe margine"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2317,9 +2319,8 @@ msgid "Number"
 msgstr "Număr"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:7
-#, fuzzy
 msgid "_Slide..."
-msgstr "Scalez..."
+msgstr "_Peliculă foto..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
