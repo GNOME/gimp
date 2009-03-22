@@ -1,5 +1,9 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpscaleentry.c: use GtkAdjustment's accessors.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpquerybox.c (create_query_box): use
 	gtk_dialog_get_content_area() instead of dialog->vbox.
 

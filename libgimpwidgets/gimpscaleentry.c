@@ -81,10 +81,12 @@ gimp_scale_entry_log_adjustment_callback (GtkAdjustment *adjustment,
   g_signal_handlers_block_by_func (other_adj,
                                    gimp_scale_entry_exp_adjustment_callback,
                                    adjustment);
-  if (adjustment->lower <= 0.0)
-    value = log (adjustment->value - adjustment->lower + 0.1);
+
+  if (gtk_adjustment_get_lower (adjustment) <= 0.0)
+    value = log (gtk_adjustment_get_value (adjustment) -
+                 gtk_adjustment_get_lower (adjustment) + 0.1);
   else
-    value = log (adjustment->value);
+    value = log (gtk_adjustment_get_value (adjustment));
 
   gtk_adjustment_set_value (other_adj, value);
 
@@ -104,8 +106,8 @@ gimp_scale_entry_exp_adjustment_callback (GtkAdjustment *adjustment,
                                    adjustment);
 
   value = exp (gtk_adjustment_get_value (adjustment));
-  if (other_adj->lower <= 0.0)
-    value += other_adj->lower  - 0.1;
+  if (gtk_adjustment_get_lower (other_adj) <= 0.0)
+    value += gtk_adjustment_get_lower (other_adj) - 0.1;
 
   gtk_adjustment_set_value (other_adj, value);
 
@@ -388,106 +390,104 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
 {
   GtkAdjustment *adj;
   GtkAdjustment *scale_adj;
-  gdouble        correction;
-  gdouble        log_value, log_lower, log_upper;
-  gdouble        log_step_increment, log_page_increment;
 
   g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment));
 
   adj       = GTK_ADJUSTMENT (adjustment);
   scale_adj = GIMP_SCALE_ENTRY_SCALE_ADJ (adjustment);
 
+  if (logarithmic == gimp_scale_entry_get_logarithmic (adjustment))
+    return;
+
   if (logarithmic)
     {
-      if (gimp_scale_entry_get_logarithmic (adjustment))
-        return;
+      gdouble correction;
+      gdouble log_value, log_lower, log_upper;
+      gdouble log_step_increment, log_page_increment;
 
-      correction = scale_adj->lower > 0 ? 0 : 0.1 + - scale_adj->lower;
+      correction = (gtk_adjustment_get_lower (scale_adj) > 0 ?
+                    0 : 0.1 + - gtk_adjustment_get_lower (scale_adj));
 
-      log_value = log (scale_adj->value + correction);
-      log_lower = log (scale_adj->lower + correction);
-      log_upper = log (scale_adj->upper + correction);
-      log_step_increment = (log_upper - log_lower) / ((scale_adj->upper -
-                                                       scale_adj->lower) /
-                                                      scale_adj->step_increment);
-      log_page_increment = (log_upper - log_lower) / ((scale_adj->upper -
-                                                       scale_adj->lower) /
-                                                      scale_adj->page_increment);
+      log_value = log (gtk_adjustment_get_value (scale_adj) + correction);
+      log_lower = log (gtk_adjustment_get_lower (scale_adj) + correction);
+      log_upper = log (gtk_adjustment_get_upper (scale_adj) + correction);
+      log_step_increment =
+        (log_upper - log_lower) / ((gtk_adjustment_get_upper (scale_adj) -
+                                    gtk_adjustment_get_lower (scale_adj)) /
+                                   gtk_adjustment_get_step_increment (scale_adj));
+      log_page_increment =
+        (log_upper - log_lower) / ((gtk_adjustment_get_upper (scale_adj) -
+                                    gtk_adjustment_get_lower (scale_adj)) /
+                                   gtk_adjustment_get_page_increment (scale_adj));
 
       if (scale_adj == adj)
         {
           GtkObject *new_adj;
-          gdouble    lower;
-          gdouble    upper;
 
-          lower = scale_adj->lower;
-          upper = scale_adj->upper;
-          new_adj = gtk_adjustment_new (scale_adj->value,
-                                        scale_adj->lower,
-                                        scale_adj->upper,
-                                        scale_adj->step_increment,
-                                        scale_adj->page_increment,
+          new_adj = gtk_adjustment_new (gtk_adjustment_get_value (scale_adj),
+                                        gtk_adjustment_get_lower (scale_adj),
+                                        gtk_adjustment_get_upper (scale_adj),
+                                        gtk_adjustment_get_step_increment (scale_adj),
+                                        gtk_adjustment_get_page_increment (scale_adj),
                                         0.0);
           gtk_range_set_adjustment (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
                                     GTK_ADJUSTMENT (new_adj));
 
           scale_adj = (GtkAdjustment *) new_adj;
-         }
-       else
-         {
-           g_signal_handlers_disconnect_by_func (adj,
-                                                 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
-                                                 scale_adj);
-           g_signal_handlers_disconnect_by_func (scale_adj,
-                                                 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
-                                                 adj);
-         }
+        }
+      else
+        {
+          g_signal_handlers_disconnect_by_func (adj,
+                                                gimp_scale_entry_unconstrained_adjustment_callback,
+                                                scale_adj);
 
-       scale_adj->value          = log_value;
-       scale_adj->lower          = log_lower;
-       scale_adj->upper          = log_upper;
-       scale_adj->step_increment = log_step_increment;
-       scale_adj->page_increment = log_page_increment;
+          g_signal_handlers_disconnect_by_func (scale_adj,
+                                                gimp_scale_entry_unconstrained_adjustment_callback,
+                                                adj);
+        }
 
-       g_signal_connect (scale_adj, "value-changed",
-                         G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
-                         adj);
+      gtk_adjustment_configure (scale_adj,
+                                log_value, log_lower, log_upper,
+                                log_step_increment, log_page_increment, 0.0);
 
-       g_signal_connect (adj, "value-changed",
-                         G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
-                         scale_adj);
+      g_signal_connect (scale_adj, "value-changed",
+                        G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
+                        adj);
 
-       g_object_set_data (G_OBJECT (adjustment),
-                          "logarithmic", GINT_TO_POINTER (TRUE));
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
+                        scale_adj);
+
+      g_object_set_data (G_OBJECT (adjustment),
+                         "logarithmic", GINT_TO_POINTER (TRUE));
     }
   else
     {
       gdouble lower, upper;
 
-      if (! gimp_scale_entry_get_logarithmic (adjustment))
-        return;
-
       g_signal_handlers_disconnect_by_func (adj,
-                                            G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
+                                            gimp_scale_entry_log_adjustment_callback,
                                             scale_adj);
+
       g_signal_handlers_disconnect_by_func (scale_adj,
-                                            G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
+                                            gimp_scale_entry_exp_adjustment_callback,
                                             adj);
 
-      lower = exp (scale_adj->lower);
-      upper = exp (scale_adj->upper);
+      lower = exp (gtk_adjustment_get_lower (scale_adj));
+      upper = exp (gtk_adjustment_get_upper (scale_adj));
 
-      if (adj->lower <= 0.0)
+      if (gtk_adjustment_get_lower (adj) <= 0.0)
         {
-          lower += - 0.1  + adj->lower;
-          upper += - 0.1  + adj->lower;
+          lower += - 0.1 + gtk_adjustment_get_lower (adj);
+          upper += - 0.1 + gtk_adjustment_get_lower (adj);
         }
 
-      scale_adj->value          = adj->value;
-      scale_adj->lower          = lower;
-      scale_adj->upper          = upper;
-      scale_adj->step_increment = adj->step_increment;
-      scale_adj->page_increment = adj->page_increment;
+      gtk_adjustment_configure (scale_adj,
+                                gtk_adjustment_get_value (adj),
+                                lower, upper,
+                                gtk_adjustment_get_step_increment (adj),
+                                gtk_adjustment_get_page_increment (adj),
+                                0.0);
 
       g_signal_connect (scale_adj, "value-changed",
                         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
