@@ -1,5 +1,10 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpscrolledpreview.c: use GtkAdjustment's
+	accessors.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpscaleentry.c: use GtkAdjustment's accessors.
 
 2009-03-22  Michael Natterer  <mitch@gimp.org>
