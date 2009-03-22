@@ -139,7 +139,7 @@ gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap)
 
       style = gtk_widget_get_style (widget);
 
-      gdk_pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
+      gdk_pixmap = gdk_pixmap_create_from_xpm_d (gtk_widget_get_window (widget),
                                                  &mask,
                                                  &style->bg[GTK_STATE_NORMAL],
                                                  pixmap->xpm_data);

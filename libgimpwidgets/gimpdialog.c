@@ -135,11 +135,12 @@ gimp_dialog_constructor (GType                  type,
 
   if (show_help_button && help_func && help_id)
     {
-      GtkDialog *dialog = GTK_DIALOG (object);
-      GtkWidget *button = gtk_button_new_from_stock (GTK_STOCK_HELP);
+      GtkDialog *dialog      = GTK_DIALOG (object);
+      GtkWidget *action_area = gtk_dialog_get_action_area (dialog);
+      GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
 
-      gtk_box_pack_end (GTK_BOX (dialog->action_area), button, FALSE, TRUE, 0);
-      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (dialog->action_area),
+      gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
+      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
                                           button, TRUE);
       gtk_widget_show (button);
 
@@ -241,11 +242,11 @@ gimp_dialog_close (GtkDialog *dialog)
 
   GtkWidget *widget = GTK_WIDGET (dialog);
 
-  if (widget->window)
+  if (gtk_widget_get_window (widget))
     {
       GdkEvent *event = gdk_event_new (GDK_DELETE);
 
-      event->any.window     = g_object_ref (widget->window);
+      event->any.window     = g_object_ref (gtk_widget_get_window (widget));
       event->any.send_event = TRUE;
 
       gtk_main_do_event (event);
@@ -269,7 +270,7 @@ gimp_dialog_response (GtkDialog *dialog,
   GList *children;
   GList *list;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dialog->action_area));
+  children = gtk_container_get_children (GTK_CONTAINER (gtk_dialog_get_action_area (dialog)));
 
   for (list = children; list; list = g_list_next (list))
     {

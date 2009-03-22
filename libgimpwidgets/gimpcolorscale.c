@@ -233,9 +233,10 @@ static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
-  GtkRange       *range = GTK_RANGE (widget);
-  GtkStyle       *style = gtk_widget_get_style (widget);
+  GimpColorScale *scale  = GIMP_COLOR_SCALE (widget);
+  GtkRange       *range  = GTK_RANGE (widget);
+  GtkStyle       *style  = gtk_widget_get_style (widget);
+  GdkWindow      *window = gtk_widget_get_window (widget);
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
@@ -302,7 +303,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
       area.x += widget->allocation.x;
       area.y += widget->allocation.y;
 
-      gtk_paint_box (style, widget->window,
+      gtk_paint_box (style, window,
                      sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
                      GTK_SHADOW_IN,
                      &area, widget, "trough",
@@ -313,7 +314,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
       switch (range->orientation)
         {
         case GTK_ORIENTATION_HORIZONTAL:
-          gdk_draw_rgb_image_dithalign (widget->window,
+          gdk_draw_rgb_image_dithalign (window,
                                         style->black_gc,
                                         x + trough_border + slider_size,
                                         y + trough_border + 1,
@@ -326,7 +327,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
           break;
 
         case GTK_ORIENTATION_VERTICAL:
-          gdk_draw_rgb_image_dithalign (widget->window,
+          gdk_draw_rgb_image_dithalign (window,
                                         style->black_gc,
                                         x + trough_border + 1,
                                         y + trough_border + slider_size,
@@ -343,7 +344,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
     }
 
   if (GTK_WIDGET_IS_SENSITIVE (widget) && GTK_WIDGET_HAS_FOCUS (range))
-    gtk_paint_focus (style, widget->window, GTK_WIDGET_STATE (widget),
+    gtk_paint_focus (style, window, GTK_WIDGET_STATE (widget),
                      &area, widget, "trough",
                      widget->allocation.x + range->range_rect.x,
                      widget->allocation.y + range->range_rect.y,
@@ -381,12 +382,12 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y;
                w > 0; w -= 2, x++, y++)
-            gdk_draw_line (widget->window, gc, x, y, x + w - 1, y);
+            gdk_draw_line (window, gc, x, y, x + w - 1, y);
           break;
         case GTK_ORIENTATION_VERTICAL:
           for (h = area.height, x = area.x, y = area.y;
                h > 0; h -= 2, x++, y++)
-            gdk_draw_line (widget->window, gc, x, y, x, y + h - 1);
+            gdk_draw_line (window, gc, x, y, x, y + h - 1);
           break;
         }
       gdk_gc_set_clip_rectangle (gc, NULL);
@@ -401,12 +402,12 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y + area.height - 1;
                w > 0; w -= 2, x++, y--)
-            gdk_draw_line (widget->window, gc, x, y, x + w - 1, y);
+            gdk_draw_line (window, gc, x, y, x + w - 1, y);
           break;
         case GTK_ORIENTATION_VERTICAL:
           for (h = area.height, x = area.x + area.width - 1, y = area.y;
                h > 0; h -= 2, x--, y++)
-            gdk_draw_line (widget->window, gc, x, y, x, y + h - 1);
+            gdk_draw_line (window, gc, x, y, x, y + h - 1);
           break;
         }
       gdk_gc_set_clip_rectangle (gc, NULL);

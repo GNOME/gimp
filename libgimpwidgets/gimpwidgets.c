@@ -1073,9 +1073,12 @@ static GtkWidget *
 find_mnemonic_widget (GtkWidget *widget,
                       gint       level)
 {
+  gboolean can_focus;
+
+  g_object_get (widget, "can-focus", &can_focus, NULL);
 
   if (GTK_WIDGET_GET_CLASS (widget)->activate_signal ||
-      GTK_WIDGET_CAN_FOCUS (widget)                  ||
+      can_focus                                      ||
       GTK_WIDGET_GET_CLASS (widget)->mnemonic_activate !=
       GTK_WIDGET_CLASS (g_type_class_peek (GTK_TYPE_WIDGET))->mnemonic_activate)
     {

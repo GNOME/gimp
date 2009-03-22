@@ -453,7 +453,7 @@ gimp_context_help_idle_start (gpointer widget)
       cursor = gdk_cursor_new_for_display (gtk_widget_get_display (invisible),
                                            GDK_QUESTION_ARROW);
 
-      status = gdk_pointer_grab (invisible->window, TRUE,
+      status = gdk_pointer_grab (gtk_widget_get_window (invisible), TRUE,
                                  GDK_BUTTON_PRESS_MASK   |
                                  GDK_BUTTON_RELEASE_MASK |
                                  GDK_ENTER_NOTIFY_MASK   |
@@ -469,7 +469,7 @@ gimp_context_help_idle_start (gpointer widget)
           return FALSE;
         }
 
-      if (gdk_keyboard_grab (invisible->window, TRUE,
+      if (gdk_keyboard_grab (gtk_widget_get_window (invisible), TRUE,
                              GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
         {
           gdk_display_pointer_ungrab (gtk_widget_get_display (invisible),

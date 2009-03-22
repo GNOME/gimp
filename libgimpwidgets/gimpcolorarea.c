@@ -334,7 +334,7 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   buf = area->buf + event->area.y * area->rowstride + event->area.x * 3;
 
-  gdk_draw_rgb_image_dithalign (widget->window,
+  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                 style->black_gc,
                                 event->area.x,
                                 event->area.y,
@@ -347,7 +347,7 @@ gimp_color_area_expose (GtkWidget      *widget,
                                 event->area.y);
 
   if (area->draw_border)
-    gdk_draw_rectangle (widget->window,
+    gdk_draw_rectangle (gtk_widget_get_window (widget),
                         style->fg_gc[widget->state],
                         FALSE,
                         0, 0,
@@ -712,20 +712,17 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
                                     guint             time)
 {
   GimpColorArea *area = GIMP_COLOR_AREA (widget);
+  const guint16 *vals;
   GimpRGB        color;
-  guint16       *vals;
 
-  if (selection_data->length < 0)
-    return;
-
-  if ((selection_data->format != 16) ||
-      (selection_data->length != 8))
+  if (gtk_selection_data_get_length (selection_data) != 8 ||
+      gtk_selection_data_get_format (selection_data) != 16)
     {
-      g_warning ("Received invalid color data");
+      g_warning ("%s: received invalid color data", G_STRFUNC);
       return;
     }
 
-  vals = (guint16 *)selection_data->data;
+  vals = (const guint16 *) gtk_selection_data_get_data (selection_data);
 
   gimp_rgba_set (&color,
                  (gdouble) vals[0] / 0xffff,

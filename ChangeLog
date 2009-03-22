@@ -1,3 +1,24 @@
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpcolorscale.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimpdialog.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpmemsizeentry.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppickbutton.c
+	* libgimpwidgets/gimppixmap.c
+	* libgimpwidgets/gimppreview.c
+	* libgimpwidgets/gimppreviewarea.c
+	* libgimpwidgets/gimpruler.c
+	* libgimpwidgets/gimpscrolledpreview.c
+	* libgimpwidgets/gimpwidgets.c: use accessors for various members
+	of GTK+ structures that don't exist any longer when GSEAL_ENABLE
+	is defined.
+
 2009-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/context-actions.c (context_actions): 

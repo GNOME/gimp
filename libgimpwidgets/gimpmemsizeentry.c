@@ -128,13 +128,15 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
     {
       entry->shift = shift;
 
-      entry->adjustment->value = CAST entry->value >> shift;
-      entry->adjustment->lower = CAST entry->lower >> shift;
-      entry->adjustment->upper = CAST entry->upper >> shift;
-
-      gtk_adjustment_value_changed (entry->adjustment);
-      gtk_adjustment_changed (entry->adjustment);
+      gtk_adjustment_configure (entry->adjustment,
+                                CAST entry->value >> shift,
+                                CAST entry->lower >> shift,
+                                CAST entry->upper >> shift,
+                                gtk_adjustment_get_step_increment (entry->adjustment),
+                                gtk_adjustment_get_page_increment (entry->adjustment),
+                                gtk_adjustment_get_page_size (entry->adjustment));
     }
+
 #undef CAST
 }
 

@@ -624,7 +624,7 @@ gimp_color_select_xy_expose (GtkWidget       *widget,
                              GimpColorSelect *select)
 {
   if (! select->gc)
-    select->gc = gdk_gc_new (widget->window);
+    select->gc = gdk_gc_new (gtk_widget_get_window (widget));
 
   gimp_color_select_draw_xy_marker (select, &event->area);
 
@@ -648,7 +648,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
       x = bevent->x;
       y = bevent->y;
 
-      gdk_pointer_grab (select->xy_color->window, FALSE,
+      gdk_pointer_grab (gtk_widget_get_window (select->xy_color), FALSE,
                         GDK_POINTER_MOTION_HINT_MASK |
                         GDK_BUTTON_MOTION_MASK       |
                         GDK_BUTTON_RELEASE_MASK,
@@ -712,7 +712,7 @@ gimp_color_select_z_expose (GtkWidget       *widget,
                             GimpColorSelect *select)
 {
   if (! select->gc)
-    select->gc = gdk_gc_new (widget->window);
+    select->gc = gdk_gc_new (gtk_widget_get_window (widget));
 
   gimp_color_select_draw_z_marker (select, &event->area);
 
@@ -735,7 +735,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
       bevent = (GdkEventButton *) event;
       z = bevent->y;
 
-      gdk_pointer_grab (select->z_color->window, FALSE,
+      gdk_pointer_grab (gtk_widget_get_window (select->z_color), FALSE,
                         GDK_POINTER_MOTION_HINT_MASK |
                         GDK_BUTTON_MOTION_MASK       |
                         GDK_BUTTON_RELEASE_MASK,
@@ -844,7 +844,7 @@ gimp_color_select_draw_z_marker (GimpColorSelect *select,
   if (y >= miny && y < height)
     {
       gdk_gc_set_function (select->gc, GDK_INVERT);
-      gdk_draw_line (select->z_color->window,
+      gdk_draw_line (gtk_widget_get_window (select->z_color),
                      select->gc, minx, y, width - 1, y);
       gdk_gc_set_function (select->gc, GDK_COPY);
     }
@@ -885,11 +885,11 @@ gimp_color_select_draw_xy_marker (GimpColorSelect *select,
     }
 
   if (y >= miny && y < height)
-    gdk_draw_line (select->xy_color->window,
+    gdk_draw_line (gtk_widget_get_window (select->xy_color),
                    select->gc, minx, y, width - 1, y);
 
   if (x >= minx && x < width)
-    gdk_draw_line (select->xy_color->window,
+    gdk_draw_line (gtk_widget_get_window (select->xy_color),
                    select->gc, x, miny, x, height - 1);
 
   gdk_gc_set_function (select->gc, GDK_COPY);

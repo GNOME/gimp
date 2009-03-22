@@ -506,7 +506,8 @@ gimp_color_button_clicked (GtkButton *button)
       gimp_color_selection_set_color (GIMP_COLOR_SELECTION (selection), &color);
       gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (selection),
                                           &color);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), selection);
+      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                         selection);
       gtk_widget_show (selection);
 
       g_signal_connect (selection, "color-changed",

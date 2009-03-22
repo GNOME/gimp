@@ -321,7 +321,7 @@ gimp_offset_area_realize (GtkWidget *widget)
 
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
                                        GDK_FLEUR);
-  gdk_window_set_cursor (widget->window, cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   gdk_cursor_unref (cursor);
 }
 
@@ -344,7 +344,7 @@ gimp_offset_area_event (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      gdk_pointer_grab (widget->window, FALSE,
+      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
                         (GDK_BUTTON1_MOTION_MASK |
                          GDK_BUTTON_RELEASE_MASK),
                         NULL, NULL, event->button.time);
@@ -388,8 +388,9 @@ static gboolean
 gimp_offset_area_expose_event (GtkWidget      *widget,
                                GdkEventExpose *eevent)
 {
-  GimpOffsetArea *area  = GIMP_OFFSET_AREA (widget);
-  GtkStyle       *style = gtk_widget_get_style (widget);
+  GimpOffsetArea *area   = GIMP_OFFSET_AREA (widget);
+  GtkStyle       *style  = gtk_widget_get_style (widget);
+  GdkWindow      *window = gtk_widget_get_window (widget);
   GdkPixbuf      *pixbuf;
   gint            w, h;
   gint            x, y;
@@ -414,14 +415,14 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 
   if (pixbuf)
     {
-      gdk_draw_pixbuf (widget->window, style->black_gc,
+      gdk_draw_pixbuf (window, style->black_gc,
                        pixbuf, 0, 0, x, y, w, h, GDK_RGB_DITHER_NORMAL, 0, 0);
-      gdk_draw_rectangle (widget->window, style->black_gc, FALSE,
+      gdk_draw_rectangle (window, style->black_gc, FALSE,
                           x, y, w - 1, h - 1);
     }
   else
     {
-      gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
+      gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                         GTK_SHADOW_OUT,
                         NULL, widget, NULL,
                         x, y, w, h);
@@ -456,7 +457,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 
       if (pixbuf)
         {
-          GdkGC *gc   = gdk_gc_new (widget->window);
+          GdkGC *gc   = gdk_gc_new (window);
           gint   line = MIN (3, MIN (w, h));
 
           gdk_gc_set_function (gc, GDK_INVERT);
@@ -464,7 +465,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
                                       GDK_LINE_SOLID, GDK_CAP_BUTT,
                                       GDK_JOIN_ROUND);
 
-          gdk_draw_rectangle (widget->window, gc, FALSE,
+          gdk_draw_rectangle (window, gc, FALSE,
                               x + line / 2,
                               y + line / 2,
                               MAX (w - line, 1),
@@ -474,7 +475,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
        }
       else
         {
-          gdk_draw_rectangle (widget->window, style->black_gc, FALSE,
+          gdk_draw_rectangle (window, style->black_gc, FALSE,
                               x, y, w, h);
         }
     }

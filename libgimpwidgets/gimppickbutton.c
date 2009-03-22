@@ -224,13 +224,14 @@ gimp_pick_button_clicked (GtkButton *gtk_button)
   widget = button->grab_widget;
   timestamp = gtk_get_current_event_time ();
 
-  if (gdk_keyboard_grab (widget->window, FALSE, timestamp) != GDK_GRAB_SUCCESS)
+  if (gdk_keyboard_grab (gtk_widget_get_window (widget), FALSE,
+                         timestamp) != GDK_GRAB_SUCCESS)
     {
       g_warning ("Failed to grab keyboard to do eyedropper");
       return;
     }
 
-  if (gdk_pointer_grab (widget->window, FALSE,
+  if (gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
                         GDK_BUTTON_RELEASE_MASK |
                         GDK_BUTTON_PRESS_MASK   |
                         GDK_POINTER_MOTION_MASK,

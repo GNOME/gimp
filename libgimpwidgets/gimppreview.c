@@ -476,15 +476,17 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 
   if (toplevel && GTK_WIDGET_REALIZED (toplevel))
     {
-      gdk_window_set_cursor (toplevel->window, preview->cursor_busy);
-      gdk_window_set_cursor (preview->area->window, preview->cursor_busy);
+      gdk_window_set_cursor (gtk_widget_get_window (toplevel),
+                             preview->cursor_busy);
+      gdk_window_set_cursor (gtk_widget_get_window (preview->area),
+                             preview->cursor_busy);
 
       gdk_flush ();
 
       g_signal_emit (preview, preview_signals[INVALIDATED], 0);
 
       class->set_cursor (preview);
-      gdk_window_set_cursor (toplevel->window, NULL);
+      gdk_window_set_cursor (gtk_widget_get_window (toplevel), NULL);
     }
   else
     {
@@ -498,7 +500,8 @@ static void
 gimp_preview_real_set_cursor (GimpPreview *preview)
 {
   if (GTK_WIDGET_REALIZED (preview->area))
-    gdk_window_set_cursor (preview->area->window, preview->default_cursor);
+    gdk_window_set_cursor (gtk_widget_get_window (preview->area),
+                           preview->default_cursor);
 }
 
 static void

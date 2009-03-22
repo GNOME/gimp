@@ -564,7 +564,7 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 
   if (GTK_WIDGET_REALIZED (widget))
     {
-      gdk_window_move_resize (widget->window,
+      gdk_window_move_resize (gtk_widget_get_window (widget),
                               allocation->x, allocation->y,
                               allocation->width, allocation->height);
 
@@ -660,7 +660,7 @@ gimp_ruler_expose (GtkWidget      *widget,
 
       gimp_ruler_draw_ticks (ruler);
 
-      gdk_draw_drawable (widget->window,
+      gdk_draw_drawable (gtk_widget_get_window (widget),
                          priv->non_gr_exp_gc,
                          priv->backing_store,
                          0, 0, 0, 0,
@@ -925,7 +925,7 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
 
   if ((bs_width > 0) && (bs_height > 0))
     {
-      cairo_t *cr = gdk_cairo_create (widget->window);
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdouble  lower;
       gdouble  upper;
       gdouble  position;
@@ -933,7 +933,7 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
 
       /*  If a backing store exists, restore the ruler  */
       if (priv->backing_store)
-        gdk_draw_drawable (widget->window,
+        gdk_draw_drawable (gtk_widget_get_window (widget),
                            style->black_gc,
                            priv->backing_store,
                            priv->xsrc, priv->ysrc,
@@ -1001,14 +1001,14 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
       g_object_unref (priv->backing_store);
     }
 
-  priv->backing_store = gdk_pixmap_new (widget->window,
+  priv->backing_store = gdk_pixmap_new (gtk_widget_get_window (widget),
                                         widget->allocation.width,
                                         widget->allocation.height,
                                         -1);
 
   if (!priv->non_gr_exp_gc)
     {
-      priv->non_gr_exp_gc = gdk_gc_new (widget->window);
+      priv->non_gr_exp_gc = gdk_gc_new (gtk_widget_get_window (widget));
       gdk_gc_set_exposures (priv->non_gr_exp_gc, FALSE);
     }
 }

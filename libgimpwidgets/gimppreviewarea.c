@@ -238,7 +238,7 @@ gimp_preview_area_expose (GtkWidget      *widget,
       gint      y     = render.y - rect.y;
       guchar   *buf   = area->buf + x * 3 + y * area->rowstride;
 
-      gdk_draw_rgb_image_dithalign (widget->window,
+      gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                     style->fg_gc[widget->state],
                                     render.x,
                                     render.y,
