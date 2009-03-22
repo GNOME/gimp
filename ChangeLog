@@ -1,7 +1,13 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptagentry.c: use "list" as variable name for
+	iterators to be consistent with the rest of GIMP; various code
+	cleanups.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* modules/color-selector-wheel.c: remove GTK+ version check and
-	related evilness because we depend on a proper GKT+ version now.
+	related evilness because we depend on a proper GTK+ version now.
 
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
