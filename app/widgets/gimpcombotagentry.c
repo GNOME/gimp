@@ -193,15 +193,16 @@ gimp_combo_tag_entry_expose_event (GtkWidget      *widget,
                                    GdkEventExpose *event,
                                    gpointer        user_data)
 {
-  GimpComboTagEntry     *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  GimpComboTagEntry     *entry     = GIMP_COMBO_TAG_ENTRY (widget);
   GimpFilteredContainer *container = GIMP_TAG_ENTRY (entry)->container;
+  GtkStyle              *style     = gtk_widget_get_style (widget);
   GdkRectangle           arrow_rect;
   gint                   tag_count;
   gint                   window_width;
   gint                   window_height;
   GtkStateType           arrow_state;
 
-  if (widget->window == event->window)
+  if (gtk_widget_get_window (widget) == event->window)
     {
       return FALSE;
     }
@@ -212,12 +213,12 @@ gimp_combo_tag_entry_expose_event (GtkWidget      *widget,
   gdk_drawable_get_size (GDK_DRAWABLE (event->window), &window_width, &window_height);
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      gdk_draw_rectangle (event->window, widget->style->base_gc[widget->state],
+      gdk_draw_rectangle (event->window, style->base_gc[widget->state],
                           TRUE, 0, 0, 14, window_height);
     }
   else
     {
-      gdk_draw_rectangle (event->window, widget->style->base_gc[widget->state],
+      gdk_draw_rectangle (event->window, style->base_gc[widget->state],
                           TRUE, window_width - 14, 0, 14, window_height);
     }
 
@@ -231,7 +232,7 @@ gimp_combo_tag_entry_expose_event (GtkWidget      *widget,
       arrow_state = GTK_STATE_INSENSITIVE;
     }
 
-  gtk_paint_arrow (widget->style,
+  gtk_paint_arrow (style,
                    event->window, arrow_state,
                    GTK_SHADOW_NONE, &event->area, widget, NULL,
                    GTK_ARROW_DOWN, TRUE,
@@ -321,11 +322,10 @@ gimp_combo_tag_entry_style_set (GtkWidget *widget,
                                 GtkStyle  *previous_style)
 {
   GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
-  GtkStyle          *style;
+  GtkStyle          *style = gtk_widget_get_style (widget);
   GdkColor           color;
   PangoAttribute    *attribute;
 
-  style = widget->style;
   if (entry->normal_item_attr)
     {
       pango_attr_list_unref (entry->normal_item_attr);
@@ -377,17 +377,14 @@ gimp_combo_tag_entry_get_arrow_rect (GimpComboTagEntry *entry,
                                      GdkRectangle      *arrow_rect)
 {
   GtkWidget *widget = GTK_WIDGET (entry);
+  GtkStyle  *style  = gtk_widget_get_style (widget);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    {
-      arrow_rect->x = widget->style->xthickness;
-    }
+    arrow_rect->x = style->xthickness;
   else
-    {
-      arrow_rect->x = widget->allocation.width - 16 - widget->style->xthickness * 2;
-    }
+    arrow_rect->x = widget->allocation.width - 16 - style->xthickness * 2;
 
-  arrow_rect->y = 0;
-  arrow_rect->width = 12;
-  arrow_rect->height = widget->allocation.height - widget->style->ythickness * 2;
+  arrow_rect->y      = 0;
+  arrow_rect->width  = 12;
+  arrow_rect->height = widget->allocation.height - style->ythickness * 2;
 }

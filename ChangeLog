@@ -1,3 +1,8 @@
+2009-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcombotagentry.c: use accessors instead of
+	widget->window and widget->style.
+
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpzoompreview.c: use GtkAdjustment's accessors.
