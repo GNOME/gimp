@@ -797,7 +797,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 
   GIMP_LOG (DND, "data type %d", info);
 
-  if (selection_data->length <= 0)
+  if (gtk_selection_data_get_length (selection_data) <= 0)
     {
       gtk_drag_finish (context, FALSE, FALSE, time);
       return;

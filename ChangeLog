@@ -1,5 +1,10 @@
 2009-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_data_drop_handle): use
+	GtkSelectionData's accessors.
+
+2009-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview-dnd.c: use GtkAdjustment's
 	accessors.
 
