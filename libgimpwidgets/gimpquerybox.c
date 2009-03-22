@@ -158,12 +158,14 @@ create_query_box (const gchar   *title,
 
   if (stock_id)
     {
+      GtkWidget *content_area;
       GtkWidget *image;
+
+      content_area = gtk_dialog_get_content_area (GTK_DIALOG (query_box->qbox));
 
       hbox = gtk_hbox_new (FALSE, 12);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
-                         hbox);
+      gtk_container_add (GTK_CONTAINER (content_area), hbox);
       gtk_widget_show (hbox);
 
       image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
@@ -183,9 +185,12 @@ create_query_box (const gchar   *title,
     }
   else
     {
+      GtkWidget *content_area;
+
+      content_area = gtk_dialog_get_content_area (GTK_DIALOG (query_box->qbox));
+
       gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 12);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
-                         query_box->vbox);
+      gtk_container_add (GTK_CONTAINER (content_area), query_box->vbox);
     }
 
   gtk_widget_show (query_box->vbox);
