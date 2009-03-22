@@ -1,5 +1,10 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* modules/color-selector-wheel.c: remove GTK+ version check and
+	related evilness because we depend on a proper GKT+ version now.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gtkscalebutton.[ch]: remove this evil hack.
 
