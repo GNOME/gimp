@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 23:33+0200\n"
-"PO-Revision-Date: 2009-02-25 22:16+0200\n"
+"POT-Creation-Date: 2009-03-22 23:29+0200\n"
+"PO-Revision-Date: 2009-03-20 17:09+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <ro@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4666,7 +4666,7 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Instrumente precum selecție imprecisă și umplere cu găleata vor găsi zone "
+"Instrumente precum selecție difuză și umplere cu găleata vor găsi zone "
 "bazându-se pe un algoritm de donare-umplere. Umplerea prin donare pornește "
 "la pixelul selectat inițial și progresează în toate direcțiile până când "
 "diferența intensității pixelului față de original este mai mare decât un "
@@ -5987,7 +5987,7 @@ msgstr "Canal %s la selecție"
 #: ../app/core/gimpchannel-select.c:520 ../app/tools/gimpfuzzyselecttool.c:80
 msgctxt "command"
 msgid "Fuzzy Select"
-msgstr "Selecție imprecisă"
+msgstr "Selecție difuză"
 
 #: ../app/core/gimpchannel-select.c:567
 #: ../app/tools/gimpbycolorselecttool.c:82
@@ -7876,7 +7876,7 @@ msgstr "Redimensionează fereastra la _zoom"
 
 #: ../app/dialogs/preferences-dialog.c:2099
 msgid "Resize window on image _size change"
-msgstr "Redimensionează fereastra la schimbarea dimensiunii imaginii"
+msgstr "Redimensionează fereastra la _schimbarea dimensiunii imaginii"
 
 #: ../app/dialogs/preferences-dialog.c:2105
 msgid "Fit to window"
@@ -9249,7 +9249,7 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Plugin-ul s-a înțepenit: „%s”\n"
+"Acest plugin s-a înțepenit: „%s”\n"
 "(%s)\n"
 "\n"
 "Este posibil ca plugin-ul muribund să fi afectat starea internă a GIMP. Ar "
@@ -10335,15 +10335,15 @@ msgstr "Selecție liberă"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fuzzy Select"
-msgstr "Selecție imprecisă"
+msgstr "Selecție difuză"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "Selecție imprecisă: selectează o zonă contiguă pe baza culorii"
+msgstr "Selecție difuză: selectează o zonă contiguă pe baza culorii"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
-msgstr "Selecție _imprecisă"
+msgstr "Selecție difu_ză"
 
 #: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
