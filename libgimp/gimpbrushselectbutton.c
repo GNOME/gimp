@@ -794,7 +794,8 @@ gimp_brush_select_button_open_popup (GimpBrushSelectButton *button,
   gtk_widget_show (preview);
 
   /* decide where to put the popup */
-  gdk_window_get_origin (priv->preview->window, &x_org, &y_org);
+  gdk_window_get_origin (gtk_widget_get_window (priv->preview),
+                         &x_org, &y_org);
 
   scr_w = gdk_screen_get_width (screen);
   scr_h = gdk_screen_get_height (screen);
@@ -839,15 +840,17 @@ gimp_brush_select_drag_data_received (GimpBrushSelectButton *button,
                                       guint                  info,
                                       guint                  time)
 {
+  gint   length = gtk_selection_data_get_length (selection);
   gchar *str;
 
-  if ((selection->format != 8) || (selection->length < 1))
+  if (gtk_selection_data_get_format (selection) != 8 || length < 1)
     {
-      g_warning ("Received invalid brush data!");
+      g_warning ("%s: received invalid brush data", G_STRFUNC);
       return;
     }
 
-  str = g_strndup ((const gchar *) selection->data, selection->length);
+  str = g_strndup ((const gchar *) gtk_selection_data_get_data (selection),
+                   length);
 
   if (g_utf8_validate (str, -1, NULL))
     {

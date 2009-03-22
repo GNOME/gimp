@@ -359,14 +359,16 @@ test_clipboard_paste (GtkClipboard *clipboard,
                       const gchar  *target,
                       const gchar  *filename)
 {
-  GtkSelectionData *data;
+  GtkSelectionData *sel_data;
 
-  data = gtk_clipboard_wait_for_contents (clipboard,
-                                          gdk_atom_intern (target,
-                                                           FALSE));
-  if (data)
+  sel_data = gtk_clipboard_wait_for_contents (clipboard,
+                                              gdk_atom_intern (target,
+                                                               FALSE));
+  if (sel_data)
     {
-      gint fd;
+      const guchar *data;
+      gint          length;
+      gint          fd;
 
       if (! strcmp (filename, "-"))
         fd = 1;
@@ -380,7 +382,10 @@ test_clipboard_paste (GtkClipboard *clipboard,
           return FALSE;
         }
 
-      if (write (fd, data->data, data->length) < data->length)
+      data   = gtk_selection_data_get_data (sel_data);
+      length = gtk_selection_data_get_length (sel_data);
+
+      if (write (fd, data, length) < length)
         {
           close (fd);
           g_printerr ("%s: write() failed: %s",
@@ -395,7 +400,7 @@ test_clipboard_paste (GtkClipboard *clipboard,
           return FALSE;
         }
 
-      gtk_selection_data_free (data);
+      gtk_selection_data_free (sel_data);
     }
 
   return TRUE;
@@ -420,7 +425,8 @@ test_clipboard_copy_callback (GtkClipboard     *clipboard,
       return;
     }
 
-  gtk_selection_data_set (selection, selection->target,
+  gtk_selection_data_set (selection,
+                          gtk_selection_data_get_target (selection),
                           8, (guchar *) buf, buf_size);
 
   g_free (buf);

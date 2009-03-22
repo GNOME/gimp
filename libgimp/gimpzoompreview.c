@@ -573,12 +573,13 @@ gimp_zoom_preview_set_cursor (GimpPreview *preview)
 
   if (gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview)) > 1.0)
     {
-      gdk_window_set_cursor (preview->area->window,
+      gdk_window_set_cursor (gtk_widget_get_window (preview->area),
                              GIMP_SCROLLED_PREVIEW (preview)->cursor_move);
     }
   else
     {
-      gdk_window_set_cursor (preview->area->window, preview->default_cursor);
+      gdk_window_set_cursor (gtk_widget_get_window (preview->area),
+                             preview->default_cursor);
     }
 }
 

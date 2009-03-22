@@ -530,7 +530,7 @@ gimp_gradient_select_preview_expose (GtkWidget                *widget,
       GtkStyle *style = gtk_widget_get_style (widget);
       guchar   *buf   = ((y / GIMP_CHECK_SIZE_SM) & 1) ? odd : even;
 
-      gdk_draw_rgb_image_dithalign (widget->window,
+      gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                     style->fg_gc[widget->state],
                                     event->area.x, y,
                                     event->area.width, 1,
@@ -553,15 +553,17 @@ gimp_gradient_select_drag_data_received (GimpGradientSelectButton *button,
                                         guint                      info,
                                         guint                      time)
 {
+  gint   length = gtk_selection_data_get_length (selection);
   gchar *str;
 
-  if ((selection->format != 8) || (selection->length < 1))
+  if (gtk_selection_data_get_format (selection) != 8 || length < 1)
     {
-      g_warning ("Received invalid gradient data!");
+      g_warning ("%s: received invalid gradient data", G_STRFUNC);
       return;
     }
 
-  str = g_strndup ((const gchar *) selection->data, selection->length);
+  str = g_strndup ((const gchar *) gtk_selection_data_get_data (selection),
+                   length);
 
   if (g_utf8_validate (str, -1, NULL))
     {

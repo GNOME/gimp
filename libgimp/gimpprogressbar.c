@@ -179,12 +179,12 @@ gimp_window_get_native (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WIN32
   if (window && GTK_WIDGET_REALIZED (window))
-    return GDK_WINDOW_HWND (GTK_WIDGET (window)->window);
+    return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
   if (window && GTK_WIDGET_REALIZED (window))
-    return GDK_WINDOW_XID (GTK_WIDGET (window)->window);
+    return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
   return 0;

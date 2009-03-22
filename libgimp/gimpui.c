@@ -272,7 +272,7 @@ gimp_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
 {
   if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (window->window, parent);
+    gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
 
 static void
@@ -291,7 +291,8 @@ gimp_window_set_transient_for (GtkWindow *window,
     return;
 
   if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (GTK_WIDGET (window)->window, parent);
+    gdk_window_set_transient_for (gtk_widget_get_window (GTK_WIDGET (window)),
+                                  parent);
 
   g_signal_connect_object (window, "realize",
                            G_CALLBACK (gimp_window_transient_realized),
