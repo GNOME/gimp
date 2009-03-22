@@ -189,7 +189,10 @@ gimp_container_tree_view_scroll_timeout (gpointer data)
   else
     new_value = gtk_adjustment_get_value (adj) + SCROLL_STEP;
 
-  new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+  new_value = CLAMP (new_value,
+                     gtk_adjustment_get_lower (adj),
+                     gtk_adjustment_get_upper (adj) -
+                     gtk_adjustment_get_page_size (adj));
 
   gtk_adjustment_set_value (adj, new_value);
 
