@@ -631,14 +631,16 @@ gimp_container_grid_view_highlight_item (GimpContainerView *container_view,
 
       row = index / grid_view->columns;
 
-      if (row * item_height < adj->value)
+      if (row * item_height < gtk_adjustment_get_value (adj))
         {
           gtk_adjustment_set_value (adj, row * item_height);
         }
-      else if ((row + 1) * item_height > adj->value + adj->page_size)
+      else if ((row + 1) * item_height > (gtk_adjustment_get_value (adj) +
+                                          gtk_adjustment_get_page_size (adj)))
         {
           gtk_adjustment_set_value (adj,
-                                    (row + 1) * item_height - adj->page_size);
+                                    (row + 1) * item_height -
+                                    gtk_adjustment_get_page_size (adj));
         }
 
       gimp_view_renderer_set_border_type (view->renderer,

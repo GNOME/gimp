@@ -1,5 +1,9 @@
 2009-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c: use GtkAdjustment's accessors.
+
+2009-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerbox.c: use accessors instead of
 	scrolled_window->vscrollbar.
 
