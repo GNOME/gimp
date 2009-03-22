@@ -277,7 +277,7 @@ gimp_color_frame_expose (GtkWidget      *widget,
       gint      w, h;
       gdouble   scale;
 
-      cr = gdk_cairo_create (widget->window);
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_NORMAL]);
 
       g_snprintf (buf, sizeof (buf), "%d", frame->number);

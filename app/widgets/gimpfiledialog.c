@@ -354,7 +354,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   if (GIMP_GUI_CONFIG (gimp->config)->show_help_button && help_id)
     {
-      GtkWidget *action_area = GTK_DIALOG (dialog)->action_area;
+      GtkWidget *action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
       GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
 
       gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
@@ -384,8 +384,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
                                        automatic_help_id);
 
   dialog->progress = gimp_progress_box_new ();
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox), dialog->progress,
-                    FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                    dialog->progress, FALSE, FALSE, 0);
 
   return GTK_WIDGET (dialog);
 }
@@ -394,8 +394,9 @@ void
 gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
                                 gboolean        sensitive)
 {
-  GList *children;
-  GList *list;
+  GtkWidget *content_area;
+  GList     *children;
+  GList     *list;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
@@ -403,8 +404,9 @@ gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
   if (! dialog->progress)
     return;
 
-  children =
-    gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox));
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  children = gtk_container_get_children (GTK_CONTAINER (content_area));
 
   for (list = children; list; list = g_list_next (list))
     {

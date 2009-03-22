@@ -359,7 +359,7 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
   else
     widget = GTK_WIDGET (grid_view->wrap_box);
 
-  gdk_window_get_origin (widget->window, x, y);
+  gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
 
   if (GTK_WIDGET_NO_WINDOW (widget))
     {

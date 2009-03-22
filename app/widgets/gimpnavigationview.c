@@ -194,7 +194,7 @@ gimp_navigation_view_expose (GtkWidget      *widget,
 
       GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-      cr = gdk_cairo_create (widget->window);
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
       gdk_cairo_region (cr, event->region);
       cairo_clip (cr);

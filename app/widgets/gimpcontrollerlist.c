@@ -645,7 +645,8 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   editor = gimp_controller_editor_new (list->dest_info,
                                        gimp_get_user_context (list->gimp));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), editor);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     editor);
   gtk_widget_show (editor);
 
   g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor-dialog",

@@ -471,14 +471,18 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 void
 gimp_session_info_get_geometry (GimpSessionInfo *info)
 {
+  GdkWindow *window;
+
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->widget));
 
-  if (info->widget->window)
+  window = gtk_widget_get_window (info->widget);
+
+  if (window)
     {
       gint x, y;
 
-      gdk_window_get_root_origin (info->widget->window, &x, &y);
+      gdk_window_get_root_origin (window, &x, &y);
 
       /* Don't write negative values to the sessionrc, they are
        * interpreted as relative to the right, respective bottom edge
@@ -489,7 +493,7 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
 
       if (! info->toplevel_entry || info->toplevel_entry->remember_size)
         {
-          gdk_drawable_get_size (GDK_DRAWABLE (info->widget->window),
+          gdk_drawable_get_size (GDK_DRAWABLE (window),
                                  &info->width, &info->height);
         }
       else

@@ -1,5 +1,55 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpblobeditor.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimpcolordialog.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontrollereditor.c
+	* app/widgets/gimpcontrollerlist.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpcurveview.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimperrordialog.c
+	* app/widgets/gimpfgbgeditor.c
+	* app/widgets/gimpfgbgview.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphandlebar.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpmessagedialog.c
+	* app/widgets/gimpnavigationview.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppaletteview.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimpprogressbox.c
+	* app/widgets/gimpprogressdialog.c
+	* app/widgets/gimpscalebutton.c
+	* app/widgets/gimpselectiondata.c
+	* app/widgets/gimpsessioninfo.c
+	* app/widgets/gimpsettingsbox.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpview-popup.c
+	* app/widgets/gimpview.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpwidgets-utils.c: use accessors for various
+	members of GTK+ structures that don't exist any longer when
+	GSEAL_ENABLE is defined.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.c
 	* app/display/gimpdisplayshell.c: use accessors for various
 	members of GTK+ structures that don't exist any longer when

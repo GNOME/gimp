@@ -109,14 +109,14 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 static void
 gimp_viewable_dialog_init (GimpViewableDialog *dialog)
 {
+  GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);

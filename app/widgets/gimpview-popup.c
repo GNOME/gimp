@@ -228,7 +228,7 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
-  gdk_window_get_origin (popup->widget->window, &x, &y);
+  gdk_window_get_origin (gtk_widget_get_window (popup->widget), &x, &y);
 
   x += popup->button_x - (popup->popup_width  >> 1);
   y += popup->button_y - (popup->popup_height >> 1);

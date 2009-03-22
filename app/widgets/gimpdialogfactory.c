@@ -1505,7 +1505,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
               gtk_widget_show (widget);
 
               if (GTK_WIDGET_VISIBLE (widget))
-                gdk_window_raise (widget->window);
+                gdk_window_raise (gtk_widget_get_window (widget));
             }
         }
     }
@@ -1540,8 +1540,8 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
                                         GIMP_CURSOR_MODIFIER_NONE);
             }
 
-          if (widget->window)
-            gdk_window_set_cursor (widget->window, cursor);
+          if (gtk_widget_get_window (widget))
+            gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
         }
     }
 
@@ -1562,8 +1562,8 @@ gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
 
       if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
         {
-          if (widget->window)
-            gdk_window_set_cursor (widget->window, NULL);
+          if (gtk_widget_get_window (widget))
+            gdk_window_set_cursor (gtk_widget_get_window (widget), NULL);
         }
     }
 }

@@ -185,12 +185,13 @@ gimp_container_popup_map (GtkWidget *widget)
    *  receive events. we filter away events outside this toplevel
    *  away in button_press()
    */
-  if (gdk_pointer_grab (widget->window, TRUE,
+  if (gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                         GDK_POINTER_MOTION_MASK,
                         NULL, NULL, GDK_CURRENT_TIME) == 0)
     {
-      if (gdk_keyboard_grab (widget->window, TRUE, GDK_CURRENT_TIME) == 0)
+      if (gdk_keyboard_grab (gtk_widget_get_window (widget), TRUE,
+                             GDK_CURRENT_TIME) == 0)
         {
           gtk_grab_add (widget);
           return;
@@ -402,7 +403,7 @@ gimp_container_popup_show (GimpContainerPopup *popup,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gtk_widget_size_request (GTK_WIDGET (popup), &requisition);
-  gdk_window_get_origin (widget->window, &orig_x, &orig_y);
+  gdk_window_get_origin (gtk_widget_get_window (widget), &orig_x, &orig_y);
 
   if (GTK_WIDGET_NO_WINDOW (widget))
     {

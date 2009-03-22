@@ -616,6 +616,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 {
   GtkWidget *toplevel;
   GtkWidget *editor;
+  GtkWidget *content_area;
 
   if (box->editor_dialog)
     {
@@ -647,8 +648,9 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
                                      box->config,
                                      box->container);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (box->editor_dialog)->vbox),
-                     editor);
+
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (box->editor_dialog));
+  gtk_container_add (GTK_CONTAINER (content_area), editor);
   gtk_widget_show (editor);
 
   gtk_widget_show (box->editor_dialog);

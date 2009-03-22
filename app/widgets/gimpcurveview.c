@@ -356,7 +356,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   width  = widget->allocation.width  - 2 * border - 1;
   height = widget->allocation.height - 2 * border - 1;
 
-  cr = gdk_cairo_create (widget->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
@@ -508,7 +508,7 @@ set_cursor (GimpCurveView *view,
       GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (view));
       GdkCursor  *cursor  = gdk_cursor_new_for_display (display, new_cursor);
 
-      gdk_window_set_cursor (GTK_WIDGET (view)->window, cursor);
+      gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (view)), cursor);
       gdk_cursor_unref (cursor);
 
       view->cursor_type = new_cursor;

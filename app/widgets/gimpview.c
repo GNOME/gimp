@@ -218,7 +218,7 @@ gimp_view_realize (GtkWidget *widget)
 
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-  view->event_window = gdk_window_new (widget->window,
+  view->event_window = gdk_window_new (gtk_widget_get_window (widget),
                                        &attributes, attributes_mask);
   gdk_window_set_user_data (view->event_window, view);
 }
@@ -386,7 +386,7 @@ gimp_view_expose_event (GtkWidget      *widget,
   if (GTK_WIDGET_DRAWABLE (widget))
     {
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               widget->window, widget,
+                               gtk_widget_get_window (widget), widget,
                                &widget->allocation,
                                &event->area);
     }

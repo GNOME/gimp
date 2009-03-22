@@ -205,8 +205,9 @@ static gboolean
 gimp_fg_bg_view_expose (GtkWidget      *widget,
                         GdkEventExpose *eevent)
 {
-  GimpFgBgView *view  = GIMP_FG_BG_VIEW (widget);
-  GtkStyle     *style = gtk_widget_get_style (widget);
+  GimpFgBgView *view   = GIMP_FG_BG_VIEW (widget);
+  GtkStyle     *style  = gtk_widget_get_style (widget);
+  GdkWindow    *window = gtk_widget_get_window (widget);
   gint          x, y;
   gint          width, height;
   gint          rect_w, rect_h;
@@ -228,8 +229,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   if (view->context)
     {
       gimp_context_get_background (view->context, &color);
-      gimp_fg_bg_view_draw_rect (view,
-                                 widget->window,
+      gimp_fg_bg_view_draw_rect (view, window,
                                  style->fg_gc[0],
                                  x + width  - rect_w + 1,
                                  y + height - rect_h + 1,
@@ -237,7 +237,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
                                  &color);
     }
 
-  gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_IN,
                     NULL, widget, NULL,
                     x + width - rect_w, y + height - rect_h, rect_w, rect_h);
@@ -247,15 +247,14 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   if (view->context)
     {
       gimp_context_get_foreground (view->context, &color);
-      gimp_fg_bg_view_draw_rect (view,
-                                 widget->window,
+      gimp_fg_bg_view_draw_rect (view, window,
                                  style->fg_gc[0],
                                  x + 1, y + 1,
                                  rect_w - 2, rect_h - 2,
                                  &color);
     }
 
-  gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_OUT,
                     NULL, widget, NULL,
                     x, y, rect_w, rect_h);

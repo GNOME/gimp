@@ -76,6 +76,7 @@ gimp_palette_select_constructor (GType                  type,
 {
   GObject       *object;
   GimpPdbDialog *dialog;
+  GtkWidget     *content_area;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -95,7 +96,9 @@ gimp_palette_select_constructor (GType                  type,
                                        8 * (GIMP_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), dialog->view);
+
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  gtk_container_add (GTK_CONTAINER (content_area), dialog->view);
   gtk_widget_show (dialog->view);
 
   return object;

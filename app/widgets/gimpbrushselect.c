@@ -132,6 +132,7 @@ gimp_brush_select_constructor (GType                  type,
   GObject         *object;
   GimpPdbDialog   *dialog;
   GimpBrushSelect *select;
+  GtkWidget       *content_area;
   GtkWidget       *table;
   GtkAdjustment   *spacing_adj;
 
@@ -163,7 +164,9 @@ gimp_brush_select_constructor (GType                  type,
                                        5 * (GIMP_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), dialog->view);
+
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  gtk_container_add (GTK_CONTAINER (content_area), dialog->view);
   gtk_widget_show (dialog->view);
 
   /*  Create the frame and the table for the options  */

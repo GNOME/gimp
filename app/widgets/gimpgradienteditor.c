@@ -777,7 +777,7 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   str2 = g_strdup_printf (_("Displaying [%0.4f, %0.4f]"),
                           gtk_adjustment_get_value (adjustment),
                           gtk_adjustment_get_value (adjustment) +
-                          adjustment->page_size);
+                          gtk_adjustment_get_page_size (adjustment));
 
   gradient_editor_set_hint (editor, str1, str2, NULL, NULL);
 
@@ -789,7 +789,7 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   gimp_view_renderer_gradient_set_offsets (renderer,
                                            gtk_adjustment_get_value (adjustment),
                                            gtk_adjustment_get_value (adjustment) +
-                                           adjustment->page_size,
+                                           gtk_adjustment_get_page_size (adjustment),
                                            editor->instant_update);
   gimp_gradient_editor_update (editor);
 }
@@ -1223,11 +1223,11 @@ control_expose (GtkWidget          *widget,
                 GimpGradientEditor *editor)
 {
   GtkAdjustment *adj = GTK_ADJUSTMENT (editor->scroll_data);
-  cairo_t       *cr  = gdk_cairo_create (widget->window);
+  cairo_t       *cr  = gdk_cairo_create (gtk_widget_get_window (widget));
   gint           width;
   gint           height;
 
-  gdk_drawable_get_size (widget->window, &width, &height);
+  gdk_drawable_get_size (gtk_widget_get_window (widget), &width, &height);
 
   control_draw (editor,
                 GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
@@ -1235,7 +1235,7 @@ control_expose (GtkWidget          *widget,
                 width, height,
                 gtk_adjustment_get_value (adj),
                 gtk_adjustment_get_value (adj) +
-                adj->page_size);
+                gtk_adjustment_get_page_size (adj));
 
   cairo_destroy (cr);
 
@@ -1894,7 +1894,8 @@ control_calc_p_pos (GimpGradientEditor *editor,
    * and the gradient control's handles.
    */
 
-  return RINT ((pwidth - 1) * (pos - adjustment->value) / adjustment->page_size);
+  return RINT ((pwidth - 1) * (pos - gtk_adjustment_get_value (adjustment)) /
+               gtk_adjustment_get_page_size (adjustment));
 }
 
 static gdouble
@@ -1906,7 +1907,8 @@ control_calc_g_pos (GimpGradientEditor *editor,
 
   /* Calculate the gradient position that corresponds to widget's coordinates */
 
-  return adjustment->page_size * pos / (pwidth - 1) + adjustment->value;
+  return (gtk_adjustment_get_page_size (adjustment) * pos / (pwidth - 1) +
+          gtk_adjustment_get_value (adjustment));
 }
 
 /***** Segment functions *****/

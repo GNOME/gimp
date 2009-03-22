@@ -96,8 +96,8 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
   adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   value = gtk_adjustment_get_value (adj);
-  lower = adj->lower;
-  upper = adj->upper;
+  lower = gtk_adjustment_get_lower (adj);
+  upper = gtk_adjustment_get_upper (adj);
 
   /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
 
@@ -128,10 +128,12 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   if (steps < 1)
     return TRUE;
 
-  value = 0.5 + ((adj->value - adj->lower) * (gdouble) steps /
-                 (adj->upper - adj->lower));
+  value = 0.5 + ((gtk_adjustment_get_value (adj) -
+                  gtk_adjustment_get_lower (adj)) * (gdouble) steps /
+                 (gtk_adjustment_get_upper (adj) -
+                  gtk_adjustment_get_lower (adj)));
 
-  cr = gdk_cairo_create (widget->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gdk_cairo_rectangle (cr, &event->area);
   cairo_clip (cr);

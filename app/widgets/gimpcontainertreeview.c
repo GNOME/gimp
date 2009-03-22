@@ -315,7 +315,7 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
   GtkWidget             *widget    = GTK_WIDGET (tree_view->view);
   GtkTreeIter            selected_iter;
 
-  gdk_window_get_origin (widget->window, x, y);
+  gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
 
   if (GTK_WIDGET_NO_WINDOW (widget))
     {

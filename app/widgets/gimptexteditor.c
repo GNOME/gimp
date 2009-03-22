@@ -132,6 +132,7 @@ gimp_text_editor_new (const gchar     *title,
                       GtkTextBuffer   *text_buffer)
 {
   GimpTextEditor *editor;
+  GtkWidget      *content_area;
   GtkWidget      *toolbar;
   GtkWidget      *scrolled_window;
 
@@ -162,13 +163,14 @@ gimp_text_editor_new (const gchar     *title,
                                                       "<TextEditor>",
                                                       editor, FALSE);
 
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (editor));
+
   toolbar = gtk_ui_manager_get_widget (GTK_UI_MANAGER (editor->ui_manager),
                                        "/text-editor-toolbar");
 
   if (toolbar)
     {
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), toolbar,
-                          FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (content_area), toolbar, FALSE, FALSE, 0);
       gtk_widget_show (toolbar);
 
       /*  language entry, disabled until it works  */
@@ -205,8 +207,7 @@ gimp_text_editor_new (const gchar     *title,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
-                      scrolled_window, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   editor->view = gtk_text_view_new_with_buffer (text_buffer);
@@ -229,8 +230,8 @@ gimp_text_editor_new (const gchar     *title,
 
   editor->font_toggle =
     gtk_check_button_new_with_mnemonic (_("_Use selected font"));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
-                      editor->font_toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), editor->font_toggle,
+                      FALSE, FALSE, 0);
   gtk_widget_show (editor->font_toggle);
 
   g_signal_connect (editor->font_toggle, "toggled",

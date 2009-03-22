@@ -430,7 +430,7 @@ gimp_dockable_realize (GtkWidget *widget)
                                       GDK_BUTTON_MOTION_MASK  |
                                       gtk_widget_get_events (widget));
 
-      dockable->title_window = gdk_window_new (widget->window,
+      dockable->title_window = gdk_window_new (gtk_widget_get_window (widget),
                                                &attributes,
                                                (GDK_WA_X |
                                                 GDK_WA_Y |
@@ -561,7 +561,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           if (dockable->blink_counter & 1)
             {
-              gtk_paint_box (style, widget->window,
+              gtk_paint_box (style, gtk_widget_get_window (widget),
                              GTK_STATE_SELECTED, GTK_SHADOW_NONE,
                              &expose_area, widget, "",
                              title_area.x, title_area.y,
@@ -589,7 +589,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           text_y = title_area.y + (title_area.height - layout_height) / 2;
 
-          gtk_paint_layout (style, widget->window,
+          gtk_paint_layout (style, gtk_widget_get_window (widget),
                             (dockable->blink_counter & 1) ?
                             GTK_STATE_SELECTED : widget->state, TRUE,
                             &expose_area, widget, NULL,
@@ -1314,6 +1314,7 @@ gimp_dockable_title_changed (GimpDocked   *docked,
 
       gimp_dockable_get_title_area (dockable, &area);
 
-      gdk_window_invalidate_rect (GTK_WIDGET (dockable)->window, &area, FALSE);
+      gdk_window_invalidate_rect (gtk_widget_get_window (GTK_WIDGET (dockable)),
+                                  &area, FALSE);
     }
 }

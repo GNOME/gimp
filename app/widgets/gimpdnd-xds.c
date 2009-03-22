@@ -157,13 +157,15 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                          uri, proc, GIMP_RUN_INTERACTIVE, FALSE,
                          &error) == GIMP_PDB_SUCCESS)
             {
-              gtk_selection_data_set (selection, selection->target, 8,
-                                      (const guchar *) "S", 1);
+              gtk_selection_data_set (selection,
+                                      gtk_selection_data_get_target (selection),
+                                      8, (const guchar *) "S", 1);
             }
           else
             {
-              gtk_selection_data_set (selection, selection->target, 8,
-                                      (const guchar *) "E", 1);
+              gtk_selection_data_set (selection,
+                                      gtk_selection_data_get_target (selection),
+                                      8, (const guchar *) "E", 1);
 
               if (error)
                 {
@@ -183,8 +185,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
     }
   else
     {
-      gtk_selection_data_set (selection, selection->target, 8,
-                              (const guchar *) "E", 1);
+      gtk_selection_data_set (selection,
+                              gtk_selection_data_get_target (selection),
+                              8, (const guchar *) "E", 1);
 
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
 			    _("The given filename does not have any known "

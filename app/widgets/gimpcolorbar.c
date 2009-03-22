@@ -204,7 +204,7 @@ gimp_color_bar_expose (GtkWidget      *widget,
       break;
     }
 
-  gdk_draw_rgb_image (widget->window, style->black_gc,
+  gdk_draw_rgb_image (gtk_widget_get_window (widget), style->black_gc,
                       widget->allocation.x + x, widget->allocation.y + y,
                       width, height,
                       GDK_RGB_DITHER_NORMAL,

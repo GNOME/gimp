@@ -196,8 +196,7 @@ gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
 
   if (box->view->start != value)
     {
-      box->high_adj->lower = value;
-      gtk_adjustment_changed (box->high_adj);
+      gtk_adjustment_set_lower (box->high_adj, value);
 
       gimp_histogram_view_set_range (box->view, value, box->view->end);
     }
@@ -211,8 +210,7 @@ gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
 
   if (box->view->end != value)
     {
-      box->low_adj->upper = value;
-      gtk_adjustment_changed (box->low_adj);
+      gtk_adjustment_set_upper (box->low_adj, value);
 
       gimp_histogram_view_set_range (box->view, box->view->start, value);
     }
@@ -224,10 +222,8 @@ gimp_histogram_box_histogram_range (GimpHistogramView *view,
                                     gint               end,
                                     GimpHistogramBox  *box)
 {
-  box->high_adj->lower = start;
-  box->low_adj->upper  = end;
-  gtk_adjustment_changed (box->high_adj);
-  gtk_adjustment_changed (box->low_adj);
+  gtk_adjustment_set_lower (box->high_adj, start);
+  gtk_adjustment_set_upper (box->low_adj,  end);
 
   gtk_adjustment_set_value (box->low_adj,  start);
   gtk_adjustment_set_value (box->high_adj, end);

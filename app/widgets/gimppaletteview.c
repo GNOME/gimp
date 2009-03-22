@@ -182,7 +182,7 @@ gimp_palette_view_expose (GtkWidget      *widget,
       row = pal_view->selected->position / renderer->columns;
       col = pal_view->selected->position % renderer->columns;
 
-      cr = gdk_cairo_create (widget->window);
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 

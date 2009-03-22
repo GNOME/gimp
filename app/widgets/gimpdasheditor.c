@@ -238,7 +238,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
-  cairo_t        *cr     = gdk_cairo_create (widget->window);
+  cairo_t        *cr     = gdk_cairo_create (gtk_widget_get_window (widget));
   gint            x;
   gint            w, h;
 
@@ -348,7 +348,7 @@ gimp_dash_editor_button_press (GtkWidget      *widget,
 
   if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
-      gdk_pointer_grab (widget->window, FALSE,
+      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
                         GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
                         NULL, NULL, bevent->time);
       index = dash_x_to_index (editor, bevent->x);

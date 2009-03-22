@@ -278,8 +278,9 @@ static gboolean
 gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
-  GimpHistogramView *view  = GIMP_HISTOGRAM_VIEW (widget);
-  GtkStyle          *style = gtk_widget_get_style (widget);
+  GimpHistogramView *view   = GIMP_HISTOGRAM_VIEW (widget);
+  GtkStyle          *style  = gtk_widget_get_style (widget);
+  GdkWindow         *window = gtk_widget_get_window (widget);
   gint               x;
   gint               x1, x2;
   gint               border;
@@ -303,14 +304,14 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   x1 = CLAMP (MIN (view->start, view->end), 0, 255);
   x2 = CLAMP (MAX (view->start, view->end), 0, 255);
 
-  gdk_draw_rectangle (widget->window,
+  gdk_draw_rectangle (window,
                       style->base_gc[GTK_STATE_NORMAL], TRUE,
                       0, 0,
                       widget->allocation.width,
                       widget->allocation.height);
 
   /*  Draw the outer border  */
-  gdk_draw_rectangle (widget->window,
+  gdk_draw_rectangle (window,
                       style->dark_gc[GTK_STATE_NORMAL], FALSE,
                       border, border,
                       width - 1, height - 1);
@@ -338,7 +339,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
       for (x = 0; x < 3; x++)
         {
-          rgb_gc[x] = gdk_gc_new_with_values (widget->window,
+          rgb_gc[x] = gdk_gc_new_with_values (window,
                                               &values, GDK_GC_FUNCTION);
 
           color.red   = (x == 0 ? 0xFFFF : 0x0);
@@ -368,7 +369,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
-          gdk_draw_line (widget->window,
+          gdk_draw_line (window,
                          style->dark_gc[GTK_STATE_NORMAL],
                          x + border, border,
                          x + border, border + height - 1);
@@ -376,7 +377,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
         }
       else if (in_selection)
         {
-          gdk_draw_line (widget->window,
+          gdk_draw_line (window,
                          style->base_gc[GTK_STATE_SELECTED],
                          x + border, border,
                          x + border, border + height - 1);
@@ -434,10 +435,11 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
                                 gint                  height,
                                 gint                  border)
 {
-  gdouble  value    = 0.0;
-  gdouble  bg_value = 0.0;
-  gint     y;
-  gint     bg_y;
+  GdkWindow *window   = gtk_widget_get_window (GTK_WIDGET (view));
+  gdouble    value    = 0.0;
+  gdouble    bg_value = 0.0;
+  gint       y;
+  gint       bg_y;
 
   if (view->histogram)
     {
@@ -485,11 +487,11 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
     }
 
   if (bg_gc)
-    gdk_draw_line (GTK_WIDGET (view)->window, bg_gc,
+    gdk_draw_line (window, bg_gc,
                    x + border, height + border - 1,
                    x + border, height + border - bg_y - 1);
 
-  gdk_draw_line (GTK_WIDGET (view)->window, gc,
+  gdk_draw_line (window, gc,
                  x + border, height + border - 1,
                  x + border, height + border - y - 1);
 }
@@ -504,7 +506,7 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
     {
       gint width;
 
-      gdk_pointer_grab (widget->window, FALSE,
+      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
                         GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
                         NULL, NULL, bevent->time);
 

@@ -947,7 +947,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 
       if (! menu_item && GTK_IS_MENU (widget))
         {
-          GdkWindow *window = GTK_MENU (widget)->toplevel->window;
+          GdkWindow *window = gtk_widget_get_window (GTK_MENU (widget)->toplevel);
           gint       x, y;
 
           gdk_window_get_pointer (window, &x, &y, NULL);
@@ -1144,7 +1144,7 @@ window_to_alloc (GtkWidget *dest_widget,
   if (!GTK_WIDGET_NO_WINDOW (dest_widget) && dest_widget->parent)
     {
       gint wx, wy;
-      gdk_window_get_position (dest_widget->window, &wx, &wy);
+      gdk_window_get_position (gtk_widget_get_window (dest_widget), &wx, &wy);
 
       /* Offset coordinates if widget->window is smaller than
        * widget->allocation.
@@ -1191,7 +1191,7 @@ find_widget_under_pointer (GdkWindow *window,
    * coordinates stay relative to the current window.
    * We end up with window == widget->window, coordinates relative to that.
    */
-  while (window && window != event_widget->window)
+  while (window && window != gtk_widget_get_window (event_widget))
     {
       gint px, py;
 

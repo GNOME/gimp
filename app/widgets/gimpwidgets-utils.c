@@ -162,7 +162,7 @@ gimp_button_menu_position (GtkWidget       *button,
         }
     }
 
-  gdk_window_get_origin (button->window, x, y);
+  gdk_window_get_origin (gtk_widget_get_window (button), x, y);
 
   gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
 
@@ -823,15 +823,15 @@ gimp_window_get_native (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WIN32
   if (window && GTK_WIDGET_REALIZED (window))
-    return (GdkNativeWindow)GDK_WINDOW_HWND (GTK_WIDGET (window)->window);
+    return (GdkNativeWindow) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
   if (window && GTK_WIDGET_REALIZED (window))
-    return GDK_WINDOW_XID (GTK_WIDGET (window)->window);
+    return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
-  return (GdkNativeWindow)0;
+  return (GdkNativeWindow) 0;
 }
 
 static void
@@ -839,7 +839,7 @@ gimp_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
 {
   if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (window->window, parent);
+    gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
 
 /* similar to what we have in libgimp/gimpui.c */
@@ -864,7 +864,8 @@ gimp_window_set_transient_for (GtkWindow *window,
     return;
 
   if (GTK_WIDGET_REALIZED (window))
-    gdk_window_set_transient_for (GTK_WIDGET (window)->window, parent);
+    gdk_window_set_transient_for (gtk_widget_get_window (GTK_WIDGET (window)),
+                                  parent);
 
   g_signal_connect_object (window, "realize",
                            G_CALLBACK (gimp_window_transient_realized),

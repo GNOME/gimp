@@ -519,7 +519,7 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
       gdouble   wilber_height;
       gdouble   factor;
 
-      cr = gdk_cairo_create (widget->window);
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_rectangle (cr, &clip_rect);
       cairo_clip (cr);
 

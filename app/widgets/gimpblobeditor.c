@@ -197,7 +197,7 @@ gimp_blob_editor_expose (GtkWidget      *widget,
   if (r0 < 2)
     return TRUE;
 
-  cr = gdk_cairo_create (widget->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gimp_blob_editor_draw_blob (editor, cr,
                               widget->allocation.width  / 2.0,

@@ -161,7 +161,7 @@ gimp_handle_bar_expose (GtkWidget      *widget,
       y += widget->allocation.y;
     }
 
-  cr = gdk_cairo_create (widget->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gdk_cairo_region (cr, eevent->region);
   cairo_clip (cr);
@@ -176,7 +176,7 @@ gimp_handle_bar_expose (GtkWidget      *widget,
       if (bar->slider_adj[i])
         {
           bar->slider_pos[i] = ROUND ((gdouble) width *
-                                      (bar->slider_adj[i]->value - bar->lower) /
+                                      (gtk_adjustment_get_value (bar->slider_adj[i]) - bar->lower) /
                                       (bar->upper - bar->lower + 1));
 
           cairo_set_source_rgb (cr, 0.5 * i, 0.5 * i, 0.5 * i);
@@ -325,14 +325,14 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
       }
 
     if (bar->slider_adj[0])
-      bar->lower = bar->slider_adj[0]->lower;
+      bar->lower = gtk_adjustment_get_lower (bar->slider_adj[0]);
     else
-      bar->lower = bar->slider_adj[handle_no]->lower;
+      bar->lower = gtk_adjustment_get_lower (bar->slider_adj[handle_no]);
 
     if (bar->slider_adj[2])
-      bar->upper = bar->slider_adj[2]->upper;
+      bar->upper = gtk_adjustment_get_upper (bar->slider_adj[2]);
     else
-      bar->upper = bar->slider_adj[handle_no]->upper;
+      bar->upper = gtk_adjustment_get_upper (bar->slider_adj[handle_no]);
 
     gimp_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
 }

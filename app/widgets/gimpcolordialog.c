@@ -126,7 +126,7 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
 
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                      dialog->selection);
   gtk_widget_show (dialog->selection);
 
@@ -277,10 +277,19 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          NULL);
 
   if (viewable)
-    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (dialog),
-                                       viewable, context);
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (dialog),
+                                         viewable, context);
+    }
   else
-    gtk_widget_hide (GIMP_VIEWABLE_DIALOG (dialog)->icon->parent->parent);
+    {
+      GtkWidget *parent;
+
+      parent = gtk_widget_get_parent (GIMP_VIEWABLE_DIALOG (dialog)->icon);
+      parent = gtk_widget_get_parent (parent);
+
+      gtk_widget_hide (parent);
+    }
 
   dialog->wants_updates = wants_updates;
 

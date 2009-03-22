@@ -99,7 +99,7 @@ gimp_message_dialog_new (const gchar    *title,
                               "stock-id",  stock_id,
                               NULL);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       GTK_WIDGET (dialog->box), FALSE, FALSE, 0);
   gtk_widget_show (GTK_WIDGET (dialog->box));
 
