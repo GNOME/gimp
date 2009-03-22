@@ -254,13 +254,14 @@ gimp_canvas_realize (GtkWidget *widget)
 
   widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
                                    &attributes, attributes_mask);
-  gdk_window_set_user_data (widget->window, widget);
+  gdk_window_set_user_data (gtk_widget_get_window (widget), widget);
 
   widget->style = gtk_style_attach (widget->style, widget->window);
-  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
+  gtk_style_set_background (widget->style, gtk_widget_get_window (widget),
+                            GTK_STATE_NORMAL);
 
   canvas->stipple[0] =
-    gdk_bitmap_create_from_data (widget->window,
+    gdk_bitmap_create_from_data (gtk_widget_get_window (widget),
                                  (const gchar *) stipples[0], 8, 8);
 }
 
@@ -304,7 +305,7 @@ gimp_canvas_size_allocate (GtkWidget     *widget,
   widget->allocation = *allocation;
 
   if (GTK_WIDGET_REALIZED (widget))
-    gdk_window_move_resize (widget->window,
+    gdk_window_move_resize (gtk_widget_get_window (widget),
                             allocation->x, allocation->y,
                             allocation->width, allocation->height);
 }
@@ -401,7 +402,8 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       return NULL;
     }
 
-  gc = gdk_gc_new_with_values (GTK_WIDGET (canvas)->window, &values, mask);
+  gc = gdk_gc_new_with_values (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                               &values, mask);
 
   if (style == GIMP_CANVAS_STYLE_XOR_DOTTED)
     {
@@ -558,15 +560,17 @@ gimp_canvas_scroll (GimpCanvas *canvas,
                     gint        offset_y)
 {
   GtkWidget *widget;
+  GdkWindow *window;
 
   g_return_if_fail (GIMP_IS_CANVAS (canvas));
 
   widget = GTK_WIDGET (canvas);
+  window = gtk_widget_get_window (widget);
 
-  gdk_window_scroll (widget->window, offset_x, offset_y);
+  gdk_window_scroll (window, offset_x, offset_y);
 
   /*  Make sure expose events are processed before scrolling again  */
-  gdk_window_process_updates (widget->window, FALSE);
+  gdk_window_process_updates (window, FALSE);
 }
 
 /**
@@ -584,22 +588,23 @@ gimp_canvas_draw_cursor (GimpCanvas *canvas,
                          gint        y)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
+  GdkWindow *window = gtk_widget_get_window (widget);
 
   if (! (gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_BLACK) &&
          gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_WHITE)) )
     return;
 
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
                  x - 7, y - 1, x + 7, y - 1);
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
                  x - 7, y,     x + 7, y    );
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
                  x - 7, y + 1, x + 7, y + 1);
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
                  x - 1, y - 7, x - 1, y + 7);
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
                  x,     y - 7, x,     y + 7);
-  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
                  x + 1, y - 7, x + 1, y + 7);
 }
 
@@ -622,7 +627,8 @@ gimp_canvas_draw_point (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_point (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_point (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                  canvas->gc[style],
                   x, y);
 }
 
@@ -645,7 +651,8 @@ gimp_canvas_draw_points (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_points (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_points (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                   canvas->gc[style],
                    points, num_points);
 }
 
@@ -672,7 +679,8 @@ gimp_canvas_draw_line (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_line (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_line (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                 canvas->gc[style],
                  x1, y1, x2, y2);
 }
 
@@ -695,7 +703,8 @@ gimp_canvas_draw_lines (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_lines (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_lines (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                  canvas->gc[style],
                   points, num_points);
 }
 
@@ -723,7 +732,8 @@ gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_rectangle (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_rectangle (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                      canvas->gc[style],
                       filled, x, y, width, height);
 }
 
@@ -755,7 +765,8 @@ gimp_canvas_draw_arc (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_arc (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_arc (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                canvas->gc[style],
                 filled, x, y, width, height, angle1, angle2);
 }
 
@@ -780,7 +791,8 @@ gimp_canvas_draw_polygon (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_polygon (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_polygon (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                    canvas->gc[style],
                     filled, points, num_points);
 }
 
@@ -804,13 +816,15 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
 
   while (num_segments >= 32000)
     {
-      gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
+      gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                         canvas->gc[style],
                          segments, 32000);
       num_segments -= 32000;
       segments     += 32000;
     }
 
-  gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                     canvas->gc[style],
                      segments, num_segments);
 }
 
@@ -850,7 +864,8 @@ gimp_canvas_draw_text (GimpCanvas      *canvas,
   pango_layout_set_text (canvas->layout, text, -1);
   g_free (text);
 
-  gdk_draw_layout (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_layout (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                   canvas->gc[style],
                    x, y, canvas->layout);
 }
 
@@ -884,7 +899,8 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  gdk_draw_rgb_image_dithalign (GTK_WIDGET (canvas)->window, canvas->gc[style],
+  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (GTK_WIDGET (canvas)),
+                                canvas->gc[style],
                                 x, y, width, height,
                                 GDK_RGB_DITHER_MAX,
                                 rgb_buf, rowstride, xdith, ydith);
@@ -1007,7 +1023,7 @@ gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
   if (! canvas->stipple[index])
     {
       canvas->stipple[index] =
-        gdk_bitmap_create_from_data (GTK_WIDGET (canvas)->window,
+        gdk_bitmap_create_from_data (gtk_widget_get_window (GTK_WIDGET (canvas)),
                                      (const gchar *) stipples[index], 8, 8);
     }
 
@@ -1061,9 +1077,9 @@ gimp_canvas_set_bg_color (GimpCanvas *canvas,
 
   gimp_rgb_get_gdk_color (color, &gdk_color);
 
-  colormap = gdk_drawable_get_colormap (widget->window);
+  colormap = gdk_drawable_get_colormap (gtk_widget_get_window (widget));
   g_return_if_fail (colormap != NULL);
   gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
 
-  gdk_window_set_background (widget->window, &gdk_color);
+  gdk_window_set_background (gtk_widget_get_window (widget), &gdk_color);
 }

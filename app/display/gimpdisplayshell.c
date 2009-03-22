@@ -1805,7 +1805,8 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 
   if (now)
     {
-      gdk_window_process_updates (shell->canvas->window, FALSE);
+      gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
+                                  FALSE);
     }
   else
     {
@@ -1899,7 +1900,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
   widget = GTK_WIDGET (shell);
   screen = gtk_widget_get_screen (widget);
 
-  monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
+  monitor = gdk_screen_get_monitor_at_window (screen,
+                                              gtk_widget_get_window (widget));
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   width  = SCALEX (shell, gimp_image_get_width  (shell->display->image));

@@ -1,5 +1,12 @@
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpcanvas.c
+	* app/display/gimpdisplayshell.c: use accessors for various
+	members of GTK+ structures that don't exist any longer when
+	GSEAL_ENABLE is defined.
+
+2009-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpbrushselectbutton.c
 	* libgimp/gimpexport.c
 	* libgimp/gimpfontselectbutton.c
