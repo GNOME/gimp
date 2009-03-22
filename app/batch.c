@@ -168,8 +168,8 @@ batch_run_cmd (Gimp          *gimp,
     case GIMP_PDB_EXECUTION_ERROR:
       if (error)
         {
-          g_printerr ("batch command experienced an execution error: %s\n",
-                      error->message);
+          g_printerr ("batch command experienced an execution error:\n"
+                      "%s\n", error->message);
         }
       else
         {
@@ -180,8 +180,8 @@ batch_run_cmd (Gimp          *gimp,
     case GIMP_PDB_CALLING_ERROR:
       if (error)
         {
-          g_printerr ("batch command experienced a calling error: %s\n",
-                      error->message);
+          g_printerr ("batch command experienced a calling error:\n"
+                      "%s\n", error->message);
         }
       else
         {

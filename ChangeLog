@@ -1,3 +1,13 @@
+2009-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_run_cmd): added a newline to the output in
+	the error case.
+
+	* plug-ins/script-fu/script-fu-eval.c (script_fu_eval_run):
+	instead of disabling all output in batch mode, use the usual
+	routine for error handling and pass the error string along with
+	the return values.
+
 2009-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpscrolledpreview.c: use GtkAdjustment's

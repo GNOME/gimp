@@ -32,24 +32,24 @@ script_fu_eval_run (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
+  static GimpParam   values[2];
+  GString           *output = g_string_new (NULL);
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   values[0].type = GIMP_PDB_STATUS;
 
   run_mode = params[0].data.d_int32;
 
   ts_set_run_mode (run_mode);
+  ts_register_output_func (ts_gstring_output_func, output);
 
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Disable Script-Fu output  */
-      ts_register_output_func (NULL, NULL);
       if (ts_interpret_string (params[1].data.d_string) != 0)
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
@@ -57,10 +57,8 @@ script_fu_eval_run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       status        = GIMP_PDB_CALLING_ERROR;
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = _("Script-Fu evaluation mode only allows "
-                                  "non-interactive invocation");
+      g_string_assign (output, _("Script-Fu evaluation mode only allows "
+                                 "non-interactive invocation"));
       break;
 
     default:
@@ -68,4 +66,15 @@ script_fu_eval_run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
+
+  if (status != GIMP_PDB_SUCCESS && output->len > 0)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = g_string_free (output, FALSE);
+    }
+  else
+    {
+      g_string_free (output, TRUE);
+    }
 }
