@@ -586,7 +586,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
   adjustment = GTK_ADJUSTMENT (editor->scroll_data);
 
   old_value     = gtk_adjustment_get_value (adjustment);
-  old_page_size = adjustment->page_size;
+  old_page_size = gtk_adjustment_get_page_size (adjustment);
 
   switch (zoom_type)
     {
@@ -624,12 +624,13 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
       break;
     }
 
-  adjustment->value          = value;
-  adjustment->page_size      = page_size;
-  adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
-  adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
-
-  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
+  gtk_adjustment_configure (adjustment,
+                            value,
+                            gtk_adjustment_get_lower (adjustment),
+                            gtk_adjustment_get_upper (adjustment),
+                            page_size * GRAD_SCROLLBAR_STEP_SIZE,
+                            page_size * GRAD_SCROLLBAR_PAGE_SIZE,
+                            page_size);
 }
 
 
@@ -925,18 +926,21 @@ view_events (GtkWidget          *widget,
             switch (sevent->direction)
               {
               case GDK_SCROLL_UP:
-                value -= adj->page_increment / 2;
+                value -= gtk_adjustment_get_page_increment (adj) / 2;
                 break;
 
               case GDK_SCROLL_DOWN:
-                value += adj->page_increment / 2;
+                value += gtk_adjustment_get_page_increment (adj) / 2;
                 break;
 
               default:
                 break;
               }
 
-            value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+            value = CLAMP (value,
+                           gtk_adjustment_get_lower (adj),
+                           gtk_adjustment_get_upper (adj) -
+                           gtk_adjustment_get_page_size (adj));
 
             gtk_adjustment_set_value (adj, value);
           }
@@ -1121,10 +1125,13 @@ control_events (GtkWidget          *widget,
 
             new_value = (gtk_adjustment_get_value (adj) +
                          ((sevent->direction == GDK_SCROLL_UP) ?
-                          - adj->page_increment / 2 :
-                          adj->page_increment / 2));
+                          - gtk_adjustment_get_page_increment (adj) / 2 :
+                          gtk_adjustment_get_page_increment (adj) / 2));
 
-            new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+            new_value = CLAMP (new_value,
+                               gtk_adjustment_get_lower (adj),
+                               gtk_adjustment_get_upper (adj) -
+                               gtk_adjustment_get_page_size (adj));
 
             gtk_adjustment_set_value (adj, new_value);
           }
