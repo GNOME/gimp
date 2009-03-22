@@ -75,13 +75,15 @@ static void
 gimp_container_box_init (GimpContainerBox *box)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (box);
+  GtkWidget         *sb;
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (box->scrolled_win);
 
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (box->scrolled_win)->vscrollbar,
-                          GTK_CAN_FOCUS);
+  sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
+
+  GTK_WIDGET_UNSET_FLAGS (sb, GTK_CAN_FOCUS);
 
   gimp_container_view_set_dnd_widget (view, box->scrolled_win);
 }
@@ -106,6 +108,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
   GimpContainerView      *view;
   GtkScrolledWindowClass *sw_class;
   GtkStyle               *sw_style;
+  GtkWidget              *sb;
   GtkRequisition          req;
   gint                    view_size;
   gint                    scrollbar_width;
@@ -130,8 +133,9 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
                           "scrollbar-spacing", &scrollbar_width,
                           NULL);
 
-  gtk_widget_size_request (GTK_SCROLLED_WINDOW (box->scrolled_win)->vscrollbar,
-                           &req);
+  sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
+
+  gtk_widget_size_request (sb, &req);
   scrollbar_width += req.width;
 
   border_x = border_y = gtk_container_get_border_width (GTK_CONTAINER (box));

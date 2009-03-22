@@ -1,5 +1,10 @@
 2009-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerbox.c: use accessors instead of
+	scrolled_window->vscrollbar.
+
+2009-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcombotagentry.c: use accessors instead of
 	widget->window and widget->style.
 
