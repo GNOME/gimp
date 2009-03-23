@@ -1,3 +1,7 @@
+2009-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpscalebutton.c: use GtkScaleButton's accessors.
+
 2009-03-23  Sven Neumann  <sven@gimp.org>
 
 	Dropped support for the GnomeVFS file-uri backend. Recent GNOME

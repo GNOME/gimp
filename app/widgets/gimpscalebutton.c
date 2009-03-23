@@ -52,12 +52,15 @@ static void
 gimp_scale_button_init (GimpScaleButton *button)
 {
   GtkWidget *image = gtk_bin_get_child (GTK_BIN (button));
+  GtkWidget *plusminus;
 
-  gtk_widget_hide (GTK_SCALE_BUTTON (button)->plus_button);
-  gtk_widget_set_no_show_all (GTK_SCALE_BUTTON (button)->plus_button, TRUE);
+  plusminus = gtk_scale_button_get_plus_button (GTK_SCALE_BUTTON (button));
+  gtk_widget_hide (plusminus);
+  gtk_widget_set_no_show_all (plusminus, TRUE);
 
-  gtk_widget_hide (GTK_SCALE_BUTTON (button)->minus_button);
-  gtk_widget_set_no_show_all (GTK_SCALE_BUTTON (button)->minus_button, TRUE);
+  plusminus = gtk_scale_button_get_minus_button (GTK_SCALE_BUTTON (button));
+  gtk_widget_hide (plusminus);
+  gtk_widget_set_no_show_all (plusminus, TRUE);
 
   g_signal_connect (image, "expose-event",
                     G_CALLBACK (gimp_scale_button_image_expose),
