@@ -1,10 +1,14 @@
+2009-03-23  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed plug-ins/file-uri/uri-backend-gnomevfs.c.
+
 2009-03-18  Mișu Moldovan  <dumol@gnome.ro>
 
 	* ro.po: updated Romanian translation by Cristian Secară
 
 2009-03-18  Marco Ciampa  <ciampix@libero.it>
 
-	it.po: updated italian translation.
+	* it.po: updated italian translation.
 
 2009-03-10  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
 

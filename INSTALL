@@ -186,11 +186,8 @@ These are:
   --without-gvfs.  If you don't want to use GIO/GVfs to access remote
      files, you can pass --without-gvfs to the configure script.
 
-  --without-gnomevfs.  If you don't want to use gnomevfs to access remote
-     files, you can pass --without-gnomevfs to the configure script.
-
   --without-libcurl.  If you don't want to use libcurl to access remote
-     files, you can pass --without-gnomevfs to the configure script.
+     files, you can pass --without-libcurl to the configure script.
 
   --without-alsa.  If you don't want to compile ALSA support into the
      MIDI input controller module, you can use the --without-alsa option.

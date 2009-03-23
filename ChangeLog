@@ -1,3 +1,14 @@
+2009-03-23  Sven Neumann  <sven@gimp.org>
+
+	Dropped support for the GnomeVFS file-uri backend. Recent GNOME
+	releases use GIO/GVfs and libgnomeui will also go away soon.
+
+	* INSTALL 
+	* configure.in: removed checks for libgnomeui and libgnome-keyring.
+
+	* plug-ins/file-uri/Makefile.am
+	* plug-ins/file-uri/uri-backend-gnomevfs.c: removed.
+
 2009-03-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c: use GtkAdjustment's accessors.

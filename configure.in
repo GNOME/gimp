@@ -1327,10 +1327,9 @@ fi
 AC_SUBST(FILE_PDF)
 
 
-###############################################
-# Check for gio/gvfs, gnome-vfs and libcurl
-# (and optionally libgnomeui and gnome-keyring)
-###############################################
+################################
+# Check for gio/gvfs and libcurl
+################################
 
 uri_plugin=no
 
@@ -1338,39 +1337,6 @@ uri_plugin=no
 AC_ARG_WITH(gvfs, [  --without-gvfs          build without GIO/GVfs support])
 
 AM_CONDITIONAL(HAVE_GVFS, test "x$with_gvfs" != xno)
-
-
-AC_ARG_WITH(gnomevfs, [  --without-gnomevfs      build without gnomevfs support])
-
-have_gnomeui="no (disabled)"
-have_gnome_keyring="no (disabled)"
-have_gnomevfs="no (disabled)"
-
-if test "x$with_gnomevfs" != xno; then
-
-gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
-
-if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
-  have_gnomeui=yes
-  gnome_vfs_modules="$gnome_vfs_modules libgnomeui-2.0"
-else
-  have_gnomeui="no (libgnomeui-2.0 not found)"
-fi
-
-if $PKG_CONFIG --atleast-version=gnome_keyring_required_version gnome-keyring-1; then
-  have_gnome_keyring=yes
-  gnome_vfs_modules="$gnome_vfs_modules gnome-keyring-1"
-else
-  have_gnome_keyring="no (gnome-keyring-1 not found)"
-fi
-
-PKG_CHECK_MODULES(GNOME_VFS, $gnome_vfs_modules,
-  have_gnomevfs=yes,
-  have_gnomevfs="no (gnome-vfs-2.0 not found)")
-
-fi
-
-AM_CONDITIONAL(HAVE_GNOMEVFS, test "x$have_gnomevfs" = xyes)
 
 
 AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
@@ -1390,21 +1356,10 @@ AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
 if test "x$with_gvfs" != xno; then
   uri_plugin="yes (using GIO/GVfs)"
-elif test "x$have_gnomevfs" = xyes; then
-  uri_plugin="yes (using gnome-vfs)"
 elif test "x$have_libcurl" = xyes; then
   uri_plugin="yes (using libcurl)"
 elif test "x$os_win32" = xno; then
   uri_plugin="yes (using wget)"
-fi
-
-
-if test "x$have_gnomeui" = xyes; then
-  AC_DEFINE(HAVE_GNOMEUI, 1, [Define to 1 if libgnomeui is available])
-fi
-
-if test "x$have_gnome_keyring" = xyes; then
-  AC_DEFINE(HAVE_GNOME_KEYRING, 1, [Define to 1 if gnome-keyring is available])
 fi
 
 
@@ -2138,8 +2093,6 @@ Optional Plug-Ins:
 
 Plug-In Features:
   EXIF support:        $have_libexif
-  GNOME UI:            $have_gnomeui
-  GNOME keyring:       $have_gnome_keyring
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa

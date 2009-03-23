@@ -23,11 +23,6 @@ backend_sources = uri-backend-gvfs.c
 backend_cflags = $(GIO_CFLAGS)
 backend_libs = $(GIO_LIBS)
 else
-if HAVE_GNOMEVFS
-backend_sources = uri-backend-gnomevfs.c
-backend_cflags = $(GNOME_VFS_CFLAGS)
-backend_libs = $(GNOME_VFS_LIBS)
-else
 if HAVE_LIBCURL
 backend_sources = uri-backend-libcurl.c
 backend_cflags = $(CURL_CFLAGS)
@@ -36,7 +31,6 @@ else
 backend_sources = uri-backend-wget.c
 backend_cflags = 
 backend_libs = 
-endif
 endif
 endif
 
