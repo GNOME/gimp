@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-24 10:47+0100\n"
-"PO-Revision-Date: 2009-03-24 10:47+0100\n"
+"POT-Creation-Date: 2009-03-24 12:59+0100\n"
+"PO-Revision-Date: 2009-03-24 13:00+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -11411,7 +11411,7 @@ msgstr "_Upprepa %s"
 
 #: ../plug-ins/imagemap/imap_menu.c:145
 msgid "_File"
-msgstr "_Fil"
+msgstr "_Arkiv"
 
 #: ../plug-ins/imagemap/imap_menu.c:146
 msgid "_Open..."
