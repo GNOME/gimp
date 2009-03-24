@@ -1,16 +1,16 @@
 # Swedish messages for the GIMP.
-# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2007, 2008 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
+# Copyright (C) 1999-2009 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-27 21:07+0100\n"
-"PO-Revision-Date: 2008-11-27 21:08+0100\n"
+"POT-Creation-Date: 2009-03-24 13:35+0100\n"
+"PO-Revision-Date: 2009-03-24 13:36+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -412,7 +412,7 @@ msgstr "Textredigerare"
 #: ../app/actions/actions.c:200
 #: ../app/dialogs/dialogs.c:138
 #: ../app/dialogs/preferences-dialog.c:1880
-#: ../app/gui/gui.c:423
+#: ../app/gui/gui.c:429
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -1094,7 +1094,7 @@ msgstr "Öppna dialogrutan för bildmallar"
 
 #: ../app/actions/dialogs-actions.c:189
 msgid "T_ools"
-msgstr "_Verktyg"
+msgstr "Ver_ktyg"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "Open the tools dialog"
@@ -1146,7 +1146,7 @@ msgstr "_Om"
 
 #: ../app/actions/dialogs-actions.c:231
 #: ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:473
+#: ../app/gui/gui.c:479
 msgid "About GIMP"
 msgstr "Om GIMP"
 
@@ -3805,7 +3805,7 @@ msgstr "Verktygslådemeny"
 
 #: ../app/actions/tools-actions.c:50
 msgid "_Tools"
-msgstr "_Verktyg"
+msgstr "Ver_ktyg"
 
 #: ../app/actions/tools-actions.c:51
 msgid "_Selection Tools"
@@ -4430,7 +4430,7 @@ msgstr "Flytta det här fönstret till skärmen %s"
 
 #: ../app/actions/windows-actions.c:79
 msgid "_Windows"
-msgstr "_Fönster"
+msgstr "F_önster"
 
 #: ../app/actions/windows-actions.c:80
 msgid "_Recently Closed Docks"
@@ -5370,7 +5370,7 @@ msgstr "Transformera"
 
 #: ../app/core/core-enums.c:884
 #: ../app/core/core-enums.c:927
-#: ../app/paint/gimppaintcore.c:135
+#: ../app/paint/gimppaintcore.c:137
 msgid "Paint"
 msgstr "Måla"
 
@@ -6628,7 +6628,7 @@ msgid "Please wait"
 msgstr "Var god vänta"
 
 #: ../app/core/gimpselection.c:150
-#: ../app/tools/gimpeditselectiontool.c:242
+#: ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "Flytta markering"
 
@@ -6699,10 +6699,10 @@ msgid "pixel"
 msgstr "bildpunkt"
 
 #: ../app/core/gimpunit.c:56
-#: ../app/tools/gimpmeasuretool.c:874
-#: ../app/tools/gimpmeasuretool.c:1017
-#: ../app/tools/gimpmeasuretool.c:1073
-#: ../app/tools/gimpmeasuretool.c:1101
+#: ../app/tools/gimpmeasuretool.c:877
+#: ../app/tools/gimpmeasuretool.c:1020
+#: ../app/tools/gimpmeasuretool.c:1076
+#: ../app/tools/gimpmeasuretool.c:1104
 #: ../app/tools/gimppainttool.c:615
 msgid "pixels"
 msgstr "bildpunkter"
@@ -6826,7 +6826,7 @@ msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kan inte konvertera till palett med mer än 256 färger."
 
 #: ../app/dialogs/dialogs-constructors.c:184
-#: ../app/gui/gui.c:158
+#: ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
@@ -7066,12 +7066,12 @@ msgstr "Lager_namn:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1062
+#: ../app/tools/gimpmeasuretool.c:1065
 msgid "Width:"
 msgstr "Bredd:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1090
+#: ../app/tools/gimpmeasuretool.c:1093
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -8492,7 +8492,7 @@ msgid "not a GIMP Levels file"
 msgstr "inte en GIMP-nivåfil"
 
 #. initialize the document history
-#: ../app/gui/gui.c:420
+#: ../app/gui/gui.c:426
 msgid "Documents"
 msgstr "Dokument"
 
@@ -8633,7 +8633,7 @@ msgid "2D Transforming"
 msgstr "2d-transformerar"
 
 #: ../app/pdb/edit-cmds.c:709
-#: ../app/tools/gimpblendtool.c:223
+#: ../app/tools/gimpblendtool.c:225
 msgid "Blending"
 msgstr "Tonar"
 
@@ -9024,7 +9024,7 @@ msgstr ""
 "strax hwila på mjuka tuvor."
 
 #: ../app/text/gimptext-compat.c:108
-#: ../app/tools/gimptexttool.c:877
+#: ../app/tools/gimptexttool.c:879
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -9113,7 +9113,7 @@ msgid "Pressure:"
 msgstr "Tryck:"
 
 #: ../app/tools/gimpaligntool.c:134
-#: ../app/tools/gimpaligntool.c:754
+#: ../app/tools/gimpaligntool.c:766
 msgid "Align"
 msgstr "Arrangera"
 
@@ -9125,91 +9125,91 @@ msgstr "Arrangeringsverktyg: Arrangera lager och andra objekt"
 msgid "_Align"
 msgstr "_Arrangera"
 
-#: ../app/tools/gimpaligntool.c:587
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr "Klicka på ett lager, slinga eller hjälplinje, eller klicka och dra för att välja flera lager"
 
-#: ../app/tools/gimpaligntool.c:596
+#: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
 msgstr "Klicka för att välja detta lager som första objekt"
 
-#: ../app/tools/gimpaligntool.c:604
+#: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
 msgstr "Klicka för att lägga till detta lager till listan"
 
-#: ../app/tools/gimpaligntool.c:608
+#: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this guide as first item"
 msgstr "Klicka för att välja denna hjälplinje som första objekt"
 
-#: ../app/tools/gimpaligntool.c:616
+#: ../app/tools/gimpaligntool.c:628
 msgid "Click to add this guide to the list"
 msgstr "Klicka för att lägga till denna hjälplinje till listan"
 
-#: ../app/tools/gimpaligntool.c:620
+#: ../app/tools/gimpaligntool.c:632
 msgid "Click to pick this path as first item"
 msgstr "Klicka för att välja denna slinga som första objekt"
 
-#: ../app/tools/gimpaligntool.c:628
+#: ../app/tools/gimpaligntool.c:640
 msgid "Click to add this path to the list"
 msgstr "Klicka för att lägga till denna slinga till listan"
 
-#: ../app/tools/gimpaligntool.c:766
+#: ../app/tools/gimpaligntool.c:778
 msgid "Relative to:"
 msgstr "Relativ till:"
 
-#: ../app/tools/gimpaligntool.c:784
+#: ../app/tools/gimpaligntool.c:796
 msgid "Align left edge of target"
 msgstr "Arrangera mot vänsterkant av målet"
 
-#: ../app/tools/gimpaligntool.c:790
+#: ../app/tools/gimpaligntool.c:802
 msgid "Align center of target"
 msgstr "Arrangera mot centrum av målet"
 
-#: ../app/tools/gimpaligntool.c:796
+#: ../app/tools/gimpaligntool.c:808
 msgid "Align right edge of target"
 msgstr "Arrangera mot högerkant av målet"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpaligntool.c:818
 msgid "Align top edge of target"
 msgstr "Arrangera mot överkant av målet"
 
-#: ../app/tools/gimpaligntool.c:812
+#: ../app/tools/gimpaligntool.c:824
 msgid "Align middle of target"
 msgstr "Arrangera mot mitten av målet"
 
-#: ../app/tools/gimpaligntool.c:818
+#: ../app/tools/gimpaligntool.c:830
 msgid "Align bottom of target"
 msgstr "Arrangera mot nederkant av målet"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute"
 msgstr "Distribuera"
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute left edges of targets"
 msgstr "Distribuera vänsterkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:843
+#: ../app/tools/gimpaligntool.c:855
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuera horisontella centrum för målen"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:862
 msgid "Distribute right edges of targets"
 msgstr "Distribuera högerkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:860
+#: ../app/tools/gimpaligntool.c:872
 msgid "Distribute top edges of targets"
 msgstr "Distribuera överkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:867
+#: ../app/tools/gimpaligntool.c:879
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuera vertikala centrum för målen"
 
-#: ../app/tools/gimpaligntool.c:873
+#: ../app/tools/gimpaligntool.c:885
 msgid "Distribute bottoms of targets"
 msgstr "Distribuera nederkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:881
+#: ../app/tools/gimpaligntool.c:893
 #: ../app/tools/gimpblendoptions.c:222
 msgid "Offset:"
 msgstr "Position:"
@@ -9251,23 +9251,23 @@ msgstr "Toningsverktyg: Fyll markerat område med en färggradient"
 msgid "Blen_d"
 msgstr "Färgto_ning"
 
-#: ../app/tools/gimpblendtool.c:162
+#: ../app/tools/gimpblendtool.c:164
 #, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
-#: ../app/tools/gimpblendtool.c:400
+#: ../app/tools/gimpblendtool.c:402
 #: ../app/tools/gimppainttool.c:606
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
 
-#: ../app/tools/gimpblendtool.c:401
+#: ../app/tools/gimpblendtool.c:403
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s för att flytta hela linjen"
 
-#: ../app/tools/gimpblendtool.c:405
+#: ../app/tools/gimpblendtool.c:407
 msgid "Blend: "
 msgstr "Toning: "
 
@@ -9791,13 +9791,13 @@ msgstr "Intervall"
 msgid "Exposure:"
 msgstr "Exponering:"
 
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1231
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1229
 msgid "Move Floating Selection"
 msgstr "Flytta flytande markering"
 
-#: ../app/tools/gimpeditselectiontool.c:459
-#: ../app/tools/gimpeditselectiontool.c:728
+#: ../app/tools/gimpeditselectiontool.c:457
+#: ../app/tools/gimpeditselectiontool.c:726
 msgid "Move: "
 msgstr "Flytta: "
 
@@ -10154,7 +10154,7 @@ msgid "Size:"
 msgstr "Storlek:"
 
 #: ../app/tools/gimpinkoptions-gui.c:76
-#: ../app/tools/gimpmeasuretool.c:1034
+#: ../app/tools/gimpmeasuretool.c:1037
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Vinkel:"
@@ -10206,7 +10206,7 @@ msgid "Intelligent _Scissors"
 msgstr "_Intelligent sax"
 
 #: ../app/tools/gimpiscissorstool.c:940
-#: ../app/tools/gimpmeasuretool.c:606
+#: ../app/tools/gimpmeasuretool.c:609
 msgid "Click-Drag to move this point"
 msgstr "Klicka och dra för att flytta den här punkten"
 
@@ -10339,36 +10339,36 @@ msgstr "Mätningsverktyg: Mät avstånd och vinklar"
 msgid "_Measure"
 msgstr "Mät_ning"
 
-#: ../app/tools/gimpmeasuretool.c:238
+#: ../app/tools/gimpmeasuretool.c:241
 msgid "Add Guides"
 msgstr "Lägg till hjälplinjer"
 
-#: ../app/tools/gimpmeasuretool.c:558
+#: ../app/tools/gimpmeasuretool.c:561
 msgid "Click to place vertical and horizontal guides"
 msgstr "Klicka för att placera vertikala och horisontella hjälplinjer"
 
-#: ../app/tools/gimpmeasuretool.c:567
+#: ../app/tools/gimpmeasuretool.c:570
 msgid "Click to place a horizontal guide"
 msgstr "Klicka för att placera ut en horisontell hjälplinje"
 
-#: ../app/tools/gimpmeasuretool.c:581
+#: ../app/tools/gimpmeasuretool.c:584
 msgid "Click to place a vertical guide"
 msgstr "Klicka för att placera ut en vertikal hjälplinje"
 
-#: ../app/tools/gimpmeasuretool.c:595
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "Klicka och dra för att lägga till en ny punkt"
 
-#: ../app/tools/gimpmeasuretool.c:625
+#: ../app/tools/gimpmeasuretool.c:628
 msgid "Click-Drag to move all points"
 msgstr "Klicka och dra för att flytta alla punkter"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:986
+#: ../app/tools/gimpmeasuretool.c:989
 msgid "Measure Distances and Angles"
 msgstr "Mät avstånd och vinklar"
 
-#: ../app/tools/gimpmeasuretool.c:1006
+#: ../app/tools/gimpmeasuretool.c:1009
 msgid "Distance:"
 msgstr "Avstånd:"
 
@@ -10854,20 +10854,20 @@ msgstr "Textverktyg: Skapa eller redigera textlager"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:954
+#: ../app/tools/gimptexttool.c:956
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: ../app/tools/gimptexttool.c:1070
-#: ../app/tools/gimptexttool.c:1073
+#: ../app/tools/gimptexttool.c:1072
+#: ../app/tools/gimptexttool.c:1075
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:1077
+#: ../app/tools/gimptexttool.c:1079
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:1101
+#: ../app/tools/gimptexttool.c:1103
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -10877,7 +10877,7 @@ msgstr ""
 "\n"
 "Du kan redigera lagret eller skapa ett nytt textlager från dess textattribut."
 
-#: ../app/tools/gimptexttool.c:1313
+#: ../app/tools/gimptexttool.c:1315
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
@@ -11936,43 +11936,43 @@ msgstr "_Bakgrundsfärg:"
 msgid "Spacing"
 msgstr "Mellanrum"
 
-#: ../app/widgets/gimphelp.c:276
+#: ../app/widgets/gimphelp.c:294
 msgid "Help browser is missing"
 msgstr "Hjälpläsaren saknas"
 
-#: ../app/widgets/gimphelp.c:277
+#: ../app/widgets/gimphelp.c:295
 msgid "The GIMP help browser is not available."
 msgstr "GIMP-hjälpläsaren är inte tillgänglig."
 
-#: ../app/widgets/gimphelp.c:278
+#: ../app/widgets/gimphelp.c:296
 msgid "The GIMP help browser plug-in appears to be missing from your installation. You may instead use the web browser for reading the help pages."
 msgstr "Insticksmodulen för GIMP:s hjälpläsare verkar saknas i din installation. Du kan istället använda webbläsaren för att läsa hjälpsidorna."
 
-#: ../app/widgets/gimphelp.c:319
+#: ../app/widgets/gimphelp.c:337
 msgid "Help browser doesn't start"
 msgstr "Hjälp_läsaren startar inte"
 
-#: ../app/widgets/gimphelp.c:320
+#: ../app/widgets/gimphelp.c:338
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Kunde inte starta GIMP-hjälpläsarinsticksmodulen."
 
-#: ../app/widgets/gimphelp.c:347
+#: ../app/widgets/gimphelp.c:365
 msgid "Use _Web Browser"
 msgstr "Använd _webbläsare"
 
-#: ../app/widgets/gimphelp.c:596
+#: ../app/widgets/gimphelp.c:614
 msgid "GIMP user manual is missing"
 msgstr "GIMP:s användarhandbok saknas"
 
-#: ../app/widgets/gimphelp.c:603
+#: ../app/widgets/gimphelp.c:621
 msgid "_Read Online"
 msgstr "_Läs på nätet"
 
-#: ../app/widgets/gimphelp.c:627
+#: ../app/widgets/gimphelp.c:645
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "GIMP:s användarhandbok är inte installerad på din dator."
 
-#: ../app/widgets/gimphelp.c:630
+#: ../app/widgets/gimphelp.c:648
 msgid "You may either install the additional help package or change your preferences to use the online version."
 msgstr "Du kan antingen installera det extra hjälppaketet eller ändra dina inställningar till att använda versionen på nätet."
 
