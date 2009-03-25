@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 09:21+0100\n"
-"PO-Revision-Date: 2009-03-18 09:21+0100\n"
+"POT-Creation-Date: 2009-03-25 16:19+0100\n"
+"PO-Revision-Date: 2009-03-25 16:21+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:62
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -982,7 +982,7 @@ msgstr "Dimensione immagine"
 #: ../plug-ins/script-fu/scripts/camo.scm.h:8
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
-msgstr "Definito"
+msgstr "Definizione"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
@@ -1300,7 +1300,7 @@ msgstr "Nuvole a differenza..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Disturbo solido applicato con modalità livello differenza"
+msgstr "Disturbo pieno applicato con modalità livello differenza"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1320,7 +1320,7 @@ msgstr "Liscia verticale"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr "Diffuso"
+msgstr "Diffusione"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
@@ -1328,7 +1328,7 @@ msgstr "Soglia (maggiore 1<-->255 minore)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr "_Distorsione..."
+msgstr "_Distorci..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
