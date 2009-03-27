@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-02-01 19:50+0000\n"
-"PO-Revision-Date: 2009-03-01 09:47+0300\n"
+"PO-Revision-Date: 2009-03-14 01:42+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -10403,7 +10403,7 @@ msgstr ""
 
 #: ../app/tools/gimpairbrushtool.c:54
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Pihusti tööriist: pritsimistugevus on muudetav"
+msgstr "Pihusti: pritsimistugevus on muudetav"
 
 #: ../app/tools/gimpairbrushtool.c:55
 msgid "_Airbrush"
@@ -11132,7 +11132,7 @@ msgstr "_Ellipsi valimine"
 
 #: ../app/tools/gimperasertool.c:66
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Kustukummi tööriist: pintsliga tagapõhjani või läbipaistvuseni kustutamine"
+msgstr "Kustukumm: pintsliga tagapõhjani või läbipaistvuseni kustutamine"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "_Eraser"
@@ -11498,7 +11498,7 @@ msgstr "Kuju"
 
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr "Sule tööriist: kalligraafilise sulega kirjutamine"
+msgstr "Sulg: kalligraafilise sulega kirjutamine"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "In_k"
@@ -11751,7 +11751,7 @@ msgstr "Lisa abijoon: "
 
 #: ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr "Pintsli tööriist: pehmeservalise pintsliga joonistamine"
+msgstr "Pintsel: pehmeservalise pintsliga joonistamine"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "_Paintbrush"
@@ -11860,7 +11860,7 @@ msgstr "%s sirgjoone joonistamiseks"
 
 #: ../app/tools/gimppenciltool.c:51
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr "Pliiatsi tööriist: teravaservalise pintsliga joonistamine"
+msgstr "Pliiats: teravaservalise pintsliga joonistamine"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pe_ncil"
@@ -11963,7 +11963,7 @@ msgstr "Ristküliku valimine"
 
 #: ../app/tools/gimprectangleselecttool.c:168
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr "Ristküliku valikutööriist: pildilt kandilise ala valimine"
+msgstr "Ristküliku valikutööriist: pildilt ristkülikulise ala valimine"
 
 #: ../app/tools/gimprectangleselecttool.c:169
 msgid "_Rectangle Select"
