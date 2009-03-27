@@ -61,7 +61,7 @@ static void   edit_actions_pattern_changed    (GimpContext     *context,
 static const GimpActionEntry edit_actions[] =
 {
   { "edit-menu",          NULL, NC_("edit-action", "_Edit")     },
-  { "edit-paste-as-menu", NULL, NC_("edit-action", "_Paste as") },
+  { "edit-paste-as-menu", NULL, NC_("edit-action", "Paste _as") },
   { "edit-buffer-menu",   NULL, NC_("edit-action", "_Buffer")   },
 
   { "undo-popup",
@@ -201,7 +201,7 @@ static const GimpEnumActionEntry edit_fill_actions[] =
     GIMP_HELP_EDIT_FILL_BG },
 
   { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
-    NC_("edit-action", "Fill with P_attern"), "<control>semicolon",
+    NC_("edit-action", "Fill _with Pattern"), "<control>semicolon",
     NC_("edit-action", "Fill the selection using the active pattern"),
     GIMP_PATTERN_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_PATTERN }
