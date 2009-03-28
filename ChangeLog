@@ -1,3 +1,11 @@
+2009-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): swallow the
+	code of gimp_display_shell_image_size_starts_to_fit() because it
+	didn't make things clearer. Add local variables instead to make
+	things more readable.
+
 2009-03-28  Sven Neumann  <sven@gimp.org>
 
 	Bug 577024 – help-browser plugin crashes when used with webkit 1.1.3

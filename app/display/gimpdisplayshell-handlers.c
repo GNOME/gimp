@@ -487,21 +487,6 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_image_size_starts_to_fit (GimpDisplayShell *shell,
-                                             gint              previous_width,
-                                             gint              previous_height,
-                                             gint              new_width,
-                                             gint              new_height,
-                                             gboolean         *horizontally,
-                                             gboolean         *vertically)
-{
-  *horizontally = SCALEX (shell, previous_width)  >  shell->disp_width  &&
-                  SCALEX (shell, new_width)       <= shell->disp_width;
-  *vertically   = SCALEY (shell, previous_height) >  shell->disp_height &&
-                  SCALEY (shell, new_height)      <= shell->disp_height;
-}
-
-static void
 gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                                   gint              previous_origin_x,
                                                   gint              previous_origin_y,
@@ -518,20 +503,18 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
     }
   else
     {
-      GimpImage *image;
-      gboolean   horizontally, vertically;
+      GimpImage *image                    = GIMP_IMAGE (shell->display->image);
+      gint       new_width                = gimp_image_get_width  (image);
+      gint       new_height               = gimp_image_get_height (image);
       gint       scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
       gint       scaled_previous_origin_y = SCALEY (shell, previous_origin_y);
+      gboolean   horizontally;
+      gboolean   vertically;
 
-      image = GIMP_IMAGE (shell->display->image);
-
-      gimp_display_shell_image_size_starts_to_fit (shell,
-                                                   previous_width,
-                                                   previous_height,
-                                                   gimp_image_get_width (image),
-                                                   gimp_image_get_height (image),
-                                                   &horizontally,
-                                                   &vertically);
+      horizontally = (SCALEX (shell, previous_width)  >  shell->disp_width  &&
+                      SCALEX (shell, new_width)       <= shell->disp_width);
+      vertically   = (SCALEY (shell, previous_height) >  shell->disp_height &&
+                      SCALEY (shell, new_height)      <= shell->disp_height);
 
       gimp_display_shell_scroll_set_offset (shell,
                                             shell->offset_x + scaled_previous_origin_x,
