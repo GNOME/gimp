@@ -128,6 +128,9 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  if (! g_thread_supported ())
+    g_thread_init (NULL);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:

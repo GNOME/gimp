@@ -1,3 +1,10 @@
+2009-03-28  Sven Neumann  <sven@gimp.org>
+
+	Bug 577024 – help-browser plugin crashes when used with webkit 1.1.3
+
+	* plug-ins/help-browser/help-browser.c (run): call g_thread_init().
+	Seems to be needed with newer versions of webkit.
+
 2009-03-28  Michael Natterer  <mitch@gimp.org>
 
 	Bug 566575 – Warning when creating sample point and releasing Ctrl
