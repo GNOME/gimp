@@ -615,6 +615,8 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
                                      GDK_HINT_MIN_SIZE   |
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
+
+      gimp_dialog_factory_set_has_min_size (GTK_WINDOW (toolbox), TRUE);
     }
 }
 

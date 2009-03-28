@@ -176,5 +176,9 @@ GimpDialogFactory *
             gimp_dialog_factory_from_widget (GtkWidget               *dialog,
                                              GimpDialogFactoryEntry **entry);
 
+void        gimp_dialog_factory_set_has_min_size    (GtkWindow       *window,
+                                                     gboolean         has_min_size);
+gboolean    gimp_dialog_factory_get_has_min_size    (GtkWindow       *window);
+
 
 #endif  /*  __GIMP_DIALOG_FACTORY_H__  */

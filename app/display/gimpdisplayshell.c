@@ -703,6 +703,8 @@ gimp_display_shell_style_set (GtkWidget *widget,
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
                                  &geometry, geometry_mask);
+
+  gimp_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
 }
 
 static void

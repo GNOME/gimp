@@ -1197,6 +1197,27 @@ gimp_dialog_factory_from_widget (GtkWidget               *dialog,
   return g_object_get_qdata (G_OBJECT (dialog), gimp_dialog_factory_key);
 }
 
+#define GIMP_DIALOG_FACTORY_MIN_SIZE_KEY "gimp-dialog-factory-min-size"
+
+void
+gimp_dialog_factory_set_has_min_size (GtkWindow *window,
+                                      gboolean   has_min_size)
+{
+  g_return_if_fail (GTK_IS_WINDOW (window));
+
+  g_object_set_data (G_OBJECT (window), GIMP_DIALOG_FACTORY_MIN_SIZE_KEY,
+                     GINT_TO_POINTER (has_min_size ? TRUE : FALSE));
+}
+
+gboolean
+gimp_dialog_factory_get_has_min_size (GtkWindow *window)
+{
+  g_return_val_if_fail (GTK_IS_WINDOW (window), FALSE);
+
+  return GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window),
+                                             GIMP_DIALOG_FACTORY_MIN_SIZE_KEY));
+}
+
 
 /*  private functions  */
 
@@ -1250,6 +1271,7 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                   GdkEventConfigure *cevent,
                                   gpointer           data)
 {
+  GdkWindowHints          geometry_mask;
 #ifdef DEBUG_FACTORY
   GimpDialogFactoryEntry *entry;
 
@@ -1264,9 +1286,13 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                         gimp_dialog_factory_set_user_pos,
                                         data);
 
+  geometry_mask = GDK_HINT_USER_POS;
+
+  if (gimp_dialog_factory_get_has_min_size (GTK_WINDOW (dialog)))
+    geometry_mask |= GDK_HINT_MIN_SIZE;
+
   gtk_window_set_geometry_hints (GTK_WINDOW (dialog), NULL, NULL,
-                                 GDK_HINT_MIN_SIZE |
-                                 GDK_HINT_USER_POS);
+                                 geometry_mask);
 
   return FALSE;
 }
