@@ -1,5 +1,15 @@
 2009-03-28  Michael Natterer  <mitch@gimp.org>
 
+	Bug 555738 – Image display is wrong after undoing canvas size
+	enlargement
+
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_size_changed_detailed_handler): call
+	gimp_display_shell_expose_full() because resizing the canvas can
+	leave all sorts of display areas unupdated otherwise.
+
+2009-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-handlers.c
 	(gimp_display_shell_size_changed_detailed_handler): swallow the
 	code of gimp_display_shell_image_size_starts_to_fit() because it
