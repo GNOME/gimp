@@ -1666,8 +1666,14 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                                           "gimp-move-tool");
 
           if (tool_info)
-            gimp_context_set_tool (gimp_get_user_context (display->gimp),
-                                   tool_info);
+            {
+              gimp_context_set_tool (gimp_get_user_context (display->gimp),
+                                     tool_info);
+
+              /*  make sure the newly created tool has the right state
+               */
+              gimp_display_shell_update_focus (shell, NULL, event->state);
+            }
         }
 
       active_tool = tool_manager_get_active (display->gimp);

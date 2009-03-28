@@ -1,5 +1,15 @@
 2009-03-28  Michael Natterer  <mitch@gimp.org>
 
+	Bug 566575 – Warning when creating sample point and releasing Ctrl
+	key too late
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_ruler_button_press): call
+	gimp_display_shell_update_focus() after changing the tool so the
+	new tool has the right state.
+
+2009-03-28  Michael Natterer  <mitch@gimp.org>
+
 	Bug 555025 – Action GEGL box widgets weirdness
 
 	Must not set GDK_HINT_MIN_SIZE if we don't actually set a minimum
