@@ -545,6 +545,8 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
        * the end
        */
       gimp_display_shell_scroll_clamp_and_update (shell);
+
+      gimp_display_shell_expose_full (shell);
     }
 }
 
