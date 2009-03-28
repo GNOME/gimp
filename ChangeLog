@@ -1,3 +1,23 @@
+2009-03-28  Michael Natterer  <mitch@gimp.org>
+
+	Bug 555025 – Action GEGL box widgets weirdness
+
+	Must not set GDK_HINT_MIN_SIZE if we don't actually set a minimum
+	size, or the window will be shrinkable to zero and it won't
+	expand automatically when its contents' requisition grows.
+
+	* app/widgets/gimpdialogfactory.[ch]: add hackish API
+	gimp_dialog_factory_set,get_has_min_size() because GTK+ itself
+	has no API for querying a window's GdkWindowHints.
+
+	(gimp_dialog_factory_set_user_pos): set GDK_HINT_MIN_SIZE only if
+	the window was being marked as having a minimum size using above
+	new API.
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_set_geometry)
+	* app/display/gimpdisplayshell.c (gimp_display_shell_style_set):
+	call gimp_dialog_factory_set_has_min_size (window, TRUE).
+
 2009-03-27  Sven Neumann  <sven@gimp.org>
 
 	Bug 576909 – "_Paste" and "_Paste as" have the same mnemonic
