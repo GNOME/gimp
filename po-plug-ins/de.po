@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-09 18:28+0100\n"
-"PO-Revision-Date: 2009-03-09 18:30+0100\n"
+"POT-Creation-Date: 2009-03-29 12:16+0200\n"
+"PO-Revision-Date: 2009-03-29 12:16+0100\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1068,7 +1068,7 @@ msgstr "Kanalmixereinstellungen speichern"
 #: ../plug-ins/common/file-mng.c:575 ../plug-ins/common/file-mng.c:909
 #: ../plug-ins/common/file-pat.c:462 ../plug-ins/common/file-pcx.c:666
 #: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
-#: ../plug-ins/common/file-pnm.c:980 ../plug-ins/common/file-ps.c:1213
+#: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:546 ../plug-ins/common/file-raw.c:574
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
@@ -2291,7 +2291,7 @@ msgstr "Kurven bearbeiten"
 
 #: ../plug-ins/common/curve-bend.c:1386
 msgid "Curve for Border"
-msgstr "Kurve für _Rand"
+msgstr "Kurve für Rand"
 
 #: ../plug-ins/common/curve-bend.c:1390
 msgid "_Upper"
@@ -2303,7 +2303,7 @@ msgstr "_Untere"
 
 #: ../plug-ins/common/curve-bend.c:1401
 msgid "Curve Type"
-msgstr "Kurven_typ"
+msgstr "Kurventyp"
 
 #: ../plug-ins/common/curve-bend.c:1405
 msgid "Smoot_h"
@@ -3061,7 +3061,7 @@ msgstr "Farbtiefe wird nicht unterstützt (%d)."
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:467
 #: ../plug-ins/common/file-pcx.c:627 ../plug-ins/common/file-pix.c:529
-#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:985
+#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
@@ -3166,7 +3166,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "»%s« ist keine DICOM-Datei"
 
 #: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:659
-#: ../plug-ins/common/file-pnm.c:970
+#: ../plug-ins/common/file-pnm.c:967
 msgid "Cannot save images with alpha channel."
 msgstr "Bilder mit Alphakanal können nicht gespeichert werden."
 
@@ -3950,21 +3950,21 @@ msgstr "Maximalwert wird nicht unterstützt."
 msgid "Error reading file."
 msgstr "Fehler beim Lesen der Datei."
 
-#: ../plug-ins/common/file-pnm.c:1174
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "Save as PNM"
 msgstr "Als PNM speichern"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1191
+#: ../plug-ins/common/file-pnm.c:1202
 msgid "Data formatting"
 msgstr "Datenformatierung"
 
 # TODO
-#: ../plug-ins/common/file-pnm.c:1195
+#: ../plug-ins/common/file-pnm.c:1206
 msgid "Raw"
 msgstr "Rohdaten"
 
-#: ../plug-ins/common/file-pnm.c:1196
+#: ../plug-ins/common/file-pnm.c:1207
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -5430,113 +5430,113 @@ msgstr "Bildfarbprofil-Informationen"
 msgid "Color Profile Information"
 msgstr "Farbprofilinformationen"
 
-#: ../plug-ins/common/lcms.c:570
+#: ../plug-ins/common/lcms.c:572
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Das Farbprofil »%s« ist nicht für den RGB-Farbraum geeignet."
 
-#: ../plug-ins/common/lcms.c:677
+#: ../plug-ins/common/lcms.c:679
 msgid "Default RGB working space"
 msgstr "Voreingestellter RGB-Arbeitsraum"
 
-#: ../plug-ins/common/lcms.c:773
+#: ../plug-ins/common/lcms.c:775
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Die als »icc-profile« angehängten Daten scheinen kein ICC-Farbprofil zu sein"
 
-#: ../plug-ins/common/lcms.c:823
+#: ../plug-ins/common/lcms.c:825
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "»%s« scheint kein ICC-Farbprofil zu sein"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:883
+#: ../plug-ins/common/lcms.c:885
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Von »%s« nach »%s« konvertieren"
 
-#: ../plug-ins/common/lcms.c:1127
+#: ../plug-ins/common/lcms.c:1129
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Es konnte kein ICC-Farbprofil aus der Datei »%s« gelesen werden"
 
-#: ../plug-ins/common/lcms.c:1149
+#: ../plug-ins/common/lcms.c:1151
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Das Bild »%s« hat ein eingebettetes Farbprofil:"
 
-#: ../plug-ins/common/lcms.c:1193
+#: ../plug-ins/common/lcms.c:1195
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Soll das Bild in den RGB-Arbeitsraum (%s) konvertiert werden?"
 
-#: ../plug-ins/common/lcms.c:1224
+#: ../plug-ins/common/lcms.c:1226
 msgid "Convert to RGB working space?"
 msgstr "In den RGB-Arbeitsraum konvertieren?"
 
-#: ../plug-ins/common/lcms.c:1229
+#: ../plug-ins/common/lcms.c:1231
 msgid "_Keep"
 msgstr "_Beibehalten"
 
-#: ../plug-ins/common/lcms.c:1234
+#: ../plug-ins/common/lcms.c:1236
 msgid "_Convert"
 msgstr "_Konvertieren"
 
-#: ../plug-ins/common/lcms.c:1261 ../plug-ins/file-jpeg/jpeg-exif.c:377
+#: ../plug-ins/common/lcms.c:1263 ../plug-ins/file-jpeg/jpeg-exif.c:377
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
-#: ../plug-ins/common/lcms.c:1325
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "Zielprofil auswählen"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "Alle Dateien (*.*)"
 
-#: ../plug-ins/common/lcms.c:1357
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-Farbprofile (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1400
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB-Arbeitsraum (%s)"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "In ICC-Farbprofil umwandeln"
 
-#: ../plug-ins/common/lcms.c:1451
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "ICC-Farbprofil zuweisen"
 
-#: ../plug-ins/common/lcms.c:1459
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "_Zuweisen"
 
-#: ../plug-ins/common/lcms.c:1476
+#: ../plug-ins/common/lcms.c:1478
 msgid "Current Color Profile"
 msgstr "Derzeitiges Farbprofil"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Convert to"
 msgstr "Konvertieren nach"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Assign"
 msgstr "Zuweisen"
 
-#: ../plug-ins/common/lcms.c:1515
+#: ../plug-ins/common/lcms.c:1517
 msgid "_Rendering Intent:"
 msgstr "_Rendering-Absicht:"
 
-#: ../plug-ins/common/lcms.c:1531
+#: ../plug-ins/common/lcms.c:1533
 msgid "_Black Point Compensation"
 msgstr "_Schwarzpunkt-Kompensation"
 
-#: ../plug-ins/common/lcms.c:1573
+#: ../plug-ins/common/lcms.c:1575
 msgid "Destination profile is not for RGB color space."
 msgstr "Das Zielfarbprofil ist nicht für den RGB-Farbraum geeignet."
 
@@ -6081,7 +6081,7 @@ msgstr "_Details:"
 msgid "T_urbulent"
 msgstr "T_urbulenz"
 
-# FIXME: Tilable = Nahtlos für GIMPressionist und Labyrinth
+# XXX: siehe auch "GIMPressionist" und "Labyrinth"
 #. Tilable
 #: ../plug-ins/common/noise-solid.c:639
 msgid "T_ilable"
@@ -9854,11 +9854,11 @@ msgstr "Kanten zeichnen"
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Die Pinselstriche bis zum Rand des Bildes fortsetzen"
 
-# FIXME: Tilable = Kachelbar für Plastisches Rauschen
+# XXX: siehe auch "Plastisches Rauschen"
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
 msgid "Tileable"
-msgstr "Nahtlos"
+msgstr "Kachelbar"
 
 #: ../plug-ins/gimpressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"

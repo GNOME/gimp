@@ -1,3 +1,7 @@
+2009-03-29  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Minor fixes in German translation.
+
 2009-03-24  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.
@@ -8,7 +12,7 @@
 
 2009-03-20  Danishka Navin  <danishka@gmail.com>
 
-        * si.po: Added Sinhala (si)
+	* si.po: Added Sinhala (si)
 	* si.po: Added Sinhala translation by Danishka and Srishanu
 		
 2009-03-18  Mișu Moldovan  <dumol@gnome.ro>
