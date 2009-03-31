@@ -1,5 +1,16 @@
 2009-03-31  Sven Neumann  <sven@gimp.org>
 
+	Bug 568479 – add PDB procedures to manipulate size of text box
+
+	* tools/pdbgen/pdb/text_layer.pdb: add gimp-text-layer-resize,
+	based on a patch from Barak Itkin.
+
+	* app/pdb/internal-procs.c
+	* app/pdb/text-layer-cmds.c
+	* libgimp/gimptextlayer_pdb.[ch]: regenerated.
+
+2009-03-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/file-uri/uri-backend-gvfs.c (copy_uri): simplified the
 	code.
 

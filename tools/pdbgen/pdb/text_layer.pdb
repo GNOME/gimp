@@ -1109,6 +1109,49 @@ CODE
     );
 }
 
+sub text_layer_resize {
+    $blurb = 'Resize the box of a text layer.';
+
+    $help = <<'HELP';
+This procedure changes the width and height of a text layer while
+keeping it as a text layer and not converting it to a bitmap like
+gimp_layer_resize() would do.
+HELP
+
+    	$author = 'Barak Itkin <lightningismyname@gmail.com>';
+	$copyright = 'Barak Itkin';
+	$date = '2009';
+	$since = '2.8';
+
+    @inargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The text layer' },
+        { name => 'width', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'The new box width in pixels' },
+        { name => 'height', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'The new box height in pixels' },
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, error))
+    {
+      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                           _("Set text layer attribute"),
+                           "box-width",  width,
+                           "box-height", height,
+                           NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimpcontext.h"
@@ -1145,6 +1188,7 @@ CODE
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
             text_layer_set_letter_spacing
+	    text_layer_resize
             text_layer_get_hinting
             text_layer_set_hinting
 );

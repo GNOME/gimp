@@ -969,6 +969,45 @@ gimp_text_layer_set_letter_spacing (gint32  layer_ID,
 }
 
 /**
+ * gimp_text_layer_resize:
+ * @layer_ID: The text layer.
+ * @width: The new box width in pixels.
+ * @height: The new box height in pixels.
+ *
+ * Resize the box of a text layer.
+ *
+ * This procedure changes the width and height of a text layer while
+ * keeping it as a text layer and not converting it to a bitmap like
+ * gimp_layer_resize() would do.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_text_layer_resize (gint32  layer_ID,
+                        gdouble width,
+                        gdouble height)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-resize",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_FLOAT, width,
+                                    GIMP_PDB_FLOAT, height,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_text_layer_get_hinting:
  * @layer_ID: The text layer.
  * @autohint: A flag which is true if the text layer is forced to use the autohinter from FreeType.

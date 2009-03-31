@@ -1044,6 +1044,43 @@ text_layer_set_letter_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+text_layer_resize_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gdouble width;
+  gdouble height;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  width = g_value_get_double (&args->values[1]);
+  height = g_value_get_double (&args->values[2]);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                               _("Set text layer attribute"),
+                               "box-width",  width,
+                               "box-height", height,
+                               NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 text_layer_get_hinting_invoker (GimpProcedure      *procedure,
                                 Gimp               *gimp,
                                 GimpContext        *context,
@@ -1963,6 +2000,41 @@ register_text_layer_procs (GimpPDB *pdb)
                                                     "letter spacing",
                                                     "The additional letter spacing to use.",
                                                     -8192.0, 8192.0, -8192.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-resize
+   */
+  procedure = gimp_procedure_new (text_layer_resize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-resize");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-resize",
+                                     "Resize the box of a text layer.",
+                                     "This procedure changes the width and height of a text layer while keeping it as a text layer and not converting it to a bitmap like 'gimp-layer-resize' would do.",
+                                     "Barak Itkin <lightningismyname@gmail.com>",
+                                     "Barak Itkin",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("width",
+                                                    "width",
+                                                    "The new box width in pixels",
+                                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("height",
+                                                    "height",
+                                                    "The new box height in pixels",
+                                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

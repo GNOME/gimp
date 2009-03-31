@@ -75,6 +75,9 @@ gboolean              gimp_text_layer_set_line_spacing   (gint32                
 gdouble               gimp_text_layer_get_letter_spacing (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_letter_spacing (gint32                 layer_ID,
                                                           gdouble                letter_spacing);
+gboolean              gimp_text_layer_resize             (gint32                 layer_ID,
+                                                          gdouble                width,
+                                                          gdouble                height);
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
                                                           gboolean              *autohint);
