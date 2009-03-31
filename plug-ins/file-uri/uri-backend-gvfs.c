@@ -274,27 +274,17 @@ copy_uri (const gchar  *src_uri,
           GimpRunMode   run_mode,
           GError      **error)
 {
-  GVfs        *vfs;
   GFile       *src_file;
   GFile       *dest_file;
   UriProgress  progress = { 0, };
   gboolean     success;
 
-  vfs = g_vfs_get_default ();
-
-  if (! g_vfs_is_active (vfs))
-    {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "Initialization of GVfs failed");
-      return FALSE;
-    }
-
-  src_file  = g_vfs_get_file_for_uri (vfs, src_uri);
-  dest_file = g_vfs_get_file_for_uri (vfs, dest_uri);
-
   gimp_progress_init (_("Connecting to server"));
 
   progress.mode = mode;
+
+  src_file  = g_file_new_for_uri (src_uri);
+  dest_file = g_file_new_for_uri (dest_uri);
 
   success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
                          uri_progress_callback, &progress,

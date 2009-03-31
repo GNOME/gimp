@@ -1,3 +1,8 @@
+2009-03-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/file-uri/uri-backend-gvfs.c (copy_uri): simplified the
+	code.
+
 2009-03-28  Michael Natterer  <mitch@gimp.org>
 
 	Bug 555738 – Image display is wrong after undoing canvas size
