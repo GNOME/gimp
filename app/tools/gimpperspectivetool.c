@@ -64,7 +64,7 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_PERSPECTIVE_TOOL,
                 GIMP_TYPE_TRANSFORM_OPTIONS,
                 gimp_transform_options_gui,
-                0,
+                GIMP_CONTEXT_BACKGROUND_MASK,
                 "gimp-perspective-tool",
                 _("Perspective"),
                 _("Perspective Tool: "

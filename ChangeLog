@@ -1,3 +1,14 @@
+2009-04-03  Michael Natterer  <mitch@gimp.org>
+
+	Bug 577575 – transform tool fills underlying extracted area wrongly
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c (gimp_*_tool_register): pass
+	GIMP_CONTEXT_BACKGROUND_MASK to the register callback to the tools
+	use the global background color.
+
 2009-03-31  Sven Neumann  <sven@gimp.org>
 
 	Bug 568479 – add PDB procedures to manipulate size of text box
