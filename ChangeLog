@@ -1,3 +1,16 @@
+2009-04-03  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	Bug 577575 – transform tool fills underlying extracted area wrongly
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c (gimp_*_tool_register): pass
+	GIMP_CONTEXT_BACKGROUND_MASK to the register callback to the tools
+	use the global background color.
+
 2009-03-28  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
