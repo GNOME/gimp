@@ -1,3 +1,8 @@
+2009-04-08  Sandeep Shedmake  <sshedmak@redhat.com>
+
+	* mr.po: Added Marathi Translations
+	* LINGUAS: Added 'mr'
+
 2009-03-25 Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: Updated italian translation.
