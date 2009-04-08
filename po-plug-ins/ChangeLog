@@ -1,3 +1,8 @@
+2009-04-08  Sandeep Shedmake  <sshedmak@redhat.com>
+
+	* mr.po: Added Marathi Translations
+	* LINGUAS: Added 'mr'
+
 2009-03-29  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
 
 	* de.po: Minor fixes in German translation.
