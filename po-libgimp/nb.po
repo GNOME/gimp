@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 01:04+0200\n"
-"PO-Revision-Date: 2008-09-17 01:05+0200\n"
+"POT-Creation-Date: 2009-04-09 18:24+0200\n"
+"PO-Revision-Date: 2009-04-08 02:19+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -18,22 +18,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1044
+#: ../libgimp/gimp.c:1045
 msgid "success"
 msgstr "suksess"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1048
+#: ../libgimp/gimp.c:1049
 msgid "execution error"
 msgstr "feil ved kjøring"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1052
+#: ../libgimp/gimp.c:1053
 msgid "calling error"
 msgstr "feil ved kall"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1056
+#: ../libgimp/gimp.c:1057
 msgid "cancelled"
 msgstr "avbrutt"
 
@@ -398,11 +398,11 @@ msgstr "Egendefinert gradering"
 
 #: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
-msgstr "Forgrunnsfargefyll"
+msgstr "Forgrunnsfarge"
 
 #: ../libgimpbase/gimpbaseenums.c:97
 msgid "BG color fill"
-msgstr "Bakgrunnsfargefyll"
+msgstr "Bakgrunnsfarge"
 
 #: ../libgimpbase/gimpbaseenums.c:98
 msgid "Pattern fill"
@@ -506,11 +506,11 @@ msgstr "Gjennomsnitt"
 
 #: ../libgimpbase/gimpbaseenums.c:324
 msgid "Dodge"
-msgstr "Lysne"
+msgstr "Avskygging"
 
 #: ../libgimpbase/gimpbaseenums.c:325
 msgid "Burn"
-msgstr "Mørkne"
+msgstr "Etterbelysning"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "gradient|Linear"
@@ -638,7 +638,7 @@ msgstr "Konstant"
 
 #: ../libgimpbase/gimpbaseenums.c:595
 msgid "Incremental"
-msgstr "Inkrementell"
+msgstr "Økende"
 
 #: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
@@ -686,15 +686,15 @@ msgstr "Lyse toner"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
-msgstr "Normal (forover)"
+msgstr "Fremover (normal)"
 
 #: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
-msgstr "Korrektiv (bakover)"
+msgstr "Bakover (korrektiv)"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
-msgstr "Juster"
+msgstr "Innretting"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
@@ -875,7 +875,7 @@ msgid "Cannot expand ${%s}"
 msgstr "Kan ikke utvide $(%s)"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Feil under skriving av «%s»: %s"
@@ -890,7 +890,8 @@ msgstr "Kunne ikke opprette midlertidig fil for «%s»: %s"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikke åpne «%s» for skriving: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -899,7 +900,7 @@ msgstr ""
 "Feil under skriving til midlertidig fil for «%s»: %s\n"
 "Originalfilen ble ikke rørt."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -908,7 +909,7 @@ msgstr ""
 "Feil under skriving til midlertidig fil for «%s»: %s\n"
 "Ingen fil ble opprettet."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Kunne ikke opprette «%s»: %s"
@@ -1256,7 +1257,7 @@ msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
-msgstr "Glød"
+msgstr "Kulør"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
@@ -1504,11 +1505,11 @@ msgstr "Vannfarge"
 msgid "Pressure"
 msgstr "Trykk"
 
-#: ../modules/color-selector-wheel.c:98
+#: ../modules/color-selector-wheel.c:103
 msgid "HSV color wheel"
 msgstr "HSV fargehjul"
 
-#: ../modules/color-selector-wheel.c:129
+#: ../modules/color-selector-wheel.c:134
 msgid "Wheel"
 msgstr "Hjul"
 
