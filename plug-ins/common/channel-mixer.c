@@ -158,7 +158,7 @@ query (void)
     { GIMP_PDB_INT32,    "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
-    { GIMP_PDB_INT32,    "monochrome", "Monochrome (TRUE or FALSE)" },
+    { GIMP_PDB_INT32,    "monochrome", "Monochrome { TRUE, FALSE }" },
     { GIMP_PDB_FLOAT,    "rr-gain",    "Set the red gain for the red channel" },
     { GIMP_PDB_FLOAT,    "rg-gain",    "Set the green gain for the red channel" },
     { GIMP_PDB_FLOAT,    "rb-gain",    "Set the blue gain for the red channel" },

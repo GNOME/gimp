@@ -107,8 +107,8 @@ query (void)
     { GIMP_PDB_FLOAT,    "ymin",         "ymin fractal image delimiter"     },
     { GIMP_PDB_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
     { GIMP_PDB_INT32,    "depth",        "Trace depth"                      },
-    { GIMP_PDB_INT32,    "outside-type", "Outside type"
-                                         "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
+    { GIMP_PDB_INT32,    "outside-type", "Outside type "
+                                         "{ WRAP (0), TRANS (1), BLACK (2), WHITE (3) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

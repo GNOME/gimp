@@ -96,22 +96,22 @@ query (void)
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"       },
-    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"               },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                     },
-    { GIMP_PDB_INT32,    "mask-size", "Oil paint mask size"                },
-    { GIMP_PDB_INT32,    "mode",      "Algorithm {RGB (0), INTENSITY (1)}" }
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"                 },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                       },
+    { GIMP_PDB_INT32,    "mask-size", "Oil paint mask size"                  },
+    { GIMP_PDB_INT32,    "mode",      "Algorithm { RGB (0), INTENSITY (1) }" }
   };
 
   static const GimpParamDef args_enhanced[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"       },
-    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"               },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                     },
-    { GIMP_PDB_INT32,    "mode",      "Algorithm {RGB (0), INTENSITY (1)}" },
-    { GIMP_PDB_INT32,    "mask-size", "Oil paint mask size"                },
-    { GIMP_PDB_DRAWABLE, "mask-size-map", "Mask size control map"          },
-    { GIMP_PDB_INT32,    "exponent",      "Oil paint exponent"             },
-    { GIMP_PDB_DRAWABLE, "exponent-map",  "Exponent control map"           }
+    { GIMP_PDB_INT32,    "run-mode",      "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"       },
+    { GIMP_PDB_IMAGE,    "image",         "Input image (unused)"             },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Input drawable"                   },
+    { GIMP_PDB_INT32,    "mode",          "Algorithm { RGB (0), INTENSITY (1) }" },
+    { GIMP_PDB_INT32,    "mask-size",     "Oil paint mask size"              },
+    { GIMP_PDB_DRAWABLE, "mask-size-map", "Mask size control map"            },
+    { GIMP_PDB_INT32,    "exponent",      "Oil paint exponent"               },
+    { GIMP_PDB_DRAWABLE, "exponent-map",  "Exponent control map"             }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

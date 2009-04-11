@@ -145,7 +145,7 @@ query (void)
     { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",     "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-    { GIMP_PDB_INT32,    "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
+    { GIMP_PDB_INT32,    "type",      "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }" },
     { GIMP_PDB_INT32,    "length",    "Length" },
     { GIMP_PDB_INT32,    "angle",     "Angle" },
     { GIMP_PDB_FLOAT,    "center-x",  "Center X (optional)" },

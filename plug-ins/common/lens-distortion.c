@@ -82,12 +82,12 @@ static guchar             background_color[4];
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
-  {
-    NULL,  /* init_proc  */
-    NULL,  /* quit_proc  */
-    query, /* query_proc */
-    run,   /* run_proc   */
-  };
+{
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
+};
 
 
 MAIN ()
@@ -97,17 +97,15 @@ query (void)
 {
   static GimpParamDef args[] =
     {
-      { GIMP_PDB_INT32,      "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-      { GIMP_PDB_IMAGE,      "image",       "Input image (unused)" },
-      { GIMP_PDB_DRAWABLE,   "drawable",    "Input drawable" },
-      { GIMP_PDB_FLOAT,      "offset-x",    "Effect centre offset in X" },
-      { GIMP_PDB_FLOAT,      "offset-y",    "Effect centre offset in Y" },
-      { GIMP_PDB_FLOAT,      "main-adjust",
-        "Amount of second-order distortion" },
-      { GIMP_PDB_FLOAT,      "edge-adjust",
-        "Amount of fourth-order distortion" },
-      { GIMP_PDB_FLOAT,      "rescale",     "Rescale overall image size" },
-      { GIMP_PDB_FLOAT,      "brighten",    "Adjust brightness in corners" }
+      { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+      { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+      { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+      { GIMP_PDB_FLOAT,    "offset-x",    "Effect centre offset in X" },
+      { GIMP_PDB_FLOAT,    "offset-y",    "Effect centre offset in Y" },
+      { GIMP_PDB_FLOAT,    "main-adjust", "Amount of second-order distortion" },
+      { GIMP_PDB_FLOAT,    "edge-adjust", "Amount of fourth-order distortion" },
+      { GIMP_PDB_FLOAT,    "rescale",     "Rescale overall image size" },
+      { GIMP_PDB_FLOAT,    "brighten",    "Adjust brightness in corners" }
     };
 
   gimp_install_procedure (PLUG_IN_PROC,

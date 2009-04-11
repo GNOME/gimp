@@ -61,13 +61,13 @@ query (void)
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,      "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,      "image",    "Input image"                  },
-    { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (unused)"      }
+    { GIMP_PDB_IMAGE,      "image",    "Input image"             },
+    { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (unused)" }
   };
   static const GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_INT32,      "image-count", "Number of images created"  },
-    { GIMP_PDB_INT32ARRAY, "image-ids",   "Output images"             }
+    { GIMP_PDB_INT32,      "image-count", "Number of images created" },
+    { GIMP_PDB_INT32ARRAY, "image-ids",   "Output images"            }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

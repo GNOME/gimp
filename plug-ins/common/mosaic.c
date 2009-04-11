@@ -349,9 +349,9 @@ query (void)
     { GIMP_PDB_FLOAT,    "color-variation",  "Magnitude of random color variations (0.0 - 1.0)" },
     { GIMP_PDB_INT32,    "antialiasing",     "Enables smoother tile output at the cost of speed" },
     { GIMP_PDB_INT32,    "color-averaging",  "Tile color based on average of subsumed pixels" },
-    { GIMP_PDB_INT32,    "tile-type",        "Tile geometry: { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }" },
-    { GIMP_PDB_INT32,    "tile-surface",     "Surface characteristics: { SMOOTH (0), ROUGH (1) }" },
-    { GIMP_PDB_INT32,    "grout-color",      "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
+    { GIMP_PDB_INT32,    "tile-type",        "Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }" },
+    { GIMP_PDB_INT32,    "tile-surface",     "Surface characteristics { SMOOTH (0), ROUGH (1) }" },
+    { GIMP_PDB_INT32,    "grout-color",      "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

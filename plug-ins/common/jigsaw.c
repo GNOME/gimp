@@ -346,7 +346,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
     { GIMP_PDB_INT32,    "x",            "Number of tiles across > 0" },
     { GIMP_PDB_INT32,    "y",            "Number of tiles down > 0" },
-    { GIMP_PDB_INT32,    "style",        "The style/shape of the jigsaw puzzle, 0 or 1" },
+    { GIMP_PDB_INT32,    "style",        "The style/shape of the jigsaw puzzle { 0, 1 }" },
     { GIMP_PDB_INT32,    "blend-lines",  "Number of lines for shading bevels >= 0" },
     { GIMP_PDB_FLOAT,    "blend-amount", "The power of the light highlights 0 =< 5" }
   };

@@ -132,7 +132,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },
-    { GIMP_PDB_INT32,    "type",     "Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
+    { GIMP_PDB_INT32,    "type",     "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }" },
     { GIMP_PDB_INT32,    "black",    "Black level (-1 to 255)" },
     { GIMP_PDB_INT32,    "white",    "White level (0 to 256)" }
   };

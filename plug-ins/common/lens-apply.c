@@ -44,8 +44,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC    "plug-in-applylens"
-#define PLUG_IN_BINARY  "lens-apply"
+#define PLUG_IN_PROC   "plug-in-applylens"
+#define PLUG_IN_BINARY "lens-apply"
 
 
 /* Declare local functions.
@@ -98,9 +98,9 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",             "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",          "Input drawable" },
     { GIMP_PDB_FLOAT,    "refraction",        "Lens refraction index" },
-    { GIMP_PDB_INT32,    "keep-surroundings", "Keep lens surroundings" },
-    { GIMP_PDB_INT32,    "set-background",    "Set lens surroundings to BG value" },
-    { GIMP_PDB_INT32,    "set-transparent",   "Set lens surroundings transparent" }
+    { GIMP_PDB_INT32,    "keep-surroundings", "Keep lens surroundings { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "set-background",    "Set lens surroundings to BG value { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "set-transparent",   "Set lens surroundings transparent { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

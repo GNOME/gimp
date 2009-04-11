@@ -172,10 +172,10 @@ query (void)
     { GIMP_PDB_FLOAT,    "greenangle",     "Green/saturation component angle factor (0-360)" },
     { GIMP_PDB_FLOAT,    "bluefrequency",  "Blue/luminance component frequency factor" },
     { GIMP_PDB_FLOAT,    "blueangle",      "Blue/luminance component angle factor (0-360)" },
-    { GIMP_PDB_INT8,     "colormodel",     "Color model (0: RGB_MODEL, 1: HSL_MODEL)" },
-    { GIMP_PDB_INT8,     "redmode",        "Red/hue application mode (TRUE, FALSE)" },
-    { GIMP_PDB_INT8,     "greenmode",      "Green/saturation application mode (TRUE, FALSE)" },
-    { GIMP_PDB_INT8,     "bluemode",       "Blue/luminance application mode (TRUE, FALSE)" },
+    { GIMP_PDB_INT8,     "colormodel",     "Color model { RGB-MODEL (0), HSL-MODEL (1) }" },
+    { GIMP_PDB_INT8,     "redmode",        "Red/hue application mode { TRUE, FALSE }" },
+    { GIMP_PDB_INT8,     "greenmode",      "Green/saturation application mode { TRUE, FALSE }" },
+    { GIMP_PDB_INT8,     "bluemode",       "Blue/luminance application mode { TRUE, FALSE }" },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

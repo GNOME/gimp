@@ -204,7 +204,7 @@ query (void)
     { GIMP_PDB_INT32,      "at-top",       "Flag for drawing numbers at top of film" },
     { GIMP_PDB_INT32,      "at-bottom",    "Flag for drawing numbers at bottom of film" },
     { GIMP_PDB_INT32,      "num-images",   "Number of images to be used for film" },
-    { GIMP_PDB_INT32ARRAY, "image-ids",    "num_images image IDs to be used for film"}
+    { GIMP_PDB_INT32ARRAY, "image-ids",    "num-images image IDs to be used for film" }
   };
 
   static const GimpParamDef return_vals[] =

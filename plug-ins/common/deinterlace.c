@@ -81,9 +81,9 @@ query (void)
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,     "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,     "image",    "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE,  "drawable", "Input drawable"               },
-    { GIMP_PDB_INT32,     "evenodd",  "0 = keep odd, 1 = keep even"  }
+    { GIMP_PDB_IMAGE,     "image",    "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE,  "drawable", "Input drawable"       },
+    { GIMP_PDB_INT32,     "evenodd",  "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

@@ -112,13 +112,13 @@ query (void)
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
-    { GIMP_PDB_INT32,    "period",      "Period; number of pixels for one wave to complete" },
-    { GIMP_PDB_INT32,    "amplitude",   "Amplitude; maximum displacement of wave" },
+    { GIMP_PDB_INT32,    "period",      "Period: number of pixels for one wave to complete" },
+    { GIMP_PDB_INT32,    "amplitude",   "Amplitude: maximum displacement of wave" },
     { GIMP_PDB_INT32,    "orientation", "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }" },
-    { GIMP_PDB_INT32,    "edges",       "Edges; 0 = smear, 1 =  wrap, 2 = blank" },
-    { GIMP_PDB_INT32,    "waveform",    "0 = sawtooth, 1 = sine wave" },
-    { GIMP_PDB_INT32,    "antialias",   "antialias; True or False" },
-    { GIMP_PDB_INT32,    "tile",        "tile; if this is true, the image will retain it's tilability" }
+    { GIMP_PDB_INT32,    "edges",       "Edges { SMEAR (0), WRAP (1), BLANK (2) }" },
+    { GIMP_PDB_INT32,    "waveform",    "Waveform { SAWTOOTH (0), SINE (1) }" },
+    { GIMP_PDB_INT32,    "antialias",   "Antialias { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "tile",        "Tileable { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

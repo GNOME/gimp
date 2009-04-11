@@ -166,8 +166,8 @@ query (void)
     { GIMP_PDB_INT32,    "threshold", "Controls where blending will be done >= 0" },
     { GIMP_PDB_INT32,    "direction", "Left or Right: 0 or 1" },
     { GIMP_PDB_INT32,    "strength",  "Controls the extent of the blending > 1" },
-    { GIMP_PDB_INT32,    "algorithm", "WIND, BLAST" },
-    { GIMP_PDB_INT32,    "edge",      "LEADING, TRAILING, or BOTH" }
+    { GIMP_PDB_INT32,    "algorithm", "Algorithm { WIND (0), BLAST (1) }" },
+    { GIMP_PDB_INT32,    "edge",      "Edge behavior { BOTH (0), LEADING (1), TRAILING (2) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -214,9 +214,9 @@ run (const gchar      *name,
         {
           config.threshold = param[3].data.d_int32;
           config.direction = param[4].data.d_int32;
-          config.strength = param[5].data.d_int32;
-          config.alg = param[6].data.d_int32;
-          config.edge = param[7].data.d_int32;
+          config.strength  = param[5].data.d_int32;
+          config.alg       = param[6].data.d_int32;
+          config.edge      = param[7].data.d_int32;
 
           if (render_effect (drawable, NULL) == -1)
             status = GIMP_PDB_EXECUTION_ERROR;

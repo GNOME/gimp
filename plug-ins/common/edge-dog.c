@@ -124,8 +124,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_FLOAT,    "inner",     "Radius of inner gaussian blur (in pixels, > 0.0)" },
     { GIMP_PDB_FLOAT,    "outer",     "Radius of outer gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_INT32,    "normalize", "True, False" },
-    { GIMP_PDB_INT32,    "invert",    "True, False" }
+    { GIMP_PDB_INT32,    "normalize", "Normalize { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "invert",    "Invert { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

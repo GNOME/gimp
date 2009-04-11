@@ -80,9 +80,9 @@ query (void)
   static const GimpParamDef args [] =
   {
     { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"       },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"             },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                     },
-    { GIMP_PDB_INT32,    "max-p",    "1 for maximizing, 0 for minimizing" }
+    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                 },
+    { GIMP_PDB_INT32,    "max-p",    "{ MINIMIZE (0), MAXIMIZE (1) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

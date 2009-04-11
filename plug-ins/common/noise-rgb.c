@@ -126,6 +126,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "noise-3",     "Noise in the third channel (blue)" },
     { GIMP_PDB_FLOAT,    "noise-4",     "Noise in the fourth channel (alpha)" }
   };
+
   static const GimpParamDef noisify_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },

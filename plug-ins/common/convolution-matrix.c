@@ -193,7 +193,7 @@ query (void)
 
     { GIMP_PDB_INT32,      "argc-channels", "The number of elements in following array. Should be always 5." },
     { GIMP_PDB_INT32ARRAY, "channels",      "Mask of the channels to be filtered" },
-    { GIMP_PDB_INT32,      "bmode",         "Mode for treating image borders" },
+    { GIMP_PDB_INT32,      "bmode",         "Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }" },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -267,8 +267,8 @@ run (const gchar      *name,
             }
 
           config.alpha_weighting = param[5].data.d_int32;
-          config.divisor   = param[6].data.d_float;
-          config.offset    = param[7].data.d_float;
+          config.divisor         = param[6].data.d_float;
+          config.offset          = param[7].data.d_float;
 
           if (param[8].data.d_int32 != CHANNELS)
             {
@@ -280,7 +280,7 @@ run (const gchar      *name,
                 config.channels[y] = param[9].data.d_int32array[y];
             }
 
-          config.bmode     = param[10].data.d_int32;
+          config.bmode = param[10].data.d_int32;
 
           check_config (drawable);
         }

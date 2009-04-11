@@ -142,13 +142,13 @@ query (void)
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",     "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
-    { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %"            },
-    { GIMP_PDB_FLOAT,    "angle",     "Offset angle"                 },
-    { GIMP_PDB_INT32,    "backwards", "Map backwards?"               },
-    { GIMP_PDB_INT32,    "inverse",   "Map from top?"                },
-    { GIMP_PDB_INT32,    "polrec",    "Polar to rectangular?"        }
+    { GIMP_PDB_IMAGE,    "image",     "Input image"                          },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                       },
+    { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %"                    },
+    { GIMP_PDB_FLOAT,    "angle",     "Offset angle"                         },
+    { GIMP_PDB_INT32,    "backwards", "Map backwards { TRUE, FALSE }"        },
+    { GIMP_PDB_INT32,    "inverse",   "Map from top { TRUE, FALSE }"         },
+    { GIMP_PDB_INT32,    "polrec",    "Polar to rectangular { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

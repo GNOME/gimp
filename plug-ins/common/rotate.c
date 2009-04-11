@@ -125,7 +125,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",      "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
     { GIMP_PDB_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees" },
-    { GIMP_PDB_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
+    { GIMP_PDB_INT32,    "everything", "Rotate the whole image { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

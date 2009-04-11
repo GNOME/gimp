@@ -246,10 +246,10 @@ query (void)
     { GIMP_PDB_INT32,    "waterlevel", "Level that full transparency "
                                        "should represent"               },
     { GIMP_PDB_INT32,    "ambient",    "Ambient lighting factor"        },
-    { GIMP_PDB_INT32,    "compensate", "Compensate for darkening"       },
-    { GIMP_PDB_INT32,    "invert",     "Invert bumpmap"                 },
-    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), "
-                                       "SPHERICAL (1), SINUSOIDAL (2))" }
+    { GIMP_PDB_INT32,    "compensate", "Compensate for darkening { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "invert",     "Invert bumpmap { TRUE, FALSE }" },
+    { GIMP_PDB_INT32,    "type",       "Type of map { LINEAR (0), "
+                                       "SPHERICAL (1), SINUSOIDAL (2) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

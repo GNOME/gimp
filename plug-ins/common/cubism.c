@@ -142,7 +142,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable" },
     { GIMP_PDB_FLOAT,    "tile-size",       "Average diameter of each tile (in pixels)" },
     { GIMP_PDB_FLOAT,    "tile-saturation", "Expand tiles by this amount" },
-    { GIMP_PDB_INT32,    "bg-color",        "Background color: { BLACK (0), BG (1) }" }
+    { GIMP_PDB_INT32,    "bg-color",        "Background color { BLACK (0), BG (1) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

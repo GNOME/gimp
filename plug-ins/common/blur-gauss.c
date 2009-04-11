@@ -132,7 +132,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
     { GIMP_PDB_FLOAT,    "horizontal", "Horizontal radius of gaussian blur (in pixels, > 0.0)" },
     { GIMP_PDB_FLOAT,    "vertical",   "Vertical radius of gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_INT32,    "method",     "IIR (0) or RLE (1)" }
+    { GIMP_PDB_INT32,    "method",     "Blur method { IIR (0), RLE (1) }" }
   };
 
   static const GimpParamDef args1[] =

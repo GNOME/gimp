@@ -197,9 +197,9 @@ query (void)
     { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,    "image",     "The Image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "The Drawable" },
-    { GIMP_PDB_INT32,    "mode",      "Mode -- NTSC/PAL" },
+    { GIMP_PDB_INT32,    "mode",      "Mode { NTSC (0), PAL (1) }" },
     { GIMP_PDB_INT32,    "action",    "The action to perform" },
-    { GIMP_PDB_INT32,    "new-layer", "Create a new layer if True" }
+    { GIMP_PDB_INT32,    "new-layer", "Create a new layer { TRUE, FALSE }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,

@@ -145,16 +145,16 @@ query (void)
   static const GimpParamDef pixelize_args[]=
   {
     { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"               },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"       },
     { GIMP_PDB_INT32,    "pixel-width", "Pixel width (the decrease in resolution)" }
   };
 
   static const GimpParamDef pixelize2_args[]=
   {
     { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"               },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"       },
     { GIMP_PDB_INT32,    "pixel-width",  "Pixel width (the decrease in horizontal resolution)" },
     { GIMP_PDB_INT32,    "pixel-height", "Pixel height (the decrease in vertical resolution)" }
   };

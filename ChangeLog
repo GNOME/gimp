@@ -1,3 +1,11 @@
+2009-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/*.c: various plug-in parameter cleanups that
+	have piled up on my disk: some whitespace fixes and other
+	formatting, but mostly changes to make plug-in boolean/enum
+	parameter desciptions look more like the ones that are generated
+	for core procedures.
+
 2009-04-03  Michael Natterer  <mitch@gimp.org>
 
 	Bug 577575 – transform tool fills underlying extracted area wrongly

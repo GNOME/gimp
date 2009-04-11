@@ -78,7 +78,7 @@ query (void)
     { GIMP_PDB_INT32,     "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"        },
     { GIMP_PDB_IMAGE,     "image",      "Input image"                         },
     { GIMP_PDB_DRAWABLE,  "drawable",   "Input drawable"                      },
-    { GIMP_PDB_INT32,     "num-colors", "Length of `map' argument "
+    { GIMP_PDB_INT32,     "num-colors", "Length of 'map' argument "
                                         "(should be equal to colormap size)"  },
     { GIMP_PDB_INT8ARRAY, "map",        "Remap array for the colormap"        }
   };
@@ -86,10 +86,10 @@ query (void)
   static const GimpParamDef swap_args[] =
   {
     { GIMP_PDB_INT32,     "run-mode",   "The run mode { RUN-NONINTERACTIVE (1) }"  },
-    { GIMP_PDB_IMAGE,     "image",      "Input image"                         },
-    { GIMP_PDB_DRAWABLE,  "drawable",   "Input drawable"                      },
-    { GIMP_PDB_INT8,      "index1",     "First index in the colormap"         },
-    { GIMP_PDB_INT8,      "index2",     "Second (other) index in the colormap"}
+    { GIMP_PDB_IMAGE,     "image",      "Input image"                          },
+    { GIMP_PDB_DRAWABLE,  "drawable",   "Input drawable"                       },
+    { GIMP_PDB_INT8,      "index1",     "First index in the colormap"          },
+    { GIMP_PDB_INT8,      "index2",     "Second (other) index in the colormap" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC_REMAP,

@@ -55,10 +55,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifdef RCSID
-static gchar rcsid[] = "$Id$";
-#endif
-
 /* Some useful macros */
 
 #define PLUG_IN_PROC    "plug-in-edge"
@@ -136,8 +132,8 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT,    "amount",   "Edge detection amount" },
-    { GIMP_PDB_INT32,    "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
-    { GIMP_PDB_INT32,    "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }
+    { GIMP_PDB_INT32,    "wrapmode", "Edge detection behavior { WRAP (0), SMEAR (1), BLACK (2) }" },
+    { GIMP_PDB_INT32,    "edgemode", "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }" }
   };
 
   const gchar *help_string =
