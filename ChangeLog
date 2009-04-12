@@ -1,3 +1,9 @@
+2009-04-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/actions/debug-commands.c: Use the new gegl:introspect
+	feature of showing the graph of nodes a given node depends
+	on. This gives much better depicted graphs.
+
 2009-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/*.c: various plug-in parameter cleanups that

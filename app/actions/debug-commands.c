@@ -231,6 +231,7 @@ debug_show_image_graph (GimpImage *source_image)
   Gimp            *gimp        = source_image->gimp;
   GimpProjectable *projectable = GIMP_PROJECTABLE (source_image);
   GeglNode        *image_graph = gimp_projectable_get_graph (projectable);
+  GeglNode        *output_node = gegl_node_get_output_proxy (image_graph, "output");
   GimpImage       *new_image   = NULL;
   TileManager     *tiles       = NULL;
   GimpLayer       *layer       = NULL;
@@ -242,7 +243,7 @@ debug_show_image_graph (GimpImage *source_image)
   /* Setup and process the introspection graph */
   introspect = gegl_node_new_child (NULL,
                                     "operation", "gegl:introspect",
-                                    "node",      image_graph,
+                                    "node",      output_node,
                                     NULL);
   sink = gegl_node_new_child (NULL,
                               "operation", "gegl:buffer-sink",
