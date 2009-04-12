@@ -1,7 +1,7 @@
 # zh_CN translation of gimp-libgimp.
-# Copyright (C) 2008 Free Software Foundation, Inc.
+# Copyright (C) 2008-2009 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
-# 神州散人 <kappa8086@gmail.com>, 2008.
+# 神州散人 <kappa8086@gmail.com>, 2008-2009.
 #
 #
 msgid ""
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&amp;component=general\n"
-"POT-Creation-Date: 2008-11-28 05:53+0000\n"
-"PO-Revision-Date: 2008-10-25 22:15+0800\n"
-"Last-Translator: Aron Xu <aronmalache@163.com>\n"
+"POT-Creation-Date: 2008-11-28 06:17+0000\n"
+"PO-Revision-Date: 2009-04-08 18:58+0800\n"
+"Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -271,7 +271,7 @@ msgstr "无匹配"
 
 #: ../libgimp/gimpprocbrowserdialog.c:386
 msgid "Search term invalid or incomplete"
-msgstr ""
+msgstr "搜索条件无效或不完整"
 
 #: ../libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching"
@@ -320,8 +320,8 @@ msgstr "您的查询无匹配项"
 #, fuzzy, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] "您的查询有 %d 个过程匹配"
-msgstr[1] "您的查询有 %d 个过程匹配"
+msgstr[0] "%d 个过程与您的查询相匹配"
+msgstr[1] "%d 个过程与您的查询相匹配"
 
 #: ../libgimp/gimpprocview.c:163
 msgid "Parameters"
@@ -1233,7 +1233,7 @@ msgstr "已选中一页"
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已选中 %d 页"
-msgstr[1] "已选中 %d 页"
+msgstr[1] "已选中全部 %d 页"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1266,8 +1266,8 @@ msgstr "方格风格"
 #, fuzzy, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "此文本输入框限制为 %d 个字符。"
-msgstr[1] "此文本输入框限制为 %d 个字符。"
+msgstr[0] "此文本输入域限制为 %d 个字符。"
+msgstr[1] "此文本输入域限制为 %d 个字符。"
 
 #: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
