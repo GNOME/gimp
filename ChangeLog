@@ -1,3 +1,11 @@
+2009-04-13  Tobias Mueller  <tobiasmue@gnome.org>
+
+	Bug 574972 – Grayscale profile should be removed in RGB/Indexed mode
+
+	* app/core/gimpimage-convert.c (gimp_image_convert): Remove the ICC 
+	profile when image will be converted from/to grayscale mode.
+	Patch by Yohinori Yamakawa <yam@yellowmagic.info>
+
 2009-04-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/actions/debug-commands.c: Use the new gegl:introspect

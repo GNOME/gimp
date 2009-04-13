@@ -1062,6 +1062,21 @@ gimp_image_convert (GimpImage               *image,
       break;
     }
 
+  /* TODO: attach or remove the ICC profile */
+  switch (new_type)
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      if (old_type == GIMP_GRAY)
+        gimp_image_parasite_detach (image, "icc-profile");
+      break;
+    case GIMP_GRAY:
+      gimp_image_parasite_detach (image, "icc-profile");
+      break;
+    default:
+      break;
+    }
+
   /*  Delete the quantizer object, if there is one */
   if (quantobj)
     quantobj->delete_func (quantobj);
