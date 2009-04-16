@@ -1,3 +1,8 @@
+2009-04-16  Shankar Prasad  <svenkate@redhat.com>
+
+        * kn.po: Added Kannada(kn) translations.
+        * LINGUAS: Added kn to the list.
+
 2009-03-24  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.
