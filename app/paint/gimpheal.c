@@ -53,7 +53,7 @@
 static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
-                                                  GimpCoords       *coords,
+                                                  const GimpCoords *coords,
                                                   GError          **error);
 
 static void         gimp_heal_substitute_0_for_1 (PixelRegion      *pr);
@@ -136,7 +136,7 @@ static gboolean
 gimp_heal_start (GimpPaintCore     *paint_core,
                  GimpDrawable      *drawable,
                  GimpPaintOptions  *paint_options,
-                 GimpCoords        *coords,
+                 const GimpCoords  *coords,
                  GError           **error)
 {
   GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);

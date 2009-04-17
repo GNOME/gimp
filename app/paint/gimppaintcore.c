@@ -70,7 +70,7 @@ static void      gimp_paint_core_get_property        (GObject          *object,
 static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *paint_options,
-                                                      GimpCoords       *coords,
+                                                      const GimpCoords *coords,
                                                       GError          **error);
 static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
@@ -221,7 +221,7 @@ static gboolean
 gimp_paint_core_real_start (GimpPaintCore    *core,
                             GimpDrawable     *drawable,
                             GimpPaintOptions *paint_options,
-                            GimpCoords       *coords,
+                            const GimpCoords *coords,
                             GError          **error)
 {
   return TRUE;
@@ -331,7 +331,7 @@ gboolean
 gimp_paint_core_start (GimpPaintCore     *core,
                        GimpDrawable      *drawable,
                        GimpPaintOptions  *paint_options,
-                       GimpCoords        *coords,
+                       const GimpCoords  *coords,
                        GError           **error)
 {
   GimpItem *item;

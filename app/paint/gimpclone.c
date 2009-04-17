@@ -47,7 +47,7 @@
 static gboolean gimp_clone_start        (GimpPaintCore    *paint_core,
                                          GimpDrawable     *drawable,
                                          GimpPaintOptions *paint_options,
-                                         GimpCoords       *coords,
+                                         const GimpCoords *coords,
                                          GError          **error);
 
 static void     gimp_clone_motion       (GimpSourceCore   *source_core,
@@ -120,7 +120,7 @@ static gboolean
 gimp_clone_start (GimpPaintCore     *paint_core,
                   GimpDrawable      *drawable,
                   GimpPaintOptions  *paint_options,
-                  GimpCoords        *coords,
+                  const GimpCoords  *coords,
                   GError           **error)
 {
   GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);

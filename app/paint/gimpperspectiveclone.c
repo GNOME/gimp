@@ -55,7 +55,7 @@ static void     gimp_perspective_clone_finalize   (GObject          *object);
 static gboolean gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
                                                    GimpDrawable     *drawable,
                                                    GimpPaintOptions *paint_options,
-                                                   GimpCoords       *coords,
+                                                   const GimpCoords *coords,
                                                    GError          **error);
 static void     gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
                                                    GimpDrawable     *drawable,
@@ -144,7 +144,7 @@ static gboolean
 gimp_perspective_clone_start (GimpPaintCore     *paint_core,
                               GimpDrawable      *drawable,
                               GimpPaintOptions  *paint_options,
-                              GimpCoords        *coords,
+                              const GimpCoords  *coords,
                               GError           **error)
 {
   GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);

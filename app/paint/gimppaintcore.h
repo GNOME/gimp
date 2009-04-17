@@ -73,7 +73,7 @@ struct _GimpPaintCoreClass
   gboolean   (* start)          (GimpPaintCore    *core,
                                  GimpDrawable     *drawable,
                                  GimpPaintOptions *paint_options,
-                                 GimpCoords       *coords,
+                                 const GimpCoords *coords,
                                  GError          **error);
 
   gboolean   (* pre_paint)      (GimpPaintCore    *core,
@@ -118,7 +118,7 @@ void      gimp_paint_core_paint                     (GimpPaintCore    *core,
 gboolean  gimp_paint_core_start                     (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
-                                                     GimpCoords       *coords,
+                                                     const GimpCoords *coords,
                                                      GError          **error);
 void      gimp_paint_core_finish                    (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,

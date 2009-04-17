@@ -1,3 +1,14 @@
+2009-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: made GimpCoords* parameter of
+	GimpPaintCore::start() const.
+
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpperspectiveclone.c
+	* app/paint/gimpsourcecore.c: changed accordingly.
+
 2009-04-13  Tobias Mueller  <tobiasmue@gnome.org>
 
 	Bug 574972 – Grayscale profile should be removed in RGB/Indexed mode

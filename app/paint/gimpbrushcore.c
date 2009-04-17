@@ -60,7 +60,7 @@ static void     gimp_brush_core_finalize           (GObject          *object);
 static gboolean gimp_brush_core_start              (GimpPaintCore    *core,
                                                     GimpDrawable     *drawable,
                                                     GimpPaintOptions *paint_options,
-                                                    GimpCoords       *coords,
+                                                    const GimpCoords *coords,
                                                     GError          **error);
 static gboolean gimp_brush_core_pre_paint          (GimpPaintCore    *core,
                                                     GimpDrawable     *drawable,
@@ -346,7 +346,7 @@ static gboolean
 gimp_brush_core_start (GimpPaintCore     *paint_core,
                        GimpDrawable      *drawable,
                        GimpPaintOptions  *paint_options,
-                       GimpCoords        *coords,
+                       const GimpCoords  *coords,
                        GError           **error)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
