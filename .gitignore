@@ -34,3 +34,6 @@
 /stamp-h
 /stamp-h.in
 /stamp-h1
+*.la
+*.lo
+*.o
