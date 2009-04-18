@@ -1,5 +1,5 @@
-# zh_CN translation of gimp-libgimp.
-# Copyright (C) 2008-2009 Free Software Foundation, Inc.
+# Simplified Chinese translation of gimp-libgimp.
+# Copyright (C) 2001-2009 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 #

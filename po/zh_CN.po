@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-03-27 19:25+0000\n"
-"PO-Revision-Date: 2009-04-08 18:54+0800\n"
+"POT-Creation-Date: 2009-04-17 20:37+0000\n"
+"PO-Revision-Date: 2009-04-14 16:41+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -779,6 +779,7 @@ msgid "Add current background color"
 msgstr "添加当前背景色"
 
 #: ../app/actions/colormap-commands.c:73
+#, c-format
 msgid "Edit colormap entry #%d"
 msgstr "编辑颜色表项 #%d"
 
@@ -918,7 +919,7 @@ msgstr "使用所有可见图层的混合颜色"
 #: ../app/dialogs/file-open-location-dialog.c:224
 #: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:757 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:977
+#: ../app/widgets/gimptoolbox.c:979
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1260,7 +1261,7 @@ msgstr "日积月累(_T)"
 #: ../app/actions/dialogs-actions.c:224
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
-msgstr "显示一些关于GIMP的小贴士"
+msgstr "显示一些关于 GIMP 的小贴士"
 
 #: ../app/actions/dialogs-actions.c:229
 msgctxt "dialogs-action"
@@ -1886,7 +1887,6 @@ msgid "Fill the selection using the background color"
 msgstr "使用背景颜色填入选中区域"
 
 #: ../app/actions/edit-actions.c:204
-#| msgid "Fill with Pattern"
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "以图案填充(_W)"
@@ -2957,7 +2957,7 @@ msgstr "旋转 _180 度"
 #: ../app/actions/image-actions.c:181
 msgctxt "image-action"
 msgid "Turn the image upside-down"
-msgstr "使图像上下翻转"
+msgstr "使图像上下颠倒"
 
 #: ../app/actions/image-actions.c:186
 msgctxt "image-action"
@@ -4305,7 +4305,7 @@ msgstr "删除模板"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "您确认要从列表以及磁盘中删除模板“%s”吗？"
+msgstr "您确认要从列表以及磁盘中删除“%s”模板吗？"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -5825,7 +5825,7 @@ msgstr "每次启动时让 GIMP 尝试恢复您上次保存的会话。"
 #: ../app/config/gimprc-blurbs.h:280
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "GIMP 会话中记住当前的工具、图案、颜色和画笔。"
+msgstr "在多个 GIMP 会话间记住当前的工具、图案、颜色和画笔。"
 
 #: ../app/config/gimprc-blurbs.h:284
 msgid ""
@@ -5928,7 +5928,7 @@ msgstr "当指针悬停在项目上时显示工具提示。"
 
 #: ../app/config/gimprc-blurbs.h:349
 msgid "What to do when the space bar is pressed in the image window."
-msgstr "当在图像窗口中空白键按下时的行为。"
+msgstr "当在图像窗口中空格键按下时的行为。"
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
@@ -6005,15 +6005,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:405
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr "交换前景色和背景色"
+msgstr "在工具箱中显示当前的前景色和背景色"
 
 #: ../app/config/gimprc-blurbs.h:408
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "显示活动画笔、图案和渐变(_B)"
+msgstr "在工具箱中显示活动画笔、图案和渐变"
 
 #: ../app/config/gimprc-blurbs.h:411
 msgid "Show the currently active image in the toolbox."
-msgstr "在工具箱中显示活动图像"
+msgstr "在工具箱中显示当前活动的图像"
 
 #: ../app/config/gimprc-blurbs.h:417
 msgid ""
@@ -6896,12 +6896,12 @@ msgstr "正在从“%2$s”复制文件“%1$s”..."
 #: ../app/core/gimp-user-install.c:324 ../app/core/gimp-user-install.c:350
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "正在创建文件夹“%s”..."
+msgstr "正在创建“%s”文件夹..."
 
 #: ../app/core/gimp-user-install.c:335 ../app/core/gimp-user-install.c:361
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "无法创建文件夹“%s”：%s"
+msgstr "无法创建“%s”文件夹：%s"
 
 #: ../app/core/gimp.c:554
 msgid "Initialization"
@@ -6959,7 +6959,7 @@ msgstr "画笔文件“%s”出现严重解析错误：字节数 = 0。"
 #: ../app/core/gimpbrush-load.c:238
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：未知色深 %d。"
 
 #: ../app/core/gimpbrush-load.c:251
 #, c-format
@@ -6991,7 +6991,7 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"画笔文件“%s”出现严重解析错误：不支持的画笔深度 %d\n"
+"画笔文件“%s”出现严重解析错误：不支持的画笔色深 %d\n"
 "GIMP 画笔必须为灰度或 RGBA。"
 
 #: ../app/core/gimpbrush-load.c:447
@@ -7014,7 +7014,7 @@ msgstr "画笔文件“%s”出现严重解析错误：不是 GIMP 画笔文件�
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr "画笔文件“%s”出现严重解析错误：第%d行未知 GIMP 画笔版本。"
+msgstr "画笔文件“%s”出现严重解析错误：第 %d 行未知 GIMP 画笔版本。"
 
 #: ../app/core/gimpbrushgenerated-load.c:149
 #, c-format
@@ -7120,7 +7120,7 @@ msgstr "缩放通道"
 
 #: ../app/core/gimpchannel.c:266
 msgid "Resize Channel"
-msgstr "通道改变大小"
+msgstr "改变通道大小"
 
 #: ../app/core/gimpchannel.c:267
 msgid "Flip Channel"
@@ -7164,11 +7164,11 @@ msgstr "取通道边界"
 
 #: ../app/core/gimpchannel.c:298
 msgid "Grow Channel"
-msgstr "通道增长"
+msgstr "增长通道"
 
 #: ../app/core/gimpchannel.c:299
 msgid "Shrink Channel"
-msgstr "通道收缩"
+msgstr "收缩通道"
 
 #: ../app/core/gimpchannel.c:712
 msgid "Cannot stroke empty channel."
@@ -7295,7 +7295,7 @@ msgstr "色调-饱和度"
 
 #: ../app/core/gimpdrawable-hue-saturation.c:87
 msgid "Hue_Saturation"
-msgstr "色相-饱和度(_S)"
+msgstr "色调-饱和度(_S)"
 
 #: ../app/core/gimpdrawable-invert.c:54 ../app/core/gimpdrawable-invert.c:62
 msgid "Invert"
@@ -7313,7 +7313,7 @@ msgstr "位移可绘"
 #: ../app/core/gimpdrawable-posterize.c:69
 #: ../app/core/gimpdrawable-posterize.c:79 ../app/tools/gimpposterizetool.c:84
 msgid "Posterize"
-msgstr "海报效果"
+msgstr "色调分离"
 
 #: ../app/core/gimpdrawable-stroke.c:435
 msgid "Render Stroke"
@@ -7375,7 +7375,7 @@ msgstr "渐变文件“%s”出现严重解析错误：第 %d 段在第 %d 行�
 #: ../app/core/gimpgradient-load.c:240 ../app/core/gimpgradient-load.c:254
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "渐变文件 “%s” 损坏：段的范围不在 0-1 间。"
+msgstr "渐变文件“%s”损坏：段的范围不在 0-1 间。"
 
 #: ../app/core/gimpgradient-load.c:333
 #, c-format
@@ -7694,23 +7694,21 @@ msgstr "无法生成预览"
 
 #: ../app/core/gimpimagefile.c:602
 msgid "(Preview may be out of date)"
-msgstr "(预览已经过时)"
+msgstr "(预览可能已经过时)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:446
 #: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:565
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d 像素"
-msgstr[1] "%d x %d 像素"
 
 #: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:310
-#, fuzzy, c-format
+#, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d 个图层"
-msgstr[1] "%d 个图层"
 
 #: ../app/core/gimpimagefile.c:681
 #, c-format
@@ -7758,7 +7756,7 @@ msgstr "移动图层"
 
 #: ../app/core/gimplayer.c:253
 msgid "Resize Layer"
-msgstr "图层改变大小"
+msgstr "改变图层大小"
 
 #: ../app/core/gimplayer.c:254
 msgid "Flip Layer"
@@ -7870,7 +7868,7 @@ msgstr "读取色板文件“%s”：第 %d 行缺少 RED 分量。"
 #: ../app/core/gimppalette-load.c:191
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
-msgstr "读取色板文件“%s”：第 %d 行缺少 RED 分量。"
+msgstr "读取色板文件“%s”：第 %d 行缺少 GREEN 分量。"
 
 #: ../app/core/gimppalette-load.c:199
 #, c-format
@@ -7910,7 +7908,7 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"图案文件“%s”出现严重解析错误：不支持的图案深度 %d。\n"
+"图案文件“%s”出现严重解析错误：不支持的图案色深 %d。\n"
 "GIMP 图案必须为灰度或 RGB。"
 
 #: ../app/core/gimppattern-load.c:138
@@ -8238,7 +8236,7 @@ msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:428
 msgid "Extension Mismatch"
-msgstr "扩展名不对应"
+msgstr "扩展名不匹配"
 
 #: ../app/dialogs/file-save-dialog.c:444
 msgid "The given file extension does not match the chosen file type."
@@ -8900,7 +8898,7 @@ msgstr "移动工具"
 msgid "Set layer or path as active"
 msgstr "将图层或路径设置为活动的"
 
-#: ../app/dialogs/preferences-dialog.c:1965 ../app/widgets/gimptoolbox.c:629
+#: ../app/dialogs/preferences-dialog.c:1965 ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
 msgstr "工具箱"
 
@@ -8975,11 +8973,11 @@ msgstr "初始缩放比率(_R)："
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2110
 msgid "Space Bar"
-msgstr "空白键"
+msgstr "空格键"
 
 #: ../app/dialogs/preferences-dialog.c:2116
 msgid "_While space bar is pressed:"
-msgstr "当空白键被按下时(_W)："
+msgstr "当空格键被按下时(_W)："
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2120
@@ -9110,7 +9108,7 @@ msgstr "色彩管理"
 
 #: ../app/dialogs/preferences-dialog.c:2440
 msgid "_RGB profile:"
-msgstr "RGB 配置文件(_R)："
+msgstr "_RGB 配置文件："
 
 #: ../app/dialogs/preferences-dialog.c:2441
 msgid "Select RGB Color Profile"
@@ -9118,7 +9116,7 @@ msgstr "选择 RGB 色彩配置文件"
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "_CMYK profile:"
-msgstr "CMYK 配置文件(_C)："
+msgstr "_CMYK 配置文件："
 
 #: ../app/dialogs/preferences-dialog.c:2443
 msgid "Select CMYK Color Profile"
@@ -9418,8 +9416,7 @@ msgstr "如果您现在关闭这些图像，更改将会丢失。"
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "有一幅修改后还没保存的图像："
-msgstr[1] "有 %d 幅修改后还没保存的图像："
+msgstr[0] "有 %d 幅修改后还没保存的图像："
 
 #: ../app/dialogs/quit-dialog.c:236
 msgid "_Discard Changes"
@@ -9691,24 +9688,24 @@ msgstr "位样合并(_S)"
 msgid "Image saved to '%s'"
 msgstr "图像已保存到“%s”"
 
-#: ../app/display/gimpdisplayshell.c:1075
+#: ../app/display/gimpdisplayshell.c:1077
 msgid "Access the image menu"
 msgstr "操作图像菜单"
 
-#: ../app/display/gimpdisplayshell.c:1180
+#: ../app/display/gimpdisplayshell.c:1182
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: ../app/display/gimpdisplayshell.c:1209
+#: ../app/display/gimpdisplayshell.c:1211
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙板"
 
-#: ../app/display/gimpdisplayshell.c:1230
+#: ../app/display/gimpdisplayshell.c:1232
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: ../app/display/gimpdisplayshell.c:1325
-#: ../app/display/gimpdisplayshell.c:1415 ../app/widgets/gimptoolbox.c:220
+#: ../app/display/gimpdisplayshell.c:1327
+#: ../app/display/gimpdisplayshell.c:1417 ../app/widgets/gimptoolbox.c:220
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
 
@@ -9725,34 +9722,31 @@ msgstr "关闭而不保存(_W)"
 #: ../app/display/gimpdisplayshell-close.c:225
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "关闭图像 “%s” 前保存修改吗？"
+msgstr "关闭图像“%s”前保存修改吗？"
 
 #: ../app/display/gimpdisplayshell-close.c:247
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "如果您不保存图像，最近一小时的更改将会丢失。"
-msgstr[1] "如果您不保存图像，最近 %d 小时的更改将会丢失。"
+msgstr[0] "如果您不保存图像，最近 %d 小时内的更改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:257
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
 "be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] "如果您不保存图像，从 1 小时零 %d 分钟前所作的修改将会丢失。"
-msgstr[1] "如果您不保存图像，从 1 小时零 %d 分钟前所作的修改将会丢失。"
+msgstr[0] "如果您不保存图像，最近 1 小时零 %d 分钟内的修改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-close.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "如果您不保存图像，最近 1 分钟的更改将会丢失。"
-msgstr[1] "如果您不保存图像，最近 %d 分钟的更改将会丢失。"
+msgstr[0] "如果您不保存图像，最近 %d 分钟内的更改将会丢失。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
 #: ../app/display/gimpdisplayshell-dnd.c:587
@@ -10071,7 +10065,7 @@ msgstr "无法固定此图层，因为它不是一个浮动选区。"
 #: ../app/pdb/gimppdb.c:376
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr "流程'%s'未找到"
+msgstr "“%s”过程未找到"
 
 #: ../app/pdb/gimppdb-utils.c:58
 msgid "Invalid empty brush name"
@@ -10080,17 +10074,17 @@ msgstr "无效的画笔名称"
 #: ../app/pdb/gimppdb-utils.c:68
 #, c-format
 msgid "Brush '%s' not found"
-msgstr "'%s'画笔未找到"
+msgstr "“%s”画笔未找到"
 
 #: ../app/pdb/gimppdb-utils.c:73
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr "'%s'画笔不可编辑"
+msgstr "“%s”画笔不可编辑"
 
 #: ../app/pdb/gimppdb-utils.c:99
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr "'%s'不是一个被生成的画笔"
+msgstr "“%s”不是一个被生成的画笔"
 
 #: ../app/pdb/gimppdb-utils.c:119
 msgid "Invalid empty pattern name"
@@ -10099,7 +10093,7 @@ msgstr "无效的纹理名称"
 #: ../app/pdb/gimppdb-utils.c:129
 #, c-format
 msgid "Pattern '%s' not found"
-msgstr "图案 %s 未找到"
+msgstr "“%s”图案未找到"
 
 #: ../app/pdb/gimppdb-utils.c:149
 msgid "Invalid empty gradient name"
@@ -10108,12 +10102,12 @@ msgstr "无效的空渐变名称"
 #: ../app/pdb/gimppdb-utils.c:159
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "渐变 %s 未找到"
+msgstr "“%s”渐变未找到"
 
 #: ../app/pdb/gimppdb-utils.c:164
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "'%s'渐变不可编辑"
+msgstr "“%s”渐变不可编辑"
 
 #: ../app/pdb/gimppdb-utils.c:185
 msgid "Invalid empty palette name"
@@ -10122,12 +10116,12 @@ msgstr "无效的空色版名称"
 #: ../app/pdb/gimppdb-utils.c:195
 #, c-format
 msgid "Palette '%s' not found"
-msgstr "色板 %s 未找到"
+msgstr "“%s”色板未找到"
 
 #: ../app/pdb/gimppdb-utils.c:200
 #, c-format
 msgid "Palette '%s' is not editable"
-msgstr "'%s'色板不可编辑"
+msgstr "“%s”色板不可编辑"
 
 #: ../app/pdb/gimppdb-utils.c:220
 msgid "Invalid empty font name"
@@ -10136,7 +10130,7 @@ msgstr "无效的字体名称"
 #: ../app/pdb/gimppdb-utils.c:230
 #, c-format
 msgid "Font '%s' not found"
-msgstr "'%s'字体未找到"
+msgstr "“%s”字体未找到"
 
 #: ../app/pdb/gimppdb-utils.c:249
 msgid "Invalid empty buffer name"
@@ -10145,7 +10139,7 @@ msgstr "无效的缓存库名称"
 #: ../app/pdb/gimppdb-utils.c:259
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "缓存库'%s'没找到"
+msgstr "“%s”缓存库没找到"
 
 #: ../app/pdb/gimppdb-utils.c:278
 msgid "Invalid empty paint method name"
@@ -10154,69 +10148,69 @@ msgstr "无效的绘图方式"
 #: ../app/pdb/gimppdb-utils.c:288
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "绘图方式'%s'不存在"
+msgstr "“%s”绘图方式不存在"
 
 #: ../app/pdb/gimppdb-utils.c:304
 #, c-format
 msgid ""
 "Item '%s' (%d) can not be used because it has not been added to an image"
-msgstr "'%s' (%d)不可用，因为它未被添加至图像"
+msgstr "“%s” (%d)不可用，因为它未被添加至图像"
 
 #: ../app/pdb/gimppdb-utils.c:326
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr "'%s' (%d)已被添加至图像"
+msgstr "“%s” (%d)已被添加至图像"
 
 #: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr "试图添加'%s' (%d)到错误的图像"
+msgstr "试图添加“%s” (%d)到错误的图像"
 
 #: ../app/pdb/gimppdb-utils.c:353
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
-msgstr "'%s' (%d)图层不能被使用，它不是一个文字图层"
+msgstr "“%s” (%d)图层不能被使用，它不是一个文字图层"
 
 #: ../app/pdb/gimppdb-utils.c:394
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
-msgstr "'%s' (%d)图像的是'%s'类，并非预计的'%s'类"
+msgstr "“%s” (%d)图像是“%s”类，并非预计的“%s”类"
 
 #: ../app/pdb/gimppdb-utils.c:417
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr "'%s' (%d)图像已经是'%s'类"
+msgstr "“%s” (%d)图像已经是“%s”类"
 
 #: ../app/pdb/gimppdb-utils.c:440
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
-msgstr "矢量对象'%d'不包括ID为'%d'的笔画"
+msgstr "矢量对象“%d”不包括ID为“%d”的笔画"
 
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
 "s, got %s."
-msgstr "调用过程“%s”使用了错误的值类型用于参数 #%d。需要 %s，但获得 %s。"
+msgstr "调用“%s”过程使用了错误的值类型用于参数 #%d。需要 %s，但获得 %s。"
 
 #: ../app/pdb/gimpprocedure.c:365 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "'%s'过程无返回值"
+msgstr "“%s”过程无返回值"
 
 #: ../app/pdb/gimpprocedure.c:621
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
-msgstr "过程“%s”返回了错误的值类型用于返回值“%s”(#%d)。需要 %s，但获得 %s。"
+msgstr "“%s”过程返回了错误的值类型用于返回值“%s”(#%d)。需要 %s，但获得 %s。"
 
 #: ../app/pdb/gimpprocedure.c:633
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
 "d). Expected %s, got %s."
-msgstr "调用过程“%s”使用了错误的值类型用于参数“%s”(#%d)。需要 %s，但获得 %s。"
+msgstr "调用“%s”过程使用了错误的值类型用于参数“%s”(#%d)。需要 %s，但获得 %s。"
 
 #: ../app/pdb/gimpprocedure.c:665
 #, c-format
@@ -10224,7 +10218,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"过程“%s”对于参数“%s”返回了无效的 ID。很有可能是插件正在试图操作一个已不再存在"
+"“%s”过程对于“%s”参数返回了无效的 ID。很有可能是插件正在试图操作一个已不再存在"
 "的图层。"
 
 #: ../app/pdb/gimpprocedure.c:677
@@ -10233,7 +10227,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"调用过程“%s”使用了无效的 ID 用于参数“%s”。很有可能是插件正在试图操作一个已不"
+"调用“%s”过程使用了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不"
 "再存在的图层。"
 
 #: ../app/pdb/gimpprocedure.c:693
@@ -10242,7 +10236,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"过程“%s”返回了无效的 ID 用于参数“%s”。很有可能是插件正在试图操作一个已不再存"
+"“%s”过程返回了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不再存"
 "在的图像。"
 
 #: ../app/pdb/gimpprocedure.c:705
@@ -10251,7 +10245,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"调用过程“%s”使用了无效的 ID 用于参数“%s”。很有可能是插件正在试图操作一个已不"
+"调用“%s”过程使用了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不"
 "再存在的图像。"
 
 #: ../app/pdb/gimpprocedure.c:725
@@ -10259,14 +10253,14 @@ msgstr ""
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
-msgstr "过程“%s”返回了“%s”作为返回值“%s”(#%d，%s 类型)。此值超出范围。"
+msgstr "“%s”过程返回了“%s”作为返回值“%s”(#%d，%s 类型)。此值超出范围。"
 
 #: ../app/pdb/gimpprocedure.c:738
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
-msgstr "过程“%s”使用了值“%s”用于参数“%s”(#%d，%s 类型)。此值超出范围。"
+msgstr "“%s”过程使用了“%s”值用于“%s”参数(#%d，%s 类型)。此值超出范围。"
 
 #: ../app/pdb/image-cmds.c:2291
 msgid ""
@@ -10288,7 +10282,8 @@ msgstr "创建文字图层失败"
 #: ../app/pdb/text-layer-cmds.c:602 ../app/pdb/text-layer-cmds.c:674
 #: ../app/pdb/text-layer-cmds.c:746 ../app/pdb/text-layer-cmds.c:816
 #: ../app/pdb/text-layer-cmds.c:888 ../app/pdb/text-layer-cmds.c:960
-#: ../app/pdb/text-layer-cmds.c:1032 ../app/pdb/text-layer-cmds.c:1110
+#: ../app/pdb/text-layer-cmds.c:1032 ../app/pdb/text-layer-cmds.c:1068
+#: ../app/pdb/text-layer-cmds.c:1147
 msgid "Set text layer attribute"
 msgstr "设定文字图层属性"
 
@@ -10318,7 +10313,7 @@ msgid ""
 "Calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"流程错误: '%s':\n"
+"“%s”过程调用错误：\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin-message.c:431
@@ -10327,7 +10322,7 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
-"执行错误发生在过程'%s':\n"
+"“%s”过程执行错误：\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:331
@@ -10346,7 +10341,7 @@ msgstr ""
 "插件崩溃：“%s”\n"
 "(%s)\n"
 "\n"
-"已崩溃的插件可能已经破坏 GIMP 的内部状态。您可能需要保存您的图片然后重新启动 "
+"已崩溃的插件可能破坏了 GIMP 的内部状态。您可能需要保存您的图片然后重新启动 "
 "GIMP 以确保稳妥。"
 
 #: ../app/plug-in/gimppluginmanager-call.c:172
@@ -10354,7 +10349,7 @@ msgstr ""
 #: ../app/plug-in/gimppluginmanager-call.c:320
 #, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr "插件\"%s\"启用失败"
+msgstr "“%s”插件启用失败"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
@@ -10414,7 +10409,7 @@ msgstr "运行“%s”时出错"
 #: ../app/plug-in/plug-in-icc-profile.c:256
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr "插件遗失(%s)"
+msgstr "插件缺失(%s)"
 
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
@@ -10498,7 +10493,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"解析图层“%s”的文字寄生物时遇到问题：\n"
+"解析“%s”图层的文字寄生物时遇到问题：\n"
 "%s\n"
 "\n"
 "某些文字属性可能有错。除非您要编辑的是文字图层，否则不必担心。"
@@ -10951,13 +10946,13 @@ msgstr "半径："
 #: ../app/tools/gimpcolorpickeroptions.c:155
 #, c-format
 msgid "Pick Mode  (%s)"
-msgstr "拾取模式(%s)"
+msgstr "拾取模式 (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:164
 #, c-format
 msgid "Use info window  (%s)"
-msgstr "使用信息窗口(%s)"
+msgstr "使用信息窗口 (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
@@ -11123,7 +11118,7 @@ msgstr "无法从“%s”中读取头：%s"
 
 #: ../app/tools/gimpcurvestool.c:708
 msgid "Use _old curves file format"
-msgstr "使用旧曲线文件格式(_o)"
+msgstr "使用旧曲线文件格式(_O)"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -11187,7 +11182,7 @@ msgstr "%s 以减淡"
 #: ../app/tools/gimpdodgeburntool.c:201
 #, c-format
 msgid "Type  (%s)"
-msgstr "类型(%s)"
+msgstr "类型 (%s)"
 
 #. mode (highlights, midtones, or shadows)
 #: ../app/tools/gimpdodgeburntool.c:212
@@ -11389,7 +11384,7 @@ msgstr "点击并拖动可移动组件"
 
 #: ../app/tools/gimpfreeselecttool.c:1125
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr "回车以确认，Esc以取消，Backspace以移除最后片段"
+msgstr "回车键以确认，Esc 键以取消，回退键以移除最后片段"
 
 #: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
@@ -11414,23 +11409,23 @@ msgstr "模糊选择(_Z)"
 
 #: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
-msgstr "GEGL操作"
+msgstr "GEGL 操作"
 
 #: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr "GEGL工具：使用无基准的GEGL操作"
+msgstr "GEGL 工具：使用无基准的 GEGL 操作"
 
 #: ../app/tools/gimpgegltool.c:94
 msgid "_GEGL Operation..."
-msgstr "GEGL操作(_G)..."
+msgstr "GEGL 操作(_G)..."
 
 #: ../app/tools/gimpgegltool.c:158
 msgid "GEGL operations do not operate on indexed layers."
-msgstr "不能对索引图层进行GEGL操作。"
+msgstr "不能对索引图层进行 GEGL 操作。"
 
 #: ../app/tools/gimpgegltool.c:333
 msgid "_Operation:"
-msgstr "操作(_O)..."
+msgstr "操作(_O)："
 
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:404
@@ -11464,7 +11459,7 @@ msgstr "直方图尺度"
 
 #: ../app/tools/gimphuesaturationtool.c:103
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "色相-饱和度工具：调整色相，饱和度，以及亮度"
+msgstr "色调-饱和度工具：调整色调，饱和度，以及亮度"
 
 #: ../app/tools/gimphuesaturationtool.c:104
 msgid "Hue-_Saturation..."
@@ -11476,11 +11471,11 @@ msgstr "调整色调 / 亮度 / 饱和度"
 
 #: ../app/tools/gimphuesaturationtool.c:123
 msgid "Import Hue-Saturation Settings"
-msgstr "导入色相-饱和度选项"
+msgstr "导入色调-饱和度选项"
 
 #: ../app/tools/gimphuesaturationtool.c:124
 msgid "Export Hue-Saturation Settings"
-msgstr "导出色相-饱和度选项"
+msgstr "导出色调-饱和度选项"
 
 #: ../app/tools/gimphuesaturationtool.c:171
 msgid "Hue-Saturation operates only on RGB color layers."
@@ -11536,7 +11531,7 @@ msgstr "重置颜色(_E)"
 
 #: ../app/tools/gimpimagemaptool-settings.c:80
 msgid "Pre_sets:"
-msgstr "预设(S):"
+msgstr "预设(_S):"
 
 #: ../app/tools/gimpimagemaptool-settings.c:222
 #, c-format
@@ -11704,7 +11699,7 @@ msgstr "将此设置作为曲线编辑"
 
 #: ../app/tools/gimplevelstool.c:825
 msgid "Use _old levels file format"
-msgstr "使用旧色阶文件格式(_o)"
+msgstr "使用旧色阶文件格式(_O)"
 
 #: ../app/tools/gimpmagnifyoptions.c:166
 msgid "Auto-resize window"
@@ -11886,7 +11881,7 @@ msgstr "动态画笔"
 
 #: ../app/tools/gimppaintoptions-gui.c:230
 msgid "Velocity:"
-msgstr "选择于："
+msgstr "速率："
 
 #: ../app/tools/gimppaintoptions-gui.c:236
 msgid "Direction:"
@@ -11988,23 +11983,23 @@ msgstr "变换矩阵"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "海报效果工具：减少颜色到限定的集合"
+msgstr "色调分离工具：减少颜色到限定的集合"
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
-msgstr "海报效果(_P)..."
+msgstr "色调分离(_P)..."
 
 #: ../app/tools/gimpposterizetool.c:103
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "海报效果(减少颜色的数量)"
+msgstr "色调分离(减少颜色的数量)"
 
 #: ../app/tools/gimpposterizetool.c:151
 msgid "Posterize does not operate on indexed layers."
-msgstr "不能对索引图层进行海报效果操作。"
+msgstr "不能对索引图层进行色调分离操作。"
 
 #: ../app/tools/gimpposterizetool.c:226
 msgid "Posterize _levels:"
-msgstr "海报效果级数(_L)："
+msgstr "色调分离级数(_L)："
 
 #: ../app/tools/gimprectangleoptions.c:111
 msgid "Use all visible layers when shrinking the selection"
@@ -12078,7 +12073,7 @@ msgstr "选择于："
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
-msgstr "移动鼠标可更改阀值"
+msgstr "移动鼠标可更改阈值"
 
 #: ../app/tools/gimprotatetool.c:90
 msgid "Rotate"
@@ -12227,8 +12222,7 @@ msgstr "调整字母符距"
 msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
-msgstr ""
-"文字输入使用外部编辑器窗口，而不是在画布上直接编辑"
+msgstr "文字输入使用外部编辑器窗口，而不是在画布上直接编辑"
 
 #: ../app/tools/gimptextoptions.c:445
 msgid "Font:"
@@ -12675,7 +12669,7 @@ msgstr "缩放路径"
 
 #: ../app/vectors/gimpvectors.c:196
 msgid "Resize Path"
-msgstr "路径改变大小"
+msgstr "改变路径大小"
 
 #: ../app/vectors/gimpvectors.c:197 ../app/vectors/gimpvectors.c:415
 msgid "Flip Path"
@@ -12718,7 +12712,7 @@ msgstr "无法从“%s”导入路径：%s"
 
 #: ../app/widgets/gimpactioneditor.c:70
 msgid "_Search:"
-msgstr "切变(_S)"
+msgstr "搜索(_S)"
 
 #: ../app/widgets/gimpactiongroup.c:885
 #, c-format
@@ -12809,7 +12803,7 @@ msgstr "将当前颜色添加到颜色历史"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:151
 msgid "Available Filters"
-msgstr "可用的虑镜"
+msgstr "可用的滤镜"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:212
 msgid "Move the selected filter up"
@@ -13092,7 +13086,7 @@ msgstr "删除控制器"
 #: ../app/widgets/gimpcontrollerlist.c:570
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "删除控制器“%s”吗？"
+msgstr "删除“%s”控制器吗？"
 
 #: ../app/widgets/gimpcontrollerlist.c:574
 msgid ""
@@ -13400,7 +13394,8 @@ msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"您似乎没有安装GIMP帮助浏览器插件。您可以使用网页浏览器以浏览GIMP帮助文件。"
+"您似乎没有安装 GIMP 帮助浏览器插件。您可以使用网页浏览器以浏览 GIMP 帮助文"
+"件。"
 
 #: ../app/widgets/gimphelp.c:336
 msgid "Help browser doesn't start"
@@ -13424,7 +13419,7 @@ msgstr "在线阅读(_R)"
 
 #: ../app/widgets/gimphelp.c:641
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "GIMP用户指南未在您的计算机上安装。"
+msgstr "GIMP 用户指南未在您的计算机上安装。"
 
 #: ../app/widgets/gimphelp.c:644
 msgid ""
@@ -13557,7 +13552,7 @@ msgstr "锁定 Alpha 通道"
 
 #: ../app/widgets/gimplayertreeview.c:345
 msgid "Lock:"
-msgstr "停靠："
+msgstr "锁定："
 
 #: ../app/widgets/gimplayertreeview.c:868
 msgid "Empty Layer"
@@ -13936,7 +13931,7 @@ msgstr "%s (尝试 %s, %s, %s)"
 #: ../app/widgets/gimpwidgets-utils.c:927
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "文件“%s”中含有无效的 UTF-8 数据。"
+msgstr "“%s”文件中含有无效的 UTF-8 数据。"
 
 #: ../app/widgets/widgets-enums.c:23
 msgctxt "active-color"
@@ -14077,13 +14072,13 @@ msgstr "保持在上方"
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
-msgstr "此 XCF 文件已坏！我已经尽可能多的读取，但它不完整。"
+msgstr "此 XCF 文件已损坏！我已经尽可能多的读取，但它不完整。"
 
 #: ../app/xcf/xcf-load.c:287
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr "此 XCF 文件已坏！我甚至无法部分抢求出任何图像数据。"
+msgstr "此 XCF 文件已损坏！我甚至无法部分抢救出任何图像数据。"
 
 #: ../app/xcf/xcf-load.c:325
 msgid ""
@@ -14170,121 +14165,3 @@ msgstr "确定工具箱可见！"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "无法启动“%s”：%s"
-
-#, fuzzy
-#~ msgctxt "edit-action"
-#~ msgid "Fill with P_attern"
-#~ msgstr "以图案填充(_A)"
-
-#~ msgid "New brush"
-#~ msgstr "新建画笔"
-
-#~ msgid "_Aspect"
-#~ msgstr "宽高比(_A)"
-
-#~ msgid "Sample Merged"
-#~ msgstr "位样合并"
-
-#~ msgid "Remove dangling entries"
-#~ msgstr "删除已不存在的项目"
-
-#~ msgid "Save error log"
-#~ msgstr "保存错误记录"
-
-#~ msgid "Save selection"
-#~ msgstr "保存选区"
-
-#~ msgid "Rescan font list"
-#~ msgstr "重新扫描字体列表"
-
-#~ msgid "New gradient"
-#~ msgstr "新建渐变"
-
-#~ msgid "Set Opacity"
-#~ msgstr "设置不透明度"
-
-#~ msgid "Delete color"
-#~ msgstr "删除颜色"
-
-#~ msgid "New palette"
-#~ msgstr "新建色板"
-
-#~ msgid "New pattern"
-#~ msgstr "新建图案"
-
-#~ msgid "select|_All"
-#~ msgstr "全部(_A)"
-
-#~ msgid "select|_None"
-#~ msgstr "无(_N)"
-
-#~ msgid "Edit the selected template"
-#~ msgstr "编辑选中的模板"
-
-#~ msgid "Delete the selected template"
-#~ msgstr "删除选中的模板"
-
-#~ msgid "Raise tool"
-#~ msgstr "提升工具"
-
-#~ msgid "New path..."
-#~ msgstr "新建路径..."
-
-#~ msgid "_New Path"
-#~ msgstr "新建路径(_N)"
-
-#~ msgid "Add"
-#~ msgstr "添加"
-
-#~ msgid "Intersect"
-#~ msgstr "相交"
-
-#~ msgid "Remove floating selection"
-#~ msgstr "删除浮动选区"
-
-#~ msgid "Rigor floating selection"
-#~ msgstr "固定浮动选区"
-
-#~ msgid "Relax floating selection"
-#~ msgstr "删除浮动选区"
-
-#~ msgid "plural|percent"
-#~ msgstr "百分比"
-
-#~ msgid "quality|Low"
-#~ msgstr "低"
-
-#~ msgid "quality|High"
-#~ msgstr "高"
-
-#~ msgid "Do_n't Save"
-#~ msgstr "不保存(_N)"
-
-#~ msgid "RGB-empty"
-#~ msgstr "RGB-空"
-
-#~ msgid "grayscale-empty"
-#~ msgstr "灰度-空"
-
-#~ msgid "grayscale"
-#~ msgstr "灰度"
-
-#~ msgid "indexed-empty"
-#~ msgstr "索引-空"
-
-#~ msgid "indexed"
-#~ msgstr "索引"
-
-#~ msgid "Cannot rigor this layer because it is not a floating selection."
-#~ msgstr "无法固定此图层，因为它不是一个浮动选区。"
-
-#~ msgid "Cannot relax this layer because it is not a floating selection."
-#~ msgstr "无法固定此图层，因为它不是一个浮动选区。"
-
-#~ msgid ""
-#~ "If available, hints from the font are used but you may prefer to always "
-#~ "use the automatic hinter"
-#~ msgstr "一般只在字体提供微调时才进行微调，但是您也可以首选总是使用自动微调"
-
-#~ msgid "Force auto-hinter"
-#~ msgstr "强制自动微调"

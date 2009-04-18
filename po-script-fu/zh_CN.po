@@ -1,65 +1,66 @@
-# zh_CN translation of gimp-script-fu.
-# Copyright (C) 2008 Free Software Foundation, Inc.
+# Simplified Chinese translation of gimp-script-fu.
+# Copyright (C) 2008-2009 Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
-# 神州散人 <kappa8086@gmail.com>, 2008.
 # Aron Xu <aronmalache@163.com>, 2008.
-# 
+# 神州散人 <kappa8086@gmail.com>, 2008-2009.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 16:28+0000\n"
-"PO-Revision-Date: 2008-10-25 22:28+0800\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-04-12 11:11+0000\n"
+"PO-Revision-Date: 2009-04-13 13:49+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Script-Fu 控制台"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "欢迎使用 TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "交互式 Scheme 开发"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "浏览(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "保存 Script-Fu 控制台输出"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "无法为写入打开“%s”：%s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu 过程浏览器"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 评估模式只允许非交互式调用"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu 无法同时处理两个脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "你已经正在运行 “%s” 脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu：%s"
@@ -67,147 +68,146 @@ msgstr "Script-Fu：%s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 色板选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:823
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "调用 “script-fu-register” 的参数太少"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
 msgid "Error while loading %s:"
 msgstr "载入 %s 时出错："
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu 服务器选项"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "启动服务器(_S)"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "服务器端口："
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "服务器日志文件："
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "用于 Script-Fu 开发的交互式控制台"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "控制台(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "远程操作 Script-Fu 的服务器"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "启动服务器(_S)..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "GIMP 在线(_G)"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "用户手册(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "测试(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "按钮(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "标志(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "图案(_P)"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "网页主题(_W)"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "奇异炽光(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "卷边的图案(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alpha 变标志(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "重新读取所有可用的 Script-Fu 脚本"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "刷新脚本(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -316,8 +316,7 @@ msgstr "轮廓模糊半径"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
-"使用图案描绘选中的区域(或 alpha) 的轮廓并添加投影"
+msgstr "使用图案描绘选中的区域(或 alpha) 的轮廓并添加投影"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -686,7 +685,6 @@ msgid ""
 msgstr "创建一个带有渐变效果，投影和背景的纯文本标志"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
-#, fuzzy
 msgid "_Basic I..."
 msgstr "基本 I (_B)..."
 
@@ -787,8 +785,7 @@ msgstr "混合动画至少需要三个源图层"
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr ""
-"创建中间图层以在背景上混合两个以上图层为动画"
+msgstr "创建中间图层以在背景上混合两个以上图层为动画"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -810,8 +807,7 @@ msgstr "混合(_B)..."
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
-msgstr ""
-"为选中区域(或 alpha) 填加混合背景，高光，以及阴影"
+msgstr "为选中区域(或 alpha) 填加混合背景，高光，以及阴影"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -874,13 +870,12 @@ msgid "Background Color"
 msgstr "背景色"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
-#, fuzzy
 msgid "Bo_vination..."
-msgstr "Bo_vination..."
+msgstr "奶牛斑(_V)..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr "创建一个“牛斑纹”风格的带文字的标志"
+msgstr "创建一个“奶牛斑点”风格的带文字的标志"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -910,8 +905,7 @@ msgstr "日冕宽度"
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr ""
-"创建两层之间的中间层以产生动画的“烧入”过渡"
+msgstr "创建两层之间的中间层以产生动画的“烧入”过渡"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
@@ -933,8 +927,7 @@ msgstr "速度(像素/帧)"
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
-msgstr ""
-"烧入脚本共需要两个图层。一个带透明的前景图层和一个背景图层。"
+msgstr "烧入脚本共需要两个图层。一个带透明的前景图层和一个背景图层。"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -993,14 +986,13 @@ msgstr "雕刻凸起文字"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carved..."
-msgstr ""
+msgstr "雕刻..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr ""
-"创建一个文字在指定背景图像上凸起或凹入的标志"
+msgstr "创建一个文字在指定背景图像上凸起或凹入的标志"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1062,33 +1054,32 @@ msgstr "保持背景"
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr ""
-"用指定的(灰度)蜡版给选中区域(或 alpha) 添加铬合金效果"
+msgstr "用指定的(灰度)蜡版给选中区域(或 alpha) 添加镀铬效果"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
-msgstr "铬合金平衡"
+msgstr "镀铬色彩平衡"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
-msgstr "铬合金因子"
+msgstr "镀铬因子"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
-msgstr "铬合金亮度"
+msgstr "镀铬亮度"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
-msgstr "铬合金饱合度"
+msgstr "镀铬饱合度"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
-msgstr "铬合金白色区域"
+msgstr "白色区域镀铬"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
@@ -1103,19 +1094,19 @@ msgstr "突出显示色彩平衡"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 msgid "Stencil C_hrome..."
-msgstr "蜡版铬合金(_H)..."
+msgstr "蜡版镀铬(_H)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr "给选中的区域(或 alpha)添加简单的铬合金效果"
+msgstr "给选中的区域(或 alpha)添加简单的镀铬效果"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
-msgstr "铬合金(_H)..."
+msgstr "镀铬(_H)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr "创建一个极简单但很酷的铬合金标志"
+msgstr "创建一个极简单但很酷的镀铬标志"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1126,11 +1117,9 @@ msgid "Circuit seed"
 msgstr "电路种子"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr ""
-"以如同电路板一样的痕迹线填充选中区域(或 alpha)"
+msgstr "以电路板痕迹线填充选中区域(或 alpha)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1197,9 +1186,8 @@ msgid "Darken only"
 msgstr "仅加深"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
 msgid "Stains"
-msgstr "迹数"
+msgstr "污迹数"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
@@ -1209,8 +1197,7 @@ msgstr "咖啡迹(_C)..."
 msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
-msgstr ""
-"以描绘轮廓及渐变填充给选中区域(或 alpha)添加漫画书效果"
+msgstr "以描绘轮廓及渐变填充给选中区域(或 alpha)添加漫画书效果"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1233,8 +1220,7 @@ msgstr "轮廓大小"
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
-msgstr ""
-"以反射及透视阴影给选中区域(或 alpha)添加金属效果"
+msgstr "以反射及透视阴影给选中区域(或 alpha)添加金属效果"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1256,9 +1242,8 @@ msgid "Background image"
 msgstr "背景图像"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
-#, fuzzy
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr "创建一个以水晶/凝胶效果置换其下的图像的标志"
+msgstr "创建一个以晶体或凝胶体效果置换其下的图像的标志"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1269,7 +1254,6 @@ msgid "Difference Clouds..."
 msgstr "差分云..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
-#, fuzzy
 msgid "Solid noise applied with Difference layer mode"
 msgstr "应用到差值图层模式的纯色噪音"
 
@@ -1438,8 +1422,7 @@ msgstr "白底黑字"
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
-"创建一幅以匹配字体名过滤器的字体预览所填充的图像"
+msgstr "创建一幅以匹配字体名过滤器的字体预览所填充的图像"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1477,8 +1460,7 @@ msgstr "文字(_T)"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
-"给选中区域(或 alpha) 添加附带投影的霜冻效果"
+msgstr "给选中区域(或 alpha) 添加附带投影的霜冻效果"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1524,11 +1506,11 @@ msgstr "自动剪裁"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅大标题的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅小标题的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1576,23 +1558,23 @@ msgstr "小标题(_S)..."
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签标题的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅二级的管状按钮标签的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "用 gimp.org 的页面主题创建一幅三级的管状按钮标签的图像"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1610,12 +1592,67 @@ msgstr "普通管状标签(_G)..."
 msgid "_Tube Button Label..."
 msgstr "管状按钮标签(_T)..."
 
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "到 GIMP 网站的书签"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "到用户手册的书签"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "创建并使用选区(_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "创建、打开及保存文件(_F)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "绘制简单对象(_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "如何使用对话框(_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "插件注册(_R)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "使用路径(_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "基本概念(_B)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "开发者网站(_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "主站(_M)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "为 Web 准备图像(_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "用户手册网站(_U)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "使用数码相机照片(_W)"
+
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
-msgstr ""
-"给选中区域(或 alpha) 添加渐变、图案、阴影和凸凹贴图"
+msgstr "给选中区域(或 alpha) 添加渐变、图案、阴影和凸凹贴图"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1716,8 +1753,7 @@ msgstr "自定义渐变(_G)..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr ""
-"使用当前笔刷按照 X 和 Y 位置列表的指定绘制网格"
+msgstr "使用当前笔刷按照 X 和 Y 位置列表的指定绘制网格"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1839,8 +1875,7 @@ msgstr "熔岩(_L)..."
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
-msgstr ""
-"使用前景色以从中心向外发射的射线填充图层"
+msgstr "使用前景色以从中心向外发射的射线填充图层"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2128,8 +2163,7 @@ msgstr "黑色"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
-"以为当前图像添加水波纹效果来创建一幅多层图像"
+msgstr "以为当前图像添加水波纹效果来创建一幅多层图像"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2141,7 +2175,6 @@ msgid "Number of frames"
 msgstr "帧数"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-#, fuzzy
 msgid "Rippling strength"
 msgstr "波纹强度"
 
@@ -2172,8 +2205,7 @@ msgstr "边缘半径"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
-"使图像的边角圆滑并可选择地添加投影和背景"
+msgstr "使图像的边角圆滑并可选择地添加投影和背景"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2250,11 +2282,11 @@ msgstr "幻灯片(_S)..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr ""
+msgstr "创建一个最新式的镀铬标志"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr ""
+msgstr "新式镀铬..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
@@ -2285,11 +2317,9 @@ msgid "_Spinning Globe..."
 msgstr "旋转球(_S)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"给当前图层添加 Spirographs、Epitrochoids 和 Lissajous 曲线"
+msgstr "给当前图层添加螺旋型星云线、外旋轮线和利萨如曲线"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2308,9 +2338,8 @@ msgid "Color method"
 msgstr "着色方法"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid "Epitrochoid"
-msgstr "Epitrochoid"
+msgstr "外旋轮线"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Frame"
@@ -2329,18 +2358,16 @@ msgid "Hexagon"
 msgstr "六边形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
-#, fuzzy
 msgid "Hole ratio"
-msgstr "孔的比率"
+msgstr "孔比率"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
 msgstr "内齿"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-#, fuzzy
 msgid "Lissajous"
-msgstr "Lissajous"
+msgstr "利萨如曲线"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
@@ -2375,9 +2402,8 @@ msgid "Polygon: 9 sides"
 msgstr "多边形：9 边"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-#, fuzzy
 msgid "Rendering Spyro"
-msgstr "渲染 Spyro"
+msgstr "正在渲染 Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2388,9 +2414,8 @@ msgid "Solid Color"
 msgstr "纯色"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
-#, fuzzy
 msgid "Spyrograph"
-msgstr "Spyrograph"
+msgstr "螺旋型星云线"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2414,26 +2439,22 @@ msgid "Type"
 msgstr "类型"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
-#, fuzzy
 msgid "_Spyrogimp..."
 msgstr "_Spyrogimp..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr "使用类似岩石的材质、新星炽光和阴影创建标志"
+msgstr "以类似岩石的材质、新星炽光和阴影创建标志"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "恒星景色(_R)..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
-#, fuzzy
 msgid "Create an image filled with a swirled tile effect"
 msgstr "创建一幅以旋转平铺效果填充的图像"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
-#, fuzzy
 msgid "Swirl-_Tile..."
 msgstr "旋转平铺(_T)..."
 
@@ -2443,7 +2464,7 @@ msgstr "旋转量"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Create an image filled with a swirly pattern"
-msgstr "创建一幅以漩涡装图案填充的图像"
+msgstr "创建一幅以漩涡状图案填充的图像"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
@@ -2497,8 +2518,7 @@ msgstr "边缘平滑"
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
-"创建一个沿着圆周渲染指定文字的标志"
+msgstr "创建一个沿着圆周渲染指定文字的标志"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2511,8 +2531,7 @@ msgstr "文字环(_I)..."
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid ""
 "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
-"创建一个带有高光、阴影和马赛克背景的纹理化的标志"
+msgstr "创建一个带有高光、阴影和马赛克背景的纹理化的标志"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2522,8 +2541,7 @@ msgstr "混和终止颜色"
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr ""
-"用纹理填充选中的区域(或 alpha) 并添加高光、阴影和马赛克背景"
+msgstr "用纹理填充选中的区域(或 alpha) 并添加高光、阴影和马赛克背景"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2617,8 +2635,7 @@ msgstr "振幅"
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
-"创建一个多层的图像，带有像石头被扔进当前图像中的效果"
+msgstr "创建一个多层的图像，带有像石头被扔进当前图像中的效果"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2636,8 +2653,7 @@ msgstr "波(_W)..."
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr ""
-"创建一个以编织效果填充的新图层以被用于覆盖或凸凹贴图"
+msgstr "创建一个以编织效果填充的新图层以被用于覆盖或凸凹贴图"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2670,62 +2686,6 @@ msgstr "线长度"
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "编织(_W)..."
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "到 GIMP 网站的书签"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "到用户手册的书签"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "创建并使用选区(_S)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "创建、打开及保存文件(_F)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "绘制简单对象(_S)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "如何使用对话框(_D)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "插件注册(_R)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "使用路径(_P)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "基本概念(_B)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "开发者网站(_D)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "主站(_M)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "为 Web 准备图像(_P)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "用户手册网站(_U)"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "使用数码相机照片(_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
@@ -2766,4 +2726,3 @@ msgstr "突出显示不透明度"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
-
