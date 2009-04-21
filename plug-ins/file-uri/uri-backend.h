@@ -39,6 +39,8 @@ gboolean      uri_backend_save_image         (const gchar  *uri,
                                               const gchar  *tmpname,
                                               GimpRunMode   run_mode,
                                               GError      **error);
+gchar       * uri_backend_map_image          (const gchar  *uri,
+                                              GimpRunMode   run_mode);
 
 
 #endif /* __URI_BACKEND_H__ */

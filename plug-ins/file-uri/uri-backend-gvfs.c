@@ -39,12 +39,14 @@ typedef enum
 } Mode;
 
 
-static gchar    * get_protocols (void);
-static gboolean   copy_uri      (const gchar  *src_uri,
-                                 const gchar  *dest_uri,
-                                 Mode          mode,
-                                 GimpRunMode   run_mode,
-                                 GError      **error);
+static gchar    * get_protocols          (void);
+static gboolean   copy_uri               (const gchar  *src_uri,
+                                          const gchar  *dest_uri,
+                                          Mode          mode,
+                                          GimpRunMode   run_mode,
+                                          GError      **error);
+static gboolean   mount_enclosing_volume (GFile        *file,
+                                          GError      **error);
 
 static gchar *supported_protocols = NULL;
 
@@ -136,6 +138,40 @@ uri_backend_save_image (const gchar  *uri,
     }
 
   return FALSE;
+}
+
+gchar *
+uri_backend_map_image (const gchar  *uri,
+                       GimpRunMode   run_mode)
+{
+  GFile    *file    = g_file_new_for_uri (uri);
+  gchar    *path    = NULL;
+  gboolean  success = TRUE;
+
+  if (! file)
+    return NULL;
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      GError *error = NULL;
+
+      if (! mount_enclosing_volume (file, &error))
+        {
+
+          if (error->domain == G_IO_ERROR   &&
+              error->code   == G_IO_ERROR_ALREADY_MOUNTED)
+            success = TRUE;
+
+          g_error_free (error);
+        }
+    }
+
+  if (success)
+    path = g_file_get_path (file);
+
+  g_object_unref (file);
+
+  return path;
 }
 
 

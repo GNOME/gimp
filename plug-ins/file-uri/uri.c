@@ -234,28 +234,40 @@ load_image (const gchar  *uri,
   gchar    *tmpname    = NULL;
   gint32    image_ID   = -1;
   gboolean  name_image = FALSE;
+  gboolean  mapped;
 
-  tmpname = get_temp_name (uri, &name_image);
+  tmpname = uri_backend_map_image (uri, run_mode);
 
-  if (uri_backend_load_image (uri, tmpname, run_mode, error))
+  if (tmpname)
     {
-      image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+      mapped = TRUE;
+    }
+  else
+    {
+      tmpname = get_temp_name (uri, &name_image);
 
-      if (image_ID != -1)
-        {
-          if (name_image)
-            gimp_image_set_filename (image_ID, uri);
-          else
-            gimp_image_set_filename (image_ID, "");
-        }
-      else
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       "%s", gimp_get_pdb_error ());
-        }
+      if (! uri_backend_load_image (uri, tmpname, run_mode, error))
+        return -1;
     }
 
-  g_unlink (tmpname);
+  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+
+  if (image_ID != -1)
+    {
+      if (mapped || name_image)
+        gimp_image_set_filename (image_ID, uri);
+      else
+        gimp_image_set_filename (image_ID, "");
+    }
+  else
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "%s", gimp_get_pdb_error ());
+    }
+
+  if (! mapped)
+    g_unlink (tmpname);
+
   g_free (tmpname);
 
   return image_ID;
@@ -270,8 +282,14 @@ save_image (const gchar  *uri,
 {
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
   gchar             *tmpname;
+  gboolean           mapped;
 
-  tmpname = get_temp_name (uri, NULL);
+  tmpname = uri_backend_map_image (uri, run_mode);
+
+  if (tmpname)
+    mapped = TRUE;
+  else
+    tmpname = get_temp_name (uri, NULL);
 
   if (gimp_file_save (run_mode,
                       image_ID,
@@ -279,7 +297,7 @@ save_image (const gchar  *uri,
                       tmpname,
                       tmpname) && valid_file (tmpname))
     {
-      if (uri_backend_save_image (uri, tmpname, run_mode, error))
+      if (mapped || uri_backend_save_image (uri, tmpname, run_mode, error))
         {
           status = GIMP_PDB_SUCCESS;
         }
@@ -290,7 +308,9 @@ save_image (const gchar  *uri,
                    "%s", gimp_get_pdb_error ());
     }
 
-  g_unlink (tmpname);
+  if (! mapped)
+    g_unlink (tmpname);
+
   g_free (tmpname);
 
   return status;

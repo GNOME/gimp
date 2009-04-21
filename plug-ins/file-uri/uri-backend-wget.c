@@ -386,3 +386,10 @@ uri_backend_save_image (const gchar  *uri,
 
   return FALSE;
 }
+
+gchar *
+uri_backend_map_image (const gchar  *uri,
+                       GimpRunMode   run_mode)
+{
+  return NULL;
+}
