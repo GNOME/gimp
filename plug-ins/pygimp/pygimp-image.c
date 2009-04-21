@@ -86,7 +86,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     layer_name = "New Layer";
 
     width = gimp_image_width(self->ID);
-    height = gimp_image_width(self->ID);
+    height = gimp_image_height(self->ID);
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
                                      "|siiiiiidii:new_layer", kwlist,
